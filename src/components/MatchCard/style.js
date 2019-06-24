@@ -36,5 +36,8 @@ export const styles = StyleSheet.create({
     rightTextStyle: {
         color: '#FFF',
         marginRight: 22
+    },
+    listContainer: {
+        flex: 1
     }
 });

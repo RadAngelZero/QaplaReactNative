@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "mocha --require test/config/mocha.js"
   },
   "dependencies": {
     "react": "16.8.3",
@@ -18,8 +18,13 @@
     "@babel/core": "^7.4.5",
     "@babel/runtime": "^7.4.5",
     "babel-jest": "^24.8.0",
+    "chai": "^4.2.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.54.1",
+    "mocha": "^6.1.4",
+    "react-native-mock-render": "^0.1.4",
     "react-test-renderer": "16.8.3"
   },
   "jest": {

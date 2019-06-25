@@ -5,14 +5,14 @@ import { styles } from './style';
 
 class MatchCardList extends Component {
     render() {
+        const reversedUserNamesArray = this.props.userNames.reverse();
         return (
             <View style={styles.listContainer}>
-                <FlatList data={[
-                    {game: 'Clash Royale', bet: 450, time: '22:00', player: 'El diego', stringId: '273HYdutli723'},
-                    {game: 'Fifa 19', bet: 75, time: '12:00', player: 'El diego', stringId: '743OkEunum389'}
-                ]}
-                renderItem={({item}) => <MatchCardItem key={item.stringId} {...item} />}
-                keyExtractor={(item) => item.stringId} />
+                {this.props.userNames.length === this.props.matches.length &&
+                    <FlatList data={this.props.matches.reverse()}
+                        renderItem={({item, index}) => <MatchCardItem key={item.alphaNumericIdMatch} userName={reversedUserNamesArray[index]} {...item} />}
+                        keyExtractor={(item) => item.alphaNumericIdMatch} />
+                }
             </View>
         );
     }

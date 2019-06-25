@@ -4,6 +4,8 @@ import FacebookIcon from './icons/F_icon.svg'
 import FavouritesIcon from './icons/favorite-heart-button.svg'
 import TestIcon from './icons/facebook.svg'
 
+import PublicFeedMatchIcon from './icons/Explore.svg'
+
 const images = {
 	content: {
 	    publicFeedMatchIcon: require('./icons/public-feed-match.png'),
@@ -15,7 +17,8 @@ const images = {
 		instagramIcon: InstagramIcon,
 		facebookIcon: FacebookIcon,
 		favouritesIcon: FavouritesIcon,
-		testIcon: TestIcon
+		testIcon: TestIcon,
+		publicFeedMatchIcon: PublicFeedMatchIcon
 	}
 };
 

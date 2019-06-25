@@ -1,12 +1,15 @@
 import { StyleSheet, Platform } from 'react-native';
 
+import {isIphoneX, isIPhoneXSize, getDimensions, hasSafeAreaView} from '@utilities/iosAndroidDim'
+
 export const styles = StyleSheet.create({
     container: {
-        height: 90,
+        height: hasSafeAreaView() ? 100 : 90,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems:'flex-start',
-        marginTop: Platform.OS == 'ios' ? 20 : 0,
+        marginTop: ((Platform.OS == 'ios') && !hasSafeAreaView()) ? 20 : 0,
+        paddingTop: hasSafeAreaView() ? 20 : 0,
         backgroundColor: '#0e1222'
     },
     imageContainer: {

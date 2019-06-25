@@ -11,21 +11,25 @@ import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMat
 import MockScreen1 from './screens/MockScreen1/MockScreen1'
 import MockScreen2 from './screens/MockScreen2/MockScreen2'
 
+// Components
+import HeaderBar from './components/HeaderBar/HeaderBar';
+
 // Svg Icons
 const RetasIcon = Images.svg.testIcon;
 const Mock1Icon = Images.svg.favouritesIcon;
 const Mock2Icon = Images.svg.testIcon;
+const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
 
 const TabMainNavigator = createBottomTabNavigator({
   
   Retas: {
     screen:   PublicMatchesFeedScreen,
     navigationOptions: ({ navigation }) => ({
-      title: "Home",  //Tried to hide this for next tab Search.
+      title: "Home",  //Tried to hide this for next tab Search.,
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <Svg >
-          <RetasIcon width={25} height={25} color={focused ? "#36E5CE": 'gray'} />
+          <PublicFeedMatchIcon width={25} height={25} color={focused ? "#36E5CE": 'gray'} />
           </Svg>
         </View>
       )
@@ -66,7 +70,12 @@ const TabMainNavigator = createBottomTabNavigator({
 
 const RootStack = createStackNavigator(
   {
-    Home: TabMainNavigator
+    Home: {
+      screen: TabMainNavigator,
+      navigationOptions: {
+          header: props => <HeaderBar {...props} />
+      }
+    }
   },
   {
     initialRouteName: 'Home',

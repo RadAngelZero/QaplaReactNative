@@ -1,18 +1,19 @@
-import React, {Component} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import HeaderBar from './src/components/HeaderBar/HeaderBar';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
 
-export default class App extends Component {
+import React from 'react';
+import {Platform, StyleSheet, Text, View} from 'react-native';
+import Router from './src/Router';
+
+
+export default class App extends React.Component {
   render() {
-    return (
-      <>
-        <HeaderBar />
-        <View style={styles.container}>
-          <Text style={styles.welcome}>Welcome to React Native!</Text>
-          <Text style={styles.instructions}>To get started, edit App.js</Text>
-        </View>
-      </>
-    );
+    return <Router />
   }
 }
 
@@ -21,17 +22,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#131833',
+    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-    color: '#fff',
     margin: 10,
   },
   instructions: {
     textAlign: 'center',
-    color: '#fff',
+    color: '#333333',
     marginBottom: 5,
   },
 });

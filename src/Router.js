@@ -73,7 +73,7 @@ const RootStack = createStackNavigator(
     Home: {
       screen: TabMainNavigator,
       navigationOptions: {
-          header: props => <HeaderBar {...props} />
+        header: props => <HeaderBar {...props} />
       }
     }
   },
@@ -89,12 +89,3 @@ export default class Router extends React.Component {
     return <AppContainer/>;
   }
 }
-
-
-//<Image source={Images.mock1Icon} style={{width: 40, height: 40}} resizeMode="contain" color="#36E5CE" />
-
-// <Image source={Images.publicFeedMatchIcon}
-//                  style={{width: 40, height: 40}} 
-//                  resizeMode="contain"
-//                  color="white"
-//                  tintColor={focused ? '#0000' : '#36E5CE'}/>

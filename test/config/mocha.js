@@ -7,7 +7,7 @@ const m = require('module');
 const originalLoader = m._load;
 
 m._load = function hookedLoader(request, parent, isMain) {
-  if (request.match(/.jpeg|.jpg|.png$/)) {
+  if (request.match(/.jpeg|.jpg|.svg|.png$/)) {
     return { uri: request };
   }
 
@@ -29,4 +29,12 @@ require('@babel/register')({
       return filepath.startsWith(`${__dirname}/node_modules`);
     },
   ],
+  plugins: [
+    [
+      "babel-plugin-root-import",
+      {
+        "rootPathPrefix": "@"
+      }
+    ]
+  ]
 });

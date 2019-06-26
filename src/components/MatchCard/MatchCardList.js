@@ -5,15 +5,19 @@ import { styles } from './style';
 
 class MatchCardList extends Component {
     render() {
-        const reversedUserNamesArray = [...this.props.userNames].reverse();
-        const reversedMatchesArray = [...this.props.matches].reverse();
+        const reversedMatchesArray = [...this.props.matches].sort((a, b) => {
+            if (a.idMatch < b.idMatch) {
+                return 1;
+            } else if (a.idMatch > b.idMatch) {
+                return -1;
+            }
+            return 0;
+        });
         return (
             <View style={styles.listContainer}>
-                {this.props.userNames.length === this.props.matches.length &&
-                    <FlatList data={reversedMatchesArray}
-                        renderItem={({item, index}) => <MatchCardItem key={item.alphaNumericIdMatch} userName={reversedUserNamesArray[index]} {...item} />}
-                        keyExtractor={(item) => item.alphaNumericIdMatch} />
-                }
+                <FlatList data={reversedMatchesArray}
+                    renderItem={({item}) => <MatchCardItem key={item.alphaNumericIdMatch} {...item} />}
+                    keyExtractor={(item) => item.alphaNumericIdMatch} />
             </View>
         );
     }

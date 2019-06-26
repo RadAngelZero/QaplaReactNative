@@ -1,13 +1,14 @@
 import React from 'react'
 
 import {View} from 'react-native'
-import {createStackNavigator,createBottomTabNavigator, createAppContainer} from 'react-navigation'
+import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator} from 'react-navigation'
 
 import Images from '@assets/images'
-import {Svg, Image} from 'react-native-svg'
+import {Svg} from 'react-native-svg'
 
 // Screens
 import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen'
+import MyMatchesScreen from './screens/MyMatchesScreen/MyMatchesScreen';
 import MockScreen1 from './screens/MockScreen1/MockScreen1'
 import MockScreen2 from './screens/MockScreen2/MockScreen2'
 
@@ -15,15 +16,42 @@ import MockScreen2 from './screens/MockScreen2/MockScreen2'
 import HeaderBar from './components/HeaderBar/HeaderBar';
 
 // Svg Icons
-const RetasIcon = Images.svg.testIcon;
 const Mock1Icon = Images.svg.favouritesIcon;
 const Mock2Icon = Images.svg.testIcon;
 const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
 
+const RetasTabNavigator = createMaterialTopTabNavigator(
+  {
+    Publicas: {
+      screen: PublicMatchesFeedScreen,
+      navigationOptions: ({ navigation }) => ({
+        title: 'PÚBLICAS'
+      })
+    },
+    MisRetas: {
+      screen: MyMatchesScreen,
+      navigationOptions: ({ navigation }) => ({
+        title: 'MIS RETAS'
+      })
+    }
+  },
+  {
+    initialRouteName: 'Publicas',
+    tabBarOptions: {
+      style: { backgroundColor: '#0C1021' },
+      activeTintColor: '#36E5CE',
+      inactiveTintColor: 'gray',
+      indicatorStyle: {
+        borderBottomColor: '#36E5CE',
+        borderBottomWidth: 2,
+      },
+    },
+  }
+);
+
 const TabMainNavigator = createBottomTabNavigator({
-  
   Retas: {
-    screen:   PublicMatchesFeedScreen,
+    screen:   RetasTabNavigator,
     navigationOptions: ({ navigation }) => ({
       title: "Home",  //Tried to hide this for next tab Search.,
       tabBarIcon: ({ tintColor, focused }) => (

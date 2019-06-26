@@ -4,6 +4,9 @@ import { expect } from 'chai';
 import HeaderBar from '../src/components/HeaderBar/HeaderBar';
 import { View } from 'react-native';
 
+/**
+ * Before run convert route: @utilities/iosAndroidDim to relative (./../../utilities/iosAndroidDim)
+ */
 describe('HeaderBar render test', () => {
     let HeaderBarWrapper;
     beforeEach(() => {

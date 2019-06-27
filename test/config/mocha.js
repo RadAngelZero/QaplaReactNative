@@ -29,12 +29,4 @@ require('@babel/register')({
       return filepath.startsWith(`${__dirname}/node_modules`);
     },
   ],
-  plugins: [
-    [
-      "babel-plugin-root-import",
-      {
-        "rootPathPrefix": "@"
-      }
-    ]
-  ]
 });

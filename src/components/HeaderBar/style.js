@@ -1,6 +1,6 @@
 import { StyleSheet, Platform } from 'react-native';
 
-import {isIphoneX, isIPhoneXSize, getDimensions, hasSafeAreaView} from '@utilities/iosAndroidDim'
+import {isIphoneX, isIPhoneXSize, getDimensions, hasSafeAreaView} from './../../utilities/iosAndroidDim'
 
 export const styles = StyleSheet.create({
     container: {

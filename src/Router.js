@@ -4,7 +4,7 @@ import {View} from 'react-native'
 import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator} from 'react-navigation'
 
 import Images from '@assets/images'
-import {retrieveData} from '@utilities/persistance'
+import {retrieveData} from './utilities/persistance'
 import {Svg, Image} from 'react-native-svg'
 
 // Screens

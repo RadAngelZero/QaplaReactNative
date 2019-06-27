@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "mocha --require @babel/register test/config/mocha.js ./test/*.test.js"
+    "test": "mocha --require test/config/mocha.js ./test/*.test.js"
   },
   "dependencies": {
     "firebase": "^6.2.2",

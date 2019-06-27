@@ -4,9 +4,11 @@ import {View} from 'react-native'
 import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator} from 'react-navigation'
 
 import Images from '@assets/images'
-import {Svg} from 'react-native-svg'
+import {retrieveData} from '@utilities/persistance'
+import {Svg, Image} from 'react-native-svg'
 
 // Screens
+import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen'
 import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen'
 import MyMatchesScreen from './screens/MyMatchesScreen/MyMatchesScreen';
 import MockScreen1 from './screens/MockScreen1/MockScreen1'
@@ -64,7 +66,7 @@ const TabMainNavigator = createBottomTabNavigator({
     })
   },
   Mock1: {
-    screen:   MockScreen1,
+    screen:   WelcomeOnboardingScreen,
     navigationOptions: ({ navigation }) => ({
       //If no title it shows the name as Search.
       title: "Mock 1",
@@ -98,6 +100,9 @@ const TabMainNavigator = createBottomTabNavigator({
 
 const RootStack = createStackNavigator(
   {
+    Welcome: {
+      screen: WelcomeOnboardingScreen
+    },
     Home: {
       screen: TabMainNavigator,
       navigationOptions: {
@@ -106,7 +111,7 @@ const RootStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: retrieveData('tutorial-done') == null ? 'Home' : 'Welcome',
   }
 );
 

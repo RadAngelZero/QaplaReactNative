@@ -6,14 +6,14 @@ async function retrieveData(key) {
   let result = null;
 
   try {
-    const value = await AsyncStorage.getItem('TASKS');
+    const value = await AsyncStorage.getItem('@QaplaRN:'+ key);
     if (value !== null) {
       // Data retrieved
       console.log("[retrieveData] : " + value);
       result = value;
     }
     else {
-    	console.log("[retrieveData] : " + value);
+    	console.log("[retrieveData 2] : " + value);
     }
   } catch (error) {
     // Error retrieving data

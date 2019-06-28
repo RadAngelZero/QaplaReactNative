@@ -98,27 +98,45 @@ const TabMainNavigator = createBottomTabNavigator({
   }
 });
 
-const RootStack = createStackNavigator(
-  {
-    Welcome: {
-      screen: WelcomeOnboardingScreen
-    },
-    Home: {
-      screen: TabMainNavigator,
-      navigationOptions: {
-        header: props => <HeaderBar {...props} />
-      }
-    }
-  },
-  {
-    initialRouteName: retrieveData('tutorial-done') == null ? 'Home' : 'Welcome',
-  }
-);
-
-const AppContainer = createAppContainer(RootStack);
-
 export default class Router extends React.Component {
+
+  constructor(props) {
+    super(props);
+  
+    this.state = {};
+  }
+
+  componentDidMount() {
+    
+  }
+
   render() {
-    return <AppContainer/>;
+
+    showTutorial = this.props.tutorial;
+
+    // Create here RootStack to ensure that we have control over tutorial shown
+    // or not shown
+    const RootStack = createStackNavigator(
+    {
+      Welcome: {
+        screen: WelcomeOnboardingScreen
+      },
+      Home: {
+        screen: TabMainNavigator,
+        navigationOptions: {
+          header: props => <HeaderBar {...props} />
+        }
+      }
+    },
+    {
+      initialRouteName:  (showTutorial == true) ? 'Home' : 'Welcome',
+    }
+    );
+    
+    // Create main router entry point for the app
+    const AppContainer = createAppContainer(RootStack);
+
+    // render de main router entry point for the app
+    return <AppContainer/>
   }
 }

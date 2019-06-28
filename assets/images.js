@@ -7,28 +7,49 @@ import TestIcon from './icons/facebook.svg'
 import PublicFeedMatchIcon from './icons/Explore.svg'
 
 // Images
-import Welcome1Img from './images/Rectangle.svg'
-import Welcome2Img from './images/Rectangle2.svg'
-import Welcome3Img from './images/Rectangle3.svg'
-import Welcome4Img from './images/Rectangle4.svg'
 
 const images = {
-	content: {
-	    publicFeedMatchIcon: require('./icons/public-feed-match.png'),
-		mock1Icon: require('./icons/instagram.png'),
-		mock2Icon: require('./icons/facebook.png'),
-		instagramIcon: require('./icons/facebook.png')
+	png: {
+		prueba: require("./icons/public-feed-match.png"),
+		publicFeedMatchIcon:{
+	    	img: require('./icons/public-feed-match.png'),
+	    	uri: '@assets/icons/public-feed-match.png'
+	    },
+		mock1Icon:{
+			img: require('./icons/instagram.png'),
+			uri: '@assets/icons/instagram.png'
+		},
+		mock1Icon:{
+			img: require('./icons/facebook.png'),
+			uri: '@assets/icons/facebook.png'
+		},
+		instagramIcon:{
+			img: require('./icons/facebook.png'),
+			uri: '@assets/icons/facebook.png'
+		},
+		welcome1Img:{
+			img: require('./images/welcome1.png'),
+			uri: '@assets/icons/welcome1.png'
+		},
+		welcome2Img:{
+			img: require('./images/welcome2.png'),
+			uri: '@assets/icons/welcome2.png'
+		},
+		welcome3Img:{
+			img: require('./images/welcome3.png'),
+			uri: '@assets/icons/welcome3.png'
+		} ,
+		welcome4Img:{
+			img: require('./images/welcome4.png'),
+			uri: '@assets/icons/welcome4.png'
+		} 
 	},
 	svg: {
 		instagramIcon: InstagramIcon,
 		facebookIcon: FacebookIcon,
 		favouritesIcon: FavouritesIcon,
 		testIcon: TestIcon,
-		publicFeedMatchIcon: PublicFeedMatchIcon,
-		welcome1: Welcome1Img,
-		welcome2: Welcome2Img,
-		welcome3: Welcome3Img,
-		welcome4: Welcome4Img
+		publicFeedMatchIcon: PublicFeedMatchIcon
 	}
 };
 

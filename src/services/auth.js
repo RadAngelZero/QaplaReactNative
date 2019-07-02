@@ -1,6 +1,9 @@
-import { auth, FBProvider } from './../utilities/firebase';
+import { auth, FBProvider, GoogleProvider } from './../utilities/firebase';
 import { createUserProfile } from './database';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
+import {GoogleSignin} from 'react-native-google-signin';
+
+const webClientIdForGoogleAuth = '614138734637-rgvqccs2sk27ilb8nklg65sdcm33ka8v.apps.googleusercontent.com';
 
 export function signInWithFacebook() {
     LoginManager.logInWithPermissions(['public_profile', 'email'])
@@ -20,4 +23,33 @@ export function signInWithFacebook() {
             });
         }
     });
+}
+
+export function signInWithGoogle() {
+    GoogleSignin.signIn()
+    .then((user) => {
+        const credential = GoogleProvider.credential(user.idToken, user.accessToken);
+        auth.signInWithCredential(credential)
+        .then((user) => {
+            createUserProfile(user.user.uid, user.user.email);
+        }).catch((error) => {
+            console.log('ERROR:',error);
+        });
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+    .done();
+}
+
+export function setupGoogleSignin() {
+    try {
+      GoogleSignin.configure({
+        webClientId: webClientIdForGoogleAuth,
+        offlineAccess: false
+      });
+    }
+    catch (err) {
+      console.log("Google signin error", err.code, err.message);
+    }
 }

@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 import styles from './style';
 import Images from './../../../assets/images';
-import { signInWithFacebook } from '../../services/auth';
+import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
 
 class SignInScreen extends Component {
+    componentDidMount() {
+        setupGoogleSignin();
+      }
+    
     render() {
         return (
             <View style={styles.container}>
@@ -17,7 +21,7 @@ class SignInScreen extends Component {
                             <Text style={{ color: '#FFF', alignSelf: 'center' }}>Continuar con Facebook</Text>
                         </View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={signInWithGoogle}>
                         <View style={{ borderRadius: 100, backgroundColor: '#FFFFFF', paddingVertical: 16, paddingHorizontal: 16, marginTop: 24 }}>
                             <Text style={{ color: 'rgba(0, 0, 0, .541)', alignSelf: 'center' }}>Continuar con Google</Text>
                         </View>

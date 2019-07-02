@@ -19,3 +19,4 @@ export const auth = firebase.auth();
 
 //Authentication providers
 export const FBProvider = firebase.auth.FacebookAuthProvider;
+export const GoogleProvider = firebase.auth.GoogleAuthProvider;

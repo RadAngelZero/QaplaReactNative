@@ -19,6 +19,7 @@ import HeaderBar from './components/HeaderBar/HeaderBar';
 import SignInScreen from './screens/SignInScreen/SignInScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
 import LoginWithEmailScreen from './screens/LoginWithEmailScreen/LoginWithEmailScreen';
+import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameScreen';
 
 // Svg Icons
 const Mock1Icon = Images.svg.favouritesIcon;
@@ -145,7 +146,8 @@ export default class Router extends React.Component {
       {
         AuthLoadingScreen: AuthLoadingScreen,
         App: RootStack,
-        Welcome: WelcomeOnboardingScreen
+        Welcome: WelcomeOnboardingScreen,
+        ChooseUserNameScreen: ChooseUserNameScreen
       },
       {
         initialRouteName: 'AuthLoadingScreen'

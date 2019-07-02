@@ -17,18 +17,18 @@ class SignInScreen extends Component {
                 </View>
                 <View>
                     <TouchableWithoutFeedback onPress={signInWithFacebook}>
-                        <View style={{ borderRadius: 100, backgroundColor: 'rgba(54,79,226,1)', paddingVertical: 16, paddingHorizontal: 16, marginTop: 44 }}>
-                            <Text style={{ color: '#FFF', alignSelf: 'center' }}>Continuar con Facebook</Text>
+                        <View style={styles.facebookButtonContainer}>
+                            <Text style={[styles.whiteColor, styles.alignSelfCenter]}>Continuar con Facebook</Text>
                         </View>
                     </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={signInWithGoogle}>
-                        <View style={{ borderRadius: 100, backgroundColor: '#FFFFFF', paddingVertical: 16, paddingHorizontal: 16, marginTop: 24 }}>
-                            <Text style={{ color: 'rgba(0, 0, 0, .541)', alignSelf: 'center' }}>Continuar con Google</Text>
+                        <View style={styles.googleButtonContainer}>
+                            <Text style={[styles.googleButtonText, styles.alignSelfCenter]}>Continuar con Google</Text>
                         </View>
                     </TouchableWithoutFeedback>
-                    <View style={{ flexDirection: 'row', marginTop: 25 }}>
-                        <Text style={{ color: '#FFF', alignSelf: 'center' }}>¿Ya tienes cuenta?</Text>
-                        <Text style={{ color: 'rgba(61,249,223,1)', alignSelf: 'center', marginLeft: 5 }}>Ingresa con correo</Text>
+                    <View style={styles.alreadyHaveAccountTextContainer}>
+                        <Text style={[styles.whiteColor, styles.alignSelfCenter]}>¿Ya tienes cuenta?</Text>
+                        <Text style={[styles.enterWithEmailText, styles.alignSelfCenter]} onPress={() => this.props.navigation.navigate('Login')}>Ingresa con correo</Text>
                     </View>
                 </View>
             </View>

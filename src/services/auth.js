@@ -13,7 +13,7 @@ export function signInWithFacebook() {
                 const credential = FBProvider.credential(data.accessToken)
                 auth.signInWithCredential(credential)
                 .then((user) => {
-                    
+                    createUserProfile(user.user.uid, user.user.email);
                 }).catch((error) => {
                     console.log('ERROR:',error);
                 });

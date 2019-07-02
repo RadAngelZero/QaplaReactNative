@@ -53,3 +53,14 @@ export function setupGoogleSignin() {
       console.log("Google signin error", err.code, err.message);
     }
 }
+
+export function signInWithEmailAndPassword(email, password) {
+    auth.signInWithEmailAndPassword(email, password)
+    .then((user) => {
+        console.log(user.user.uid);
+        //Do something with the user data
+    })
+    .catch((error) => {
+        console.log(error.code, error.message);
+    });
+}

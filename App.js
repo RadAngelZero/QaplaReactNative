@@ -1,38 +1,24 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import Router from './src/Router';
-import {retrieveData} from '@utilities/persistance'
+import rootReducer from './src/reducers/rootReducer';
+
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 console.disableYellowBox = true;
 
-export default class App extends React.Component {
-
-  
-  constructor(props) {
-    super(props);
-    this.state = {st: undefined};
-  }
-
-  componentDidMount() {
-  	this.getConfData();
-  }
-
-  async getConfData() {
-  	const v = await retrieveData('tutorial-done');
-  	console.log("muu: " + v)
-  	this.setState({
-  		st: v
-  	})
-  }
-
+class App extends React.Component {
   render() {
-  	show = true;
-    if (this.state.st == undefined) {
-    	console.log("[App] : st is undefined")
-	    show = false;
-    }
-    
-    console.log("[App] : st is st " + JSON.stringify(this.state))
-
-    return <Router tutorial={show == true}/>
+    return <Router />
   }
 }
+
+const AppReduxContainer = () => (
+  <Provider store={store}>
+      <App />
+  </Provider>
+)
+
+export default AppReduxContainer;

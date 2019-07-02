@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 import styles from './style';
 import Images from './../../../assets/images';
+import { signInWithFacebook } from '../../services/auth';
 
 class SignInScreen extends Component {
     render() {
@@ -11,7 +12,7 @@ class SignInScreen extends Component {
                     <Image source={Images.png.instagramIcon.img} />
                 </View>
                 <View>
-                    <TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={signInWithFacebook}>
                         <View style={{ borderRadius: 100, backgroundColor: 'rgba(54,79,226,1)', paddingVertical: 16, paddingHorizontal: 16, marginTop: 44 }}>
                             <Text style={{ color: '#FFF', alignSelf: 'center' }}>Continuar con Facebook</Text>
                         </View>

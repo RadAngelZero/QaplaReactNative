@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native'
 import style from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
-import { matchesRef, getUserNameWithUID } from '../../services/database';
+import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
 
 class PublicMatchesFeedScreen extends Component {
     state = {
@@ -54,7 +54,8 @@ class PublicMatchesFeedScreen extends Component {
                         timeStamp,
                         winBet,
                         //Get the userName from a external function because the match object only have the UID
-                        userName: await getUserNameWithUID(newPublicMatch.val().adversary1).then((userName) => userName)
+                        userName: await getUserNameWithUID(newPublicMatch.val().adversary1).then((userName) => userName),
+                        gamerTag: await getGamerTagWithUID(newPublicMatch.val().adversary1, newPublicMatch.val().game, newPublicMatch.val().platform).then((gamerTag) => gamerTag)
                     };
                     this.setState((state) => {
                         //Add the matchObject to the matches array of the state

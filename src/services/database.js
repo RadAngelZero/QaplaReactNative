@@ -11,6 +11,12 @@ export async function getUserNameWithUID(Uid) {
     return await usersRef.child(Uid).child('userName').once('value').then((data) => data.val());
 }
 
+/**
+ * Returns the gamerTag of the specified user and the game and platform of the current match
+ * @param {string} Uid User id from firebase
+ * @param {string} game Name of the game of the current match
+ * @param {string} platform Name of the platform of the current match
+ */
 export async function getGamerTagWithUID(Uid, game, platform) {
     return await usersRef.child(Uid).child('gamerTags').once('value').then((data) =>
     {
@@ -67,5 +73,20 @@ export function createUserProfile(Uid, email) {
         token: '',
         userName: '',
         wins: 0
+    });
+}
+
+/**
+ * Update the userName of specific user only if that username is not already in use
+ * @param {string} uid User identifier of the user on firebase
+ * @param {string} userName The name that the user want to use in Qapla
+ */
+export async function createUserName(uid, userName) {
+    return await usersRef.orderByChild('city').equalTo(userName.toUpperCase()).once('value').then(async (userNameAlready) => {
+        if (!userNameAlready.exists()) {
+            return await usersRef.child(uid).update({ userName, city: userName.toUpperCase() });
+        } else {
+            //El nombre de usuario ya esta en uso por alguien mas
+        }
     });
 }

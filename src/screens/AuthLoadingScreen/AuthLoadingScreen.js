@@ -5,20 +5,33 @@ import { auth } from '../../utilities/firebase';
 import { retrieveData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
+import { getUserNameWithUID } from '../../services/database';
 
 class AuthLoadingScreen extends Component {
     componentDidMount() {
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 this.props.loadUserData(user.uid);
-            }
-            const isTutorialDone = await retrieveData('tutorial-done');
-            if (isTutorialDone) {
-                this.props.navigation.navigate('App');
+                const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
+                if(userName === ''){
+                    this.props.navigation.navigate('ChooseUserNameScreen');
+                } else {
+                    const isTutorialDone = await retrieveData('tutorial-done');
+                    if (isTutorialDone) {
+                        this.props.navigation.navigate('App');
+                    } else {
+                        this.props.navigation.navigate('Welcome');
+                    }
+                }
             } else {
-                this.props.navigation.navigate('Welcome');
+                const isTutorialDone = await retrieveData('tutorial-done');
+                if (isTutorialDone) {
+                    this.props.navigation.navigate('App');
+                } else {
+                    this.props.navigation.navigate('Welcome');
+                }
             }
-        })
+        });
     }
     render() {
         return (
@@ -30,10 +43,16 @@ class AuthLoadingScreen extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        user: state.userReducer.user
+    };
+}
+
 function mapDispatchToProps(dispatch) {
     return {
         loadUserData: (uid) => getUserNode(uid)(dispatch)
     };
 }
 
-export default AuthLoadingScreen = connect(null, mapDispatchToProps)(AuthLoadingScreen);
+export default AuthLoadingScreen = connect(mapStateToProps, mapDispatchToProps)(AuthLoadingScreen);

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {View} from 'react-native'
-import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator} from 'react-navigation'
+import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createSwitchNavigator} from 'react-navigation'
 
 import Images from '@assets/images'
 import {retrieveData} from './utilities/persistance'
@@ -16,6 +16,9 @@ import MockScreen2 from './screens/MockScreen2/MockScreen2'
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
+import SignInScreen from './screens/SignInScreen/SignInScreen';
+import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
+import LoginWithEmailScreen from './screens/LoginWithEmailScreen/LoginWithEmailScreen';
 
 // Svg Icons
 const Mock1Icon = Images.svg.favouritesIcon;
@@ -111,15 +114,20 @@ export default class Router extends React.Component {
   }
 
   render() {
-
-    showTutorial = this.props.tutorial;
-
-    // Create here RootStack to ensure that we have control over tutorial shown
     // or not shown
     const RootStack = createStackNavigator(
     {
-      Welcome: {
-        screen: WelcomeOnboardingScreen
+      SignIn: {
+        screen: SignInScreen,
+        navigationOptions: {
+          header: null
+        }
+      },
+      Login: {
+        screen: LoginWithEmailScreen,
+        navigationOptions: {
+          header: null
+        }
       },
       Home: {
         screen: TabMainNavigator,
@@ -129,12 +137,23 @@ export default class Router extends React.Component {
       }
     },
     {
-      initialRouteName:  (showTutorial == true) ? 'Home' : 'Welcome',
+      initialRouteName:  'Home'
     }
+    );
+
+    const MainNavigator = createSwitchNavigator(
+      {
+        AuthLoadingScreen: AuthLoadingScreen,
+        App: RootStack,
+        Welcome: WelcomeOnboardingScreen
+      },
+      {
+        initialRouteName: 'AuthLoadingScreen'
+      }
     );
     
     // Create main router entry point for the app
-    const AppContainer = createAppContainer(RootStack);
+    const AppContainer = createAppContainer(MainNavigator);
 
     // render de main router entry point for the app
     return <AppContainer/>

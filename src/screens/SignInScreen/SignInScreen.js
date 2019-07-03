@@ -7,7 +7,7 @@ import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../s
 class SignInScreen extends Component {
     componentDidMount() {
         setupGoogleSignin();
-      }
+    }
     
     render() {
         return (
@@ -16,12 +16,12 @@ class SignInScreen extends Component {
                     <Image source={Images.png.instagramIcon.img} />
                 </View>
                 <View>
-                    <TouchableWithoutFeedback onPress={signInWithFacebook}>
+                    <TouchableWithoutFeedback onPress={() => signInWithFacebook(this.props.navigation)}>
                         <View style={styles.facebookButtonContainer}>
                             <Text style={[styles.whiteColor, styles.alignSelfCenter]}>Continuar con Facebook</Text>
                         </View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={signInWithGoogle}>
+                    <TouchableWithoutFeedback onPress={() => signInWithGoogle(this.props.navigation)}>
                         <View style={styles.googleButtonContainer}>
                             <Text style={[styles.googleButtonText, styles.alignSelfCenter]}>Continuar con Google</Text>
                         </View>

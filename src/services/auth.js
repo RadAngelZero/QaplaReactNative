@@ -5,7 +5,7 @@ import {GoogleSignin} from 'react-native-google-signin';
 
 const webClientIdForGoogleAuth = '614138734637-rgvqccs2sk27ilb8nklg65sdcm33ka8v.apps.googleusercontent.com';
 
-export function signInWithFacebook() {
+export function signInWithFacebook(navigation) {
     LoginManager.logInWithPermissions(['public_profile', 'email'])
     .then((result) => {
         if (result.isCancelled) {
@@ -16,7 +16,12 @@ export function signInWithFacebook() {
                 const credential = FBProvider.credential(data.accessToken)
                 auth.signInWithCredential(credential)
                 .then((user) => {
-                    createUserProfile(user.user.uid, user.user.email);
+                    if (user.additionalUserInfo.isNewUser) {
+                        createUserProfile(user.user.uid, user.user.email);
+                        navigation.navigate('ChooseUserNameScreen', { uid: user.user.uid });
+                    } else {
+                        navigation.navigate('Home');
+                    }
                 }).catch((error) => {
                     console.log('ERROR:',error);
                 });
@@ -25,13 +30,18 @@ export function signInWithFacebook() {
     });
 }
 
-export function signInWithGoogle() {
+export function signInWithGoogle(navigation) {
     GoogleSignin.signIn()
     .then((user) => {
         const credential = GoogleProvider.credential(user.idToken, user.accessToken);
         auth.signInWithCredential(credential)
         .then((user) => {
-            createUserProfile(user.user.uid, user.user.email);
+            if (user.additionalUserInfo.isNewUser) {
+                createUserProfile(user.user.uid, user.user.email);
+                navigation.navigate('ChooseUserNameScreen', { uid: user.user.uid });
+            } else {
+                navigation.navigate('Home');
+            }
         }).catch((error) => {
             console.log('ERROR:',error);
         });

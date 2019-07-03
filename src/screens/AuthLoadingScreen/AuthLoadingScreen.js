@@ -14,22 +14,14 @@ class AuthLoadingScreen extends Component {
                 this.props.loadUserData(user.uid);
                 const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
                 if(userName === ''){
-                    this.props.navigation.navigate('ChooseUserNameScreen');
-                } else {
-                    const isTutorialDone = await retrieveData('tutorial-done');
-                    if (isTutorialDone) {
-                        this.props.navigation.navigate('App');
-                    } else {
-                        this.props.navigation.navigate('Welcome');
-                    }
+                    return this.props.navigation.navigate('ChooseUserNameScreen');
                 }
+            }
+            const isTutorialDone = await retrieveData('tutorial-done');
+            if (isTutorialDone) {
+                return this.props.navigation.navigate('App');
             } else {
-                const isTutorialDone = await retrieveData('tutorial-done');
-                if (isTutorialDone) {
-                    this.props.navigation.navigate('App');
-                } else {
-                    this.props.navigation.navigate('Welcome');
-                }
+                return this.props.navigation.navigate('Welcome');
             }
         });
     }

@@ -43,9 +43,12 @@ class ChooseUserNameScreen extends Component {
 }
 
 function mapStateToProps(state) {
-    return {
-        uid: state.userReducer.user.id
-    };
+    if (state.userReducer.user.hasOwnProperty('id')) {
+        return {
+            uid: state.userReducer.user.id
+        };
+    }
+    return { user: {} };
 }
 
 export default ChooseUserNameScreen = connect(mapStateToProps)(ChooseUserNameScreen);

@@ -5,7 +5,7 @@ import MatchCardList from '../../components/MatchCard/MatchCardList';
 import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
 import { connect } from 'react-redux';
 
-class MyMatchesScreen extends Component {
+export class MyMatchesScreen extends Component {
     state = {
         matches: [],
     };

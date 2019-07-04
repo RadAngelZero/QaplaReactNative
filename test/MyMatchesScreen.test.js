@@ -1,18 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { View, Text } from 'react-native';
-import MyMatchesScreen from '../src/screens/MyMatchesScreen/MyMatchesScreen';
+import { View } from 'react-native';
+import { MyMatchesScreen } from '../src/screens/MyMatchesScreen/MyMatchesScreen';
+import MatchCardList from '../src/components/MatchCard/MatchCardList';
 
-describe('MyMatchesScreen render test', () => {
-    let MyMatchesScreenWrapper;
+describe('PublicMatchesFeedScreen render test', () => {
+    let PublicMatchesFeedScreenWrapper;
     beforeEach(() => {
-        MyMatchesScreenWrapper = shallow(<MyMatchesScreen />);
+        const navigation = { addListener: () => console.log('Flag to avoid test error') };
+        PublicMatchesFeedScreenWrapper = shallow(<MyMatchesScreen navigation={navigation} id='1' />);
     });
     it('Check view of the component', () => {
-        expect(MyMatchesScreenWrapper.find(View)).to.to.have.lengthOf(1);
+        expect(PublicMatchesFeedScreenWrapper.find(View)).to.to.have.lengthOf(1);
     });
     it('Check MatchCardList of the component', () => {
-        expect(MyMatchesScreenWrapper.find(Text)).to.to.have.lengthOf(1);
+        expect(PublicMatchesFeedScreenWrapper.find(MatchCardList)).to.to.have.lengthOf(1);
     });
 });

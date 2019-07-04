@@ -74,3 +74,7 @@ export function signInWithEmailAndPassword(email, password) {
         console.log(error.code, error.message);
     });
 }
+
+export function isUserLogged() {
+    return auth.currentUser !== null;
+}

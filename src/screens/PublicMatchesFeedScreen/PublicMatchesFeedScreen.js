@@ -3,6 +3,8 @@ import { View } from 'react-native'
 import style from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
 import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
+import CreateRetasButton from '../../components/CreateRetasButton/CreateRetasButton';
+import { isUserLogged } from '../../services/auth';
 
 class PublicMatchesFeedScreen extends Component {
     state = {
@@ -84,10 +86,12 @@ class PublicMatchesFeedScreen extends Component {
             }
         );
     }
+
     render() {
         return (
             <View style={style.container}>
 		        <MatchCardList {...this.state} />
+                <CreateRetasButton highlighted={false} onPress={() => this.props.navigation.navigate(isUserLogged() ? 'Publicas' : 'SignIn')} />
             </View>
         );
     }

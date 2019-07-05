@@ -81,10 +81,11 @@ export function createUserProfile(Uid, email) {
  * @param {string} uid User identifier of the user on firebase
  * @param {string} userName The name that the user want to use in Qapla
  */
-export async function createUserName(uid, userName) {
+export async function createUserName(uid, userName, navigation) {
     return await usersRef.orderByChild('city').equalTo(userName.toUpperCase()).once('value').then(async (userNameAlready) => {
         if (!userNameAlready.exists()) {
-            return await usersRef.child(uid).update({ userName, city: userName.toUpperCase() });
+            await usersRef.child(uid).update({ userName, city: userName.toUpperCase() });
+            return navigation.navigate('Retas');
         } else {
             //El nombre de usuario ya esta en uso por alguien mas
         }

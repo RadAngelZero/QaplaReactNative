@@ -6,17 +6,8 @@ import { createUserName } from '../../services/database';
 
 class ChooseUserNameScreen extends Component {
     state = {
-        userName: '',
-        showErrorMessage: false
+        userName: ''
     };
-
-    assignUserName() {
-        this.setState({ showErrorMessage: false });
-        createUserName(this.props.uid, this.state.userName)
-        .then((algo) => {
-            //Redirect to a better place
-        });
-    }
 
     render() {
         return (
@@ -31,7 +22,7 @@ class ChooseUserNameScreen extends Component {
                 </View>
                 }
                 <View>
-                    <TouchableWithoutFeedback onPress={() => createUserName(this.props.uid, this.state.userName)}>
+                    <TouchableWithoutFeedback onPress={() => createUserName(this.props.uid, this.state.userName, this.props.navigation)}>
                         <View style={styles.buttonContainer}>
                             <Text style={styles.buttonText}>CONTINUAR</Text>
                         </View>

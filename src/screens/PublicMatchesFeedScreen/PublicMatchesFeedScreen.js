@@ -5,10 +5,11 @@ import MatchCardList from '../../components/MatchCard/MatchCardList';
 import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
 import CreateRetasButton from '../../components/CreateRetasButton/CreateRetasButton';
 import { isUserLogged } from '../../services/auth';
+import { storeData } from '../../utilities/persistance';
 
 class PublicMatchesFeedScreen extends Component {
     state = {
-        matches: [],
+        matches: []
     };
 
     componentWillMount(){
@@ -76,7 +77,7 @@ class PublicMatchesFeedScreen extends Component {
                     const { idMatch } = removedPublicMatch.val();
                     //Create a new array and assign the filtered original array
                     //The filter return every match except the match who id is the same that idMatch
-                    const matchesArrayFiltered = this.state.matches.filter((match) =>(idMatch !== match.idMatch));
+                    const matchesArrayFiltered = this.state.matches.filter((match) => (idMatch !== match.idMatch));
                     this.setState((state) => {
                         //Asiggn the filteredArray to the state
                         const matches = [...matchesArrayFiltered];
@@ -87,11 +88,18 @@ class PublicMatchesFeedScreen extends Component {
         );
     }
 
+    onCrearRetaButtonPress() {
+        if(!this.props.navigation.getParam('firstMatchCreated')){
+            storeData('first-match-created', 'true');
+        }
+        this.props.navigation.navigate(isUserLogged() ? 'Publicas' : 'SignIn');
+    }
+
     render() {
         return (
             <View style={style.container}>
 		        <MatchCardList {...this.state} />
-                <CreateRetasButton highlighted={false} onPress={() => this.props.navigation.navigate(isUserLogged() ? 'Publicas' : 'SignIn')} />
+                <CreateRetasButton highlighted={!this.props.navigation.getParam('firstMatchCreated')} onPress={this.onCrearRetaButtonPress.bind(this)} />
             </View>
         );
     }

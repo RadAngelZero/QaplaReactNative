@@ -19,7 +19,7 @@ class AuthLoadingScreen extends Component {
             }
             const isTutorialDone = await retrieveData('tutorial-done');
             if (isTutorialDone) {
-                return this.props.navigation.navigate('App');
+                return this.props.navigation.navigate('Publicas', { firstMatchCreated: (await retrieveData('first-match-created')) === 'true' });
             } else {
                 return this.props.navigation.navigate('Welcome');
             }
@@ -28,7 +28,7 @@ class AuthLoadingScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ActivityIndicator size='large' color='rgba(61,249,223,1)' />
+                <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
                 <Text style={styles.textColor}>Cargando...</Text>
             </View>
         );

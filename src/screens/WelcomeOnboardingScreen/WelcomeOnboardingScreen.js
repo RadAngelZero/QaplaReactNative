@@ -74,7 +74,7 @@ export default class WelcomeOnboardingScreen extends React.Component {
                   disabled={(this.state.carouselPageCount + 1 != img.length) ? true : false}
                   color="#36E5CE"
                   accessibilityLabel="Learn more about this purple button"
-                  onPress={this.goToScreen.bind(this, "Home")}
+                  onPress={this.goToScreen.bind(this, "Publicas")}
               />
             
 		    </View>
@@ -100,6 +100,6 @@ export default class WelcomeOnboardingScreen extends React.Component {
     const {navigate} = this.props.navigation;
 
     storeData('tutorial-done', this.state.switch1Value.toString());
-    navigate(screenName);
+    navigate(screenName, { firstMatchCreated: true });
   }
 }

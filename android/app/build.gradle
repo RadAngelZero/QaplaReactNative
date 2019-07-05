@@ -117,16 +117,14 @@ android {
                 storePassword MYAPP_UPLOAD_STORE_PASSWORD
             }
         }
-        /*
-        release {
+        /*release {
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
                 storeFile file(MYAPP_UPLOAD_STORE_FILE)
-                storePassword MYAPP_UPLOAD_STORE_PASSWORD
                 keyAlias MYAPP_UPLOAD_KEY_ALIAS
                 keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
             }
-        }
-        */
+        } */ //Uncoment to build signed apk
     }
     splits {
         abi {
@@ -140,6 +138,7 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            //signingConfig signingConfigs.release //Uncoment to build signed apk
         }
     }
     // applicationVariants are e.g. debug, release

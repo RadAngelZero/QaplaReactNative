@@ -10,6 +10,8 @@ import ProfileIcon from './icons/ProfileActive.svg'
 import FifaIcon from './icons/Fifa.svg'
 import GowIcon from './icons/Gow.svg'
 import CancelIcon from './icons/qaploins.svg'
+import LightningIcon from './icons/Lighting.svg';
+import SearchIcon from './icons/search.svg';
 
 // Images
 
@@ -59,7 +61,9 @@ const images = {
 		profileIcon: ProfileIcon,
 		gowIcon: GowIcon,
 		fifaIcon: FifaIcon,
-		cancelIcon: CancelIcon
+		cancelIcon: CancelIcon,
+		lightningIcon: LightningIcon,
+		searchIcon: SearchIcon
 	}
 };
 

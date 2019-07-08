@@ -36,7 +36,7 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 14,
         letterSpacing: .5,
-        paddingVertical: 12,
+        paddingVertical: 14,
         paddingHorizontal: 20,
         textAlign: 'center'
     },
@@ -54,15 +54,14 @@ export default styles = StyleSheet.create({
         marginLeft: 80
     },
     directMatchButtonSearchIcon: {
-        marginTop: 14,
-        marginBottom: 14,
+        paddingVertical: 14,
         marginLeft: 15
     },
     directMatchButtonText: {
         color: 'rgba(0, 0, 0, .8)',
         fontSize: 14,
         letterSpacing: .5,
-        paddingVertical: 12,
+        paddingVertical: 14,
         paddingHorizontal: 20,
         alignContent: 'center'
     }

@@ -12,7 +12,9 @@ class AuthLoadingScreen extends Component {
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 this.props.loadUserData(user.uid);
+                
                 const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
+                
                 if(userName === ''){
                     return this.props.navigation.navigate('ChooseUserNameScreen');
                 }
@@ -20,7 +22,8 @@ class AuthLoadingScreen extends Component {
             const isTutorialDone = await retrieveData('tutorial-done');
             if (isTutorialDone) {
                 return this.props.navigation.navigate('Publicas', { firstMatchCreated: (await retrieveData('first-match-created')) === 'true' });
-            } else {
+            } 
+            else {
                 return this.props.navigation.navigate('Welcome');
             }
         });

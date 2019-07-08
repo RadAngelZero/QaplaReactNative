@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { styles } from './style';
 
+import { withNavigation } from 'react-navigation';
+
 class MatchCardItem extends Component {
     render() {
+        const {navigate} = this.props.navigation;
+
         return (
-            <TouchableWithoutFeedback onPress={() => console.log(this.props.idMatch)}>
+            <TouchableWithoutFeedback onPress={() => {console.log("Match card Item" + this.props.idMatch); navigate('MatchCard', {matchCard: this.props})}}>
                 <View style={styles.container}>
                         <>
                             <View style={styles.row}>
@@ -26,4 +30,4 @@ class MatchCardItem extends Component {
     }
 }
 
-export default MatchCardItem;
+export default withNavigation(MatchCardItem);

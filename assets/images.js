@@ -5,6 +5,11 @@ import FavouritesIcon from './icons/favorite-heart-button.svg'
 import TestIcon from './icons/facebook.svg'
 
 import PublicFeedMatchIcon from './icons/Explore.svg'
+import QaploinsIcon from './icons/qaploins.svg'
+import ProfileIcon from './icons/ProfileActive.svg'
+import FifaIcon from './icons/Fifa.svg'
+import GowIcon from './icons/Gow.svg'
+import CancelIcon from './icons/qaploins.svg'
 
 // Images
 
@@ -49,7 +54,12 @@ const images = {
 		facebookIcon: FacebookIcon,
 		favouritesIcon: FavouritesIcon,
 		testIcon: TestIcon,
-		publicFeedMatchIcon: PublicFeedMatchIcon
+		publicFeedMatchIcon: PublicFeedMatchIcon,
+		qaploinsIcon: QaploinsIcon,
+		profileIcon: ProfileIcon,
+		gowIcon: GowIcon,
+		fifaIcon: FifaIcon,
+		cancelIcon: CancelIcon
 	}
 };
 

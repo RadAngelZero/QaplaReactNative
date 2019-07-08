@@ -33,13 +33,6 @@ class CarouselSvg extends Component {
                             images.map((SvgImage, index) => (
                                 <View key = {index} style={styles.carouselContainer}>
                                     <SvgImage width={getDimensions().width} height={getDimensions().height*0.8}/>
-                                    <Text style={styles.text}>{index + 1} / {images.length}</Text>
-                                      <Button
-                                          title="Empieza a Retar"
-                                          disabled={(index + 1 != images.length) ? true : false}
-                                          color="#36E5CE"
-                                          accessibilityLabel="Learn more about this purple button"
-                                       />
                                 </View>
                             ))
                         }

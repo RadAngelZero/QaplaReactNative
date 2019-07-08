@@ -11,6 +11,9 @@ import {Svg, Image} from 'react-native-svg'
 import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen'
 import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen'
 import MyMatchesScreen from './screens/MyMatchesScreen/MyMatchesScreen';
+import PublicMatchCardScreen from './screens/PublicMatchCardScreen/PublicMatchCardScreen';
+
+// Mock screen
 import MockScreen1 from './screens/MockScreen1/MockScreen1'
 import MockScreen2 from './screens/MockScreen2/MockScreen2'
 
@@ -26,12 +29,30 @@ const Mock1Icon = Images.svg.favouritesIcon;
 const Mock2Icon = Images.svg.testIcon;
 const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
 
+const PublicFeedMatchStackNavigator = createStackNavigator(
+  {
+    Home: {
+      screen: PublicMatchesFeedScreen
+    },
+    MatchCard: {
+      screen: PublicMatchCardScreen,
+    },
+  },
+  {
+    initialRouteName: 'Home',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    }
+  }
+);
+
 const RetasTabNavigator = createMaterialTopTabNavigator(
   {
     Publicas: {
       screen: PublicMatchesFeedScreen,
       navigationOptions: ({ navigation }) => ({
-        title: 'PÚBLICAS'
+        title: 'PÚBLICAS',
       })
     },
     MisRetas: {
@@ -102,6 +123,29 @@ const TabMainNavigator = createBottomTabNavigator({
   }
 });
 
+const AppWithHeaderStackNavigator = createStackNavigator(
+  {
+    HomeScreen: {
+      screen: TabMainNavigator
+    }
+  },
+  {
+    initialRouteName: 'HomeScreen',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    }
+  }
+);
+
+const AppNoHeaderStackNavigator = createStackNavigator(
+  {
+    MatchCard: {
+      screen: PublicMatchCardScreen,
+    }
+  }
+);
+
 export default class Router extends React.Component {
 
   constructor(props) {
@@ -131,11 +175,18 @@ export default class Router extends React.Component {
         }
       },
       Home: {
-        screen: TabMainNavigator,
+        screen: AppWithHeaderStackNavigator,
         navigationOptions: {
           header: props => <HeaderBar {...props} />
         }
-      }
+      },
+      NoHeader: {
+        screen: AppNoHeaderStackNavigator,
+        navigationOptions: {
+          header: null
+        }
+      } 
+
     },
     {
       initialRouteName:  'Home'

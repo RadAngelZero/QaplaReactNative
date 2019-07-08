@@ -23,10 +23,5 @@ export const styles = StyleSheet.create({
      width: getDimensions().width,
      height:  getDimensions().height * 0.6,
      justifyContent: 'flex-start'
-  },
-  text: {
-    marginTop: '2%',
-    marginBottom: '10%',
-    color: '#36E5CE'
   }
 });

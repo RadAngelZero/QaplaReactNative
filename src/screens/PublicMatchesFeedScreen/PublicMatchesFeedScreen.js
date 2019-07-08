@@ -92,6 +92,7 @@ class PublicMatchesFeedScreen extends Component {
         if(!this.props.navigation.getParam('firstMatchCreated')){
             storeData('first-match-created', 'true');
         }
+
         this.props.navigation.navigate(isUserLogged() ? 'Publicas' : 'SignIn');
     }
 

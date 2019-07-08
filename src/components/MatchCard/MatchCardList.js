@@ -3,16 +3,13 @@ import { FlatList, View } from 'react-native';
 import MatchCardItem from './MatchCardItem';
 import { styles } from './style';
 
+import { withNavigation } from 'react-navigation';
+
 class MatchCardList extends Component {
+    
     render() {
-        const reversedMatchesArray = [...this.props.matches].sort((a, b) => {
-            if (a.idMatch < b.idMatch) {
-                return 1;
-            } else if (a.idMatch > b.idMatch) {
-                return -1;
-            }
-            return 0;
-        });
+        const reversedMatchesArray = this.getSortedMatchesArr([...this.props.matches]);
+
         return (
             <View style={styles.listContainer}>
                 <FlatList data={reversedMatchesArray}
@@ -21,6 +18,19 @@ class MatchCardList extends Component {
             </View>
         );
     }
+
+    getSortedMatchesArr(matchesArr) {
+        const reversedMatchesArray = matchesArr.sort((a, b) => {
+            if (a.idMatch < b.idMatch) {
+                return 1;
+            } else if (a.idMatch > b.idMatch) {
+                return -1;
+            }
+            return 0;
+        });
+
+        return reversedMatchesArray;
+    }
 }
 
-export default MatchCardList;
+export default withNavigation(MatchCardList);

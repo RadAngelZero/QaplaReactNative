@@ -23,6 +23,7 @@ import SignInScreen from './screens/SignInScreen/SignInScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
 import LoginWithEmailScreen from './screens/LoginWithEmailScreen/LoginWithEmailScreen';
 import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameScreen';
+import ChooseMatchTypeScreen from './screens/ChooseMatchTypeScreen/ChooseMatchTypeScreen';
 
 // Svg Icons
 const Mock1Icon = Images.svg.favouritesIcon;
@@ -138,11 +139,14 @@ const AppWithHeaderStackNavigator = createStackNavigator(
   }
 );
 
-const AppNoHeaderStackNavigator = createStackNavigator(
+const AppNoHeaderStackNavigator = createSwitchNavigator(
   {
     MatchCard: {
       screen: PublicMatchCardScreen,
-    }
+    },
+    ChooseMatchType: {
+      screen: ChooseMatchTypeScreen
+    },
   }
 );
 

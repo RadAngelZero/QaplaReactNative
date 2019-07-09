@@ -6,10 +6,12 @@ import { retrieveData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
 import { getUserNameWithUID } from '../../services/database';
+import { getListOfGames } from '../../actions/gamesActions';
 
 class AuthLoadingScreen extends Component {
     componentDidMount() {
         auth.onAuthStateChanged(async (user) => {
+            this.props.loadListOfGames();
             if (user) {
                 this.props.loadUserData(user.uid);
                 
@@ -46,7 +48,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadUserData: (uid) => getUserNode(uid)(dispatch)
+        loadUserData: (uid) => getUserNode(uid)(dispatch),
+        loadListOfGames: () => getListOfGames()(dispatch)
     };
 }
 

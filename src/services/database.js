@@ -2,6 +2,7 @@ import { database } from "../utilities/firebase";
 
 export const matchesRef = database.ref('/Matches');
 export const usersRef = database.ref('/Users');
+export const gamesRef = database.ref('/Games');
 
 /**
  * Returns the userName of the specified user

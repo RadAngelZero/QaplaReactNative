@@ -7,7 +7,7 @@ class GameCard extends Component {
     render() {
         return (
             <View style={[styles.container, { backgroundColor: this.props.backgroundColor }]}>
-                <Image style={this.props.game.fullImage ? styles.fullImageStyle : styles.noFullImageStyle} source={this.props.game.image} />
+                <Image style={this.props.game.fullImage ? styles.fullImageStyle : styles.noFullImageStyle} source={this.props.game.image[this.props.platform]} />
                 <View style={styles.detailsContainer}>
                     <Svg style={styles.iconContainer}>
                         <this.props.game.Icon width={30} height={30} />

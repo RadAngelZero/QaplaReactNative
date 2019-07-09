@@ -1,3 +1,5 @@
+// josep.sanahuja - 08-07-2019 - us83 - + inputTextTaken
+
 import { StyleSheet } from 'react-native'
 
 export default styles = StyleSheet.create({
@@ -24,6 +26,14 @@ export default styles = StyleSheet.create({
         backgroundColor: '#FFF',
         paddingHorizontal: 16,
         paddingVertical: 12
+    },
+    inputTextTaken: {
+        marginTop: 14,
+        borderRadius: 6,
+        backgroundColor: '#FFF',
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        color: 'red'
     },
     buttonContainer: {
         borderRadius: 100,

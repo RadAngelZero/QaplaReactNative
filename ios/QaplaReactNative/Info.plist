@@ -23,11 +23,9 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.614138734637-ru8iav3e6bt8bnnd45g1i1ifk2e1itc2</string>
+				<string>fb466330124181172</string>
 			</array>
 		</dict>
 		<dict>
@@ -35,12 +33,23 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>org.reactjs.native.example.QaplaReactNative</string>
+				<string>com.googleusercontent.apps.614138734637-ru8iav3e6bt8bnnd45g1i1ifk2e1itc2</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FacebookAppID</key>
+	<string>466330124181172</string>
+	<key>FacebookDisplayName</key>
+	<string>QaplaReactNative</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -72,25 +81,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>CFBundleURLTypes</key>
-  <array>
-    <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb466330124181172</string>
-      </array>
-    </dict>
-  </array>
-  <key>FacebookAppID</key>
-  <string>466330124181172</string>
-  <key>FacebookDisplayName</key>
-  <string>QaplaReactNative</string>
-  <key>LSApplicationQueriesSchemes</key>
-  <array>
-    <string>fbapi</string>
-    <string>fb-messenger-share-api</string>
-    <string>fbauth2</string>
-    <string>fbshareextension</string>
-  </array>
 </dict>
 </plist>

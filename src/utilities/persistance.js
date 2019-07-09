@@ -1,3 +1,5 @@
+// josep.sanahuja - 08-07-2019 - us83 - + removeDataItem
+
 import {AsyncStorage} from 'react-native';
 
 // key: string
@@ -34,4 +36,17 @@ async function storeData(key, value) {
   }
 };
 
-export {retrieveData, storeData }
+// key: string
+// const storeData = async (key) => {
+async function removeDataItem(key) {  
+  try {
+    await AsyncStorage.removeItem('@QaplaRN:'+ key);
+    console.log();
+  } catch (error) {
+    // Error saving data
+  }
+};
+
+
+
+export {retrieveData, storeData, removeDataItem }

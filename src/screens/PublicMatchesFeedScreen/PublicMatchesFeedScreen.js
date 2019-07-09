@@ -1,3 +1,5 @@
+// josep.sanahuja - 08-07-2019 - us83 - + 'userName-creation-scenario' asyncStg flag & 'constructor'
+
 import React, { Component } from 'react';
 import { View } from 'react-native'
 import style from './style';
@@ -8,9 +10,15 @@ import { isUserLogged } from '../../services/auth';
 import { storeData } from '../../utilities/persistance';
 
 class PublicMatchesFeedScreen extends Component {
-    state = {
+    
+    constructor(props) {
+      super(props);
+    
+      this. state = {
         matches: []
-    };
+      };
+    }
+   
 
     componentWillMount(){
         this.list = [
@@ -95,13 +103,6 @@ class PublicMatchesFeedScreen extends Component {
         this.list.forEach((item) => item.remove());
     }
 
-    onCrearRetaButtonPress() {
-        if(!this.props.navigation.getParam('firstMatchCreated')){
-            storeData('first-match-created', 'true');
-        }
-        this.props.navigation.navigate(isUserLogged() ? 'ChooseMatchType' : 'SignIn');
-    }
-
     render() {
         return (
             <View style={style.container}>
@@ -109,6 +110,15 @@ class PublicMatchesFeedScreen extends Component {
                 <CreateRetasButton highlighted={!this.props.navigation.getParam('firstMatchCreated')} onPress={this.onCrearRetaButtonPress.bind(this)} />
             </View>
         );
+    }
+
+    onCrearRetaButtonPress() {
+        
+        if(!this.props.navigation.getParam('firstMatchCreated')){
+            storeData('first-match-created', 'true');
+            storeData('userName-creation-scenario', 'CreateFirstMatchFromRetas');
+        }
+        this.props.navigation.navigate(isUserLogged() ? 'ChooseMatchType' : 'SignIn');
     }
 }
 

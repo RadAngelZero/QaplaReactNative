@@ -1,3 +1,5 @@
+// josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
+
 import { database } from "../utilities/firebase";
 
 export const matchesRef = database.ref('/Matches');
@@ -80,14 +82,22 @@ export function createUserProfile(Uid, email) {
  * Update the userName of specific user only if that username is not already in use
  * @param {string} uid User identifier of the user on firebase
  * @param {string} userName The name that the user want to use in Qapla
+ * 
+ * Return: {boolean} user was created or otherwise it was not
  */
 export async function createUserName(uid, userName, navigation) {
     return await usersRef.orderByChild('city').equalTo(userName.toUpperCase()).once('value').then(async (userNameAlready) => {
         if (!userNameAlready.exists()) {
             await usersRef.child(uid).update({ userName, city: userName.toUpperCase() });
-            return navigation.navigate('Retas');
+             
+            // #us83: Removed return navigation.navigate('Retas'); and replace it with a boolean value
+            //.so that it can be consumed by others. Removing the navigation method complies with
+            // trying to decouple as much as possible what each method does. This one, creates a UserName
+            // in to the database, we delegate navigation to others.
+            return true;
         } else {
             //El nombre de usuario ya esta en uso por alguien mas
+            return false;
         }
     });
 }

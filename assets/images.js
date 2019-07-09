@@ -12,6 +12,12 @@ import GowIcon from './icons/Gow.svg'
 import CancelIcon from './icons/qaploins.svg'
 import LightningIcon from './icons/Lighting.svg';
 import SearchIcon from './icons/search.svg';
+import BackIcon from './icons/back.svg';
+import ClashIcon from './icons/Clash.svg';
+import HeartstoneIcon from './icons/Heartstone.svg';
+import LOLIcon from './icons/LOL.svg';
+import OverwatchIcon from './icons/Overwatch.svg';
+import SmashIcon from './icons/Smash.svg';
 
 // Images
 
@@ -49,7 +55,55 @@ const images = {
 		welcome4Img:{
 			img: require('./images/welcome4.png'),
 			uri: '@assets/icons/welcome4.png'
-		} 
+		},
+		peekaImg: {
+			img: require('./images/PEKKA.png'),
+			uri: '@assets/images/PEKKA.png'
+		},
+		fifaXboxImg: {
+			img: require('./images/FIFAXbox.png'),
+			uri: '@assets/images/FIFA.png'
+		},
+		fifaPsImg: {
+			img: require('./images/FIFAPs.png'),
+			uri: '@assets/images/FIFAPs.png'
+		},
+		GOW4Xbox: {
+			img: require('./images/GOW4Xbox.png'),
+			uri: '@assets/images/GOW4Xbox.png'
+		},
+		HALO5Xbox: {
+			img: require('./images/HALO5Xbox.png'),
+			uri: '@assets/images/HALO5Xbox.png'
+		},
+		heartstoneImg: {
+			img: require('./images/HEARTHSTONE.png'),
+			uri: '@assets/images/HEARTHSTONE.png'
+		},
+		overwatchPsImg: {
+			img: require('./images/OverwatchPs.png'),
+			uri: '@assets/images/Overwatch.png'
+		},
+		overwatchPcImg: {
+			img: require('./images/OVERWATCHPC.png'),
+			uri: '@assets/images/OVERWATCHPC.png'
+		},
+		overwatchXboxImg: {
+			img: require('./images/OVERWATCHXbox.png'),
+			uri: '@assets/images/OVERWATCHXbox.png'
+		},
+		lolImg: {
+			img: require('./images/LEAGUELEGENDS.png'),
+			uri: '@assets/images/LEAGUELEGENDS.png'
+		},
+		smashImg: {
+			img: require('./images/SAMSHBROS.png'),
+			uri: '@assets/images/SAMSHBROS.png'
+		},
+		smashImg: {
+			img: require('./images/Smashbros.png'),
+			uri: '@assets/images/Smashbros.png'
+		}
 	},
 	svg: {
 		instagramIcon: InstagramIcon,
@@ -59,11 +113,17 @@ const images = {
 		publicFeedMatchIcon: PublicFeedMatchIcon,
 		qaploinsIcon: QaploinsIcon,
 		profileIcon: ProfileIcon,
-		gowIcon: GowIcon,
-		fifaIcon: FifaIcon,
 		cancelIcon: CancelIcon,
 		lightningIcon: LightningIcon,
-		searchIcon: SearchIcon
+		searchIcon: SearchIcon,
+		backIcon: BackIcon,
+		gowIcon: GowIcon,
+		fifaIcon: FifaIcon,
+		clashIcon: ClashIcon,
+		heartstoneIcon: HeartstoneIcon,
+		overwatchIcon: OverwatchIcon,
+		lolIcon: LOLIcon,
+		smashIcon: SmashIcon
 	}
 };
 

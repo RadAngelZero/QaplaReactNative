@@ -17,7 +17,7 @@ class ChooseMatchTypeScreen extends Component {
                         <LightningIcon />
                     </Svg>
                 </View>
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('LoadGames')}>
                     <View style={styles.publicMatchButton}>
                         <Text style={styles.publicMatchButtonText}>
                             RETA PÚBLICA

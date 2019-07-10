@@ -24,6 +24,7 @@ import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
 import LoginWithEmailScreen from './screens/LoginWithEmailScreen/LoginWithEmailScreen';
 import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameScreen';
 import ChooseMatchTypeScreen from './screens/ChooseMatchTypeScreen/ChooseMatchTypeScreen';
+import LoadGamesScreen from './screens/LoadGamesScreen/LoadGamesScreen';
 
 // Svg Icons
 const Mock1Icon = Images.svg.favouritesIcon;
@@ -147,6 +148,9 @@ const AppNoHeaderStackNavigator = createSwitchNavigator(
     ChooseMatchType: {
       screen: ChooseMatchTypeScreen
     },
+    LoadGames: {
+      screen: LoadGamesScreen
+    }
   }
 );
 

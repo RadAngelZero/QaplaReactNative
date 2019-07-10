@@ -107,12 +107,21 @@ class PlatformGamesList extends Component {
                     <Text style={styles.title}>{platformResources[this.props.platform].name}</Text><View style={[styles.circleIcon, { backgroundColor: platformResources[this.props.platform].platformColor }]}></View>
                 </View>
                 <ScrollView horizontal style={styles.scrollViewStyle}>
-                    {Object.keys(this.props.listOfGames).map((game) => (
-                        <GameCard key={game}
-                            game={gamesResources[(this.props.listOfGames[game]).replace(/ +/g, "")]}
-                            platform={this.props.platform}
-                            backgroundColor={platformResources[this.props.platform].backgroundColor} />
-                    ))}
+                    {Object.keys(this.props.listOfGames).map((game) => {
+                        //Condition for the existing games on database that actually dont exist
+                        //Like counter strike or street fighter
+                        if (gamesResources[(this.props.listOfGames[game]).replace(/ +/g, "")]) {
+                            return (
+                                <GameCard key={game}
+                                    game={gamesResources[(this.props.listOfGames[game]).replace(/ +/g, "")]}
+                                    platform={this.props.platform}
+                                    backgroundColor={platformResources[this.props.platform].backgroundColor} />
+                            );
+                        }
+                        //Something must be returned in this operation, thats why we return
+                        //a fragment, that actually dont modify nothing
+                        return <React.Fragment key={game}></React.Fragment>
+                    })}
                 </ScrollView>
             </View>
         );

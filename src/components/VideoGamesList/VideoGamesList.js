@@ -14,17 +14,25 @@ class VideoGamesList extends Component {
     componentWillMount() {
         var gamesToLoad = {};
         var userGameList = this.props.gamesListToLoad;
-        Object.keys(this.props.games).map((gamePlatform) => {
-            userGameList.sort().map((gameToLoadKey) => {
-                if(this.props.games[gamePlatform].hasOwnProperty(gameToLoadKey)) {
-                    if(!gamesToLoad[gamePlatform]){
-                        gamesToLoad[gamePlatform] = {};
+        //If the user don't have games userGameList is going to be undefined
+        //So we check that userGameList instance of array, in this case we
+        //can show only their games
+        if (userGameList instanceof Array) {
+            Object.keys(this.props.games).map((gamePlatform) => {
+                userGameList.sort().map((gameToLoadKey) => {
+                    if(this.props.games[gamePlatform].hasOwnProperty(gameToLoadKey)) {
+                        if(!gamesToLoad[gamePlatform]){
+                            gamesToLoad[gamePlatform] = {};
+                        }
+                        gamesToLoad[gamePlatform][gameToLoadKey] = this.props.games[gamePlatform][gameToLoadKey];
                     }
-                    gamesToLoad[gamePlatform][gameToLoadKey] = this.props.games[gamePlatform][gameToLoadKey];
-                }
-                userGameList.slice(userGameList.indexOf(gameToLoadKey), 1);
+                    userGameList.slice(userGameList.indexOf(gameToLoadKey), 1);
+                });
             });
-        });
+        //If the user don't have games then we send all the games to be loaded
+        } else {
+            gamesToLoad = this.props.games;
+        }
         this.setState({ gamesToLoad });
     }
 

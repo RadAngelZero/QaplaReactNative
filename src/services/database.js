@@ -102,3 +102,38 @@ export async function createUserName(uid, userName, navigation) {
         }
     });
 }
+
+export async function addGameToUser(uid, platform, gameKey, gamerTag) {
+    const nextIndex = await usersRef.child('gameList').once('value').then((gameList) => gameList);
+    if (nextIndex.exists()) {
+        console.log(nextIndex.numChildren);
+        await usersRef.child(uid).child('gameList').child([nextIndex.numChildren]).set(gameKey);
+    } else {
+        await usersRef.child(uid).child('gameList').child(0).set(gameKey);
+    }
+    var gamerTagChildNode = {};
+    switch (platform) {
+        case 'pc':
+            if (gameKey === 'aClash') {
+                gamerTagChildNode = {key: 'clashTag', value: gamerTag};
+            } else if (gameKey === 'pcLol'){
+                gamerTagChildNode = {key: 'lolTag', value: gamerTag};
+            } else if (gameKey === 'pHearth' || gameKey === 'pOver'){
+                gamerTagChildNode = {key: 'battlenet', value: gamerTag};
+            }
+            break;
+        case 'ps4':
+            gamerTagChildNode = {key: 'psn', value: gamerTag};
+            break;
+        case 'switch':
+            gamerTagChildNode = {key: 'NintendoID', value: gamerTag};
+            break;
+        case 'xbox':
+            gamerTagChildNode = {key: 'xboxLive', value: gamerTag};
+            break;
+        default:
+            return Promise.reject();
+    }
+    await usersRef.child(uid).child('gamerTags').child(gamerTagChildNode.key).set(gamerTagChildNode.value);
+    return Promise.resolve();
+}

@@ -4,7 +4,6 @@ import {View} from 'react-native'
 import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createSwitchNavigator} from 'react-navigation'
 
 import Images from '@assets/images'
-import {retrieveData} from './utilities/persistance'
 import {Svg, Image} from 'react-native-svg'
 
 // Screens
@@ -12,6 +11,13 @@ import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOn
 import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen'
 import MyMatchesScreen from './screens/MyMatchesScreen/MyMatchesScreen';
 import PublicMatchCardScreen from './screens/PublicMatchCardScreen/PublicMatchCardScreen';
+import SignInScreen from './screens/SignInScreen/SignInScreen';
+import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
+import LoginWithEmailScreen from './screens/LoginWithEmailScreen/LoginWithEmailScreen';
+import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameScreen';
+import ChooseMatchTypeScreen from './screens/ChooseMatchTypeScreen/ChooseMatchTypeScreen';
+import LoadGamesScreen from './screens/LoadGamesScreen/LoadGamesScreen';
+import ChooseOpponentScreen from './screens/ChooseOpponentScreen/ChooseOpponentScreen';
 
 // Mock screen
 import MockScreen1 from './screens/MockScreen1/MockScreen1'
@@ -19,11 +25,6 @@ import MockScreen2 from './screens/MockScreen2/MockScreen2'
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
-import SignInScreen from './screens/SignInScreen/SignInScreen';
-import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
-import LoginWithEmailScreen from './screens/LoginWithEmailScreen/LoginWithEmailScreen';
-import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameScreen';
-import ChooseMatchTypeScreen from './screens/ChooseMatchTypeScreen/ChooseMatchTypeScreen';
 
 // Svg Icons
 const Mock1Icon = Images.svg.favouritesIcon;
@@ -147,6 +148,12 @@ const AppNoHeaderStackNavigator = createSwitchNavigator(
     ChooseMatchType: {
       screen: ChooseMatchTypeScreen
     },
+    LoadGames: {
+      screen: LoadGamesScreen
+    },
+    ChooseOponent: {
+      screen: ChooseOpponentScreen
+    }
   }
 );
 

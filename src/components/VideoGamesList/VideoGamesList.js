@@ -1,3 +1,5 @@
+// diego - 10-07-2019 - us22 - Update in the way that load the game name
+
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import styles from './style';
@@ -18,7 +20,7 @@ class VideoGamesList extends Component {
                     if(!gamesToLoad[gamePlatform]){
                         gamesToLoad[gamePlatform] = {};
                     }
-                    gamesToLoad[gamePlatform][gameToLoadKey] = { name: this.props.games[gamePlatform][gameToLoadKey] };
+                    gamesToLoad[gamePlatform][gameToLoadKey] = this.props.games[gamePlatform][gameToLoadKey];
                 }
                 userGameList.slice(userGameList.indexOf(gameToLoadKey), 1);
             });

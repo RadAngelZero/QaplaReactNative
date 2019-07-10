@@ -1,3 +1,5 @@
+// diego - 10-07-2019 - us22 - Update in the way that load the game name
+
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import styles from './style';
@@ -107,7 +109,7 @@ class PlatformGamesList extends Component {
                 <ScrollView horizontal style={styles.scrollViewStyle}>
                     {Object.keys(this.props.listOfGames).map((game) => (
                         <GameCard key={game}
-                            game={gamesResources[(this.props.listOfGames[game].name).replace(/ +/g, "")]}
+                            game={gamesResources[(this.props.listOfGames[game]).replace(/ +/g, "")]}
                             platform={this.props.platform}
                             backgroundColor={platformResources[this.props.platform].backgroundColor} />
                     ))}

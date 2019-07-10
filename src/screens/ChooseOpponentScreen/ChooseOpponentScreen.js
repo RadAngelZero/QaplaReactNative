@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, BackHandler } from 'react-native';
 import styles from './style';
 
 class ChooseOpponentScreen extends Component {
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
+    }
+
+    backToMatchTypeScreen = () => {
+        this.props.navigation.navigate('ChooseMatchType');
+        return true;
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -11,7 +22,7 @@ class ChooseOpponentScreen extends Component {
                         <Text style={styles.titleText}>
                             Buscar usuario a retar
                         </Text>
-                        <Text style={styles.titleText}>
+                        <Text style={styles.titleText} onPress={this.backToMatchTypeScreen}>
                             X
                         </Text>
                     </View>

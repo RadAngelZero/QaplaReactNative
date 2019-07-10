@@ -24,7 +24,7 @@ class ChooseMatchTypeScreen extends Component {
                         </Text>
                     </View>
                 </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('ChooseOponent')}>
                     <View style={styles.directMatchButton}>
                         <View style={styles.directMatchButtonSearchIcon}>
                             <Svg>

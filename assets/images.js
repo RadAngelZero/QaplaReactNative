@@ -18,6 +18,7 @@ import HeartstoneIcon from './icons/Heartstone.svg';
 import LOLIcon from './icons/LOL.svg';
 import OverwatchIcon from './icons/Overwatch.svg';
 import SmashIcon from './icons/Smash.svg';
+import HaloIcon from './icons/Halo5.svg';
 
 // Images
 
@@ -123,7 +124,8 @@ const images = {
 		heartstoneIcon: HeartstoneIcon,
 		overwatchIcon: OverwatchIcon,
 		lolIcon: LOLIcon,
-		smashIcon: SmashIcon
+		smashIcon: SmashIcon,
+		haloIcon: HaloIcon
 	}
 };
 

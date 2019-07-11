@@ -60,7 +60,7 @@ const gamesResources = {
         image: {
             xbox_white: images.png.HALO5Xbox.img,
         },
-        Icon: images.svg.clashIcon,
+        Icon: images.svg.haloIcon,
         name: 'Halo 5',
         fullImage: true
     },

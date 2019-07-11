@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
+import Svg from 'react-native-svg';
+import images from './../../../assets/images';
 import { styles } from './style';
+
+const NotificationIcon = images.svg.notificationIcon;
 
 class HeaderBar extends Component {
     render() {
@@ -8,7 +12,9 @@ class HeaderBar extends Component {
             <View style={styles.container} testID='container'>
                 <View style={styles.imageContainer}>
                     <TouchableWithoutFeedback style={styles.imageAndButtonDimensions} testID='NotificationButton'>
-                        <Image testID='NotificationIcon' style={styles.imageAndButtonDimensions} source={require('./../../../assets/notification-icon.png')} />
+                        <Svg>
+                            <NotificationIcon height={24} width={24} />
+                        </Svg>
                     </TouchableWithoutFeedback>
                 </View>
                 <View style={styles.textContainer} testID='textContainer'>

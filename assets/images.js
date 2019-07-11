@@ -7,6 +7,7 @@ import TestIcon from './icons/facebook.svg'
 import PublicFeedMatchIcon from './icons/Explore.svg'
 import QaploinsIcon from './icons/qaploins.svg'
 import ProfileIcon from './icons/ProfileActive.svg'
+import NotificationIcon from './icons/Notifications.svg';
 import FifaIcon from './icons/Fifa.svg'
 import GowIcon from './icons/Gow.svg'
 import CancelIcon from './icons/qaploins.svg'
@@ -118,6 +119,7 @@ const images = {
 		lightningIcon: LightningIcon,
 		searchIcon: SearchIcon,
 		backIcon: BackIcon,
+		notificationIcon: NotificationIcon,
 		gowIcon: GowIcon,
 		fifaIcon: FifaIcon,
 		clashIcon: ClashIcon,

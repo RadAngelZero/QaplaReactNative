@@ -1,4 +1,6 @@
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
+// Diego - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
+//for new references on database and errors detecrted on addGameToUser
 
 import { database } from "../utilities/firebase";
 
@@ -23,34 +25,40 @@ export async function getUserNameWithUID(Uid) {
 export async function getGamerTagWithUID(Uid, game, platform) {
     return await usersRef.child(Uid).child('gamerTags').once('value').then((data) =>
     {
-        switch (platform) {
-            case 'pc_white':
-                if (game === 'aClash') {
-                    return {
-                        gamerTag: data.val().clashTag
+        if (data.exists()) {
+            switch (platform) {
+                case 'pc_white':
+                    if (game === 'aClash') {
+                        return {
+                            gamerTag: data.val().clashTag != null ? data.val().clashTag : null
+                        }
+                    } else if (game === 'pcLol'){
+                        return {
+                            gamerTag: data.val().lolTag != null ? data.val().lolTag : null
+                        }
+                    } else if (game === 'pHearth' || game === 'pOver'){
+                        return {
+                            gamerTag: data.val().battlenet != null ? data.val().battlenet : null
+                        }
                     }
-                } else if (game === 'pcLol'){
+                    break;
+                case 'ps4_white':
                     return {
-                        gamerTag: data.val().lolTag
+                        gamerTag: data.val().psn != null ? data.val().psn : null
                     }
-                } else if (game === 'pHearth' || game === 'pOver'){
+                case 'xbox_white':
                     return {
-                        gamerTag: data.val().battlenet
+                        gamerTag: data.val().xboxLive != null ? data.val().xboxLive : null
                     }
-                }
-                break;
-            case 'ps4_white':
-                return {
-                    gamerTag: data.val().psn
-                }
-            case 'xbox_white':
-                return {
-                    gamerTag: data.val().xboxLive
-                }
-            case 'switch_white':
-                break;
-            default:
-                break;
+                case 'switch_white':
+                    return {
+                        gamerTag: data.val().NintendoID != null ? data.val().NintendoID : null
+                    }
+                default:
+                    break;
+            }
+        } else {
+            return { gamerTag: null };
         }
     });
 }
@@ -103,37 +111,54 @@ export async function createUserName(uid, userName, navigation) {
     });
 }
 
+/**
+ * Function to add the game and gamertag of a user
+ * @param {string} uid User identifier from database
+ * @param {string} platform Platform to add gamertag (one of: pc, xbox, ps4, switch)
+ * @param {string} gameKey Key of the game to add
+ * @param {string} gamerTag Tag of the user (the user must insert this value)
+ */
 export async function addGameToUser(uid, platform, gameKey, gamerTag) {
-    const nextIndex = await usersRef.child('gameList').once('value').then((gameList) => gameList);
-    if (nextIndex.exists()) {
-        console.log(nextIndex.numChildren);
-        await usersRef.child(uid).child('gameList').child([nextIndex.numChildren]).set(gameKey);
+    const gameList = await usersRef.child(uid).child('gameList').once('value').then((gameList) => gameList);
+    if (gameList.exists()) {
+        var userAlreadyHaveThisGame = false;
+        gameList.forEach((game) => {
+            if (game.val() === gameKey) {
+                userAlreadyHaveThisGame = true;
+            }
+        });
+        if (userAlreadyHaveThisGame) {
+            return Promise.resolve({ message: 'El usuario ya tiene este juego agregado' });
+        }
+        await usersRef.child(uid).child('gameList').child(gameList.numChildren()).set(gameKey);
     } else {
         await usersRef.child(uid).child('gameList').child(0).set(gameKey);
     }
     var gamerTagChildNode = {};
     switch (platform) {
-        case 'pc':
-            if (gameKey === 'aClash') {
+        case 'pc_white':
+            if (game === 'aClash') {
                 gamerTagChildNode = {key: 'clashTag', value: gamerTag};
-            } else if (gameKey === 'pcLol'){
+            } else if (game === 'pcLol'){
                 gamerTagChildNode = {key: 'lolTag', value: gamerTag};
-            } else if (gameKey === 'pHearth' || gameKey === 'pOver'){
+            } else if (game === 'pHearth' || game === 'pOver'){
                 gamerTagChildNode = {key: 'battlenet', value: gamerTag};
             }
             break;
-        case 'ps4':
+        case 'ps4_white':
             gamerTagChildNode = {key: 'psn', value: gamerTag};
             break;
-        case 'switch':
-            gamerTagChildNode = {key: 'NintendoID', value: gamerTag};
-            break;
-        case 'xbox':
+        case 'xbox_white':
             gamerTagChildNode = {key: 'xboxLive', value: gamerTag};
             break;
+        case 'switch_white':
+            gamerTagChildNode = {key: 'NintendoID', value: gamerTag};
+            break;
         default:
-            return Promise.reject();
+            break;
     }
-    await usersRef.child(uid).child('gamerTags').child(gamerTagChildNode.key).set(gamerTagChildNode.value);
-    return Promise.resolve();
+    if ((await getGamerTagWithUID(uid, gameKey, platform).then((gamerTag) => gamerTag.gamerTag)) == null) {
+        await usersRef.child(uid).child('gamerTags').child(gamerTagChildNode.key).set(gamerTagChildNode.value);
+    }
+    return Promise.resolve({ message: 'Juego agregado correctamente' });
 }

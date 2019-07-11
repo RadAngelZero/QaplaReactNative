@@ -1,4 +1,5 @@
 // diego - 10-07-2019 - us22 - Update in the way that load the game name
+//Diego - 11-07-2019 - Update platform's names for new references on database
 
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
@@ -7,22 +8,22 @@ import images from '../../../assets/images';
 import GameCard from '../GameCard/GameCard';
 
 const platformResources = {
-    pc: {
+    pc_white: {
         platformColor: '#6D7DDE',
         backgroundColor: '#7726C6',
         name: 'Móvil / PC'
     },
-    xbox: {
+    xbox_white: {
         platformColor: '#119910',
         backgroundColor: '#42B85E',
         name: 'Xbox One'
     },
-    ps4: {
+    ps4_white: {
         platformColor: '#0053CC',
         backgroundColor: '#1A52CF',
         name: 'PS4'
     },
-    switch: {
+    switch_white: {
         platformColor: '#CC003A',
         backgroundColor: '#FF1658',
         name: 'Switch'
@@ -32,8 +33,8 @@ const platformResources = {
 const gamesResources = {
     Fifa17: {
         image: {
-            ps4: images.png.fifaPsImg.img,
-            xbox: images.png.fifaXboxImg.img
+            ps4_white: images.png.fifaPsImg.img,
+            xbox_white: images.png.fifaXboxImg.img
         },
         Icon: images.svg.fifaIcon,
         name: 'FIFA 19',
@@ -41,7 +42,7 @@ const gamesResources = {
     },
     ClashRoyale: {
         image: {
-            pc: images.png.peekaImg.img
+            pc_white: images.png.peekaImg.img
         },
         Icon: images.svg.clashIcon,
         name: 'Clash Royale',
@@ -49,7 +50,7 @@ const gamesResources = {
     },
     GearsofWar: {
         image: {
-            xbox: images.png.GOW4Xbox.img
+            xbox_white: images.png.GOW4Xbox.img
         },
         Icon: images.svg.gowIcon,
         name: 'Gears of War 4',
@@ -57,7 +58,7 @@ const gamesResources = {
     },
     Halo: {
         image: {
-            xbox: images.png.HALO5Xbox.img,
+            xbox_white: images.png.HALO5Xbox.img,
         },
         Icon: images.svg.clashIcon,
         name: 'Halo 5',
@@ -65,7 +66,7 @@ const gamesResources = {
     },
     Hearthstone: {
         image: {
-            pc: images.png.heartstoneImg.img,
+            pc_white: images.png.heartstoneImg.img,
         },
         Icon: images.svg.heartstoneIcon,
         name: 'Hearthstone',
@@ -73,9 +74,9 @@ const gamesResources = {
     },
     Overwatch: {
         image: {
-            ps4: images.png.overwatchPsImg.img,
-            pc: images.png.overwatchPcImg.img,
-            xbox: images.png.overwatchXboxImg.img
+            ps4_white: images.png.overwatchPsImg.img,
+            pc_white: images.png.overwatchPcImg.img,
+            xbox_white: images.png.overwatchXboxImg.img
         },
         Icon: images.svg.overwatchIcon,
         name: 'Overwatch',
@@ -83,7 +84,7 @@ const gamesResources = {
     },
     LOL: {
         image: {
-            pc: images.png.lolImg.img
+            pc_white: images.png.lolImg.img
         },
         Icon: images.svg.lolIcon,
         name: 'League of legends',
@@ -91,7 +92,7 @@ const gamesResources = {
     },
     Smashbrothers: {
         image: {
-            switch: images.png.smashImg.img
+            switch_white: images.png.smashImg.img
         },
         Icon: images.svg.smashIcon,
         name: 'Smash Ultimate',

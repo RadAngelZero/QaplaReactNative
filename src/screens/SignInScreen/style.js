@@ -42,5 +42,15 @@ export default styles = StyleSheet.create({
     fontBold: {
         fontSize: 13,
         fontWeight: 'bold'
+    },
+    backgroundImage: {
+        flex: 1,
+        position: 'absolute',
+        left: 0,
+        bottom: 0,
+        zIndex: -1,
+        opacity: .68,
+        width: '100%',
+        height: '50%'
     }
 });

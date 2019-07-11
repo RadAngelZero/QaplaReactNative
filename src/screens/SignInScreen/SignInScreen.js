@@ -34,15 +34,7 @@ class SignInScreen extends Component {
                         <Text style={[styles.enterWithEmailText, styles.alignSelfCenter, styles.fontBold]} onPress={() => this.props.navigation.navigate('Login')}>Ingresa con correo</Text>
                     </View>
                 </View>
-                <Image style={{
-                        position: 'absolute',
-                        left: 0,
-                        bottom: 0,
-                        zIndex: -1,
-                        opacity: .68,
-                        width: '100%',
-                        height: '40%'
-                    }}
+                <Image style={styles.backgroundImage}
                     source={SignUpControllersBackgroundImage} />
             </View>
         );

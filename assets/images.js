@@ -53,10 +53,18 @@ const images = {
 		welcome3Img:{
 			img: require('./images/welcome3.png'),
 			uri: '@assets/icons/welcome3.png'
-		} ,
+		},
 		welcome4Img:{
 			img: require('./images/welcome4.png'),
 			uri: '@assets/icons/welcome4.png'
+		},
+		signUpControllers: {
+			img: require('./images/signup.png'),
+			uri: '@assets/images/signup.svg'
+		},
+		qaplaSignupLogo: {
+			img: require('./images/QaplaSignUpLogo.png'),
+			uri: '@assets/images/QaplaSignUpLogo.png'
 		},
 		peekaImg: {
 			img: require('./images/PEKKA.png'),

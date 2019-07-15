@@ -1,12 +1,12 @@
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
-// Diego - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
+// diego          - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
 //for new references on database and errors detecrted on addGameToUser
 
 import { database } from "../utilities/firebase";
 
 export const matchesRef = database.ref('/Matches');
 export const usersRef = database.ref('/Users');
-export const gamesRef = database.ref('/Games');
+export const gamesRef = database.ref('/GamesPrueba');
 
 /**
  * Returns the userName of the specified user
@@ -17,10 +17,16 @@ export async function getUserNameWithUID(Uid) {
 }
 
 /**
- * Returns the gamerTag of the specified user and the game and platform of the current match
+ * Description: Returns the gamerTag of the specified user and the game and
+ * platform of the current match. There are some platforms that share the same gamerTag,
+ * therefore, in this code in the function this fact is checked (ps4white, xbox_white).
+ *
  * @param {string} Uid User id from firebase
  * @param {string} game Name of the game of the current match
  * @param {string} platform Name of the platform of the current match
+ *
+ * TODO (12-09-2019): Move the logic that checks if all games from a platform share
+ * the same gamertag into a cloud function that basically returns the gamertag.
  */
 export async function getGamerTagWithUID(Uid, game, platform) {
     return await usersRef.child(Uid).child('gamerTags').once('value').then((data) =>
@@ -132,6 +138,7 @@ export async function addGameToUser(uid, platform, gameKey, gamerTag) {
         }
         await usersRef.child(uid).child('gameList').child(gameList.numChildren()).set(gameKey);
     } else {
+        console.log("[addGameToUser] : gameKey2 :  " + gameKey);
         await usersRef.child(uid).child('gameList').child(0).set(gameKey);
     }
     var gamerTagChildNode = {};

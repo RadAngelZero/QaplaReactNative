@@ -14,9 +14,16 @@ class VideoGamesList extends Component {
     componentWillMount() {
         var gamesToLoad = {};
         var userGameList = this.props.gamesListToLoad;
+
+        console.log("[VideoGameList] : componentWillMount - this.props.games: " + JSON.stringify(this.props.games));
+
         //If the user don't have games userGameList is going to be undefined
         //So we check that userGameList instance of array, in this case we
-        //can show only their games
+        //can show only their games.
+
+        // NOTE: It seems it only gets the whole list of games from the game ref,ç
+        // instead of getting both scenarios (Qapla Games, and )
+        // TODO: Extend info on that. (Diego)
         if (userGameList instanceof Array) {
             Object.keys(this.props.games).map((gamePlatform) => {
                 userGameList.sort().map((gameToLoadKey) => {

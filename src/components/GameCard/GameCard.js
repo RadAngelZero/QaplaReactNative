@@ -1,24 +1,88 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import styles from './style';
 import Svg from 'react-native-svg';
 
+import {
+    showModalAddGameProfile,
+    setSelectedGame
+} from '../../actions/gamesActions';
+
+import { connect } from 'react-redux';
+
+import {
+    getGamerTagWithUID
+} from '../../services/database';
+
+
 class GameCard extends Component {
+       
+    componentDidMount() {
+        console.log("[GameCard] : componentDidMount - game: " + JSON.stringify(this.props.game));
+    }
+
     render() {
+        const {game} = this.props;
+        console.log("[GameCard] : componentDidMount - render: " + JSON.stringify(this.props.game));
+
         return (
-            <View style={[styles.container, { backgroundColor: this.props.backgroundColor }]}>
-                <Image style={this.props.game.fullImage ? styles.fullImageStyle : styles.noFullImageStyle} source={this.props.game.image[this.props.platform]} />
-                <View style={styles.detailsContainer}>
-                    <Svg style={styles.iconContainer}>
-                        <this.props.game.Icon width={30} height={30} />
-                    </Svg>
-                    <Text style={styles.gameName}>
-                        {this.props.game.name}
-                    </Text>
+            <TouchableWithoutFeedback onPress={this.openModal.bind(this)}>
+                <View style={[styles.container, { backgroundColor: this.props.backgroundColor }]}>
+                    <Image 
+                        style={game.fullImage ? styles.fullImageStyle : styles.noFullImageStyle} 
+                        source={game.image[this.props.platform]}/>
+                    
+                    <View style={styles.detailsContainer}>
+                        <Svg style={styles.iconContainer}>
+                            <game.Icon width={30} height={30} />
+                        </Svg>
+                        
+                        <Text style={styles.gameName}>
+                            {game.name}
+                        </Text>
+                    </View>
                 </View>
-            </View>
+            </TouchableWithoutFeedback>
         );
+    }
+
+    openModal = async() => {
+        
+        // Create a new game object which is extended with the platform member
+        // so that it can be used in LoadGamesScreen inside the modal.
+        let newGame = this.props.game;
+        newGame.platform = this.props.platform;
+        newGame.gameKey = this.props.gameKey;
+
+        // Update Redux State with the current game selected so we can use it in the
+        // modal from the screen where all games are listed.
+        this.props.setSelectedGame(newGame);
+        
+        const gtag = await getGamerTagWithUID(this.props.user.id, newGame.gameKey, newGame.platform);
+
+        console.log("[GameCard] : openModal - gtag: " + JSON.stringify(gtag) + " props: " + JSON.stringify(this.props.user));
+
+        // If the game selected has a gamertag then we don't open the modal 
+        if (gtag == undefined || gtag == null) {
+             // Enable modal in LoadGamesScreen
+            this.props.showModalAddGameProfile(true);
+        }
     }
 }
 
-export default GameCard;
+function mapStateToProps(state) {
+    return {
+        user: state.userReducer.user
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        showModalAddGameProfile: (showMode) => showModalAddGameProfile(showMode)(dispatch),
+        setSelectedGame: (game) => setSelectedGame(game)(dispatch)
+    };
+}
+
+// NOTE: when calling redux connect with only mapDispatchToProps, it will complain about
+// dispatch not being found as a function. Fix to that is to use null as the first parameter.
+export default GameCard = connect(mapStateToProps, mapDispatchToProps)(GameCard);

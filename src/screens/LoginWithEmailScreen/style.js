@@ -34,5 +34,6 @@ export default styles = StyleSheet.create({
         marginRight: 40,
         fontSize: 12,
         marginTop: 14
-    }
+    },
+    
 });

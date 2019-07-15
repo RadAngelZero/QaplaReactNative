@@ -15,14 +15,21 @@ export async function getUserNameWithUID(Uid) {
 }
 
 /**
- * Returns the gamerTag of the specified user and the game and platform of the current match
+ * Description: Returns the gamerTag of the specified user and the game and
+ * platform of the current match. There are some platforms that share the same gamerTag,
+ * therefore, in this code in the function this fact is checked (ps4white, xbox_white).
+ *
  * @param {string} Uid User id from firebase
  * @param {string} game Name of the game of the current match
  * @param {string} platform Name of the platform of the current match
+ *
+ * TODO (12-09-2019): Move the logic that checks if all games from a platform share
+ * the same gamertag into a cloud function that basically returns the gamertag.
  */
 export async function getGamerTagWithUID(Uid, game, platform) {
     return await usersRef.child(Uid).child('gamerTags').once('value').then((data) =>
     {
+        console.log("muuu " + JSON.stringify(data));
         switch (platform) {
             case 'pc_white':
                 if (game === 'aClash') {
@@ -47,8 +54,14 @@ export async function getGamerTagWithUID(Uid, game, platform) {
                 return {
                     gamerTag: data.val().xboxLive
                 }
-            case 'switch_white':
+            case 'switch':
+                // return {
+                //     gamerTag: data.val().NintendoID
+                // }
                 break;
+            case 'switch_white':
+
+               break;
             default:
                 break;
         }
@@ -105,10 +118,13 @@ export async function createUserName(uid, userName, navigation) {
 
 export async function addGameToUser(uid, platform, gameKey, gamerTag) {
     const nextIndex = await usersRef.child('gameList').once('value').then((gameList) => gameList);
+    console.log("[addGameToUser] : index :  " + JSON.stringify(nextIndex));
     if (nextIndex.exists()) {
         console.log(nextIndex.numChildren);
+        console.log("[addGameToUser] : gameKey1 :  " + gameKey);
         await usersRef.child(uid).child('gameList').child([nextIndex.numChildren]).set(gameKey);
     } else {
+        console.log("[addGameToUser] : gameKey2 :  " + gameKey);
         await usersRef.child(uid).child('gameList').child(0).set(gameKey);
     }
     var gamerTagChildNode = {};
@@ -134,6 +150,8 @@ export async function addGameToUser(uid, platform, gameKey, gamerTag) {
         default:
             return Promise.reject();
     }
+    console.log("[addGameToUser] : gameKey4 :  ");
     await usersRef.child(uid).child('gamerTags').child(gamerTagChildNode.key).set(gamerTagChildNode.value);
+    console.log("[addGameToUser] : gameKey5 :  ");
     return Promise.resolve();
 }

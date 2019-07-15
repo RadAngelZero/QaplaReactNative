@@ -46,6 +46,11 @@ class SetBetScreen extends Component {
         this.setState({ currentBet: oldBet < 300 ? oldBet + 75 : this.state.currentBet });
     }
 
+    decreaseBet() {
+        const oldBet = this.state.currentBet;
+        this.setState({ currentBet: oldBet > 150 ? oldBet - 75 : this.state.currentBet });
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.container}>
@@ -66,9 +71,11 @@ class SetBetScreen extends Component {
                     <Text style={styles.qaploinIconText}>Qaploins</Text>
                 </View>
                 <View style={styles.betContainer}>
-                    <Svg style={styles.changeBetIcon}>
-                        <LessQaploinsIcon />
-                    </Svg>
+                    <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
+                        <Svg style={styles.changeBetIcon}>
+                            <LessQaploinsIcon />
+                        </Svg>
+                    </TouchableWithoutFeedback>
                     <View style={styles.betTextContainer}>
                         <Text style={styles.betText}>{this.state.currentBet}</Text>
                         <Text style={styles.betEntrada}>Entrada</Text>

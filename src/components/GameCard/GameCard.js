@@ -67,7 +67,7 @@ class GameCard extends Component {
             this.props.showModalAddGameProfile(true);
         }
         else {
-            this.props.navigation.navigate('SetBet');
+            this.props.navigation.navigate('SetBet', {game: newGame.gameKey});
             console.log("[GameCard] : openModal - else");
         }
     }

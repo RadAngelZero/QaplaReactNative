@@ -169,7 +169,7 @@ class LoadGamesScreen extends React.Component {
                                         this.props.loadUserData(this.props.user.id);
                                         
                                         // Navigate to the screen where Qaploins are selected
-                                        navigate('SetBet');
+                                        navigate('SetBet', {game: this.props.selectedGame});
                                         console.log("[render]: - hasNoGameOnProfile");
                                     }
                                     else{

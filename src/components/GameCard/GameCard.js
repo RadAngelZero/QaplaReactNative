@@ -1,3 +1,5 @@
+// josep.sanahuja - 17-07-2019 - us25 - + openModal
+
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import styles from './style';
@@ -17,10 +19,6 @@ import {
 
 class GameCard extends Component {
        
-    componentDidMount() {
-        console.log("[GameCard] : componentDidMount - game: " + JSON.stringify(this.props.game));
-    }
-
     render() {
         const {game} = this.props;
         console.log("[GameCard] : componentDidMount - render: " + JSON.stringify(this.props.game));
@@ -63,9 +61,13 @@ class GameCard extends Component {
         console.log("[GameCard] : openModal - gtag: " + JSON.stringify(gtag) + " props: " + JSON.stringify(this.props.user));
 
         // If the game selected has a gamertag then we don't open the modal 
-        if (gtag == undefined || gtag == null) {
+        if (gtag.gamerTag == undefined || gtag.gamerTag == null) {
+            console.log("[GameCard] : openModal - inside gtag if");
              // Enable modal in LoadGamesScreen
             this.props.showModalAddGameProfile(true);
+        }
+        else {
+            console.log("[GameCard] : openModal - else");
         }
     }
 }

@@ -1,3 +1,5 @@
+// josep.sanahuja - 15-07-2019 - us25 - + 'gamerTagTextInput' & modal style
+
 import {StyleSheet} from 'react-native'
 
 export default StyleSheet.create({
@@ -59,7 +61,7 @@ export default StyleSheet.create({
     confirmButton: {
     	
     	width: 100,
-        borderRadius: 100,
+        borderRadius: 20,
         backgroundColor: '#FA2D79',
         elevation: 6,
         shadowColor: "#000",

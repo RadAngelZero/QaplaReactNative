@@ -1,3 +1,5 @@
+// josep.sanahuja - 15-07-2019 - us25 - + addGameProfile Modal logic
+
 import React from 'react';
 
 import { 
@@ -93,12 +95,14 @@ class LoadGamesScreen extends React.Component {
     onShowAddGameToProfile = async () => {
         // Retrieve the gamertag from the game, if there is no gamertag then
         // no gamertag found.
+        //
+        // NOTE (15-07-2019): It could be retrieved by storing it in redux from GameCard.js
         const gtag = await getGamerTagWithUID(this.props.user, this.props.selectedGame.gameKey,
                                               this.props.selectedGame.platform);
         
-        if (gtag != undefined && gtag != null){
+        if (gtag.gamerTag != undefined && gtag.gamerTag != null){
             this.setState({
-                gamerTagText: gtag,
+                gamerTagText: gtag.gamerTag,
                 hasGamerTag: true
             });
         }    

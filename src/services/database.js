@@ -1,12 +1,12 @@
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
-// Diego - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
+// diego          - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
 //for new references on database and errors detecrted on addGameToUser
 
 import { database } from "../utilities/firebase";
 
 export const matchesRef = database.ref('/Matches');
 export const usersRef = database.ref('/Users');
-export const gamesRef = database.ref('/Games');
+export const gamesRef = database.ref('/GamesPrueba');
 
 /**
  * Returns the userName of the specified user

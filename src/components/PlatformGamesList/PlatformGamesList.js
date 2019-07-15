@@ -1,5 +1,6 @@
-// diego - 10-07-2019 - us22 - Update in the way that load the game name
-//Diego - 11-07-2019 - Update platform's names for new references on database
+// josep.sanahuja - 15-07-2019 - us25 - added 'gameKey' to GameCard comp props
+// diego          - 11-07-2019 - Update platform's names for new references on database
+// diego          - 10-07-2019 - us22 - Update in the way that load the game name
 
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
@@ -75,8 +76,8 @@ const platformResources = {
 const gamesResources = {
     Fifa17: {
         image: {
-            ps4_white: images.png.fifaPsImg.img,
-            xbox_white: images.png.fifaXboxImg.img
+            ps4_white: Images.png.fifaPsImg.img,
+            xbox_white: Images.png.fifaXboxImg.img
         },
         Icon: Images.svg.fifaIcon,
         name: 'FIFA 19',
@@ -84,7 +85,7 @@ const gamesResources = {
     },
     ClashRoyale: {
         image: {
-            pc_white: images.png.peekaImg.img
+            pc_white: Images.png.peekaImg.img
         },
         Icon: Images.svg.clashIcon,
         name: 'Clash Royale',
@@ -92,7 +93,7 @@ const gamesResources = {
     },
     GearsofWar: {
         image: {
-            xbox_white: images.png.GOW4Xbox.img
+            xbox_white: Images.png.GOW4Xbox.img
         },
         Icon: Images.svg.gowIcon,
         name: 'Gears of War 4',
@@ -100,15 +101,15 @@ const gamesResources = {
     },
     Halo: {
         image: {
-            xbox_white: images.png.HALO5Xbox.img,
+            xbox_white: Images.png.HALO5Xbox.img,
         },
-        Icon: images.svg.haloIcon,
+        Icon: Images.svg.haloIcon,
         name: 'Halo 5',
         fullImage: true
     },
     Hearthstone: {
         image: {
-            pc_white: images.png.heartstoneImg.img,
+            pc_white: Images.png.heartstoneImg.img,
         },
         Icon: Images.svg.heartstoneIcon,
         name: 'Hearthstone',
@@ -116,9 +117,9 @@ const gamesResources = {
     },
     Overwatch: {
         image: {
-            ps4_white: images.png.overwatchPsImg.img,
-            pc_white: images.png.overwatchPcImg.img,
-            xbox_white: images.png.overwatchXboxImg.img
+            ps4_white: Images.png.overwatchPsImg.img,
+            pc_white: Images.png.overwatchPcImg.img,
+            xbox_white: Images.png.overwatchXboxImg.img
         },
         Icon: Images.svg.overwatchIcon,
         name: 'Overwatch',
@@ -126,7 +127,7 @@ const gamesResources = {
     },
     LOL: {
         image: {
-            pc_white: images.png.lolImg.img
+            pc_white: Images.png.lolImg.img
         },
         Icon: Images.svg.lolIcon,
         name: 'League of legends',
@@ -134,7 +135,7 @@ const gamesResources = {
     },
     Smashbrothers: {
         image: {
-            switch_white: images.png.smashImg.img
+            switch_white: Images.png.smashImg.img
         },
         Icon: Images.svg.smashIcon,
         name: 'Smash Ultimate',

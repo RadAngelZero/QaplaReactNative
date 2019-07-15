@@ -1,3 +1,4 @@
+// diego -      15-07-2019 - us 27 - added increment bet option
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, BackHandler, TouchableWithoutFeedback } from 'react-native';
 import Svg from 'react-native-svg';
@@ -14,7 +15,8 @@ class SetBetScreen extends Component {
     state = {
         commission: 10,
         currentBet: 150
-    }
+    };
+
     async componentWillMount() {
         const com = await getCurrentQaplaCommission()
         this.setState({ commission: com });
@@ -37,6 +39,11 @@ class SetBetScreen extends Component {
         const totalBet = this.state.currentBet*2;
         const qaploinsOfCommission = totalBet * this.state.commission/100;
         return totalBet - qaploinsOfCommission;
+    }
+
+    incrementeBet() {
+        const oldBet = this.state.currentBet;
+        this.setState({ currentBet: oldBet < 300 ? oldBet + 75 : this.state.currentBet });
     }
 
     render() {
@@ -63,12 +70,14 @@ class SetBetScreen extends Component {
                         <LessQaploinsIcon />
                     </Svg>
                     <View style={styles.betTextContainer}>
-                        <Text style={styles.betText}>150</Text>
+                        <Text style={styles.betText}>{this.state.currentBet}</Text>
                         <Text style={styles.betEntrada}>Entrada</Text>
                     </View>
-                    <Svg style={styles.changeBetIcon}>
-                        <MoreQaploinsIcon />
-                    </Svg>
+                        <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
+                            <Svg style={styles.changeBetIcon}>
+                                <MoreQaploinsIcon />
+                            </Svg>
+                        </TouchableWithoutFeedback>
                 </View>
                 <TouchableWithoutFeedback>
                     <View style={styles.createButton}>

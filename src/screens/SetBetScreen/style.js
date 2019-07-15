@@ -54,8 +54,8 @@ export default styles = StyleSheet.create({
         marginTop: 35
     },
     betTextContainer: {
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: 14,
+        marginRight: 14,
         textAlignVertical: 'top'
     },
     betText: {

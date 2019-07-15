@@ -1,7 +1,7 @@
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
-// Diego - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
+// diego -          11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
 //for new references on database and errors detecrted on addGameToUser
-//Diego - 15-07-2019 - Create commissionRef and getCurrentQaplaCommission
+// diego -          15-07-2019 - Create commissionRef and getCurrentQaplaCommission
 
 import { database } from "../utilities/firebase";
 

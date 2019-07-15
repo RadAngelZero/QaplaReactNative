@@ -8,6 +8,9 @@ import PublicFeedMatchIcon from './icons/Explore.svg'
 import QaploinsIcon from './icons/qaploins.svg'
 import ProfileIcon from './icons/ProfileActive.svg'
 import NotificationIcon from './icons/Notifications.svg';
+import QaploinsPrize from './icons/QaploinsPrize.svg';
+import LessQaploins from './icons/LessQaploins.svg';
+import MoreQaploins from './icons/MoreQaploins.svg';
 import FifaIcon from './icons/Fifa.svg'
 import GowIcon from './icons/Gow.svg'
 import CancelIcon from './icons/qaploins.svg'
@@ -128,6 +131,9 @@ const images = {
 		searchIcon: SearchIcon,
 		backIcon: BackIcon,
 		notificationIcon: NotificationIcon,
+		qaploinsPrize: QaploinsPrize,
+		lessQaploins: LessQaploins,
+		moreQaploins: MoreQaploins,
 		gowIcon: GowIcon,
 		fifaIcon: FifaIcon,
 		clashIcon: ClashIcon,

@@ -1,12 +1,14 @@
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
 // diego          - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
 //for new references on database and errors detecrted on addGameToUser
+// diego -          15-07-2019 - Create commissionRef and getCurrentQaplaCommission
 
 import { database } from "../utilities/firebase";
 
 export const matchesRef = database.ref('/Matches');
 export const usersRef = database.ref('/Users');
 export const gamesRef = database.ref('/Games');
+export const commissionRef = database.ref('/Commission');
 
 /**
  * Returns the userName of the specified user
@@ -168,4 +170,8 @@ export async function addGameToUser(uid, platform, gameKey, gamerTag) {
         await usersRef.child(uid).child('gamerTags').child(gamerTagChildNode.key).set(gamerTagChildNode.value);
     }
     return Promise.resolve({ message: 'Juego agregado correctamente' });
+}
+
+export async function getCurrentQaplaCommission() {
+    return await commissionRef.once('value').then((commission) => commission.val());
 }

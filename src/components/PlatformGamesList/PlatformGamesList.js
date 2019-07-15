@@ -1,4 +1,5 @@
 // diego - 10-07-2019 - us22 - Update in the way that load the game name
+//Diego - 11-07-2019 - Update platform's names for new references on database
 
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
@@ -49,22 +50,22 @@ class PlatformGamesList extends Component {
 // TODO: Is this info in the backend? Ideally it should be retrieved from the server and maybe
 // cached after first time downloaded
 const platformResources = {
-    pc: {
+    pc_white: {
         platformColor: '#6D7DDE',
         backgroundColor: '#7726C6',
         name: 'Móvil / PC'
     },
-    xbox: {
+    xbox_white: {
         platformColor: '#119910',
         backgroundColor: '#42B85E',
         name: 'Xbox One'
     },
-    ps4: {
+    ps4_white: {
         platformColor: '#0053CC',
         backgroundColor: '#1A52CF',
         name: 'PS4'
     },
-    switch: {
+    switch_white: {
         platformColor: '#CC003A',
         backgroundColor: '#FF1658',
         name: 'Switch'
@@ -74,8 +75,8 @@ const platformResources = {
 const gamesResources = {
     Fifa17: {
         image: {
-            ps4: Images.png.fifaPsImg.img,
-            xbox: Images.png.fifaXboxImg.img
+            ps4_white: images.png.fifaPsImg.img,
+            xbox_white: images.png.fifaXboxImg.img
         },
         Icon: Images.svg.fifaIcon,
         name: 'FIFA 19',
@@ -83,7 +84,7 @@ const gamesResources = {
     },
     ClashRoyale: {
         image: {
-            pc: Images.png.peekaImg.img
+            pc_white: images.png.peekaImg.img
         },
         Icon: Images.svg.clashIcon,
         name: 'Clash Royale',
@@ -91,7 +92,7 @@ const gamesResources = {
     },
     GearsofWar: {
         image: {
-            xbox: Images.png.GOW4Xbox.img
+            xbox_white: images.png.GOW4Xbox.img
         },
         Icon: Images.svg.gowIcon,
         name: 'Gears of War 4',
@@ -99,15 +100,15 @@ const gamesResources = {
     },
     Halo: {
         image: {
-            xbox: Images.png.HALO5Xbox.img,
+            xbox_white: images.png.HALO5Xbox.img,
         },
-        Icon: Images.svg.clashIcon,
+        Icon: images.svg.haloIcon,
         name: 'Halo 5',
         fullImage: true
     },
     Hearthstone: {
         image: {
-            pc: Images.png.heartstoneImg.img,
+            pc_white: images.png.heartstoneImg.img,
         },
         Icon: Images.svg.heartstoneIcon,
         name: 'Hearthstone',
@@ -115,9 +116,9 @@ const gamesResources = {
     },
     Overwatch: {
         image: {
-            ps4: Images.png.overwatchPsImg.img,
-            pc: Images.png.overwatchPcImg.img,
-            xbox: Images.png.overwatchXboxImg.img
+            ps4_white: images.png.overwatchPsImg.img,
+            pc_white: images.png.overwatchPcImg.img,
+            xbox_white: images.png.overwatchXboxImg.img
         },
         Icon: Images.svg.overwatchIcon,
         name: 'Overwatch',
@@ -125,7 +126,7 @@ const gamesResources = {
     },
     LOL: {
         image: {
-            pc: Images.png.lolImg.img
+            pc_white: images.png.lolImg.img
         },
         Icon: Images.svg.lolIcon,
         name: 'League of legends',
@@ -133,7 +134,7 @@ const gamesResources = {
     },
     Smashbrothers: {
         image: {
-            switch: Images.png.smashImg.img
+            switch_white: images.png.smashImg.img
         },
         Icon: Images.svg.smashIcon,
         name: 'Smash Ultimate',

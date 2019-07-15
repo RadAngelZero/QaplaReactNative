@@ -38,5 +38,19 @@ export default styles = StyleSheet.create({
     enterWithEmailText: {
         color: 'rgba(61,249,223,1)',
         marginLeft: 5
+    },
+    fontBold: {
+        fontSize: 13,
+        fontWeight: 'bold'
+    },
+    backgroundImage: {
+        flex: 1,
+        position: 'absolute',
+        left: 0,
+        bottom: 0,
+        zIndex: -1,
+        opacity: .68,
+        width: '100%',
+        height: '50%'
     }
 });

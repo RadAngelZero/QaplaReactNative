@@ -1,8 +1,9 @@
 // josep.sanahuja - 08-07-2019 - us83 - Added 'goToScreen' logic & 'constructor'
 
 import React, { Component } from 'react';
-import { View, TextInput, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, TextInput, Text, TouchableWithoutFeedback, Image } from 'react-native';
 import { connect } from 'react-redux';
+import Images from './../../../assets/images';
 import styles from './style';
 
 import { createUserName } from '../../services/database';
@@ -11,6 +12,8 @@ import {
     retrieveData,
     removeDataItem
 } from '../../utilities/persistance'
+
+const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 
 class ChooseUserNameScreen extends Component {
     constructor(props) {
@@ -23,7 +26,6 @@ class ChooseUserNameScreen extends Component {
     }
     
     render() {
-        const {navigate} = this.props.navigation;
 
         return (
             <View style={styles.container}>
@@ -68,6 +70,8 @@ class ChooseUserNameScreen extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
+                <Image style={styles.backgroundImage}
+                    source={SignUpControllersBackgroundImage} />
             </View>
         );
     }

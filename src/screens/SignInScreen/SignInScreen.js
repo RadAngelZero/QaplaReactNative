@@ -4,6 +4,9 @@ import styles from './style';
 import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
 
+const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
+const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
+
 class SignInScreen extends Component {
     componentDidMount() {
         setupGoogleSignin();
@@ -13,7 +16,7 @@ class SignInScreen extends Component {
         return (
             <View style={styles.container}>
                 <View>
-                    <Image source={Images.png.instagramIcon.img} />
+                    <Image source={QaplaSignUpLogo} />
                 </View>
                 <View>
                     <TouchableWithoutFeedback onPress={() => signInWithFacebook(this.props.navigation)}>
@@ -27,10 +30,12 @@ class SignInScreen extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                     <View style={styles.alreadyHaveAccountTextContainer}>
-                        <Text style={[styles.whiteColor, styles.alignSelfCenter]}>¿Ya tienes cuenta?</Text>
-                        <Text style={[styles.enterWithEmailText, styles.alignSelfCenter]} onPress={() => this.props.navigation.navigate('Login')}>Ingresa con correo</Text>
+                        <Text style={[styles.whiteColor, styles.alignSelfCenter, styles.fontBold]}>¿Ya tienes cuenta?</Text>
+                        <Text style={[styles.enterWithEmailText, styles.alignSelfCenter, styles.fontBold]} onPress={() => this.props.navigation.navigate('Login')}>Ingresa con correo</Text>
                     </View>
                 </View>
+                <Image style={styles.backgroundImage}
+                    source={SignUpControllersBackgroundImage} />
             </View>
         );
     }

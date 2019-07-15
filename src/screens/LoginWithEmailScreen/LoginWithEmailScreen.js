@@ -1,8 +1,13 @@
+// Diego - 11-07-2019 - Qapla logo added to the top and Controllers image background created
+
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback, TextInput } from 'react-native';
 import Images from './../../../assets/images';
 import styles from './style';
 import { signInWithEmailAndPassword } from '../../services/auth';
+
+const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
+const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
 
 class LoginWithEmailScreen extends Component {
     state = {
@@ -14,7 +19,7 @@ class LoginWithEmailScreen extends Component {
         return (
             <View style={styles.container}>
                 <View>
-                    <Image source={Images.png.instagramIcon.img} />
+                    <Image source={QaplaSignUpLogo} />
                 </View>
                 <View style={{ width: '100%' }}>
                     <TextInput style={styles.inputText}
@@ -33,6 +38,8 @@ class LoginWithEmailScreen extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
+                <Image style={styles.backgroundImage}
+                    source={SignUpControllersBackgroundImage} />
             </View>
         );
     }

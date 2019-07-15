@@ -7,6 +7,7 @@ import TestIcon from './icons/facebook.svg'
 import PublicFeedMatchIcon from './icons/Explore.svg'
 import QaploinsIcon from './icons/qaploins.svg'
 import ProfileIcon from './icons/ProfileActive.svg'
+import NotificationIcon from './icons/Notifications.svg';
 import FifaIcon from './icons/Fifa.svg'
 import GowIcon from './icons/Gow.svg'
 import CancelIcon from './icons/qaploins.svg'
@@ -18,6 +19,7 @@ import HeartstoneIcon from './icons/Heartstone.svg';
 import LOLIcon from './icons/LOL.svg';
 import OverwatchIcon from './icons/Overwatch.svg';
 import SmashIcon from './icons/Smash.svg';
+import HaloIcon from './icons/Halo5.svg';
 
 // Images
 
@@ -51,10 +53,18 @@ const images = {
 		welcome3Img:{
 			img: require('./images/welcome3.png'),
 			uri: '@assets/icons/welcome3.png'
-		} ,
+		},
 		welcome4Img:{
 			img: require('./images/welcome4.png'),
 			uri: '@assets/icons/welcome4.png'
+		},
+		signUpControllers: {
+			img: require('./images/signup.png'),
+			uri: '@assets/images/signup.svg'
+		},
+		qaplaSignupLogo: {
+			img: require('./images/QaplaSignUpLogo.png'),
+			uri: '@assets/images/QaplaSignUpLogo.png'
 		},
 		peekaImg: {
 			img: require('./images/PEKKA.png'),
@@ -117,13 +127,15 @@ const images = {
 		lightningIcon: LightningIcon,
 		searchIcon: SearchIcon,
 		backIcon: BackIcon,
+		notificationIcon: NotificationIcon,
 		gowIcon: GowIcon,
 		fifaIcon: FifaIcon,
 		clashIcon: ClashIcon,
 		heartstoneIcon: HeartstoneIcon,
 		overwatchIcon: OverwatchIcon,
 		lolIcon: LOLIcon,
-		smashIcon: SmashIcon
+		smashIcon: SmashIcon,
+		haloIcon: HaloIcon
 	}
 };
 

@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import {
     getGamerTagWithUID
 } from '../../services/database';
-
+import { withNavigation } from 'react-navigation';
 
 class GameCard extends Component {
        
@@ -67,6 +67,7 @@ class GameCard extends Component {
             this.props.showModalAddGameProfile(true);
         }
         else {
+            this.props.navigation.navigate('SetBet');
             console.log("[GameCard] : openModal - else");
         }
     }
@@ -87,4 +88,4 @@ function mapDispatchToProps(dispatch) {
 
 // NOTE: when calling redux connect with only mapDispatchToProps, it will complain about
 // dispatch not being found as a function. Fix to that is to use null as the first parameter.
-export default GameCard = connect(mapStateToProps, mapDispatchToProps)(GameCard);
+export default GameCard = withNavigation(connect(mapStateToProps, mapDispatchToProps)(GameCard));

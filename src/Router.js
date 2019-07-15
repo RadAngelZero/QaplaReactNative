@@ -18,6 +18,7 @@ import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameS
 import ChooseMatchTypeScreen from './screens/ChooseMatchTypeScreen/ChooseMatchTypeScreen';
 import LoadGamesScreen from './screens/LoadGamesScreen/LoadGamesScreen';
 import ChooseOpponentScreen from './screens/ChooseOpponentScreen/ChooseOpponentScreen';
+import SetBetScreen from './screens/SetBetScreen/SetBetScreen';
 
 // Mock screen
 import MockScreen1 from './screens/MockScreen1/MockScreen1'
@@ -153,6 +154,9 @@ const AppNoHeaderStackNavigator = createSwitchNavigator(
     },
     ChooseOponent: {
       screen: ChooseOpponentScreen
+    },
+    SetBet: {
+      screen: SetBetScreen
     }
   }
 );

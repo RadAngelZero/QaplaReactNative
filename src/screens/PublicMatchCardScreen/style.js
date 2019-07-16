@@ -1,3 +1,5 @@
+// josep.sanahuja - 15-07-2019 - us25 - Remv. cancelButton
+
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
@@ -93,11 +95,5 @@ export default StyleSheet.create({
     },
     gamertag: {
         color: 'white'
-    },
-    cancelButton: {
-        position: 'absolute',
-        top: 20,
-        left: 30,
-        color: '#36E5CE'
     }
 });

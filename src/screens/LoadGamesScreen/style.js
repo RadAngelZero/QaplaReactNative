@@ -1,3 +1,4 @@
+// josep.sanahuja - 15-07-2019 - us26 - + cancelImageContainer & cancelImage
 // josep.sanahuja - 15-07-2019 - us25 - + 'gamerTagTextInput' & modal style
 
 import {StyleSheet} from 'react-native'
@@ -121,6 +122,17 @@ export default StyleSheet.create({
         marginBottom: 10,
         textAlign: 'center',
         color: 'white'
+    },
+    cancelImageContainer: {
+        width:     40, 
+        height: 40,
+        borderRadius: 20,
+        position: 'absolute',
+        top: -10,
+        right: -10
+    },
+    cancelImage: {
+        borderRadius: 20
     }
 
 });

@@ -1,3 +1,4 @@
+// josep.sanahuja - 15-07-2019 - us26 - + CancelIcon
 // josep.sanahuja - 15-07-2019 - us25 - + addGameProfile Modal logic
 
 import React from 'react';
@@ -15,7 +16,7 @@ import {
 
 import { Svg } from 'react-native-svg';
 import styles from './style'
-import images from './../../../assets/images';
+import Images from './../../../assets/images';
 import VideoGamesList from '../../components/VideoGamesList/VideoGamesList';
 import { connect } from 'react-redux';
 
@@ -32,7 +33,8 @@ import {
     getGamerTagWithUID
 } from '../../services/database';
 
-const BackIcon = images.svg.backIcon;
+const BackIcon = Images.svg.backIcon;
+const CancelIcon = Images.svg.cancelIcon; 
 
 class LoadGamesScreen extends React.Component {
     constructor(props) {
@@ -132,6 +134,15 @@ class LoadGamesScreen extends React.Component {
                     }}>
                     <SafeAreaView style={styles.safeAreaViewContainer}>
                         <View style={styles.modalContainer}>
+                            <TouchableHighlight
+                                style = { styles.cancelImageContainer }
+                                onPress = {
+                                    // us26: When cancel button is pressed the
+                                    // addGameToProfile modal will disappear.
+                                    () => this.props.showModalAddGameProfile(false)}>
+
+                                <CancelIcon height={40} width={40} style={ styles.cancelImage }/>
+                            </TouchableHighlight> 
                             {
                                 !this.gameHasGamerTag()
                                 ?

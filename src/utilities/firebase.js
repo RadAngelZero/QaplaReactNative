@@ -1,3 +1,5 @@
+//diego         - 16-07-2019 - us30 - TimeStamp const created
+
 import * as firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
@@ -20,3 +22,6 @@ export const auth = firebase.auth();
 //Authentication providers
 export const FBProvider = firebase.auth.FacebookAuthProvider;
 export const GoogleProvider = firebase.auth.GoogleAuthProvider;
+
+//TimeStamp
+export const TimeStamp = firebase.database.ServerValue.TIMESTAMP;

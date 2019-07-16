@@ -2,9 +2,11 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, BackHandler, TouchableWithoutFeedback } from 'react-native';
 import Svg from 'react-native-svg';
+import { connect } from 'react-redux';
 import styles from './style';
 import images from './../../../assets/images';
-import { getCurrentQaplaCommission } from '../../services/database';
+import { getCurrentQaplaCommission, createPublicMatch } from '../../services/database';
+import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
 const QaploinIcon = images.svg.qaploinsIcon;
@@ -14,7 +16,8 @@ const MoreQaploinsIcon = images.svg.moreQaploins;
 class SetBetScreen extends Component {
     state = {
         commission: 10,
-        currentBet: 150
+        currentBet: 150,
+        open: false
     };
 
     async componentWillMount() {
@@ -51,9 +54,24 @@ class SetBetScreen extends Component {
         this.setState({ currentBet: oldBet > 150 ? oldBet - 75 : this.state.currentBet });
     }
 
+    async createMatch() {
+        if (this.props.userQaploins >= this.state.currentBet) {
+            await createPublicMatch(this.props.uid, this.state.currentBet, this.props.navigation.getParam('game')).then((value) => {
+                if (value !== undefined) {
+                    this.props.navigation.navigate('MisRetas');
+                } else {
+                    console.log('Error al crear la reta');
+                }
+            });
+        } else {
+            this.setState({ open: !this.state.open });
+        }
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.container}>
+                <BuyQaploinsModal open={this.state.open} onClose={() => this.setState({ open: false })} />
                 <View style={styles.headerOptions}>
                     <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
                     <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>
@@ -72,21 +90,17 @@ class SetBetScreen extends Component {
                 </View>
                 <View style={styles.betContainer}>
                     <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
-                        <Svg style={styles.changeBetIcon}>
-                            <LessQaploinsIcon />
-                        </Svg>
+                        <LessQaploinsIcon style={styles.changeBetIcon} />
                     </TouchableWithoutFeedback>
                     <View style={styles.betTextContainer}>
                         <Text style={styles.betText}>{this.state.currentBet}</Text>
                         <Text style={styles.betEntrada}>Entrada</Text>
                     </View>
-                        <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
-                            <Svg style={styles.changeBetIcon}>
-                                <MoreQaploinsIcon />
-                            </Svg>
-                        </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
+                        <MoreQaploinsIcon style={styles.changeBetIcon} />
+                    </TouchableWithoutFeedback>
                 </View>
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
                     <View style={styles.createButton}>
                         <Text style={styles.createButtonText}>CREAR AHORA</Text>
                     </View>
@@ -96,4 +110,11 @@ class SetBetScreen extends Component {
     }
 }
 
-export default SetBetScreen;
+function mapDispatchToProps(state) {
+    return {
+        userQaploins: state.userReducer.user.credits,
+        uid: state.userReducer.user.id
+    };
+}
+
+export default SetBetScreen = connect(mapDispatchToProps)(SetBetScreen);

@@ -1,5 +1,6 @@
 // josep.sanahuja - 15-07-2019 - us26 - + CancelIcon
 // josep.sanahuja - 15-07-2019 - us25 - + addGameProfile Modal logic
+// diego          - 16-07-2019 - us30 - update navigation when GamerTag is added
 
 import React from 'react';
 
@@ -180,7 +181,7 @@ class LoadGamesScreen extends React.Component {
                                         this.props.loadUserData(this.props.user.id);
                                         
                                         // Navigate to the screen where Qaploins are selected
-                                        navigate('SetBet');
+                                        navigate('SetBet', {game: {gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform}});
                                         console.log("[render]: - hasNoGameOnProfile");
                                     }
                                     else{

@@ -1,4 +1,5 @@
 // josep.sanahuja - 17-07-2019 - us25 - + openModal
+// diego          - 16-07-2019 - us30 - update navigation when GamerTag is added
 
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
@@ -67,7 +68,7 @@ class GameCard extends Component {
             this.props.showModalAddGameProfile(true);
         }
         else {
-            this.props.navigation.navigate('SetBet');
+            this.props.navigation.navigate('SetBet', {game: newGame});
             console.log("[GameCard] : openModal - else");
         }
     }

@@ -72,19 +72,15 @@ class SetBetScreen extends Component {
                 </View>
                 <View style={styles.betContainer}>
                     <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
-                        <Svg style={styles.changeBetIcon}>
-                            <LessQaploinsIcon />
-                        </Svg>
+                        <LessQaploinsIcon style={styles.changeBetIcon} />
                     </TouchableWithoutFeedback>
                     <View style={styles.betTextContainer}>
                         <Text style={styles.betText}>{this.state.currentBet}</Text>
                         <Text style={styles.betEntrada}>Entrada</Text>
                     </View>
-                        <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
-                            <Svg style={styles.changeBetIcon}>
-                                <MoreQaploinsIcon />
-                            </Svg>
-                        </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
+                        <MoreQaploinsIcon style={styles.changeBetIcon} />
+                    </TouchableWithoutFeedback>
                 </View>
                 <TouchableWithoutFeedback>
                     <View style={styles.createButton}>

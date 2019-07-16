@@ -2,8 +2,10 @@
 // diego          - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
 //for new references on database and errors detecrted on addGameToUser
 // diego -          15-07-2019 - Create commissionRef and getCurrentQaplaCommission
+// diego -          16-07-2019 - Create createPublicMatch and bug fixed on addGameToUser
 
-import { database } from "../utilities/firebase";
+import { database, TimeStamp } from "../utilities/firebase";
+import { randomString } from "../utilities/utils";
 
 export const matchesRef = database.ref('/Matches');
 export const usersRef = database.ref('/Users');
@@ -146,11 +148,11 @@ export async function addGameToUser(uid, platform, gameKey, gamerTag) {
     var gamerTagChildNode = {};
     switch (platform) {
         case 'pc_white':
-            if (game === 'aClash') {
+            if (gameKey === 'aClash') {
                 gamerTagChildNode = {key: 'clashTag', value: gamerTag};
-            } else if (game === 'pcLol'){
+            } else if (gameKey === 'pcLol'){
                 gamerTagChildNode = {key: 'lolTag', value: gamerTag};
-            } else if (game === 'pHearth' || game === 'pOver'){
+            } else if (gameKey === 'pHearth' || game === 'pOver'){
                 gamerTagChildNode = {key: 'battlenet', value: gamerTag};
             }
             break;
@@ -174,4 +176,36 @@ export async function addGameToUser(uid, platform, gameKey, gamerTag) {
 
 export async function getCurrentQaplaCommission() {
     return await commissionRef.once('value').then((commission) => commission.val());
+}
+
+export async function createPublicMatch(uid, bet, game) {
+    const dateObject = new Date();
+    const hour = dateObject.getUTCHours() < 10 ? '0' + dateObject.getUTCHours() : dateObject.getUTCHours();
+    const minutes = dateObject.getUTCMinutes() < 10 ? '0' + dateObject.getUTCMinutes() : dateObject.getUTCMinutes();
+    const date = dateObject.getUTCDate() < 10 ? '0' + dateObject.getUTCDate() : dateObject.getUTCDate();
+    const month = dateObject.getUTCMonth()+1 < 10 ? '0' + (dateObject.getUTCMonth()+1) : (dateObject.getUTCMonth()+1);
+    const matchObject = {
+        adversary1: uid,
+        adversary2: '',
+        alphaNumericIdMatch: randomString(),
+        bet,
+        date: `${date}/${month}`,
+        game: game.gameKey,
+        hora: parseFloat(hour+minutes/100),
+        hour: `${hour}:${minutes}`,
+        hourResult: '',
+        numMatches: '1',
+        observations: '',
+        pickResult1: '',
+        pickResult2: '',
+        platform: game.platform,
+        resultPlay1: '0',
+        resultPlay2: '0',
+        timeStamp: TimeStamp,
+        winBet: bet*2
+    };
+    return await matchesRef.push(matchObject).then(async (matchCreated) => {
+        await matchesRef.child(matchCreated.key).update({ idMatch: matchCreated.key });
+        return matchCreated.key;
+    });
 }

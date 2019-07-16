@@ -2,12 +2,11 @@
 // diego          - 16-07-2019 - us30 - update navigation when GamerTag is added
 
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
-import styles from './style';
+import { View, Text, Image, TouchableWithoutFeedback, TextInput, Modal, Alert } from 'react-native';
+import styles from './style'
 import Svg from 'react-native-svg';
 
 import {
-    showModalAddGameProfile,
     setSelectedGame
 } from '../../actions/gamesActions';
 
@@ -19,7 +18,7 @@ import {
 import { withNavigation } from 'react-navigation';
 
 class GameCard extends Component {
-       
+
     render() {
         const {game} = this.props;
         console.log("[GameCard] : componentDidMount - render: " + JSON.stringify(this.props.game));
@@ -82,7 +81,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        showModalAddGameProfile: (showMode) => showModalAddGameProfile(showMode)(dispatch),
         setSelectedGame: (game) => setSelectedGame(game)(dispatch)
     };
 }

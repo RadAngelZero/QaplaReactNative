@@ -1,11 +1,12 @@
 // diego -      15-07-2019 - us 27 - added increment bet option
+// diego -          16-07-2019 - us 34 - Substract of qaploins logic implemented
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, BackHandler, TouchableWithoutFeedback } from 'react-native';
 import Svg from 'react-native-svg';
 import { connect } from 'react-redux';
 import styles from './style';
 import images from './../../../assets/images';
-import { getCurrentQaplaCommission, createPublicMatch } from '../../services/database';
+import { getCurrentQaplaCommission, createPublicMatch, substractQaploinsToUser } from '../../services/database';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
@@ -17,7 +18,8 @@ class SetBetScreen extends Component {
     state = {
         commission: 10,
         currentBet: 150,
-        open: false
+        open: false,
+        loading: false
     };
 
     async componentWillMount() {
@@ -55,10 +57,18 @@ class SetBetScreen extends Component {
     }
 
     async createMatch() {
-        if (this.props.userQaploins >= this.state.currentBet) {
-            await createPublicMatch(this.props.uid, this.state.currentBet, this.props.navigation.getParam('game')).then((value) => {
+        if (!this.state.loading && this.props.userQaploins >= this.state.currentBet) {
+            this.setState({ loading: true });
+            await createPublicMatch(this.props.uid, this.state.currentBet, this.props.navigation.getParam('game')).then(async (value) => {
                 if (value !== undefined) {
-                    this.props.navigation.navigate('MisRetas');
+                    console.log('Qaploins before substraction: ', this.props.userQaploins);
+                    await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet)
+                    .then(() => {
+                        console.log('Qaploins after substraction: ', this.props.userQaploins);
+                        this.props.navigation.navigate('MisRetas');
+                    }, (rejected) => {
+                        console.log('Substraction of qaploins rejected: ', rejected);
+                    })
                 } else {
                     console.log('Error al crear la reta');
                 }

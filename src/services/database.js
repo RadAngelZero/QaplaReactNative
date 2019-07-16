@@ -3,7 +3,7 @@
 //for new references on database and errors detecrted on addGameToUser
 // diego -          15-07-2019 - Create commissionRef and getCurrentQaplaCommission
 // diego -          16-07-2019 - Create createPublicMatch and bug fixed on addGameToUser
-
+// diego -          16-07-2019 - us 34 - Substract of qaploins logic implemented
 import { database, TimeStamp } from "../utilities/firebase";
 import { randomString } from "../utilities/utils";
 
@@ -207,5 +207,13 @@ export async function createPublicMatch(uid, bet, game) {
     return await matchesRef.push(matchObject).then(async (matchCreated) => {
         await matchesRef.child(matchCreated.key).update({ idMatch: matchCreated.key });
         return matchCreated.key;
+    });
+}
+
+export async function substractQaploinsToUser(uid, currentCredits, quantityToSubstract) {
+    return await usersRef.child(uid).update({ credits: currentCredits - quantityToSubstract}).then(() => {
+        return Promise.resolve();
+    }, (rejected) => {
+        return Promise.reject(rejected);
     });
 }

@@ -6,7 +6,7 @@ class Modal extends Component {
     render() {
         return (
             <>
-                {this.props.open &&
+                {this.props.open ?
                     <>
                         <View style={styles.overlay} />
                         <View style={styles.mainContainer}>
@@ -18,6 +18,8 @@ class Modal extends Component {
                             </View>
                         </View>
                     </>
+                    :
+                    null
                 }
             </>
         );

@@ -1,6 +1,8 @@
 // josep.sanahuja - 15-07-2019 - us26 - + CancelIcon
 // josep.sanahuja - 15-07-2019 - us25 - + addGameProfile Modal logic
 // diego          - 16-07-2019 - us30 - update navigation when GamerTag is added
+// diego          - 17-07-2019 - us30 - Modal and SafeAreaView added, also unnecesary
+// redux code was removed
 
 import React from 'react';
 
@@ -8,34 +10,27 @@ import {
     View,
     Text, 
     TouchableWithoutFeedback, 
-    TouchableHighlight, 
     BackHandler, 
-    Modal, 
-    SafeAreaView,
-    TextInput
+    TextInput,
+    SafeAreaView
 } from 'react-native'
 
-import { Svg } from 'react-native-svg';
 import styles from './style'
 import Images from './../../../assets/images';
 import VideoGamesList from '../../components/VideoGamesList/VideoGamesList';
 import { connect } from 'react-redux';
 
 import {
-    showModalAddGameProfile,
+    setSelectedGame,
 } from '../../actions/gamesActions';
-
-import {
-    getUserNode
-} from '../../actions/userActions';
 
 import {
     addGameToUser,
     getGamerTagWithUID
 } from '../../services/database';
+import Modal from '../../components/Modal/Modal';
 
 const BackIcon = Images.svg.backIcon;
-const CancelIcon = Images.svg.cancelIcon; 
 
 class LoadGamesScreen extends React.Component {
     constructor(props) {
@@ -115,90 +110,60 @@ class LoadGamesScreen extends React.Component {
         const {navigate} = this.props.navigation;
 
         return (
-            <View style={styles.container}>
-                <View style={styles.headerOptions}>
-                    <TouchableWithoutFeedback onPress={this.backToMatchTypeScreen}>
-                        <View style={styles.backIcon}>
-                            <Svg>
+            <SafeAreaView style={styles.safeAreaViewContainer}>
+                <View style={styles.container}>
+                    <View style={styles.headerOptions}>
+                        <TouchableWithoutFeedback onPress={this.backToMatchTypeScreen}>
+                            <View style={styles.backIcon}>
                                 <BackIcon />
-                            </Svg>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>
+                    </View>
+                    <Modal open={this.isThereSelectedGame()} onClose={() => this.props.setSelectedGame(null)}>
+                            <View style={styles.modalContainer}>
+                                <TextInput
+                                    style={styles.gamerTagTextInput}
+                                    placeholder="Escribe tu Gamer Tag"
+                                    placeholderTextColor = 'white'
+                                    onChangeText={(text) => {
+                                        console.log("gamerTagText: " + text); 
+                                        this.setState({
+                                            gamerTagText: text 
+                                        }); 
+                                    }}
+                                    value={this.state.gamerTagText} />
+                                <Text style = {styles.modalText}>Se va a añadir el Juego {this.isThereSelectedGame() && this.props.selectedGame.name } a tu perfil con Gamertag {this.state.gamerTagText}. Estás seguro?</Text>
+                                <TouchableWithoutFeedback
+                                    disabled = {!this.isValidGamerTag(this.state.gamerTagText)}
+                                    onPress={async () => {
+                                        // Check if the user has no games in the profile
+                                        // and if 0, then add the one selected.
+                                        if (!this.hasGamesOnProfile()) {
+                                            await this.addSelectedGameToProfile(this.props.selectedGame,
+                                                                                this.state.gamerTagText);
+
+                                            console.log("User: " + JSON.stringify(this.props.user));
+                                            
+                                            // Navigate to the screen where Qaploins are selected
+                                            navigate('SetBet', {game: {gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform}});
+                                            console.log("[render]: - hasNoGameOnProfile");
+                                        }
+                                        else{
+                                            console.log("[render]: - hasGameOnProfile");
+                                        }
+
+                                        this.props.setSelectedGame(null)
+                                    }}>
+                                        <View style = {styles.confirmButton}>
+                                            <Text style={styles.confirmButtonText}>Aceptar</Text>
+                                        </View>
+                                </TouchableWithoutFeedback>
+                            </View>
+                        </Modal>
+                    <VideoGamesList gamesListToLoad={this.props.userGameList} />
                 </View>
-                <Modal
-                    animationType = "fade"
-                    transparent = {true}
-                    visible = {this.props.smagp}
-                    onRequestClose = {() => {
-                        Alert.alert('Modal has been closed.');
-                    }}>
-                    <SafeAreaView style={styles.safeAreaViewContainer}>
-                        <View style={styles.modalContainer}>
-                            <TouchableHighlight
-                                style = { styles.cancelImageContainer }
-                                onPress = {
-                                    // us26: When cancel button is pressed the
-                                    // addGameToProfile modal will disappear.
-                                    () => this.props.showModalAddGameProfile(false)}>
-
-                                <CancelIcon height={40} width={40} style={ styles.cancelImage }/>
-                            </TouchableHighlight> 
-                            {
-                                !this.gameHasGamerTag()
-                                ?
-                                (
-                                    <TextInput
-                                      style={styles.gamerTagTextInput}
-                                      placeholder="Escribe tu Gamer Tag"
-                                      placeholderTextColor = 'white'
-                                      onShow={this.onShowAddGameToProfile.bind(this)}
-                                      onChangeText={(text) => {
-                                          console.log("gamerTagText: " + text); 
-                                          this.setState({
-                                              gamerTagText: text 
-                                          });
-                                      }}
-                                      value={this.state.gamerTagText}
-                                    />
-                                )
-                                :
-                                null
-                            }
-                            <Text style = {styles.modalText}>Se va a añadir el Juego {this.isThereSelectedGame() ? this.props.selectedGame.name : null} a tu perfil con Gamertag {this.state.gamerTagText}. Estás seguro?</Text>
-                            <TouchableHighlight
-                                style = {styles.confirmButton}
-                                disabled = {!this.isValidGamerTag(this.state.gamerTagText)}
-                                onPress={async () => {
-                                    // Check if the user has no games in the profile
-                                    // and if 0, then add the one selected.
-                                    if (!this.hasGamesOnProfile()) {
-                                        await this.addSelectedGameToProfile(this.props.selectedGame,
-                                                                            this.state.gamerTagText);
-
-                                        console.log("User: " + JSON.stringify(this.props.user));
-                                        // Refresh game list from user // TODO: Check if necessary
-                                        this.props.loadUserData(this.props.user.id);
-                                        
-                                        // Navigate to the screen where Qaploins are selected
-                                        navigate('SetBet', {game: {gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform}});
-                                        console.log("[render]: - hasNoGameOnProfile");
-                                    }
-                                    else{
-                                        console.log("[render]: - hasGameOnProfile");
-                                    }
-
-                                    this.setModalVisible(!this.props.smagp);
-                                }}
-                                background='white'>
-
-                                <Text style={styles.confirmButtonText}>Aceptar</Text>
-                            </TouchableHighlight>
-                        </View>
-                  </SafeAreaView>
-                </Modal>
-                <VideoGamesList gamesListToLoad={this.props.userGameList} />
-            </View>
+            </SafeAreaView>
         );
     }
 }
@@ -214,8 +179,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        showModalAddGameProfile: (showMode) => showModalAddGameProfile(showMode)(dispatch),
-        loadUserData: (uid) => getUserNode(uid)(dispatch)
+        setSelectedGame: (game) => setSelectedGame(game)(dispatch)
     };
 }
 

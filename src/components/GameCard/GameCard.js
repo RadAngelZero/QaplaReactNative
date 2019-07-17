@@ -2,9 +2,10 @@
 // diego          - 16-07-2019 - us30 - update navigation when GamerTag is added
 
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableWithoutFeedback, TextInput, Modal, Alert } from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import styles from './style'
 import Svg from 'react-native-svg';
+import LinearGradient from 'react-native-linear-gradient';
 
 import {
     setSelectedGame
@@ -20,12 +21,15 @@ import { withNavigation } from 'react-navigation';
 class GameCard extends Component {
 
     render() {
-        const {game} = this.props;
-        console.log("[GameCard] : componentDidMount - render: " + JSON.stringify(this.props.game));
+        const { game, backgroundColor} = this.props;
 
         return (
             <TouchableWithoutFeedback onPress={this.openModal.bind(this)}>
-                <View style={[styles.container, { backgroundColor: this.props.backgroundColor }]}>
+                <LinearGradient useAngle={true}
+                    angle={150}
+                    angleCenter={{ x: .5, y: .5}}
+                    colors={[backgroundColor.primary, backgroundColor.secondary]}
+                    style={styles.container}>
                     <Image 
                         style={game.fullImage ? styles.fullImageStyle : styles.noFullImageStyle} 
                         source={game.image[this.props.platform]}/>
@@ -39,7 +43,7 @@ class GameCard extends Component {
                             {game.name}
                         </Text>
                     </View>
-                </View>
+                </LinearGradient>
             </TouchableWithoutFeedback>
         );
     }

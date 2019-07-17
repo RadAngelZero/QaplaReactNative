@@ -53,22 +53,34 @@ class PlatformGamesList extends Component {
 const platformResources = {
     pc_white: {
         platformColor: '#6D7DDE',
-        backgroundColor: '#7726C6',
+        backgroundColor: {
+            primary: '#B670E1',
+            secondary: '#7726C6'
+        },
         name: 'Móvil / PC'
     },
     xbox_white: {
         platformColor: '#119910',
-        backgroundColor: '#42B85E',
+        backgroundColor: {
+            primary: '#3DF9DF',
+            secondary: '#42B85E'
+        },
         name: 'Xbox One'
     },
     ps4_white: {
         platformColor: '#0053CC',
-        backgroundColor: '#1A52CF',
+        backgroundColor: {
+            primary: '#3DBFF4',
+            secondary: '#1A52CF'
+        },
         name: 'PS4'
     },
     switch_white: {
         platformColor: '#CC003A',
-        backgroundColor: '#FF1658',
+        backgroundColor: {
+            primary: '#FF1658',
+            secondary: '#1A52CF'
+        },
         name: 'Switch'
     }
 };
@@ -89,7 +101,7 @@ const gamesResources = {
         },
         Icon: Images.svg.clashIcon,
         name: 'Clash Royale',
-        fullImage: false
+        fullImage: true
     },
     GearsofWar: {
         image: {

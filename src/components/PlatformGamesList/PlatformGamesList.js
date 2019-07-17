@@ -2,6 +2,7 @@
 // diego          - 11-07-2019 - Update platform's names for new references on database
 // diego          - 10-07-2019 - us22 - Update in the way that load the game name
 // diego          - 17-07-2019 - NA   - Remove unnecesary code to make more legible and efficient
+// diego          - 17-07-2019 - NA   - remove full image field in gamesResources object
 
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
@@ -78,40 +79,35 @@ const gamesResources = {
             xbox_white: Images.png.fifaXboxImg.img
         },
         Icon: Images.svg.fifaIcon,
-        name: 'FIFA 19',
-        fullImage: true
+        name: 'FIFA 19'
     },
     ClashRoyale: {
         image: {
             pc_white: Images.png.peekaImg.img
         },
         Icon: Images.svg.clashIcon,
-        name: 'Clash Royale',
-        fullImage: true
+        name: 'Clash Royale'
     },
     GearsofWar: {
         image: {
             xbox_white: Images.png.GOW4Xbox.img
         },
         Icon: Images.svg.gowIcon,
-        name: 'Gears of War 4',
-        fullImage: true
+        name: 'Gears of War 4'
     },
     Halo: {
         image: {
             xbox_white: Images.png.HALO5Xbox.img,
         },
         Icon: Images.svg.haloIcon,
-        name: 'Halo 5',
-        fullImage: true
+        name: 'Halo 5'
     },
     Hearthstone: {
         image: {
             pc_white: Images.png.heartstoneImg.img,
         },
         Icon: Images.svg.heartstoneIcon,
-        name: 'Hearthstone',
-        fullImage: true
+        name: 'Hearthstone'
     },
     Overwatch: {
         image: {
@@ -120,24 +116,21 @@ const gamesResources = {
             xbox_white: Images.png.overwatchXboxImg.img
         },
         Icon: Images.svg.overwatchIcon,
-        name: 'Overwatch',
-        fullImage: true
+        name: 'Overwatch'
     },
     LOL: {
         image: {
             pc_white: Images.png.lolImg.img
         },
         Icon: Images.svg.lolIcon,
-        name: 'League of legends',
-        fullImage: true
+        name: 'League of legends'
     },
     Smashbrothers: {
         image: {
             switch_white: Images.png.smashImg.img
         },
         Icon: Images.svg.smashIcon,
-        name: 'Smash Ultimate',
-        fullImage: false
+        name: 'Smash Ultimate'
     }
 };
 

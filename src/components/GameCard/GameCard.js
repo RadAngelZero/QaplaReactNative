@@ -1,5 +1,6 @@
 // josep.sanahuja - 17-07-2019 - us25 - + openModal
 // diego          - 16-07-2019 - us30 - update navigation when GamerTag is added
+// diego          - 17-07-2019 - NA   - update images styles and remove unnecesary code
 
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
@@ -22,7 +23,6 @@ class GameCard extends Component {
 
     render() {
         const { game, backgroundColor} = this.props;
-
         return (
             <TouchableWithoutFeedback onPress={this.openModal.bind(this)}>
                 <LinearGradient useAngle={true}
@@ -31,7 +31,7 @@ class GameCard extends Component {
                     colors={[backgroundColor.primary, backgroundColor.secondary]}
                     style={styles.container}>
                     <Image 
-                        style={game.fullImage ? styles.fullImageStyle : styles.noFullImageStyle} 
+                        style={styles.imageStyle}
                         source={game.image[this.props.platform]}/>
                     
                     <View style={styles.detailsContainer}>
@@ -62,17 +62,13 @@ class GameCard extends Component {
         
         const gtag = await getGamerTagWithUID(this.props.user.id, newGame.gameKey, newGame.platform);
 
-        console.log("[GameCard] : openModal - gtag: " + JSON.stringify(gtag) + " props: " + JSON.stringify(this.props.user));
-
         // If the game selected has a gamertag then we don't open the modal 
         if (gtag.gamerTag == undefined || gtag.gamerTag == null) {
-            console.log("[GameCard] : openModal - inside gtag if");
              // Enable modal in LoadGamesScreen
             this.props.showModalAddGameProfile(true);
         }
         else {
             this.props.navigation.navigate('SetBet', {game: newGame});
-            console.log("[GameCard] : openModal - else");
         }
     }
 }

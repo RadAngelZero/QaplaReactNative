@@ -1,3 +1,4 @@
+// diego          - 17-07-2019 - NA   - removed duplicate smash bros image
 // Icons
 import InstagramIcon from './icons/Instagram_logo_2016.svgx'
 import FacebookIcon from './icons/F_icon.svg'
@@ -112,10 +113,6 @@ const images = {
 		smashImg: {
 			img: require('./images/SAMSHBROS.png'),
 			uri: '@assets/images/SAMSHBROS.png'
-		},
-		smashImg: {
-			img: require('./images/Smashbros.png'),
-			uri: '@assets/images/Smashbros.png'
 		}
 	},
 	svg: {

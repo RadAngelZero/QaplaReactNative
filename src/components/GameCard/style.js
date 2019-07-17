@@ -1,3 +1,4 @@
+// diego          - 17-07-2019 - NA   - update images styles and remove unnecesary code
 import {StyleSheet} from 'react-native'
 import { getDimensions } from '../../utilities/iosAndroidDim';
 
@@ -13,15 +14,11 @@ export default StyleSheet.create({
 		flexDirection: 'row',
 		marginTop: 24
     },
-    fullImageStyle: {
+    imageStyle: {
         height: getDimensions().height/4,
         width: getDimensions().width-20,
         alignSelf: 'center',
         resizeMode: 'cover'
-    },
-    noFullImageStyle: {
-        height: getDimensions().height/4,
-        alignSelf: 'flex-end'
     },
 	detailsContainer: {
         backgroundColor: '#0E1222',

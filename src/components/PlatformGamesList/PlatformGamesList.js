@@ -1,6 +1,7 @@
 // josep.sanahuja - 15-07-2019 - us25 - added 'gameKey' to GameCard comp props
 // diego          - 11-07-2019 - Update platform's names for new references on database
 // diego          - 10-07-2019 - us22 - Update in the way that load the game name
+// diego          - 17-07-2019 - NA   - Remove unnecesary code to make more legible and efficient
 
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
@@ -16,32 +17,17 @@ class PlatformGamesList extends Component {
                     <Text style={styles.title}>{platformResources[this.props.platform].name}</Text><View style={[styles.circleIcon, { backgroundColor: platformResources[this.props.platform].platformColor }]}></View>
                 </View>
                 <ScrollView horizontal style={styles.scrollViewStyle}>
-                    {
-                        Object.keys(this.props.listOfGames).map((game) =>{
-                            console.log("Miau_1 " + JSON.stringify(game));
-                        } )
-                    }
-                    {Object.keys(this.props.listOfGames).map((game) => {
-                        // Condition for the existing games on database that actually dont exist
-                        // Like counter strike or street fighter
-                        
-                        // us24: TODO: The reason and the whereabouts of the replace operation
-                        // are not clear and need more clarification 
-                        if (gamesResources[(this.props.listOfGames[game]).replace(/ +/g, "")]) {
-                            return (
-                                <GameCard key={game}
-                                    game={gamesResources[(this.props.listOfGames[game]).replace(/ +/g, "")]}
-                                    platform={this.props.platform}
-                                    backgroundColor={platformResources[this.props.platform].backgroundColor}
-                                    gameKey={game} />
-                            );
-                        }
-                        //Something must be returned in this operation, thats why we return
-                        //a fragment, that actually dont modify nothing
-                        // TODO: Look a way to see if there is a way to avoid having to have
-                        // two returns
-                        return <React.Fragment key={game}></React.Fragment>
-                    })}
+                    {Object.keys(this.props.listOfGames).map((game) => (
+                        //Remove any game that actually dont exist (like counter strike o street figther) from database
+                        //or this component is going to fail
+                        <GameCard key={game}
+                            //Replace is necesary cause the key of the game objects in the gamesResources object
+                            //are the name of the game but without spaces (replace function remove that spaces)
+                            game={gamesResources[(this.props.listOfGames[game]).replace(/ +/g, "")]}
+                            platform={this.props.platform}
+                            backgroundColor={platformResources[this.props.platform].backgroundColor}
+                            gameKey={game} />
+                    ))}
                 </ScrollView>
             </View>
         );

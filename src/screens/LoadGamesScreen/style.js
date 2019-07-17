@@ -1,8 +1,8 @@
 // josep.sanahuja - 15-07-2019 - us26 - + cancelImageContainer & cancelImage
 // josep.sanahuja - 15-07-2019 - us25 - + 'gamerTagTextInput' & modal style
+// diego          - 17-07-2019 - NA   - Remove unnecesary code to make more legible and efficient
 
 import {StyleSheet} from 'react-native'
-import { getDimensions } from '../../utilities/iosAndroidDim';
 
 export default StyleSheet.create({
   	container:{

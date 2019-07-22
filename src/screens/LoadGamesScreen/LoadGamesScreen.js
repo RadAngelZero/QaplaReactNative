@@ -3,6 +3,8 @@
 // diego          - 16-07-2019 - us30 - update navigation when GamerTag is added
 // diego          - 17-07-2019 - us30 - Modal and SafeAreaView added, also unnecesary
 // redux code was removed
+// diego          - 22-07-2019 - bug3 - open modal logic modified and unnecesary code
+// removed
 
 import React from 'react';
 
@@ -25,8 +27,7 @@ import {
 } from '../../actions/gamesActions';
 
 import {
-    addGameToUser,
-    getGamerTagWithUID
+    addGameToUser
 } from '../../services/database';
 import Modal from '../../components/Modal/Modal';
 
@@ -35,10 +36,8 @@ const BackIcon = Images.svg.backIcon;
 class LoadGamesScreen extends React.Component {
     constructor(props) {
       super(props);
-    
       this.state = {
-          gamerTagText: "",
-          hasGamerTag: false
+          gamerTagText: ""
       };
     }
 
@@ -54,30 +53,13 @@ class LoadGamesScreen extends React.Component {
         return true;
     }
 
-    // TODO: Figure out a way to have a Modal1Text2Button component that does not
-    // have conflict with redux state and prop dispatch. At the moment we leave it this 
-    // way for simplicity. Come up with such solutio seems a bit trickier if we want it
-    // to be simple and maimtainable.
-    setModalVisible(visible) {
-        console.log("[LoadGamesScreen] : setModalVisible - visible: " + visible);
-        this.props.showModalAddGameProfile(visible);
-    }
-
     addSelectedGameToProfile = async (game, gamerTag) => {
-        // Add Game to profile. TODO: Check what returns in the new version of the function
-        // that Diego added but didn't merge yet to the release
-        console.log("Marramiau User : " + JSON.stringify(this.props.user.id) + " game: " + JSON.stringify(game) + " gamerTag: " + gamerTag);
-        
         await addGameToUser(this.props.user.id, game.platform,
                             game.gameKey, gamerTag);
     }
 
     hasGamesOnProfile(){
         return this.props.userGameList === undefined ? false : true;                 
-    }
-
-    gameHasGamerTag() {
-        return this.state.hasGamerTag;
     }
 
     isValidGamerTag(gamerTag) {
@@ -90,20 +72,40 @@ class LoadGamesScreen extends React.Component {
         return this.props.selectedGame != null && this.props.selectedGame != undefined;
     }
 
-    onShowAddGameToProfile = async () => {
-        // Retrieve the gamertag from the game, if there is no gamertag then
-        // no gamertag found.
-        //
-        // NOTE (15-07-2019): It could be retrieved by storing it in redux from GameCard.js
-        const gtag = await getGamerTagWithUID(this.props.user, this.props.selectedGame.gameKey,
-                                              this.props.selectedGame.platform);
-        
-        if (gtag.gamerTag != undefined && gtag.gamerTag != null){
-            this.setState({
-                gamerTagText: gtag.gamerTag,
-                hasGamerTag: true
-            });
-        }    
+    openModal() {
+        //If the user has already selected a game
+        if (this.isThereSelectedGame()) {
+            //Check if the user have 1 or more games
+            if (this.hasGamesOnProfile()) {
+                const { gameKey, platform } = this.props.selectedGame;
+                //Check if the user have the selected game on their gamerTags node
+                //If the user have the game then return false (don't show the modal)
+                //If the user don't have the game then return true (show the modal)
+                switch (platform) {
+                    case 'pc_white':
+                        if (gameKey === 'aClash') {
+                            return !this.props.user.gamerTags.hasOwnProperty('clashTag');
+                        } else if (gameKey === 'pcLol') {
+                            return !this.props.user.gamerTags.hasOwnProperty('lolTag');
+                        } else if (gameKey === 'pHearth' || game === 'pOver') {
+                            return !this.props.user.gamerTags.hasOwnProperty('battlenet');
+                        }
+                        break;
+                    case 'ps4_white':
+                        return !this.props.user.gamerTags.hasOwnProperty('psn');
+                    case 'xbox_white':
+                        return !this.props.user.gamerTags.hasOwnProperty('xboxLive');
+                    case 'switch_white':
+                        return !this.props.user.gamerTags.hasOwnProperty('NintendoID');
+                    default:
+                        break;
+                }
+            } else {
+                //If the user don't have games then open the modal
+                return true;
+            }
+        }
+        return false;
     }
 
     render() {
@@ -120,14 +122,13 @@ class LoadGamesScreen extends React.Component {
                         </TouchableWithoutFeedback>
                         <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>
                     </View>
-                    <Modal open={this.isThereSelectedGame()} onClose={() => this.props.setSelectedGame(null)}>
+                    <Modal open={this.openModal()} onClose={() => this.props.setSelectedGame(null)}>
                             <View style={styles.modalContainer}>
                                 <TextInput
                                     style={styles.gamerTagTextInput}
                                     placeholder="Escribe tu Gamer Tag"
                                     placeholderTextColor = 'white'
                                     onChangeText={(text) => {
-                                        console.log("gamerTagText: " + text); 
                                         this.setState({
                                             gamerTagText: text 
                                         }); 
@@ -137,23 +138,11 @@ class LoadGamesScreen extends React.Component {
                                 <TouchableWithoutFeedback
                                     disabled = {!this.isValidGamerTag(this.state.gamerTagText)}
                                     onPress={async () => {
-                                        // Check if the user has no games in the profile
-                                        // and if 0, then add the one selected.
-                                        if (!this.hasGamesOnProfile()) {
-                                            await this.addSelectedGameToProfile(this.props.selectedGame,
-                                                                                this.state.gamerTagText);
-
-                                            console.log("User: " + JSON.stringify(this.props.user));
-                                            
-                                            // Navigate to the screen where Qaploins are selected
-                                            navigate('SetBet', {game: {gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform}});
-                                            console.log("[render]: - hasNoGameOnProfile");
-                                        }
-                                        else{
-                                            console.log("[render]: - hasGameOnProfile");
-                                        }
-
-                                        this.props.setSelectedGame(null)
+                                        await this.addSelectedGameToProfile(this.props.selectedGame,
+                                                                            this.state.gamerTagText);
+                                        // Navigate to the screen where Qaploins are selected
+                                        navigate('SetBet', {game: {gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform}});
+                                        this.props.setSelectedGame(null);
                                     }}>
                                         <View style = {styles.confirmButton}>
                                             <Text style={styles.confirmButtonText}>Aceptar</Text>

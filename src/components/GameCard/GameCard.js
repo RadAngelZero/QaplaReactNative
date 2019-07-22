@@ -63,12 +63,8 @@ class GameCard extends Component {
         const gtag = await getGamerTagWithUID(this.props.user.id, newGame.gameKey, newGame.platform);
 
         // If the game selected has a gamertag then we don't open the modal 
-        if (gtag.gamerTag == undefined || gtag.gamerTag == null) {
-             // Enable modal in LoadGamesScreen
-            this.props.showModalAddGameProfile(true);
-        }
-        else {
-            this.props.navigation.navigate('SetBet', {game: newGame});
+        if (gtag.gamerTag != undefined || gtag.gamerTag != null) {
+            this.props.navigation.navigate('SetBet', {game: newGame}); 
         }
     }
 }

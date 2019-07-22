@@ -160,7 +160,6 @@ class LoadGamesScreen extends React.Component {
 function mapStateToProps(state) {
     return {
         userGameList: state.userReducer.user.gameList,
-        smagp: state.gamesReducer.smagp,
         selectedGame: state.gamesReducer.selectedGame,
         user: state.userReducer.user
     }

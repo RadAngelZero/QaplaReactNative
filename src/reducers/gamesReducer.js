@@ -5,7 +5,6 @@ import {
 
 const initialState = {
     games: {},
-    smagp: false,
     selectedGame: null
 };
 

@@ -29,13 +29,9 @@ import {
 } from '../../actions/gamesActions';
 
 import {
-    getUserNode
-} from '../../actions/userActions';
-
-
-import {
     addGameToUser
 } from '../../services/database';
+
 import Modal from '../../components/Modal/Modal';
 
 const BackIcon = Images.svg.backIcon;
@@ -50,7 +46,7 @@ class LoadGamesScreen extends React.Component {
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
-        console.log("Miau Miau");
+        
         // #bug2:
         // At the beginning of the components life, there should not be any game selected,
         // the way we ensure that is by overwriting the value it may have when the component

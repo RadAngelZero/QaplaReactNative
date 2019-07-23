@@ -78,3 +78,7 @@ export function signInWithEmailAndPassword(email, password) {
 export function isUserLogged() {
     return auth.currentUser !== null;
 }
+
+export async function getIdTokenFromUser() {
+    return await auth.currentUser.getIdToken(true).then((idToken) => idToken).catch((error) => error);
+}

@@ -1,10 +1,12 @@
+// josep.sanahuja - 22-07-2019 - bug2 - moved 'setSelectedGame' to 'componentDidMount'
+//                                      && simplified 'openModal'
+// diego          - 17-07-2019 - us30 - Modal and SafeAreaView added, also unnecesary
+//                                      redux code was removed
+// diego          - 22-07-2019 - bug3 - open modal logic modified and unnecesary code
+//                                      removed
+// diego          - 16-07-2019 - us30 - update navigation when GamerTag is added
 // josep.sanahuja - 15-07-2019 - us26 - + CancelIcon
 // josep.sanahuja - 15-07-2019 - us25 - + addGameProfile Modal logic
-// diego          - 16-07-2019 - us30 - update navigation when GamerTag is added
-// diego          - 17-07-2019 - us30 - Modal and SafeAreaView added, also unnecesary
-// redux code was removed
-// diego          - 22-07-2019 - bug3 - open modal logic modified and unnecesary code
-// removed
 
 import React from 'react';
 
@@ -27,6 +29,11 @@ import {
 } from '../../actions/gamesActions';
 
 import {
+    getUserNode
+} from '../../actions/userActions';
+
+
+import {
     addGameToUser
 } from '../../services/database';
 import Modal from '../../components/Modal/Modal';
@@ -43,6 +50,12 @@ class LoadGamesScreen extends React.Component {
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
+        console.log("Miau Miau");
+        // #bug2:
+        // At the beginning of the components life, there should not be any game selected,
+        // the way we ensure that is by overwriting the value it may have when the component
+        // mounted.
+        this.props.setSelectedGame(null);
     }
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
@@ -73,39 +86,9 @@ class LoadGamesScreen extends React.Component {
     }
 
     openModal() {
-        //If the user has already selected a game
-        if (this.isThereSelectedGame()) {
-            //Check if the user have 1 or more games
-            if (this.hasGamesOnProfile()) {
-                const { gameKey, platform } = this.props.selectedGame;
-                //Check if the user have the selected game on their gamerTags node
-                //If the user have the game then return false (don't show the modal)
-                //If the user don't have the game then return true (show the modal)
-                switch (platform) {
-                    case 'pc_white':
-                        if (gameKey === 'aClash') {
-                            return !this.props.user.gamerTags.hasOwnProperty('clashTag');
-                        } else if (gameKey === 'pcLol') {
-                            return !this.props.user.gamerTags.hasOwnProperty('lolTag');
-                        } else if (gameKey === 'pHearth' || game === 'pOver') {
-                            return !this.props.user.gamerTags.hasOwnProperty('battlenet');
-                        }
-                        break;
-                    case 'ps4_white':
-                        return !this.props.user.gamerTags.hasOwnProperty('psn');
-                    case 'xbox_white':
-                        return !this.props.user.gamerTags.hasOwnProperty('xboxLive');
-                    case 'switch_white':
-                        return !this.props.user.gamerTags.hasOwnProperty('NintendoID');
-                    default:
-                        break;
-                }
-            } else {
-                //If the user don't have games then open the modal
-                return true;
-            }
-        }
-        return false;
+        // If there are no games on the profile of the user and a game is selected
+        // the modal should open
+        return this.isThereSelectedGame() && !this.hasGamesOnProfile();
     }
 
     render() {
@@ -140,9 +123,9 @@ class LoadGamesScreen extends React.Component {
                                     onPress={async () => {
                                         await this.addSelectedGameToProfile(this.props.selectedGame,
                                                                             this.state.gamerTagText);
+                                        
                                         // Navigate to the screen where Qaploins are selected
                                         navigate('SetBet', {game: {gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform}});
-                                        this.props.setSelectedGame(null);
                                     }}>
                                         <View style = {styles.confirmButton}>
                                             <Text style={styles.confirmButtonText}>Aceptar</Text>

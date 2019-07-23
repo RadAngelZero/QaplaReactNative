@@ -46,7 +46,7 @@
 		C8983909D9124FFBB2B1E2DD /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 804A4C544EF34401B305DB30 /* libRNSVG-tvOS.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
-		F9A06C3022D5206B0032DFA2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9A06C0622D5206B0032DFA2 /* GoogleService-Info.plist */; };
+		F99FA6EB22E77F3000D0BBFB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F99FA6EA22E77F3000D0BBFB /* GoogleService-Info.plist */; };
 		FBF77EE29EB4F9143C0420F1 /* libPods-QaplaReactNative-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFC30DCC651B0B2BC1D121F /* libPods-QaplaReactNative-tvOS.a */; };
 /* End PBXBuildFile section */
 
@@ -397,7 +397,7 @@
 		B6B8741564C6E040BCA7B6F8 /* Pods-QaplaReactNative-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaReactNative-tvOS.release.xcconfig"; path = "Target Support Files/Pods-QaplaReactNative-tvOS/Pods-QaplaReactNative-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		F9A06C0622D5206B0032DFA2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Miyabi Labs/contabilidad/2018/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F99FA6EA22E77F3000D0BBFB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Miyabi Labs/fit2018/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FEFC30DCC651B0B2BC1D121F /* libPods-QaplaReactNative-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -657,7 +657,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				F9A06C0622D5206B0032DFA2 /* GoogleService-Info.plist */,
+				F99FA6EA22E77F3000D0BBFB /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* QaplaReactNative */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* QaplaReactNativeTests */,
@@ -811,6 +811,9 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 9DKYMDN2KS;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1207,7 +1210,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				F9A06C3022D5206B0032DFA2 /* GoogleService-Info.plist in Resources */,
+				F99FA6EB22E77F3000D0BBFB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1470,6 +1473,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 9DKYMDN2KS;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
@@ -1478,6 +1482,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
 				);
 				INFOPLIST_FILE = QaplaReactNative/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1496,6 +1501,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9DKYMDN2KS;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
@@ -1504,6 +1510,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
 				);
 				INFOPLIST_FILE = QaplaReactNative/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

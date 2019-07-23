@@ -26,6 +26,7 @@ import MockScreen2 from './screens/MockScreen2/MockScreen2'
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
+import CheckOutPaymentScreen from './screens/CheckOutPaymentScreen/CheckOutPaymentScreen';
 
 // Svg Icons
 const Mock1Icon = Images.svg.favouritesIcon;
@@ -157,6 +158,9 @@ const AppNoHeaderStackNavigator = createSwitchNavigator(
     },
     SetBet: {
       screen: SetBetScreen
+    },
+    CheckOut: {
+      screen: CheckOutPaymentScreen
     }
   }
 );

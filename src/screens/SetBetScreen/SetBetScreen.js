@@ -59,7 +59,7 @@ class SetBetScreen extends Component {
     async createMatch() {
         if (!this.state.loading && this.props.userQaploins >= this.state.currentBet) {
             this.setState({ loading: true });
-            await createPublicMatch(this.props.uid, this.state.currentBet, this.props.navigation.getParam('game')).then(async (value) => {
+            await createPublicMatch(this.props.uid, this.state.currentBet, this.props.selectedGame).then(async (value) => {
                 if (value !== undefined) {
                     console.log('Qaploins before substraction: ', this.props.userQaploins);
                     await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet)
@@ -123,7 +123,8 @@ class SetBetScreen extends Component {
 function mapDispatchToProps(state) {
     return {
         userQaploins: state.userReducer.user.credits,
-        uid: state.userReducer.user.id
+        uid: state.userReducer.user.id,
+        selectedGame: state.gamesReducer.selectedGame
     };
 }
 

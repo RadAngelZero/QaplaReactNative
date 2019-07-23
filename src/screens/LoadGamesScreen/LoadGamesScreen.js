@@ -29,7 +29,6 @@ import {
 } from '../../actions/gamesActions';
 
 import {
-    getUserNode
 } from '../../actions/userActions';
 
 

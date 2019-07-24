@@ -36,7 +36,10 @@ class CheckOutPaymentScreen extends Component {
             <View style={{ flex: 1, overflow: 'hidden' }}>
                 {this.state.idToken !== '' &&
                     <WebView
-                        source={{ uri: `https://us-central1-reactnativeprueba-8f6f8.cloudfunctions.net/checkOutWithPaypal?idToken=${this.state.idToken}` }}
+                        source={{
+                            uri: `https://us-central1-reactnativeprueba-8f6f8.cloudfunctions.net/checkOutWithPaypal`,
+                            headers: { 'Authorization': `Bearer ${this.state.idToken}` }
+                        }}
                         onNavigationStateChange={(data) => this.handleNavigation(data.title)}
                         scalesPageToFit={true} />
                 }

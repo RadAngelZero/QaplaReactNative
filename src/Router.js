@@ -1,3 +1,4 @@
+//diego -         24-07-2019 - us31 - added CheckOutPaymentScreen
 import React from 'react'
 
 import {View} from 'react-native'

@@ -1,7 +1,13 @@
+// diego -              24-07-2019 - us31 - update headers in WebView and componentWillMount
 import React, { Component } from 'react';
-import { View, WebView, BackHandler } from 'react-native';
+import {
+    View,
+    WebView,
+    BackHandler
+} from 'react-native';
 import { getIdTokenFromUser } from '../../services/auth';
 import { withNavigation } from 'react-navigation';
+import styles from './style';
 
 class CheckOutPaymentScreen extends Component {
     state = {
@@ -16,13 +22,13 @@ class CheckOutPaymentScreen extends Component {
         BackHandler.removeEventListener('hardwareBackPress', () => this.props.navigation.goBack());
     }
 
-    componentWillMount() {
-        getIdTokenFromUser().then((idToken) => {
-            this.setState({ idToken });
-        })
-        .catch((error) => {
+    async componentWillMount() {
+        try {
+            this.setState({ idToken: await getIdTokenFromUser() });
+        }
+        catch(error) {
             console.log(error);
-        });
+        };
     }
 
     handleNavigation(title) {
@@ -33,7 +39,7 @@ class CheckOutPaymentScreen extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, overflow: 'hidden' }}>
+            <View style={styles.container}>
                 {this.state.idToken !== '' &&
                     <WebView
                         source={{

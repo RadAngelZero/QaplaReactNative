@@ -15,10 +15,12 @@ class CheckOutPaymentScreen extends Component {
     };
 
     componentDidMount() {
+        //Listener on Back button for android devices
         BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
     }
 
     componentWillUnmount() {
+        //Listener on Back button for android devices
         BackHandler.removeEventListener('hardwareBackPress', () => this.props.navigation.goBack());
     }
 

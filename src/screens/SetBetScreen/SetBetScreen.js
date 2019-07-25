@@ -1,7 +1,8 @@
 // diego -          24-07-2019 - us31 - updated createMatch and decreaseBet to accept
 //                                      bets from 0 qaploins
-// diego -          15-07-2019 - us 27 - added increment bet option
 // diego -          16-07-2019 - us 34 - Substract of qaploins logic implemented
+// diego -          15-07-2019 - us 27 - added increment bet option
+
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, BackHandler, TouchableWithoutFeedback } from 'react-native';
 import Svg from 'react-native-svg';

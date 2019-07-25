@@ -1,5 +1,5 @@
-// diego -              24-07-2019 - us31 - removed unnecesary code from
-// getIdTokenFromUser function
+// diego -              24-07-2019 - us31 - removed unnecessary code from
+//                                          getIdTokenFromUser function
 import { auth, FBProvider, GoogleProvider } from './../utilities/firebase';
 import { createUserProfile } from './database';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'

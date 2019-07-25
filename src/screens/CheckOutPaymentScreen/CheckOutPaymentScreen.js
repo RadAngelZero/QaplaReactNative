@@ -24,9 +24,13 @@ class CheckOutPaymentScreen extends Component {
         BackHandler.removeEventListener('hardwareBackPress', () => this.props.navigation.goBack());
     }
 
-    async componentWillMount() {
+    componentWillMount() {
+        this.setIdToken();
+    }
+
+    async setIdToken() {
         try {
-            this.setState({ idToken: await getIdTokenFromUser() });
+            this.setState({ idToken: await getIdTokenFromUser() });            
         }
         catch(error) {
             console.log(error);

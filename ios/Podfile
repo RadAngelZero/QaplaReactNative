@@ -29,6 +29,10 @@ target 'QaplaReactNative' do
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+  
+  pod 'Firebase/Functions'
+  
+  pod 'Firebase/Analytics'
 
 end
 

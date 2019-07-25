@@ -1,5 +1,4 @@
-// diego -         25-07-2019 - us31 - unnecessary code removed
-// diego -         24-07-2019 - us31 - added CheckOutPaymentScreen
+// diego -         25-07-2019 - us31 - added CheckOutPaymentScreen and unnecessary code removed
 import React from 'react'
 
 import {View} from 'react-native'

@@ -82,5 +82,9 @@ export function isUserLogged() {
 }
 
 export async function getIdTokenFromUser() {
-    return await auth.currentUser.getIdToken(true);
+    try {
+        return await auth.currentUser.getIdToken(true);
+    } catch(error) {
+        console.log('Error: ', error);
+    }
 }

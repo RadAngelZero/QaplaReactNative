@@ -1,3 +1,5 @@
+// diego -              24-07-2019 - us31 - removed unnecessary code from
+//                                          getIdTokenFromUser function
 import { auth, FBProvider, GoogleProvider } from './../utilities/firebase';
 import { createUserProfile } from './database';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
@@ -77,4 +79,12 @@ export function signInWithEmailAndPassword(email, password) {
 
 export function isUserLogged() {
     return auth.currentUser !== null;
+}
+
+export async function getIdTokenFromUser() {
+    try {
+        return await auth.currentUser.getIdToken(true);
+    } catch(error) {
+        console.log('Error: ', error);
+    }
 }

@@ -1,5 +1,8 @@
-// diego -      15-07-2019 - us 27 - added increment bet option
+// diego -          24-07-2019 - us31 - updated createMatch and decreaseBet to accept
+//                                      bets from 0 qaploins
 // diego -          16-07-2019 - us 34 - Substract of qaploins logic implemented
+// diego -          15-07-2019 - us 27 - added increment bet option
+
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, BackHandler, TouchableWithoutFeedback } from 'react-native';
 import Svg from 'react-native-svg';
@@ -53,26 +56,19 @@ class SetBetScreen extends Component {
 
     decreaseBet() {
         const oldBet = this.state.currentBet;
-        this.setState({ currentBet: oldBet > 150 ? oldBet - 75 : this.state.currentBet });
+        this.setState({ currentBet: oldBet > 0 ? oldBet - 75 : this.state.currentBet });
     }
 
     async createMatch() {
         if (!this.state.loading && this.props.userQaploins >= this.state.currentBet) {
             this.setState({ loading: true });
-            await createPublicMatch(this.props.uid, this.state.currentBet, this.props.navigation.getParam('game')).then(async (value) => {
-                if (value !== undefined) {
-                    console.log('Qaploins before substraction: ', this.props.userQaploins);
-                    await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet)
-                    .then(() => {
-                        console.log('Qaploins after substraction: ', this.props.userQaploins);
-                        this.props.navigation.navigate('MisRetas');
-                    }, (rejected) => {
-                        console.log('Substraction of qaploins rejected: ', rejected);
-                    })
-                } else {
-                    console.log('Error al crear la reta');
-                }
-            });
+            try {
+                await createPublicMatch(this.props.uid, this.state.currentBet, this.props.selectedGame);
+                await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet);
+                this.props.navigation.navigate('Publicas');
+            } catch (error) {
+                console.log(error);
+            }
         } else {
             this.setState({ open: !this.state.open });
         }
@@ -123,7 +119,8 @@ class SetBetScreen extends Component {
 function mapDispatchToProps(state) {
     return {
         userQaploins: state.userReducer.user.credits,
-        uid: state.userReducer.user.id
+        uid: state.userReducer.user.id,
+        selectedGame: state.gamesReducer.selectedGame
     };
 }
 

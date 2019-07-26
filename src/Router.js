@@ -1,10 +1,11 @@
+// diego -         25-07-2019 - us31 - added CheckOutPaymentScreen and unnecessary code removed
 import React from 'react'
 
 import {View} from 'react-native'
 import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createSwitchNavigator} from 'react-navigation'
 
 import Images from '@assets/images'
-import {Svg, Image} from 'react-native-svg'
+import {Svg} from 'react-native-svg'
 
 // Screens
 import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen'
@@ -21,34 +22,16 @@ import ChooseOpponentScreen from './screens/ChooseOpponentScreen/ChooseOpponentS
 import SetBetScreen from './screens/SetBetScreen/SetBetScreen';
 
 // Mock screen
-import MockScreen1 from './screens/MockScreen1/MockScreen1'
 import MockScreen2 from './screens/MockScreen2/MockScreen2'
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
+import CheckOutPaymentScreen from './screens/CheckOutPaymentScreen/CheckOutPaymentScreen';
 
 // Svg Icons
 const Mock1Icon = Images.svg.favouritesIcon;
 const Mock2Icon = Images.svg.testIcon;
 const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
-
-const PublicFeedMatchStackNavigator = createStackNavigator(
-  {
-    Home: {
-      screen: PublicMatchesFeedScreen
-    },
-    MatchCard: {
-      screen: PublicMatchCardScreen,
-    },
-  },
-  {
-    initialRouteName: 'Home',
-    headerMode: 'none',
-    navigationOptions: {
-      headerVisible: false,
-    }
-  }
-);
 
 const RetasTabNavigator = createMaterialTopTabNavigator(
   {
@@ -157,6 +140,9 @@ const AppNoHeaderStackNavigator = createSwitchNavigator(
     },
     SetBet: {
       screen: SetBetScreen
+    },
+    CheckOut: {
+      screen: CheckOutPaymentScreen
     }
   }
 );

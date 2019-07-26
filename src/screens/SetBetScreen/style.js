@@ -60,6 +60,7 @@ export default styles = StyleSheet.create({
     },
     betText: {
         fontSize: 26,
+        textAlign: 'center',
         color: '#FFF'
     },
     betEntrada: {

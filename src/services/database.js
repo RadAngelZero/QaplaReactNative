@@ -1,3 +1,4 @@
+// diego -          29-07-2019 - us55 - challengeUser method added
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
 // diego          - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
 //for new references on database and errors detecrted on addGameToUser
@@ -178,6 +179,12 @@ export async function getCurrentQaplaCommission() {
     return await commissionRef.once('value').then((commission) => commission.val());
 }
 
+/**
+ * Create a public match
+ * @param {string} uid user identifier of the match creator
+ * @param {number} bet bet of the match
+ * @param {string} game gameKey of the game selected to play
+ */
 export async function createPublicMatch(uid, bet, game) {
     const dateObject = new Date();
     const hour = dateObject.getUTCHours() < 10 ? '0' + dateObject.getUTCHours() : dateObject.getUTCHours();
@@ -204,16 +211,33 @@ export async function createPublicMatch(uid, bet, game) {
         timeStamp: TimeStamp,
         winBet: bet*2
     };
-    return await matchesRef.push(matchObject).then(async (matchCreated) => {
-        await matchesRef.child(matchCreated.key).update({ idMatch: matchCreated.key });
-        return matchCreated.key;
-    });
+    const createdMatch = await matchesRef.push(matchObject);
+    await matchesRef.child(createdMatch.key).update({ idMatch: createdMatch.key });
+    return createdMatch.key;
 }
 
+/**
+ * Remove the specified quantity of qaploins from a user
+ * @param {string} uid user identifier to substract the qaploins
+ * @param {number} currentCredits The current number of qaploins of the user
+ * @param {number} quantityToSubstract The amount of qaploins to substract
+ */
 export async function substractQaploinsToUser(uid, currentCredits, quantityToSubstract) {
-    return await usersRef.child(uid).update({ credits: currentCredits - quantityToSubstract}).then(() => {
-        return Promise.resolve();
-    }, (rejected) => {
-        return Promise.reject(rejected);
+    return await usersRef.child(uid).update({ credits: currentCredits - quantityToSubstract});
+}
+
+/**
+ * Notify to the creator of the match that an user wants to challenge him
+ * @param {string} uidMatchCreator The user identifier of the user who has created the match
+ * @param {string} uidMatchChallenger The user identifier of the user who wants to challenge the match
+ * @param {string} idMatch The identifier of the match
+ */
+export async function challengeUser(uidMatchCreator, uidMatchChallenger, idMatch) {
+    return await usersRef.child(uidMatchCreator).child('notificationMatch').push({
+        idEquipo: '',
+        idMatch,
+        idUserSend: uidMatchChallenger,
+        type: 'reta',
+        userName: await getUserNameWithUID(uidMatchChallenger)
     });
 }

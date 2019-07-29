@@ -1,92 +1,90 @@
-import React, { Component } from 'react';
-import { View, Text, SafeAreaView, FlatList, Button, TouchableWithoutFeedback } from 'react-native'
+// diego -        29-07-2019 - us55 - Reorganization of the component
+//                                    Removed getGameIcon function and replaced with getGameData
+//                                    Button's 'Retar' and 'Cancelar' added with login to challenge
 
-import { withNavigation } from 'react-navigation';
+import React, { Component } from 'react';
+import { View, Text, SafeAreaView, TouchableWithoutFeedback } from 'react-native'
+import { connect } from 'react-redux';
 import styles from './style'
 
 import Images from '../../../assets/images'
-import MatchCardItem from '../../components/MatchCard/MatchCardItem'
+import { challengeUser } from '../../services/database';
+
+const QaploinsIcon = Images.svg.qaploinsIcon;
+const ProfileIcon = Images.svg.profileIcon;
 
 class PublicMatchCardScreen extends Component {
-    static navigationOptions = {
-        header: null
-    }
-
-    constructor(props) {
-        super(props);
-        console.log("This is PublicMatchcardScreen: " + JSON.stringify(this.props));
-    }
-
     render() {
-        // TODO: modify default value into a dummy match saying no info
         const matchCard = this.props.navigation.getParam('matchCard');
-       
-        const GameIcon = getGameIcon(matchCard.game);
-        const QaploinsIcon = Images.svg.qaploinsIcon;
-        const ProfileIcon = Images.svg.profileIcon;
-
+        const gameData = getGameData(matchCard.game, this.props.games);
         return (
             <SafeAreaView style={styles.container} testID='publicmatchcardscreen-1'>
-                <View style={styles.container}>
-                    <View style={styles.imageHeader}>
-                        <GameIcon width={50} height={50}></GameIcon>
-                    </View>
+                <View style={styles.imageHeader}>
+                    <gameData.Icon width={50} height={50} />
+                </View>
+                <View style={styles.rowContainer}>
                     <View style={styles.headerRow1}>
                         <QaploinsIcon style={styles.hr1}/>
-                        <QaploinsIcon style={styles.hr2}/>
+                        <Text style={styles.gameName}>{gameData.name}</Text>
                         <QaploinsIcon style={styles.hr3}/>
                     </View>
-                    <View style={styles.headerRow2}>
-                        <Text style={styles.gamertag}>{matchCard.userName}</Text>
-                    </View>
-                    <View style={styles.rowContainer}>
-                        <View style={styles.row}>
-                            <View style={styles.infoR1}>
-                                <ProfileIcon style={styles.rowIcon}/>
-                                <Text style={styles.elemR1}>Gamertag</Text>
-                            </View>
-                            <View style={styles.infoR2}>
-                                <Text style={styles.rightTextStyle}>{matchCard.userName}</Text>
-                            </View>
-                        </View>
 
-                        <View style={styles.row}>
-                            <View style={styles.infoR1}>
-                                <ProfileIcon style={styles.rowIcon}/>
-                                <Text style={styles.elemR1}>No. de Integrantes</Text>
-                            </View>
-                            <View style={styles.infoR2}>
-                                <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1vs1' : '*vs*'}</Text>
-                            </View>
-                        </View>
+                    <Text style={styles.gamertag}>{matchCard.userName}</Text>
 
-                        <View style={styles.row}>
-                            <View style={styles.infoR1}>
-                                <ProfileIcon style={styles.rowIcon}/>
-                                <Text style={styles.elemR1}>Fecha y Hora</Text>
-                            </View>
-                            <View style={styles.infoR2}>
-                                <Text style={styles.rightTextStyle}>{matchCard.date} {matchCard.hour}hrs</Text>
-                            </View>
+                    <View style={styles.row}>
+                        <View style={styles.infoContainer}>
+                            <ProfileIcon style={styles.rowIcon}/>
+                            <Text style={[styles.elemR1, styles.activeColor]}>Gamertag</Text>
                         </View>
-
-                        <View style={styles.row}>
-                            <View style={styles.infoR1}>
-                                <ProfileIcon style={styles.rowIcon}/>
-                                <Text style={styles.elemR1}>Qaploins</Text>
-                            </View>
-                            <View style={styles.infoR2}>
-                                <Text style={styles.rightTextStyle}>{matchCard.bet}</Text>
-                            </View>
+                        <View style={styles.infoContainer}>
+                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.userName}</Text>
                         </View>
                     </View>
-                    <Button
-                      onPress={this.goToPrevScreen.bind(this)}
-                      title="Regresar"
-                      color="#36E5CE"
-                      accessibilityLabel="Regresar a retas públicas"
-                    />
+
+                    <View style={styles.row}>
+                        <View style={styles.infoContainer}>
+                            <ProfileIcon style={styles.rowIcon}/>
+                            <Text style={styles.elemR1}>No. de Integrantes</Text>
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.row}>
+                        <View style={styles.infoContainer}>
+                            <ProfileIcon style={styles.rowIcon}/>
+                            <Text style={styles.elemR1}>Fecha y Hora</Text>
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.rightTextStyle}>{matchCard.hour}hrs</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.row}>
+                        <View style={styles.infoContainer}>
+                            <ProfileIcon style={styles.rowIcon}/>
+                            <Text style={styles.elemR1}>Qaploins</Text>
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.rightTextStyle}>{matchCard.bet}</Text>
+                        </View>
+                    </View>
                 </View>
+                {this.props.uid !== matchCard.adversary1 &&
+                    <TouchableWithoutFeedback onPress={() => challengeUser(matchCard.adversary1, this.props.uid, matchCard.idMatch)}>
+                        <View style={styles.bottomButton}>
+                            <Text style={styles.bottomButtonText}>Retar</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                }
+                {this.props.uid === matchCard.adversary1 &&
+                    <TouchableWithoutFeedback onPress={() => console.log('I must be a function that cancel the match, but i`m a log')}>
+                        <View style={styles.bottomButton}>
+                            <Text style={styles.bottomButtonText}>Cancelar</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                }
             </SafeAreaView>
         );
     }
@@ -108,23 +106,58 @@ class PublicMatchCardScreen extends Component {
     }
 }
 
-function getGameIcon(game) {
-    // TODO: replace with a placeholder
-    let icon = Images.svg.qaploinsIcon;
-
-    if (game === "Halo") {
-        icon = Images.svg.gowIcon;
-    }
-    else {
-        icon = Images.svg.fifaIcon;
-    }
-
-    console.log("miau " + JSON.stringify(Images));
-
-    return icon;
+function getGameData(game, listOfAllGames) {
+    var gameData;
+    Object.keys(listOfAllGames).map((platformKey) => {
+        Object.keys(listOfAllGames[platformKey]).map((gameKey) => {
+            if (gameKey === game) {
+                gameData = gamesResources[listOfAllGames[platformKey][gameKey].replace(/ +/g, "")];
+            }
+        });
+    });
+    return gameData;
 }
 
+const gamesResources = {
+    Fifa17: {
+        Icon: Images.svg.fifaIcon,
+        name: 'FIFA 19'
+    },
+    ClashRoyale: {
+        Icon: Images.svg.clashIcon,
+        name: 'Clash Royale'
+    },
+    GearsofWar: {
+        Icon: Images.svg.gowIcon,
+        name: 'Gears of War 4'
+    },
+    Halo: {
+        Icon: Images.svg.haloIcon,
+        name: 'Halo 5'
+    },
+    Hearthstone: {
+        Icon: Images.svg.heartstoneIcon,
+        name: 'Hearthstone'
+    },
+    Overwatch: {
+        Icon: Images.svg.overwatchIcon,
+        name: 'Overwatch'
+    },
+    LOL: {
+        Icon: Images.svg.lolIcon,
+        name: 'League of legends'
+    },
+    Smashbrothers: {
+        Icon: Images.svg.smashIcon,
+        name: 'Smash Ultimate'
+    }
+};
 
+function mapStateToProps(state) {
+    return {
+        games: state.gamesReducer.games,
+        uid: state.userReducer.user.id
+    }
+}
 
-
-export default withNavigation(PublicMatchCardScreen);
+export default connect(mapStateToProps)(PublicMatchCardScreen);

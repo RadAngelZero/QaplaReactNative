@@ -1,99 +1,100 @@
+// diego -        29-07-2019 - us55 - Remove unnecessary styles and added new ones
 // josep.sanahuja - 15-07-2019 - us25 - Remv. cancelButton
 
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     container: {
-        backgroundColor: '#0e1222',
-        alignSelf: 'center',
-        width: '100%',
-        height: '100%',
+        flex: 1,
+        backgroundColor: '#0e1222'
     },
     rowContainer: {
-        flex:1,
-        width: '85%',
-        alignSelf: 'center',
+        marginRight: 30,
+        marginLeft: 30,
+        alignSelf: 'center'
     },
     imageHeader: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: '9%',
-    },
-    imageHeader2: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        marginTop: '9%',
+        marginTop: 55,
     },
     headerRow1: {
     	flexDirection: 'row',
-        justifyContent: 'center',
         alignItems: 'center',
-        marginTop: '3%',
-        marginBottom: '1%'
+        justifyContent: 'space-between',
+        marginTop: '5%'
     },
     hr1: {
        marginRight: '25%',
        width: '25',
        height: '25'
     },
-    hr2: {
-        width: '25',
-        height: '25'
+    gameName: {
+        fontSize: 16,
+        color: '#FFF',
+        textAlignVertical: 'center'
     },
     hr3: {
         marginLeft: '25%',
-        width: '25',
-        height: '25'
-    },
-    headerRow2: {
-        alignItems: 'center',
-        marginBottom: '5%'
+        alignSelf: 'flex-end'
     },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-start',
         marginTop: 20,
         borderBottomWidth: 1,
-        borderColor: 'green',
-        height: '3.5%'
-    },
-    col: {
-        flexDirection: 'column',
+        borderBottomColor: '#3DF9DF',
     },
     rowIcon: {
         width: '20',
         height: '20',
         marginRight: '6%'
     },
-    infoR1: {
+    infoContainer: {
     	flexDirection: 'row',
-    	justifyContent: 'flex-start',
-    },
-    infoR2: {
-    	flexDirection: 'row',
-    	justifyContent: 'flex-start'
+        marginBottom: 8
     },
     elemR1: {
     	marginRight: '10%',
-    	color: 'white'
-    },
-    marginBottom10: {
-        marginBottom: 10
-    },
-    leftTextStyle: {
         color: '#FFF',
-        marginLeft: 22
+        textAlignVertical: 'top',
+        fontSize: 12
     },
     rightTextStyle: {
         color: '#FFF',
-        
-    },
-    listContainer: {
-        flex: 1
+        textAlignVertical: 'top',
+        fontSize: 12
     },
     gamertag: {
-        color: 'white'
+        color: '#FFF',
+        textAlign: 'center',
+        fontSize: 12,
+        marginTop: 10
+    },
+    activeColor: {
+        color: '#3DF9DF'
+    },
+    bottomButton: {
+        marginTop: 177,
+        backgroundColor: '#FA2D79',
+        borderRadius: 100,
+        elevation: 6,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        marginRight: 80,
+        marginLeft: 80
+    },
+    bottomButtonText: {
+        paddingVertical: 14,
+        paddingHorizontal: 20,
+        fontSize: 16,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        color: '#FFF'
     }
 });

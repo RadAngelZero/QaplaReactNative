@@ -1,4 +1,4 @@
-// diego -        29-07-2019 - us55 - Remove unnecessary styles and added new ones
+// diego          - 29-07-2019 - us55 - Update styles to make screen look like the mockup of inVision iOS
 // josep.sanahuja - 15-07-2019 - us25 - Remv. cancelButton
 
 import { StyleSheet } from 'react-native';

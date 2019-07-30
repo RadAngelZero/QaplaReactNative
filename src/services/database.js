@@ -1,4 +1,4 @@
-// diego -          29-07-2019 - us55 - challengeUser method added
+// diego          - 29-07-2019 - us55 - challengeUser method added
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
 // diego          - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
 //for new references on database and errors detecrted on addGameToUser
@@ -174,70 +174,89 @@ export async function addGameToUser(uid, platform, gameKey, gamerTag) {
     }
     return Promise.resolve({ message: 'Juego agregado correctamente' });
 }
-
+/**
+ * Get the current commission that qapla set for each match
+ */
 export async function getCurrentQaplaCommission() {
-    return await commissionRef.once('value').then((commission) => commission.val());
+    try {
+        return await commissionRef.once('value').then((commission) => commission.val());
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 /**
  * Create a public match
- * @param {string} uid user identifier of the match creator
- * @param {number} bet bet of the match
- * @param {string} game gameKey of the game selected to play
+ * @param {string} uid INPUT user identifier of the match creator
+ * @param {number} bet INPUT bet of the match
+ * @param {string} game INPUT gameKey of the game selected to play
  */
 export async function createPublicMatch(uid, bet, game) {
-    const dateObject = new Date();
-    const hour = dateObject.getUTCHours() < 10 ? '0' + dateObject.getUTCHours() : dateObject.getUTCHours();
-    const minutes = dateObject.getUTCMinutes() < 10 ? '0' + dateObject.getUTCMinutes() : dateObject.getUTCMinutes();
-    const date = dateObject.getUTCDate() < 10 ? '0' + dateObject.getUTCDate() : dateObject.getUTCDate();
-    const month = dateObject.getUTCMonth()+1 < 10 ? '0' + (dateObject.getUTCMonth()+1) : (dateObject.getUTCMonth()+1);
-    const matchObject = {
-        adversary1: uid,
-        adversary2: '',
-        alphaNumericIdMatch: randomString(),
-        bet,
-        date: `${date}/${month}`,
-        game: game.gameKey,
-        hora: parseFloat(hour+minutes/100),
-        hour: `${hour}:${minutes}`,
-        hourResult: '',
-        numMatches: '1',
-        observations: '',
-        pickResult1: '',
-        pickResult2: '',
-        platform: game.platform,
-        resultPlay1: '0',
-        resultPlay2: '0',
-        timeStamp: TimeStamp,
-        winBet: bet*2
-    };
-    const createdMatch = await matchesRef.push(matchObject);
-    await matchesRef.child(createdMatch.key).update({ idMatch: createdMatch.key });
-    return createdMatch.key;
+    try {
+        const dateObject = new Date();
+        const hour = dateObject.getUTCHours() < 10 ? '0' + dateObject.getUTCHours() : dateObject.getUTCHours();
+        const minutes = dateObject.getUTCMinutes() < 10 ? '0' + dateObject.getUTCMinutes() : dateObject.getUTCMinutes();
+        const date = dateObject.getUTCDate() < 10 ? '0' + dateObject.getUTCDate() : dateObject.getUTCDate();
+        const month = dateObject.getUTCMonth()+1 < 10 ? '0' + (dateObject.getUTCMonth()+1) : (dateObject.getUTCMonth()+1);
+        const matchObject = {
+            adversary1: uid,
+            adversary2: '',
+            alphaNumericIdMatch: randomString(),
+            bet,
+            date: `${date}/${month}`,
+            game: game.gameKey,
+            hora: parseFloat(hour+minutes/100),
+            hour: `${hour}:${minutes}`,
+            hourResult: '',
+            numMatches: '1',
+            observations: '',
+            pickResult1: '',
+            pickResult2: '',
+            platform: game.platform,
+            resultPlay1: '0',
+            resultPlay2: '0',
+            timeStamp: TimeStamp,
+            // winBet is the bet multiplied x2 cause must be the sum of the bet of the two adversary's
+            winBet: bet*2
+        };
+        const createdMatch = await matchesRef.push(matchObject);
+        await matchesRef.child(createdMatch.key).update({ idMatch: createdMatch.key });
+        return createdMatch.key;
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 /**
  * Remove the specified quantity of qaploins from a user
- * @param {string} uid user identifier to substract the qaploins
- * @param {number} currentCredits The current number of qaploins of the user
- * @param {number} quantityToSubstract The amount of qaploins to substract
+ * @param {string} uid INPUT user identifier to substract the qaploins
+ * @param {number} currentCredits INPUT The current number of qaploins of the user
+ * @param {number} quantityToSubstract INPUT The amount of qaploins to substract
  */
 export async function substractQaploinsToUser(uid, currentCredits, quantityToSubstract) {
-    return await usersRef.child(uid).update({ credits: currentCredits - quantityToSubstract});
+    try {
+        return await usersRef.child(uid).update({ credits: currentCredits - quantityToSubstract});
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 /**
  * Notify to the creator of the match that an user wants to challenge him
- * @param {string} uidMatchCreator The user identifier of the user who has created the match
- * @param {string} uidMatchChallenger The user identifier of the user who wants to challenge the match
- * @param {string} idMatch The identifier of the match
+ * @param {string} uidMatchCreator INPUT The user identifier of the user who has created the match
+ * @param {string} uidMatchChallenger INPUT The user identifier of the user who wants to challenge the match
+ * @param {string} idMatch INPUT The identifier of the match
  */
 export async function challengeUser(uidMatchCreator, uidMatchChallenger, idMatch) {
-    return await usersRef.child(uidMatchCreator).child('notificationMatch').push({
-        idEquipo: '',
-        idMatch,
-        idUserSend: uidMatchChallenger,
-        type: 'reta',
-        userName: await getUserNameWithUID(uidMatchChallenger)
-    });
+    try {
+        return await usersRef.child(uidMatchCreator).child('notificationMatch').push({
+            idEquipo: '',
+            idMatch,
+            idUserSend: uidMatchChallenger,
+            type: 'reta',
+            userName: await getUserNameWithUID(uidMatchChallenger)
+        });
+    } catch (error) {
+        console.error(error);
+    }
 }

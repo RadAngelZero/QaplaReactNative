@@ -1,6 +1,4 @@
-// diego -        29-07-2019 - us55 - Reorganization of the component
-//                                    Removed getGameIcon function and replaced with getGameData
-//                                    Button's 'Retar' and 'Cancelar' added with login to challenge
+// diego -        29-07-2019 - us55 - Challenge match logic added
 
 import React, { Component } from 'react';
 import { View, Text, SafeAreaView, TouchableWithoutFeedback } from 'react-native'
@@ -9,11 +7,24 @@ import styles from './style'
 
 import Images from '../../../assets/images'
 import { challengeUser } from '../../services/database';
+import { isUserLogged } from '../../services/auth';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
 
 class PublicMatchCardScreen extends Component {
+    tryToChallengeUser() {
+        //If the user is logged
+        if (isUserLogged()) {
+            //Get the info of the match
+            const matchCard = this.props.navigation.getParam('matchCard');
+            //Challenge the user to play the match
+            challengeUser(matchCard.adversary1, this.props.uid, matchCard.idMatch);
+        } else {
+            //If the user is unlogged then redirect the user to Signin Screen
+            this.props.navigation.navigate('SignIn');
+        }
+    }
     render() {
         const matchCard = this.props.navigation.getParam('matchCard');
         const gameData = getGameData(matchCard.game, this.props.games);
@@ -72,7 +83,7 @@ class PublicMatchCardScreen extends Component {
                     </View>
                 </View>
                 {this.props.uid !== matchCard.adversary1 &&
-                    <TouchableWithoutFeedback onPress={() => challengeUser(matchCard.adversary1, this.props.uid, matchCard.idMatch)}>
+                    <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Retar</Text>
                         </View>
@@ -107,7 +118,7 @@ class PublicMatchCardScreen extends Component {
 }
 
 function getGameData(game, listOfAllGames) {
-    var gameData;
+    let gameData;
     Object.keys(listOfAllGames).map((platformKey) => {
         Object.keys(listOfAllGames[platformKey]).map((gameKey) => {
             if (gameKey === game) {

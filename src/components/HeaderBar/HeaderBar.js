@@ -1,3 +1,5 @@
+// josep.sanahuja    - 30-07-2019 - us59 - + gotoScreen()
+
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 import Svg from 'react-native-svg';
@@ -11,10 +13,13 @@ class HeaderBar extends Component {
         return (
             <View style={styles.container} testID='container'>
                 <View style={styles.imageContainer}>
-                    <TouchableWithoutFeedback style={styles.imageAndButtonDimensions} testID='NotificationButton'>
-                        <Svg>
+                    <TouchableWithoutFeedback
+                        style={styles.imageAndButtonDimensions} 
+                        onPress={gotoScreen.bind(this, 'Mock2')}
+                        testID='NotificationButton'>
+                        <View>
                             <NotificationIcon height={24} width={24} />
-                        </Svg>
+                        </View>
                     </TouchableWithoutFeedback>
                 </View>
                 <View style={styles.textContainer} testID='textContainer'>
@@ -24,6 +29,18 @@ class HeaderBar extends Component {
             </View>
         );
     }
+}
+
+/**
+ * Description:
+ * Navigate to the screen from param1
+ *
+ * @param {string} screenName name of the screen specified in Router
+ *
+ */
+function gotoScreen(screenName) {
+    console.log("Miau Miau");
+    this.props.navigation.navigate(screenName);
 }
 
 export default HeaderBar;

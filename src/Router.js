@@ -1,3 +1,4 @@
+// diego -         01-08-2019 - us58 - NotificationTabNavigator created
 // diego -         25-07-2019 - us31 - added CheckOutPaymentScreen and unnecessary code removed
 import React from 'react'
 
@@ -20,18 +21,58 @@ import ChooseMatchTypeScreen from './screens/ChooseMatchTypeScreen/ChooseMatchTy
 import LoadGamesScreen from './screens/LoadGamesScreen/LoadGamesScreen';
 import ChooseOpponentScreen from './screens/ChooseOpponentScreen/ChooseOpponentScreen';
 import SetBetScreen from './screens/SetBetScreen/SetBetScreen';
+import CheckOutPaymentScreen from './screens/CheckOutPaymentScreen/CheckOutPaymentScreen';
+import ActivityNotificationsScreen from './screens/ActivityNotificationsScreen/ActivityNotificationsScreen';
+import RetasNotificationsScreen from './screens/RetasNotificationsScreen/RetasNotificationsScreen';
 
 // Mock screen
 import MockScreen2 from './screens/MockScreen2/MockScreen2'
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
-import CheckOutPaymentScreen from './screens/CheckOutPaymentScreen/CheckOutPaymentScreen';
+import NotificationsHeader from './components/NotificationsHeader/NotificationsHeader';
+import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeForNotificationTab';
 
 // Svg Icons
 const Mock1Icon = Images.svg.favouritesIcon;
 const Mock2Icon = Images.svg.testIcon;
 const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
+
+const NotificationTabNavigator = createMaterialTopTabNavigator(
+  {
+    NotificationActividad: {
+      screen: ActivityNotificationsScreen,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Actividad'
+      })
+    },
+    NotificationRetas: {
+      screen: RetasNotificationsScreen,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Retas',
+        tabBarIcon: ({ tintColor, focused }) => (
+          <BadgeForNotificationTab />
+        )
+      })
+    }
+  },
+  {
+    initialRouteName: 'NotificationActividad',
+    tabBarOptions: {
+      showIcon: true,
+      style: { backgroundColor: '#0C1021' },
+      activeTintColor: '#36E5CE',
+      inactiveTintColor: 'gray',
+      indicatorStyle: {
+        borderBottomColor: '#36E5CE',
+        borderBottomWidth: 2,
+      },
+      tabStyle: {
+        flexDirection: 'row-reverse'
+      }
+    },
+  }
+);
 
 const RetasTabNavigator = createMaterialTopTabNavigator(
   {
@@ -162,7 +203,7 @@ export default class Router extends React.Component {
   render() {
     // or not shown
     const RootStack = createStackNavigator(
-    {
+      {
       SignIn: {
         screen: SignInScreen,
         navigationOptions: {
@@ -186,13 +227,18 @@ export default class Router extends React.Component {
         navigationOptions: {
           header: null
         }
-      } 
-
+      },
+      Notifications: {
+        screen: NotificationTabNavigator,
+        navigationOptions: {
+          header: props => <NotificationsHeader {...props} />
+        }
+      }
     },
     {
       initialRouteName:  'Home'
     }
-    );
+  );
 
     const MainNavigator = createSwitchNavigator(
       {
@@ -210,6 +256,6 @@ export default class Router extends React.Component {
     const AppContainer = createAppContainer(MainNavigator);
 
     // render de main router entry point for the app
-    return <AppContainer/>
+    return <AppContainer />
   }
 }

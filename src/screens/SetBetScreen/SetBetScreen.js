@@ -4,26 +4,50 @@
 // diego -          15-07-2019 - us 27 - added increment bet option
 
 import React, { Component } from 'react';
-import { SafeAreaView, View, Text, BackHandler, TouchableWithoutFeedback } from 'react-native';
-import Svg from 'react-native-svg';
-import { connect } from 'react-redux';
+
+import {
+    SafeAreaView,
+    View,
+    Text,
+    BackHandler,
+    TouchableWithoutFeedback
+} from 'react-native';
+
 import styles from './style';
+import { connect } from 'react-redux';
+import Svg from 'react-native-svg';
 import images from './../../../assets/images';
-import { getCurrentQaplaCommission, createPublicMatch, substractQaploinsToUser } from '../../services/database';
+
+import {
+    storeData,
+    retrieveData
+} from '@utilities/persistance'
+
+import {
+    getCurrentQaplaCommission,
+    createPublicMatch,
+    substractQaploinsToUser
+} from '../../services/database';
+
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
-const QaploinIcon = images.svg.qaploinsIcon;
-const LessQaploinsIcon = images.svg.lessQaploins;
-const MoreQaploinsIcon = images.svg.moreQaploins;
+const QaploinIcon       = images.svg.qaploinsIcon;
+const LessQaploinsIcon  = images.svg.lessQaploins;
+const MoreQaploinsIcon  = images.svg.moreQaploins;
 
 class SetBetScreen extends Component {
-    state = {
-        commission: 10,
-        currentBet: 150,
-        open: false,
-        loading: false
-    };
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            commission: 10,
+            currentBet: 150,
+            open: false,
+            loading: false,
+            timeActionMsgOpen: false
+        };
+    }
 
     async componentWillMount() {
         const com = await getCurrentQaplaCommission()
@@ -60,12 +84,23 @@ class SetBetScreen extends Component {
     }
 
     async createMatch() {
-        if (!this.state.loading && this.props.userQaploins >= this.state.currentBet) {
+       if (!this.state.loading && this.props.userQaploins >= this.state.currentBet) {
             this.setState({ loading: true });
             try {
                 await createPublicMatch(this.props.uid, this.state.currentBet, this.props.selectedGame);
                 await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet);
-                this.props.navigation.navigate('Publicas');
+                
+                let openMsgFlag = await JSON.parse(retrieveData('create-match-time-action-msg'));
+
+                if (!this.state.timeActionMsgOpen && openMsgFlag) {
+                    // Toogle modal state to open
+                    this.setState({
+                        timeActionMsgOpen: !this.state.timeActionMsgOpen
+                    })
+                }
+                else{
+                    this.props.navigation.navigate('Publicas');
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -78,6 +113,26 @@ class SetBetScreen extends Component {
         return (
             <SafeAreaView style={styles.container}>
                 <BuyQaploinsModal open={this.state.open} onClose={() => this.setState({ open: false })} />
+                <Modal open={this.state.timeActionMsgOpen} onClose={() => this.setState({ timeActionMsgOpen: false })}>
+                    <View style={styles.container}>
+                        <QaploinIcon height={40} width={40} />
+                        <Text style={styles.qaploinsToBuyText}>750</Text>
+                        <Text style={styles.qaploinsText}>Qaploins</Text>
+                        <Text style={styles.paragraph}>
+                            Puedes devolver los 750 Qaploins cuando quieras ¡y te haremos un reembolso!
+                        </Text>
+                        <TouchableWithoutFeedback onPress={() => {
+                            // Store flag that indicate that the msg have to be shown
+                            storeData('create-match-time-action-msg');
+                            // Navigate to the Public Match Feed screen
+                            this.props.navigation.navigate('Publicas')}}>
+                            <View style={styles.buyButton}>
+                                <Text style={styles.priceText}>$50 MXN</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <Text style={styles.smallText}>Costo por devolución $10 MXN</Text>
+                    </View>
+                </Modal>
                 <View style={styles.headerOptions}>
                     <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
                     <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>

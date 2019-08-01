@@ -15,16 +15,17 @@ import Svg from 'react-native-svg';
 import images from './../../../assets/images';
 
 const NotificationIcon = images.svg.notificationIcon;
-const {navigate}       = this.props.navigation;
 
 class HeaderBar extends Component {
     render() {
+        const {navigate} = this.props.navigation;
+
         return (
             <View style={styles.container} testID='container'>
                 <View style={styles.imageContainer}>
                     <TouchableWithoutFeedback
                         style={styles.imageAndButtonDimensions} 
-                        onPress={navigate('Mock2')}
+                        onPress={() => navigate('Mock2')}
                         testID='NotificationButton'>
                         <View>
                             <NotificationIcon height={24} width={24} />

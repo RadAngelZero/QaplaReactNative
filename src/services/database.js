@@ -1,6 +1,6 @@
 // diego          - 29-07-2019 - us55 - challengeUser method added
-// josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
 // diego          - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
+// josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
 //for new references on database and errors detecrted on addGameToUser
 // diego -          15-07-2019 - Create commissionRef and getCurrentQaplaCommission
 // diego -          16-07-2019 - Create createPublicMatch and bug fixed on addGameToUser

@@ -4,6 +4,7 @@
 // diego -          15-07-2019 - Create commissionRef and getCurrentQaplaCommission
 // diego -          16-07-2019 - Create createPublicMatch and bug fixed on addGameToUser
 // diego -          16-07-2019 - us 34 - Substract of qaploins logic implemented
+// diego -          01-08-2019 - us58 - Add logic to load info for notifications
 import { database, TimeStamp } from "../utilities/firebase";
 import { randomString } from "../utilities/utils";
 
@@ -17,7 +18,12 @@ export const commissionRef = database.ref('/Commission');
  * @param {string} Uid User id from firebase
  */
 export async function getUserNameWithUID(Uid) {
-    return await usersRef.child(Uid).child('userName').once('value').then((data) => data.val());
+    try {
+        const userName = await usersRef.child(Uid).child('userName').once('value');
+        return userName.val();
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 /**
@@ -216,4 +222,80 @@ export async function substractQaploinsToUser(uid, currentCredits, quantityToSub
     }, (rejected) => {
         return Promise.reject(rejected);
     });
+}
+
+/**
+ * Return the URL of the given user
+ * @param {string} uid user identifier from firebase
+ */
+export async function getProfileImageWithUID(uid) {
+    try {
+        return (await usersRef.child(uid).child('photoUrl').once('value')).val();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+/**
+ * Get the game name based on the matchId
+ * @param {string} matchId Match identifier in the database
+ */
+export async function getGameNameOfMatch(matchId) {
+    try {
+        let game = 'Juego no encontrado';
+        const gameKey = await matchesRef.child(matchId).child('game').once('value');
+        const platform = await matchesRef.child(matchId).child('platform').once('value');
+        switch(platform.val()) {
+            case 'pc_white':
+                if (gameKey.val() === 'aClash') {
+                    game = 'Clash Royale';
+                } else if (gameKey.val() === 'pcLol') {
+                    game = 'LOL';
+                } else if (gameKey.val() === 'pHearth') {
+                    game = 'Hearthstone';
+                } else if (gameKey.val() === 'pOver') {
+                    game = 'Overwatch';
+                }
+                break;
+            case 'ps4_white':
+                if (gameKey.val() === 'psFifa') {
+                    game = 'FIFA 19';
+                } else if (gameKey.val() === 'psOver') {
+                    game = 'Overwatch';
+                }
+                break;
+            case 'switch_white':
+                    if (gameKey.val() === 'swSmash') {
+                        game = 'Smash brothers';
+                    }
+                break;
+            case 'xbox_white':
+                if (gameKey.val() === 'xFifa') {
+                    game = 'FIFA 19';
+                } else if (gameKey.val() === 'xGears') {
+                    game = 'Gears of War';
+                } else if (gameKey.val() === 'xHalo') {
+                    game = 'Halo';
+                } else if (gameKey.val() === 'xOver') {
+                    game = 'Overwatch';
+                }
+                break;
+        }
+        return game;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+/**
+ * Return the data of a match
+ * @param {string} matchId Identifier of the match in the database
+ */
+export async function getMatchWitMatchId(matchId) {
+    try {
+        const match = await matchesRef.child(matchId).once('value');
+        return match.val();
+    } catch (error) {
+        console.error(error);
+    }
 }

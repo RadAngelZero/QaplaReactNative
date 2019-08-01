@@ -13,10 +13,9 @@ import { styles } from './style';
 
 import Svg from 'react-native-svg';
 import images from './../../../assets/images';
-import navigateToScreen from './../../utilities/utils';
 
 const NotificationIcon = images.svg.notificationIcon;
-const {navigate} = this.props.navigation;
+const {navigate}       = this.props.navigation;
 
 class HeaderBar extends Component {
     render() {

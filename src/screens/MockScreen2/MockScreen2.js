@@ -97,8 +97,6 @@ function cancelMatch(idMatch) {
  *
  */
 function acceptChallengeRequest(idChallenged, idNotification) {
-	console.log("[MockScreen2] - accepChallengeRequest : Miau Miau");
-
 	let cloudFunc = functions.httpsCallable('acceptChallengeRequest');
 
 	try {

@@ -1,12 +1,22 @@
-// josep.sanahuja    - 30-07-2019 - us59 - + gotoScreen()
+// josep.sanahuja    - 30-07-2019 - us59 - + navigate('Mock2')
 
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
-import Svg from 'react-native-svg';
-import images from './../../../assets/images';
+
+import {
+    View,
+    Image,
+    Text,
+    TouchableWithoutFeedback 
+} from 'react-native';
+
 import { styles } from './style';
 
+import Svg from 'react-native-svg';
+import images from './../../../assets/images';
+import navigateToScreen from './../../utilities/utils';
+
 const NotificationIcon = images.svg.notificationIcon;
+const {navigate} = this.props.navigation;
 
 class HeaderBar extends Component {
     render() {
@@ -15,7 +25,7 @@ class HeaderBar extends Component {
                 <View style={styles.imageContainer}>
                     <TouchableWithoutFeedback
                         style={styles.imageAndButtonDimensions} 
-                        onPress={gotoScreen.bind(this, 'Mock2')}
+                        onPress={navigate('Mock2')}
                         testID='NotificationButton'>
                         <View>
                             <NotificationIcon height={24} width={24} />
@@ -29,18 +39,6 @@ class HeaderBar extends Component {
             </View>
         );
     }
-}
-
-/**
- * Description:
- * Navigate to the screen from param1
- *
- * @param {string} screenName name of the screen specified in Router
- *
- */
-function gotoScreen(screenName) {
-    console.log("Miau Miau");
-    this.props.navigation.navigate(screenName);
 }
 
 export default HeaderBar;

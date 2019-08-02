@@ -1,4 +1,5 @@
 // diego -          01-08-2019 - us58 - File creation
+
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import styles from './style';

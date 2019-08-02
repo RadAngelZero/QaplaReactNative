@@ -1,4 +1,5 @@
 // diego -          01-08-2019 - us58 - Navigation implemented to notificationRouter
+
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import images from './../../../assets/images';
@@ -11,7 +12,9 @@ class HeaderBar extends Component {
         return (
             <View style={styles.container} testID='container'>
                 <View style={styles.imageContainer}>
-                    <TouchableWithoutFeedback style={styles.imageAndButtonDimensions} onPress={() => this.props.navigation.navigate('Notifications')} testID='NotificationButton'>
+                    <TouchableWithoutFeedback style={styles.imageAndButtonDimensions}
+                        onPress={() => this.props.navigation.navigate('Notifications')}
+                        testID='NotificationButton'>
                         <View>
                             <NotificationIcon height={24} width={24} />
                         </View>

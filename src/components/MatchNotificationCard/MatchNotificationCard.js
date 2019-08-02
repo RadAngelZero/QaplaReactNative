@@ -1,15 +1,29 @@
 // diego -          01-08-2019 - us58 - File creation
+
 import React, { Component } from 'react';
-import { View, Image, TouchableWithoutFeedback, Text, ActivityIndicator } from 'react-native';
+import {
+    View,
+    Image,
+    TouchableWithoutFeedback,
+    Text,
+    ActivityIndicator
+} from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 import styles from './style';
-import { getProfileImageWithUID, getGameNameOfMatch, getMatchWitMatchId } from '../../services/database';
+import {
+    getProfileImageWithUID,
+    getGameNameOfMatch,
+    getMatchWitMatchId
+} from '../../services/database';
 
 class MatchNotificationCard extends Component {
     state = {
-        avatar: null, //We use null by default because is the same value that getProfileImageWithUID returns if the user don't have profile image
-        //In this way the notification loads faster, was implemented because some performance problemas were found using by default value: ''
+        /*
+            We use null by default because is the same value that getProfileImageWithUID returns if the user don't have profile image
+            In this way the notification loads faster, was implemented because some performance problemas were found using by default value: ''
+        */
+        avatar: null,
         userName: '',
         gameName: '',
         loading: false
@@ -28,10 +42,12 @@ class MatchNotificationCard extends Component {
     }
 
     async fetchNotificationData() {
+        const avatar = await getProfileImageWithUID(this.props.notification.idUserSend);
+        const gameName = await getGameNameOfMatch(this.props.notification.idMatch);
         this.setState({
-            avatar: await getProfileImageWithUID(this.props.notification.idUserSend),
+            avatar,
             userName: this.props.notification.userName,
-            gameName: await getGameNameOfMatch(this.props.notification.idMatch)
+            gameName
         });
     }
 
@@ -66,7 +82,7 @@ class MatchNotificationCard extends Component {
                             <View style={styles.arrowContainer}>
                                 {this.state.loading ?
                                     <ActivityIndicator size='small' color='rgb(61, 249, 223)' />
-                                :   
+                                    :
                                     <Text style={styles.arrow}>
                                         {/*I know look like an error but we need to render the grater than character here*/}
                                         >

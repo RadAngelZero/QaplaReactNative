@@ -1,4 +1,5 @@
-// diego -          01-08-2019 - us58 - Change the way to load the user data and the way for listen changes
+// diego -          01-08-2019 - us58 - Put new constants to detect the different ways to update the user data
+
 import { UPDATE_USER_DATA, REMOVE_USER_DATA } from '../utilities/Constants';
 
 const initialState = {

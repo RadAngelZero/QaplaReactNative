@@ -1,6 +1,10 @@
 // diego -          01-08-2019 - us58 - File creation
+
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import {
+    View,
+    Text
+} from 'react-native';
 import { connect } from 'react-redux';
 import styles from './style';
 
@@ -21,13 +25,12 @@ class BadgeForNotificationTab extends Component {
 }
 
 function mapDispatchToProps(state) {
+    let retasCount = 0
     if (Object.keys(state.userReducer.user).length > 0 && state.userReducer.user.hasOwnProperty('notificationMatch')) {
-        return {
-            retasCount: Object.keys(state.userReducer.user.notificationMatch).length
-        }
+        retasCount = Object.keys(state.userReducer.user.notificationMatch).length;
     }
     return {
-        retasCount: 0
+        retasCount
     }
 }
 

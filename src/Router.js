@@ -1,5 +1,6 @@
-// diego -         01-08-2019 - us58 - NotificationTabNavigator created
+// diego -         01-08-2019 - us58 - created NotificationTabNavigator
 // diego -         25-07-2019 - us31 - added CheckOutPaymentScreen and unnecessary code removed
+
 import React from 'react'
 
 import {View} from 'react-native'
@@ -204,41 +205,41 @@ export default class Router extends React.Component {
     // or not shown
     const RootStack = createStackNavigator(
       {
-      SignIn: {
-        screen: SignInScreen,
-        navigationOptions: {
-          header: null
+        SignIn: {
+          screen: SignInScreen,
+          navigationOptions: {
+            header: null
+          }
+        },
+        Login: {
+          screen: LoginWithEmailScreen,
+          navigationOptions: {
+            header: null
+          }
+        },
+        Home: {
+          screen: AppWithHeaderStackNavigator,
+          navigationOptions: {
+            header: props => <HeaderBar {...props} />
+          }
+        },
+        NoHeader: {
+          screen: AppNoHeaderStackNavigator,
+          navigationOptions: {
+            header: null
+          }
+        },
+        Notifications: {
+          screen: NotificationTabNavigator,
+          navigationOptions: {
+            header: props => <NotificationsHeader {...props} />
+          }
         }
       },
-      Login: {
-        screen: LoginWithEmailScreen,
-        navigationOptions: {
-          header: null
-        }
-      },
-      Home: {
-        screen: AppWithHeaderStackNavigator,
-        navigationOptions: {
-          header: props => <HeaderBar {...props} />
-        }
-      },
-      NoHeader: {
-        screen: AppNoHeaderStackNavigator,
-        navigationOptions: {
-          header: null
-        }
-      },
-      Notifications: {
-        screen: NotificationTabNavigator,
-        navigationOptions: {
-          header: props => <NotificationsHeader {...props} />
-        }
+      {
+        initialRouteName:  'Home'
       }
-    },
-    {
-      initialRouteName:  'Home'
-    }
-  );
+    );
 
     const MainNavigator = createSwitchNavigator(
       {

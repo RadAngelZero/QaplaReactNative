@@ -42,13 +42,17 @@ class MatchNotificationCard extends Component {
     }
 
     async fetchNotificationData() {
-        const avatar = await getProfileImageWithUID(this.props.notification.idUserSend);
-        const gameName = await getGameNameOfMatch(this.props.notification.idMatch);
-        this.setState({
-            avatar,
-            userName: this.props.notification.userName,
-            gameName
-        });
+        try {
+            const avatar = await getProfileImageWithUID(this.props.notification.idUserSend);
+            const gameName = await getGameNameOfMatch(this.props.notification.idMatch);
+            this.setState({
+                avatar,
+                userName: this.props.notification.userName,
+                gameName
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     render() {

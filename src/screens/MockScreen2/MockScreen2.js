@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 
 import styles from './style'
-import {database, functions, auth} from '../../utilities/firebase'
+import {functions} from '../../utilities/firebase'
 
 export default class MockScreen2 extends React.Component {
   constructor(props) {
@@ -23,7 +23,6 @@ export default class MockScreen2 extends React.Component {
   }
 
   render() {
-	auth.signOut();
     return (
        <View style={styles.container}>
         	<Text >Miau!</Text>

@@ -1,4 +1,5 @@
 // diego -          01-08-2019 - us58 - Navigation implemented to notificationRouter
+// josep.sanahuja    - 30-07-2019 - us59 - + navigate('Mock2')
 
 import React, { Component } from 'react';
 import {

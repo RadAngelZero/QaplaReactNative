@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "614138734637-fdr2shoks0p7qmul6alld00881lkt4qs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qaplareactnative",
+            "certificate_hash": "4e279d145e3cc5088d790a54c8e227c2184f03a2"
+          }
+        },
+        {
           "client_id": "614138734637-rgvqccs2sk27ilb8nklg65sdcm33ka8v.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -30,6 +38,13 @@
             {
               "client_id": "614138734637-rgvqccs2sk27ilb8nklg65sdcm33ka8v.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "614138734637-ru8iav3e6bt8bnnd45g1i1ifk2e1itc2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.QaplaReactNative"
+              }
             }
           ]
         }

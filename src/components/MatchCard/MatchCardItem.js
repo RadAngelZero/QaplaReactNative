@@ -1,3 +1,5 @@
+// diego -        29-07-2019 - us55 - Remove unnecessary log from on press event
+
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { styles } from './style';
@@ -9,7 +11,7 @@ class MatchCardItem extends Component {
         const {navigate} = this.props.navigation;
 
         return (
-            <TouchableWithoutFeedback onPress={() => {console.log("Match card Item" + this.props.idMatch); navigate('MatchCard', {matchCard: this.props})}}>
+            <TouchableWithoutFeedback onPress={() => navigate('MatchCard', {matchCard: this.props})}>
                 <View style={styles.container}>
                         <>
                             <View style={styles.row}>

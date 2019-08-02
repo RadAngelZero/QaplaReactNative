@@ -19,7 +19,7 @@ class HeaderBar extends Component {
             <View style={styles.container} testID='container'>
                 <View style={styles.imageContainer}>
                     <TouchableWithoutFeedback style={styles.imageAndButtonDimensions}
-                        onPress={() => this.props.navigation.navigate('Notifications')}
+                        onPress={() => navigate('Notifications')}
                         testID='NotificationButton'>
                         <View>
                             <NotificationIcon height={24} width={24} />

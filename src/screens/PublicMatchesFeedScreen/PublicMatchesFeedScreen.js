@@ -1,3 +1,4 @@
+// diego          - 05-08-2019 - us   - Bug fixed: the matches array was not deleted when willBlur was called
 // josep.sanahuja - 08-07-2019 - us83 - + 'userName-creation-scenario' asyncStg flag & 'constructor'
 
 import React, { Component } from 'react';
@@ -10,15 +11,9 @@ import { isUserLogged } from '../../services/auth';
 import { storeData } from '../../utilities/persistance';
 
 class PublicMatchesFeedScreen extends Component {
-    
-    constructor(props) {
-      super(props);
-    
-      this. state = {
+    state = {
         matches: []
-      };
-    }
-   
+    };
 
     componentWillMount(){
         this.list = [
@@ -26,20 +21,22 @@ class PublicMatchesFeedScreen extends Component {
              * This event is triggered when the user goes to other screen
              */
             this.props.navigation.addListener(
-                'didBlur',
+                'willBlur',
                 (payload) => {
                     /**
                      * Remove the listeners on matchesRef and clean the state
                      */
                     matchesRef.off();
-                    this.setState({ matches: [] });
+                    var stateCopy = [...this.state.matches];
+                    stateCopy.splice(0);
+                    this.setState({ matches: stateCopy });
                 }
             ),
             /**
              * This event is triggered when the user enter (focus) on this screen
              */
             this.props.navigation.addListener(
-                'didFocus',
+                'willFocus',
                 (payload) => {
                     /**
                      * Add a listener of type child_added. In the first load bring all the
@@ -67,7 +64,7 @@ class PublicMatchesFeedScreen extends Component {
                             winBet,
                             //Get the userName from a external function because the match object only have the UID
                             userName: await getUserNameWithUID(newPublicMatch.val().adversary1).then((userName) => userName),
-                            gamerTag: await getGamerTagWithUID(newPublicMatch.val().adversary1, newPublicMatch.val().game, newPublicMatch.val().platform).then((gamerTag) => gamerTag)
+                            gamerTag: await getGamerTagWithUID(newPublicMatch.val().adversary1, newPublicMatch.val().game, newPublicMatch.val().platform)
                         };
                         this.setState((state) => {
                             //Add the matchObject to the matches array of the state

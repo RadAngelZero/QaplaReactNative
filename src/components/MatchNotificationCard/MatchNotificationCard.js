@@ -1,4 +1,5 @@
-// diego -          01-08-2019 - us58 - File creation
+// diego          - 05-08-2019 - us60 - Add declineMatch logic
+// diego          - 01-08-2019 - us58 - File creation
 
 import React, { Component } from 'react';
 import {
@@ -14,7 +15,8 @@ import styles from './style';
 import {
     getProfileImageWithUID,
     getGameNameOfMatch,
-    getMatchWitMatchId
+    getMatchWitMatchId,
+    declineMatch
 } from '../../services/database';
 
 class MatchNotificationCard extends Component {
@@ -51,6 +53,10 @@ class MatchNotificationCard extends Component {
         });
     }
 
+    tryToDeclineMatch() {
+        declineMatch(this.props.uid, this.props.notificationKey);
+    }
+
     render() {
         return (
             <>
@@ -71,7 +77,7 @@ class MatchNotificationCard extends Component {
                                         <Text style={styles.infoButtonText}>Aceptar</Text>
                                     </View>
                                 </TouchableWithoutFeedback>
-                                <TouchableWithoutFeedback>
+                                <TouchableWithoutFeedback onPress={() => this.tryToDeclineMatch()}>
                                     <View style={[styles.infoDeclineButton, styles.infoButton]}>
                                         <Text style={styles.infoButtonText}>Rechazar</Text>
                                     </View>

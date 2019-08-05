@@ -1,4 +1,5 @@
-// diego -          01-08-2019 - us58 - File creation
+// diego          - 05-08-2019 -us    - Accept challenge logic added
+// diego          - 01-08-2019 - us58 - File creation
 
 import React, { Component } from 'react';
 import {
@@ -16,6 +17,7 @@ import {
     getGameNameOfMatch,
     getMatchWitMatchId
 } from '../../services/database';
+import { acceptChallengeRequest } from '../../services/functions';
 
 class MatchNotificationCard extends Component {
     state = {
@@ -70,7 +72,7 @@ class MatchNotificationCard extends Component {
                         <View style={styles.infoContainer}>
                             <Text style={styles.infoText}>¡{this.state.userName} quiere desafiar tu reta de {this.state.gameName}!</Text>
                             <View style={styles.infoButtonsMenu}>
-                                <TouchableWithoutFeedback>
+                                <TouchableWithoutFeedback onPress={() => acceptChallengeRequest(this.props.notificationKey)}>
                                     <View style={[styles.infoAcceptButton, styles.infoButton]}>
                                         <Text style={styles.infoButtonText}>Aceptar</Text>
                                     </View>

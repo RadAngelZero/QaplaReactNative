@@ -1,4 +1,4 @@
-// diego          - 05-08-2019 -us    - Cancel match logic added
+// diego          - 05-08-2019 - us58    - Cancel match logic added
 // diego          - 29-07-2019 - us55 - Challenge match logic added
 
 import React, { Component } from 'react';

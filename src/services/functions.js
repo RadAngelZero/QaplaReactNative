@@ -1,4 +1,4 @@
-// diego          - 05-08-2019 -us    - File creation
+// diego          - 05-08-2019 - us58    - File creation
 
 import { functions, auth } from '../utilities/firebase';
 

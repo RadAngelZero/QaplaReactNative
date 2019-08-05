@@ -1,4 +1,4 @@
-// diego          - 05-08-2019 - us   - Bug fixed: the matches array was not deleted when willBlur was called
+// diego          - 05-08-2019 - us58   - Bug fixed: the matches array was not deleted when willBlur was called
 // josep.sanahuja - 08-07-2019 - us83 - + 'userName-creation-scenario' asyncStg flag & 'constructor'
 
 import React, { Component } from 'react';

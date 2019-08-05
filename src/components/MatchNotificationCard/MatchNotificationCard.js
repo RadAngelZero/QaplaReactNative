@@ -1,4 +1,4 @@
-// diego          - 05-08-2019 -us    - Accept challenge logic added
+// diego          - 05-08-2019 - us58    - Accept challenge logic added
 // diego          - 01-08-2019 - us58 - File creation
 
 import React, { Component } from 'react';

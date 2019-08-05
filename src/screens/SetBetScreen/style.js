@@ -139,5 +139,9 @@ export default styles = StyleSheet.create({
         color: '#909299',
         fontSize: 10,
         textAlign: 'justify'
+    },
+    marginSmallText: {
+        marginBottom: '2%',
+        marginTop: '20%'
     }
 });

@@ -111,11 +111,11 @@ class SetBetScreen extends Component {
                 // When creating a match 'this.state.timeActionMsgOpen' is expected to be false, 
                 // otherwise when loading the Component the Modal would automatically open, which is
                 // a behaviour we don't want. 
-                if (!this.state.timeActionMsgOpen && (openMsgFlag || openMsgFlag === null)) {
-                    
-                    // Toogle modal state to open
+                if (openMsgFlag || openMsgFlag === null) {
+
+                    // Tooggle modal state to open
                     this.setState({
-                        timeActionMsgOpen: !this.state.timeActionMsgOpen
+                        timeActionMsgOpen: true
                     })
                 }
                 else{
@@ -139,36 +139,44 @@ class SetBetScreen extends Component {
         });
     }
 
+    /**
+     * Description:
+     * It checks if the modal will be shown in future occasions and store the configuration so 
+     * that it remains in the future. It redirects to 'Public Matches Feed' screen.
+     *
+     */
+    confirmModal() {
+        // If switch is activated then that means that this screen should
+        // not show up again when creating a Match. This is why we set flag value
+        // to false, indicating that the modal should not open again.
+        if (this.state.switchTA) {
+            storeData('create-match-time-action-msg', JSON.stringify(false));
+        }
+
+        this.props.navigation.navigate('Publicas')
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.container}>
                 <BuyQaploinsModal open={this.state.open} onClose={() => this.setState({ open: false })} />
                 <Modal open={this.state.timeActionMsgOpen} onClose={() => {
                     this.setState({
-                        timeActionMsgOpen: false 
-                    });
-                    this.setState({
-                        loading: false })
-                    }}>
+                        timeActionMsgOpen: false,
+                        loading: false
+                    })}}>
                     <View style={styles.containerMsgModal}>
                         <Text style={styles.headerText}>Recuerda</Text>
                         <Text style={styles.paragraph}>
                             La Reta expirará después de 10 minutos si no recibe y se acepta un desafio de otro jugador.                  
                         </Text>
-                        <Text style={[styles.smallText, {marginBottom: '2%', marginTop: '20%'}]}>No volver a mostrar este mensaje</Text>
+                        <Text style={[styles.smallText, styles.marginSmallText]}>No volver a mostrar este mensaje</Text>
                         <Switch
                             style = {styles.switch}
                             trackColor={{true: '#36E5CE', false: 'grey'}}
                             onValueChange = {this.toggleSwitchTA.bind(this)}
                             value = {this.state.switchTA} /> 
-                        <TouchableWithoutFeedback onPress={() => {
-                            // If switch is activated then that means that this screen should
-                            // not show up again when creating a Match. This is why we set flag value
-                            // to false, indicating that the modal should not open again.
-                            if (this.state.switchTA) {
-                                storeData('create-match-time-action-msg', JSON.stringify(false));
-                            }
-                            this.props.navigation.navigate('Publicas')}}>
+                        <TouchableWithoutFeedback onPress={this.confirmModal.bind(this)}>
                             <View style={styles.okButton}>
                                 <Text style={styles.buttonText}>Confirmar</Text>
                             </View>

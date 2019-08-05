@@ -1,4 +1,5 @@
-// diego -        29-07-2019 - us55 - Challenge match logic added
+// diego          - 05-08-2019 - us58    - Cancel match logic added
+// diego          - 29-07-2019 - us55 - Challenge match logic added
 
 import React, { Component } from 'react';
 import { View, Text, SafeAreaView, TouchableWithoutFeedback } from 'react-native'
@@ -8,6 +9,7 @@ import styles from './style'
 import Images from '../../../assets/images'
 import { challengeUser } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
+import { cancelPublicMatch } from '../../services/functions';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
@@ -25,6 +27,13 @@ class PublicMatchCardScreen extends Component {
             this.props.navigation.navigate('SignIn');
         }
     }
+
+    tryToCancelMatch() {
+        const matchCard = this.props.navigation.getParam('matchCard');
+        cancelPublicMatch(matchCard.idMatch);
+        this.props.navigation.navigate('Publicas');
+    }
+
     render() {
         const matchCard = this.props.navigation.getParam('matchCard');
         const gameData = getGameData(matchCard.game, this.props.games);
@@ -90,7 +99,7 @@ class PublicMatchCardScreen extends Component {
                     </TouchableWithoutFeedback>
                 }
                 {this.props.uid === matchCard.adversary1 &&
-                    <TouchableWithoutFeedback onPress={() => console.log('I must be a function that cancel the match, but i`m a log')}>
+                    <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Cancelar</Text>
                         </View>
@@ -98,22 +107,6 @@ class PublicMatchCardScreen extends Component {
                 }
             </SafeAreaView>
         );
-    }
-
-    // Description: 
-    // Returns to previous screen
-    // @Input Params:
-    // None
-    // @Output Params:
-    // None
-    goToPrevScreen() {
-        const {goBack} = this.props.navigation;
-        
-        // A key could be used instead of null, but
-        // it should have to be passed by the previous
-        // screen. Not using any key at the moment, seems
-        // to work fine with 'null' value.
-        goBack(null);
     }
 }
 

@@ -1,10 +1,13 @@
+// diego -          01-08-2019 - us58 - Add logic to load info for notifications
 // diego          - 29-07-2019 - us55 - challengeUser method added
+// diego -          16-07-2019 - us34 - Substract of qaploins logic implemented
+// diego -          16-07-2019 - Create createPublicMatch and bug fixed on addGameToUser
+// diego -          15-07-2019 - Create commissionRef and getCurrentQaplaCommission
 // diego          - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
-//for new references on database and errors detecrted on addGameToUser
-// diego -          15-07-2019 - Create commissionRef and getCurrentQaplaCommission
-// diego -          16-07-2019 - Create createPublicMatch and bug fixed on addGameToUser
-// diego -          16-07-2019 - us 34 - Substract of qaploins logic implemented
+//                                      for new references on database and errors detecrted on addGameToUser
+// josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
+
 import { database, TimeStamp } from "../utilities/firebase";
 import { randomString } from "../utilities/utils";
 
@@ -18,7 +21,12 @@ export const commissionRef = database.ref('/Commission');
  * @param {string} Uid User id from firebase
  */
 export async function getUserNameWithUID(Uid) {
-    return await usersRef.child(Uid).child('userName').once('value').then((data) => data.val());
+    try {
+        const userNameSnap = await usersRef.child(Uid).child('userName').once('value');
+        return userNameSnap.val();
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 /**
@@ -236,6 +244,87 @@ export async function createPublicMatch(uid, bet, game) {
 export async function substractQaploinsToUser(uid, currentCredits, quantityToSubstract) {
     try {
         return await usersRef.child(uid).update({ credits: currentCredits - quantityToSubstract});
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+/**
+ * Return the URL of the given user
+ * @param {string} uid user identifier from firebase
+ */
+export async function getProfileImageWithUID(uid) {
+    try {
+        const photoUrlSnap = await usersRef.child(uid).child('photoUrl').once('value');
+        return photoUrlSnap.val();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+/**
+ * Get the game name based on the matchId
+ * @param {string} matchId Match identifier in the database
+ */
+export async function getGameNameOfMatch(matchId) {
+    try {
+        let game = 'Juego no encontrado';
+        const gameKeySnap = await matchesRef.child(matchId).child('game').once('value');
+        const gameKey = gameKeySnap.val();
+        const platformSnap = await matchesRef.child(matchId).child('platform').once('value');
+
+        switch(platformSnap.val()) {
+            case 'pc_white':
+                if (gameKey === 'aClash') {
+                    game = 'Clash Royale';
+                } else if (gameKey === 'pcLol') {
+                    game = 'LOL';
+                } else if (gameKey === 'pHearth') {
+                    game = 'Hearthstone';
+                } else if (gameKey === 'pOver') {
+                    game = 'Overwatch';
+                }
+                break;
+            case 'ps4_white':
+                if (gameKey === 'psFifa') {
+                    game = 'FIFA 19';
+                } else if (gameKey === 'psOver') {
+                    game = 'Overwatch';
+                }
+                break;
+            case 'switch_white':
+                    if (gameKey === 'swSmash') {
+                        game = 'Smash brothers';
+                    }
+                break;
+            case 'xbox_white':
+                if (gameKey === 'xFifa') {
+                    game = 'FIFA 19';
+                } else if (gameKey === 'xGears') {
+                    game = 'Gears of War';
+                } else if (gameKey === 'xHalo') {
+                    game = 'Halo';
+                } else if (gameKey === 'xOver') {
+                    game = 'Overwatch';
+                }
+                break;
+            default: 
+                break;
+        }
+        return game;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+/**
+ * Return the data of a match
+ * @param {string} matchId Identifier of the match in the database
+ */
+export async function getMatchWitMatchId(matchId) {
+    try {
+        const matchSnap = await matchesRef.child(matchId).once('value');
+        return matchSnap.val();
     } catch (error) {
         console.error(error);
     }

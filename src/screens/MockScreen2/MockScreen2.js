@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 
 import styles from './style'
-import {database, functions} from '../../utilities/firebase'
+import {functions} from '../../utilities/firebase'
 
 export default class MockScreen2 extends React.Component {
   constructor(props) {

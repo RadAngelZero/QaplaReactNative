@@ -54,14 +54,8 @@ class SetBetScreen extends Component {
         };
     }
 
-    async componentWillMount() {
-        try {
-            const com = await getCurrentQaplaCommission();    
-        } catch(err) {
-            console.log(err);
-        }
-
-        this.setState({ commission: com });
+    componentWillMount() {
+        this.setQaplaComission();
     }
 
     componentDidMount() {
@@ -70,6 +64,24 @@ class SetBetScreen extends Component {
 
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
+    }
+
+    /**
+     * Description:
+     * Retrieves the Qapla comission for transactions and sets it into the state.
+     * 
+     * Params NONE
+     */
+    async setQaplaComission() {
+        try {
+            const com = await getCurrentQaplaCommission(); 
+
+            this.setState({
+                commission: com
+            });   
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     backToMatchTypeScreen = () => {

@@ -1,3 +1,4 @@
+// josep.sanahuja - 05-08-2019 - us84 - + sfvContainer
 // josep.sanahuja - 15-07-2019 - us26 - + cancelImageContainer & cancelImage
 // josep.sanahuja - 15-07-2019 - us25 - + 'gamerTagTextInput' & modal style
 // diego          - 17-07-2019 - NA   - Remove unnecesary code to make more legible and efficient
@@ -5,15 +6,16 @@
 import {StyleSheet} from 'react-native'
 
 export default StyleSheet.create({
-  	container:{
+  	sfvContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignContent: 'center',
+        backgroundColor:'#131833'
+    },
+    container:{
 		flex: 1,
 		justifyContent:'center',
 		backgroundColor:'#131833'
-	},
-	safeAreaViewContainer: {
-		flex: 1,
-		justifyContent:'center',
-		alignItems: 'center'
 	},
 	modalContainer: {
         marginTop: 10,

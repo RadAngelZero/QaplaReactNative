@@ -1,7 +1,8 @@
+// josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
 // josep.sanahuja - 08-07-2019 - us83 - Added 'goToScreen' logic & 'constructor'
 
 import React, { Component } from 'react';
-import { View, TextInput, Text, TouchableWithoutFeedback, Image } from 'react-native';
+import { View, TextInput, Text, TouchableWithoutFeedback, Image, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 import Images from './../../../assets/images';
 import styles from './style';
@@ -28,51 +29,53 @@ class ChooseUserNameScreen extends Component {
     render() {
 
         return (
-            <View style={styles.container}>
-                <View style={styles.formContainer}>
-                    <Text style={styles.title}>Crea tu nombre de usuario</Text>
-                    <TextInput 
-                        style = {this.state.userNameTaken ?styles.inputTextTaken : styles.inputText}
-                        placeholder = 'Introduce tu Usuario'
-                        onChangeText = {
-                            (text) => this.setState({ userName: text, userNameTaken: false })
-                        }
-                        value = {this.state.userName}
-                    />
-                </View>
-                {this.state.showErrorMessage &&
-                <View>
-                    <Text style={styles.buttonText}>Ese nombre de usuario ya esta en uso, prueba con otro</Text>
-                </View>
-                }
-                <View>
-                    <TouchableWithoutFeedback onPress={
-                        async () => {
-                            const res = await createUserName(this.props.uid, this.state.userName, this.props.navigation);
-                            if (res) {
-                                const scenario = await retrieveData('userName-creation-scenario');
+            <SafeAreaView style={styles.sfvContainer}>
+                <View style={styles.container}>
+                    <View style={styles.formContainer}>
+                        <Text style={styles.title}>Crea tu nombre de usuario</Text>
+                        <TextInput 
+                            style = {this.state.userNameTaken ?styles.inputTextTaken : styles.inputText}
+                            placeholder = 'Introduce tu Usuario'
+                            onChangeText = {
+                                (text) => this.setState({ userName: text, userNameTaken: false })
+                            }
+                            value = {this.state.userName}
+                        />
+                    </View>
+                    {this.state.showErrorMessage &&
+                    <View>
+                        <Text style={styles.buttonText}>Ese nombre de usuario ya esta en uso, prueba con otro</Text>
+                    </View>
+                    }
+                    <View>
+                        <TouchableWithoutFeedback onPress={
+                            async () => {
+                                const res = await createUserName(this.props.uid, this.state.userName, this.props.navigation);
+                                if (res) {
+                                    const scenario = await retrieveData('userName-creation-scenario');
 
-                                // Since key was obtained then we can free memory on AsyncStorage
-                                removeDataItem('userName-creation-scenario');
-                                
-                                this.goToScreen(scenario);
+                                    // Since key was obtained then we can free memory on AsyncStorage
+                                    removeDataItem('userName-creation-scenario');
+                                    
+                                    this.goToScreen(scenario);
+                                }
+                                else {
+                                    this.setState({
+                                        userNameTaken: true,
+                                        userName: "Username ya usado"
+                                    }); 
+                                }
                             }
-                            else {
-                                this.setState({
-                                    userNameTaken: true,
-                                    userName: "Username ya usado"
-                                }); 
-                            }
-                        }
-                    }>
-                        <View style={styles.buttonContainer}>
-                            <Text style={styles.buttonText}>CONTINUAR</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
+                        }>
+                            <View style={styles.buttonContainer}>
+                                <Text style={styles.buttonText}>CONTINUAR</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                    <Image style={styles.backgroundImage}
+                        source={SignUpControllersBackgroundImage} />
                 </View>
-                <Image style={styles.backgroundImage}
-                    source={SignUpControllersBackgroundImage} />
-            </View>
+            </SafeAreaView>
         );
     }
 

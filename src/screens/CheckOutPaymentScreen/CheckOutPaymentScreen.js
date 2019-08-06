@@ -1,9 +1,12 @@
-// diego -              24-07-2019 - us31 - update headers in WebView and componentWillMount
+// josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
+// diego             - 24-07-2019 - us31 - update headers in WebView and componentWillMount
+
 import React, { Component } from 'react';
 import {
     View,
     WebView,
-    BackHandler
+    BackHandler,
+    SafeAreaView
 } from 'react-native';
 import { getIdTokenFromUser } from '../../services/auth';
 import { withNavigation } from 'react-navigation';
@@ -45,17 +48,19 @@ class CheckOutPaymentScreen extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                {this.state.idToken !== '' &&
-                    <WebView
-                        source={{
-                            uri: `https://us-central1-reactnativeprueba-8f6f8.cloudfunctions.net/checkOutWithPaypal`,
-                            headers: { 'Authorization': `Bearer ${this.state.idToken}` }
-                        }}
-                        onNavigationStateChange={(data) => this.handleNavigation(data.title)}
-                        scalesPageToFit={true} />
-                }
-            </View>
+            <SafeAreaView style={styles.sfvContainer}>
+                <View style={styles.container}>
+                    {this.state.idToken !== '' &&
+                        <WebView
+                            source={{
+                                uri: `https://us-central1-reactnativeprueba-8f6f8.cloudfunctions.net/checkOutWithPaypal`,
+                                headers: { 'Authorization': `Bearer ${this.state.idToken}` }
+                            }}
+                            onNavigationStateChange={(data) => this.handleNavigation(data.title)}
+                            scalesPageToFit={true} />
+                    }
+                </View>
+            </SafeAreaView>
         );
     }
 }

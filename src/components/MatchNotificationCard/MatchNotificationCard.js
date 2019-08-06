@@ -53,17 +53,13 @@ class MatchNotificationCard extends Component {
         });
     }
 
-    tryToDeclineMatch() {
-        declineMatch(this.props.uid, this.props.notificationKey);
-    }
-
     render() {
         return (
             <>
                 {this.state.userName !== '' ?
                     <View style={styles.container}>
                         <View style={styles.avatarContainer}>
-                            {this.state.avatar != null ?
+                            {(this.state.avatar != null && this.state.avatar !== '') ?
                                 <Image style={styles.avatarImage} source={{ uri: this.state.avatar }} />
                                 :
                                 <View style={styles.avatarImage}></View>
@@ -77,7 +73,7 @@ class MatchNotificationCard extends Component {
                                         <Text style={styles.infoButtonText}>Aceptar</Text>
                                     </View>
                                 </TouchableWithoutFeedback>
-                                <TouchableWithoutFeedback onPress={() => this.tryToDeclineMatch()}>
+                                <TouchableWithoutFeedback onPress={() => declineMatch(this.props.uid, this.props.notificationKey)}>
                                     <View style={[styles.infoDeclineButton, styles.infoButton]}>
                                         <Text style={styles.infoButtonText}>Rechazar</Text>
                                     </View>

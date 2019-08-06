@@ -352,13 +352,16 @@ export async function challengeUser(uidMatchCreator, uidMatchChallenger, idMatch
 }
 
 /**
- * Decline a proposal of match
+ * @description Decline a proposal of match
  * @param {string} uid User id of the user who decline the match
  * @param {string} notificationId Id of the notification
  */
 export async function declineMatch(uid, notificationId) {
     try {
-        // Decline a match only implies delete the notification
+        /*
+            Decline a match only implies delete the notification from the notificationMatch node
+            of the user who receives it (challenged user)
+        */
         return await usersRef.child(uid).child('notificationMatch').child(notificationId).remove();
     } catch (error) {
         console.error(error);

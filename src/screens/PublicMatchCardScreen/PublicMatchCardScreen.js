@@ -1,3 +1,4 @@
+// diego          - 06-08-2019 - us76 - Show gamerTag key and value of the match and adversary2
 // diego          - 06-08-2019 - us75 - 'Subir Resultado' button added
 // diego          - 05-08-2019 - us58 - Cancel match logic added
 // diego          - 29-07-2019 - us55 - Challenge match logic added
@@ -11,6 +12,7 @@ import Images from '../../../assets/images'
 import { challengeUser } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
 import { cancelPublicMatch } from '../../services/functions';
+import { getGamerTagStringWithGameAndPlatform } from '../../utilities/utils';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
@@ -55,10 +57,10 @@ class PublicMatchCardScreen extends Component {
                     <View style={styles.row}>
                         <View style={styles.infoContainer}>
                             <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={[styles.elemR1, styles.activeColor]}>Gamertag</Text>
+                            <Text style={[styles.elemR1, styles.activeColor]}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
                         </View>
                         <View style={styles.infoContainer}>
-                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.userName}</Text>
+                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.gamerTag.gamerTag}</Text>
                         </View>
                     </View>
 
@@ -107,7 +109,7 @@ class PublicMatchCardScreen extends Component {
                     </TouchableWithoutFeedback>
                 }
                 {matchCard.matchesPlay &&
-                    <TouchableWithoutFeedback onPress={() => console.log('Resultado a subir')}>
+                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Mock2')}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Subir Resultado</Text>
                         </View>

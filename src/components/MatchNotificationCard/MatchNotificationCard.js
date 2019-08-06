@@ -1,4 +1,6 @@
+
 // diego          - 05-08-2019 - us60 - Add declineMatch logic
+// diego          - 05-08-2019 - us58    - Accept challenge logic added
 // diego          - 01-08-2019 - us58 - File creation
 
 import React, { Component } from 'react';
@@ -18,6 +20,7 @@ import {
     getMatchWitMatchId,
     declineMatch
 } from '../../services/database';
+import { acceptChallengeRequest } from '../../services/functions';
 
 class MatchNotificationCard extends Component {
     state = {
@@ -44,13 +47,17 @@ class MatchNotificationCard extends Component {
     }
 
     async fetchNotificationData() {
-        const avatar = await getProfileImageWithUID(this.props.notification.idUserSend);
-        const gameName = await getGameNameOfMatch(this.props.notification.idMatch);
-        this.setState({
-            avatar,
-            userName: this.props.notification.userName,
-            gameName
-        });
+        try {
+            const avatar = await getProfileImageWithUID(this.props.notification.idUserSend);
+            const gameName = await getGameNameOfMatch(this.props.notification.idMatch);
+            this.setState({
+                avatar,
+                userName: this.props.notification.userName,
+                gameName
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     render() {
@@ -68,7 +75,7 @@ class MatchNotificationCard extends Component {
                         <View style={styles.infoContainer}>
                             <Text style={styles.infoText}>¡{this.state.userName} quiere desafiar tu reta de {this.state.gameName}!</Text>
                             <View style={styles.infoButtonsMenu}>
-                                <TouchableWithoutFeedback>
+                                <TouchableWithoutFeedback onPress={() => acceptChallengeRequest(this.props.notificationKey)}>
                                     <View style={[styles.infoAcceptButton, styles.infoButton]}>
                                         <Text style={styles.infoButtonText}>Aceptar</Text>
                                     </View>

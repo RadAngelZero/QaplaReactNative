@@ -1,3 +1,4 @@
+// diego          - 05-08-2019 - us60 - Add declineMatch logic
 // diego -          01-08-2019 - us58 - Add logic to load info for notifications
 // diego          - 29-07-2019 - us55 - challengeUser method added
 // diego -          16-07-2019 - us34 - Substract of qaploins logic implemented
@@ -345,6 +346,23 @@ export async function challengeUser(uidMatchCreator, uidMatchChallenger, idMatch
             type: 'reta',
             userName: await getUserNameWithUID(uidMatchChallenger)
         });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+/**
+ * @description Decline a proposal of match
+ * @param {string} uid User id of the user who decline the match
+ * @param {string} notificationId Id of the notification
+ */
+export async function declineMatch(uid, notificationId) {
+    try {
+        /*
+            Decline a match only implies delete the notification from the notificationMatch node
+            of the user who receives it (challenged user)
+        */
+        return await usersRef.child(uid).child('notificationMatch').child(notificationId).remove();
     } catch (error) {
         console.error(error);
     }

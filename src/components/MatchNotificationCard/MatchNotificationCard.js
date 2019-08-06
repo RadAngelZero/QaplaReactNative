@@ -1,3 +1,5 @@
+
+// diego          - 05-08-2019 - us60 - Add declineMatch logic
 // diego          - 05-08-2019 - us58    - Accept challenge logic added
 // diego          - 01-08-2019 - us58 - File creation
 
@@ -15,7 +17,8 @@ import styles from './style';
 import {
     getProfileImageWithUID,
     getGameNameOfMatch,
-    getMatchWitMatchId
+    getMatchWitMatchId,
+    declineMatch
 } from '../../services/database';
 import { acceptChallengeRequest } from '../../services/functions';
 
@@ -63,7 +66,7 @@ class MatchNotificationCard extends Component {
                 {this.state.userName !== '' ?
                     <View style={styles.container}>
                         <View style={styles.avatarContainer}>
-                            {this.state.avatar != null ?
+                            {(this.state.avatar != null && this.state.avatar !== '') ?
                                 <Image style={styles.avatarImage} source={{ uri: this.state.avatar }} />
                                 :
                                 <View style={styles.avatarImage}></View>
@@ -77,7 +80,7 @@ class MatchNotificationCard extends Component {
                                         <Text style={styles.infoButtonText}>Aceptar</Text>
                                     </View>
                                 </TouchableWithoutFeedback>
-                                <TouchableWithoutFeedback>
+                                <TouchableWithoutFeedback onPress={() => declineMatch(this.props.uid, this.props.notificationKey)}>
                                     <View style={[styles.infoDeclineButton, styles.infoButton]}>
                                         <Text style={styles.infoButtonText}>Rechazar</Text>
                                     </View>

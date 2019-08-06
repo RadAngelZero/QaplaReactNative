@@ -1,3 +1,5 @@
+// diego -        06-08-2019 - us75 - initialNumToRender prop added and matchesPlay added of each item of FlatList
+
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
 import MatchCardItem from './MatchCardItem';
@@ -13,7 +15,8 @@ class MatchCardList extends Component {
         return (
             <View style={styles.listContainer}>
                 <FlatList data={reversedMatchesArray}
-                    renderItem={({item}) => <MatchCardItem key={item.alphaNumericIdMatch} {...item} />}
+                    initialNumToRender={5}
+                    renderItem={({item}) => <MatchCardItem matchesPlay={this.props.matchesPlay} key={item.alphaNumericIdMatch} {...item} />}
                     keyExtractor={(item) => item.alphaNumericIdMatch} />
             </View>
         );

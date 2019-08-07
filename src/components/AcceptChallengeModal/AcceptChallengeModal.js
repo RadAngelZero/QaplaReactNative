@@ -13,7 +13,7 @@ class AcceptChallengeModal extends Component {
     };
 
     /**
-     * Method called when the user accepts to delete all the notifications of the same match
+     * @description Method called when the user accepts to delete all the notifications of the same match
      */
     acceptDelete() {
         if (this.state.dontShowModalAgain) {

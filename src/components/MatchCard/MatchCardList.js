@@ -1,4 +1,4 @@
-// diego -        06-08-2019 - us75 - initialNumToRender prop added and matchesPlay added of each item of FlatList
+// diego -        06-08-2019 - us75 - initialNumToRender prop added and matchesPlay added to each item of FlatList
 
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';

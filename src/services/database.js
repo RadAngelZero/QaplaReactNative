@@ -1,10 +1,10 @@
-// diego          - 06-08-2019 - us75 - matchesPlayRef created
+// diego          - 06-08-2019 - us75 - Add matchesPlayRef
 // diego          - 05-08-2019 - us60 - Add declineMatch logic
-// diego -          01-08-2019 - us58 - Add logic to load info for notifications
+// diego          - 01-08-2019 - us58 - Add logic to load info for notifications
 // diego          - 29-07-2019 - us55 - challengeUser method added
-// diego -          16-07-2019 - us34 - Substract of qaploins logic implemented
-// diego -          16-07-2019 - Create createPublicMatch and bug fixed on addGameToUser
-// diego -          15-07-2019 - Create commissionRef and getCurrentQaplaCommission
+// diego          - 16-07-2019 - us34 - Substract of qaploins logic implemented
+// diego          - 16-07-2019 - Create createPublicMatch and bug fixed on addGameToUser
+// diego          - 15-07-2019 - Create commissionRef and getCurrentQaplaCommission
 // diego          - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
 //                                      for new references on database and errors detecrted on addGameToUser

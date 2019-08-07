@@ -1,4 +1,4 @@
-// diego -        06-08-2019 - us75 - Component changed to PureComponent and defaultProps added
+// diego -        06-08-2019 - us75 - Class now extends from PureComponent instead of Component and defaultProps added
 // diego -        29-07-2019 - us55 - Remove unnecessary log from on press event
 
 import React, { PureComponent } from 'react';

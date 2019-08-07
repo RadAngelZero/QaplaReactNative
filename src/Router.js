@@ -26,6 +26,9 @@ import CheckOutPaymentScreen from './screens/CheckOutPaymentScreen/CheckOutPayme
 import ActivityNotificationsScreen from './screens/ActivityNotificationsScreen/ActivityNotificationsScreen';
 import RetasNotificationsScreen from './screens/RetasNotificationsScreen/RetasNotificationsScreen';
 
+// Test
+import UploadMatchResultScreen from './screens/UploadMatchResultScreen/UploadMatchResultScreen';
+
 // Mock screen
 import MockScreen2 from './screens/MockScreen2/MockScreen2'
 
@@ -119,7 +122,7 @@ const TabMainNavigator = createBottomTabNavigator({
     })
   },
   Mock1: {
-    screen:   WelcomeOnboardingScreen,
+    screen:   UploadMatchResultScreen,
     navigationOptions: ({ navigation }) => ({
       //If no title it shows the name as Search.
       title: "Mock 1",

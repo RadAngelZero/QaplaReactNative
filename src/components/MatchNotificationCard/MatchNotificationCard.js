@@ -1,4 +1,4 @@
-// diego          - 06-08-2019 - us68 - Delete related notifications modal implemented
+// diego          - 06-08-2019 - us68 - Add modal: Delete related notifications
 // diego          - 05-08-2019 - us60 - Add declineMatch logic
 // diego          - 05-08-2019 - us58 - Accept challenge logic added
 // diego          - 01-08-2019 - us58 - File creation
@@ -42,6 +42,9 @@ class MatchNotificationCard extends Component {
         this.fetchNotificationData();
     }
 
+    /**
+     * @description Redirect the user to the MatchCard screen, so the user can see the details of the match
+     */
     async sendToMatchDetail() {
         this.setState({ loading: true });
         const matchData = await getMatchWitMatchId(this.props.notification.idMatch);
@@ -50,6 +53,9 @@ class MatchNotificationCard extends Component {
         this.setState({ loading: false });
     }
 
+    /**
+     * @description Load the info. of the notification
+     */
     async fetchNotificationData() {
         try {
             const avatar = await getProfileImageWithUID(this.props.notification.idUserSend);
@@ -65,11 +71,11 @@ class MatchNotificationCard extends Component {
     }
 
     /**
-     * Check if the user has disabled the modal, if it's not disabled
+     * @description Check if the user has disabled the modal, if it's not disabled
      * open the modal, if it's disabled just accept the request
      */
     async tryToAcceptChallengeRequest() {
-        const dontShowModal = await retrieveData('dontShowDeleteNotificationsModal');
+        const dontShowModal = await retrieveData('dont-show-delete-notifications-modal');
         if (dontShowModal !== 'true') {
             this.setState({ open: true });
         } else {

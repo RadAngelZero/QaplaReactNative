@@ -9,12 +9,15 @@ import { storeData } from '../../utilities/persistance';
 
 class AcceptChallengeModal extends Component {
     state = {
-        dontShowAgain: false
+        dontShowModalAgain: false
     };
 
+    /**
+     * Method called when the user accepts to delete all the notifications of the same match
+     */
     acceptDelete() {
-        if (this.state.dontShowAgain) {
-            storeData('dontShowDeleteNotificationsModal', 'true');
+        if (this.state.dontShowModalAgain) {
+            storeData('dont-show-delete-notifications-modal', 'true');
         }
         this.props.acceptNotificationsDelete();
     }
@@ -28,7 +31,8 @@ class AcceptChallengeModal extends Component {
                         seran eliminados.
                     </Text>
                     <Text style={styles.smallText}>No mostrar de nuevo</Text>
-                    <Switch onValueChange={(value) => this.setState({ dontShowAgain: value })} value={this.state.dontShowAgain} />
+                    <Switch onValueChange={(value) => this.setState({ dontShowModalAgain: value })}
+                        value={this.state.dontShowModalAgain} />
                     <TouchableWithoutFeedback onPress={() => this.acceptDelete()}>
                         <View style={styles.gotItButton}>
                             <Text style={styles.gotItButtonText}>Continuar</Text>

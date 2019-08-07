@@ -1,4 +1,4 @@
-// diego		  - 06-08-2019 - us68 - acceptChallengeRequest parameter updated
+// diego		  - 06-08-2019 - us68 - acceptChallengeRequest with parameter updated
 // diego          - 05-08-2019 - us58 - File creation
 
 import { functions, auth } from '../utilities/firebase';

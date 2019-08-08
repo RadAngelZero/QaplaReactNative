@@ -8,7 +8,6 @@ export default StyleSheet.create({
     sfvContainer: {
       flex: 1,
       justifyContent: 'center',
-      alignContent: 'center',
       backgroundColor:'#131833'
     },
     rowContainer: {

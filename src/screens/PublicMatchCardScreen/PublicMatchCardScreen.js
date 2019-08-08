@@ -1,3 +1,4 @@
+// diego          - 06-08-2019 - us75 - 'Subir Resultado' button added
 // josep.sanahuja - 05-08-2019 - us84 - Changed SafeAreaView style
 // diego          - 05-08-2019 - us58 - Cancel match logic added
 // diego          - 29-07-2019 - us55 - Challenge match logic added
@@ -92,17 +93,24 @@ class PublicMatchCardScreen extends Component {
                         </View>
                     </View>
                 </View>
-                {this.props.uid !== matchCard.adversary1 &&
+                {(this.props.uid !== matchCard.adversary1 && !matchCard.matchesPlay) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Retar</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
-                {this.props.uid === matchCard.adversary1 &&
+                {(this.props.uid === matchCard.adversary1 && !matchCard.matchesPlay) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Cancelar</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                }
+                {matchCard.matchesPlay &&
+                    <TouchableWithoutFeedback onPress={() => console.log('Resultado a subir')}>
+                        <View style={styles.bottomButton}>
+                            <Text style={styles.bottomButtonText}>Subir Resultado</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }

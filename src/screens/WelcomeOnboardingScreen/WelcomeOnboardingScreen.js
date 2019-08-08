@@ -1,3 +1,5 @@
+// josep.sanahuja    - 05-08-2019 - us84 - Changed style from SafeAreaView
+
 import React from 'react';
 
 import {
@@ -44,7 +46,7 @@ export default class WelcomeOnboardingScreen extends React.Component {
     ];
 
     return (
-       <SafeAreaView style={styles.container} testID='welcomeonboarding-1'>
+       <SafeAreaView style={styles.sfvContainer} testID='welcomeonboarding-1'>
 	       <View style={styles.carousel} testID='welcomeonboarding-2'>
             <CarouselPng images={img} emmiter={this.obs} />
             

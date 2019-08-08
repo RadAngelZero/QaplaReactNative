@@ -1,5 +1,7 @@
+// josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
+
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import styles from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
 import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
@@ -148,9 +150,11 @@ export class MyMatchesScreen extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-		        <MatchCardList {...this.state} />
-            </View>
+            <SafeAreaView style={styles.sfvContainer}>
+                <View style={styles.container}>
+    		        <MatchCardList {...this.state} />
+                </View>
+            </SafeAreaView>
         );
     }
 }

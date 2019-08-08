@@ -1,4 +1,4 @@
-// diego		  - 06-08-2019 - us68 - acceptChallengeRequest with idNotification parameter changed to notification
+// diego	  - 06-08-2019 - us68 - acceptChallengeRequest with idNotification parameter changed to notification
 // diego          - 05-08-2019 - us58 - File creation
 
 import { functions, auth } from '../utilities/firebase';

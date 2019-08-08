@@ -1,12 +1,20 @@
-// diego -          01-08-2019 - us58 - File creation
+// josep.sanahuja    - 05-08-2019 - us84 - Changed container to identify notch area
+// diego             - 01-08-2019 - us58 - File creation
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
+import {hasSafeAreaView} from './../../utilities/iosAndroidDim'
+
 
 export default styles = StyleSheet.create({
     container: {
-        backgroundColor:'#0E1222',
+        backgroundColor: '#0E1222',
         justifyContent: 'space-between',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        height: hasSafeAreaView() ? 100 : 90, 
+        alignItems:'flex-start',
+        marginTop: ((Platform.OS == 'ios') && !hasSafeAreaView()) ? 20 : 0,
+        paddingTop: hasSafeAreaView() ? 20 : 0,
+        
     },
     title: {
         fontSize: 20,

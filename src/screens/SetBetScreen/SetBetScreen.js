@@ -1,3 +1,4 @@
+// josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
 // josep.sanahuja - 01-08-2019 - us57 - + Modal for 10 minutes msg when creating a match
 // diego          - 24-07-2019 - us31 - Updated createMatch and decreaseBet to accept
 //                                      bets from 0 qaploins
@@ -170,65 +171,67 @@ class SetBetScreen extends Component {
 
     render() {
         return (
-            <SafeAreaView style={styles.container}>
-                <BuyQaploinsModal open={this.state.open} onClose={() => this.setState({ open: false })} />
-                <Modal open={this.state.timeActionMsgOpen} onClose={() => {
-                    this.setState({
-                        timeActionMsgOpen: false,
-                        loading: false
-                    })}}>
-                    <View style={styles.containerMsgModal}>
-                        <Text style={styles.headerText}>Recuerda</Text>
-                        <Text style={styles.paragraph}>
-                            La Reta expirará después de 10 minutos si no recibe y se acepta un desafio de otro jugador.                  
-                        </Text>
-                        <Text style={[styles.smallText, styles.marginSmallText]}>No volver a mostrar este mensaje</Text>
-                        <Switch
-                            style = {styles.switch}
-                            trackColor={{true: '#36E5CE', false: 'grey'}}
-                            onValueChange = {this.toggleSwitchTA.bind(this)}
-                            value = {this.state.switchTA} /> 
-                        <TouchableWithoutFeedback onPress={this.confirmModal.bind(this)}>
-                            <View style={styles.okButton}>
-                                <Text style={styles.buttonText}>Confirmar</Text>
-                            </View>
+            <SafeAreaView style={styles.sfvContainer}>
+                <View style={styles.container}>
+                    <BuyQaploinsModal open={this.state.open} onClose={() => this.setState({ open: false })} />
+                    <Modal open={this.state.timeActionMsgOpen} onClose={() => {
+                        this.setState({
+                            timeActionMsgOpen: false,
+                            loading: false
+                        })}}>
+                        <View style={styles.containerMsgModal}>
+                            <Text style={styles.headerText}>Recuerda</Text>
+                            <Text style={styles.paragraph}>
+                                La Reta expirará después de 10 minutos si no recibe y se acepta un desafio de otro jugador.                  
+                            </Text>
+                            <Text style={[styles.smallText, styles.marginSmallText]}>No volver a mostrar este mensaje</Text>
+                            <Switch
+                                style = {styles.switch}
+                                trackColor={{true: '#36E5CE', false: 'grey'}}
+                                onValueChange = {this.toggleSwitchTA.bind(this)}
+                                value = {this.state.switchTA} /> 
+                            <TouchableWithoutFeedback onPress={this.confirmModal.bind(this)}>
+                                <View style={styles.okButton}>
+                                    <Text style={styles.buttonText}>Confirmar</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
+                    </Modal>
+                    <View style={styles.headerOptions}>
+                        <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
+                        <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>
+                    </View>
+                    <View style={styles.prizeImage}>
+                        <Svg>
+                            <QaploinsPrizeIcon />
+                        </Svg>
+                    </View>
+                    <Text style={styles.winBet}>{this.defineWinBet()}</Text>
+                    <View style={styles.qaploinIconContainer}>
+                        <Svg>
+                            <QaploinIcon height={24} width={24} />
+                        </Svg>
+                        <Text style={styles.qaploinIconText}>Qaploins</Text>
+                    </View>
+                    <View style={styles.betContainer}>
+                        <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
+                            <LessQaploinsIcon style={styles.changeBetIcon} />
+                        </TouchableWithoutFeedback>
+                        <View style={styles.betTextContainer}>
+                            <Text style={styles.betText}>{this.state.currentBet}</Text>
+                            <Text style={styles.betEntrada}>Entrada</Text>
+                        </View>
+                        <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
+                            <MoreQaploinsIcon style={styles.changeBetIcon} />
                         </TouchableWithoutFeedback>
                     </View>
-                </Modal>
-                <View style={styles.headerOptions}>
-                    <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
-                    <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>
-                </View>
-                <View style={styles.prizeImage}>
-                    <Svg>
-                        <QaploinsPrizeIcon />
-                    </Svg>
-                </View>
-                <Text style={styles.winBet}>{this.defineWinBet()}</Text>
-                <View style={styles.qaploinIconContainer}>
-                    <Svg>
-                        <QaploinIcon height={24} width={24} />
-                    </Svg>
-                    <Text style={styles.qaploinIconText}>Qaploins</Text>
-                </View>
-                <View style={styles.betContainer}>
-                    <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
-                        <LessQaploinsIcon style={styles.changeBetIcon} />
-                    </TouchableWithoutFeedback>
-                    <View style={styles.betTextContainer}>
-                        <Text style={styles.betText}>{this.state.currentBet}</Text>
-                        <Text style={styles.betEntrada}>Entrada</Text>
-                    </View>
-                    <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
-                        <MoreQaploinsIcon style={styles.changeBetIcon} />
+                    <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
+                        <View style={styles.createButton}>
+                            <Text style={styles.createButtonText}>CREAR AHORA</Text>
+                        </View>
                     </TouchableWithoutFeedback>
                 </View>
-                <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
-                    <View style={styles.createButton}>
-                        <Text style={styles.createButtonText}>CREAR AHORA</Text>
-                    </View>
-                </TouchableWithoutFeedback>
-            </SafeAreaView>
+            </SafeAreaView>    
         );
     }
 }

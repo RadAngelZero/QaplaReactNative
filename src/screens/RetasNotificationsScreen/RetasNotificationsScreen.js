@@ -1,9 +1,11 @@
-// diego -          01-08-2019 - us58 - File creation
+// josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
+// diego             - 01-08-2019 - us58 - File creation
 
 import React, { Component } from 'react';
 import {
     View,
-    ScrollView
+    ScrollView,
+    SafeAreaView
 } from 'react-native';
 import styles from './style';
 import MatchNotificationCard from '../../components/MatchNotificationCard/MatchNotificationCard';
@@ -12,16 +14,18 @@ import { connect } from 'react-redux';
 class RetasNotificationsScreen extends Component {
     render() {
         return (
-            <View style={styles.container}>
-                <ScrollView>
-                    {Object.keys(this.props.notifications).map((notificationKey) => (
-                        <MatchNotificationCard key={`Reta-${notificationKey}`}
-                            notification={this.props.notifications[notificationKey]}
-                            notificationKey={notificationKey}
-                            uid={this.props.uid} />
-                    ))}
-                </ScrollView>
-            </View>
+            <SafeAreaView style={styles.sfvContainer}>
+                <View style={styles.container}>
+                    <ScrollView>
+                        {Object.keys(this.props.notifications).map((notificationKey) => (
+                            <MatchNotificationCard key={`Reta-${notificationKey}`}
+                                notification={this.props.notifications[notificationKey]}
+                                notificationKey={notificationKey}
+                                uid={this.props.uid} />
+                        ))}
+                    </ScrollView>
+                </View>
+            </SafeAreaView>
         );
     }
 }

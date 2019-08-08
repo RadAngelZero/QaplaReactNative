@@ -1,4 +1,5 @@
 // diego          - 06-08-2019 - us75 - 'Subir Resultado' button added
+// josep.sanahuja - 05-08-2019 - us84 - Changed SafeAreaView style
 // diego          - 05-08-2019 - us58 - Cancel match logic added
 // diego          - 29-07-2019 - us55 - Challenge match logic added
 
@@ -39,7 +40,7 @@ class PublicMatchCardScreen extends Component {
         const matchCard = this.props.navigation.getParam('matchCard');
         const gameData = getGameData(matchCard.game, this.props.games);
         return (
-            <SafeAreaView style={styles.container} testID='publicmatchcardscreen-1'>
+            <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
                 <View style={styles.imageHeader}>
                     <gameData.Icon width={50} height={50} />
                 </View>

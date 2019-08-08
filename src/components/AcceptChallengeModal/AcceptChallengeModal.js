@@ -19,6 +19,7 @@ class AcceptChallengeModal extends Component {
         if (this.state.dontShowModalAgain) {
             storeData('dont-show-delete-notifications-modal', 'true');
         }
+        
         this.props.acceptNotificationsDelete();
     }
 

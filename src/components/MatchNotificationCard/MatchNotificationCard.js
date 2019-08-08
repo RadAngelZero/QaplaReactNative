@@ -35,7 +35,7 @@ class MatchNotificationCard extends Component {
         userName: '',
         gameName: '',
         loading: false,
-        open: false
+        openAcceptChallengeModal: false
     };
 
     componentWillMount() {
@@ -75,9 +75,9 @@ class MatchNotificationCard extends Component {
      * open the modal, if it's disabled just accept the request
      */
     async tryToAcceptChallengeRequest() {
-        const dontShowModal = await retrieveData('dont-show-delete-notifications-modal');
-        if (dontShowModal !== 'true') {
-            this.setState({ open: true });
+        const dontShowAcceptChallengeModal = await retrieveData('dont-show-delete-notifications-modal');
+        if (dontShowAcceptChallengeModal !== 'true') {
+            this.setState({ openAcceptChallengeModal: true });
         } else {
             acceptChallengeRequest(this.props.notification);
         }
@@ -126,9 +126,9 @@ class MatchNotificationCard extends Component {
                         </View>
                         <Modal animationType='none'
                             transparent
-                            visible={this.state.open}>
+                            visible={this.state.openAcceptChallengeModal}>
                             <AcceptChallengeModal acceptNotificationsDelete={() => acceptChallengeRequest(this.props.notification)}
-                                onClose={() => this.setState({ open: false })} />
+                                onClose={() => this.setState({ openAcceptChallengeModal: false })} />
                         </Modal>
                     </>
                     :

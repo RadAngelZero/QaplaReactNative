@@ -1,5 +1,6 @@
-// diego -         01-08-2019 - us58 - created NotificationTabNavigator
-// diego -         25-07-2019 - us31 - added CheckOutPaymentScreen and unnecessary code removed
+// josep.sanahuja  - 06-08-2019 - us78 - + UploadMatchResultScreen
+// diego           - 01-08-2019 - us58 - created NotificationTabNavigator
+// diego           - 25-07-2019 - us31 - added CheckOutPaymentScreen and unnecessary code removed
 
 import React from 'react'
 
@@ -25,8 +26,6 @@ import SetBetScreen from './screens/SetBetScreen/SetBetScreen';
 import CheckOutPaymentScreen from './screens/CheckOutPaymentScreen/CheckOutPaymentScreen';
 import ActivityNotificationsScreen from './screens/ActivityNotificationsScreen/ActivityNotificationsScreen';
 import RetasNotificationsScreen from './screens/RetasNotificationsScreen/RetasNotificationsScreen';
-
-// Test
 import UploadMatchResultScreen from './screens/UploadMatchResultScreen/UploadMatchResultScreen';
 
 // Mock screen

@@ -11,7 +11,6 @@ import {
 
 import styles      from './style';
 import Images      from './../../../assets/images';
-import {Svg}       from 'react-native-svg'
 
 
 const QaploinIcon = Images.svg.favouritesIcon;
@@ -53,17 +52,21 @@ class UploadMatchResultScreen extends Component {
                 <View style={styles.container}>
                     <View style={styles.winLooseContainer}>
                         <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, 'Won')}>
-                            <QaploinIcon
-                                fill={this.state.matchResultStatus === 'won' ? '#36E5CE' : 'gray'} 
-                                height={100}
-                                width={100} />                        
+                            <View>
+                                <QaploinIcon
+                                    fill={this.state.matchResultStatus === 'won' ? '#36E5CE' : 'gray'} 
+                                    height={100}
+                                    width={100} /> 
+                            </View>                       
                         </TouchableWithoutFeedback>
                         <View style={styles.winLooseSeparator} />
                         <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, 'Lost')}> 
-                            <QaploinIcon
-                                fill={this.state.matchResultStatus === 'lost' ? '#36E5CE' : 'gray'}
-                                height={100}
-                                width={100} />
+                            <View>
+                                <QaploinIcon
+                                    fill={this.state.matchResultStatus === 'lost' ? '#36E5CE' : 'gray'}
+                                    height={100}
+                                    width={100} />
+                            </View>
                         </TouchableWithoutFeedback>
                     </View>
                     <View style={styles.uploadEvidence}>

@@ -1,4 +1,7 @@
-// diego          - 05-08-2019 - us58    - File creation
+// josep.sanahuja - 08-08-2019 - us85 - +callCloudFunction
+// diego          - 05-08-2019 - us58 - File creation
+
+import {functions} from '../utilities/firebase'
 
 /**
  * Accept challenge for idMatch

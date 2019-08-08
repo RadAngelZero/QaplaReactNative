@@ -10,12 +10,15 @@ import MatchNotificationCard from '../../components/MatchNotificationCard/MatchN
 import { connect } from 'react-redux';
 
 class RetasNotificationsScreen extends Component {
+    
     render() {
+        console.log("[RetasNotificationsScreen] - render - notifications: " + JSON.stringify(this.props.notifications, null, 2));
         return (
             <View style={styles.container}>
                 <ScrollView>
                     {Object.keys(this.props.notifications).map((notificationKey) => (
-                        <MatchNotificationCard key={`Reta-${notificationKey}`}
+                        <MatchNotificationCard
+                            key={`Reta-${notificationKey}`}
                             notification={this.props.notifications[notificationKey]}
                             notificationKey={notificationKey}
                             uid={this.props.uid} />
@@ -29,10 +32,12 @@ class RetasNotificationsScreen extends Component {
 function mapDispatchToProps(state) {
     let uid = '';
     let notifications = {};
+
     if (Object.keys(state.userReducer.user).length > 0 && state.userReducer.user.hasOwnProperty('notificationMatch')) {
         uid = state.userReducer.user.id;
         notifications = state.userReducer.user.notificationMatch
     }
+
     return {
         uid,
         notifications

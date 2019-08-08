@@ -11,38 +11,75 @@ import {
     Text,
     ActivityIndicator
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
 
 import styles from './style';
+
+import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
+
 import {
     getProfileImageWithUID,
     getGameNameOfMatch,
     getMatchWitMatchId,
     declineMatch
 } from '../../services/database';
+
+// Cloud Functions
 import { acceptChallengeRequest } from '../../services/functions';
 
 class MatchNotificationCard extends Component {
-    state = {
-        /*
-            We use null by default because is the same value that getProfileImageWithUID returns if the user don't have profile image
-            In this way the notification loads faster, was implemented because some performance problemas were found using by default value: ''
-        */
-        avatar: null,
-        userName: '',
-        gameName: '',
-        loading: false
-    };
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            /*
+                We use null by default because is the same value that getProfileImageWithUID returns if the user don't have profile image
+                In this way the notification loads faster, was implemented because some performance problemas were found using by default value: ''
+            */
+            avatar: null,
+            userName: '',
+            gameName: '',
+            loading: false,
+            showNotEQapModal: false
+        };
+
+        // Binding functions without parameters
+        this.acceptChallengeReq = this.acceptChallengeReq.bind(this);
+    }
 
     componentWillMount() {
         this.fetchNotificationData();
     }
 
+    /**
+     * Description:
+     * Accepts a challenge request to a match of the challenged user and deletes
+     * all the other notifications from the same match.
+     * 
+     * Params NONE
+     */
+    async acceptChallengeReq() {
+        // let opponentQaploins = await getUserQaploins(uid);
+
+        // if (opponentQaploins >= ) {
+        //     this.setState({
+        //         showNotEQapModal: true
+        //     }) 
+        // }
+
+        await acceptChallengeRequest(this.props.notificationKey, this.props.uid);
+    }
+
     async sendToMatchDetail() {
         this.setState({ loading: true });
-        const matchData = await getMatchWitMatchId(this.props.notification.idMatch);
+        
+        matchData = await getMatchWitMatchId(this.props.notification.idMatch);
         matchData['userName'] = this.props.notification.userName;
+        
         this.props.navigation.navigate('MatchCard', { matchCard: matchData });
+        
+        // NOTE: This line of code after navigation seems odd, in fact it will never be called
+        // because navigation happens first and changes from component.
         this.setState({ loading: false });
     }
 
@@ -50,6 +87,7 @@ class MatchNotificationCard extends Component {
         try {
             const avatar = await getProfileImageWithUID(this.props.notification.idUserSend);
             const gameName = await getGameNameOfMatch(this.props.notification.idMatch);
+            
             this.setState({
                 avatar,
                 userName: this.props.notification.userName,
@@ -75,7 +113,7 @@ class MatchNotificationCard extends Component {
                         <View style={styles.infoContainer}>
                             <Text style={styles.infoText}>¡{this.state.userName} quiere desafiar tu reta de {this.state.gameName}!</Text>
                             <View style={styles.infoButtonsMenu}>
-                                <TouchableWithoutFeedback onPress={() => acceptChallengeRequest(this.props.notificationKey)}>
+                                <TouchableWithoutFeedback onPress={this.acceptChallengeReq}>
                                     <View style={[styles.infoAcceptButton, styles.infoButton]}>
                                         <Text style={styles.infoButtonText}>Aceptar</Text>
                                     </View>
@@ -108,4 +146,11 @@ class MatchNotificationCard extends Component {
     }
 }
 
-export default withNavigation(MatchNotificationCard);
+function mapDispatchToProps(state) {
+    return {
+        uid: state.userReducer.user.id
+    };
+}
+
+export default withNavigation(connect(mapDispatchToProps)(MatchNotificationCard));
+

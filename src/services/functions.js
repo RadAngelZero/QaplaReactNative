@@ -1,19 +1,20 @@
 // diego          - 05-08-2019 - us58    - File creation
 
-import { functions, auth } from '../utilities/firebase';
-
 /**
  * Accept challenge for idMatch
  * @param {string} idNotification id from the user that sends the challenge request
+ * @param {string} idChallenged   uid from the user that receives the challenge request
  */
-export function acceptChallengeRequest(idNotification) {
-	let cloudFunc = functions.httpsCallable('acceptChallengeRequest');
-	try {
-		let res = cloudFunc({idNotification: idNotification, idChallenged: auth.currentUser.uid});
-	}
-	catch (err) {
-		console.log('[functions] - acceptChallengeRequest - Error - ' + err);
-	}
+
+ //TODO: make modification to remove auth object. this is not good.
+export function acceptChallengeRequest(idNotification, idChallenged) {
+	return callCloudFunction({
+		cfName: 'acceptChallengeRequest',
+		params: {
+			idNotification: idNotification,
+			idChallenged: idChallenged
+		}
+	})
 }
 
 /**
@@ -21,11 +22,30 @@ export function acceptChallengeRequest(idNotification) {
  * @param {string} idMatch id of the match to cancel
  */
 export function cancelPublicMatch(idMatch) {
-	var cloudFunc = functions.httpsCallable('cancelMatch');
+	return callCloudFunction({
+		cfName: 'cancelMatch',
+		params: {idMatch: idMatch}
+	});
+}
+
+/**
+ * Description: 
+ * Performs the call to the callable cloud function 
+ *
+ * @param {object} ctx Context object that has cloud function name and parameter object.
+ *
+ */
+function callCloudFunction(ctx) {
+	let res = null;
+	let cloudFunc = functions.httpsCallable(ctx.cfName);
+
 	try {
-        let res = cloudFunc({idMatch: idMatch});
+        res = cloudFunc(ctx.params);
 	}
 	catch (err) {
-		console.log('[functions] - Error - ' + err);
+		console.log('[callCloudFunction] - ' + ctx.cfName + ' - Error - ' + err);
+		res = err;
 	}
+
+	return res;
 }

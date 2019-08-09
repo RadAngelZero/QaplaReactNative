@@ -64,7 +64,7 @@ class MatchNotificationCard extends Component {
     async sendToMatchDetail() {
         this.setState({ loading: true });
         
-        matchData = await getMatchWitMatchId(this.props.notification.idMatch);
+        const matchData = await getMatchWitMatchId(this.props.notification.idMatch);
         matchData['userName'] = this.props.notification.userName;
         
         this.props.navigation.navigate('MatchCard', { matchCard: matchData });

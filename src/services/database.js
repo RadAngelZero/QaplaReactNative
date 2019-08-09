@@ -387,26 +387,26 @@ export async function deleteNotification(uid, notificationId) {
 }
 
 // -----------------------------------------------
-// Notifications
+// Qaploins
 // -----------------------------------------------
 
 /**
  * Description:
  * Check that a user has >= Qaploins than the match bet.
  *
- * @param {string}  data Data passed when calling the CF.
- * @param {context} useful info that firebase parses when calling a CF, such as auth info.
+ * @param {string}  idUserSend  Id of the user that challenged a match
+ * @param {string}  matchId     Id of the match consulted
  *
  */
 export async function userHasQaploinsToPlayMatch(idUserSend, matchId) {
     try {
-        let numQaploinsSnap = await usersRef.once('value');
+        let numQaploinsSnap = await usersRef.child(idUserSend).child('credits').once('value');
         let numQaploins = numQaploinsSnap.val().credits;
 
-        let matchBetSnap = await matchesRef.child(matchId).once('value');
-        let matchBet = matchBetSnap.val().matchBet;
+        let matchBetSnap = await matchesRef.child(matchId).child('bet').once('value');
+        let matchBet = matchBetSnap.val();
 
-        return (matchBet >= numQaploins) ? true : false
+        return numQaploins >= matchBet;
     } catch (error) {
         console.error(error);
     }

@@ -1,4 +1,5 @@
-// josep.sanahuja - 08-08-2019 - us85 - +callCloudFunction, +userHasQaploinsToPlayMatch
+// josep.sanahuja - 08-08-2019 - us85 - +callCloudFunction &&  +userHasQaploinsToPlayMatch
+//                                      && - auth import
 // diego	      - 06-08-2019 - us68 - acceptChallengeRequest with idNotification parameter changed to notification
 // diego          - 05-08-2019 - us58 - File creation
 
@@ -8,9 +9,11 @@ import {functions} from '../utilities/firebase'
  * Accept challenge for idMatch
  * @param {string} notificationObj Notification object from the challenge request
  * @param {string} idChallenged    uid from the user that receives the challenge request
+ *
+ * josep.sanahuja - us85: Removed auth.currentUser.uid and include it as parameter 'idChallenged',
+ * this avoids dependencies between files and allows a more natural use of the method
+ * by passing the info needed as argument.
  */
-
- //TODO: make modification to remove auth object. this is not good.
 export function acceptChallengeRequest(notificationObj, idChallenged) {
 	return callCloudFunction({
 		cfName: 'acceptChallengeRequest',
@@ -31,23 +34,6 @@ export function cancelPublicMatch(idMatch) {
 		params: {idMatch: idMatch}
 	});
 }
-
-/**
- * Description: 
- * Performs the call to the callable cloud function 
- *
- * @param {string} idUserSend Id from the user that challenged the current user
- * @param {string} idMatch Id of the match challenged
- */
-export function userHasQaploinsToPlayMatch(idUserSend, idMatch){
-	return callCloudFunction({
-		cfName: 'userHasQaploinsToPlayMatch',
-		params: {
-			idUserSend: idUserSend,
-			idMatch: idMatch
-		}
-	});
-}; 
 
 /**
  * Description: 

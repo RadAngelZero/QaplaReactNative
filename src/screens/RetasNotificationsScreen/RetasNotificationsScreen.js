@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 class RetasNotificationsScreen extends Component {
     
     render() {
-        console.log("[RetasNotificationsScreen] - render - notifications: " + JSON.stringify(this.props.notifications, null, 2));
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>

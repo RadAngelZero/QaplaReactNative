@@ -105,7 +105,7 @@ class MatchNotificationCard extends Component {
         // play against the challenged user. 
         const enoughQaploins = await userHasQaploinsToPlayMatch(this.props.notification.idUserSend, this.props.notification.idMatch); 
         
-        if (!enoughQaploins) {
+        if (enoughQaploins !== null && enoughQaploins.data !== null && !enoughQaploins.data.res) {
             this.setState({
                 openNoQaploinsModal: true
             })
@@ -165,7 +165,7 @@ class MatchNotificationCard extends Component {
                         </Modal>
                         <NotEnoughQaploinsModal
                             visible={this.state.openNoQaploinsModal}
-                            deleteNotificationFromDB = {() => deleteNotification(this.props.notification.key)}
+                            deleteNotificationFromDB = {() => deleteNotification(this.props.uid, this.props.notificationKey)}
                             onClose={() => this.setState({openNoQaploinsModal: false})} />    
                     </>
                     :

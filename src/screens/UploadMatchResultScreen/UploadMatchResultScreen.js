@@ -1,14 +1,12 @@
 // josep.sanahuja - 06-08-2019 - us78 - File creation
 
 import React, { Component } from 'react';
-
 import {
     View,
     SafeAreaView,
     Text,
     TouchableWithoutFeedback
 } from 'react-native';
-
 import styles from './style';
 import Images from './../../../assets/images';
 

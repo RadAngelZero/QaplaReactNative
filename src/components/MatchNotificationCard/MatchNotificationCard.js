@@ -22,13 +22,19 @@ import {
     getProfileImageWithUID,
     getGameNameOfMatch,
     getMatchWitMatchId,
-    declineMatch
+    declineMatch,
+    deleteNotification
 } from '../../services/database';
+
+import { retrieveData } from '../../utilities/persistance';
 
 // Cloud Functions
 import { acceptChallengeRequest } from '../../services/functions';
+
+// Components
 import AcceptChallengeModal from '../AcceptChallengeModal/AcceptChallengeModal';
-import { retrieveData } from '../../utilities/persistance';
+import NotEnoughQaploinsModal from '../NotEnoughQaploinsModal/NotEnoughQaploinsModal';
+
 
 class MatchNotificationCard extends Component {
     state = {
@@ -41,30 +47,11 @@ class MatchNotificationCard extends Component {
         gameName: '',
         loading: false,
         openAcceptChallengeModal: false,
-        showNotEQapModal: false
+        openNoQaploinsModal: false
     };
 
     componentWillMount() {
         this.fetchNotificationData();
-    }
-
-    /**
-     * Description:
-     * Accepts a challenge request to a match of the challenged user and deletes
-     * all the other notifications from the same match.
-     * 
-     * Params NONE
-     */
-    async acceptChallengeReq() {
-        // let opponentQaploins = await getUserQaploins(uid);
-
-        // if (opponentQaploins >= ) {
-        //     this.setState({
-        //         showNotEQapModal: true
-        //     }) 
-        // }
-
-        await acceptChallengeRequest(this.props.notificationKey, this.props.uid);
     }
 
     /**
@@ -105,9 +92,20 @@ class MatchNotificationCard extends Component {
      * @description Check if the user has disabled the modal, if it's not disabled
      * open the modal, if it's disabled just accept the request
      */
-    async tryToAcceptChallengeRequest() {
+    tryToAcceptChallengeRequest = async () => {
+        // Flag that indicates the modal notifying the user that other notifications
+        // will be deleted, will be shown or not.
         const dontShowAcceptChallengeModal = await retrieveData('dont-show-delete-notifications-modal');
-        if (dontShowAcceptChallengeModal !== 'true') {
+
+        // Check if the challenger user have enough Qaploins (match bet) in his account so that it can
+        // play against the challenged user. 
+        const enoughQaploins = await userHasQaploinsToPlayMatch(this.props.notification.idUserSend, this.props.notification.idMatch); 
+        
+        if (!enoughQaploins) {
+            this.setState({
+                openNoQaploinsModal: true
+            })
+        } else if (dontShowAcceptChallengeModal !== 'true') {
             this.setState({ openAcceptChallengeModal: true });
         } else {
             acceptChallengeRequest(this.props.notification);
@@ -161,6 +159,10 @@ class MatchNotificationCard extends Component {
                             <AcceptChallengeModal acceptNotificationsDelete={() => acceptChallengeRequest(this.props.notification)}
                                 onClose={() => this.setState({ openAcceptChallengeModal: false })} />
                         </Modal>
+                        <NotEnoughQaploinsModal
+                            visible={this.state.openNoQaploinsModal}
+                            deleteNotificationFromDB = {() => deleteNotification(this.props.notification.key)}
+                            onClose={() => this.setState({openNoQaploinsModal: false})} />    
                     </>
                     :
                     null

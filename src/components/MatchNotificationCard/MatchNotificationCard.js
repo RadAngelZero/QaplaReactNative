@@ -24,15 +24,15 @@ import {
     getGameNameOfMatch,
     getMatchWitMatchId,
     declineMatch,
-    deleteNotification
+    deleteNotification,
+    userHasQaploinsToPlayMatch
 } from '../../services/database';
 
 import { retrieveData } from '../../utilities/persistance';
 
 // Cloud Functions
 import {
-    acceptChallengeRequest,
-    userHasQaploinsToPlayMatch
+    acceptChallengeRequest
 } from '../../services/functions';
 
 // Components
@@ -105,7 +105,7 @@ class MatchNotificationCard extends Component {
         // play against the challenged user. 
         const enoughQaploins = await userHasQaploinsToPlayMatch(this.props.notification.idUserSend, this.props.notification.idMatch); 
         
-        if (enoughQaploins !== null && enoughQaploins.data !== null && !enoughQaploins.data.res) {
+        if (enoughQaploins !== null && !enoughQaploins) {
             this.setState({
                 openNoQaploinsModal: true
             })

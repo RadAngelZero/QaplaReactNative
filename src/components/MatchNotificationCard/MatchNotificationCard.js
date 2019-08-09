@@ -1,3 +1,4 @@
+// josep.sanahuja - 08-08-2019 - us85 - + NotEnoughQaploinsModal
 // diego          - 06-08-2019 - us68 - Add modal: Delete related notifications
 // diego          - 05-08-2019 - us60 - Add declineMatch logic
 // diego          - 05-08-2019 - us58 - Accept challenge logic added
@@ -29,7 +30,10 @@ import {
 import { retrieveData } from '../../utilities/persistance';
 
 // Cloud Functions
-import { acceptChallengeRequest } from '../../services/functions';
+import {
+    acceptChallengeRequest,
+    userHasQaploinsToPlayMatch
+} from '../../services/functions';
 
 // Components
 import AcceptChallengeModal from '../AcceptChallengeModal/AcceptChallengeModal';

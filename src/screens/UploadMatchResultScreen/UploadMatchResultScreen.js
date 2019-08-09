@@ -9,8 +9,8 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 
-import styles      from './style';
-import Images      from './../../../assets/images';
+import styles from './style';
+import Images from './../../../assets/images';
 
 
 const QaploinIcon = Images.svg.favouritesIcon;
@@ -34,12 +34,12 @@ class UploadMatchResultScreen extends Component {
      *
      */
     toogleResultButton(resultType) {
-        if (resultType === 'Won' && this.state.matchResultStatus != 'won') {
+        if (resultType === 'Won' && this.state.matchResultStatus !== 'won') {
             this.setState({
                 matchResultStatus: 'won',
             }) 
         }
-        else if(resultType === 'Lost' && this.state.matchResultStatus != 'lost') {
+        else if(resultType === 'Lost' && this.state.matchResultStatus !== 'lost') {
             this.setState({
                 matchResultStatus: 'lost',
             }) ;

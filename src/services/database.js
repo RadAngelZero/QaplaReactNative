@@ -1,4 +1,5 @@
 // josep.sanahuja - 08-08-2019 - us85 - +deleteNotification
+// diego          - 06-08-2019 - us75 - Add matchesPlayRef
 // diego          - 05-08-2019 - us60 - Add declineMatch logic
 // diego          - 01-08-2019 - us58 - Add logic to load info for notifications
 // diego          - 29-07-2019 - us55 - challengeUser method added
@@ -14,6 +15,7 @@ import { database, TimeStamp } from "../utilities/firebase";
 import { randomString } from "../utilities/utils";
 
 export const matchesRef = database.ref('/Matches');
+export const matchesPlayRef = database.ref('/MatchesPlay');
 export const usersRef = database.ref('/Users');
 export const gamesRef = database.ref('/Games');
 export const commissionRef = database.ref('/Commission');

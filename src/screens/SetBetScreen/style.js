@@ -1,11 +1,17 @@
+// josep.sanahuja - 05-08-2019 - us84 - + sfvContainer
 // josep.sanahuja - 01-08-2019 - us57 - + props for 10 minutes Modal Msg
 
 import { StyleSheet } from 'react-native';
 
 export default styles = StyleSheet.create({
+    sfvContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      backgroundColor:'#131833'
+    },
     container: {
-        flex:1,
-        backgroundColor:'#131833'
+        backgroundColor:'#131833',
+        flex: 1
     },
     headerOptions: {
 		flexDirection: 'row',

@@ -1,4 +1,7 @@
-// diego          - 05-08-2019 - us58    - Cancel match logic added
+// diego          - 06-08-2019 - us76 - Show gamerTag key and value of the match and adversary2
+// diego          - 06-08-2019 - us75 - 'Subir Resultado' button added
+// josep.sanahuja - 05-08-2019 - us84 - Changed SafeAreaView style
+// diego          - 05-08-2019 - us58 - Cancel match logic added
 // diego          - 29-07-2019 - us55 - Challenge match logic added
 
 import React, { Component } from 'react';
@@ -10,6 +13,7 @@ import Images from '../../../assets/images'
 import { challengeUser } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
 import { cancelPublicMatch } from '../../services/functions';
+import { getGamerTagStringWithGameAndPlatform } from '../../utilities/utils';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
@@ -38,7 +42,7 @@ class PublicMatchCardScreen extends Component {
         const matchCard = this.props.navigation.getParam('matchCard');
         const gameData = getGameData(matchCard.game, this.props.games);
         return (
-            <SafeAreaView style={styles.container} testID='publicmatchcardscreen-1'>
+            <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
                 <View style={styles.imageHeader}>
                     <gameData.Icon width={50} height={50} />
                 </View>
@@ -54,10 +58,10 @@ class PublicMatchCardScreen extends Component {
                     <View style={styles.row}>
                         <View style={styles.infoContainer}>
                             <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={[styles.elemR1, styles.activeColor]}>Gamertag</Text>
+                            <Text style={[styles.elemR1, styles.activeColor]}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
                         </View>
                         <View style={styles.infoContainer}>
-                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.userName}</Text>
+                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.gamerTag.gamerTag}</Text>
                         </View>
                     </View>
 
@@ -91,17 +95,24 @@ class PublicMatchCardScreen extends Component {
                         </View>
                     </View>
                 </View>
-                {this.props.uid !== matchCard.adversary1 &&
+                {(this.props.uid !== matchCard.adversary1 && !matchCard.matchesPlay) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Retar</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
-                {this.props.uid === matchCard.adversary1 &&
+                {(this.props.uid === matchCard.adversary1 && !matchCard.matchesPlay) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Cancelar</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                }
+                {matchCard.matchesPlay &&
+                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Mock2')}>
+                        <View style={styles.bottomButton}>
+                            <Text style={styles.bottomButtonText}>Subir Resultado</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }

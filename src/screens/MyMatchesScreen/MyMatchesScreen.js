@@ -1,8 +1,12 @@
+
+// diego             - 06-08-2019 - us75 - matchesRef changed to matchesPlayRef
+// josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
+
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import styles from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
-import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
+import { matchesPlayRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
 import { connect } from 'react-redux';
 
 export class MyMatchesScreen extends Component {
@@ -16,12 +20,12 @@ export class MyMatchesScreen extends Component {
              * This event is triggered when the user goes to other screen
              */
             this.props.navigation.addListener(
-                'didBlur',
+                'willBlur',
                 (payload) => {
                     /**
                      * Remove the listeners on matchesRef and clean the state
                      */
-                    matchesRef.off();
+                    matchesPlayRef.off();
                     this.setState({ matches: [] });
                 }
             ),
@@ -29,12 +33,12 @@ export class MyMatchesScreen extends Component {
              * This event is triggered when the user enter (focus) on this screen
              */
             this.props.navigation.addListener(
-                'didFocus',
+                'willFocus',
                 (payload) => {
                     /**
                      * Listen to childs_added for matches where te adversary1 is the current user (the user is the creator of the match)
                      */
-                    matchesRef.orderByChild('adversary1').equalTo(this.props.id).on('child_added', async (hostedMatches) => {
+                    matchesPlayRef.orderByChild('adversary1').equalTo(this.props.id).on('child_added', async (hostedMatches) => {
                         if (hostedMatches.val().adversary2 !== '') {
                             //Take the necesary information from the object returned of the database
                             const { adversary2, alphaNumericIdMatch, bet, date, game, hour, idMatch, numMatches, observations, platform, timeStamp, winBet } = hostedMatches.val();
@@ -66,7 +70,7 @@ export class MyMatchesScreen extends Component {
                     /**
                      * Listen to childs_added for matches where te adversary2 is the current user (the user has accepted the challenge of other user)
                      */
-                    matchesRef.orderByChild('adversary2').equalTo(this.props.id).on('child_added', async (challengedMatches) => {
+                    matchesPlayRef.orderByChild('adversary2').equalTo(this.props.id).on('child_added', async (challengedMatches) => {
                         //Take the necesary information from the object returned of the database
                         const { adversary1, alphaNumericIdMatch, bet, date, game, hour, idMatch, numMatches, observations, platform, timeStamp, winBet } = challengedMatches.val();
                         //Object with the necesary fields to load the match in the app (the card and the detailed view)
@@ -97,7 +101,7 @@ export class MyMatchesScreen extends Component {
                      * Listen to detect when a user accept a challenge from the current user (adversary2 field is filled) or remove if adversary cancels their
                      * participation on the match
                      */
-                    matchesRef.orderByChild('adversary1').equalTo(this.props.id).on('child_changed', async (updatedMatch) => {
+                    matchesPlayRef.orderByChild('adversary1').equalTo(this.props.id).on('child_changed', async (updatedMatch) => {
                         var copyOfMatches = [...this.state.matches];
                         const indexToUpdate = copyOfMatches.findIndex((element) => element.idMatch === updatedMatch.key);
                         if (updatedMatch.val().adversary2 !== '') {
@@ -124,7 +128,7 @@ export class MyMatchesScreen extends Component {
                      * When a child is removed from matches the event is triggered to remove the match from the state
                      * Reference: https://firebase.google.com/docs/database/web/lists-of-data?hl=es-419
                      */
-                    matchesRef.on('child_removed', (removedPublicMatch) => {
+                    matchesPlayRef.on('child_removed', (removedPublicMatch) => {
                         //Get the id of the match
                         const { idMatch } = removedPublicMatch.val();
                         //Create a new array and assign the filtered original array
@@ -148,9 +152,12 @@ export class MyMatchesScreen extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-		        <MatchCardList {...this.state} />
-            </View>
+
+            <SafeAreaView style={styles.sfvContainer}>
+                <View style={styles.container}>
+    		          <MatchCardList matchesPlay {...this.state} />
+                </View>
+            </SafeAreaView>
         );
     }
 }

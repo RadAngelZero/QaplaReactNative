@@ -1,3 +1,4 @@
+// josep.sanahuja - 05-08-2019 - us84 - changed style from SafeAreaView
 // josep.sanahuja - 22-07-2019 - bug2 - moved 'setSelectedGame' to 'componentDidMount'
 //                                      && simplified 'openModal'
 // diego          - 17-07-2019 - us30 - Modal and SafeAreaView added, also unnecesary
@@ -91,7 +92,7 @@ class LoadGamesScreen extends React.Component {
         const {navigate} = this.props.navigation;
 
         return (
-            <SafeAreaView style={styles.safeAreaViewContainer}>
+            <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <View style={styles.headerOptions}>
                         <TouchableWithoutFeedback onPress={this.backToMatchTypeScreen}>

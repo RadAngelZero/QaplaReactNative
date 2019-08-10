@@ -1,12 +1,13 @@
+// diego -        06-08-2019 - us75 - Class now extends from PureComponent instead of Component and defaultProps added
 // diego -        29-07-2019 - us55 - Remove unnecessary log from on press event
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { styles } from './style';
 
 import { withNavigation } from 'react-navigation';
 
-class MatchCardItem extends Component {
+class MatchCardItem extends PureComponent {
     render() {
         const {navigate} = this.props.navigation;
 
@@ -31,5 +32,9 @@ class MatchCardItem extends Component {
         );
     }
 }
+
+MatchCardItem.defaultProps = {
+    matchesPlay: false
+};
 
 export default withNavigation(MatchCardItem);

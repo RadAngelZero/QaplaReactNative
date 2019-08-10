@@ -1,5 +1,7 @@
+// josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
+
 import React, { Component } from 'react';
-import { View, ActivityIndicator, Text } from 'react-native';
+import { View, ActivityIndicator, Text, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 import { auth } from '../../utilities/firebase';
 import { retrieveData } from '../../utilities/persistance';
@@ -32,10 +34,12 @@ class AuthLoadingScreen extends Component {
     }
     render() {
         return (
-            <View style={styles.container}>
-                <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
-                <Text style={styles.textColor}>Cargando...</Text>
-            </View>
+            <SafeAreaView style={styles.sfvContainer}>
+                <View style={styles.container}>
+                    <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
+                    <Text style={styles.textColor}>Cargando...</Text>
+                </View>
+            </SafeAreaView>
         );
     }
 }

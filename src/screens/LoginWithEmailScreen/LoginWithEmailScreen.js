@@ -1,7 +1,8 @@
-// Diego - 11-07-2019 - Qapla logo added to the top and Controllers image background created
+// josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
+// Diego             - 11-07-2019 - Qapla logo added to the top and Controllers image background created
 
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableWithoutFeedback, TextInput } from 'react-native';
+import { View, Image, Text, TouchableWithoutFeedback, TextInput, SafeAreaView } from 'react-native';
 import Images from './../../../assets/images';
 import styles from './style';
 import { signInWithEmailAndPassword } from '../../services/auth';
@@ -17,30 +18,32 @@ class LoginWithEmailScreen extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <View>
-                    <Image source={QaplaSignUpLogo} />
+            <SafeAreaView style={styles.sfvContainer}>
+                <View style={styles.container}>
+                    <View>
+                        <Image source={QaplaSignUpLogo} />
+                    </View>
+                    <View style={{ width: '100%' }}>
+                        <TextInput style={styles.inputText}
+                            placeholder='Email o Usuario'
+                            onChangeText={(text) => this.setState({ email: text })} />
+                        <TextInput style={styles.inputText}
+                            placeholder='Contraseña'
+                            onChangeText={(text) => this.setState({ password: text })}
+                            secureTextEntry />
+                        <Text style={styles.forgotPasswordText} >¿Olvidaste tu contraseña?</Text>
+                    </View>
+                    <View>
+                        <TouchableWithoutFeedback onPress={() => signInWithEmailAndPassword(this.state.email, this.state.password)}>
+                            <View style={styles.buttonContainer}>
+                                <Text style={styles.buttonText} >INICIAR SESION</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                    <Image style={styles.backgroundImage}
+                        source={SignUpControllersBackgroundImage} />
                 </View>
-                <View style={{ width: '100%' }}>
-                    <TextInput style={styles.inputText}
-                        placeholder='Email o Usuario'
-                        onChangeText={(text) => this.setState({ email: text })} />
-                    <TextInput style={styles.inputText}
-                        placeholder='Contraseña'
-                        onChangeText={(text) => this.setState({ password: text })}
-                        secureTextEntry />
-                    <Text style={styles.forgotPasswordText} >¿Olvidaste tu contraseña?</Text>
-                </View>
-                <View>
-                    <TouchableWithoutFeedback onPress={() => signInWithEmailAndPassword(this.state.email, this.state.password)}>
-                        <View style={styles.buttonContainer}>
-                            <Text style={styles.buttonText} >INICIAR SESION</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
-                <Image style={styles.backgroundImage}
-                    source={SignUpControllersBackgroundImage} />
-            </View>
+            </SafeAreaView>
         );
     }
 }

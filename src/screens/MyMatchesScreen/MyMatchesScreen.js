@@ -1,4 +1,3 @@
-
 // diego             - 06-08-2019 - us75 - matchesRef changed to matchesPlayRef
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 
@@ -152,7 +151,6 @@ export class MyMatchesScreen extends Component {
 
     render() {
         return (
-
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
     		          <MatchCardList matchesPlay {...this.state} />

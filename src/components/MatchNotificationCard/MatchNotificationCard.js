@@ -1,3 +1,4 @@
+// josep.sanahuja - 08-08-2019 - us85 - + NotEnoughQaploinsModal
 // diego          - 06-08-2019 - us68 - Add modal: Delete related notifications
 // diego          - 05-08-2019 - us60 - Add declineMatch logic
 // diego          - 05-08-2019 - us58 - Accept challenge logic added
@@ -12,18 +13,32 @@ import {
     ActivityIndicator,
     Modal
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
 
 import styles from './style';
+
+import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
+
 import {
     getProfileImageWithUID,
     getGameNameOfMatch,
     getMatchWitMatchId,
-    declineMatch
+    declineMatch,
+    deleteNotification,
+    userHasQaploinsToPlayMatch
 } from '../../services/database';
-import { acceptChallengeRequest } from '../../services/functions';
-import AcceptChallengeModal from '../AcceptChallengeModal/AcceptChallengeModal';
+
 import { retrieveData } from '../../utilities/persistance';
+
+// Cloud Functions
+import {
+    acceptChallengeRequest
+} from '../../services/functions';
+
+// Components
+import AcceptChallengeModal from '../AcceptChallengeModal/AcceptChallengeModal';
+import NotEnoughQaploinsModal from '../NotEnoughQaploinsModal/NotEnoughQaploinsModal';
+
 
 class MatchNotificationCard extends Component {
     state = {
@@ -35,7 +50,8 @@ class MatchNotificationCard extends Component {
         userName: '',
         gameName: '',
         loading: false,
-        openAcceptChallengeModal: false
+        openAcceptChallengeModal: false,
+        openNoQaploinsModal: false
     };
 
     componentWillMount() {
@@ -47,9 +63,14 @@ class MatchNotificationCard extends Component {
      */
     async sendToMatchDetail() {
         this.setState({ loading: true });
+        
         const matchData = await getMatchWitMatchId(this.props.notification.idMatch);
         matchData['userName'] = this.props.notification.userName;
+        
         this.props.navigation.navigate('MatchCard', { matchCard: matchData });
+        
+        // NOTE: This line of code after navigation seems odd, in fact it will never be called
+        // because navigation happens first and changes from component.
         this.setState({ loading: false });
     }
 
@@ -60,6 +81,7 @@ class MatchNotificationCard extends Component {
         try {
             const avatar = await getProfileImageWithUID(this.props.notification.idUserSend);
             const gameName = await getGameNameOfMatch(this.props.notification.idMatch);
+            
             this.setState({
                 avatar,
                 userName: this.props.notification.userName,
@@ -74,9 +96,20 @@ class MatchNotificationCard extends Component {
      * @description Check if the user has disabled the modal, if it's not disabled
      * open the modal, if it's disabled just accept the request
      */
-    async tryToAcceptChallengeRequest() {
+    tryToAcceptChallengeRequest = async () => {
+        // Flag that indicates the modal notifying the user that other notifications
+        // will be deleted, will be shown or not.
         const dontShowAcceptChallengeModal = await retrieveData('dont-show-delete-notifications-modal');
-        if (dontShowAcceptChallengeModal !== 'true') {
+
+        // Check if the challenger user have enough Qaploins (match bet) in his account so that it can
+        // play against the challenged user. 
+        const enoughQaploins = await userHasQaploinsToPlayMatch(this.props.notification.idUserSend, this.props.notification.idMatch); 
+        
+        if (enoughQaploins !== null && !enoughQaploins) {
+            this.setState({
+                openNoQaploinsModal: true
+            })
+        } else if (dontShowAcceptChallengeModal !== 'true') {
             this.setState({ openAcceptChallengeModal: true });
         } else {
             acceptChallengeRequest(this.props.notification);
@@ -130,6 +163,10 @@ class MatchNotificationCard extends Component {
                             <AcceptChallengeModal acceptNotificationsDelete={() => acceptChallengeRequest(this.props.notification)}
                                 onClose={() => this.setState({ openAcceptChallengeModal: false })} />
                         </Modal>
+                        <NotEnoughQaploinsModal
+                            visible={this.state.openNoQaploinsModal}
+                            deleteNotificationFromDB = {() => deleteNotification(this.props.uid, this.props.notificationKey)}
+                            onClose={() => this.setState({openNoQaploinsModal: false})} />    
                     </>
                     :
                     null
@@ -139,4 +176,11 @@ class MatchNotificationCard extends Component {
     }
 }
 
-export default withNavigation(MatchNotificationCard);
+function mapDispatchToProps(state) {
+    return {
+        uid: state.userReducer.user.id
+    };
+}
+
+export default withNavigation(connect(mapDispatchToProps)(MatchNotificationCard));
+

@@ -12,6 +12,7 @@ import MatchNotificationCard from '../../components/MatchNotificationCard/MatchN
 import { connect } from 'react-redux';
 
 class RetasNotificationsScreen extends Component {
+    
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -33,10 +34,12 @@ class RetasNotificationsScreen extends Component {
 function mapDispatchToProps(state) {
     let uid = '';
     let notifications = {};
+
     if (Object.keys(state.userReducer.user).length > 0 && state.userReducer.user.hasOwnProperty('notificationMatch')) {
         uid = state.userReducer.user.id;
         notifications = state.userReducer.user.notificationMatch
     }
+
     return {
         uid,
         notifications

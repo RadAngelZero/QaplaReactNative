@@ -1,3 +1,4 @@
+// josep.sanahuja - 08-08-2019 - us85 - +deleteNotification
 // diego          - 06-08-2019 - us75 - Add matchesPlayRef
 // diego          - 05-08-2019 - us60 - Add declineMatch logic
 // diego          - 01-08-2019 - us58 - Add logic to load info for notifications
@@ -364,8 +365,52 @@ export async function declineMatch(uid, notificationId) {
             Decline a match only implies delete the notification from the notificationMatch node
             of the user who receives it (challenged user)
         */
+        return await deleteNotification(uid, notificationId);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// -----------------------------------------------
+// Notifications
+// -----------------------------------------------
+
+/**
+ * @description Delete a notification with notificationId
+ * @param {string} uid User id of the user who decline the match
+ * @param {string} notificationId Id of the notification
+ */
+export async function deleteNotification(uid, notificationId) {
+    try {
         return await usersRef.child(uid).child('notificationMatch').child(notificationId).remove();
     } catch (error) {
         console.error(error);
     }
 }
+
+// -----------------------------------------------
+// Qaploins
+// -----------------------------------------------
+
+/**
+ * Description:
+ * Check that a user has >= Qaploins than the match bet.
+ *
+ * @param {string}  idUserSend  Id of the user that challenged a match
+ * @param {string}  matchId     Id of the match consulted
+ *
+ */
+export async function userHasQaploinsToPlayMatch(idUserSend, matchId) {
+    try {
+        let numQaploinsSnap = await usersRef.child(idUserSend).child('credits').once('value');
+        let numQaploins = numQaploinsSnap.val().credits;
+
+        let matchBetSnap = await matchesRef.child(matchId).child('bet').once('value');
+        let matchBet = matchBetSnap.val();
+
+        return numQaploins >= matchBet;
+    } catch (error) {
+        console.error(error);
+    }
+}
+

@@ -14,14 +14,29 @@ import {
 import styles from './style'
 import {functions} from '../../utilities/firebase'
 
+import UploadMatchEvidenceModal from '../../components/UploadMatchEvidenceModal/UploadMatchEvidenceModal'
+
 export default class MockScreen2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
     	textIdMatch: 'Type IdMatch',
     	textIdNotification: 'Type IdNotification',
-    	textIdChallenged: 'Type IdChallenged'
+    	textIdChallenged: 'Type IdChallenged',
+    	openUploadEvModal: false
     };
+  }
+
+ /**
+  * Description:
+  * Closes Modal that reminds to upload an evidence
+  *
+  * @param None
+  */
+  toogleUploadEvModal = async () => {
+  	this.setState({
+  		openUploadEvModal: !this.state.openUploadEvModal
+  	})
   }
 
   render() {
@@ -57,6 +72,14 @@ export default class MockScreen2 extends React.Component {
 				  title="CancelMatch"
 				  color="white"
 				/>
+				<Button
+				  onPress={this.toogleUploadEvModal}
+				  title="Open Upload Ev Modal"
+				  color="white"
+				/>
+				<UploadMatchEvidenceModal
+					visible={this.state.openUploadEvModal}
+					onClose={this.toogleUploadEvModal} />
 	      	</View>
 	    </SafeAreaView>
     );

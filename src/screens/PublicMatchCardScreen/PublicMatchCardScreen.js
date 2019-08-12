@@ -1,3 +1,4 @@
+// josep.sanahuja - 12-08-2019 - us85 - 'Subir Resultado' button navigates to UploadMatchResult
 // diego          - 06-08-2019 - us76 - Show gamerTag key and value of the match and adversary2
 // diego          - 06-08-2019 - us75 - 'Subir Resultado' button added
 // josep.sanahuja - 05-08-2019 - us84 - Changed SafeAreaView style
@@ -110,7 +111,7 @@ class PublicMatchCardScreen extends Component {
                     </TouchableWithoutFeedback>
                 }
                 {matchCard.matchesPlay &&
-                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Mock2')}>
+                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('UploadMatchResult')}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Subir Resultado</Text>
                         </View>

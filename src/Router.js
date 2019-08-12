@@ -1,3 +1,4 @@
+// josep.sanahuja  - 12-08-2019 - us85 - + UploadMatchResult in AppNoHeaderStackNavigator
 // josep.sanahuja  - 06-08-2019 - us78 - + UploadMatchResultScreen
 // diego           - 01-08-2019 - us58 - created NotificationTabNavigator
 // diego           - 25-07-2019 - us31 - added CheckOutPaymentScreen and unnecessary code removed
@@ -187,6 +188,9 @@ const AppNoHeaderStackNavigator = createSwitchNavigator(
     },
     CheckOut: {
       screen: CheckOutPaymentScreen
+    },
+    UploadMatchResult: {
+      screen: UploadMatchResultScreen
     }
   }
 );

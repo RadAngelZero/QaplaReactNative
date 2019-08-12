@@ -18,10 +18,11 @@ class UploadMatchEvidenceModal extends Component {
 
 	/**
 	 * Description:
-	 * Deletes one notification from the database using the callback passed via props,
-	 * and closes the modal after that. After closing the modal, cb1 and cb2 props can be
-	 * called.
-	 *
+	 * Perform a series of actions for the Modal, including the main one which is 'closing the modal'.
+	 * The other actions are performed via cb1 and cb2 props, which are executed sequentially, cb1 1st,
+	 * cb2 2nd, and they are executed in a synchronous way.
+	 * 
+	 * @param None
 	 */
     action = async () => {
     	// Close the Modal

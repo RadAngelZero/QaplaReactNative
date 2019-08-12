@@ -1,7 +1,7 @@
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, Image, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import styles from './style';
 import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';

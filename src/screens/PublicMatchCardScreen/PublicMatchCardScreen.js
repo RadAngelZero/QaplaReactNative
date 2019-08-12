@@ -1,3 +1,4 @@
+// diego          - 12-08-2019 - bug4 - Update name of adversary1 prop to adversaryUid because the adversary can be also the adversary2
 // diego          - 06-08-2019 - us76 - Show gamerTag key and value of the match and adversary2
 // diego          - 06-08-2019 - us75 - 'Subir Resultado' button added
 // josep.sanahuja - 05-08-2019 - us84 - Changed SafeAreaView style
@@ -25,7 +26,7 @@ class PublicMatchCardScreen extends Component {
             //Get the info of the match
             const matchCard = this.props.navigation.getParam('matchCard');
             //Challenge the user to play the match
-            challengeUser(matchCard.adversary1, this.props.uid, matchCard.idMatch);
+            challengeUser(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
         } else {
             //If the user is unlogged then redirect the user to Signin Screen
             this.props.navigation.navigate('SignIn');
@@ -95,14 +96,14 @@ class PublicMatchCardScreen extends Component {
                         </View>
                     </View>
                 </View>
-                {(this.props.uid !== matchCard.adversary1 && !matchCard.matchesPlay) &&
+                {(this.props.uid !== matchCard.adversaryUid && !matchCard.matchesPlay) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Retar</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
-                {(this.props.uid === matchCard.adversary1 && !matchCard.matchesPlay) &&
+                {(this.props.uid === matchCard.adversaryUid && !matchCard.matchesPlay) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Cancelar</Text>

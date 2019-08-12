@@ -1,3 +1,4 @@
+// diego          - 09-08-2019 - bug4 - Add gamerTag info. to send it as prop to avoid error on PublicMatchCardScreen
 // diego          - 06-08-2019 - us68 - Add modal: Delete related notifications
 // diego          - 05-08-2019 - us60 - Add declineMatch logic
 // diego          - 05-08-2019 - us58 - Accept challenge logic added
@@ -19,7 +20,8 @@ import {
     getProfileImageWithUID,
     getGameNameOfMatch,
     getMatchWitMatchId,
-    declineMatch
+    declineMatch,
+    getGamerTagWithUID
 } from '../../services/database';
 import { acceptChallengeRequest } from '../../services/functions';
 import AcceptChallengeModal from '../AcceptChallengeModal/AcceptChallengeModal';
@@ -46,11 +48,21 @@ class MatchNotificationCard extends Component {
      * @description Redirect the user to the MatchCard screen, so the user can see the details of the match
      */
     async sendToMatchDetail() {
-        this.setState({ loading: true });
-        const matchData = await getMatchWitMatchId(this.props.notification.idMatch);
-        matchData['userName'] = this.props.notification.userName;
-        this.props.navigation.navigate('MatchCard', { matchCard: matchData });
-        this.setState({ loading: false });
+        try {
+            this.setState({ loading: true });
+            const matchData = await getMatchWitMatchId(this.props.notification.idMatch);
+            if (matchData) {
+                matchData['userName'] = this.props.notification.userName;
+                matchData['gamerTag'] = await getGamerTagWithUID(this.props.notification.idUserSend, matchData.game, matchData.platform);
+                this.props.navigation.navigate('MatchCard', { matchCard: matchData });
+                this.setState({ loading: false });
+            } else {
+                //TODO: In this case the match don't exist, ask to Fer or Paco what to do
+                console.log('else');
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     /**

@@ -1,3 +1,4 @@
+// josep.sanahuja    - 13-08-2019 - us88 - + UploadMatchResultsModal
 // josep.sanahuja    - 12-08-2019 - us79 - + UploadMatchEvidenceModal
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 // josep.sanahuja    - 30-07-2019 - us59 - + acceptChallengeRequest()
@@ -16,6 +17,7 @@ import styles from './style'
 import {functions} from '../../utilities/firebase'
 
 import UploadMatchEvidenceModal from '../../components/UploadMatchEvidenceModal/UploadMatchEvidenceModal'
+import UploadMatchResultsModal from '../../components/UploadMatchResultsModal/UploadMatchResultsModal'
 
 export default class MockScreen2 extends React.Component {
   constructor(props) {
@@ -24,7 +26,8 @@ export default class MockScreen2 extends React.Component {
     	textIdMatch: 'Type IdMatch',
     	textIdNotification: 'Type IdNotification',
     	textIdChallenged: 'Type IdChallenged',
-    	openUploadEvModal: false
+    	openUploadEvModal: false,
+    	openUploadResModal: false
     };
   }
 
@@ -39,6 +42,18 @@ export default class MockScreen2 extends React.Component {
   		openUploadEvModal: !this.state.openUploadEvModal
   	})
   }
+
+ /**
+  * Description:
+  * Closes Modal that reminds to upload a match result
+  *
+  * @param None
+  */
+  toogleUploadResModal = async () => {
+  	this.setState({
+  		openUploadResModal: !this.state.openUploadResModal
+  	})
+  }  
 
   render() {
     return (
@@ -78,9 +93,17 @@ export default class MockScreen2 extends React.Component {
 				  title="Open Upload Ev Modal"
 				  color="white"
 				/>
+				<Button
+				  onPress={this.toogleUploadResModal}
+				  title="Open Upload Res Modal"
+				  color="white"
+				/>
 				<UploadMatchEvidenceModal
 					visible={this.state.openUploadEvModal}
 					onClose={this.toogleUploadEvModal} />
+				<UploadMatchResultsModal
+					visible={this.state.openUploadResModal}
+					onClose={this.toogleUploadResModal} />	
 	      	</View>
 	    </SafeAreaView>
     );

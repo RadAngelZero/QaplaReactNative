@@ -1,4 +1,4 @@
-// josep.sanahuja - 12-08-2019 - us79 - File creation
+// josep.sanahuja - 12-08-2019 - us88 - File creation
 
 import React, { Component } from 'react';
 import { 
@@ -10,7 +10,7 @@ import {
 
 import styles from './style';
 
-class UploadMatchEvidenceModal extends Component {
+class UploadMatchResultsModal extends Component {
     
 	/**
 	 *	Callbacks used in render()
@@ -30,11 +30,11 @@ class UploadMatchEvidenceModal extends Component {
 
     	// cb1 executes before cb2, and in case cb1 is not defined and cb2 is, then cb2 is excecuted
     	// even though cb1 is undefined.
-    	if (this.props.cb1 != undefined && this.props.cb1 != null){
+    	if (this.props.cb1 !== undefined && this.props.cb1 !== null){
     		await this.props.cb1();	
     	}
 
-    	if (this.props.cb2 != undefined && this.props.cb2 != null){
+    	if (this.props.cb2 !== undefined && this.props.cb2 !== null){
     		await this.props.cb2();
     	}
     }
@@ -59,14 +59,12 @@ class UploadMatchEvidenceModal extends Component {
 	          onRequestClose={this.props.onClose}>
 	          <View style={styles.mainContainer}>
 			    <View style={styles.container}>
-			        <Text style={styles.closeIcon} onPress={this.closeModal}>X</Text>
-					<Text style={styles.headerText}>Sube tu evidencia :)</Text>
-					<Text style={styles.paragraph}>Recuerda de subir tu evidencia de la partida que jugaste! En caso de haber una disputa por el resultado la evidencia será tu mejor prueba!</Text>
+					<Text style={styles.headerText}>Felicidades !</Text>
+					<Text style={styles.paragraph}>Tu resultado fué subido satisfactóriamente</Text>
 					<TouchableWithoutFeedback onPress={this.action}>
 						<View style={styles.okButton}>
 							<Text style={styles.text}>OK</Text>
 						</View>
-
 					</TouchableWithoutFeedback>
 			    </View>
 			  </View>
@@ -75,4 +73,4 @@ class UploadMatchEvidenceModal extends Component {
     }
 }
 
-export default UploadMatchEvidenceModal;
+export default UploadMatchResultsModal;

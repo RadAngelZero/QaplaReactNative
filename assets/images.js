@@ -1,4 +1,6 @@
+// diego	      - 13-08-2019 - us77 - Added clutch tutorial images
 // diego          - 17-07-2019 - NA   - removed duplicate smash bros image
+
 // Icons
 import InstagramIcon from './icons/Instagram_logo_2016.svgx'
 import FacebookIcon from './icons/F_icon.svg'
@@ -69,6 +71,14 @@ const images = {
 		qaplaSignupLogo: {
 			img: require('./images/QaplaSignUpLogo.png'),
 			uri: '@assets/images/QaplaSignUpLogo.png'
+		},
+		uploadVideoClutch: {
+			img: require('./images/UploadVideoClutch.jpg'),
+			uri: '@assets/images/UploadVideoClutch.jpg'
+		},
+		shareClutchLink: {
+			img: require('./images/ShareClutchLink.jpg'),
+			uri: '@assets/images/ShareClutchLink.jpg'
 		},
 		peekaImg: {
 			img: require('./images/PEKKA.png'),

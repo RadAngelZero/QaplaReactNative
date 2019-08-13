@@ -1,3 +1,4 @@
+// diego          - 13-08-2019 - us77 - navigation to UploadClutchEvidenceScreen added
 // josep.sanahuja - 06-08-2019 - us78 - File creation
 
 import React, { Component } from 'react';
@@ -31,7 +32,7 @@ class UploadMatchResultScreen extends Component {
      * @param {string}  resultType Match result type.
      *
      */
-    toogleResultButton(resultType) {
+    toogleResultButton = (resultType) => {
         if (resultType === 'Won' && this.state.matchResultStatus !== 'won') {
             this.setState({
                 matchResultStatus: 'won',
@@ -41,8 +42,15 @@ class UploadMatchResultScreen extends Component {
             this.setState({
                 matchResultStatus: 'lost',
             }) ;
+        } else if (resultType === 'Other' && this.state.matchResultStatus !== 'other') {
+            this.setState({ matchResultStatus: 'other' });
         }
-    } 
+    }
+
+    /**
+     * Send the user to UploadClutchEvidenceScreen
+     */
+    sendToUploadEvidence = () => this.props.navigation.navigate('UploadClutchEvidence');
 
     render() {
         return (
@@ -68,19 +76,21 @@ class UploadMatchResultScreen extends Component {
                         </TouchableWithoutFeedback>
                     </View>
                     <View style={styles.uploadEvidence}>
-                        <QaploinIcon height={150} width={150} />
+                        <TouchableWithoutFeedback onPress={this.sendToUploadEvidence.bind(this)}>
+                            <QaploinIcon height={150} width={150} />
+                        </TouchableWithoutFeedback>
                     </View>
                     <Text style={styles.footerEvidence}>
                         Evidencia.                  
                     </Text>
-                    <TouchableWithoutFeedback onPress={() => console.log("mu")}>
-                        <View style={styles.uploadResultButton}>
-                            <Text style={styles.buttonText}>SUBIR RESULTADO</Text>
+                    <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, 'Other')}>
+                        <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === 'other' ? '#FF0000' : '#6D7DDE' }]}>
+                            <Text style={styles.buttonText}>OTRO RESULTADO</Text>
                         </View>
                     </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={() => console.log("mu")}>
-                        <View style={styles.otherResultButton}>
-                            <Text style={styles.buttonText}>OTRO RESULTADO</Text>
+                        <View style={styles.uploadResultButton}>
+                            <Text style={styles.buttonText}>SUBIR RESULTADO</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>

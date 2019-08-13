@@ -26,7 +26,7 @@ class UploadMatchEvidenceModal extends Component {
 	 */
     action = async () => {
     	// Close the Modal
-    	this.props.onClose();
+    	this.closeModal();
 
     	// cb1 executes before cb2, and in case cb1 is not defined and cb2 is, then cb2 is excecuted
     	// even though cb1 is undefined.
@@ -39,6 +39,11 @@ class UploadMatchEvidenceModal extends Component {
     	}
     }
 
+    closeModal = async () => {
+    	// Close the Modal
+    	this.props.onClose();
+    }
+
     render() {
         return (
         	<Modal
@@ -48,6 +53,7 @@ class UploadMatchEvidenceModal extends Component {
 	          onRequestClose={this.props.onClose}>
 	          <View style={styles.mainContainer}>
 			    <View style={styles.container}>
+			        <Text style={styles.closeIcon} onPress={this.closeModal}>X</Text>
 					<Text style={styles.headerText}>Sube tu evidencia :)</Text>
 					<Text style={styles.paragraph}>Recuerda de subir tu evidencia de la partida que jugaste! En caso de haber una disputa por el resultado la evidencia será tu mejor prueba!</Text>
 					<TouchableWithoutFeedback onPress={this.action}>

@@ -59,5 +59,15 @@ export default styles = StyleSheet.create({
         borderRadius: 100,
         backgroundColor: '#6D7DDE'
     },
+    closeIcon: {
+        fontSize: 20,
+        textAlignVertical: 'top',
+        width: 24,
+        height: 24,
+        top: 10,
+        right: 10,
+        color: '#FFF',
+        position: 'absolute'
+    },
 
 })

@@ -103,7 +103,8 @@ export default class MockScreen2 extends React.Component {
 					onClose={this.toogleUploadEvModal} />
 				<UploadMatchResultsModal
 					visible={this.state.openUploadResModal}
-					onClose={this.toogleUploadResModal} />	
+					onClose={this.toogleUploadResModal}
+					nextScreen={'Publicas'} />	
 	      	</View>
 	    </SafeAreaView>
     );

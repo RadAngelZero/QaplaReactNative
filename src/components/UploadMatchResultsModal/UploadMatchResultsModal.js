@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import styles from './style';
+import { withNavigation } from 'react-navigation';
 
 class UploadMatchResultsModal extends Component {
     
@@ -18,9 +19,9 @@ class UploadMatchResultsModal extends Component {
 
 	/**
 	 * Description:
-	 * Perform a series of actions for the Modal, including the main one which is 'closing the modal'.
-	 * The other actions are performed via cb1 and cb2 props, which are executed sequentially, cb1 1st,
-	 * cb2 2nd, and they are executed in a synchronous way.
+	 * Perform a series of actions for the Modal, including the main one which is 'closing the modal'
+	 * and navigation to next screen. The other actions are performed via cb1 and cb2 props,
+	 * which are executed sequentially, cb1 1st, cb2 2nd, and they are executed in a synchronous way.
 	 * 
 	 * @param None
 	 */
@@ -37,8 +38,13 @@ class UploadMatchResultsModal extends Component {
     	if (this.props.cb2 !== undefined && this.props.cb2 !== null){
     		await this.props.cb2();
     	}
-    }
 
+    	// If there is no screen defined in props, the modal will close without any navigation
+    	if (this.props.nextScreen) {
+    		this.props.navigation.navigate(this.props.nextScreen);
+    	}
+    }
+    	
     /**
 	 * Description:
 	 * Closes the Modal by using the function given in props.
@@ -73,4 +79,4 @@ class UploadMatchResultsModal extends Component {
     }
 }
 
-export default UploadMatchResultsModal;
+export default withNavigation(UploadMatchResultsModal);

@@ -413,28 +413,21 @@ export async function isMatchAlreadyChallenged(matchCreatorUid, matchChallengerU
         
         if (notArr !== null && notArr !== undefined) {
             
-            // Convert what the query to the DB returns, into an array of objects, ripping
-            // away the notification uid, and leaving only the content of the notification
-            // as an object
-            let notArrConverted = Object.keys(notArr).map(function(key) {
-              return notArr[key];
+            // Object.keys returns an array of keys from the notArr. The method 'some' compares and returns
+            // true as soon as the comparison produces 'true', otherwise it will keep iterating until the end.
+            res = Object.keys(notArr).some((key) => {
+
+                // notArr is an Object that contains multiple properties with the value of an uuid of
+                // a notification, which each have their onw properties as an Object. Therefore the
+                // notArr[key] operation to access the Object, and .matchId to access the prop. from the
+                // notification Object.
+                return notArr[key].idMatch === matchId;
             });
-
-            // Traverse the array of objects of notifications so that we can compare the matchId
-            for (let key in notArrConverted) {  
-                if (notArrConverted.hasOwnProperty(key)) {
-
-                    // Identify the matchId that matches with the one provides in parameter
-                    if (notArrConverted[key].idMatch === matchId) {
-                        res = true;
-                    }
-                }
-            }
         }
     } catch (error) {
         console.error(error);
     }
-
+    console.log("Res is: " + res);
     return res;
 }
 

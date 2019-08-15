@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import styles from './style';
 import Images from './../../../assets/images';
+import UploadClutchEvidenceScreen from '../UploadClutchEvidenceScreen/UploadClutchEvidenceScreen';
+import { uploadResultOfMatch } from '../../services/database';
 
 
 const QaploinIcon = Images.svg.favouritesIcon;
@@ -20,7 +22,9 @@ class UploadMatchResultScreen extends Component {
       super(props);
     
       this.state = {
-          matchResultStatus: 'none'
+          matchResultStatus: 'none',
+          evidenceUrl: '',
+          uploadingEvidence: false
       };
     }
 
@@ -33,67 +37,88 @@ class UploadMatchResultScreen extends Component {
      *
      */
     toogleResultButton = (resultType) => {
-        if (resultType === 'Won' && this.state.matchResultStatus !== 'won') {
+        if (resultType === '1' && this.state.matchResultStatus !== '1') {
             this.setState({
-                matchResultStatus: 'won',
+                matchResultStatus: '1',
             }) 
         }
-        else if(resultType === 'Lost' && this.state.matchResultStatus !== 'lost') {
+        else if(resultType === '0' && this.state.matchResultStatus !== '0') {
             this.setState({
-                matchResultStatus: 'lost',
+                matchResultStatus: '0',
             }) ;
-        } else if (resultType === 'Other' && this.state.matchResultStatus !== 'other') {
-            this.setState({ matchResultStatus: 'other' });
+        } else if (resultType === '7' && this.state.matchResultStatus !== '7') {
+            this.setState({ matchResultStatus: '7' });
         }
     }
 
     /**
-     * Send the user to UploadClutchEvidenceScreen
+     * Open the UploadClutchEvidenceScreen
      */
-    sendToUploadEvidence = () => this.props.navigation.navigate('UploadClutchEvidence');
+    sendToUploadEvidence = () => this.setState({ uploadingEvidence: true });
+
+    /**
+     * Get the inserted url afther that was validated on UploadClutchEvidenceScreen and back to the initial screen
+     */
+    getEvidenceData = (url) => this.setState({ evidenceUrl: url, uploadingEvidence: false });
+
+    /**
+     * If the user has a result selected upload their result to firebase
+     * if not shows a modal to notify the user
+     */
+    uploadResult = () => {
+        if (this.state.matchResultStatus !== 'none') {
+            uploadResultOfMatch(this.props.navigation.getParam('idMatch'), this.props.navigation.getParam('adversary'), this.state.matchResultStatus, this.state.evidenceUrl);
+        } else {
+            console.log('Here we can the modal');
+        }
+    }
 
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
-                <View style={styles.container}>
-                    <View style={styles.winLooseContainer}>
-                        <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, 'Won')}>
-                            <View>
-                                <QaploinIcon
-                                    fill={this.state.matchResultStatus === 'won' ? '#36E5CE' : 'gray'} 
-                                    height={100}
-                                    width={100} /> 
-                            </View>                       
+                {this.state.uploadingEvidence ?
+                    <UploadClutchEvidenceScreen sendEvidenceData={this.getEvidenceData} />
+                    :
+                    <View style={styles.container}>
+                        <View style={styles.winLooseContainer}>
+                            <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, '1')}>
+                                <View>
+                                    <QaploinIcon
+                                        fill={this.state.matchResultStatus === '1' ? '#36E5CE' : 'gray'} 
+                                        height={100}
+                                        width={100} /> 
+                                </View>                       
+                            </TouchableWithoutFeedback>
+                            <View style={styles.winLooseSeparator} />
+                            <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, '0')}> 
+                                <View>
+                                    <QaploinIcon
+                                        fill={this.state.matchResultStatus === '0' ? '#FF0000' : 'gray'}
+                                        height={100}
+                                        width={100} />
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
+                        <View style={styles.uploadEvidence}>
+                            <TouchableWithoutFeedback onPress={this.sendToUploadEvidence.bind(this)}>
+                                <QaploinIcon height={150} width={150} />
+                            </TouchableWithoutFeedback>
+                        </View>
+                        <Text style={styles.footerEvidence}>
+                            Evidencia.                  
+                        </Text>
+                        <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, '7')}>
+                            <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === '7' ? '#FF0000' : '#6D7DDE' }]}>
+                                <Text style={styles.buttonText}>OTRO RESULTADO</Text>
+                            </View>
                         </TouchableWithoutFeedback>
-                        <View style={styles.winLooseSeparator} />
-                        <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, 'Lost')}> 
-                            <View>
-                                <QaploinIcon
-                                    fill={this.state.matchResultStatus === 'lost' ? '#36E5CE' : 'gray'}
-                                    height={100}
-                                    width={100} />
+                        <TouchableWithoutFeedback onPress={this.uploadResult}>
+                            <View style={styles.uploadResultButton}>
+                                <Text style={styles.buttonText}>SUBIR RESULTADO</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
-                    <View style={styles.uploadEvidence}>
-                        <TouchableWithoutFeedback onPress={this.sendToUploadEvidence.bind(this)}>
-                            <QaploinIcon height={150} width={150} />
-                        </TouchableWithoutFeedback>
-                    </View>
-                    <Text style={styles.footerEvidence}>
-                        Evidencia.                  
-                    </Text>
-                    <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, 'Other')}>
-                        <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === 'other' ? '#FF0000' : '#6D7DDE' }]}>
-                            <Text style={styles.buttonText}>OTRO RESULTADO</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={() => console.log("mu")}>
-                        <View style={styles.uploadResultButton}>
-                            <Text style={styles.buttonText}>SUBIR RESULTADO</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
+                }
             </SafeAreaView>
         );
     }

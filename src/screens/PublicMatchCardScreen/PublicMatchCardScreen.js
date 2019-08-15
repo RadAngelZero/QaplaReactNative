@@ -1,3 +1,4 @@
+// diego          - 14-08-2019 - us77 - Added navigation to upload results on 'Subir Resultado' button
 // josep.sanahuja - 12-08-2019 - us85 - 'Subir Resultado' button navigates to UploadMatchResult
 // diego          - 06-08-2019 - us76 - Show gamerTag key and value of the match and adversary2
 // diego          - 06-08-2019 - us75 - 'Subir Resultado' button added
@@ -33,10 +34,25 @@ class PublicMatchCardScreen extends Component {
         }
     }
 
+    /**
+     * Cancel a public match
+     */
     tryToCancelMatch() {
         const matchCard = this.props.navigation.getParam('matchCard');
         cancelPublicMatch(matchCard.idMatch);
         this.props.navigation.navigate('Publicas');
+    }
+
+    /**
+     * Send the user with the necesary parameters to the UploadMatchResultScreen
+     */
+    sendToUploadMatchResult = () => {
+        const matchCard = this.props.navigation.getParam('matchCard');
+        if (!matchCard.adversary1) {
+            this.props.navigation.navigate('UploadMatchResult', { idMatch: matchCard.idMatch, adversary: 1 });
+        } else if (!matchCard.adversary2) {
+            this.props.navigation.navigate('UploadMatchResult', { idMatch: matchCard.idMatch, adversary: 2 });
+        }
     }
 
     render() {
@@ -111,7 +127,7 @@ class PublicMatchCardScreen extends Component {
                     </TouchableWithoutFeedback>
                 }
                 {matchCard.matchesPlay &&
-                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('UploadMatchResult')}>
+                    <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Subir Resultado</Text>
                         </View>

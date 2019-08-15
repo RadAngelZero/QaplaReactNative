@@ -1,3 +1,4 @@
+// josep.sanahuja - 14-08-2019 - bug6 - - .credits from numQaploins
 // josep.sanahuja - 13-08-2019 - us86 - + isMatchAlreadyChallenged
 // josep.sanahuja - 08-08-2019 - us85 - + deleteNotification
 // diego          - 06-08-2019 - us75 - Add matchesPlayRef
@@ -448,7 +449,7 @@ export async function isMatchAlreadyChallenged(matchCreatorUid, matchChallengerU
 export async function userHasQaploinsToPlayMatch(idUserSend, matchId) {
     try {
         let numQaploinsSnap = await usersRef.child(idUserSend).child('credits').once('value');
-        let numQaploins = numQaploinsSnap.val().credits;
+        let numQaploins = numQaploinsSnap.val();
 
         let matchBetSnap = await matchesRef.child(matchId).child('bet').once('value');
         let matchBet = matchBetSnap.val();

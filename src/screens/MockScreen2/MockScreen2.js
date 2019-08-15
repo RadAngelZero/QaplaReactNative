@@ -1,3 +1,4 @@
+// josep.sanahuja    - 13-08-2019 - bug6 - - acceptChallengeRequest
 // josep.sanahuja    - 13-08-2019 - us88 - + UploadMatchResultsModal
 // josep.sanahuja    - 12-08-2019 - us79 - + UploadMatchEvidenceModal
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
@@ -82,13 +83,6 @@ export default class MockScreen2 extends React.Component {
 				  color="white"
 				/>
 				<Button
-				  onPress={acceptChallengeRequest.bind(this,
-				  	this.state.textIdChallenged,
-				  	this.state.textIdNotification)}
-				  title="CancelMatch"
-				  color="white"
-				/>
-				<Button
 				  onPress={this.toogleUploadEvModal}
 				  title="Open Upload Ev Modal"
 				  color="white"
@@ -136,25 +130,5 @@ function cancelMatch(idMatch) {
 	}
 	catch (err) {
 		console.log("[MockScreen] - Error - " + error.toString());
-	}
-}
-
-/**
- * Description:
- * Accept challenge for idMatch
- *
- * @param {string} idMatch    id of the Match to be challenged
- * @param {string} idRequest  id from the match request
- * @param {string} idSender   id from the user that sends the challenge request
- *
- */
-function acceptChallengeRequest(idChallenged, idNotification) {
-	let cloudFunc = functions.httpsCallable('acceptChallengeRequest');
-
-	try {
-		let res = cloudFunc({idNotification: idNotification, idChallenged: idChallenged});
-	}
-	catch (err) {
-		console.log("[MockScreen] - acceptChallengeRequest - Error - " + error.toString());
 	}
 }

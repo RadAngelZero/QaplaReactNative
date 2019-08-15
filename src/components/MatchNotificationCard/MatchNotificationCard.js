@@ -1,3 +1,4 @@
+// josep.sanahuja - 14-08-2019 - bug6 - Add challengedUser id arg to acceptChallengeRequest
 // josep.sanahuja - 08-08-2019 - us85 - + NotEnoughQaploinsModal
 // diego          - 06-08-2019 - us68 - Add modal: Delete related notifications
 // diego          - 05-08-2019 - us60 - Add declineMatch logic
@@ -112,7 +113,8 @@ class MatchNotificationCard extends Component {
         } else if (dontShowAcceptChallengeModal !== 'true') {
             this.setState({ openAcceptChallengeModal: true });
         } else {
-            acceptChallengeRequest(this.props.notification);
+            // bug6: Added user id as 2nd arg.
+            acceptChallengeRequest(this.props.notification, this.props.uid);
         }
     }
 
@@ -160,7 +162,7 @@ class MatchNotificationCard extends Component {
                         <Modal animationType='none'
                             transparent
                             visible={this.state.openAcceptChallengeModal}>
-                            <AcceptChallengeModal acceptNotificationsDelete={() => acceptChallengeRequest(this.props.notification)}
+                            <AcceptChallengeModal acceptNotificationsDelete={() => acceptChallengeRequest(this.props.notification, this.props.uid)}
                                 onClose={() => this.setState({ openAcceptChallengeModal: false })} />
                         </Modal>
                         <NotEnoughQaploinsModal

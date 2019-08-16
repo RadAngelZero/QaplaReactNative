@@ -10,8 +10,8 @@ export default styles = StyleSheet.create({
       backgroundColor:'#131833'
     },
     container: {
-        backgroundColor:'#131833',
-        flex: 1
+        flex: 1,
+        backgroundColor:'#131833'
     },
     headerOptions: {
 		flexDirection: 'row',

@@ -1,3 +1,6 @@
+// josep.sanahuja - 14-08-2019 - bug6 - - .credits from numQaploins
+// josep.sanahuja - 13-08-2019 - us86 - + isMatchAlreadyChallenged
+// josep.sanahuja - 08-08-2019 - us85 - + deleteNotification
 // diego          - 06-08-2019 - us75 - Add matchesPlayRef
 // diego          - 05-08-2019 - us60 - Add declineMatch logic
 // diego          - 01-08-2019 - us58 - Add logic to load info for notifications
@@ -185,6 +188,7 @@ export async function addGameToUser(uid, platform, gameKey, gamerTag) {
     }
     return Promise.resolve({ message: 'Juego agregado correctamente' });
 }
+
 /**
  * Get the current commission that qapla set for each match
  */
@@ -364,8 +368,95 @@ export async function declineMatch(uid, notificationId) {
             Decline a match only implies delete the notification from the notificationMatch node
             of the user who receives it (challenged user)
         */
+        return await deleteNotification(uid, notificationId);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// -----------------------------------------------
+// Notifications
+// -----------------------------------------------
+
+/**
+ * @description Delete a notification with notificationId
+ * @param {string} uid User id of the user who decline the match
+ * @param {string} notificationId Id of the notification
+ */
+export async function deleteNotification(uid, notificationId) {
+    try {
         return await usersRef.child(uid).child('notificationMatch').child(notificationId).remove();
     } catch (error) {
         console.error(error);
     }
 }
+
+/**
+ * @description 
+ * Checks if a challenge notification for a match created by a particular user already exists.
+ *
+ * @param {string} matchCreatorUid    User id of the user who created the match
+ * @param {string} matchChallengerUid User id of the user who challenges the match
+ * @param {string} matchId            Id of the match
+ */
+export async function isMatchAlreadyChallenged(matchCreatorUid, matchChallengerUid, matchId) 
+{
+    let res = false;
+
+    try {
+        // Retrieve the notificationMatch Node with its childs ordered by order considering 
+        // the idUserSend. Why idUserSend? Because it's much more efficient to order by 
+        // idUsersend rather than matchId. Reason to say much more efficient is that the 
+        // ChallengedUser might have several notifications for a match 'A', whereas it will
+        // have much more fewer notifications from the ChallengerUser.
+        notArrSnap = await usersRef.child(matchCreatorUid).child('notificationMatch').orderByChild('idUserSend').equalTo(matchChallengerUid).once('value');
+        notArr = notArrSnap.val();
+        
+        if (notArr !== null && notArr !== undefined) {
+            
+            // Object.keys returns an array of keys from the notArr. The method 'some' compares and returns
+            // true as soon as the comparison produces 'true', otherwise it will keep iterating until the end.
+            res = Object.keys(notArr).some((key) => {
+
+                // notArr is an Object that contains multiple properties with the value of an uuid of
+                // a notification, which each have their onw properties as an Object. Therefore the
+                // notArr[key] operation to access the Object, and .matchId to access the prop. from the
+                // notification Object.
+                return notArr[key].idMatch === matchId;
+            });
+        }
+    } catch (error) {
+        console.error(error);
+    }
+    console.log("Res is: " + res);
+    return res;
+}
+
+
+
+// -----------------------------------------------
+// Qaploins
+// -----------------------------------------------
+
+/**
+ * @description
+ * Check that a user has >= Qaploins than the match bet.
+ *
+ * @param {string}  idUserSend  Id of the user that challenged a match
+ * @param {string}  matchId     Id of the match consulted
+ *
+ */
+export async function userHasQaploinsToPlayMatch(idUserSend, matchId) {
+    try {
+        let numQaploinsSnap = await usersRef.child(idUserSend).child('credits').once('value');
+        let numQaploins = numQaploinsSnap.val();
+
+        let matchBetSnap = await matchesRef.child(matchId).child('bet').once('value');
+        let matchBet = matchBetSnap.val();
+
+        return numQaploins >= matchBet;
+    } catch (error) {
+        console.error(error);
+    }
+}
+

@@ -153,7 +153,6 @@ export class MyMatchesScreen extends Component {
 
     render() {
         return (
-
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <MatchCardList matchesPlay {...this.state} />

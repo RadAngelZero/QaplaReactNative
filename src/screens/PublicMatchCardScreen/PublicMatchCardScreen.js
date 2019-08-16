@@ -1,4 +1,6 @@
+// josep.sanahuja - 13-08-2019 - us86 - + match challenge already exist logic
 // diego          - 12-08-2019 - bug4 - Update name of adversary1 prop to adversaryUid because the adversary can be also the adversary2
+// josep.sanahuja - 12-08-2019 - us85 - 'Subir Resultado' button navigates to UploadMatchResult
 // diego          - 06-08-2019 - us76 - Show gamerTag key and value of the match and adversary2
 // diego          - 06-08-2019 - us75 - 'Subir Resultado' button added
 // josep.sanahuja - 05-08-2019 - us84 - Changed SafeAreaView style
@@ -11,24 +13,69 @@ import { connect } from 'react-redux';
 import styles from './style'
 
 import Images from '../../../assets/images'
-import { challengeUser } from '../../services/database';
+import { challengeUser, isMatchAlreadyChallenged } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
 import { cancelPublicMatch } from '../../services/functions';
 import { getGamerTagStringWithGameAndPlatform } from '../../utilities/utils';
+
+// Custom Components
+import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBttnModal'
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
 
 class PublicMatchCardScreen extends Component {
-    tryToChallengeUser() {
-        //If the user is logged
+    
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            openChalExModal: false
+        };
+    }
+
+    /**
+    * Description:
+    * Closes Modal that reminds that a challenge was already sent for a match
+    *
+    * @param None
+    */
+    toggleOpenChalExModal = async () => {
+        this.setState({
+          openChalExModal: !this.state.openChalExModal
+        })
+    } 
+
+    /**
+    * Description:
+    * Performs the challenge operation where adversary2 challenges adversary1 for match
+    * with matchId. If adversary2 already challenged the adversary1 then the challenge
+    * wont be sent because it already exists in adversary1/notificationMatch node
+    *
+    * @param None
+    */
+    async tryToChallengeUser() {
+        // If the user is logged
         if (isUserLogged()) {
-            //Get the info of the match
+            // Get the info of the match
             const matchCard = this.props.navigation.getParam('matchCard');
-            //Challenge the user to play the match
-            challengeUser(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
+            
+            // Check if the match created by adversary1, with matchId was already challenged 
+            // by the user uid, we want to avoid to challenge a match twice or more.
+            const already = await isMatchAlreadyChallenged(matchCard.adversary1, this.props.uid, matchCard.idMatch);
+ 
+            if (!already)
+            {
+                // Challenge the user to play the match
+                challengeUser(matchCard.adversary1, this.props.uid, matchCard.idMatch);
+            }
+            else {
+                // Show Modal
+                this.toggleOpenChalExModal();
+            }
+
         } else {
-            //If the user is unlogged then redirect the user to Signin Screen
+            // If the user is unlogged then redirect the user to Signin Screen
             this.props.navigation.navigate('SignIn');
         }
     }
@@ -111,12 +158,18 @@ class PublicMatchCardScreen extends Component {
                     </TouchableWithoutFeedback>
                 }
                 {matchCard.matchesPlay &&
-                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Mock2')}>
+                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('UploadMatchResult')}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Subir Resultado</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
+                <OneTxtOneBttnModal
+                    visible={ this.state.openChalExModal }
+                    onClose={ this.toggleOpenChalExModal }
+                    header={ 'Lo sentimos' }
+                    body={ 'Ya enviaste un desafio al jugador para esta Partida' }
+                    textButton={ 'Ok' } />
             </SafeAreaView>
         );
     }

@@ -1,4 +1,5 @@
-// diego             - 09-08-2019 - bug4 - Remove child_changed listener + update remove listeners + update remove listener methods on willBlur
+// diego             - 09-08-2019 - bug4 - Remove child_changed listener
+//                                         + update remove listener methods on willBlur
 // diego             - 06-08-2019 - us75 - matchesRef changed to matchesPlayRef
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 
@@ -25,10 +26,13 @@ export class MyMatchesScreen extends Component {
                 (payload) => {
                     /**
                      * Remove the listeners on matchesPlayRef and clean the state
+                     * as we use the child_added and child_removed listeners
+                     * we need to remove it one by one
                      */
-                    matchesPlayRef.off('child_added');
-                    matchesPlayRef.off('child_removed');
                     matchesPlayRef.orderByChild('adversary1').equalTo(this.props.id).off('child_added');
+                    matchesPlayRef.orderByChild('adversary2').equalTo(this.props.id).off('child_added');
+                    matchesPlayRef.orderByChild('adversary1').equalTo(this.props.id).off('child_removed');
+                    matchesPlayRef.orderByChild('adversary2').equalTo(this.props.id).off('child_removed');
                     var stateCopy = [...this.state.matches];
                     stateCopy.splice(0);
                     this.setState({ matches: stateCopy });

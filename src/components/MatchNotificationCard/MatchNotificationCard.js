@@ -51,6 +51,7 @@ class MatchNotificationCard extends Component {
         try {
             this.setState({ loading: true });
             const matchData = await getMatchWitMatchId(this.props.notification.idMatch);
+            
             if (matchData) {
                 matchData['userName'] = this.props.notification.userName;
                 matchData['gamerTag'] = await getGamerTagWithUID(this.props.notification.idUserSend, matchData.game, matchData.platform);

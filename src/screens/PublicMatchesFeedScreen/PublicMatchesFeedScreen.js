@@ -27,6 +27,8 @@ class PublicMatchesFeedScreen extends Component {
                 (payload) => {
                     /**
                      * Remove the listeners on matchesRef and clean the state
+                     * as we use the child_added and child_removed listeners
+                     * we need to remove it one by one
                      */
                     matchesRef.off('child_added');
                     matchesRef.off('child_removed');

@@ -1,35 +1,29 @@
 // diego          - 13-08-2019 - us77 - File creation
 
 import React, { Component } from 'react';
-import { View, Image, ScrollView, TextInput, Text, TouchableWithoutFeedback, Linking } from 'react-native';
+import { View, TextInput, Text, TouchableWithoutFeedback, Linking } from 'react-native';
 
 import styles from './style';
 import Images from './../../../assets/images';
-import { getDimensions } from '../../utilities/iosAndroidDim';
+import TutorialCarousel from '../../components/TutorialCarousel/TutorialCarousel';
 
 const images = [Images.png.uploadVideoClutch.img, Images.png.shareClutchLink.img];
 
 export class UploadClutchEvidenceScreen extends Component {
     state = {
-        selectedIndex: 0,
         url: '',
         showUrlError: false
     };
 
     /**
-     * Validates that the url enterd by the user is a valid url
+     * Validates that the url entered by the user is a valid url
      */
     urlIsValid() {
-        return /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(this.state.url);
-    }
-
-    /**
-     * Set the current index to show on the progress icons
-     * @param {object} scrollEvent Event returned from onScroll method of ScrollView
-     */
-    setSelectedIndex = (scrollEvent) => {
-        const scrollPosition = scrollEvent.nativeEvent.contentOffset.x;
-        this.setState({ selectedIndex: scrollPosition < getDimensions().width/2 ? 0 : 1 });
+        /**
+         * Reg. exp to check for valid url's
+         * Lear more about reg exp in: https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_Expressions
+         */
+        return /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(this.state.url);
     }
 
     /**
@@ -39,7 +33,7 @@ export class UploadClutchEvidenceScreen extends Component {
     setUrlText = (url) => this.setState({ showUrlError: false, url });
 
     /**
-     * Chek the url and then send the data (url) to the UploadMatchResultScreen
+     * Send the data (url) to the UploadMatchResultScreen
      */
     submitData = () => {
         if (this.urlIsValid()) {
@@ -57,24 +51,7 @@ export class UploadClutchEvidenceScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.scrollContainer}>
-                    <ScrollView horizontal
-                        pagingEnabled
-                        disableIntervalMomentum
-                        onScroll={this.setSelectedIndex}>
-                        <View style={styles.carrouselContainer}>
-                            {images.map((image, index) => (
-                                <View key={`ClutchTutorialCarouselIndex${index}`}>
-                                    <Image style={styles.image} source={image}/>
-                                </View>
-                            ))}
-                        </View>
-                    </ScrollView>
-                    <View style={styles.progressContainer}>
-                        <View style={[styles.progressCircleIndicator, { backgroundColor: this.state.selectedIndex === 0 ? '#6D7DDE' : '#B1B1B1' }]} />
-                        <View style={[styles.progressCircleIndicator, { backgroundColor: this.state.selectedIndex === 1 ? '#6D7DDE' : '#B1B1B1' }]} />
-                    </View>
-                </View>
+                <TutorialCarousel images={images} />
                 <TextInput placeholder='Inserta aqui el URL del clip'
                     placeholderTextColor='#898A97'
                     onChangeText={this.setUrlText}

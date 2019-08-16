@@ -86,6 +86,7 @@ class PublicMatchCardScreen extends Component {
     tryToCancelMatch() {
         const matchCard = this.props.navigation.getParam('matchCard');
         cancelPublicMatch(matchCard.idMatch);
+
         this.props.navigation.navigate('Publicas');
     }
 
@@ -94,6 +95,11 @@ class PublicMatchCardScreen extends Component {
      */
     sendToUploadMatchResult = () => {
         const matchCard = this.props.navigation.getParam('matchCard');
+        
+        /**
+         * Detect what adversary is trying to upload their result
+         * TODO: Adjust when bug4 is merged
+         */
         if (!matchCard.adversary1) {
             this.props.navigation.navigate('UploadMatchResult', { idMatch: matchCard.idMatch, adversary: 1 });
         } else if (!matchCard.adversary2) {

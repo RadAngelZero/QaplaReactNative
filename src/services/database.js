@@ -1,6 +1,6 @@
 // diego          - 14-08-2019 - us77 - Added uploadResultOfMatch
 // josep.sanahuja - 13-08-2019 - us86 - + isMatchAlreadyChallenged
-// josep.sanahuja - 08-08-2019 - us85 - +deleteNotification
+// josep.sanahuja - 08-08-2019 - us85 - + deleteNotification
 // diego          - 06-08-2019 - us75 - Add matchesPlayRef
 // diego          - 05-08-2019 - us60 - Add declineMatch logic
 // diego          - 01-08-2019 - us58 - Add logic to load info for notifications
@@ -126,7 +126,7 @@ export async function createUserName(uid, userName) {
              
             return true;
         } else {
-            //El nombre de usuario ya esta en uso por alguien mas
+            // The username has already taken by other user
             return false;
         }
     });
@@ -467,11 +467,17 @@ export async function userHasQaploinsToPlayMatch(idUserSend, matchId) {
  * @param {enum} result 1 for won, 0 for lost, 7 for other
  * @param {string} evidence url of the clutch evidence
  */
-export async function uploadResultOfMatch(idMatch, adversary, result, evidence) {
+export async function uploadMatchResult(idMatch, adversary, result, evidence) {
     const dateObject = new Date();
+
+    // If the current hour is less than 10, for example 1, we add a 0 to make looks like 01
     const hour = dateObject.getUTCHours() < 10 ? '0' + dateObject.getUTCHours() : dateObject.getUTCHours();
+
+    // If the current minute is less than 10, for example 1, we add a 0 to make looks like 01
     const minutes = dateObject.getUTCMinutes() < 10 ? '0' + dateObject.getUTCMinutes() : dateObject.getUTCMinutes();
     const hourResult = `${hour}:${minutes}`;
+
+    // Check what adversary is trying to upload the result, for add the data in the correct childs
     if (adversary === 1) {
         matchesPlayRef.child(idMatch).update({ resultPlay1: result, pickResult1: '1', hourResult, clutch1: evidence });
     } else if (adversary === 2) {

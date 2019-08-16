@@ -1,4 +1,4 @@
-// diego          - 13-08-2019 - us77 - navigation to UploadClutchEvidenceScreen added
+// diego          - 13-08-2019 - us77 - Added navigation to UploadClutchEvidenceScreen
 // josep.sanahuja - 06-08-2019 - us78 - File creation
 
 import React, { Component } from 'react';
@@ -11,7 +11,7 @@ import {
 import styles from './style';
 import Images from './../../../assets/images';
 import UploadClutchEvidenceScreen from '../UploadClutchEvidenceScreen/UploadClutchEvidenceScreen';
-import { uploadResultOfMatch } from '../../services/database';
+import { uploadMatchResult } from '../../services/database';
 
 
 const QaploinIcon = Images.svg.favouritesIcon;
@@ -36,38 +36,37 @@ class UploadMatchResultScreen extends Component {
      * @param {string}  resultType Match result type.
      *
      */
-    toogleResultButton = (resultType) => {
-        if (resultType === '1' && this.state.matchResultStatus !== '1') {
-            this.setState({
-                matchResultStatus: '1',
-            }) 
-        }
-        else if(resultType === '0' && this.state.matchResultStatus !== '0') {
-            this.setState({
-                matchResultStatus: '0',
-            }) ;
-        } else if (resultType === '7' && this.state.matchResultStatus !== '7') {
-            this.setState({ matchResultStatus: '7' });
-        }
+    toogleResultButton = (result) => {
+        this.setState({
+            matchResultStatus: result,
+        });
     }
 
     /**
      * Open the UploadClutchEvidenceScreen
      */
-    sendToUploadEvidence = () => this.setState({ uploadingEvidence: true });
+    sendToUploadEvidence = () => {
+        this.setState({
+            uploadingEvidence: true
+        });
+    }
 
     /**
      * Get the inserted url afther that was validated on UploadClutchEvidenceScreen and back to the initial screen
      */
-    getEvidenceData = (url) => this.setState({ evidenceUrl: url, uploadingEvidence: false });
+    getEvidenceData = (url) => {
+        this.setState({
+            evidenceUrl: url,
+            uploadingEvidence: false
+        });
+    }
 
     /**
-     * If the user has a result selected upload their result to firebase
-     * if not shows a modal to notify the user
+     * Upload user result to firebase
      */
     uploadResult = () => {
         if (this.state.matchResultStatus !== 'none') {
-            uploadResultOfMatch(this.props.navigation.getParam('idMatch'), this.props.navigation.getParam('adversary'), this.state.matchResultStatus, this.state.evidenceUrl);
+            uploadMatchResult(this.props.navigation.getParam('idMatch'), this.props.navigation.getParam('adversary'), this.state.matchResultStatus, this.state.evidenceUrl);
         } else {
             console.log('Here we can the modal');
         }

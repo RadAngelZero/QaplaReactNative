@@ -10,32 +10,6 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor:'#131833'
     },
-    scrollContainer: {
-        height: getDimensions().height/2
-    },
-    carrouselContainer: {
-        flexWrap: 'wrap'
-    },
-    image: {
-        resizeMode: 'contain',
-        width: getDimensions().width-28,
-        height: getDimensions().width,
-        marginRight: 14,
-        marginLeft: 14
-    },
-    progressContainer: {
-        flexDirection: 'row',
-        alignSelf: 'center',
-        top: -30
-    },
-    progressCircleIndicator: {
-        alignSelf: 'center',
-        justifyContent: 'center',
-        borderRadius: 100,
-        marginRight: 11,
-        width: 9,
-        height: 9
-    },
     urlTextInput: {
         marginLeft: 64,
         marginRight: 64,

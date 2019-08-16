@@ -1,3 +1,5 @@
+// diego              - 16-08-2019 - us77 - File creation
+
 import { StyleSheet } from 'react-native';
 import { getDimensions } from '../../utilities/iosAndroidDim';
 

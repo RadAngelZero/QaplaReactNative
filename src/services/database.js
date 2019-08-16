@@ -126,7 +126,7 @@ export async function createUserName(uid, userName) {
              
             return true;
         } else {
-            // The username has already taken by other user
+            // The username is already being used
             return false;
         }
     });

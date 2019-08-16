@@ -13,6 +13,7 @@ export class TutorialCarousel extends Component {
 
     /**
      * Set the current index to show on the progress icons
+     * 
      * @param {object} scrollEvent Event returned from onScroll method of ScrollView
      */
     determineIndexWithScrollPosition = (scrollEvent) => {

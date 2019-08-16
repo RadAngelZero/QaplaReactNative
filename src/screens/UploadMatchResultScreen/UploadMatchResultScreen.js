@@ -37,9 +37,11 @@ class UploadMatchResultScreen extends Component {
      *
      */
     toogleResultButton = (result) => {
-        this.setState({
-            matchResultStatus: result,
-        });
+        if (result != null && result !== undefined) {
+            this.setState({
+                matchResultStatus: result
+            });
+        }
     }
 
     /**
@@ -62,11 +64,16 @@ class UploadMatchResultScreen extends Component {
     }
 
     /**
-     * Upload user result to firebase
+     * Upload user match result to firebase database
      */
     uploadResult = () => {
         if (this.state.matchResultStatus !== 'none') {
-            uploadMatchResult(this.props.navigation.getParam('idMatch'), this.props.navigation.getParam('adversary'), this.state.matchResultStatus, this.state.evidenceUrl);
+            uploadMatchResult(
+                this.props.navigation.getParam('idMatch'),
+                this.props.navigation.getParam('adversary'),
+                this.state.matchResultStatus,
+                this.state.evidenceUrl
+            );
         } else {
             console.log('Here we can the modal');
         }

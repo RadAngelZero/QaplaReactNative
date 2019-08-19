@@ -34,7 +34,7 @@ class UploadMatchResultScreen extends Component {
     /**
      * Description:
      * Toogles and hightlight the correct match result button. If a button is activated
-     * and then pressed, it won't update the state twice.
+     * and then pressed, it won't update the the state.
      *
      * @param {string}  result Result of the match
      *
@@ -110,7 +110,7 @@ class UploadMatchResultScreen extends Component {
                             </TouchableWithoutFeedback>
                         </View>
                         <View style={styles.uploadEvidence}>
-                            <TouchableWithoutFeedback onPress={this.sendToUploadEvidence.bind(this)}>
+                            <TouchableWithoutFeedback onPress={this.sendToUploadEvidence}>
                                 <QaploinIcon height={150} width={150} />
                             </TouchableWithoutFeedback>
                         </View>

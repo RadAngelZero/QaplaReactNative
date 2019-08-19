@@ -1,3 +1,4 @@
+// diego          - 14-08-2019 - us77 - Added navigation to upload results on 'Subir Resultado' button
 // josep.sanahuja - 13-08-2019 - us86 - + match challenge already exist logic
 // diego          - 12-08-2019 - bug4 - Update name of adversary1 prop to adversaryUid because the adversary can be also the adversary2
 // josep.sanahuja - 12-08-2019 - us85 - 'Subir Resultado' button navigates to UploadMatchResult
@@ -80,10 +81,31 @@ class PublicMatchCardScreen extends Component {
         }
     }
 
+    /**
+     * Cancel a public match
+     */
     tryToCancelMatch() {
         const matchCard = this.props.navigation.getParam('matchCard');
         cancelPublicMatch(matchCard.idMatch);
+
         this.props.navigation.navigate('Publicas');
+    }
+
+    /**
+     * Send the user with the necesary parameters to the UploadMatchResultScreen
+     */
+    sendToUploadMatchResult = () => {
+        const matchCard = this.props.navigation.getParam('matchCard');
+        
+        /**
+         * Detect what adversary is trying to upload their result
+         * TODO: Adjust when bug4 is merged
+         */
+        if (!matchCard.adversary1) {
+            this.props.navigation.navigate('UploadMatchResult', { idMatch: matchCard.idMatch, adversary: 1 });
+        } else if (!matchCard.adversary2) {
+            this.props.navigation.navigate('UploadMatchResult', { idMatch: matchCard.idMatch, adversary: 2 });
+        }
     }
 
     render() {
@@ -158,7 +180,7 @@ class PublicMatchCardScreen extends Component {
                     </TouchableWithoutFeedback>
                 }
                 {matchCard.matchesPlay &&
-                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('UploadMatchResult')}>
+                    <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Subir Resultado</Text>
                         </View>

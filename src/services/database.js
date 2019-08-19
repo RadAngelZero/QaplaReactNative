@@ -1,3 +1,4 @@
+// diego          - 14-08-2019 - us77 - Added uploadResultOfMatch
 // josep.sanahuja - 14-08-2019 - bug6 - - .credits from numQaploins
 // josep.sanahuja - 13-08-2019 - us86 - + isMatchAlreadyChallenged
 // josep.sanahuja - 08-08-2019 - us85 - + deleteNotification
@@ -119,7 +120,7 @@ export function createUserProfile(Uid, email) {
  * 
  * Return: {boolean} user was created or otherwise it was not
  */
-export async function createUserName(uid, userName, navigation) {
+export async function createUserName(uid, userName) {
     return await usersRef.orderByChild('city').equalTo(userName.toUpperCase()).once('value').then(async (userNameAlready) => {
         if (!userNameAlready.exists()) {
             await usersRef.child(uid).update({ userName, city: userName.toUpperCase() });
@@ -130,7 +131,7 @@ export async function createUserName(uid, userName, navigation) {
             // in to the database, we delegate navigation to others.
             return true;
         } else {
-            //El nombre de usuario ya esta en uso por alguien mas
+            // The username is already being used
             return false;
         }
     });
@@ -460,3 +461,31 @@ export async function userHasQaploinsToPlayMatch(idUserSend, matchId) {
     }
 }
 
+// -----------------------------------------------
+// Matches
+// -----------------------------------------------
+
+/**
+ * @description Upload the result of a match from the current user
+ * @param {string} idMatch Identifier of the match on database
+ * @param {number} adversary Indicates if the user is the adversary1 or the adversary2
+ * @param {enum} result 1 for won, 0 for lost, 7 for other
+ * @param {string} evidence url of the clutch evidence
+ */
+export async function uploadMatchResult(idMatch, adversary, result, evidence) {
+    const dateObject = new Date();
+
+    // If the current hour is less than 10, for example 1, we add a 0 to make looks like 01
+    const hour = dateObject.getUTCHours() < 10 ? '0' + dateObject.getUTCHours() : dateObject.getUTCHours();
+
+    // If the current minute is less than 10, for example 1, we add a 0 to make looks like 01
+    const minutes = dateObject.getUTCMinutes() < 10 ? '0' + dateObject.getUTCMinutes() : dateObject.getUTCMinutes();
+    const hourResult = `${hour}:${minutes}`;
+
+    // Check what adversary is trying to upload the result, for add the data in the correct childs
+    if (adversary === 1) {
+        matchesPlayRef.child(idMatch).update({ resultPlay1: result, pickResult1: '1', hourResult, clutch1: evidence });
+    } else if (adversary === 2) {
+        matchesPlayRef.child(idMatch).update({ resultPlay2: result, pickResult2: '1', hourResult, clutch2: evidence });
+    }
+}

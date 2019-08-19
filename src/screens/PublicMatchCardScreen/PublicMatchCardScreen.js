@@ -1,5 +1,6 @@
 // diego          - 14-08-2019 - us77 - Added navigation to upload results on 'Subir Resultado' button
 // josep.sanahuja - 13-08-2019 - us86 - + match challenge already exist logic
+// diego          - 12-08-2019 - bug4 - Update name of adversary1 prop to adversaryUid because the adversary can be also the adversary2
 // josep.sanahuja - 12-08-2019 - us85 - 'Subir Resultado' button navigates to UploadMatchResult
 // diego          - 06-08-2019 - us76 - Show gamerTag key and value of the match and adversary2
 // diego          - 06-08-2019 - us75 - 'Subir Resultado' button added
@@ -164,14 +165,14 @@ class PublicMatchCardScreen extends Component {
                         </View>
                     </View>
                 </View>
-                {(this.props.uid !== matchCard.adversary1 && !matchCard.matchesPlay) &&
+                {(this.props.uid !== matchCard.adversaryUid && !matchCard.matchesPlay) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Retar</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
-                {(this.props.uid === matchCard.adversary1 && !matchCard.matchesPlay) &&
+                {(this.props.uid === matchCard.adversaryUid && !matchCard.matchesPlay) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Cancelar</Text>

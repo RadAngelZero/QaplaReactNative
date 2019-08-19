@@ -1,3 +1,4 @@
+// diego          - 19-08-2019 - us89 - Responsive behavior added to width and height modal size
 // josep.sanahuja - 12-08-2019 - us79 - File creation
 
 import { StyleSheet } from 'react-native';
@@ -14,8 +15,7 @@ export default styles = StyleSheet.create({
         height: '100%',
 	},
 	container: {
-        height: getDimensions().height*.5,
-        width: getDimensions().width,
+        maxWidth: getDimensions().width*.8,
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#141833',
@@ -57,7 +57,8 @@ export default styles = StyleSheet.create({
         paddingTop: '3%',
         paddingBottom: '3%',
         borderRadius: 100,
-        backgroundColor: '#6D7DDE'
+        backgroundColor: '#6D7DDE',
+        marginBottom: 18
     },
     closeIcon: {
         fontSize: 20,

@@ -13,8 +13,11 @@ import Images from './../../../assets/images';
 import UploadClutchEvidenceScreen from '../UploadClutchEvidenceScreen/UploadClutchEvidenceScreen';
 import { uploadMatchResult } from '../../services/database';
 
-
 const QaploinIcon = Images.svg.favouritesIcon;
+
+const WON_RESULT = '1';
+const LOST_RESULT = '0';
+const OTHER_RESULT = '7';
 
 class UploadMatchResultScreen extends Component {
     
@@ -22,7 +25,7 @@ class UploadMatchResultScreen extends Component {
       super(props);
     
       this.state = {
-          matchResultStatus: 'none',
+          matchResultStatus: null,
           evidenceUrl: '',
           uploadingEvidence: false
       };
@@ -33,11 +36,11 @@ class UploadMatchResultScreen extends Component {
      * Toogles and hightlight the correct match result button. If a button is activated
      * and then pressed, it won't update the state twice.
      *
-     * @param {string}  resultType Match result type.
+     * @param {string}  result Result of the match
      *
      */
     toogleResultButton = (result) => {
-        if (result != null && result !== undefined) {
+        if (result != null && result !== undefined && result !== this.state.matchResultStatus) {
             this.setState({
                 matchResultStatus: result
             });
@@ -67,7 +70,7 @@ class UploadMatchResultScreen extends Component {
      * Upload user match result to firebase database
      */
     uploadResult = () => {
-        if (this.state.matchResultStatus !== 'none') {
+        if (this.state.matchResultStatus) {
             uploadMatchResult(
                 this.props.navigation.getParam('idMatch'),
                 this.props.navigation.getParam('adversary'),
@@ -87,19 +90,19 @@ class UploadMatchResultScreen extends Component {
                     :
                     <View style={styles.container}>
                         <View style={styles.winLooseContainer}>
-                            <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, '1')}>
+                            <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, WON_RESULT)}>
                                 <View>
                                     <QaploinIcon
-                                        fill={this.state.matchResultStatus === '1' ? '#36E5CE' : 'gray'} 
+                                        fill={this.state.matchResultStatus === WON_RESULT ? '#36E5CE' : 'gray'} 
                                         height={100}
                                         width={100} /> 
                                 </View>                       
                             </TouchableWithoutFeedback>
                             <View style={styles.winLooseSeparator} />
-                            <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, '0')}> 
+                            <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, LOST_RESULT)}> 
                                 <View>
                                     <QaploinIcon
-                                        fill={this.state.matchResultStatus === '0' ? '#FF0000' : 'gray'}
+                                        fill={this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : 'gray'}
                                         height={100}
                                         width={100} />
                                 </View>
@@ -113,8 +116,8 @@ class UploadMatchResultScreen extends Component {
                         <Text style={styles.footerEvidence}>
                             Evidencia.                  
                         </Text>
-                        <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, '7')}>
-                            <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === '7' ? '#FF0000' : '#6D7DDE' }]}>
+                        <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, OTHER_RESULT)}>
+                            <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === OTHER_RESULT ? '#FF0000' : '#6D7DDE' }]}>
                                 <Text style={styles.buttonText}>OTRO RESULTADO</Text>
                             </View>
                         </TouchableWithoutFeedback>

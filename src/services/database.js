@@ -124,6 +124,10 @@ export async function createUserName(uid, userName) {
         if (!userNameAlready.exists()) {
             await usersRef.child(uid).update({ userName, city: userName.toUpperCase() });
              
+            // #us83: Removed return navigation.navigate('Retas'); and replace it with a boolean value
+            //.so that it can be consumed by others. Removing the navigation method complies with
+            // trying to decouple as much as possible what each method does. This one, creates a UserName
+            // in to the database, we delegate navigation to others.
             return true;
         } else {
             // The username is already being used

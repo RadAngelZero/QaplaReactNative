@@ -58,6 +58,7 @@ class UploadMatchResultScreen extends Component {
 
     /**
      * Get the inserted url afther that was validated on UploadClutchEvidenceScreen and back to the initial screen
+     * @param {string} url Url inserted by the user on the UploadClutchEvidenceScreen
      */
     getEvidenceData = (url) => {
         this.setState({

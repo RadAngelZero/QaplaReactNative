@@ -1,3 +1,4 @@
+// diego          - 09-08-2019 - bug4 - update remove listener methods on willBlur and make unshift of the new data on array
 // josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
 // diego          - 05-08-2019 - us58   - Bug fixed: the matches array was not deleted when willBlur was called
 // josep.sanahuja - 08-07-2019 - us83 - + 'userName-creation-scenario' asyncStg flag & 'constructor'
@@ -26,13 +27,17 @@ class PublicMatchesFeedScreen extends Component {
                 (payload) => {
                     /**
                      * Remove the listeners on matchesRef and clean the state
+                     * as we use the child_added and child_removed listeners
+                     * we need to remove it one by one
                      */
-                    matchesRef.off();
+                    matchesRef.off('child_added');
+                    matchesRef.off('child_removed');
                     var stateCopy = [...this.state.matches];
                     stateCopy.splice(0);
                     this.setState({ matches: stateCopy });
                 }
             ),
+
             /**
              * This event is triggered when the user enter (focus) on this screen
              */
@@ -51,7 +56,7 @@ class PublicMatchesFeedScreen extends Component {
                         const { adversary1, alphaNumericIdMatch, bet, date, game, hour, idMatch, numMatches, observations, platform, timeStamp, winBet } = newPublicMatch.val();
                         //Object with the necesary fields to load the match in the app (the card and the detailed view)
                         const matchObject = {
-                            adversary1,
+                            adversaryUid: adversary1,
                             alphaNumericIdMatch,
                             bet,
                             date,
@@ -64,15 +69,22 @@ class PublicMatchesFeedScreen extends Component {
                             timeStamp,
                             winBet,
                             //Get the userName from a external function because the match object only have the UID
-                            userName: await getUserNameWithUID(newPublicMatch.val().adversary1).then((userName) => userName),
+                            userName: await getUserNameWithUID(newPublicMatch.val().adversary1),
                             gamerTag: await getGamerTagWithUID(newPublicMatch.val().adversary1, newPublicMatch.val().game, newPublicMatch.val().platform)
                         };
                         this.setState((state) => {
                             //Add the matchObject to the matches array of the state
-                            const matches = [...state.matches, matchObject];
+                            const matches = [...state.matches];
+                            /*
+                            * NOTE: For som undiscovered reason, in the first time when the component is created in the MatchCardList, the array of 
+                            * matches is sorted but in any other render execution the sort is not called (fixed on PublicMatchesFeedScreen making 
+                            * unshift when get new match)
+                            */
+                            matches.unshift(matchObject);
                             return { matches };
                         });
                     });
+
                     /**
                      * Add a listener of type child_removed.
                      * When a child is removed from matches the event is triggered to remove the match
@@ -92,12 +104,12 @@ class PublicMatchesFeedScreen extends Component {
                         });
                     });
                 }
-            ) // End of didFocus listener
+            )
         ];
     }
 
     componentWillUnmount() {
-        //Remove didBlur and didFocus listeners on navigation
+        //Remove willBlur and willFocus listeners on navigation
         this.list.forEach((item) => item.remove());
     }
 
@@ -111,11 +123,11 @@ class PublicMatchesFeedScreen extends Component {
     }
 
     onCrearRetaButtonPress() {
-        
         if(!this.props.navigation.getParam('firstMatchCreated')){
             storeData('first-match-created', 'true');
             storeData('userName-creation-scenario', 'CreateFirstMatchFromRetas');
         }
+
         this.props.navigation.navigate(isUserLogged() ? 'ChooseMatchType' : 'SignIn');
     }
 }

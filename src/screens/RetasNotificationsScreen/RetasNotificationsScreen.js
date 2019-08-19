@@ -1,3 +1,4 @@
+// diego             - 15-08-2019 - us80 - Order of notifications reversed to show it in the right order
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 // diego             - 01-08-2019 - us58 - File creation
 
@@ -18,8 +19,8 @@ class RetasNotificationsScreen extends Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <ScrollView>
-                        {Object.keys(this.props.notifications).map((notificationKey) => (
-                            <MatchNotificationCard key={`Reta-${notificationKey}`}
+                        {Object.keys(this.props.notifications).reverse().map((notificationKey) => (
+                            <MatchNotificationCard key={`MatchNotification-${notificationKey}`}
                                 notification={this.props.notifications[notificationKey]}
                                 notificationKey={notificationKey}
                                 uid={this.props.uid} />

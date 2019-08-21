@@ -1,3 +1,5 @@
+// diego           - 20-08-2019 - us89 - File creation
+
 import { StyleSheet } from 'react-native';
 
 export default styles = StyleSheet.create({
@@ -22,7 +24,7 @@ export default styles = StyleSheet.create({
         flexDirection: 'column',
         marginRight: 30,
         marginLeft: 86,
-        marginBottom: 25
+        marginBottom: 36
     },
     avatarImage: {
         height: 60,

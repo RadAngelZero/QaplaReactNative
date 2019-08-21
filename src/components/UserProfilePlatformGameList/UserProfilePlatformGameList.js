@@ -24,15 +24,18 @@ export class UserProfilePlatformGameList extends Component {
             <View style={{ marginBottom: this.props.lastChild ? 20 : 0 }}>
                 <Text style={styles.title}>{getPlatformNameWithKey(this.props.platform)}</Text>
                 <ScrollView horizontal>
-                    {Object.keys(this.props.userGames).map((gameKey, index) => (
-                        <UserProfileGameCard key={`${this.props.platform}-${gameKey}`}
-                            platform={this.props.platform}
-                            game={this.getGameResources(this.props.userGames[gameKey])}
-                            winRate={this.getWinRate(gameKey) || 0}
-                            experience={this.getExperience(gameKey)}
-                            level={this.props.gamerStatistics[gameKey].gameExp / 20}
-                            lastChild={index === Object.keys(this.props.userGames).length - 1} />
-                    ))}
+                    {Object.keys(this.props.userGames).map((gameKey, index) => {
+                        if (this.props.gamerStatistics[gameKey]) {
+                            return <UserProfileGameCard key={`${this.props.platform}-${gameKey}`}
+                                platform={this.props.platform}
+                                game={this.getGameResources(this.props.userGames[gameKey])}
+                                winRate={this.getWinRate(gameKey) || 0}
+                                experience={this.getExperience(gameKey)}
+                                level={this.props.gamerStatistics[gameKey].gameExp / 20}
+                                lastChild={index === Object.keys(this.props.userGames).length - 1} />
+                        }
+                        return null;
+                    })}
                 </ScrollView>
             </View>
         );

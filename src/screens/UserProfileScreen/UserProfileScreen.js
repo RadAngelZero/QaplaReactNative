@@ -1,3 +1,4 @@
+// diego           - 21-08-2019 - us89 - Redirect to load games screen added
 // diego           - 20-08-2019 - us89 - Show user statistics by game
 //                                       Added BuyQaploinsModal
 // diego           - 19-08-2019 - us89 - File creation
@@ -22,6 +23,8 @@ export class UserProfileScreen extends Component {
     openBuyQaploinsModal = () => this.setState({ showBuyQaploinsModal: true });
 
     closeBuyQaploinsModal = () => this.setState({ showBuyQaploinsModal: false });
+
+    addGame = () => this.props.navigation.navigate('LoadGames', { loadGamesThatUserDontHave: true });
 
     render() {
         const userGames = getUserGamesOrderedByPlatform(this.props.userGames, this.props.qaplaGames);
@@ -57,7 +60,7 @@ export class UserProfileScreen extends Component {
                             lastChild={index === Object.keys(userGames).length - 1} />
                     ))}
                 </ScrollView>
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={this.addGame}>
                     <View style={styles.fab}>
                         <Text style={styles.fabText}>+</Text>
                     </View>

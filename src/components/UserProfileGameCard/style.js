@@ -6,7 +6,6 @@ import { getDimensions } from '../../utilities/iosAndroidDim';
 export default styles = StyleSheet.create({
     container: {
         height: getDimensions().height / 5,
-        width: (getDimensions().width-20) * .95,
         backgroundColor: '#0D1021',
         borderRadius: 10,
         opacity: .82,
@@ -32,7 +31,8 @@ export default styles = StyleSheet.create({
         marginLeft: 15,
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginRight: 18
     },
     indicatorContainer: {
         marginLeft: 15

@@ -1,4 +1,5 @@
-// diego          - 21-08-2019 - us89 - GamerTag modal moved to independent file
+// diego          - 21-08-2019 - us89 - Added loadGamesThatUserDontHave prop
+//                                      GamerTag modal moved to independent file
 // josep.sanahuja - 05-08-2019 - us84 - changed style from SafeAreaView
 // josep.sanahuja - 22-07-2019 - bug2 - moved 'setSelectedGame' to 'componentDidMount'
 //                                      && simplified 'openModal'
@@ -12,22 +13,14 @@
 
 import React from 'react';
 
-import { 
-    View,
-    Text, 
-    TouchableWithoutFeedback, 
-    BackHandler, 
-    SafeAreaView
-} from 'react-native'
+import { View, Text, TouchableWithoutFeedback, BackHandler, SafeAreaView } from 'react-native'
 
 import styles from './style'
 import Images from './../../../assets/images';
 import VideoGamesList from '../../components/VideoGamesList/VideoGamesList';
 import { connect } from 'react-redux';
 
-import {
-    setSelectedGame,
-} from '../../actions/gamesActions';
+import { setSelectedGame } from '../../actions/gamesActions';
 
 import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal';
 
@@ -58,17 +51,18 @@ class LoadGamesScreen extends React.Component {
 
     userHaveGame() {
         if (this.isThereSelectedGame()) {
-            return this.props.userGameList[this.props.selectedGame.gameKey];
+
+            return this.props.userGameList.indexOf(this.props.selectedGame.gameKey) !== -1;
         }
 
-        return false;
+        return true;
     }
 
     /** 
      * If there are no games on the profile of the user and a game is selected
      * the modal should open
      */
-    openAddGamerTagModal = () => this.userHaveGame();
+    openAddGamerTagModal = () => !this.userHaveGame();
 
     closeAddGamerTagModal = () => this.props.setSelectedGame(null);
 
@@ -86,9 +80,12 @@ class LoadGamesScreen extends React.Component {
                     </View>
                     <AddGamerTagModal selectedGame={this.props.selectedGame}
                         uid={this.props.uid}
+                        userName={this.props.userName}
                         open={this.openAddGamerTagModal()}
-                        onClose={this.closeAddGamerTagModal} />
-                    <VideoGamesList gamesListToLoad={this.props.userGameList} />
+                        onClose={this.closeAddGamerTagModal}
+                        loadGamesThatUserDontHave={this.props.navigation.getParam('loadGamesThatUserDontHave', false)} />
+                    <VideoGamesList gamesListToLoad={this.props.userGameList}
+                        loadGamesThatUserDontHave={this.props.navigation.getParam('loadGamesThatUserDontHave', false)} />
                 </View>
             </SafeAreaView>
         );
@@ -99,7 +96,8 @@ function mapStateToProps(state) {
     return {
         userGameList: state.userReducer.user.gameList,
         selectedGame: state.gamesReducer.selectedGame,
-        uid: state.userReducer.user.id
+        uid: state.userReducer.user.id,
+        userName: state.userReducer.user.userName
     }
 }
 

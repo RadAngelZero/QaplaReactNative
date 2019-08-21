@@ -1,3 +1,4 @@
+// diego          - 20-08-2019 - us77 - Created gamersRef
 // diego          - 14-08-2019 - us77 - Added uploadResultOfMatch
 // josep.sanahuja - 14-08-2019 - bug6 - - .credits from numQaploins
 // josep.sanahuja - 13-08-2019 - us86 - + isMatchAlreadyChallenged
@@ -22,6 +23,7 @@ export const matchesPlayRef = database.ref('/MatchesPlay');
 export const usersRef = database.ref('/Users');
 export const gamesRef = database.ref('/Games');
 export const commissionRef = database.ref('/Commission');
+export const gamersRef = database.ref('/Gamers');
 
 /**
  * Returns the userName of the specified user

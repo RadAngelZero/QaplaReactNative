@@ -1,3 +1,4 @@
+// diego	      - 20-08-2019 - us89 - addQaploinsToUserCloudFunction for beta on iOS
 // josep.sanahuja - 08-08-2019 - us85 - +callCloudFunction &&  +userHasQaploinsToPlayMatch
 //                                      && - auth import
 // diego	      - 06-08-2019 - us68 - acceptChallengeRequest with idNotification parameter changed to notification
@@ -32,6 +33,16 @@ export function cancelPublicMatch(idMatch) {
 	return callCloudFunction({
 		cfName: 'cancelMatch',
 		params: {idMatch: idMatch}
+	});
+}
+
+/**
+ * Add qaploins (iOS beta version)
+ */
+export function addQaploinsToUserCloudFunction() {
+	return callCloudFunction({
+		cfName: 'addQaploinsToUserBETA',
+		params: {}
 	});
 }
 

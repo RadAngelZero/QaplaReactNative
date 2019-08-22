@@ -40,7 +40,6 @@ export const getUserNode = (uid) => async (dispatch) => {
         dispatch(removeUserData({ key: childRemoved.key, value: childRemoved.val() }));
     });
 
-    // Pass everything to async to can perform actions sequentially
     const platformsWithGames = await gamesRef.once('value');
     platformsWithGames.forEach((platformGames) => {
         Object.keys(platformGames.val()).forEach((gameKey) => {

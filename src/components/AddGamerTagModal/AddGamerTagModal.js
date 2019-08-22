@@ -12,11 +12,17 @@ export class AddGamerTagModal extends Component {
         gamerTagText: ''
     };
 
-    isValidGamerTag(gamerTag) {
-        return gamerTag.length > 0;
+    /**
+     * Check if the gamerTag is valid
+     */
+    isValidGamerTag = () => {
+        return this.state.gamerTagText.length > 0;
     }
 
-    isThereSelectedGame() {
+    /**
+     * Check if some game is selected
+     */
+    isThereSelectedGame = () => {
         return this.props.selectedGame != null && this.props.selectedGame != undefined;
     }
 

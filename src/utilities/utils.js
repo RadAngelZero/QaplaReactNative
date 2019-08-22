@@ -67,7 +67,6 @@ export function getPlatformNameWithKey(platformKey) {
  * Sort all the games from a user based on their platform
  * @param {Object} userGames List of the games from the user
  * @param {Object} allQaplaGames List that contains all the games on Qapla
- * @returns {Object} Sorted games by platform
  */
 export function getUserGamesOrderedByPlatform(userGames, allQaplaGames) {
     let gamesOrderedByPlatform = {};

@@ -13,10 +13,22 @@ const NECESSARY_EXPERIENCE_TO_UPLOAD_LEVEL = 20;
 
 export class UserProfilePlatformGameList extends Component {
 
+    /**
+     * Return the resources of the game
+     * @param game Game to get resources
+     */
     getGameResources = (game) => gamesResources[game.replace(/ +/g, '')];
 
+    /**
+     * Return the win rate of the user in the specified game
+     * @param gameKey Key of the game
+     */
     getWinRate = (gameKey) => this.props.gamerStatistics[gameKey].gameWins * 100 / (this.props.gamerStatistics[gameKey].gameWins + this.props.gamerStatistics[gameKey].gameLoses);
 
+    /**
+     * Return the experience level of the user
+     * @param gameKey Key of the game
+     */
     getExperience = (gameKey) => 100 / NECESSARY_EXPERIENCE_TO_UPLOAD_LEVEL * (this.props.gamerStatistics[gameKey].gameExp - NECESSARY_EXPERIENCE_TO_UPLOAD_LEVEL * Math.floor(this.props.gamerStatistics[gameKey].gameExp / NECESSARY_EXPERIENCE_TO_UPLOAD_LEVEL));
 
     render() {

@@ -16,6 +16,9 @@ class BuyQaploinsModal extends Component {
         qaploinsAdded: false
     };
 
+    /**
+     * Call the CF to add qaploins to the user (iOS beta version)
+     */
     addQaploinsToUser = async () => {
         try {
             if (!this.state.qaploinsAdded) {

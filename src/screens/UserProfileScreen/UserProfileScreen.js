@@ -20,10 +20,19 @@ export class UserProfileScreen extends Component {
         showBuyQaploinsModal: false
     };
 
+    /**
+     * Open the modal of buy qaploins
+     */
     openBuyQaploinsModal = () => this.setState({ showBuyQaploinsModal: true });
 
+    /**
+     * Close the modal of buy qaploins
+     */
     closeBuyQaploinsModal = () => this.setState({ showBuyQaploinsModal: false });
 
+    /**
+     * Redirect to LoadGames screen
+     */
     addGame = () => this.props.navigation.navigate('LoadGames', { loadGamesThatUserDontHave: true });
 
     render() {

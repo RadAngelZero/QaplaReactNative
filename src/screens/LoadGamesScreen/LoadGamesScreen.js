@@ -45,10 +45,16 @@ class LoadGamesScreen extends React.Component {
         return true;
     }
 
+    /**
+     * Return true if some game is selected
+     */
     isThereSelectedGame() {
         return this.props.selectedGame != null && this.props.selectedGame != undefined;
     }
 
+    /**
+     * Determine if the user have the selected game on their list
+     */
     userHaveGame() {
         if (this.isThereSelectedGame()) {
 
@@ -64,6 +70,9 @@ class LoadGamesScreen extends React.Component {
      */
     openAddGamerTagModal = () => !this.userHaveGame();
 
+    /**
+     * Close the modal by setting to null the selectedGame on redux
+     */
     closeAddGamerTagModal = () => this.props.setSelectedGame(null);
 
     render() {

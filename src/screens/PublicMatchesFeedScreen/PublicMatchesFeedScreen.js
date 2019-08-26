@@ -1,20 +1,25 @@
+// josep.sanahuja - 26-08-2019 - usXX - Add Create Match Button Highlight
 // diego          - 09-08-2019 - bug4 - update remove listener methods on willBlur and make unshift of the new data on array
 // josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
-// diego          - 05-08-2019 - us58   - Bug fixed: the matches array was not deleted when willBlur was called
+// diego          - 05-08-2019 - us58 - Bug fixed: the matches array was not deleted when willBlur was called
 // josep.sanahuja - 08-07-2019 - us83 - + 'userName-creation-scenario' asyncStg flag & 'constructor'
 
 import React, { Component } from 'react';
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import style from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
 import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
 import CreateRetasButton from '../../components/CreateRetasButton/CreateRetasButton';
 import { isUserLogged } from '../../services/auth';
-import { storeData } from '../../utilities/persistance';
+import { storeData, retrieveData } from '../../utilities/persistance';
+import { HIGHLIGHT_1_CREATE_MATCH } from '../../utilities/Constants';
+
+import HighlightModal from '../../components/HighlightModal/HighlightModal'
 
 class PublicMatchesFeedScreen extends Component {
     state = {
-        matches: []
+        matches: [],
+        showHg1Modal: false
     };
 
     componentWillMount(){
@@ -113,22 +118,111 @@ class PublicMatchesFeedScreen extends Component {
         this.list.forEach((item) => item.remove());
     }
 
-    render() {
-        return (
-            <View style={style.container}>
-		        <MatchCardList {...this.state} />
-                <CreateRetasButton highlighted={!this.props.navigation.getParam('firstMatchCreated')} onPress={this.onCrearRetaButtonPress.bind(this)} />
-            </View>
-        );
+    componentDidMount() {
+        this.checkHighlightsFlags();
     }
 
-    onCrearRetaButtonPress() {
+    /**
+     * @description
+     * Perform a serie of function calls after match creation button is pressed.
+     */
+    onCrearRetaButtonPress = () => {
+        // TODO: This if-code block could be removed I think after HIGHLIGHT_1_CREATE_MATCH
+        // introduction
         if(!this.props.navigation.getParam('firstMatchCreated')){
             storeData('first-match-created', 'true');
             storeData('userName-creation-scenario', 'CreateFirstMatchFromRetas');
         }
 
+        // If showHg1Modal is enabled then
+        if (this.state.showHg1Modal){
+            // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
+            // and it should not show up again.
+            this.markHg1();
+            
+            // Hide HIGHLIGHT_1_CREATE_MATCH Modal
+            this.toggleHg1Modal();
+        }
+
         this.props.navigation.navigate(isUserLogged() ? 'ChooseMatchType' : 'SignIn');
+    }
+
+    /**
+     * @description 
+     * Checks Highlights flags stored in AsyncStorage, and evaluates which flags
+     * to activate in the component state.
+     *
+     * TODO Josep Maria 25-08-2019:
+     * When adding more highlights in the same screen, think a way to synchronize
+     * them via logic in the same screen or may be add that logic to the HighlightModal
+     * component which does not make sense right now.
+     */
+    async checkHighlightsFlags() {
+        try {
+            // Get the value for the highlight flag stored in AsynStorage.
+            const value = await retrieveData(HIGHLIGHT_1_CREATE_MATCH);
+
+            if (value !== null) {
+                
+                // There is data stored for the flag, it can be either 'false' or 'true'.
+                this.setState({
+                    showHg1Modal: JSON.parse(value)
+                });
+            }
+            else {
+
+                // That means there is no value stored for the flag, therefore
+                // result should be 'true', meaning the highlight will activate.
+                this.setState({
+                    showHg1Modal: true
+                });
+            }
+        } catch (error) {
+          // Error retrieving flag data
+          console.log("[PublicMatchesFeed] {checkHighlightsFlags} - error retrieving flag data : " + value);
+        }
+    }
+
+    /**
+     * @description 
+     * Toggles the flag 'showHg1Modal' in the component state. If value is 'true' then it becomes
+     * 'false'. If it is 'false' then it becomes 'true'.
+     *
+     * TODO: Consider in a future and be aware of toggle instead of a setTrue or setFalse mecanism. 
+     */
+    toggleHg1Modal = () => {
+        this.setState({
+            showHg1Modal: !this.state.showHg1Modal
+        })
+    }
+
+    /**
+     * @description 
+     * Mark the Highlight flag 'HIGHLIGHT_1_CREATE_MATCH' that indicates
+     * a highlight for rName of specific user only if that username is not already in use.
+     * Flag is stored in AsyncStorage
+     */
+    markHg1 = async () => {
+        storeData(HIGHLIGHT_1_CREATE_MATCH, 'false');
+    }
+
+    render() {
+        return (
+            <View style={style.container}>
+                <MatchCardList {...this.state} /> 
+                <HighlightModal 
+                    visible={this.state.showHg1Modal}
+                    onClose={this.toggleHg1Modal}
+                    cb1={this.markHg1}
+                    header='Crea una Reta'
+                    body='Empieza a competir con otros jugadores. Crea tu reta y gana!'>
+
+                    <CreateRetasButton 
+                        highlighted={!this.props.navigation.getParam('firstMatchCreated')}
+                        onPress={this.onCrearRetaButtonPress}/>
+                </HighlightModal> 
+            </View>  
+        );
     }
 }
 

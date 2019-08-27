@@ -142,6 +142,7 @@ export async function createUserName(uid, userName) {
 
 /**
  * Function to add the game and gamertag of a user
+ * 
  * @param {string} uid User identifier from database
  * @param {string} userName Name from the user
  * @param {string} platform Platform to add gamertag (one of: pc, xbox, ps4, switch)
@@ -149,46 +150,53 @@ export async function createUserName(uid, userName) {
  * @param {string} gamerTag Tag of the user (the user must insert this value)
  */
 export async function addGameToUser(uid, userName, platform, gameKey, gamerTag) {
-    const gameList = await usersRef.child(uid).child('gameList').once('value').then((gameList) => gameList);
-    if (gameList.exists()) {
-        await usersRef.child(uid).child('gameList').child(gameList.numChildren()).set(gameKey);
-    } else {
-        console.log("[addGameToUser] : gameKey2 :  " + gameKey);
-        await usersRef.child(uid).child('gameList').child(0).set(gameKey);
+    try {
+        const gameList = await usersRef.child(uid).child('gameList').once('value');
+
+        if (gameList.exists()) {
+            // Add the gameKey on gameList of the user with the correct index (gameList.numChildren() is the index)
+            await usersRef.child(uid).child('gameList').child(gameList.numChildren()).set(gameKey);
+        } else {
+            await usersRef.child(uid).child('gameList').child(0).set(gameKey);
+        }
+        var gamerTagChildNode = {};
+
+        switch (platform) {
+            case 'pc_white':
+                if (gameKey === 'aClash') {
+                    gamerTagChildNode = {key: 'clashTag', value: gamerTag};
+                } else if (gameKey === 'pcLol'){
+                    gamerTagChildNode = {key: 'lolTag', value: gamerTag};
+                } else if (gameKey === 'pHearth' || gameKey === 'pOver'){
+                    gamerTagChildNode = {key: 'battlenet', value: gamerTag};
+                }
+                break;
+            case 'ps4_white':
+                gamerTagChildNode = {key: 'psn', value: gamerTag};
+                break;
+            case 'xbox_white':
+                gamerTagChildNode = {key: 'xboxLive', value: gamerTag};
+                break;
+            case 'switch_white':
+                gamerTagChildNode = {key: 'NintendoID', value: gamerTag};
+                break;
+            default:
+                break;
+        }
+
+        await usersRef.child(uid).child('gamerTags').update({ [gamerTagChildNode.key]: gamerTagChildNode.value});
+
+        await gamersRef.child(gameKey).push({
+            gameExp: 0,
+            gameLoses: 0,
+            gameWins: 0,
+            gamelvl: 0,
+            userName,
+            userUid: uid
+        });
+    } catch (error) {
+        console.error(error);
     }
-    var gamerTagChildNode = {};
-    switch (platform) {
-        case 'pc_white':
-            if (gameKey === 'aClash') {
-                gamerTagChildNode = {key: 'clashTag', value: gamerTag};
-            } else if (gameKey === 'pcLol'){
-                gamerTagChildNode = {key: 'lolTag', value: gamerTag};
-            } else if (gameKey === 'pHearth' || gameKey === 'pOver'){
-                gamerTagChildNode = {key: 'battlenet', value: gamerTag};
-            }
-            break;
-        case 'ps4_white':
-            gamerTagChildNode = {key: 'psn', value: gamerTag};
-            break;
-        case 'xbox_white':
-            gamerTagChildNode = {key: 'xboxLive', value: gamerTag};
-            break;
-        case 'switch_white':
-            gamerTagChildNode = {key: 'NintendoID', value: gamerTag};
-            break;
-        default:
-            break;
-    }
-    await usersRef.child(uid).child('gamerTags').child(gamerTagChildNode.key).set(gamerTagChildNode.value);
-    await gamersRef.child(gameKey).push({
-        gameExp: 0,
-        gameLoses: 0,
-        gameWins: 0,
-        gamelvl: 0,
-        userName,
-        userUid: uid
-    });
-    return Promise.resolve({ message: 'Juego agregado correctamente' });
 }
 
 /**

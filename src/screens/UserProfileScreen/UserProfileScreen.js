@@ -1,10 +1,10 @@
-// diego           - 21-08-2019 - us89 - Redirect to load games screen added
+// diego           - 21-08-2019 - us89 - Add redirect logic to LoadGamesScreen
 // diego           - 20-08-2019 - us89 - Show user statistics by game
 //                                       Added BuyQaploinsModal
 // diego           - 19-08-2019 - us89 - File creation
 
 import React, { Component } from 'react';
-import { SafeAreaView, View, Image, Text, TouchableWithoutFeedback, ScrollView, Modal } from 'react-native';
+import { SafeAreaView, View, Image, Text, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -13,7 +13,7 @@ import UserProfilePlatformGameList from '../../components/UserProfilePlatformGam
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 
-const QaploinExchange = images.svg.qaploinsIcon;
+const QaploinExchangeIcon = images.svg.qaploinsIcon;
 
 export class UserProfileScreen extends Component {
     state = {
@@ -33,13 +33,31 @@ export class UserProfileScreen extends Component {
     /**
      * Redirect to LoadGames screen
      */
-    addGame = () => this.props.navigation.navigate('LoadGames', { loadGamesThatUserDontHave: true });
+    addGame = () => this.props.navigation.navigate('LoadGames', { loadGamesUserDontHave: true });
+
+    /**
+     * Determine if the current element is the last from a list, for a better UI
+     */
+    isLastChild = (currentIndex, objectLength) => currentIndex === objectLength - 1;
 
     render() {
+        /**
+         * userGames must be look like this:
+         * userGames: {
+         *     pc_white: {
+         *         aClash: 'Clash royale'
+         *     },
+         *     ps4_white: {
+         *         psFifa: 'Fifa 19'
+         *     }
+         * }
+         * 
+         * Similar to 'Games' node of the database but only with the games of the user
+         */
         const userGames = getUserGamesOrderedByPlatform(this.props.userGames, this.props.qaplaGames);
 
         return (
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.userInfoContainer}>
                     <View style={styles.imageAndNameContainer}>
                         {this.props.userProfilePhoto ?
@@ -51,7 +69,7 @@ export class UserProfileScreen extends Component {
                     </View>
                     <View style={styles.manageQaploinsContainer}>
                         <View style={styles.qaploinInfoContainer}>
-                            <QaploinExchange style={styles.qaploinImage} />
+                            <QaploinExchangeIcon style={styles.qaploinImage} />
                             <Text style={styles.qaploinsAmount}>{this.props.userQaploins}</Text>
                         </View>
                         <TouchableWithoutFeedback onPress={this.openBuyQaploinsModal}>
@@ -66,7 +84,7 @@ export class UserProfileScreen extends Component {
                         <UserProfilePlatformGameList key={`${platform}-${index}`}
                             platform={platform}
                             userGames={userGames[platform]}
-                            lastChild={index === Object.keys(userGames).length - 1} />
+                            lastChild={this.isLastChild(index, Object.keys(userGames).length)} />
                     ))}
                 </ScrollView>
                 <TouchableWithoutFeedback onPress={this.addGame}>

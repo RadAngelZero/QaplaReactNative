@@ -37,7 +37,7 @@ export function cancelPublicMatch(idMatch) {
 }
 
 /**
- * Add qaploins (iOS beta version)
+ * Add qaploins with no payment checkout process (iOS beta version)
  */
 export function addQaploinsToUserCloudFunction() {
 	return callCloudFunction({

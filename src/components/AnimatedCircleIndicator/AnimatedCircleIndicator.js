@@ -39,6 +39,6 @@ AnimatedCircleIndicator.defaultProps = {
     duration: 300,
     backgroundColor: '#1A1D34',
     percentage: false
-}
+};
 
 export default AnimatedCircleIndicator;

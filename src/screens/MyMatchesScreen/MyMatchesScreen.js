@@ -1,4 +1,4 @@
-// diego             - 19-08-2019 - us89 - Send new prop to items on the list to determine what adversary
+// diego             - 19-08-2019 - us89 - Send new prop (currentUserAdversary) to items on the matches list to determine what adversary
 //                                         the user is (adversary1 or adversary2) necessary to upload results
 // diego             - 09-08-2019 - bug4 - Remove child_changed listener
 //                                         + update remove listener methods on willBlur
@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
 import { matchesPlayRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
+import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constants';
 
 export class MyMatchesScreen extends Component {
     state = {
@@ -62,7 +63,7 @@ export class MyMatchesScreen extends Component {
                                  * if the user is the author (creator) of the match, is the adversary1, if not, is the adversary2, and
                                  * that information is important when their result is uploaded
                                  */
-                                currentUserAdversary: 1,
+                                currentUserAdversary: ADVERSARY_1_NUMBER,
                                 alphaNumericIdMatch,
                                 bet,
                                 date,
@@ -95,7 +96,7 @@ export class MyMatchesScreen extends Component {
                         //Object with the necesary fields to load the match in the app (the card and the detailed view)
                         const matchObject = {
                             adversaryUid: adversary1,
-                            currentUserAdversary: 2,
+                            currentUserAdversary: ADVERSARY_2_NUMBER,
                             alphaNumericIdMatch,
                             bet,
                             date,

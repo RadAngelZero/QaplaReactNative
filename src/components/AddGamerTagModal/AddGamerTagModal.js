@@ -28,11 +28,14 @@ export class AddGamerTagModal extends Component {
 
     saveGameOnUser = async () => {
         try {
-            await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform, this.props.selectedGame.gameKey, this.state.gamerTagText);
-            if (this.props.loadGamesThatUserDontHave) {
+            await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
+                this.props.selectedGame.gameKey, this.state.gamerTagText);
+
+            if (this.props.loadGamesUserDontHave) {
                 this.props.navigation.navigate('Perfil');
             } else {
-                this.props.navigation.navigate('SetBet', { game: { gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform } });
+                this.props.navigation.navigate('SetBet',
+                    { game: { gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform } });
             }
         } catch (error) {
             console.error(error);

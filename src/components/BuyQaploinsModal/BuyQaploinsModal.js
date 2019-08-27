@@ -1,4 +1,4 @@
-// diego           - 20-08-2019 - us89 - Removed custom Modal component and change to react native modal
+// diego           - 20-08-2019 - us89 - Modal.js component from components folder changed to react-nativenative modal
 //                                       addQaploinsToUser for iOS beta
 
 import React, { Component } from 'react';
@@ -11,6 +11,11 @@ import { addQaploinsToUserCloudFunction } from '../../services/functions';
 
 const QaploinIcon = images.svg.qaploinsIcon;
 
+/**
+ * The logic of this component was changed for the iOS beta, instead of navigate to CheckOutPaymentScreen just
+ * add qaploins to the user calling a cloud function, once the beta has finished the code must be changed for
+ * the original
+ */
 class BuyQaploinsModal extends Component {
     state = {
         qaploinsAdded: false

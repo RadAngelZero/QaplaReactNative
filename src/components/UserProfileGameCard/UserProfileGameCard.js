@@ -8,6 +8,12 @@ import AnimatedCircleIndicator from '../AnimatedCircleIndicator/AnimatedCircleIn
 
 export class UserProfileGameCard extends Component {
     render() {
+
+        /**
+         * lastChild prop indicates if that is the last card, in this case add an extra marginRight
+         * to the style, in other way the last card is going to end at the border of the screen, and
+         * that doesn't look good
+         */
         return (
             <View style={[styles.container, { marginRight: this.props.lastChild ? 20 : 0 }]}>
                 <View style={styles.gameData}>

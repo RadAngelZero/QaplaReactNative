@@ -64,10 +64,25 @@ class GameCard extends Component {
 
         // If the game selected has a gamertag then we don't open the modal 
         if (gtag.gamerTag != undefined || gtag.gamerTag != null) {
-            if (this.props.loadGamesThatUserDontHave) {
+
+            /**
+             * If receive a flag to load the games that the user don't have, but have a gamerTag for this game
+             * (as happens on xbox or ps4) add the game to the user with ask no question and redirect to profile
+             * because the user is adding games on their profile, no creating a match
+             */
+            if (this.props.loadGamesUserDontHave) {
+
+                /**
+                 * Set the selected game to null should avoid that the modal shows up to the user, in this case it's not
+                 * necessary because already have a valid gamerTag for the selected game
+                 */
                 this.props.setSelectedGame(null);
-                await addGameToUser(this.props.user.id, this.props.user.userName, newGame.platform, newGame.gameKey, gtag.gamerTag);
-                this.props.navigation.navigate('Perfil');
+                try {
+                    await addGameToUser(this.props.user.id, this.props.user.userName, newGame.platform, newGame.gameKey, gtag.gamerTag);
+                    this.props.navigation.navigate('Perfil');
+                } catch (error) {
+                    console.error(error);
+                }
             } else {
                 this.props.navigation.navigate('SetBet', {game: newGame}); 
             }

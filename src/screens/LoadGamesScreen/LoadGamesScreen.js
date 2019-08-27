@@ -1,4 +1,4 @@
-// diego          - 21-08-2019 - us89 - Added loadGamesThatUserDontHave prop
+// diego          - 21-08-2019 - us89 - Added loadGamesUserDontHave prop
 //                                      GamerTag modal moved to independent file
 // josep.sanahuja - 05-08-2019 - us84 - changed style from SafeAreaView
 // josep.sanahuja - 22-07-2019 - bug2 - moved 'setSelectedGame' to 'componentDidMount'
@@ -56,12 +56,13 @@ class LoadGamesScreen extends React.Component {
      * Determine if the user have the selected game on their list
      */
     userHaveGame() {
+        let result = true;
         if (this.isThereSelectedGame()) {
 
-            return this.props.userGameList.indexOf(this.props.selectedGame.gameKey) !== -1;
+            result = this.props.userGameList.indexOf(this.props.selectedGame.gameKey) !== -1;
         }
 
-        return true;
+        return result;
     }
 
     /** 
@@ -92,9 +93,9 @@ class LoadGamesScreen extends React.Component {
                         userName={this.props.userName}
                         open={this.openAddGamerTagModal()}
                         onClose={this.closeAddGamerTagModal}
-                        loadGamesThatUserDontHave={this.props.navigation.getParam('loadGamesThatUserDontHave', false)} />
+                        loadGamesUserDontHave={this.props.navigation.getParam('loadGamesUserDontHave', false)} />
                     <VideoGamesList gamesListToLoad={this.props.userGameList}
-                        loadGamesThatUserDontHave={this.props.navigation.getParam('loadGamesThatUserDontHave', false)} />
+                        loadGamesUserDontHave={this.props.navigation.getParam('loadGamesUserDontHave', false)} />
                 </View>
             </SafeAreaView>
         );

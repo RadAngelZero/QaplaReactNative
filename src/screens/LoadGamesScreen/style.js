@@ -1,4 +1,4 @@
-// diego          - 21-08-2019 - us89 - Modal styles removed
+// diego          - 21-08-2019 - us89 - AddGamerTag Modal styles removed
 // josep.sanahuja - 05-08-2019 - us84 - + sfvContainer
 // josep.sanahuja - 15-07-2019 - us26 - + cancelImageContainer & cancelImage
 // josep.sanahuja - 15-07-2019 - us25 - + 'gamerTagTextInput' & modal style

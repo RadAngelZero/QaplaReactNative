@@ -49,7 +49,7 @@ class LoadGamesScreen extends React.Component {
      * Return true if some game is selected
      */
     isThereSelectedGame() {
-        return this.props.selectedGame != null && this.props.selectedGame != undefined;
+        return this.props.selectedGame;
     }
 
     /**

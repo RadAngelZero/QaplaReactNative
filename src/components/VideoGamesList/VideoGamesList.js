@@ -62,27 +62,6 @@ class VideoGamesList extends Component {
              */
             if (userGameList instanceof Array) {
                 gamesToLoad = getUserGamesOrderedByPlatform(userGameList, this.props.games);
-                /*Object.keys(this.props.games).forEach((gamePlatform) => {
-                    userGameList.sort().forEach((gameToLoadKey) => {
-                        // If the platform on the current iteration have a child with key of the current user game
-                        if(this.props.games[gamePlatform].hasOwnProperty(gameToLoadKey)) {
-
-                            // Check if the user don't have games on that platform
-                            if(!gamesToLoad[gamePlatform]){
-
-                                // Create a child on the object for that platform
-                                gamesToLoad[gamePlatform] = {};
-                            }
-
-                            // Add the game to the list of games to load
-                            gamesToLoad[gamePlatform][gameToLoadKey] = this.props.games[gamePlatform][gameToLoadKey];
-                        }
-                        
-                        // Remove the game from the list of the user games
-                        userGameList.slice(userGameList.indexOf(gameToLoadKey), 1);
-                    });
-                });*/
-
             //If the user don't have games then we send all the games to be loaded
             } else {
                 gamesToLoad = this.props.games;

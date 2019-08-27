@@ -23,7 +23,7 @@ export class AddGamerTagModal extends Component {
      * Check if some game is selected
      */
     isThereSelectedGame = () => {
-        return this.props.selectedGame != null && this.props.selectedGame != undefined;
+        return this.props.selectedGame;
     }
 
     saveGameOnUser = async () => {

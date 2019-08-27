@@ -63,7 +63,7 @@ class GameCard extends Component {
         const gtag = await getGamerTagWithUID(this.props.user.id, newGame.gameKey, newGame.platform);
 
         // If the game selected has a gamertag then we don't open the modal 
-        if (gtag.gamerTag != undefined || gtag.gamerTag != null) {
+        if (gtag.gamerTag) {
 
             /**
              * If receive a flag to load the games that the user don't have, but have a gamerTag for this game

@@ -9,6 +9,7 @@ import styles from './style';
 import { getUserNode } from '../../actions/userActions';
 import { getUserNameWithUID } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
+import { setUserIdOnFacebookAnalytics, setUserIdOnSegment } from '../../services/statistics';
 
 class AuthLoadingScreen extends Component {
     componentDidMount() {
@@ -16,6 +17,7 @@ class AuthLoadingScreen extends Component {
             this.props.loadListOfGames();
             if (user) {
                 this.props.loadUserData(user.uid);
+                setUserIdOnSegment(user.uid);
                 
                 const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
                 

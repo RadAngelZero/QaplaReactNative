@@ -11,6 +11,7 @@ import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../servic
 import CreateRetasButton from '../../components/CreateRetasButton/CreateRetasButton';
 import { isUserLogged } from '../../services/auth';
 import { storeData } from '../../utilities/persistance';
+import { recordScreenOnSegment } from '../../services/statistics';
 
 class PublicMatchesFeedScreen extends Component {
     state = {
@@ -44,6 +45,7 @@ class PublicMatchesFeedScreen extends Component {
             this.props.navigation.addListener(
                 'willFocus',
                 (payload) => {
+                    recordScreenOnSegment('Public matches');
                     /**
                      * Add a listener of type child_added. In the first load bring all the
                      * childs of the matches node.

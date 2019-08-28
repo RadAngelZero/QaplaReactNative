@@ -59,7 +59,7 @@ class LoadGamesScreen extends React.Component {
         let result = true;
         if (this.isThereSelectedGame()) {
 
-            result = this.props.userGameList.indexOf(this.props.selectedGame.gameKey) !== -1;
+            result = this.props.userGameList instanceof Array ? this.props.userGameList.indexOf(this.props.selectedGame.gameKey) !== -1 : false;
         }
 
         return result;

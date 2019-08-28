@@ -41,7 +41,7 @@ class VideoGamesList extends Component {
                 Object.keys(this.props.games[gamePlatform]).forEach((gameKey) => {
 
                     // If the user don't have that game
-                    if (userGameList.indexOf(gameKey) === -1) {
+                    if (!(userGameList instanceof Array) || (userGameList instanceof Array && userGameList.indexOf(gameKey) === -1)) {
 
                         // Create a child of the platform on the object
                         if(!gamesToLoad[gamePlatform]){

@@ -54,7 +54,11 @@ export class UserProfileScreen extends Component {
          * 
          * Similar to 'Games' node of the database but only with the games of the user
          */
-        const userGames = getUserGamesOrderedByPlatform(this.props.userGames, this.props.qaplaGames);
+        let userGames = {};
+        
+        if (this.props.userGames instanceof Array) {
+            userGames = getUserGamesOrderedByPlatform(this.props.userGames, this.props.qaplaGames);   
+        }
 
         return (
             <SafeAreaView style={styles.sfvContainer}>

@@ -1,5 +1,6 @@
 // diego          - 21-08-2019 - us89 - Add game on the user if they don't have it but have a valid gamer tag
-//                                      (ej: in all the xbox games you use the xboxLive, so don't need to add a new gamer tag every time)
+//                                      (e.g.: in all the xbox games you use the xboxLive,
+//                                      so don't need to add a new gamer tag every time)
 // josep.sanahuja - 17-07-2019 - us25 - + openModal
 // diego          - 16-07-2019 - us30 - update navigation when GamerTag is added
 // diego          - 17-07-2019 - NA   - update images styles and remove unnecesary code

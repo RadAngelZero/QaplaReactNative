@@ -88,13 +88,15 @@ class LoadGamesScreen extends React.Component {
                         </TouchableWithoutFeedback>
                         <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>
                     </View>
-                    <AddGamerTagModal selectedGame={this.props.selectedGame}
+                    <AddGamerTagModal
+                        selectedGame={this.props.selectedGame}
                         uid={this.props.uid}
                         userName={this.props.userName}
                         open={this.openAddGamerTagModal()}
                         onClose={this.closeAddGamerTagModal}
                         loadGamesUserDontHave={this.props.navigation.getParam('loadGamesUserDontHave', false)} />
-                    <VideoGamesList gamesListToLoad={this.props.userGameList}
+                    <VideoGamesList
+                        gamesListToLoad={this.props.userGameList}
                         loadGamesUserDontHave={this.props.navigation.getParam('loadGamesUserDontHave', false)} />
                 </View>
             </SafeAreaView>

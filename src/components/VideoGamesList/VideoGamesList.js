@@ -77,7 +77,8 @@ class VideoGamesList extends Component {
                 <Text style={styles.title}>Elige tu juego</Text>
                 <ScrollView style={styles.scrollViewMargin}>
                     {Object.keys(this.state.gamesToLoad).map((platform) => (
-                        <PlatformGamesList key={platform}
+                        <PlatformGamesList
+                            key={platform}
                             loadGamesUserDontHave={this.props.loadGamesUserDontHave}
                             listOfGames={this.state.gamesToLoad[platform]}
                             platform={platform} />

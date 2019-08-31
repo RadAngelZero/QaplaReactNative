@@ -1,4 +1,4 @@
-// diego          - 19-08-2019 - us89 - Connect UploadMatchEvidenceModal and UploadMatchResultsModal
+// diego          - 19-08-2019 - us89 - Add UploadMatchEvidenceModal and UploadMatchResultsModal
 // diego          - 13-08-2019 - us77 - Added navigation to UploadClutchEvidenceScreen
 // josep.sanahuja - 06-08-2019 - us78 - File creation
 

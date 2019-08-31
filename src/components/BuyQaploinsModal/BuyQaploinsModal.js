@@ -39,10 +39,11 @@ class BuyQaploinsModal extends Component {
 
     render() {
         return (
-            <Modal animationType='none'
-	          transparent={true}
-	          visible={this.props.open}
-	          onRequestClose={this.props.onClose}>
+            <Modal
+                animationType='none'
+                transparent={true}
+                visible={this.props.open}
+                onRequestClose={this.props.onClose}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
                         <Text style={styles.closeIcon} onPress={this.props.onClose}>X</Text>

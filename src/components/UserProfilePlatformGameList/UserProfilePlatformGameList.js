@@ -23,13 +23,22 @@ export class UserProfilePlatformGameList extends Component {
      * Return the win rate of the user from game with gameKey
      * @param gameKey Key of the game
      */
-    getWinRate = (gameKey) => this.props.gamerStatistics[gameKey].gameWins * 100 / (this.props.gamerStatistics[gameKey].gameWins + this.props.gamerStatistics[gameKey].gameLoses) || 0;
+    getWinRate = (gameKey) => {
+        const gameWins = this.props.gamerStatistics[gameKey].gameWins * 100;
+        const matchesPlayed = (this.props.gamerStatistics[gameKey].gameWins + this.props.gamerStatistics[gameKey].gameLoses)
+        return gameWins / matchesPlayed || 0;
+    }
 
     /**
      * Return the experience level of the user
      * @param gameKey Key of the game
      */
-    getExperience = (gameKey) => 100 / EXPERIENCE_REQUIRED_TO_LEVEL_UP * (this.props.gamerStatistics[gameKey].gameExp - EXPERIENCE_REQUIRED_TO_LEVEL_UP * Math.floor(this.props.gamerStatistics[gameKey].gameExp / EXPERIENCE_REQUIRED_TO_LEVEL_UP));
+    getExperience = (gameKey) => {
+        const userLevel = Math.floor(this.props.gamerStatistics[gameKey].gameExp / EXPERIENCE_REQUIRED_TO_LEVEL_UP);
+        const experienceRequiredForCurrentLevel = EXPERIENCE_REQUIRED_TO_LEVEL_UP * userLevel;
+        const experienceOnTheCurrentLevel = this.props.gamerStatistics[gameKey].gameExp - experienceRequiredForCurrentLevel;
+        return 100 / EXPERIENCE_REQUIRED_TO_LEVEL_UP * experienceOnTheCurrentLevel;
+    };
 
     /**
      * Determine the user level of a game based on the experience of the user
@@ -39,7 +48,7 @@ export class UserProfilePlatformGameList extends Component {
      */
     determineUserLevel = (gameKey) => this.props.gamerStatistics[gameKey].gameExp / 20;
 
-    lastChild = (currentIndex, quantityOfElements) => currentIndex === quantityOfElements - 1;
+    lastChild = (currentIndex, quantityOfElements) => (currentIndex === quantityOfElements - 1);
 
     render() {
         return (
@@ -47,8 +56,10 @@ export class UserProfilePlatformGameList extends Component {
                 <Text style={styles.title}>{getPlatformNameWithKey(this.props.platform)}</Text>
                 <ScrollView horizontal>
                     {Object.keys(this.props.userGames).map((gameKey, index) => {
+                        let gamerStatistics = null;
                         if (this.props.gamerStatistics[gameKey]) {
-                            return <UserProfileGameCard key={`${this.props.platform}-${gameKey}`}
+                            gamerStatistics = <UserProfileGameCard
+                                key={`${this.props.platform}-${gameKey}`}
                                 platform={this.props.platform}
                                 game={this.getGameResources(this.props.userGames[gameKey])}
                                 winRate={this.getWinRate(gameKey)}
@@ -56,7 +67,7 @@ export class UserProfilePlatformGameList extends Component {
                                 level={this.determineUserLevel(gameKey)}
                                 lastChild={this.lastChild(index, Object.keys(this.props.userGames).length)} />
                         }
-                        return null;
+                        return gamerStatistics;
                     })}
                 </ScrollView>
             </View>

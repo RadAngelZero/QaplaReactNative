@@ -1,4 +1,4 @@
-// diego     - 20-08-2019 - us89 - getPlatformNameWithKey and getUserGamesOrderedByPlatform created
+// diego     - 20-08-2019 - us89 - Created getPlatformNameWithKey and getUserGamesOrderedByPlatform
 // diego     - 06-08-2019 - us76 - Function to get the gamer tag key on string created
 // diego     - 16-07-2019 - us30 - File creation
 

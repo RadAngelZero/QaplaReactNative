@@ -11,7 +11,7 @@ export class UserProfileGameCard extends Component {
 
         /**
          * lastChild prop indicates if that is the last card, in this case add an extra marginRight
-         * to the style, in other way the last card is going to end at the border of the screen, and
+         * to the style, otherwise the last card is going to end at the border of the screen, and
          * that doesn't look good
          */
         return (

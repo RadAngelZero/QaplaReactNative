@@ -12,6 +12,7 @@ import images from '../../../assets/images';
 import UserProfilePlatformGameList from '../../components/UserProfilePlatformGameList/UserProfilePlatformGameList';
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
+import { isUserLogged } from '../../services/auth';
 
 const QaploinExchangeIcon = images.svg.qaploinsIcon;
 
@@ -19,6 +20,29 @@ export class UserProfileScreen extends Component {
     state = {
         showBuyQaploinsModal: false
     };
+
+    componentWillMount(){
+        this.list = [
+            
+            /**
+             * This event is triggered when the user goes to other screen
+             */
+            this.props.navigation.addListener(
+                'willFocus',
+                (payload) => {
+
+                    if(!isUserLogged()){
+                        this.props.navigation.navigate('SignIn');
+                    }
+                }
+            )
+        ]
+    }
+
+    componentWillUnmount() {
+        //Remove willBlur and willFocus listeners on navigation
+        this.list.forEach((item) => item.remove());
+    }
 
     /**
      * Open the modal of buy qaploins
@@ -85,7 +109,8 @@ export class UserProfileScreen extends Component {
                 </View>
                 <ScrollView>
                     {Object.keys(userGames).map((platform, index) => (
-                        <UserProfilePlatformGameList key={`${platform}-${index}`}
+                        <UserProfilePlatformGameList
+                            key={`${platform}-${index}`}
                             platform={platform}
                             userGames={userGames[platform]}
                             lastChild={this.isLastChild(index, Object.keys(userGames).length)} />

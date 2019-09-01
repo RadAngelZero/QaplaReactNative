@@ -35,6 +35,7 @@ import {
 } from '../../services/database';
 
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
+import { recordScreenOnSegment } from '../../services/statistics';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
 const QaploinIcon       = images.svg.qaploinsIcon;
@@ -57,6 +58,18 @@ class SetBetScreen extends Component {
 
     componentWillMount() {
         this.setQaplaComission();
+        this.list = [
+            
+            /**
+             * This event is triggered when the user goes to other screen
+             */
+            this.props.navigation.addListener(
+                'willBlur',
+                (payload) => {
+                    recordScreenOnSegment('Set Bet');
+                }
+            )
+        ]
     }
 
     componentDidMount() {
@@ -115,6 +128,9 @@ class SetBetScreen extends Component {
             try {
                 await createPublicMatch(this.props.uid, this.state.currentBet, this.props.selectedGame);
                 await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet);
+
+                recordScreenOnSegment('Match created', { bet: this.state.currentBet, gameKey: this.props.selectedGame.gameKey,
+                    platform: this.props.selectedGame.platform });
                 
                 // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
                 // return a 'null' value, otherwise it would return a 'false' 'true' value from a
@@ -129,7 +145,7 @@ class SetBetScreen extends Component {
                     // Tooggle modal state to open
                     this.setState({
                         timeActionMsgOpen: true
-                    })
+                    });
                 }
                 else{
                     this.props.navigation.navigate('Publicas');

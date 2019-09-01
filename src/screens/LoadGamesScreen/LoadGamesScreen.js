@@ -23,10 +23,30 @@ import { connect } from 'react-redux';
 import { setSelectedGame } from '../../actions/gamesActions';
 
 import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal';
+import { recordScreenOnSegment } from '../../services/statistics';
 
 const BackIcon = Images.svg.backIcon;
 
 class LoadGamesScreen extends React.Component {
+    componentWillMount() {
+        this.list = [
+            
+            /**
+             * This event is triggered when the user goes to other screen
+             */
+            this.props.navigation.addListener(
+                'willBlur',
+                (payload) => {
+                    if (this.props.loadGamesThatUserDontHave) {
+                        recordScreenOnSegment('Load Games (Add Game)');
+                    } else {
+                        recordScreenOnSegment('Load Games (Create Match)');
+                    }
+                }
+            )
+        ]
+    }
+
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
         
@@ -38,6 +58,7 @@ class LoadGamesScreen extends React.Component {
     }
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
+        this.list.forEach((item) => item.remove());
     }
 
     backToMatchTypeScreen = () => {

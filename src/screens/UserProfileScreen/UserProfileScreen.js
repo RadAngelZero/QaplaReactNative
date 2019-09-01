@@ -60,9 +60,12 @@ export class UserProfileScreen extends Component {
     addGame = () => this.props.navigation.navigate('LoadGames', { loadGamesUserDontHave: true });
 
     /**
-     * Determine if the current element is the last from a list, for a better UI
+     * Check if the given index is the last from a list of size quantityOfElements
+     * 
+     * @param {number} currentIndex Index to evaluate
+     * @param {number} quantityOfElements Quantity of elements from the list to evaluate
      */
-    isLastChild = (currentIndex, objectLength) => currentIndex === objectLength - 1;
+    isLastChild = (currentIndex, objectLength) => (currentIndex === objectLength - 1);
 
     render() {
         /**
@@ -110,6 +113,10 @@ export class UserProfileScreen extends Component {
                 <ScrollView>
                     {Object.keys(userGames).map((platform, index) => (
                         <UserProfilePlatformGameList
+                            /**
+                             * key is builded with the name of the platform and the index of the same platform
+                             * e.g. pc_white-1
+                             */
                             key={`${platform}-${index}`}
                             platform={platform}
                             userGames={userGames[platform]}

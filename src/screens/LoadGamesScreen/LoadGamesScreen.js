@@ -1,5 +1,5 @@
 // diego          - 21-08-2019 - us89 - Added loadGamesUserDontHave prop
-//                                      GamerTag modal moved to independent file
+//                                      GamerTag modal moved to independent file: components/AddGamerTagModal.js
 // josep.sanahuja - 05-08-2019 - us84 - changed style from SafeAreaView
 // josep.sanahuja - 22-07-2019 - bug2 - moved 'setSelectedGame' to 'componentDidMount'
 //                                      && simplified 'openModal'

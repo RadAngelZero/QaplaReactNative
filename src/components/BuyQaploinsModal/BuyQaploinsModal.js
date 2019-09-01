@@ -14,7 +14,7 @@ const QaploinIcon = images.svg.qaploinsIcon;
 /**
  * The logic of this component was changed for the iOS beta, instead of navigate to CheckOutPaymentScreen just
  * add qaploins to the user calling a cloud function, once the beta has finished the code must be changed for
- * the original
+ * the original (Original code in commit: 5029533a510c1164d4d5996e1041c00db8d8c735)
  */
 class BuyQaploinsModal extends Component {
     state = {

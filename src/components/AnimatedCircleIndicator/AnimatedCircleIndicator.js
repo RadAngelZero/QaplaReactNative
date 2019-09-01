@@ -7,6 +7,12 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import styles from './style';
 
 export class AnimatedCircleIndicator extends Component {
+
+    /**
+     * Determine the content to show inside the circle
+     * 
+     * @param {number} fill Percentage of the circle who is filled
+     */
     fillCircleText = (fill) => <Text style={styles.fillText}> {Math.floor(fill)}{this.props.percentage ? '%' : ''} </Text>
 
     render() {

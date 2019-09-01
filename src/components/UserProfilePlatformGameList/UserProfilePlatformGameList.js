@@ -15,28 +15,33 @@ export class UserProfilePlatformGameList extends Component {
 
     /**
      * Return resources (Icon and name) of the game
-     * @param game Game to get resources
+     * 
+     * @param {string} game Game to get resources
      */
     getGameResources = (game) => gamesResources[game.replace(/ +/g, '')];
 
     /**
      * Return the win rate of the user from game with gameKey
-     * @param gameKey Key of the game
+     * 
+     * @param {string} gameKey Key of the game
      */
     getWinRate = (gameKey) => {
         const gameWins = this.props.gamerStatistics[gameKey].gameWins * 100;
-        const matchesPlayed = (this.props.gamerStatistics[gameKey].gameWins + this.props.gamerStatistics[gameKey].gameLoses)
+        const matchesPlayed = (this.props.gamerStatistics[gameKey].gameWins + this.props.gamerStatistics[gameKey].gameLoses);
+
         return gameWins / matchesPlayed || 0;
     }
 
     /**
      * Return the experience level of the user
-     * @param gameKey Key of the game
+     * 
+     * @param {string} gameKey Key of the game
      */
     getExperience = (gameKey) => {
         const userLevel = Math.floor(this.props.gamerStatistics[gameKey].gameExp / EXPERIENCE_REQUIRED_TO_LEVEL_UP);
         const experienceRequiredForCurrentLevel = EXPERIENCE_REQUIRED_TO_LEVEL_UP * userLevel;
         const experienceOnTheCurrentLevel = this.props.gamerStatistics[gameKey].gameExp - experienceRequiredForCurrentLevel;
+
         return 100 / EXPERIENCE_REQUIRED_TO_LEVEL_UP * experienceOnTheCurrentLevel;
     };
 
@@ -48,6 +53,12 @@ export class UserProfilePlatformGameList extends Component {
      */
     determineUserLevel = (gameKey) => this.props.gamerStatistics[gameKey].gameExp / 20;
 
+    /**
+     * Check if the given index is the last from a list of size quantityOfElements
+     * 
+     * @param {number} currentIndex Index to evaluate
+     * @param {number} quantityOfElements Quantity of elements from the list to evaluate
+     */
     lastChild = (currentIndex, quantityOfElements) => (currentIndex === quantityOfElements - 1);
 
     render() {
@@ -59,6 +70,10 @@ export class UserProfilePlatformGameList extends Component {
                         let gamerStatistics = null;
                         if (this.props.gamerStatistics[gameKey]) {
                             gamerStatistics = <UserProfileGameCard
+                                /**
+                                 * key is builded with the name of the platform and the index of the game
+                                 * e.g. pc_white-1
+                                 */
                                 key={`${this.props.platform}-${gameKey}`}
                                 platform={this.props.platform}
                                 game={this.getGameResources(this.props.userGames[gameKey])}

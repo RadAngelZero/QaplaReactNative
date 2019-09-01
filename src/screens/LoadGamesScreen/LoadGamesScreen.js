@@ -1,3 +1,5 @@
+// diego          - 21-08-2019 - us89 - Added loadGamesUserDontHave prop
+//                                      GamerTag modal moved to independent file: components/AddGamerTagModal.js
 // josep.sanahuja - 05-08-2019 - us84 - changed style from SafeAreaView
 // josep.sanahuja - 22-07-2019 - bug2 - moved 'setSelectedGame' to 'componentDidMount'
 //                                      && simplified 'openModal'
@@ -11,40 +13,20 @@
 
 import React from 'react';
 
-import { 
-    View,
-    Text, 
-    TouchableWithoutFeedback, 
-    BackHandler, 
-    TextInput,
-    SafeAreaView
-} from 'react-native'
+import { View, Text, TouchableWithoutFeedback, BackHandler, SafeAreaView } from 'react-native'
 
 import styles from './style'
 import Images from './../../../assets/images';
 import VideoGamesList from '../../components/VideoGamesList/VideoGamesList';
 import { connect } from 'react-redux';
 
-import {
-    setSelectedGame,
-} from '../../actions/gamesActions';
+import { setSelectedGame } from '../../actions/gamesActions';
 
-import {
-    addGameToUser
-} from '../../services/database';
-
-import Modal from '../../components/Modal/Modal';
+import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal';
 
 const BackIcon = Images.svg.backIcon;
 
 class LoadGamesScreen extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-          gamerTagText: ""
-      };
-    }
-
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
         
@@ -63,34 +45,38 @@ class LoadGamesScreen extends React.Component {
         return true;
     }
 
-    addSelectedGameToProfile = async (game, gamerTag) => {
-        await addGameToUser(this.props.user.id, game.platform,
-                            game.gameKey, gamerTag);
-    }
-
-    hasGamesOnProfile(){
-        return this.props.userGameList === undefined ? false : true;                 
-    }
-
-    isValidGamerTag(gamerTag) {
-        return gamerTag != undefined &&
-               gamerTag != null &&
-               gamerTag.length > 0;
-    }
-
+    /**
+     * Return true if some game is selected
+     */
     isThereSelectedGame() {
-        return this.props.selectedGame != null && this.props.selectedGame != undefined;
+        return this.props.selectedGame;
     }
 
-    openModal() {
-        // If there are no games on the profile of the user and a game is selected
-        // the modal should open
-        return this.isThereSelectedGame() && !this.hasGamesOnProfile();
+    /**
+     * Determine if the user have the selected game on their list
+     */
+    userHaveGame() {
+        let result = true;
+        if (this.isThereSelectedGame()) {
+
+            result = this.props.userGameList instanceof Array ? this.props.userGameList.indexOf(this.props.selectedGame.gameKey) !== -1 : false;
+        }
+
+        return result;
     }
+
+    /** 
+     * If there are no games on the profile of the user and a game is selected
+     * the modal should open
+     */
+    openAddGamerTagModal = () => !this.userHaveGame();
+
+    /**
+     * Close the modal by setting to null the selectedGame on redux
+     */
+    closeAddGamerTagModal = () => this.props.setSelectedGame(null);
 
     render() {
-        const {navigate} = this.props.navigation;
-
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
@@ -102,35 +88,16 @@ class LoadGamesScreen extends React.Component {
                         </TouchableWithoutFeedback>
                         <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>
                     </View>
-                    <Modal open={this.openModal()} onClose={() => this.props.setSelectedGame(null)}>
-                            <View style={styles.modalContainer}>
-                                <TextInput
-                                    style={styles.gamerTagTextInput}
-                                    placeholder="Escribe tu Gamer Tag"
-                                    placeholderTextColor = 'white'
-                                    onChangeText={(text) => {
-                                        this.setState({
-                                            gamerTagText: text 
-                                        }); 
-                                    }}
-                                    value={this.state.gamerTagText} />
-                                <Text style = {styles.modalText}>Se va a añadir el Juego {this.isThereSelectedGame() && this.props.selectedGame.name } a tu perfil con Gamertag {this.state.gamerTagText}. Estás seguro?</Text>
-                                <TouchableWithoutFeedback
-                                    disabled = {!this.isValidGamerTag(this.state.gamerTagText)}
-                                    onPress={async () => {
-                                        await this.addSelectedGameToProfile(this.props.selectedGame,
-                                                                            this.state.gamerTagText);
-                                        
-                                        // Navigate to the screen where Qaploins are selected
-                                        navigate('SetBet', {game: {gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform}});
-                                    }}>
-                                        <View style = {styles.confirmButton}>
-                                            <Text style={styles.confirmButtonText}>Aceptar</Text>
-                                        </View>
-                                </TouchableWithoutFeedback>
-                            </View>
-                        </Modal>
-                    <VideoGamesList gamesListToLoad={this.props.userGameList} />
+                    <AddGamerTagModal
+                        selectedGame={this.props.selectedGame}
+                        uid={this.props.uid}
+                        userName={this.props.userName}
+                        open={this.openAddGamerTagModal()}
+                        onClose={this.closeAddGamerTagModal}
+                        loadGamesUserDontHave={this.props.navigation.getParam('loadGamesUserDontHave', false)} />
+                    <VideoGamesList
+                        gamesListToLoad={this.props.userGameList}
+                        loadGamesUserDontHave={this.props.navigation.getParam('loadGamesUserDontHave', false)} />
                 </View>
             </SafeAreaView>
         );
@@ -141,7 +108,8 @@ function mapStateToProps(state) {
     return {
         userGameList: state.userReducer.user.gameList,
         selectedGame: state.gamesReducer.selectedGame,
-        user: state.userReducer.user
+        uid: state.userReducer.user.id,
+        userName: state.userReducer.user.userName
     }
 }
 

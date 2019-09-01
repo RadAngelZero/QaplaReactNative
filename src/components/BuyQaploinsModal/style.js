@@ -1,11 +1,43 @@
+// diego           - 20-08-2019 - us89 - +getDimensions & closeIcon
+
 import { StyleSheet } from 'react-native';
+import { getDimensions } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
+    mainContainer: {
+		flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        width: '100%',
+        height: '100%',
+    },
+    closeIcon: {
+        fontSize: 20,
+        flexDirection: 'row',
+        alignSelf: 'flex-end',
+		textAlignVertical: 'top',
+		width: 30,
+		height: 30,
+        marginRight: 10,
+        marginTop: 20,
+        color: '#FFF',
+    },
     container: {
-        marginTop: 10,
-        marginBottom: 23,
-        marginRight: 54,
-        marginLeft: 54,
+        width: getDimensions().width * .8,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#141833',
+        borderRadius: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 12,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+        elevation: 24,
         alignItems: 'center'
     },
     qaploinsToBuyText: {
@@ -19,6 +51,8 @@ export default styles = StyleSheet.create({
     },
     paragraph: {
         marginTop: 5,
+        marginLeft: 12,
+        marginRight: 12,
         color: '#CFD1DB',
         fontSize: 16,
         textAlign: 'center'
@@ -40,8 +74,11 @@ export default styles = StyleSheet.create({
     },
     smallText: {
         marginTop: 10,
+        marginLeft: 24,
+        marginRight: 24,
         color: '#909299',
         fontSize: 10,
-        textAlign: 'justify'
+        textAlign: 'center',
+        marginBottom: 23
     }
 });

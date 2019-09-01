@@ -1,3 +1,4 @@
+// diego           - 19-08-2019 - us89 - Added logic to show label only when tab is focused added on TabMainNavigator 
 // josep.sanahuja  - 12-08-2019 - us85 - + UploadMatchResult in AppNoHeaderStackNavigator
 // josep.sanahuja  - 06-08-2019 - us78 - + UploadMatchResultScreen
 // diego           - 01-08-2019 - us58 - created NotificationTabNavigator
@@ -5,11 +6,10 @@
 
 import React from 'react'
 
-import {View} from 'react-native'
+import { View, Text } from 'react-native'
 import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createSwitchNavigator} from 'react-navigation'
 
 import Images from '@assets/images'
-import {Svg} from 'react-native-svg'
 
 // Screens
 import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen'
@@ -28,9 +28,7 @@ import CheckOutPaymentScreen from './screens/CheckOutPaymentScreen/CheckOutPayme
 import ActivityNotificationsScreen from './screens/ActivityNotificationsScreen/ActivityNotificationsScreen';
 import RetasNotificationsScreen from './screens/RetasNotificationsScreen/RetasNotificationsScreen';
 import UploadMatchResultScreen from './screens/UploadMatchResultScreen/UploadMatchResultScreen';
-
-// Mock screen
-import MockScreen2 from './screens/MockScreen2/MockScreen2'
+import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
@@ -39,7 +37,7 @@ import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeF
 
 // Svg Icons
 const Mock1Icon = Images.svg.favouritesIcon;
-const Mock2Icon = Images.svg.testIcon;
+const ProfileIcon = Images.svg.profileIcon;
 const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
 
 const NotificationTabNavigator = createMaterialTopTabNavigator(
@@ -114,9 +112,8 @@ const TabMainNavigator = createBottomTabNavigator({
       title: "Home",  //Tried to hide this for next tab Search.,
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
-          <Svg >
-          <PublicFeedMatchIcon width={25} height={25} color={focused ? "#36E5CE": 'gray'} />
-          </Svg>
+          <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
+          {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Retas</Text>}
         </View>
       )
     })
@@ -128,20 +125,21 @@ const TabMainNavigator = createBottomTabNavigator({
       title: "Mock 1",
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
-          <Mock1Icon width={25} height={25} fill={focused ? "#36E5CE": 'gray'}/>  
+          <Mock1Icon width={25} height={25} style={{ alignSelf: 'center' }} fill={focused ? '#36E5CE' : 'gray'}/>
+          {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Mock 1</Text>}
         </View>
       )
     })
-
   },
-  Mock2: {
-    screen:   MockScreen2,
+  Perfil: {
+    screen:   UserProfileScreen,
     navigationOptions: ({ navigation }) => ({
       //If no title it shows the name as Search.
-      title: "Mock 2",
+      title: 'Perfil',
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
-          <Mock2Icon width={25} height={25} color={focused ? "#36E5CE": 'gray'}/> 
+          <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'}/> 
+          {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Perfil</Text>}
         </View>
       )
     })
@@ -150,7 +148,13 @@ const TabMainNavigator = createBottomTabNavigator({
 { 
   tabBarOptions: {
     style: { backgroundColor: '#0C1021', height: 60, padding:0, margin:0 },
-    activeTintColor: '#36E5CE'
+    showLabel: false,
+    activeTintColor: '#36E5CE',
+    tabStyle: {
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
   }
 });
 

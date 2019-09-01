@@ -1,3 +1,4 @@
+// diego          - 19-08-2019 - us89 - Updated references to received params from navigation
 // diego          - 14-08-2019 - us77 - Added navigation to upload results on 'Subir Resultado' button
 // josep.sanahuja - 13-08-2019 - us86 - + match challenge already exist logic
 // diego          - 12-08-2019 - bug4 - Update name of adversary1 prop to adversaryUid because the adversary can be also the adversary2
@@ -49,9 +50,9 @@ class PublicMatchCardScreen extends Component {
 
     /**
     * Description:
-    * Performs the challenge operation where adversary2 challenges adversary1 for match
-    * with matchId. If adversary2 already challenged the adversary1 then the challenge
-    * wont be sent because it already exists in adversary1/notificationMatch node
+    * Performs the challenge operation where current logged user challenges adversaryUid for match
+    * with matchId. If the user already challenged the adversaryUid then the challenge
+    * wont be sent because it already exists in adversaryUid/notificationMatch node
     *
     * @param None
     */
@@ -61,14 +62,14 @@ class PublicMatchCardScreen extends Component {
             // Get the info of the match
             const matchCard = this.props.navigation.getParam('matchCard');
             
-            // Check if the match created by adversary1, with matchId was already challenged 
+            // Check if the match created by adversaryUid, with matchId was already challenged 
             // by the user uid, we want to avoid to challenge a match twice or more.
-            const already = await isMatchAlreadyChallenged(matchCard.adversary1, this.props.uid, matchCard.idMatch);
+            const already = await isMatchAlreadyChallenged(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
  
             if (!already)
             {
                 // Challenge the user to play the match
-                challengeUser(matchCard.adversary1, this.props.uid, matchCard.idMatch);
+                challengeUser(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
             }
             else {
                 // Show Modal
@@ -98,14 +99,11 @@ class PublicMatchCardScreen extends Component {
         const matchCard = this.props.navigation.getParam('matchCard');
         
         /**
-         * Detect what adversary is trying to upload their result
-         * TODO: Adjust when bug4 is merged
+         * currentUserAdversary is a number value that means what adversary is the current user on the match
+         * if the user is the author (creator) of the match, is the adversary1, if not, is the adversary2, and
+         * that information is important when their result is uploaded
          */
-        if (!matchCard.adversary1) {
-            this.props.navigation.navigate('UploadMatchResult', { idMatch: matchCard.idMatch, adversary: 1 });
-        } else if (!matchCard.adversary2) {
-            this.props.navigation.navigate('UploadMatchResult', { idMatch: matchCard.idMatch, adversary: 2 });
-        }
+        this.props.navigation.navigate('UploadMatchResult', { idMatch: matchCard.idMatch, currentUserAdversary: matchCard.currentUserAdversary });
     }
 
     render() {

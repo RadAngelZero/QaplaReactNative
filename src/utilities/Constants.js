@@ -15,3 +15,8 @@ export const SET_SELECTED_GAME = 'SET_SELECTED_GAME';
 const HIGHLIGHT_1_CREATE_MATCH = 'HIGHLIGHT_1_CREATE_MATCH';
 // Notification Button in HeaderBar.js
 const HIGHLIGHT_2_NOTIFICATIONS = 'HIGHLIGHT_2_NOTIFICATIONS';
+export const SET_SELECTED_GAME = 'SET_SELECTED_GAME';
+
+// Adversary numbers
+export const ADVERSARY_1_NUMBER = 1;
+export const ADVERSARY_2_NUMBER = 2;

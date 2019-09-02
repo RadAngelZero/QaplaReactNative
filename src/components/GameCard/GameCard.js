@@ -1,3 +1,6 @@
+// diego          - 21-08-2019 - us89 - Add game on the user if they don't have it but have a valid gamer tag
+//                                      (e.g.: in all the xbox games you use the xboxLive,
+//                                      so don't need to add a new gamer tag every time)
 // josep.sanahuja - 17-07-2019 - us25 - + openModal
 // diego          - 16-07-2019 - us30 - update navigation when GamerTag is added
 // diego          - 17-07-2019 - NA   - update images styles and remove unnecesary code
@@ -14,9 +17,7 @@ import {
 
 import { connect } from 'react-redux';
 
-import {
-    getGamerTagWithUID
-} from '../../services/database';
+import { getGamerTagWithUID, addGameToUser } from '../../services/database';
 import { withNavigation } from 'react-navigation';
 
 class GameCard extends Component {
@@ -63,8 +64,29 @@ class GameCard extends Component {
         const gtag = await getGamerTagWithUID(this.props.user.id, newGame.gameKey, newGame.platform);
 
         // If the game selected has a gamertag then we don't open the modal 
-        if (gtag.gamerTag != undefined || gtag.gamerTag != null) {
-            this.props.navigation.navigate('SetBet', {game: newGame}); 
+        if (gtag.gamerTag) {
+
+            /**
+             * If receive a flag to load the games that the user don't have, but have a gamerTag for this game
+             * (as happens on xbox or ps4) add the game to the user with ask no question and redirect to profile
+             * because the user is adding games on their profile, no creating a match
+             */
+            if (this.props.loadGamesUserDontHave) {
+
+                /**
+                 * Set the selected game to null should avoid that the modal shows up to the user, in this case it's not
+                 * necessary because already have a valid gamerTag for the selected game
+                 */
+                this.props.setSelectedGame(null);
+                try {
+                    await addGameToUser(this.props.user.id, this.props.user.userName, newGame.platform, newGame.gameKey, gtag.gamerTag);
+                    this.props.navigation.navigate('Perfil');
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                this.props.navigation.navigate('SetBet', {game: newGame}); 
+            }
         }
     }
 }

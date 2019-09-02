@@ -1,3 +1,4 @@
+// diego     - 20-08-2019 - us89 - Created getPlatformNameWithKey and getUserGamesOrderedByPlatform
 // diego     - 06-08-2019 - us76 - Function to get the gamer tag key on string created
 // diego     - 16-07-2019 - us30 - File creation
 
@@ -40,4 +41,74 @@ export function getGamerTagStringWithGameAndPlatform(platform, game) {
         default:
             break;
     }
+}
+
+/**
+ * Return the name of the platform based on their key
+ * 
+ * @param {string} platformKey Key of the platform
+ * @returns {string} Platform name
+ */
+export function getPlatformNameWithKey(platformKey) {
+    switch (platformKey) {
+        case 'pc_white':
+            return 'PC/Movil';
+        case 'ps4_white':
+            return 'Play Station 4';
+        case 'xbox_white':
+            return 'Xbox One';
+        case 'switch_white':
+            return 'Switch';
+        default:
+            return '';
+    }
+}
+
+/**
+ * Sort all the games from a user based on their platform
+ * 
+ * @param {Array} userGames Array with all the game keys of the current user
+ * @param {Object} allQaplaGames List that contains all the games on Qapla
+ */
+export function getUserGamesOrderedByPlatform(userGames, allQaplaGames) {
+    /**
+     * Based on the qapla structure we need to get (from database) all the games, that games are in the following form:
+     * Games: {
+     *     PlatformName1: {
+     *         GameKey1: GameName1,
+     *         GameKey2: GameName2,
+     *     }
+     *     PlatformName2: {
+     *         GameKey1: GameName1,
+     *         GameKey2: GameName2,
+     *     }
+     * }
+     * So we get the Games node, then we make a forEach (the first one) of that, this forEach iterate over the platforms,
+     * then we iterate over all the games that the user have
+     */
+    let gamesOrderedByPlatform = {};
+
+    Object.keys(allQaplaGames).map((gamePlatform) => {
+        userGames.sort().map((gameToLoadKey) => {
+            
+            // If the platform on the current iteration have a child with key of the current user game
+            if(allQaplaGames[gamePlatform].hasOwnProperty(gameToLoadKey)) {
+                
+                // Check if the user don't have games on that platform
+                if(!gamesOrderedByPlatform[gamePlatform]){
+
+                    // Create a child on the object for that platform
+                    gamesOrderedByPlatform[gamePlatform] = {};
+                }
+
+                // Add the game to the list of games
+                gamesOrderedByPlatform[gamePlatform][gameToLoadKey] = allQaplaGames[gamePlatform][gameToLoadKey];
+            }
+
+            // Remove the game from the list of the user games
+            userGames.slice(userGames.indexOf(gameToLoadKey), 1);
+        });
+    });
+
+    return gamesOrderedByPlatform;
 }

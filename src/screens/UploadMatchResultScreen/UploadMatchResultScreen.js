@@ -1,3 +1,4 @@
+// diego          - 19-08-2019 - us89 - Add UploadMatchEvidenceModal and UploadMatchResultsModal
 // diego          - 13-08-2019 - us77 - Added navigation to UploadClutchEvidenceScreen
 // josep.sanahuja - 06-08-2019 - us78 - File creation
 
@@ -12,6 +13,8 @@ import styles from './style';
 import Images from './../../../assets/images';
 import UploadClutchEvidenceScreen from '../UploadClutchEvidenceScreen/UploadClutchEvidenceScreen';
 import { uploadMatchResult } from '../../services/database';
+import UploadMatchResultsModal from '../../components/UploadMatchResultsModal/UploadMatchResultsModal';
+import UploadMatchEvidenceModal from '../../components/UploadMatchEvidenceModal/UploadMatchEvidenceModal';
 
 const QaploinIcon = Images.svg.favouritesIcon;
 
@@ -27,7 +30,9 @@ class UploadMatchResultScreen extends Component {
       this.state = {
           matchResultStatus: null,
           evidenceUrl: '',
-          uploadingEvidence: false
+          uploadingEvidence: false,
+          showUploadMatchResultsModal: false,
+          showUploadMatchEvidenceModal: false
       };
     }
 
@@ -68,19 +73,45 @@ class UploadMatchResultScreen extends Component {
     }
 
     /**
+     * Validate the result checking if the user have uploaded evidence, if have, upload the result, if not, open the modal
+     */
+    validateResultToUpload = () => {
+        if (this.state.evidenceUrl !== '') {
+            this.uploadResult();
+        } else {
+            this.setState({ showUploadMatchEvidenceModal: true });
+        }
+    }
+
+    /**
      * Upload user match result to firebase database
      */
-    uploadResult = () => {
-        if (this.state.matchResultStatus) {
-            uploadMatchResult(
+    uploadResult = async () => {
+        try {
+            await uploadMatchResult(
                 this.props.navigation.getParam('idMatch'),
-                this.props.navigation.getParam('adversary'),
+                this.props.navigation.getParam('currentUserAdversary'),
                 this.state.matchResultStatus,
                 this.state.evidenceUrl
             );
-        } else {
-            console.log('Here we can the modal');
+            this.setState({ showUploadMatchResultsModal: true })
+        } catch (error) {
+            console.error(error);
         }
+    }
+
+    /**
+     * Close the UploadMatchResultsModal
+     */
+    closeUploadMatchResultsModal = () => {
+        this.setState({ showUploadMatchResultsModal: false });
+    }
+
+    /**
+     * Close the UploadMatchEvidenceModal
+     */
+    closeUploadMatchEvidenceModal = () => {
+        this.setState({ showUploadMatchEvidenceModal: false });
     }
 
     render() {
@@ -122,11 +153,21 @@ class UploadMatchResultScreen extends Component {
                                 <Text style={styles.buttonText}>OTRO RESULTADO</Text>
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={this.uploadResult}>
-                            <View style={styles.uploadResultButton}>
-                                <Text style={styles.buttonText}>SUBIR RESULTADO</Text>
-                            </View>
-                        </TouchableWithoutFeedback>
+                        {this.state.matchResultStatus &&
+                            <TouchableWithoutFeedback onPress={this.validateResultToUpload}>
+                                <View style={styles.uploadResultButton}>
+                                    <Text style={styles.buttonText}>SUBIR RESULTADO</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        }
+                        <UploadMatchResultsModal
+                            visible={this.state.showUploadMatchResultsModal}
+                            onClose={this.closeUploadMatchResultsModal}
+                            nextScreen='Publicas' />
+                        <UploadMatchEvidenceModal
+                            visible={this.state.showUploadMatchEvidenceModal}
+                            onClose={this.closeUploadMatchEvidenceModal}
+                            cb1={this.uploadResult} />
                     </View>
                 }
             </SafeAreaView>

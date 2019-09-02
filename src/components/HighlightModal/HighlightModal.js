@@ -33,8 +33,8 @@ class HighlightModal extends Component {
       elemPosY: 0,
       elemHeight: 0,
       elemWidth: 0,
-      flag: false,
-      flag2: false
+      timeoutStarted: false,
+      timeoutEnded: false
     };
 
     this.quad = null;
@@ -54,8 +54,10 @@ class HighlightModal extends Component {
     * @param None
     */
     action = async () => {
+      console.log('MUUU_1');
       // Close the Modal
       this.closeModal();
+      console.log('MUUU_2');
 
       // cb1 executes before cb2, and in case cb1 is not defined and cb2 is, then cb2 is excecuted
       // even though cb1 is undefined.
@@ -180,13 +182,13 @@ class HighlightModal extends Component {
               visible={(visible && this.state.timeoutEnded)}
               onRequestClose={this.action}>
 
-              <View style={getHighlightContainerStyle2(measures, quad, subQuad)}>
-                <View style={getAbsComponentPosOffsetsStyle2(measures, quad, subQuad)}>
+              <View style={getHighlightContainerStyle2(measures, this.quad, this.subQuad)}>
+                <View style={getAbsComponentPosOffsetsStyle2(measures, this.quad, this.subQuad)}>
                   <ChildComponentWithRef style={this.props.children.props.style}/>
                 </View>
 
                 {/* This is the info content from the Component */}
-                <View style={getAbsTextInfoPosOffsetsStyle2(measures, quad, subQuad)}>
+                <View style={getAbsTextInfoPosOffsetsStyle2(measures, this.quad, this.subQuad)}>
                   <Text style={{color:'white', fontSize:30, marginLeft:40, marginRight: 40}}>{this.props.header}</Text>
                   <Text style={{color:'white', fontSize:14, marginLeft:40, marginRight: 40}}>{this.props.body}</Text>
                   <View style={{flexDirection:'row', justifyContent: 'flex-end', marginTop: 10, marginRight: 40}}>
@@ -232,7 +234,7 @@ function getHighlightContainerStyle(measures) {
 function getHighlightContainerStyle2(measures, quad, subQuad) {
   let res = null;
 
-  console.log("Quadrant: " + quad);
+  console.log("*Quadrant: " + quad);
 
   if (quad === TOP_QUADRANT){
     res = styles.highlightTopContainer;
@@ -309,7 +311,6 @@ function getAbsTextInfoPosOffsetsStyle(measures) {
     res = {position: 'absolute', bottom: 50};
   }
   else if (quad === BOTTOM_QUADRANT_BOTTOM){
-    console.log("marramiauuuuu");
     // description
     res = {position: 'absolute', bottom: 240};
   }

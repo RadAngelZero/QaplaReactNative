@@ -39,7 +39,7 @@ export default styles = StyleSheet.create({
     },
     infoText: {
         color: '#FFF',
-        fontSize: 12,
+        fontSize: 14,
         textAlign: 'justify',
         width: getDimensions().width*.5
     },
@@ -69,7 +69,7 @@ export default styles = StyleSheet.create({
     },
     infoButtonText: {
         color: '#FFF',
-        fontSize: 10,
+        fontSize: 14,
         paddingVertical: 7,
         paddingHorizontal: 24,
         textAlign: 'center'

@@ -213,7 +213,7 @@ class PublicMatchesFeedScreen extends Component {
                 <HighlightModal 
                     visible={this.state.showHg1Modal}
                     onClose={this.toggleHg1Modal}
-                    showDelay={0}
+                    showDelay={4000}
                     cb1={this.markHg1}
                     header='Crea una Reta'
                     body='Empieza a competir con otros jugadores. Crea tu reta y gana!'>

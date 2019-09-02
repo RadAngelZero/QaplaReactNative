@@ -58,7 +58,7 @@ export default styles = StyleSheet.create({
         width: getDimensions().width,
         top: 0,
         //backgroundColor: '#141833',
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        backgroundColor: 'rgba(0, 0, 0, 0.80)',
     },
     highlightBottomContainer: {
         position: 'absolute',

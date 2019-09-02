@@ -13,3 +13,5 @@ export const SET_SELECTED_GAME = 'SET_SELECTED_GAME';
 
 // Crear Reta Button in PublicMatchesFeedScreen.js
 const HIGHLIGHT_1_CREATE_MATCH = 'HIGHLIGHT_1_CREATE_MATCH';
+// Notification Button in HeaderBar.js
+const HIGHLIGHT_2_NOTIFICATIONS = 'HIGHLIGHT_2_NOTIFICATIONS';

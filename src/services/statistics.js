@@ -8,7 +8,7 @@ export async function initializeSegment() {
             recordScreenViews: true,
             // Record certain application events automatically!
             trackAppLifecycleEvents: true,
-            flushAt: 1
+            flushAt: 5
         });
     } catch (error) {
         console.log('On setup');

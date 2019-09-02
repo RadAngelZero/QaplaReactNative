@@ -45,7 +45,6 @@ class PublicMatchesFeedScreen extends Component {
             this.props.navigation.addListener(
                 'willFocus',
                 (payload) => {
-                    recordScreenOnSegment('Public matches');
                     /**
                      * Add a listener of type child_added. In the first load bring all the
                      * childs of the matches node.

@@ -18,7 +18,7 @@ class ChooseMatchTypeScreen extends Component {
              * This event is triggered when the user goes to other screen
              */
             this.props.navigation.addListener(
-                'willBlur',
+                'willFocus',
                 (payload) => {
                     recordScreenOnSegment('Choose Match Type');
                 }

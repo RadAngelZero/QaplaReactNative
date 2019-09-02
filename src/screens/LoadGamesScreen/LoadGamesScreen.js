@@ -35,7 +35,7 @@ class LoadGamesScreen extends React.Component {
              * This event is triggered when the user goes to other screen
              */
             this.props.navigation.addListener(
-                'willBlur',
+                'willFocus',
                 (payload) => {
                     if (this.props.loadGamesThatUserDontHave) {
                         recordScreenOnSegment('Load Games (Add Game)');

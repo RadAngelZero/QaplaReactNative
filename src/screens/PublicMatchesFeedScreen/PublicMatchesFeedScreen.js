@@ -119,6 +119,7 @@ class PublicMatchesFeedScreen extends Component {
     }
 
     componentDidMount() {
+        //storeData(HIGHLIGHT_1_CREATE_MATCH, 'true');
         this.checkHighlightsFlags();
     }
 
@@ -142,6 +143,9 @@ class PublicMatchesFeedScreen extends Component {
             
             // Hide HIGHLIGHT_1_CREATE_MATCH Modal
             this.toggleHg1Modal();
+
+            // Show Notification Highlight Modal
+            storeData(HIGHLIGHT_2_NOTIFICATIONS, 'true');
         }
 
         this.props.navigation.navigate(isUserLogged() ? 'ChooseMatchType' : 'SignIn');

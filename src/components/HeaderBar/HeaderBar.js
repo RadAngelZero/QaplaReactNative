@@ -28,7 +28,7 @@ class HeaderBar extends Component {
     }
 
     componentDidMount() {
-        //storeData(HIGHLIGHT_2_NOTIFICATIONS, 'true');
+        storeData(HIGHLIGHT_2_NOTIFICATIONS, 'true');
         this.checkHighlightsFlags();
     }
 
@@ -38,18 +38,18 @@ class HeaderBar extends Component {
      */
     onNotiPressBttn = () => {
         
-        // // If showHg1Modal is enabled then
-        // if (this.state.showHg1Modal){
-        //     // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
-        //     // and it should not show up again.
-        //     this.markHg1();
+        // If showHg1Modal is enabled then
+        if (this.state.showHg1Modal){
+            // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
+            // and it should not show up again.
+            this.markHg1();
             
-        //     console.log('Miau 1: this.state.showHg1Modal' + this.state.showHg1Modal);
-        //     // Hide HIGHLIGHT_1_CREATE_MATCH Modal
-        //     this.toggleHg1Modal();
+            console.log('Miau 1: this.state.showHg1Modal' + this.state.showHg1Modal);
+            // Hide HIGHLIGHT_1_CREATE_MATCH Modal
+            this.toggleHg1Modal();
 
-        //     console.log('Miau 2: this.state.showHg1Modal' + this.state.showHg1Modal);
-        // }
+            console.log('Miau 2: this.state.showHg1Modal' + this.state.showHg1Modal);
+        }
 
         console.log("Main Miau");
 
@@ -71,7 +71,9 @@ class HeaderBar extends Component {
             // Get the value for the highlight flag stored in AsynStorage.
             const value = await retrieveData(HIGHLIGHT_2_NOTIFICATIONS);
 
-            if (value !== null) {
+            //const hgCreateReta = await retrieveData(HIGHLIGHT_1_CREATE_MATCH);
+            const hgCreateReta = false;
+            if (value !== null && !JSON.parse(hgCreateReta)) {
                 console.log('marra != null: ' + value);
                 // There is data stored for the flag, it can be either 'false' or 'true'.
                 this.setState({
@@ -82,9 +84,12 @@ class HeaderBar extends Component {
                 console.log('marra === null: ' + value);
                 // That means there is no value stored for the flag, therefore
                 // result should be 'true', meaning the highlight will activate.
-                this.setState({
-                    showHg1Modal: true
-                });
+                if (!JSON.parse(hgCreateReta)) {
+                    this.setState({
+                        showHg1Modal: true
+                    });
+                }
+                
             }
         } catch (error) {
           // Error retrieving flag data
@@ -120,7 +125,14 @@ class HeaderBar extends Component {
         
         return (
             <View style={styles.container} testID='container'>
-                <View style={styles.imageContainer}>
+                <HighlightModal 
+                    visible={this.state.showHg1Modal}
+                    onClose={this.toggleHg1Modal}
+                    showDelay={1000}
+                    cb1={this.markHg1}
+                    header='Ve tus Notificaciones'
+                    body='Tus retas recibirán notificaciones de desafio, recuerda checar las notificaciones!'>
+                    <View style={styles.imageContainer}>
                         <TouchableWithoutFeedback style={styles.imageAndButtonDimensions}
                             onPress={this.onNotiPressBttn}
                             testID='NotificationButton'>
@@ -129,7 +141,7 @@ class HeaderBar extends Component {
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
-                
+                </HighlightModal>
                 <View style={styles.textContainer} testID='textContainer'>
                     <Text style={styles.textStyle} testID='text'>Qapla</Text>
                 </View>
@@ -138,14 +150,5 @@ class HeaderBar extends Component {
         );
     }
 }
-
-// <HighlightModal 
-//                     visible={this.state.showHg1Modal}
-//                     onClose={this.toggleHg1Modal}
-//                     showDelay={1000}
-//                     cb1={this.markHg1}
-//                     header='Ve tus Notificaciones'
-//                     body='Tus retas recibirán notificaciones de desafio, recuerda checar las notificaciones!'>
-
 
 export default HeaderBar;

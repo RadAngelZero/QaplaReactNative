@@ -1,3 +1,4 @@
+// diego             - 03-09-2019 - us96 - Bug fixed: load duplicated matches
 // diego             - 19-08-2019 - us89 - Send new prop (currentUserAdversary) to items on the matches list to determine what adversary
 //                                         the user is (adversary1 or adversary2) necessary to upload results
 // diego             - 09-08-2019 - bug4 - Remove child_changed listener
@@ -36,9 +37,7 @@ export class MyMatchesScreen extends Component {
                     matchesPlayRef.orderByChild('adversary2').equalTo(this.props.id).off('child_added');
                     matchesPlayRef.orderByChild('adversary1').equalTo(this.props.id).off('child_removed');
                     matchesPlayRef.orderByChild('adversary2').equalTo(this.props.id).off('child_removed');
-                    var stateCopy = [...this.state.matches];
-                    stateCopy.splice(0);
-                    this.setState({ matches: stateCopy });
+                    this.setState({ matches: [] });
                 }
             ),
 

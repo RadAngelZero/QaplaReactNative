@@ -1,3 +1,4 @@
+// diego          - 03-09-2019 - us96 - Added custom header (TopNavOptions)
 // diego          - 19-08-2019 - us89 - Updated references to received params from navigation
 // diego          - 14-08-2019 - us77 - Added navigation to upload results on 'Subir Resultado' button
 // josep.sanahuja - 13-08-2019 - us86 - + match challenge already exist logic
@@ -22,11 +23,19 @@ import { getGamerTagStringWithGameAndPlatform } from '../../utilities/utils';
 
 // Custom Components
 import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBttnModal'
+import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
 
 class PublicMatchCardScreen extends Component {
+    static navigationOptions = ({ navigation }) => ({
+        header: () => (
+            <TopNavOptions
+                close
+                navigation={navigation}
+                onCloseGoTo={navigation.getParam('matchCard').matchesPlay ? 'MisRetas' : 'Publicas'} />)
+    });
     
     constructor(props) {
         super(props);
@@ -34,6 +43,10 @@ class PublicMatchCardScreen extends Component {
         this.state = {
             openChalExModal: false
         };
+    }
+
+    componentDidMount() {
+        this.props.navigation.setParams({ onCloseGoTo: this.props.navigation.getParam('onCloseGoTo', 'Home') });
     }
 
     /**

@@ -1,3 +1,4 @@
+// diego           - 03-09-2019 - us96 - Added TopNavOptions to allow users without back button navigate to previous screens
 // diego           - 19-08-2019 - us89 - Added logic to show label only when tab is focused added on TabMainNavigator 
 // josep.sanahuja  - 12-08-2019 - us85 - + UploadMatchResult in AppNoHeaderStackNavigator
 // josep.sanahuja  - 06-08-2019 - us78 - + UploadMatchResultScreen
@@ -34,6 +35,7 @@ import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
 import HeaderBar from './components/HeaderBar/HeaderBar';
 import NotificationsHeader from './components/NotificationsHeader/NotificationsHeader';
 import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeForNotificationTab';
+import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 
 // Svg Icons
 const Mock1Icon = Images.svg.favouritesIcon;
@@ -173,25 +175,45 @@ const AppWithHeaderStackNavigator = createStackNavigator(
   }
 );
 
-const AppNoHeaderStackNavigator = createSwitchNavigator(
+const MatchWizardStackNavigator = createStackNavigator(
   {
-    MatchCard: {
-      screen: PublicMatchCardScreen,
-    },
     ChooseMatchType: {
-      screen: ChooseMatchTypeScreen
+      screen: ChooseMatchTypeScreen,
+      navigationOptions: {
+        header: props => <TopNavOptions close {...props} onCloseGoTo='Publicas' />
+      }
     },
     LoadGames: {
       screen: LoadGamesScreen
     },
     ChooseOponent: {
-      screen: ChooseOpponentScreen
+      screen: ChooseOpponentScreen,
+      navigationOptions: {
+        header: null
+      }
     },
     SetBet: {
-      screen: SetBetScreen
+      screen: SetBetScreen,
+      navigationOptions: {
+        header: props => <TopNavOptions back close {...props} onCloseGoTo='Publicas' />
+      }
     },
     CheckOut: {
-      screen: CheckOutPaymentScreen
+      screen: CheckOutPaymentScreen,
+      navigationOptions: {
+        header: props => <TopNavOptions back close {...props} onCloseGoTo='Publicas' />
+      }
+    },
+  },
+  {
+    initialRouteName: 'ChooseMatchType',
+  }
+);
+
+const AppNoHeaderStackNavigator = createSwitchNavigator(
+  {
+    MatchWizard: {
+      screen: MatchWizardStackNavigator
     },
     UploadMatchResult: {
       screen: UploadMatchResultScreen
@@ -244,7 +266,10 @@ export default class Router extends React.Component {
           navigationOptions: {
             header: props => <NotificationsHeader {...props} />
           }
-        }
+        },
+        MatchCard: {
+          screen: PublicMatchCardScreen
+        },
       },
       {
         initialRouteName:  'Home'

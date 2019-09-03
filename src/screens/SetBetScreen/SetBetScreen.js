@@ -1,3 +1,4 @@
+// diego          - 03-09-2019 - us96 - Removed close icon (now this screen have custom header)
 // josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
 // josep.sanahuja - 01-08-2019 - us57 - + Modal for 10 minutes msg when creating a match
 // diego          - 24-07-2019 - us31 - Updated createMatch and decreaseBet to accept
@@ -197,9 +198,8 @@ class SetBetScreen extends Component {
                             </TouchableWithoutFeedback>
                         </View>
                     </Modal>
-                    <View style={styles.headerOptions}>
+                    <View style={styles.titleContainer}>
                         <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
-                        <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>
                     </View>
                     <View style={styles.prizeImage}>
                         <Svg>
@@ -209,7 +209,7 @@ class SetBetScreen extends Component {
                     <Text style={styles.winBet}>{this.defineWinBet()}</Text>
                     <View style={styles.qaploinIconContainer}>
                         <Svg>
-                            <QaploinIcon height={24} width={24} />
+                            <QaploinIcon height={18} width={18} />
                         </Svg>
                         <Text style={styles.qaploinIconText}>Qaploins</Text>
                     </View>

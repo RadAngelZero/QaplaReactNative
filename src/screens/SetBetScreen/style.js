@@ -1,3 +1,4 @@
+// diego          - 03-09-2019 - us96 - Update titleContainer marginTop to be the same in all the match wizard
 // josep.sanahuja - 05-08-2019 - us84 - + sfvContainer
 // josep.sanahuja - 01-08-2019 - us57 - + props for 10 minutes Modal Msg
 
@@ -13,11 +14,8 @@ export default styles = StyleSheet.create({
         flex: 1,
         backgroundColor:'#131833'
     },
-    headerOptions: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-        top: 0,
-        marginTop: 24
+    titleContainer: {
+        marginTop: '5%'
 	},
     titleText: {
         color: '#FFF',
@@ -26,17 +24,8 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         width: '60%',
     },
-    closeIcon: {
-		fontSize: 20,
-		textAlignVertical: 'top',
-		width: 24,
-		height: 24,
-        marginRight: 20,
-        marginTop: 10,
-		color: '#FFF'
-    },
     prizeImage: {
-        marginTop: 40,
+        marginTop: '10%',
         alignItems: 'center'
     },
     winBet: {
@@ -44,8 +33,8 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 60,
         textAlign: 'center',
-        marginTop: 30,
-        marginBottom: 10
+        marginTop: '4.2%',
+        marginBottom: '1.23%'
     },
     qaploinIconContainer: {
         alignSelf: 'center',
@@ -59,7 +48,7 @@ export default styles = StyleSheet.create({
     betContainer: {
         flexDirection: 'row',
         alignSelf: 'center',
-        marginTop: 35
+        marginTop: '7.27%'
     },
     betTextContainer: {
         marginLeft: 14,
@@ -83,7 +72,7 @@ export default styles = StyleSheet.create({
         backgroundColor: '#FA2D79',
         marginLeft: 80,
         marginRight: 80,
-        marginTop: 40
+        marginTop: '6.65%'
     },
     createButtonText: {
         marginTop: 12,

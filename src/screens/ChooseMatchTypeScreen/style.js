@@ -1,3 +1,4 @@
+// diego             - 03-09-2019 - us96 - Update titleText marginTop to be the same in all the match wizard
 // josep.sanahuja    - 05-08-2019 - us84 - + sfvContainer
 
 import { StyleSheet } from 'react-native';
@@ -18,7 +19,7 @@ export default styles = StyleSheet.create({
         fontSize: 32,
         fontWeight: 'bold',
         width: '60%',
-        marginTop: 43
+        marginTop: '5%'
     },
     lightningImage: {
         marginTop: 71,

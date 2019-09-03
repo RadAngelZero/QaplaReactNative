@@ -1,4 +1,4 @@
-// diego          - 21-08-2019 - us89 - Added loadGamesThatUserDontHave prop
+// diego          - 21-08-2019 - us89 - Added loadGamesUserDontHave prop
 // josep.sanahuja - 15-07-2019 - us25 - added 'gameKey' to GameCard comp props
 // diego          - 11-07-2019 - Update platform's names for new references on database
 // diego          - 10-07-2019 - us22 - Update in the way that load the game name
@@ -22,10 +22,11 @@ class PlatformGamesList extends Component {
                     {Object.keys(this.props.listOfGames).map((game) => (
                         //Remove any game that actually dont exist (like counter strike o street figther) from database
                         //or this component is going to fail
-                        <GameCard key={game}
-                            //Replace is necesary cause the key of the game objects in the gamesResources object
-                            //are the name of the game but without spaces (replace function remove that spaces)
-                            loadGamesThatUserDontHave={this.props.loadGamesThatUserDontHave}
+                        <GameCard
+                            key={game}
+                            // Replace is needed because the key of the game objects in the gamesResources object
+                            // are the name of the game but without spaces (replace function remove that spaces)
+                            loadGamesUserDontHave={this.props.loadGamesUserDontHave}
                             game={gamesResources[(this.props.listOfGames[game]).replace(/ +/g, "")]}
                             platform={this.props.platform}
                             backgroundColor={platformResources[this.props.platform].backgroundColor}

@@ -25,18 +25,20 @@ export class AddGamerTagModal extends Component {
      * Check if some game is selected
      */
     isThereSelectedGame = () => {
-        return this.props.selectedGame != null && this.props.selectedGame != undefined;
+        return this.props.selectedGame;
     }
 
     saveGameOnUser = async () => {
         try {
-            await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform, this.props.selectedGame.gameKey, this.state.gamerTagText);
+            await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
+                this.props.selectedGame.gameKey, this.state.gamerTagText);
             trackOnSegment('Add Gamer Tag Process Completed',
                 { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });
             if (this.props.loadGamesThatUserDontHave) {
                 this.props.navigation.navigate('Perfil');
             } else {
-                this.props.navigation.navigate('SetBet', { game: { gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform } });
+                this.props.navigation.navigate('SetBet',
+                    { game: { gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform } });
             }
         } catch (error) {
             console.error(error);
@@ -45,20 +47,23 @@ export class AddGamerTagModal extends Component {
 
     render() {
         return (
-            <Modal animationType='none'
+            <Modal
+                animationType='none'
                 transparent
                 visible={this.props.open}
                 onRequestClose={this.props.onClose}>
                     <View style={styles.mainContainer}>
                         <View style={styles.modalContainer}>
                             <View style={styles.modalBody}>
-                                <TextInput style={styles.gamerTagTextInput}
+                                <TextInput
+                                    style={styles.gamerTagTextInput}
                                     placeholder='Escribe tu Gamer Tag'
                                     placeholderTextColor = '#FFF'
                                     onChangeText={(text) => this.setState({ gamerTagText: text })}
                                     value={this.state.gamerTagText} />
                                 <Text style={styles.modalText}>Se va a añadir el Juego {this.isThereSelectedGame() && this.props.selectedGame.name } a tu perfil con Gamertag {this.state.gamerTagText}. Estás seguro?</Text>
-                                <TouchableWithoutFeedback disabled={!this.isValidGamerTag}
+                                <TouchableWithoutFeedback
+                                    disabled={!this.isValidGamerTag}
                                     onPress={this.saveGameOnUser}>
                                         <View style={styles.confirmButton}>
                                             <Text style={styles.confirmButtonText}>Aceptar</Text>

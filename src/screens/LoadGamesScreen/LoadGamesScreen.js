@@ -1,6 +1,6 @@
 // diego          - 02-09-2019 - us91 - Add track and record screen segment statistic
-// diego          - 21-08-2019 - us89 - Added loadGamesThatUserDontHave prop
-//                                      GamerTag modal moved to independent file
+// diego          - 21-08-2019 - us89 - Added loadGamesUserDontHave prop
+//                                      GamerTag modal moved to independent file: components/AddGamerTagModal.js
 // josep.sanahuja - 05-08-2019 - us84 - changed style from SafeAreaView
 // josep.sanahuja - 22-07-2019 - bug2 - moved 'setSelectedGame' to 'componentDidMount'
 //                                      && simplified 'openModal'
@@ -71,19 +71,20 @@ class LoadGamesScreen extends React.Component {
      * Return true if some game is selected
      */
     isThereSelectedGame() {
-        return this.props.selectedGame != null && this.props.selectedGame != undefined;
+        return this.props.selectedGame;
     }
 
     /**
      * Determine if the user have the selected game on their list
      */
     userHaveGame() {
+        let result = true;
         if (this.isThereSelectedGame()) {
 
-            return this.props.userGameList.indexOf(this.props.selectedGame.gameKey) !== -1;
+            result = this.props.userGameList instanceof Array ? this.props.userGameList.indexOf(this.props.selectedGame.gameKey) !== -1 : false;
         }
 
-        return true;
+        return result;
     }
 
     /** 
@@ -112,14 +113,16 @@ class LoadGamesScreen extends React.Component {
                         </TouchableWithoutFeedback>
                         <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>
                     </View>
-                    <AddGamerTagModal selectedGame={this.props.selectedGame}
+                    <AddGamerTagModal
+                        selectedGame={this.props.selectedGame}
                         uid={this.props.uid}
                         userName={this.props.userName}
                         open={this.openAddGamerTagModal()}
                         onClose={this.closeAddGamerTagModal}
-                        loadGamesThatUserDontHave={this.props.navigation.getParam('loadGamesThatUserDontHave', false)} />
-                    <VideoGamesList gamesListToLoad={this.props.userGameList}
-                        loadGamesThatUserDontHave={this.props.navigation.getParam('loadGamesThatUserDontHave', false)} />
+                        loadGamesUserDontHave={this.props.navigation.getParam('loadGamesUserDontHave', false)} />
+                    <VideoGamesList
+                        gamesListToLoad={this.props.userGameList}
+                        loadGamesUserDontHave={this.props.navigation.getParam('loadGamesUserDontHave', false)} />
                 </View>
             </SafeAreaView>
         );

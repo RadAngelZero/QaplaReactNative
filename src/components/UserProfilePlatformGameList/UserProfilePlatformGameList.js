@@ -9,27 +9,57 @@ import Images from './../../../assets/images';
 import UserProfileGameCard from '../UserProfileGameCard/UserProfileGameCard';
 import { getPlatformNameWithKey } from '../../utilities/utils';
 
-const NECESSARY_EXPERIENCE_TO_UPLOAD_LEVEL = 20;
+const EXPERIENCE_REQUIRED_TO_LEVEL_UP = 20;
 
 export class UserProfilePlatformGameList extends Component {
 
     /**
-     * Return the resources of the game
-     * @param game Game to get resources
+     * Return resources (Icon and name) of the game
+     * 
+     * @param {string} game Game to get resources
      */
     getGameResources = (game) => gamesResources[game.replace(/ +/g, '')];
 
     /**
-     * Return the win rate of the user in the specified game
-     * @param gameKey Key of the game
+     * Return the win rate of the user from game with gameKey
+     * 
+     * @param {string} gameKey Key of the game
      */
-    getWinRate = (gameKey) => this.props.gamerStatistics[gameKey].gameWins * 100 / (this.props.gamerStatistics[gameKey].gameWins + this.props.gamerStatistics[gameKey].gameLoses);
+    getWinRate = (gameKey) => {
+        const gameWins = this.props.gamerStatistics[gameKey].gameWins * 100;
+        const matchesPlayed = (this.props.gamerStatistics[gameKey].gameWins + this.props.gamerStatistics[gameKey].gameLoses);
+
+        return gameWins / matchesPlayed || 0;
+    }
 
     /**
      * Return the experience level of the user
-     * @param gameKey Key of the game
+     * 
+     * @param {string} gameKey Key of the game
      */
-    getExperience = (gameKey) => 100 / NECESSARY_EXPERIENCE_TO_UPLOAD_LEVEL * (this.props.gamerStatistics[gameKey].gameExp - NECESSARY_EXPERIENCE_TO_UPLOAD_LEVEL * Math.floor(this.props.gamerStatistics[gameKey].gameExp / NECESSARY_EXPERIENCE_TO_UPLOAD_LEVEL));
+    getExperience = (gameKey) => {
+        const userLevel = Math.floor(this.props.gamerStatistics[gameKey].gameExp / EXPERIENCE_REQUIRED_TO_LEVEL_UP);
+        const experienceRequiredForCurrentLevel = EXPERIENCE_REQUIRED_TO_LEVEL_UP * userLevel;
+        const experienceOnTheCurrentLevel = this.props.gamerStatistics[gameKey].gameExp - experienceRequiredForCurrentLevel;
+
+        return 100 / EXPERIENCE_REQUIRED_TO_LEVEL_UP * experienceOnTheCurrentLevel;
+    };
+
+    /**
+     * Determine the user level of a game based on the experience of the user
+     * in that game
+     * 
+     * @param {string} gameKey Identifier of the game
+     */
+    determineUserLevel = (gameKey) => this.props.gamerStatistics[gameKey].gameExp / 20;
+
+    /**
+     * Check if the given index is the last from a list of size quantityOfElements
+     * 
+     * @param {number} currentIndex Index to evaluate
+     * @param {number} quantityOfElements Quantity of elements from the list to evaluate
+     */
+    lastChild = (currentIndex, quantityOfElements) => (currentIndex === quantityOfElements - 1);
 
     render() {
         return (
@@ -37,16 +67,22 @@ export class UserProfilePlatformGameList extends Component {
                 <Text style={styles.title}>{getPlatformNameWithKey(this.props.platform)}</Text>
                 <ScrollView horizontal>
                     {Object.keys(this.props.userGames).map((gameKey, index) => {
+                        let gamerStatistics = null;
                         if (this.props.gamerStatistics[gameKey]) {
-                            return <UserProfileGameCard key={`${this.props.platform}-${gameKey}`}
+                            gamerStatistics = <UserProfileGameCard
+                                /**
+                                 * key is builded with the name of the platform and the index of the game
+                                 * e.g. pc_white-1
+                                 */
+                                key={`${this.props.platform}-${gameKey}`}
                                 platform={this.props.platform}
                                 game={this.getGameResources(this.props.userGames[gameKey])}
-                                winRate={this.getWinRate(gameKey) || 0}
+                                winRate={this.getWinRate(gameKey)}
                                 experience={this.getExperience(gameKey)}
-                                level={this.props.gamerStatistics[gameKey].gameExp / 20}
-                                lastChild={index === Object.keys(this.props.userGames).length - 1} />
+                                level={this.determineUserLevel(gameKey)}
+                                lastChild={this.lastChild(index, Object.keys(this.props.userGames).length)} />
                         }
-                        return null;
+                        return gamerStatistics;
                     })}
                 </ScrollView>
             </View>

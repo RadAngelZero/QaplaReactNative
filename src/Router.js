@@ -1,4 +1,4 @@
-// diego           - 19-08-2019 - us89 - Behavior to just show label when tab is focused added on TabMainNavigator 
+// diego           - 19-08-2019 - us89 - Added logic to show label only when tab is focused added on TabMainNavigator 
 // josep.sanahuja  - 12-08-2019 - us85 - + UploadMatchResult in AppNoHeaderStackNavigator
 // josep.sanahuja  - 06-08-2019 - us78 - + UploadMatchResultScreen
 // diego           - 01-08-2019 - us58 - created NotificationTabNavigator

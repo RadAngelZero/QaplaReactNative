@@ -41,9 +41,28 @@ export const getUserNode = (uid) => async (dispatch) => {
     });
 
     const platformsWithGames = await gamesRef.once('value');
+
+    /**
+     * Based on the qapla structure we need to get (from database) all the games, that games are in the following form:
+     * Games: {
+     *     PlatformName1: {
+     *         GameKey1: GameName1,
+     *         GameKey2: GameName2,
+     *     }
+     *     PlatformName2: {
+     *         GameKey1: GameName1,
+     *         GameKey2: GameName2,
+     *     }
+     * }
+     * So we get the Games node, then we make a forEach (the first one) of that, this forEach iterate over the platforms,
+     * based on that we need to iterate over every platform to get the games of that platform and then with that data
+     * (on the second) forEach we can make a query to gamersRef to get the experience, loses, wins, etc. and then add that
+     * data on the user profile
+     */
     platformsWithGames.forEach((platformGames) => {
         Object.keys(platformGames.val()).forEach((gameKey) => {
             gamersRef.child(gameKey).orderByChild('userUid').equalTo(uid).on('value', (gamerGameData) => {
+                
                 if (gamerGameData.exists()) {
                     gamerGameData.forEach((gamerProfile) => {
                         dispatch(updateUserDataSuccess({ key: gameKey, value: gamerProfile.val() }));

@@ -3,7 +3,7 @@
 import { StyleSheet } from 'react-native';
 
 export default styles = StyleSheet.create({
-    container: {
+    sfvContainer: {
         backgroundColor:'#131833',
         flex: 1
     },

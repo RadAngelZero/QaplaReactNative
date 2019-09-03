@@ -1,4 +1,4 @@
-// diego           - 20-08-2019 - us89 - Removed custom Modal component and change to react native modal
+// diego           - 20-08-2019 - us89 - +getDimensions & closeIcon
 
 import { StyleSheet } from 'react-native';
 import { getDimensions } from '../../utilities/iosAndroidDim';

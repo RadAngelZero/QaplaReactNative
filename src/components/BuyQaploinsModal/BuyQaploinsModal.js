@@ -1,4 +1,4 @@
-// diego          - 02-09-2019 - us91 - Add track segment statistic
+// diego           - 02-09-2019 - us91 - Add track segment statistic
 // diego           - 20-08-2019 - us89 - Removed custom Modal component and change to react native modal
 //                                       addQaploinsToUser for iOS beta
 
@@ -13,6 +13,11 @@ import { trackOnSegment } from '../../services/statistics';
 
 const QaploinIcon = images.svg.qaploinsIcon;
 
+/**
+ * The logic of this component was changed for the iOS beta, instead of navigate to CheckOutPaymentScreen just
+ * add qaploins to the user calling a cloud function, once the beta has finished the code must be changed for
+ * the original (Original code in commit: 5029533a510c1164d4d5996e1041c00db8d8c735)
+ */
 class BuyQaploinsModal extends Component {
     state = {
         qaploinsAdded: false
@@ -37,10 +42,11 @@ class BuyQaploinsModal extends Component {
 
     render() {
         return (
-            <Modal animationType='none'
-	          transparent={true}
-	          visible={this.props.open}
-	          onRequestClose={this.props.onClose}>
+            <Modal
+                animationType='none'
+                transparent={true}
+                visible={this.props.open}
+                onRequestClose={this.props.onClose}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
                         <Text style={styles.closeIcon} onPress={this.props.onClose}>X</Text>

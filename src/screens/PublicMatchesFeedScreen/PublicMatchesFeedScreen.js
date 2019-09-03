@@ -11,7 +11,6 @@ import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../servic
 import CreateRetasButton from '../../components/CreateRetasButton/CreateRetasButton';
 import { isUserLogged } from '../../services/auth';
 import { storeData } from '../../utilities/persistance';
-import { recordScreenOnSegment } from '../../services/statistics';
 
 class PublicMatchesFeedScreen extends Component {
     state = {

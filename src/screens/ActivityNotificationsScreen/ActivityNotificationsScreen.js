@@ -28,6 +28,7 @@ class ActivityNotificationsScreen extends Component {
     }
 
     componentWillUnmount() {
+        //Remove willBlur and willFocus listeners on navigation
         this.list.forEach((item) => item.remove());
 	}
 	

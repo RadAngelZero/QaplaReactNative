@@ -21,6 +21,7 @@ export function signInWithFacebook(navigation) {
                 auth.signInWithCredential(credential)
                 .then((user) => {
                     setUserIdOnSegment(user.user.uid);
+
                     if (user.additionalUserInfo.isNewUser) {
                         createUserProfile(user.user.uid, user.user.email);
                         navigation.navigate('ChooseUserNameScreen', { uid: user.user.uid });
@@ -42,6 +43,7 @@ export function signInWithGoogle(navigation) {
         auth.signInWithCredential(credential)
         .then((user) => {
             setUserIdOnSegment(user.user.uid);
+
             if (user.additionalUserInfo.isNewUser) {
                 createUserProfile(user.user.uid, user.user.email);
                 navigation.navigate('ChooseUserNameScreen', { uid: user.user.uid });

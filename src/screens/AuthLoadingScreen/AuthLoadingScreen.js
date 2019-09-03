@@ -16,9 +16,9 @@ class AuthLoadingScreen extends Component {
     componentDidMount() {
         auth.onAuthStateChanged(async (user) => {
             this.props.loadListOfGames();
+            initializeSegment();
             if (user) {
                 this.props.loadUserData(user.uid);
-                initializeSegment();
                 
                 const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
                 

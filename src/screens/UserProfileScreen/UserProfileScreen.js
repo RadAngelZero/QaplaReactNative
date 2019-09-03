@@ -1,4 +1,4 @@
-// diego          - 02-09-2019 - us91 - Add record screen segment statistic
+// diego           - 02-09-2019 - us91 - Add record screen segment statistic
 // diego           - 21-08-2019 - us89 - Add redirect logic to LoadGamesScreen
 // diego           - 20-08-2019 - us89 - Show user statistics by game
 //                                       Added BuyQaploinsModal

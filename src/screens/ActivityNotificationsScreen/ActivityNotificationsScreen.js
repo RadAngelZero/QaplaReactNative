@@ -12,7 +12,7 @@ import ActivityNotificationCard from '../../components/ActivityNotificationCard/
 import { recordScreenOnSegment } from '../../services/statistics';
 
 class ActivityNotificationsScreen extends Component {
-	componentWillMount() {
+	componentDidMount() {
         this.list = [
             
             /**

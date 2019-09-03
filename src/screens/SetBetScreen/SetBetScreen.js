@@ -78,6 +78,8 @@ class SetBetScreen extends Component {
     }
 
     componentWillUnmount() {
+
+        //Remove willFocus listener on navigation
         this.list.forEach((item) => item.remove());
         BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
     }
@@ -131,8 +133,11 @@ class SetBetScreen extends Component {
                 await createPublicMatch(this.props.uid, this.state.currentBet, this.props.selectedGame);
                 await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet);
 
-                trackOnSegment('Match created', { bet: this.state.currentBet, gameKey: this.props.selectedGame.gameKey,
-                    platform: this.props.selectedGame.platform });
+                trackOnSegment('Match created', {
+                    bet: this.state.currentBet,
+                    gameKey: this.props.selectedGame.gameKey,
+                    platform: this.props.selectedGame.platform
+                });
                 
                 // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
                 // return a 'null' value, otherwise it would return a 'false' 'true' value from a

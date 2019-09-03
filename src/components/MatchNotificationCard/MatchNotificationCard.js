@@ -13,7 +13,15 @@ import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import { getProfileImageWithUID, getGameNameOfMatch, getMatchWitMatchId, declineMatch, getGamerTagWithUID, deleteNotification, userHasQaploinsToPlayMatch } from '../../services/database';
+import {
+    getProfileImageWithUID,
+    getGameNameOfMatch,
+    getMatchWitMatchId,
+    declineMatch,
+    getGamerTagWithUID,
+    deleteNotification,
+    userHasQaploinsToPlayMatch
+} from '../../services/database';
 import { retrieveData } from '../../utilities/persistance';
 import { trackOnSegment } from '../../services/statistics';
 

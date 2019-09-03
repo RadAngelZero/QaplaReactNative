@@ -57,8 +57,11 @@ class LoadGamesScreen extends React.Component {
         // mounted.
         this.props.setSelectedGame(null);
     }
+
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
+
+        //Remove willFocus listener on navigation
         this.list.forEach((item) => item.remove());
     }
 

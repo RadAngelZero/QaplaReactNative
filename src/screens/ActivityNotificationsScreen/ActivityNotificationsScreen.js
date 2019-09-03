@@ -27,9 +27,12 @@ class ActivityNotificationsScreen extends Component {
 }
 
 function mapDispatchToProps(state) {
-    return {
-        notifications: state.userReducer.user.notification
-    }
+	let notifications = {};
+	if (Object.keys(state.userReducer.user).length > 0 && state.userReducer.user.hasOwnProperty('notification')) {
+		notifications = state.userReducer.user.notification;
+	}
+	
+	return { notifications };
 }
 
 export default connect(mapDispatchToProps)(ActivityNotificationsScreen);

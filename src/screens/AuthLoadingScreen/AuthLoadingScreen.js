@@ -9,9 +9,14 @@ import styles from './style';
 import { getUserNode } from '../../actions/userActions';
 import { getUserNameWithUID } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
+import { getHg1CreateMatch } from '../../actions/highlightsActions';
 
 class AuthLoadingScreen extends Component {
     componentDidMount() {
+        // blablabla
+        this.props.loadShowHg1Modal();
+
+        // blablabla
         auth.onAuthStateChanged(async (user) => {
             this.props.loadListOfGames();
             if (user) {
@@ -53,7 +58,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         loadUserData: (uid) => getUserNode(uid)(dispatch),
-        loadListOfGames: () => getListOfGames()(dispatch)
+        loadListOfGames: () => getListOfGames()(dispatch),
+        loadShowHg1Modal: () => getHg1CreateMatch()(dispatch)
     };
 }
 

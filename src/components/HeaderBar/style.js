@@ -15,7 +15,8 @@ export const styles = StyleSheet.create({
     imageContainer: {
         flex: 1,
         marginLeft: 20,
-        marginTop: 24
+        marginTop: 24,
+        backgroundColor: 'green'
     },
     imageAndButtonDimensions: {
         height: 28,

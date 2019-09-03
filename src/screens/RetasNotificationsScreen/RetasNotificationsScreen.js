@@ -6,27 +6,63 @@ import React, { Component } from 'react';
 import {
     View,
     ScrollView,
-    SafeAreaView
+    SafeAreaView,
+    InteractionManager
 } from 'react-native';
 import styles from './style';
 import MatchNotificationCard from '../../components/MatchNotificationCard/MatchNotificationCard';
 import { connect } from 'react-redux';
 
 class RetasNotificationsScreen extends Component {
-    
+    constructor(props) {
+       super(props);
+
+       // 1: set didFinishInitialAnimation to false
+       // This will render only the navigation bar and activity indicator
+       this.state = {
+         didFinishInitialAnimation: false,
+       };
+    }
+
+    componentDidMount() {
+        InteractionManager.runAfterInteractions(() => {
+         // 2: Component is done animating
+         // 3: Start fetching the team
+         //this.props.dispatchTeamFetchStart();
+        
+         // 4: set didFinishInitialAnimation to false
+         // This will render the navigation bar and a list of players
+         this.setState({
+           didFinishInitialAnimation: true
+         });
+       });
+    }
+
+    // componentWillMount(){
+    //     setTimeout(() => {
+    //         this.setState({didFinishInitialAnimation: true});
+    //     }, 10000);
+    // }
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
-                <View style={styles.container}>
-                    <ScrollView>
-                        {Object.keys(this.props.notifications).reverse().map((notificationKey) => (
-                            <MatchNotificationCard key={`MatchNotification-${notificationKey}`}
-                                notification={this.props.notifications[notificationKey]}
-                                notificationKey={notificationKey}
-                                uid={this.props.uid} />
-                        ))}
-                    </ScrollView>
-                </View>
+                {this.state.didFinishInitialAnimation
+                ?
+                    <View style={styles.container}>
+                        <ScrollView>
+                            {Object.keys(this.props.notifications).reverse().map((notificationKey) => (
+                                <MatchNotificationCard key={`MatchNotification-${notificationKey}`}
+                                    notification={this.props.notifications[notificationKey]}
+                                    notificationKey={notificationKey}
+                                    uid={this.props.uid} />
+                            ))}
+                        </ScrollView>
+                    </View> 
+                :
+                null
+                }
+                
             </SafeAreaView>
         );
     }

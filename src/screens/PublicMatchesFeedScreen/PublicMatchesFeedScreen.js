@@ -16,6 +16,10 @@ import { HIGHLIGHT_1_CREATE_MATCH } from '../../utilities/Constants';
 
 import HighlightModal from '../../components/HighlightModal/HighlightModal'
 
+import { setHg1CreateMatch } from '../../actions/highlightsActions';
+import { connect } from 'react-redux';
+
+
 class PublicMatchesFeedScreen extends Component {
     state = {
         matches: [],
@@ -119,7 +123,7 @@ class PublicMatchesFeedScreen extends Component {
     }
 
     componentDidMount() {
-        //storeData(HIGHLIGHT_1_CREATE_MATCH, 'true');
+        storeData(HIGHLIGHT_1_CREATE_MATCH, 'true');
         this.checkHighlightsFlags();
     }
 
@@ -143,9 +147,6 @@ class PublicMatchesFeedScreen extends Component {
             
             // Hide HIGHLIGHT_1_CREATE_MATCH Modal
             this.toggleHg1Modal();
-
-            // Show Notification Highlight Modal
-            storeData(HIGHLIGHT_2_NOTIFICATIONS, 'true');
         }
 
         this.props.navigation.navigate(isUserLogged() ? 'ChooseMatchType' : 'SignIn');
@@ -207,7 +208,10 @@ class PublicMatchesFeedScreen extends Component {
      * Flag is stored in AsyncStorage
      */
     markHg1 = async () => {
+        // flag in asyncStorage for component purpose
         storeData(HIGHLIGHT_1_CREATE_MATCH, 'false');
+        // flag in redux to know when a hg has been completed. Using AsyncStorage
+        this.props.setHg1CreateMatch(true);
     }
 
     render() {
@@ -231,4 +235,11 @@ class PublicMatchesFeedScreen extends Component {
     }
 }
 
-export default PublicMatchesFeedScreen;
+function mapDispatchToProps(dispatch) {
+    return {
+        setHg1CreateMatch: (value) => setHg1CreateMatch(value)(dispatch)
+    };
+}
+
+export default connect(null, mapDispatchToProps)(PublicMatchesFeedScreen);
+

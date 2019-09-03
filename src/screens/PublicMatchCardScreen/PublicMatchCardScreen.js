@@ -1,3 +1,4 @@
+// diego          - 02-09-2019 - us91 - Add track segment statistic
 // diego          - 19-08-2019 - us89 - Updated references to received params from navigation
 // diego          - 14-08-2019 - us77 - Added navigation to upload results on 'Subir Resultado' button
 // josep.sanahuja - 13-08-2019 - us86 - + match challenge already exist logic
@@ -19,7 +20,7 @@ import { challengeUser, isMatchAlreadyChallenged } from '../../services/database
 import { isUserLogged } from '../../services/auth';
 import { cancelPublicMatch } from '../../services/functions';
 import { getGamerTagStringWithGameAndPlatform } from '../../utilities/utils';
-
+import { trackOnSegment } from '../../services/statistics';
 // Custom Components
 import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBttnModal'
 
@@ -57,6 +58,8 @@ class PublicMatchCardScreen extends Component {
     * @param None
     */
     async tryToChallengeUser() {
+        trackOnSegment('User Wants To Challenge A Match');
+
         // If the user is logged
         if (isUserLogged()) {
             // Get the info of the match
@@ -88,6 +91,7 @@ class PublicMatchCardScreen extends Component {
     tryToCancelMatch() {
         const matchCard = this.props.navigation.getParam('matchCard');
         cancelPublicMatch(matchCard.idMatch);
+        trackOnSegment('User Has Canceled Match');
 
         this.props.navigation.navigate('Publicas');
     }

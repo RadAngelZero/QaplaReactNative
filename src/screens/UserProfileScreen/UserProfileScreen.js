@@ -1,3 +1,4 @@
+// diego          - 02-09-2019 - us91 - Add record screen segment statistic
 // diego           - 21-08-2019 - us89 - Redirect to load games screen added
 // diego           - 20-08-2019 - us89 - Show user statistics by game
 //                                       Added BuyQaploinsModal
@@ -12,6 +13,7 @@ import images from '../../../assets/images';
 import UserProfilePlatformGameList from '../../components/UserProfilePlatformGameList/UserProfilePlatformGameList';
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
+import { recordScreenOnSegment } from '../../services/statistics';
 
 const QaploinExchange = images.svg.qaploinsIcon;
 
@@ -19,6 +21,25 @@ export class UserProfileScreen extends Component {
     state = {
         showBuyQaploinsModal: false
     };
+
+    componentWillMount() {
+        this.list = [
+            
+            /**
+             * This event is triggered when the user goes to other screen
+             */
+            this.props.navigation.addListener(
+                'willFocus',
+                (payload) => {
+                    recordScreenOnSegment('User Profile');
+                }
+            )
+        ]
+    }
+
+    componentWillUnmount() {
+        this.list.forEach((item) => item.remove());
+    }
 
     /**
      * Open the modal of buy qaploins

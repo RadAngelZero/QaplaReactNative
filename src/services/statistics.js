@@ -1,5 +1,6 @@
+// diego          - 02-09-2019 - us91 - File creation
+
 import analytics from '@segment/analytics-react-native';
-import { AppEventsLogger } from 'react-native-fbsdk';
 
 export async function initializeSegment() {
     try {
@@ -37,16 +38,6 @@ export async function trackOnSegment(event, properties = {}) {
 export async function setUserIdOnSegment(uid) {
     try {
         analytics.identify(uid);
-        analytics.f
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-export async function logEventWithFacebookAnalytics(event, details = {}) {
-    try {
-        console.log(event);
-        AppEventsLogger.logEvent(event, details);
     } catch (error) {
         console.error(error);
     }

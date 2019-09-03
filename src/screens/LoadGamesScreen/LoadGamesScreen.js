@@ -1,3 +1,4 @@
+// diego          - 02-09-2019 - us91 - Add track and record screen segment statistic
 // diego          - 21-08-2019 - us89 - Added loadGamesThatUserDontHave prop
 //                                      GamerTag modal moved to independent file
 // josep.sanahuja - 05-08-2019 - us84 - changed style from SafeAreaView
@@ -23,7 +24,7 @@ import { connect } from 'react-redux';
 import { setSelectedGame } from '../../actions/gamesActions';
 
 import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal';
-import { recordScreenOnSegment } from '../../services/statistics';
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 
 const BackIcon = Images.svg.backIcon;
 
@@ -37,7 +38,7 @@ class LoadGamesScreen extends React.Component {
             this.props.navigation.addListener(
                 'willFocus',
                 (payload) => {
-                    if (this.props.loadGamesThatUserDontHave) {
+                    if (this.props.navigation.getParam('loadGamesThatUserDontHave', false)) {
                         recordScreenOnSegment('Load Games (Add Game)');
                     } else {
                         recordScreenOnSegment('Load Games (Create Match)');
@@ -94,7 +95,10 @@ class LoadGamesScreen extends React.Component {
     /**
      * Close the modal by setting to null the selectedGame on redux
      */
-    closeAddGamerTagModal = () => this.props.setSelectedGame(null);
+    closeAddGamerTagModal = () => {
+        trackOnSegment('Add Gamer Tag Process Canceled');
+        this.props.setSelectedGame(null);
+    }
 
     render() {
         return (

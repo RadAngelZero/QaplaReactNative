@@ -36,8 +36,14 @@ class HeaderBar extends Component {
     shouldComponentUpdate(nextProp, nextState) {
         //console.log("muuuuuuuu " + JSON.stringify(nextProp, null, 2));
         // check the hg1 modal flag
-        if (nextProp.hg1CreateMatch) {
+        if (nextProp.hg1CreateMatch && !this.props.hg1CreateMatch) {
             this.checkHighlightsFlags();
+        }
+        else if(nextProp.hg1CreateMatch === false) {
+          console.log("[shouldComponentUpdate] : false");
+        }
+        else {
+          console.log("[shouldComponentUpdate] : other");
         }
 
         return true;
@@ -78,7 +84,6 @@ class HeaderBar extends Component {
      * component which does not make sense right now.
      */
     async checkHighlightsFlags() {
-      console.log('maramamama');
         try {
             // Get the value for the highlight flag stored in AsynStorage.
             const value = await retrieveData(HIGHLIGHT_2_NOTIFICATIONS);
@@ -175,7 +180,7 @@ class HeaderBar extends Component {
 
 function mapStateToProps(state) {
     return {
-        hg1CreateMatch: state.hg1CreateMatch
+        hg1CreateMatch: state.highlightsReducer.hg1CreateMatch
     }
 }
 

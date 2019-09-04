@@ -141,14 +141,6 @@ class HeaderBar extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
-
-        if (this.props.hg1CreateMatch) {
-            console.log("propi 1")
-            this.checkHighlightsFlags();
-        }
-        else {
-          console.log("propi 2");
-        }
         
         return (
             <View style={styles.container} testID='container'>

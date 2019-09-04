@@ -19,33 +19,34 @@ const TOP_QUADRANT_BOTTOM     = 3;
 const BOTTOM_QUADRANT_TOP     = 4;
 const BOTTOM_QUADRANT_BOTTOM  = 5;
 
-
-
 class HighlightModal extends Component {
   
-  constructor(props) {
-    super(props);
-  
-    this.childWrapper = React.createRef();
+    constructor(props) {
+        super(props);
+        
+        // Reference for the View that contains the cloned element highlighted in props.children
+        this.childWrapper = React.createRef();
 
-    this.state = {
-      elemPosX: 0,
-      elemPosY: 0,
-      elemHeight: 0,
-      elemWidth: 0,
-      timeoutStarted: false,
-      timeoutEnded: false
-    };
+        this.state = {
+            elemPosX: 0,
+            elemPosY: 0,
+            elemHeight: 0,
+            elemWidth: 0,
+            timeoutStarted: false,
+            timeoutEnded: false
+        };
 
-    this.quad = null;
-    this.subQuad = null;
-  }
+        // Quadrant and SubQuadrant of screen device. Screen is divided first in two halfs,
+        // then each half is divided by two.
+        this.quad = null;
+        this.subQuad = null;
+    }
 
-   /**
-   *  Callbacks used in render()
-   */
+    /**
+    *  Callbacks used in render()
+    */
 
-   /**
+    /**
     * Description:
     * Perform a series of actions for the Modal, including the main one which is 'closing the modal'
     * and navigation to next screen. The other actions are performed via cb1 and cb2 props,
@@ -54,10 +55,8 @@ class HighlightModal extends Component {
     * @param None
     */
     action = async () => {
-      console.log('MUUU_1');
       // Close the Modal
       this.closeModal();
-      console.log('MUUU_2');
 
       // cb1 executes before cb2, and in case cb1 is not defined and cb2 is, then cb2 is excecuted
       // even though cb1 is undefined.
@@ -87,6 +86,16 @@ class HighlightModal extends Component {
       this.props.onClose();
     }
 
+    /**
+    * @description
+    * It computes the layout properties from a specific reference passed to a component.
+    * Layout info is x, y absolute position on screen, and width and height from the component.
+    * Beware that measureInWindow used inside this function, can give layout info from a very early rendered
+    * stage, and therefore to us, it can represent that the component we are trying to get layout info,
+    * can have a non final position info. Therefore the use of setTimeout().
+    *
+    * @param None
+    */
     measureChildComponent = (event) => {
       
       if (!this.state.timeoutStarted) {
@@ -182,13 +191,13 @@ class HighlightModal extends Component {
               visible={(visible && this.state.timeoutEnded)}
               onRequestClose={this.action}>
 
-              <View style={getHighlightContainerStyle2(measures, this.quad, this.subQuad)}>
-                <View style={getAbsComponentPosOffsetsStyle2(measures, this.quad, this.subQuad)}>
+              <View style={getHighlightContainerStyle(this.quad)}>
+                <View style={getAbsComponentPosOffsetsStyle(measures, this.quad)}>
                   <ChildComponentWithRef style={this.props.children.props.style}/>
                 </View>
 
                 {/* This is the info content from the Component */}
-                <View style={getAbsTextInfoPosOffsetsStyle2(measures, this.quad, this.subQuad)}>
+                <View style={getAbsTextInfoPosOffsetsStyle(this.subQuad)}>
                   <Text style={{color:'white', fontSize:30, marginLeft:40, marginRight: 40}}>{this.props.header}</Text>
                   <Text style={{color:'white', fontSize:14, marginLeft:40, marginRight: 40}}>{this.props.body}</Text>
                   <View style={{flexDirection:'row', justifyContent: 'flex-end', marginTop: 10, marginRight: 40}}>
@@ -208,219 +217,170 @@ class HighlightModal extends Component {
     }
 }
 
-function getHighlightContainerStyle(measures) {
-  let res = null;
+/**
+* @description
+* Computes which Quadrant the object with measures is.
+*
+* @param {Object} measures  Contains layout info from a component
+* @param {Num} quad  Quadrant number
+*
+* @return
+* It returns a style Object depending on the Quadrant
+*/
+function getHighlightContainerStyle(quad) {
+    let res = null;
 
-  // Computes, according to where the component is placed in the window, to what part of the
-  // screen (top / bottom) the component is. Display is divided in a first step into two 
-  // vertical portions (top / bottom).
-  let quad = computeQuadrant(measures);
+    if (quad === TOP_QUADRANT){
+        res = styles.highlightTopContainer;
+    }
+    else if (quad === BOTTOM_QUADRANT){
+        res = styles.highlightBottomContainer;
+    }
+    else {
+        //console.log('[Highlight] {getHighlightContainerStyle} - Should not be here!');
+    }
 
-  console.log("Quadrant: " + quad);
-
-  if (quad === TOP_QUADRANT){
-    res = styles.highlightTopContainer;
-  }
-  else if (quad === BOTTOM_QUADRANT){
-    res = styles.highlightBottomContainer;
-  }
-  else {
-    console.log("moo");
-  }
-
-  return res;
+    return res;
 }
 
-function getHighlightContainerStyle2(measures, quad, subQuad) {
-  let res = null;
+/**
+* @description
+* Computes the absolute position for the View of the component.
+*
+* @param {Object} measures  Contains layout info from a component
+* @param {Num} quad  Quadrant number
+*
+* @return
+* It returns a style Object depending on the Quadrant
+*/
+function getAbsComponentPosOffsetsStyle(measures, quad) {
+    let res = null;
 
-  console.log("*Quadrant: " + quad);
-
-  if (quad === TOP_QUADRANT){
-    res = styles.highlightTopContainer;
-  }
-  else if (quad === BOTTOM_QUADRANT){
-    res = styles.highlightBottomContainer;
-  }
-  else {
-    console.log("moo");
-  }
-
-  return res;
-}
-
-function getAbsComponentPosOffsetsStyle(measures) {
-  const displayHeight = Dimensions.get('window').height;
-  const displayMid = displayHeight / 2;
-  
-  let res = null;
-  let quad = computeQuadrant(measures);
-
-  if (quad === TOP_QUADRANT){
-    res = {top: measures.elemPosY, left: measures.elemPosX};
-  }
-  else if (quad === BOTTOM_QUADRANT){
+    const displayHeight = Dimensions.get('window').height;
+    const displayMid = displayHeight / 2;
     
-    // description
-    res = {top: measures.elemPosY - displayMid, left: measures.elemPosX};
-  }
-  else {
-    console.log("moo");
-  }
-  
-  return res;
+    if (quad === TOP_QUADRANT){
+        res = {top: measures.elemPosY, left: measures.elemPosX};
+    }
+    else if (quad === BOTTOM_QUADRANT){
+        // description
+        res = {top: measures.elemPosY - displayMid, left: measures.elemPosX};
+    }
+    else {
+        //console.log('[Highlight] {getAbsComponentPosOffsetsStyle} - Should not be here!');
+    }
+    
+    return res;
 }
 
-function getAbsComponentPosOffsetsStyle2(measures, quad, subQuad) {
-  const displayHeight = Dimensions.get('window').height;
-  const displayMid = displayHeight / 2;
-  
-  let res = null;
+/**
+* @description
+* Computes the absolute position for the Text info content describing the Highlight.
+*
+* @param {Object} measures  Contains layout info from a component
+* @param {Num} quad  Quadrant number
+*
+* @return
+* It returns a style Object depending on the Quadrant
+*/
+function getAbsTextInfoPosOffsetsStyle(subQuad) {
+    let res = null;
 
-  if (quad === TOP_QUADRANT){
-    res = {top: measures.elemPosY, left: measures.elemPosX};
-  }
-  else if (quad === BOTTOM_QUADRANT){
+    const displayHeight = Dimensions.get('window').height;
+    const displayMid = displayHeight / 2;
+
+    if (subQuad === TOP_QUADRANT_TOP){
+        res = {position: 'absolute', top: displayMid - 190};
+    }
+    else if (subQuad === TOP_QUADRANT_BOTTOM){
+        res = {position: 'absolute', top: 50};
+    }
+    else if (subQuad === BOTTOM_QUADRANT_TOP){
+        res = {position: 'absolute', bottom: 50};
+    }
+    else if (subQuad === BOTTOM_QUADRANT_BOTTOM){
+        // description
+        res = {position: 'absolute', bottom: 240};
+    }
+    else {
+        //console.log('[Highlight] {getAbsTextInfoPosOffsetsStyle} - Should not be here!');
+    }
     
-    // description
-    res = {top: measures.elemPosY - displayMid, left: measures.elemPosX};
-  }
-  else {
-    console.log("moo");
-  }
-  
-  return res;
-}
-
-function getAbsTextInfoPosOffsetsStyle(measures) {
-  const displayHeight = Dimensions.get('window').height;
-  const displayMid = displayHeight / 2;
-  
-  let res = null;
-  let quad = computeSubQuadrant(measures);
-
-  if (quad === TOP_QUADRANT_TOP){
-    res = {position: 'absolute', top: displayMid - 190};
-  }
-  else if (quad === TOP_QUADRANT_BOTTOM){
-    
-    // description
-    res = {position: 'absolute', top: 50};
-  }
-  else if (quad === BOTTOM_QUADRANT_TOP){
-    res = {position: 'absolute', bottom: 50};
-  }
-  else if (quad === BOTTOM_QUADRANT_BOTTOM){
-    // description
-    res = {position: 'absolute', bottom: 240};
-  }
-  else {
-    console.log("moo");
-  }
-  
-  return res;
-}
-
-function getAbsTextInfoPosOffsetsStyle2(measures, quad, subQuad) {
-  const displayHeight = Dimensions.get('window').height;
-  const displayMid = displayHeight / 2;
-  
-  let res = null;
-
-  if (subQuad === TOP_QUADRANT_TOP){
-    res = {position: 'absolute', top: displayMid - 190};
-  }
-  else if (subQuad === TOP_QUADRANT_BOTTOM){
-    
-    // description
-    res = {position: 'absolute', top: 50};
-  }
-  else if (subQuad === BOTTOM_QUADRANT_TOP){
-    res = {position: 'absolute', bottom: 50};
-  }
-  else if (subQuad === BOTTOM_QUADRANT_BOTTOM){
-    console.log("marramiauuuuu");
-    // description
-    res = {position: 'absolute', bottom: 240};
-  }
-  else {
-    console.log("moo");
-  }
-  
-  return res;
+    return res;
 }
 
 function computeQuadrant(measures) {
-  const displayWidth = Dimensions.get('window').width;
-  const displayHeight = Dimensions.get('window').height;
-  const displayMid = displayHeight / 2;
-  let res = TOP_QUADRANT;
+    let res = TOP_QUADRANT;
 
-  // First Quadrant
-  if (measures.elemPosY + measures.elemHeight < displayMid) {
-    res = TOP_QUADRANT;
-  }
-  else if (measures.elemPosY + measures.elemHeight >= displayMid) {
-    res = BOTTOM_QUADRANT;
-  }
-  else {
-    console.log('[Highlight] {computeQuadrant} - Should not be here!');
-  }
+    const displayWidth = Dimensions.get('window').width;
+    const displayHeight = Dimensions.get('window').height;
+    const displayMid = displayHeight / 2;
 
-  return res;
+    // First Quadrant
+    if (measures.elemPosY + measures.elemHeight < displayMid) {
+        res = TOP_QUADRANT;
+    }
+    else if (measures.elemPosY + measures.elemHeight >= displayMid) {
+        res = BOTTOM_QUADRANT;
+    }
+    else {
+        //console.log('[Highlight] {computeQuadrant} - Should not be here!');
+    }
+
+    return res;
 }
 
 function computeSubQuadrant(measures) {
-  const displayWidth  = Dimensions.get('window').width;
-  const displayHeight = Dimensions.get('window').height;
-  const displayMid    = displayHeight / 2;
-  const displayQuad   = displayMid / 2;
-  
-  let res = TOP_QUADRANT;
-  
-  // First compute Quadrant 
-  let quad = computeQuadrant(measures);
-
-  console.log('Quadrant: ' + quad);
-
-  if (quad === TOP_QUADRANT) {
+    const displayWidth  = Dimensions.get('window').width;
+    const displayHeight = Dimensions.get('window').height;
+    const displayMid    = displayHeight / 2;
+    const displayQuad   = displayMid / 2;
     
-    // TOT-TOP ?
-    if (measures.elemPosY + measures.elemHeight < displayQuad){
-      res = TOP_QUADRANT_TOP;
-    }
-    else if (
-      measures.elemPosY + measures.elemHeight > displayQuad &&
-      measures.elemPosY + measures.elemHeight <= displayMid){
-      res = TOP_QUADRANT_BOTTOM;
-    }
-    else{
-      console.log('[Highlight] {computeSubQuadrant} {TOP_QUADRANT} - Should not be here!');
-    }
-  }
-  else if (quad === BOTTOM_QUADRANT) {
+    let res = TOP_QUADRANT;
     
-    // TOT-TOP ?
-    if (measures.elemPosY + measures.elemHeight > displayMid &&
-      measures.elemPosY + measures.elemHeight <= (displayMid + displayQuad)){
-      res = BOTTOM_QUADRANT_TOP;
-    }
-    else if (
-      measures.elemPosY + measures.elemHeight > displayMid &&
-      measures.elemPosY + measures.elemHeight > (displayMid + displayQuad) &&
-      measures.elemPosY + measures.elemHeight <= displayHeight){
-      res = BOTTOM_QUADRANT_BOTTOM;
-    }
-    else{
-      console.log('[Highlight] {computeSubQuadrant} {BOTTOM_QUADRANT} - Should not be here!');
-    }
-  }
-  else {
-    console.log('[Highlight] {computeSubQuadrant} - Should not be here!');
-  }
+    // First compute Quadrant 
+    let quad = computeQuadrant(measures);
 
-  console.log("SubQuadrant: " + res);
-  return res;
+    if (quad === TOP_QUADRANT) {
+      
+        // TOT-TOP ?
+        if (measures.elemPosY + measures.elemHeight < displayQuad){
+            res = TOP_QUADRANT_TOP;
+        }
+        else if (
+            measures.elemPosY + measures.elemHeight > displayQuad &&
+            measures.elemPosY + measures.elemHeight <= displayMid)
+        {
+            res = TOP_QUADRANT_BOTTOM;
+        }
+        else{
+            //console.log('[Highlight] {computeSubQuadrant} {TOP_QUADRANT} - Should not be here!');
+        }
+    }
+    else if (quad === BOTTOM_QUADRANT){
+      
+        // TOT-TOP ?
+        if (measures.elemPosY + measures.elemHeight > displayMid &&
+            measures.elemPosY + measures.elemHeight <= (displayMid + displayQuad))
+        {
+            res = BOTTOM_QUADRANT_TOP;
+        }
+        else if(
+            measures.elemPosY + measures.elemHeight > displayMid &&
+            measures.elemPosY + measures.elemHeight > (displayMid + displayQuad) &&
+            measures.elemPosY + measures.elemHeight <= displayHeight)
+        {
+            res = BOTTOM_QUADRANT_BOTTOM;
+        }
+        else{
+            //console.log('[Highlight] {computeSubQuadrant} {BOTTOM_QUADRANT} - Should not be here!');
+        }
+    }
+    else {
+        //console.log('[Highlight] {computeSubQuadrant} - Should not be here!');
+    }
+
+    return res;
 }
 
 HighlightModal.defaultProps = {

@@ -12,7 +12,11 @@ import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../servic
 import CreateRetasButton from '../../components/CreateRetasButton/CreateRetasButton';
 import { isUserLogged } from '../../services/auth';
 import { storeData, retrieveData } from '../../utilities/persistance';
-import { HIGHLIGHT_1_CREATE_MATCH } from '../../utilities/Constants';
+
+import {
+    HIGHLIGHT_1_CREATE_MATCH,
+    HIGHLIGHT_1_CREATE_MATCH_FLAG
+ } from '../../utilities/Constants';
 
 import HighlightModal from '../../components/HighlightModal/HighlightModal'
 
@@ -123,7 +127,8 @@ class PublicMatchesFeedScreen extends Component {
     }
 
     componentDidMount() {
-        storeData(HIGHLIGHT_1_CREATE_MATCH, 'true');
+        //storeData(HIGHLIGHT_1_CREATE_MATCH, 'true');
+        //storeData(HIGHLIGHT_1_CREATE_MATCH_FLAG, 'false');
         this.checkHighlightsFlags();
     }
 
@@ -168,6 +173,7 @@ class PublicMatchesFeedScreen extends Component {
             const value = await retrieveData(HIGHLIGHT_1_CREATE_MATCH);
 
             if (value !== null) {
+                console.log("[checkHighlightsFlags] !== null");
                 
                 // There is data stored for the flag, it can be either 'false' or 'true'.
                 this.setState({
@@ -175,6 +181,7 @@ class PublicMatchesFeedScreen extends Component {
                 });
             }
             else {
+                console.log("[checkHighlightsFlags] === null");
 
                 // That means there is no value stored for the flag, therefore
                 // result should be 'true', meaning the highlight will activate.

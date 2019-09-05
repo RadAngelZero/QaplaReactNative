@@ -1,3 +1,4 @@
+// diego          - 05-09-2019 - us104 - Added style for displayed text if the user has already sended their result
 // josep.sanahuja - 05-08-2019 - us84 - + sfvContainer
 // diego          - 29-07-2019 - us55 - Update styles to make screen look like the mockup of inVision iOS
 // josep.sanahuja - 15-07-2019 - us25 - Remv. cancelButton
@@ -97,6 +98,12 @@ export default StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         fontWeight: 'bold',
+        color: '#FFF'
+    },
+    alreadyHaveResult: {
+        marginTop: 36,
+        fontSize: 16,
+        textAlign: 'center',
         color: '#FFF'
     }
 });

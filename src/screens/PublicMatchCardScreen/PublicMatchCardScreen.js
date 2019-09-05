@@ -105,10 +105,9 @@ class PublicMatchCardScreen extends Component {
     }
 
     /**
-    * Determine if some amoun
-    * @param date Dia y mes
-    * @param hour Hora y minuto
-    * @param expectedTime Tiempo que debio pasar
+    * Convert a given date and hour in a UTC date and return their timestamp
+    * @param {string} date Day and month in format DD/MM
+    * @param {string} hour hour and minute in format HH/mm
     */
     convertHourToTimeStamp(date, hour) {
         const [day, month] = date.split('/').map(p => parseInt(p, 10));

@@ -1,3 +1,4 @@
+// diego             - 05-09-2019 - us101 - Send hour result for set timer on detail match screen
 // diego             - 19-08-2019 - us89 - Send new prop (currentUserAdversary) to items on the matches list to determine what adversary
 //                                         the user is (adversary1 or adversary2) necessary to upload results
 // diego             - 09-08-2019 - bug4 - Remove child_changed listener
@@ -54,7 +55,21 @@ export class MyMatchesScreen extends Component {
                     matchesPlayRef.orderByChild('adversary1').equalTo(this.props.id).on('child_added', async (hostedMatches) => {
                         if (hostedMatches.val().adversary2 !== '') {
                             //Take the necesary information from the object returned of the database
-                            const { adversary2, alphaNumericIdMatch, bet, date, game, hour, idMatch, numMatches, observations, platform, timeStamp, winBet } = hostedMatches.val();
+                            const {
+                                adversary2,
+                                alphaNumericIdMatch,
+                                bet,
+                                date,
+                                game,
+                                hour,
+                                idMatch,
+                                numMatches,
+                                observations,
+                                platform,
+                                timeStamp,
+                                winBet,
+                                hourResult
+                            } = hostedMatches.val();
                             //Object with the necesary fields to load the match in the app (the card and the detailed view)
                             const matchObject = {
                                 adversaryUid: adversary2,
@@ -75,6 +90,7 @@ export class MyMatchesScreen extends Component {
                                 platform,
                                 timeStamp,
                                 winBet,
+                                hourResult,
                                 //Get the userName from a external function because the match object only have the UID
                                 userName: await getUserNameWithUID(hostedMatches.val().adversary2),
                                 gamerTag: await getGamerTagWithUID(hostedMatches.val().adversary2, hostedMatches.val().game, hostedMatches.val().platform)
@@ -92,7 +108,21 @@ export class MyMatchesScreen extends Component {
                      */
                     matchesPlayRef.orderByChild('adversary2').equalTo(this.props.id).on('child_added', async (challengedMatches) => {
                         //Take the necesary information from the object returned of the database
-                        const { adversary1, alphaNumericIdMatch, bet, date, game, hour, idMatch, numMatches, observations, platform, timeStamp, winBet } = challengedMatches.val();
+                        const {
+                            adversary1,
+                            alphaNumericIdMatch,
+                            bet,
+                            date,
+                            game,
+                            hour,
+                            idMatch,
+                            numMatches,
+                            observations,
+                            platform,
+                            timeStamp,
+                            winBet,
+                            hourResult
+                        } = challengedMatches.val();
                         //Object with the necesary fields to load the match in the app (the card and the detailed view)
                         const matchObject = {
                             adversaryUid: adversary1,
@@ -108,6 +138,7 @@ export class MyMatchesScreen extends Component {
                             platform,
                             timeStamp,
                             winBet,
+                            hourResult,
                             //Get the userName from a external function because the match object only have the UID
                             userName: await getUserNameWithUID(challengedMatches.val().adversary1),
                             gamerTag: await getGamerTagWithUID(challengedMatches.val().adversary1, challengedMatches.val().game, challengedMatches.val().platform)

@@ -1,4 +1,5 @@
-// diego	  - 13-08-2019 - us77 - Added clutch tutorial images
+// diego	      - 06-09-2019 - us93 - Added OkIcon for checkbox
+// diego	      - 13-08-2019 - us77 - Added clutch tutorial images
 // diego          - 17-07-2019 - NA   - removed duplicate smash bros image
 
 // Icons
@@ -20,6 +21,7 @@ import CancelIcon from './icons/qaploins.svg'
 import LightningIcon from './icons/Lighting.svg';
 import SearchIcon from './icons/search.svg';
 import BackIcon from './icons/back.svg';
+import OkIcon from './icons/OkIcon.svg';
 import ClashIcon from './icons/Clash.svg';
 import HeartstoneIcon from './icons/Heartstone.svg';
 import LOLIcon from './icons/LOL.svg';
@@ -141,6 +143,7 @@ const images = {
 		qaploinsPrize: QaploinsPrize,
 		lessQaploins: LessQaploins,
 		moreQaploins: MoreQaploins,
+		okIcon: OkIcon,
 		gowIcon: GowIcon,
 		fifaIcon: FifaIcon,
 		clashIcon: ClashIcon,

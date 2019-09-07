@@ -1,11 +1,13 @@
+// diego          - 06-09-2019 - us93 - Replace of switch with CheckBox component
 // diego          - 06-08-2019 - us68 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback, Switch } from 'react-native';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './style';
 import Modal from '../Modal/Modal';
 import { storeData } from '../../utilities/persistance';
+import CheckBox from '../CheckBox/CheckBox';
 
 class AcceptChallengeModal extends Component {
     state = {
@@ -23,6 +25,13 @@ class AcceptChallengeModal extends Component {
         this.props.acceptNotificationsDelete();
     }
 
+    /**
+     * Toogle the dontShowModalAgain flag to the selected state of the checkbox
+     */
+    toogleCheckBox = (newState) => {
+        this.setState({ dontShowModalAgain: newState });
+    }
+
     render() {
         return (
             <Modal open onClose={this.props.onClose}>
@@ -31,9 +40,11 @@ class AcceptChallengeModal extends Component {
                         Al aceptar este desafio todos los otros desafios que te han hecho a esta reta 
                         seran eliminados.
                     </Text>
-                    <Text style={styles.smallText}>No mostrar de nuevo</Text>
-                    <Switch onValueChange={(value) => this.setState({ dontShowModalAgain: value })}
-                        value={this.state.dontShowModalAgain} />
+                    <CheckBox
+                        style={styles.checkbox}
+                        label='Entendido, no volver a mostrar este mensaje'
+                        selected={this.state.dontShowModalAgain}
+                        onPress={this.toogleCheckBox} />
                     <TouchableWithoutFeedback onPress={() => this.acceptDelete()}>
                         <View style={styles.gotItButton}>
                             <Text style={styles.gotItButtonText}>Continuar</Text>

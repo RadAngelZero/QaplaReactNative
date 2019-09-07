@@ -1,3 +1,4 @@
+// diego          - 06-09-2019 - us93 - Added checkbox style
 // diego          - 06-08-2019 - us68 - File creation
 
 import { StyleSheet } from 'react-native';
@@ -31,10 +32,7 @@ export default styles = StyleSheet.create({
         marginBottom: 14,
         color: '#FFF'
     },
-    smallText: {
-        marginTop: 18,
-        color: '#909299',
-        fontSize: 10,
-        textAlign: 'justify'
+    checkbox: {
+        marginTop: 18
     }
 });

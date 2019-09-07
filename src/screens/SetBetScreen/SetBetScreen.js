@@ -1,3 +1,4 @@
+// diego          - 06-09-2019 - us93 - Convert modal to remember the time of life of the match on component: MatchExpireRememberModal
 // josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
 // josep.sanahuja - 01-08-2019 - us57 - + Modal for 10 minutes msg when creating a match
 // diego          - 24-07-2019 - us31 - Updated createMatch and decreaseBet to accept
@@ -12,19 +13,15 @@ import {
     View,
     Text,
     BackHandler,
-    TouchableWithoutFeedback,
-    Switch
+    TouchableWithoutFeedback
 } from 'react-native';
 
 import styles from './style';
 
-import Modal from '../../components/Modal/Modal'; 
 import { connect } from 'react-redux';
-import Svg from 'react-native-svg';
 import images from './../../../assets/images';
 
 import {
-    storeData,
     retrieveData
 } from '@utilities/persistance'
 
@@ -35,6 +32,7 @@ import {
 } from '../../services/database';
 
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
+import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/MatchExpireRememberModal';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
 const QaploinIcon       = images.svg.qaploinsIcon;
@@ -50,8 +48,7 @@ class SetBetScreen extends Component {
             currentBet: 150,
             open: false,
             loading: false,
-            timeActionMsgOpen: false,
-            swtichTA: false
+            timeActionMsgOpen: false
         };
     }
 
@@ -143,30 +140,13 @@ class SetBetScreen extends Component {
     }
 
     /**
-     * Description:
-     * Toogles switchTA value
+     * Close the modal and enable the button again
      */
-    toggleSwitchTA() {
+    closeMatchExpireRememberModal = () => {
         this.setState({
-            switchTA: !this.state.switchTA
+            timeActionMsgOpen: false,
+            loading: false
         });
-    }
-
-    /**
-     * Description:
-     * It checks if the modal will be shown in future occasions and store the configuration so 
-     * that it remains in the future. It redirects to 'Public Matches Feed' screen.
-     *
-     */
-    confirmModal() {
-        // If switch is activated then that means that this screen should
-        // not show up again when creating a Match. This is why we set flag value
-        // to false, indicating that the modal should not open again.
-        if (this.state.switchTA) {
-            storeData('create-match-time-action-msg', JSON.stringify(false));
-        }
-
-        this.props.navigation.navigate('Publicas')
     }
 
     render() {
@@ -174,43 +154,19 @@ class SetBetScreen extends Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <BuyQaploinsModal open={this.state.open} onClose={() => this.setState({ open: false })} />
-                    <Modal open={this.state.timeActionMsgOpen} onClose={() => {
-                        this.setState({
-                            timeActionMsgOpen: false,
-                            loading: false
-                        })}}>
-                        <View style={styles.containerMsgModal}>
-                            <Text style={styles.headerText}>Recuerda</Text>
-                            <Text style={styles.paragraph}>
-                                La Reta expirará después de 10 minutos si no recibe y se acepta un desafio de otro jugador.                  
-                            </Text>
-                            <Text style={[styles.smallText, styles.marginSmallText]}>No volver a mostrar este mensaje</Text>
-                            <Switch
-                                style = {styles.switch}
-                                trackColor={{true: '#36E5CE', false: 'grey'}}
-                                onValueChange = {this.toggleSwitchTA.bind(this)}
-                                value = {this.state.switchTA} /> 
-                            <TouchableWithoutFeedback onPress={this.confirmModal.bind(this)}>
-                                <View style={styles.okButton}>
-                                    <Text style={styles.buttonText}>Confirmar</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                        </View>
-                    </Modal>
+                    <MatchExpireRememberModal
+                        visible={this.state.timeActionMsgOpen}
+                        onClose={this.closeMatchExpireRememberModal} />
                     <View style={styles.headerOptions}>
                         <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
                         <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>
                     </View>
                     <View style={styles.prizeImage}>
-                        <Svg>
-                            <QaploinsPrizeIcon />
-                        </Svg>
+                        <QaploinsPrizeIcon />
                     </View>
                     <Text style={styles.winBet}>{this.defineWinBet()}</Text>
                     <View style={styles.qaploinIconContainer}>
-                        <Svg>
-                            <QaploinIcon height={24} width={24} />
-                        </Svg>
+                        <QaploinIcon height={24} width={24} />
                         <Text style={styles.qaploinIconText}>Qaploins</Text>
                     </View>
                     <View style={styles.betContainer}>

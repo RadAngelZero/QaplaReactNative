@@ -4,9 +4,13 @@ import { StyleSheet } from 'react-native';
 
 export default styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        width: '100%'
+    },
+    selectionArea: {
+        flexDirection: 'row',
+        alignSelf: 'center'
     },
     checkboxContainer: {
         height: 24,
@@ -19,12 +23,12 @@ export default styles = StyleSheet.create({
     selectedContainer: {
         height: 20,
         width: 20,
-        backgroundColor: '#6D7DDE',
+        backgroundColor: '#3DF9DF',
         borderRadius: 2,
         alignSelf: 'flex-start'
     },
     label: {
-        fontSize: 14,
+        fontSize: 11,
         color: '#909299',
         textAlignVertical: 'center',
         marginLeft: 8

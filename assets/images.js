@@ -1,4 +1,4 @@
-// diego	  	  - 03-09-2019 - us92 - Added on boarding images
+// diego	  	  - 03-09-2019 - us92 - Added onboarding images
 // diego	  	  - 13-08-2019 - us77 - Added clutch tutorial images
 // diego          - 17-07-2019 - NA   - removed duplicate smash bros image
 

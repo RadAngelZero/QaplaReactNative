@@ -2,9 +2,11 @@
 
 import React, { Component } from 'react';
 import { View, ScrollView, Image, Text } from 'react-native';
-import Images from './../../../assets/images';
 
+import Images from './../../../assets/images';
 import { styles } from './style';
+
+const Divider = Images.png.divider.img;
 
 class CarouselPng extends Component { 
     onScrollEnd = (e) => {
@@ -31,7 +33,7 @@ class CarouselPng extends Component {
                             <Image style={styles.image} source={slide.Image}/>
                         </View>
                         <Text style={styles.title}>{slide.title}</Text>
-                        <Image style={styles.divider} source={Images.png.divider.img} />
+                        <Image style={styles.divider} source={Divider} />
                         <Text style={styles.description}>{slide.description}</Text>
                     </View>
                 ))}

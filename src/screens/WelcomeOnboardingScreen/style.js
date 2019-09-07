@@ -24,6 +24,11 @@ export default StyleSheet.create({
     progressRow: {
         width: getDimensions().width / 3
     },
+    indicatorsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignSelf: 'center'
+    },
     progressCircleIndicator: {
         alignSelf: 'center',
         justifyContent: 'center',

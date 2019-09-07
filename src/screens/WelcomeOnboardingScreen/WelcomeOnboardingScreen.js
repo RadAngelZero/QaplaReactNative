@@ -23,7 +23,7 @@ export default class WelcomeOnboardingScreen extends React.Component {
     }
   }
 
-	goToScreen = () => {
+	goToScreenPublicas = () => {
 		this.props.navigation.navigate('Publicas', { firstMatchCreated: true });
 	}
 
@@ -61,13 +61,13 @@ export default class WelcomeOnboardingScreen extends React.Component {
 			<CarouselPng carrouselData={carrouselData} setCurrentIndex={this.setCurrentIndex} />
 			<View style={styles.progressContainer}>
 				<View style={styles.progressRow}></View>
-				<View style={[styles.progressRow, { flexDirection: 'row', justifyContent: 'center', }]}>
+				<View style={[styles.progressRow, styles.indicatorsContainer]}>
 					{carrouselData.map((slide, index) => (
 						<View style={[styles.progressCircleIndicator, { backgroundColor: this.state.selectedIndex === index ? '#3DF9DF' : '#090D29' }]} />
 					))}
 				</View>
 				<View style={styles.progressRow}>
-					<Text onPress={this.goToScreen} style={styles.finishTextButton}>
+					<Text onPress={this.goToScreenPublicas} style={styles.finishTextButton}>
 						{this.state.selectedIndex === carrouselData.length - 1 &&
 							'TERMINAR'
 						}

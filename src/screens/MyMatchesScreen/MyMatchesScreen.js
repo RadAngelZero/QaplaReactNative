@@ -70,6 +70,7 @@ export class MyMatchesScreen extends Component {
                                 winBet,
                                 hourResult
                             } = hostedMatches.val();
+                            
                             //Object with the necesary fields to load the match in the app (the card and the detailed view)
                             const matchObject = {
                                 adversaryUid: adversary2,

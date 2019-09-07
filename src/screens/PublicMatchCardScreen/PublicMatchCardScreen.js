@@ -13,7 +13,7 @@
 // diego          - 29-07-2019 - us55 - Challenge match logic added
 
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, TouchableWithoutFeedback, InteractionManager } from 'react-native'
+import { View, Text, SafeAreaView, TouchableWithoutFeedback } from 'react-native'
 import { connect } from 'react-redux';
 import styles from './style'
 
@@ -60,6 +60,7 @@ class PublicMatchCardScreen extends Component {
                 'willFocus',
                 (payload) => {
                     const { date, hourResult, timeStamp, matchesPlay } = this.props.navigation.getParam('matchCard');
+
                     this.timer = setInterval(() => {
                         let now = new Date().getTime();
                         let leftTime = 0;
@@ -112,6 +113,7 @@ class PublicMatchCardScreen extends Component {
     convertHourToTimeStamp(date, hour) {
         const [day, month] = date.split('/').map(p => parseInt(p, 10));
         const [h, min] = hour.split(':').map(p => parseInt(p, 10));
+        
         return new Date(Date.UTC((new Date).getUTCFullYear(), month - 1, day, h, min, 0, 0)).getTime();
     }
 

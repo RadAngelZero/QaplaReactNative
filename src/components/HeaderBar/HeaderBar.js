@@ -36,14 +36,23 @@ class HeaderBar extends Component {
     shouldComponentUpdate(nextProp, nextState) {
         //console.log("muuuuuuuu " + JSON.stringify(nextProp, null, 2));
         // check the hg1 modal flag
-        if (nextProp.hg1CreateMatch && !this.props.hg1CreateMatch) {
+
+        console.log("[HeaderBar] {shouldComponentUpdate} - nextProp.hg1CreateMatch: " + 
+            nextProp.hg1CreateMatch +
+            " this.props.hg1CreateMatch: " + this.props.hg1CreateMatch);
+
+        console.log("[HeaderBar] {shouldComponentUpdate} - type nextProp.hg1CreateMatch: " + 
+            typeof(nextProp.hg1CreateMatch) +
+            " type this.props.hg1CreateMatch: " + typeof(this.props.hg1CreateMatch));
+
+        if (nextProp.hg1CreateMatch === true && this.props.hg1CreateMatch === false) {
             this.checkHighlightsFlags();
         }
         else if(nextProp.hg1CreateMatch === false) {
-          console.log("[shouldComponentUpdate] : false");
+          console.log("[shouldComponentUpdate Noti] : false");
         }
         else {
-          console.log("[shouldComponentUpdate] : other");
+          console.log("[shouldComponentUpdate Noti] : other");
         }
 
         return true;
@@ -91,19 +100,21 @@ class HeaderBar extends Component {
             //const hgCreateReta = await retrieveData(HIGHLIGHT_1_CREATE_MATCH);
             //const hgCreateReta = false;
             //if (value !== null && !JSON.parse(this.hgCreateReta)) {
-            if (value !== null && this.props.hg1CreateMatch) {
-                console.log('marra != null: ' + value);
+            if (value !== null && this.props.hg1CreateMatch === true) {
+                console.log('[checkHighlightsFlags Header]: value !== null, value: ' + value + " hg1CreateMatch: " + this.props.hg1CreateMatch);
                 // There is data stored for the flag, it can be either 'false' or 'true'.
                 this.setState({
                     showHg2Modal: JSON.parse(value)
                 });
             }
             else {
-                console.log('marra === null: ' + value);
+                console.log('[checkHighlightsFlags Header]: value === null, value: ' + value + " hg1CreateMatch: " + this.props.hg1CreateMatch);
                 // That means there is no value stored for the flag, therefore
                 // result should be 'true', meaning the highlight will activate.
                 //if (!JSON.parse(hgCreateReta)) {
-                if (this.props.hg1CreateMatch) {
+                if (this.props.hg1CreateMatch === true) {
+                    console.log('[checkHighlightsFlags Header]: value === null, setState: ' + " hg1CreateMatch: " + this.props.hg1CreateMatch );
+
                     this.setState({
                         showHg2Modal: true
                     });

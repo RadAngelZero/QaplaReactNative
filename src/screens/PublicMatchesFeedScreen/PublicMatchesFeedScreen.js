@@ -15,7 +15,8 @@ import { storeData, retrieveData } from '../../utilities/persistance';
 
 import {
     HIGHLIGHT_1_CREATE_MATCH,
-    HIGHLIGHT_1_CREATE_MATCH_FLAG
+    HIGHLIGHT_1_CREATE_MATCH_FLAG,
+    HIGHLIGHT_2_NOTIFICATIONS
  } from '../../utilities/Constants';
 
 import HighlightModal from '../../components/HighlightModal/HighlightModal'
@@ -127,9 +128,11 @@ class PublicMatchesFeedScreen extends Component {
     }
 
     componentDidMount() {
-        //storeData(HIGHLIGHT_1_CREATE_MATCH, 'true');
-        //storeData(HIGHLIGHT_1_CREATE_MATCH_FLAG, 'false');
-        this.checkHighlightsFlags();
+        // storeData(HIGHLIGHT_1_CREATE_MATCH, 'true');
+        // storeData(HIGHLIGHT_1_CREATE_MATCH_FLAG, 'false');
+        // storeData(HIGHLIGHT_2_NOTIFICATIONS, 'true');
+        // this.props.setHg1CreateMatch(false);
+        this.checkHighlightsFlags();  
     }
 
     /**
@@ -173,7 +176,7 @@ class PublicMatchesFeedScreen extends Component {
             const value = await retrieveData(HIGHLIGHT_1_CREATE_MATCH);
 
             if (value !== null) {
-                console.log("[checkHighlightsFlags] !== null");
+                console.log("[checkHighlightsFlags PM] !== null value: " + value);
                 
                 // There is data stored for the flag, it can be either 'false' or 'true'.
                 this.setState({
@@ -181,7 +184,7 @@ class PublicMatchesFeedScreen extends Component {
                 });
             }
             else {
-                console.log("[checkHighlightsFlags] === null");
+                console.log("[checkHighlightsFlags PM] === null");
 
                 // That means there is no value stored for the flag, therefore
                 // result should be 'true', meaning the highlight will activate.
@@ -203,6 +206,7 @@ class PublicMatchesFeedScreen extends Component {
      * TODO: Consider in a future and be aware of toggle instead of a setTrue or setFalse mecanism. 
      */
     toggleHg1Modal = () => {
+        console.log("[toggleHg1Modal PM]: " + this.state.showHg1Modal);
         this.setState({
             showHg1Modal: !this.state.showHg1Modal
         })
@@ -217,6 +221,8 @@ class PublicMatchesFeedScreen extends Component {
     markHg1 = async () => {
         // flag in asyncStorage for component purpose
         storeData(HIGHLIGHT_1_CREATE_MATCH, 'false');
+        
+        console.log("[markHg1]");
         // flag in redux to know when a hg has been completed. Using AsyncStorage
         this.props.setHg1CreateMatch(true);
     }

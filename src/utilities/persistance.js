@@ -10,8 +10,6 @@ async function retrieveData(key) {
   try {
     const value = await AsyncStorage.getItem('@QaplaRN:'+ key);
     if (value !== null) {
-      // Data retrieved
-      console.log("[retrieveData] : " + value);
       result = value;
     }
     else {
@@ -30,7 +28,6 @@ async function retrieveData(key) {
 async function storeData(key, value) {	
   try {
     await AsyncStorage.setItem('@QaplaRN:'+ key, value);
-    console.log();
   } catch (error) {
     // Error saving data
   }
@@ -41,7 +38,6 @@ async function storeData(key, value) {
 async function removeDataItem(key) {  
   try {
     await AsyncStorage.removeItem('@QaplaRN:'+ key);
-    console.log();
   } catch (error) {
     // Error saving data
   }

@@ -15,7 +15,7 @@ export default styles = StyleSheet.create({
         height: '100%',
 	},
 	container: {
-        width: getDimensions().width*.8,
+        width: getDimensions().width * .8,
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#141833',

@@ -73,8 +73,8 @@ class MatchNotificationCard extends Component {
                 matchData['gamerTag'] = await getGamerTagWithUID(this.props.notification.idUserSend, matchData.game, matchData.platform);
                 matchData['isChallenge'] = true;
                 matchData['acceptChallenge'] = this.tryToAcceptChallengeRequest;
-                this.props.navigation.navigate('MatchCard',
-                    {
+
+                this.props.navigation.navigate('MatchCard', {
                         matchCard: matchData,
                         notification: this.props.notification,
                         notificationKey: this.props.notificationKey

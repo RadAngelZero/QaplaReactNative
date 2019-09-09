@@ -9,18 +9,25 @@ import { NOTIFICATION_TYPE_WINNER, NOTIFICATION_TYPE_LOSER, NOTIFICATION_TYPE_RE
 
 export class ActivityNotificationCard extends Component {
     determineNotificationText = () => {
+        let notificationText = '';
         switch (this.props.type) {
             case NOTIFICATION_TYPE_WINNER:
-                return 'Has sido declarado ganador de la reta';
+                notificationText = 'Has sido declarado ganador de la reta';
+                break;
             case NOTIFICATION_TYPE_LOSER:
-                return `${this.props.userName} ha sido declarado ganador de la reta.`;
+                notificationText = `${this.props.userName} ha sido declarado ganador de la reta.`;
+                break;
             case NOTIFICATION_TYPE_RESULT:
-                return `¡${this.props.userName} ha subido su resultado, tienes 15 minutos para subir el tuyo!`;
+                notificationText = `¡${this.props.userName} ha subido su resultado, tienes 15 minutos para subir el tuyo!`;
+                break;
             case NOTIFICATION_TYPE_REVISION:
-                return 'Tu partida entro en disputa y esta siendo revisada. En cuanto este lista se te notificara.';
+                notificationText = 'Tu partida entro en disputa y esta siendo revisada. En cuanto este lista se te notificara.';
+                break;
             default:
-                return '';
+                break;
         }
+
+        return notificationText;
     }
 
     render() {

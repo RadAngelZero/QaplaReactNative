@@ -122,9 +122,15 @@ class PublicMatchCardScreen extends Component {
         // will be deleted, will be shown or not.
         const dontShowAcceptChallengeModal = false;// await retrieveData('dont-show-delete-notifications-modal');
 
+        let enoughQaploins = false;
+        
         // Check if the challenger user have enough Qaploins (match bet) in his account so that it can
-        // play against the challenged user. 
-        const enoughQaploins = await userHasQaploinsToPlayMatch(notification.idUserSend, notification.idMatch); 
+        // play against the challenged user.
+        try {
+            enoughQaploins = await userHasQaploinsToPlayMatch(notification.idUserSend, notification.idMatch); 
+        } catch (error) {
+            console.error(error);
+        }
         
         if (enoughQaploins !== null && !enoughQaploins) {
             this.setState({ openNoQaploinsModal: true });

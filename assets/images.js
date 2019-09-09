@@ -1,4 +1,5 @@
-// diego	  - 13-08-2019 - us77 - Added clutch tutorial images
+// diego	  	  - 03-09-2019 - us92 - Added onboarding images
+// diego	  	  - 13-08-2019 - us77 - Added clutch tutorial images
 // diego          - 17-07-2019 - NA   - removed duplicate smash bros image
 
 // Icons
@@ -79,6 +80,21 @@ const images = {
 		shareClutchLink: {
 			img: require('./images/ShareClutchLink.jpg'),
 			uri: '@assets/images/ShareClutchLink.jpg'
+		},
+		connectOnBoarding: {
+			img: require('./images/connect-onboarding.png')
+		},
+		compiteOnBoarding: {
+			img: require('./images/compite-onboarding.png')
+		},
+		shareOnBoarding: {
+			img: require('./images/comparte-onboarding.png')
+		},
+		walletOnBoarding: {
+			img: require('./images/wallet-onboarding.png')
+		},
+		divider: {
+			img: require('./images/divider-onboarding.png')
 		},
 		peekaImg: {
 			img: require('./images/PEKKA.png'),

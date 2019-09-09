@@ -1,9 +1,12 @@
+// diego	  	     - 03-09-2019 - us92 - Update Welcome screen according to inVision design
 // josep.sanahuja    - 05-08-2019 - us84 - Changed style from SafeAreaView
 
 import React from 'react';
 
 import {
-  View, Text, SafeAreaView, Image, Switch, Button
+  View,
+  Text,
+  SafeAreaView
 } from 'react-native'
 
 import styles from './style'
@@ -11,97 +14,67 @@ import styles from './style'
 import CarouselPng from '../../components/CarouselPng/CarouselPng'
 import Images from '@assets/images'
 
-import {storeData} from '@utilities/persistance'
-import Observable     from '@utilities/Observable'
-
 export default class WelcomeOnboardingScreen extends React.Component {
-  static navigationOptions = {
-        header: null
-  }
-
-  constructor(props) {
+	constructor(props) {
     // Required step: always call the parent class' constructor
     super(props);
-
-    // Set the state directly. Use props if necessary.
     this.state = {
-      carouselPageCount: 0,
-      switch1Value: false
+      selectedIndex: 0
     }
-
-    this.obs = new Observable();
-    this.obs.subscribe(this.updatePageIndex.bind(this));
   }
 
-  
+	goToScreenPublicas = () => {
+		this.props.navigation.navigate('Publicas', { firstMatchCreated: true });
+	}
+
+	setCurrentIndex = (index) => {
+		this.setState({ selectedIndex: index });
+	}
 
   render() {
 
-    // TODO: Test image array
-    const img = [
-      Images.png.welcome1Img.img,
-      Images.png.welcome2Img.img,
-      Images.png.welcome3Img.img,
-      Images.png.welcome4Img.img
+    const carrouselData = [
+      	{
+			Image: Images.png.connectOnBoarding.img,
+			description: 'Conecta con otros gamers de tu nivel en competencias individuales o multijugador.',
+			title: 'Conecta'
+		},
+      	{
+			Image: Images.png.compiteOnBoarding.img,
+			description: 'Compite como todo un pro, monetiza tus scrims y participa en eventos por bolsas de premios.',
+			title: 'Compite'
+		},
+      	{
+			Image: Images.png.shareOnBoarding.img,
+			description: 'Comparte los clips de tus partidas, toda la comunidad podrá ver la evidencia de tus victorias.',
+			title: 'Comparte'
+		},
+      	{
+			Image: Images.png.walletOnBoarding.img,
+			description:'Retira tu Saldo Qapla o úsalo para comprar productos de Amazon Prime, ¡Los enviamos gratis a tu casa!',
+			title: 'Convierte'
+		}
     ];
 
     return (
        <SafeAreaView style={styles.sfvContainer} testID='welcomeonboarding-1'>
-	       <View style={styles.carousel} testID='welcomeonboarding-2'>
-            <CarouselPng images={img} emmiter={this.obs} />
-            
-              <Text style={styles.text}>{this.state.carouselPageCount + 1} / {img.length}</Text>
-              {
-                  (this.state.carouselPageCount + 1) >= img.length
-                  ?
-                  (
-                    <View style={styles.switchContainer}>
-                      <Text style={styles.hideTutorial}>No volver a mostrar Tutorial:</Text>
-                      <Switch
-                        style = {styles.switch}
-                        value = {true}
-                        trackColor={{true: '#36E5CE', false: 'grey'}}
-                        onValueChange = {this.toggleSwitch1.bind(this)}
-                        value = {this.state.switch1Value}
-                      /> 
-                    </View>
-                    
-                  )
-                  :
-                  null
-              }
-             
-              <Button
-                  title="Empieza a Retar"
-                  disabled={(this.state.carouselPageCount + 1 != img.length) ? true : false}
-                  color="#36E5CE"
-                  accessibilityLabel="Learn more about this purple button"
-                  onPress={this.goToScreen.bind(this, "Publicas")}
-              />
-            
-		    </View>
+			<CarouselPng carrouselData={carrouselData} setCurrentIndex={this.setCurrentIndex} />
+			<View style={styles.progressContainer}>
+				<View style={styles.progressRow}></View>
+				<View style={[styles.progressRow, styles.indicatorsContainer]}>
+					{carrouselData.map((slide, index) => (
+						<View style={[styles.progressCircleIndicator, { backgroundColor: this.state.selectedIndex === index ? '#3DF9DF' : '#090D29' }]} />
+					))}
+				</View>
+				<View style={styles.progressRow}>
+					<Text onPress={this.goToScreenPublicas} style={styles.finishTextButton}>
+						{this.state.selectedIndex === carrouselData.length - 1 &&
+							'TERMINAR'
+						}
+					</Text>
+				</View>
+			</View>
 	    </SafeAreaView>
     );
-  }
-
-  updatePageIndex(data) {
-    console.log("Hello World: " + JSON.stringify(data));
-    if (this.state != data.pageIndex) {
-      this.setState({
-        carouselPageCount: data.pageIndex
-      });
-    } 
-  }
-
-  toggleSwitch1(value) {
-      this.setState({switch1Value: value})
-      console.log('Switch 1 is: ' + value)
-  }
-
-  goToScreen(screenName) {
-    const {navigate} = this.props.navigation;
-
-    storeData('tutorial-done', this.state.switch1Value.toString());
-    navigate(screenName, { firstMatchCreated: true });
   }
 }

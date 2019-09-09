@@ -1,4 +1,5 @@
 // diego             - 05-09-2019 - us104 - Send pickResult's as prop for allow just one upload of result by user in a match
+// diego             - 05-09-2019 - us101 - Send hour result for set timer on detail match screen
 // diego             - 19-08-2019 - us89 - Send new prop (currentUserAdversary) to items on the matches list to determine what adversary
 //                                         the user is (adversary1 or adversary2) necessary to upload results
 // diego             - 09-08-2019 - bug4 - Remove child_changed listener
@@ -68,7 +69,8 @@ export class MyMatchesScreen extends Component {
                                 platform,
                                 timeStamp,
                                 winBet,
-                                pickResult1
+                                pickResult1,
+                                hourResult
                             } = hostedMatches.val();
 
                             let userName = '';
@@ -79,7 +81,7 @@ export class MyMatchesScreen extends Component {
                             } catch (error) {
                                 console.error(error);
                             }
-
+                          
                             //Object with the necesary fields to load the match in the app (the card and the detailed view)
                             const matchObject = {
                                 adversaryUid: adversary2,
@@ -101,6 +103,7 @@ export class MyMatchesScreen extends Component {
                                 timeStamp,
                                 winBet,
                                 pickResult1,
+                                hourResult,
                                 userName,
                                 gamerTag
                             };
@@ -130,7 +133,8 @@ export class MyMatchesScreen extends Component {
                             platform,
                             timeStamp,
                             winBet,
-                            pickResult2
+                            pickResult2,
+                            hourResult
                         } = challengedMatches.val();
 
                         let userName = '';
@@ -141,7 +145,7 @@ export class MyMatchesScreen extends Component {
                         } catch (error) {
                             console.error(error);
                         }
-
+                      
                         //Object with the necesary fields to load the match in the app (the card and the detailed view)
                         const matchObject = {
                             adversaryUid: adversary1,
@@ -158,7 +162,7 @@ export class MyMatchesScreen extends Component {
                             timeStamp,
                             winBet,
                             pickResult2,
-                            //Get the userName from a external function because the match object only have the UID
+                            hourResult,
                             userName,
                             gamerTag
                         };

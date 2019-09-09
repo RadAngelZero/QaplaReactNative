@@ -70,6 +70,16 @@ export class MyMatchesScreen extends Component {
                                 winBet,
                                 pickResult1
                             } = hostedMatches.val();
+
+                            let userName = '';
+                            let gamerTag = '';
+                            try {
+                                userName = await getUserNameWithUID(hostedMatches.val().adversary2);
+                                gamerTag = await getGamerTagWithUID(hostedMatches.val().adversary2, hostedMatches.val().game, hostedMatches.val().platform);
+                            } catch (error) {
+                                console.error(error);
+                            }
+
                             //Object with the necesary fields to load the match in the app (the card and the detailed view)
                             const matchObject = {
                                 adversaryUid: adversary2,
@@ -91,9 +101,8 @@ export class MyMatchesScreen extends Component {
                                 timeStamp,
                                 winBet,
                                 pickResult1,
-                                //Get the userName from a external function because the match object only have the UID
-                                userName: await getUserNameWithUID(hostedMatches.val().adversary2),
-                                gamerTag: await getGamerTagWithUID(hostedMatches.val().adversary2, hostedMatches.val().game, hostedMatches.val().platform)
+                                userName,
+                                gamerTag
                             };
                             this.setState((state) => {
                                 //Add the matchObject to the matches array of the state
@@ -123,6 +132,16 @@ export class MyMatchesScreen extends Component {
                             winBet,
                             pickResult2
                         } = challengedMatches.val();
+
+                        let userName = '';
+                        let gamerTag = '';
+                        try {
+                            userName = await getUserNameWithUID(challengedMatches.val().adversary1);
+                            gamerTag = await getGamerTagWithUID(challengedMatches.val().adversary1, challengedMatches.val().game, challengedMatches.val().platform);
+                        } catch (error) {
+                            console.error(error);
+                        }
+
                         //Object with the necesary fields to load the match in the app (the card and the detailed view)
                         const matchObject = {
                             adversaryUid: adversary1,
@@ -140,8 +159,8 @@ export class MyMatchesScreen extends Component {
                             winBet,
                             pickResult2,
                             //Get the userName from a external function because the match object only have the UID
-                            userName: await getUserNameWithUID(challengedMatches.val().adversary1),
-                            gamerTag: await getGamerTagWithUID(challengedMatches.val().adversary1, challengedMatches.val().game, challengedMatches.val().platform)
+                            userName,
+                            gamerTag
                         };
                         this.setState((state) => {
                             //Add the matchObject to the matches array of the state

@@ -1,5 +1,8 @@
 // diego -          01-08-2019 - us58 - Update user constants for the new way to load their data
 
+// Segment key
+export const SEGMENT_KEY = 'Jngk5nWegue5IJe5XPV86T46qrA1nRCQ';
+
 // User constants
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 export const REMOVE_USER_DATA = 'REMOVE_USER_DATA';

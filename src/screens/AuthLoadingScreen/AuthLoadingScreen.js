@@ -14,9 +14,12 @@ import { initializeSegment } from '../../services/statistics';
 
 class AuthLoadingScreen extends Component {
     componentDidMount() {
+
+        // Initialize the segment SDK to collect user statistics
+        initializeSegment();
+
         auth.onAuthStateChanged(async (user) => {
             this.props.loadListOfGames();
-            initializeSegment();
             if (user) {
                 this.props.loadUserData(user.uid);
                 

@@ -1,4 +1,4 @@
-// diego                - 02-09-2019 - us91 - Added set user Id on segment on different signins
+// diego                - 02-09-2019 - us91 - Added setUserIdOnSegment on different signins
 // diego                - 24-07-2019 - us31 - removed unnecessary code from
 //                                          getIdTokenFromUser function
 import { auth, FBProvider, GoogleProvider } from './../utilities/firebase';

@@ -1,4 +1,4 @@
-// diego	  	  - 03-09-2019 - us96 - Added close icon
+// diego	  	  - 03-09-2019 - us96 - Added close (x) icon (used on close of navigators over the main navigator)
 // diego	  	  - 13-08-2019 - us77 - Added clutch tutorial images
 // diego          - 17-07-2019 - NA   - removed duplicate smash bros image
 

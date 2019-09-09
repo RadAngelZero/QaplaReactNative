@@ -1,4 +1,4 @@
-// diego          - 03-09-2019 - us96 - Removed close icon (now this screen have custom header)
+// diego          - 03-09-2019 - us96 - Removed X text icon (now this screen have custom header)
 // josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
 // josep.sanahuja - 01-08-2019 - us57 - + Modal for 10 minutes msg when creating a match
 // diego          - 24-07-2019 - us31 - Updated createMatch and decreaseBet to accept

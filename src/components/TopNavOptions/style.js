@@ -1,4 +1,4 @@
-// diego           - 03-09-2019 - us96 - Fil creation
+// diego           - 03-09-2019 - us96 - File creation
 
 import { StyleSheet, Platform } from 'react-native';
 import { hasSafeAreaView } from '../../utilities/iosAndroidDim';

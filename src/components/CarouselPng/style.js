@@ -1,3 +1,5 @@
+// diego	  	  - 03-09-2019 - us92 - Update carousel styles according to inVision design
+
 import {StyleSheet} from 'react-native'
 import {getDimensions} from '@utilities/iosAndroidDim'
 
@@ -19,15 +21,32 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start'
   },
+  imageContainer: {
+    height: getDimensions().height * .35,
+  },
   image: {
-     width: getDimensions().width,
-     height:  getDimensions().height * 0.75,
+    marginTop: '30%',
      justifyContent: 'flex-start'
   },
-  text: {
-    marginTop: '2%',
-    color: '#36E5CE',
+  title: {
+    marginTop: '25%',
+    fontSize: 24,
+    color: '#FFF',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  divider: {
+    marginTop: '4%'
+  },
+  description: {
+    marginTop: '10%',
+    fontSize: 18,
+    fontWeight: '500',
+    lineHeight: 21,
+    color: '#FFF',
+    textAlign: 'center',
     marginBottom: '5%',
+    maxWidth: getDimensions().width - 64
   },
   switch: {
     marginBottom: '5%'

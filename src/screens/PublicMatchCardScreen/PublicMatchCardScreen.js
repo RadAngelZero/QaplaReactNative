@@ -1,3 +1,6 @@
+// diego          - 05-09-2019 - us101 - Added timer to show user time before match from matches play expire
+//                                       Added timer to show user time for upload result once the adversary was uploaded their result
+// diego          - 05-09-2019 - us100 - Added timer to show user time before public match expire
 // diego          - 03-09-2019 - us96 - Added custom header (TopNavOptions)
 // diego          - 19-08-2019 - us89 - Updated references to received params from navigation
 // diego          - 14-08-2019 - us77 - Added navigation to upload results on 'Subir Resultado' button
@@ -41,12 +44,87 @@ class PublicMatchCardScreen extends Component {
         super(props);
     
         this.state = {
-            openChalExModal: false
+            openChalExModal: false,
+            validTimeLeft: 0
         };
     }
 
     componentDidMount() {
         this.props.navigation.setParams({ onCloseGoTo: this.props.navigation.getParam('onCloseGoTo', 'Home') });
+        this.list = [
+
+            /**
+             * This event is triggered when the user goes to other screen
+             */
+            this.props.navigation.addListener(
+                'willBlur',
+                (payload) => {
+                    clearInterval(this.timer);
+                }
+            ),
+
+            /**
+             * This event is triggered when the user enter to the screen
+             */
+            this.props.navigation.addListener(
+                'willFocus',
+                (payload) => {
+                    const { date, hourResult, timeStamp, matchesPlay } = this.props.navigation.getParam('matchCard');
+
+                    this.timer = setInterval(() => {
+                        let now = new Date().getTime();
+                        let leftTime = 0;
+                        let validTimeLeft = 0;
+
+                        // If some result was uploaded
+                        if (hourResult) {
+                            leftTime = (this.convertHourToTimeStamp(date, hourResult) + this.convertMinutesToMiliSeconds(15)) - now;
+                        } else if (matchesPlay) {
+                            leftTime = (timeStamp + this.convertMinutesToMiliSeconds(60)) - now;
+                        }
+                         else {
+                            leftTime = (timeStamp + this.convertMinutesToMiliSeconds(15)) - now;
+                        }
+
+                        // Calculate minutes and seconds befor match expire
+                        let minutes = Math.floor((leftTime % (1000 * 60 * 60)) / (1000 * 60));
+                        let seconds = Math.floor((leftTime % (1000 * 60)) / 1000);
+
+                        /**
+                         * If the minute or second value is less than 10 (like 9 or 8)
+                         * then we add a 0 before the numeric value (so the value look like: 09 or 08)
+                         */ 
+                        minutes = minutes < 10 ? `0${minutes}` : minutes;
+                        seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+                        // Legible user string
+                        validTimeLeft = `${minutes}:${seconds}`;
+
+                        this.setState({ validTimeLeft });
+                    }, 1000);
+                }
+            )
+        ];
+    }
+
+    /**
+     * Convert the quantity of minutes to miliseconds (util for timestamp operations)
+     * @param {number} minutes The number of minutes to convert
+     */
+    convertMinutesToMiliSeconds(minutes) {
+        return minutes * 60000;
+    }
+
+    /**
+    * Convert a given date and hour in a UTC date and return their timestamp
+    * @param {string} date Day and month in format DD/MM
+    * @param {string} hour hour and minute in format HH/mm
+    */
+    convertHourToTimeStamp(date, hour) {
+        const [day, month] = date.split('/').map(p => parseInt(p, 10));
+        const [h, min] = hour.split(':').map(p => parseInt(p, 10));
+        
+        return new Date(Date.UTC((new Date).getUTCFullYear(), month - 1, day, h, min, 0, 0)).getTime();
     }
 
     /**
@@ -159,10 +237,16 @@ class PublicMatchCardScreen extends Component {
                     <View style={styles.row}>
                         <View style={styles.infoContainer}>
                             <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>Fecha y Hora</Text>
+                            <Text style={styles.elemR1}>
+                                {matchCard.matchesPlay ?
+                                    'Sube tu resultado en:'
+                                    :
+                                    'Expira en:'
+                                }
+                            </Text>
                         </View>
                         <View style={styles.infoContainer}>
-                            <Text style={styles.rightTextStyle}>{matchCard.hour}hrs</Text>
+                            <Text style={styles.rightTextStyle}>{this.state.validTimeLeft}</Text>
                         </View>
                     </View>
 

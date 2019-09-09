@@ -151,6 +151,8 @@ class PublicMatchCardScreen extends Component {
             {
                 // Challenge the user to play the match
                 challengeUser(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
+
+                this.props.navigation.navigate('Publicas');
             }
             else {
                 // Show Modal

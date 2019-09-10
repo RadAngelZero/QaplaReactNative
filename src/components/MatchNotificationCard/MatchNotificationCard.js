@@ -108,7 +108,7 @@ class MatchNotificationCard extends Component {
     tryToAcceptChallengeRequest = async () => {
         // Flag that indicates the modal notifying the user that other notifications
         // will be deleted, will be shown or not.
-        const dontShowAcceptChallengeModal = await retrieveData('dont-show-delete-notifications-modal');
+        const dontShowAcceptChallengeModal = false; // await retrieveData('dont-show-delete-notifications-modal');
 
         // Check if the challenger user have enough Qaploins (match bet) in his account so that it can
         // play against the challenged user. 

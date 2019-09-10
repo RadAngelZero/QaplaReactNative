@@ -278,7 +278,7 @@ class PublicMatchCardScreen extends Component {
                     onClose={ this.toggleOpenChalExModal }
                     header={ 'Lo sentimos' }
                     body={ 'Ya enviaste un desafio al jugador para esta Partida' }
-                    textButton={ 'Ok' } />
+                    textButton={ 'Entendido' } />
             </SafeAreaView>
         );
     }

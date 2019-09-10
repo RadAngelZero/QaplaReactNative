@@ -9,16 +9,18 @@ export default styles = StyleSheet.create({
     buttonContainer: {
         borderRadius: 100,
         backgroundColor: '#FA2D79',
-        paddingVertical: 12,
-        paddingHorizontal: 45,
-        paddingRight: 40,
-        paddingLeft: 40
+        elevation: 10
     },
     textStyle: {
         color: '#FFF',
         alignSelf: 'center',
         textTransform: 'uppercase',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 32,
+        marginRight: 32,
+        letterSpacing: .57
     },
     highlightedExterior: {
         paddingVertical: 12,

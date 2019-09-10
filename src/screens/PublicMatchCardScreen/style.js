@@ -92,11 +92,13 @@ export default StyleSheet.create({
         marginLeft: 80
     },
     bottomButtonText: {
-        paddingVertical: 14,
-        paddingHorizontal: 20,
+        color: '#FFF',
         fontSize: 16,
         textAlign: 'center',
         fontWeight: 'bold',
-        color: '#FFF'
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 32,
+        marginRight: 32
     }
 });

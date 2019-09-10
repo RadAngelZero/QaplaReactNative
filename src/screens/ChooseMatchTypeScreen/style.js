@@ -42,10 +42,13 @@ export default styles = StyleSheet.create({
     publicMatchButtonText: {
         color: '#FFF',
         fontSize: 14,
+        fontWeight: 'bold',
         letterSpacing: .5,
-        paddingVertical: 14,
-        paddingHorizontal: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 32,
+        marginRight: 32
     },
     directMatchButton: {
         flexDirection: 'row',
@@ -61,15 +64,18 @@ export default styles = StyleSheet.create({
         marginLeft: 80
     },
     directMatchButtonSearchIcon: {
-        paddingVertical: 14,
-        marginLeft: 15
+        alignSelf: 'center',
+        marginLeft: 24
     },
     directMatchButtonText: {
-        color: 'rgba(0, 0, 0, .8)',
+        color: '#FFF',
         fontSize: 14,
+        fontWeight: 'bold',
         letterSpacing: .5,
-        paddingVertical: 14,
-        paddingHorizontal: 20,
-        alignContent: 'center'
+        textAlign: 'center',
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 8,
+        marginRight: 32
     }
 });

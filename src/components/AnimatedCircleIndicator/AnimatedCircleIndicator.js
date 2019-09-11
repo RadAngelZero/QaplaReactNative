@@ -1,3 +1,4 @@
+// diego           - 11-09-2019 - us107 - updated default size and width of AnimatedCircularProgress
 // diego           - 20-08-2019 - us89 - File creation
 
 import React, { Component } from 'react';
@@ -38,8 +39,8 @@ export class AnimatedCircleIndicator extends Component {
 }
 
 AnimatedCircleIndicator.defaultProps = {
-    size: 60,
-    width: 6,
+    size: 50,
+    width: 4,
     tintColor: '#6D7DDE',
     duration: 300,
     backgroundColor: '#1A1D34',

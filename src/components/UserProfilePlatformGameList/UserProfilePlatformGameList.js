@@ -93,19 +93,19 @@ export class UserProfilePlatformGameList extends Component {
 const gamesResources = {
     Fifa17: {
         Icon: Images.svg.fifaIcon,
-        name: 'FIFA 19'
+        name: 'FIFA'
     },
     ClashRoyale: {
         Icon: Images.svg.clashIcon,
-        name: 'Clash Royale'
+        name: 'Clash'
     },
     GearsofWar: {
         Icon: Images.svg.gowIcon,
-        name: 'Gears of War 4'
+        name: 'GOW'
     },
     Halo: {
         Icon: Images.svg.haloIcon,
-        name: 'Halo 5'
+        name: 'Halo'
     },
     Hearthstone: {
         Icon: Images.svg.heartstoneIcon,
@@ -117,7 +117,7 @@ const gamesResources = {
     },
     LOL: {
         Icon: Images.svg.lolIcon,
-        name: 'League of legends'
+        name: 'LOL'
     },
     Smashbrothers: {
         Icon: Images.svg.smashIcon,

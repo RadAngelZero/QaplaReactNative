@@ -61,7 +61,6 @@ class HighlightModal extends Component {
       // cb1 executes before cb2, and in case cb1 is not defined and cb2 is, then cb2 is excecuted
       // even though cb1 is undefined.
       if (this.props.cb1 !== undefined && this.props.cb1 !== null){
-        console.log('MUUUUUUUUU');
         await this.props.cb1();  
       }
 
@@ -111,11 +110,6 @@ class HighlightModal extends Component {
 
           // pageX, pageY, width, height are absolute values within the display
           this.childWrapper.current.measureInWindow((pageX, pageY, width, height) => {
-            console.log('* Component width is: ' + width)
-            console.log('* Component height is: ' + height)
-            console.log('* X offset to page: ' + pageX)
-            console.log('*Y offset to page: ' + pageY)
-
             // Initially elemPosX and elemPosY have 0 value, therefore we prevent and update of
             // the state, to prevent a re-render. However, at this point this might have 0 consecuences
             // as a result of the timeoutStarted timeoutEnded flags. Leaving it though.
@@ -178,41 +172,39 @@ class HighlightModal extends Component {
         }
 
         return (
-          <View>
-            {!children ? null : (
-                <View ref={this.childWrapper} onLayout={this.measureChildComponent}>
-                  <ChildComponentWithRef/>
-                </View>
-            )}
-            
-            <Modal
-              animationType="none"
-              transparent={true}
-              visible={(visible && this.state.timeoutEnded)}
-              onRequestClose={this.action}>
+            <View>
+                {!children ? null : (
+                    <View ref={this.childWrapper} onLayout={this.measureChildComponent}>
+                      <ChildComponentWithRef/>
+                    </View>
+                )}
 
-              <View style={getHighlightContainerStyle(this.quad)}>
-                <View style={getAbsComponentPosOffsetsStyle(measures, this.quad)}>
-                  <ChildComponentWithRef style={this.props.children.props.style}/>
-                </View>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={(visible && this.state.timeoutEnded)}
+                    onRequestClose={this.action}>
 
-                {/* This is the info content from the Component */}
-                <View style={getAbsTextInfoPosOffsetsStyle(this.subQuad)}>
-                  <Text style={{color:'white', fontSize:30, marginLeft:40, marginRight: 40}}>{this.props.header}</Text>
-                  <Text style={{color:'white', fontSize:14, marginLeft:40, marginRight: 40}}>{this.props.body}</Text>
-                  <View style={{flexDirection:'row', justifyContent: 'flex-end', marginTop: 10, marginRight: 40}}>
-                    <TouchableWithoutFeedback onPress={this.action}>
-                        <View>
-                            <Text style={{color:'#6D7DDE', fontSize:24, right: 0}}>Entendido :) </Text>
+                    <View style={getHighlightContainerStyle(this.quad)}>
+                        <View style={getAbsComponentPosOffsetsStyle(measures, this.quad)}>
+                          <ChildComponentWithRef style={this.props.children.props.style}/>
                         </View>
-                    </TouchableWithoutFeedback>
 
-                  </View>
-                </View>
-                
-              </View>
-            </Modal>
-          </View>
+                        {/* This is the info content from the Component */}
+                        <View style={getAbsTextInfoPosOffsetsStyle(this.subQuad)}>
+                          <Text style={styles.infoHeader}>{this.props.header}</Text>
+                          <Text style={styles.infoBody}>{this.props.body}</Text>
+                          <View style={styles.infoContainer}>
+                            <TouchableWithoutFeedback onPress={this.action}>
+                                <View>
+                                    <Text style={styles.okButton}>Entendido :) </Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                          </View>
+                        </View>
+                    </View>
+                </Modal>
+            </View>
         );
     }
 }
@@ -236,9 +228,6 @@ function getHighlightContainerStyle(quad) {
     else if (quad === BOTTOM_QUADRANT){
         res = styles.highlightBottomContainer;
     }
-    else {
-        //console.log('[Highlight] {getHighlightContainerStyle} - Should not be here!');
-    }
 
     return res;
 }
@@ -260,14 +249,16 @@ function getAbsComponentPosOffsetsStyle(measures, quad) {
     const displayMid = displayHeight / 2;
     
     if (quad === TOP_QUADRANT){
-        res = {top: measures.elemPosY, left: measures.elemPosX};
+        res = {
+            top: measures.elemPosY,
+            left: measures.elemPosX
+        };
     }
     else if (quad === BOTTOM_QUADRANT){
-        // description
-        res = {top: measures.elemPosY - displayMid, left: measures.elemPosX};
-    }
-    else {
-        //console.log('[Highlight] {getAbsComponentPosOffsetsStyle} - Should not be here!');
+        res = {
+            top: measures.elemPosY - displayMid,
+            left: measures.elemPosX
+        };
     }
     
     return res;
@@ -290,20 +281,29 @@ function getAbsTextInfoPosOffsetsStyle(subQuad) {
     const displayMid = displayHeight / 2;
 
     if (subQuad === TOP_QUADRANT_TOP){
-        res = {position: 'absolute', top: displayMid - 190};
+        res = {
+            position: 'absolute',
+            top: displayMid - 190
+        };
     }
     else if (subQuad === TOP_QUADRANT_BOTTOM){
-        res = {position: 'absolute', top: 50};
+        res = {
+            position: 'absolute',
+            top: 50
+        };
     }
     else if (subQuad === BOTTOM_QUADRANT_TOP){
-        res = {position: 'absolute', bottom: 50};
+        res = {
+            position: 'absolute',
+            bottom: 50
+        };
     }
     else if (subQuad === BOTTOM_QUADRANT_BOTTOM){
         // description
-        res = {position: 'absolute', bottom: 240};
-    }
-    else {
-        //console.log('[Highlight] {getAbsTextInfoPosOffsetsStyle} - Should not be here!');
+        res = {
+            position: 'absolute',
+            bottom: 240
+        };
     }
     
     return res;
@@ -343,28 +343,29 @@ function computeSubQuadrant(measures) {
 
     if (quad === TOP_QUADRANT) {
       
-        // TOT-TOP ?
+        // TOT-TOP
         if (measures.elemPosY + measures.elemHeight < displayQuad){
             res = TOP_QUADRANT_TOP;
         }
+
+        // TOT-BOTTOM
         else if (
             measures.elemPosY + measures.elemHeight > displayQuad &&
             measures.elemPosY + measures.elemHeight <= displayMid)
         {
             res = TOP_QUADRANT_BOTTOM;
         }
-        else{
-            //console.log('[Highlight] {computeSubQuadrant} {TOP_QUADRANT} - Should not be here!');
-        }
     }
     else if (quad === BOTTOM_QUADRANT){
       
-        // TOT-TOP ?
+        // BOTTOM-TOP
         if (measures.elemPosY + measures.elemHeight > displayMid &&
             measures.elemPosY + measures.elemHeight <= (displayMid + displayQuad))
         {
             res = BOTTOM_QUADRANT_TOP;
         }
+
+        // BOTTOM-BOTTOM
         else if(
             measures.elemPosY + measures.elemHeight > displayMid &&
             measures.elemPosY + measures.elemHeight > (displayMid + displayQuad) &&
@@ -372,12 +373,6 @@ function computeSubQuadrant(measures) {
         {
             res = BOTTOM_QUADRANT_BOTTOM;
         }
-        else{
-            //console.log('[Highlight] {computeSubQuadrant} {BOTTOM_QUADRANT} - Should not be here!');
-        }
-    }
-    else {
-        //console.log('[Highlight] {computeSubQuadrant} - Should not be here!');
     }
 
     return res;

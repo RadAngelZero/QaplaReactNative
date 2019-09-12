@@ -1,3 +1,4 @@
+// josep.sanahuja    - 26-08-2019 - us90 - Add didFinishInitialAnimation
 // diego             - 15-08-2019 - us80 - Order of notifications reversed to show it in the right order
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 // diego             - 01-08-2019 - us58 - File creation
@@ -37,12 +38,6 @@ class RetasNotificationsScreen extends Component {
          });
        });
     }
-
-    // componentWillMount(){
-    //     setTimeout(() => {
-    //         this.setState({didFinishInitialAnimation: true});
-    //     }, 10000);
-    // }
 
     render() {
         return (

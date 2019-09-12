@@ -1,4 +1,5 @@
-// diego -          01-08-2019 - us58 - Navigation implemented to notificationRouter
+// josep.sanahuja    - 26-08-2019 - us90 - Added notification highlight
+// diego             - 01-08-2019 - us58 - Navigation implemented to notificationRouter
 // josep.sanahuja    - 30-07-2019 - us59 - + navigate('Mock2')
 
 import React, { Component } from 'react';
@@ -29,30 +30,15 @@ class HeaderBar extends Component {
     }
 
     componentDidMount() {
-        //storeData(HIGHLIGHT_2_NOTIFICATIONS, 'true');
         this.checkHighlightsFlags();
     }
 
     shouldComponentUpdate(nextProp, nextState) {
-        //console.log("muuuuuuuu " + JSON.stringify(nextProp, null, 2));
-        // check the hg1 modal flag
 
-        console.log("[HeaderBar] {shouldComponentUpdate} - nextProp.hg1CreateMatch: " + 
-            nextProp.hg1CreateMatch +
-            " this.props.hg1CreateMatch: " + this.props.hg1CreateMatch);
-
-        console.log("[HeaderBar] {shouldComponentUpdate} - type nextProp.hg1CreateMatch: " + 
-            typeof(nextProp.hg1CreateMatch) +
-            " type this.props.hg1CreateMatch: " + typeof(this.props.hg1CreateMatch));
-
+        // We check flags when there is a change of state in hg1CreateMatch, which 
+        // indicates that a match was created for the first time by a user.
         if (nextProp.hg1CreateMatch === true && this.props.hg1CreateMatch === false) {
             this.checkHighlightsFlags();
-        }
-        else if(nextProp.hg1CreateMatch === false) {
-          console.log("[shouldComponentUpdate Noti] : false");
-        }
-        else {
-          console.log("[shouldComponentUpdate Noti] : other");
         }
 
         return true;
@@ -66,18 +52,14 @@ class HeaderBar extends Component {
         
         // If showHg1Modal is enabled then
         if (this.state.showHg2Modal){
+
             // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
             // and it should not show up again.
             this.markHg2();
             
-            console.log('Miau 1: this.state.showHg2Modal' + this.state.showHg2Modal);
             // Hide HIGHLIGHT_1_CREATE_MATCH Modal
             this.toggleHg2Modal();
-
-            console.log('Miau 2: this.state.showHg2Modal' + this.state.showHg2Modal);
         }
-
-        console.log("Main Miau");
 
         this.props.navigation.navigate('Notifications');
     }
@@ -97,24 +79,19 @@ class HeaderBar extends Component {
             // Get the value for the highlight flag stored in AsynStorage.
             const value = await retrieveData(HIGHLIGHT_2_NOTIFICATIONS);
 
-            //const hgCreateReta = await retrieveData(HIGHLIGHT_1_CREATE_MATCH);
-            //const hgCreateReta = false;
-            //if (value !== null && !JSON.parse(this.hgCreateReta)) {
             if (value !== null && this.props.hg1CreateMatch === true) {
-                console.log('[checkHighlightsFlags Header]: value !== null, value: ' + value + " hg1CreateMatch: " + this.props.hg1CreateMatch);
+ 
                 // There is data stored for the flag, it can be either 'false' or 'true'.
                 this.setState({
                     showHg2Modal: JSON.parse(value)
                 });
             }
             else {
-                console.log('[checkHighlightsFlags Header]: value === null, value: ' + value + " hg1CreateMatch: " + this.props.hg1CreateMatch);
+                
                 // That means there is no value stored for the flag, therefore
                 // result should be 'true', meaning the highlight will activate.
-                //if (!JSON.parse(hgCreateReta)) {
                 if (this.props.hg1CreateMatch === true) {
-                    console.log('[checkHighlightsFlags Header]: value === null, setState: ' + " hg1CreateMatch: " + this.props.hg1CreateMatch );
-
+                    
                     this.setState({
                         showHg2Modal: true
                     });
@@ -134,7 +111,7 @@ class HeaderBar extends Component {
      *
      * TODO: Consider in a future and be aware of toggle instead of a setTrue or setFalse mecanism. 
      */
-    toggleHg2Modal = () => {
+    toggleHg2Modal = () => {  
         this.setState({
             showHg2Modal: !this.state.showHg2Modal
         })
@@ -143,10 +120,10 @@ class HeaderBar extends Component {
     /**
      * @description 
      * Mark the Highlight flag 'HIGHLIGHT_1_CREATE_MATCH' that indicates
-     * a highlight for rName of specific user only if that username is not already in use.
-     * Flag is stored in AsyncStorage
+     * a highlight for rName of specific user only if that username is not
+     * already in use. Flag is stored in AsyncStorage
      */
-    markHg2 = async () => {
+    markHg2 = () => {
         storeData(HIGHLIGHT_2_NOTIFICATIONS, 'false');
     }
 

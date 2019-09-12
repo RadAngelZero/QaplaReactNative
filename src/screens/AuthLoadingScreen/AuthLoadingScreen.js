@@ -1,3 +1,4 @@
+// josep.sanahuja    - 26-08-2019 - us90 - loadShowHg1Modal
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 
 import React, { Component } from 'react';
@@ -13,7 +14,7 @@ import { getHg1CreateMatch } from '../../actions/highlightsActions';
 
 class AuthLoadingScreen extends Component {
     componentDidMount() {
-        // blablabla
+        // Load highlight hg1 Modal
         this.props.loadShowHg1Modal();
 
         // blablabla

@@ -43,6 +43,12 @@ export default styles = StyleSheet.create({
         marginLeft: 20,
         paddingTop: '20%'
     },
+    infoContainer: {
+        flexDirection:'row',
+        justifyContent: 'flex-end',
+        marginTop: 10,
+        marginRight: 40
+    },
     firstView: {
         height: getDimensions().height*.5,
         width: getDimensions().width,
@@ -90,14 +96,22 @@ export default styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center'
     },
+    infoHeader: {
+        color:'white',
+        fontSize:30,
+        marginLeft:40,
+        marginRight: 40
+    },
+    infoBody: {
+        color:'white',
+        fontSize:14,
+        marginLeft:40,
+        marginRight: 40
+    },
     okButton: {
-        marginTop: 40,
-        paddingLeft: '20%',
-        paddingRight: '20%',
-        paddingTop: '3%',
-        paddingBottom: '3%',
-        borderRadius: 100,
-        backgroundColor: '#6D7DDE'
+        color:'#6D7DDE',
+        fontSize:24,
+        right: 0
     },
     m: {
        height: getDimensions().height,

@@ -1,4 +1,4 @@
-// josep.sanahuja - 26-08-2019 - usX. - Add Highlights constants
+// josep.sanahuja - 26-08-2019 - us90 - Add Highlights constants
 // diego 		  - 01-08-2019 - us58 - Update user constants for the new way to load their data
 
 // User constants

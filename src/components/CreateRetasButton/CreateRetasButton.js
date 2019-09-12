@@ -1,4 +1,4 @@
-// josep.sanahuja - 26-08-2019 - usXX - Removed surrouding Views highlights
+// josep.sanahuja - 26-08-2019 - us90 - Removed surrouding Views highlights
 
 import React, { Component } from 'react';
 import { TouchableWithoutFeedback, View, Text, NativeModules, LayoutAnimation, Animated } from 'react-native';

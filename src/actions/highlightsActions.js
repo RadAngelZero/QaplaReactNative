@@ -1,4 +1,4 @@
-// xxx josep maria
+// josep.sanahuja - 26-08-2019 - us90 - File creation
 
 import {
     GET_HIGHLIGHT_1_CREATE_MATCH,
@@ -11,7 +11,6 @@ import { storeData, retrieveData } from '../utilities/persistance';
 
 export const getHg1CreateMatch = () => async (dispatch) => {
     const flag = await retrieveData(HIGHLIGHT_1_CREATE_MATCH_FLAG);
-    console.log("[getHg1CreateMatch] flag: " + flag);
     dispatch(getHg1CreateMatchSuccess(JSON.parse(flag)));
 }
 
@@ -23,8 +22,7 @@ export const getHg1CreateMatchSuccess = (payload) => {
 }
 
 export const setHg1CreateMatch = (value) => async (dispatch) => {
-	console.log("[setHg1CreateMatch] value: " + value);
-	await storeData(HIGHLIGHT_1_CREATE_MATCH_FLAG, JSON.stringify(value));
+    await storeData(HIGHLIGHT_1_CREATE_MATCH_FLAG, JSON.stringify(value));
     dispatch(setHg1CreateMatchSuccess(value));
 }
 

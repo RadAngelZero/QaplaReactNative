@@ -1,4 +1,4 @@
-// josep.sanahuja - 26-08-2019 - usXX - Add Create Match Button Highlight
+// josep.sanahuja - 26-08-2019 - us90 - Add CreateRetasButton Highlight
 // diego          - 09-08-2019 - bug4 - update remove listener methods on willBlur and make unshift of the new data on array
 // josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
 // diego          - 05-08-2019 - us58 - Bug fixed: the matches array was not deleted when willBlur was called
@@ -128,10 +128,6 @@ class PublicMatchesFeedScreen extends Component {
     }
 
     componentDidMount() {
-        // storeData(HIGHLIGHT_1_CREATE_MATCH, 'true');
-        // storeData(HIGHLIGHT_1_CREATE_MATCH_FLAG, 'false');
-        // storeData(HIGHLIGHT_2_NOTIFICATIONS, 'true');
-        // this.props.setHg1CreateMatch(false);
         this.checkHighlightsFlags();  
     }
 
@@ -168,24 +164,23 @@ class PublicMatchesFeedScreen extends Component {
      * TODO Josep Maria 25-08-2019:
      * When adding more highlights in the same screen, think a way to synchronize
      * them via logic in the same screen or may be add that logic to the HighlightModal
-     * component which does not make sense right now.
+     * component which does not make sense right now. Synchronized CreateRetasButton
+     * with HeaderBar highlights, using Redux and Flags.
      */
     async checkHighlightsFlags() {
         try {
             // Get the value for the highlight flag stored in AsynStorage.
             const value = await retrieveData(HIGHLIGHT_1_CREATE_MATCH);
 
-            if (value !== null) {
-                console.log("[checkHighlightsFlags PM] !== null value: " + value);
-                
+            if (value !== null) 
+            {
                 // There is data stored for the flag, it can be either 'false' or 'true'.
                 this.setState({
                     showHg1Modal: JSON.parse(value)
                 });
             }
-            else {
-                console.log("[checkHighlightsFlags PM] === null");
-
+            else
+            {    
                 // That means there is no value stored for the flag, therefore
                 // result should be 'true', meaning the highlight will activate.
                 this.setState({
@@ -203,10 +198,10 @@ class PublicMatchesFeedScreen extends Component {
      * Toggles the flag 'showHg1Modal' in the component state. If value is 'true' then it becomes
      * 'false'. If it is 'false' then it becomes 'true'.
      *
-     * TODO: Consider in a future and be aware of toggle instead of a setTrue or setFalse mecanism. 
+     * TODO: Consider in a future to consider if the toggle mecanism is the ideal, instead,
+     * of using a setTrue or setFalse mecanism. 
      */
     toggleHg1Modal = () => {
-        console.log("[toggleHg1Modal PM]: " + this.state.showHg1Modal);
         this.setState({
             showHg1Modal: !this.state.showHg1Modal
         })
@@ -222,8 +217,7 @@ class PublicMatchesFeedScreen extends Component {
         // flag in asyncStorage for component purpose
         storeData(HIGHLIGHT_1_CREATE_MATCH, 'false');
         
-        console.log("[markHg1]");
-        // flag in redux to know when a hg has been completed. Using AsyncStorage
+        // Flag in redux to know when a hg has been completed. Using AsyncStorage
         this.props.setHg1CreateMatch(true);
     }
 

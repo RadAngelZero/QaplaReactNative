@@ -34,12 +34,6 @@ class ActivityNotificationsScreen extends Component {
        });
     }
 
-    // componentWillMount(){
-    // 	setTimeout(() => {
-    //         this.setState({didFinishInitialAnimation: true});
-    //     }, 10000);
-    // }
-
     render() {
         return (
         	<SafeAreaView style={styles.sfvContainer}>

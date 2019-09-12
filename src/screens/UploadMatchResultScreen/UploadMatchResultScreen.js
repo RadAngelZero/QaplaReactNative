@@ -121,11 +121,18 @@ class UploadMatchResultScreen extends Component {
      */
     closeUploadMatchResultScreen = () => this.props.navigation.pop();
 
+    /**
+     * Close clutch screen and back to UploadMatchResultScreen
+     */
+    backToUploadMatchResultScreen = () => this.setState({ uploadingEvidence: false });
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 {this.state.uploadingEvidence ?
-                    <UploadClutchEvidenceScreen sendEvidenceData={this.getEvidenceData} />
+                    <UploadClutchEvidenceScreen
+                        backToUploadMatchResultScreen={this.backToUploadMatchResultScreen}
+                        sendEvidenceData={this.getEvidenceData} />
                     :
                     <View style={styles.container}>
                         <TouchableWithoutFeedback onPress={this.closeUploadMatchResultScreen}>

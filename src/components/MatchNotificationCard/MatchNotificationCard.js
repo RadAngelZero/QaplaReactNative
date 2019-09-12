@@ -1,3 +1,4 @@
+// diego          - 11-09-2019 - us70 - Add redirect to 'Mis retas' when a challenge is accepted
 // josep.sanahuja - 14-08-2019 - bug6 - Add challengedUser id arg to acceptChallengeRequest
 // diego          - 09-08-2019 - bug4 - Add gamerTag info. to send it as prop to avoid error on PublicMatchCardScreen
 // josep.sanahuja - 08-08-2019 - us85 - + NotEnoughQaploinsModal
@@ -121,8 +122,15 @@ class MatchNotificationCard extends Component {
         } else if (dontShowAcceptChallengeModal !== 'true') {
             this.setState({ openAcceptChallengeModal: true });
         } else {
-            // bug6: Added user id as 2nd arg.
-            acceptChallengeRequest(this.props.notification, this.props.uid);
+            try {
+
+                // bug6: Added user id as 2nd arg.
+                await acceptChallengeRequest(this.props.notification, this.props.uid);
+
+                this.props.navigation.navigate('MisRetas');
+            } catch (error) {
+                console.error(error);
+            }
         }
     }
 

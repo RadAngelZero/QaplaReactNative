@@ -1,10 +1,12 @@
+// diego           - 03-09-2019 - us96 - Update container marginTop to be the same in all the match wizard
+
 import {StyleSheet} from 'react-native'
 
 export default StyleSheet.create({
   	container:{
 		flex: 1,
         backgroundColor:'#131833',
-        marginTop: 29
+        marginTop: '5%'
 	},
 	title: {
         fontSize: 32,

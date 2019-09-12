@@ -161,6 +161,8 @@ class PublicMatchCardScreen extends Component {
             {
                 // Challenge the user to play the match
                 challengeUser(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
+
+                this.props.navigation.navigate('Publicas');
             }
             else {
                 // Show Modal
@@ -286,7 +288,7 @@ class PublicMatchCardScreen extends Component {
                     onClose={ this.toggleOpenChalExModal }
                     header={ 'Lo sentimos' }
                     body={ 'Ya enviaste un desafio al jugador para esta Partida' }
-                    textButton={ 'Ok' } />
+                    textButton={ 'Entendido' } />
             </SafeAreaView>
         );
     }

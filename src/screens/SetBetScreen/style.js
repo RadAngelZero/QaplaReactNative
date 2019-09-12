@@ -75,13 +75,15 @@ export default styles = StyleSheet.create({
         marginTop: '6.65%'
     },
     createButtonText: {
-        marginTop: 12,
-        marginBottom: 12,
-        marginLeft: 22,
-        marginRight: 22,
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 32,
+        marginRight: 32,
+        letterSpacing: .57,
         fontSize: 14,
         textAlign: 'center',
         color: '#FFF',
+        fontWeight: 'bold',
         elevation: 6,
         shadowColor: "#000",
         shadowOffset: {

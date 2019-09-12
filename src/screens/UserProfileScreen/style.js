@@ -64,15 +64,15 @@ export default styles = StyleSheet.create({
         backgroundColor: '#FA2D79'
     },
     addQaploinsButtonText: {
+        color: '#FFF',
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#FFF',
-        marginBottom: 6,
-        marginTop: 6,
-        marginRight: 28,
-        marginLeft: 28,
         textAlignVertical: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 22,
+        marginRight: 22
     },
     fab: {
         bottom: 16,

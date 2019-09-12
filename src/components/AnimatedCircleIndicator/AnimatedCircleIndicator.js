@@ -1,4 +1,4 @@
-// diego           - 11-09-2019 - us107 - updated default size and width of AnimatedCircularProgress
+// diego           - 11-09-2019 - us107 - Updated default size and width of AnimatedCircularProgress
 // diego           - 20-08-2019 - us89 - File creation
 
 import React, { Component } from 'react';

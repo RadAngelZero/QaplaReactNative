@@ -1,4 +1,4 @@
-// diego	  	     - 11-09-2019 - us107 - Added back store data to know when the user has passed
+// diego	  	     - 11-09-2019 - us107 - Added flag to AsyncStorage to know when the user has passed
 //                                          the onboarding (removed by error in us92)
 // diego	  	     - 03-09-2019 - us92 - Update Welcome screen according to inVision design
 // josep.sanahuja    - 05-08-2019 - us84 - Changed style from SafeAreaView
@@ -28,7 +28,6 @@ export default class WelcomeOnboardingScreen extends React.Component {
 
 	goToScreenPublicas = () => {
 		storeData('tutorial-done', 'true');
-
 		this.props.navigation.navigate('Publicas', { firstMatchCreated: true });
 	}
 

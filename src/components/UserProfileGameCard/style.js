@@ -1,4 +1,4 @@
-// diego           - 11-09-2019 - us107 - updated card margins to make visible for the user
+// diego           - 11-09-2019 - us107 - Updated card margins to make visible for the user
 //                                        that he can scroll
 // diego           - 20-08-2019 - us89 - File creation
 

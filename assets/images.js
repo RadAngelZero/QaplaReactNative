@@ -1,6 +1,7 @@
+// diego	  	  - 03-09-2019 - us96 - Added close (x) icon (used on close of navigators over the main navigator)
 // diego	  	  - 03-09-2019 - us92 - Added onboarding images
 // diego	  	  - 13-08-2019 - us77 - Added clutch tutorial images
-// diego          - 17-07-2019 - NA   - removed duplicate smash bros image
+// diego        - 17-07-2019 - NA   - removed duplicate smash bros image
 
 // Icons
 import InstagramIcon from './icons/Instagram_logo_2016.svgx'
@@ -21,6 +22,7 @@ import CancelIcon from './icons/qaploins.svg'
 import LightningIcon from './icons/Lighting.svg';
 import SearchIcon from './icons/search.svg';
 import BackIcon from './icons/back.svg';
+import CloseIcon from './icons/close.svg';
 import ClashIcon from './icons/Clash.svg';
 import HeartstoneIcon from './icons/Heartstone.svg';
 import LOLIcon from './icons/LOL.svg';
@@ -153,6 +155,7 @@ const images = {
 		lightningIcon: LightningIcon,
 		searchIcon: SearchIcon,
 		backIcon: BackIcon,
+		closeIcon: CloseIcon,
 		notificationIcon: NotificationIcon,
 		qaploinsPrize: QaploinsPrize,
 		lessQaploins: LessQaploins,

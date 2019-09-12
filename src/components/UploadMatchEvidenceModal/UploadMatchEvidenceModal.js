@@ -1,3 +1,4 @@
+// diego          - 12-09-2019 - us99 - Added close icon to allow user back and upload evidence
 // josep.sanahuja - 12-08-2019 - us79 - File creation
 
 import React, { Component } from 'react';
@@ -9,6 +10,9 @@ import {
 } from 'react-native';
 
 import styles from './style';
+import Images from './../../../assets/images';
+
+const CloseIcon = Images.svg.closeIcon;
 
 class UploadMatchEvidenceModal extends Component {
     
@@ -57,19 +61,23 @@ class UploadMatchEvidenceModal extends Component {
 	          transparent={true}
 	          visible={this.props.visible}
 	          onRequestClose={this.props.onClose}>
-	          <View style={styles.mainContainer}>
-			    <View style={styles.container}>
-			        <Text style={styles.closeIcon} onPress={this.closeModal}>X</Text>
-					<Text style={styles.headerText}>Sube tu evidencia :)</Text>
-					<Text style={styles.paragraph}>Recuerda de subir tu evidencia de la partida que jugaste! En caso de haber una disputa por el resultado la evidencia será tu mejor prueba!</Text>
-					<TouchableWithoutFeedback onPress={this.action}>
-						<View style={styles.okButton}>
-							<Text style={styles.text}>OK</Text>
-						</View>
+				<View style={styles.mainContainer}>
+					<View style={styles.container}>
+						<TouchableWithoutFeedback onPress={this.closeModal}>
+							<View style={styles.closeIcon}>
+								<CloseIcon />
+							</View>
+						</TouchableWithoutFeedback>
+						<Text style={styles.headerText}>Sube tu evidencia :)</Text>
+						<Text style={styles.paragraph}>Recuerda de subir tu evidencia de la partida que jugaste! En caso de haber una disputa por el resultado la evidencia será tu mejor prueba!</Text>
+						<TouchableWithoutFeedback onPress={this.action}>
+							<View style={styles.okButton}>
+								<Text style={styles.text}>OK</Text>
+							</View>
 
-					</TouchableWithoutFeedback>
-			    </View>
-			  </View>
+						</TouchableWithoutFeedback>
+					</View>
+				</View>
 	        </Modal>
         );
     }

@@ -1,3 +1,4 @@
+// diego          - 12-09-2019 - us99 - Added close icon styles
 // diego          - 21-08-2019 - us89 - File creation
 
 import { StyleSheet } from 'react-native';
@@ -29,8 +30,18 @@ export default styles = StyleSheet.create({
         elevation: 24,
         alignItems: 'center'
     },
+    modalControls: {
+        marginTop: 20,
+        alignSelf: 'flex-end'
+    },
+    closeIcon: {
+        marginRight: 20,
+        marginBottom: 20,
+        marginTop: '2.56%',
+        alignSelf: 'baseline'
+    },
     modalBody: {
-        marginTop: 30,
+        marginTop: '1%',
         marginBottom: 24,
         marginRight: 5,
         marginLeft: 5,

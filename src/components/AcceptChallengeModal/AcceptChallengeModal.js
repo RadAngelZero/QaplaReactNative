@@ -23,6 +23,9 @@ class AcceptChallengeModal extends Component {
         this.props.acceptNotificationsDelete();
     }
 
+    /**
+     * TODO: Add close icon after merge of release-1 and pull request #30
+     */
     render() {
         return (
             <Modal open onClose={this.props.onClose}>

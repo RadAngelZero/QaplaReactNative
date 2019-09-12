@@ -1,3 +1,5 @@
+// diego             - 12-09-2019 - us99 - Updated closeIcon styles to make it consistent with new
+//                                         closeIcon implementation (changed text icon for SVG icon)
 // josep.sanahuja    - 05-08-2019 - us84 - Changed container to identify notch area
 // diego             - 01-08-2019 - us58 - File creation
 
@@ -25,11 +27,9 @@ export default styles = StyleSheet.create({
         marginTop: 18
     },
     closeIcon: {
-        fontSize: 18,
-        fontWeight: '400',
         marginRight: 20,
-        color: '#FFF',
-        marginBottom: 18,
-        marginTop: 18
+        marginBottom: 20,
+        marginTop: 20,
+        alignSelf: 'baseline'
     }
 })

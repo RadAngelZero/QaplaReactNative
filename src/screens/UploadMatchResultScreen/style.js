@@ -1,23 +1,32 @@
+// diego          - 12-09-2019 - us99 - Added close icon styles
 // diego          - 13-08-2019 - us77 - Upload result and other result buttons styles updated
 // josep.sanahuja - 05-08-2019 - us78 - File creation
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
+import { hasSafeAreaView } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor:'#131833'
+        backgroundColor:'#131833',
+        marginTop: ((Platform.OS === 'ios') && !hasSafeAreaView()) ? 20 : 0
     },
     container: {
         backgroundColor:'#131833',
         alignItems: 'center',
         flex: 1
     },
+    closeIcon: {
+        marginTop: 36,
+        marginRight: 30,
+        marginBottom: 20,
+        alignSelf: 'flex-end'
+    },
     winLooseContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: '14%'
+        marginTop: '2%'
     },
     winLooseSeparator: {
         width: '6%'

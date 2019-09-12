@@ -1,5 +1,6 @@
-// diego           - 20-08-2019 - us89 - Modal.js component from components folder changed to react-nativenative modal
-//                                       addQaploinsToUser for iOS beta
+// diego             - 12-09-2019 - us99 - Updated closeIcon (changed text icon for SVG icon)
+// diego             - 20-08-2019 - us89 - Modal.js component from components folder changed to react-nativenative modal
+//                                         addQaploinsToUser for iOS beta
 
 import React, { Component } from 'react';
 import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
@@ -8,7 +9,9 @@ import { withNavigation } from 'react-navigation';
 import images from './../../../assets/images';
 import styles from './style';
 import { addQaploinsToUserCloudFunction } from '../../services/functions';
+import Images from './../../../assets/images';
 
+const CloseIcon = Images.svg.closeIcon;
 const QaploinIcon = images.svg.qaploinsIcon;
 
 /**
@@ -40,13 +43,17 @@ class BuyQaploinsModal extends Component {
     render() {
         return (
             <Modal
-                animationType='none'
+                animationType='fade'
                 transparent={true}
                 visible={this.props.open}
                 onRequestClose={this.props.onClose}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
-                        <Text style={styles.closeIcon} onPress={this.props.onClose}>X</Text>
+                        <TouchableWithoutFeedback onPress={this.props.onClose}>
+                            <View style={styles.closeIcon}>
+                                <CloseIcon />
+                            </View>
+                        </TouchableWithoutFeedback>
                         <QaploinIcon height={40} width={40} />
                         <Text style={styles.qaploinsToBuyText}>750</Text>
                         <Text style={styles.qaploinsText}>Qaploins</Text>

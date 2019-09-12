@@ -48,7 +48,8 @@ export default styles = StyleSheet.create({
         flexDirection: 'row'
     },
     infoButton: {
-        borderRadius: 100
+        borderRadius: 100,
+        width: 90
     },
     infoAcceptButton: {
         backgroundColor: '#FA2D79',
@@ -69,9 +70,10 @@ export default styles = StyleSheet.create({
     },
     infoButtonText: {
         color: '#FFF',
-        fontSize: 10,
-        paddingVertical: 7,
-        paddingHorizontal: 24,
+        fontSize: 12,
+        fontWeight: 'bold',
+        marginTop: 8,
+        marginBottom: 8,
         textAlign: 'center'
     },
     arrowContainer: {

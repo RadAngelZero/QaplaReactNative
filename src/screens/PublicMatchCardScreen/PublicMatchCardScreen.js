@@ -1,3 +1,4 @@
+// diego          - 05-09-2019 - us104 - Added logic to allow just one result per user on the displayed match
 // diego          - 05-09-2019 - us101 - Added timer to show user time before match from matches play expire
 //                                       Added timer to show user time for upload result once the adversary was uploaded their result
 // diego          - 05-09-2019 - us100 - Added timer to show user time before public match expire
@@ -26,6 +27,7 @@ import { getGamerTagStringWithGameAndPlatform } from '../../utilities/utils';
 
 // Custom Components
 import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBttnModal'
+import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constants';
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
@@ -147,7 +149,7 @@ class PublicMatchCardScreen extends Component {
     *
     * @param None
     */
-    async tryToChallengeUser() {
+    tryToChallengeUser = async () => {
         // If the user is logged
         if (isUserLogged()) {
             // Get the info of the match
@@ -161,6 +163,8 @@ class PublicMatchCardScreen extends Component {
             {
                 // Challenge the user to play the match
                 challengeUser(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
+
+                this.props.navigation.navigate('Publicas');
             }
             else {
                 // Show Modal
@@ -176,7 +180,7 @@ class PublicMatchCardScreen extends Component {
     /**
      * Cancel a public match
      */
-    tryToCancelMatch() {
+    tryToCancelMatch = () => {
         const matchCard = this.props.navigation.getParam('matchCard');
         cancelPublicMatch(matchCard.idMatch);
 
@@ -188,7 +192,7 @@ class PublicMatchCardScreen extends Component {
      */
     sendToUploadMatchResult = () => {
         const matchCard = this.props.navigation.getParam('matchCard');
-        
+
         /**
          * currentUserAdversary is a number value that means what adversary is the current user on the match
          * if the user is the author (creator) of the match, is the adversary1, if not, is the adversary2, and
@@ -261,20 +265,25 @@ class PublicMatchCardScreen extends Component {
                     </View>
                 </View>
                 {(this.props.uid !== matchCard.adversaryUid && !matchCard.matchesPlay) &&
-                    <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()}>
+                    <TouchableWithoutFeedback onPress={this.tryToChallengeUser}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Retar</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
                 {(this.props.uid === matchCard.adversaryUid && !matchCard.matchesPlay) &&
-                    <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()}>
+                    <TouchableWithoutFeedback onPress={this.tryToCancelMatch}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Cancelar</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
                 {matchCard.matchesPlay &&
+                    ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1)
+                    ||
+                    (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2)) ?
+                    <Text style={styles.alreadyHaveResult}>Ya haz subido un resultado a esta reta</Text>
+                    :
                     <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Subir Resultado</Text>
@@ -286,7 +295,7 @@ class PublicMatchCardScreen extends Component {
                     onClose={ this.toggleOpenChalExModal }
                     header={ 'Lo sentimos' }
                     body={ 'Ya enviaste un desafio al jugador para esta Partida' }
-                    textButton={ 'Ok' } />
+                    textButton={ 'Entendido' } />
             </SafeAreaView>
         );
     }

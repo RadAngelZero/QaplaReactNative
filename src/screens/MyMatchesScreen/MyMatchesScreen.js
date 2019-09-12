@@ -1,3 +1,4 @@
+// diego             - 05-09-2019 - us104 - Send pickResult's as prop for allow just one upload of result by user in a match
 // diego             - 05-09-2019 - us101 - Send hour result for set timer on detail match screen
 // diego             - 03-09-2019 - us96 - Bug fixed: load duplicated matches
 // diego             - 19-08-2019 - us89 - Send new prop (currentUserAdversary) to items on the matches list to determine what adversary
@@ -67,9 +68,19 @@ export class MyMatchesScreen extends Component {
                                 platform,
                                 timeStamp,
                                 winBet,
+                                pickResult1,
                                 hourResult
                             } = hostedMatches.val();
-                            
+
+                            let userName = '';
+                            let gamerTag = '';
+                            try {
+                                userName = await getUserNameWithUID(hostedMatches.val().adversary2);
+                                gamerTag = await getGamerTagWithUID(hostedMatches.val().adversary2, hostedMatches.val().game, hostedMatches.val().platform);
+                            } catch (error) {
+                                console.error(error);
+                            }
+                          
                             //Object with the necesary fields to load the match in the app (the card and the detailed view)
                             const matchObject = {
                                 adversaryUid: adversary2,
@@ -90,10 +101,10 @@ export class MyMatchesScreen extends Component {
                                 platform,
                                 timeStamp,
                                 winBet,
+                                pickResult1,
                                 hourResult,
-                                //Get the userName from a external function because the match object only have the UID
-                                userName: await getUserNameWithUID(hostedMatches.val().adversary2),
-                                gamerTag: await getGamerTagWithUID(hostedMatches.val().adversary2, hostedMatches.val().game, hostedMatches.val().platform)
+                                userName,
+                                gamerTag
                             };
                             this.setState((state) => {
                                 //Add the matchObject to the matches array of the state
@@ -121,8 +132,19 @@ export class MyMatchesScreen extends Component {
                             platform,
                             timeStamp,
                             winBet,
+                            pickResult2,
                             hourResult
                         } = challengedMatches.val();
+
+                        let userName = '';
+                        let gamerTag = '';
+                        try {
+                            userName = await getUserNameWithUID(challengedMatches.val().adversary1);
+                            gamerTag = await getGamerTagWithUID(challengedMatches.val().adversary1, challengedMatches.val().game, challengedMatches.val().platform);
+                        } catch (error) {
+                            console.error(error);
+                        }
+                      
                         //Object with the necesary fields to load the match in the app (the card and the detailed view)
                         const matchObject = {
                             adversaryUid: adversary1,
@@ -138,10 +160,10 @@ export class MyMatchesScreen extends Component {
                             platform,
                             timeStamp,
                             winBet,
+                            pickResult2,
                             hourResult,
-                            //Get the userName from a external function because the match object only have the UID
-                            userName: await getUserNameWithUID(challengedMatches.val().adversary1),
-                            gamerTag: await getGamerTagWithUID(challengedMatches.val().adversary1, challengedMatches.val().game, challengedMatches.val().platform)
+                            userName,
+                            gamerTag
                         };
                         this.setState((state) => {
                             //Add the matchObject to the matches array of the state

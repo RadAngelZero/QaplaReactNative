@@ -54,11 +54,14 @@ export default styles = StyleSheet.create({
     },
     buttonText: {
         color: '#FFF',
-        fontSize: 14,
+        fontSize: 16,
+        fontWeight: '900',
+        textAlign: 'center',
         letterSpacing: .5,
-        paddingVertical: 14,
-        paddingHorizontal: 40,
-        textAlign: 'center'
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 32,
+        marginRight: 32
     },
     uploadResultButton: {
         marginTop: 24.5,

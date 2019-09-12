@@ -72,9 +72,8 @@ class UploadMatchEvidenceModal extends Component {
 						<Text style={styles.paragraph}>Recuerda de subir tu evidencia de la partida que jugaste! En caso de haber una disputa por el resultado la evidencia será tu mejor prueba!</Text>
 						<TouchableWithoutFeedback onPress={this.action}>
 							<View style={styles.okButton}>
-								<Text style={styles.text}>OK</Text>
+								<Text style={styles.text}>Entendido</Text>
 							</View>
-
 						</TouchableWithoutFeedback>
 					</View>
 				</View>

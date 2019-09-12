@@ -40,12 +40,10 @@ class NotEnoughQaploins extends Component {
 	          <View style={styles.mainContainer}>
 			    <View style={styles.container}>
 					<Text style={styles.headerText}>Adversario sin Qaploins</Text>
-					<TouchableWithoutFeedback
-							onPress={this.action}>
+					<TouchableWithoutFeedback onPress={this.action}>
 						<View style={styles.okButton}>
-							<Text style={styles.text}>OK</Text>
+							<Text style={styles.text}>Entendido</Text>
 						</View>
-
 					</TouchableWithoutFeedback>
 					<Text style={styles.smallText}>La notificación se borrará de la lista</Text>
 			    </View>

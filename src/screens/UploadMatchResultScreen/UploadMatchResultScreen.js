@@ -169,13 +169,13 @@ class UploadMatchResultScreen extends Component {
                         </Text>
                         <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, OTHER_RESULT)}>
                             <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === OTHER_RESULT ? '#FF0000' : '#6D7DDE' }]}>
-                                <Text style={styles.buttonText}>OTRO RESULTADO</Text>
+                                <Text style={styles.buttonText}>Otro Resultado</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         {this.state.matchResultStatus &&
                             <TouchableWithoutFeedback onPress={this.validateResultToUpload}>
                                 <View style={styles.uploadResultButton}>
-                                    <Text style={styles.buttonText}>SUBIR RESULTADO</Text>
+                                    <Text style={styles.buttonText}>Subir Resultado</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         }

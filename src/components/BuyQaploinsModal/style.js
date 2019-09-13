@@ -63,14 +63,15 @@ export default styles = StyleSheet.create({
         backgroundColor: '#6D7DDE'
     },
     priceText: {
+        color: '#FFF',
         textAlign: 'center',
-        fontSize: 18,
+        fontSize: 16,
+        fontWeight: 'bold',
         letterSpacing: 2.65,
-        marginLeft: 40,
-        marginRight: 40,
-        marginTop: 14,
-        marginBottom: 14,
-        color: '#FFF'
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 32,
+        marginRight: 32
     },
     smallText: {
         marginTop: 10,

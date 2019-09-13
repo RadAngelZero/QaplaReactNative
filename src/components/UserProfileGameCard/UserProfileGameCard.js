@@ -1,3 +1,5 @@
+// diego           - 11-09-2019 - us107 - Updated card margins and game icon size to make
+//                                        visible for the user that he can scroll
 // diego           - 20-08-2019 - us89 - File creation
 
 import React, { Component } from 'react';
@@ -15,9 +17,9 @@ export class UserProfileGameCard extends Component {
          * that doesn't look good
          */
         return (
-            <View style={[styles.container, { marginRight: this.props.lastChild ? 20 : 0 }]}>
+            <View style={[styles.container, { marginRight: this.props.lastChild ? 10 : 0 }]}>
                 <View style={styles.gameData}>
-                    <this.props.game.Icon width={60} height={60} />
+                    <this.props.game.Icon width={48} height={48} />
                     <Text style={styles.descriptionText}>{this.props.game.name}</Text>
                 </View>
                 <View style={styles.gamerInfo}>

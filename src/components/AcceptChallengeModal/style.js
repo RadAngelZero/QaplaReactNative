@@ -23,14 +23,15 @@ export default styles = StyleSheet.create({
         backgroundColor: '#6D7DDE'
     },
     gotItButtonText: {
+        color: '#FFF',
         textAlign: 'center',
-        fontSize: 18,
-        letterSpacing: 2.65,
-        marginLeft: 40,
-        marginRight: 40,
-        marginTop: 14,
-        marginBottom: 14,
-        color: '#FFF'
+        fontWeight: 'bold',
+        fontSize: 16,
+        letterSpacing: .57,
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 32,
+        marginRight: 32
     },
     checkbox: {
         marginTop: 18

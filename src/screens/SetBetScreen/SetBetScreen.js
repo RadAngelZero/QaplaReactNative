@@ -1,4 +1,5 @@
 // diego          - 06-09-2019 - us93 - Convert modal to remember the time of life of the match on component: MatchExpireRememberModal
+// diego          - 03-09-2019 - us96 - Removed X text icon (now this screen have custom header)
 // josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
 // josep.sanahuja - 01-08-2019 - us57 - + Modal for 10 minutes msg when creating a match
 // diego          - 24-07-2019 - us31 - Updated createMatch and decreaseBet to accept
@@ -159,7 +160,6 @@ class SetBetScreen extends Component {
                         onClose={this.closeMatchExpireRememberModal} />
                     <View style={styles.headerOptions}>
                         <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
-                        <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>
                     </View>
                     <View style={styles.prizeImage}>
                         <QaploinsPrizeIcon />

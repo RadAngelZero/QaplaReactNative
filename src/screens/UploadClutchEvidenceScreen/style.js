@@ -46,9 +46,12 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 16,
         fontWeight: 'bold',
-        paddingVertical: 10,
-        paddingHorizontal: 40,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 32,
+        marginRight: 32,
+        minWidth: 100
     },
     goToClutchButtonText: {
         marginTop: 20,

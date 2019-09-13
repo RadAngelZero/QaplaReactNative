@@ -7,6 +7,7 @@
     "test": "mocha --require test/config/mocha.js ./test/*.test.js"
   },
   "dependencies": {
+    "@segment/analytics-react-native": "^1.1.0-beta.1",
     "firebase": "^6.2.2",
     "react": "16.8.3",
     "react-native": "0.59.9",

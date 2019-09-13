@@ -1,5 +1,6 @@
 // diego          - 11-09-2019 - us70 - Add redirect to 'Mis retas' when a challenge is accepted
 // diego          - 04-09-2019 - us106 - Props sended to PublicMatchCardScreen updated
+// diego          - 02-09-2019 - us91 - Add track segment statistic
 // josep.sanahuja - 14-08-2019 - bug6 - Add challengedUser id arg to acceptChallengeRequest
 // diego          - 09-08-2019 - bug4 - Add gamerTag info. to send it as prop to avoid error on PublicMatchCardScreen
 // josep.sanahuja - 08-08-2019 - us85 - + NotEnoughQaploinsModal
@@ -9,20 +10,11 @@
 // diego          - 01-08-2019 - us58 - File creation
 
 import React, { Component } from 'react';
-import {
-    View,
-    Image,
-    TouchableWithoutFeedback,
-    Text,
-    ActivityIndicator,
-    Modal
-} from 'react-native';
-
-import styles from './style';
-
+import { View, Image, TouchableWithoutFeedback, Text, ActivityIndicator, Modal } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 
+import styles from './style';
 import {
     getProfileImageWithUID,
     getGameNameOfMatch,
@@ -32,8 +24,8 @@ import {
     deleteNotification,
     userHasQaploinsToPlayMatch
 } from '../../services/database';
-
 import { retrieveData } from '../../utilities/persistance';
+import { trackOnSegment } from '../../services/statistics';
 
 // Cloud Functions
 import { acceptChallengeRequest } from '../../services/functions';
@@ -126,17 +118,24 @@ class MatchNotificationCard extends Component {
             this.setState({ openNoQaploinsModal: true });
         } else if (dontShowAcceptChallengeModal !== 'true') {
             this.setState({ openAcceptChallengeModal: true });
+            trackOnSegment('Match Challenge Accepted');
         } else {
             try {
 
                 // bug6: Added user id as 2nd arg.
                 await acceptChallengeRequest(this.props.notification, this.props.uid);
+                trackOnSegment('Match Challenge Accepted');
 
                 this.props.navigation.navigate('MisRetas');
             } catch (error) {
                 console.error(error);
             }
         }
+    }
+
+    declineMatch = () => {
+        declineMatch(this.props.uid, this.props.notificationKey)
+        trackOnSegment('Match Challenge Declined');
     }
 
     render() {
@@ -160,7 +159,7 @@ class MatchNotificationCard extends Component {
                                             <Text style={styles.infoButtonText}>Aceptar</Text>
                                         </View>
                                     </TouchableWithoutFeedback>
-                                    <TouchableWithoutFeedback onPress={() => declineMatch(this.props.uid, this.props.notificationKey)}>
+                                    <TouchableWithoutFeedback onPress={this.declineMatch}>
                                         <View style={[styles.infoDeclineButton, styles.infoButton]}>
                                             <Text style={styles.infoButtonText}>Rechazar</Text>
                                         </View>

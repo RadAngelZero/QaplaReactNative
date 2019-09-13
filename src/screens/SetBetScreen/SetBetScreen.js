@@ -1,5 +1,6 @@
 // diego          - 06-09-2019 - us93 - Convert modal to remember the time of life of the match on component: MatchExpireRememberModal
 // diego          - 03-09-2019 - us96 - Removed X text icon (now this screen have custom header)
+// diego          - 02-09-2019 - us91 - Add record screen segment statistic
 // josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
 // josep.sanahuja - 01-08-2019 - us57 - + Modal for 10 minutes msg when creating a match
 // diego          - 24-07-2019 - us31 - Updated createMatch and decreaseBet to accept
@@ -8,7 +9,6 @@
 // diego          - 15-07-2019 - us27 - added increment bet option
 
 import React, { Component } from 'react';
-
 import {
     SafeAreaView,
     View,
@@ -16,23 +16,20 @@ import {
     BackHandler,
     TouchableWithoutFeedback
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import styles from './style';
-
-import { connect } from 'react-redux';
 import images from './../../../assets/images';
-
 import {
     retrieveData
 } from '@utilities/persistance'
-
 import {
     getCurrentQaplaCommission,
     createPublicMatch,
     substractQaploinsToUser
 } from '../../services/database';
-
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/MatchExpireRememberModal';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
@@ -55,6 +52,18 @@ class SetBetScreen extends Component {
 
     componentWillMount() {
         this.setQaplaComission();
+        this.list = [
+            
+            /**
+             * This event is triggered when the user goes to other screen
+             */
+            this.props.navigation.addListener(
+                'willFocus',
+                (payload) => {
+                    recordScreenOnSegment('Set Bet');
+                }
+            )
+        ]
     }
 
     componentDidMount() {
@@ -62,6 +71,9 @@ class SetBetScreen extends Component {
     }
 
     componentWillUnmount() {
+
+        //Remove willFocus listener on navigation
+        this.list.forEach((item) => item.remove());
         BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
     }
 
@@ -113,6 +125,12 @@ class SetBetScreen extends Component {
             try {
                 await createPublicMatch(this.props.uid, this.state.currentBet, this.props.selectedGame);
                 await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet);
+
+                trackOnSegment('Match created', {
+                    bet: this.state.currentBet,
+                    gameKey: this.props.selectedGame.gameKey,
+                    platform: this.props.selectedGame.platform
+                });
                 
                 // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
                 // return a 'null' value, otherwise it would return a 'false' 'true' value from a
@@ -127,7 +145,7 @@ class SetBetScreen extends Component {
                     // Tooggle modal state to open
                     this.setState({
                         timeActionMsgOpen: true
-                    })
+                    });
                 }
                 else{
                     this.props.navigation.navigate('Publicas');

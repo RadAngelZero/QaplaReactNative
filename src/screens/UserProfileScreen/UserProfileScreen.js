@@ -1,5 +1,6 @@
 // diego           - 03-09-2019 - us96 - Send flag onCloseGoTo when add game, so the header knows
 //                                       where go if the user closes the procces
+// diego           - 02-09-2019 - us91 - Add record screen segment statistic
 // diego           - 21-08-2019 - us89 - Add redirect logic to LoadGamesScreen
 // diego           - 20-08-2019 - us89 - Show user statistics by game
 //                                       Added BuyQaploinsModal
@@ -14,6 +15,7 @@ import images from '../../../assets/images';
 import UserProfilePlatformGameList from '../../components/UserProfilePlatformGameList/UserProfilePlatformGameList';
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
+import { recordScreenOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
 
 const QaploinExchangeIcon = images.svg.qaploinsIcon;
@@ -23,7 +25,7 @@ export class UserProfileScreen extends Component {
         showBuyQaploinsModal: false
     };
 
-    componentWillMount(){
+    componentWillMount() {
         this.list = [
             
             /**
@@ -32,7 +34,7 @@ export class UserProfileScreen extends Component {
             this.props.navigation.addListener(
                 'willFocus',
                 (payload) => {
-
+                    recordScreenOnSegment('User Profile');
                     if(!isUserLogged()){
                         this.props.navigation.navigate('SignIn');
                     }

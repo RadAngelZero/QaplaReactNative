@@ -4,6 +4,7 @@
 // diego          - 05-09-2019 - us100 - Added timer to show user time before public match expire
 // diego          - 04-09-2019 - us106 - Added accept challenge behavior
 // diego          - 03-09-2019 - us96 - Added custom header (TopNavOptions)
+// diego          - 02-09-2019 - us91 - Add track segment statistic
 // diego          - 19-08-2019 - us89 - Updated references to received params from navigation
 // diego          - 14-08-2019 - us77 - Added navigation to upload results on 'Subir Resultado' button
 // josep.sanahuja - 13-08-2019 - us86 - + match challenge already exist logic
@@ -25,7 +26,7 @@ import { challengeUser, isMatchAlreadyChallenged, userHasQaploinsToPlayMatch } f
 import { isUserLogged } from '../../services/auth';
 import { cancelPublicMatch, acceptChallengeRequest } from '../../services/functions';
 import { getGamerTagStringWithGameAndPlatform } from '../../utilities/utils';
-
+import { trackOnSegment } from '../../services/statistics';
 // Custom Components
 import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBttnModal'
 import AcceptChallengeModal from '../../components/AcceptChallengeModal/AcceptChallengeModal';
@@ -155,6 +156,8 @@ class PublicMatchCardScreen extends Component {
     * @param None
     */
     tryToChallengeUser = async () => {
+        trackOnSegment('User Wants To Challenge A Match');
+  
         // If the user is logged
         if (isUserLogged()) {
             // Get the info of the match
@@ -188,6 +191,7 @@ class PublicMatchCardScreen extends Component {
     tryToCancelMatch = () => {
         const matchCard = this.props.navigation.getParam('matchCard');
         cancelPublicMatch(matchCard.idMatch);
+        trackOnSegment('User Has Canceled Match');
 
         this.props.navigation.navigate('Publicas');
     }

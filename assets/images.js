@@ -1,3 +1,4 @@
+// diego	      - 06-09-2019 - us93 - Added OkIcon for checkbox
 // diego	  	  - 03-09-2019 - us96 - Added close (x) icon (used on close of navigators over the main navigator)
 // diego	  	  - 03-09-2019 - us92 - Added onboarding images
 // diego	  	  - 13-08-2019 - us77 - Added clutch tutorial images
@@ -22,6 +23,7 @@ import CancelIcon from './icons/qaploins.svg'
 import LightningIcon from './icons/Lighting.svg';
 import SearchIcon from './icons/search.svg';
 import BackIcon from './icons/back.svg';
+import OkIcon from './icons/OkIcon.svg';
 import CloseIcon from './icons/close.svg';
 import ClashIcon from './icons/Clash.svg';
 import HeartstoneIcon from './icons/Heartstone.svg';
@@ -160,6 +162,7 @@ const images = {
 		qaploinsPrize: QaploinsPrize,
 		lessQaploins: LessQaploins,
 		moreQaploins: MoreQaploins,
+		okIcon: OkIcon,
 		gowIcon: GowIcon,
 		fifaIcon: FifaIcon,
 		clashIcon: ClashIcon,

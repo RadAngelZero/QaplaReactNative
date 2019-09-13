@@ -245,6 +245,10 @@ class PublicMatchCardScreen extends Component {
     render() {
         const matchCard = this.props.navigation.getParam('matchCard');
         const gameData = getGameData(matchCard.game, this.props.games);
+        console.log((matchCard.matchesPlay &&
+            ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1)
+            ||
+            (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2))));
         return (
             <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
                 <View style={styles.imageHeader}>
@@ -319,17 +323,21 @@ class PublicMatchCardScreen extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 }
-                {matchCard.matchesPlay &&
+                {(matchCard.matchesPlay &&
                     ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1)
                     ||
-                    (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2)) ?
+                    (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2))) ?
                     <Text style={styles.alreadyHaveResult}>Ya haz subido un resultado a esta reta</Text>
                     :
-                    <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult}>
-                        <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>Subir Resultado</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
+                    <>
+                    {matchCard.matchesPlay &&
+                        <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult}>
+                            <View style={styles.bottomButton}>
+                                <Text style={styles.bottomButtonText}>Subir Resultado</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    }
+                    </>
                 }
                 {matchCard.isChallenge &&
                     <TouchableWithoutFeedback onPress={this.tryToAcceptChallengeRequest}>

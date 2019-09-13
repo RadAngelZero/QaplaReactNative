@@ -48,9 +48,11 @@ class AcceptChallengeModal extends Component {
                                 Al aceptar este desafio todos los otros desafios que te han hecho a esta reta seran eliminados.
                             </Text>
                             <Text style={styles.smallText}>No mostrar de nuevo</Text>
-                            <Switch
-                                onValueChange={this.toogleSwitchValue}
-                                value={this.state.dontShowModalAgain} />
+                            <CheckBox
+                                style={styles.checkbox}
+                                label='Entendido, no volver a mostrar este mensaje'
+                                selected={this.state.dontShowModalAgain}
+                                onPress={this.setCheckBoxState} />
                             <TouchableWithoutFeedback onPress={this.acceptDelete}>
                                 <View style={styles.gotItButton}>
                                     <Text style={styles.gotItButtonText}>Continuar</Text>

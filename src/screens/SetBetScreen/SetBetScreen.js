@@ -176,7 +176,7 @@ class SetBetScreen extends Component {
                     <MatchExpireRememberModal
                         visible={this.state.timeActionMsgOpen}
                         onClose={this.closeMatchExpireRememberModal} />
-                    <View style={styles.headerOptions}>
+                    <View style={styles.titleContainer}>
                         <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
                     </View>
                     <View style={styles.prizeImage}>

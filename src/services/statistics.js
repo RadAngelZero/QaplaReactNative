@@ -4,7 +4,7 @@ import analytics from '@segment/analytics-react-native';
 import { SEGMENT_KEY } from '../utilities/Constants';
 
 /**
- * Initialize segemnt (necessary to send data to segment)
+ * @description Initialize segemnt (necessary to send data to segment)
  */
 export async function initializeSegment() {
     try {
@@ -21,7 +21,7 @@ export async function initializeSegment() {
 }
 
 /**
- * Send an event related to screens with custom properties on the event
+ * @description Send an event related to screens with custom properties on the event
  * 
  * @param {string} screen Name of the recorded screen on the event
  * @param {object} properties Optional data to record on the event
@@ -36,7 +36,7 @@ export async function recordScreenOnSegment(screen, properties = {}) {
 }
 
 /**
- * Send a event related to track (click buttons, select an option, etc.) with custom properties on the event
+ * @description Send a event related to track (click buttons, select an option, etc.) with custom properties on the event
  * 
  * @param {string} event Event identifier on segment
  * @param {object} properties Optional data to record on the event
@@ -51,7 +51,7 @@ export async function trackOnSegment(event, properties = {}) {
 }
 
 /**
- * Link the uid with the sended statistics to segment, so we can identify and filter data
+ * @description Link the uid with the sended statistics to segment, so we can identify and filter data
  * based on specific user when we make querys on segment
  * 
  * @param {string} uid User identifier on firebase

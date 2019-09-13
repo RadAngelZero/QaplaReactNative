@@ -1,6 +1,4 @@
-// diego          - 06-09-2019 - us93 - Added checkbox style
-// diego          - 04-09-2019 - us106 - Added styles for react native modal
-// diego          - 06-08-2019 - us68 - File creation
+// diego          - 06-09-2019 - us93 - File creation
 
 import { StyleSheet } from 'react-native';
 import { getDimensions } from '../../utilities/iosAndroidDim';
@@ -17,9 +15,11 @@ export default styles = StyleSheet.create({
     },
     container: {
         width: getDimensions().width * .9,
+        alignSelf: 'center',
+        justifyContent: 'center',
         backgroundColor: '#141833',
         borderRadius: 20,
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 12,
@@ -29,32 +29,43 @@ export default styles = StyleSheet.create({
         elevation: 24,
         alignItems: 'center'
     },
+    containerMsgModal: {
+        marginTop: 10,
+        marginBottom: 23,
+        marginRight: 54,
+        marginLeft: 54,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    headerText: {
+        marginTop: 5.5,
+        marginBottom: '1%',
+        color: '#FFF',
+        fontSize: 40
+    },
     paragraph: {
-        marginTop: 36,
-        marginRight: 20,
-        marginLeft: 20,
+        marginTop: 5,
         color: '#CFD1DB',
         fontSize: 16,
         textAlign: 'center'
     },
-    gotItButton: {
-        marginTop: 24,
-        marginBottom: 24,
+    checkbox: {
+        marginTop: '10%',
+        marginBottom: '5%'
+    },
+    okButton: {
+        marginTop: 11,
         borderRadius: 100,
         backgroundColor: '#6D7DDE'
     },
-    gotItButtonText: {
-        color: '#FFF',
+    buttonText: {
         textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 16,
-        letterSpacing: .57,
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32
-    },
-    checkbox: {
-        marginTop: 18
+        fontSize: 18,
+        letterSpacing: 2.65,
+        marginLeft: 40,
+        marginRight: 40,
+        marginTop: 14,
+        marginBottom: 14,
+        color: '#FFF'
     }
-});
+})

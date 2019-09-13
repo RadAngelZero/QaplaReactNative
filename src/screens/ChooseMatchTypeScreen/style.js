@@ -1,3 +1,4 @@
+// diego             - 03-09-2019 - us96 - Update titleText marginTop to be the same in all the match wizard
 // josep.sanahuja    - 05-08-2019 - us84 - + sfvContainer
 
 import { StyleSheet } from 'react-native';
@@ -18,7 +19,7 @@ export default styles = StyleSheet.create({
         fontSize: 32,
         fontWeight: 'bold',
         width: '60%',
-        marginTop: 43
+        marginTop: '5%'
     },
     lightningImage: {
         marginTop: 71,
@@ -42,10 +43,13 @@ export default styles = StyleSheet.create({
     publicMatchButtonText: {
         color: '#FFF',
         fontSize: 14,
+        fontWeight: 'bold',
         letterSpacing: .5,
-        paddingVertical: 14,
-        paddingHorizontal: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 32,
+        marginRight: 32
     },
     directMatchButton: {
         flexDirection: 'row',
@@ -61,15 +65,18 @@ export default styles = StyleSheet.create({
         marginLeft: 80
     },
     directMatchButtonSearchIcon: {
-        paddingVertical: 14,
-        marginLeft: 15
+        alignSelf: 'center',
+        marginLeft: 24
     },
     directMatchButtonText: {
-        color: 'rgba(0, 0, 0, .8)',
+        color: '#FFF',
         fontSize: 14,
+        fontWeight: 'bold',
         letterSpacing: .5,
-        paddingVertical: 14,
-        paddingHorizontal: 20,
-        alignContent: 'center'
+        textAlign: 'center',
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 8,
+        marginRight: 32
     }
 });

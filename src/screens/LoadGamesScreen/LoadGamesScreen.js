@@ -1,3 +1,4 @@
+// diego          - 03-09-2019 - us96 - Added custom header (TopNavOptions)
 // diego          - 02-09-2019 - us91 - Add track and record screen segment statistic
 // diego          - 21-08-2019 - us89 - Added loadGamesUserDontHave prop
 //                                      GamerTag modal moved to independent file: components/AddGamerTagModal.js
@@ -13,23 +14,34 @@
 // josep.sanahuja - 15-07-2019 - us25 - + addGameProfile Modal logic
 
 import React from 'react';
-
-import { View, Text, TouchableWithoutFeedback, BackHandler, SafeAreaView } from 'react-native'
+import { View, BackHandler, SafeAreaView } from 'react-native'
 
 import styles from './style'
-import Images from './../../../assets/images';
 import VideoGamesList from '../../components/VideoGamesList/VideoGamesList';
 import { connect } from 'react-redux';
-
 import { setSelectedGame } from '../../actions/gamesActions';
-
 import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
-
-const BackIcon = Images.svg.backIcon;
+import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
 class LoadGamesScreen extends React.Component {
-    componentWillMount() {
+    static navigationOptions = ({ navigation }) => ({
+        header: ({ props }) => (
+            <TopNavOptions
+                close
+                navigation={navigation}
+                back={navigation.getParam('onCloseGoTo', '') !== 'Perfil'}
+                onCloseGoTo={navigation.getParam('onCloseGoTo', '')} />)
+    });
+
+    constructor(props) {
+      super(props);
+      this.state = {
+          gamerTagText: ""
+      };
+    }
+
+    componentDidMount() {
         this.list = [
             
             /**
@@ -46,9 +58,7 @@ class LoadGamesScreen extends React.Component {
                 }
             )
         ]
-    }
-
-    componentDidMount() {
+        this.props.navigation.setParams({ onCloseGoTo: this.props.navigation.getParam('onCloseGoTo', 'Home') });
         BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
         
         // #bug2:
@@ -108,14 +118,6 @@ class LoadGamesScreen extends React.Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    <View style={styles.headerOptions}>
-                        <TouchableWithoutFeedback onPress={this.backToMatchTypeScreen}>
-                            <View style={styles.backIcon}>
-                                <BackIcon />
-                            </View>
-                        </TouchableWithoutFeedback>
-                        <Text style={styles.closeIcon} onPress={this.backToMatchTypeScreen}>X</Text>
-                    </View>
                     <AddGamerTagModal
                         selectedGame={this.props.selectedGame}
                         uid={this.props.uid}

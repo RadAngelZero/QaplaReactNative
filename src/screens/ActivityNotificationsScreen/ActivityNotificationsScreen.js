@@ -37,11 +37,11 @@ class ActivityNotificationsScreen extends Component {
         	<SafeAreaView style={styles.sfvContainer}>
 	            <View style={styles.container}>
 	                <ScrollView>
-				{Object.keys(this.props.notifications).reverse().map((notificationKey) => (
-				    <ActivityNotificationCard key={`ActivityNotification-${notificationKey}`}
-					{...this.props.notifications[notificationKey]} />
-				))}
-                    	</ScrollView>
+						{Object.keys(this.props.notifications).reverse().map((notificationKey) => (
+							<ActivityNotificationCard key={`ActivityNotification-${notificationKey}`}
+							{...this.props.notifications[notificationKey]} />
+						))}
+					</ScrollView>
 	            </View>
 	        </SafeAreaView>
         );

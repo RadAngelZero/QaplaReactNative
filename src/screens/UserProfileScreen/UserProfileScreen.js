@@ -1,3 +1,5 @@
+// diego           - 03-09-2019 - us96 - Send flag onCloseGoTo when add game, so the header knows
+//                                       where go if the user closes the procces
 // diego           - 02-09-2019 - us91 - Add record screen segment statistic
 // diego           - 21-08-2019 - us89 - Add redirect logic to LoadGamesScreen
 // diego           - 20-08-2019 - us89 - Show user statistics by game
@@ -59,7 +61,7 @@ export class UserProfileScreen extends Component {
     /**
      * Redirect to LoadGames screen
      */
-    addGame = () => this.props.navigation.navigate('LoadGames', { loadGamesUserDontHave: true });
+    addGame = () => this.props.navigation.navigate('LoadGames', { loadGamesUserDontHave: true, onCloseGoTo: 'Perfil' });
 
     /**
      * Check if the given index is the last from a list of size quantityOfElements

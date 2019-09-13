@@ -1,3 +1,4 @@
+// diego          - 03-09-2019 - us96 - Bug fixed: load duplicated matches
 // diego          - 09-08-2019 - bug4 - update remove listener methods on willBlur and make unshift of the new data on array
 // josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
 // diego          - 05-08-2019 - us58   - Bug fixed: the matches array was not deleted when willBlur was called
@@ -32,9 +33,7 @@ class PublicMatchesFeedScreen extends Component {
                      */
                     matchesRef.off('child_added');
                     matchesRef.off('child_removed');
-                    var stateCopy = [...this.state.matches];
-                    stateCopy.splice(0);
-                    this.setState({ matches: stateCopy });
+                    this.setState({ matches: [] });
                 }
             ),
 
@@ -128,7 +127,7 @@ class PublicMatchesFeedScreen extends Component {
             storeData('userName-creation-scenario', 'CreateFirstMatchFromRetas');
         }
 
-        this.props.navigation.navigate(isUserLogged() ? 'ChooseMatchType' : 'SignIn');
+        this.props.navigation.navigate(isUserLogged() ? 'ChooseMatchType' : 'SignIn', { onCloseGoTo: 'Publicas' });
     }
 }
 

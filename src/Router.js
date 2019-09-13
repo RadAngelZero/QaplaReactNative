@@ -12,7 +12,7 @@ import {createStackNavigator, createBottomTabNavigator, createAppContainer, crea
 
 import Images from '@assets/images'
 
-// Screens
+// Screens prueba github
 import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen'
 import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen'
 import MyMatchesScreen from './screens/MyMatchesScreen/MyMatchesScreen';

@@ -1,4 +1,5 @@
-// josep.sanahuja    - 26-08-2019 - us90 - Add didFinishInitialAnimation
+// josep.sanahuja    - 13-09-2019 - us90 - Add didFinishInitialAnimation
+// diego             - 02-09-2019 - us91 - Add track and record screen segment statistic
 // diego             - 15-08-2019 - us80 - Order of notifications reversed to show it in the right order
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 // diego             - 01-08-2019 - us58 - File creation
@@ -13,6 +14,7 @@ import {
 import styles from './style';
 import MatchNotificationCard from '../../components/MatchNotificationCard/MatchNotificationCard';
 import { connect } from 'react-redux';
+import { recordScreenOnSegment } from '../../services/statistics';
 
 class RetasNotificationsScreen extends Component {
     constructor(props) {
@@ -39,6 +41,26 @@ class RetasNotificationsScreen extends Component {
        });
     }
 
+    componentWillMount() {
+        this.list = [
+            
+            /**
+             * This event is triggered when the user goes to other screen
+             */
+            this.props.navigation.addListener(
+                'willFocus',
+                (payload) => {
+                    recordScreenOnSegment('Match Notifications');
+                }
+            )
+        ]
+    }
+
+    componentWillUnmount() {
+        //Remove willBlur and willFocus listeners on navigation
+        this.list.forEach((item) => item.remove());
+	}
+    
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>

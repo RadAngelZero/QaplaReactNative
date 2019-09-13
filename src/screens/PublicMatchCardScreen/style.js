@@ -1,3 +1,5 @@
+// diego          - 05-09-2019 - us104 - Added style for displayed text if the user has already sended their result
+// diego          - 03-09-2019 - us96 - Margins updated for new size of the screen
 // josep.sanahuja - 05-08-2019 - us84 - + sfvContainer
 // diego          - 29-07-2019 - us55 - Update styles to make screen look like the mockup of inVision iOS
 // josep.sanahuja - 15-07-2019 - us25 - Remv. cancelButton
@@ -18,7 +20,7 @@ export default StyleSheet.create({
     imageHeader: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 55,
+        marginTop: '10%'
     },
     headerRow1: {
     	flexDirection: 'row',
@@ -77,7 +79,7 @@ export default StyleSheet.create({
         color: '#3DF9DF'
     },
     bottomButton: {
-        marginTop: 177,
+        marginTop: '28%',
         backgroundColor: '#FA2D79',
         borderRadius: 100,
         elevation: 6,
@@ -92,11 +94,18 @@ export default StyleSheet.create({
         marginLeft: 80
     },
     bottomButtonText: {
-        paddingVertical: 14,
-        paddingHorizontal: 20,
+        color: '#FFF',
+        marginTop: 20,
+        marginBottom: 20,
         fontSize: 16,
         textAlign: 'center',
         fontWeight: 'bold',
+        color: '#FFF'
+    },
+    alreadyHaveResult: {
+        marginTop: 36,
+        fontSize: 16,
+        textAlign: 'center',
         color: '#FFF'
     }
 });

@@ -69,7 +69,7 @@ class UploadMatchResultsModal extends Component {
 					<Text style={styles.paragraph}>Tu resultado fué subido satisfactóriamente</Text>
 					<TouchableWithoutFeedback onPress={this.action}>
 						<View style={styles.okButton}>
-							<Text style={styles.text}>OK</Text>
+							<Text style={styles.text}>Entendido</Text>
 						</View>
 					</TouchableWithoutFeedback>
 			    </View>

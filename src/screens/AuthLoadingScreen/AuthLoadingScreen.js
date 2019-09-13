@@ -1,4 +1,5 @@
 // josep.sanahuja    - 26-08-2019 - us90 - loadShowHg1Modal
+// diego             - 02-09-2019 - us91 - Initialize segment
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 
 import React, { Component } from 'react';
@@ -10,6 +11,7 @@ import styles from './style';
 import { getUserNode } from '../../actions/userActions';
 import { getUserNameWithUID } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
+import { initializeSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
 
 class AuthLoadingScreen extends Component {
@@ -17,7 +19,9 @@ class AuthLoadingScreen extends Component {
         // Load highlight hg1 Modal
         this.props.loadShowHg1Modal();
 
-        // blablabla
+        // Initialize the segment SDK to collect user statistics
+        initializeSegment();
+
         auth.onAuthStateChanged(async (user) => {
             this.props.loadListOfGames();
             if (user) {

@@ -1,5 +1,8 @@
-// diego	  - 13-08-2019 - us77 - Added clutch tutorial images
-// diego          - 17-07-2019 - NA   - removed duplicate smash bros image
+// diego	      - 06-09-2019 - us93 - Added OkIcon for checkbox
+// diego	  	  - 03-09-2019 - us96 - Added close (x) icon (used on close of navigators over the main navigator)
+// diego	  	  - 03-09-2019 - us92 - Added onboarding images
+// diego	  	  - 13-08-2019 - us77 - Added clutch tutorial images
+// diego        - 17-07-2019 - NA   - removed duplicate smash bros image
 
 // Icons
 import InstagramIcon from './icons/Instagram_logo_2016.svgx'
@@ -20,6 +23,8 @@ import CancelIcon from './icons/qaploins.svg'
 import LightningIcon from './icons/Lighting.svg';
 import SearchIcon from './icons/search.svg';
 import BackIcon from './icons/back.svg';
+import OkIcon from './icons/OkIcon.svg';
+import CloseIcon from './icons/close.svg';
 import ClashIcon from './icons/Clash.svg';
 import HeartstoneIcon from './icons/Heartstone.svg';
 import LOLIcon from './icons/LOL.svg';
@@ -80,6 +85,21 @@ const images = {
 			img: require('./images/ShareClutchLink.jpg'),
 			uri: '@assets/images/ShareClutchLink.jpg'
 		},
+		connectOnBoarding: {
+			img: require('./images/connect-onboarding.png')
+		},
+		compiteOnBoarding: {
+			img: require('./images/compite-onboarding.png')
+		},
+		shareOnBoarding: {
+			img: require('./images/comparte-onboarding.png')
+		},
+		walletOnBoarding: {
+			img: require('./images/wallet-onboarding.png')
+		},
+		divider: {
+			img: require('./images/divider-onboarding.png')
+		},
 		peekaImg: {
 			img: require('./images/PEKKA.png'),
 			uri: '@assets/images/PEKKA.png'
@@ -137,10 +157,12 @@ const images = {
 		lightningIcon: LightningIcon,
 		searchIcon: SearchIcon,
 		backIcon: BackIcon,
+		closeIcon: CloseIcon,
 		notificationIcon: NotificationIcon,
 		qaploinsPrize: QaploinsPrize,
 		lessQaploins: LessQaploins,
 		moreQaploins: MoreQaploins,
+		okIcon: OkIcon,
 		gowIcon: GowIcon,
 		fifaIcon: FifaIcon,
 		clashIcon: ClashIcon,

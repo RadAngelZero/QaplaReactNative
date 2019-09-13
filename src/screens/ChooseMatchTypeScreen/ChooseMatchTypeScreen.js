@@ -5,11 +5,32 @@ import { View, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native
 import { Svg } from 'react-native-svg';
 import styles from './style';
 import Images from '../../../assets/images';
+import { recordScreenOnSegment } from '../../services/statistics';
 
 const LightningIcon = Images.svg.lightningIcon;
 const SearchIcon = Images.svg.searchIcon;
 
 class ChooseMatchTypeScreen extends Component {
+    componentWillMount() {
+        this.list = [
+
+            /**
+             * This event is triggered when the user goes to other screen
+             */
+            this.props.navigation.addListener(
+                'willFocus',
+                (payload) => {
+                    recordScreenOnSegment('Choose Match Type');
+                }
+            )
+        ]
+    }
+
+    componentWillUnmount() {
+        //Remove willBlur and willFocus listeners on navigation
+        this.list.forEach((item) => item.remove());
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -30,11 +51,9 @@ class ChooseMatchTypeScreen extends Component {
                     <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('ChooseOponent')}>
                         <View style={styles.directMatchButton}>
                             <View style={styles.directMatchButtonSearchIcon}>
-                                <Svg>
-                                    <SearchIcon width={18} height={18} />
-                                </Svg>
+                                <SearchIcon width={18} height={18} />
                             </View>
-                            <Text style={styles.publicMatchButtonText}>
+                            <Text style={styles.directMatchButtonText}>
                                 RETAR USUARIO
                             </Text>
                             <View style={styles.directMatchButtonSearchIcon}></View>

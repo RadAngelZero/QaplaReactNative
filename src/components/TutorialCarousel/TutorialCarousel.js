@@ -1,10 +1,14 @@
+// diego              - 12-09-2019 - us99 - Added BackIcon
 // diego              - 16-08-2019 - us77 - File creation
 
 import React, { Component } from 'react';
-import { View, ScrollView, Image } from 'react-native';
+import { View, ScrollView, Image, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './style';
 import { getDimensions } from '../../utilities/iosAndroidDim';
+import Images from './../../../assets/images';
+
+const BackIcon = Images.svg.backIcon;
 
 export class TutorialCarousel extends Component {
     state = {
@@ -24,6 +28,13 @@ export class TutorialCarousel extends Component {
     render() {
         return (
             <View style={styles.scrollContainer}>
+                <View style={styles.backIconContainer}>
+                    <TouchableWithoutFeedback onPress={this.props.backToUploadMatchResultScreen}>
+                        <View style={styles.backIcon}>
+                            <BackIcon />
+                        </View>
+                    </TouchableWithoutFeedback>
+                </View>
                 <ScrollView horizontal
                     pagingEnabled
                     disableIntervalMomentum

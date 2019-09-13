@@ -1,3 +1,4 @@
+// diego     - 06-09-2019 - us93 - Added isFunction to validate if a parameter is a function or not
 // diego     - 20-08-2019 - us89 - Created getPlatformNameWithKey and getUserGamesOrderedByPlatform
 // diego     - 06-08-2019 - us76 - Function to get the gamer tag key on string created
 // diego     - 16-07-2019 - us30 - File creation
@@ -111,4 +112,20 @@ export function getUserGamesOrderedByPlatform(userGames, allQaplaGames) {
     });
 
     return gamesOrderedByPlatform;
+}
+
+/**
+ * @description Return true if the functionToCheck param is a function
+ * otherwise return false
+ * 
+ * @param {function} functionToCheck The function to verify
+ */
+export function isFunction(functionToCheck) {
+    var getType = {};
+
+    /**
+     * Check first if the function is different from null
+     * Check if the type of the object is [object function]
+     */
+    return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
 }

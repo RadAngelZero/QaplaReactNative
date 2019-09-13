@@ -1,3 +1,4 @@
+// diego          - 12-09-2019 - us99 - Added close icon styles
 // diego          - 21-08-2019 - us89 - File creation
 
 import { StyleSheet } from 'react-native';
@@ -19,7 +20,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#141833',
         borderRadius: 20,
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 12,
@@ -29,8 +30,18 @@ export default styles = StyleSheet.create({
         elevation: 24,
         alignItems: 'center'
     },
+    modalControls: {
+        marginTop: 20,
+        alignSelf: 'flex-end'
+    },
+    closeIcon: {
+        marginRight: 20,
+        marginBottom: 20,
+        marginTop: '2.56%',
+        alignSelf: 'baseline'
+    },
     modalBody: {
-        marginTop: 30,
+        marginTop: '1%',
         marginBottom: 24,
         marginRight: 5,
         marginLeft: 5,
@@ -41,7 +52,6 @@ export default styles = StyleSheet.create({
         letterSpacing: .5,
         elevation: 6,
         borderRadius: 100,
-        shadowColor: "#000",
         borderColor: '#36E5CE',
         borderWidth: 1,
         width: 200,
@@ -53,34 +63,35 @@ export default styles = StyleSheet.create({
     modalText: {
         fontSize: 14,
         marginTop: 20,
-        marginBottom: 10,
+        marginBottom: 18,
         color: '#FFF',
         textAlignVertical: 'center',
         justifyContent:'center',
         marginLeft: 10,
-        marginRight:10,
+        marginRight: 10,
         textAlign: 'center'
     },
     confirmButton: {
         borderRadius: 100,
-        backgroundColor: '#FA2D79',
+        backgroundColor: '#6D7DDE',
         elevation: 6,
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 3,
         },
         shadowOpacity: 0.27,
-        shadowRadius: 4.65,
-        marginRight: 10,
-        marginLeft: 10
+        shadowRadius: 4.65
     },
     confirmButtonText: {
     	color: '#FFF',
-        fontSize: 14,
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
         letterSpacing: .5,
-        paddingVertical: 6,
-        paddingHorizontal: 20,
-        textAlign: 'center'
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 36,
+        marginRight: 36
     }
 });

@@ -3,6 +3,7 @@ package com.qaplareactnative;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.segment.analytics.reactnative.core.RNAnalyticsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -34,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNAnalyticsPackage(),
             new LinearGradientPackage(),
             new RNGoogleSigninPackage(),
             new FBSDKPackage(mCallbackManager),

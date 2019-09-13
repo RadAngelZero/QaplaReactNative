@@ -1,4 +1,4 @@
-// josep.sanahuja - 26-08-2019 - us90 - Add CreateRetasButton Highlight
+// josep.sanahujaa - 26-08-2019 - us90 - Add CreateRetasButton Highlight
 // diego          - 09-08-2019 - bug4 - update remove listener methods on willBlur and make unshift of the new data on array
 // josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
 // diego          - 05-08-2019 - us58 - Bug fixed: the matches array was not deleted when willBlur was called

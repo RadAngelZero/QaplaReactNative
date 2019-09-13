@@ -1,3 +1,4 @@
+// diego          - 12-09-2019 - us99 - Added close icon to allow user cancelation
 // diego          - 06-09-2019 - us93 - Replace Switch for custom CheckBox component
 // diego          - 04-09-2019 - us106 - Logic to accept challenge implemented
 // diego          - 06-08-2019 - us68 - File creation

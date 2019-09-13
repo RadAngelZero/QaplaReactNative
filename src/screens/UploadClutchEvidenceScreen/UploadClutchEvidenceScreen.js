@@ -1,4 +1,6 @@
-// diego          - 13-08-2019 - us77 - File creation
+// diego              - 12-09-2019 - us99 - Added backToUploadMatchResultScreen to handle
+//                                          the back to UploadMatchResultScreen
+// diego              - 13-08-2019 - us77 - File creation
 
 import React, { Component } from 'react';
 import { View, TextInput, Text, TouchableWithoutFeedback, Linking } from 'react-native';
@@ -51,7 +53,9 @@ export class UploadClutchEvidenceScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TutorialCarousel images={images} />
+                <TutorialCarousel
+                    images={images}
+                    backToUploadMatchResultScreen={this.props.backToUploadMatchResultScreen} />
                 <TextInput placeholder='Inserta aqui el URL del clip'
                     placeholderTextColor='#898A97'
                     onChangeText={this.setUrlText}

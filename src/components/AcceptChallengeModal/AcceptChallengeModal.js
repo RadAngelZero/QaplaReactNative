@@ -1,3 +1,4 @@
+// diego          - 12-09-2019 - us99 - Added close icon to allow user cancelation
 // diego          - 06-09-2019 - us93 - Replace Switch for custom CheckBox component
 // diego          - 04-09-2019 - us106 - Logic to accept challenge implemented
 // diego          - 06-08-2019 - us68 - File creation
@@ -10,6 +11,9 @@ import { storeData } from '../../utilities/persistance';
 import { acceptChallengeRequest } from '../../services/functions';
 import { withNavigation } from 'react-navigation';
 import CheckBox from '../CheckBox/CheckBox';
+import Images from './../../../assets/images';
+
+const CloseIcon = Images.svg.closeIcon;
 
 class AcceptChallengeModal extends Component {
     state = {
@@ -44,6 +48,11 @@ class AcceptChallengeModal extends Component {
                 onRequestClose={this.props.onClose}>
                     <View style={styles.mainContainer}>
                         <View style={styles.container}>
+                            <TouchableWithoutFeedback onPress={this.props.onClose}>
+                                <View style={styles.closeIcon}>
+                                    <CloseIcon />
+                                </View>
+                            </TouchableWithoutFeedback>
                             <Text style={styles.paragraph}>
                                 Al aceptar este desafio todos los otros desafios que te han hecho a esta reta seran eliminados.
                             </Text>

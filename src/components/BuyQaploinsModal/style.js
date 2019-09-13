@@ -1,4 +1,6 @@
-// diego           - 20-08-2019 - us89 - +getDimensions & closeIcon
+// diego             - 12-09-2019 - us99 - Updated closeIcon styles to make it consistent with new
+//                                         closeIcon implementation (changed text icon for SVG icon)
+// diego             - 20-08-2019 - us89 - +getDimensions & closeIcon
 
 import { StyleSheet } from 'react-native';
 import { getDimensions } from '../../utilities/iosAndroidDim';
@@ -14,15 +16,10 @@ export default styles = StyleSheet.create({
         height: '100%',
     },
     closeIcon: {
-        fontSize: 20,
-        flexDirection: 'row',
-        alignSelf: 'flex-end',
-		textAlignVertical: 'top',
-		width: 30,
-		height: 30,
-        marginRight: 10,
+        marginRight: 20,
+        marginBottom: 20,
         marginTop: 20,
-        color: '#FFF',
+        alignSelf: 'flex-end'
     },
     container: {
         width: getDimensions().width * .8,

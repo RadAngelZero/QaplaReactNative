@@ -1,3 +1,4 @@
+// diego          - 12-09-2019 - us99 - Added close icon to allow user cancelation
 // diego          - 02-09-2019 - us91 - Add track segment statistic
 // diego          - 21-08-2019 - us89 - File creation
 
@@ -7,7 +8,10 @@ import { withNavigation } from 'react-navigation';
 
 import styles from './style';
 import { addGameToUser } from '../../services/database';
+import Images from './../../../assets/images';
 import { trackOnSegment } from '../../services/statistics';
+
+const CloseIcon = Images.svg.closeIcon;
 
 export class AddGamerTagModal extends Component {
     state = {
@@ -48,12 +52,19 @@ export class AddGamerTagModal extends Component {
     render() {
         return (
             <Modal
-                animationType='none'
+                animationType='fade'
                 transparent
                 visible={this.props.open}
                 onRequestClose={this.props.onClose}>
                     <View style={styles.mainContainer}>
                         <View style={styles.modalContainer}>
+                            <View style={styles.modalControls}>
+                                <TouchableWithoutFeedback onPress={this.props.onClose}>
+                                    <View style={styles.closeIcon}>
+                                        <CloseIcon />
+                                    </View>
+                                </TouchableWithoutFeedback>
+                            </View>
                             <View style={styles.modalBody}>
                                 <TextInput
                                     style={styles.gamerTagTextInput}

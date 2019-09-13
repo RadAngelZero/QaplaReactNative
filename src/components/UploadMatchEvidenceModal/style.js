@@ -30,8 +30,13 @@ export default styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         marginRight: 20,
-        marginLeft: 20,
-        paddingTop: '20%'
+        marginLeft: 20
+    },
+    closeIcon: {
+        marginRight: 20,
+        marginBottom: 20,
+        marginTop: '8%',
+        alignSelf: 'flex-end'
     },
     headerText: {
         marginBottom: '15%',
@@ -63,15 +68,4 @@ export default styles = StyleSheet.create({
         backgroundColor: '#6D7DDE',
         marginBottom: 18
     },
-    closeIcon: {
-        fontSize: 20,
-        textAlignVertical: 'top',
-        width: 24,
-        height: 24,
-        top: 10,
-        right: 10,
-        color: '#FFF',
-        position: 'absolute'
-    },
-
-})
+});

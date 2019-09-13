@@ -1,3 +1,4 @@
+// diego          - 12-09-2019 - us99 - Added close icon styles
 // diego          - 06-09-2019 - us93 - Added checkbox style
 // diego          - 04-09-2019 - us106 - Added styles for react native modal
 // diego          - 06-08-2019 - us68 - File creation
@@ -28,6 +29,12 @@ export default styles = StyleSheet.create({
         shadowRadius: 16.00,
         elevation: 24,
         alignItems: 'center'
+    },
+    closeIcon: {
+        marginRight: 20,
+        marginBottom: 20,
+        marginTop: 20,
+        alignSelf: 'flex-end'
     },
     paragraph: {
         marginTop: 36,

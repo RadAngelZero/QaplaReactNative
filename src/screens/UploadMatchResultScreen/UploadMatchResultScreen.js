@@ -1,3 +1,4 @@
+// diego          - 12-09-2019 - us99 - Added close icon to allow user cancelation on upload result
 // diego          - 19-08-2019 - us89 - Add UploadMatchEvidenceModal and UploadMatchResultsModal
 // diego          - 13-08-2019 - us77 - Added navigation to UploadClutchEvidenceScreen
 // josep.sanahuja - 06-08-2019 - us78 - File creation
@@ -16,6 +17,7 @@ import { uploadMatchResult } from '../../services/database';
 import UploadMatchResultsModal from '../../components/UploadMatchResultsModal/UploadMatchResultsModal';
 import UploadMatchEvidenceModal from '../../components/UploadMatchEvidenceModal/UploadMatchEvidenceModal';
 
+const CloseIcon = Images.svg.closeIcon;
 const QaploinIcon = Images.svg.favouritesIcon;
 
 const WON_RESULT = '1';
@@ -23,7 +25,7 @@ const LOST_RESULT = '0';
 const OTHER_RESULT = '7';
 
 class UploadMatchResultScreen extends Component {
-    
+
     constructor(props) {
       super(props);
     
@@ -114,13 +116,30 @@ class UploadMatchResultScreen extends Component {
         this.setState({ showUploadMatchEvidenceModal: false });
     }
 
+    /**
+     * Close the UploadMatchResultScreen
+     */
+    closeUploadMatchResultScreen = () => this.props.navigation.pop();
+
+    /**
+     * Close clutch screen and back to UploadMatchResultScreen
+     */
+    backToUploadMatchResultScreen = () => this.setState({ uploadingEvidence: false });
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 {this.state.uploadingEvidence ?
-                    <UploadClutchEvidenceScreen sendEvidenceData={this.getEvidenceData} />
+                    <UploadClutchEvidenceScreen
+                        backToUploadMatchResultScreen={this.backToUploadMatchResultScreen}
+                        sendEvidenceData={this.getEvidenceData} />
                     :
                     <View style={styles.container}>
+                        <TouchableWithoutFeedback onPress={this.closeUploadMatchResultScreen}>
+                            <View style={styles.closeIcon}>
+                                <CloseIcon />
+                            </View>
+                        </TouchableWithoutFeedback>
                         <View style={styles.winLooseContainer}>
                             <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, WON_RESULT)}>
                                 <View>

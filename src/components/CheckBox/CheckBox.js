@@ -7,13 +7,18 @@ import styles from './style';
 import images from '../../../assets/images';
 import { isFunction } from '../../utilities/utils';
 
+const OkIcon = images.svg.okIcon;
+
 export class CheckBox extends Component {
     state = {
         backgroundOpacity: new Animated.Value(0),
         selected: false
     };
 
-    toogleCheckBox = () => {
+    /**
+     * @description Toggle the state of the checbox
+     */
+    toggleCheckBox = () => {
 
         /**
          * Create an animation to set the opacity of the selectedContainer
@@ -25,6 +30,7 @@ export class CheckBox extends Component {
             /**
              * Based on material design, the speed in this kind of controls
              * (selection controls) must be of 100ms
+             * https://material.io/design/motion/speed.html#duration
              */ 
             duration: 100
         }).start();
@@ -47,11 +53,11 @@ export class CheckBox extends Component {
     render() {
         return (
             <View style={[styles.container, this.props.style]}>
-                <TouchableWithoutFeedback onPress={this.toogleCheckBox}>
+                <TouchableWithoutFeedback onPress={this.toggleCheckBox}>
                     <View style={styles.selectionArea}>
                         <View style={styles.checkboxContainer}>
                             <Animated.View style={[styles.selectedContainer, { opacity: this.state.backgroundOpacity }]}>
-                                <images.svg.okIcon />
+                                <OkIcon />
                             </Animated.View>
                         </View>
                         <Text style={styles.label}>{this.props.label}</Text>

@@ -1,4 +1,4 @@
-// diego          - 06-09-2019 - us93 - Replace of switch with CheckBox component
+// diego          - 06-09-2019 - us93 - Replace Switch for custom CheckBox component
 // diego          - 06-08-2019 - us68 - File creation
 
 import React, { Component } from 'react';
@@ -26,9 +26,9 @@ class AcceptChallengeModal extends Component {
     }
 
     /**
-     * Toogle the dontShowModalAgain flag to the selected state of the checkbox
+     * @description Toogle the dontShowModalAgain flag to the selected state of the checkbox
      */
-    toogleCheckBox = (newState) => {
+    setCheckBoxState = (newState) => {
         this.setState({ dontShowModalAgain: newState });
     }
 
@@ -44,7 +44,7 @@ class AcceptChallengeModal extends Component {
                         style={styles.checkbox}
                         label='Entendido, no volver a mostrar este mensaje'
                         selected={this.state.dontShowModalAgain}
-                        onPress={this.toogleCheckBox} />
+                        onPress={this.setCheckBoxState} />
                     <TouchableWithoutFeedback onPress={() => this.acceptDelete()}>
                         <View style={styles.gotItButton}>
                             <Text style={styles.gotItButtonText}>Continuar</Text>

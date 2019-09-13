@@ -115,8 +115,9 @@ export function getUserGamesOrderedByPlatform(userGames, allQaplaGames) {
 }
 
 /**
- * Return true if the functionToCheck param is a function
+ * @description Return true if the functionToCheck param is a function
  * otherwise return false
+ * 
  * @param {function} functionToCheck The function to verify
  */
 export function isFunction(functionToCheck) {

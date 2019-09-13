@@ -1,13 +1,15 @@
+// diego          - 06-09-2019 - us93 - Replace Switch for custom CheckBox component
 // diego          - 04-09-2019 - us106 - Logic to accept challenge implemented
 // diego          - 06-08-2019 - us68 - File creation
 
 import React, { Component } from 'react';
-import { Modal, View, Text, TouchableWithoutFeedback, Switch } from 'react-native';
+import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './style';
 import { storeData } from '../../utilities/persistance';
 import { acceptChallengeRequest } from '../../services/functions';
 import { withNavigation } from 'react-navigation';
+import CheckBox from '../CheckBox/CheckBox';
 
 class AcceptChallengeModal extends Component {
     state = {
@@ -25,9 +27,14 @@ class AcceptChallengeModal extends Component {
         acceptChallengeRequest(this.props.notification, this.props.uid);
         this.props.navigation.navigate('MisRetas');
     }
-
-    toogleSwitchValue = (value) => this.setState({ dontShowModalAgain: value });
-
+    
+    /**
+     * @description Toogle the dontShowModalAgain flag to the selected state of the checkbox
+     */
+    setCheckBoxState = (newState) => {
+        this.setState({ dontShowModalAgain: newState });
+    }
+    
     render() {
         return (
             <Modal

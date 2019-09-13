@@ -40,7 +40,14 @@ export default styles = StyleSheet.create({
         textAlign: 'center'
     },
     text: {
-    	color: 'white'
+    	color: '#FFF',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontSize: 16,
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 32,
+        marginRight: 32
     },
     paragraph: {
         marginTop: 5,
@@ -52,10 +59,6 @@ export default styles = StyleSheet.create({
     },
     okButton: {
         marginTop: 40,
-        paddingLeft: '20%',
-        paddingRight: '20%',
-        paddingTop: '3%',
-        paddingBottom: '3%',
         borderRadius: 100,
         backgroundColor: '#6D7DDE'
     }

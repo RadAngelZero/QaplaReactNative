@@ -22,7 +22,7 @@ export default styles = StyleSheet.create({
         borderRadius: 20,
         zIndex: 1000,
         elevation: 6,
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 2,
@@ -40,20 +40,23 @@ export default styles = StyleSheet.create({
         textAlign: 'center'
     },
     text: {
-    	color: 'white'
+        color: '#FFF',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontSize: 16,
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 32,
+        marginRight: 32
     },
     smallText: {
         marginTop: 10,
         color: '#909299',
         fontSize: 10,
-        textAlign: 'justify'
+        textAlign: 'center'
     },
     okButton: {
         marginTop: 11,
-        paddingLeft: '20%',
-        paddingRight: '20%',
-        paddingTop: '3%',
-        paddingBottom: '3%',
         borderRadius: 100,
         backgroundColor: '#6D7DDE'
     },

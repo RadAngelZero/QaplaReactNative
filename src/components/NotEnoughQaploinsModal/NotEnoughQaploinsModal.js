@@ -50,18 +50,17 @@ class NotEnoughQaploins extends Component {
 	          transparent={true}
 	          visible={this.props.visible}
 	          onRequestClose={this.props.onClose}>
-				<View style={styles.mainContainer}>
-					<View style={styles.container}>
-						<Text style={styles.headerText}>Adversario sin Qaploins</Text>
-						<TouchableWithoutFeedback
-								onPress={this.action}>
-							<View style={styles.okButton}>
-								<Text style={styles.text}>OK</Text>
-							</View>
-						</TouchableWithoutFeedback>
-						<Text style={styles.smallText}>La notificación se borrará de la lista</Text>
-					</View>
-				</View>
+	          <View style={styles.mainContainer}>
+              <View style={styles.container}>
+                <Text style={styles.headerText}>Adversario sin Qaploins</Text>
+                <TouchableWithoutFeedback onPress={this.action}>
+                  <View style={styles.okButton}>
+                    <Text style={styles.text}>Entendido</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+                <Text style={styles.smallText}>La notificación se borrará de la lista</Text>
+                </View>
+            </View>
 	        </Modal>
         );
     }

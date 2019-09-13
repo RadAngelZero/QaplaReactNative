@@ -1,4 +1,9 @@
+// diego          - 05-09-2019 - us104 - Added logic to allow just one result per user on the displayed match
+// diego          - 05-09-2019 - us101 - Added timer to show user time before match from matches play expire
+//                                       Added timer to show user time for upload result once the adversary was uploaded their result
+// diego          - 05-09-2019 - us100 - Added timer to show user time before public match expire
 // diego          - 04-09-2019 - us106 - Added accept challenge behavior
+// diego          - 03-09-2019 - us96 - Added custom header (TopNavOptions)
 // diego          - 19-08-2019 - us89 - Updated references to received params from navigation
 // diego          - 14-08-2019 - us77 - Added navigation to upload results on 'Subir Resultado' button
 // josep.sanahuja - 13-08-2019 - us86 - + match challenge already exist logic
@@ -25,11 +30,20 @@ import { getGamerTagStringWithGameAndPlatform } from '../../utilities/utils';
 import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBttnModal'
 import AcceptChallengeModal from '../../components/AcceptChallengeModal/AcceptChallengeModal';
 import NotEnoughQaploinsModal from '../../components/NotEnoughQaploinsModal/NotEnoughQaploinsModal';
+import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constants';
+import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
 
 class PublicMatchCardScreen extends Component {
+    static navigationOptions = ({ navigation }) => ({
+        header: () => (
+            <TopNavOptions
+                close
+                navigation={navigation}
+                onCloseGoTo={navigation.getParam('matchCard').matchesPlay ? 'MisRetas' : 'Publicas'} />)
+    });
     
     constructor(props) {
         super(props);
@@ -37,8 +51,87 @@ class PublicMatchCardScreen extends Component {
         this.state = {
             openChalExModal: false,
             openAcceptChallengeModal: false,
-            openNoQaploinsModal: false
+            openNoQaploinsModal: false,
+            validTimeLeft: 0
         };
+    }
+
+    componentDidMount() {
+        this.props.navigation.setParams({ onCloseGoTo: this.props.navigation.getParam('onCloseGoTo', 'Home') });
+        this.list = [
+
+            /**
+             * This event is triggered when the user goes to other screen
+             */
+            this.props.navigation.addListener(
+                'willBlur',
+                (payload) => {
+                    clearInterval(this.timer);
+                }
+            ),
+
+            /**
+             * This event is triggered when the user enter to the screen
+             */
+            this.props.navigation.addListener(
+                'willFocus',
+                (payload) => {
+                    const { date, hourResult, timeStamp, matchesPlay } = this.props.navigation.getParam('matchCard');
+
+                    this.timer = setInterval(() => {
+                        let now = new Date().getTime();
+                        let leftTime = 0;
+                        let validTimeLeft = 0;
+
+                        // If some result was uploaded
+                        if (hourResult) {
+                            leftTime = (this.convertHourToTimeStamp(date, hourResult) + this.convertMinutesToMiliSeconds(15)) - now;
+                        } else if (matchesPlay) {
+                            leftTime = (timeStamp + this.convertMinutesToMiliSeconds(60)) - now;
+                        }
+                         else {
+                            leftTime = (timeStamp + this.convertMinutesToMiliSeconds(15)) - now;
+                        }
+
+                        // Calculate minutes and seconds befor match expire
+                        let minutes = Math.floor((leftTime % (1000 * 60 * 60)) / (1000 * 60));
+                        let seconds = Math.floor((leftTime % (1000 * 60)) / 1000);
+
+                        /**
+                         * If the minute or second value is less than 10 (like 9 or 8)
+                         * then we add a 0 before the numeric value (so the value look like: 09 or 08)
+                         */ 
+                        minutes = minutes < 10 ? `0${minutes}` : minutes;
+                        seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+                        // Legible user string
+                        validTimeLeft = `${minutes}:${seconds}`;
+
+                        this.setState({ validTimeLeft });
+                    }, 1000);
+                }
+            )
+        ];
+    }
+
+    /**
+     * Convert the quantity of minutes to miliseconds (util for timestamp operations)
+     * @param {number} minutes The number of minutes to convert
+     */
+    convertMinutesToMiliSeconds(minutes) {
+        return minutes * 60000;
+    }
+
+    /**
+    * Convert a given date and hour in a UTC date and return their timestamp
+    * @param {string} date Day and month in format DD/MM
+    * @param {string} hour hour and minute in format HH/mm
+    */
+    convertHourToTimeStamp(date, hour) {
+        const [day, month] = date.split('/').map(p => parseInt(p, 10));
+        const [h, min] = hour.split(':').map(p => parseInt(p, 10));
+        
+        return new Date(Date.UTC((new Date).getUTCFullYear(), month - 1, day, h, min, 0, 0)).getTime();
     }
 
     /**
@@ -61,7 +154,7 @@ class PublicMatchCardScreen extends Component {
     *
     * @param None
     */
-    async tryToChallengeUser() {
+    tryToChallengeUser = async () => {
         // If the user is logged
         if (isUserLogged()) {
             // Get the info of the match
@@ -75,6 +168,8 @@ class PublicMatchCardScreen extends Component {
             {
                 // Challenge the user to play the match
                 challengeUser(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
+
+                this.props.navigation.navigate('Publicas');
             }
             else {
                 // Show Modal
@@ -90,7 +185,7 @@ class PublicMatchCardScreen extends Component {
     /**
      * Cancel a public match
      */
-    tryToCancelMatch() {
+    tryToCancelMatch = () => {
         const matchCard = this.props.navigation.getParam('matchCard');
         cancelPublicMatch(matchCard.idMatch);
 
@@ -102,7 +197,7 @@ class PublicMatchCardScreen extends Component {
      */
     sendToUploadMatchResult = () => {
         const matchCard = this.props.navigation.getParam('matchCard');
-        
+
         /**
          * currentUserAdversary is a number value that means what adversary is the current user on the match
          * if the user is the author (creator) of the match, is the adversary1, if not, is the adversary2, and
@@ -183,10 +278,16 @@ class PublicMatchCardScreen extends Component {
                     <View style={styles.row}>
                         <View style={styles.infoContainer}>
                             <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>Fecha y Hora</Text>
+                            <Text style={styles.elemR1}>
+                                {matchCard.matchesPlay ?
+                                    'Sube tu resultado en:'
+                                    :
+                                    'Expira en:'
+                                }
+                            </Text>
                         </View>
                         <View style={styles.infoContainer}>
-                            <Text style={styles.rightTextStyle}>{matchCard.hour}hrs</Text>
+                            <Text style={styles.rightTextStyle}>{this.state.validTimeLeft}</Text>
                         </View>
                     </View>
 
@@ -215,6 +316,11 @@ class PublicMatchCardScreen extends Component {
                     </TouchableWithoutFeedback>
                 }
                 {matchCard.matchesPlay &&
+                    ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1)
+                    ||
+                    (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2)) ?
+                    <Text style={styles.alreadyHaveResult}>Ya haz subido un resultado a esta reta</Text>
+                    :
                     <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Subir Resultado</Text>
@@ -233,7 +339,7 @@ class PublicMatchCardScreen extends Component {
                     onClose={ this.toggleOpenChalExModal }
                     header={ 'Lo sentimos' }
                     body={ 'Ya enviaste un desafio al jugador para esta Partida' }
-                    textButton={ 'Ok' } />
+                    textButton={ 'Entendido' } />
                 <AcceptChallengeModal
                     visible={this.state.openAcceptChallengeModal}
                     uid={this.props.uid}

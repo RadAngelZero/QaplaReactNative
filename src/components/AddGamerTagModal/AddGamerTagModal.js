@@ -1,4 +1,5 @@
 // diego          - 12-09-2019 - us99 - Added close icon to allow user cancelation
+// diego          - 02-09-2019 - us91 - Add track segment statistic
 // diego          - 21-08-2019 - us89 - File creation
 
 import React, { Component } from 'react';
@@ -8,6 +9,7 @@ import { withNavigation } from 'react-navigation';
 import styles from './style';
 import { addGameToUser } from '../../services/database';
 import Images from './../../../assets/images';
+import { trackOnSegment } from '../../services/statistics';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -34,8 +36,9 @@ export class AddGamerTagModal extends Component {
         try {
             await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
                 this.props.selectedGame.gameKey, this.state.gamerTagText);
-
-            if (this.props.loadGamesUserDontHave) {
+            trackOnSegment('Add Gamer Tag Process Completed',
+                { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });
+            if (this.props.loadGamesThatUserDontHave) {
                 this.props.navigation.navigate('Perfil');
             } else {
                 this.props.navigation.navigate('SetBet',

@@ -95,6 +95,8 @@ export default StyleSheet.create({
     },
     bottomButtonText: {
         color: '#FFF',
+        marginTop: 20,
+        marginBottom: 20,
         fontSize: 16,
         textAlign: 'center',
         fontWeight: 'bold',

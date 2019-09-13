@@ -1,4 +1,5 @@
 // diego          - 03-09-2019 - us96 - Added custom header (TopNavOptions)
+// diego          - 02-09-2019 - us91 - Add track and record screen segment statistic
 // diego          - 21-08-2019 - us89 - Added loadGamesUserDontHave prop
 //                                      GamerTag modal moved to independent file: components/AddGamerTagModal.js
 // josep.sanahuja - 05-08-2019 - us84 - changed style from SafeAreaView
@@ -13,16 +14,14 @@
 // josep.sanahuja - 15-07-2019 - us25 - + addGameProfile Modal logic
 
 import React from 'react';
-
 import { View, BackHandler, SafeAreaView } from 'react-native'
 
 import styles from './style'
 import VideoGamesList from '../../components/VideoGamesList/VideoGamesList';
 import { connect } from 'react-redux';
-
 import { setSelectedGame } from '../../actions/gamesActions';
-
 import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal';
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
 class LoadGamesScreen extends React.Component {
@@ -43,6 +42,22 @@ class LoadGamesScreen extends React.Component {
     }
 
     componentDidMount() {
+        this.list = [
+            
+            /**
+             * This event is triggered when the user goes to other screen
+             */
+            this.props.navigation.addListener(
+                'willFocus',
+                (payload) => {
+                    if (this.props.navigation.getParam('loadGamesThatUserDontHave', false)) {
+                        recordScreenOnSegment('Load Games (Add Game)');
+                    } else {
+                        recordScreenOnSegment('Load Games (Create Match)');
+                    }
+                }
+            )
+        ]
         this.props.navigation.setParams({ onCloseGoTo: this.props.navigation.getParam('onCloseGoTo', 'Home') });
         BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
         
@@ -52,8 +67,12 @@ class LoadGamesScreen extends React.Component {
         // mounted.
         this.props.setSelectedGame(null);
     }
+
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
+
+        //Remove willFocus listener on navigation
+        this.list.forEach((item) => item.remove());
     }
 
     backToMatchTypeScreen = () => {
@@ -90,7 +109,10 @@ class LoadGamesScreen extends React.Component {
     /**
      * Close the modal by setting to null the selectedGame on redux
      */
-    closeAddGamerTagModal = () => this.props.setSelectedGame(null);
+    closeAddGamerTagModal = () => {
+        trackOnSegment('Add Gamer Tag Process Canceled');
+        this.props.setSelectedGame(null);
+    }
 
     render() {
         return (

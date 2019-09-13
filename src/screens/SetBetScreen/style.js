@@ -1,3 +1,4 @@
+// diego          - 06-09-2019 - us93 - Removed unused styles of life time match modal (now: MatchExpireRememberModal)
 // diego          - 03-09-2019 - us96 - Update titleContainer marginTop to be the same in all the match wizard
 // josep.sanahuja - 05-08-2019 - us84 - + sfvContainer
 // josep.sanahuja - 01-08-2019 - us57 - + props for 10 minutes Modal Msg
@@ -92,53 +93,5 @@ export default styles = StyleSheet.create({
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65
-    },
-    switch: {
-        marginTop: '5%',
-        marginBottom: '10%'
-    },
-    containerMsgModal: {
-        marginTop: 10,
-        marginBottom: 23,
-        marginRight: 54,
-        marginLeft: 54,
-        alignItems: 'center'
-    },
-    headerText: {
-        marginTop: 5.5,
-        marginBottom: '1%',
-        color: '#FFF',
-        fontSize: 40
-    },
-    paragraph: {
-        marginTop: 5,
-        color: '#CFD1DB',
-        fontSize: 16,
-        textAlign: 'center'
-    },
-    okButton: {
-        marginTop: 11,
-        borderRadius: 100,
-        backgroundColor: '#6D7DDE'
-    },
-    buttonText: {
-        textAlign: 'center',
-        fontSize: 18,
-        letterSpacing: 2.65,
-        marginLeft: 40,
-        marginRight: 40,
-        marginTop: 14,
-        marginBottom: 14,
-        color: '#FFF'
-    },
-    smallText: {
-        marginTop: 10,
-        color: '#909299',
-        fontSize: 10,
-        textAlign: 'justify'
-    },
-    marginSmallText: {
-        marginBottom: '2%',
-        marginTop: '20%'
     }
 });

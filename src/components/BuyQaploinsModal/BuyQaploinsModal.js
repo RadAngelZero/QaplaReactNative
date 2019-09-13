@@ -1,4 +1,5 @@
 // diego             - 12-09-2019 - us99 - Updated closeIcon (changed text icon for SVG icon)
+// diego             - 02-09-2019 - us91 - Add track segment statistic
 // diego             - 20-08-2019 - us89 - Modal.js component from components folder changed to react-nativenative modal
 //                                         addQaploinsToUser for iOS beta
 
@@ -10,6 +11,7 @@ import images from './../../../assets/images';
 import styles from './style';
 import { addQaploinsToUserCloudFunction } from '../../services/functions';
 import Images from './../../../assets/images';
+import { trackOnSegment } from '../../services/statistics';
 
 const CloseIcon = Images.svg.closeIcon;
 const QaploinIcon = images.svg.qaploinsIcon;
@@ -32,6 +34,7 @@ class BuyQaploinsModal extends Component {
             if (!this.state.qaploinsAdded) {
                 addQaploinsToUserCloudFunction();
                 this.setState({ qaploinsAdded: true });
+                trackOnSegment('Add Qaploins To User');
             } else {
                 this.props.onClose();
             }

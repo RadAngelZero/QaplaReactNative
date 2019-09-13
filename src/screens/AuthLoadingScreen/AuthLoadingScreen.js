@@ -1,3 +1,4 @@
+// diego             - 02-09-2019 - us91 - Initialize segment
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 
 import React, { Component } from 'react';
@@ -9,9 +10,14 @@ import styles from './style';
 import { getUserNode } from '../../actions/userActions';
 import { getUserNameWithUID } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
+import { initializeSegment } from '../../services/statistics';
 
 class AuthLoadingScreen extends Component {
     componentDidMount() {
+
+        // Initialize the segment SDK to collect user statistics
+        initializeSegment();
+
         auth.onAuthStateChanged(async (user) => {
             this.props.loadListOfGames();
             if (user) {

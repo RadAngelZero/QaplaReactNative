@@ -1,3 +1,5 @@
+// diego           - 11-09-2019 - us107 - Updated card margins to make visible for the user
+//                                        that he can scroll
 // diego           - 20-08-2019 - us89 - File creation
 
 import { StyleSheet } from 'react-native';
@@ -10,7 +12,7 @@ export default styles = StyleSheet.create({
         borderRadius: 10,
         opacity: .82,
         elevation: 1,
-        marginLeft: 20,
+        marginLeft: 10,
         marginTop: 18,
         flexDirection: 'row'
     },

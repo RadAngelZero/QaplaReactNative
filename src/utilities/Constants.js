@@ -35,3 +35,4 @@ export const NOTIFICATION_TYPE_WINNER = 'resultadoW';
 export const NOTIFICATION_TYPE_LOSER = 'resultadoL';
 export const NOTIFICATION_TYPE_RESULT = 'resultado';
 export const NOTIFICATION_TYPE_REVISION = 'revision';
+export const NOTIFICATION_TYPE_TIE = 'empate';

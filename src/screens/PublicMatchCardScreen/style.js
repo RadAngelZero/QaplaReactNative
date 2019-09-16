@@ -27,7 +27,7 @@ export default StyleSheet.create({
     	flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: '5%'
+        marginTop: heightPercentageToPx('5%')
     },
     hr1: {
        marginRight: '25%',

@@ -3,7 +3,7 @@
 // josep.sanahuja - 05-08-2019 - us78 - File creation
 
 import { StyleSheet, Platform } from 'react-native';
-import { hasSafeAreaView } from '../../utilities/iosAndroidDim';
+import { hasSafeAreaView, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
@@ -48,7 +48,7 @@ export default styles = StyleSheet.create({
         borderWidth: 3,
         borderStyle: 'solid',
         backgroundColor: 'transparent',
-        marginTop: '20%',
+        marginTop: heightPercentageToPx('20%'),
         marginRight: 40,
         marginLeft: 40
     },

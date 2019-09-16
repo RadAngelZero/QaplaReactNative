@@ -107,9 +107,6 @@ const images = {
 		addButton: {
 			img: require('./images/addButton.png')
 		},
-		plusButton: {
-			img: require('./images/plus.png')
-		},
 		fifaXboxImg: {
 			img: require('./images/FIFAXbox.png'),
 			uri: '@assets/images/FIFA.png'

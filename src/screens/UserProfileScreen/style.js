@@ -92,11 +92,5 @@ export default styles = StyleSheet.create({
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
         elevation: 6
-    },
-    fabText: {
-        fontSize: 52,
-        fontWeight: '400',
-        color: '#FFF',
-        marginBottom: 6
     }
 });

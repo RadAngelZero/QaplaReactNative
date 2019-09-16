@@ -1,4 +1,4 @@
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions, Platform, PixelRatio } from 'react-native';
 
 function getDimensions() {
 	return Dimensions.get('window');
@@ -37,4 +37,20 @@ function hasSafeAreaView() {
 	return result;
 }
 
-export {isIphoneX, isIPhoneXSize, isIPhoneXrSize, getDimensions, hasSafeAreaView };
+function widthPercentageToPx(widthPercent) {
+  const elemWidth = typeof widthPercent === "number" ? widthPercent : parseFloat(widthPercent);
+
+  // Use PixelRatio.roundToNearestPixel method in order to round the layout
+  // size (dp) to the nearest one that correspons to an integer number of pixels.
+  return PixelRatio.roundToNearestPixel(getDimensions().width * elemWidth / 100);
+}
+
+function heightPercentageToPx(heightPercent) {
+  const elemHeight = typeof heightPercent === "number" ? heightPercent : parseFloat(heightPercent);
+
+  // Use PixelRatio.roundToNearestPixel method in order to round the layout
+  // size (dp) to the nearest one that correspons to an integer number of pixels.
+  return PixelRatio.roundToNearestPixel(getDimensions().height * elemHeight / 100);
+}
+
+export {isIphoneX, isIPhoneXSize, isIPhoneXrSize, getDimensions, hasSafeAreaView, widthPercentageToPx, heightPercentageToPx};

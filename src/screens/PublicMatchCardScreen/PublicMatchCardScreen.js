@@ -351,7 +351,7 @@ class PublicMatchCardScreen extends Component {
                     ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1)
                     ||
                     (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2))) ?
-                    <Text style={styles.alreadyHaveResult}>Ya haz subido un resultado a esta reta</Text>
+                    <Text style={styles.alreadyHaveResult}>Ya has subido un resultado a esta reta</Text>
                     :
                     <>
                     {matchCard.matchesPlay &&

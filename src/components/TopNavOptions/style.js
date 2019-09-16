@@ -4,11 +4,10 @@ import { StyleSheet, Platform } from 'react-native';
 import { hasSafeAreaView } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
-    sfvcontainer: {
-        backgroundColor: '#141833',
-        height: hasSafeAreaView() ? 60 : 50,
-        marginTop: ((Platform.OS == 'ios') && !hasSafeAreaView()) ? 20 : 0,
-        paddingTop: hasSafeAreaView() ? 20 : 0
+    sfvContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor:'#131833'
     },
     optionsContainer: {
         flexDirection: 'row',

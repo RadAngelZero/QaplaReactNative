@@ -12,7 +12,7 @@ const CloseIcon = Images.svg.closeIcon;
 export class TopNavOptions extends Component {
     render() {
         return (
-            <SafeAreaView style={styles.sfvcontainer}>
+            <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.optionsContainer}>
                     <View style={styles.backIconContainer}>
                         {this.props.back &&

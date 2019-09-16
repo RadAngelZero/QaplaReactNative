@@ -20,14 +20,17 @@ import { connect } from 'react-redux';
 
 import styles from './style';
 import images from './../../../assets/images';
+
 import {
     retrieveData
 } from '@utilities/persistance'
+
 import {
     getCurrentQaplaCommission,
     createPublicMatch,
     substractQaploinsToUser
 } from '../../services/database';
+
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/MatchExpireRememberModal';

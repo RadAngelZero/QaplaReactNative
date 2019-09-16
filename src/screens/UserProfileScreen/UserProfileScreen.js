@@ -127,9 +127,10 @@ export class UserProfileScreen extends Component {
                             lastChild={this.isLastChild(index, Object.keys(userGames).length)} />
                     ))}
                 </ScrollView>
+
                 <TouchableWithoutFeedback onPress={this.addGame}>
                     <View style={styles.fab}>
-                        <Text style={styles.fabText}>+</Text>
+                         <Image style={styles.fabImage} source={images.png.addButton.img} />
                     </View>
                 </TouchableWithoutFeedback>
                 <BuyQaploinsModal open={this.state.showBuyQaploinsModal} onClose={this.closeBuyQaploinsModal} />

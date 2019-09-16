@@ -77,8 +77,6 @@ export default styles = StyleSheet.create({
     fab: {
         bottom: 16,
         right: 16,
-        width: 48,
-        height: 48,
         borderRadius: 100,
         position: 'absolute',
         backgroundColor: '#FA2D79',
@@ -93,10 +91,8 @@ export default styles = StyleSheet.create({
         shadowRadius: 4.65,
         elevation: 6
     },
-    fabText: {
-        fontSize: 52,
-        fontWeight: '400',
-        color: '#FFF',
-        marginBottom: 6
+    fabImage: {
+        width: 48,
+        height: 48
     }
 });

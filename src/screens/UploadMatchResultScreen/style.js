@@ -53,7 +53,7 @@ export default styles = StyleSheet.create({
         borderWidth: 3,
         borderStyle: 'solid',
         backgroundColor: 'transparent',
-        marginTop: heightPercentageToPx('20%'),
+        marginTop: heightPercentageToPx('5%'),
         marginRight: 40,
         marginLeft: 40
     },

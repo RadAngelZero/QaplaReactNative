@@ -3,7 +3,7 @@
 // josep.sanahuja - 05-08-2019 - us78 - File creation
 
 import { StyleSheet, Platform } from 'react-native';
-import { hasSafeAreaView } from '../../utilities/iosAndroidDim';
+import { hasSafeAreaView, getDimensions } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
@@ -28,15 +28,20 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: '2%'
     },
+    resultDecription: {
+        color: '#B3B3B3',
+        fontSize: 16,
+        fontWeight: '700',
+        textAlign: 'center'
+    },
     winLooseSeparator: {
         width: '6%'
     },
     uploadEvidence: {
-        marginTop: '11%',
+        marginTop: '10%',
         alignItems: 'center'
     },
     footerEvidence: {
-        marginTop: '2%',
         color: '#FFF',
         fontSize: 20
     },
@@ -48,7 +53,7 @@ export default styles = StyleSheet.create({
         borderWidth: 3,
         borderStyle: 'solid',
         backgroundColor: 'transparent',
-        marginTop: '20%',
+        marginTop: '10%',
         marginRight: 40,
         marginLeft: 40
     },
@@ -61,7 +66,8 @@ export default styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20,
         marginLeft: 32,
-        marginRight: 32
+        marginRight: 32,
+        width: getDimensions().width * .4
     },
     uploadResultButton: {
         marginTop: 24.5,

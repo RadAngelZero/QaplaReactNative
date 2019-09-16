@@ -66,7 +66,7 @@ class PublicMatchesFeedScreen extends Component {
                      */
                     matchesRef.on('child_added', async (newPublicMatch) => {
                         //Take the necesary information from the object returned of the database
-                        const { adversary1, alphaNumericIdMatch, bet, date, game, hour, idMatch, numMatches, observations, platform, timeStamp, winBet } = newPublicMatch.val();
+                        const { adversary1, alphaNumericIdMatch, bet, date, game, hour, numMatches, observations, platform, timeStamp, winBet } = newPublicMatch.val();
                         //Object with the necesary fields to load the match in the app (the card and the detailed view)
                         const matchObject = {
                             adversaryUid: adversary1,
@@ -75,7 +75,7 @@ class PublicMatchesFeedScreen extends Component {
                             date,
                             game,
                             hour,
-                            idMatch,
+                            idMatch: newPublicMatch.key,
                             numMatches,
                             observations,
                             platform,
@@ -231,11 +231,10 @@ class PublicMatchesFeedScreen extends Component {
                     cb1={this.markHg1}
                     header='Crea una Reta'
                     body='Empieza a competir con otros jugadores. Crea tu reta y gana!'>
-
                     <CreateRetasButton 
-                        highlighted={!this.props.navigation.getParam('firstMatchCreated')}
-                        onPress={this.onCrearRetaButtonPress}/>
-                </HighlightModal> 
+                            highlighted={!this.props.navigation.getParam('firstMatchCreated')}
+                            onPress={this.onCrearRetaButtonPress}/>
+                </HighlightModal>
             </View>  
         );
     }

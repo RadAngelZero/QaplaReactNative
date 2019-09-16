@@ -5,6 +5,7 @@
 // josep.sanahuja - 15-07-2019 - us25 - Remv. cancelButton
 
 import { StyleSheet } from 'react-native';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default StyleSheet.create({
     sfvContainer: {
@@ -79,7 +80,7 @@ export default StyleSheet.create({
         color: '#3DF9DF'
     },
     bottomButton: {
-        marginTop: '28%',
+        marginTop: heightPercentageToPx('28%'),
         backgroundColor: '#FA2D79',
         borderRadius: 100,
         elevation: 6,

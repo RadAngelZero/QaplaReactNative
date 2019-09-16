@@ -4,10 +4,7 @@
 // josep.sanahuja - 01-08-2019 - us57 - + props for 10 minutes Modal Msg
 
 import { StyleSheet } from 'react-native';
-import {
-    heightPercentageToPx,
-    widthPercentageToPx
- } from '../../utilities/iosAndroidDim'
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
     sfvContainer: {

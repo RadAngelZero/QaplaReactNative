@@ -6,7 +6,7 @@
 // josep.sanahuja - 08-07-2019 - us83 - + 'userName-creation-scenario' asyncStg flag & 'constructor'
 
 import React, { Component } from 'react';
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import style from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
 import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
@@ -15,9 +15,7 @@ import { isUserLogged } from '../../services/auth';
 import { storeData, retrieveData } from '../../utilities/persistance';
 
 import {
-    HIGHLIGHT_1_CREATE_MATCH,
-    HIGHLIGHT_1_CREATE_MATCH_FLAG,
-    HIGHLIGHT_2_NOTIFICATIONS
+    HIGHLIGHT_1_CREATE_MATCH
  } from '../../utilities/Constants';
 
 import HighlightModal from '../../components/HighlightModal/HighlightModal'
@@ -66,7 +64,19 @@ class PublicMatchesFeedScreen extends Component {
                      */
                     matchesRef.on('child_added', async (newPublicMatch) => {
                         //Take the necesary information from the object returned of the database
-                        const { adversary1, alphaNumericIdMatch, bet, date, game, hour, numMatches, observations, platform, timeStamp, winBet } = newPublicMatch.val();
+                        const {
+                            adversary1,
+                            alphaNumericIdMatch,
+                            bet,
+                            date,
+                            game,
+                            hour,
+                            numMatches,
+                            observations,
+                            platform,
+                            timeStamp,
+                            winBet
+                        } = newPublicMatch.val();
                         //Object with the necesary fields to load the match in the app (the card and the detailed view)
                         const matchObject = {
                             adversaryUid: adversary1,

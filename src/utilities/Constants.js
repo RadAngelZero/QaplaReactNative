@@ -36,3 +36,9 @@ export const NOTIFICATION_TYPE_LOSER = 'resultadoL';
 export const NOTIFICATION_TYPE_RESULT = 'resultado';
 export const NOTIFICATION_TYPE_REVISION = 'revision';
 export const NOTIFICATION_TYPE_TIE = 'empate';
+
+// Posible match results constants
+export const WON_RESULT = '1';
+export const LOST_RESULT = '0';
+export const OTHER_RESULT = '7';
+export const TIE_RESULT = '3';

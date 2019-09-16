@@ -17,6 +17,7 @@ import { uploadMatchResult } from '../../services/database';
 import UploadMatchResultsModal from '../../components/UploadMatchResultsModal/UploadMatchResultsModal';
 import UploadMatchEvidenceModal from '../../components/UploadMatchEvidenceModal/UploadMatchEvidenceModal';
 import { getDimensions } from '../../utilities/iosAndroidDim';
+import { WON_RESULT, TIE_RESULT, LOST_RESULT, OTHER_RESULT } from '../../utilities/Constants';
 
 const CloseIcon = Images.svg.closeIcon;
 const WinIcon = Images.svg.winIcon;
@@ -24,11 +25,6 @@ const LostIcon = Images.svg.lostIcon;
 const TieIcon = Images.svg.tieIcon;
 const ChooseClipIcon = Images.svg.chooseClipIcon;
 const AlreadyChoosedClipIcon = Images.svg.alreadyChoosedClipIcon;
-
-const WON_RESULT = '1';
-const LOST_RESULT = '0';
-const OTHER_RESULT = '7';
-const TIE_RESULT = '3';
 
 class UploadMatchResultScreen extends Component {
 
@@ -162,7 +158,7 @@ class UploadMatchResultScreen extends Component {
                                         width={getDimensions().width * .25}
                                         height={getDimensions().height * .2}
                                         fill={this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3'} /> 
-                                    <Text style={[styles.resultDecription,, { color: this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3' }]}>
+                                    <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3' }]}>
                                         Ganado.
                                     </Text>
                                 </View>
@@ -174,7 +170,7 @@ class UploadMatchResultScreen extends Component {
                                         width={getDimensions().width * .18}
                                         height={getDimensions().height * .14}
                                         fill={this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3'} /> 
-                                    <Text style={[styles.resultDecription,, { color: this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
+                                    <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
                                         Empatado.
                                     </Text>
                                 </View>
@@ -186,7 +182,7 @@ class UploadMatchResultScreen extends Component {
                                         width={getDimensions().width * .25}
                                         height={getDimensions().height * .2}
                                         fill={this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3'} />
-                                    <Text style={[styles.resultDecription,, { color: this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3' }]}>
+                                    <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3' }]}>
                                         Perdido.
                                     </Text>
                                 </View>

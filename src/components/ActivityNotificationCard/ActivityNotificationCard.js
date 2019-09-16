@@ -5,7 +5,13 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
 import styles from './style';
-import { NOTIFICATION_TYPE_WINNER, NOTIFICATION_TYPE_LOSER, NOTIFICATION_TYPE_RESULT, NOTIFICATION_TYPE_REVISION, NOTIFICATION_TYPE_TIE } from '../../utilities/Constants';
+import {
+    NOTIFICATION_TYPE_WINNER,
+    NOTIFICATION_TYPE_LOSER,
+    NOTIFICATION_TYPE_RESULT,
+    NOTIFICATION_TYPE_REVISION,
+    NOTIFICATION_TYPE_TIE
+} from '../../utilities/Constants';
 
 export class ActivityNotificationCard extends Component {
     determineNotificationText = () => {

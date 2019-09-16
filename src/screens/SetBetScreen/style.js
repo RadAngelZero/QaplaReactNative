@@ -4,6 +4,10 @@
 // josep.sanahuja - 01-08-2019 - us57 - + props for 10 minutes Modal Msg
 
 import { StyleSheet } from 'react-native';
+import {
+    heightPercentageToPx,
+    widthPercentageToPx
+ } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
     sfvContainer: {
@@ -16,14 +20,14 @@ export default styles = StyleSheet.create({
         backgroundColor:'#131833'
     },
     titleContainer: {
-        marginTop: '5%'
+        marginTop: heightPercentageToPx('5%')
 	},
     titleText: {
         color: '#FFF',
         marginLeft: 24,
         fontSize: 32,
         fontWeight: 'bold',
-        width: '60%',
+        width: widthPercentageToPx('60%'),
     },
     prizeImage: {
         marginTop: '10%',
@@ -34,8 +38,8 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 60,
         textAlign: 'center',
-        marginTop: '4.2%',
-        marginBottom: '1.23%'
+        marginTop: heightPercentageToPx('4.2%'),
+        marginBottom: heightPercentageToPx('1.23%')
     },
     qaploinIconContainer: {
         alignSelf: 'center',
@@ -49,7 +53,7 @@ export default styles = StyleSheet.create({
     betContainer: {
         flexDirection: 'row',
         alignSelf: 'center',
-        marginTop: '7.27%'
+        marginTop: heightPercentageToPx('7.27%')
     },
     betTextContainer: {
         marginLeft: 14,
@@ -73,7 +77,7 @@ export default styles = StyleSheet.create({
         backgroundColor: '#FA2D79',
         marginLeft: 80,
         marginRight: 80,
-        marginTop: '6.65%'
+        marginTop: heightPercentageToPx('6.65%')
     },
     createButtonText: {
         marginTop: 20,
@@ -83,6 +87,7 @@ export default styles = StyleSheet.create({
         letterSpacing: .57,
         fontSize: 14,
         textAlign: 'center',
+        textAlignVertical: 'center',
         color: '#FFF',
         fontWeight: 'bold',
         elevation: 6,

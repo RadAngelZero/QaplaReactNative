@@ -16,13 +16,15 @@ import UploadClutchEvidenceScreen from '../UploadClutchEvidenceScreen/UploadClut
 import { uploadMatchResult } from '../../services/database';
 import UploadMatchResultsModal from '../../components/UploadMatchResultsModal/UploadMatchResultsModal';
 import UploadMatchEvidenceModal from '../../components/UploadMatchEvidenceModal/UploadMatchEvidenceModal';
+import { getDimensions } from '../../utilities/iosAndroidDim';
+import { WON_RESULT, TIE_RESULT, LOST_RESULT, OTHER_RESULT } from '../../utilities/Constants';
 
 const CloseIcon = Images.svg.closeIcon;
-const QaploinIcon = Images.svg.favouritesIcon;
-
-const WON_RESULT = '1';
-const LOST_RESULT = '0';
-const OTHER_RESULT = '7';
+const WinIcon = Images.svg.winIcon;
+const LostIcon = Images.svg.lostIcon;
+const TieIcon = Images.svg.tieIcon;
+const ChooseClipIcon = Images.svg.chooseClipIcon;
+const AlreadyChoosedClipIcon = Images.svg.alreadyChoosedClipIcon;
 
 class UploadMatchResultScreen extends Component {
 
@@ -90,10 +92,19 @@ class UploadMatchResultScreen extends Component {
      */
     uploadResult = async () => {
         try {
+            let {matchResultStatus} = this.state;
+
+            /**
+             * A result of type 'TIE_RESULT' has (in the cloud functions) the same logic than 'OTHER_RESULT',
+             * we just need to identify wich one here for UI questions
+             */
+            if (matchResultStatus === TIE_RESULT) {
+                matchResultStatus = OTHER_RESULT;
+            }
             await uploadMatchResult(
                 this.props.navigation.getParam('idMatch'),
                 this.props.navigation.getParam('currentUserAdversary'),
-                this.state.matchResultStatus,
+                matchResultStatus,
                 this.state.evidenceUrl
             );
             this.setState({ showUploadMatchResultsModal: true })
@@ -143,33 +154,53 @@ class UploadMatchResultScreen extends Component {
                         <View style={styles.winLooseContainer}>
                             <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, WON_RESULT)}>
                                 <View>
-                                    <QaploinIcon
-                                        fill={this.state.matchResultStatus === WON_RESULT ? '#36E5CE' : 'gray'} 
-                                        height={100}
-                                        width={100} /> 
-                                </View>                       
+                                    <WinIcon
+                                        width={getDimensions().width * .25}
+                                        height={getDimensions().height * .2}
+                                        fill={this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3'} /> 
+                                    <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3' }]}>
+                                        Ganado.
+                                    </Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                            <View style={styles.winLooseSeparator} />
+                            <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, TIE_RESULT)}>
+                                <View style={{ alignSelf: 'center' }}>
+                                    <TieIcon
+                                        width={getDimensions().width * .18}
+                                        height={getDimensions().height * .14}
+                                        fill={this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3'} /> 
+                                    <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
+                                        Empatado.
+                                    </Text>
+                                </View>
                             </TouchableWithoutFeedback>
                             <View style={styles.winLooseSeparator} />
                             <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, LOST_RESULT)}> 
                                 <View>
-                                    <QaploinIcon
-                                        fill={this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : 'gray'}
-                                        height={100}
-                                        width={100} />
+                                    <LostIcon
+                                        width={getDimensions().width * .25}
+                                        height={getDimensions().height * .2}
+                                        fill={this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3'} />
+                                    <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3' }]}>
+                                        Perdido.
+                                    </Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>
                         <View style={styles.uploadEvidence}>
                             <TouchableWithoutFeedback onPress={this.sendToUploadEvidence}>
-                                <QaploinIcon height={150} width={150} />
+                                {this.state.evidenceUrl !== '' ?
+                                    <AlreadyChoosedClipIcon height={150} width={150} fill='#FF0000' />
+                                    :
+                                    <ChooseClipIcon height={150} width={150} fill='#FF0000' />
+                                }
                             </TouchableWithoutFeedback>
                         </View>
-                        <Text style={styles.footerEvidence}>
-                            Evidencia.                  
-                        </Text>
+                        <Text style={styles.footerEvidence}>Evidencia.</Text>
                         <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, OTHER_RESULT)}>
-                            <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === OTHER_RESULT ? '#FF0000' : '#6D7DDE' }]}>
-                                <Text style={styles.buttonText}>Otro Resultado</Text>
+                            <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === OTHER_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
+                                <Text style={styles.buttonText}>No Jugado</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         {this.state.matchResultStatus &&

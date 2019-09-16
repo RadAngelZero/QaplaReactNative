@@ -53,7 +53,8 @@ class PublicMatchCardScreen extends Component {
             openChalExModal: false,
             openAcceptChallengeModal: false,
             openNoQaploinsModal: false,
-            validTimeLeft: 0
+            validTimeLeft: 0,
+            expired: false
         };
     }
 
@@ -99,14 +100,27 @@ class PublicMatchCardScreen extends Component {
                         let seconds = Math.floor((leftTime % (1000 * 60)) / 1000);
 
                         /**
-                         * If the minute or second value is less than 10 (like 9 or 8)
-                         * then we add a 0 before the numeric value (so the value look like: 09 or 08)
-                         */ 
-                        minutes = minutes < 10 ? `0${minutes}` : minutes;
-                        seconds = seconds < 10 ? `0${seconds}` : seconds;
+                         * If there's no more time to interact with the match
+                         */
+                        if (minutes <= 0 && seconds <= 0) {
+                            validTimeLeft = 'Reta expirada';
 
-                        // Legible user string
-                        validTimeLeft = `${minutes}:${seconds}`;
+                            /**
+                             * We set the match as expired (this action disable the button)
+                             */
+                            this.setState({ expired: true });
+                            clearInterval(this.timer);
+                        } else {
+                            /**
+                             * If the minute or second value is less than 10 (like 9 or 8)
+                             * then we add a 0 before the numeric value (so the value look like: 09 or 08)
+                             */ 
+                            minutes = minutes < 10 ? `0${minutes}` : minutes;
+                            seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+                            // Legible user string
+                            validTimeLeft = `${minutes}:${seconds}`;
+                        }
 
                         this.setState({ validTimeLeft });
                     }, 1000);
@@ -144,7 +158,7 @@ class PublicMatchCardScreen extends Component {
     toggleOpenChalExModal = async () => {
         this.setState({
           openChalExModal: !this.state.openChalExModal
-        })
+        });
     } 
 
     /**
@@ -245,10 +259,7 @@ class PublicMatchCardScreen extends Component {
     render() {
         const matchCard = this.props.navigation.getParam('matchCard');
         const gameData = getGameData(matchCard.game, this.props.games);
-        console.log((matchCard.matchesPlay &&
-            ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1)
-            ||
-            (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2))));
+
         return (
             <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
                 <View style={styles.imageHeader}>
@@ -309,20 +320,33 @@ class PublicMatchCardScreen extends Component {
                         </View>
                     </View>
                 </View>
+                {/*
+                    If the user isn't the creator of the match, and this match is not in matches play and isn't a challenge
+                    we show 'Retar' button
+                */}
                 {(this.props.uid !== matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
-                    <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()}>
+                    <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()} disabled={this.state.expired}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Retar</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
+                {/*
+                    If the user is the creator of the match, and this match is not in matches play and isn't a challenge
+                    we show 'Cancelar' button
+                */}
                 {(this.props.uid === matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
-                    <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()}>
+                    <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()} disabled={this.state.expired}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Cancelar</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
+                {/*
+                    If the match is on matches play and the user hasn't upload their result yet we show 'Subir Resultado'
+                    button, if the match is on matches play and the user has already uploaded their result, then we show
+                    just a text
+                */}
                 {(matchCard.matchesPlay &&
                     ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1)
                     ||
@@ -331,7 +355,7 @@ class PublicMatchCardScreen extends Component {
                     :
                     <>
                     {matchCard.matchesPlay &&
-                        <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult}>
+                        <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult} disabled={this.state.expired}>
                             <View style={styles.bottomButton}>
                                 <Text style={styles.bottomButtonText}>Subir Resultado</Text>
                             </View>
@@ -340,7 +364,7 @@ class PublicMatchCardScreen extends Component {
                     </>
                 }
                 {matchCard.isChallenge &&
-                    <TouchableWithoutFeedback onPress={this.tryToAcceptChallengeRequest}>
+                    <TouchableWithoutFeedback onPress={this.tryToAcceptChallengeRequest} disabled={this.state.expired}>
                         <View style={styles.bottomButton}>
                             <Text style={styles.bottomButtonText}>Aceptar desafio</Text>
                         </View>

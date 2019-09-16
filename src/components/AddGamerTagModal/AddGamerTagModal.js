@@ -38,7 +38,7 @@ export class AddGamerTagModal extends Component {
                 this.props.selectedGame.gameKey, this.state.gamerTagText);
             trackOnSegment('Add Gamer Tag Process Completed',
                 { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });
-            if (this.props.loadGamesThatUserDontHave) {
+            if (this.props.loadGamesUserDontHave) {
                 this.props.navigation.navigate('Perfil');
             } else {
                 this.props.navigation.navigate('SetBet',

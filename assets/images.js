@@ -31,6 +31,11 @@ import LOLIcon from './icons/LOL.svg';
 import OverwatchIcon from './icons/Overwatch.svg';
 import SmashIcon from './icons/Smash.svg';
 import HaloIcon from './icons/Halo5.svg';
+import WinIcon from './icons/ganado.svg';
+import LostIcon from './icons/perdido.svg';
+import TieIcon from './icons/empatado.svg';
+import ChooseClipIcon from './icons/video-clip.svg';
+import AlreadyChoosedClipIcon from './icons/video-clip-check.svg';
 
 // Images
 
@@ -166,6 +171,11 @@ const images = {
 		lessQaploins: LessQaploins,
 		moreQaploins: MoreQaploins,
 		okIcon: OkIcon,
+		winIcon: WinIcon,
+		lostIcon: LostIcon,
+		tieIcon: TieIcon,
+		chooseClipIcon: ChooseClipIcon,
+		alreadyChoosedClipIcon: AlreadyChoosedClipIcon,
 		gowIcon: GowIcon,
 		fifaIcon: FifaIcon,
 		clashIcon: ClashIcon,

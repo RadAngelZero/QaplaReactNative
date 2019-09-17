@@ -120,19 +120,6 @@ const TabMainNavigator = createBottomTabNavigator({
       )
     })
   },
-  Mock1: {
-    screen:   UploadMatchResultScreen,
-    navigationOptions: ({ navigation }) => ({
-      //If no title it shows the name as Search.
-      title: "Mock 1",
-      tabBarIcon: ({ tintColor, focused }) => (
-        <View>
-          <Mock1Icon width={25} height={25} style={{ alignSelf: 'center' }} fill={focused ? '#36E5CE' : 'gray'}/>
-          {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Mock 1</Text>}
-        </View>
-      )
-    })
-  },
   Perfil: {
     screen:   UserProfileScreen,
     navigationOptions: ({ navigation }) => ({

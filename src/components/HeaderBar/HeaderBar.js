@@ -131,30 +131,29 @@ class HeaderBar extends Component {
         const {navigate} = this.props.navigation;
         
         return (
-            <HighlightModal 
-                    visible={this.state.showHg2Modal}
-                    onClose={this.toggleHg2Modal}
-                    showDelay={1000}
-                    cb1={this.markHg2}
-                    header='Ve tus Notificaciones'
-                    body='Tus retas recibirán notificaciones de desafio, recuerda checar las notificaciones!'>
             <View style={styles.container} testID='container'>
-                                    <View style={styles.imageContainer}>
-                        <TouchableWithoutFeedback style={styles.imageAndButtonDimensions}
-                            onPress={this.onNotiPressBttn}
-                            testID='NotificationButton'>
-                            <View>
-                                <NotificationIcon height={24} width={24} />
-                            </View>
-                        </TouchableWithoutFeedback>
-                    </View>
-                
+                <View style={styles.imageContainer}>
+                    <HighlightModal 
+                      visible={this.state.showHg2Modal}
+                      onClose={this.toggleHg2Modal}
+                      showDelay={1000}
+                      cb1={this.markHg2}
+                      header='Ve tus Notificaciones'
+                      body='Tus retas recibirán notificaciones de desafio, recuerda checar las notificaciones!'>
+                          <TouchableWithoutFeedback style={styles.imageAndButtonDimensions}
+                              onPress={this.onNotiPressBttn}
+                              testID='NotificationButton'>
+                              <View>
+                                  <NotificationIcon height={24} width={24} />
+                              </View>
+                          </TouchableWithoutFeedback>
+                    </HighlightModal>
+                </View>
                 <View style={styles.textContainer} testID='textContainer'>
                     <Text style={styles.textStyle} testID='text'>Qapla</Text>
                 </View>
                 <View style={styles.invisibleView} testID='invisibleView'></View>
             </View>
-            </HighlightModal>
         );
     }
 }

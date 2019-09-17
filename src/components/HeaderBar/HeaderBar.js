@@ -131,15 +131,15 @@ class HeaderBar extends Component {
         const {navigate} = this.props.navigation;
         
         return (
-            <View style={styles.container} testID='container'>
-                <HighlightModal 
+            <HighlightModal 
                     visible={this.state.showHg2Modal}
                     onClose={this.toggleHg2Modal}
                     showDelay={1000}
                     cb1={this.markHg2}
                     header='Ve tus Notificaciones'
                     body='Tus retas recibirán notificaciones de desafio, recuerda checar las notificaciones!'>
-                    <View style={styles.imageContainer}>
+            <View style={styles.container} testID='container'>
+                                    <View style={styles.imageContainer}>
                         <TouchableWithoutFeedback style={styles.imageAndButtonDimensions}
                             onPress={this.onNotiPressBttn}
                             testID='NotificationButton'>
@@ -148,12 +148,13 @@ class HeaderBar extends Component {
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
-                </HighlightModal>
+                
                 <View style={styles.textContainer} testID='textContainer'>
                     <Text style={styles.textStyle} testID='text'>Qapla</Text>
                 </View>
                 <View style={styles.invisibleView} testID='invisibleView'></View>
             </View>
+            </HighlightModal>
         );
     }
 }

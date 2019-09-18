@@ -1,4 +1,5 @@
-// diego           - 03-09-2019 - us109 - Added Tab for logros on TabMainNavigator
+// diego           - 18-09-2019 - us110 - Created LogrosTabNavigator
+// diego           - 18-09-2019 - us109 - Added Tab for logros on TabMainNavigator
 // diego           - 03-09-2019 - us96 - Added TopNavOptions to allow users without back button navigate to previous screens
 // diego           - 19-08-2019 - us89 - Added logic to show label only when tab is focused added on TabMainNavigator 
 // josep.sanahuja  - 12-08-2019 - us85 - + UploadMatchResult in AppNoHeaderStackNavigator
@@ -30,19 +31,48 @@ import ActivityNotificationsScreen from './screens/ActivityNotificationsScreen/A
 import RetasNotificationsScreen from './screens/RetasNotificationsScreen/RetasNotificationsScreen';
 import UploadMatchResultScreen from './screens/UploadMatchResultScreen/UploadMatchResultScreen';
 import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
+import LogrosActivosScreen from './screens/LogrosActivosScreen/LogrosActivosScreen';
+import LogrosCompletadosScreen from './screens/LogrosCompletadosScreen/LogrosCompletadosScreen';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
 import NotificationsHeader from './components/NotificationsHeader/NotificationsHeader';
 import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeForNotificationTab';
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
-import MockScreen1 from './screens/MockScreen1/MockScreen1';
 
 // Svg Icons
-const Mock1Icon = Images.svg.favouritesIcon;
 const ProfileIcon = Images.svg.profileIcon;
 const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
 const LogrosIcon = Images.svg.logrosIcon;
+
+const LogrosTabNavigator = createMaterialTopTabNavigator(
+  {
+    LogrosActivos: {
+      screen: LogrosActivosScreen,
+      navigationOptions: () => ({
+        title: 'Activos'
+      })
+    },
+    LogrosCompletados: {
+      screen: LogrosCompletadosScreen,
+      navigationOptions: () => ({
+        title: 'Completados'
+      })
+    }
+  },
+  {
+    initialRouteName: 'LogrosActivos',
+    tabBarOptions: {
+      style: { backgroundColor: '#0C1021' },
+      activeTintColor: '#36E5CE',
+      inactiveTintColor: 'gray',
+      indicatorStyle: {
+        borderBottomColor: '#36E5CE',
+        borderBottomWidth: 2,
+      }
+    },
+  }
+);
 
 const NotificationTabNavigator = createMaterialTopTabNavigator(
   {
@@ -123,7 +153,7 @@ const TabMainNavigator = createBottomTabNavigator({
     })
   },
   Logros: {
-    screen: MockScreen1,
+    screen: LogrosTabNavigator,
     navigationOptions: ({ navigation }) => ({
       title: "Logros",  //Tried to hide this for next tab Search.,
       tabBarIcon: ({ tintColor, focused }) => (

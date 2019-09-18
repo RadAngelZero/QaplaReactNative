@@ -1,3 +1,4 @@
+// diego           - 03-09-2019 - us109 - Added Tab for logros on TabMainNavigator
 // diego           - 03-09-2019 - us96 - Added TopNavOptions to allow users without back button navigate to previous screens
 // diego           - 19-08-2019 - us89 - Added logic to show label only when tab is focused added on TabMainNavigator 
 // josep.sanahuja  - 12-08-2019 - us85 - + UploadMatchResult in AppNoHeaderStackNavigator
@@ -5,16 +6,15 @@
 // diego           - 01-08-2019 - us58 - created NotificationTabNavigator
 // diego           - 25-07-2019 - us31 - added CheckOutPaymentScreen and unnecessary code removed
 
-import React from 'react'
+import React from 'react';
 
-import { View, Text } from 'react-native'
-import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createSwitchNavigator} from 'react-navigation'
+import { View, Text } from 'react-native';
+import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createSwitchNavigator} from 'react-navigation';
 
-import Images from '@assets/images'
+import Images from './../assets/images';
 
-// Screens prueba github
-import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen'
-import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen'
+import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen';
+import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen';
 import MyMatchesScreen from './screens/MyMatchesScreen/MyMatchesScreen';
 import PublicMatchCardScreen from './screens/PublicMatchCardScreen/PublicMatchCardScreen';
 import SignInScreen from './screens/SignInScreen/SignInScreen';
@@ -36,11 +36,13 @@ import HeaderBar from './components/HeaderBar/HeaderBar';
 import NotificationsHeader from './components/NotificationsHeader/NotificationsHeader';
 import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeForNotificationTab';
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
+import MockScreen1 from './screens/MockScreen1/MockScreen1';
 
 // Svg Icons
 const Mock1Icon = Images.svg.favouritesIcon;
 const ProfileIcon = Images.svg.profileIcon;
 const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
+const LogrosIcon = Images.svg.logrosIcon;
 
 const NotificationTabNavigator = createMaterialTopTabNavigator(
   {
@@ -116,6 +118,18 @@ const TabMainNavigator = createBottomTabNavigator({
         <View>
           <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
           {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Retas</Text>}
+        </View>
+      )
+    })
+  },
+  Logros: {
+    screen: MockScreen1,
+    navigationOptions: ({ navigation }) => ({
+      title: "Logros",  //Tried to hide this for next tab Search.,
+      tabBarIcon: ({ tintColor, focused }) => (
+        <View>
+          <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
+          {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Logros</Text>}
         </View>
       )
     })
@@ -209,17 +223,6 @@ const AppNoHeaderStackNavigator = createSwitchNavigator(
 );
 
 export default class Router extends React.Component {
-
-  constructor(props) {
-    super(props);
-  
-    this.state = {};
-  }
-
-  componentDidMount() {
-    
-  }
-
   render() {
     // or not shown
     const RootStack = createStackNavigator(

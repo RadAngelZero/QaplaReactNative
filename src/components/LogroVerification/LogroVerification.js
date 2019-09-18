@@ -2,10 +2,19 @@
 
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import styles from './style';
 
 export class LogroVerification extends Component {
+
+    /**
+     * Redirecto to VerificationScreen
+     */
+    redirectToVerifyScreen = () => {
+        this.props.navigation.navigate('Verification');
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -17,7 +26,7 @@ export class LogroVerification extends Component {
                     <Text style={styles.description}>
                         La información compartida es completamente confidencial y será utilizada para incrementar la seguridad de tu cuenta.
                     </Text>
-                    <TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={this.redirectToVerifyScreen}>
                         <View style={styles.verifyButton}>
                             <Text style={styles.verifyTextButton}>Verificar</Text>
                         </View>
@@ -28,4 +37,4 @@ export class LogroVerification extends Component {
     }
 }
 
-export default LogroVerification;
+export default withNavigation(LogroVerification);

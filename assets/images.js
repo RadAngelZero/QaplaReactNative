@@ -1,3 +1,4 @@
+// diego	      - 18-09-2019 - us109 - Added LogroIcon
 // diego	      - 06-09-2019 - us93 - Added OkIcon for checkbox
 // diego	  	  - 03-09-2019 - us96 - Added close (x) icon (used on close of navigators over the main navigator)
 // diego	  	  - 03-09-2019 - us92 - Added onboarding images
@@ -5,21 +6,21 @@
 // diego        - 17-07-2019 - NA   - removed duplicate smash bros image
 
 // Icons
-import InstagramIcon from './icons/Instagram_logo_2016.svgx'
-import FacebookIcon from './icons/F_icon.svg'
-import FavouritesIcon from './icons/favorite-heart-button.svg'
-import TestIcon from './icons/facebook.svg'
+import InstagramIcon from './icons/Instagram_logo_2016.svgx';
+import FacebookIcon from './icons/F_icon.svg';
+import FavouritesIcon from './icons/favorite-heart-button.svg';
+import TestIcon from './icons/facebook.svg';
 
-import PublicFeedMatchIcon from './icons/Explore.svg'
-import QaploinsIcon from './icons/qaploins.svg'
-import ProfileIcon from './icons/ProfileActive.svg'
+import PublicFeedMatchIcon from './icons/Explore.svg';
+import QaploinsIcon from './icons/qaploins.svg';
+import ProfileIcon from './icons/ProfileActive.svg';
 import NotificationIcon from './icons/Notifications.svg';
 import QaploinsPrize from './icons/QaploinsPrize.svg';
 import LessQaploins from './icons/LessQaploins.svg';
 import MoreQaploins from './icons/MoreQaploins.svg';
-import FifaIcon from './icons/Fifa.svg'
-import GowIcon from './icons/Gow.svg'
-import CancelIcon from './icons/qaploins.svg'
+import FifaIcon from './icons/Fifa.svg';
+import GowIcon from './icons/Gow.svg';
+import CancelIcon from './icons/qaploins.svg';
 import LightningIcon from './icons/Lighting.svg';
 import SearchIcon from './icons/search.svg';
 import BackIcon from './icons/back.svg';
@@ -36,6 +37,7 @@ import LostIcon from './icons/perdido.svg';
 import TieIcon from './icons/empatado.svg';
 import ChooseClipIcon from './icons/video-clip.svg';
 import AlreadyChoosedClipIcon from './icons/video-clip-check.svg';
+import LogrosIcon from './icons/LogrosActive.svg';
 
 // Images
 
@@ -176,6 +178,7 @@ const images = {
 		tieIcon: TieIcon,
 		chooseClipIcon: ChooseClipIcon,
 		alreadyChoosedClipIcon: AlreadyChoosedClipIcon,
+		logrosIcon: LogrosIcon,
 		gowIcon: GowIcon,
 		fifaIcon: FifaIcon,
 		clashIcon: ClashIcon,

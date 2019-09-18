@@ -25,6 +25,7 @@ export const usersRef = database.ref('/Users');
 export const gamesRef = database.ref('/Games');
 export const commissionRef = database.ref('/Commission');
 export const gamersRef = database.ref('/Gamers');
+export const logrosActRef = database.ref('/logrosActivos');
 
 /**
  * Returns the userName of the specified user
@@ -498,3 +499,22 @@ export async function uploadMatchResult(idMatch, adversary, result, evidence) {
         matchesPlayRef.child(idMatch).update({ resultPlay2: result, pickResult2: '1', hourResult, clutch2: evidence });
     }
 }
+
+// -----------------------------------------------
+// Logros
+// -----------------------------------------------
+/**
+ * Remove the specified quantity of qaploins from a user
+ * @param {string} uid INPUT user identifier to substract the qaploins
+ * @param {number} currentCredits INPUT The current number of qaploins of the user
+ * @param {number} quantityToSubstract INPUT The amount of qaploins to substract
+ */
+
+export async function getQaplaActiveLogros(ctx) {
+    try {
+        return await logrosActRef.once('value');
+    } catch (error) {
+        console.error(error);
+    }
+}
+

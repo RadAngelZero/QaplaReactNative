@@ -10,7 +10,13 @@ import {
 
 import styles from './style'
 
+import {getQaplaActiveLogros} from '../../services/database'
+
 export default class MockScreen1 extends React.Component {
+  async componentDidMount() {
+    console.log("Logros: \n" + JSON.stringify( await getQaplaActiveLogros(), null, 2));
+  }
+
   render() {
     return (
         <SafeAreaView style={styles.sfvContainer}>

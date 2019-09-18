@@ -19,5 +19,19 @@ export default StyleSheet.create({
     paddingHorizontal:10,
     paddingVertical:5,
     borderRadius:3
+  },
+  preview: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  capture: {
+    flex: 0,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    padding: 15,
+    paddingHorizontal: 20,
+    alignSelf: 'center',
+    margin: 20,
   }
 })

@@ -31,6 +31,8 @@ import RetasNotificationsScreen from './screens/RetasNotificationsScreen/RetasNo
 import UploadMatchResultScreen from './screens/UploadMatchResultScreen/UploadMatchResultScreen';
 import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
 
+import MockScreen1 from './screens/MockScreen1/MockScreen1'
+
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
 import NotificationsHeader from './components/NotificationsHeader/NotificationsHeader';
@@ -116,6 +118,19 @@ const TabMainNavigator = createBottomTabNavigator({
         <View>
           <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
           {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Retas</Text>}
+        </View>
+      )
+    })
+  },
+  Camera: {
+    screen:   MockScreen1,
+    navigationOptions: ({ navigation }) => ({
+      //If no title it shows the name as Search.
+      title: 'Camera',
+      tabBarIcon: ({ tintColor, focused }) => (
+        <View>
+          <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'}/> 
+          {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Perfil</Text>}
         </View>
       )
     })

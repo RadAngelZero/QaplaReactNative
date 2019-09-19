@@ -6,6 +6,7 @@ import { SafeAreaView, ScrollView, View, TouchableWithoutFeedback, Text } from '
 import styles from './style';
 import VerificationPersonalData from '../../components/VerificationPersonalData/VerificationPersonalData';
 import VerificationPhoneNumber from '../../components/VerificationPhoneNumber/VerificationPhoneNumber';
+import ProgressStepsIndicator from '../../components/ProgressStepsIndicator/ProgressStepsIndicator';
 
 class VerificationScreen extends Component {
     state = {
@@ -67,6 +68,11 @@ class VerificationScreen extends Component {
                                 setPhoneNumber={this.setPhoneNumber}
                                 goToNextStep={this.goToNextStep} />
                         </View>
+                        <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
+                            <VerificationPhoneNumber
+                                setPhoneNumber={this.setPhoneNumber}
+                                goToNextStep={this.goToNextStep} />
+                        </View>
                     </ScrollView>
                 </View>
                 {this.state.nextIndex < this.state.indexPositions.length &&
@@ -76,6 +82,7 @@ class VerificationScreen extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 }
+                <ProgressStepsIndicator steps={this.state.indexPositions.length} selected={this.state.nextIndex - 1} />
             </SafeAreaView>
         );
     }

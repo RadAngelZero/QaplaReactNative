@@ -512,7 +512,8 @@ export async function uploadMatchResult(idMatch, adversary, result, evidence) {
 
 export async function getQaplaActiveLogros(ctx) {
     try {
-        return await logrosActRef.once('value');
+        const logrosSnap = await logrosActRef.once('value');
+        return logrosSnap.val();
     } catch (error) {
         console.error(error);
     }

@@ -31,7 +31,7 @@ import RetasNotificationsScreen from './screens/RetasNotificationsScreen/RetasNo
 import UploadMatchResultScreen from './screens/UploadMatchResultScreen/UploadMatchResultScreen';
 import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
 
-import MockScreen1 from './screens/MockScreen1/MockScreen1';
+import LogrosScreen from './screens/LogrosScreen/LogrosScreen';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
@@ -123,7 +123,7 @@ const TabMainNavigator = createBottomTabNavigator({
     })
   },
   Logros: {
-    screen:   MockScreen1,
+    screen:   LogrosScreen,
     navigationOptions: ({ navigation }) => ({
       //If no title it shows the name as Search.
       title: 'Logros',

@@ -10,7 +10,9 @@ export class ProgressStepsIndicator extends Component {
         let steps = [];
         for (let index = 0; index < this.props.steps; index++) {
             steps.push(
-                <View style={[styles.indicator, { backgroundColor: index === this.props.selected ? '#3DF9DF' : '#060919'  }]} />
+                <View
+                    key={`Indicator-${index}`}
+                    style={[styles.indicator, { backgroundColor: index === this.props.selected ? '#3DF9DF' : '#060919'  }]} />
             );
         }
         return (

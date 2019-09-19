@@ -1,29 +1,4 @@
-// josep.sanahuja    - 05-08-2019 - us84 - + sfvContainer
-// diego             - 01-08-2019 - us58 - File creation
-
-// import { StyleSheet } from 'react-native';
-
-// export default styles = StyleSheet.create({
-//     sfvContainer: {
-//         flex: 1,
-//         justifyContent: 'center',
-//         backgroundColor:'#131833',
-
-//     },
-//     container: {
-//         backgroundColor:'#131833',
-//         flexDirection: 'row',
-//         alignItems: 'center',
-//         flex: 1
-//     },
-//     title: {
-//         color: '#FFF',
-//         fontSize: 24,
-//         textAlign: 'center'
-//     }
-// });
-
-// diego           - 18-09-2019 - us133 - File creation
+// josep.sanahuja - 19-09-2019 - us114 - File creation
 
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';

@@ -1,5 +1,4 @@
-// josep.sanahuja    - 05-08-2019 - us84 - + sfvContainer
-// diego             - 01-08-2019 - us58 - File creation
+// josep.sanahuja - 19-09-2019 - us114 - File creation
 
 import { StyleSheet } from 'react-native';
 

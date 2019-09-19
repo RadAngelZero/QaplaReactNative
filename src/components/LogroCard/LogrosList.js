@@ -1,10 +1,9 @@
-// josep.sanahuja    - 18-09-2019 - us114 - File creation
+// josep.sanahuja - 19-09-2019 - us114 - File creation
 
 import React from 'react';
 
 import {
   View,
-  Text,
   SafeAreaView,
   FlatList
 } from 'react-native'
@@ -12,7 +11,6 @@ import {
 import styles from './style'
 
 import {getQaplaActiveLogros} from '../../services/database'
-
 import LogroCardItem from '../../components/LogroCard/LogroCardItem';
 
 class LogrosList extends React.Component {
@@ -24,11 +22,15 @@ class LogrosList extends React.Component {
       };
   }  
 
-
   componentDidMount() {
       this.loadLogros();
   }
 
+  /**
+   * @description
+   * Gets active logros from database and processes them so that an array of logros objects
+   * is created, so that it can be used for listing. No listener is implemented.
+   */
   async loadLogros() {
       try{
           const logrosColl = await getQaplaActiveLogros();
@@ -94,13 +96,29 @@ class LogrosList extends React.Component {
   }
 }
 
+/**
+ * @description
+ * Obtains the keys from logros array 
+ *
+ * @param {array} logrosArr Array of logros with type as key
+ *
+ * @return Array of logros type keys
+ */
 function getLogrosType(logrosArr) 
 {
     return (typeof logrosArr) === 'object' ? Object.keys(logrosArr) : [];
 }
 
-function getLogrosIds(logroCategory) {
-  return (typeof logroCategory) === 'object' ? Object.keys(logroCategory) : [];
+/**
+ * @description
+ * Obtains the uids from the logro array passed as parameter
+ *
+ * @param {array} logroType Array of logros of the same type
+ *
+ * @return Array with logros ids
+ */
+function getLogrosIds(logroType) {
+  return (typeof logroType) === 'object' ? Object.keys(logroType) : [];
 }
 
 export default LogrosList;

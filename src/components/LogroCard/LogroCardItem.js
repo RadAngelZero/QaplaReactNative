@@ -1,13 +1,10 @@
-// josep.sanahuja - 14-08-2019 - us114 - File creation
+// josep.sanahuja - 19-09-2019 - us114 - File creation
 
 import React, { Component } from 'react';
-import { View, Text} from 'react-native';
-
-import styles from './style';
-import { trackOnSegment } from '../../services/statistics';
 
 import LogroQapla from './LogroQapla';
 import LogroSocial from './LogroSocial';
+
 class LogroCardItem extends Component {
     render() {
         let res = null;
@@ -29,4 +26,3 @@ class LogroCardItem extends Component {
 }
 
 export default LogroCardItem;
-

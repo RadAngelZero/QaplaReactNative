@@ -1,3 +1,4 @@
+// josep.sanahuja - 19-09-2019 - us114 - Add getQaplaActiveLogros && logrosActRef
 // diego          - 21-08-2019 - us89 - Updated addGameToUser to create gamer profile of the new game on GamersRef
 // diego          - 20-08-2019 - us89 - Created gamersRef
 // diego          - 14-08-2019 - us77 - Added uploadResultOfMatch
@@ -503,13 +504,14 @@ export async function uploadMatchResult(idMatch, adversary, result, evidence) {
 // -----------------------------------------------
 // Logros
 // -----------------------------------------------
-/**
- * Remove the specified quantity of qaploins from a user
- * @param {string} uid INPUT user identifier to substract the qaploins
- * @param {number} currentCredits INPUT The current number of qaploins of the user
- * @param {number} quantityToSubstract INPUT The amount of qaploins to substract
- */
 
+/**
+ * @description 
+ * Get active logros that Qapla has
+ *
+ * @param {object} context object
+ * @return active logros in JSON format
+ */
 export async function getQaplaActiveLogros(ctx) {
     try {
         const logrosSnap = await logrosActRef.once('value');

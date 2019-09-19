@@ -1,0 +1,63 @@
+// josep.sanahuja    - 05-08-2019 - us84 - + sfvContainer
+
+import { StyleSheet } from 'react-native';
+
+export default styles = StyleSheet.create({
+     sfvContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      backgroundColor:'#131833'
+    },
+    container: {
+        flex:1,
+        backgroundColor:'#131833',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    facebookButtonContainer: {
+        borderRadius: 100,
+        backgroundColor: '#364fe2',
+        paddingVertical: 16,
+        paddingHorizontal: 16,
+        marginTop: 44
+    },
+    whiteColor: {
+        color: '#FFF'
+    },
+    alignSelfCenter: {
+        alignSelf: 'center'
+    },
+    googleButtonContainer: {
+        borderRadius: 100,
+        backgroundColor: '#FFFFFF',
+        paddingVertical: 16,
+        paddingHorizontal: 16,
+        marginTop: 24
+    },
+    googleButtonText: {
+        color: 'rgba(0, 0, 0, .541)'
+    },
+    alreadyHaveAccountTextContainer: {
+        flexDirection: 'row',
+        marginTop: 25
+    },
+    enterWithEmailText: {
+        color: 'rgba(61,249,223,1)',
+        marginLeft: 5
+    },
+    fontBold: {
+        fontSize: 13,
+        fontWeight: 'bold'
+    },
+    backgroundImage: {
+        flex: 1,
+        position: 'absolute',
+        left: 0,
+        bottom: 0,
+        zIndex: -1,
+        opacity: .68,
+        width: '100%',
+        height: '50%'
+    }
+});

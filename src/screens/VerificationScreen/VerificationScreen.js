@@ -39,11 +39,21 @@ class VerificationScreen extends Component {
 
     setIndexPosition = (position) => {
         const { indexPositions } = this.state;
+
+        /**
+         * Save the X position of the slide to know where to scroll to show the right element of
+         * the "carousel"
+         */
         indexPositions.push(position);
         this.setState({ indexPositions });
     }
 
     goToNextStep = () => {
+
+        /**
+         * Scroll to the position of the nextIndex, so we can make things like validate data
+         * before that we show to the user the next "slide"
+         */
         this.scrollViewRef.scrollTo({x: this.state.indexPositions[this.state.nextIndex], y: 0, animated: true});
         this.setState({ nextIndex: this.state.nextIndex + 1 });
     }

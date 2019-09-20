@@ -1,3 +1,4 @@
+// josep.sanahuja - 20-09-2019 - us111 - Added verified on LogroCardItem
 // josep.sanahuja - 19-09-2019 - us114 - File creation
 
 import React from 'react';
@@ -8,6 +9,7 @@ import {
   FlatList
 } from 'react-native'
 
+import { connect } from 'react-redux';
 import styles from './style'
 
 import {getQaplaActiveLogros} from '../../services/database'
@@ -88,7 +90,7 @@ class LogrosList extends React.Component {
                 <FlatList
                     data={this.state.logros}
                     initialNumToRender={5}
-                    renderItem={({item}) => <LogroCardItem {...item} />}
+                    renderItem={({item}) => <LogroCardItem verified = {this.props.user.status} {...item} />}
                     keyExtractor={(item) => item.id} />      
             </View>
 	      </SafeAreaView>
@@ -121,4 +123,10 @@ function getLogrosIds(logroType) {
   return (typeof logroType) === 'object' ? Object.keys(logroType) : [];
 }
 
-export default LogrosList;
+function mapStateToProps(state) {
+    return {
+        user: state.userReducer.user
+    };
+}
+
+export default LogrosList = connect(mapStateToProps, null)(LogrosList);

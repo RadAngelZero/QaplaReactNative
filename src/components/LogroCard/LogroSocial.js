@@ -1,3 +1,4 @@
+// josep.sanahuja - 20-09-2019 - us111 - Added disabledContainer logic
 // josep.sanahuja - 19-09-2019 - us114 - File creation
 
 import React, { Component } from 'react';
@@ -13,7 +14,7 @@ class LogroSocial extends Component {
         const {titulo, descripcion, qaploins, photoUrl, pageLink, totalPuntos} = this.props;
         console.log("Image: " + photoUrl);
         return (
-            <View style={styles.container}>
+            <View style={this.props.verified ? styles.container : styles.disabledContainer}>
                 <View style={styles.contentContainer}>
                     <View style={styles.colASocialContainer}>
                         <Image style={styles.picture} source={{uri: photoUrl}} />

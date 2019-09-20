@@ -1,3 +1,4 @@
+// josep.sanahuja - 20-09-2019 - us111 - Added disabledContainer
 // josep.sanahuja - 19-09-2019 - us114 - File creation
 
 import { StyleSheet } from 'react-native';
@@ -24,7 +25,24 @@ export default styles = StyleSheet.create({
         shadowOpacity: .34,
         shadowRadius: 6.27,
         elevation: 10,
+        justifyContent: 'space-between'
+    },
+    disabledContainer: {
+        marginTop: heightPercentageToPx(2.83),
+        backgroundColor: '#0E1222',
+        alignSelf: 'center',
+        width: widthPercentageToPx(95),
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: .34,
+        shadowRadius: 6.27,
+        elevation: 10,
         justifyContent: 'space-between',
+        opacity: 0.1
     },
     contentContainer: {
         marginLeft: widthPercentageToPx(4),

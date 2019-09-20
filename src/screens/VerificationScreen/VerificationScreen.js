@@ -77,6 +77,12 @@ class VerificationScreen extends Component {
      * Scroll the ScrollView to the previous step of the form
      */
     goToPreviousStep = () => {
+
+        /**
+         * Example to understand: this.state.nextIndex - 2
+         * this.stat.nextIndex = 2 so currentIndex = 1 so previousIndex = 0
+         * So to get 0 you need to remove 2 fromthis.stat.nextIndex (2 - 2 = 0)
+         */
         this.scrollViewRef.scrollTo({x: this.state.indexPositions[this.state.nextIndex - 2], y: 0, animated: true});
         this.setState({ nextIndex: this.state.nextIndex - 1 });
     }
@@ -87,6 +93,7 @@ class VerificationScreen extends Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.backAndCloseOptions}>
                     <View style={styles.backIconContainer}>
+                        {/** Just show BackIcon if the user has already passed at least the first slide */}
                         {this.state.nextIndex > 1 &&
                             <TouchableWithoutFeedback onPress={this.goToPreviousStep}>
                                 <View style={styles.buttonDimensions}>

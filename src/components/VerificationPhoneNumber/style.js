@@ -1,15 +1,15 @@
-// diego           - 18-09-2019 - us119 - File creation
+// diego           - 19-09-2019 - us126 - File creation
 
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx, heightPercentageToPx, getDimensions } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
+        flex: 1,
+        justifyContent: 'space-around',
         backgroundColor:'#131833',
         marginLeft: widthPercentageToPx(4),
-        marginRight: widthPercentageToPx(4),
-        width: widthPercentageToPx(100)
+        width: getDimensions().width
     },
     title: {
         fontSize: 32,
@@ -20,12 +20,11 @@ export default styles = StyleSheet.create({
     divider: {
         marginTop: heightPercentageToPx(2.5)
     },
-    userDataForm: {
-        marginTop: heightPercentageToPx(10),
-        justifyContent: 'space-between',
+    phoneContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
         marginLeft: widthPercentageToPx(6),
-        marginRight: widthPercentageToPx(12),
-        height: heightPercentageToPx(36)
+        marginRight: widthPercentageToPx(12)
     },
     qaplaTextInput: {
         backgroundColor: '#11152D',
@@ -34,5 +33,10 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         borderRadius: 4,
         borderBottomWidth: 2
+    },
+    smallText: {
+        fontSize: 12,
+        fontWeight: '700',
+        color: '#8A8D92'
     }
 });

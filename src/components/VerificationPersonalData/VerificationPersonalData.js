@@ -1,7 +1,7 @@
 // diego           - 18-09-2019 - us119 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, KeyboardAvoidingView, TextInput } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -33,11 +33,6 @@ export class VerificationPersonalData extends Component {
                         placeholderTextColor='#898A97'
                         onChangeText={(text) => this.props.setUserPersonalData('secondSurname', text)} />
                 </KeyboardAvoidingView>
-                <TouchableWithoutFeedback onPress={this.props.goToNextStep}>
-                    <View style={styles.button}>
-                        <Text style={styles.buttonText}>Continuar</Text>
-                    </View>
-                </TouchableWithoutFeedback>
             </View>
         );
     }

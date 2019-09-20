@@ -147,7 +147,9 @@ const TabMainNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
-          {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Retas</Text>}
+          {focused &&
+            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Retas</Text>
+          }
         </View>
       )
     })
@@ -159,7 +161,9 @@ const TabMainNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
-          {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Logros</Text>}
+          {focused &&
+            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Logros</Text>
+          }
         </View>
       )
     })
@@ -172,7 +176,9 @@ const TabMainNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'}/> 
-          {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Perfil</Text>}
+          {focused &&
+            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Perfil</Text>
+          }
         </View>
       )
     })

@@ -14,9 +14,7 @@ class LogrosScreen extends React.Component {
   render() {
     return (
         <SafeAreaView style={styles.sfvContainer}>
-    	    	<View style={styles.container}>
-    	        	<LogrosList />
-            </View>
+    	      <LogrosList />
 	      </SafeAreaView>
     );
   }

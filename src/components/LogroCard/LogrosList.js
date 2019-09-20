@@ -34,20 +34,23 @@ class LogrosList extends React.Component {
   async loadLogros() {
       try{
           const logrosColl = await getQaplaActiveLogros();
-          const lgType = getLogrosType(logrosColl);
+          const logroType = getLogrosType(logrosColl);
 
           const logrosArr = [];
 
-          lgType.forEach((type) => {
+          logroType.forEach((type) => {
               if (type === 'verifica') {
-                  // TODO: Refactor this code in this block that is used twice
+                  // TODO: Refactor this code in this block that is used twice.
+                  // It could actually be refactor by using a query to db with a filter.
+                  // However this would introduce the potential problem that we could not
+                  // know how many verification logros are there in the results of the query.
 
                   // Get Logros Ids
-                  const lgIdArr = getLogrosIds(logrosColl[type]);
+                  const logroIdArr = getLogrosIds(logrosColl[type]);
 
                   // Traverse lgIdArr and for each id get the Object info
                   // and add it to the logros array
-                  lgIdArr.forEach((id) => {
+                  logroIdArr.forEach((id) => {
                       const logro = logrosColl[type][id];
                       logro.id = id;
                       logrosArr.push(logro); 
@@ -57,14 +60,14 @@ class LogrosList extends React.Component {
 
           // Fill logrosArr with logros of all categories available at the
           // moment
-          lgType.forEach((type) => {
+          logroType.forEach((type) => {
             if (type !== 'verifica') {
                 // Get Logros Ids
-                const lgIdArr = getLogrosIds(logrosColl[type]);
+                const logroIdArr = getLogrosIds(logrosColl[type]);
 
                 // Traverse lgIdArr and for each id get the Object info
                 // and add it to the logros array
-                lgIdArr.forEach((id) => {
+                logroIdArr.forEach((id) => {
                     const logro = logrosColl[type][id];
                     logro.id = id;
                     logrosArr.push(logro); 
@@ -98,22 +101,22 @@ class LogrosList extends React.Component {
 
 /**
  * @description
- * Obtains the keys from logros array 
+ * Obtains the keys from logros object 
  *
- * @param {array} logrosArr Array of logros with type as key
+ * @param {object} logrosObj Object of logros with type as key
  *
  * @return Array of logros type keys
  */
-function getLogrosType(logrosArr) 
+function getLogrosType(logrosObj) 
 {
-    return (typeof logrosArr) === 'object' ? Object.keys(logrosArr) : [];
+    return (typeof logrosObj) === 'object' ? Object.keys(logrosObj) : [];
 }
 
 /**
  * @description
- * Obtains the uids from the logro array passed as parameter
+ * Obtains the uids from the logro Object passed as parameter
  *
- * @param {array} logroType Array of logros of the same type
+ * @param {object} logroType Object of logros of the same type
  *
  * @return Array with logros ids
  */

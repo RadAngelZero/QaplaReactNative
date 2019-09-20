@@ -8,12 +8,6 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor:'#131833'
     },
-    container: {
-        backgroundColor:'#131833',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1
-    },
     title: {
         color: '#FFF',
         fontSize: 24,

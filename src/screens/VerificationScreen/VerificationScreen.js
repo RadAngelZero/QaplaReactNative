@@ -140,6 +140,12 @@ class VerificationScreen extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 }
+                
+                {/**
+                    * The selected (or current) index is the nextIndex - 1, we use nextIndex instead of
+                   * currentIndex for the goToNextStep and goToPrevStep functions, can be changed to current
+                   * in the future, actually don't have a major implication, is just a way to do the work
+                */}
                 <ProgressStepsIndicator
                     steps={this.state.indexPositions.length}
                     selected={this.state.nextIndex - 1} />

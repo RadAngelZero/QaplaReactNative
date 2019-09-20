@@ -14,12 +14,12 @@ const CloseIcon = Images.svg.closeIcon;
 
 class VerificationScreen extends Component {
     state = {
-        firstStep:{
+        personData:{
             name: '',
             firstSurname: '',
             secondSurname: ''
         },
-        secondStep: {
+        phoneData: {
             phoneNumber: ''
         },
         nextIndex: 1,
@@ -40,9 +40,9 @@ class VerificationScreen extends Component {
      * @param {string} data Data to store on the state
      */
     setUserPersonalData = (dataKey, data) => {
-        const { firstStep } = this.state;
-        firstStep[dataKey] = data;
-        this.setState({ firstStep });
+        const { personData } = this.state;
+        personData[dataKey] = data;
+        this.setState({ personData });
     }
 
     /**
@@ -50,9 +50,9 @@ class VerificationScreen extends Component {
      * @param {string} phoneNumber Phone number of the user
      */
     setPhoneNumber = (phoneNumber) => {
-        const { secondStep } = this.state;
-        secondStep.phoneNumber = phoneNumber;
-        this.setState({ secondStep });
+        const { phoneData } = this.state;
+        phoneData.phoneNumber = phoneNumber;
+        this.setState({ phoneData });
     }
 
     /**
@@ -82,6 +82,7 @@ class VerificationScreen extends Component {
     }
 
     render() {
+        console.log(this.state);
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.backAndCloseOptions}>

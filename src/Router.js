@@ -1,3 +1,4 @@
+// diego           - 18-09-2019 - us119 - Added VerificationScreen
 // diego           - 18-09-2019 - us110 - Created LogrosTabNavigator
 // diego           - 18-09-2019 - us109 - Added Tab for logros on TabMainNavigator
 // diego           - 03-09-2019 - us96 - Added TopNavOptions to allow users without back button navigate to previous screens
@@ -33,6 +34,7 @@ import UploadMatchResultScreen from './screens/UploadMatchResultScreen/UploadMat
 import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
 import LogrosActivosScreen from './screens/LogrosActivosScreen/LogrosActivosScreen';
 import LogrosCompletadosScreen from './screens/LogrosCompletadosScreen/LogrosCompletadosScreen';
+import VerificationScreen from './screens/VerificationScreen/VerificationScreen';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
@@ -307,7 +309,8 @@ export default class Router extends React.Component {
         AuthLoadingScreen: AuthLoadingScreen,
         App: RootStack,
         Welcome: WelcomeOnboardingScreen,
-        ChooseUserNameScreen: ChooseUserNameScreen
+        ChooseUserNameScreen: ChooseUserNameScreen,
+        Verification: VerificationScreen
       },
       {
         initialRouteName: 'AuthLoadingScreen'

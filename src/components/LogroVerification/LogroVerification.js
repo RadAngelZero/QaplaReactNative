@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './style';
+import Images from './../../../assets/images';
+
+const VerifyIcon = Images.svg.verifyIcon
 
 export class LogroVerification extends Component {
     render() {
@@ -12,7 +15,7 @@ export class LogroVerification extends Component {
                 <View style={styles.contentContainer}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>¡Verifica tu identidad! y desbloquea los logros.</Text>
-                        <Text style={{ color: '#FFF' }}>Icon</Text>
+                        <VerifyIcon />
                     </View>
                     <Text style={styles.description}>
                         La información compartida es completamente confidencial y será utilizada para incrementar la seguridad de tu cuenta.

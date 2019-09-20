@@ -8,8 +8,26 @@ export default styles = StyleSheet.create({
         flex: 1,
         backgroundColor:'#131833'
     },
+    backAndCloseOptions: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 18
+    },
+    backIconContainer: {
+        marginLeft: 30,
+        marginTop: 18,
+        alignSelf: 'flex-end'
+    },
+    buttonDimensions: {
+        height: heightPercentageToPx(5)
+    },
+    closeIconContainer: {
+        marginRight: 30,
+        marginTop: 18,
+        alignSelf: 'flex-end'
+    },
     scrollViewContainer: {
-        height: heightPercentageToPx(70)
+        height: heightPercentageToPx(60)
     },
     button: {
         marginTop: heightPercentageToPx(10),

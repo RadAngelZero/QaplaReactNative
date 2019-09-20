@@ -15,7 +15,6 @@ export default styles = StyleSheet.create({
         fontSize: 32,
         fontWeight: 'bold',
         color: '#FFF',
-        marginTop: heightPercentageToPx(4),
         width: widthPercentageToPx(80)
     },
     divider: {

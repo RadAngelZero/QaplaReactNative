@@ -1,3 +1,5 @@
+// diego	      - 20-09-2019 - us133 - Added VerifyIcon
+// diego	      - 18-09-2019 - us109 - Added LogroIcon
 // diego	      - 18-09-2019 - us109 - Added LogrosIcon
 // diego	      - 06-09-2019 - us93 - Added OkIcon for checkbox
 // diego	  	  - 03-09-2019 - us96 - Added close (x) icon (used on close of navigators over the main navigator)
@@ -38,6 +40,7 @@ import TieIcon from './icons/empatado.svg';
 import ChooseClipIcon from './icons/video-clip.svg';
 import AlreadyChoosedClipIcon from './icons/video-clip-check.svg';
 import LogrosIcon from './icons/LogrosActive.svg';
+import VerifyIcon from './icons/verificado.svg';
 
 // Images
 
@@ -179,6 +182,7 @@ const images = {
 		chooseClipIcon: ChooseClipIcon,
 		alreadyChoosedClipIcon: AlreadyChoosedClipIcon,
 		logrosIcon: LogrosIcon,
+		verifyIcon: VerifyIcon,
 		gowIcon: GowIcon,
 		fifaIcon: FifaIcon,
 		clashIcon: ClashIcon,

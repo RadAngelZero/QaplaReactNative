@@ -1,12 +1,17 @@
 // diego           - 18-09-2019 - us110 - File creation
 
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { SafeAreaView } from 'react-native';
+
+import styles from './style';
+import LogroVerification from '../../components/LogroVerification/LogroVerification';
 
 export class LogrosActivosScreen extends Component {
     render() {
         return (
-            <Text>Logros activos</Text>
+            <SafeAreaView style={styles.container}>
+                <LogroVerification />
+            </SafeAreaView>
         );
     }
 }

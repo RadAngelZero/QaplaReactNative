@@ -11,7 +11,6 @@ export default StyleSheet.create({
   container:{
     flex:1,
     justifyContent:'center',
-    backgroundColor:'purple'
   },
   content:{
     backgroundColor:'white',

@@ -11,10 +11,10 @@ const QaploinIcon = Images.svg.qaploinsIcon;
 
 class LogroQapla extends Component {
     render() {
-        const {titulo, descripcion, qaploins, photoUrl, pageLink, totalPuntos} = this.props;
+        const {titulo, descripcion, qaploins, photoUrl, pageLink, totalPuntos, verified} = this.props;
         
         return (
-            <View style={this.props.verified ? styles.container : styles.disabledContainer}>
+            <View style={verified ? styles.container : styles.disabledContainer}>
                 <View style={styles.contentContainer}>
                     <View style={styles.colAContainer}>
                         <View style={styles.titleContainer}>

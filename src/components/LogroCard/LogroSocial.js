@@ -11,10 +11,10 @@ const QaploinIcon = Images.svg.qaploinsIcon;
 
 class LogroSocial extends Component {
     render() {
-        const {titulo, descripcion, qaploins, photoUrl, pageLink, totalPuntos} = this.props;
+        const {titulo, descripcion, qaploins, photoUrl, pageLink, totalPuntos, verified} = this.props;
         console.log("Image: " + photoUrl);
         return (
-            <View style={this.props.verified ? styles.container : styles.disabledContainer}>
+            <View style={verified ? styles.container : styles.disabledContainer}>
                 <View style={styles.contentContainer}>
                     <View style={styles.colASocialContainer}>
                         <Image style={styles.picture} source={{uri: photoUrl}} />

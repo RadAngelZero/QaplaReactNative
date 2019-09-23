@@ -90,7 +90,7 @@ class LogrosList extends React.Component {
                 <FlatList
                     data={this.state.logros}
                     initialNumToRender={5}
-                    renderItem={({item}) => <LogroCardItem verified = {this.props.user.status} {...item} />}
+                    renderItem={({item}) => <LogroCardItem {...item} />}
                     keyExtractor={(item) => item.id} />      
             </View>
 	      </SafeAreaView>
@@ -125,7 +125,7 @@ function getLogrosIds(logroType) {
 
 function mapStateToProps(state) {
     return {
-        user: state.userReducer.user
+        verified: state.userReducer.user.status
     };
 }
 

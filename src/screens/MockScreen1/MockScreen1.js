@@ -6,7 +6,8 @@ import {
   View,
   Text,
   SafeAreaView,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from 'react-native'
 
 import styles from './style'
@@ -14,11 +15,24 @@ import styles from './style'
 import { RNCamera } from 'react-native-camera';
 
 export default class MockScreen1 extends React.Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+      pictureTaken: false,
+      picture: ""
+    };
+  }
+
   takePicture = async() => {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options);
-      console.log("Camera: " + data.uri);
+      console.log("Camera Miau: " + data.uri);
+      await this.setState({
+        pictureTaken: true,
+        picture: data.uri
+      });
     }
   };
 
@@ -29,14 +43,14 @@ export default class MockScreen1 extends React.Component {
 	        	<Text >Miau!</Text>
 	        	<Text >To get started, edit App.js</Text>
 
-
+     
         <RNCamera
             ref={ref => {
               this.camera = ref;
             }}
             style={styles.preview}
             type={RNCamera.Constants.Type.back}
-            flashMode={RNCamera.Constants.FlashMode.on}
+            flashMode={RNCamera.Constants.FlashMode.off}
             captureAudio={false}
             androidCameraPermissionOptions={{
               title: 'Permission to use camera',
@@ -49,7 +63,15 @@ export default class MockScreen1 extends React.Component {
             <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
                  <Text style={{ fontSize: 14 }}> SNAP </Text>
             </TouchableOpacity>
-        </View> 
+        </View>
+
+      {this.state.pictureTaken &&
+        <Image
+          source={{uri: this.state.picture}}
+          style={{width: 400, height: 400}}
+        /> 
+      }
+        
         </View>
 	    </SafeAreaView>
     );

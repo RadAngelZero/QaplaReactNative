@@ -5,7 +5,7 @@ import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 import styles from './style';
-import Images from './../../../assets/images';
+import Images from './../../../../assets/images';
 
 const VerifyIcon = Images.svg.verifyIcon
 

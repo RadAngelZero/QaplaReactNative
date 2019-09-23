@@ -36,8 +36,6 @@ import LogrosActivosScreen from './screens/LogrosActivosScreen/LogrosActivosScre
 import LogrosCompletadosScreen from './screens/LogrosCompletadosScreen/LogrosCompletadosScreen';
 import VerificationScreen from './screens/VerificationScreen/VerificationScreen';
 
-import LogrosScreen from './screens/LogrosScreen/LogrosScreen';
-
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
 import NotificationsHeader from './components/NotificationsHeader/NotificationsHeader';
@@ -167,21 +165,6 @@ const TabMainNavigator = createBottomTabNavigator({
           <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
           {focused &&
             <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Logros</Text>
-          }
-        </View>
-      )
-    })
-  },
-  Logros: {
-    screen:   LogrosScreen,
-    navigationOptions: ({ navigation }) => ({
-      //If no title it shows the name as Search.
-      title: 'Logros',
-      tabBarIcon: ({ tintColor, focused }) => (
-        <View>
-          <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'}/> 
-          {focused && 
-            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Perfil</Text>
           }
         </View>
       )

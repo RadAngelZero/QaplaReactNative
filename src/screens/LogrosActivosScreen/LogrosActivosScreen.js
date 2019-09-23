@@ -4,13 +4,13 @@ import React, { Component } from 'react';
 import { SafeAreaView } from 'react-native';
 
 import styles from './style';
-import LogroVerification from '../../components/LogroVerification/LogroVerification';
+import LogrosList from '../../components/LogroCard/LogrosList';
 
 export class LogrosActivosScreen extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <LogroVerification />
+                <LogrosList />
             </SafeAreaView>
         );
     }

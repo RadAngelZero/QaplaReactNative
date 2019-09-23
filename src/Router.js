@@ -1,3 +1,6 @@
+// diego           - 18-09-2019 - us119 - Added VerificationScreen
+// diego           - 18-09-2019 - us110 - Created LogrosTabNavigator
+// diego           - 18-09-2019 - us109 - Added Tab for logros on TabMainNavigator
 // diego           - 03-09-2019 - us96 - Added TopNavOptions to allow users without back button navigate to previous screens
 // diego           - 19-08-2019 - us89 - Added logic to show label only when tab is focused added on TabMainNavigator 
 // josep.sanahuja  - 12-08-2019 - us85 - + UploadMatchResult in AppNoHeaderStackNavigator
@@ -5,16 +8,15 @@
 // diego           - 01-08-2019 - us58 - created NotificationTabNavigator
 // diego           - 25-07-2019 - us31 - added CheckOutPaymentScreen and unnecessary code removed
 
-import React from 'react'
+import React from 'react';
 
-import { View, Text } from 'react-native'
-import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createSwitchNavigator} from 'react-navigation'
+import { View, Text } from 'react-native';
+import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createSwitchNavigator} from 'react-navigation';
 
-import Images from '@assets/images'
+import Images from './../assets/images';
 
-// Screens prueba github
-import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen'
-import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen'
+import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen';
+import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen';
 import MyMatchesScreen from './screens/MyMatchesScreen/MyMatchesScreen';
 import PublicMatchCardScreen from './screens/PublicMatchCardScreen/PublicMatchCardScreen';
 import SignInScreen from './screens/SignInScreen/SignInScreen';
@@ -30,8 +32,9 @@ import ActivityNotificationsScreen from './screens/ActivityNotificationsScreen/A
 import RetasNotificationsScreen from './screens/RetasNotificationsScreen/RetasNotificationsScreen';
 import UploadMatchResultScreen from './screens/UploadMatchResultScreen/UploadMatchResultScreen';
 import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
-
-import LogrosScreen from './screens/LogrosScreen/LogrosScreen';
+import LogrosActivosScreen from './screens/LogrosActivosScreen/LogrosActivosScreen';
+import LogrosCompletadosScreen from './screens/LogrosCompletadosScreen/LogrosCompletadosScreen';
+import VerificationScreen from './screens/VerificationScreen/VerificationScreen';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
@@ -40,9 +43,38 @@ import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeF
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 
 // Svg Icons
-const Mock1Icon = Images.svg.favouritesIcon;
 const ProfileIcon = Images.svg.profileIcon;
 const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
+const LogrosIcon = Images.svg.logrosIcon;
+
+const LogrosTabNavigator = createMaterialTopTabNavigator(
+  {
+    LogrosActivos: {
+      screen: LogrosActivosScreen,
+      navigationOptions: () => ({
+        title: 'Activos'
+      })
+    },
+    LogrosCompletados: {
+      screen: LogrosCompletadosScreen,
+      navigationOptions: () => ({
+        title: 'Completados'
+      })
+    }
+  },
+  {
+    initialRouteName: 'LogrosActivos',
+    tabBarOptions: {
+      style: { backgroundColor: '#0C1021' },
+      activeTintColor: '#36E5CE',
+      inactiveTintColor: 'gray',
+      indicatorStyle: {
+        borderBottomColor: '#36E5CE',
+        borderBottomWidth: 2,
+      }
+    },
+  }
+);
 
 const NotificationTabNavigator = createMaterialTopTabNavigator(
   {
@@ -117,20 +149,23 @@ const TabMainNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
-          {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Retas</Text>}
+          {focused &&
+            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Retas</Text>
+          }
         </View>
       )
     })
   },
   Logros: {
-    screen:   LogrosScreen,
+    screen: LogrosTabNavigator,
     navigationOptions: ({ navigation }) => ({
-      //If no title it shows the name as Search.
-      title: 'Logros',
+      title: "Logros",  //Tried to hide this for next tab Search.,
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
-          <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'}/> 
-          {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Perfil</Text>}
+          <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
+          {focused &&
+            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Logros</Text>
+          }
         </View>
       )
     })
@@ -143,7 +178,9 @@ const TabMainNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'}/> 
-          {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Perfil</Text>}
+          {focused &&
+            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Perfil</Text>
+          }
         </View>
       )
     })
@@ -224,17 +261,6 @@ const AppNoHeaderStackNavigator = createSwitchNavigator(
 );
 
 export default class Router extends React.Component {
-
-  constructor(props) {
-    super(props);
-  
-    this.state = {};
-  }
-
-  componentDidMount() {
-    
-  }
-
   render() {
     // or not shown
     const RootStack = createStackNavigator(
@@ -283,7 +309,8 @@ export default class Router extends React.Component {
         AuthLoadingScreen: AuthLoadingScreen,
         App: RootStack,
         Welcome: WelcomeOnboardingScreen,
-        ChooseUserNameScreen: ChooseUserNameScreen
+        ChooseUserNameScreen: ChooseUserNameScreen,
+        Verification: VerificationScreen
       },
       {
         initialRouteName: 'AuthLoadingScreen'

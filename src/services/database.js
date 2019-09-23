@@ -509,10 +509,9 @@ export async function uploadMatchResult(idMatch, adversary, result, evidence) {
  * @description 
  * Get active logros that Qapla has
  *
- * @param {object} context object
  * @return active logros in JSON format
  */
-export async function getQaplaActiveLogros(ctx) {
+export async function getQaplaActiveLogros() {
     try {
         const logrosSnap = await logrosActRef.once('value');
         return logrosSnap.val();

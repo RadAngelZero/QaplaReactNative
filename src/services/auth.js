@@ -84,6 +84,14 @@ export function signInWithEmailAndPassword(email, password) {
     });
 }
 
+export async function sendVerificationSMSToUser(phoneNumber) {
+    return await auth.verifyPhoneNumber(phoneNumber);
+}
+
+export async function linkUserAccountWithPhone(phoneCredential) {
+    return await auth.currentUser.linkWithCredential(phoneCredential);
+}
+
 export function isUserLogged() {
     return auth.currentUser !== null;
 }

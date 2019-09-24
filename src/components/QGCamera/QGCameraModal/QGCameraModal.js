@@ -1,4 +1,4 @@
-// josep.sanahuja - 17-08-2019 - us90 - File creation
+// josep.sanahuja - 22-09-2019 - us123 - File creation
 
 import React, { Component } from 'react';
 import { 
@@ -17,14 +17,6 @@ import Images from './../../../../assets/images';
 const CloseIcon = Images.svg.closeIcon;
 
 class QGCameraModal extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            
-        };
-    }
-
     /**
     *  Callbacks used in render()
     */
@@ -38,9 +30,6 @@ class QGCameraModal extends Component {
     * @param None
     */
     action = async () => {
-      // Close the Modal
-      this.closeModal();
-
       // cb1 executes before cb2, and in case cb1 is not defined and cb2 is, then cb2 is excecuted
       // even though cb1 is undefined.
       if (this.props.cb1 !== undefined && this.props.cb1 !== null){
@@ -55,6 +44,9 @@ class QGCameraModal extends Component {
       if (this.props.nextScreen) {
         this.props.navigation.navigate(this.props.nextScreen);
       }
+
+      // Close the Modal
+      this.closeModal();
     }
 
     /**
@@ -75,25 +67,24 @@ class QGCameraModal extends Component {
 	          transparent={false}
 	          visible={this.props.visible}
 	          onRequestClose={this.props.onClose}>
-	          <View style={styles.mainContainer}>
-			    <View style={styles.container}>
-			        <TouchableWithoutFeedback onPress={this.closeModal}>
-						<View style={styles.closeIcon}>
-							<CloseIcon />
-						</View>
-				    </TouchableWithoutFeedback>
-					<Text style={styles.headerText}>{this.props.header}</Text>
-					<Image
-		            	source={{uri: this.props.pictureUri}}
-		                style={{width: 400, height: 400}}
-		            /> 
-					<TouchableWithoutFeedback onPress={this.action}>
-						<View style={styles.okButton}>
-							<Text style={styles.text}>{this.props.okTextButton}</Text>
-						</View>
-					</TouchableWithoutFeedback>
-			    </View>
-			  </View>
+	            <View style={styles.mainContainer}>
+			            <View style={styles.container}>
+			                <TouchableWithoutFeedback onPress={this.closeModal}>
+						              <View style={styles.closeIcon}>
+							                <CloseIcon />
+						              </View>
+				              </TouchableWithoutFeedback>
+					            <Text style={styles.headerText}>{this.props.header}</Text>
+					            <Image
+		            	        source={{uri: this.props.pictureUri}}
+		                      style={{width: 400, height: 400}} /> 
+					            <TouchableWithoutFeedback onPress={this.action}>
+						              <View style={styles.okButton}>
+							                <Text style={styles.text}>{this.props.okTextButton}</Text>
+						              </View>
+					            </TouchableWithoutFeedback>
+			            </View>
+			        </View>
 	        </Modal>
         );
     }

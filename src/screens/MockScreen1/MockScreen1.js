@@ -1,4 +1,5 @@
-// josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
+// josep.sanahuja    - 22-09-2019 - us123 - Add QGCamera
+// josep.sanahuja    - 05-08-2019 - us84  - + SafeAreaView
 
 import React from 'react';
 
@@ -11,8 +12,6 @@ import {
 } from 'react-native'
 
 import styles from './style'
-
-// import { RNCamera } from 'react-native-camera';
 import QGCamera from '../../components/QGCamera/QGCamera';
 
 export default class MockScreen1 extends React.Component {
@@ -25,78 +24,36 @@ export default class MockScreen1 extends React.Component {
     };
   }
 
-  closeCamera = async () => {
-      console.log("[closeCamera]: before " + JSON.stringify(this.state, null, 2));
-
-      await this.setState({
+  /**
+   * Closes QGCamera by closing its modal.
+   */
+  closeCamera = () => {
+      this.setState({
           cameraVisible: false
       });
-
-      console.log("[closeCamera]: after " + JSON.stringify(this.state, null, 2));
   }
 
-  // takePicture = async() => {
-  //   if (this.camera) {
-  //     const options = { quality: 0.5, base64: true };
-  //     const data = await this.camera.takePictureAsync(options);
-  //     console.log("Camera Miau: " + data.uri);
-  //     await this.setState({
-  //       pictureTaken: true,
-  //       picture: data.uri
-  //     });
-  //   }
-  // };
+  /**
+   * Closes QGCamera by closing its modal.
+   * 
+   * @param {object} pict Object representing a picture, with uri and base64 props
+   */
+  savePicture = (pict) => {
+      this.setState({
+          picture: {uri: pict.uri, base64: pict.base64}
+      });  
+  }
 
-  // render() {
-  //   return (
-  //       <SafeAreaView style={styles.sfvContainer}>
-	 //    	<View style={styles.container}>
-	 //        	<Text >Miau!</Text>
-	 //        	<Text >To get started, edit App.js</Text>
-
-     
-  //       <RNCamera
-  //           ref={ref => {
-  //             this.camera = ref;
-  //           }}
-  //           style={styles.preview}
-  //           type={RNCamera.Constants.Type.back}
-  //           flashMode={RNCamera.Constants.FlashMode.off}
-  //           captureAudio={false}
-  //           androidCameraPermissionOptions={{
-  //             title: 'Permission to use camera',
-  //             message: 'We need your permission to use your camera',
-  //             buttonPositive: 'Ok',
-  //             buttonNegative: 'Cancel',
-  //           }}
-  //       />
-  //       <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-  //           <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
-  //                <Text style={{ fontSize: 14 }}> SNAP </Text>
-  //           </TouchableOpacity>
-  //       </View>
-
-  //     {this.state.pictureTaken &&
-  //       <Image
-  //         source={{uri: this.state.picture}}
-  //         style={{width: 400, height: 400}}
-  //       /> 
-  //     }
-        
-  //       </View>
-	 //    </SafeAreaView>
-  //   );
-  // }
   render() {
-    return (
-        <SafeAreaView style={styles.sfvContainer}>
-            <View style={styles.container}>
-                <QGCamera 
-                    visible={this.state.cameraVisible} 
-                    picture={this.state.picture}
-                    onClose={this.closeCamera}/>
-            </View>
-        </SafeAreaView>
-    );
+      return (
+          <SafeAreaView style={styles.sfvContainer}>
+              <View style={styles.container}>
+                  <QGCamera 
+                      visible={this.state.cameraVisible} 
+                      savePicture={this.savePicture}
+                      onClose={this.closeCamera}/>
+              </View>
+          </SafeAreaView>
+      );
   }
 }

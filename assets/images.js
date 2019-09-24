@@ -1,3 +1,4 @@
+// josep
 // diego	      - 20-09-2019 - us133 - Added VerifyIcon
 // diego	      - 18-09-2019 - us109 - Added LogroIcon
 // diego	      - 18-09-2019 - us109 - Added LogrosIcon
@@ -106,6 +107,9 @@ const images = {
 		},
 		walletOnBoarding: {
 			img: require('./images/wallet-onboarding.png')
+		},
+		qaplaSmile: {
+			img: require('./images/qapla-smile.png')
 		},
 		divider: {
 			img: require('./images/divider-onboarding.png')

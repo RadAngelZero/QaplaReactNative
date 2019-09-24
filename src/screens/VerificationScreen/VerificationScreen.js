@@ -6,8 +6,10 @@ import { SafeAreaView, ScrollView, View, TouchableWithoutFeedback, Text } from '
 import styles from './style';
 import Images from './../../../assets/images';
 import VerificationPersonalData from '../../components/VerificationPersonalData/VerificationPersonalData';
+import VerificationTakeSelfie from '../../components/VerificationTakeSelfie/VerificationTakeSelfie';
 import VerificationPhoneNumber from '../../components/VerificationPhoneNumber/VerificationPhoneNumber';
 import ProgressStepsIndicator from '../../components/ProgressStepsIndicator/ProgressStepsIndicator';
+
 
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
@@ -130,6 +132,9 @@ class VerificationScreen extends Component {
                             <VerificationPersonalData
                                 setUserPersonalData={this.setUserPersonalData}
                                 goToNextStep={this.goToNextStep} />
+                        </View>
+                        <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
+                            <VerificationTakeSelfie/>
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
                             <VerificationPhoneNumber

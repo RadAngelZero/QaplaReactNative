@@ -36,6 +36,8 @@ target 'QaplaReactNative' do
 
   pod 'RNAnalytics', :path => '../node_modules/@segment/analytics-react-native'
 
+  pod 'react-native-camera', path: '../node_modules/react-native-camera'
+
 end
 
 target 'QaplaReactNative-tvOS' do

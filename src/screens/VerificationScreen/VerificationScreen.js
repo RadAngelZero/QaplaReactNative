@@ -22,6 +22,10 @@ class VerificationScreen extends Component {
             firstSurname: '',
             secondSurname: ''
         },
+        selfie: {
+            cameraVisible: false,
+            picture: {uri: "", base64: ""}
+        },
         phoneData: {
             phoneNumber: ''
         },
@@ -58,6 +62,28 @@ class VerificationScreen extends Component {
         this.setState({ phoneData });
     }
 
+    /**
+     * Set the camera to either visible or invisible
+     * @param {boolean} mode Camera visible mode
+     */
+    setCameraVisible = (mode) => {
+        const { selfie } = this.state;
+        selfie.cameraVisible = mode;
+        this.setState({selfie});
+    }
+
+    /**
+    * Saves the picture to the state so it can be used.
+    * 
+    * @param {object} pict Object representing a picture, with uri and base64 props
+    */
+    savePicture = (pict) => {
+        const { selfie } = this.state;
+        selfie.picture.uri = pict.uri;
+        selfie.picture.base64 = pict.base64;
+        this.setState({selfie});
+    }
+        
     /**
      * Add the position of the different slides (one per call)
      * @param {number} position X value of the given component (slide)
@@ -135,7 +161,12 @@ class VerificationScreen extends Component {
                                 goToNextStep={this.goToNextStep} />
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
-                            <VerificationTakeSelfie/>
+                            <VerificationTakeSelfie
+                                setCameraVisible={this.setCameraVisible}
+                                savePicture={this.savePicture}
+                                picture={this.state.selfie.picture}
+                                cameraVisible={this.state.selfie.cameraVisible}
+                                />
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
                             <VerificationPhoneNumber

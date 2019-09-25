@@ -12,42 +12,27 @@ const Divider         = Images.png.divider.img;
 const QaplaSmileIcon  = Images.png.qaplaSmile.img;
 
 export class VerificationTakeSelfie extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            cameraVisible: false,
-            picture: {uri: "", base64: ""}
-        };
-    }
-
     /**
     * Closes QGCamera by closing its modal.
     */
     closeCamera = () => {
-        this.setState({
-              cameraVisible: false
-        });
+        this.props.setCameraVisible(false);
     }
 
     /**
     * Opens QGCamera.
     */
     openCamera = () => {
-        this.setState({
-              cameraVisible: true
-        });
+        this.props.setCameraVisible(true);
     }
 
     /**
-    * Closes QGCamera by closing its modal.
+    * Saves the picture to the state so it can be used.
     * 
     * @param {object} pict Object representing a picture, with uri and base64 props
     */
     savePicture = (pict) => {
-        this.setState({
-            picture: {uri: pict.uri, base64: pict.base64}
-        }); 
+        this.props.savePicture(pict);
     }
 
     render() {
@@ -63,8 +48,8 @@ export class VerificationTakeSelfie extends Component {
                     <TouchableWithoutFeedback onPress={this.openCamera}>
                         <View>
                            <Image source={QaplaSmileIcon} />
-                           {this.state.picture.uri !== "" &&
-                               <Image source={{uri: this.state.picture.uri}} style={styles.selfiePreview}/>
+                           {this.props.picture.uri !== "" &&
+                               <Image source={{uri: this.props.picture.uri}} style={styles.selfiePreview}/>
                            }
                         </View>
                     </TouchableWithoutFeedback> 
@@ -72,7 +57,7 @@ export class VerificationTakeSelfie extends Component {
                     <Text style={styles.smallText}>Subir Selfie</Text>            
                 </View>
                 <QGCamera 
-                    visible={this.state.cameraVisible} 
+                    visible={this.props.cameraVisible} 
                     savePicture={this.savePicture}
                     cameraType={"front"}
                     onClose={this.closeCamera}/>

@@ -89,7 +89,7 @@ export function signInWithEmailAndPassword(email, password) {
  * @param {string} phoneNumber Phone number of the user
  */
 export async function sendVerificationSMSToUser(phoneNumber) {
-    return await auth.verifyPhoneNumber(phoneNumber);
+    return await auth.verifyPhoneNumber(phoneNumber, false, true);
 }
 
 /**

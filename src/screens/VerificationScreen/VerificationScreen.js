@@ -200,6 +200,9 @@ class VerificationScreen extends Component {
         this.setState({ nextIndex: this.state.nextIndex - 1 });
     }
 
+    /**
+     * Define the text displayed in the button
+     */
     setButtonText = () => {
         let buttonText = 'Continuar';
         if (this.state.indexPositions.length >= 4) {
@@ -219,8 +222,14 @@ class VerificationScreen extends Component {
         return buttonText;
     }
 
+    /**
+     * Close the verification procces (interrupt the proccess)
+     */
     closeVerificationProccess = () => this.props.navigation.navigate('Logros');
 
+    /**
+     * End the verification procces (once the procces is completed)
+     */
     endVerificationProccess = () => this.props.navigation.navigate('Logros');
 
     render() {

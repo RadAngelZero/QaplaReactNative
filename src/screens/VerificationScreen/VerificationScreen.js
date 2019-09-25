@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { SafeAreaView, ScrollView, View, TouchableWithoutFeedback, Text } from 'react-native';
+import { connect } from 'react-redux';
 
 import styles from './style';
 import Images from './../../../assets/images';
@@ -11,6 +12,8 @@ import VerificationCode from '../../components/VerificationCode/VerificationCode
 import ProgressStepsIndicator from '../../components/ProgressStepsIndicator/ProgressStepsIndicator';
 import { sendVerificationSMSToUser, linkUserAccountWithPhone } from '../../services/auth';
 import { PhoneProvider } from '../../utilities/firebase';
+import VerificationProccessSuccess from '../../components/VerificationProccessSuccess/VerificationProccessSuccess';
+import { createVerificationRequest } from '../../services/database';
 
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
@@ -110,7 +113,7 @@ class VerificationScreen extends Component {
             case 1:
                 isValidData = Object.keys(this.state.personData).some((value) => this.state.personData[value] !== '');
                 break;
-            case this.state.indexPositions.length - 1:
+            case this.state.indexPositions.length - 2:
                 isValidData = Object.keys(this.state.phoneData).some((value) => this.state.phoneData[value] !== '');
                 try {
 
@@ -128,12 +131,12 @@ class VerificationScreen extends Component {
                      * Once we have the verification object (after we await for the SMS) we add it to the state
                      * so we can render new things on the screen, to let the user add their code and procceed
                      */
-                    this.setState({ verificationObject: await sendVerificationSMSToUser('+52 33 1297 12 99') });
+                    this.setState({ verificationObject: await sendVerificationSMSToUser(`+52${this.state.phoneData.phoneNumber}`) });
                 } catch (error) {
                     console.error(error);
                 }
                 break;
-            case this.state.indexPositions.length:
+            case this.state.indexPositions.length - 1:
                 isValidData = Object.keys(this.state.firebaseVerificationData).some((value) => this.state.firebaseVerificationData[value] !== '');
 
                 /**
@@ -143,6 +146,19 @@ class VerificationScreen extends Component {
                     this.state.firebaseVerificationData.verificationCode);
                     try {
                         await linkUserAccountWithPhone(phoneCredentials);
+
+                        /**
+                         * The object to write on the database as the request of verification of the user
+                         */
+                        const verificationRequest = {
+                            curp: '',
+                            nombre: `${this.state.personData.name} ${this.state.personData.firstSurname} ${this.state.personData.secondSurname}`,
+                            foto: '', // Add download url of the photo
+                            status: 1,
+                            usuario: this.props.userName,
+                            whatsapp: this.state.phoneData.phoneNumber
+                        }
+                        await createVerificationRequest(this.props.uid, verificationRequest);
                     } catch (error) {
                         
                         /**
@@ -185,25 +201,27 @@ class VerificationScreen extends Component {
     }
 
     setButtonText = () => {
-        let buttonText = '';
-        if (this.state.nextIndex === this.state.indexPositions.length - 1) {
-            buttonText = 'Enviar Código';
-        } else if (this.state.nextIndex === this.state.indexPositions.length) {
-            if (Object.keys(this.state.verificationObject).length <= 0) {
-                buttonText = 'Enviando codigo...';
-            } else {
-                buttonText = 'Verificar';
+        let buttonText = 'Continuar';
+        if (this.state.indexPositions.length >= 4) {
+            if (this.state.nextIndex === this.state.indexPositions.length - 2) {
+                buttonText = 'Enviar Código';
+            } else if (this.state.nextIndex === this.state.indexPositions.length - 1) {
+                if (Object.keys(this.state.verificationObject).length <= 0) {
+                    buttonText = 'Enviando codigo...';
+                } else {
+                    buttonText = 'Verificar';
+                }
+            } else if (this.state.nextIndex === this.state.indexPositions.length) {
+                buttonText = 'Finalizar';
             }
-        } else if (this.state.nextIndex === this.state.indexPositions.length) {
-            buttonText = 'Finalizar';
-        } else {
-            buttonText = 'Continuar';
         }
 
         return buttonText;
     }
 
     closeVerificationProccess = () => this.props.navigation.navigate('Logros');
+
+    endVerificationProccess = () => this.props.navigation.navigate('Logros');
 
     render() {
         return (
@@ -248,18 +266,32 @@ class VerificationScreen extends Component {
                                 setVerificationCode={this.setVerificationCode}
                                 goToNextStep={this.goToNextStep} />
                         </View>
+                        <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
+                            <VerificationProccessSuccess endVerificationProccess={this.endVerificationProccess} />
+                        </View>
                     </ScrollView>
                 </View>
-                <TouchableWithoutFeedback
-                    onPress={this.goToNextStep}
-                    disabled={this.state.nextIndex === this.state.indexPositions.length && Object.keys(this.state.verificationObject).length <= 0}>
-                    <View style={styles.button}>
-                        <Text style={styles.buttonText}>
-                            {this.setButtonText()}
-                        </Text>
-                    </View>
-                </TouchableWithoutFeedback>
-                {(this.state.nextIndex === this.state.indexPositions.length && Object.keys(this.state.verificationObject).length <= 0) &&
+                {this.state.nextIndex !== this.state.indexPositions.length ?
+                    <TouchableWithoutFeedback
+                        onPress={this.goToNextStep}
+                        disabled={this.state.nextIndex === this.state.indexPositions.length - 1 && Object.keys(this.state.verificationObject).length <= 0}>
+                        <View style={styles.button}>
+                            <Text style={styles.buttonText}>
+                                {this.setButtonText()}
+                            </Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    :
+                    <TouchableWithoutFeedback
+                        onPress={this.endVerificationProccess}>
+                        <View style={styles.button}>
+                            <Text style={styles.buttonText}>
+                                {this.setButtonText()}
+                            </Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                }
+                {(this.state.nextIndex === this.state.indexPositions.length - 1 && Object.keys(this.state.verificationObject).length <= 0) &&
                     <Text style={{ color: '#FFF', fontSize: 10, textAlign: 'center' }}>
                         Este proceso puede tomar{'\n'}algunos minutos, espera porfavor
                     </Text>
@@ -269,12 +301,21 @@ class VerificationScreen extends Component {
                    * currentIndex for the goToNextStep and goToPrevStep functions, can be changed to current
                    * in the future, actually don't have a major implication, is just a way to do the work
                 */}
-                <ProgressStepsIndicator
-                    steps={this.state.indexPositions.length}
-                    selected={this.state.nextIndex - 1} />
+                {this.state.nextIndex !== this.state.indexPositions.length &&
+                    <ProgressStepsIndicator
+                        steps={this.state.indexPositions.length}
+                        selected={this.state.nextIndex - 1} />
+                }
             </SafeAreaView>
         );
     }
 }
 
-export default VerificationScreen;
+function mapDispatchToProps(state) {
+    return {
+        uid: state.userReducer.user.id,
+        userName: state.userReducer.user.userName
+    }
+}
+
+export default connect(mapDispatchToProps)(VerificationScreen);

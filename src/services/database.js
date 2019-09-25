@@ -27,6 +27,7 @@ export const gamesRef = database.ref('/Games');
 export const commissionRef = database.ref('/Commission');
 export const gamersRef = database.ref('/Gamers');
 export const logrosActRef = database.ref('/logrosActivos');
+export const verificationOnProccessRef = database.ref('/VerificacionEnProceso');
 
 /**
  * Returns the userName of the specified user
@@ -520,3 +521,16 @@ export async function getQaplaActiveLogros() {
     }
 }
 
+// -----------------------------------------------
+// Verification
+// -----------------------------------------------
+
+/**
+ * Write a request for verification on the database
+ * @param {string} uid user identifier on database
+ * @param {object} verificationInfo Object with the necessary information to write the request
+ * 
+ */
+export async function createVerificationRequest(uid, verificationInfo) {
+    await verificationOnProccessRef.child(uid).set(verificationInfo);
+}

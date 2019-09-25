@@ -1,4 +1,4 @@
-// diego           - 19-09-2019 - us126 - File creation
+// josep.sanahuja  - 25-09-2019 - us122 - File creation
 
 import { StyleSheet } from 'react-native';
 import { widthPercentageToPx, heightPercentageToPx, getDimensions } from '../../utilities/iosAndroidDim';
@@ -38,6 +38,15 @@ export default styles = StyleSheet.create({
           lineHeight: 18,
           textAlign: 'center',
           marginTop: heightPercentageToPx(2.5)
+    },
+    selfiePreview: {
+        position: 'absolute', 
+        top: 0, 
+        left: 0,
+        height: 115, 
+        width: 115, 
+        borderRadius: 115 / 2, 
+        resizeMode: 'cover', 
+        overlayColor: 'white'
     }
-
 });

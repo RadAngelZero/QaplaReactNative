@@ -1,3 +1,4 @@
+// josep.sanahuja - 22-09-2019 - us122 - Added picture
 // josep.sanahuja - 22-09-2019 - us123 - File creation
 
 import { StyleSheet } from 'react-native';
@@ -68,4 +69,10 @@ export default styles = StyleSheet.create({
         marginTop: '8%',
         alignSelf: 'flex-end'
     },
+    picture: {
+        flex: 1,
+        width: getDimensions().width,
+        height: getDimensions().height * 0.6,
+        resizeMode: 'contain'
+    }
 })

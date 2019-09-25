@@ -67,7 +67,6 @@ class QGCamera extends React.Component {
     * and the base64 string image. It closes the QGCamera modal at the end.
     */
   savePicture = () => {
-    console.log("[savePicture]: " );
     if (this.state.picture.uri != "") {
       this.props.savePicture(this.state.picture);
     }
@@ -92,6 +91,16 @@ class QGCamera extends React.Component {
       this.props.onClose();  
   }
 
+  getCameraType = () => {
+      let res = RNCamera.Constants.Type.back;
+
+      if (this.props.cameraType === "front"){
+        res = RNCamera.Constants.Type.front;
+      }
+
+      return res; 
+  }
+
   render() {
     console.log("[QGCamera]: visible: " + JSON.stringify(this.props.visible, null, 2));
     return (
@@ -108,7 +117,7 @@ class QGCamera extends React.Component {
                             this.camera = ref;
                           }}
                           style={styles.preview}
-                          type={RNCamera.Constants.Type.back}
+                          type={this.getCameraType()}
                           flashMode={RNCamera.Constants.FlashMode.off}
                           captureAudio={false}
                           androidCameraPermissionOptions={{

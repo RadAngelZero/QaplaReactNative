@@ -1,3 +1,4 @@
+// josep.sanahuja  - 22-09-2019 - us122 - Add VerificationTakeSelfie
 // diego           - 18-09-2019 - us119 - File creation
 
 import React, { Component } from 'react';

@@ -77,7 +77,7 @@ class QGCameraModal extends Component {
 					            <Text style={styles.headerText}>{this.props.header}</Text>
 					            <Image
 		            	        source={{uri: this.props.pictureUri}}
-		                      style={{width: 400, height: 400}} /> 
+		                      style={styles.picture} /> 
 					            <TouchableWithoutFeedback onPress={this.action}>
 						              <View style={styles.okButton}>
 							                <Text style={styles.text}>{this.props.okTextButton}</Text>

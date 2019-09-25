@@ -172,19 +172,6 @@ const TabMainNavigator = createBottomTabNavigator({
       )
     })
   },
-  Camera: {
-    screen:   MockScreen1,
-    navigationOptions: ({ navigation }) => ({
-      //If no title it shows the name as Search.
-      title: 'Camera',
-      tabBarIcon: ({ tintColor, focused }) => (
-        <View>
-          <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'}/> 
-          {focused && <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Perfil</Text>}
-        </View>
-      )
-    })
-  },
   Perfil: {
     screen:   UserProfileScreen,
     navigationOptions: ({ navigation }) => ({

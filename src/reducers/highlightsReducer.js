@@ -3,7 +3,6 @@
 import {
     GET_HIGHLIGHT_1_CREATE_MATCH,
     SET_HIGHLIGHT_1_CREATE_MATCH,
-    HIGHLIGHT_1_CREATE_MATCH
 } from '../utilities/Constants';
 
 const initialState = {

@@ -27,6 +27,8 @@ export const gamesRef = database.ref('/Games');
 export const commissionRef = database.ref('/Commission');
 export const gamersRef = database.ref('/Gamers');
 export const logrosActRef = database.ref('/logrosActivos');
+export const cuentasVerificadasRef = database.ref('/CuentasVerificadas');
+export const logrosRef = database.ref('/logros');
 
 /**
  * Returns the userName of the specified user
@@ -519,4 +521,3 @@ export async function getQaplaActiveLogros() {
         console.error(error);
     }
 }
-

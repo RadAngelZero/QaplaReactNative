@@ -236,23 +236,33 @@ class VerificationScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.backAndCloseOptions}>
-                    <View style={styles.backIconContainer}>
-                        {/** Just show BackIcon if the user has already passed at least the first slide */}
-                        {this.state.nextIndex > 1 &&
-                            <TouchableWithoutFeedback onPress={this.goToPreviousStep}>
-                                <View style={styles.buttonDimensions}>
-                                    <BackIcon />
-                                </View>
-                            </TouchableWithoutFeedback>
-                        }
-                    </View>
-                    <View style={styles.closeIconContainer}>
-                        <TouchableWithoutFeedback onPress={this.closeVerificationProccess}>
-                            <View style={styles.buttonDimensions}>
-                                <CloseIcon />
+                    {
+                        <>
+                            <View style={styles.backIconContainer}>
+                                {/** Just show BackIcon if the user has already passed at least the first slide */}
+                                {(this.state.nextIndex > 1 && this.state.nextIndex !== this.state.indexPositions.length) ?
+                                    <TouchableWithoutFeedback onPress={this.goToPreviousStep}>
+                                        <View style={styles.buttonDimensions}>
+                                            <BackIcon />
+                                        </View>
+                                    </TouchableWithoutFeedback>
+                                    :
+                                    <View style={styles.buttonDimensions} />
+                                }
                             </View>
-                        </TouchableWithoutFeedback>
-                    </View>
+                            <View style={styles.closeIconContainer}>
+                                {this.state.nextIndex !== this.state.indexPositions.length ?
+                                    <TouchableWithoutFeedback onPress={this.closeVerificationProccess}>
+                                        <View style={styles.buttonDimensions}>
+                                            <CloseIcon />
+                                        </View>
+                                    </TouchableWithoutFeedback>
+                                    :
+                                    <View style={styles.buttonDimensions} />
+                                }
+                            </View>
+                        </>
+                    }
                 </View>
                 <View style={styles.scrollViewContainer}>
                     <ScrollView

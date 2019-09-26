@@ -1,14 +1,29 @@
 // diego           - 18-09-2019 - us110 - File creation
 
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { SafeAreaView } from 'react-native';
+import { connect } from 'react-redux';
+
+import styles from './style';
+import LogrosList from '../../components/LogroCard/LogrosList';
 
 export class LogrosCompletadosScreen extends Component {
     render() {
         return (
-            <Text>Logros completados</Text>
+            <SafeAreaView style={styles.container}>
+                <LogrosList
+                    isUserVerified={this.props.logros.isUserVerified}
+                    logros={Object.keys(this.props.logros.logrosCompletados).map((logroKey) => this.props.logros.logrosCompletados[logroKey])} />
+            </SafeAreaView>
         );
     }
 }
 
-export default LogrosCompletadosScreen;
+function mapStateToProps(state) {
+    return {
+        uid: state.userReducer.user.id,
+        logros: state.logrosReducer
+    };
+}
+
+export default connect(mapStateToProps)(LogrosCompletadosScreen);

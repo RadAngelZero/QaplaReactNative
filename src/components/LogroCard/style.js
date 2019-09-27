@@ -54,6 +54,7 @@ export default styles = StyleSheet.create({
     },
     colBContainer: {
         flex: 1,
+        justifyContent: 'space-between'
     },
     colASocialContainer: {
         width: widthPercentageToPx(23),

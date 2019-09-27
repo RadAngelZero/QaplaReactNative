@@ -7,6 +7,7 @@ import { Animated, View, TouchableWithoutFeedback, Text } from 'react-native';
 import styles from './style';
 import Images from '../../../assets/images';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
@@ -31,8 +32,7 @@ class LogroQapla extends Component {
     }
 
     render() {
-        const { titulo, descripcion, qaploins, puntosCompletados, totalPuntos, verified } = this.props;
-
+        const { titulo, descripcion, qaploins, puntosCompletados, totalPuntos, tiempoLimite, verified } = this.props;
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
                 <View style={styles.contentContainer}>
@@ -47,6 +47,7 @@ class LogroQapla extends Component {
                             <QaploinIcon height={31} width={31} style={styles.qaploinIcon} />
                             <Text style={styles.qaploinsText}>{qaploins}</Text>  
                         </View>
+                        <LogroLifeTimeBadge tiempoLimite={tiempoLimite} />
                         {puntosCompletados >= totalPuntos &&
                             <TouchableWithoutFeedback>
                                 <View style={styles.redimirButton}>

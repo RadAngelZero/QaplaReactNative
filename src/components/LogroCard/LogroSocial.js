@@ -7,12 +7,21 @@ import { View, Image, TouchableWithoutFeedback, Text } from 'react-native';
 import styles from './style';
 import Images from '../../../assets/images';
 import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
+import { redeemLogroCloudFunction } from '../../services/functions';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
 class LogroSocial extends Component {
+
+    /**
+     * Redeem the logro calling to the cloud function
+     */
+    redeemLogro = () => {
+        redeemLogroCloudFunction(this.props.id, this.props.qaploins);
+    }
+
     render() {
-        const {titulo, descripcion, qaploins, photoUrl, puntosCompletados, totalPuntos, tiempoLimite, verified} = this.props;
+        const { titulo, descripcion, qaploins, photoUrl, puntosCompletados, totalPuntos, tiempoLimite, verified } = this.props;
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
                 <View style={styles.contentContainer}>
@@ -32,7 +41,10 @@ class LogroSocial extends Component {
                         </View>
                         <LogroLifeTimeBadge tiempoLimite={tiempoLimite} />
                         {puntosCompletados >= totalPuntos &&
-                            <TouchableWithoutFeedback>
+                            <TouchableWithoutFeedback
+                                onPress={this.redeemLogro}
+                                /**Just a double check on disabled property of the button */
+                                disabled={puntosCompletados < totalPuntos}>
                                 <View style={styles.redimirButton}>
                                     <Text style={styles.redimirTextButton}>Redimir</Text>
                                 </View>
@@ -40,7 +52,7 @@ class LogroSocial extends Component {
                         }
                     </View>
                 </View>
-                {puntosCompletados < totalPuntos &&
+                {(!puntosCompletados || puntosCompletados < totalPuntos) &&
                     <View style={styles.shareContainer}>
                         <TouchableWithoutFeedback>
                             <View>

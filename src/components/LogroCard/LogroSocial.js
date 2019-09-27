@@ -11,7 +11,7 @@ const QaploinIcon = Images.svg.qaploinsIcon;
 
 class LogroSocial extends Component {
     render() {
-        const {titulo, descripcion, qaploins, photoUrl, pageLink, totalPuntos, verified} = this.props;
+        const {titulo, descripcion, qaploins, photoUrl, puntosCompletados, totalPuntos, verified} = this.props;
         
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
@@ -30,25 +30,29 @@ class LogroSocial extends Component {
                             <QaploinIcon height={31} width={31} style={styles.qaploinIcon} />
                             <Text style={styles.qaploinsText}>{qaploins}</Text>  
                         </View>
+                        {puntosCompletados >= totalPuntos &&
+                            <TouchableWithoutFeedback>
+                                <View style={styles.redimirButton}>
+                                    <Text style={styles.redimirTextButton}>Redimir</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        }
+                    </View>
+                </View>
+                {puntosCompletados < totalPuntos &&
+                    <View style={styles.shareContainer}>
                         <TouchableWithoutFeedback>
-                            <View style={styles.redimirButton}>
-                                <Text style={styles.redimirTextButton}>Redimir</Text>
+                            <View>
+                                <Text style={styles.likeText}>Dar Like</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback>
+                            <View>
+                                <Text style={styles.uploadText}>Subir</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
-                </View>
-                <View style={styles.shareContainer}>
-                    <TouchableWithoutFeedback>
-                        <View>
-                            <Text style={styles.likeText}>Dar Like</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback>
-                        <View>
-                            <Text style={styles.uploadText}>Subir</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
+                }
             </View>
         );
     }

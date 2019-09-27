@@ -169,7 +169,8 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         width: widthPercentageToPx(95),
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 18
     },
     progressBar: {
         marginTop: 12,

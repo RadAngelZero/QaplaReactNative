@@ -26,8 +26,8 @@ class LogroQapla extends Component {
                 }
             ).start();
             this.setState({ puntosCompletados: nextProps.puntosCompletados });
-            return true;
         }
+        return true;
     }
 
     render() {

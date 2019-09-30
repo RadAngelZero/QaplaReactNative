@@ -74,11 +74,12 @@ class VerificationScreen extends Component {
     }
 
     /**
-     * Set the verification code sended to the user
+     * Set the verification code sent to the user
      * @param {string} verificationCode Verification code that the user get by a SMS sended by firebase
      */
     setVerificationCode = (verificationCode) => {
         const { firebaseVerificationData } = this.state;
+
         firebaseVerificationData.verificationCode = verificationCode;
         this.setState({ firebaseVerificationData });
     }
@@ -236,33 +237,29 @@ class VerificationScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.backAndCloseOptions}>
-                    {
-                        <>
-                            <View style={styles.backIconContainer}>
-                                {/** Just show BackIcon if the user has already passed at least the first slide */}
-                                {(this.state.nextIndex > 1 && this.state.nextIndex !== this.state.indexPositions.length) ?
-                                    <TouchableWithoutFeedback onPress={this.goToPreviousStep}>
-                                        <View style={styles.buttonDimensions}>
-                                            <BackIcon />
-                                        </View>
-                                    </TouchableWithoutFeedback>
-                                    :
-                                    <View style={styles.buttonDimensions} />
-                                }
-                            </View>
-                            <View style={styles.closeIconContainer}>
-                                {this.state.nextIndex !== this.state.indexPositions.length ?
-                                    <TouchableWithoutFeedback onPress={this.closeVerificationProccess}>
-                                        <View style={styles.buttonDimensions}>
-                                            <CloseIcon />
-                                        </View>
-                                    </TouchableWithoutFeedback>
-                                    :
-                                    <View style={styles.buttonDimensions} />
-                                }
-                            </View>
-                        </>
-                    }
+                    <View style={styles.backIconContainer}>
+                        {/** Just show BackIcon if the user has already passed at least the first slide */}
+                        {(this.state.nextIndex > 1 && this.state.nextIndex !== this.state.indexPositions.length) ?
+                            <TouchableWithoutFeedback onPress={this.goToPreviousStep}>
+                                <View style={styles.buttonDimensions}>
+                                    <BackIcon />
+                                </View>
+                            </TouchableWithoutFeedback>
+                            :
+                            <View style={styles.buttonDimensions} />
+                        }
+                    </View>
+                    <View style={styles.closeIconContainer}>
+                        {this.state.nextIndex !== this.state.indexPositions.length ?
+                            <TouchableWithoutFeedback onPress={this.closeVerificationProccess}>
+                                <View style={styles.buttonDimensions}>
+                                    <CloseIcon />
+                                </View>
+                            </TouchableWithoutFeedback>
+                            :
+                            <View style={styles.buttonDimensions} />
+                        }
+                    </View>
                 </View>
                 <View style={styles.scrollViewContainer}>
                     <ScrollView
@@ -311,7 +308,7 @@ class VerificationScreen extends Component {
                     </TouchableWithoutFeedback>
                 }
                 {(this.state.nextIndex === this.state.indexPositions.length - 1 && Object.keys(this.state.verificationObject).length <= 0) &&
-                    <Text style={{ color: '#FFF', fontSize: 10, textAlign: 'center' }}>
+                    <Text style={styles.smsWarning}>
                         Este proceso puede tomar{'\n'}algunos minutos, espera porfavor
                     </Text>
                 }

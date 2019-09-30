@@ -89,6 +89,10 @@ export function signInWithEmailAndPassword(email, password) {
  * @param {string} phoneNumber Phone number of the user
  */
 export async function sendVerificationSMSToUser(phoneNumber) {
+
+    /**
+     * https://rnfirebase.io/docs/v5.x.x/auth/reference/auth#verifyPhoneNumber
+     */
     return await auth.verifyPhoneNumber(phoneNumber, false, true);
 }
 

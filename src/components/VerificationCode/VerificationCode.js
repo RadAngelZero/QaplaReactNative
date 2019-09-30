@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 import { View, Text, Image, TextInput } from 'react-native';
 
 import styles from './style';
-import images from '../../../assets/images';
+import Images from '../../../assets/images';
 
-const Divider = images.png.divider.img;
+const Divider = Images.png.divider.img;
 
 class VerificationCode extends Component {
     render() {

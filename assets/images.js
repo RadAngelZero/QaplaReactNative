@@ -110,6 +110,9 @@ const images = {
 		divider: {
 			img: require('./images/divider-onboarding.png')
 		},
+		verificationProccesSuccess: {
+			img: require('./images/VerificationProccesSuccess.png')
+		},
 		peekaImg: {
 			img: require('./images/PEKKA.png'),
 			uri: '@assets/images/PEKKA.png'

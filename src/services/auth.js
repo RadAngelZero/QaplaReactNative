@@ -84,6 +84,26 @@ export function signInWithEmailAndPassword(email, password) {
     });
 }
 
+/**
+ * Send a SMS to the given number of the user to verify their phone number
+ * @param {string} phoneNumber Phone number of the user
+ */
+export async function sendVerificationSMSToUser(phoneNumber) {
+
+    /**
+     * https://rnfirebase.io/docs/v5.x.x/auth/reference/auth#verifyPhoneNumber
+     */
+    return await auth.verifyPhoneNumber(phoneNumber, false, true);
+}
+
+/**
+ * Link the current account of the user with the new cellphone account
+ * @param {object} phoneCredential Phone credentials of firebase auth
+ */
+export async function linkUserAccountWithPhone(phoneCredential) {
+    return await auth.currentUser.linkWithCredential(phoneCredential);
+}
+
 export function isUserLogged() {
     return auth.currentUser !== null;
 }

@@ -1,13 +1,15 @@
+// diego           - 26-09-2019 - us130 - File creation
+
 import { logrosActRef, logrosRef, cuentasVerificadasRef } from '../services/database';
 import { LOAD_USER_VERIFICATION_STATUS, LOAD_LOGROS_ACTIVOS, REMOVE_LOGRO_ACTIVO, LOAD_LOGROS_COMPLETOS } from '../utilities/Constants';
 
 export const loadQaplaLogros = (uid) => async (dispatch) => {
     cuentasVerificadasRef.child(uid).on('value', (verifiedAccount) => {
-        if (verifiedAccount.exists()) {
+        if (verifiedAccount.exists() && verifiedAccount.val().status === 2) {
             dispatch(checkIfIsUserVerifiedSuccess(true));
             dispatch(removeLogroFromActivos('Verification-Logro'));
         } else {
-            dispatch(loadLogrosActivosSuccess({ tipoLogro: 'verifica', id: 'Verification-Logro' }));
+            dispatch(loadLogrosActivosSuccess({ tipoLogro: 'verificado', id: 'Verification-Logro' }));
             dispatch(checkIfIsUserVerifiedSuccess(false));
         }
     });

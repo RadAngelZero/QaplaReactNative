@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
 import styles from './style';
-import images from '../../../assets/images';
+import Images from '../../../assets/images';
 
-const QaploinIcon = images.svg.qaploinsIcon;
+const QaploinIcon = Images.svg.qaploinsIcon;
 
 export class LogroCompletedCard extends Component {
     render() {

@@ -9,11 +9,13 @@ import LogrosList from '../../components/LogroCard/LogrosList';
 
 export class LogrosCompletadosScreen extends Component {
     render() {
+        const logros = Object.keys(this.props.logros.logrosCompletados).map((logroKey) => this.props.logros.logrosCompletados[logroKey]);
+
         return (
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={styles.sfvContainer}>
                 <LogrosList
                     isUserVerified={this.props.logros.isUserVerified}
-                    logros={Object.keys(this.props.logros.logrosCompletados).map((logroKey) => this.props.logros.logrosCompletados[logroKey])} />
+                    logros={logros} />
             </SafeAreaView>
         );
     }

@@ -14,10 +14,16 @@
 #import <RNGoogleSignin/RNGoogleSignin.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
+// This import should be removed if React Native Firebase library is removed
+#import <Firebase.h>
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  // This line should be removed if React Native Firebase library is removed
+  [FIRApp configure];
+  
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"QaplaReactNative"

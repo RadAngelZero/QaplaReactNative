@@ -46,3 +46,8 @@ export const WON_RESULT = '1';
 export const LOST_RESULT = '0';
 export const OTHER_RESULT = '7';
 export const TIE_RESULT = '3';
+
+// Date constants
+
+export const ONE_HOUR_MILISECONDS = 3600000;
+export const HOURS_IN_DAY = 24;

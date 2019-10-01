@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
 import styles from './style';
-
-const ONE_HOUR_MILISECONDS = 3600000;
+import { ONE_HOUR_MILISECONDS, HOURS_IN_DAY } from './../../../utilities/Constants';
 
 export class LogroLifeTimeBadge extends Component {
     render() {
@@ -15,8 +14,8 @@ export class LogroLifeTimeBadge extends Component {
         );
 
         let leftHours = (logroEndDate.getTime() - currentDate.getTime()) / ONE_HOUR_MILISECONDS;
-        const remainingDays = Math.round(leftHours / 24);
-        const remainingHours = Math.round(leftHours - (remainingDays * 24));
+        const remainingDays = Math.round(leftHours / HOURS_IN_DAY);
+        const remainingHours = Math.round(leftHours - (remainingDays * HOURS_IN_DAY));
 
         return (
             <View style={styles.timeLifeBadge}>

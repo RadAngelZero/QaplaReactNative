@@ -69,7 +69,7 @@ class VerificationScreen extends Component {
     setCameraVisible = (mode) => {
         const { selfie } = this.state;
         selfie.cameraVisible = mode;
-        this.setState({selfie});
+        this.setState({ selfie });
     }
 
     /**
@@ -81,7 +81,7 @@ class VerificationScreen extends Component {
         const { selfie } = this.state;
         selfie.picture.uri = pict.uri;
         selfie.picture.base64 = pict.base64;
-        this.setState({selfie});
+        this.setState({ selfie });
     }
         
     /**

@@ -5,7 +5,6 @@ import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './style';
 import Images from '../../../assets/images';
-
 import QGCamera from '../../components/QGCamera/QGCamera';
 
 const Divider         = Images.png.divider.img;

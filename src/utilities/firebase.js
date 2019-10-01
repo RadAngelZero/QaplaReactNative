@@ -1,9 +1,11 @@
-//diego         - 16-07-2019 - us30 - TimeStamp const created
+// josep.sanahuja - 26-09-2019 - us118 - Added firebase.storage
+// diego          - 16-07-2019 - us30  - TimeStamp const created
 
 import * as firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
 import '@firebase/functions';
+import 'firebase/storage';
 
 var firebaseConfig = {
     apiKey: "AIzaSyDBCB9kPA5NPKDR6gWSwTLbtVyR_9aCAA0",
@@ -20,6 +22,7 @@ firebase.initializeApp(firebaseConfig);
 export const database = firebase.database();
 export const auth = firebase.auth();
 export const functions = firebase.functions();
+export const storage = firebase.storage();
 
 //Authentication providers
 export const FBProvider = firebase.auth.FacebookAuthProvider;

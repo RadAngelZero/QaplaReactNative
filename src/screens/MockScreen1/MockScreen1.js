@@ -1,4 +1,5 @@
-// josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
+// josep.sanahuja    - 26-09-2019 - us118 - Added ImagePickerModal
+// josep.sanahuja    - 05-08-2019 - us84  - + SafeAreaView
 
 import React from 'react';
 
@@ -9,67 +10,56 @@ import {
   Button,
   Image,
   ScrollView,
-  CameraRoll
+  CameraRoll,
+  TouchableWithoutFeedback
 } from 'react-native'
 
 import styles from './style'
 
-import {getQaplaActiveLogros} from '../../services/database'
+import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
+import { savePictureEvidenceLogroSocial } from '../../services/database';
+
 
 export default class MockScreen1 extends React.Component {
-  // render() {
-  //   return (
-  //       <SafeAreaView style={styles.sfvContainer}>
-	 //    	<View style={styles.container}>
-	 //        	<Text >Miau!</Text>
-	 //        	<Text >To get started, edit App.js</Text>
-	 //      	</View>
-	 //    </SafeAreaView>
-  //   );
-  // }
   constructor(props) {
-    super(props);
+      super(props);
   
-    this.state = {
-      photos: []
-    };
+      this.state = {
+          showImgPckModal: true,
+          picture: null
+      };
   }
 
-  _handleButtonPress = () => {
-    console.log("Camera " + JSON.stringify(CameraRoll, null, 2));
-    CameraRoll.getPhotos({
-       first: 20,
-       assetType: 'Photos',
-     })
-     .then(r => {
-       this.setState({ photos: r.edges });
-     })
-     .catch((err) => {
-        //Error Loading Images
-     });
-  };
+  saveImage = (picture) => {
+      console.log('This is the picture Obj 2: ' + JSON.stringify(picture, null, 2));
+      
+      this.setState({
+          picture: picture
+      });
+
+      savePictureEvidenceLogroSocial(picture.node.image.uri, 'QdcloizcjBfPyZd3i8o5GoFD5AC3', '-LQow7xrduUSQIBYqZce');
+  }
+
+  closeImgPckModal = () => {
+      this.setState({
+          showImgPckModal: false  
+      });
+  }
 
   render() {
     return (
       <SafeAreaView style={styles.sfvContainer}>
-      <View style={styles.container}>
-        <Button title="Load Images" onPress={this._handleButtonPress} />
-        <ScrollView>
-          {this.state.photos.map((p, i) => {
-            return (
-             <Image
-               key={i}
-               style={{
-                 width: 300,
-                 height: 100,
-               }}
-               source={{ uri: p.node.image.uri }}
-             />
-            );
-          })}
-        </ScrollView>
-      </View>
-    </SafeAreaView>
+        <View style={styles.container}>
+          <ImagePickerModal
+              visible={this.state.showImgPckModal}
+              saveImage={this.saveImage}
+              onClose={this.closeImgPckModal}
+          /> 
+          {this.state.picture !== null &&
+              <Image style={{height: 400, width: 400}} source={{uri: this.state.picture.node.image.uri}}/>  
+          }
+        </View>
+      </SafeAreaView>
     );
   }
 }

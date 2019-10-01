@@ -1,3 +1,5 @@
+// josep.sanahuja - 26-09-2019 - us118 - Added savePictureEvidenceLogroSocial 
+//                                       & saveImgEvidenceUrlLogroSocial
 // josep.sanahuja - 19-09-2019 - us114 - Add getQaplaActiveLogros && logrosActRef
 // diego          - 21-08-2019 - us89 - Updated addGameToUser to create gamer profile of the new game on GamersRef
 // diego          - 20-08-2019 - us89 - Created gamersRef
@@ -17,7 +19,7 @@
 //                                      for new references on database and errors detecrted on addGameToUser
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
 
-import { database, TimeStamp } from "../utilities/firebase";
+import { database, TimeStamp, storage } from "../utilities/firebase";
 import { randomString } from "../utilities/utils";
 
 export const matchesRef = database.ref('/Matches');
@@ -27,6 +29,10 @@ export const gamesRef = database.ref('/Games');
 export const commissionRef = database.ref('/Commission');
 export const gamersRef = database.ref('/Gamers');
 export const logrosActRef = database.ref('/logrosActivos');
+export const veriLogroSocialRef = database.ref('/verificarLogroSocial');
+
+// storage
+export const storageLogrosImgRef = storage.ref('/facebook_likes');
 
 /**
  * Returns the userName of the specified user
@@ -519,4 +525,60 @@ export async function getQaplaActiveLogros() {
         console.error(error);
     }
 }
+
+/**
+ * @description 
+ * Save a picture to 'storageLogrosImgRef/logroId/idUser.jpg'
+ *
+ * @param {string} pictureUri Uri to the picture
+ * @param {string} logroId    Logro identifier
+ * @param {string} userId     User identifier
+ *  
+ * @return
+ * Operation fails     - NULL
+ * Operations succeeds - Task to be used for upload progress operations
+ *
+ * TODO: Move it to storage.js file
+ */
+export async function savePictureEvidenceLogroSocial(pictureUri, logroId, userId) {
+    let res = null;
+
+    try {  
+        const imgFetched = await fetch(pictureUri);
+        
+        res = imgResPromise = storageLogrosImgRef.child('/' + logroId + '/' + userId +  '.jpg').put(imgFetched._bodyBlob);
+        
+    } catch (error) {
+        console.error(error);
+    }
+
+    return res;
+}
+
+/**
+ * @description 
+ * Save a picture to 'storageLogrosImgRef/logroId/idUser.jpg'
+ *
+ * @param {string} logroId    Logro identifier
+ * @param {string} userId     User identifier
+ *  
+ * @return
+ * Operation fails     - NULL
+ * Operations succeeds - Promise to know the completeness of the operation
+ */
+export async function saveImgEvidenceUrlLogroSocial(logroId, userId) {
+    let res = null;
+
+    try {
+        res = await veriLogroSocialRef.child(logroId).child(userId).set({
+            photoUrl: 'facebook_likes/' + logroId + '/' + userId
+        });
+    } catch (error) {
+        console.error(error);
+    }
+
+    return res;
+}
+
+
 

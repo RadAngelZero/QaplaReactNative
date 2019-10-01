@@ -1,3 +1,4 @@
+// josep.sanahuja - 26-09-2019 - us118 - Added userId to LogroCardItem
 // josep.sanahuja - 20-09-2019 - us111 - Added verified on LogroCardItem
 // josep.sanahuja - 19-09-2019 - us114 - File creation
 
@@ -93,7 +94,7 @@ class LogrosList extends React.Component {
                 <FlatList
                     data={this.state.logros}
                     initialNumToRender={5}
-                    renderItem={({item}) => <LogroCardItem {...item} />}
+                    renderItem={({item}) => <LogroCardItem {...item} userId={this.props.userId}/>}
                     keyExtractor={(item) => item.id} />      
             </View>
 	      </SafeAreaView>
@@ -128,7 +129,8 @@ function getLogrosIds(logroType) {
 
 function mapStateToProps(state) {
     return {
-        verified: state.userReducer.user.status
+        verified: state.userReducer.user.status,
+        userId: state.userReducer.user.id
     };
 }
 

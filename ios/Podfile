@@ -14,7 +14,7 @@ target 'QaplaReactNative' do
     'RCTNetwork',
     'RCTWebSocket', # Needed for debugging
     'RCTAnimation', # Needed for FlatList and animations running on native UI thread
-    
+    'RCTImage'
   ]
   # Explicitly include Yoga if you are using RN >= 0.42.0
   pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
@@ -33,6 +33,8 @@ target 'QaplaReactNative' do
   pod 'Firebase/Functions'
   
   pod 'Firebase/Analytics'
+
+  pod 'Firebase/Storage'
 
   pod 'RNAnalytics', :path => '../node_modules/@segment/analytics-react-native'
 

@@ -1,4 +1,4 @@
-// josep.sanahuja - 26-09-2019 - us117 - Added goToSocialLink
+// josep.sanahuja - 26-09-2019 - us118 - Added goToSocialLink & ImagePickerModal
 // josep.sanahuja - 20-09-2019 - us111 - Added disabledContainer logic
 // josep.sanahuja - 19-09-2019 - us114 - File creation
 
@@ -7,10 +7,21 @@ import { View, Image, TouchableWithoutFeedback, Text, Linking } from 'react-nati
 
 import styles from './style';
 import Images from '../../../assets/images';
+import { savePictureEvidenceLogroSocial, saveImgEvidenceUrlLogroSocial } from '../../services/database';
+import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
 class LogroSocial extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showImgPckModal: false,
+            picture: null
+        };
+    }
+
     /**
      * Validates that the url is a valid url
      */
@@ -27,6 +38,31 @@ class LogroSocial extends Component {
      */
     goToSocialLink = (url) => {
         Linking.openURL(url);
+    }
+
+    saveImage = (picture) => {
+        console.log('This is the picture Obj 2: ' + JSON.stringify(picture, null, 2));
+
+        this.setState({
+          picture: picture
+        });
+
+        let evidenceURL = savePictureEvidenceLogroSocial(picture.node.image.uri, this.props.id, this.props.userId);
+        if (evidenceURL !== null) {
+            saveImgEvidenceUrlLogroSocial(this.props.id, this.props.userId);
+        }
+    }
+
+    closeImgPckModal = () => {
+        this.setState({
+            showImgPckModal: false  
+        });
+    }
+
+    openImgPckModal = () => {
+        this.setState({
+            showImgPckModal: true  
+        });
     }
 
     render() {
@@ -62,12 +98,16 @@ class LogroSocial extends Component {
                             <Text style={styles.likeText}>Dar Like</Text>
                         </View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={this.openImgPckModal}>
                         <View>
                             <Text style={styles.uploadText}>Subir</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
+                <ImagePickerModal
+                      visible={this.state.showImgPckModal}
+                      saveImage={this.saveImage}
+                      onClose={this.closeImgPckModal}/> 
             </View>
         );
     }

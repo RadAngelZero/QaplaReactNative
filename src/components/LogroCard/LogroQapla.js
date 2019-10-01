@@ -22,6 +22,11 @@ class LogroQapla extends Component {
             Animated.timing(
                 this.state.progressBarWidth,
                 {
+                    /**
+                     * 70 is the maxim value of the width because the width defined in the style is also 70
+                     * The operation calculate the percentage to fill based on the current progress of the user
+                     * If the user don't have any progress show the 0% by default
+                     */
                     toValue: widthPercentageToPx((70 / this.props.totalPuntos * nextProps.puntosCompletados) || 0),
                     duration: 375
                 }

@@ -3,6 +3,12 @@ import { LOAD_USER_VERIFICATION_STATUS, LOAD_LOGROS_ACTIVOS, REMOVE_LOGRO_ACTIVO
 
 export const loadQaplaLogros = (uid) => async (dispatch) => {
     cuentasVerificadasRef.child(uid).on('value', (verifiedAccount) => {
+        
+        /**
+         * That node don't exist unless that the user requests for verification to Qapla
+         * The status is 2 when the user is already verified
+         * The status is 1 when the user request for verification to Qapla
+         */
         if (verifiedAccount.exists() && verifiedAccount.val().status === 2) {
             dispatch(checkIfIsUserVerifiedSuccess(true));
             dispatch(removeLogroFromActivos('Verification-Logro'));

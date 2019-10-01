@@ -52,6 +52,11 @@ class LogroSocial extends Component {
                         }
                     </View>
                 </View>
+                {/**
+                    If the user don't have progress on the logro
+                    or
+                    If the user have progress but not enough to redeem the logro
+                 */}
                 {(!puntosCompletados || puntosCompletados < totalPuntos) &&
                     <View style={styles.shareContainer}>
                         <TouchableWithoutFeedback>

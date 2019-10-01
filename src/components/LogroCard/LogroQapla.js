@@ -18,10 +18,6 @@ class LogroQapla extends Component {
         puntosCompletados: 0
     };
 
-    /**
-     * Used to change the width of the progressBar (with animation)
-     * @param {object} nextProps Incoming props from new render of component
-     */
     shouldComponentUpdate(nextProps) {
         if (nextProps.puntosCompletados !== this.state.puntosCompletados) {
             Animated.timing(
@@ -73,6 +69,11 @@ class LogroQapla extends Component {
                         }
                     </View>
                 </View>
+                {/**
+                    If the user don't have progress on the logro
+                    or
+                    If the user have progress but not enough to redeem the logro
+                 */}
                 {(!puntosCompletados || puntosCompletados < totalPuntos) &&
                     <View style={styles.progressContainer}>
                         <View style={styles.progressBar}>

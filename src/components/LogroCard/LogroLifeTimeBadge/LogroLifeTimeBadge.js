@@ -6,8 +6,9 @@ import { ONE_HOUR_MILISECONDS, HOURS_IN_DAY } from './../../../utilities/Constan
 
 export class LogroLifeTimeBadge extends Component {
     render() {
+        console.log(this.props);
         const dayObject = new Date();
-        const [day, month, year] = this.props.tiempoLimite.split('-');
+        const [day, month, year] = this.props.limitDate.split('-');
         const logroEndDate = new Date(`${month}/${day}/${year}`);
         const currentDate = new Date(
             `${dayObject.getUTCMonth() + 1}/${dayObject.getUTCDate()}/${dayObject.getUTCFullYear()} ${dayObject.getUTCHours()}:${dayObject.getUTCMinutes()}`

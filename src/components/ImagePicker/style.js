@@ -1,18 +1,26 @@
-// josep.sanahuja    - 05-08-2019 - us84 - + sfvContainer
+// josep.sanahuja    - 30-09-2019 - us118 - File creation
 
-import {StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native'
+import { getDimensions } from '../../utilities/iosAndroidDim'
 
 export default StyleSheet.create({
   container:{
-    flex:1,
-    justifyContent:'center',
+      flex:1,
+      justifyContent:'center',
+  },
+  imageContainer: {
+      justifyContent: 'flex-start',
+      alignSelf: 'center',
+      marginBottom: '2%', 
+      width: getDimensions().width * 0.95,
+      height: getDimensions().height / 2.5
   },
   content:{
-    backgroundColor:'white',
-    marginHorizontal:10,
-    paddingHorizontal:10,
-    paddingVertical:5,
-    borderRadius:3
+      backgroundColor:'white',
+      marginHorizontal:10,
+      paddingHorizontal:10,
+      paddingVertical:5,
+      borderRadius:3
   },
   okButtonContainer: {
       bottom: 100,
@@ -50,4 +58,9 @@ export default StyleSheet.create({
       marginRight: 32,
       letterSpacing: .57
   },
+  picture: {
+      height: getDimensions().height / 2.5,
+      width: getDimensions().width * 0.95,
+      resizeMode: 'cover'  
+  }
 })

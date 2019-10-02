@@ -36,29 +36,43 @@ class LogroSocial extends Component {
     /**
      * Send the user to the social link page (if app is installed then asked to open with the app)
      */
-    goToSocialLink = (url) => {
-        Linking.openURL(url);
+    goToSocialLink = () => {
+        Linking.openURL(this.props.pageLink);
     }
 
+    /**
+     * Sends the selected picture by ImagePickerModal and sends it to 
+     * Firebase Storage.
+     * 
+     * @params {Object} picture Picture selected in ImagePickerModal
+     */
     saveImage = (picture) => {
-        console.log('This is the picture Obj 2: ' + JSON.stringify(picture, null, 2));
-
         this.setState({
-          picture: picture
+            picture: picture
         });
 
-        let evidenceURL = savePictureEvidenceLogroSocial(picture.node.image.uri, this.props.id, this.props.userId);
-        if (evidenceURL !== null) {
+        let evProm = savePictureEvidenceLogroSocial(picture.node.image.uri, this.props.id, this.props.userId);
+        
+        // In case the picture is successfully stored in Firebase Datastorage,
+        // then an evidence of that picture will be saved in Firebase DB for
+        // verification purposes.
+        if (evProm !== null) {
             saveImgEvidenceUrlLogroSocial(this.props.id, this.props.userId);
         }
     }
 
+    /**
+     * Closes ImagePickerModal
+     */
     closeImgPckModal = () => {
         this.setState({
             showImgPckModal: false  
         });
     }
 
+    /**
+     * Opens ImagePickerModal
+     */
     openImgPckModal = () => {
         this.setState({
             showImgPckModal: true  
@@ -93,7 +107,7 @@ class LogroSocial extends Component {
                     </View>
                 </View>
                 <View style={styles.shareContainer}>
-                    <TouchableWithoutFeedback onPress={() => {this.goToSocialLink(pageLink)}}>
+                    <TouchableWithoutFeedback onPress={() => {this.goToSocialLink}}>
                         <View>
                             <Text style={styles.likeText}>Dar Like</Text>
                         </View>

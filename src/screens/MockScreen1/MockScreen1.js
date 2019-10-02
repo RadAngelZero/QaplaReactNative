@@ -2,18 +2,11 @@
 // josep.sanahuja    - 05-08-2019 - us84  - + SafeAreaView
 
 import React from 'react';
-
 import {
   View,
-  Text,
   SafeAreaView,
-  Button,
   Image,
-  ScrollView,
-  CameraRoll,
-  TouchableWithoutFeedback
 } from 'react-native'
-
 import styles from './style'
 
 import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
@@ -30,6 +23,12 @@ export default class MockScreen1 extends React.Component {
       };
   }
 
+  /**
+   * Sends the selected picture by ImagePickerModal and sends it to 
+   * Firebase Storage.
+   * 
+   * @params {Object} picture Picture selected in ImagePickerModal
+   */
   saveImage = (picture) => {
       console.log('This is the picture Obj 2: ' + JSON.stringify(picture, null, 2));
       
@@ -40,6 +39,9 @@ export default class MockScreen1 extends React.Component {
       savePictureEvidenceLogroSocial(picture.node.image.uri, 'QdcloizcjBfPyZd3i8o5GoFD5AC3', '-LQow7xrduUSQIBYqZce');
   }
 
+  /**
+   * Closes ImagePickerModal
+   */
   closeImgPckModal = () => {
       this.setState({
           showImgPckModal: false  

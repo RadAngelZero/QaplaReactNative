@@ -1,21 +1,15 @@
-// josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
+// josep.sanahuja    - 30-09-2019 - us118 - File creation
 
 import React from 'react';
-
 import {
   View,
   Text,
-  SafeAreaView,
-  Button,
   Image,
   ScrollView,
   CameraRoll,
   TouchableWithoutFeedback
 } from 'react-native'
-
 import styles from './style'
-
-import { getDimensions } from '../../utilities/iosAndroidDim'
 
 export default class ImagePicker extends React.Component {
   constructor(props) {
@@ -32,25 +26,40 @@ export default class ImagePicker extends React.Component {
   }
 
   componentDidMount() {
-      this._handleButtonPress();
+      this.loadPictures();
   }
 
-  _handleButtonPress = async () => {
-    CameraRoll.getPhotos({
-       first: this.state.numPictures,
-       assetType: 'Photos',
-       groupTypes: 'All'
-     })
-     .then(r => {
-       this.setState({ photos: r.edges });
-     })
-     .catch((err) => {
-       console.log(JSON.stringify(err, null, 2));
-        //Error Loading Images
-     });
-  };
+  /**
+  * Gets pictures from the Cameraroll in IOS and Android,
+  * in IOS what it returns is a list of phassets where we
+  * can read the uri to use it in an Image component. To use
+  * it for sending info to a server it is recommended to use
+  * fetch to obtain a blob, and then send it to the server.
+  */
+  loadPictures = async () => {
+      try {
+          const res = await CameraRoll.getPhotos({
+              first: this.state.numPictures,
+              assetType: 'Photos',
+              groupTypes: 'All'
+          });  
 
-  showMorePictures = async () => {
+          this.setState({
+              photos: res.edges
+          })
+      }
+      catch (err) {
+          console.log(err);
+      }
+  }
+
+  /**
+  * The function 'loadPictures' gets a list of this.state.numPictures
+  * pictures. In case that the user wants to see more pictures from 
+  * his Cameraroll then getPhotos in 'loadPictures' must be called again but with a 
+  * larger number of pictures to retrieve. 
+  */
+  loadMorePictures = async () => {
       if (this.state.morePictures) {
           if (this.state.numPictures <= this.state.photos.length)
           {
@@ -58,7 +67,7 @@ export default class ImagePicker extends React.Component {
                   numPictures: this.state.numPictures + 20    
               });
 
-              this._handleButtonPress();
+              this.loadPictures();
           }
           else {
               this.setState({
@@ -68,7 +77,14 @@ export default class ImagePicker extends React.Component {
       }
   }
 
-  selectPicture = async (pictIndex, picture) => {
+  /**
+  * Selects a picture from a list of pictures and saves all
+  * required info into the state to show the selection on screen.
+  * 
+  * @param {Number} pictIndex Index of the picture from the list
+  * @param {Object} picture   Picture object  
+  */
+  selectPicture = (pictIndex, picture) => {
       if (!this.state.pictureSelected) {
           this.setState({
               pictureSelected: true,
@@ -78,20 +94,32 @@ export default class ImagePicker extends React.Component {
       } 
   }
 
-  unselectPicture = async() => {
-      await this.setState({
+  /**
+  * Unselects a picture from a list of pictures and saves all
+  * required info into the state to apply the unselection on screen. 
+  */
+  unselectPicture = () => {
+      this.setState({
           pictureSelected: false,
           pictureIndex: -1,
           picture: null 
       });
   }
 
+  /**
+  * Checks if an image is selected from a list of pictures
+  *
+  * @param {Number}  index      Index of the picture from the list
+  * @param {Boolean} selected   Flag to check the selection state  
+  */
   isImageSelected = (index, selected) => {
-      let res = (index === this.state.pictureIndex) && selected;
-      
-      return res;
+      return (index === this.state.pictureIndex) && selected;
   }
 
+  /**
+  * Calls a method provided via props, to save the selected image,
+  * what save means, is up to the parent of the ImagePicker component. 
+  */
   saveImage = () => {
       this.props.saveImage(this.state.picture);
   }
@@ -100,35 +128,24 @@ export default class ImagePicker extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          {this.state.photos.map((p, i) => {
-            return (
+          {this.state.photos.map((p, i) => (
               <TouchableWithoutFeedback onPress={() => this.selectPicture(i, p)}>
                   <View 
-                    style={{
-                      justifyContent: 'flex-start',
-                      alignSelf: 'center',
-                      marginBottom: '2%', 
-                      width: getDimensions().width * 0.95,
-                      height: getDimensions().height / 2.5,
-                      
-                    }}>
-                    
+                    style={styles.imageContainer}>
                     <Image
-                     key={i}
-                     style={{
-                       height: getDimensions().height / 2.5,
-                       width: getDimensions().width * 0.95,
-                       resizeMode: 'cover',
-                       opacity: this.isImageSelected(i, this.state.pictureSelected) ? 0.4 : 1.0,
-                     }}
-                     source={{ uri: p.node.image.uri }}
-                   />
+                        key={p.node.image.uri}
+                        style={[{
+                            opacity: this.isImageSelected(i, this.state.pictureSelected) ? 0.4 : 1.0
+                            }, 
+                            styles.picture
+                        ]}
+                     source={{ uri: p.node.image.uri }} />
                   </View>
               </TouchableWithoutFeedback>
-            );
-          })}
+            ))
+          }
           {this.state.photos.length > 0 && this.state.morePictures && !this.state.pictureSelected &&
-              <TouchableWithoutFeedback onPress={this.showMorePictures}>
+              <TouchableWithoutFeedback onPress={this.loadMorePictures}>
                   <View style={styles.moreButtonContainer}>
                       <Text style={styles.textStyle}>Mostrar más fotografias</Text>
                   </View>
@@ -136,18 +153,18 @@ export default class ImagePicker extends React.Component {
           }
         </ScrollView>
         {this.state.pictureSelected &&
-          <>
-            <TouchableWithoutFeedback onPress={this.saveImage}>
-                <View style={styles.okButtonContainer}>
-                    <Text style={styles.textStyle}>{this.props.selectImgBttnTxt}</Text>
-                </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={this.unselectPicture}>
-                <View style={styles.cancelButtonContainer}>
-                    <Text style={styles.textStyle}>{this.props.discardImgBttnTxt}</Text>
-                </View>
-            </TouchableWithoutFeedback>
-          </>
+            <>
+                <TouchableWithoutFeedback onPress={this.saveImage}>
+                    <View style={styles.okButtonContainer}>
+                        <Text style={styles.textStyle}>{this.props.selectImgBttnTxt}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={this.unselectPicture}>
+                    <View style={styles.cancelButtonContainer}>
+                        <Text style={styles.textStyle}>{this.props.discardImgBttnTxt}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+            </>
         }  
       </View>
     );

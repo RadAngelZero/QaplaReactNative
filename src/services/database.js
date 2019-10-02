@@ -1,3 +1,4 @@
+// josep.sanahuja - 02-10-2019 - us118 - Added createLogroIncompletoChild
 // josep.sanahuja - 26-09-2019 - us118 - Added saveImgEvidenceUrlLogroSocial
 // josep.sanahuja - 19-09-2019 - us114 - Add getQaplaActiveLogros && logrosActRef
 // diego          - 21-08-2019 - us89 - Updated addGameToUser to create gamer profile of the new game on GamersRef
@@ -27,6 +28,7 @@ export const usersRef = database.ref('/Users');
 export const gamesRef = database.ref('/Games');
 export const commissionRef = database.ref('/Commission');
 export const gamersRef = database.ref('/Gamers');
+export const logrosRef = database.ref('/logros');
 export const logrosActRef = database.ref('/logrosActivos');
 export const veriLogroSocialRef = database.ref('/verificarLogroSocial');
 
@@ -539,6 +541,35 @@ export async function saveImgEvidenceUrlLogroSocial(logroId, userId) {
     try {
         res = await veriLogroSocialRef.child(logroId).child(userId).set({
             photoUrl: 'facebook_likes/' + logroId + '/' + userId
+        });
+    } catch (error) {
+        console.error(error);
+    }
+
+    return res;
+}
+
+/**
+ * @description 
+ * Creates an entry for logroIncompleto node with the info
+ * regarding the logro status. Once completed the logro, this entry
+ * should be moved to logroCompleto
+ *
+ * @param {string} logroId    Logro identifier
+ * @param {string} userId     User identifier
+ *  
+ * @returns
+ * FAIL    - {Null}    Operation on DB didn't succeed  
+ * SUCCESS - {Promise} Task Promise tracking completeness of operation
+ */
+export async function createLogroIncompletoChild(logroId, userId) {
+    let res = null;
+
+    try {
+        res = await logrosRef.child(userId).child('logroIncompleto').child(logroId).set({
+            puntosCompletados: 1,
+            redimido: false,
+            totalPuntos: 1
         });
     } catch (error) {
         console.error(error);

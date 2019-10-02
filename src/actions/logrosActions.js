@@ -5,7 +5,7 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
     cuentasVerificadasRef.child(uid).on('value', (verifiedAccount) => {
         
         /**
-         * That node don't exist unless that the user requests for verification to Qapla
+         * That node doesn't exist unless the user requests for verification to Qapla
          * The status is 2 when the user is already verified
          * The status is 1 when the user request for verification to Qapla
          */

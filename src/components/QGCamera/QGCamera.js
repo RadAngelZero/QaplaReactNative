@@ -5,16 +5,14 @@ import React from 'react';
 import {
   View,
   Text,
-  SafeAreaView,
   TouchableWithoutFeedback,
-  Image,
   Modal
 } from 'react-native'
 
 import styles from './style'
 import { withNavigation } from 'react-navigation';
-
 import { RNCamera } from 'react-native-camera';
+
 import QGCameraModal from './QGCameraModal/QGCameraModal';
 
 class QGCamera extends React.Component {
@@ -91,6 +89,11 @@ class QGCamera extends React.Component {
       this.props.onClose();  
   }
 
+  /**
+  * Determines de type of camera.
+  *
+  * @returns {any} Camera type (front / back)
+  */
   getCameraType = () => {
       let res = RNCamera.Constants.Type.back;
 
@@ -102,48 +105,47 @@ class QGCamera extends React.Component {
   }
 
   render() {
-    console.log("[QGCamera]: visible: " + JSON.stringify(this.props.visible, null, 2));
-    return (
-      <View>
-        <Modal
-            animationType="slide"
-            transparent={false}
-            visible={this.props.visible && !this.state.pictureTaken}
-            onRequestClose={this.closeCamera}>
-                {this.state.focusedScreen &&
-                    <View style={styles.container}>
-                        <RNCamera
-                          ref={ref => {
-                            this.camera = ref;
-                          }}
-                          style={styles.preview}
-                          type={this.getCameraType()}
-                          flashMode={RNCamera.Constants.FlashMode.off}
-                          captureAudio={false}
-                          androidCameraPermissionOptions={{
-                            title: 'Permiso para usar la cámara',
-                            message: 'Necesitamos tu permiso para usar tu cámara',
-                            buttonPositive: 'Ok',
-                            buttonNegative: 'Cancelar',
-                          }}
-                        />
-                        <TouchableWithoutFeedback onPress={this.takePicture}>
-                            <View style={styles.buttonContainer}>
-                                <Text style={styles.textStyle}>Tomar Foto :)</Text>
-                            </View>
-                        </TouchableWithoutFeedback> 
-                    </View>
-                }
-        </Modal>
-        <QGCameraModal
-            visible={this.state.pictureTaken}
-            okTextButton={"Quiero usar esta foto!"}
-            pictureUri={this.state.picture.uri}
-            cb1={this.savePicture}
-            onClose={this.closeQGCameraModal} 
-        />
-      </View>
-    );
+      return (
+        <View>
+          <Modal
+              animationType="slide"
+              transparent={false}
+              visible={this.props.visible && !this.state.pictureTaken}
+              onRequestClose={this.closeCamera}>
+                  {this.state.focusedScreen &&
+                      <View style={styles.container}>
+                          <RNCamera
+                            ref={ref => {
+                              this.camera = ref;
+                            }}
+                            style={styles.preview}
+                            type={this.getCameraType()}
+                            flashMode={RNCamera.Constants.FlashMode.off}
+                            captureAudio={false}
+                            androidCameraPermissionOptions={{
+                              title: 'Permiso para usar la cámara',
+                              message: 'Necesitamos tu permiso para usar tu cámara',
+                              buttonPositive: 'Ok',
+                              buttonNegative: 'Cancelar',
+                            }}
+                          />
+                          <TouchableWithoutFeedback onPress={this.takePicture}>
+                              <View style={styles.buttonContainer}>
+                                  <Text style={styles.textStyle}>Tomar Foto :)</Text>
+                              </View>
+                          </TouchableWithoutFeedback> 
+                      </View>
+                  }
+          </Modal>
+          <QGCameraModal
+              visible={this.state.pictureTaken}
+              okTextButton={"Quiero usar esta foto!"}
+              pictureUri={this.state.picture.uri}
+              savePicture={this.savePicture}
+              onClose={this.closeQGCameraModal} 
+          />
+        </View>
+      );
   }
 }
 

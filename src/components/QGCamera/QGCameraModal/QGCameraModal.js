@@ -8,7 +8,6 @@ import {
   TouchableWithoutFeedback,
   Image
 } from 'react-native';
-
 import styles from './style';
 import { withNavigation } from 'react-navigation';
 
@@ -17,36 +16,22 @@ import Images from './../../../../assets/images';
 const CloseIcon = Images.svg.closeIcon;
 
 class QGCameraModal extends Component {
-    /**
-    *  Callbacks used in render()
-    */
 
-    /**
-    * Description:
-    * Perform a series of actions for the Modal, including the main one which is 'closing the modal'
-    * and navigation to next screen. The other actions are performed via cb1 and cb2 props,
-    * which are executed sequentially, cb1 1st, cb2 2nd, and they are executed in a synchronous way.
-    * 
-    * @param None
+    /** 
+    * Saves the picture taken by Camera, hides the modal and navigates
+    * to a next screen in case of beeing it defined.
     */
     action = async () => {
-      // cb1 executes before cb2, and in case cb1 is not defined and cb2 is, then cb2 is excecuted
-      // even though cb1 is undefined.
-      if (this.props.cb1 !== undefined && this.props.cb1 !== null){
-        await this.props.cb1();  
-      }
-
-      if (this.props.cb2 !== undefined && this.props.cb2 !== null){
-        await this.props.cb2();
-      }
-
-      // If there is no screen defined in props, the modal will close without any navigation
-      if (this.props.nextScreen) {
-        this.props.navigation.navigate(this.props.nextScreen);
-      }
+      // Calls callback to save the picture
+      this.props.savePicture();
 
       // Close the Modal
       this.closeModal();
+
+      // If there is no screen defined in props, the modal will close without any navigation
+      if (this.props.nextScreen && typeof this.props.nextScreen === 'string') {
+        this.props.navigation.navigate(this.props.nextScreen);
+      }
     }
 
     /**

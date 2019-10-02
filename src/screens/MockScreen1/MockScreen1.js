@@ -5,16 +5,13 @@ import React from 'react';
 
 import {
   View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  Image
+  SafeAreaView
 } from 'react-native'
 
 import styles from './style'
 import QGCamera from '../../components/QGCamera/QGCamera';
 
-import {getQaplaActiveLogros} from '../../services/database'
+import { getQaplaActiveLogros } from '../../services/database'
 
 export default class MockScreen1 extends React.Component {
   constructor(props) {

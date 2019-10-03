@@ -91,7 +91,7 @@ class LogroSocial extends Component {
         const {titulo, descripcion, qaploins, photoUrl, pageLink, totalPuntos, verified} = this.props;
         
         return (
-            <View style={true ? styles.container : styles.disabledContainer}>
+            <View style={verified ? styles.container : styles.disabledContainer}>
                 <View style={styles.contentContainer}>
                     <View style={styles.colASocialContainer}>
                         <Image style={styles.picture} source={{uri: photoUrl}} />

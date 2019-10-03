@@ -7,7 +7,8 @@ import { View, Image, TouchableWithoutFeedback, Text, Linking } from 'react-nati
 
 import styles from './style';
 import Images from '../../../assets/images';
-import { savePictureEvidenceLogroSocial, saveImgEvidenceUrlLogroSocial } from '../../services/database';
+import { saveImgEvidenceUrlLogroSocial, createLogroIncompletoChild } from '../../services/database';
+import { savePictureEvidenceLogroSocial } from '../../services/storage';
 import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
@@ -57,7 +58,14 @@ class LogroSocial extends Component {
         // then an evidence of that picture will be saved in Firebase DB for
         // verification purposes.
         if (evProm !== null) {
-            saveImgEvidenceUrlLogroSocial(this.props.id, this.props.userId);
+            const dbRes = saveImgEvidenceUrlLogroSocial(this.props.id, this.props.userId);
+
+            // After the reference to the evidence image is written to DB,
+            // an entry for the logro is created to DB in logroIcompleto child,
+            // to track the status of the completeness of the logro. 
+            if (dbRes !== null) {
+                createLogroIncompletoChild(this.props.id, this.props.userId);
+            }
         }
     }
 

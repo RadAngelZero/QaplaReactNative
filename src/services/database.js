@@ -1,3 +1,4 @@
+// josep.sanahuja - 26-09-2019 - us118 - Added saveImgEvidenceUrlLogroSocial
 // josep.sanahuja - 19-09-2019 - us114 - Add getQaplaActiveLogros && logrosActRef
 // diego          - 21-08-2019 - us89 - Updated addGameToUser to create gamer profile of the new game on GamersRef
 // diego          - 20-08-2019 - us89 - Created gamersRef
@@ -28,6 +29,7 @@ export const commissionRef = database.ref('/Commission');
 export const gamersRef = database.ref('/Gamers');
 export const logrosActRef = database.ref('/logrosActivos');
 export const verificationOnProccessRef = database.ref('/VerificacionEnProceso');
+export const veriLogroSocialRef = database.ref('/verificarLogroSocial');
 
 /**
  * Returns the userName of the specified user
@@ -510,7 +512,7 @@ export async function uploadMatchResult(idMatch, adversary, result, evidence) {
  * @description 
  * Get active logros that Qapla has
  *
- * @return active logros in JSON format
+ * @returns active logros in JSON format
  */
 export async function getQaplaActiveLogros() {
     try {
@@ -520,6 +522,33 @@ export async function getQaplaActiveLogros() {
         console.error(error);
     }
 }
+
+/**
+ * @description 
+ * Save a picture to 'storageLogrosImgRef/logroId/idUser.jpg'
+ *
+ * @param {string} logroId    Logro identifier
+ * @param {string} userId     User identifier
+ *  
+ * @returns
+ * FAIL    - {Null}    Operation on DB didn't succeed  
+ * SUCCESS - {Promise} Task Promise tracking completeness of operation
+ */
+export async function saveImgEvidenceUrlLogroSocial(logroId, userId) {
+    let res = null;
+
+    try {
+        res = await veriLogroSocialRef.child(logroId).child(userId).set({
+            photoUrl: 'facebook_likes/' + logroId + '/' + userId
+        });
+    } catch (error) {
+        console.error(error);
+    }
+
+    return res;
+}
+
+
 
 // -----------------------------------------------
 // Verification

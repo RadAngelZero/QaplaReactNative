@@ -2,12 +2,10 @@
 // josep.sanahuja    - 05-08-2019 - us84  - + SafeAreaView
 
 import React from 'react';
-
 import {
   View,
   SafeAreaView
 } from 'react-native'
-
 import styles from './style'
 import QGCamera from '../../components/QGCamera/QGCamera';
 

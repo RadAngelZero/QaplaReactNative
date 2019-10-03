@@ -47,6 +47,7 @@
 		C8983909D9124FFBB2B1E2DD /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 804A4C544EF34401B305DB30 /* libRNSVG-tvOS.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
+		F97D0A5A233BF67D00C00713 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F97D0A33233BF33000C00713 /* libRCTCameraRoll.a */; };
 		F99FA6EB22E77F3000D0BBFB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F99FA6EA22E77F3000D0BBFB /* GoogleService-Info.plist */; };
 		FBF77EE29EB4F9143C0420F1 /* libPods-QaplaReactNative-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFC30DCC651B0B2BC1D121F /* libPods-QaplaReactNative-tvOS.a */; };
 /* End PBXBuildFile section */
@@ -360,6 +361,13 @@
 			remoteGlobalIDString = B5C32A36220C603B000FFB8D;
 			remoteInfo = "RNGestureHandler-tvOS";
 		};
+		F97D0A32233BF33000C00713 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F97D0A29233BF33000C00713 /* RCTCameraRoll.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
+			remoteInfo = RCTCameraRoll;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -407,6 +415,7 @@
 		B6B8741564C6E040BCA7B6F8 /* Pods-QaplaReactNative-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaReactNative-tvOS.release.xcconfig"; path = "Target Support Files/Pods-QaplaReactNative-tvOS/Pods-QaplaReactNative-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F97D0A29233BF33000C00713 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		F99FA6EA22E77F3000D0BBFB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Miyabi Labs/fit2018/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FEFC30DCC651B0B2BC1D121F /* libPods-QaplaReactNative-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -437,6 +446,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				F97D0A5A233BF67D00C00713 /* libRCTCameraRoll.a in Frameworks */,
 				370EF3D9F81D4C1DB5AB3C5D /* libRNGestureHandler.a in Frameworks */,
 				1E90C74E7E254F929365151D /* libRNSVG.a in Frameworks */,
 				61D7D7A1791BAA77CC6428A1 /* libPods-QaplaReactNative.a in Frameworks */,
@@ -638,6 +648,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				F97D0A29233BF33000C00713 /* RCTCameraRoll.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -737,6 +748,14 @@
 			children = (
 				F951DB8B22D518B100801C80 /* libRNGestureHandler.a */,
 				F951DB8D22D518B100801C80 /* libRNGestureHandler-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F97D0A2A233BF33000C00713 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F97D0A33233BF33000C00713 /* libRCTCameraRoll.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -871,6 +890,10 @@
 				{
 					ProductGroup = ADBDB9201DFEBF0600ED6528 /* Products */;
 					ProjectRef = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
+				},
+				{
+					ProductGroup = F97D0A2A233BF33000C00713 /* Products */;
+					ProjectRef = F97D0A29233BF33000C00713 /* RCTCameraRoll.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -1226,6 +1249,13 @@
 			remoteRef = F951DB8C22D518B100801C80 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		F97D0A33233BF33000C00713 /* libRCTCameraRoll.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCameraRoll.a;
+			remoteRef = F97D0A32233BF33000C00713 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1521,6 +1551,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/CameraRoll/**"
 				);
 				INFOPLIST_FILE = QaplaReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1550,6 +1581,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/CameraRoll/**"
 				);
 				INFOPLIST_FILE = QaplaReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

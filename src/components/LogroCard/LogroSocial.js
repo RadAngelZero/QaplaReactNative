@@ -1,4 +1,4 @@
-// josep.sanahuja - 26-09-2019 - us117 - Added goToSocialLink
+// josep.sanahuja - 26-09-2019 - us118 - Added goToSocialLink & ImagePickerModal
 // josep.sanahuja - 20-09-2019 - us111 - Added disabledContainer logic
 // josep.sanahuja - 19-09-2019 - us114 - File creation
 
@@ -7,10 +7,21 @@ import { View, Image, TouchableWithoutFeedback, Text, Linking } from 'react-nati
 
 import styles from './style';
 import Images from '../../../assets/images';
+import { savePictureEvidenceLogroSocial, saveImgEvidenceUrlLogroSocial } from '../../services/database';
+import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
 class LogroSocial extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showImgPckModal: false,
+            picture: null
+        };
+    }
+
     /**
      * Validates that the url is a valid url
      */
@@ -25,8 +36,47 @@ class LogroSocial extends Component {
     /**
      * Send the user to the social link page (if app is installed then asked to open with the app)
      */
-    goToSocialLink = (url) => {
-        Linking.openURL(url);
+    goToSocialLink = () => {
+        Linking.openURL(this.props.pageLink);
+    }
+
+    /**
+     * Sends the selected picture by ImagePickerModal and sends it to 
+     * Firebase Storage.
+     * 
+     * @params {Object} picture Picture selected in ImagePickerModal
+     */
+    saveImage = (picture) => {
+        this.setState({
+            picture: picture
+        });
+
+        let evProm = savePictureEvidenceLogroSocial(picture.node.image.uri, this.props.id, this.props.userId);
+        
+        // In case the picture is successfully stored in Firebase Datastorage,
+        // then an evidence of that picture will be saved in Firebase DB for
+        // verification purposes.
+        if (evProm !== null) {
+            saveImgEvidenceUrlLogroSocial(this.props.id, this.props.userId);
+        }
+    }
+
+    /**
+     * Closes ImagePickerModal
+     */
+    closeImgPckModal = () => {
+        this.setState({
+            showImgPckModal: false  
+        });
+    }
+
+    /**
+     * Opens ImagePickerModal
+     */
+    openImgPckModal = () => {
+        this.setState({
+            showImgPckModal: true  
+        });
     }
 
     render() {
@@ -57,17 +107,21 @@ class LogroSocial extends Component {
                     </View>
                 </View>
                 <View style={styles.shareContainer}>
-                    <TouchableWithoutFeedback onPress={() => {this.goToSocialLink(pageLink)}}>
+                    <TouchableWithoutFeedback onPress={() => {this.goToSocialLink}}>
                         <View>
                             <Text style={styles.likeText}>Dar Like</Text>
                         </View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={this.openImgPckModal}>
                         <View>
                             <Text style={styles.uploadText}>Subir</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
+                <ImagePickerModal
+                      visible={this.state.showImgPckModal}
+                      saveImage={this.saveImage}
+                      onClose={this.closeImgPckModal}/> 
             </View>
         );
     }

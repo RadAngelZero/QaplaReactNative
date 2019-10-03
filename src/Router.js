@@ -172,6 +172,20 @@ const TabMainNavigator = createBottomTabNavigator({
       )
     })
   },
+  Playground: {
+    screen:   MockScreen1,
+    navigationOptions: ({ navigation }) => ({
+      title: "PlayGround",  //Tried to hide this for next tab Search.,
+      tabBarIcon: ({ tintColor, focused }) => (
+        <View>
+          <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
+          {focused &&
+            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Retas</Text>
+          }
+        </View>
+      )
+    })
+  },
   Perfil: {
     screen:   UserProfileScreen,
     navigationOptions: ({ navigation }) => ({

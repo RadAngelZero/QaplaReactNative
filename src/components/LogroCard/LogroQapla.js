@@ -8,6 +8,7 @@ import styles from './style';
 import Images from '../../../assets/images';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
+import { redeemLogroCloudFunction } from '../../services/functions';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
@@ -36,6 +37,13 @@ class LogroQapla extends Component {
         return true;
     }
 
+    /**
+     * Redeem the logro calling to the cloud function
+     */
+    redeemLogro = () => {
+        redeemLogroCloudFunction(this.props.id, this.props.qaploins);
+    }
+
     render() {
         const { titulo, descripcion, qaploins, puntosCompletados, totalPuntos, tiempoLimite, verified } = this.props;
         return (
@@ -54,7 +62,11 @@ class LogroQapla extends Component {
                         </View>
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />
                         {puntosCompletados >= totalPuntos &&
-                            <TouchableWithoutFeedback>
+                            <TouchableWithoutFeedback
+                                onPress={this.redeemLogro}
+                                /**Just a double check on disabled property of the button */
+                                disabled={puntosCompletados < totalPuntos}>
+                                
                                 <View style={styles.redimirButton}>
                                     <Text style={styles.redimirTextButton}>Redimir</Text>
                                 </View>
@@ -62,7 +74,12 @@ class LogroQapla extends Component {
                         }
                     </View>
                 </View>
-                {puntosCompletados < totalPuntos &&
+                {/**
+                    If the user don't have progress on the logro
+                    or
+                    If the user have progress but not enough to redeem the logro
+                 */}
+                {(!puntosCompletados || puntosCompletados < totalPuntos) &&
                     <View style={styles.progressContainer}>
                         <View style={styles.progressBar}>
                             <Animated.View

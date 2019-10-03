@@ -42,6 +42,7 @@ export default styles = StyleSheet.create({
         fontSize: 14,
         letterSpacing: .17,
         lineHeight: 16,
+        textAlignVertical: 'center',
         color: '#FFF',
         marginLeft: 8,
         width: '60%'

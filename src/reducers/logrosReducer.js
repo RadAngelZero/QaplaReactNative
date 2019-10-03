@@ -23,7 +23,7 @@ function logrosReducer(state = initialState, action) {
             
             return { ...state, logrosActivos };
         case LOAD_LOGROS_COMPLETOS:
-            logrosCompletados[action.payload.id] = {...logrosActivos[action.payload.id], ...action.payload};
+            logrosCompletados[action.payload.id] = { ...logrosActivos[action.payload.id], ...action.payload };
 
             return { ...state, ...logrosCompletados };
         default:

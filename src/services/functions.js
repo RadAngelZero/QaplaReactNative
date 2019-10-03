@@ -46,6 +46,16 @@ export function addQaploinsToUserCloudFunction() {
 	});
 }
 
+export function redeemLogroCloudFunction(idLogro, qaploins) {
+	return callCloudFunction({
+		cfName: 'redeemLogro',
+		params: {
+			idLogro,
+			qaploins
+		}
+	});
+}
+
 /**
  * Description: 
  * Performs the call to the callable cloud function 

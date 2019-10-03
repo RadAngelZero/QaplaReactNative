@@ -8,7 +8,8 @@ const initialState = {
 };
 
 function logrosReducer(state = initialState, action) {
-    let { logrosActivos, logrosCompletados } = state;
+    const { logrosActivos, logrosCompletados } = state;
+    
     switch (action.type) {
         case LOAD_USER_VERIFICATION_STATUS:
 

@@ -23,6 +23,11 @@ class LogroQapla extends Component {
             Animated.timing(
                 this.state.progressBarWidth,
                 {
+                    /**
+                     * 70 is the maxim value of the width because the width defined in the style is also 70
+                     * The operation calculate the percentage to fill based on the current progress of the user
+                     * If the user don't have any progress show the 0% by default
+                     */
                     toValue: widthPercentageToPx((70 / this.props.totalPuntos * nextProps.puntosCompletados) || 0),
                     duration: 375
                 }
@@ -55,7 +60,7 @@ class LogroQapla extends Component {
                             <QaploinIcon height={31} width={31} style={styles.qaploinIcon} />
                             <Text style={styles.qaploinsText}>{qaploins}</Text>  
                         </View>
-                        <LogroLifeTimeBadge tiempoLimite={tiempoLimite} />
+                        <LogroLifeTimeBadge limitDate={tiempoLimite} />
                         {puntosCompletados >= totalPuntos &&
                             <TouchableWithoutFeedback
                                 onPress={this.redeemLogro}

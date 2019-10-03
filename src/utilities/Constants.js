@@ -17,18 +17,18 @@ export const SET_SELECTED_GAME = 'SET_SELECTED_GAME';
 export const GET_HIGHLIGHT_1_CREATE_MATCH = 'GET_HIGHLIGHT_1_CREATE_MATCH';
 export const SET_HIGHLIGHT_1_CREATE_MATCH = 'SET_HIGHLIGHT_1_CREATE_MATCH';
 
-// Logros constants
-export const LOAD_USER_VERIFICATION_STATUS = 'LOAD_USER_VERIFICATION_STATUS';
-export const LOAD_LOGROS_ACTIVOS = 'LOAD_LOGROS_ACTIVOS';
-export const REMOVE_LOGRO_ACTIVO = 'REMOVE_LOGRO_ACTIVO';
-export const LOAD_LOGROS_COMPLETOS = 'LOAD_LOGROS_COMPLETOS';
-
 // Crear Reta Button in PublicMatchesFeedScreen.js
 export const HIGHLIGHT_1_CREATE_MATCH = 'HIGHLIGHT_1_CREATE_MATCH';
 // Crear Reta Button in PublicMatchesFeedScreen.js Flag
 export const HIGHLIGHT_1_CREATE_MATCH_FLAG = 'HIGHLIGHT_1_CREATE_MATCH_FLAG';
 // Notification Button in HeaderBar.js
 export const HIGHLIGHT_2_NOTIFICATIONS = 'HIGHLIGHT_2_NOTIFICATIONS';
+
+// Logros constants
+export const LOAD_USER_VERIFICATION_STATUS = 'LOAD_USER_VERIFICATION_STATUS';
+export const LOAD_LOGROS_ACTIVOS = 'LOAD_LOGROS_ACTIVOS';
+export const REMOVE_LOGRO_ACTIVO = 'REMOVE_LOGRO_ACTIVO';
+export const LOAD_LOGROS_COMPLETOS = 'LOAD_LOGROS_COMPLETOS';
 
 // Adversary numbers
 export const ADVERSARY_1_NUMBER = 1;
@@ -46,3 +46,8 @@ export const WON_RESULT = '1';
 export const LOST_RESULT = '0';
 export const OTHER_RESULT = '7';
 export const TIE_RESULT = '3';
+
+// Date constants
+
+export const ONE_HOUR_MILISECONDS = 3600000;
+export const HOURS_IN_DAY = 24;

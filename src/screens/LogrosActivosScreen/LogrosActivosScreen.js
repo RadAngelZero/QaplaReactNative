@@ -23,16 +23,18 @@ export class LogrosActivosScreen extends Component {
     }
 
     componentWillUnmount() {
-        //Remove willBlur and willFocus listeners on navigation
+        // Remove willBlur and willFocus listeners on navigation
         this.list.forEach((item) => item.remove());
     }
 
     render() {
+        const logros = Object.keys(this.props.logros.logrosActivos).map((logroKey) => this.props.logros.logrosActivos[logroKey]);
+
         return (
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={styles.sfvContainer}>
                 <LogrosList
                     isUserVerified={this.props.logros.isUserVerified}
-                    logros={Object.keys(this.props.logros.logrosActivos).map((logroKey) => this.props.logros.logrosActivos[logroKey])} />
+                    logros={logros} />
             </SafeAreaView>
         );
     }

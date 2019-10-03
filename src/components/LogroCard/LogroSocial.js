@@ -39,7 +39,7 @@ class LogroSocial extends Component {
                             <QaploinIcon height={31} width={31} style={styles.qaploinIcon} />
                             <Text style={styles.qaploinsText}>{qaploins}</Text>  
                         </View>
-                        <LogroLifeTimeBadge tiempoLimite={tiempoLimite} />
+                        <LogroLifeTimeBadge limitDate={tiempoLimite} />
                         {puntosCompletados >= totalPuntos &&
                             <TouchableWithoutFeedback
                                 onPress={this.redeemLogro}

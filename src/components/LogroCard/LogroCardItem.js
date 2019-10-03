@@ -19,7 +19,7 @@ class LogroCardItem extends Component {
             case 'like':
                 res = <LogroSocial {...this.props} />;
                 break;
-            case 'verifica':
+            case 'verificado':
                 res = <LogroVerification {...this.props} />;
                 break;
             case 'completado':

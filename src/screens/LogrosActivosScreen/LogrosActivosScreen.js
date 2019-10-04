@@ -34,7 +34,8 @@ export class LogrosActivosScreen extends Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <LogrosList
                     isUserVerified={this.props.logros.isUserVerified}
-                    logros={logros} />
+                    logros={logros}
+                    userId={this.props.uid}/>
             </SafeAreaView>
         );
     }

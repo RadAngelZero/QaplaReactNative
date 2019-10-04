@@ -36,6 +36,8 @@ import LogrosActivosScreen from './screens/LogrosActivosScreen/LogrosActivosScre
 import LogrosCompletadosScreen from './screens/LogrosCompletadosScreen/LogrosCompletadosScreen';
 import VerificationScreen from './screens/VerificationScreen/VerificationScreen';
 
+import MockScreen1 from './screens/MockScreen1/MockScreen1'
+
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
 import NotificationsHeader from './components/NotificationsHeader/NotificationsHeader';
@@ -165,6 +167,20 @@ const TabMainNavigator = createBottomTabNavigator({
           <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
           {focused &&
             <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Logros</Text>
+          }
+        </View>
+      )
+    })
+  },
+  Playground: {
+    screen:   MockScreen1,
+    navigationOptions: ({ navigation }) => ({
+      title: "PlayGround",  //Tried to hide this for next tab Search.,
+      tabBarIcon: ({ tintColor, focused }) => (
+        <View>
+          <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
+          {focused &&
+            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Retas</Text>
           }
         </View>
       )

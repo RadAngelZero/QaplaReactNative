@@ -1,3 +1,5 @@
+// josep.sanahuja - 02-10-2019 - us118 - Added createLogroIncompletoChild
+// josep.sanahuja - 26-09-2019 - us118 - Added saveImgEvidenceUrlLogroSocial
 // josep.sanahuja - 19-09-2019 - us114 - Add getQaplaActiveLogros && logrosActRef
 // diego          - 21-08-2019 - us89 - Updated addGameToUser to create gamer profile of the new game on GamersRef
 // diego          - 20-08-2019 - us89 - Created gamersRef
@@ -26,9 +28,11 @@ export const usersRef = database.ref('/Users');
 export const gamesRef = database.ref('/Games');
 export const commissionRef = database.ref('/Commission');
 export const gamersRef = database.ref('/Gamers');
+export const logrosRef = database.ref('/logros');
 export const logrosActRef = database.ref('/logrosActivos');
 export const cuentasVerificadasRef = database.ref('/CuentasVerificadas');
-export const logrosRef = database.ref('/logros');
+export const verificationOnProccessRef = database.ref('/VerificacionEnProceso');
+export const veriLogroSocialRef = database.ref('/verificarLogroSocial');
 
 /**
  * Returns the userName of the specified user
@@ -511,7 +515,7 @@ export async function uploadMatchResult(idMatch, adversary, result, evidence) {
  * @description 
  * Get active logros that Qapla has
  *
- * @return active logros in JSON format
+ * @returns active logros in JSON format
  */
 export async function getQaplaActiveLogros() {
     try {
@@ -520,4 +524,74 @@ export async function getQaplaActiveLogros() {
     } catch (error) {
         console.error(error);
     }
+}
+
+/**
+ * @description 
+ * Save a picture to 'storageLogrosImgRef/logroId/idUser.jpg'
+ *
+ * @param {string} logroId    Logro identifier
+ * @param {string} userId     User identifier
+ *  
+ * @returns
+ * FAIL    - {Null}    Operation on DB didn't succeed  
+ * SUCCESS - {Promise} Task Promise tracking completeness of operation
+ */
+export async function saveImgEvidenceUrlLogroSocial(logroId, userId) {
+    let res = null;
+
+    try {
+        res = await veriLogroSocialRef.child(logroId).child(userId).set({
+            photoUrl: 'facebook_likes/' + logroId + '/' + userId
+        });
+    } catch (error) {
+        console.error(error);
+    }
+
+    return res;
+}
+
+/**
+ * @description 
+ * Creates an entry for logroIncompleto node with the info
+ * regarding the logro status. Once completed the logro, this entry
+ * should be moved to logroCompleto
+ *
+ * @param {string} logroId    Logro identifier
+ * @param {string} userId     User identifier
+ *  
+ * @returns
+ * FAIL    - {Null}    Operation on DB didn't succeed  
+ * SUCCESS - {Promise} Task Promise tracking completeness of operation
+ */
+export async function createLogroIncompletoChild(logroId, userId) {
+    let res = null;
+
+    try {
+        res = await logrosRef.child(userId).child('logroIncompleto').child(logroId).set({
+            puntosCompletados: 1,
+            redimido: false,
+            totalPuntos: 1
+        });
+    } catch (error) {
+        console.error(error);
+    }
+
+    return res;
+}
+
+
+
+// -----------------------------------------------
+// Verification
+// -----------------------------------------------
+
+/**
+ * Write a request for verification on the database
+ * @param {string} uid user identifier on database
+ * @param {object} verificationInfo Object with the necessary information to write the request
+ * 
+ */
+export async function createVerificationRequest(uid, verificationInfo) {
+    await verificationOnProccessRef.child(uid).set(verificationInfo);
 }

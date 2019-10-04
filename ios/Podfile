@@ -14,7 +14,7 @@ target 'QaplaReactNative' do
     'RCTNetwork',
     'RCTWebSocket', # Needed for debugging
     'RCTAnimation', # Needed for FlatList and animations running on native UI thread
-    # Add any other subspecs you want to use in your project
+    'RCTImage'
   ]
   # Explicitly include Yoga if you are using RN >= 0.42.0
   pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
@@ -31,10 +31,20 @@ target 'QaplaReactNative' do
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   
   pod 'Firebase/Functions'
-  
-  pod 'Firebase/Analytics'
+
+  pod 'Firebase/Storage'
 
   pod 'RNAnalytics', :path => '../node_modules/@segment/analytics-react-native'
+
+  pod 'Firebase/Core', '~> 6.9.0'
+  
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios' 
+  
+  pod 'Firebase/Database'
+
+  pod 'Firebase/Auth'
+
+  pod 'react-native-camera', path: '../node_modules/react-native-camera'
 
 end
 

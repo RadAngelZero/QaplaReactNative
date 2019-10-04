@@ -46,5 +46,10 @@ export default styles = StyleSheet.create({
         marginRight: widthPercentageToPx(10),
         textAlign: 'center',
         letterSpacing: .57
+    },
+    smsWarning: {
+        fontSize: 10,
+        color: '#FFF',
+        textAlign: 'center'
     }
 });

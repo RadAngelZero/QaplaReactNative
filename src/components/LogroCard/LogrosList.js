@@ -1,3 +1,4 @@
+// josep.sanahuja - 26-09-2019 - us118 - Added userId to LogroCardItem
 // josep.sanahuja - 20-09-2019 - us111 - Added verified on LogroCardItem
 // josep.sanahuja - 19-09-2019 - us114 - File creation
 
@@ -20,7 +21,10 @@ class LogrosList extends React.Component {
                 <FlatList
                     data={this.props.logros}
                     initialNumToRender={5}
-                    renderItem={({item}) => <LogroCardItem verified={this.props.isUserVerified} {...item} />}
+                    renderItem={({item}) => <LogroCardItem
+                      {...item}
+                      userId={this.props.userId}
+                      verified={this.props.isUserVerified} />}
                     keyExtractor={(item) => item.id} />      
             </View>
 	      </SafeAreaView>

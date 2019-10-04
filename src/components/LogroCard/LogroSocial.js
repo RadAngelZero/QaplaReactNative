@@ -7,6 +7,8 @@ import { View, Image, TouchableWithoutFeedback, Text, Linking } from 'react-nati
 
 import styles from './style';
 import Images from '../../../assets/images';
+import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
+import { redeemLogroCloudFunction } from '../../services/functions';
 import { saveImgEvidenceUrlLogroSocial, createLogroIncompletoChild } from '../../services/database';
 import { savePictureEvidenceLogroSocial } from '../../services/storage';
 import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
@@ -14,6 +16,7 @@ import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/Imag
 const QaploinIcon = Images.svg.qaploinsIcon;
 
 class LogroSocial extends Component {
+
     constructor(props) {
         super(props);
 
@@ -87,9 +90,15 @@ class LogroSocial extends Component {
         });
     }
 
+    /**
+     * Redeem the logro calling to the cloud function
+     */
+    redeemLogro = () => {
+        redeemLogroCloudFunction(this.props.id, this.props.qaploins);
+    }
+
     render() {
-        const {titulo, descripcion, qaploins, photoUrl, pageLink, totalPuntos, verified} = this.props;
-        
+        const { titulo, descripcion, qaploins, photoUrl, puntosCompletados, totalPuntos, tiempoLimite, verified } = this.props;
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
                 <View style={styles.contentContainer}>
@@ -107,29 +116,42 @@ class LogroSocial extends Component {
                             <QaploinIcon height={31} width={31} style={styles.qaploinIcon} />
                             <Text style={styles.qaploinsText}>{qaploins}</Text>  
                         </View>
-                        <TouchableWithoutFeedback>
-                            <View style={styles.redimirButton}>
-                                <Text style={styles.redimirTextButton}>Redimir</Text>
+                        <LogroLifeTimeBadge limitDate={tiempoLimite} />
+                        {puntosCompletados >= totalPuntos &&
+                            <TouchableWithoutFeedback
+                                onPress={this.redeemLogro}
+                                /**Just a double check on disabled property of the button */
+                                disabled={puntosCompletados < totalPuntos}>
+                                <View style={styles.redimirButton}>
+                                    <Text style={styles.redimirTextButton}>Redimir</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        }
+                    </View>
+                </View>
+                {/**
+                    If the user don't have progress on the logro
+                    or
+                    If the user have progress but not enough to redeem the logro
+                 */}
+                {(!puntosCompletados || puntosCompletados < totalPuntos) &&
+                    <View style={styles.shareContainer}>
+                        <TouchableWithoutFeedback onPress={this.goToSocialLink}>
+                            <View>
+                                <Text style={styles.likeText}>Dar Like</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={this.openImgPckModal}>
+                            <View>
+                                <Text style={styles.uploadText}>Subir</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
-                </View>
-                <View style={styles.shareContainer}>
-                    <TouchableWithoutFeedback onPress={() => {this.goToSocialLink}}>
-                        <View>
-                            <Text style={styles.likeText}>Dar Like</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={this.openImgPckModal}>
-                        <View>
-                            <Text style={styles.uploadText}>Subir</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
+                }
                 <ImagePickerModal
                       visible={this.state.showImgPckModal}
                       saveImage={this.saveImage}
-                      onClose={this.closeImgPckModal}/> 
+                      onClose={this.closeImgPckModal} />
             </View>
         );
     }

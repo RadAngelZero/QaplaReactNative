@@ -54,6 +54,7 @@ export default styles = StyleSheet.create({
     },
     colBContainer: {
         flex: 1,
+        justifyContent: 'space-between'
     },
     colASocialContainer: {
         width: widthPercentageToPx(23),
@@ -164,6 +165,34 @@ export default styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 12,
         marginBottom: 12
+    },
+    progressContainer: {
+        flexDirection: 'row',
+        width: widthPercentageToPx(95),
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: 18
+    },
+    progressBar: {
+        marginTop: 12,
+        width: widthPercentageToPx(70),
+        backgroundColor: '#1A1D34',
+        height: 4,
+        marginLeft: 16,
+        marginBottom: 15,
+        borderRadius: 18,
+        alignSelf: 'baseline'
+    },
+    progressBarContent: {
+        backgroundColor: '#6D7DDE',
+        height: 4,
+        borderRadius: 18
+    },
+    progressBarCounter: {
+        fontSize: 10,
+        fontWeight: '700',
+        color: '#3DF9DF',
+        marginLeft: 8
     },
     likeText: {
         marginTop: heightPercentageToPx(2),

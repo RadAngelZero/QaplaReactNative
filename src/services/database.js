@@ -569,7 +569,7 @@ export async function createLogroIncompletoChild(logroId, userId) {
 
     try {
         res = await logrosRef.child(userId).child('logroIncompleto').child(logroId).set({
-            puntosCompletados: 1,
+            puntosCompletados: 0,
             redimido: false,
             totalPuntos: 1
         });

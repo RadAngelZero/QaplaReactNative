@@ -1,3 +1,4 @@
+// josep.sanahuja  - 04-10-2019 - XXXXX - Added SupportScreen
 // diego           - 18-09-2019 - us119 - Added VerificationScreen
 // diego           - 18-09-2019 - us110 - Created LogrosTabNavigator
 // diego           - 18-09-2019 - us109 - Added Tab for logros on TabMainNavigator
@@ -36,7 +37,8 @@ import LogrosActivosScreen from './screens/LogrosActivosScreen/LogrosActivosScre
 import LogrosCompletadosScreen from './screens/LogrosCompletadosScreen/LogrosCompletadosScreen';
 import VerificationScreen from './screens/VerificationScreen/VerificationScreen';
 
-import MockScreen1 from './screens/MockScreen1/MockScreen1'
+import MockScreen1 from './screens/MockScreen1/MockScreen1';
+import SupportScreen from './screens/SupportScreen/SupportScreen';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
@@ -48,6 +50,7 @@ import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 const ProfileIcon = Images.svg.profileIcon;
 const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
 const LogrosIcon = Images.svg.logrosIcon;
+const SupportIcon = Images.svg.supportIcon;
 
 const LogrosTabNavigator = createMaterialTopTabNavigator(
   {
@@ -172,15 +175,15 @@ const TabMainNavigator = createBottomTabNavigator({
       )
     })
   },
-  Playground: {
-    screen:   MockScreen1,
+  Support: {
+    screen:   SupportScreen,
     navigationOptions: ({ navigation }) => ({
-      title: "PlayGround",  //Tried to hide this for next tab Search.,
+      title: "Soporte",  //Tried to hide this for next tab Search.,
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
-          <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
+          <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
           {focused &&
-            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Retas</Text>
+            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Support</Text>
           }
         </View>
       )

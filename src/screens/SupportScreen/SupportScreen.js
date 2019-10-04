@@ -42,7 +42,10 @@ class SupportScreen extends React.Component {
   }
 
   sendFeedback = () => {
-      sendUserFeedback(this.state.text, this.props.uid);    
+      sendUserFeedback(this.state.text, this.props.uid);
+      this.setState({
+          text: ''
+      })  
       this.toggleOpenModal();
   }
 
@@ -57,7 +60,9 @@ class SupportScreen extends React.Component {
                         onChangeText={(text) => this.setState({text})}
                         multiline
                         numberOfLines={200}
-                        placeholderTextColor={'#FFFF'} />
+                        clearTextOnFocus={true}
+                        placeholderTextColor={'#FFFF'}
+                        value={this.state.text} />
                     <TouchableWithoutFeedback onPress={this.sendFeedback}>
                         <View style={styles.sendButtonContainer}>
                             <Text style={styles.textStyle}>Envia tu comentario :)</Text>

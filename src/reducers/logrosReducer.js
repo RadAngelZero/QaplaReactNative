@@ -1,3 +1,5 @@
+// diego          - 04-10-2019 - us113 - File creation
+
 import { LOAD_USER_VERIFICATION_STATUS, LOAD_LOGROS_ACTIVOS, REMOVE_LOGRO_ACTIVO, LOAD_LOGROS_COMPLETOS } from '../utilities/Constants';
 
 const initialState = {

@@ -6,8 +6,14 @@ import { ONE_HOUR_MILISECONDS, HOURS_IN_DAY } from './../../../utilities/Constan
 
 export class LogroLifeTimeBadge extends Component {
     render() {
-        console.log(this.props);
         const dayObject = new Date();
+        
+        /**
+         * The date come from the cards in the next format:
+         * Day-Month-Year
+         * So we need to split between the "-" to get the data, because
+         * the original format is not valide to create a date object
+         */
         const [day, month, year] = this.props.limitDate.split('-');
         const logroEndDate = new Date(`${month}/${day}/${year}`);
         const currentDate = new Date(
@@ -20,14 +26,14 @@ export class LogroLifeTimeBadge extends Component {
 
         return (
             <View style={styles.timeLifeBadge}>
-                {remainingDays === 0 ?
-                    <Text style={styles.timeLife}>
-                        {`${remainingHours}h`}
-                    </Text>
-                    :
-                    remainingDays > 0 &&
+                {remainingDays > 0 ?
                     <Text style={styles.timeLife}>
                         {`${remainingDays}d ${remainingHours}h`}
+                    </Text>
+                    :
+                    remainingDays === 0 &&
+                    <Text style={styles.timeLife}>
+                        {`${remainingHours}h`}
                     </Text>
                 }
             </View>

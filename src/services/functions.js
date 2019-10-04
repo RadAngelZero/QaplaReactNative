@@ -46,6 +46,11 @@ export function addQaploinsToUserCloudFunction() {
 	});
 }
 
+/**
+ * Allow the user to redeem a completed logro (completed on points)
+ * @param {string} idLogro Identifier of the logro on the database
+ * @param {number} qaploins Quantity of qaploins to add
+ */
 export function redeemLogroCloudFunction(idLogro, qaploins) {
 	return callCloudFunction({
 		cfName: 'redeemLogro',

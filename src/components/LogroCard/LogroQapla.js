@@ -6,8 +6,8 @@ import { Animated, View, TouchableWithoutFeedback, Text } from 'react-native';
 
 import styles from './style';
 import Images from '../../../assets/images';
-import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { redeemLogroCloudFunction } from '../../services/functions';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
@@ -24,7 +24,7 @@ class LogroQapla extends Component {
                 this.state.progressBarWidth,
                 {
                     /**
-                     * 70 is the maxim value of the width because the width defined in the style is also 70
+                     * 70 is the maximum value of the width because the width defined in the style is also 70
                      * The operation calculate the percentage to fill based on the current progress of the user
                      * If the user don't have any progress show the 0% by default
                      */
@@ -66,7 +66,6 @@ class LogroQapla extends Component {
                                 onPress={this.redeemLogro}
                                 /**Just a double check on disabled property of the button */
                                 disabled={puntosCompletados < totalPuntos}>
-                                
                                 <View style={styles.redimirButton}>
                                     <Text style={styles.redimirTextButton}>Redimir</Text>
                                 </View>

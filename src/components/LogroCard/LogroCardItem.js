@@ -1,3 +1,4 @@
+// diego          - 04-10-2019 - us113 - Added LogroCompletedCard
 // josep.sanahuja - 19-09-2019 - us114 - File creation
 
 import React, { Component } from 'react';

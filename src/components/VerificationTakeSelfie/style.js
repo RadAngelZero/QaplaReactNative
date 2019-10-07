@@ -4,6 +4,10 @@ import { StyleSheet } from 'react-native';
 import { widthPercentageToPx, heightPercentageToPx, getDimensions } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
+    sfvContainer: {
+        flex: 1,
+        backgroundColor:'#131833'
+    },
     container: {
         flex: 1,
         justifyContent: 'space-around',

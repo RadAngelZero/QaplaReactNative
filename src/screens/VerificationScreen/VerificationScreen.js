@@ -1,3 +1,4 @@
+// josep.sanahuja  - 08-10-2019 - usXXX - Sort indexPositions array in crescendo order
 // josep.sanahuja  - 22-09-2019 - us122 - Add VerificationTakeSelfie
 // diego           - 18-09-2019 - us119 - File creation
 
@@ -40,7 +41,8 @@ class VerificationScreen extends Component {
         },
         nextIndex: 1,
         verificationObject: {},
-        indexPositions: []
+        indexPositions: [],
+        indexPositionsIsSorted: false
     };
 
     provideFeedBackToUserOnCurrentScren(optionalMessage) {
@@ -120,6 +122,7 @@ class VerificationScreen extends Component {
     setIndexPosition = (position) => {
         const { indexPositions } = this.state;
 
+        console.log('[setIndexPosition] x: ' + position);
         /**
          * Save the X position of the slide to know where to scroll to show the right element of
          * the "carousel"
@@ -138,6 +141,26 @@ class VerificationScreen extends Component {
          * Flag used because we don't want to scroll two times when the user is on VerificationCode.js
          */
         let isUserOnSendCodeScreen = false;
+
+        // Components are rendered in a random order, specially in IOS,
+        // therefore it is a bad practice to think that onLayout will be called
+        // for the first component declared, then the onLayout from the second
+        // component declared and so on. This results on having an array with x
+        // offsets for the components layout location, but with no established order,
+        // everytime the app renders the screen, the elements from the screen are
+        // likely in a different position. For that reason to ensure an order of
+        // navigation the indexPositions array is sortedin increment order.
+        if (!this.state.indexPositionsIsSorted) {
+            const {indexPositions} = this.state;
+
+            // sort array of x offsets from smaller to bigger
+            indexPositions.sort((a, b) => {return a - b});
+
+            await this.setState({
+                indexPositions: indexPositions,
+                indexPositionsIsSorted: true
+            })
+        }
 
         switch (this.state.nextIndex) {
             case 1:

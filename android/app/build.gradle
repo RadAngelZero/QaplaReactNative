@@ -108,6 +108,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        missingDimensionStrategy 'react-native-camera', 'general'
     }
     signingConfigs {
         debug {
@@ -158,6 +159,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-camera')
     implementation project(':react-native-firebase')
     implementation project(':@segment_analytics-react-native')
     implementation project(':react-native-linear-gradient')

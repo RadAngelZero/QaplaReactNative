@@ -1,12 +1,12 @@
 // josep.sanahuja - 22-09-2019 - us123 - File creation
 
 import { StyleSheet } from 'react-native';
+import { hasSafeAreaView } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
 		flex:1,
 		justifyContent:'center',
-		backgroundColor:'purple'
   	},
     buttonContainer: {
     	bottom: 35,
@@ -32,4 +32,13 @@ export default styles = StyleSheet.create({
 	    justifyContent: 'flex-end',
 	    alignItems: 'center'
   	},
+    buttonDimensions: {
+        height: hasSafeAreaView() ? 60 : 50
+    },
+    closeIconContainer: {
+        position: 'absolute',
+        right: 35,
+        top: 45,
+        
+    }
 });

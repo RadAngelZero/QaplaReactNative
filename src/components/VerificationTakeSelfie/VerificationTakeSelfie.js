@@ -1,7 +1,7 @@
 // josep.sanahuja  - 22-09-2019 - us122 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 
 import styles from './style';
 import Images from '../../../assets/images';
@@ -36,31 +36,33 @@ export class VerificationTakeSelfie extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <View>
-                    <Text style={styles.title}>Tómate una selfie</Text>
-                    <View style={styles.divider}>
-                        <Image source={Divider} />
-                    </View>
-                </View>
-                <View style={styles.selfieContainer}>
-                    <TouchableWithoutFeedback onPress={this.openCamera}>
-                        <View>
-                           <Image source={QaplaSmileIcon} />
-                           {this.props.picture.uri !== "" &&
-                               <Image source={{uri: this.props.picture.uri}} style={styles.selfiePreview}/>
-                           }
+            <SafeAreaView style={styles.sfvContainer}>
+                <View style={styles.container}>
+                    <View>
+                        <Text style={styles.title}>Tómate una selfie</Text>
+                        <View style={styles.divider}>
+                            <Image source={Divider} />
                         </View>
-                    </TouchableWithoutFeedback> 
+                    </View>
+                    <View style={styles.selfieContainer}>
+                        <TouchableWithoutFeedback onPress={this.openCamera}>
+                            <View>
+                               <Image source={QaplaSmileIcon} />
+                               {this.props.picture.uri !== "" &&
+                                   <Image source={{uri: this.props.picture.uri}} style={styles.selfiePreview}/>
+                               }
+                            </View>
+                        </TouchableWithoutFeedback> 
 
-                    <Text style={styles.smallText}>Subir Selfie</Text>            
+                        <Text style={styles.smallText}>Subir Selfie</Text>            
+                    </View>
+                    <QGCamera 
+                        visible={this.props.cameraVisible} 
+                        savePicture={this.savePicture}
+                        cameraType={"front"}
+                        onClose={this.closeCamera}/>
                 </View>
-                <QGCamera 
-                    visible={this.props.cameraVisible} 
-                    savePicture={this.savePicture}
-                    cameraType={"front"}
-                    onClose={this.closeCamera}/>
-            </View>
+            </SafeAreaView>
         );
     }
 }

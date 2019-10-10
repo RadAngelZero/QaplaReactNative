@@ -10,12 +10,15 @@ import {
 } from 'react-native'
 
 import styles from './style'
+import Images from './../../../assets/images';
 import { withNavigation } from 'react-navigation';
 import { RNCamera } from 'react-native-camera';
 
 import QGCameraModal from './QGCameraModal/QGCameraModal';
 
-class QGCamera extends React.Component {
+const CloseIcon = Images.svg.closeIcon;
+
+class QGCamera extends React.Component {       
   constructor(props) {
     super(props);
   
@@ -129,6 +132,13 @@ class QGCamera extends React.Component {
                               buttonNegative: 'Cancelar',
                             }}
                           />
+                          <View style={styles.closeIconContainer}>
+                              <TouchableWithoutFeedback onPress={this.props.onClose}>
+                                  <View style={styles.buttonDimensions}>
+                                      <CloseIcon/>
+                                  </View>
+                              </TouchableWithoutFeedback>
+                          </View>
                           <TouchableWithoutFeedback onPress={this.takePicture}>
                               <View style={styles.buttonContainer}>
                                   <Text style={styles.textStyle}>Tomar Foto :)</Text>

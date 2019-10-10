@@ -47,6 +47,7 @@ export default styles = StyleSheet.create({
     contentContainer: {
         marginLeft: widthPercentageToPx(4),
         marginRight: widthPercentageToPx(4),
+        marginBottom: heightPercentageToPx(2),
         flexDirection: 'row'
     },
     colAContainer: {

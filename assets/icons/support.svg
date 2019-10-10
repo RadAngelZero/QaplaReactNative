@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="22px" viewBox="0 0 21 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="iPhone-XS" transform="translate(-174.000000, -356.000000)" stroke="#000000">
+            <g id="Group" transform="translate(174.000000, 357.077317)">
+                <path d="M2.93575413,6.42093287 C7.51143365,-1.59171381 15.955419,-2.91225723 18.1361184,7.10766316" id="Path"></path>
+                <path d="M2.76894049,12.4812642 C6.30907979,18.4076863 3.80152984,16.3776518 10.2391434,18.6355869" id="Path-2"></path>
+                <rect id="Rectangle" fill="#000000" x="0.5" y="7.42268323" width="4" height="5" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#000000" x="16.5" y="7.42268323" width="4" height="5" rx="2"></rect>
+                <circle id="Oval" fill="#000000" cx="10.5" cy="18.4226832" r="1.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

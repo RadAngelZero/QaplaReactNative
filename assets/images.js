@@ -42,6 +42,7 @@ import ChooseClipIcon from './icons/video-clip.svg';
 import AlreadyChoosedClipIcon from './icons/video-clip-check.svg';
 import LogrosIcon from './icons/LogrosActive.svg';
 import VerifyIcon from './icons/verificado.svg';
+import SupportIcon from './icons/support.svg';
 
 // Images
 
@@ -190,6 +191,7 @@ const images = {
 		alreadyChoosedClipIcon: AlreadyChoosedClipIcon,
 		logrosIcon: LogrosIcon,
 		verifyIcon: VerifyIcon,
+		supportIcon: SupportIcon,
 		gowIcon: GowIcon,
 		fifaIcon: FifaIcon,
 		clashIcon: ClashIcon,

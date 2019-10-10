@@ -1,3 +1,4 @@
+// josep.sanahuja - 04-10-2019 - XXXXX - Added sendUserFeedback()
 // josep.sanahuja - 02-10-2019 - us118 - Added createLogroIncompletoChild
 // josep.sanahuja - 26-09-2019 - us118 - Added saveImgEvidenceUrlLogroSocial
 // josep.sanahuja - 19-09-2019 - us114 - Add getQaplaActiveLogros && logrosActRef
@@ -33,6 +34,7 @@ export const logrosActRef = database.ref('/logrosActivos');
 export const cuentasVerificadasRef = database.ref('/CuentasVerificadas');
 export const verificationOnProccessRef = database.ref('/VerificacionEnProceso');
 export const veriLogroSocialRef = database.ref('/verificarLogroSocial');
+export const feedbackUsersRef = database.ref('/FeedbackUsers');
 
 /**
  * Returns the userName of the specified user
@@ -580,8 +582,6 @@ export async function createLogroIncompletoChild(logroId, userId) {
     return res;
 }
 
-
-
 // -----------------------------------------------
 // Verification
 // -----------------------------------------------
@@ -594,4 +594,37 @@ export async function createLogroIncompletoChild(logroId, userId) {
  */
 export async function createVerificationRequest(uid, verificationInfo) {
     await verificationOnProccessRef.child(uid).set(verificationInfo);
+}
+
+// -----------------------------------------------
+// Feedback
+// -----------------------------------------------
+
+/**
+ * Writes a message feedback from the user to feedbackUsersRef
+ *
+ * @param {string} message Comment written by the user
+ * @param {string} userId  User identifier on database
+ *
+ * @returns
+ * FAIL    - {Null}    Operation on DB didn't succeed  
+ * SUCCESS - {Promise} Promise from operation
+ */
+export async function sendUserFeedback(message, userId) {
+    let res = null;
+    const date = new Date();
+    const year = date.getUTCFullYear();
+    const month = date.getUTCMonth();
+    const dayHourMinuteSecond = date.getUTCDay().toString() + ' d:' + date.getUTCHours().toString() + ' h:' + date.getUTCMinutes().toString() + ' m:' + date.getUTCSeconds().toString() + ' s';
+
+    try {
+        res = await feedbackUsersRef.child(year).child(month).child(userId).push({
+            timestamp: dayHourMinuteSecond,
+            message: message
+        });
+    } catch (error) {
+        console.error(error);
+    }
+
+    return res;
 }

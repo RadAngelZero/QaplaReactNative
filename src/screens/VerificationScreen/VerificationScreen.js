@@ -184,7 +184,7 @@ class VerificationScreen extends Component {
                         // downloadable URL from Firebase Storage
                         if (this.state.selfie.picture.uri !== '') {
                             let task = await writeUserVerificationSelfie(this.props.uid, this.state.selfie.picture.uri);
-                            const imgUrl = getObjUrl(task);  
+                            const imgUrl = task.downloadURL;  
 
                             // Update state with new selfie URL info 
                             let newSelfie = this.state.selfie;
@@ -277,7 +277,7 @@ class VerificationScreen extends Component {
     /**
      * End the verification procces (once the procces is completed)
      */
-    endVerificationProccess = async () => this.props.navigation.navigate('Logros');
+    endVerificationProccess = () => this.props.navigation.navigate('Logros');
 
     render() {
         return (

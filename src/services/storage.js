@@ -1,4 +1,4 @@
-// josep.sanahuja - 08-10-2019 - usXXX - + writeUserVerificationSelfie && getObjUrl
+// josep.sanahuja - 08-10-2019 - usXXX - + writeUserVerificationSelfie
 // josep.sanahuja - 03-10-2019 - XXXXX - Use Filepath in .put on savePictureEvidenceLogroSocial
 //                                       instead of Blob because of react-native-firebase 
 // josep.sanahuja - 26-09-2019 - us118 - File creation
@@ -63,29 +63,6 @@ export async function writeUserVerificationSelfie(userId, pictureUri) {
     }
     catch (error) {
         console.error(error);
-    }
-
-    return res;
-}
-
-/**
- * @description 
- * Gets the downloadable url from an object stored at Firebase Storage
- *
- * @param {object} uploadTask Task from the write/put operation at Storage
- *  
- * @returns
- * FAIL    - {string}  uploadTask is not defined 
- * SUCCESS - {string}  Object downloadable url from Storage
- */
-export function getObjUrl(uploadTask) {
-    let res = '';
-
-    if (uploadTask === null || uploadTask === undefined) {
-        console.error('[getObjUrl] uploadTask is: ' + uploadTask );
-    }
-    else {
-        res = uploadTask.downloadURL;
     }
 
     return res;

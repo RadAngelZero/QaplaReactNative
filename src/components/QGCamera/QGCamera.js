@@ -40,8 +40,6 @@ class QGCamera extends React.Component {
          this.setState({ focusedScreen: false })
         )
       ]
-
-      console.log("Miau Miau Camera");
   }
 
   componentWillUnmount() {

@@ -122,7 +122,6 @@ class VerificationScreen extends Component {
     setIndexPosition = (position) => {
         const { indexPositions } = this.state;
 
-        console.log('[setIndexPosition] x: ' + position);
         /**
          * Save the X position of the slide to know where to scroll to show the right element of
          * the "carousel"

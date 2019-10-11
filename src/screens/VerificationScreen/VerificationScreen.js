@@ -1,4 +1,5 @@
 // josep.sanahuja  - 08-10-2019 - usXXX - Sort indexPositions array in crescendo order
+// josep.sanahuja  - 08-10-2019 - usXXX - Add selfie.storageUrl
 // josep.sanahuja  - 22-09-2019 - us122 - Add VerificationTakeSelfie
 // diego           - 18-09-2019 - us119 - File creation
 
@@ -17,6 +18,7 @@ import { sendVerificationSMSToUser, linkUserAccountWithPhone } from '../../servi
 import { PhoneProvider } from '../../utilities/firebase';
 import VerificationProccessSuccess from '../../components/VerificationProccessSuccess/VerificationProccessSuccess';
 import { createVerificationRequest } from '../../services/database';
+import { writeUserVerificationSelfie, getObjUrl } from '../../services/storage';
 
 
 const BackIcon = Images.svg.backIcon;
@@ -31,7 +33,8 @@ class VerificationScreen extends Component {
         },
         selfie: {
             cameraVisible: false,
-            picture: {uri: "", base64: ""}
+            picture: {uri: "", base64: ""},
+            storageUrl: ''
         },
         phoneData: {
             phoneNumber: ''
@@ -108,11 +111,11 @@ class VerificationScreen extends Component {
     * 
     * @param {object} pict Object representing a picture, with uri and base64 props
     */
-    savePicture = (pict) => {
+    savePicture = async (pict) => {
         const { selfie } = this.state;
         selfie.picture.uri = pict.uri;
         selfie.picture.base64 = pict.base64;
-        this.setState({ selfie });
+        await this.setState({ selfie });
     }
         
     /**
@@ -199,13 +202,27 @@ class VerificationScreen extends Component {
                     try {
                         await linkUserAccountWithPhone(phoneCredentials);
 
+                        // A selfie picture has been taken, let's extract the
+                        // downloadable URL from Firebase Storage
+                        if (this.state.selfie.picture.uri !== '') {
+                            let task = await writeUserVerificationSelfie(this.props.uid, this.state.selfie.picture.uri);
+                            const imgUrl = task.downloadURL;  
+
+                            // Update state with new selfie URL info 
+                            let newSelfie = this.state.selfie;
+                            newSelfie.storageUrl = imgUrl;
+                            await this.setState({
+                                selfie: newSelfie
+                            });  
+                        }
+
                         /**
                          * The object to write on the database as the request of verification of the user
                          */
                         const verificationRequest = {
                             curp: '',
                             nombre: `${this.state.personData.name} ${this.state.personData.firstSurname} ${this.state.personData.secondSurname}`,
-                            foto: '', // Add download url of the photo
+                            foto: this.state.selfie.storageUrl,
                             status: 1,
                             usuario: this.props.userName,
                             whatsapp: this.state.phoneData.phoneNumber

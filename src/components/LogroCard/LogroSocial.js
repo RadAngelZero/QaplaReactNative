@@ -7,11 +7,15 @@ import { View, Image, TouchableWithoutFeedback, Text, Linking } from 'react-nati
 
 import styles from './style';
 import Images from '../../../assets/images';
-import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
+
 import { redeemLogroCloudFunction } from '../../services/functions';
 import { saveImgEvidenceUrlLogroSocial, createLogroIncompletoChild } from '../../services/database';
 import { savePictureEvidenceLogroSocial } from '../../services/storage';
+
+import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
 import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
+import OneTxtOneBttnModal from '../OneTxtOneBttnModal/OneTxtOneBttnModal'
+
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
@@ -22,7 +26,8 @@ class LogroSocial extends Component {
 
         this.state = {
             showImgPckModal: false,
-            picture: null
+            picture: null,
+            openThankyouModal: false
         };
     }
 
@@ -52,7 +57,8 @@ class LogroSocial extends Component {
      */
     saveImage = (picture) => {
         this.setState({
-            picture: picture
+            picture: picture,
+            openThankyouModal: true
         });
 
         let evProm = savePictureEvidenceLogroSocial(picture.node.image.uri, this.props.id, this.props.userId);
@@ -96,6 +102,17 @@ class LogroSocial extends Component {
     redeemLogro = () => {
         redeemLogroCloudFunction(this.props.id, this.props.qaploins);
     }
+
+    /**
+    * Description:
+    * Closes Modal that gives information to the user after
+    * user redeemed the logro
+    */
+    toggleOpenThankyouModal = () => {
+        this.setState({
+          openThankyouModal: !this.state.openThankyouModal
+        });
+    } 
 
     render() {
         const { titulo, descripcion, qaploins, photoUrl, puntosCompletados, totalPuntos, tiempoLimite, verified } = this.props;
@@ -152,6 +169,13 @@ class LogroSocial extends Component {
                       visible={this.state.showImgPckModal}
                       saveImage={this.saveImage}
                       onClose={this.closeImgPckModal} />
+                <OneTxtOneBttnModal
+                    visible={ this.state.openThankyouModal }
+                    onClose={ this.toggleOpenThankyouModal }
+                    header={ 'Felicidades!' }
+                    body={ 'Tu imágen será verificada en breve y podrás redimir tu logro en breve' }
+                    textButton={ 'Entendido' } />
+
             </View>
         );
     }

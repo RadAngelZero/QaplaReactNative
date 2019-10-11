@@ -14,6 +14,9 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import com.facebook.FacebookSdk;
+import com.facebook.CallbackManager;
+import com.facebook.appevents.AppEventsLogger;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
@@ -24,6 +27,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
+  private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
+  protected static CallbackManager getCallbackManager() {
+    return mCallbackManager;
+  }
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
     public boolean getUseDeveloperSupport() {
@@ -43,7 +50,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNAnalyticsPackage(),
             new LinearGradientPackage(),
             new RNGoogleSigninPackage(),
-            new FBSDKPackage(),
+            new FBSDKPackage(mCallbackManager),
             new SvgPackage(),
             new RNGestureHandlerPackage()
       );

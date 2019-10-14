@@ -51,6 +51,6 @@ export default styles = StyleSheet.create({
         width: 115, 
         borderRadius: 115 / 2, 
         resizeMode: 'cover', 
-        overlayColor: 'white'
+        backgroundColor: 'transparent'
     }
 });

@@ -234,17 +234,9 @@ class PublicMatchesFeedScreen extends Component {
         return (
             <View style={style.container}>
                 <MatchCardList {...this.state} /> 
-                <HighlightModal 
-                    visible={this.state.showHg1Modal}
-                    onClose={this.toggleHg1Modal}
-                    showDelay={4000}
-                    cb1={this.markHg1}
-                    header='Crea una Reta'
-                    body='Empieza a competir con otros jugadores. Crea tu reta y gana!'>
-                    <CreateRetasButton 
-                            highlighted={!this.props.navigation.getParam('firstMatchCreated')}
-                            onPress={this.onCrearRetaButtonPress}/>
-                </HighlightModal>
+                <CreateRetasButton 
+                    highlighted={!this.props.navigation.getParam('firstMatchCreated')}
+                    onPress={this.onCrearRetaButtonPress}/>
             </View>  
         );
     }

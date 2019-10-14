@@ -6,6 +6,7 @@ import { withNavigation } from 'react-navigation';
 
 import styles from './style';
 import Images from './../../../../assets/images';
+import { isUserLogged } from '../../../services/auth';
 
 const VerifyIcon = Images.svg.verifyIcon
 
@@ -15,7 +16,7 @@ export class LogroVerification extends Component {
      * Redirecto to VerificationScreen
      */
     redirectToVerifyScreen = () => {
-        this.props.navigation.navigate('Verification');
+        this.props.navigation.navigate(isUserLogged() ? 'Verification' : 'SignIn');
     }
 
     render() {

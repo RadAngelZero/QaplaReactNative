@@ -20,8 +20,8 @@
 //                                      for new references on database and errors detecrted on addGameToUser
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
 
-import { database, TimeStamp } from "../utilities/firebase";
-import { randomString } from "../utilities/utils";
+import { database, TimeStamp } from '../utilities/firebase';
+import { randomString } from '../utilities/utils';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
@@ -35,6 +35,9 @@ export const cuentasVerificadasRef = database.ref('/CuentasVerificadas');
 export const verificationOnProccessRef = database.ref('/VerificacionEnProceso');
 export const veriLogroSocialRef = database.ref('/verificarLogroSocial');
 export const feedbackUsersRef = database.ref('/FeedbackUsers');
+export const torneosRef = database.ref('/torneos');
+export const torneosActivosRef = torneosRef.child('torneosActivos');
+export const puntosTorneosRef = database.ref('/puntosTorneos');
 
 /**
  * Returns the userName of the specified user
@@ -593,7 +596,9 @@ export async function createLogroIncompletoChild(logroId, userId) {
  * 
  */
 export async function createVerificationRequest(uid, verificationInfo) {
+    console.log('Writing');
     await verificationOnProccessRef.child(uid).set(verificationInfo);
+    console.log('Writed');
 }
 
 // -----------------------------------------------

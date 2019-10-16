@@ -1,6 +1,6 @@
 // diego           - 26-09-2019 - us130 - File creation
 
-import { logrosActRef, logrosRef, cuentasVerificadasRef } from '../services/database';
+import { logrosActRef, logrosRef, cuentasVerificadasRef, torneosActivosRef, puntosTorneosRef } from '../services/database';
 import { LOAD_USER_VERIFICATION_STATUS, LOAD_LOGROS_ACTIVOS, REMOVE_LOGRO_ACTIVO, LOAD_LOGROS_COMPLETOS } from '../utilities/Constants';
 
 export const loadQaplaLogros = (uid) => async (dispatch) => {
@@ -50,13 +50,38 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
             id: logroCompleto.key,
             tipoLogro: 'completado',
             ...logroCompleto.val()
-        }
+        };
         dispatch(loadLogrosCompletosSuccess(logroCompletoObject));
         dispatch(removeLogroFromActivos(logroCompleto.key));
     });
 
     logrosActRef.on('child_removed', (removedLogro) => {
         dispatch(removeLogroFromActivos(removedLogro.key));
+    });
+
+    torneosActivosRef.on('child_added', (torneoActivo) => {
+        const torneoActivoObject = {
+            id: torneoActivo.key,
+            ...torneoActivo.val()
+        };
+        torneoActivoObject.tipoLogro = 'tournament';
+        dispatch(loadLogrosActivosSuccess(torneoActivoObject));
+    });
+
+    puntosTorneosRef.child(uid).on('value', (torneosProgress) => {
+        if (torneosProgress.exists()) {
+            torneosProgress.forEach((torneoProgress) => {
+                const torneoProgressObject = {
+                    id: torneoProgress.key,
+                    ...torneoProgress.val()
+                };
+                dispatch(loadLogrosActivosSuccess(torneoProgressObject));
+            });
+        }
+    });
+
+    torneosActivosRef.on('child_removed', (removedTorneo) => {
+        dispatch(removeLogroFromActivos(removedTorneo.key));
     });
 }
 

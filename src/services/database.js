@@ -633,3 +633,15 @@ export async function sendUserFeedback(message, userId) {
 
     return res;
 }
+
+// -----------------------------------------------
+// Tournaments
+// -----------------------------------------------
+
+export async function joinInTournament(uid, tournamentId, totalPuntos) {
+    puntosTorneosRef.child(uid).child(tournamentId).update({
+        puntosCompletados: 0,
+        redimido: false,
+        totalPuntos
+    });
+}

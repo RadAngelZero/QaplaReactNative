@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Animated, View, Image, Text, TouchableWithoutFeedback } from 'react-native';
+import { connect } from 'react-redux';
 
 import styles from './style';
 
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { joinInTournament } from '../../services/database';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
 
@@ -34,8 +36,15 @@ export class TournamentCard extends Component {
         return true;
     }
 
+    /**
+     * Allow the user to join in the tournament
+     */
+    joinInTournament = () => {
+        joinInTournament(this.props.uid, this.props.id /* <- Tournament id */, this.props.totalPuntos );
+    }
+
     render() {
-        const { photoUrl, titulo, descripcion, puntosCompletados, tiempoLimite, verified } = this.props;
+        const { photoUrl, titulo, descripcion, totalPuntos, puntosCompletados, tiempoLimite, verified } = this.props;
 
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
@@ -52,7 +61,7 @@ export class TournamentCard extends Component {
                     <View style={styles.colBContainer}>
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />
                         {puntosCompletados == null &&
-                            <TouchableWithoutFeedback>
+                            <TouchableWithoutFeedback onPress={this.joinInTournament}>
                                 <View style={styles.redimirButton}>
                                     <Text style={styles.redimirTextButton}>Participar</Text>
                                 </View>
@@ -68,7 +77,7 @@ export class TournamentCard extends Component {
                                 <View style={styles.progressBarContent} />
                             </Animated.View>
                         </View>
-                        <Text style={styles.progressBarCounter}>{`${puntosCompletados}`}</Text>
+                        <Text style={styles.progressBarCounter}>{`${puntosCompletados}/${totalPuntos}`}</Text>
                     </View>
                 }
             </View>
@@ -76,4 +85,10 @@ export class TournamentCard extends Component {
     }
 }
 
-export default TournamentCard;
+function mapDispatchToProps(state) {
+    return {
+        uid: state.userReducer.user.id
+    }
+}
+
+export default connect(mapDispatchToProps)(TournamentCard);

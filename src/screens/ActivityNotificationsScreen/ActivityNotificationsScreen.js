@@ -1,3 +1,4 @@
+// josep.sanahuja    - 18-10-2019 - us140 - Added AnnouncementsScrollView
 // diego             - 02-09-2019 - us91 - Add track segment statistic
 // diego             - 14-08-2019 - us80 - Added load of ActivityNotificationCard
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
@@ -9,6 +10,7 @@ import { connect } from 'react-redux';
 
 import styles from './style';
 import ActivityNotificationCard from '../../components/ActivityNotificationCard/ActivityNotificationCard';
+import AnnouncementsScrollView from '../../components/AnnouncementsScrollView/AnnouncementsScrollView'; 
 import { recordScreenOnSegment } from '../../services/statistics';
 
 class ActivityNotificationsScreen extends Component {
@@ -57,19 +59,21 @@ class ActivityNotificationsScreen extends Component {
     render() {
         return (
         	<SafeAreaView style={styles.sfvContainer}>
-        	{this.state.didFinishInitialAnimation
-                ?
-	            <View style={styles.container}>
-	                <ScrollView>
-						{Object.keys(this.props.notifications).reverse().map((notificationKey) => (
-							<ActivityNotificationCard key={`ActivityNotification-${notificationKey}`}
-							{...this.props.notifications[notificationKey]} />
-						))}
-					</ScrollView>
-	            </View>
-	            :
-	            null
-	        }
+                <AnnouncementsScrollView/>
+                {this.state.didFinishInitialAnimation
+                    ?
+    	            <View style={styles.container}>
+                        <ScrollView>
+    						{Object.keys(this.props.notifications).reverse().map((notificationKey) => (
+    							<ActivityNotificationCard key={`ActivityNotification-${notificationKey}`}
+    							{...this.props.notifications[notificationKey]} />
+    						))}
+    					</ScrollView>
+                    
+                    </View>
+    	            :
+    	            null
+    	        }
 	        </SafeAreaView>
         );
     }

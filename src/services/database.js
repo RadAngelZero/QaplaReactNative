@@ -1,3 +1,4 @@
+// josep.sanahuja - 18-10-2019 - us140 - Added getAnnouncements()
 // josep.sanahuja - 04-10-2019 - XXXXX - Added sendUserFeedback()
 // josep.sanahuja - 02-10-2019 - us118 - Added createLogroIncompletoChild
 // josep.sanahuja - 26-09-2019 - us118 - Added saveImgEvidenceUrlLogroSocial
@@ -35,6 +36,7 @@ export const cuentasVerificadasRef = database.ref('/CuentasVerificadas');
 export const verificationOnProccessRef = database.ref('/VerificacionEnProceso');
 export const veriLogroSocialRef = database.ref('/verificarLogroSocial');
 export const feedbackUsersRef = database.ref('/FeedbackUsers');
+export const announcementsRef = database.ref('/Announcements');
 
 /**
  * Returns the userName of the specified user
@@ -621,6 +623,35 @@ export async function sendUserFeedback(message, userId) {
         res = await feedbackUsersRef.child(year).child(month).child(userId).push({
             timestamp: dayHourMinuteSecond,
             message: message
+        });
+    } catch (error) {
+        console.error(error);
+    }
+
+    return res;
+}
+
+// -----------------------------------------------
+// Announcements
+// -----------------------------------------------
+
+/**
+ * Gets all active announcements from database
+ *
+ * @returns
+ * FAIL    - {Array} Empty array when operation on DB didn't succeed  
+ * SUCCESS - {Array} Array got from operation
+ */
+export async function getAnnouncements() {
+    let res = [];
+    
+    try {
+        const dbResultSnap = await announcementsRef.child('Active').orderByValue().once('value');
+        let dbResJson = dbResultSnap.val();
+        
+        let keys = Object.keys(dbResJson);
+        keys.map((item) => {
+            res.push(dbResJson[item]);
         });
     } catch (error) {
         console.error(error);

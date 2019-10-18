@@ -4,53 +4,53 @@
 import React from 'react';
 import {
   View,
-  SafeAreaView
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  Linking,
+  Text
 } from 'react-native'
 import styles from './style'
-import QGCamera from '../../components/QGCamera/QGCamera';
-
-import { getQaplaActiveLogros } from '../../services/database'
 
 export default class MockScreen1 extends React.Component {
-  constructor(props) {
-    super(props);
-  
-    this.state = {
-      cameraVisible: true,
-      picture: {uri: "", base64: ""}
-    };
-  }
+    constructor(props) {
+        super(props);
 
-  /**
-   * Closes QGCamera by closing its modal.
-   */
-  closeCamera = () => {
-      this.setState({
-          cameraVisible: false
-      });
-  }
+        this.state = {
+        cameraVisible: true,
+        picture: {uri: "", base64: ""}
+        };
+    }
 
-  /**
-   * Closes QGCamera by closing its modal.
-   * 
-   * @param {object} pict Object representing a picture, with uri and base64 props
-   */
-  savePicture = (pict) => {
-      this.setState({
-          picture: {uri: pict.uri, base64: pict.base64}
-      });  
-  }
+    /**
+     * Closes QGCamera by closing its modal.
+     */
+    closeCamera = () => {
+        this.setState({
+            cameraVisible: false
+        });
+    }
 
-  render() {
-      return (
-          <SafeAreaView style={styles.sfvContainer}>
+    /**
+     * Closes QGCamera by closing its modal.
+     * 
+     * @param {object} pict Object representing a picture, with uri and base64 props
+     */
+    savePicture = (pict) => {
+        this.setState({
+            picture: {uri: pict.uri, base64: pict.base64}
+        });  
+    }
+
+    render() {
+        return (
+            <SafeAreaView style={styles.sfvContainer}>
               <View style={styles.container}>
-                  <QGCamera 
-                      visible={this.state.cameraVisible} 
-                      savePicture={this.savePicture}
-                      onClose={this.closeCamera}/>
+                  <TouchableWithoutFeedback
+                    onPress={() => Linking.openURL('whatsapp://send?text=Hola, quiero retirar mis qaploins&phone=+523312971299'/*<= Change for the suport number */)}>
+                      <Text>Retirar mi dinero</Text>
+                  </TouchableWithoutFeedback>
               </View>
-          </SafeAreaView>
-      );
-  }
+            </SafeAreaView>
+        );
+    }
 }

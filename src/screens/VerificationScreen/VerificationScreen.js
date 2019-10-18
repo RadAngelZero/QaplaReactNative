@@ -1,3 +1,4 @@
+// josep.sanahuja  - 17-10-2019 - us134 - Added phone prefix to SMS verification
 // josep.sanahuja  - 08-10-2019 - usXXX - Sort indexPositions array in crescendo order
 // josep.sanahuja  - 08-10-2019 - usXXX - Add selfie.storageUrl
 // josep.sanahuja  - 22-09-2019 - us122 - Add VerificationTakeSelfie
@@ -37,7 +38,8 @@ class VerificationScreen extends Component {
             storageUrl: ''
         },
         phoneData: {
-            phoneNumber: ''
+            phoneNumber: '',
+            prefixObj: {}
         },
         firebaseVerificationData: {
             verificationCode: ''
@@ -82,6 +84,16 @@ class VerificationScreen extends Component {
     setPhoneNumber = (phoneNumber) => {
         const { phoneData } = this.state;
         phoneData.phoneNumber = phoneNumber;
+        this.setState({ phoneData });
+    }
+
+    /**
+     * Set the telephonic number prefix object of the user
+     * @param {object} prefixObj Phone number prefix obj of the user
+     */
+    setPhonePrefixObj = (prefixObj) => {
+        const { phoneData } = this.state;
+        phoneData.prefixObj = prefixObj;
         this.setState({ phoneData });
     }
 
@@ -186,7 +198,7 @@ class VerificationScreen extends Component {
                      * Once we have the verification object (after we await for the SMS) we add it to the state
                      * so we can render new things on the screen, to let the user add their code and procceed
                      */
-                    this.setState({ verificationObject: await sendVerificationSMSToUser(`+52${this.state.phoneData.phoneNumber}`) });
+                    this.setState({ verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`) });
                 } catch (error) {
                     console.error(error);
                 }
@@ -225,7 +237,7 @@ class VerificationScreen extends Component {
                             foto: this.state.selfie.storageUrl,
                             status: 1,
                             usuario: this.props.userName,
-                            whatsapp: this.state.phoneData.phoneNumber
+                            whatsapp: '+' + this.state.phoneData.prefixObj.callingCodes[0] + this.state.phoneData.phoneNumber
                         }
                         await createVerificationRequest(this.props.uid, verificationRequest);
                     } catch (error) {
@@ -351,7 +363,8 @@ class VerificationScreen extends Component {
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
                             <VerificationPhoneNumber
                                 setPhoneNumber={this.setPhoneNumber}
-                                goToNextStep={this.goToNextStep} />
+                                goToNextStep={this.goToNextStep}
+                                setPhonePrefix={this.setPhonePrefixObj} />
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
                             <VerificationCode

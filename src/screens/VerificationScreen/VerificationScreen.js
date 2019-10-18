@@ -1,3 +1,6 @@
+// josep.sanahuja  - 17-10-2019 - us141 - Add age to verificationRequest
+// josep.sanahuja  - 08-10-2019 - usXXX - Removed VerificationTakeSelfie && added
+//                                        VerificationAskAge
 // josep.sanahuja  - 08-10-2019 - usXXX - Sort indexPositions array in crescendo order
 // josep.sanahuja  - 08-10-2019 - usXXX - Add selfie.storageUrl
 // josep.sanahuja  - 22-09-2019 - us122 - Add VerificationTakeSelfie
@@ -10,7 +13,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import Images from './../../../assets/images';
 import VerificationPersonalData from '../../components/VerificationPersonalData/VerificationPersonalData';
-import VerificationTakeSelfie from '../../components/VerificationTakeSelfie/VerificationTakeSelfie';
+import VerificationAskAge from '../../components/VerificationAskAge/VerificationAskAge';
 import VerificationPhoneNumber from '../../components/VerificationPhoneNumber/VerificationPhoneNumber';
 import VerificationCode from '../../components/VerificationCode/VerificationCode';
 import ProgressStepsIndicator from '../../components/ProgressStepsIndicator/ProgressStepsIndicator';
@@ -18,7 +21,6 @@ import { sendVerificationSMSToUser, linkUserAccountWithPhone } from '../../servi
 import { PhoneProvider } from '../../utilities/firebase';
 import VerificationProccessSuccess from '../../components/VerificationProccessSuccess/VerificationProccessSuccess';
 import { createVerificationRequest } from '../../services/database';
-import { writeUserVerificationSelfie, getObjUrl } from '../../services/storage';
 
 
 const BackIcon = Images.svg.backIcon;
@@ -31,10 +33,8 @@ class VerificationScreen extends Component {
             firstSurname: '',
             secondSurname: ''
         },
-        selfie: {
-            cameraVisible: false,
-            picture: {uri: "", base64: ""},
-            storageUrl: ''
+        ageData:{
+            age: 0
         },
         phoneData: {
             phoneNumber: ''
@@ -76,6 +76,16 @@ class VerificationScreen extends Component {
     }
 
     /**
+     * Set how many years has the user
+     * @param {number} age Number oy years of living of the user
+     */
+    setAge = (age) => {
+        const { ageData } = this.state;
+        ageData.age = age;
+        this.setState({ ageData });
+    }
+
+    /**
      * Set the telephonic number of the user
      * @param {string} phoneNumber Phone number of the user
      */
@@ -94,28 +104,6 @@ class VerificationScreen extends Component {
 
         firebaseVerificationData.verificationCode = verificationCode;
         this.setState({ firebaseVerificationData });
-    }
-
-    /**
-     * Set the camera to either visible or invisible
-     * @param {boolean} mode Camera visible mode
-     */
-    setCameraVisible = (mode) => {
-        const { selfie } = this.state;
-        selfie.cameraVisible = mode;
-        this.setState({ selfie });
-    }
-
-    /**
-    * Saves the picture to the state so it can be used.
-    * 
-    * @param {object} pict Object representing a picture, with uri and base64 props
-    */
-    savePicture = async (pict) => {
-        const { selfie } = this.state;
-        selfie.picture.uri = pict.uri;
-        selfie.picture.base64 = pict.base64;
-        await this.setState({ selfie });
     }
         
     /**
@@ -168,6 +156,9 @@ class VerificationScreen extends Component {
             case 1:
                 isValidData = Object.keys(this.state.personData).some((value) => this.state.personData[value] !== '');
                 break;
+            case 2: 
+                isValidData = Object.keys(this.state.ageData).some((value) => this.state.ageData[value] > 0);
+                break;
             case this.state.indexPositions.length - 2:
                 isValidData = Object.keys(this.state.phoneData).some((value) => this.state.phoneData[value] !== '');
                 try {
@@ -202,30 +193,17 @@ class VerificationScreen extends Component {
                     try {
                         await linkUserAccountWithPhone(phoneCredentials);
 
-                        // A selfie picture has been taken, let's extract the
-                        // downloadable URL from Firebase Storage
-                        if (this.state.selfie.picture.uri !== '') {
-                            let task = await writeUserVerificationSelfie(this.props.uid, this.state.selfie.picture.uri);
-                            const imgUrl = task.downloadURL;  
-
-                            // Update state with new selfie URL info 
-                            let newSelfie = this.state.selfie;
-                            newSelfie.storageUrl = imgUrl;
-                            await this.setState({
-                                selfie: newSelfie
-                            });  
-                        }
-
                         /**
                          * The object to write on the database as the request of verification of the user
                          */
                         const verificationRequest = {
                             curp: '',
                             nombre: `${this.state.personData.name} ${this.state.personData.firstSurname} ${this.state.personData.secondSurname}`,
-                            foto: this.state.selfie.storageUrl,
+                            foto: '',
                             status: 1,
                             usuario: this.props.userName,
-                            whatsapp: this.state.phoneData.phoneNumber
+                            whatsapp: this.state.phoneData.phoneNumber,
+                            age: this.state.ageData.age
                         }
                         await createVerificationRequest(this.props.uid, verificationRequest);
                     } catch (error) {
@@ -273,6 +251,8 @@ class VerificationScreen extends Component {
      * Define the text displayed in the button
      */
     setButtonText = () => {
+        // TODO Josep Maria: (maybe) 17-10-2019 : Create each button per separated insteda of applying
+        // a lot of logic to one only button.
         let buttonText = 'Continuar';
         if (this.state.indexPositions.length >= 4) {
             if (this.state.nextIndex === this.state.indexPositions.length - 2) {
@@ -341,12 +321,7 @@ class VerificationScreen extends Component {
                                 goToNextStep={this.goToNextStep} />
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
-                            <VerificationTakeSelfie
-                                setCameraVisible={this.setCameraVisible}
-                                savePicture={this.savePicture}
-                                picture={this.state.selfie.picture}
-                                cameraVisible={this.state.selfie.cameraVisible}
-                                />
+                            <VerificationAskAge setAge={this.setAge} goToNextStep={this.goToNextStep}/>
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
                             <VerificationPhoneNumber

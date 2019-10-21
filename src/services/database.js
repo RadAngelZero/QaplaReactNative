@@ -36,7 +36,7 @@ export const cuentasVerificadasRef = database.ref('/CuentasVerificadas');
 export const verificationOnProccessRef = database.ref('/VerificacionEnProceso');
 export const veriLogroSocialRef = database.ref('/verificarLogroSocial');
 export const feedbackUsersRef = database.ref('/FeedbackUsers');
-export const announcementsRef = database.ref('/Announcements');
+export const announcementsActRef = database.ref('/Announcements/Active');
 
 /**
  * Returns the userName of the specified user
@@ -639,14 +639,15 @@ export async function sendUserFeedback(message, userId) {
  * Gets all active announcements from database
  *
  * @returns
- * FAIL    - {Array} Empty array when operation on DB didn't succeed  
- * SUCCESS - {Array} Array got from operation
+ * FAIL    - {Array}  Empty array when operation on DB didn't
+ *                    succeed or have no announcements on the database
+ * SUCCESS - {Array}  Array got from operation
  */
 export async function getAnnouncements() {
     let res = [];
     
     try {
-        const dbResultSnap = await announcementsRef.child('Active').orderByValue().once('value');
+        const dbResultSnap = await announcementsActRef.once('value');
         let dbResJson = dbResultSnap.val();
         
         let keys = Object.keys(dbResJson);

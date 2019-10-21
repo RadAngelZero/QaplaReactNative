@@ -1,7 +1,7 @@
 // josep.sanahuja    - 18-10-2019 - us140 - File creation
 
-import {StyleSheet} from 'react-native'
-import { getDimensions, widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { StyleSheet } from 'react-native'
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default StyleSheet.create({
   	container:{

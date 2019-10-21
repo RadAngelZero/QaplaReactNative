@@ -5,18 +5,13 @@ import { View, Text, Image } from 'react-native';
 import styles from './style'
 
 class AnnouncementCard extends Component {
-
-    componentDidMount() {
-        console.log('Why hello there');
-    }
-
     render() {
         return (
                 <View style={styles.container}>
                     <View style={styles.imageContainer}>
                         <Image 
                             style={styles.imageStyle}
-                            source={{uri: this.props.url}}/>
+                            source={{uri: this.props.photoUrl}}/>
                     </View>
                     <Text style={styles.description}>
                         {this.props.description}

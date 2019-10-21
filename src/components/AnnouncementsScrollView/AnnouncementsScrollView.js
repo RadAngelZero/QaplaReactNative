@@ -1,11 +1,11 @@
 // josep.sanahuja    - 18-10-2019 - us140 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import styles from './style';
 import Images from '../../../assets/images';
 import AnnouncementCard from '../AnnouncementCard/AnnouncementCard';
-import {getAnnouncements} from '../../services/database';
+import { getAnnouncements } from '../../services/database';
 
 class AnnouncementsScrollView extends Component {
     constructor(props) {
@@ -33,7 +33,7 @@ class AnnouncementsScrollView extends Component {
                 <ScrollView horizontal style={styles.scrollViewStyle}>
                     {this.state.announcements.map((ancmnt) => (
                         <AnnouncementCard
-                            url={ancmnt.url}
+                            photoUrl={ancmnt.photoUrl}
                             description={ancmnt.description}
                         />
                     ))}

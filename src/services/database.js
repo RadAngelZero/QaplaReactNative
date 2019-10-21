@@ -35,9 +35,9 @@ export const cuentasVerificadasRef = database.ref('/CuentasVerificadas');
 export const verificationOnProccessRef = database.ref('/VerificacionEnProceso');
 export const veriLogroSocialRef = database.ref('/verificarLogroSocial');
 export const feedbackUsersRef = database.ref('/FeedbackUsers');
-export const torneosRef = database.ref('/torneos');
-export const torneosActivosRef = torneosRef.child('torneosActivos');
-export const puntosTorneosRef = database.ref('/puntosTorneos');
+export const tournamentsRef = database.ref('/torneos');
+export const activeTournamentsRef = tournamentsRef.child('torneosActivos');
+export const pointsTournamentsRef = database.ref('/puntosTorneos');
 
 /**
  * Returns the userName of the specified user
@@ -632,4 +632,22 @@ export async function sendUserFeedback(message, userId) {
     }
 
     return res;
+}
+
+// -----------------------------------------------
+// Tournaments
+// -----------------------------------------------
+
+/**
+ * Allow the user to join in the given tournament
+ * @param {string} uid User identifier on database
+ * @param {string} tournamentId Tournament identifier on the database
+ * @param {number} totalPuntos The total of points of the tournament
+ */
+export async function joinInTournament(uid, tournamentId, totalPuntos) {
+    pointsTournamentsRef.child(uid).child(tournamentId).update({
+        puntosCompletados: 0,
+        redimido: false,
+        totalPuntos
+    });
 }

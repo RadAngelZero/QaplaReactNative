@@ -1,5 +1,4 @@
-// josep.sanahuja  - 17-10-2019 - us134 - Added prefixContainer
-// diego           - 19-09-2019 - us126 - File creation
+// josep.sanahuja  - 17-10-2019 - us141 - File creation
 
 import { StyleSheet } from 'react-native';
 import { widthPercentageToPx, heightPercentageToPx, getDimensions } from '../../utilities/iosAndroidDim';
@@ -10,7 +9,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-around',
         backgroundColor:'#131833',
         marginLeft: widthPercentageToPx(4),
-        width: getDimensions().width
+        width: widthPercentageToPx(100)
     },
     title: {
         fontSize: 32,
@@ -21,22 +20,13 @@ export default styles = StyleSheet.create({
     divider: {
         marginTop: heightPercentageToPx(2.5)
     },
-    phoneContainer: {
+    ageContainer: {
+        flexGrow: 1,
         justifyContent: 'center',
         marginLeft: widthPercentageToPx(6),
-        marginRight: widthPercentageToPx(12),
-    },
-    phoneContainerRow: {
-        flexDirection: 'row'
-    },
-    prefixContainer: {
-        borderColor: '#6D7DDE',
-        color: '#FFF',
-        borderRadius: 4,
-        borderWidth: 2
+        marginRight: widthPercentageToPx(12)
     },
     qaplaTextInput: {
-        flex: 1, 
         backgroundColor: '#11152D',
         height: heightPercentageToPx(8),
         borderBottomColor: '#6D7DDE',

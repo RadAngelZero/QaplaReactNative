@@ -1,12 +1,12 @@
 import { StyleSheet, Platform } from 'react-native';
 
-import {isIphoneX, isIPhoneXSize, getDimensions, hasSafeAreaView} from './../../utilities/iosAndroidDim'
+import { hasSafeAreaView } from './../../utilities/iosAndroidDim'
 
 export const styles = StyleSheet.create({
     container: {
         height: hasSafeAreaView() ? 100 : 90,
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems:'flex-start',
         marginTop: ((Platform.OS == 'ios') && !hasSafeAreaView()) ? 20 : 0,
         paddingTop: hasSafeAreaView() ? 20 : 0,
@@ -23,16 +23,17 @@ export const styles = StyleSheet.create({
     },
     textContainer: {
         flexGrow: 1,
-        marginTop: 20,
-        justifyContent: 'flex-start'
+        marginTop: 20
     },
     textStyle: {
         fontSize: 24,
         textAlign: 'center',
         color: '#fff'
     },
-    invisibleView: {
+    discordIcon: {
         flex: 1,
-        marginRight: 20
+        flexDirection: 'row-reverse',
+        justifyContent: 'space-around',
+        marginTop: 24
     }
 });

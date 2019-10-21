@@ -1,3 +1,4 @@
+// josep.sanahuja - 18-10-2019 - us140 - Added getAnnouncements()
 // josep.sanahuja - 04-10-2019 - XXXXX - Added sendUserFeedback()
 // josep.sanahuja - 02-10-2019 - us118 - Added createLogroIncompletoChild
 // josep.sanahuja - 26-09-2019 - us118 - Added saveImgEvidenceUrlLogroSocial
@@ -38,6 +39,7 @@ export const feedbackUsersRef = database.ref('/FeedbackUsers');
 export const tournamentsRef = database.ref('/torneos');
 export const activeTournamentsRef = tournamentsRef.child('torneosActivos');
 export const pointsTournamentsRef = database.ref('/puntosTorneos');
+export const announcementsActRef = database.ref('/Announcements/Active');
 
 /**
  * Returns the userName of the specified user
@@ -648,4 +650,34 @@ export async function joinInTournament(uid, tournamentId, totalPuntos) {
         redimido: false,
         totalPuntos
     });
+}
+
+// -----------------------------------------------
+// Announcements
+// -----------------------------------------------
+
+/**
+ * Gets all active announcements from database
+ *
+ * @returns
+ * FAIL    - {Array}  Empty array when operation on DB didn't
+ *                    succeed or have no announcements on the database
+ * SUCCESS - {Array}  Array got from operation
+ */
+export async function getAnnouncements() {
+    let res = [];
+    
+    try {
+        const dbResultSnap = await announcementsActRef.once('value');
+        let dbResJson = dbResultSnap.val();
+        
+        let keys = Object.keys(dbResJson);
+        keys.map((item) => {
+            res.push(dbResJson[item]);
+        });
+    } catch (error) {
+        console.error(error);
+    }
+
+    return res;
 }

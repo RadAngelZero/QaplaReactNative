@@ -1,7 +1,9 @@
+// josep.sanahuja    - 18-10-2019 - us140 - Added marginTop on container
 // josep.sanahuja    - 05-08-2019 - us84 - + sfvContainer
 // diego             - 01-08-2019 - us58 - File creation
 
 import { StyleSheet } from 'react-native';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
     sfvContainer: {
@@ -13,7 +15,8 @@ export default styles = StyleSheet.create({
         backgroundColor:'#131833',
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 1
+        flex: 1,
+        marginTop: heightPercentageToPx(0.5)
     },
     title: {
         color: '#FFF',

@@ -5,9 +5,9 @@
 import React, { Component } from 'react';
 import {
     View,
-    Image,
     Text,
-    TouchableWithoutFeedback 
+    TouchableWithoutFeedback,
+    Linking
 } from 'react-native';
 import { styles } from './style';
 import { connect } from 'react-redux';
@@ -16,9 +16,10 @@ import images from './../../../assets/images';
 import HighlightModal from '../HighlightModal/HighlightModal';
 
 import { storeData, retrieveData } from '../../utilities/persistance';
-import { HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';
+import { HIGHLIGHT_2_NOTIFICATIONS, QAPLA_DISCORD_CHANNEL } from '../../utilities/Constants';
 
 const NotificationIcon = images.svg.notificationIcon;
+const DiscordIcon = images.svg.discordIcon;
 
 class HeaderBar extends Component {
     constructor(props) {
@@ -127,9 +128,15 @@ class HeaderBar extends Component {
         storeData(HIGHLIGHT_2_NOTIFICATIONS, 'false');
     }
 
+    /**
+     * Redirect the user to the discord channel of Qapla
+     */
+    sendToDiscord = () => {
+        Linking.openURL(QAPLA_DISCORD_CHANNEL);
+    }
+
     render() {
-        const {navigate} = this.props.navigation;
-        
+
         return (
             <View style={styles.container} testID='container'>
                 <View style={styles.imageContainer}>
@@ -140,10 +147,10 @@ class HeaderBar extends Component {
                       cb1={this.markHg2}
                       header='Ve tus Notificaciones'
                       body='Tus retas recibirán notificaciones de desafio, recuerda checar las notificaciones!'>
-                          <TouchableWithoutFeedback style={styles.imageAndButtonDimensions}
+                          <TouchableWithoutFeedback
                               onPress={this.onNotiPressBttn}
                               testID='NotificationButton'>
-                              <View>
+                              <View style={styles.imageAndButtonDimensions}>
                                   <NotificationIcon height={24} width={24} />
                               </View>
                           </TouchableWithoutFeedback>
@@ -152,7 +159,16 @@ class HeaderBar extends Component {
                 <View style={styles.textContainer} testID='textContainer'>
                     <Text style={styles.textStyle} testID='text'>Qapla</Text>
                 </View>
-                <View style={styles.invisibleView} testID='invisibleView'></View>
+                <View style={styles.discordIcon} testID='discordIcon'>
+                    <TouchableWithoutFeedback onPress={this.sendToDiscord}>
+                        <View style={styles.imageAndButtonDimensions}>
+                            <DiscordIcon
+                                height={32}
+                                width={32}
+                                fill='#FFF' />
+                        </View>
+                    </TouchableWithoutFeedback>
+                </View>
             </View>
         );
     }

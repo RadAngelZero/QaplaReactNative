@@ -6,10 +6,11 @@ import {
   View,
   SafeAreaView,
   TouchableWithoutFeedback,
-  Linking,
   Text
-} from 'react-native'
-import styles from './style'
+} from 'react-native';
+
+import styles from './style';
+import { withdrawQaploins } from '../../utilities/utils';
 
 export default class MockScreen1 extends React.Component {
     constructor(props) {
@@ -45,8 +46,7 @@ export default class MockScreen1 extends React.Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
               <View style={styles.container}>
-                  <TouchableWithoutFeedback
-                    onPress={() => Linking.openURL('whatsapp://send?text=Hola, quiero retirar mis qaploins&phone=+523312971299'/*<= Change for the suport number */)}>
+                  <TouchableWithoutFeedback onPress={withdrawQaploins}>
                       <Text>Retirar mi dinero</Text>
                   </TouchableWithoutFeedback>
               </View>

@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { Animated, View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
-
 import styles from './style';
-
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { joinInTournament } from '../../services/database';
-
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
 
 export class TournamentCard extends Component {
@@ -18,13 +15,14 @@ export class TournamentCard extends Component {
     shouldComponentUpdate(nextProps) {
         if (nextProps.puntosCompletados !== this.state.puntosCompletados) {
             /**
-             * 70 is the maximum value of the width because the width defined in the style is also 70
-             * The operation calculate the percentage to fill based on the current progress of the user
-             * If the user don't have any progress show the 0% by default
+             * 70 is the maximum value of the width of the progress bar because the width defined in the style
+             * is also 70 rhe operation calculate the percentage to fill based on the current progress of the
+             * user. If the user don't have any progress show the 0% by default
              */
             const progressPercentage = (70 / this.props.totalPuntos * nextProps.puntosCompletados) || 0;
             const progressBarWidth = progressPercentage <= 70 ? progressPercentage : 70;
-            Animated.timing(
+
+            Animated.timing (
                 this.state.progressBarWidth,
                 {
                     toValue: widthPercentageToPx(progressBarWidth),

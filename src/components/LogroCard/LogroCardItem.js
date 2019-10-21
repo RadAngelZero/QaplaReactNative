@@ -10,6 +10,12 @@ import LogroVerification from './LogroVerification/LogroVerification';
 import LogroCompletedCard from '../LogroCompletedCard/LogroCompletedCard';
 import TournamentCard from '../TournamentCard/TournamentCard';
 
+/**
+ * Container to add extra marginBottom on the last child of the list
+ * (UI purpose)
+ * @param {element} children Card to render into the container
+ * @param {boolean} lastChild Flag to know if we need to add the margin bottom
+ */
 const CardContainer = ({ children, lastChild }) => (
     <View style={{ marginBottom: lastChild ? 30 : 0 }}>
         {children}

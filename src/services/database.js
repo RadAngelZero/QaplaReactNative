@@ -596,9 +596,7 @@ export async function createLogroIncompletoChild(logroId, userId) {
  * 
  */
 export async function createVerificationRequest(uid, verificationInfo) {
-    console.log('Writing');
     await verificationOnProccessRef.child(uid).set(verificationInfo);
-    console.log('Writed');
 }
 
 // -----------------------------------------------

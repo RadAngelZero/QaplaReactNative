@@ -1,3 +1,4 @@
+// diego             - 21-10-2019 - us135 - Update reference for qaploins and price
 // diego             - 12-09-2019 - us99 - Updated closeIcon (changed text icon for SVG icon)
 // diego             - 02-09-2019 - us91 - Add track segment statistic
 // diego             - 20-08-2019 - us89 - Modal.js component from components folder changed to react-nativenative modal
@@ -12,6 +13,7 @@ import styles from './style';
 import { addQaploinsToUserCloudFunction } from '../../services/functions';
 import Images from './../../../assets/images';
 import { trackOnSegment } from '../../services/statistics';
+import { QAPLOIN_PACKAGES } from '../../utilities/Constants';
 
 const CloseIcon = Images.svg.closeIcon;
 const QaploinIcon = images.svg.qaploinsIcon;
@@ -58,27 +60,26 @@ class BuyQaploinsModal extends Component {
                             </View>
                         </TouchableWithoutFeedback>
                         <QaploinIcon height={40} width={40} />
-                        <Text style={styles.qaploinsToBuyText}>750</Text>
+                        {/**
+                            Goingo to the definition of QAPLOIN_PACKAGES to get more info. about this array
+                         */}
+                        <Text style={styles.qaploinsToBuyText}>{QAPLOIN_PACKAGES[0].qaploins}</Text>
                         <Text style={styles.qaploinsText}>Qaploins</Text>
                         <Text style={styles.paragraph}>
                             {this.state.qaploinsAdded ?
                                 'Gratis para usuarios de la versión beta'
                                 :
-                                'Puedes devolver los 750 Qaploins cuando quieras ¡y te haremos un reembolso!'
+                                'Puedes devolver los 300 Qaploins cuando quieras ¡y te haremos un reembolso!'
                             }
                         </Text>
                         <TouchableWithoutFeedback onPress={this.addQaploinsToUser}>
                             <View style={styles.buyButton}>
-                                <Text style={styles.priceText}>{this.state.qaploinsAdded ? 'Qaploins listos!' : '$50 MXN'}</Text>
+                                {/**
+                                    Goingo to the definition of QAPLOIN_PACKAGES to get more info. about this array
+                                */}
+                                <Text style={styles.priceText}>{this.state.qaploinsAdded ? 'Qaploins listos!' : QAPLOIN_PACKAGES[0].price }</Text>
                             </View>
                         </TouchableWithoutFeedback>
-                        <Text style={styles.smallText}>
-                            {this.state.qaploinsAdded ? 
-                                'Los qaploins agregados no tienen valor real y no podran ser retirados'
-                                :
-                                'Costo por devolución $10 MXN'
-                            }
-                        </Text>
                     </View>
                 </View>
             </Modal>

@@ -1,3 +1,4 @@
+// diego          - 21-10-2019 - us135 - Create QAPLOIN_PACKAGES constant
 // josep.sanahuja - 26-08-2019 - us90 - Add Highlights constants
 // diego          - 05-08-2019 - us105 - Added activity notification constants
 // diego          - 01-08-2019 - us58 - Update user constants for the new way to load their data
@@ -54,3 +55,11 @@ export const QAPLA_DISCORD_CHANNEL = 'https://discordapp.com/invite/6GBHn78';
 
 export const ONE_HOUR_MILISECONDS = 3600000;
 export const HOURS_IN_DAY = 24;
+
+// On sale qaploins packages
+/**
+ * In the future we are going to add more packages, obviusly this is not the solution,
+ * the real solution is have this data on the database, this consts purpose is temporary and
+ * informative (also is a suggestion for the moment when we build the structure on the database)
+ */
+export const QAPLOIN_PACKAGES = [ { qaploins: 300, price: '$2 USD' } ];

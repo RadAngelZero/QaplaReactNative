@@ -57,7 +57,8 @@ export default styles = StyleSheet.create({
     buyButton: {
         marginTop: 11,
         borderRadius: 100,
-        backgroundColor: '#6D7DDE'
+        backgroundColor: '#6D7DDE',
+        marginBottom: 24
     },
     priceText: {
         color: '#FFF',
@@ -69,14 +70,5 @@ export default styles = StyleSheet.create({
         marginBottom: 20,
         marginLeft: 32,
         marginRight: 32
-    },
-    smallText: {
-        marginTop: 10,
-        marginLeft: 24,
-        marginRight: 24,
-        color: '#909299',
-        fontSize: 10,
-        textAlign: 'center',
-        marginBottom: 23
     }
 });

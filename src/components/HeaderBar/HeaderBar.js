@@ -16,7 +16,7 @@ import images from './../../../assets/images';
 import HighlightModal from '../HighlightModal/HighlightModal';
 
 import { storeData, retrieveData } from '../../utilities/persistance';
-import { HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';
+import { HIGHLIGHT_2_NOTIFICATIONS, QAPLA_DISCORD_CHANNEL } from '../../utilities/Constants';
 
 const NotificationIcon = images.svg.notificationIcon;
 const DiscordIcon = images.svg.discordIcon;
@@ -128,13 +128,15 @@ class HeaderBar extends Component {
         storeData(HIGHLIGHT_2_NOTIFICATIONS, 'false');
     }
 
+    /**
+     * Redirect the user to the discord channel of Qapla
+     */
     sendToDiscord = () => {
-        Linking.openURL('https://discordapp.com/invite/6GBHn78');
+        Linking.openURL(QAPLA_DISCORD_CHANNEL);
     }
 
     render() {
-        const {navigate} = this.props.navigation;
-        
+
         return (
             <View style={styles.container} testID='container'>
                 <View style={styles.imageContainer}>

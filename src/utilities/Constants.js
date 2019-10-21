@@ -47,6 +47,9 @@ export const LOST_RESULT = '0';
 export const OTHER_RESULT = '7';
 export const TIE_RESULT = '3';
 
+// Discord Qapla Channel link
+export const QAPLA_DISCORD_CHANNEL = 'https://discordapp.com/invite/6GBHn78';
+
 // Date constants
 
 export const ONE_HOUR_MILISECONDS = 3600000;

@@ -9,11 +9,11 @@ import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBad
 export class TournamentCard extends Component {
     state = {
         progressBarWidth: new Animated.Value(0),
-        puntosCompletados: 0
+        completedPoints: 0
     };
 
     shouldComponentUpdate(nextProps) {
-        if (nextProps.puntosCompletados !== this.state.puntosCompletados) {
+        if (nextProps.puntosCompletados !== this.state.completedPoints) {
             /**
              * 70 is the maximum value of the width of the progress bar because the width defined in the style
              * is also 70 rhe operation calculate the percentage to fill based on the current progress of the
@@ -29,7 +29,7 @@ export class TournamentCard extends Component {
                     duration: 375
                 }
             ).start();
-            this.setState({ puntosCompletados: nextProps.puntosCompletados });
+            this.setState({ completedPoints: nextProps.puntosCompletados });
         }
         return true;
     }
@@ -58,7 +58,7 @@ export class TournamentCard extends Component {
                     </View>
                     <View style={styles.colBContainer}>
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />
-                        {puntosCompletados == null &&
+                        {(puntosCompletados === null || puntosCompletados === undefined) &&
                             <TouchableWithoutFeedback onPress={this.joinInTournament}>
                                 <View style={styles.redimirButton}>
                                     <Text style={styles.redimirTextButton}>Participar</Text>
@@ -67,7 +67,7 @@ export class TournamentCard extends Component {
                         }
                     </View>
                 </View>
-                {puntosCompletados != null &&
+                {(puntosCompletados !== null && puntosCompletados !== undefined) &&
                     <View style={styles.progressContainer}>
                         <View style={styles.progressBar}>
                             <Animated.View

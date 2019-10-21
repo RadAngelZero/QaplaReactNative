@@ -51,3 +51,11 @@ export const TIE_RESULT = '3';
 
 export const ONE_HOUR_MILISECONDS = 3600000;
 export const HOURS_IN_DAY = 24;
+
+// On sale qaploins packages
+/**
+ * In the future we are going to add more packages, obviusly this is not the solution,
+ * the real solution is have this data on the database, this consts purpose is temporary and
+ * informative (also is a suggestion for the moment when we build the structure on the database)
+ */
+export const QAPLOIN_PACKAGES = [ { qaploins: 300, price: '$2 USD' } ];

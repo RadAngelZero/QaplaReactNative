@@ -12,6 +12,7 @@ import styles from './style';
 import { addQaploinsToUserCloudFunction } from '../../services/functions';
 import Images from './../../../assets/images';
 import { trackOnSegment } from '../../services/statistics';
+import { QAPLOIN_PACKAGES } from '../../utilities/Constants';
 
 const CloseIcon = Images.svg.closeIcon;
 const QaploinIcon = images.svg.qaploinsIcon;
@@ -58,7 +59,10 @@ class BuyQaploinsModal extends Component {
                             </View>
                         </TouchableWithoutFeedback>
                         <QaploinIcon height={40} width={40} />
-                        <Text style={styles.qaploinsToBuyText}>300</Text>
+                        {/**
+                            Goingo to the definition of QAPLOIN_PACKAGES to get more info. about this array
+                         */}
+                        <Text style={styles.qaploinsToBuyText}>{QAPLOIN_PACKAGES[0].qaploins}</Text>
                         <Text style={styles.qaploinsText}>Qaploins</Text>
                         <Text style={styles.paragraph}>
                             {this.state.qaploinsAdded ?
@@ -69,7 +73,10 @@ class BuyQaploinsModal extends Component {
                         </Text>
                         <TouchableWithoutFeedback onPress={this.addQaploinsToUser}>
                             <View style={styles.buyButton}>
-                                <Text style={styles.priceText}>{this.state.qaploinsAdded ? 'Qaploins listos!' : '$2 USD'}</Text>
+                                {/**
+                                    Goingo to the definition of QAPLOIN_PACKAGES to get more info. about this array
+                                */}
+                                <Text style={styles.priceText}>{this.state.qaploinsAdded ? 'Qaploins listos!' : QAPLOIN_PACKAGES[0].price }</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>

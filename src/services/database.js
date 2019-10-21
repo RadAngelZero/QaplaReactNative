@@ -21,8 +21,8 @@
 //                                      for new references on database and errors detecrted on addGameToUser
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
 
-import { database, TimeStamp } from "../utilities/firebase";
-import { randomString } from "../utilities/utils";
+import { database, TimeStamp } from '../utilities/firebase';
+import { randomString } from '../utilities/utils';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
@@ -36,6 +36,9 @@ export const cuentasVerificadasRef = database.ref('/CuentasVerificadas');
 export const verificationOnProccessRef = database.ref('/VerificacionEnProceso');
 export const veriLogroSocialRef = database.ref('/verificarLogroSocial');
 export const feedbackUsersRef = database.ref('/FeedbackUsers');
+export const tournamentsRef = database.ref('/torneos');
+export const activeTournamentsRef = tournamentsRef.child('torneosActivos');
+export const pointsTournamentsRef = database.ref('/puntosTorneos');
 export const announcementsActRef = database.ref('/Announcements/Active');
 
 /**
@@ -629,6 +632,24 @@ export async function sendUserFeedback(message, userId) {
     }
 
     return res;
+}
+
+// -----------------------------------------------
+// Tournaments
+// -----------------------------------------------
+
+/**
+ * Allow the user to join in the given tournament
+ * @param {string} uid User identifier on database
+ * @param {string} tournamentId Tournament identifier on the database
+ * @param {number} totalPuntos The total of points of the tournament
+ */
+export async function joinInTournament(uid, tournamentId, totalPuntos) {
+    pointsTournamentsRef.child(uid).child(tournamentId).update({
+        puntosCompletados: 0,
+        redimido: false,
+        totalPuntos
+    });
 }
 
 // -----------------------------------------------

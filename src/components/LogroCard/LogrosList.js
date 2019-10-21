@@ -21,13 +21,14 @@ class LogrosList extends React.Component {
                 <FlatList
                     data={this.props.logros}
                     initialNumToRender={5}
-                    renderItem={({item}) => <LogroCardItem
-                      {...item}
-                      userId={this.props.userId}
-                      verified={this.props.isUserVerified} />}
-                    keyExtractor={(item) => item.id} />      
+                    renderItem={({item, index}) => <LogroCardItem
+                        {...item}
+                        userId={this.props.userId}
+                        verified={this.props.isUserVerified}
+                        lastChild={index === this.props.logros.length - 1} />}
+                        keyExtractor={(item) => item.id} />
             </View>
-	      </SafeAreaView>
+        </SafeAreaView>
     );
   }
 }

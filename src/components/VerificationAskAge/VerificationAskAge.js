@@ -13,7 +13,7 @@ class VerificationAskAge extends Component {
         return (
             <View style={styles.container}>
                 <View>
-                    <Text style={styles.title}>¿Quantos años tienes?</Text>
+                    <Text style={styles.title}>¿Cuantos años tienes?</Text>
                     <View style={styles.divider}>
                         <Image source={Divider} />
                     </View>

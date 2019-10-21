@@ -9,7 +9,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-around',
         backgroundColor:'#131833',
         marginLeft: widthPercentageToPx(4),
-        width: getDimensions().width
+        width: widthPercentageToPx(100)
     },
     title: {
         fontSize: 32,

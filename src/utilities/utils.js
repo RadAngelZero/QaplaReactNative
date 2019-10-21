@@ -3,6 +3,8 @@
 // diego     - 06-08-2019 - us76 - Function to get the gamer tag key on string created
 // diego     - 16-07-2019 - us30 - File creation
 
+import { Linking } from 'react-native';
+
 /**Generador ramdom de claves para retas
  * basado en el metodo de android
 */
@@ -128,4 +130,8 @@ export function isFunction(functionToCheck) {
      * Check if the type of the object is [object function]
      */
     return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+}
+
+export function withdrawQaploins() {
+    Linking.openURL('whatsapp://send?text=Hola, quiero retirar mis qaploins&phone=+523312971299'/*<= Change for the suport number */);
 }

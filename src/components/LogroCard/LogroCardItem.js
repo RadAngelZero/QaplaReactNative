@@ -24,6 +24,11 @@ const CardContainer = ({ children, lastChild }) => (
 
 class LogroCardItem extends Component {
     render() {
+
+        /**
+         * TODO: Change all the received props from the database (in spanish) to english, then send it to the different logro
+         * Also change the reference inside every logro
+         */
         let res = null;
         const { tipoLogro, lastChild } = this.props;
 

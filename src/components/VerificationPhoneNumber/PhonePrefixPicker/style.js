@@ -25,7 +25,7 @@ export default styles = StyleSheet.create({
     },
     modalContainer: {
       	height: heightPercentageToPx(70),
-        width: getDimensions().width*5,
+        width: getDimensions().width * 5,
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#141833',

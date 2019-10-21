@@ -14,7 +14,6 @@ const Divider = images.png.divider.img;
 export class VerificationPhoneNumber extends Component {
     render() {
         return (
-            <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <View>
                         <Text style={styles.title}>¡Verifica tu Whatsapp!</Text>
@@ -23,7 +22,7 @@ export class VerificationPhoneNumber extends Component {
                         </View>
                     </View>
                     <View style={styles.phoneContainer}>
-                        <View style={{flexDirection: 'row'}}>
+                        <View style={styles.phoneContainerRow}>
                             <PhonePrefixPicker onChangePrefix={this.props.setPhonePrefix}/>
                             <TextInput
                                 keyboardType='numeric'
@@ -34,7 +33,6 @@ export class VerificationPhoneNumber extends Component {
                         </View>
                     </View>
                 </View>
-            </SafeAreaView>
         );
     }
 }

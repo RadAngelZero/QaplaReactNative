@@ -1,7 +1,7 @@
 // josep.sanahuja  - 17-10-2019 - us134 - File creation
 
 import React, { Component } from 'react';
-import { View, Picker, Text, Image, TouchableWithoutFeedback, FlatList, Modal, SafeAreaView} from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback, FlatList, Modal } from 'react-native';
 import styles from './style';
 
 import Images from '../../../../assets/images';
@@ -119,8 +119,8 @@ export class PhonePrefixPicker extends Component {
                                     data={this.state.countriesList}
                                     initialNumToRender={7}
                                     initialScrollIndex={MEXICO_FLAT_LIST_INDEX}
-                                    renderItem={({item, index}) =>
-                                        <TouchableWithoutFeedback onPress={() => {this.itemSelected(item)}}>
+                                    renderItem={({item}) =>
+                                        <TouchableWithoutFeedback onPress={() => this.itemSelected(item)}>
                                             <View style={styles.prefixCardItem}>
                                                 <Text style={styles.prefixCardTxt}>
                                                     +{item.callingCodes[0]}, {item.name}

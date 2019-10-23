@@ -7,7 +7,7 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import {GoogleSignin} from 'react-native-google-signin';
 import { setUserIdOnSegment } from './statistics';
 
-const webClientIdForGoogleAuth = '614138734637-rgvqccs2sk27ilb8nklg65sdcm33ka8v.apps.googleusercontent.com';
+const webClientIdForGoogleAuth = '66587586976-m04tjhp3or1f2c27jd5pvh2m3vf9cq4b.apps.googleusercontent.com';
 
 export function signInWithFacebook(navigation) {
     LoginManager.logInWithPermissions(['public_profile', 'email'])

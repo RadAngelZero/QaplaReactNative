@@ -16,9 +16,9 @@ export default StyleSheet.create({
   },
   content:{
     backgroundColor:'white',
-    marginHorizontal:10,
-    paddingHorizontal:10,
-    paddingVertical:5,
+    marginHorizontal: widthPercentageToPx(2.67),
+    paddingHorizontal: widthPercentageToPx(2.67),
+    paddingVertical: heightPercentageToPx(0.62),
     borderRadius:3
   },
   preview: {
@@ -30,10 +30,10 @@ export default StyleSheet.create({
     flex: 0,
     backgroundColor: '#fff',
     borderRadius: 5,
-    padding: 15,
-    paddingHorizontal: 20,
+    padding: heightPercentageToPx(1.85),
+    paddingHorizontal: widthPercentageToPx(5.33),
     alignSelf: 'center',
-    margin: 20,
+    margin: heightPercentageToPx(2.46),
   },
   textInput: {
         backgroundColor: '#11152D',
@@ -57,10 +57,10 @@ export default StyleSheet.create({
       alignSelf: 'center',
       textTransform: 'uppercase',
       fontWeight: 'bold',
-      marginTop: 20,
-      marginBottom: 20,
-      marginLeft: 32,
-      marginRight: 32,
+      marginTop: heightPercentageToPx(2.46),
+      marginBottom: heightPercentageToPx(2.46),
+      marginLeft: widthPercentageToPx(8.53),
+      marginRight: widthPercentageToPx(8.53),
       letterSpacing: .57
   },
 })

@@ -356,6 +356,7 @@ class PublicMatchCardScreen extends Component {
                         <Text style={styles.alreadyHaveResult}>Ya has subido un resultado a esta reta</Text>
                         :
                         <>
+                        {/*TODO: disabled=this.state.expired} */}
                         {matchCard.matchesPlay &&
                             <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult} disabled={false}>
                                 <View style={styles.bottomButton}>

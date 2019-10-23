@@ -8,7 +8,6 @@ import { View, TextInput, Text, TouchableWithoutFeedback, Linking } from 'react-
 import styles from './style';
 import Images from './../../../assets/images';
 import TutorialCarousel from '../../components/TutorialCarousel/TutorialCarousel';
-import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
 
 const images = [Images.png.uploadVideoClutch.img, Images.png.shareClutchLink.img];
 
@@ -17,19 +16,6 @@ export class UploadClutchEvidenceScreen extends Component {
         url: '',
         showUrlError: false
     };
-
-    componentDidMount() {
-        console.log('Dimensions height: ' +
-            42 + ' : ' + getPercentHeight(42) + '\n' +
-            50 + ' : ' + getPercentHeight(50)
-            );
-        console.log('Dimensions width: ' +
-            64 + ' :  ' + getPercentWidth(64) +'\n' +
-            28 + ' :  ' + getPercentWidth(28) +'\n' +
-            32 + ' :  ' + getPercentWidth(32) +'\n' +
-            100 + ' :  ' + getPercentWidth(100)
-            );
-    }
 
     /**
      * Validates that the url entered by the user is a valid url

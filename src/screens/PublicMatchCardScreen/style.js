@@ -94,7 +94,6 @@ export default StyleSheet.create({
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-        
         position: 'absolute',
         alignSelf: 'center',
         bottom: heightPercentageToPx(4)

@@ -35,6 +35,9 @@ import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/MatchExpireRememberModal';
 
+import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
+
+
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
 const QaploinIcon       = images.svg.qaploinsIcon;
 const LessQaploinsIcon  = images.svg.lessQaploins;
@@ -71,6 +74,14 @@ class SetBetScreen extends Component {
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
+           console.log('Dimensions height: ' +
+       
+        4 + ' : ' + getPercentHeight(4)
+        );
+    console.log('Dimensions width: ' +
+        11 + ' :  ' + getPercentWidth(11) +'\n' 
+        
+        );
     }
 
     componentWillUnmount() {

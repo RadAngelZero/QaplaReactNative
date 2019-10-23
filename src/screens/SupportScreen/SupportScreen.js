@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 import { sendUserFeedback } from '../../services/database';
 
 import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBttnModal';
-import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
 
 class SupportScreen extends React.Component {
   constructor(props) {
@@ -25,19 +24,6 @@ class SupportScreen extends React.Component {
           openModal: false
       };
   }
-
-  componentDidMount() {
-    console.log('Dimensions height: ' +
-        5 + ' : ' + getPercentHeight(5) + '\n' +
-        15 + ' : ' + getPercentHeight(15)
-        );
-    // console.log('Dimensions width: ' +
-    //     64 + ' :  ' + getPercentWidth(64) +'\n' +
-    //     28 + ' :  ' + getPercentWidth(28) +'\n' +
-    //     32 + ' :  ' + getPercentWidth(32) +'\n' +
-    //     100 + ' :  ' + getPercentWidth(100)
-    //     );
-    }
 
   /**
     * Description:

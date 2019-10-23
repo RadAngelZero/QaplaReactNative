@@ -2,6 +2,7 @@
 // josep.sanahuja    - 05-08-2019 - us84 - + sfvContainer
 
 import { StyleSheet } from 'react-native';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
     sfvContainer: {
@@ -15,30 +16,30 @@ export default styles = StyleSheet.create({
     },
     titleText: {
         color: '#FFF',
-        marginLeft: 24,
+        marginLeft: widthPercentageToPx(6.4),
         fontSize: 32,
         fontWeight: 'bold',
-        width: '60%',
-        marginTop: '5%'
+        width: widthPercentageToPx(60),
+        marginTop: heightPercentageToPx(5)
     },
     lightningImage: {
-        marginTop: 71,
+        marginTop: heightPercentageToPx(8.74),
         alignItems: 'center'
     },
     publicMatchButton: {
-        marginTop: 66,
+        marginTop: heightPercentageToPx(8.13),
         borderRadius: 100,
         backgroundColor: '#FA2D79',
         elevation: 6,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 3,
+            height: heightPercentageToPx(0.34),
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-        marginRight: 80,
-        marginLeft: 80
+        marginRight: widthPercentageToPx(21.33),
+        marginLeft: widthPercentageToPx(21.33)
     },
     publicMatchButtonText: {
         color: '#FFF',
@@ -46,10 +47,10 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing: .5,
         textAlign: 'center',
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53)
     },
     directMatchButton: {
         flexDirection: 'row',
@@ -60,13 +61,13 @@ export default styles = StyleSheet.create({
         borderStyle: 'solid',
         borderColor: '#6D7DDE',
         backgroundColor: 'transparent',
-        marginTop: 25,
-        marginRight: 80,
-        marginLeft: 80
+        marginTop: heightPercentageToPx(3.08),
+        marginRight: widthPercentageToPx(21.33),
+        marginLeft: widthPercentageToPx(21.33)
     },
     directMatchButtonSearchIcon: {
         alignSelf: 'center',
-        marginLeft: 24
+        marginLeft: widthPercentageToPx(6.4)
     },
     directMatchButtonText: {
         color: '#FFF',
@@ -74,9 +75,9 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing: .5,
         textAlign: 'center',
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 8,
-        marginRight: 32
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(2.13),
+        marginRight: widthPercentageToPx(8.53)
     }
 });

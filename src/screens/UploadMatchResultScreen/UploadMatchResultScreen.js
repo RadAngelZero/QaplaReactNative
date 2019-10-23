@@ -40,6 +40,21 @@ class UploadMatchResultScreen extends Component {
       };
     }
 
+    componentDidMount() {
+        console.log('Dimensions height: ' +
+            20 + ' : ' + getPercentHeight(20) + '\n' +
+            36 + ' : ' + getPercentHeight(36) + '\n' +
+            24.5 + ' : ' + getPercentHeight(24.5) + '\n' +
+            3 + ' : ' + getPercentHeight(3) + '\n' +
+            24 + ' : ' + getPercentHeight(24)
+            );
+        console.log('Dimensions width: ' +
+            30 + ' :  ' + getPercentWidth(30) +'\n' +
+            40 + ' :  ' + getPercentWidth(40) +'\n' +
+            32 + ' :  ' + getPercentWidth(32)
+            );
+    }
+
     /**
      * Description:
      * Toogles and hightlight the correct match result button. If a button is activated

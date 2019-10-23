@@ -34,6 +34,8 @@ import NotEnoughQaploinsModal from '../../components/NotEnoughQaploinsModal/NotE
 import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constants';
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
+import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
+
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
 
@@ -127,6 +129,15 @@ class PublicMatchCardScreen extends Component {
                 }
             )
         ];
+
+        console.log('Dimensions height: ' +
+            20 + ' : ' + getPercentHeight(20)
+            );
+        console.log('Dimensions width: ' +
+            25 + ' :  ' + getPercentWidth(25) +'\n' +
+            20 + ' :  ' + getPercentWidth(20) +'\n' +
+            80 + ' :  ' + getPercentWidth(80)
+            );
     }
 
     /**
@@ -262,131 +273,134 @@ class PublicMatchCardScreen extends Component {
 
         return (
             <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
-                <View style={styles.imageHeader}>
-                    <gameData.Icon width={50} height={50} />
-                </View>
-                <View style={styles.rowContainer}>
-                    <View style={styles.headerRow1}>
-                        <QaploinsIcon style={styles.hr1}/>
-                        <Text style={styles.gameName}>{gameData.name}</Text>
-                        <QaploinsIcon style={styles.hr3}/>
+                
+                    <View style={styles.imageHeader}>
+                        <gameData.Icon width={50} height={50} />
                     </View>
-
-                    <Text style={styles.gamertag}>{matchCard.userName}</Text>
-
-                    <View style={styles.row}>
-                        <View style={styles.infoContainer}>
-                            <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={[styles.elemR1, styles.activeColor]}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
+                    <View style={styles.rowContainer}>
+                        <View style={styles.headerRow1}>
+                            <QaploinsIcon style={styles.hr1}/>
+                            <Text style={styles.gameName}>{gameData.name}</Text>
+                            <QaploinsIcon style={styles.hr3}/>
                         </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.gamerTag.gamerTag}</Text>
+
+                        <Text style={styles.gamertag}>{matchCard.userName}</Text>
+
+                        <View style={styles.row}>
+                            <View style={styles.infoContainer}>
+                                <ProfileIcon style={styles.rowIcon}/>
+                                <Text style={[styles.elemR1, styles.activeColor]}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
+                            </View>
+                            <View style={styles.infoContainer}>
+                                <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.gamerTag.gamerTag}</Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.row}>
+                            <View style={styles.infoContainer}>
+                                <ProfileIcon style={styles.rowIcon}/>
+                                <Text style={styles.elemR1}>No. de Integrantes</Text>
+                            </View>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.row}>
+                            <View style={styles.infoContainer}>
+                                <ProfileIcon style={styles.rowIcon}/>
+                                <Text style={styles.elemR1}>
+                                    {matchCard.matchesPlay ?
+                                        'Sube tu resultado en:'
+                                        :
+                                        'Expira en:'
+                                    }
+                                </Text>
+                            </View>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.rightTextStyle}>{this.state.validTimeLeft}</Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.row}>
+                            <View style={styles.infoContainer}>
+                                <ProfileIcon style={styles.rowIcon}/>
+                                <Text style={styles.elemR1}>Qaploins</Text>
+                            </View>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.rightTextStyle}>{matchCard.bet}</Text>
+                            </View>
                         </View>
                     </View>
-
-                    <View style={styles.row}>
-                        <View style={styles.infoContainer}>
-                            <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>No. de Integrantes</Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.row}>
-                        <View style={styles.infoContainer}>
-                            <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>
-                                {matchCard.matchesPlay ?
-                                    'Sube tu resultado en:'
-                                    :
-                                    'Expira en:'
-                                }
-                            </Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.rightTextStyle}>{this.state.validTimeLeft}</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.row}>
-                        <View style={styles.infoContainer}>
-                            <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>Qaploins</Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.rightTextStyle}>{matchCard.bet}</Text>
-                        </View>
-                    </View>
-                </View>
-                {/*
-                    If the user isn't the creator of the match, and this match is not in matches play and isn't a challenge
-                    we show 'Retar' button
-                */}
-                {(this.props.uid !== matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
-                    <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()} disabled={this.state.expired}>
-                        <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>Retar</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                }
-                {/*
-                    If the user is the creator of the match, and this match is not in matches play and isn't a challenge
-                    we show 'Cancelar' button
-                */}
-                {(this.props.uid === matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
-                    <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()} disabled={this.state.expired}>
-                        <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>Cancelar</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                }
-                {/*
-                    If the match is on matches play and the user hasn't upload their result yet we show 'Subir Resultado'
-                    button, if the match is on matches play and the user has already uploaded their result, then we show
-                    just a text
-                */}
-                {(matchCard.matchesPlay &&
-                    ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1)
-                    ||
-                    (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2))) ?
-                    <Text style={styles.alreadyHaveResult}>Ya has subido un resultado a esta reta</Text>
-                    :
-                    <>
-                    {matchCard.matchesPlay &&
-                        <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult} disabled={this.state.expired}>
+                    
+                    {/*
+                        If the user isn't the creator of the match, and this match is not in matches play and isn't a challenge
+                        we show 'Retar' button
+                    */}
+                    {(this.props.uid !== matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
+                        <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()} disabled={this.state.expired}>
                             <View style={styles.bottomButton}>
-                                <Text style={styles.bottomButtonText}>Subir Resultado</Text>
+                                <Text style={styles.bottomButtonText}>Retar</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     }
-                    </>
-                }
-                {matchCard.isChallenge &&
-                    <TouchableWithoutFeedback onPress={this.tryToAcceptChallengeRequest} disabled={this.state.expired}>
-                        <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>Aceptar desafio</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                }
-                <OneTxtOneBttnModal
-                    visible={ this.state.openChalExModal }
-                    onClose={ this.toggleOpenChalExModal }
-                    header={ 'Lo sentimos' }
-                    body={ 'Ya enviaste un desafio al jugador para esta Partida' }
-                    textButton={ 'Entendido' } />
-                <AcceptChallengeModal
-                    visible={this.state.openAcceptChallengeModal}
-                    uid={this.props.uid}
-                    notification={this.props.navigation.getParam('notification', {})}
-                    onClose={() => this.setState({ openAcceptChallengeModal: false })} />
-                <NotEnoughQaploinsModal
-                    visible={this.state.openNoQaploinsModal}
-                    uid={this.props.uid}
-                    notificationKey={this.props.navigation.getParam('notificationKey')}
-                    deletedFromMatchDetail={true}
-                    onClose={() => this.setState({openNoQaploinsModal: false})} />
+                    {/*
+                        If the user is the creator of the match, and this match is not in matches play and isn't a challenge
+                        we show 'Cancelar' button
+                    */}
+                    {(this.props.uid === matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
+                        <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()} disabled={this.state.expired}>
+                            <View style={styles.bottomButton}>
+                                <Text style={styles.bottomButtonText}>Cancelar</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    }
+                    {/*
+                        If the match is on matches play and the user hasn't upload their result yet we show 'Subir Resultado'
+                        button, if the match is on matches play and the user has already uploaded their result, then we show
+                        just a text
+                    */}
+                    {(matchCard.matchesPlay &&
+                        ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1)
+                        ||
+                        (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2))) ?
+                        <Text style={styles.alreadyHaveResult}>Ya has subido un resultado a esta reta</Text>
+                        :
+                        <>
+                        {matchCard.matchesPlay &&
+                            <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult} disabled={false}>
+                                <View style={styles.bottomButton}>
+                                    <Text style={styles.bottomButtonText}>Subir Resultado</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        }
+                        </>
+                    }
+                    {matchCard.isChallenge &&
+                        <TouchableWithoutFeedback onPress={this.tryToAcceptChallengeRequest} disabled={this.state.expired}>
+                            <View style={styles.bottomButton}>
+                                <Text style={styles.bottomButtonText}>Aceptar desafio</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    }
+                    <OneTxtOneBttnModal
+                        visible={ this.state.openChalExModal }
+                        onClose={ this.toggleOpenChalExModal }
+                        header={ 'Lo sentimos' }
+                        body={ 'Ya enviaste un desafio al jugador para esta Partida' }
+                        textButton={ 'Entendido' } />
+                    <AcceptChallengeModal
+                        visible={this.state.openAcceptChallengeModal}
+                        uid={this.props.uid}
+                        notification={this.props.navigation.getParam('notification', {})}
+                        onClose={() => this.setState({ openAcceptChallengeModal: false })} />
+                    <NotEnoughQaploinsModal
+                        visible={this.state.openNoQaploinsModal}
+                        uid={this.props.uid}
+                        notificationKey={this.props.navigation.getParam('notificationKey')}
+                        deletedFromMatchDetail={true}
+                        onClose={() => this.setState({openNoQaploinsModal: false})} />
+                    
             </SafeAreaView>
         );
     }

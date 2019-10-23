@@ -3,14 +3,12 @@
 // josep.sanahuja - 05-08-2019 - us78 - File creation
 
 import { StyleSheet, Platform } from 'react-native';
-import { hasSafeAreaView, heightPercentageToPx, getDimensions } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, getDimensions, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
         flex: 1,
-        justifyContent: 'center',
         backgroundColor:'#131833',
-        marginTop: ((Platform.OS === 'ios') && !hasSafeAreaView()) ? 20 : 0
     },
     container: {
         backgroundColor:'#131833',
@@ -18,15 +16,15 @@ export default styles = StyleSheet.create({
         flex: 1
     },
     closeIcon: {
-        marginTop: 36,
-        marginRight: 30,
-        marginBottom: 20,
+        marginTop: heightPercentageToPx(4.43),
+        marginRight: widthPercentageToPx(8),
+        marginBottom: heightPercentageToPx(2.46),
         alignSelf: 'flex-end'
     },
     winLooseContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: '2%'
+        marginTop: heightPercentageToPx(2)
     },
     resultDecription: {
         color: '#B3B3B3',
@@ -35,10 +33,10 @@ export default styles = StyleSheet.create({
         textAlign: 'center'
     },
     winLooseSeparator: {
-        width: '6%'
+        width: widthPercentageToPx(6)
     },
     uploadEvidence: {
-        marginTop: '10%',
+        marginTop: heightPercentageToPx(10),
         alignItems: 'center'
     },
     footerEvidence: {
@@ -53,9 +51,9 @@ export default styles = StyleSheet.create({
         borderWidth: 3,
         borderStyle: 'solid',
         backgroundColor: 'transparent',
-        marginTop: heightPercentageToPx('5%'),
-        marginRight: 40,
-        marginLeft: 40
+        marginTop: heightPercentageToPx(5),
+        marginRight: widthPercentageToPx(10.67),
+        marginLeft: widthPercentageToPx(10.67)
     },
     buttonText: {
         color: '#FFF',
@@ -63,26 +61,26 @@ export default styles = StyleSheet.create({
         fontWeight: '900',
         textAlign: 'center',
         letterSpacing: .5,
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32,
-        width: getDimensions().width * .4
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53),
+        width: widthPercentageToPx(40)
     },
     uploadResultButton: {
-        marginTop: 24.5,
+        marginTop: heightPercentageToPx(3.01),
         borderRadius: 100,
         backgroundColor: '#FA2D79',
         elevation: 6,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 3,
+            height: heightPercentageToPx(0.37),
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-        marginRight: 40,
-        marginLeft: 40,
-        marginBottom: 24
+        marginRight: widthPercentageToPx(10.67),
+        marginLeft: widthPercentageToPx(10.67),
+        marginBottom: heightPercentageToPx(2.95)
     }
 });

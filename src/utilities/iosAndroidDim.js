@@ -1,5 +1,13 @@
 import { Dimensions, Platform, PixelRatio } from 'react-native';
 
+function getPercentHeight(value) {
+  return (value/812) * 100;
+}
+
+function getPercentWidth(value) {
+  return (value/375) * 100;
+}
+
 function getDimensions() {
 	return Dimensions.get('window');
 }
@@ -53,4 +61,4 @@ function heightPercentageToPx(heightPercent) {
   return PixelRatio.roundToNearestPixel(getDimensions().height * elemHeight / 100);
 }
 
-export {isIphoneX, isIPhoneXSize, isIPhoneXrSize, getDimensions, hasSafeAreaView, widthPercentageToPx, heightPercentageToPx};
+export {getPercentHeight, getPercentWidth, isIphoneX, isIPhoneXSize, isIPhoneXrSize, getDimensions, hasSafeAreaView, widthPercentageToPx, heightPercentageToPx};

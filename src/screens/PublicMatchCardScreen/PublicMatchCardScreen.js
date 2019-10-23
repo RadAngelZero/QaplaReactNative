@@ -34,8 +34,6 @@ import NotEnoughQaploinsModal from '../../components/NotEnoughQaploinsModal/NotE
 import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constants';
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
-import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
-
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
 
@@ -129,15 +127,6 @@ class PublicMatchCardScreen extends Component {
                 }
             )
         ];
-
-        console.log('Dimensions height: ' +
-            20 + ' : ' + getPercentHeight(20)
-            );
-        console.log('Dimensions width: ' +
-            25 + ' :  ' + getPercentWidth(25) +'\n' +
-            20 + ' :  ' + getPercentWidth(20) +'\n' +
-            80 + ' :  ' + getPercentWidth(80)
-            );
     }
 
     /**

@@ -1,7 +1,7 @@
 // diego          - 13-08-2019 - us77 - File creation
 
 import { StyleSheet } from 'react-native';
-import { getDimensions } from '../../utilities/iosAndroidDim';
+import { getDimensions, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
@@ -11,9 +11,9 @@ export default styles = StyleSheet.create({
         backgroundColor:'#131833'
     },
     urlTextInput: {
-        marginLeft: 64,
-        marginRight: 64,
-        marginTop: 18,
+        marginLeft: widthPercentageToPx(17.07),
+        marginRight: widthPercentageToPx(17.07),
+        marginTop: heightPercentageToPx(2.28),
         fontSize: 14,
         color: '#FFF',
         borderBottomWidth: 1
@@ -22,22 +22,22 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 14,
         textAlign: 'center',
-        marginTop: 18,
-        marginLeft: 28,
-        marginRight: 28
+        marginTop: heightPercentageToPx(2.28),
+        marginLeft: widthPercentageToPx(7.47),
+        marginRight: widthPercentageToPx(7.47)
     },
     highlightedText: {
         color: '#3DF9DF'
     },
     readyButton: {
-        marginTop: 42,
+        marginTop: heightPercentageToPx(6.15),
         borderRadius: 100,
         backgroundColor: '#6D7DDE',
         elevation: 6,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 3,
+            height: heightPercentageToPx(0.34),
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65
@@ -47,17 +47,17 @@ export default styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center',
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32,
-        minWidth: 100
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53),
+        minWidth: widthPercentageToPx(26.67)
     },
     goToClutchButtonText: {
-        marginTop: 20,
-        marginBottom: 50,
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(5.17),
         fontSize: 14,
-        height: 20,
+        height: heightPercentageToPx(2.46),
         color: '#828385'
     }
 });

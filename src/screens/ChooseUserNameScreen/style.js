@@ -2,6 +2,7 @@
 // josep.sanahuja - 08-07-2019 - us83 - + inputTextTaken
 
 import { StyleSheet } from 'react-native'
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
     sfvContainer: {
@@ -17,8 +18,8 @@ export default styles = StyleSheet.create({
         alignItems: 'center'
     },
     formContainer: {
-        marginLeft: 30,
-        marginRight: 30
+        marginLeft: widthPercentageToPx(8),
+        marginRight: widthPercentageToPx(8)
     },
     title: {
         color: '#FFF',
@@ -27,26 +28,26 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     inputText: {
-        marginTop: 14,
+        marginTop: heightPercentageToPx(1.72),
         borderRadius: 6,
         backgroundColor: '#FFF',
-        paddingHorizontal: 16,
-        paddingVertical: 12
+        paddingHorizontal: widthPercentageToPx(4.27),
+        paddingVertical: heightPercentageToPx(1.48)
     },
     inputTextTaken: {
-        marginTop: 14,
+        marginTop: heightPercentageToPx(1.72),
         borderRadius: 6,
         backgroundColor: '#FFF',
-        paddingHorizontal: 16,
-        paddingVertical: 12,
+        paddingHorizontal: widthPercentageToPx(4.27),
+        paddingVertical: heightPercentageToPx(1.48),
         color: 'red'
     },
     buttonContainer: {
         borderRadius: 100,
         backgroundColor: '#FA2D79',
-        paddingVertical: 16,
-        paddingHorizontal: 40,
-        marginTop: 50
+        paddingVertical: heightPercentageToPx(1.97),
+        paddingHorizontal: widthPercentageToPx(10.66),
+        marginTop: heightPercentageToPx(5.17)
     },
     buttonText: {
         color: '#FFF',
@@ -55,11 +56,11 @@ export default styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         position: 'absolute',
-        left: 0,
-        bottom: 0,
+        left: widthPercentageToPx(0),
+        bottom: heightPercentageToPx(0),
         zIndex: -1,
         opacity: .68,
-        width: '100%',
-        height: '50%'
+        width: widthPercentageToPx(100),
+        height: heightPercentageToPx(50)
     }
 });

@@ -14,6 +14,9 @@ import {
     removeDataItem
 } from '../../utilities/persistance'
 
+import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
+
+
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 
 class ChooseUserNameScreen extends Component {
@@ -24,6 +27,17 @@ class ChooseUserNameScreen extends Component {
             userName: '',
             userNameTaken: false
         };
+    }
+
+     componentDidMount() {
+           console.log('Dimensions height: ' +
+       
+        12 + ' : ' + getPercentHeight(12)
+        );
+    console.log('Dimensions width: ' +
+        
+        40 + ' :  ' + getPercentWidth(40)
+        );
     }
     
     render() {

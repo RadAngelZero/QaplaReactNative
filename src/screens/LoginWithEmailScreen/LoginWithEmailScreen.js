@@ -7,9 +7,6 @@ import Images from './../../../assets/images';
 import styles from './style';
 import { signInWithEmailAndPassword } from '../../services/auth';
 
-import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
-
-
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
 
@@ -18,17 +15,6 @@ class LoginWithEmailScreen extends Component {
         email: '',
         password: ''
     };
-
-    componentDidMount() {
-           console.log('Dimensions height: ' +
-       
-        14 + ' : ' + getPercentHeight(14)
-        );
-    console.log('Dimensions width: ' +
-        72 + ' :  ' + getPercentWidth(72) +'\n' +
-        40 + ' :  ' + getPercentWidth(40)
-        );
-    }
 
     render() {
         return (

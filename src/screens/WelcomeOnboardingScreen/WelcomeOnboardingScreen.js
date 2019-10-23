@@ -16,15 +16,28 @@ import styles from './style'
 import CarouselPng from '../../components/CarouselPng/CarouselPng'
 import Images from '@assets/images'
 import { storeData } from '../../utilities/persistance';
+import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
+
 
 export default class WelcomeOnboardingScreen extends React.Component {
 	constructor(props) {
-    // Required step: always call the parent class' constructor
-    super(props);
-    this.state = {
-      selectedIndex: 0
-    }
-  }
+	    // Required step: always call the parent class' constructor
+	    super(props);
+	    this.state = {
+	    	selectedIndex: 0
+	    }
+  	}
+
+  	componentDidMount() {
+  		console.log('Dimensions height: ' +
+       
+        9 + ' : ' + getPercentHeight(9)
+        );
+    console.log('Dimensions width: ' +
+        11 + ' :  ' + getPercentWidth(11) +'\n' +
+        9 + ' :  ' + getPercentWidth(9)
+        );
+  	}
 
 	goToScreenPublicas = () => {
 		storeData('tutorial-done', 'true');

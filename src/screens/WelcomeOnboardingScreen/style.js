@@ -2,7 +2,7 @@
 // josep.sanahuja    - 05-08-2019 - us84 - + sfvContainer
 
 import {StyleSheet} from 'react-native'
-import { getDimensions } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default StyleSheet.create({
     sfvContainer: {
@@ -11,18 +11,18 @@ export default StyleSheet.create({
         backgroundColor:'#131833'
     },
     text: {
-        marginTop: '2%',
-        marginBottom: '10%',
+        marginTop: heightPercentageToPx(2),
+        marginBottom: heightPercentageToPx(10),
         color: '#36E5CE'
     },
     progressContainer: {
         flexDirection: 'row',
         alignSelf: 'center',
         position: 'absolute',
-        bottom: 16
+        bottom: heightPercentageToPx(1.97)
     },
     progressRow: {
-        width: getDimensions().width / 3
+        width: widthPercentageToPx(100) / 3
     },
     indicatorsContainer: {
         flexDirection: 'row',
@@ -33,15 +33,15 @@ export default StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         borderRadius: 100,
-        marginRight: 11,
-        width: 9,
-        height: 9
+        marginRight: widthPercentageToPx(11.29),
+        width: widthPercentageToPx(2.4),
+        height: heightPercentageToPx(1.08)
     },
     finishTextButton: {
         fontSize: 14,
         letterSpacing: .5,
         color: '#3DF9DF',
         textAlign: 'right',
-        marginRight: 16
+        marginRight: widthPercentageToPx(4.27)
     }
 });

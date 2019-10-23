@@ -5,22 +5,12 @@ import { View, Image, Text, TouchableWithoutFeedback, SafeAreaView } from 'react
 import styles from './style';
 import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
-import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
 
 class SignInScreen extends Component {
     componentDidMount() {
-        console.log('Dimensions height: ' +
-       
-        44 + ' : ' + getPercentHeight(44)
-        );
-    console.log('Dimensions width: ' +
-        5 + ' :  ' + getPercentWidth(5) +'\n'
-        
-        );
-
         setupGoogleSignin();
     }
     

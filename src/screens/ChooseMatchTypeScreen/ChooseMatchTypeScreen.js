@@ -12,17 +12,6 @@ const LightningIcon = Images.svg.lightningIcon;
 const SearchIcon = Images.svg.searchIcon;
 
 class ChooseMatchTypeScreen extends Component {
-componentDidMount() {
-    console.log('Dimensions height: ' +
-        71 + ' : ' + getPercentHeight(71) + '\n' +
-        66 + ' : ' + getPercentHeight(66)
-        );
-    console.log('Dimensions width: ' +
-        24 + ' :  ' + getPercentWidth(24) +'\n' +
-        8 + ' :  ' + getPercentWidth(8)
-        );
-    }    
-
     componentWillMount() {
         this.list = [
 

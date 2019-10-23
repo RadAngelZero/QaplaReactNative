@@ -24,6 +24,9 @@ import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
+import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
+
+
 class LoadGamesScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
         header: ({ props }) => (
@@ -66,6 +69,15 @@ class LoadGamesScreen extends React.Component {
         // the way we ensure that is by overwriting the value it may have when the component
         // mounted.
         this.props.setSelectedGame(null);
+
+        console.log('Dimensions height: ' +
+       
+        24 + ' : ' + getPercentHeight(24)
+        );
+    // console.log('Dimensions width: ' +
+    //     24 + ' :  ' + getPercentWidth(24) +'\n' +
+    //     8 + ' :  ' + getPercentWidth(8)
+    //     );
     }
 
     componentWillUnmount() {

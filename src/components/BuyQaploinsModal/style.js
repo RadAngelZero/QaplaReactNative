@@ -3,7 +3,7 @@
 // diego             - 20-08-2019 - us89 - +getDimensions & closeIcon
 
 import { StyleSheet } from 'react-native';
-import { getDimensions } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     mainContainer: {
@@ -12,25 +12,25 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        width: '100%',
-        height: '100%',
+        width: widthPercentageToPx(100),
+        height: heightPercentageToPx(100),
     },
     closeIcon: {
-        marginRight: 20,
-        marginBottom: 20,
-        marginTop: 20,
+        marginRight: widthPercentageToPx(5.33),
+        marginBottom: heightPercentageToPx(2.46),
+        marginTop: heightPercentageToPx(2.46),
         alignSelf: 'flex-end'
     },
     container: {
-        width: getDimensions().width * .8,
+        width: widthPercentageToPx(80),
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: '#141833',
         borderRadius: 20,
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 12,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(1.48),
         },
         shadowOpacity: 0.58,
         shadowRadius: 16.00,
@@ -38,7 +38,7 @@ export default styles = StyleSheet.create({
         alignItems: 'center'
     },
     qaploinsToBuyText: {
-        marginTop: 5.5,
+        marginTop: heightPercentageToPx(0.67),
         color: '#FFF',
         fontSize: 40
     },
@@ -47,18 +47,18 @@ export default styles = StyleSheet.create({
         fontSize: 16
     },
     paragraph: {
-        marginTop: 5,
-        marginLeft: 12,
-        marginRight: 12,
+        marginTop: heightPercentageToPx(0.62),
+        marginLeft: widthPercentageToPx(3.13),
+        marginRight: widthPercentageToPx(3.13),
         color: '#CFD1DB',
         fontSize: 16,
         textAlign: 'center'
     },
     buyButton: {
-        marginTop: 11,
+        marginTop: heightPercentageToPx(1.31),
         borderRadius: 100,
         backgroundColor: '#6D7DDE',
-        marginBottom: 24
+        marginBottom: heightPercentageToPx(2.96)
     },
     priceText: {
         color: '#FFF',
@@ -66,9 +66,9 @@ export default styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         letterSpacing: 2.65,
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53)
     }
 });

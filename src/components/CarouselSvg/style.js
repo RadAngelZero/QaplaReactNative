@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native'
-import {getDimensions} from '@utilities/iosAndroidDim'
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export const styles = StyleSheet.create({
   container:{
@@ -9,19 +9,19 @@ export const styles = StyleSheet.create({
   },
   content:{
     backgroundColor:'white',
-    marginHorizontal:10,
-    paddingHorizontal:10,
-    paddingVertical:5,
+    marginHorizontal: widthPercentageToPx(2.67),
+    paddingHorizontal: widthPercentageToPx(2.67),
+    paddingVertical: heightPercentageToPx(0.62),
     borderRadius:3
   },
   carouselContainer: {
-    width: getDimensions().width,
+    width: widthPercentageToPx(100),
     alignItems: 'center',
     justifyContent: 'center'
   },
   image: {
-     width: getDimensions().width,
-     height:  getDimensions().height * 0.6,
+     width: widthPercentageToPx(100),
+     height:  heightPercentageToPx(60),
      justifyContent: 'flex-start'
   }
 });

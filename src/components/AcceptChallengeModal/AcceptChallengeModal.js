@@ -56,7 +56,6 @@ class AcceptChallengeModal extends Component {
                             <Text style={styles.paragraph}>
                                 Al aceptar este desafio todos los otros desafios que te han hecho a esta reta seran eliminados.
                             </Text>
-                            <Text style={styles.smallText}>No mostrar de nuevo</Text>
                             <CheckBox
                                 style={styles.checkbox}
                                 label='Entendido, no volver a mostrar este mensaje'

@@ -23,8 +23,7 @@ import HighlightModal from '../../components/HighlightModal/HighlightModal'
 import { setHg1CreateMatch } from '../../actions/highlightsActions';
 import { connect } from 'react-redux';
 
-import { getDimensions } from '../../utilities/iosAndroidDim';
-
+import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
 
 class PublicMatchesFeedScreen extends Component {
     state = {
@@ -141,7 +140,12 @@ class PublicMatchesFeedScreen extends Component {
     componentDidMount() {
         this.checkHighlightsFlags();  
 
-        console.log('Dimensions: width: ' + getDimensions().width + ' height: ' + getDimensions().height) ;
+        console.log('Dimensions height: ' +
+            12 + ' : ' + getPercentHeight(12)
+        );
+        console.log('Dimensions width: ' +
+            40 + ' :  ' + getPercentWidth(40)
+        );
     }
 
     /**

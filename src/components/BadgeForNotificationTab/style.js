@@ -7,7 +7,7 @@ import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 export default styles = StyleSheet.create({
     container: {
         borderRadius: 11.5,
-        width: widthPercentageToPx(80),
+        width: widthPercentageToPx(6),
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#FFF'

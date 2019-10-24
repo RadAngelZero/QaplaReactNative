@@ -19,7 +19,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'center',
         position: 'absolute',
-        bottom: heightPercentageToPx(1.97)
+        bottom: heightPercentageToPx(5)
     },
     progressRow: {
         width: widthPercentageToPx(100) / 3

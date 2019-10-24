@@ -93,7 +93,6 @@ class LoadGamesScreen extends React.Component {
     userHaveGame() {
         let result = true;
         if (this.isThereSelectedGame()) {
-
             result = this.props.userGameList instanceof Array ? this.props.userGameList.indexOf(this.props.selectedGame.gameKey) !== -1 : false;
         }
 
@@ -105,7 +104,7 @@ class LoadGamesScreen extends React.Component {
      * the modal should open
      */
     openAddGamerTagModal = () => !this.userHaveGame();
-
+    
     /**
      * Close the modal by setting to null the selectedGame on redux
      */

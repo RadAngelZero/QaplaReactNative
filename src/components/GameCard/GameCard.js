@@ -65,7 +65,6 @@ class GameCard extends Component {
 
         // If the game selected has a gamertag then we don't open the modal 
         if (gtag.gamerTag) {
-
             /**
              * If receive a flag to load the games that the user don't have, but have a gamerTag for this game
              * (as happens on xbox or ps4) add the game to the user with ask no question and redirect to profile

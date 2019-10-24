@@ -1,12 +1,12 @@
 // josep.sanahuja    - 18-10-2019 - us140 - File creation
 
 import { StyleSheet } from 'react-native'
-import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default StyleSheet.create({
   	container:{
-        marginTop: 12,
-        marginHorizontal: 10,
+        marginTop: heightPercentageToPx(1.48),
+        marginHorizontal: widthPercentageToPx(2.67),
         borderRadius: 10,
         width: widthPercentageToPx(35),
         height: widthPercentageToPx(35),
@@ -25,7 +25,7 @@ export default StyleSheet.create({
         width: widthPercentageToPx(15),
     },
     description: {
-        height: 50,
+        height: heightPercentageToPx(5.17),
         width: widthPercentageToPx(30),
         color: '#FFF',
         fontSize: 12,

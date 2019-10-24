@@ -25,6 +25,8 @@ export const database = firebase.database();
 export const auth = firebase.auth();
 export const functions = firebase.functions();
 export const storage = firebase.storage();
+export const messaging = firebase.messaging();
+export const notifications = firebase.notifications();
 
 //Authentication providers
 export const FBProvider = firebase.auth.FacebookAuthProvider;

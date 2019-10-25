@@ -20,6 +20,9 @@ class App extends React.Component {
         this.notificationOpenedListener();
     }
 
+    /**
+     * Enable the listeners for Firebase Cloud Messaging notifications
+     */
     async enableNotificationListeners() {
         /*
         * Triggered when a particular notification has been received in foreground

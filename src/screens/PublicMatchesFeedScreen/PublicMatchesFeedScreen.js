@@ -140,11 +140,11 @@ class PublicMatchesFeedScreen extends Component {
     componentDidMount() {
         this.checkHighlightsFlags();  
 
-        console.log('Dimensions height: '
-            // 28 + ' : ' + getPercentHeight(28)
+        console.log('Dimensions height: ' +
+            100 + ' : ' + getPercentHeight(100)
         );
         console.log('Dimensions width: ' +
-            6 + ' :  ' + getPercentWidth(6) + '\n'
+            250 + ' :  ' + getPercentWidth(250) + '\n'
             // 18 + ' :  ' + getPercentWidth(18)
         );
     }

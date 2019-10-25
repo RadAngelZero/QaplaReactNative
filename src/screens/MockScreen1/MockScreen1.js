@@ -11,6 +11,7 @@ import {
 
 import styles from './style';
 import { withdrawQaploins } from '../../utilities/utils';
+import ImagePickerModal from '../../components/ImagePicker/ImagePicker';
 
 export default class MockScreen1 extends React.Component {
     constructor(props) {
@@ -49,6 +50,11 @@ export default class MockScreen1 extends React.Component {
                   <TouchableWithoutFeedback onPress={withdrawQaploins}>
                       <Text>Retirar mi dinero</Text>
                   </TouchableWithoutFeedback>
+                   <ImagePickerModal
+                      visible={true}
+                      saveImage={this.savePicture}
+                      onClose={this.closeCamera}
+                      selectImgBttnTxt={"Miau Miau"} />
               </View>
             </SafeAreaView>
         );

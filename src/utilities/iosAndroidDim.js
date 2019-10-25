@@ -61,4 +61,8 @@ function heightPercentageToPx(heightPercent) {
   return PixelRatio.roundToNearestPixel(getDimensions().height * elemHeight / 100);
 }
 
-export {getPercentHeight, getPercentWidth, isIphoneX, isIPhoneXSize, isIPhoneXrSize, getDimensions, hasSafeAreaView, widthPercentageToPx, heightPercentageToPx};
+function getPixelSizeForLayoutSize(num) {
+  return PixelRatio.getPixelSizeForLayoutSize(num);
+}
+
+export {getPercentHeight, getPercentWidth, isIphoneX, isIPhoneXSize, isIPhoneXrSize, getDimensions, hasSafeAreaView, widthPercentageToPx, heightPercentageToPx, getPixelSizeForLayoutSize };

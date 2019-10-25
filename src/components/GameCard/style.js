@@ -34,7 +34,7 @@ export default StyleSheet.create({
     gameName: {
         fontSize: 18,
         color: '#FFF',
-        textAlignVertical: 'center',
+        alignSelf: 'center',
         marginLeft: widthPercentageToPx(2.67)
     }
 });

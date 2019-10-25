@@ -29,8 +29,8 @@ export default styles = StyleSheet.create({
         marginBottom: heightPercentageToPx(4.43)
     },
     avatarImage: {
-        height: heightPercentageToPx(7.4),
-        width: widthPercentageToPx(16),
+        height: 60,
+        width: 60,
         borderRadius: 100,
         backgroundColor: '#131833',
         marginBottom: heightPercentageToPx(1)

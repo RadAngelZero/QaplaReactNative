@@ -1,6 +1,5 @@
 import { StyleSheet, Platform } from 'react-native';
-
-import { hasSafeAreaView } from './../../utilities/iosAndroidDim'
+import { heightPercentageToPx, widthPercentageToPx, hasSafeAreaView } from '../../utilities/iosAndroidDim';
 
 export const styles = StyleSheet.create({
     container: {
@@ -8,14 +7,14 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems:'flex-start',
-        marginTop: ((Platform.OS == 'ios') && !hasSafeAreaView()) ? 20 : 0,
-        paddingTop: hasSafeAreaView() ? 20 : 0,
+        marginTop: ((Platform.OS == 'ios') && !hasSafeAreaView()) ? heightPercentageToPx(2.46) : heightPercentageToPx(0),
+        paddingTop: hasSafeAreaView() ? heightPercentageToPx(2.46) : heightPercentageToPx(0),
         backgroundColor: '#0e1222'
     },
     imageContainer: {
         flex: 1,
-        marginLeft: 20,
-        marginTop: 24,
+        marginLeft: widthPercentageToPx(5.33),
+        marginTop: heightPercentageToPx(2.96),
     },
     imageAndButtonDimensions: {
         height: 28,
@@ -23,7 +22,7 @@ export const styles = StyleSheet.create({
     },
     textContainer: {
         flexGrow: 1,
-        marginTop: 20
+        marginTop: heightPercentageToPx(2.46)
     },
     textStyle: {
         fontSize: 24,
@@ -34,6 +33,6 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row-reverse',
         justifyContent: 'space-around',
-        marginTop: 24
+        marginTop: heightPercentageToPx(2.96)
     }
 });

@@ -1,22 +1,22 @@
 // diego          - 17-07-2019 - NA   - update images styles and remove unnecesary code
 import {StyleSheet} from 'react-native'
-import { getDimensions } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default StyleSheet.create({
   	container:{
-        marginTop: 12,
-        marginHorizontal: 10,
+        marginTop: heightPercentageToPx(1.48),
+        marginHorizontal: widthPercentageToPx(2.67),
         borderRadius: 10,
-        width: getDimensions().width-20,
+        width: widthPercentageToPx(95),
         alignSelf: 'center'
 	},
 	titleContainer: {
 		flexDirection: 'row',
-		marginTop: 24
+		marginTop: heightPercentageToPx(2.96)
     },
     imageStyle: {
-        height: getDimensions().height/4,
-        width: getDimensions().width-20,
+        height: heightPercentageToPx(25),
+        width: widthPercentageToPx(95),
         alignSelf: 'center',
         resizeMode: 'cover'
     },
@@ -27,14 +27,14 @@ export default StyleSheet.create({
         borderBottomRightRadius: 10
     },
     iconContainer: {
-        marginLeft: 16,
-        marginTop: 20,
-        marginBottom: 23
+        marginLeft: widthPercentageToPx(4.27),
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.83)
     },
     gameName: {
         fontSize: 18,
         color: '#FFF',
         textAlignVertical: 'center',
-        marginLeft: 10
+        marginLeft: widthPercentageToPx(2.67)
     }
 });

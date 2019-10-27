@@ -33,13 +33,15 @@ class AuthLoadingScreen extends Component {
                 await this.checkNotificationPermission(user.uid);
 
                 /*
-                * When the app load we check if is opened from a notification, also we check if the notificatios
+                * When the app loads we check if is opened from a notification, also we check if the notificatios
                 * has instructions and useful params
                 */
                 const notificationOpen = await notifications.getInitialNotification();
+
                 if (notificationOpen) {
                     const { notification } = notificationOpen;
                     const { navigateTo } = notification._data;
+
                     if (navigateTo) {
                         navigateToScreen = navigateTo;
                         navigationParams = notification._data;
@@ -70,6 +72,7 @@ class AuthLoadingScreen extends Component {
     async checkNotificationPermission(uid) {
         try {
             const notificationPermissionEnabled = await messaging.hasPermission();
+
             if (notificationPermissionEnabled) {
                 this.handleUserToken(uid);
             } else {

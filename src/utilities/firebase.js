@@ -28,10 +28,10 @@ export const storage = firebase.storage();
 export const messaging = firebase.messaging();
 export const notifications = firebase.notifications();
 
-//Authentication providers
+// Authentication providers
 export const FBProvider = firebase.auth.FacebookAuthProvider;
 export const GoogleProvider = firebase.auth.GoogleAuthProvider;
 export const PhoneProvider = firebase.auth.PhoneAuthProvider;
 
-//TimeStamp
+// TimeStamp
 export const TimeStamp = firebase.database.ServerValue.TIMESTAMP;

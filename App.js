@@ -21,7 +21,7 @@ class App extends React.Component {
     }
 
     /**
-     * Enable the listeners for Firebase Cloud Messaging notifications
+     * Enable listeners for Firebase Cloud Messaging notifications
      */
     async enableNotificationListeners() {
         /*
@@ -42,7 +42,7 @@ class App extends React.Component {
         */
         this.notificationOpenedListener = notifications.onNotificationOpened((notificationOpen) => {
             const { title, body, _data } = notificationOpen.notification;
-            // The user has rehydrated the app, show it something cool
+            // The user has rehydrated the app, show him something cool
         });
     }
 

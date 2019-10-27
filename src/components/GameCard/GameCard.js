@@ -81,6 +81,11 @@ class GameCard extends Component {
                 this.props.setSelectedGame(null);
                 try {
                     await addGameToUser(this.props.user.id, this.props.user.userName, newGame.platform, newGame.gameKey, gtag.gamerTag);
+
+                    /**
+                     * Every game is a topic, so we can send push notifications to the user
+                     * about specific games
+                     */
                     subscribeUserToTopic(newGame.gameKey);
                     this.props.navigation.navigate('Perfil');
                 } catch (error) {

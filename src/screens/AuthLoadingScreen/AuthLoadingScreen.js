@@ -37,13 +37,22 @@ class AuthLoadingScreen extends Component {
                     return this.props.navigation.navigate('ChooseUserNameScreen');
                 }
             }
+
+            /**
+             * We only make this process the first time the app loads (when it's opened) because
+             * may can cause problems with the signin/login of a user, if the status changes
+             * and this process is executed again we are goint to be redirected to the 'Publicas'
+             * screen, no to the place that we need
+             */
             if (this.state.firstLoad) {
                 const isTutorialDone = await retrieveData('tutorial-done');
                 this.setState({ firstLoad: false });
                 if (isTutorialDone) {
+
                     return this.props.navigation.navigate('Publicas', { firstMatchCreated: (await retrieveData('first-match-created')) === 'true' });
                 } 
                 else {
+                    
                     return this.props.navigation.navigate('Welcome');
                 }
             }

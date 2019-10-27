@@ -5,7 +5,6 @@ import { hasSafeAreaView } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
-        flex: 1,
         justifyContent: 'center',
         backgroundColor:'#131833'
     },

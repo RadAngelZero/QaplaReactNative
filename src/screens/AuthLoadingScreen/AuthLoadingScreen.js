@@ -5,11 +5,11 @@
 import React, { Component } from 'react';
 import { View, ActivityIndicator, Text, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
-import { auth } from '../../utilities/firebase';
+import { auth, messaging, notifications } from '../../utilities/firebase';
 import { retrieveData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
-import { getUserNameWithUID } from '../../services/database';
+import { getUserNameWithUID, saveFCMUserToken } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
@@ -28,8 +28,29 @@ class AuthLoadingScreen extends Component {
 
         auth.onAuthStateChanged(async (user) => {
             this.props.loadListOfGames();
+
+            let navigateToScreen = 'Home';
+            let navigationParams = {};
             if (user) {
                 this.props.loadUserData(user.uid);
+
+                await this.checkNotificationPermission(user.uid);
+
+                /*
+                * When the app loads we check if is opened from a notification, also we check if the notificatios
+                * has instructions and useful params
+                */
+                const notificationOpen = await notifications.getInitialNotification();
+
+                if (notificationOpen) {
+                    const { notification } = notificationOpen;
+                    const { navigateTo } = notification._data;
+
+                    if (navigateTo) {
+                        navigateToScreen = navigateTo;
+                        navigationParams = notification._data;
+                    }
+                }
                 
                 const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
                 
@@ -58,6 +79,61 @@ class AuthLoadingScreen extends Component {
             }
         });
     }
+
+    /**
+     * Check if the user has granted the required permission to receive
+     * our push notifications
+     * @param {string} uid User identifier on the database
+     */
+    async checkNotificationPermission(uid) {
+        try {
+            const notificationPermissionEnabled = await messaging.hasPermission();
+
+            if (notificationPermissionEnabled) {
+                this.handleUserToken(uid);
+            } else {
+                this.requestPermission(uid);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    /**
+     * Ask the user for the required permission to receive our push notifications
+     * @param {string} uid User identifier on the database
+     */
+    async requestPermission(uid) {
+        try {
+
+            /**
+             * If the user don't grant permission we go to the catch block automatically
+             */
+            await messaging.requestPermission();
+
+            /**
+             * If the user grant permission we handle their token
+             */
+            this.handleUserToken(uid);
+        } catch (error) {
+            // User has rejected permissions
+            console.log('permission rejected');
+        }
+    }
+
+    /**
+     * Get and save the FCM token of the user on the database
+     * @param {string} uid User identifier on the database
+     */
+    async handleUserToken(uid) {
+        try {
+            const FCMToken = await messaging.getToken();
+            await saveFCMUserToken(uid, FCMToken);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>

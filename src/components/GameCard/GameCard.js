@@ -57,10 +57,6 @@ class GameCard extends Component {
         let newGame = this.props.game;
         newGame.platform = this.props.platform;
         newGame.gameKey = this.props.gameKey;
-
-        // Update Redux State with the current game selected so we can use it in the
-        // modal from the screen where all games are listed.
-        this.props.setSelectedGame(newGame);
         
         const gtag = await getGamerTagWithUID(this.props.user.id, newGame.gameKey, newGame.platform);
 
@@ -92,8 +88,13 @@ class GameCard extends Component {
                     console.error(error);
                 }
             } else {
+                this.props.setSelectedGame(newGame);
                 this.props.navigation.navigate('SetBet', {game: newGame}); 
             }
+        } else {
+            // Update Redux State with the current game selected so we can use it in the
+            // modal from the screen where all games are listed.
+            this.props.setSelectedGame(newGame);
         }
     }
 }

@@ -141,7 +141,7 @@ class PublicMatchesFeedScreen extends Component {
         this.checkHighlightsFlags();  
 
         console.log('Dimensions height: ' +
-            100 + ' : ' + getPercentHeight(100)
+            17 + ' : ' + getPercentHeight(17)
         );
         console.log('Dimensions width: ' +
             250 + ' :  ' + getPercentWidth(250) + '\n'
@@ -241,8 +241,10 @@ class PublicMatchesFeedScreen extends Component {
 
     render() {
         return (
-            <View style={style.container}>
-                <MatchCardList {...this.state} /> 
+            <>
+                <View style={style.container}>
+                    <MatchCardList {...this.state} /> 
+                </View>  
                 <HighlightModal 
                     visible={this.state.showHg1Modal}
                     onClose={this.toggleHg1Modal}
@@ -254,7 +256,7 @@ class PublicMatchesFeedScreen extends Component {
                             highlighted={!this.props.navigation.getParam('firstMatchCreated')}
                             onPress={this.onCrearRetaButtonPress}/>
                 </HighlightModal>
-            </View>  
+            </>
         );
     }
 }

@@ -9,12 +9,12 @@ export default styles = StyleSheet.create({
         backgroundColor: '#0E1222',
         alignSelf: 'center',
         width: widthPercentageToPx(95),
-        marginTop: 15,
+        marginTop: heightPercentageToPx(1.85),
         borderRadius: 10,
         shadowColor: '#000',
         shadowOffset: {
-            width: 0,
-            height: 5,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.62),
         },
         shadowOpacity: .34,
         shadowRadius: 6.27,
@@ -35,8 +35,8 @@ export default styles = StyleSheet.create({
         fontWeight: '600',
         letterSpacing: .2,
         color: '#FFF',
-        marginTop: 18,
-        maxWidth: '85%',
+        marginTop: heightPercentageToPx(2.28),
+        maxWidth: widthPercentageToPx(85),
         alignSelf: 'flex-start'
     },
     description: {
@@ -52,14 +52,14 @@ export default styles = StyleSheet.create({
         backgroundColor: '#FA2D79',
         shadowColor: '#000',
         shadowOffset: {
-            width: 0,
-            height: 2,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.25),
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
         marginTop: heightPercentageToPx(2),
-        maxWidth: '33%',
+        maxWidth: widthPercentageToPx(33),
         marginBottom: heightPercentageToPx(2)
     },
     verifyTextButton: {
@@ -68,7 +68,7 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         letterSpacing: .15,
         textAlign: 'center',
-        marginTop: 12,
-        marginBottom: 12
+        marginTop: heightPercentageToPx(1.48),
+        marginBottom: heightPercentageToPx(1.48)
     }
 });

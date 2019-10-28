@@ -20,7 +20,7 @@ export default styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
-            height: 5,
+            height: heightPercentageToPx(0.62),
         },
         shadowOpacity: .34,
         shadowRadius: 6.27,
@@ -36,7 +36,7 @@ export default styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
-            height: 5,
+            height: heightPercentageToPx(0.62),
         },
         shadowOpacity: .34,
         shadowRadius: 6.27,
@@ -87,7 +87,7 @@ export default styles = StyleSheet.create({
         fontWeight: '600',
         letterSpacing: .2,
         color: '#FFF',
-        marginTop: 18,
+        marginTop: heightPercentageToPx(2.28),
         maxWidth: widthPercentageToPx(58),
         alignSelf: 'flex-start'
     },
@@ -96,7 +96,7 @@ export default styles = StyleSheet.create({
         fontWeight: '600',
         letterSpacing: .2,
         color: '#FFF',
-        marginTop: 18,
+        marginTop: heightPercentageToPx(2.28),
         maxWidth: widthPercentageToPx(37),
         alignSelf: 'flex-start'
     },
@@ -109,7 +109,7 @@ export default styles = StyleSheet.create({
         marginTop: heightPercentageToPx(1)
     },
     qaploinsText: {
-        marginTop: 17,
+        top: heightPercentageToPx(1.2),
         height: 50.73,
         width: 66.26,
         color: '#FFF',
@@ -117,21 +117,23 @@ export default styles = StyleSheet.create({
         fontWeight: '600',
         letterSpacing: 0.45,
         lineHeight: 43,
-        textAlign: 'right'
+        textAlign: 'right',
+        position: 'absolute',
+        right: widthPercentageToPx(0)
     },
     verifyButton: {
         borderRadius: 100,
         backgroundColor: '#FA2D79',
         shadowColor: '#000',
         shadowOffset: {
-            width: 0,
-            height: 2,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.25),
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
         marginTop: heightPercentageToPx(2),
-        maxWidth: '33%',
+        maxWidth: widthPercentageToPx(33),
         marginBottom: heightPercentageToPx(2)
     },
     verifyTextButton: {
@@ -140,16 +142,16 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         letterSpacing: .15,
         textAlign: 'center',
-        marginTop: 12,
-        marginBottom: 12
+        marginTop: heightPercentageToPx(1.48),
+        marginBottom: heightPercentageToPx(1.48)
     },
     redimirButton: {
         borderRadius: 100,
         backgroundColor: '#FA2D79',
         shadowColor: '#000',
         shadowOffset: {
-            width: 0,
-            height: 2,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.25),
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
@@ -164,23 +166,23 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         letterSpacing: .15,
         textAlign: 'center',
-        marginTop: 12,
-        marginBottom: 12
+        marginTop: heightPercentageToPx(1.48),
+        marginBottom: heightPercentageToPx(1.48)
     },
     progressContainer: {
         flexDirection: 'row',
         width: widthPercentageToPx(95),
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginBottom: 18
+        marginBottom: heightPercentageToPx(2.28)
     },
     progressBar: {
-        marginTop: 12,
+        marginTop: heightPercentageToPx(1.48),
         width: widthPercentageToPx(70),
         backgroundColor: '#1A1D34',
         height: 4,
-        marginLeft: 16,
-        marginBottom: 15,
+        marginLeft: widthPercentageToPx(4.27),
+        marginBottom: heightPercentageToPx(1.85),
         borderRadius: 18,
         alignSelf: 'baseline'
     },
@@ -193,11 +195,11 @@ export default styles = StyleSheet.create({
         fontSize: 10,
         fontWeight: '700',
         color: '#3DF9DF',
-        marginLeft: 8
+        marginLeft: widthPercentageToPx(2.13)
     },
     likeText: {
         marginTop: heightPercentageToPx(2),
-        marginBottom: 18,
+        marginBottom: heightPercentageToPx(2.28),
         marginRight: widthPercentageToPx(3),
         height: 14.49,
         width: 66.26,
@@ -209,7 +211,7 @@ export default styles = StyleSheet.create({
     },
     uploadText: {
         marginTop: heightPercentageToPx(2),
-        marginBottom: 18,
+        marginBottom: heightPercentageToPx(2.28),
         height: 14.49,
         width: 66.26,
         color: '#6D7DDE',
@@ -219,11 +221,11 @@ export default styles = StyleSheet.create({
         lineHeight: 14,
     },
     qaploinIcon: {
-        marginTop: 17,
-        marginRight: 6
+        marginTop: heightPercentageToPx(2.09),
+        marginRight: widthPercentageToPx(1.6)
     },
     picture: {
-        marginTop: 20,
+        marginTop: heightPercentageToPx(2.46),
         width: 60,
         height: 60 
     }

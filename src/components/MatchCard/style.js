@@ -1,7 +1,6 @@
 // diego          - 09-08-2019 - bug4 - styles for icons on the match card added
 
 import { StyleSheet } from 'react-native';
-import { getDimensions } from '../../utilities/iosAndroidDim';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export const styles = StyleSheet.create({

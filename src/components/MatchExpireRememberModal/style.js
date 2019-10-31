@@ -2,6 +2,7 @@
 
 import { StyleSheet } from 'react-native';
 import { getDimensions } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     mainContainer: {
@@ -10,8 +11,8 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        width: '100%',
-        height: '100%',
+        width: widthPercentageToPx(100),
+        height: heightPercentageToPx(100),
     },
     container: {
         width: getDimensions().width * .9,
@@ -21,8 +22,8 @@ export default styles = StyleSheet.create({
         borderRadius: 20,
         shadowColor: '#000',
         shadowOffset: {
-            width: 0,
-            height: 12,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(1.48),
         },
         shadowOpacity: 0.58,
         shadowRadius: 16.00,
@@ -30,31 +31,31 @@ export default styles = StyleSheet.create({
         alignItems: 'center'
     },
     containerMsgModal: {
-        marginTop: 10,
-        marginBottom: 23,
-        marginRight: 54,
-        marginLeft: 54,
+        marginTop: heightPercentageToPx(1.23),
+        marginBottom: heightPercentageToPx(2.83),
+        marginRight: widthPercentageToPx(14.4),
+        marginLeft: widthPercentageToPx(14.4),
         alignItems: 'center',
         justifyContent: 'center'
     },
     headerText: {
-        marginTop: 5.5,
-        marginBottom: '1%',
+        marginTop: heightPercentageToPx(0.67),
+        marginBottom: heightPercentageToPx(1),
         color: '#FFF',
         fontSize: 40
     },
     paragraph: {
-        marginTop: 5,
+        marginTop: heightPercentageToPx(0.62),
         color: '#CFD1DB',
         fontSize: 16,
         textAlign: 'center'
     },
     checkbox: {
-        marginTop: '10%',
-        marginBottom: '5%'
+        marginTop: heightPercentageToPx(10),
+        marginBottom: heightPercentageToPx(5)
     },
     okButton: {
-        marginTop: 11,
+        marginTop: heightPercentageToPx(1.31),
         borderRadius: 100,
         backgroundColor: '#6D7DDE'
     },
@@ -62,10 +63,10 @@ export default styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 18,
         letterSpacing: 2.65,
-        marginLeft: 40,
-        marginRight: 40,
-        marginTop: 14,
-        marginBottom: 14,
+        marginLeft: widthPercentageToPx(10.66),
+        marginRight: widthPercentageToPx(10.66),
+        marginTop: heightPercentageToPx(1.72),
+        marginBottom: heightPercentageToPx(1.72),
         color: '#FFF'
     }
 })

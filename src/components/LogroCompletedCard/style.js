@@ -12,8 +12,8 @@ export default styles = StyleSheet.create({
         borderRadius: 10,
         shadowColor: '#000',
         shadowOffset: {
-            width: 0,
-            height: 5,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.62),
         },
         shadowOpacity: .34,
         shadowRadius: 6.27,
@@ -36,7 +36,7 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         letterSpacing: .45,
         textAlign: 'center',
-        marginLeft: 8
+        marginLeft: widthPercentageToPx(2.13)
     },
     description: {
         fontSize: 14,
@@ -44,7 +44,7 @@ export default styles = StyleSheet.create({
         lineHeight: 16,
         textAlignVertical: 'center',
         color: '#FFF',
-        marginLeft: 8,
-        width: '60%'
+        marginLeft: widthPercentageToPx(2.13),
+        width: widthPercentageToPx(60)
     }
 }); 

@@ -2,19 +2,20 @@
 
 import { StyleSheet } from 'react-native';
 import { getDimensions } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export const styles = StyleSheet.create({
     container: {
-        height: getDimensions().height/6,
+        height: heightPercentageToPx(0.17),
         backgroundColor: '#0e1222',
         alignSelf: 'center',
-        width: '95%',
-        marginTop: 15,
+        width: widthPercentageToPx(95),
+        marginTop: heightPercentageToPx(1.85),
         borderRadius: 4,
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 5,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.62),
         },
         shadowOpacity: .34,
         shadowRadius: 6.27,
@@ -24,16 +25,16 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        marginTop: 20
+        marginTop: heightPercentageToPx(2.46)
     },
     col: {
         flexDirection: 'column',
     },
     marginBottom10: {
-        marginBottom: 10
+        marginBottom: heightPercentageToPx(1.23)
     },
     gameContainer: {
-        marginLeft: 12,
+        marginLeft: widthPercentageToPx(3.13),
         flexDirection: 'row'
     },
     leftTextStyle: {
@@ -41,7 +42,7 @@ export const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '600',
         textAlignVertical: 'center',
-        marginLeft: 12
+        marginLeft: widthPercentageToPx(3.13)
     },
     rightTextStyle: {
         color: '#FFF',
@@ -52,39 +53,39 @@ export const styles = StyleSheet.create({
     matchDetailInfoContainer: {
         justifyContent: 'space-around',
         flexDirection: 'row',
-        marginRight: 12
+        marginRight: widthPercentageToPx(3.13)
     },
     betContainer: {
         flexDirection: 'row',
-        marginLeft: 6
+        marginLeft: widthPercentageToPx(1.6)
     },
     hourContainer: {
         flexDirection: 'row',
-        marginLeft: 6
+        marginLeft: widthPercentageToPx(1.6)
     },
     leftFooterTextStyle: {
         color: '#FFF',
         fontSize: 11,
-        marginLeft: 6,
+        marginLeft: widthPercentageToPx(1.6),
         textAlignVertical: 'center'
     },
     rightFooterTextStyle: {
         color: '#FFF',
         fontSize: 11,
-        marginRight: 12
+        marginRight: widthPercentageToPx(3.13)
     },
     adversaryDataContainer: {
         flexDirection: 'row',
-        marginLeft: 12
+        marginLeft: widthPercentageToPx(3.13)
     },
     avatarImage: {
         height: 24,
         width: 24,
         borderRadius: 100,
         backgroundColor: '#131833',
-        marginRight: 12
+        marginRight: widthPercentageToPx(3.13)
     },
     qaploinIcon: {
-        marginRight: 6
+        marginRight: widthPercentageToPx(1.6)
     }
 });

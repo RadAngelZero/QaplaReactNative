@@ -10,7 +10,8 @@ import {
     NOTIFICATION_TYPE_LOSER,
     NOTIFICATION_TYPE_RESULT,
     NOTIFICATION_TYPE_REVISION,
-    NOTIFICATION_TYPE_TIE
+    NOTIFICATION_TYPE_TIE,
+    NOTIFICATION_MATCH_ACCEPTED
 } from '../../utilities/Constants';
 
 export class ActivityNotificationCard extends Component {
@@ -31,6 +32,9 @@ export class ActivityNotificationCard extends Component {
                 break;
             case NOTIFICATION_TYPE_TIE:
                 notificationText = `Tu partida con ${this.props.userName} concluyó sin un ganador.`;
+                break;
+            case NOTIFICATION_MATCH_ACCEPTED:
+                notificationText = `${this.props.userName} ha aceptado tu desafio.`;
                 break;
             default:
                 break;

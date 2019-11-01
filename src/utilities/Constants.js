@@ -41,6 +41,7 @@ export const NOTIFICATION_TYPE_LOSER = 'resultadoL';
 export const NOTIFICATION_TYPE_RESULT = 'resultado';
 export const NOTIFICATION_TYPE_REVISION = 'revision';
 export const NOTIFICATION_TYPE_TIE = 'empate';
+export const NOTIFICATION_MATCH_ACCEPTED = 'retaA';
 
 // Posible match results constants
 export const WON_RESULT = '1';

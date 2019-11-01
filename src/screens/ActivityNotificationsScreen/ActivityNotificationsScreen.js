@@ -29,7 +29,6 @@ class ActivityNotificationsScreen extends Component {
          // 2: Component is done animating
          // 3: Start fetching the team
          //this.props.dispatchTeamFetchStart();
-        
          // 4: set didFinishInitialAnimation to false
          // This will render the navigation bar and a list of players
          this.setState({
@@ -37,7 +36,7 @@ class ActivityNotificationsScreen extends Component {
          });
 
         this.list = [
-            
+
             /**
              * This event is triggered when the user goes to other screen
              */
@@ -64,12 +63,12 @@ class ActivityNotificationsScreen extends Component {
                     ?
     	            <View style={styles.container}>
                         <ScrollView>
-    						{Object.keys(this.props.notifications).reverse().map((notificationKey) => (
+    						{Object.keys(this.props.notifications).sort((a, b) => a < b).map((notificationKey) => (
     							<ActivityNotificationCard key={`ActivityNotification-${notificationKey}`}
     							{...this.props.notifications[notificationKey]} />
     						))}
     					</ScrollView>
-                    
+
                     </View>
     	            :
     	            null
@@ -83,8 +82,8 @@ function mapDispatchToProps(state) {
 	let notifications = {};
 	if (Object.keys(state.userReducer.user).length > 0 && state.userReducer.user.hasOwnProperty('notification')) {
 		notifications = state.userReducer.user.notification;
-	}
-	
+    }
+
 	return { notifications };
 }
 

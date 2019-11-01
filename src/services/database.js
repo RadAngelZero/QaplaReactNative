@@ -170,7 +170,7 @@ export async function addGameToUser(uid, userName, platform, gameKey, gamerTag) 
 
         if (gameList.exists()) {
             // Add the gameKey on gameList of the user with the correct index (gameList.numChildren() is the index)
-            await usersRef.child(uid).child('gameList').child(gameList.numChildren()).set(gameKey);
+            await usersRef.child(uid).child('gameList').child(gameList.val().length).set(gameKey);
         } else {
             await usersRef.child(uid).child('gameList').child(0).set(gameKey);
         }
@@ -201,14 +201,17 @@ export async function addGameToUser(uid, userName, platform, gameKey, gamerTag) 
 
         await usersRef.child(uid).child('gamerTags').update({ [gamerTagChildNode.key]: gamerTagChildNode.value});
 
-        await gamersRef.child(gameKey).push({
+        const gameAdded = gamersRef.child(gameKey).push({
             gameExp: 0,
             gameLoses: 0,
+            gameName: gameKey,
             gameWins: 0,
             gamelvl: 0,
             userName,
             userUid: uid
         });
+
+        await usersRef.child(uid).child('games').child(gameKey).push(gameAdded.key);
     } catch (error) {
         console.error(error);
     }
@@ -250,9 +253,10 @@ export async function createPublicMatch(uid, bet, game) {
             hourResult: '',
             numMatches: '1',
             observations: '',
-            pickResult1: '',
-            pickResult2: '',
+            pickResult1: '0',
+            pickResult2: '0',
             platform: game.platform,
+            privado: '',
             resultPlay1: '0',
             resultPlay2: '0',
             timeStamp: TimeStamp,

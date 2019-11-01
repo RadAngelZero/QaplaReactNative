@@ -34,6 +34,7 @@ import {
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/MatchExpireRememberModal';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
 const QaploinIcon       = images.svg.qaploinsIcon;
@@ -174,40 +175,42 @@ class SetBetScreen extends Component {
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
-                <View style={styles.container}>
-                    <BuyQaploinsModal open={this.state.open} onClose={() => this.setState({ open: false })} />
-                    <MatchExpireRememberModal
-                        visible={this.state.timeActionMsgOpen}
-                        onClose={this.closeMatchExpireRememberModal} />
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
-                    </View>
-                    <View style={styles.prizeImage}>
-                        <QaploinsPrizeIcon />
-                    </View>
-                    <Text style={styles.winBet}>{this.defineWinBet()}</Text>
-                    <View style={styles.qaploinIconContainer}>
-                        <QaploinIcon height={24} width={24} />
-                        <Text style={styles.qaploinIconText}>Qaploins</Text>
-                    </View>
-                    <View style={styles.betContainer}>
-                        <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
-                            <LessQaploinsIcon style={styles.changeBetIcon} />
-                        </TouchableWithoutFeedback>
-                        <View style={styles.betTextContainer}>
-                            <Text style={styles.betText}>{this.state.currentBet}</Text>
-                            <Text style={styles.betEntrada}>Entrada</Text>
+                <ScrollView>
+                    <View style={styles.container}>
+                        <BuyQaploinsModal open={this.state.open} onClose={() => this.setState({ open: false })} />
+                        <MatchExpireRememberModal
+                            visible={this.state.timeActionMsgOpen}
+                            onClose={this.closeMatchExpireRememberModal} />
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
                         </View>
-                        <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
-                            <MoreQaploinsIcon style={styles.changeBetIcon} />
+                        <View style={styles.prizeImage}>
+                            <QaploinsPrizeIcon />
+                        </View>
+                        <Text style={styles.winBet}>{this.defineWinBet()}</Text>
+                        <View style={styles.qaploinIconContainer}>
+                            <QaploinIcon height={24} width={24} />
+                            <Text style={styles.qaploinIconText}>Qaploins</Text>
+                        </View>
+                        <View style={styles.betContainer}>
+                            <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
+                                <LessQaploinsIcon style={styles.changeBetIcon} />
+                            </TouchableWithoutFeedback>
+                            <View style={styles.betTextContainer}>
+                                <Text style={styles.betText}>{this.state.currentBet}</Text>
+                                <Text style={styles.betEntrada}>Entrada</Text>
+                            </View>
+                            <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
+                                <MoreQaploinsIcon style={styles.changeBetIcon} />
+                            </TouchableWithoutFeedback>
+                        </View>
+                        <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
+                            <View style={styles.createButton}>
+                                <Text style={styles.createButtonText}>CREAR AHORA</Text>
+                            </View>
                         </TouchableWithoutFeedback>
                     </View>
-                    <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
-                        <View style={styles.createButton}>
-                            <Text style={styles.createButtonText}>CREAR AHORA</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
+                </ScrollView>
             </SafeAreaView>    
         );
     }

@@ -86,12 +86,15 @@ class PublicMatchCardScreen extends Component {
                         let validTimeLeft = 0;
 
                         // If some result was uploaded
-                        if (hourResult) {
+                        if (hourResult !== '') {
+                            console.log('Hour result');
                             leftTime = (this.convertHourToTimeStamp(date, hourResult) + this.convertMinutesToMiliSeconds(15)) - now;
                         } else if (matchesPlay) {
+                            console.log('Matches play');
                             leftTime = (timeStamp + this.convertMinutesToMiliSeconds(60)) - now;
                         }
                          else {
+                             console.log('else');
                             leftTime = (timeStamp + this.convertMinutesToMiliSeconds(15)) - now;
                         }
 
@@ -348,9 +351,9 @@ class PublicMatchCardScreen extends Component {
                     just a text
                 */}
                 {(matchCard.matchesPlay &&
-                    ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1)
+                    ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
                     ||
-                    (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2))) ?
+                    (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0'))) ?
                     <Text style={styles.alreadyHaveResult}>Ya has subido un resultado a esta reta</Text>
                     :
                     <>

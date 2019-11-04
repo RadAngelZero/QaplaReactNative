@@ -4,8 +4,8 @@
 // diego             - 01-08-2019 - us58 - File creation
 
 import { StyleSheet, Platform } from 'react-native';
-import {hasSafeAreaView} from './../../utilities/iosAndroidDim'
-
+import { hasSafeAreaView } from './../../utilities/iosAndroidDim'
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
@@ -14,22 +14,22 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         height: hasSafeAreaView() ? 100 : 90, 
         alignItems:'flex-start',
-        marginTop: ((Platform.OS == 'ios') && !hasSafeAreaView()) ? 20 : 0,
-        paddingTop: hasSafeAreaView() ? 20 : 0,
+        marginTop: ((Platform.OS == 'ios') && !hasSafeAreaView()) ? heightPercentageToPx(2.46) : heightPercentageToPx(0),
+        paddingTop: hasSafeAreaView() ? heightPercentageToPx(2.46) : heightPercentageToPx(0),
         
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginLeft: 15,
+        marginLeft: widthPercentageToPx(4),
         color: '#FFF',
-        marginBottom: 18,
-        marginTop: 18
+        marginBottom: heightPercentageToPx(2.28),
+        marginTop: heightPercentageToPx(2.28)
     },
     closeIcon: {
-        marginRight: 20,
-        marginBottom: 20,
-        marginTop: 20,
+        marginRight: widthPercentageToPx(5.33),
+        marginBottom: heightPercentageToPx(2.46),
+        marginTop: heightPercentageToPx(2.46),
         alignSelf: 'baseline'
     }
 })

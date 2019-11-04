@@ -135,14 +135,14 @@ export function createUserProfile(Uid, email) {
  * Update the userName of specific user only if that username is not already in use
  * @param {string} uid User identifier of the user on firebase
  * @param {string} userName The name that the user want to use in Qapla
- * 
+ *
  * Return: {boolean} user was created or otherwise it was not
  */
 export async function createUserName(uid, userName) {
     return await usersRef.orderByChild('city').equalTo(userName.toUpperCase()).once('value').then(async (userNameAlready) => {
         if (!userNameAlready.exists()) {
             await usersRef.child(uid).update({ userName, city: userName.toUpperCase() });
-             
+
             // #us83: Removed return navigation.navigate('Retas'); and replace it with a boolean value
             //.so that it can be consumed by others. Removing the navigation method complies with
             // trying to decouple as much as possible what each method does. This one, creates a UserName
@@ -157,7 +157,7 @@ export async function createUserName(uid, userName) {
 
 /**
  * Function to add the game and gamertag of a user
- * 
+ *
  * @param {string} uid User identifier from database
  * @param {string} userName Name from the user
  * @param {string} platform Platform to add gamertag (one of: pc, xbox, ps4, switch)
@@ -344,7 +344,7 @@ export async function getGameNameOfMatch(matchId) {
                     game = 'Overwatch';
                 }
                 break;
-            default: 
+            default:
                 break;
         }
         return game;
@@ -421,28 +421,28 @@ export async function deleteNotification(uid, notificationId) {
 }
 
 /**
- * @description 
+ * @description
  * Checks if a challenge notification for a match created by a particular user already exists.
  *
  * @param {string} matchCreatorUid    User id of the user who created the match
  * @param {string} matchChallengerUid User id of the user who challenges the match
  * @param {string} matchId            Id of the match
  */
-export async function isMatchAlreadyChallenged(matchCreatorUid, matchChallengerUid, matchId) 
+export async function isMatchAlreadyChallenged(matchCreatorUid, matchChallengerUid, matchId)
 {
     let res = false;
 
     try {
-        // Retrieve the notificationMatch Node with its childs ordered by order considering 
-        // the idUserSend. Why idUserSend? Because it's much more efficient to order by 
-        // idUsersend rather than matchId. Reason to say much more efficient is that the 
+        // Retrieve the notificationMatch Node with its childs ordered by order considering
+        // the idUserSend. Why idUserSend? Because it's much more efficient to order by
+        // idUsersend rather than matchId. Reason to say much more efficient is that the
         // ChallengedUser might have several notifications for a match 'A', whereas it will
         // have much more fewer notifications from the ChallengerUser.
         notArrSnap = await usersRef.child(matchCreatorUid).child('notificationMatch').orderByChild('idUserSend').equalTo(matchChallengerUid).once('value');
         notArr = notArrSnap.val();
-        
+
         if (notArr !== null && notArr !== undefined) {
-            
+
             // Object.keys returns an array of keys from the notArr. The method 'some' compares and returns
             // true as soon as the comparison produces 'true', otherwise it will keep iterating until the end.
             res = Object.keys(notArr).some((key) => {
@@ -457,7 +457,7 @@ export async function isMatchAlreadyChallenged(matchCreatorUid, matchChallengerU
     } catch (error) {
         console.error(error);
     }
-    console.log("Res is: " + res);
+
     return res;
 }
 
@@ -523,7 +523,7 @@ export async function uploadMatchResult(idMatch, adversary, result, evidence) {
 // -----------------------------------------------
 
 /**
- * @description 
+ * @description
  * Get active logros that Qapla has
  *
  * @returns active logros in JSON format
@@ -538,14 +538,14 @@ export async function getQaplaActiveLogros() {
 }
 
 /**
- * @description 
+ * @description
  * Save a picture to 'storageLogrosImgRef/logroId/idUser.jpg'
  *
  * @param {string} logroId    Logro identifier
  * @param {string} userId     User identifier
- *  
+ *
  * @returns
- * FAIL    - {Null}    Operation on DB didn't succeed  
+ * FAIL    - {Null}    Operation on DB didn't succeed
  * SUCCESS - {Promise} Task Promise tracking completeness of operation
  */
 export async function saveImgEvidenceUrlLogroSocial(logroId, userId) {
@@ -563,16 +563,16 @@ export async function saveImgEvidenceUrlLogroSocial(logroId, userId) {
 }
 
 /**
- * @description 
+ * @description
  * Creates an entry for logroIncompleto node with the info
  * regarding the logro status. Once completed the logro, this entry
  * should be moved to logroCompleto
  *
  * @param {string} logroId    Logro identifier
  * @param {string} userId     User identifier
- *  
+ *
  * @returns
- * FAIL    - {Null}    Operation on DB didn't succeed  
+ * FAIL    - {Null}    Operation on DB didn't succeed
  * SUCCESS - {Promise} Task Promise tracking completeness of operation
  */
 export async function createLogroIncompletoChild(logroId, userId) {
@@ -599,7 +599,7 @@ export async function createLogroIncompletoChild(logroId, userId) {
  * Write a request for verification on the database
  * @param {string} uid user identifier on database
  * @param {object} verificationInfo Object with the necessary information to write the request
- * 
+ *
  */
 export async function createVerificationRequest(uid, verificationInfo) {
     await verificationOnProccessRef.child(uid).set(verificationInfo);
@@ -616,7 +616,7 @@ export async function createVerificationRequest(uid, verificationInfo) {
  * @param {string} userId  User identifier on database
  *
  * @returns
- * FAIL    - {Null}    Operation on DB didn't succeed  
+ * FAIL    - {Null}    Operation on DB didn't succeed
  * SUCCESS - {Promise} Promise from operation
  */
 export async function sendUserFeedback(message, userId) {
@@ -670,11 +670,11 @@ export async function joinInTournament(uid, tournamentId, totalPuntos) {
  */
 export async function getAnnouncements() {
     let res = [];
-    
+
     try {
         const dbResultSnap = await announcementsActRef.once('value');
         let dbResJson = dbResultSnap.val();
-        
+
         let keys = Object.keys(dbResJson);
         keys.map((item) => {
             res.push(dbResJson[item]);

@@ -6,7 +6,8 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 
 export default styles = StyleSheet.create({
     scrollContainer: {
-        height: heightPercentageToPx(44)
+        height: heightPercentageToPx(44),
+        width: widthPercentageToPx(93.55)
     },
     backIconContainer: {
         justifyContent: 'center',
@@ -24,14 +25,12 @@ export default styles = StyleSheet.create({
     image: {
         resizeMode: 'contain',
         width: widthPercentageToPx(94.66),
-        height: heightPercentageToPx(33.33),
-        marginRight: widthPercentageToPx(3.73),
-        marginLeft: widthPercentageToPx(3.73)
+        height: heightPercentageToPx(33.33)
     },
     progressContainer: {
         flexDirection: 'row',
         alignSelf: 'center',
-        top: -1 * heightPercentageToPx(3.69)
+        top: -1 * heightPercentageToPx(4.69)
     },
     progressCircleIndicator: {
         alignSelf: 'center',

@@ -1,7 +1,8 @@
 // josep.sanahuja - 22-09-2019 - us123 - File creation
 
 import { StyleSheet } from 'react-native';
-import { hasSafeAreaView } from '../../utilities/iosAndroidDim';
+import { hasSafeAreaView, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+
 
 export default styles = StyleSheet.create({
     container: {
@@ -9,7 +10,7 @@ export default styles = StyleSheet.create({
 		justifyContent:'center',
   	},
     buttonContainer: {
-    	bottom: 35,
+    	bottom: heightPercentageToPx(4.30),
         alignSelf: 'center',
         position: 'absolute',
         borderRadius: 100,
@@ -21,10 +22,10 @@ export default styles = StyleSheet.create({
         alignSelf: 'center',
         textTransform: 'uppercase',
         fontWeight: 'bold',
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32,
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53),
         letterSpacing: .57
     },
 	preview: {
@@ -37,8 +38,8 @@ export default styles = StyleSheet.create({
     },
     closeIconContainer: {
         position: 'absolute',
-        right: 35,
-        top: 45,
+        right: widthPercentageToPx(9.33),
+        top: heightPercentageToPx(5.54),
         
     }
 });

@@ -48,14 +48,14 @@ export default styles = StyleSheet.create({
     colBContainer: {
         flex: 1,
         justifyContent: 'space-between',
-        marginTop: 18
+        marginTop: heightPercentageToPx(1.48)
     },
     colBSocialContainer: {
         width: widthPercentageToPx(37),
         marginRight: widthPercentageToPx(2)
     },
     picture: {
-        marginTop: 20,
+        marginTop: heightPercentageToPx(1.8),
         width: 60,
         height: 60 
     },
@@ -93,16 +93,16 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         letterSpacing: .15,
         textAlign: 'center',
-        marginTop: 12,
-        marginBottom: 12
+        marginTop: heightPercentageToPx(1.48),
+        marginBottom: heightPercentageToPx(1.48)
     },
     title: {
         fontSize: 16,
         fontWeight: '600',
         letterSpacing: .2,
         color: '#FFF',
-        marginTop: 18,
-        maxWidth: '85%',
+        marginTop: heightPercentageToPx(1.48),
+        maxWidth: widthPercentageToPx(85),
         alignSelf: 'flex-start'
     },
     description: {
@@ -118,15 +118,15 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(95),
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginBottom: 18
+        marginBottom: heightPercentageToPx(2.28)
     },
     progressBar: {
-        marginTop: 12,
+        marginTop: heightPercentageToPx(1.48),
         width: widthPercentageToPx(70),
         backgroundColor: '#1A1D34',
         height: 4,
-        marginLeft: 16,
-        marginBottom: 15,
+        marginLeft: widthPercentageToPx(4.27),
+        marginBottom: heightPercentageToPx(1.85),
         borderRadius: 18,
         alignSelf: 'baseline'
     },
@@ -139,6 +139,6 @@ export default styles = StyleSheet.create({
         fontSize: 10,
         fontWeight: '700',
         color: '#3DF9DF',
-        marginLeft: 8
+        marginLeft: widthPercentageToPx(2.13)
     },
 });

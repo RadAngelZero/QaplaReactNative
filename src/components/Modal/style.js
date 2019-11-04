@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { getDimensions } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     overlay: {
-        height: '100%',
-        width: '100%',
+        height: heightPercentageToPx(100),
+        width: widthPercentageToPx(100),
         backgroundColor: 'rgba(0, 0, 0, .5)',
         flex: 1,
         position: 'absolute',
@@ -12,15 +12,15 @@ export default styles = StyleSheet.create({
     },
     mainContainer: {
         position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
+        top: heightPercentageToPx(0),
+        left: widthPercentageToPx(0),
+        right: widthPercentageToPx(0),
+        bottom: heightPercentageToPx(0),
         justifyContent: 'center',
         alignItems: 'center'
     },
     container: {
-        maxHeight: getDimensions().height*.8,
+        maxHeight: heightPercentageToPx(80),
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: '#141833',
@@ -29,13 +29,13 @@ export default styles = StyleSheet.create({
         elevation: 6,
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 2,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.25),
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        marginRight: 20,
-        marginLeft: 20
+        marginRight: widthPercentageToPx(5.33),
+        marginLeft: widthPercentageToPx(5.33)
     },
     modalBody: {
         justifyContent: 'center',
@@ -49,8 +49,8 @@ export default styles = StyleSheet.create({
 		textAlignVertical: 'top',
 		width: 30,
 		height: 30,
-        marginRight: 10,
-        marginTop: 20,
+        marginRight: widthPercentageToPx(2.67),
+        marginTop: heightPercentageToPx(2.46),
         color: '#FFF',
     }
 })

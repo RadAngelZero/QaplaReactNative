@@ -32,8 +32,14 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
+			<array/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.614138734637-ru8iav3e6bt8bnnd45g1i1ifk2e1itc2</string>
+				<string>com.googleusercontent.apps.66587586976-diksg9cj3fk737afd02udbq803d6rb8c</string>
 			</array>
 		</dict>
 	</array>
@@ -74,9 +80,9 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Your message to user when the microphone is accessed for the first time</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Your message to user when the photo library is accessed for the first time</string>
+	<string>Photo Library Access Warning</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Your message to user when the photo library is accessed for the first time</string>
+	<string>Photo Library Access Warning</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -89,9 +95,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>NSPhotoLibraryUsageDescription</key>
-  <string>Photo Library Access Warning</string>
-  <key>NSPhotoLibraryAddUsageDescription</key>
-  <string>Photo Library Access Warning</string>
 </dict>
 </plist>

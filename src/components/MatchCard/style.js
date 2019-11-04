@@ -5,7 +5,7 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 
 export const styles = StyleSheet.create({
     container: {
-        height: heightPercentageToPx(0.17),
+        height: heightPercentageToPx(13.5),
         backgroundColor: '#0e1222',
         alignSelf: 'center',
         width: widthPercentageToPx(95),
@@ -20,7 +20,13 @@ export const styles = StyleSheet.create({
         shadowRadius: 6.27,
         elevation: 10
     },
-    row: {
+    rowGame: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        marginTop: heightPercentageToPx(2.46)
+    },
+    rowUserName: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
@@ -34,7 +40,8 @@ export const styles = StyleSheet.create({
     },
     gameContainer: {
         marginLeft: widthPercentageToPx(3.13),
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     leftTextStyle: {
         color: '#FFF',
@@ -52,7 +59,8 @@ export const styles = StyleSheet.create({
     matchDetailInfoContainer: {
         justifyContent: 'space-around',
         flexDirection: 'row',
-        marginRight: widthPercentageToPx(3.13)
+        marginRight: widthPercentageToPx(3.13),
+        alignSelf: 'center'
     },
     betContainer: {
         flexDirection: 'row',
@@ -66,12 +74,14 @@ export const styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 11,
         marginLeft: widthPercentageToPx(1.6),
-        textAlignVertical: 'center'
+        textAlignVertical: 'center',
+        marginTop: heightPercentageToPx(0.5)
     },
     rightFooterTextStyle: {
         color: '#FFF',
         fontSize: 11,
-        marginRight: widthPercentageToPx(3.13)
+        marginRight: widthPercentageToPx(3.13),
+        marginTop: heightPercentageToPx(0.5)
     },
     adversaryDataContainer: {
         flexDirection: 'row',

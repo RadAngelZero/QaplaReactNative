@@ -1,20 +1,21 @@
 // diego -          01-08-2019 - us58 - File creation
 
 import { StyleSheet } from 'react-native';
-import { getDimensions } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+
 
 export default styles = StyleSheet.create({
     container: {
-        height: getDimensions().height/5,
+        height: heightPercentageToPx(15),
         backgroundColor: '#0e1222',
         alignSelf: 'center',
-        width: '90%',
+        width: widthPercentageToPx(90),
         marginTop: 15,
         borderRadius: 10,
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 5,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.62),
         },
         shadowOpacity: .34,
         shadowRadius: 6.27,
@@ -24,7 +25,7 @@ export default styles = StyleSheet.create({
     avatarContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 24
+        marginLeft: widthPercentageToPx(6.4)
     },
     avatarImage: {
         height: 48,
@@ -34,34 +35,34 @@ export default styles = StyleSheet.create({
     },
     infoContainer: {
         flexDirection: 'column',
-        marginLeft: 18,
+        marginLeft: widthPercentageToPx(4.8),
         justifyContent: 'center'
     },
     infoText: {
         color: '#FFF',
         fontSize: 12,
         textAlign: 'justify',
-        width: getDimensions().width*.5
+        width: widthPercentageToPx(50)
     },
     infoButtonsMenu: {
-        marginTop: 18,
+        marginTop: heightPercentageToPx(2.28),
         flexDirection: 'row'
     },
     infoButton: {
         borderRadius: 100,
-        width: 90
+        width: widthPercentageToPx(24)
     },
     infoAcceptButton: {
         backgroundColor: '#FA2D79',
         elevation: 6,
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 3,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.34),
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-        marginRight: 12
+        marginRight: widthPercentageToPx(3.13)
     },
     infoDeclineButton: {
         backgroundColor: 'transparent',
@@ -72,14 +73,14 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 12,
         fontWeight: 'bold',
-        marginTop: 8,
-        marginBottom: 8,
+        marginTop: heightPercentageToPx(0.99),
+        marginBottom: heightPercentageToPx(0.99),
         textAlign: 'center'
     },
     arrowContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 24
+        marginLeft: widthPercentageToPx(6.4)
     },
     arrow: {
         fontSize: 24,

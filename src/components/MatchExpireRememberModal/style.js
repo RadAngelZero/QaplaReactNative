@@ -1,7 +1,6 @@
 // diego          - 06-09-2019 - us93 - File creation
 
 import { StyleSheet } from 'react-native';
-import { getDimensions } from '../../utilities/iosAndroidDim';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
@@ -15,7 +14,7 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(100),
     },
     container: {
-        width: getDimensions().width * .9,
+        width: widthPercentageToPx(90),
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: '#141833',

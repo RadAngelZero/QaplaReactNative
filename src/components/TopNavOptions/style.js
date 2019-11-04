@@ -1,22 +1,21 @@
 // diego           - 03-09-2019 - us96 - File creation
 
 import { StyleSheet, Platform } from 'react-native';
-import { hasSafeAreaView } from '../../utilities/iosAndroidDim';
+import { hasSafeAreaView, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
-        flex: 1,
         justifyContent: 'center',
         backgroundColor:'#131833'
     },
     optionsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 18
+        marginTop: heightPercentageToPx(2.28)
     },
     backIconContainer: {
-        marginLeft: 30,
-        marginTop: 18,
+        marginLeft: widthPercentageToPx(8),
+        marginTop: heightPercentageToPx(2.28),
         alignSelf: 'flex-end'
     },
     buttonDimensions: {
@@ -27,8 +26,8 @@ export default styles = StyleSheet.create({
         height: 18
     },
     closeIconContainer: {
-        marginRight: 30,
-        marginTop: 18,
+        marginRight: widthPercentageToPx(8),
+        marginTop: heightPercentageToPx(2.28),
         alignSelf: 'flex-end'
     }
 });

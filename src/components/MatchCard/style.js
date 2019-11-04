@@ -5,7 +5,7 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 
 export const styles = StyleSheet.create({
     container: {
-        height: heightPercentageToPx(13.5),
+        height: heightPercentageToPx(14),
         backgroundColor: '#0e1222',
         alignSelf: 'center',
         width: widthPercentageToPx(95),

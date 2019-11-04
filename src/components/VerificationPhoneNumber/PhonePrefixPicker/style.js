@@ -1,7 +1,7 @@
 // josep.sanahuja  - 17-10-2019 - us134 - File creation
 
 import { StyleSheet } from 'react-native';
-import { widthPercentageToPx, heightPercentageToPx, getDimensions } from '../../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx, getDimensions } from '../../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
@@ -39,9 +39,9 @@ export default styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        marginRight: 20,
-        marginLeft: 20,
-        paddingTop: '20%'
+        marginRight: widthPercentageToPx(5.33),
+        marginLeft: widthPercentageToPx(5.33),
+        paddingTop: heightPercentageToPx(20)
     },
     prefixCardItem: {
         backgroundColor: '#11152D',

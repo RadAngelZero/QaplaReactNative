@@ -11,12 +11,13 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 import styles from './style';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+
 import Images from './../../../assets/images';
 import UploadClutchEvidenceScreen from '../UploadClutchEvidenceScreen/UploadClutchEvidenceScreen';
 import { uploadMatchResult } from '../../services/database';
 import UploadMatchResultsModal from '../../components/UploadMatchResultsModal/UploadMatchResultsModal';
 import UploadMatchEvidenceModal from '../../components/UploadMatchEvidenceModal/UploadMatchEvidenceModal';
-import { getDimensions } from '../../utilities/iosAndroidDim';
 import { WON_RESULT, TIE_RESULT, LOST_RESULT, OTHER_RESULT } from '../../utilities/Constants';
 
 const CloseIcon = Images.svg.closeIcon;
@@ -155,8 +156,8 @@ class UploadMatchResultScreen extends Component {
                             <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, WON_RESULT)}>
                                 <View>
                                     <WinIcon
-                                        width={getDimensions().width * .25}
-                                        height={getDimensions().height * .2}
+                                        width={widthPercentageToPx(25)}
+                                        height={heightPercentageToPx(20)}
                                         fill={this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3'} /> 
                                     <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3' }]}>
                                         Ganado.
@@ -167,8 +168,8 @@ class UploadMatchResultScreen extends Component {
                             <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, TIE_RESULT)}>
                                 <View style={{ alignSelf: 'center' }}>
                                     <TieIcon
-                                        width={getDimensions().width * .18}
-                                        height={getDimensions().height * .14}
+                                        width={widthPercentageToPx(18)}
+                                        height={heightPercentageToPx(14)}
                                         fill={this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3'} /> 
                                     <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
                                         Empatado.
@@ -179,8 +180,8 @@ class UploadMatchResultScreen extends Component {
                             <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, LOST_RESULT)}> 
                                 <View>
                                     <LostIcon
-                                        width={getDimensions().width * .25}
-                                        height={getDimensions().height * .2}
+                                        width={widthPercentageToPx(25)}
+                                        height={heightPercentageToPx(20)}
                                         fill={this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3'} />
                                     <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3' }]}>
                                         Perdido.

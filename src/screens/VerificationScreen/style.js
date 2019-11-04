@@ -31,6 +31,7 @@ export default styles = StyleSheet.create({
     },
     button: {
         marginTop: heightPercentageToPx(10),
+        marginBottom: heightPercentageToPx(2),
         borderRadius: 100,
         backgroundColor: '#FA2D79',
         alignSelf: 'center'

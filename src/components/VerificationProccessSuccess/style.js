@@ -1,7 +1,7 @@
 // diego           - 24-09-2019 - us128 - File creation
 
 import { StyleSheet } from 'react-native';
-import { widthPercentageToPx, getDimensions, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
@@ -11,7 +11,7 @@ export default styles = StyleSheet.create({
         backgroundColor:'#131833',
         marginLeft: widthPercentageToPx(4),
         marginTop: heightPercentageToPx(10),
-        width: getDimensions().width
+        width: widthPercentageToPx(100)
     },
     greetingContainer: {
         flexGrow: 1,

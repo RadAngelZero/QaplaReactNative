@@ -45,7 +45,7 @@ export class TournamentCard extends Component {
         const { photoUrl, titulo, descripcion, totalPuntos, puntosCompletados, tiempoLimite, verified } = this.props;
 
         return (
-            <View style={true ? styles.container : styles.disabledContainer}>
+            <View style={verified ? styles.container : styles.disabledContainer}>
                 <View style={styles.contentContainer}>
                     <View style={styles.colASocialContainer}>
                         <Image style={styles.picture} source={{uri: photoUrl}} />

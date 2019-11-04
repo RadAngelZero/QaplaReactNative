@@ -1,7 +1,7 @@
 // josep.sanahuja  - 25-09-2019 - us122 - File creation
 
 import { StyleSheet } from 'react-native';
-import { widthPercentageToPx, heightPercentageToPx, getDimensions } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
@@ -13,7 +13,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-around',
         backgroundColor:'#131833',
         marginLeft: widthPercentageToPx(4),
-        width: getDimensions().width
+        width: widthPercentageToPx(100)
     },
     title: {
         fontSize: 32,

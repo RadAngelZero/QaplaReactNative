@@ -48,7 +48,7 @@ export function getGamerTagStringWithGameAndPlatform(platform, game) {
 
 /**
  * Return the name of the platform based on their key
- * 
+ *
  * @param {string} platformKey Key of the platform
  * @returns {string} Platform name
  */
@@ -69,7 +69,7 @@ export function getPlatformNameWithKey(platformKey) {
 
 /**
  * Sort all the games from a user based on their platform
- * 
+ *
  * @param {Array} userGames Array with all the game keys of the current user
  * @param {Object} allQaplaGames List that contains all the games on Qapla
  */
@@ -93,10 +93,10 @@ export function getUserGamesOrderedByPlatform(userGames, allQaplaGames) {
 
     Object.keys(allQaplaGames).map((gamePlatform) => {
         userGames.sort().map((gameToLoadKey) => {
-            
+
             // If the platform on the current iteration have a child with key of the current user game
             if(allQaplaGames[gamePlatform].hasOwnProperty(gameToLoadKey)) {
-                
+
                 // Check if the user don't have games on that platform
                 if(!gamesOrderedByPlatform[gamePlatform]){
 
@@ -119,7 +119,7 @@ export function getUserGamesOrderedByPlatform(userGames, allQaplaGames) {
 /**
  * @description Return true if the functionToCheck param is a function
  * otherwise return false
- * 
+ *
  * @param {function} functionToCheck The function to verify
  */
 export function isFunction(functionToCheck) {
@@ -134,4 +134,12 @@ export function isFunction(functionToCheck) {
 
 export function withdrawQaploins() {
     Linking.openURL('whatsapp://send?text=Hola, quiero retirar mis qaploins&phone=+523312971299'/*<= Change for the suport number */);
+}
+
+/**
+ * Convert a UTC timeStamp to a local time timeStamp
+ * @param {number} UTCTimeStamp UTC TimeStamp to convert (generally the timeStamp that we get from the server)
+ */
+export function convertUTCToLocalTimeStamp(UTCTimeStamp) {
+    return UTCTimeStamp - new Date().getTimezoneOffset() * 60 * 1000;
 }

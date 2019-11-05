@@ -241,6 +241,7 @@ export async function createPublicMatch(uid, bet, game) {
         const minutes = dateObject.getUTCMinutes() < 10 ? '0' + dateObject.getUTCMinutes() : dateObject.getUTCMinutes();
         const date = dateObject.getUTCDate() < 10 ? '0' + dateObject.getUTCDate() : dateObject.getUTCDate();
         const month = dateObject.getUTCMonth()+1 < 10 ? '0' + (dateObject.getUTCMonth()+1) : (dateObject.getUTCMonth()+1);
+        const UTCTimeStamp = new Date(dateObject.getUTCFullYear(), month, date, hour, minutes, dateObject.getUTCSeconds(), 0).getTime();
         const matchObject = {
             adversary1: uid,
             adversary2: '',
@@ -248,7 +249,7 @@ export async function createPublicMatch(uid, bet, game) {
             bet,
             date: `${date}/${month}`,
             game: game.gameKey,
-            hora: parseFloat(hour+minutes/100),
+            hora: parseFloat(`${hour}.${minutes}`),
             hour: `${hour}:${minutes}`,
             hourResult: '',
             numMatches: '1',
@@ -259,9 +260,9 @@ export async function createPublicMatch(uid, bet, game) {
             privado: '',
             resultPlay1: '0',
             resultPlay2: '0',
-            timeStamp: TimeStamp,
+            timeStamp: UTCTimeStamp,
             // winBet is the bet multiplied x2 cause must be the sum of the bet of the two adversary's
-            winBet: bet*2
+            winBet: bet * 2
         };
         const createdMatch = await matchesRef.push(matchObject);
         await matchesRef.child(createdMatch.key).update({ idMatch: createdMatch.key });

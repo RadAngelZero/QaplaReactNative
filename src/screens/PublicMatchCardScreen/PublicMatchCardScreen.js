@@ -91,7 +91,7 @@ class PublicMatchCardScreen extends Component {
                         if (hourResult !== '') {
                             leftTime = (this.convertHourToTimeStamp(date, hourResult) + this.convertMinutesToMiliSeconds(15)) - now;
                         } else if (matchesPlay) {
-                            leftTime = (timeStamp + this.convertMinutesToMiliSeconds(60)) - now;
+                            leftTime = (timeStamp + this.convertMinutesToMiliSeconds(80)) - now;
                         }
                          else {
                             leftTime = (timeStamp + this.convertMinutesToMiliSeconds(15)) - now;

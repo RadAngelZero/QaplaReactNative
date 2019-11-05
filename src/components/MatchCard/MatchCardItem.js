@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 
 import { styles } from './style';
 import Images from '../../../assets/images';
+import { convertUTCToLocalTimeStamp } from '../../utilities/utils';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
@@ -16,10 +17,17 @@ class MatchCardItem extends PureComponent {
     getCurrentGameResources() {
         return gamesResources[this.props.games[this.props.platform][this.props.game].replace(/ +/g, "")];
     }
-    
+
     render() {
         const {navigate} = this.props.navigation;
         const game = this.getCurrentGameResources();
+        /**
+         * timeStamp's are created on UTC time, so we need to calculate the timeStamp hola amico 
+         */
+        const localUserTime = new Date(convertUTCToLocalTimeStamp(this.props.timeStamp));
+        const formatedHour = `${localUserTime.getHours() < 10 ? '0' : ''}${localUserTime.getHours()}`;
+        const formatedMinutes = `${localUserTime.getMinutes() < 10 ? '0' : ''}${localUserTime.getMinutes()}`;
+
         return (
             <TouchableWithoutFeedback onPress={() => navigate('MatchCard', {matchCard: this.props})}>
                 <View style={styles.container}>
@@ -34,7 +42,7 @@ class MatchCardItem extends PureComponent {
                                     <Text style={styles.rightTextStyle}>{this.props.bet}</Text>
                                 </View>
                                 <View style={styles.hourContainer}>
-                                    <Text style={styles.rightTextStyle}>{this.props.hour}</Text>
+                                    <Text style={styles.rightTextStyle}>{`${formatedHour}:${formatedMinutes}`}</Text>
                                 </View>
                             </View>
                         </View>

@@ -58,6 +58,8 @@ export class UploadClutchEvidenceScreen extends Component {
                     backToUploadMatchResultScreen={this.props.backToUploadMatchResultScreen} />
                 <TextInput placeholder='Inserta aqui el URL del clip'
                     placeholderTextColor='#898A97'
+                    keyboardType='url'
+                    autoCapitalize='none'
                     onChangeText={this.setUrlText}
                     style={[styles.urlTextInput, { borderBottomColor: this.state.showUrlError ? '#FF0000' : 'transparent' }]} />
                 <Text style={styles.instructions}>

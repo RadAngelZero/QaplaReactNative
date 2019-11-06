@@ -260,7 +260,7 @@ export async function createPublicMatch(uid, bet, game) {
             privado: '',
             resultPlay1: '0',
             resultPlay2: '0',
-            timeStamp: UTCTimeStamp,
+            timeStamp: TimeStamp,
             // winBet is the bet multiplied x2 cause must be the sum of the bet of the two adversary's
             winBet: bet * 2
         };

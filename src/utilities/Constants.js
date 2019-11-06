@@ -18,6 +18,9 @@ export const SET_SELECTED_GAME = 'SET_SELECTED_GAME';
 export const GET_HIGHLIGHT_1_CREATE_MATCH = 'GET_HIGHLIGHT_1_CREATE_MATCH';
 export const SET_HIGHLIGHT_1_CREATE_MATCH = 'SET_HIGHLIGHT_1_CREATE_MATCH';
 
+// Server Time Offset constants
+export const SET_SERVER_TIME_OFFSET = 'SET_SERVER_TIME_OFFSET';
+
 // Crear Reta Button in PublicMatchesFeedScreen.js
 export const HIGHLIGHT_1_CREATE_MATCH = 'HIGHLIGHT_1_CREATE_MATCH';
 // Crear Reta Button in PublicMatchesFeedScreen.js Flag

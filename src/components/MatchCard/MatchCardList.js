@@ -4,11 +4,12 @@ import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
 import MatchCardItem from './MatchCardItem';
 import { styles } from './style';
+import { connect } from 'react-redux';
 
 import { withNavigation } from 'react-navigation';
 
 class MatchCardList extends Component {
-    
+
     render() {
         const reversedMatchesArray = this.getSortedMatchesArr([...this.props.matches]);
 
@@ -16,7 +17,13 @@ class MatchCardList extends Component {
             <View style={styles.listContainer}>
                 <FlatList data={reversedMatchesArray}
                     initialNumToRender={5}
-                    renderItem={({item}) => <MatchCardItem matchesPlay={this.props.matchesPlay} key={item.alphaNumericIdMatch} {...item} />}
+                    renderItem={({item}) =>
+                        <MatchCardItem
+                            matchesPlay={this.props.matchesPlay}
+                            serverTimeOffset={this.props.serverTimeOffset}
+                            key={item.alphaNumericIdMatch}
+                            {...item} />
+                    }
                     keyExtractor={(item) => item.alphaNumericIdMatch} />
             </View>
         );
@@ -36,4 +43,10 @@ class MatchCardList extends Component {
     }
 }
 
-export default withNavigation(MatchCardList);
+function mapStateToProps(state) {
+    return {
+        serverTimeOffset: state.serverTimeOffsetReducer.serverTimeOffset
+    };
+}
+
+export default connect(mapStateToProps)(withNavigation(MatchCardList));

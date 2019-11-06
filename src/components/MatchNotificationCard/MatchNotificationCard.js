@@ -21,7 +21,6 @@ import {
     getMatchWitMatchId,
     declineMatch,
     getGamerTagWithUID,
-    deleteNotification,
     userHasQaploinsToPlayMatch
 } from '../../services/database';
 import { retrieveData } from '../../utilities/persistance';
@@ -60,7 +59,7 @@ class MatchNotificationCard extends Component {
         try {
             this.setState({ loading: true });
             const matchData = await getMatchWitMatchId(this.props.notification.idMatch);
-            
+
             if (matchData) {
                 matchData['userName'] = this.props.notification.userName;
                 matchData['gamerTag'] = await getGamerTagWithUID(this.props.notification.idUserSend, matchData.game, matchData.platform);
@@ -90,7 +89,7 @@ class MatchNotificationCard extends Component {
         try {
             const avatar = await getProfileImageWithUID(this.props.notification.idUserSend);
             const gameName = await getGameNameOfMatch(this.props.notification.idMatch);
-            
+
             this.setState({
                 avatar,
                 userName: this.props.notification.userName,
@@ -111,9 +110,9 @@ class MatchNotificationCard extends Component {
         const dontShowAcceptChallengeModal = await retrieveData('dont-show-delete-notifications-modal');
 
         // Check if the challenger user have enough Qaploins (match bet) in his account so that it can
-        // play against the challenged user. 
-        const enoughQaploins = await userHasQaploinsToPlayMatch(this.props.notification.idUserSend, this.props.notification.idMatch); 
-        
+        // play against the challenged user.
+        const enoughQaploins = await userHasQaploinsToPlayMatch(this.props.notification.idUserSend, this.props.notification.idMatch);
+
         if (enoughQaploins !== null && !enoughQaploins) {
             this.setState({ openNoQaploinsModal: true });
         } else if (dontShowAcceptChallengeModal !== 'true') {

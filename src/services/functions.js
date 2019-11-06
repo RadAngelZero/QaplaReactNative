@@ -8,7 +8,7 @@ import {functions} from '../utilities/firebase'
 
 /**
  * Accept challenge for idMatch
- * @param {string} notificationObj Notification object from the challenge request
+ * @param {object} notificationObj Notification object from the challenge request
  * @param {string} idChallenged    uid from the user that receives the challenge request
  *
  * josep.sanahuja - us85: Removed auth.currentUser.uid and include it as parameter 'idChallenged',

@@ -135,11 +135,3 @@ export function isFunction(functionToCheck) {
 export function withdrawQaploins() {
     Linking.openURL('whatsapp://send?text=Hola, quiero retirar mis qaploins&phone=+523312971299'/*<= Change for the suport number */);
 }
-
-/**
- * Convert a UTC timeStamp to a local time timeStamp
- * @param {number} UTCTimeStamp UTC TimeStamp to convert (generally the timeStamp that we get from the server)
- */
-export function convertUTCToLocalTimeStamp(UTCTimeStamp) {
-    return UTCTimeStamp - new Date().getTimezoneOffset() * 60 * 1000;
-}

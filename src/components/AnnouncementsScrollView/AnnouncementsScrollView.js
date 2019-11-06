@@ -31,8 +31,9 @@ class AnnouncementsScrollView extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView horizontal style={styles.scrollViewStyle}>
-                    {this.state.announcements.map((ancmnt) => (
+                    {this.state.announcements.map((ancmnt, index) => (
                         <AnnouncementCard
+                            key={`Announcement-${index}`}
                             photoUrl={ancmnt.photoUrl}
                             description={ancmnt.description}
                         />

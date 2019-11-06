@@ -13,6 +13,7 @@ import { getUserNameWithUID } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
+import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 
 class AuthLoadingScreen extends Component {
     componentDidMount() {
@@ -26,9 +27,11 @@ class AuthLoadingScreen extends Component {
             this.props.loadListOfGames();
             if (user) {
                 this.props.loadUserData(user.uid);
-                
+
+                await this.props.getServerTimeOffset();
+
                 const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
-                
+
                 if(userName === ''){
                     return this.props.navigation.navigate('ChooseUserNameScreen');
                 }
@@ -36,7 +39,7 @@ class AuthLoadingScreen extends Component {
             const isTutorialDone = await retrieveData('tutorial-done');
             if (isTutorialDone) {
                 return this.props.navigation.navigate('Publicas', { firstMatchCreated: (await retrieveData('first-match-created')) === 'true' });
-            } 
+            }
             else {
                 return this.props.navigation.navigate('Welcome');
             }
@@ -64,7 +67,8 @@ function mapDispatchToProps(dispatch) {
     return {
         loadUserData: (uid) => getUserNode(uid)(dispatch),
         loadListOfGames: () => getListOfGames()(dispatch),
-        loadShowHg1Modal: () => getHg1CreateMatch()(dispatch)
+        loadShowHg1Modal: () => getHg1CreateMatch()(dispatch),
+        getServerTimeOffset: () => getServerTimeOffset()(dispatch)
     };
 }
 

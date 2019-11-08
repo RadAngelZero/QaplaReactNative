@@ -26,7 +26,7 @@ export function signInWithFacebook(navigation) {
                         createUserProfile(user.user.uid, user.user.email);
                         navigation.navigate('ChooseUserNameScreen', { uid: user.user.uid });
                     } else {
-                        navigation.navigate('Home');
+                        navigation.pop();
                     }
                 }).catch((error) => {
                     console.log('ERROR:',error);
@@ -48,7 +48,7 @@ export function signInWithGoogle(navigation) {
                 createUserProfile(user.user.uid, user.user.email);
                 navigation.navigate('ChooseUserNameScreen', { uid: user.user.uid });
             } else {
-                navigation.navigate('Home');
+                navigation.pop();
             }
         }).catch((error) => {
             console.log('ERROR:',error);

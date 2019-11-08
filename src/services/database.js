@@ -453,11 +453,22 @@ export async function isMatchAlreadyChallenged(matchCreatorUid, matchChallengerU
     } catch (error) {
         console.error(error);
     }
-    console.log("Res is: " + res);
+
     return res;
 }
 
-
+/**
+ * Save the Firebase Cloud Messaging (FCM) token of the user in their profile
+ * @param {string} uid User identifier on the database
+ * @param {string} token FCM token (unique number to send push notifications to the user)
+ */
+export async function saveFCMUserToken(uid, token) {
+    try {
+        await usersRef.child(uid).update({ token });
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 // -----------------------------------------------
 // Qaploins

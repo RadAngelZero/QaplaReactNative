@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 
 import { getGamerTagWithUID, addGameToUser } from '../../services/database';
 import { withNavigation } from 'react-navigation';
+import { subscribeUserToTopic } from '../../services/messaging';
 
 class GameCard extends Component {
 
@@ -75,6 +76,12 @@ class GameCard extends Component {
                 this.props.setSelectedGame(null);
                 try {
                     await addGameToUser(this.props.user.id, this.props.user.userName, newGame.platform, newGame.gameKey, gtag.gamerTag);
+
+                    /**
+                     * Every game is a topic, so we can send push notifications to the user
+                     * about specific games
+                     */
+                    subscribeUserToTopic(newGame.gameKey);
                     this.props.navigation.navigate('Perfil');
                 } catch (error) {
                     console.error(error);

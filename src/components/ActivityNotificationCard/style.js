@@ -31,7 +31,7 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: widthPercentageToPx(4.8),
         height: heightPercentageToPx(2.28),
-        width: widthPercentageToPx(4.8),
+        width: heightPercentageToPx(2.28),
         borderRadius: 100,
         backgroundColor: '#3DF9DF'
     },

@@ -9,7 +9,7 @@ export default StyleSheet.create({
         marginHorizontal: widthPercentageToPx(1.0),
         borderRadius: 10,
         width: widthPercentageToPx(49),
-        height: widthPercentageToPx(49),
+        height: heightPercentageToPx(18),
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#0E1222'
@@ -18,7 +18,7 @@ export default StyleSheet.create({
         height: widthPercentageToPx(15),
         width: widthPercentageToPx(15),
         marginBottom: heightPercentageToPx(1),
-        marginTop: heightPercentageToPx(2),
+        
     },
     imageStyle: {
         height: widthPercentageToPx(15),

@@ -35,7 +35,7 @@ export default StyleSheet.create({
         borderRadius: 100,
         marginRight: widthPercentageToPx(11.29),
         width: widthPercentageToPx(2.4),
-        height: heightPercentageToPx(1.08)
+        height:  widthPercentageToPx(2.4)
     },
     finishTextButton: {
         fontSize: 14,

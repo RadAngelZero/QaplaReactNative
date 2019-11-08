@@ -98,7 +98,7 @@ class PublicMatchCardScreen extends Component {
                         }
 
                         // Calculate minutes and seconds befor match expire
-                        let minutes = Math.floor((leftTime % (1000 * 60 * 60)) / (1000 * 60));
+                        let minutes = Math.floor(leftTime / (60000));
                         let seconds = Math.floor((leftTime % (1000 * 60)) / 1000);
 
                         /**

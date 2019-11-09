@@ -98,7 +98,8 @@ class PublicMatchCardScreen extends Component {
                         }
 
                         // Calculate minutes and seconds befor match expire
-                        let minutes = Math.floor(leftTime / (60000));
+                        let hours = Math.floor((leftTime % (1000 * 60 * 60 * 60)) / (1000 * 60 * 60));
+                        let minutes = Math.floor((leftTime % (1000 * 60 * 60)) / (1000 * 60));
                         let seconds = Math.floor((leftTime % (1000 * 60)) / 1000);
 
                         /**
@@ -121,7 +122,11 @@ class PublicMatchCardScreen extends Component {
                             seconds = seconds < 10 ? `0${seconds}` : seconds;
 
                             // Legible user string
-                            validTimeLeft = `${minutes}:${seconds}`;
+                            if (hours > 0) {
+                                validTimeLeft = `${hours}:${minutes}:${seconds}`;
+                            } else {
+                                validTimeLeft = `${minutes}:${seconds}`;
+                            }
                         }
 
                         this.setState({ validTimeLeft });

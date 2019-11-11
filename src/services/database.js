@@ -39,6 +39,9 @@ export const feedbackUsersRef = database.ref('/FeedbackUsers');
 export const tournamentsRef = database.ref('/torneos');
 export const activeTournamentsRef = tournamentsRef.child('torneosActivos');
 export const pointsTournamentsRef = database.ref('/puntosTorneos');
+export const eventsRef = database.ref('/eventosEspeciales');
+export const activeEventsRef = eventsRef.child('eventsData');
+export const eventParticipantsRef = database.ref('/EventParticipants');
 export const announcementsActRef = database.ref('/Announcements/Active');
 
 /**
@@ -642,6 +645,20 @@ export async function sendUserFeedback(message, userId) {
 // -----------------------------------------------
 // Tournaments
 // -----------------------------------------------
+
+/**
+ * Allow the user to join in the given event
+ * @param {string} uid User identifier on database
+ * @param {string} eventId Event identifier on the database
+ * @param {number} totalPuntos The total of points of the event
+ */
+export async function joinInEvent(uid, eventId) {
+    eventParticipantsRef.child(eventId).child(uid).update({
+        email: '',
+        priceQaploins: 0,
+        userNamve: 'DHVS'
+    });
+}
 
 /**
  * Allow the user to join in the given tournament

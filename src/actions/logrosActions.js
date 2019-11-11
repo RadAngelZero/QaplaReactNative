@@ -1,6 +1,6 @@
 // diego           - 26-09-2019 - us130 - File creation
 
-import { logrosActRef, logrosRef, cuentasVerificadasRef, activeTournamentsRef, pointsTournamentsRef } from '../services/database';
+import { logrosActRef, logrosRef, cuentasVerificadasRef, activeEventsRef, eventParticipantsRef, activeTournamentsRef, pointsTournamentsRef } from '../services/database';
 import { LOAD_USER_VERIFICATION_STATUS, LOAD_LOGROS_ACTIVOS, REMOVE_LOGRO_ACTIVO, LOAD_LOGROS_COMPLETOS } from '../utilities/Constants';
 
 export const loadQaplaLogros = (uid) => async (dispatch) => {
@@ -18,7 +18,7 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
             dispatch(checkIfIsUserVerifiedSuccess(false));
         }
     });
-    
+
     logrosActRef.once('value', (logrosActivos) => {
         logrosActivos.forEach((typeOfLogro) => {
             if (typeOfLogro.key !== 'verifica') {
@@ -82,6 +82,28 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
 
     activeTournamentsRef.on('child_removed', (removedTournament) => {
         dispatch(removeLogroFromActivos(removedTournament.key));
+    });
+
+    activeEventsRef.on('child_added', (activeEvent) => {
+        const activeEventObject = {
+            id: activeEvent.key,
+            ...activeEvent.val()
+        };
+        activeEventObject.tipoLogro = 'event';
+        dispatch(loadLogrosActivosSuccess(activeEventObject));
+        eventParticipantsRef.child(activeEvent.key).child(uid).on('value', (eventProgress) => {
+            if (eventProgress.exists()) {
+                const eventProgressObject = {
+                    id: activeEvent.key,
+                    ...eventProgress.val()
+                };
+                dispatch(loadLogrosActivosSuccess(eventProgressObject));
+            }
+        });
+    });
+
+    activeEventsRef.on('child_removed', (removedEvent) => {
+        dispatch(removeLogroFromActivos(removedEvent.key));
     });
 }
 

@@ -32,24 +32,22 @@ class MatchCardItem extends PureComponent {
         return (
             <TouchableWithoutFeedback onPress={() => navigate('MatchCard', {matchCard: this.props})}>
                 <View style={styles.container}>
-                        <View style={styles.rowGame}>
-                            <View style={styles.gameContainer}>
-                                <game.Icon width={28} height={28} />
-                                <Text style={styles.leftTextStyle}>{game.name}</Text>
-                            </View>
-                            <View style={styles.matchDetailInfoContainer}>
-                                <View style={styles.betContainer}>
-                                    <QaploinIcon style={styles.qaploinIcon} />
-                                    <Text style={styles.rightTextStyle}>{this.props.bet}</Text>
-                                </View>
-                            </View>
+                    <View style={styles.rowGame}>
+                        <View style={styles.gameContainer}>
+                            <game.Icon width={28} height={28} />
+                            <Text style={styles.leftTextStyle}>{game.name}</Text>
                         </View>
-                        <View style={[styles.rowUserName, styles.marginBottom10]}>
+                        <View style={styles.matchDetailInfoContainer}>
+                            <View style={styles.betContainer}>
+                                <QaploinIcon style={styles.qaploinIcon} />
+                                <Text style={styles.rightTextStyle}>{this.props.bet}</Text>
+                            </View>
                             <View style={styles.hourContainer}>
                                 <Text style={styles.rightTextStyle}>{`${formatedHour}:${formatedMinutes}`}</Text>
                             </View>
                         </View>
-                    <View style={[styles.row, styles.marginBottom10]}>
+                    </View>
+                    <View style={[styles.rowUserName, styles.marginBottom10]}>
                         <View style={styles.adversaryDataContainer}>
                             <View style={styles.avatarImage}></View>
                             <Text style={styles.leftFooterTextStyle}>{this.props.userName}</Text>

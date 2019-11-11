@@ -44,7 +44,7 @@ const MoreQaploinsIcon  = images.svg.moreQaploins;
 class SetBetScreen extends Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
             commission: 10,
             currentBet: 150,
@@ -57,7 +57,7 @@ class SetBetScreen extends Component {
     componentWillMount() {
         this.setQaplaComission();
         this.list = [
-            
+
             /**
              * This event is triggered when the user goes to other screen
              */
@@ -84,16 +84,16 @@ class SetBetScreen extends Component {
     /**
      * Description:
      * Retrieves the Qapla comission for transactions and sets it into the state.
-     * 
+     *
      * Params NONE
      */
     async setQaplaComission() {
         try {
-            const com = await getCurrentQaplaCommission(); 
+            const com = await getCurrentQaplaCommission();
 
             this.setState({
                 commission: com
-            });   
+            });
         } catch(err) {
             console.log(err);
         }
@@ -135,7 +135,7 @@ class SetBetScreen extends Component {
                     gameKey: this.props.selectedGame.gameKey,
                     platform: this.props.selectedGame.platform
                 });
-                
+
                 // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
                 // return a 'null' value, otherwise it would return a 'false' 'true' value from a
                 // previous flag update.
@@ -143,7 +143,7 @@ class SetBetScreen extends Component {
 
                 // When creating a match 'this.state.timeActionMsgOpen' is expected to be false, 
                 // otherwise when loading the Component the Modal would automatically open, which is
-                // a behaviour we don't want. 
+                // a behaviour we don't want.
                 if (openMsgFlag || openMsgFlag === null) {
 
                     // Tooggle modal state to open
@@ -175,43 +175,41 @@ class SetBetScreen extends Component {
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
-                <ScrollView>
-                    <View style={styles.container}>
-                        <BuyQaploinsModal open={this.state.open} onClose={() => this.setState({ open: false })} />
-                        <MatchExpireRememberModal
-                            visible={this.state.timeActionMsgOpen}
-                            onClose={this.closeMatchExpireRememberModal} />
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
+                <View style={styles.container}>
+                    <BuyQaploinsModal open={this.state.open} onClose={() => this.setState({ open: false })} />
+                    <MatchExpireRememberModal
+                        visible={this.state.timeActionMsgOpen}
+                        onClose={this.closeMatchExpireRememberModal} />
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
+                    </View>
+                    <View style={styles.prizeImage}>
+                        <QaploinsPrizeIcon />
+                    </View>
+                    <Text style={styles.winBet}>{this.defineWinBet()}</Text>
+                    <View style={styles.qaploinIconContainer}>
+                        <QaploinIcon height={24} width={24} />
+                        <Text style={styles.qaploinIconText}>Qaploins</Text>
+                    </View>
+                    <View style={styles.betContainer}>
+                        <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
+                            <LessQaploinsIcon style={styles.changeBetIcon} />
+                        </TouchableWithoutFeedback>
+                        <View style={styles.betTextContainer}>
+                            <Text style={styles.betText}>{this.state.currentBet}</Text>
+                            <Text style={styles.betEntrada}>Entrada</Text>
                         </View>
-                        <View style={styles.prizeImage}>
-                            <QaploinsPrizeIcon />
-                        </View>
-                        <Text style={styles.winBet}>{this.defineWinBet()}</Text>
-                        <View style={styles.qaploinIconContainer}>
-                            <QaploinIcon height={24} width={24} />
-                            <Text style={styles.qaploinIconText}>Qaploins</Text>
-                        </View>
-                        <View style={styles.betContainer}>
-                            <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
-                                <LessQaploinsIcon style={styles.changeBetIcon} />
-                            </TouchableWithoutFeedback>
-                            <View style={styles.betTextContainer}>
-                                <Text style={styles.betText}>{this.state.currentBet}</Text>
-                                <Text style={styles.betEntrada}>Entrada</Text>
-                            </View>
-                            <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
-                                <MoreQaploinsIcon style={styles.changeBetIcon} />
-                            </TouchableWithoutFeedback>
-                        </View>
-                        <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
-                            <View style={styles.createButton}>
-                                <Text style={styles.createButtonText}>CREAR AHORA</Text>
-                            </View>
+                        <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
+                            <MoreQaploinsIcon style={styles.changeBetIcon} />
                         </TouchableWithoutFeedback>
                     </View>
-                </ScrollView>
-            </SafeAreaView>    
+                    <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
+                        <View style={styles.createButton}>
+                            <Text style={styles.createButtonText}>CREAR AHORA</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </View>
+            </SafeAreaView>
         );
     }
 }

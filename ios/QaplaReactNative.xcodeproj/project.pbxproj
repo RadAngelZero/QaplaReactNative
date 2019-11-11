@@ -47,8 +47,8 @@
 		C8983909D9124FFBB2B1E2DD /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 804A4C544EF34401B305DB30 /* libRNSVG-tvOS.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
+		F920B9E023706E30006059A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F920B9DF23706E30006059A8 /* GoogleService-Info.plist */; };
 		F97D0A5A233BF67D00C00713 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F97D0A33233BF33000C00713 /* libRCTCameraRoll.a */; };
-		F99FA6EB22E77F3000D0BBFB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F99FA6EA22E77F3000D0BBFB /* GoogleService-Info.plist */; };
 		FBF77EE29EB4F9143C0420F1 /* libPods-QaplaReactNative-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFC30DCC651B0B2BC1D121F /* libPods-QaplaReactNative-tvOS.a */; };
 /* End PBXBuildFile section */
 
@@ -415,8 +415,8 @@
 		B6B8741564C6E040BCA7B6F8 /* Pods-QaplaReactNative-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaReactNative-tvOS.release.xcconfig"; path = "Target Support Files/Pods-QaplaReactNative-tvOS/Pods-QaplaReactNative-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F920B9DF23706E30006059A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleServicesInfo-IOS/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F97D0A29233BF33000C00713 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
-		F99FA6EA22E77F3000D0BBFB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Miyabi Labs/fit2018/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FEFC30DCC651B0B2BC1D121F /* libPods-QaplaReactNative-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -680,7 +680,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				F99FA6EA22E77F3000D0BBFB /* GoogleService-Info.plist */,
+				F920B9DF23706E30006059A8 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* QaplaReactNative */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* QaplaReactNativeTests */,
@@ -1272,7 +1272,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				F99FA6EB22E77F3000D0BBFB /* GoogleService-Info.plist in Resources */,
+				F920B9E023706E30006059A8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1551,10 +1551,10 @@
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
-					"$(SRCROOT)/../node_modules/react-native/Libraries/CameraRoll/**"
+					"$(SRCROOT)/../node_modules/react-native/Libraries/CameraRoll/**",
 				);
 				INFOPLIST_FILE = QaplaReactNative/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1572,8 +1572,9 @@
 			baseConfigurationReference = 8687C8670DBA8624622AB07E /* Pods-QaplaReactNative.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9DKYMDN2KS;
+				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
@@ -1581,18 +1582,19 @@
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
-					"$(SRCROOT)/../node_modules/react-native/Libraries/CameraRoll/**"
+					"$(SRCROOT)/../node_modules/react-native/Libraries/CameraRoll/**",
 				);
 				INFOPLIST_FILE = QaplaReactNative/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
 				PRODUCT_NAME = QaplaReactNative;
+				PROVISIONING_PROFILE_SPECIFIER = IosReactNativeDevelopment;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

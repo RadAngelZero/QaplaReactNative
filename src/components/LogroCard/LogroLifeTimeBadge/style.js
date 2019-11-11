@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { widthPercentageToPx } from '../../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     timeLifeBadge: {
@@ -14,8 +14,8 @@ export default styles = StyleSheet.create({
         fontWeight: '700',
         letterSpacing: .1,
         color: '#FFF',
-        marginTop: 4,
-        marginBottom: 4,
+        marginTop: heightPercentageToPx(0.49),
+        marginBottom: heightPercentageToPx(0.49),
         textAlign: 'center'
     }
 });

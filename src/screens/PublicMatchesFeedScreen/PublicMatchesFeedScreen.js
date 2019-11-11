@@ -23,6 +23,7 @@ import HighlightModal from '../../components/HighlightModal/HighlightModal'
 import { setHg1CreateMatch } from '../../actions/highlightsActions';
 import { connect } from 'react-redux';
 
+import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
 
 class PublicMatchesFeedScreen extends Component {
     state = {
@@ -140,6 +141,14 @@ class PublicMatchesFeedScreen extends Component {
 
     componentDidMount() {
         this.checkHighlightsFlags();  
+
+        console.log('Dimensions height: ' +
+            17 + ' : ' + getPercentHeight(17)
+        );
+        console.log('Dimensions width: ' +
+            250 + ' :  ' + getPercentWidth(250) + '\n'
+            // 18 + ' :  ' + getPercentWidth(18)
+        );
     }
 
     /**
@@ -234,12 +243,14 @@ class PublicMatchesFeedScreen extends Component {
 
     render() {
         return (
-            <View style={style.container}>
-                <MatchCardList {...this.state} /> 
+            <>
+                <View style={style.container}>
+                    <MatchCardList {...this.state} /> 
+                </View>  
                 <HighlightModal 
                     visible={this.state.showHg1Modal}
                     onClose={this.toggleHg1Modal}
-                    showDelay={4000}
+                    showDelay={1000}
                     cb1={this.markHg1}
                     header='Crea una Reta'
                     body='Empieza a competir con otros jugadores. Crea tu reta y gana!'>
@@ -247,7 +258,7 @@ class PublicMatchesFeedScreen extends Component {
                             highlighted={!this.props.navigation.getParam('firstMatchCreated')}
                             onPress={this.onCrearRetaButtonPress}/>
                 </HighlightModal>
-            </View>  
+            </>
         );
     }
 }

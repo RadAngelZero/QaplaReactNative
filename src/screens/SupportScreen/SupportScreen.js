@@ -24,6 +24,7 @@ class SupportScreen extends React.Component {
           openModal: false
       };
   }
+
   /**
     * Description:
     * Closes Modal that reminds that a challenge was already sent for a match

@@ -2,7 +2,7 @@
 // diego          - 21-08-2019 - us89 - File creation
 
 import { StyleSheet } from 'react-native';
-import { getDimensions } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
     mainContainer: {
@@ -11,19 +11,19 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        width: '100%',
-        height: '100%',
+        width: widthPercentageToPx(100),
+        height: heightPercentageToPx(100),
     },
     modalContainer: {
-        width: getDimensions().width * .8,
+        width: widthPercentageToPx(80),
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: '#141833',
         borderRadius: 20,
         shadowColor: '#000',
         shadowOffset: {
-            width: 0,
-            height: 12,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(1.48),
         },
         shadowOpacity: 0.58,
         shadowRadius: 16.00,
@@ -31,20 +31,20 @@ export default styles = StyleSheet.create({
         alignItems: 'center'
     },
     modalControls: {
-        marginTop: 20,
+        marginTop: heightPercentageToPx(2.46),
         alignSelf: 'flex-end'
     },
     closeIcon: {
-        marginRight: 20,
-        marginBottom: 20,
-        marginTop: '2.56%',
+        marginRight: widthPercentageToPx(5.33),
+        marginBottom: heightPercentageToPx(2.46),
+        marginTop: heightPercentageToPx(2.56),
         alignSelf: 'baseline'
     },
     modalBody: {
-        marginTop: '1%',
-        marginBottom: 24,
-        marginRight: 5,
-        marginLeft: 5,
+        marginTop: heightPercentageToPx(1),
+        marginBottom: heightPercentageToPx(2.96),
+        marginRight: widthPercentageToPx(1.33),
+        marginLeft: widthPercentageToPx(1.33),
         alignItems: 'center'
     },
     gamerTagTextInput : {
@@ -56,19 +56,19 @@ export default styles = StyleSheet.create({
         borderWidth: 1,
         width: 200,
         justifyContent: 'center',
-        marginBottom: 10,
+        marginBottom: heightPercentageToPx(1.23),
         textAlign: 'center',
         color: 'white'
     },
     modalText: {
         fontSize: 14,
-        marginTop: 20,
-        marginBottom: 18,
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.28),
         color: '#FFF',
         textAlignVertical: 'center',
         justifyContent:'center',
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: widthPercentageToPx(2.67),
+        marginRight: widthPercentageToPx(2.67),
         textAlign: 'center'
     },
     confirmButton: {
@@ -77,8 +77,8 @@ export default styles = StyleSheet.create({
         elevation: 6,
         shadowColor: '#000',
         shadowOffset: {
-            width: 0,
-            height: 3,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.34),
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65
@@ -89,9 +89,9 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         letterSpacing: .5,
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 36,
-        marginRight: 36
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(9.6),
+        marginRight: widthPercentageToPx(9.6)
     }
 });

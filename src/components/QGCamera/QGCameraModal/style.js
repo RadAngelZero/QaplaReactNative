@@ -2,7 +2,7 @@
 // josep.sanahuja - 22-09-2019 - us123 - File creation
 
 import { StyleSheet } from 'react-native';
-import { getDimensions } from '../../../utilities/iosAndroidDim';
+import { hasSafeAreaView, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
 	mainContainer: {
@@ -11,12 +11,12 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        width: '100%',
-        height: '100%',
+        width: widthPercentageToPx(100),
+        height: heightPercentageToPx(100),
 	},
 	container: {
-        height: getDimensions().height,
-        width: getDimensions().width,
+        height: heightPercentageToPx(100),
+        width: widthPercentageToPx(100),
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#141833',
@@ -25,17 +25,17 @@ export default styles = StyleSheet.create({
         elevation: 6,
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 2,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.25),
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        marginRight: 20,
-        marginLeft: 20,
-        paddingTop: '20%'
+        marginRight: widthPercentageToPx(5.33),
+        marginLeft: widthPercentageToPx(5.33),
+        paddingTop: heightPercentageToPx(20)
     },
     headerText: {
-        marginBottom: '15%',
+        marginBottom: heightPercentageToPx(15),
         color: '#FFF',
         fontSize: 40,
         textAlign: 'center'
@@ -45,34 +45,34 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 16,
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53)
     },
     paragraph: {
-        marginTop: 5,
-        marginRight: 30,
-        marginLeft: 30,
+        marginTop: heightPercentageToPx(0.62),
+        marginRight: widthPercentageToPx(8),
+        marginLeft: widthPercentageToPx(8),
         color: '#CFD1DB',
         fontSize: 16,
         textAlign: 'center'
     },
     okButton: {
-        marginTop: 40,
+        marginTop: heightPercentageToPx(4.93),
         borderRadius: 100,
         backgroundColor: '#6D7DDE'
     },
     closeIcon: {
-        marginRight: 20,
-        marginBottom: 20,
-        marginTop: '8%',
+        marginRight: widthPercentageToPx(5.33),
+        marginBottom: heightPercentageToPx(2.46),
+        marginTop: heightPercentageToPx(8),
         alignSelf: 'flex-end'
     },
     picture: {
         flex: 1,
-        width: getDimensions().width,
-        height: getDimensions().height * 0.6,
+        width: widthPercentageToPx(100),
+        height: heightPercentageToPx(60),
         resizeMode: 'contain'
     }
 })

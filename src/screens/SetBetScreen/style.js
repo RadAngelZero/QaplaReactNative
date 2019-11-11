@@ -14,20 +14,19 @@ export default styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor:'#131833'
     },
     titleContainer: {
-        marginTop: heightPercentageToPx('5%')
+        marginTop: heightPercentageToPx(5)
 	},
     titleText: {
         color: '#FFF',
-        marginLeft: 24,
+        marginLeft: widthPercentageToPx(6.4),
         fontSize: 32,
         fontWeight: 'bold',
-        width: widthPercentageToPx('60%'),
+        width: widthPercentageToPx(60),
     },
     prizeImage: {
-        marginTop: '10%',
+        marginTop: heightPercentageToPx(7.97),
         alignItems: 'center'
     },
     winBet: {
@@ -35,8 +34,8 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 60,
         textAlign: 'center',
-        marginTop: heightPercentageToPx('4.2%'),
-        marginBottom: heightPercentageToPx('1.23%')
+        marginTop: heightPercentageToPx(4.69),
+        marginBottom: heightPercentageToPx(1.56)
     },
     qaploinIconContainer: {
         alignSelf: 'center',
@@ -45,16 +44,16 @@ export default styles = StyleSheet.create({
     qaploinIconText: {
         color: '#3DF9DF',
         fontSize: 14,
-        marginLeft: 5
+        marginLeft: widthPercentageToPx(1.33)
     },
     betContainer: {
         flexDirection: 'row',
         alignSelf: 'center',
-        marginTop: heightPercentageToPx('7.27%')
+        marginTop: heightPercentageToPx(5.47)
     },
     betTextContainer: {
-        marginLeft: 14,
-        marginRight: 14,
+        marginLeft: widthPercentageToPx(3.73),
+        marginRight: widthPercentageToPx(3.73),
         textAlignVertical: 'top'
     },
     betText: {
@@ -67,20 +66,23 @@ export default styles = StyleSheet.create({
         color: '#B5B5B5'
     },
     changeBetIcon: {
-        marginTop: 4
+        marginTop: heightPercentageToPx(0.49)
     },
     createButton: {
         borderRadius: 100,
         backgroundColor: '#FA2D79',
-        marginLeft: 80,
-        marginRight: 80,
-        marginTop: heightPercentageToPx('6.65%')
+        marginLeft: widthPercentageToPx(21.33),
+        marginRight: widthPercentageToPx(21.33),
+        //marginTop: heightPercentageToPx(6.88),
+        position: 'absolute',
+        alignSelf: 'center',
+        bottom: heightPercentageToPx(2)
     },
     createButtonText: {
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32,
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53),
         letterSpacing: .57,
         fontSize: 14,
         textAlign: 'center',
@@ -90,8 +92,8 @@ export default styles = StyleSheet.create({
         elevation: 6,
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 3,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.34),
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65

@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native'
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default StyleSheet.create({
   	container:{
@@ -7,22 +8,22 @@ export default StyleSheet.create({
 	},
 	titleContainer: {
 		flexDirection: 'row',
-		marginTop: 24
+		marginTop: heightPercentageToPx(2.96)
 	},
 	title: {
 		fontSize: 16,
 		letterSpacing: .17,
         color: '#FFF',
-		marginLeft: 24
+		marginLeft: widthPercentageToPx(6.4)
 	},
 	circleIcon: {
-		marginLeft: 6,
+		marginLeft: widthPercentageToPx(1.6),
 		borderRadius: 100,
 		alignSelf: 'center',
 		width: 10,
 		height: 10
 	},
 	scrollViewStyle: {
-		marginRight: 10
+		marginRight: widthPercentageToPx(2.67)
 	}
 });

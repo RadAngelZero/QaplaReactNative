@@ -1,6 +1,7 @@
 // josep.sanahuja    - 05-08-2019 - us84 - + sfvContainer
 
 import { StyleSheet } from 'react-native';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
      sfvContainer: {
@@ -18,9 +19,9 @@ export default styles = StyleSheet.create({
     facebookButtonContainer: {
         borderRadius: 100,
         backgroundColor: '#364fe2',
-        paddingVertical: 16,
-        paddingHorizontal: 16,
-        marginTop: 44
+        paddingVertical: heightPercentageToPx(1.97),
+        paddingHorizontal: widthPercentageToPx(4.27),
+        marginTop: heightPercentageToPx(5.41)
     },
     whiteColor: {
         color: '#FFF'
@@ -31,20 +32,20 @@ export default styles = StyleSheet.create({
     googleButtonContainer: {
         borderRadius: 100,
         backgroundColor: '#FFFFFF',
-        paddingVertical: 16,
-        paddingHorizontal: 16,
-        marginTop: 24
+        paddingVertical: heightPercentageToPx(1.97),
+        paddingHorizontal: widthPercentageToPx(4.27),
+        marginTop: heightPercentageToPx(2.96)
     },
     googleButtonText: {
         color: 'rgba(0, 0, 0, .541)'
     },
     alreadyHaveAccountTextContainer: {
         flexDirection: 'row',
-        marginTop: 25
+        marginTop: heightPercentageToPx(3.08)
     },
     enterWithEmailText: {
         color: 'rgba(61,249,223,1)',
-        marginLeft: 5
+        marginLeft: widthPercentageToPx(1.33)
     },
     fontBold: {
         fontSize: 13,
@@ -53,11 +54,11 @@ export default styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         position: 'absolute',
-        left: 0,
-        bottom: 0,
+        left: widthPercentageToPx(0),
+        bottom: heightPercentageToPx(0),
         zIndex: -1,
         opacity: .68,
-        width: '100%',
-        height: '50%'
+        width: widthPercentageToPx(100),
+        height: heightPercentageToPx(50)
     }
 });

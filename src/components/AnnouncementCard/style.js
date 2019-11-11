@@ -1,15 +1,15 @@
 // josep.sanahuja    - 18-10-2019 - us140 - File creation
 
 import { StyleSheet } from 'react-native'
-import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default StyleSheet.create({
   	container:{
-        marginTop: 12,
-        marginHorizontal: 10,
+        marginTop: heightPercentageToPx(1.48),
+        marginHorizontal: widthPercentageToPx(1.0),
         borderRadius: 10,
-        width: widthPercentageToPx(35),
-        height: widthPercentageToPx(35),
+        width: widthPercentageToPx(49),
+        height: heightPercentageToPx(18),
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#0E1222'
@@ -18,15 +18,18 @@ export default StyleSheet.create({
         height: widthPercentageToPx(15),
         width: widthPercentageToPx(15),
         marginBottom: heightPercentageToPx(1),
-        marginTop: heightPercentageToPx(2),
+        
     },
     imageStyle: {
         height: widthPercentageToPx(15),
         width: widthPercentageToPx(15),
+        alignSelf: 'center',
+        resizeMode: 'contain'
+        
     },
     description: {
-        height: 50,
-        width: widthPercentageToPx(30),
+        height: heightPercentageToPx(5.17),
+        width: widthPercentageToPx(40),
         color: '#FFF',
         fontSize: 12,
         fontWeight: '700',

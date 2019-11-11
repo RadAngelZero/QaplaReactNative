@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 
 import { getGamerTagWithUID, addGameToUser } from '../../services/database';
 import { withNavigation } from 'react-navigation';
+import { subscribeUserToTopic } from '../../services/messaging';
 
 class GameCard extends Component {
 
@@ -56,16 +57,11 @@ class GameCard extends Component {
         let newGame = this.props.game;
         newGame.platform = this.props.platform;
         newGame.gameKey = this.props.gameKey;
-
-        // Update Redux State with the current game selected so we can use it in the
-        // modal from the screen where all games are listed.
-        this.props.setSelectedGame(newGame);
         
         const gtag = await getGamerTagWithUID(this.props.user.id, newGame.gameKey, newGame.platform);
 
         // If the game selected has a gamertag then we don't open the modal 
         if (gtag.gamerTag) {
-
             /**
              * If receive a flag to load the games that the user don't have, but have a gamerTag for this game
              * (as happens on xbox or ps4) add the game to the user with ask no question and redirect to profile
@@ -80,13 +76,24 @@ class GameCard extends Component {
                 this.props.setSelectedGame(null);
                 try {
                     await addGameToUser(this.props.user.id, this.props.user.userName, newGame.platform, newGame.gameKey, gtag.gamerTag);
+
+                    /**
+                     * Every game is a topic, so we can send push notifications to the user
+                     * about specific games
+                     */
+                    subscribeUserToTopic(newGame.gameKey);
                     this.props.navigation.navigate('Perfil');
                 } catch (error) {
                     console.error(error);
                 }
             } else {
+                this.props.setSelectedGame(newGame);
                 this.props.navigation.navigate('SetBet', {game: newGame}); 
             }
+        } else {
+            // Update Redux State with the current game selected so we can use it in the
+            // modal from the screen where all games are listed.
+            this.props.setSelectedGame(newGame);
         }
     }
 }

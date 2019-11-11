@@ -6,6 +6,7 @@ import { Svg } from 'react-native-svg';
 import styles from './style';
 import Images from '../../../assets/images';
 import { recordScreenOnSegment } from '../../services/statistics';
+import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
 
 const LightningIcon = Images.svg.lightningIcon;
 const SearchIcon = Images.svg.searchIcon;

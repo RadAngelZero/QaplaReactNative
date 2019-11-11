@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
-        bottom: 35,
+        bottom: heightPercentageToPx(4.30),
         alignSelf: 'center',
         position: 'absolute',
     },
@@ -16,32 +17,32 @@ export default styles = StyleSheet.create({
         alignSelf: 'center',
         textTransform: 'uppercase',
         fontWeight: 'bold',
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32,
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53),
         letterSpacing: .57
     },
     highlightedExterior: {
-        paddingVertical: 12,
-        paddingHorizontal: 45,
+        paddingVertical: heightPercentageToPx(1.48),
+        paddingHorizontal: widthPercentageToPx(12),
         backgroundColor: '#3DF9DF',
         position: 'absolute',
-        bottom: 16,
+        bottom: heightPercentageToPx(1.97),
         alignSelf: 'center',
         justifyContent: 'center',
         borderRadius: 100,
-        paddingRight: 40,
-        paddingLeft: 40
+        paddingRight: widthPercentageToPx(10.66),
+        paddingLeft: widthPercentageToPx(10.66)
     },
     highlightedInterior: {
-        paddingVertical: 12,
-        paddingHorizontal: 45,
+        paddingVertical: heightPercentageToPx(1.48),
+        paddingHorizontal: widthPercentageToPx(12),
         backgroundColor: '#6D7DDE',
         alignSelf: 'center',
         justifyContent: 'center',
         borderRadius: 100,
-        paddingRight: 40,
-        paddingLeft: 40
+        paddingRight: widthPercentageToPx(10.66),
+        paddingLeft: widthPercentageToPx(10.66)
     }
 });

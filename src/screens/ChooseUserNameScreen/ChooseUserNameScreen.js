@@ -25,7 +25,7 @@ class ChooseUserNameScreen extends Component {
             userNameTaken: false
         };
     }
-    
+
     render() {
 
         return (

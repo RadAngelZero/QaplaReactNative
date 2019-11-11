@@ -11,19 +11,19 @@ export default styles = StyleSheet.create({
     backAndCloseOptions: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 18
+        marginTop: heightPercentageToPx(2.22)
     },
     backIconContainer: {
-        marginLeft: 30,
-        marginTop: 18,
+        marginLeft: widthPercentageToPx(8),
+        marginTop: heightPercentageToPx(2.22),
         alignSelf: 'flex-end'
     },
     buttonDimensions: {
         height: heightPercentageToPx(5)
     },
     closeIconContainer: {
-        marginRight: 30,
-        marginTop: 18,
+        marginRight: widthPercentageToPx(8),
+        marginTop: heightPercentageToPx(2.22),
         alignSelf: 'flex-end'
     },
     scrollViewContainer: {
@@ -31,6 +31,7 @@ export default styles = StyleSheet.create({
     },
     button: {
         marginTop: heightPercentageToPx(10),
+        marginBottom: heightPercentageToPx(2),
         borderRadius: 100,
         backgroundColor: '#FA2D79',
         alignSelf: 'center'

@@ -19,12 +19,12 @@ import { storeData } from '../../utilities/persistance';
 
 export default class WelcomeOnboardingScreen extends React.Component {
 	constructor(props) {
-    // Required step: always call the parent class' constructor
-    super(props);
-    this.state = {
-      selectedIndex: 0
-    }
-  }
+	    // Required step: always call the parent class' constructor
+	    super(props);
+	    this.state = {
+	    	selectedIndex: 0
+	    }
+  	}
 
 	goToScreenPublicas = () => {
 		storeData('tutorial-done', 'true');

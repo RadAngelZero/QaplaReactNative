@@ -58,7 +58,7 @@ class ActivityNotificationsScreen extends Component {
     render() {
         return (
         	<SafeAreaView style={styles.sfvContainer}>
-                <AnnouncementsScrollView/>
+                <AnnouncementsScrollView />
                 {this.state.didFinishInitialAnimation
                     ?
     	            <View style={styles.container}>

@@ -272,64 +272,65 @@ class PublicMatchCardScreen extends Component {
 
         return (
             <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
-                <View style={styles.imageHeader}>
-                    <gameData.Icon width={50} height={50} />
-                </View>
-                <View style={styles.rowContainer}>
-                    <View style={styles.headerRow1}>
-                        <QaploinsIcon style={styles.hr1}/>
-                        <Text style={styles.gameName}>{gameData.name}</Text>
-                        <QaploinsIcon style={styles.hr3}/>
+                
+                    <View style={styles.imageHeader}>
+                        <gameData.Icon width={50} height={50} />
                     </View>
-
-                    <Text style={styles.gamertag}>{matchCard.userName}</Text>
-
-                    <View style={styles.row}>
-                        <View style={styles.infoContainer}>
-                            <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={[styles.elemR1, styles.activeColor]}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
+                    <View style={styles.rowContainer}>
+                        <View style={styles.headerRow1}>
+                            <QaploinsIcon style={styles.hr1}/>
+                            <Text style={styles.gameName}>{gameData.name}</Text>
+                            <QaploinsIcon style={styles.hr3}/>
                         </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.gamerTag.gamerTag}</Text>
+
+                        <Text style={styles.gamertag}>{matchCard.userName}</Text>
+
+                        <View style={styles.row}>
+                            <View style={styles.infoContainer}>
+                                <ProfileIcon style={styles.rowIcon}/>
+                                <Text style={[styles.elemR1, styles.activeColor]}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
+                            </View>
+                            <View style={styles.infoContainer}>
+                                <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.gamerTag.gamerTag}</Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.row}>
+                            <View style={styles.infoContainer}>
+                                <ProfileIcon style={styles.rowIcon}/>
+                                <Text style={styles.elemR1}>No. de Integrantes</Text>
+                            </View>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.row}>
+                            <View style={styles.infoContainer}>
+                                <ProfileIcon style={styles.rowIcon}/>
+                                <Text style={styles.elemR1}>
+                                    {matchCard.matchesPlay ?
+                                        'Sube tu resultado en:'
+                                        :
+                                        'Expira en:'
+                                    }
+                                </Text>
+                            </View>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.rightTextStyle}>{this.state.validTimeLeft}</Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.row}>
+                            <View style={styles.infoContainer}>
+                                <ProfileIcon style={styles.rowIcon}/>
+                                <Text style={styles.elemR1}>Qaploins</Text>
+                            </View>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.rightTextStyle}>{matchCard.bet}</Text>
+                            </View>
                         </View>
                     </View>
-
-                    <View style={styles.row}>
-                        <View style={styles.infoContainer}>
-                            <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>No. de Integrantes</Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.row}>
-                        <View style={styles.infoContainer}>
-                            <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>
-                                {matchCard.matchesPlay ?
-                                    'Sube tu resultado en:'
-                                    :
-                                    'Expira en:'
-                                }
-                            </Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.rightTextStyle}>{this.state.validTimeLeft}</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.row}>
-                        <View style={styles.infoContainer}>
-                            <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>Qaploins</Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.rightTextStyle}>{matchCard.bet}</Text>
-                        </View>
-                    </View>
-                </View>
                 {/*
                     If the user isn't the creator of the match, and this match is not in matches play and isn't a challenge
                     we show 'Retar' button

@@ -1,7 +1,7 @@
 // josep.sanahuja    - 30-09-2019 - us118 - File creation
 
 import { StyleSheet } from 'react-native'
-import { getDimensions } from '../../utilities/iosAndroidDim'
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default StyleSheet.create({
   container:{
@@ -11,56 +11,56 @@ export default StyleSheet.create({
   imageContainer: {
       justifyContent: 'flex-start',
       alignSelf: 'center',
-      marginBottom: '2%', 
-      width: getDimensions().width * 0.95,
-      height: getDimensions().height / 2.5
+      marginBottom: heightPercentageToPx(2), 
+      width: widthPercentageToPx(95),
+      height: heightPercentageToPx(40)
   },
   content:{
-      backgroundColor:'white',
-      marginHorizontal:10,
-      paddingHorizontal:10,
-      paddingVertical:5,
-      borderRadius:3
+      backgroundColor: 'white',
+      marginHorizontal: widthPercentageToPx(2.67),
+      paddingHorizontal: widthPercentageToPx(2.67),
+      paddingVertical: heightPercentageToPx(0.62),
+      borderRadius: 3
   },
   okButtonContainer: {
-      bottom: 100,
+      bottom: heightPercentageToPx(12.31),
       alignSelf: 'center',
       position: 'absolute',
       borderRadius: 100,
       backgroundColor: '#FA2D79',
       elevation: 10,
-      width: 250
+      width: widthPercentageToPx(66.6)
   },
   cancelButtonContainer: {
-      bottom: 35,
+      bottom: heightPercentageToPx(4.30),
       alignSelf: 'center',
       position: 'absolute',
       borderRadius: 100,
       backgroundColor: '#FA2D79',
       elevation: 10,
-      width: 250
+      width: widthPercentageToPx(66.6)
   },
   moreButtonContainer: {
       alignSelf: 'center',
       borderRadius: 100,
       backgroundColor: '#FA2D79',
       elevation: 10,
-      width: 250
+      width: widthPercentageToPx(66.6)
   },
   textStyle: {
       color: '#FFF',
       alignSelf: 'center',
       textTransform: 'uppercase',
       fontWeight: 'bold',
-      marginTop: 20,
-      marginBottom: 20,
-      marginLeft: 32,
-      marginRight: 32,
+      marginTop: heightPercentageToPx(2.46),
+      marginBottom: heightPercentageToPx(2.46),
+      marginLeft: widthPercentageToPx(8.53),
+      marginRight: widthPercentageToPx(8.53),
       letterSpacing: .57
   },
   picture: {
-      height: getDimensions().height / 2.5,
-      width: getDimensions().width * 0.95,
+      height: heightPercentageToPx(40),
+      width: widthPercentageToPx(95),
       resizeMode: 'cover'  
   }
 })

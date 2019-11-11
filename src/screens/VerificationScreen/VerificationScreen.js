@@ -23,7 +23,6 @@ import { PhoneProvider } from '../../utilities/firebase';
 import VerificationProccessSuccess from '../../components/VerificationProccessSuccess/VerificationProccessSuccess';
 import { createVerificationRequest } from '../../services/database';
 
-
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
 

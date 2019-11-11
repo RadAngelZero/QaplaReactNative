@@ -9,6 +9,7 @@ import LogroSocial from './LogroSocial';
 import LogroVerification from './LogroVerification/LogroVerification';
 import LogroCompletedCard from '../LogroCompletedCard/LogroCompletedCard';
 import TournamentCard from '../TournamentCard/TournamentCard';
+import EventCard from '../EventCard/EventCard';
 
 /**
  * Container to add extra marginBottom on the last child of the list
@@ -47,6 +48,9 @@ class LogroCardItem extends Component {
                 break;
             case 'tournament':
                 res = <CardContainer lastChild={lastChild}><TournamentCard {...this.props} /></CardContainer>;
+                break;
+            case 'event':
+                res = <CardContainer lastChild={lastChild}><EventCard {...this.props} /></CardContainer>;
                 break;
             default:
                 break;

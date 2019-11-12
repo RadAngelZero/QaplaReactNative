@@ -20,6 +20,8 @@ import { HIGHLIGHT_2_NOTIFICATIONS, QAPLA_DISCORD_CHANNEL } from '../../utilitie
 
 const NotificationIcon = images.svg.notificationIcon;
 const DiscordIcon = images.svg.discordIcon;
+const SettingsIcon = images.svg.settingsIcon;
+
 
 class HeaderBar extends Component {
     constructor(props) {
@@ -41,6 +43,8 @@ class HeaderBar extends Component {
         if (nextProp.hg1CreateMatch === true && this.props.hg1CreateMatch === false) {
             this.checkHighlightsFlags();
         }
+
+        console.log('current screen id: ' + this.props.currentScreenId);
 
         return true;
     }
@@ -159,16 +163,30 @@ class HeaderBar extends Component {
                 <View style={styles.textContainer} testID='textContainer'>
                     <Text style={styles.textStyle} testID='text'>Qapla</Text>
                 </View>
-                <View style={styles.discordIcon} testID='discordIcon'>
-                    <TouchableWithoutFeedback onPress={this.sendToDiscord}>
-                        <View style={styles.imageAndButtonDimensions}>
-                            <DiscordIcon
-                                height={32}
-                                width={32}
-                                fill='#FFF' />
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
+                {this.props.currentScreenId !== 'Perfil' &&
+                  <View style={styles.discordIcon} testID='discordIcon'>
+                      <TouchableWithoutFeedback onPress={this.sendToDiscord}>
+                          <View style={styles.imageAndButtonDimensions}>
+                              <DiscordIcon
+                                  height={32}
+                                  width={32}
+                                  fill='#FFF' />
+                          </View>
+                      </TouchableWithoutFeedback>
+                  </View>
+                }
+                {this.props.currentScreenId === 'Perfil' &&
+                    <View style={styles.discordIcon} testID='discordIcon'>
+                        <TouchableWithoutFeedback onPress={this.sendToDiscord}>
+                            <View style={styles.imageAndButtonDimensions}>
+                                <SettingsIcon
+                                    height={24}
+                                    width={24}
+                                    fill='#FFF' />
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                }
             </View>
         );
     }
@@ -176,7 +194,8 @@ class HeaderBar extends Component {
 
 function mapStateToProps(state) {
     return {
-        hg1CreateMatch: state.highlightsReducer.hg1CreateMatch
+        hg1CreateMatch: state.highlightsReducer.hg1CreateMatch,
+        currentScreenId: state.screensReducer.currentScreenId
     }
 }
 

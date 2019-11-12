@@ -13,6 +13,8 @@ import React from 'react';
 
 import { View, Text } from 'react-native';
 import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createSwitchNavigator} from 'react-navigation';
+import { connect } from 'react-redux';
+import { setCurrentScreenId, setPreviousScreenId } from './actions/screensActions';
 
 import Images from './../assets/images';
 
@@ -39,6 +41,7 @@ import VerificationScreen from './screens/VerificationScreen/VerificationScreen'
 
 import MockScreen1 from './screens/MockScreen1/MockScreen1';
 import SupportScreen from './screens/SupportScreen/SupportScreen';
+import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
@@ -176,7 +179,7 @@ const TabMainNavigator = createBottomTabNavigator({
     })
   },
   Support: {
-    screen:   SupportScreen,
+    screen:   AppSettingsMenuScreen,
     navigationOptions: ({ navigation }) => ({
       title: "Soporte",  //Tried to hide this for next tab Search.,
       tabBarIcon: ({ tintColor, focused }) => (
@@ -275,11 +278,14 @@ const AppNoHeaderStackNavigator = createSwitchNavigator(
     },
     UploadMatchResult: {
       screen: UploadMatchResultScreen
+    },
+    AppSettingsMenu:{
+      screen: AppSettingsMenuScreen
     }
   }
 );
 
-export default class Router extends React.Component {
+class Router extends React.Component {
   render() {
     // or not shown
     const RootStack = createStackNavigator(
@@ -339,7 +345,41 @@ export default class Router extends React.Component {
     // Create main router entry point for the app
     const AppContainer = createAppContainer(MainNavigator);
 
+    // gets the current screen from navigation state
+    function getActiveRouteName(navigationState) {
+      if (!navigationState) {
+        return null;
+      }
+      const route = navigationState.routes[navigationState.index];
+      // dive into nested navigators
+      if (route.routes) {
+        return getActiveRouteName(route);
+      }
+      return route.routeName;
+    }
+
     // render de main router entry point for the app
-    return <AppContainer />
+    return <AppContainer 
+      onNavigationStateChange={(prevState, currentState, action) => {
+            const currentRouteName = getActiveRouteName(currentState);
+            const previousRouteName = getActiveRouteName(prevState);
+
+            if (previousRouteName !== currentRouteName) {
+              // miau
+              this.props.setCurrentScreenId(currentRouteName);
+              this.props.setPreviousScreenId(previousRouteName);
+            }
+      }}
+    />
   }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        setCurrentScreenId: (screenId) => setCurrentScreenId(screenId)(dispatch),
+        setPreviousScreenId: (screenId) => setPreviousScreenId(screenId)(dispatch)
+    };
+}
+
+export default connect(null, mapDispatchToProps)(Router);
+// export default Router;

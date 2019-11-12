@@ -18,6 +18,11 @@ export const SET_SELECTED_GAME = 'SET_SELECTED_GAME';
 export const GET_HIGHLIGHT_1_CREATE_MATCH = 'GET_HIGHLIGHT_1_CREATE_MATCH';
 export const SET_HIGHLIGHT_1_CREATE_MATCH = 'SET_HIGHLIGHT_1_CREATE_MATCH';
 
+// Screens REDUX constants
+export const SET_CURRENT_SCREEN_ID = 'SET_CURRENT_SCREEN_ID';
+export const SET_PREVIOUS_SCREEN_ID = 'SET_PREVIOUS_SCREEN_ID';
+export const GET_CURRENT_SCREEN_ID = 'GET_CURRENT_SCREEN_ID';
+
 // Crear Reta Button in PublicMatchesFeedScreen.js
 export const HIGHLIGHT_1_CREATE_MATCH = 'HIGHLIGHT_1_CREATE_MATCH';
 // Crear Reta Button in PublicMatchesFeedScreen.js Flag

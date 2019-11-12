@@ -698,6 +698,11 @@ export async function getAnnouncements() {
 // User profile
 // -----------------------------------------------
 
+/**
+ * Update the discord tag of the given user
+ * @param {string} uid User identifier on the database
+ * @param {string} discordTag The value of the tag (data to update on the database)
+ */
 export async function updateUserDiscordTag(uid, discordTag) {
     try {
         await usersRef.child(uid).update({ discordTag });

@@ -14,15 +14,25 @@ class AddDiscordTagModal extends Component {
         selected: false
     };
 
+    /**
+     * Toggle the selection of the TextInput so the user can know when the text input is selected
+     * (we show the cool border bottom color when selected is true)
+     */
     toggleInputSelection = () => {
         this.setState({ selected: !this.state.selected });
     }
 
+    /**
+     * Clean the local state and then close the modal
+     */
     closeModal = () => {
         this.setState({ discordTag: '', selected: false });
         this.props.onClose();
     }
 
+    /**
+     * Call to the database function to update the discord tag of the user and then close the modal
+     */
     updateDiscordTag = () => {
         updateUserDiscordTag(this.props.uid, this.state.discordTag);
         this.closeModal();

@@ -1,7 +1,7 @@
 // diego          - 06-09-2019 - us93 - File creation
 
 import React, { Component } from 'react';
-import { Modal, View, Text, TouchableWithoutFeedback, BackHandler } from 'react-native';
+import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 import styles from './style';
@@ -12,12 +12,6 @@ export class MatchExpireRememberModal extends Component {
     state = {
         dontShowModalAgain: false
     };
-
-    componentDidMount() {
-        // Remove back button actions (mainly Android) to avoid situations when Qaploins
-        // are substracted and the user navigates back without finishing creating the match.
-        BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
-    }
 
     /**
      * @description It checks if the modal will be shown in future occasions and store the configuration so 

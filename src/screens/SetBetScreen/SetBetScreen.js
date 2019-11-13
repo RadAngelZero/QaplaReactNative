@@ -145,6 +145,10 @@ class SetBetScreen extends Component {
                 // a behaviour we don't want. 
                 if (openMsgFlag || openMsgFlag === null) {
 
+                    // Remove back button actions (mainly Android) to avoid situations when Qaploins
+                    // are substracted and the user navigates back without finishing creating the match.
+                    BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen); 
+
                     // Tooggle modal state to open
                     this.setState({
                         timeActionMsgOpen: true

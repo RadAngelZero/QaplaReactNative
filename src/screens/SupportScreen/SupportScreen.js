@@ -1,3 +1,4 @@
+// josep.sanahuja    - 13-11-2019 - us147  - goToLogrosScreen -> goToPopScreen
 // josep.sanahuja    - 04-10-2019 - usXXX  - File creation
 
 import React, {Component}from 'react';
@@ -37,9 +38,9 @@ class SupportScreen extends React.Component {
       });
   } 
 
-  gotoLogrosScreen = () => {
+  gotoPopScreen = () => {
       this.toggleOpenModal();
-      this.props.navigation.navigate('Logros');
+      this.props.navigation.pop();
   }
 
   sendFeedback = () => {
@@ -56,7 +57,7 @@ class SupportScreen extends React.Component {
               <View style={styles.container}>
                   <TextInput
                         style={styles.textInput}
-                        placeholder='Contento? Frustado? Triste? Compártenos tu opinión aquí ...'
+                        placeholder='Contento? Frustrado? Triste? Compártenos tu opinión aquí ...'
                         placeholderTextColor='#898A97'
                         onChangeText={(text) => this.setState({text})}
                         multiline
@@ -72,7 +73,7 @@ class SupportScreen extends React.Component {
               </View>
               <OneTxtOneBttnModal
                     visible={ this.state.openModal }
-                    onClose={ this.gotoLogrosScreen }
+                    onClose={ this.gotoPopScreen }
                     header={ 'Gracias por tu comentario' }
                     body={ '' }
                     textButton={ 'OK' } />

@@ -1,4 +1,5 @@
-// josep.sanahuja  - 04-10-2019 - XXXXX - Added SupportScreen
+// josep.sanahuja  - 13-11-2019 - us147 - Add AppSettingsMenuScreen + Redux connect
+// josep.sanahuja  - 04-10-2019 - XXXXX - Added TabtScreen
 // diego           - 18-09-2019 - us119 - Added VerificationScreen
 // diego           - 18-09-2019 - us110 - Created LogrosTabNavigator
 // diego           - 18-09-2019 - us109 - Added Tab for logros on TabMainNavigator
@@ -178,20 +179,6 @@ const TabMainNavigator = createBottomTabNavigator({
       )
     })
   },
-  Support: {
-    screen:   AppSettingsMenuScreen,
-    navigationOptions: ({ navigation }) => ({
-      title: "Soporte",  //Tried to hide this for next tab Search.,
-      tabBarIcon: ({ tintColor, focused }) => (
-        <View>
-          <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
-          {focused &&
-            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Support</Text>
-          }
-        </View>
-      )
-    })
-  },
   Perfil: {
     screen:   UserProfileScreen,
     navigationOptions: ({ navigation }) => ({
@@ -264,7 +251,7 @@ const MatchWizardStackNavigator = createStackNavigator(
       navigationOptions: {
         header: props => <TopNavOptions back close {...props} onCloseGoTo='Publicas' />
       }
-    },
+    }
   },
   {
     initialRouteName: 'ChooseMatchType',
@@ -323,6 +310,12 @@ class Router extends React.Component {
         MatchCard: {
           screen: PublicMatchCardScreen
         },
+        Support: {
+          screen: SupportScreen,
+          navigationOptions: {
+            header: props => <TopNavOptions back {...props} />
+          }
+        }
       },
       {
         initialRouteName:  'Home'

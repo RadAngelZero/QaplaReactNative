@@ -1,3 +1,4 @@
+// josep.sanahuja    - 13-11-2019 - us147 - Connect currentScreenId
 // josep.sanahuja    - 26-08-2019 - us90 - Added notification highlight
 // diego             - 01-08-2019 - us58 - Navigation implemented to notificationRouter
 // josep.sanahuja    - 30-07-2019 - us59 - + navigate('Mock2')
@@ -139,6 +140,10 @@ class HeaderBar extends Component {
         Linking.openURL(QAPLA_DISCORD_CHANNEL);
     }
 
+    goToUserProfile = () => {
+      this.props.navigation.navigate('AppSettingsMenu');
+    }
+
     render() {
 
         return (
@@ -176,8 +181,8 @@ class HeaderBar extends Component {
                   </View>
                 }
                 {this.props.currentScreenId === 'Perfil' &&
-                    <View style={styles.discordIcon} testID='discordIcon'>
-                        <TouchableWithoutFeedback onPress={this.sendToDiscord}>
+                    <View style={styles.discordIcon}>
+                        <TouchableWithoutFeedback onPress={this.goToUserProfile}>
                             <View style={styles.imageAndButtonDimensions}>
                                 <SettingsIcon
                                     height={24}

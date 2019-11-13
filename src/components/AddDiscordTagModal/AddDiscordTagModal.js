@@ -1,3 +1,5 @@
+// diego          - 13-11-2019 - us148 - File creation
+
 import React, { Component } from 'react';
 import { Modal, View, TouchableWithoutFeedback, Text, TextInput } from 'react-native';
 import { connect } from 'react-redux';

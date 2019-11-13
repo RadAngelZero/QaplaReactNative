@@ -115,3 +115,15 @@ export async function getIdTokenFromUser() {
         console.log('Error: ', error);
     }
 }
+
+/**
+ * Close the sesion of the user (just on auth, don't remove
+ * data from redux)
+ */
+export async function signOut() {
+    try {
+        await auth.signOut();
+    } catch (error) {
+        console.error(error);
+    }
+}

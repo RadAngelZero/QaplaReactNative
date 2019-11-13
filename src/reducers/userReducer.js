@@ -1,6 +1,6 @@
 // diego -          01-08-2019 - us58 - Put new constants to detect the different ways to update the user data
 
-import { UPDATE_USER_DATA, REMOVE_USER_DATA } from '../utilities/Constants';
+import { UPDATE_USER_DATA, REMOVE_USER_DATA, SIGN_OUT_USER } from '../utilities/Constants';
 
 const initialState = {
     user: {}
@@ -15,6 +15,8 @@ function userReducer(state = initialState, action) {
         case REMOVE_USER_DATA:
             delete user[action.payload.key];
             return { ...state, user };
+        case SIGN_OUT_USER:
+            return { ...state, user: {} };
         default:
             return state;
       }

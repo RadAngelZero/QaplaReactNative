@@ -1,8 +1,9 @@
 // diego           - 20-08-2019 - us89 - Load user games statistics
 // diego           - 01-08-2019 - us58 - Change the way to load the user data and the way for listen changes
 
-import { UPDATE_USER_DATA, REMOVE_USER_DATA } from '../utilities/Constants';
+import { UPDATE_USER_DATA, REMOVE_USER_DATA, SIGN_OUT_USER } from '../utilities/Constants';
 import { usersRef, gamesRef, gamersRef } from '../services/database';
+import { signOut } from '../services/auth';
 
 export const getUserNode = (uid) => async (dispatch) => {
 
@@ -62,7 +63,7 @@ export const getUserNode = (uid) => async (dispatch) => {
     platformsWithGames.forEach((platformGames) => {
         Object.keys(platformGames.val()).forEach((gameKey) => {
             gamersRef.child(gameKey).orderByChild('userUid').equalTo(uid).on('value', (gamerGameData) => {
-                
+
                 if (gamerGameData.exists()) {
                     gamerGameData.forEach((gamerProfile) => {
                         dispatch(updateUserDataSuccess({ key: gameKey, value: gamerProfile.val() }));
@@ -71,6 +72,21 @@ export const getUserNode = (uid) => async (dispatch) => {
             });
         });
     });
+}
+
+export const signOutUser = () => async (dispatch) => {
+    try {
+        await signOut();
+        dispatch(signOutUserSuccess());
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const signOutUserSuccess = () => {
+    return {
+        type: SIGN_OUT_USER
+    }
 }
 
 export const updateUserDataSuccess = (payload) => {

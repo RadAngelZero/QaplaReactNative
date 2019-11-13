@@ -27,7 +27,7 @@ export class UserProfileScreen extends Component {
 
     componentWillMount() {
         this.list = [
-            
+
             /**
              * This event is triggered when the user goes to other screen
              */
@@ -65,7 +65,7 @@ export class UserProfileScreen extends Component {
 
     /**
      * Check if the given index is the last from a list of size quantityOfElements
-     * 
+     *
      * @param {number} currentIndex Index to evaluate
      * @param {number} quantityOfElements Quantity of elements from the list to evaluate
      */
@@ -82,13 +82,13 @@ export class UserProfileScreen extends Component {
          *         psFifa: 'Fifa 19'
          *     }
          * }
-         * 
+         *
          * Similar to 'Games' node of the database but only with the games of the user
          */
         let userGames = {};
-        
+
         if (this.props.userGames instanceof Array) {
-            userGames = getUserGamesOrderedByPlatform(this.props.userGames, this.props.qaplaGames);   
+            userGames = getUserGamesOrderedByPlatform(this.props.userGames, this.props.qaplaGames);
         }
 
         return (
@@ -140,13 +140,25 @@ export class UserProfileScreen extends Component {
 }
 
 function mapStateToProps(state) {
-    return {
-        userProfilePhoto: state.userReducer.user.photoUrl,
-        userName: state.userReducer.user.userName,
-        userQaploins: state.userReducer.user.credits,
-        userGames: state.userReducer.user.gameList,
-        qaplaGames: state.gamesReducer.games
+    if (Object.keys(state.userReducer.user).length > 0) {
+        return {
+            userProfilePhoto: state.userReducer.user.photoUrl,
+            userName: state.userReducer.user.userName,
+            userQaploins: state.userReducer.user.credits,
+            userGames: state.userReducer.user.gameList,
+            qaplaGames: state.gamesReducer.games
+        }
     }
+
+    /**
+     * If the user is not loged is going to be rejected from this
+     * screen, so doesn't matters this return, is just added because
+     * the screen is showed (some miliseconds) and we must return an object
+     * from this functions (redux requirements)
+     */
+    return {
+        user: state.userReducer.user
+    };
 }
 
 export default connect(mapStateToProps)(UserProfileScreen);

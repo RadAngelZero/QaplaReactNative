@@ -80,7 +80,7 @@ export class MyMatchesScreen extends Component {
                             } catch (error) {
                                 console.error(error);
                             }
-                          
+
                             //Object with the necesary fields to load the match in the app (the card and the detailed view)
                             const matchObject = {
                                 adversaryUid: adversary2,
@@ -144,7 +144,7 @@ export class MyMatchesScreen extends Component {
                         } catch (error) {
                             console.error(error);
                         }
-                      
+
                         //Object with the necesary fields to load the match in the app (the card and the detailed view)
                         const matchObject = {
                             adversaryUid: adversary1,
@@ -171,7 +171,7 @@ export class MyMatchesScreen extends Component {
                             return { matches };
                         });
                     });
-                    
+
                     /**
                      * Listen for deleted matches where the current user is the adversary1
                      */
@@ -226,7 +226,7 @@ export class MyMatchesScreen extends Component {
 }
 
 function mapStateToProps(state) {
-    if (state.userReducer.user.hasOwnProperty('id')) {
+    if (Object.keys(state.userReducer.user).length > 0 && state.userReducer.user.hasOwnProperty('id')) {
         return {
             id: state.userReducer.user.id
         };

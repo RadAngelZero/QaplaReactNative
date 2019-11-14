@@ -45,10 +45,10 @@ class PublicMatchCardScreen extends Component {
                 navigation={navigation}
                 onCloseGoTo={navigation.getParam('matchCard').matchesPlay ? 'MisRetas' : 'Publicas'} />)
     });
-    
+
     constructor(props) {
         super(props);
-    
+
         this.state = {
             openChalExModal: false,
             openAcceptChallengeModal: false,
@@ -114,7 +114,7 @@ class PublicMatchCardScreen extends Component {
                             /**
                              * If the minute or second value is less than 10 (like 9 or 8)
                              * then we add a 0 before the numeric value (so the value look like: 09 or 08)
-                             */ 
+                             */
                             minutes = minutes < 10 ? `0${minutes}` : minutes;
                             seconds = seconds < 10 ? `0${seconds}` : seconds;
 
@@ -145,7 +145,7 @@ class PublicMatchCardScreen extends Component {
     convertHourToTimeStamp(date, hour) {
         const [day, month] = date.split('/').map(p => parseInt(p, 10));
         const [h, min] = hour.split(':').map(p => parseInt(p, 10));
-        
+
         return new Date(Date.UTC((new Date).getUTCFullYear(), month - 1, day, h, min, 0, 0)).getTime();
     }
 
@@ -159,7 +159,7 @@ class PublicMatchCardScreen extends Component {
         this.setState({
           openChalExModal: !this.state.openChalExModal
         });
-    } 
+    }
 
     /**
     * Description:
@@ -171,16 +171,16 @@ class PublicMatchCardScreen extends Component {
     */
     tryToChallengeUser = async () => {
         trackOnSegment('User Wants To Challenge A Match');
-  
+
         // If the user is logged
         if (isUserLogged()) {
             // Get the info of the match
             const matchCard = this.props.navigation.getParam('matchCard');
-            
-            // Check if the match created by adversaryUid, with matchId was already challenged 
+
+            // Check if the match created by adversaryUid, with matchId was already challenged
             // by the user uid, we want to avoid to challenge a match twice or more.
             const already = await isMatchAlreadyChallenged(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
- 
+
             if (!already)
             {
                 // Challenge the user to play the match
@@ -236,15 +236,15 @@ class PublicMatchCardScreen extends Component {
         const dontShowAcceptChallengeModal = false;// await retrieveData('dont-show-delete-notifications-modal');
 
         let enoughQaploins = false;
-        
+
         // Check if the challenger user have enough Qaploins (match bet) in his account so that it can
         // play against the challenged user.
         try {
-            enoughQaploins = await userHasQaploinsToPlayMatch(notification.idUserSend, notification.idMatch); 
+            enoughQaploins = await userHasQaploinsToPlayMatch(notification.idUserSend, notification.idMatch);
         } catch (error) {
             console.error(error);
         }
-        
+
         if (enoughQaploins !== null && !enoughQaploins) {
             this.setState({ openNoQaploinsModal: true });
         } else if (dontShowAcceptChallengeModal !== 'true') {
@@ -262,7 +262,6 @@ class PublicMatchCardScreen extends Component {
 
         return (
             <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
-                
                     <View style={styles.imageHeader}>
                         <gameData.Icon width={50} height={50} />
                     </View>
@@ -300,7 +299,12 @@ class PublicMatchCardScreen extends Component {
                                 <ProfileIcon style={styles.rowIcon}/>
                                 <Text style={styles.elemR1}>
                                     {matchCard.matchesPlay ?
-                                        'Sube tu resultado en:'
+                                        ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
+                                        ||
+                                        (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0')) ?
+                                            'Esperando resultado de tu rival:'
+                                            :
+                                            'Sube tu resultado en:'
                                         :
                                         'Expira en:'
                                     }
@@ -321,7 +325,7 @@ class PublicMatchCardScreen extends Component {
                             </View>
                         </View>
                     </View>
-                    
+
                     {/*
                         If the user isn't the creator of the match, and this match is not in matches play and isn't a challenge
                         we show 'Retar' button
@@ -350,9 +354,9 @@ class PublicMatchCardScreen extends Component {
                         just a text
                     */}
                     {(matchCard.matchesPlay &&
-                        ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1)
+                        ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
                         ||
-                        (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2))) ?
+                        (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0'))) ?
                         <Text style={styles.alreadyHaveResult}>Ya has subido un resultado a esta reta</Text>
                         :
                         <>

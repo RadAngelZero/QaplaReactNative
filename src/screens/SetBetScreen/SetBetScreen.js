@@ -1,3 +1,4 @@
+// josep.sanahuja - 14-09-2019 - bug5 - Redirect backButton on Android from MatchExpireRememberModal
 // diego          - 06-09-2019 - us93 - Convert modal to remember the time of life of the match on component: MatchExpireRememberModal
 // diego          - 03-09-2019 - us96 - Removed X text icon (now this screen have custom header)
 // diego          - 02-09-2019 - us91 - Add record screen segment statistic
@@ -165,10 +166,16 @@ class SetBetScreen extends Component {
      * Close the modal and enable the button again
      */
     closeMatchExpireRememberModal = () => {
+        
         this.setState({
             timeActionMsgOpen: false,
             loading: false
         });
+
+        // bug5: BackHandler aparently is not called in MatchExpireRememberModal.js, therefore
+        // a tradeoff is to redirect to 'Publicas' here, taking advantage that this is
+        // the onClose function for MatchExpireRememberModal.
+        this.props.navigation.navigate('Publicas');
     }
 
     render() {

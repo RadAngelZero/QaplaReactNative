@@ -38,7 +38,7 @@ class SupportScreen extends React.Component {
       });
   } 
 
-  gotoPopScreen = () => {
+  gotoPreviousScreen = () => {
       this.toggleOpenModal();
       this.props.navigation.pop();
   }
@@ -73,7 +73,7 @@ class SupportScreen extends React.Component {
               </View>
               <OneTxtOneBttnModal
                     visible={ this.state.openModal }
-                    onClose={ this.gotoPopScreen }
+                    onClose={ this.gotoPreviousScreen }
                     header={ 'Gracias por tu comentario' }
                     body={ '' }
                     textButton={ 'OK' } />

@@ -2,18 +2,13 @@
 
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, SafeAreaView, Image } from 'react-native';
-import { Svg } from 'react-native-svg';
 import styles from './style';
 import Images from './../../../assets/images';
 import { connect } from 'react-redux';
-import { recordScreenOnSegment } from '../../services/statistics';
-import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
 
 import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTagModal';
 
-const LightningIcon = Images.svg.lightningIcon;
 const QaplaAppIcon = Images.png.qaplaAppIcon.img;
-const SignUpControllersBackgroundImage = Images.png.qaplaAppIcon.img;
 
 class AppSettingsMenuScreen extends Component {
     constructor(props) {
@@ -40,7 +35,7 @@ class AppSettingsMenuScreen extends Component {
                 <View style={styles.container}>
                     <Text style={styles.headerText}>Configuración</Text>
                     <Image style={styles.mainImage}
-                    source={QaplaAppIcon} />  
+                        source={QaplaAppIcon} />  
                     <Text style={styles.littleText}>{this.props.userName}</Text>  
                     
                     <View style={styles.menuHeader}>

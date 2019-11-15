@@ -1,4 +1,4 @@
-// josep.sanahuja - 26-08-2019 - us90 - File creation
+// josep.sanahuja - 26-08-2019 - us147 - File creation
 
 import {
     SET_CURRENT_SCREEN_ID,
@@ -12,8 +12,6 @@ const initialState = {
 function screensReducer(state = initialState, action) {
       switch (action.type) {
         case SET_CURRENT_SCREEN_ID:
-        	console.log('Reducer: ' + action.payload)
-        	
             return { ...state, currentScreenId: action.payload };
         case GET_CURRENT_SCREEN_ID:
             return {...state};

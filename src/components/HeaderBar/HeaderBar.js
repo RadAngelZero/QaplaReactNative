@@ -23,7 +23,6 @@ const NotificationIcon = images.svg.notificationIcon;
 const DiscordIcon = images.svg.discordIcon;
 const SettingsIcon = images.svg.settingsIcon;
 
-
 class HeaderBar extends Component {
     constructor(props) {
         super(props);
@@ -44,9 +43,7 @@ class HeaderBar extends Component {
         if (nextProp.hg1CreateMatch === true && this.props.hg1CreateMatch === false) {
             this.checkHighlightsFlags();
         }
-
-        console.log('current screen id: ' + this.props.currentScreenId);
-
+        
         return true;
     }
 

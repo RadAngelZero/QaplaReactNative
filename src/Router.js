@@ -267,7 +267,6 @@ const AppNoHeaderStackNavigator = createSwitchNavigator(
     UploadMatchResult: {
       screen: UploadMatchResultScreen
     }
-    //miau
   }
 );
 
@@ -349,7 +348,7 @@ class Router extends React.Component {
      *
      * @param {Object} navigationState Navigation state object
      *
-     * Return: {string} Router name of the current screen
+     * @return {string} Router name of the current screen
      */
     function getActiveRouteName(navigationState) {
         let res = null;
@@ -373,7 +372,7 @@ class Router extends React.Component {
           onNavigationStateChange={(prevState, currentState, action) => {
               const currentRouteName = getActiveRouteName(currentState);
               const previousRouteName = getActiveRouteName(prevState);
-              
+
               if (previousRouteName !== currentRouteName) {
                   this.props.setCurrentScreenId(currentRouteName);
                   this.props.setPreviousScreenId(previousRouteName);

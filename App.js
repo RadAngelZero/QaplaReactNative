@@ -1,12 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import Router from './src/Router';
-import rootReducer from './src/reducers/rootReducer';
-import { notifications } from './src/utilities/firebase';
 
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+import Router from './src/Router';
+import { notifications } from './src/utilities/firebase';
+import store from './src/store/store';
 
 console.disableYellowBox = true;
 

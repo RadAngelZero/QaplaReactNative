@@ -226,6 +226,10 @@ export class MyMatchesScreen extends Component {
 }
 
 function mapStateToProps(state) {
+    /**
+     * Check if user object (in redux) contains data (when a user is not logged
+     * or a user make signout their redux object is empty)
+     */
     if (Object.keys(state.userReducer.user).length > 0 && state.userReducer.user.hasOwnProperty('id')) {
         return {
             id: state.userReducer.user.id

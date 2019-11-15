@@ -1,3 +1,4 @@
+// diego           - 13-11-2019 - us89 - signOutUser created
 // diego           - 20-08-2019 - us89 - Load user games statistics
 // diego           - 01-08-2019 - us58 - Change the way to load the user data and the way for listen changes
 
@@ -76,7 +77,6 @@ export const getUserNode = (uid) => async (dispatch) => {
 
 export const signOutUser = () => async (dispatch) => {
     try {
-        await signOut();
         dispatch(signOutUserSuccess());
     } catch (error) {
         console.error(error);

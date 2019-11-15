@@ -6,6 +6,8 @@ import { createUserProfile } from './database';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import {GoogleSignin} from 'react-native-google-signin';
 import { setUserIdOnSegment } from './statistics';
+import store from './../store/store';
+import { signOutUser } from '../actions/userActions';
 
 const webClientIdForGoogleAuth = '66587586976-m04tjhp3or1f2c27jd5pvh2m3vf9cq4b.apps.googleusercontent.com';
 
@@ -123,6 +125,7 @@ export async function getIdTokenFromUser() {
 export async function signOut() {
     try {
         await auth.signOut();
+        store.dispatch(signOutUser());
     } catch (error) {
         console.error(error);
     }

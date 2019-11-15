@@ -13,8 +13,22 @@ const QaplaAppIcon = Images.png.qaplaAppIcon.img;
 const SignUpControllersBackgroundImage = Images.png.qaplaAppIcon.img;
 
 class AppSettingsMenuScreen extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            discordModalOpen: false
+        };
+    }
+
     goToSupport = () => {
         this.props.navigation.navigate('Support');
+    }
+
+    toggleDiscordModal = () => {
+        this.setState({
+            discordModalOpen: !discordModalOpen
+        })
     }
 
     render() {
@@ -38,6 +52,9 @@ class AppSettingsMenuScreen extends Component {
                         <Text style={styles.menuItemRowText}> Editar Discord </Text>
                     </View> 
                 </View>
+                <
+                    open={this.state.discordModalOpen}
+                    onClose={this.toggleDiscordModal}
             </SafeAreaView>
         );
     }

@@ -1,3 +1,4 @@
+// diego             - 15-11-2019 - us149 - Check if user data is loaded on mapStateToProps
 // diego             - 05-09-2019 - us104 - Send pickResult's as prop for allow just one upload of result by user in a match
 // diego             - 05-09-2019 - us101 - Send hour result for set timer on detail match screen
 // diego             - 03-09-2019 - us96 - Bug fixed: load duplicated matches

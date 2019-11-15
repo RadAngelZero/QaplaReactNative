@@ -1,3 +1,4 @@
+// diego           - 15-11-2019 - us149 - Check if user data is loaded on mapStateToProps
 // diego           - 03-09-2019 - us96 - Send flag onCloseGoTo when add game, so the header knows
 //                                       where go if the user closes the procces
 // diego           - 02-09-2019 - us91 - Add record screen segment statistic

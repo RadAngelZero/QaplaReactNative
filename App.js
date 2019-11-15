@@ -1,3 +1,5 @@
+// diego           - 15-11-2019 - us149 - Store moved to an independent file
+
 import React from 'react';
 import { Provider } from 'react-redux';
 
@@ -32,8 +34,8 @@ class App extends React.Component {
              * https://material.io/components/snackbars/#usage
              */
         });
-        
-      
+
+
         /*
         * If the app is in background, we listen for when a notification is opened
         */

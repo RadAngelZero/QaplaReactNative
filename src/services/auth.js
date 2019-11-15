@@ -1,6 +1,8 @@
+// diego                - 02-09-2019 - us91 - signOut function created
 // diego                - 02-09-2019 - us91 - Added setUserIdOnSegment on different signins
 // diego                - 24-07-2019 - us31 - removed unnecessary code from
 //                                          getIdTokenFromUser function
+
 import { auth, FBProvider, GoogleProvider } from './../utilities/firebase';
 import { createUserProfile } from './database';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
@@ -119,8 +121,8 @@ export async function getIdTokenFromUser() {
 }
 
 /**
- * Close the sesion of the user (just on auth, don't remove
- * data from redux)
+ * Close the sesion of the user on auth
+ * and remove data from redux
  */
 export async function signOut() {
     try {

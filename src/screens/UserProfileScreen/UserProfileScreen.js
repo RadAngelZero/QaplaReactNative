@@ -156,7 +156,7 @@ function mapStateToProps(state) {
 
     /**
      * If the user is not logged, then the user will be rejected from this
-     * screen, it doesn't matters this return, is just added because
+     * screen, it doesn't matter this return, is just added because
      * the screen is showed (some miliseconds) and we must return an object
      * from this functions (redux requirements)
      */

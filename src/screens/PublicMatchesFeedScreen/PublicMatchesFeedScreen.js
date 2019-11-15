@@ -23,8 +23,6 @@ import HighlightModal from '../../components/HighlightModal/HighlightModal'
 import { setHg1CreateMatch } from '../../actions/highlightsActions';
 import { connect } from 'react-redux';
 
-import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
-
 class PublicMatchesFeedScreen extends Component {
     state = {
         matches: [],
@@ -138,15 +136,7 @@ class PublicMatchesFeedScreen extends Component {
     }
 
     componentDidMount() {
-        this.checkHighlightsFlags();  
-
-        console.log('Dimensions height: ' +
-            17 + ' : ' + getPercentHeight(17)
-        );
-        console.log('Dimensions width: ' +
-            250 + ' :  ' + getPercentWidth(250) + '\n'
-            // 18 + ' :  ' + getPercentWidth(18)
-        );
+        this.checkHighlightsFlags();
     }
 
     /**
@@ -166,7 +156,7 @@ class PublicMatchesFeedScreen extends Component {
             // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
             // and it should not show up again.
             this.markHg1();
-            
+
             // Hide HIGHLIGHT_1_CREATE_MATCH Modal
             this.toggleHg1Modal();
         }
@@ -175,7 +165,7 @@ class PublicMatchesFeedScreen extends Component {
     }
 
     /**
-     * @description 
+     * @description
      * Checks Highlights flags stored in AsyncStorage, and evaluates which flags
      * to activate in the component state.
      *
@@ -190,7 +180,7 @@ class PublicMatchesFeedScreen extends Component {
             // Get the value for the highlight flag stored in AsynStorage.
             const value = await retrieveData(HIGHLIGHT_1_CREATE_MATCH);
 
-            if (value !== null) 
+            if (value !== null)
             {
                 // There is data stored for the flag, it can be either 'false' or 'true'.
                 this.setState({
@@ -198,7 +188,7 @@ class PublicMatchesFeedScreen extends Component {
                 });
             }
             else
-            {    
+            {
                 // That means there is no value stored for the flag, therefore
                 // result should be 'true', meaning the highlight will activate.
                 this.setState({
@@ -212,12 +202,12 @@ class PublicMatchesFeedScreen extends Component {
     }
 
     /**
-     * @description 
+     * @description
      * Toggles the flag 'showHg1Modal' in the component state. If value is 'true' then it becomes
      * 'false'. If it is 'false' then it becomes 'true'.
      *
      * TODO: Consider in a future to consider if the toggle mecanism is the ideal, instead,
-     * of using a setTrue or setFalse mecanism. 
+     * of using a setTrue or setFalse mecanism.
      */
     toggleHg1Modal = () => {
         this.setState({
@@ -226,7 +216,7 @@ class PublicMatchesFeedScreen extends Component {
     }
 
     /**
-     * @description 
+     * @description
      * Mark the Highlight flag 'HIGHLIGHT_1_CREATE_MATCH' that indicates
      * a highlight for rName of specific user only if that username is not already in use.
      * Flag is stored in AsyncStorage
@@ -234,7 +224,7 @@ class PublicMatchesFeedScreen extends Component {
     markHg1 = async () => {
         // flag in asyncStorage for component purpose
         storeData(HIGHLIGHT_1_CREATE_MATCH, 'false');
-        
+
         // Flag in redux to know when a hg has been completed. Using AsyncStorage
         this.props.setHg1CreateMatch(true);
     }
@@ -243,16 +233,16 @@ class PublicMatchesFeedScreen extends Component {
         return (
             <>
                 <View style={style.container}>
-                    <MatchCardList {...this.state} /> 
-                </View>  
-                <HighlightModal 
+                    <MatchCardList {...this.state} />
+                </View>
+                <HighlightModal
                     visible={this.state.showHg1Modal}
                     onClose={this.toggleHg1Modal}
                     showDelay={1000}
                     cb1={this.markHg1}
                     header='Crea una Reta'
                     body='Empieza a competir con otros jugadores. Crea tu reta y gana!'>
-                    <CreateRetasButton 
+                    <CreateRetasButton
                             highlighted={!this.props.navigation.getParam('firstMatchCreated')}
                             onPress={this.onCrearRetaButtonPress}/>
                 </HighlightModal>

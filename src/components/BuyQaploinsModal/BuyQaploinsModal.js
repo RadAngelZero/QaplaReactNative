@@ -8,7 +8,6 @@ import React, { Component } from 'react';
 import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
-import images from './../../../assets/images';
 import styles from './style';
 import { addQaploinsToUserCloudFunction } from '../../services/functions';
 import Images from './../../../assets/images';
@@ -16,7 +15,7 @@ import { trackOnSegment } from '../../services/statistics';
 import { QAPLOIN_PACKAGES } from '../../utilities/Constants';
 
 const CloseIcon = Images.svg.closeIcon;
-const QaploinIcon = images.svg.qaploinsIcon;
+const QaploinIcon = Images.svg.qaploinsIcon;
 
 /**
  * The logic of this component was changed for the iOS beta, instead of navigate to CheckOutPaymentScreen just

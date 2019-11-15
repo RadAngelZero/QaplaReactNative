@@ -1,3 +1,4 @@
+// diego          - 15-11-2019 - us149 - Check if user data is loaded on mapStateToProps
 // josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
 // josep.sanahuja - 08-07-2019 - us83 - Added 'goToScreen' logic & 'constructor'
 
@@ -19,7 +20,7 @@ const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 class ChooseUserNameScreen extends Component {
     constructor(props) {
         super (props);
-        
+
         this.state = {
             userName: '',
             userNameTaken: false
@@ -33,7 +34,7 @@ class ChooseUserNameScreen extends Component {
                 <View style={styles.container}>
                     <View style={styles.formContainer}>
                         <Text style={styles.title}>Crea tu nombre de usuario</Text>
-                        <TextInput 
+                        <TextInput
                             style = {this.state.userNameTaken ?styles.inputTextTaken : styles.inputText}
                             placeholder = 'Introduce tu Usuario'
                             onChangeText = {
@@ -56,14 +57,14 @@ class ChooseUserNameScreen extends Component {
 
                                     // Since key was obtained then we can free memory on AsyncStorage
                                     removeDataItem('userName-creation-scenario');
-                                    
+
                                     this.goToScreen(scenario);
                                 }
                                 else {
                                     this.setState({
                                         userNameTaken: true,
                                         userName: "Username ya usado"
-                                    }); 
+                                    });
                                 }
                             }
                         }>
@@ -105,7 +106,11 @@ class ChooseUserNameScreen extends Component {
 }
 
 function mapStateToProps(state) {
-    if (state.userReducer.user.hasOwnProperty('id')) {
+    /**
+     * Check if user object (in redux) contains data (when a user is not logged
+     * or a user make signout their redux object is empty)
+     */
+    if (Object.keys(state.userReducer.user).length > 0 && state.userReducer.user.hasOwnProperty('id')) {
         return {
             uid: state.userReducer.user.id
         };

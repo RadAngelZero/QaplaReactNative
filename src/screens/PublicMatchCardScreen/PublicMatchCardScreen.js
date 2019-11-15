@@ -1,3 +1,4 @@
+// diego          - 14-09-2019 - bug86 - Show correct text when the user has uploaded their results, but the adversary no
 // diego          - 05-09-2019 - us104 - Added logic to allow just one result per user on the displayed match
 // diego          - 05-09-2019 - us101 - Added timer to show user time before match from matches play expire
 //                                       Added timer to show user time for upload result once the adversary was uploaded their result
@@ -298,6 +299,10 @@ class PublicMatchCardScreen extends Component {
                             <View style={styles.infoContainer}>
                                 <ProfileIcon style={styles.rowIcon}/>
                                 <Text style={styles.elemR1}>
+                                    {/**
+                                     * bug86: When a user has uploaded a result, text has to show different message
+                                     * so the user can know that their result is saved and just can wait for theira adversary result
+                                     */}
                                     {matchCard.matchesPlay ?
                                         ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
                                         ||

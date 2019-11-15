@@ -1,3 +1,4 @@
+// diego             - 14-11-2019 - us146 - Added suport for challenge accepted notifications
 // diego             - 04-09-2019 - us105 - Added text for different type of notifications
 // diego             - 14-08-2019 - us80 - File creation
 
@@ -34,7 +35,7 @@ export class ActivityNotificationCard extends Component {
                 notificationText = `Tu partida con ${this.props.userName} concluyó sin un ganador.`;
                 break;
             case NOTIFICATION_MATCH_ACCEPTED:
-                notificationText = `${this.props.userName} ha aceptado tu desafio.`;
+                notificationText = `${this.props.userName} ha aceptado tu desafío.`;
                 break;
             default:
                 break;

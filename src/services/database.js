@@ -1,3 +1,4 @@
+// diego              - 14-11-2019 - us146 - Events support added
 // josep.sanahuja - 18-10-2019 - us140 - Added getAnnouncements()
 // josep.sanahuja - 04-10-2019 - XXXXX - Added sendUserFeedback()
 // josep.sanahuja - 02-10-2019 - us118 - Added createLogroIncompletoChild
@@ -658,12 +659,12 @@ export async function sendUserFeedback(message, userId) {
 // -----------------------------------------------
 
 /**
- * Allow the user to join in the given event
+ * Allow the user to join the given event
  * @param {string} uid User identifier on database
  * @param {string} eventId Event identifier on the database
  * @param {number} totalPuntos The total of points of the event
  */
-export async function joinInEvent(uid, eventId) {
+export async function joinEvent(uid, eventId) {
     eventParticipantsRef.child(eventId).child(uid).update({
         email: '',
         priceQaploins: 0,

@@ -27,12 +27,12 @@ export default styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        marginRight: 20,
-        marginLeft: 20
+        marginRight: widthPercentageToPx(5.33),
+        marginLeft: widthPercentageToPx(5.33)
     },
     headerText: {
         marginTop: heightPercentageToPx(5),
-        marginBottom: 12,
+        marginBottom: heightPercentageToPx(1.48),
         color: '#FFF',
         fontSize: 24,
         fontWeight: '900',
@@ -40,26 +40,26 @@ export default styles = StyleSheet.create({
     },
     paragraph: {
         marginTop: 5,
-        marginRight: 30,
-        marginLeft: 30,
+        marginRight: widthPercentageToPx(8),
+        marginLeft: widthPercentageToPx(8),
         color: '#CFD1DB',
         fontSize: 16,
         textAlign: 'center'
     },
     okButton: {
-        marginTop: 40,
+        marginTop: heightPercentageToPx(4.93),
         borderRadius: 100,
         backgroundColor: '#6D7DDE',
-        marginBottom: 18
+        marginBottom: heightPercentageToPx(2.28)
     },
     textButton: {
     	color: '#FFF',
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 16,
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53)
     }
 });

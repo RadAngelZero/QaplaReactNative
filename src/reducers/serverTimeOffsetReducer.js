@@ -1,3 +1,5 @@
+// diego           - 14-11-2019 - us146 - File creation
+
 import { SET_SERVER_TIME_OFFSET } from '../utilities/Constants';
 
 const initialState = {

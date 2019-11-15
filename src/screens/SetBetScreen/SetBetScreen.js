@@ -34,7 +34,6 @@ import {
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/MatchExpireRememberModal';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
 const QaploinIcon       = images.svg.qaploinsIcon;

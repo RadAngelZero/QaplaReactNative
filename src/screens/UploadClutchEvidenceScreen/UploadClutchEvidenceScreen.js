@@ -1,3 +1,4 @@
+// diego              - 14-11-2019 - us146 - AutoCapitalize disabled on TextInput
 // diego              - 12-09-2019 - us99 - Added backToUploadMatchResultScreen to handle
 //                                          the back to UploadMatchResultScreen
 // diego              - 13-08-2019 - us77 - File creation

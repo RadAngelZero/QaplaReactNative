@@ -1,10 +1,11 @@
+// diego           - 14-11-2019 - us146 - File creation
+
 import React, { Component } from 'react';
 import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './style';
 
 export class UserDontHaveGameModal extends Component {
-    addGame = () => {}
     render() {
         return (
             <Modal

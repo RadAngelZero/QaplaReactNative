@@ -1,3 +1,4 @@
+// diego             - 14-11-2019 - us146 - Load server time offset
 // josep.sanahuja    - 26-08-2019 - us90 - loadShowHg1Modal
 // diego             - 02-09-2019 - us91 - Initialize segment
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
@@ -36,6 +37,11 @@ class AuthLoadingScreen extends Component {
                 this.props.loadUserData(user.uid);
 
                 await this.checkNotificationPermission(user.uid);
+
+                /**
+                 * Get the offset between the server timeStamps and the users timeStamp
+                 * (You can see this description also in the function declaration/implementation)
+                 */
                 await this.props.getServerTimeOffset();
 
                 /*

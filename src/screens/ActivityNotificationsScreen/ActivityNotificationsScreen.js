@@ -63,6 +63,9 @@ class ActivityNotificationsScreen extends Component {
                     ?
     	            <View style={styles.container}>
                         <ScrollView>
+                            {/**
+                             * Sort the notifications in order by their key
+                             */}
     						{Object.keys(this.props.notifications).sort((a, b) => a < b).map((notificationKey) => (
     							<ActivityNotificationCard key={`ActivityNotification-${notificationKey}`}
     							{...this.props.notifications[notificationKey]} />

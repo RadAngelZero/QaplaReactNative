@@ -1,3 +1,4 @@
+// diego          - 14-11-2019 - us146 - Add serverTimeOffsetReducer
 // josep.sanahuja - 26-08-2019 - us90 - + highlightsReducer
 
 import { combineReducers } from 'redux';

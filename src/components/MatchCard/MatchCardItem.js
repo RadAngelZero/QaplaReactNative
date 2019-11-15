@@ -22,7 +22,7 @@ class MatchCardItem extends PureComponent {
         const game = this.getCurrentGameResources();
 
         /**
-         * timeStamp's are added on the server, so we need to calculate the timeStamp for the user
+         * timeStamps are added on the server, so we need to calculate the timeStamp for the user
          * (this.props.timeStamp - this.props.serverTimeOffset)
          */
         const localUserTime = new Date(this.props.timeStamp - this.props.serverTimeOffset);

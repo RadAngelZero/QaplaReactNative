@@ -1,4 +1,5 @@
-// diego          - 21-10-2019 - us135 - Create QAPLOIN_PACKAGES constant
+// diego          - 14-11-2019 - us146 - created SET_SERVER_TIME_OFFSET
+// diego          - 21-10-2019 - us135 - Created QAPLOIN_PACKAGES constant
 // josep.sanahuja - 26-08-2019 - us90 - Add Highlights constants
 // diego          - 05-08-2019 - us105 - Added activity notification constants
 // diego          - 01-08-2019 - us58 - Update user constants for the new way to load their data

@@ -1,16 +1,18 @@
+// diego           - 14-11-2019 - us146 - File creation
+
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import styles from './style';
-import { joinInEvent } from '../../services/database';
+import { joinEvent } from '../../services/database';
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
 
 class EventCard extends Component {
     /**
-     * Allow the user to join in the tournament
+     * Allow the user to join the tournament
      */
-    joinInEvent = () => {
-        joinInEvent(this.props.uid, this.props.id);
+    joinEvent = () => {
+        joinEvent(this.props.uid, this.props.id);
     }
 
     render() {
@@ -31,7 +33,7 @@ class EventCard extends Component {
                     <View style={styles.colBContainer}>
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />
                         {(priceQaploins === null || priceQaploins === undefined) &&
-                            <TouchableWithoutFeedback onPress={this.joinInEvent}>
+                            <TouchableWithoutFeedback onPress={this.joinEvent}>
                                 <View style={styles.redimirButton}>
                                     <Text style={styles.redimirTextButton}>Participar</Text>
                                 </View>

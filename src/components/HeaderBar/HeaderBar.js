@@ -1,3 +1,4 @@
+// josep.sanahuja    - 13-11-2019 - us147 - Connect currentScreenId
 // josep.sanahuja    - 26-08-2019 - us90 - Added notification highlight
 // diego             - 01-08-2019 - us58 - Navigation implemented to notificationRouter
 // josep.sanahuja    - 30-07-2019 - us59 - + navigate('Mock2')
@@ -20,6 +21,7 @@ import { HIGHLIGHT_2_NOTIFICATIONS, QAPLA_DISCORD_CHANNEL } from '../../utilitie
 
 const NotificationIcon = images.svg.notificationIcon;
 const DiscordIcon = images.svg.discordIcon;
+const SettingsIcon = images.svg.settingsIcon;
 
 class HeaderBar extends Component {
     constructor(props) {
@@ -41,7 +43,7 @@ class HeaderBar extends Component {
         if (nextProp.hg1CreateMatch === true && this.props.hg1CreateMatch === false) {
             this.checkHighlightsFlags();
         }
-
+        
         return true;
     }
 
@@ -135,6 +137,10 @@ class HeaderBar extends Component {
         Linking.openURL(QAPLA_DISCORD_CHANNEL);
     }
 
+    goToUserProfile = () => {
+      this.props.navigation.navigate('AppSettingsMenu');
+    }
+
     render() {
 
         return (
@@ -159,16 +165,30 @@ class HeaderBar extends Component {
                 <View style={styles.textContainer} testID='textContainer'>
                     <Text style={styles.textStyle} testID='text'>Qapla</Text>
                 </View>
-                <View style={styles.discordIcon} testID='discordIcon'>
-                    <TouchableWithoutFeedback onPress={this.sendToDiscord}>
-                        <View style={styles.imageAndButtonDimensions}>
-                            <DiscordIcon
-                                height={32}
-                                width={32}
-                                fill='#FFF' />
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
+                {this.props.currentScreenId !== 'Perfil' &&
+                  <View style={styles.discordIcon} testID='discordIcon'>
+                      <TouchableWithoutFeedback onPress={this.sendToDiscord}>
+                          <View style={styles.imageAndButtonDimensions}>
+                              <DiscordIcon
+                                  height={32}
+                                  width={32}
+                                  fill='#FFF' />
+                          </View>
+                      </TouchableWithoutFeedback>
+                  </View>
+                }
+                {this.props.currentScreenId === 'Perfil' &&
+                    <View style={styles.discordIcon}>
+                        <TouchableWithoutFeedback onPress={this.goToUserProfile}>
+                            <View style={styles.imageAndButtonDimensions}>
+                                <SettingsIcon
+                                    height={24}
+                                    width={24}
+                                    fill='#FFF' />
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                }
             </View>
         );
     }
@@ -176,7 +196,8 @@ class HeaderBar extends Component {
 
 function mapStateToProps(state) {
     return {
-        hg1CreateMatch: state.highlightsReducer.hg1CreateMatch
+        hg1CreateMatch: state.highlightsReducer.hg1CreateMatch,
+        currentScreenId: state.screensReducer.currentScreenId
     }
 }
 

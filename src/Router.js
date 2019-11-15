@@ -1,4 +1,5 @@
-// josep.sanahuja  - 04-10-2019 - XXXXX - Added SupportScreen
+// josep.sanahuja  - 13-11-2019 - us147 - Add AppSettingsMenuScreen + Redux connect
+// josep.sanahuja  - 04-10-2019 - XXXXX - Added TabtScreen
 // diego           - 18-09-2019 - us119 - Added VerificationScreen
 // diego           - 18-09-2019 - us110 - Created LogrosTabNavigator
 // diego           - 18-09-2019 - us109 - Added Tab for logros on TabMainNavigator
@@ -14,6 +15,8 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createSwitchNavigator} from 'react-navigation';
 
+import { setCurrentScreenId, setPreviousScreenId } from './actions/screensActions';
+import { connect } from 'react-redux';
 import Images from './../assets/images';
 
 import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen';
@@ -37,8 +40,10 @@ import LogrosActivosScreen from './screens/LogrosActivosScreen/LogrosActivosScre
 import LogrosCompletadosScreen from './screens/LogrosCompletadosScreen/LogrosCompletadosScreen';
 import VerificationScreen from './screens/VerificationScreen/VerificationScreen';
 
-import MockScreen1 from './screens/MockScreen1/MockScreen1';
 import SupportScreen from './screens/SupportScreen/SupportScreen';
+import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
+
+import MockScreen1 from './screens/MockScreen1/MockScreen1';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
@@ -175,20 +180,6 @@ const TabMainNavigator = createBottomTabNavigator({
       )
     })
   },
-  Support: {
-    screen:   SupportScreen,
-    navigationOptions: ({ navigation }) => ({
-      title: "Soporte",  //Tried to hide this for next tab Search.,
-      tabBarIcon: ({ tintColor, focused }) => (
-        <View>
-          <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
-          {focused &&
-            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Support</Text>
-          }
-        </View>
-      )
-    })
-  },
   Perfil: {
     screen:   UserProfileScreen,
     navigationOptions: ({ navigation }) => ({
@@ -261,7 +252,7 @@ const MatchWizardStackNavigator = createStackNavigator(
       navigationOptions: {
         header: props => <TopNavOptions back close {...props} onCloseGoTo='Publicas' />
       }
-    },
+    }
   },
   {
     initialRouteName: 'ChooseMatchType',
@@ -279,7 +270,7 @@ const AppNoHeaderStackNavigator = createSwitchNavigator(
   }
 );
 
-export default class Router extends React.Component {
+class Router extends React.Component {
   render() {
     // or not shown
     const RootStack = createStackNavigator(
@@ -308,6 +299,12 @@ export default class Router extends React.Component {
             header: null
           }
         },
+        AppSettingsMenu:{
+          screen: AppSettingsMenuScreen,
+          navigationOptions: {
+            header: props => <TopNavOptions back {...props} />
+          }
+        },
         Notifications: {
           screen: NotificationTabNavigator,
           navigationOptions: {
@@ -317,6 +314,12 @@ export default class Router extends React.Component {
         MatchCard: {
           screen: PublicMatchCardScreen
         },
+        Support: {
+          screen: SupportScreen,
+          navigationOptions: {
+            header: props => <TopNavOptions back {...props} />
+          }
+        }
       },
       {
         initialRouteName:  'Home'
@@ -339,7 +342,52 @@ export default class Router extends React.Component {
     // Create main router entry point for the app
     const AppContainer = createAppContainer(MainNavigator);
 
-    // render de main router entry point for the app
-    return <AppContainer />
+    /**
+     * @description
+     * Gets the current screen from navigation state
+     *
+     * @param {Object} navigationState Navigation state object
+     *
+     * @return {string} Router name of the current screen
+     */
+    function getActiveRouteName(navigationState) {
+        let res = null;
+
+        if (navigationState) {
+            const route = navigationState.routes[navigationState.index];
+            
+            // dive into nested navigators
+            if (route.routes) {
+                res = getActiveRouteName(route);
+            }
+            else {
+                res = route.routeName;
+            }
+        }
+        return res;
+    }
+
+    return (
+      <AppContainer 
+          onNavigationStateChange={(prevState, currentState, action) => {
+              const currentRouteName = getActiveRouteName(currentState);
+              const previousRouteName = getActiveRouteName(prevState);
+
+              if (previousRouteName !== currentRouteName) {
+                  this.props.setCurrentScreenId(currentRouteName);
+                  this.props.setPreviousScreenId(previousRouteName);
+              }
+          }}
+      />
+    )
   }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        setCurrentScreenId: (screenId) => setCurrentScreenId(screenId)(dispatch),
+        setPreviousScreenId: (screenId) => setPreviousScreenId(screenId)(dispatch)
+    };
+}
+
+export default connect(null, mapDispatchToProps)(Router);

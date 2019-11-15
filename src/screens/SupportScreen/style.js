@@ -21,20 +21,6 @@ export default StyleSheet.create({
     paddingVertical: heightPercentageToPx(0.62),
     borderRadius:3
   },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  capture: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: heightPercentageToPx(1.85),
-    paddingHorizontal: widthPercentageToPx(5.33),
-    alignSelf: 'center',
-    margin: heightPercentageToPx(2.46),
-  },
   textInput: {
         backgroundColor: '#11152D',
         height: heightPercentageToPx(20),

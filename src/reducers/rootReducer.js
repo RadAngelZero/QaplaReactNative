@@ -5,10 +5,12 @@ import userReducer from './userReducer';
 import gamesReducer from './gamesReducer';
 import highlightsReducer from './highlightsReducer';
 import logrosReducer from './logrosReducer';
+import screensReducer from './screensReducer';
 
 export default combineReducers({
     userReducer,
     gamesReducer,
     highlightsReducer,
-    logrosReducer
+    logrosReducer,
+    screensReducer
 });

@@ -44,6 +44,7 @@ import LogrosIcon from './icons/LogrosActive.svg';
 import VerifyIcon from './icons/verificado.svg';
 import SupportIcon from './icons/support.svg';
 import DiscordIcon from './icons/discord.svg';
+import SettingsIcon from './icons/settings.svg';
 
 // Images
 
@@ -126,6 +127,9 @@ const images = {
 		addButton: {
 			img: require('./images/addButton.png')
 		},
+		qaplaAppIcon: {
+			img: require('./icons/qapla-app-icon.png')
+		},
 		fifaXboxImg: {
 			img: require('./images/FIFAXbox.png'),
 			uri: '@assets/images/FIFA.png'
@@ -201,7 +205,8 @@ const images = {
 		lolIcon: LOLIcon,
 		smashIcon: SmashIcon,
 		haloIcon: HaloIcon,
-		discordIcon: DiscordIcon
+		discordIcon: DiscordIcon,
+		settingsIcon: SettingsIcon
 	}
 };
 

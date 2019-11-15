@@ -18,14 +18,13 @@ export default styles = StyleSheet.create({
     headerText: {
         color: '#FFF',
         fontSize: 24,
-        fontWeight: 'bold',
-        marginTop: heightPercentageToPx(2)
+        fontWeight: 'bold'
     },
     littleText: {
         color: '#FFF',
         fontSize: 12,
         marginTop: heightPercentageToPx(2),
-        marginBottom: heightPercentageToPx(10)
+        marginBottom: heightPercentageToPx(5)
     },
     menuHeaderText: {
         color: '#E1E1E3',
@@ -54,7 +53,7 @@ export default styles = StyleSheet.create({
         resizeMode: 'contain',
         width: widthPercentageToPx(20),
         height: widthPercentageToPx(20),
-        marginTop: heightPercentageToPx(5)
+        marginTop: heightPercentageToPx(2)
     }
 
 });

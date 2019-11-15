@@ -5,8 +5,11 @@ import { View, Text, TouchableWithoutFeedback, SafeAreaView, Image } from 'react
 import { Svg } from 'react-native-svg';
 import styles from './style';
 import Images from './../../../assets/images';
+import { connect } from 'react-redux';
 import { recordScreenOnSegment } from '../../services/statistics';
 import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
+
+import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTagModal';
 
 const LightningIcon = Images.svg.lightningIcon;
 const QaplaAppIcon = Images.png.qaplaAppIcon.img;
@@ -27,7 +30,7 @@ class AppSettingsMenuScreen extends Component {
 
     toggleDiscordModal = () => {
         this.setState({
-            discordModalOpen: !discordModalOpen
+            discordModalOpen: !this.state.discordModalOpen
         })
     }
 
@@ -38,7 +41,7 @@ class AppSettingsMenuScreen extends Component {
                     <Text style={styles.headerText}>Configuración</Text>
                     <Image style={styles.mainImage}
                     source={QaplaAppIcon} />  
-                    <Text style={styles.littleText}>Miau</Text>  
+                    <Text style={styles.littleText}>{this.props.userName}</Text>  
                     
                     <View style={styles.menuHeader}>
                         <Text style={styles.menuHeaderText}> CONFIGURACIÓN </Text>
@@ -48,16 +51,24 @@ class AppSettingsMenuScreen extends Component {
                             <Text style={styles.menuItemRowText}> Soporte </Text>
                         </View>
                     </TouchableWithoutFeedback>    
-                    <View style={styles.menuItemRow}>
-                        <Text style={styles.menuItemRowText}> Editar Discord </Text>
-                    </View> 
+                    <TouchableWithoutFeedback onPress={this.toggleDiscordModal}>
+                        <View style={styles.menuItemRow}>
+                            <Text style={styles.menuItemRowText}> Editar Discord </Text>
+                        </View>
+                    </TouchableWithoutFeedback> 
                 </View>
-                <
+                <AddDiscordTagModal
                     open={this.state.discordModalOpen}
-                    onClose={this.toggleDiscordModal}
+                    onClose={this.toggleDiscordModal} />
             </SafeAreaView>
         );
     }
 }
 
-export default AppSettingsMenuScreen;
+function mapStateToProps(state) {
+    return {
+        userName: state.userReducer.user.userName
+    }
+}
+
+export default connect(mapStateToProps)(AppSettingsMenuScreen);

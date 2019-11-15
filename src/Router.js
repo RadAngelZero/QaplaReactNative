@@ -265,10 +265,8 @@ const AppNoHeaderStackNavigator = createSwitchNavigator(
     },
     UploadMatchResult: {
       screen: UploadMatchResultScreen
-    },
-    AppSettingsMenu:{
-      screen: AppSettingsMenuScreen
     }
+    //miau
   }
 );
 
@@ -299,6 +297,12 @@ class Router extends React.Component {
           screen: AppNoHeaderStackNavigator,
           navigationOptions: {
             header: null
+          }
+        },
+        AppSettingsMenu:{
+          screen: AppSettingsMenuScreen,
+          navigationOptions: {
+            header: props => <TopNavOptions back {...props} />
           }
         },
         Notifications: {

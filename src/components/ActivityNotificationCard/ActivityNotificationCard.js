@@ -1,4 +1,4 @@
-// diego             - 14-11-2019 - us146 - Added suport for challenge accepted notifications
+// diego             - 14-11-2019 - us146 - Added NOTIFICATION_TYPE_TIE and NOTIFICATION_MATCH_ACCEPTED
 // diego             - 04-09-2019 - us105 - Added text for different type of notifications
 // diego             - 14-08-2019 - us80 - File creation
 

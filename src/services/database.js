@@ -1,4 +1,4 @@
-// diego              - 14-11-2019 - us146 - Events support added
+// diego          - 14-11-2019 - us146 - Events support added
 // josep.sanahuja - 18-10-2019 - us140 - Added getAnnouncements()
 // josep.sanahuja - 04-10-2019 - XXXXX - Added sendUserFeedback()
 // josep.sanahuja - 02-10-2019 - us118 - Added createLogroIncompletoChild

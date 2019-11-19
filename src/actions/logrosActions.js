@@ -1,4 +1,4 @@
-// diego           - 14-11-2019 - us146 - Suport for events added
+// diego           - 14-11-2019 - us146 - Support for events added
 // diego           - 26-09-2019 - us130 - File creation
 
 import { logrosActRef, logrosRef, cuentasVerificadasRef, activeEventsRef, eventParticipantsRef, activeTournamentsRef, pointsTournamentsRef } from '../services/database';

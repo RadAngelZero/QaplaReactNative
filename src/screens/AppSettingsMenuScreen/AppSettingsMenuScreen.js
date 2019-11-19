@@ -7,6 +7,7 @@ import Images from './../../../assets/images';
 import { connect } from 'react-redux';
 
 import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTagModal';
+import { signOut } from '../../services/auth';
 
 const QaplaAppIcon = Images.png.qaplaAppIcon.img;
 
@@ -29,28 +30,38 @@ class AppSettingsMenuScreen extends Component {
         })
     }
 
+    closeSession = () => {
+        signOut();
+        this.props.navigation.navigate('Publicas');
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <Text style={styles.headerText}>Configuración</Text>
                     <Image style={styles.mainImage}
-                        source={QaplaAppIcon} />  
-                    <Text style={styles.littleText}>{this.props.userName}</Text>  
-                    
+                        source={QaplaAppIcon} />
+                    <Text style={styles.littleText}>{this.props.userName}</Text>
+
                     <View style={styles.menuHeader}>
                         <Text style={styles.menuHeaderText}> CONFIGURACIÓN </Text>
-                    </View> 
+                    </View>
                     <TouchableWithoutFeedback onPress={this.goToSupport}>
                         <View style={styles.menuItemRow}>
                             <Text style={styles.menuItemRowText}> Soporte </Text>
                         </View>
-                    </TouchableWithoutFeedback>    
+                    </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={this.toggleDiscordModal}>
                         <View style={styles.menuItemRow}>
                             <Text style={styles.menuItemRowText}> Editar Discord </Text>
                         </View>
-                    </TouchableWithoutFeedback> 
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={this.closeSession}>
+                        <View style={styles.menuItemRow}>
+                            <Text style={styles.menuItemRowText}>Cerrar sesión</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
                 </View>
                 <AddDiscordTagModal
                     open={this.state.discordModalOpen}

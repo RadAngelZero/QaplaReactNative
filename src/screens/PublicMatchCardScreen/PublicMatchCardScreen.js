@@ -1,3 +1,4 @@
+// diego          - 14-09-2019 - bug86 - Show correct text when the user has uploaded their results, but the adversary no
 // diego          - 05-09-2019 - us104 - Added logic to allow just one result per user on the displayed match
 // diego          - 05-09-2019 - us101 - Added timer to show user time before match from matches play expire
 //                                       Added timer to show user time for upload result once the adversary was uploaded their result
@@ -272,65 +273,74 @@ class PublicMatchCardScreen extends Component {
 
         return (
             <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
-                
-                    <View style={styles.imageHeader}>
-                        <gameData.Icon width={50} height={50} />
+                <View style={styles.imageHeader}>
+                    <gameData.Icon width={50} height={50} />
+                </View>
+                <View style={styles.rowContainer}>
+                    <View style={styles.headerRow1}>
+                        <QaploinsIcon style={styles.hr1}/>
+                        <Text style={styles.gameName}>{gameData.name}</Text>
+                        <QaploinsIcon style={styles.hr3}/>
                     </View>
-                    <View style={styles.rowContainer}>
-                        <View style={styles.headerRow1}>
-                            <QaploinsIcon style={styles.hr1}/>
-                            <Text style={styles.gameName}>{gameData.name}</Text>
-                            <QaploinsIcon style={styles.hr3}/>
+
+                    <Text style={styles.gamertag}>{matchCard.userName}</Text>
+
+                    <View style={styles.row}>
+                        <View style={styles.infoContainer}>
+                            <ProfileIcon style={styles.rowIcon}/>
+                            <Text style={[styles.elemR1, styles.activeColor]}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
                         </View>
-
-                        <Text style={styles.gamertag}>{matchCard.userName}</Text>
-
-                        <View style={styles.row}>
-                            <View style={styles.infoContainer}>
-                                <ProfileIcon style={styles.rowIcon}/>
-                                <Text style={[styles.elemR1, styles.activeColor]}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
-                            </View>
-                            <View style={styles.infoContainer}>
-                                <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.gamerTag.gamerTag}</Text>
-                            </View>
+                        <View style={styles.infoContainer}>
+                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.gamerTag.gamerTag}</Text>
                         </View>
+                    </View>
 
-                        <View style={styles.row}>
-                            <View style={styles.infoContainer}>
-                                <ProfileIcon style={styles.rowIcon}/>
-                                <Text style={styles.elemR1}>No. de Integrantes</Text>
-                            </View>
-                            <View style={styles.infoContainer}>
-                                <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</Text>
-                            </View>
+                    <View style={styles.row}>
+                        <View style={styles.infoContainer}>
+                            <ProfileIcon style={styles.rowIcon}/>
+                            <Text style={styles.elemR1}>No. de Integrantes</Text>
                         </View>
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</Text>
+                        </View>
+                    </View>
 
-                        <View style={styles.row}>
-                            <View style={styles.infoContainer}>
-                                <ProfileIcon style={styles.rowIcon}/>
-                                <Text style={styles.elemR1}>
-                                    {matchCard.matchesPlay ?
-                                        'Sube tu resultado en:'
+                    <View style={styles.row}>
+                        <View style={styles.infoContainer}>
+                            <ProfileIcon style={styles.rowIcon}/>
+                            <Text style={styles.elemR1}>
+                                {/**
+                                 * bug86: When a user has uploaded a result, text has to show different message
+                                 * so the user can know that their result is saved and just can wait for theira adversary result
+                                 */}
+                                {matchCard.matchesPlay ?
+                                    ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
+                                    ||
+                                    (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0')) ?
+                                        'Esperando resultado de tu rival:'
                                         :
-                                        'Expira en:'
-                                    }
-                                </Text>
-                            </View>
-                            <View style={styles.infoContainer}>
-                                <Text style={styles.rightTextStyle}>{this.state.validTimeLeft}</Text>
-                            </View>
+                                        'Sube tu resultado en:'
+                                    :
+                                    'Expira en:'
+                                }
+                            </Text>
                         </View>
-
-                        <View style={styles.row}>
-                            <View style={styles.infoContainer}>
-                                <ProfileIcon style={styles.rowIcon}/>
-                                <Text style={styles.elemR1}>Qaploins</Text>
-                            </View>
-                            <View style={styles.infoContainer}>
-                                <Text style={styles.rightTextStyle}>{matchCard.bet}</Text>
-                            </View>
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.rightTextStyle}>{this.state.validTimeLeft}</Text>
                         </View>
                     </View>
+
+                    <View style={styles.row}>
+                        <View style={styles.infoContainer}>
+                            <ProfileIcon style={styles.rowIcon}/>
+                            <Text style={styles.elemR1}>Qaploins</Text>
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.rightTextStyle}>{matchCard.bet}</Text>
+                        </View>
+                    </View>
+                </View>
+
                 {/*
                     If the user isn't the creator of the match, and this match is not in matches play and isn't a challenge
                     we show 'Retar' button
@@ -365,6 +375,7 @@ class PublicMatchCardScreen extends Component {
                     <Text style={styles.alreadyHaveResult}>Ya has subido un resultado a esta reta</Text>
                     :
                     <>
+                    {/*TODO: disabled=this.state.expired} */}
                     {matchCard.matchesPlay &&
                         <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult} disabled={this.state.expired}>
                             <View style={styles.bottomButton}>

@@ -42,6 +42,8 @@ target 'QaplaReactNative' do
   
   pod 'Firebase/Database'
 
+  pod 'Firebase/Messaging'
+
   pod 'Firebase/Auth'
 
   pod 'react-native-camera', path: '../node_modules/react-native-camera'

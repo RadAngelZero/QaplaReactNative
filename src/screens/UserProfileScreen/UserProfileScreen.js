@@ -1,3 +1,4 @@
+// diego           - 15-11-2019 - us149 - Check if user data is loaded on mapStateToProps
 // diego           - 03-09-2019 - us96 - Send flag onCloseGoTo when add game, so the header knows
 //                                       where go if the user closes the procces
 // diego           - 02-09-2019 - us91 - Add record screen segment statistic
@@ -27,7 +28,7 @@ export class UserProfileScreen extends Component {
 
     componentWillMount() {
         this.list = [
-            
+
             /**
              * This event is triggered when the user goes to other screen
              */
@@ -65,7 +66,7 @@ export class UserProfileScreen extends Component {
 
     /**
      * Check if the given index is the last from a list of size quantityOfElements
-     * 
+     *
      * @param {number} currentIndex Index to evaluate
      * @param {number} quantityOfElements Quantity of elements from the list to evaluate
      */
@@ -82,13 +83,13 @@ export class UserProfileScreen extends Component {
          *         psFifa: 'Fifa 19'
          *     }
          * }
-         * 
+         *
          * Similar to 'Games' node of the database but only with the games of the user
          */
         let userGames = {};
-        
+
         if (this.props.userGames instanceof Array) {
-            userGames = getUserGamesOrderedByPlatform(this.props.userGames, this.props.qaplaGames);   
+            userGames = getUserGamesOrderedByPlatform(this.props.userGames, this.props.qaplaGames);
         }
 
         return (
@@ -140,13 +141,29 @@ export class UserProfileScreen extends Component {
 }
 
 function mapStateToProps(state) {
-    return {
-        userProfilePhoto: state.userReducer.user.photoUrl,
-        userName: state.userReducer.user.userName,
-        userQaploins: state.userReducer.user.credits,
-        userGames: state.userReducer.user.gameList,
-        qaplaGames: state.gamesReducer.games
+    /**
+     * Check if user object (in redux) contains data (when a user is not logged
+     * or a user make signout their redux object is empty)
+     */
+    if (Object.keys(state.userReducer.user).length > 0) {
+        return {
+            userProfilePhoto: state.userReducer.user.photoUrl,
+            userName: state.userReducer.user.userName,
+            userQaploins: state.userReducer.user.credits,
+            userGames: state.userReducer.user.gameList,
+            qaplaGames: state.gamesReducer.games
+        }
     }
+
+    /**
+     * If the user is not logged, then the user will be rejected from this
+     * screen, it doesn't matter this return, is just added because
+     * the screen is showed (some miliseconds) and we must return an object
+     * from this functions (redux requirements)
+     */
+    return {
+        user: state.userReducer.user
+    };
 }
 
 export default connect(mapStateToProps)(UserProfileScreen);

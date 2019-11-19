@@ -1,4 +1,5 @@
 // diego          - 14-11-2019 - us146 - created SET_SERVER_TIME_OFFSET
+// diego          - 13-11-2019 - us135 - Created SIGN_OUT_USER constant
 // diego          - 21-10-2019 - us135 - Created QAPLOIN_PACKAGES constant
 // josep.sanahuja - 26-08-2019 - us90 - Add Highlights constants
 // diego          - 05-08-2019 - us105 - Added activity notification constants
@@ -10,6 +11,7 @@ export const SEGMENT_KEY = 'Jngk5nWegue5IJe5XPV86T46qrA1nRCQ';
 // User constants
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 export const REMOVE_USER_DATA = 'REMOVE_USER_DATA';
+export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 
 // Games constants
 export const GET_LIST_OF_GAMES = 'GET_LIST_OF_GAMES';
@@ -21,6 +23,10 @@ export const SET_HIGHLIGHT_1_CREATE_MATCH = 'SET_HIGHLIGHT_1_CREATE_MATCH';
 
 // Server Time Offset constants
 export const SET_SERVER_TIME_OFFSET = 'SET_SERVER_TIME_OFFSET';
+
+// Screens REDUX constants
+export const SET_CURRENT_SCREEN_ID = 'SET_CURRENT_SCREEN_ID';
+export const SET_PREVIOUS_SCREEN_ID = 'SET_PREVIOUS_SCREEN_ID';
 
 // Crear Reta Button in PublicMatchesFeedScreen.js
 export const HIGHLIGHT_1_CREATE_MATCH = 'HIGHLIGHT_1_CREATE_MATCH';

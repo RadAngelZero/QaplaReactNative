@@ -1,12 +1,11 @@
+// diego           - 15-11-2019 - us149 - Store moved to an independent file
+
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import Router from './src/Router';
-import rootReducer from './src/reducers/rootReducer';
-import { notifications } from './src/utilities/firebase';
 
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+import Router from './src/Router';
+import { notifications } from './src/utilities/firebase';
+import store from './src/store/store';
 
 console.disableYellowBox = true;
 
@@ -35,8 +34,8 @@ class App extends React.Component {
              * https://material.io/components/snackbars/#usage
              */
         });
-        
-      
+
+
         /*
         * If the app is in background, we listen for when a notification is opened
         */

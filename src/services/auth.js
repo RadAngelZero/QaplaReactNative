@@ -1,11 +1,15 @@
+// diego                - 02-09-2019 - us91 - signOut function created
 // diego                - 02-09-2019 - us91 - Added setUserIdOnSegment on different signins
 // diego                - 24-07-2019 - us31 - removed unnecessary code from
 //                                          getIdTokenFromUser function
+
 import { auth, FBProvider, GoogleProvider } from './../utilities/firebase';
 import { createUserProfile } from './database';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import {GoogleSignin} from 'react-native-google-signin';
 import { setUserIdOnSegment } from './statistics';
+import store from './../store/store';
+import { signOutUser } from '../actions/userActions';
 
 const webClientIdForGoogleAuth = '66587586976-m04tjhp3or1f2c27jd5pvh2m3vf9cq4b.apps.googleusercontent.com';
 
@@ -113,5 +117,18 @@ export async function getIdTokenFromUser() {
         return await auth.currentUser.getIdToken(true);
     } catch(error) {
         console.log('Error: ', error);
+    }
+}
+
+/**
+ * Close the sesion of the user on auth
+ * and remove data from redux
+ */
+export async function signOut() {
+    try {
+        await auth.signOut();
+        store.dispatch(signOutUser());
+    } catch (error) {
+        console.error(error);
     }
 }

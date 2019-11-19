@@ -32,7 +32,7 @@ class RetasNotificationsScreen extends Component {
          // 2: Component is done animating
          // 3: Start fetching the team
          //this.props.dispatchTeamFetchStart();
-        
+
          // 4: set didFinishInitialAnimation to false
          // This will render the navigation bar and a list of players
          this.setState({
@@ -43,7 +43,7 @@ class RetasNotificationsScreen extends Component {
 
     componentWillMount() {
         this.list = [
-            
+
             /**
              * This event is triggered when the user goes to other screen
              */
@@ -60,7 +60,7 @@ class RetasNotificationsScreen extends Component {
         //Remove willBlur and willFocus listeners on navigation
         this.list.forEach((item) => item.remove());
 	}
-    
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -75,11 +75,11 @@ class RetasNotificationsScreen extends Component {
                                     uid={this.props.uid} />
                             ))}
                         </ScrollView>
-                    </View> 
+                    </View>
                 :
                 null
                 }
-                
+
             </SafeAreaView>
         );
     }

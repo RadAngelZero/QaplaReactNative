@@ -202,7 +202,7 @@ export async function addGameToUser(uid, userName, platform, gameKey, gamerTag) 
             default:
                 break;
         }
-        
+
         await usersRef.child(uid).child('gamerTags').update({ [gamerTagChildNode.key]: gamerTagChildNode.value});
 
         const gameAdded = gamersRef.child(gameKey).push({
@@ -714,4 +714,22 @@ export async function getAnnouncements() {
     }
 
     return res;
+}
+
+
+// -----------------------------------------------
+// User profile
+// -----------------------------------------------
+
+/**
+ * Update the discord tag of the given user
+ * @param {string} uid User identifier on the database
+ * @param {string} discordTag The value of the tag (data to update on the database)
+ */
+export async function updateUserDiscordTag(uid, discordTag) {
+    try {
+        await usersRef.child(uid).update({ discordTag });
+    } catch (error) {
+        console.error(error);
+    }
 }

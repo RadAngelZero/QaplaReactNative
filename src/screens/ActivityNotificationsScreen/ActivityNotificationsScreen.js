@@ -71,7 +71,6 @@ class ActivityNotificationsScreen extends Component {
     							{...this.props.notifications[notificationKey]} />
     						))}
     					</ScrollView>
-
                     </View>
     	            :
     	            null

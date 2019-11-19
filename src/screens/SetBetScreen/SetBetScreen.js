@@ -44,7 +44,7 @@ const MoreQaploinsIcon  = images.svg.moreQaploins;
 class SetBetScreen extends Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
             commission: 10,
             currentBet: 150,
@@ -57,7 +57,7 @@ class SetBetScreen extends Component {
     componentWillMount() {
         this.setQaplaComission();
         this.list = [
-            
+
             /**
              * This event is triggered when the user goes to other screen
              */
@@ -84,16 +84,16 @@ class SetBetScreen extends Component {
     /**
      * Description:
      * Retrieves the Qapla comission for transactions and sets it into the state.
-     * 
+     *
      * Params NONE
      */
     async setQaplaComission() {
         try {
-            const com = await getCurrentQaplaCommission(); 
+            const com = await getCurrentQaplaCommission();
 
             this.setState({
                 commission: com
-            });   
+            });
         } catch(err) {
             console.log(err);
         }
@@ -135,7 +135,7 @@ class SetBetScreen extends Component {
                     gameKey: this.props.selectedGame.gameKey,
                     platform: this.props.selectedGame.platform
                 });
-                
+
                 // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
                 // return a 'null' value, otherwise it would return a 'false' 'true' value from a
                 // previous flag update.
@@ -143,7 +143,7 @@ class SetBetScreen extends Component {
 
                 // When creating a match 'this.state.timeActionMsgOpen' is expected to be false, 
                 // otherwise when loading the Component the Modal would automatically open, which is
-                // a behaviour we don't want. 
+                // a behaviour we don't want.
                 if (openMsgFlag || openMsgFlag === null) {
 
                     // Tooggle modal state to open
@@ -215,7 +215,7 @@ class SetBetScreen extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
-            </SafeAreaView>    
+            </SafeAreaView>
         );
     }
 }

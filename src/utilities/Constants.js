@@ -1,3 +1,4 @@
+// diego          - 14-11-2019 - us146 - created SET_SERVER_TIME_OFFSET
 // diego          - 13-11-2019 - us135 - Created SIGN_OUT_USER constant
 // diego          - 21-10-2019 - us135 - Created QAPLOIN_PACKAGES constant
 // josep.sanahuja - 26-08-2019 - us90 - Add Highlights constants
@@ -19,6 +20,9 @@ export const SET_SELECTED_GAME = 'SET_SELECTED_GAME';
 // Highlights constants
 export const GET_HIGHLIGHT_1_CREATE_MATCH = 'GET_HIGHLIGHT_1_CREATE_MATCH';
 export const SET_HIGHLIGHT_1_CREATE_MATCH = 'SET_HIGHLIGHT_1_CREATE_MATCH';
+
+// Server Time Offset constants
+export const SET_SERVER_TIME_OFFSET = 'SET_SERVER_TIME_OFFSET';
 
 // Screens REDUX constants
 export const SET_CURRENT_SCREEN_ID = 'SET_CURRENT_SCREEN_ID';
@@ -47,6 +51,7 @@ export const NOTIFICATION_TYPE_LOSER = 'resultadoL';
 export const NOTIFICATION_TYPE_RESULT = 'resultado';
 export const NOTIFICATION_TYPE_REVISION = 'revision';
 export const NOTIFICATION_TYPE_TIE = 'empate';
+export const NOTIFICATION_MATCH_ACCEPTED = 'retaA';
 
 // Posible match results constants
 export const WON_RESULT = '1';

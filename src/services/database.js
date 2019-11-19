@@ -1,3 +1,4 @@
+// diego          - 14-11-2019 - us146 - Events support added
 // josep.sanahuja - 18-10-2019 - us140 - Added getAnnouncements()
 // josep.sanahuja - 04-10-2019 - XXXXX - Added sendUserFeedback()
 // josep.sanahuja - 02-10-2019 - us118 - Added createLogroIncompletoChild
@@ -39,6 +40,9 @@ export const feedbackUsersRef = database.ref('/FeedbackUsers');
 export const tournamentsRef = database.ref('/torneos');
 export const activeTournamentsRef = tournamentsRef.child('torneosActivos');
 export const pointsTournamentsRef = database.ref('/puntosTorneos');
+export const eventsRef = database.ref('/eventosEspeciales');
+export const activeEventsRef = eventsRef.child('eventsData');
+export const eventParticipantsRef = database.ref('/EventParticipants');
 export const announcementsActRef = database.ref('/Announcements/Active');
 
 /**
@@ -201,14 +205,17 @@ export async function addGameToUser(uid, userName, platform, gameKey, gamerTag) 
 
         await usersRef.child(uid).child('gamerTags').update({ [gamerTagChildNode.key]: gamerTagChildNode.value});
 
-        await gamersRef.child(gameKey).push({
+        const gameAdded = gamersRef.child(gameKey).push({
             gameExp: 0,
             gameLoses: 0,
+            gameName: gameKey,
             gameWins: 0,
             gamelvl: 0,
             userName,
             userUid: uid
         });
+
+        await usersRef.child(uid).child('games').child(gameKey).push(gameAdded.key);
     } catch (error) {
         console.error(error);
     }
@@ -238,6 +245,7 @@ export async function createPublicMatch(uid, bet, game) {
         const minutes = dateObject.getUTCMinutes() < 10 ? '0' + dateObject.getUTCMinutes() : dateObject.getUTCMinutes();
         const date = dateObject.getUTCDate() < 10 ? '0' + dateObject.getUTCDate() : dateObject.getUTCDate();
         const month = dateObject.getUTCMonth()+1 < 10 ? '0' + (dateObject.getUTCMonth()+1) : (dateObject.getUTCMonth()+1);
+        const UTCTimeStamp = new Date(dateObject.getUTCFullYear(), month, date, hour, minutes, dateObject.getUTCSeconds(), 0).getTime();
         const matchObject = {
             adversary1: uid,
             adversary2: '',
@@ -245,19 +253,20 @@ export async function createPublicMatch(uid, bet, game) {
             bet,
             date: `${date}/${month}`,
             game: game.gameKey,
-            hora: parseFloat(hour+minutes/100),
+            hora: parseFloat(`${hour}.${minutes}`),
             hour: `${hour}:${minutes}`,
             hourResult: '',
             numMatches: '1',
             observations: '',
-            pickResult1: '',
-            pickResult2: '',
+            pickResult1: '0',
+            pickResult2: '0',
             platform: game.platform,
+            privado: '',
             resultPlay1: '0',
             resultPlay2: '0',
             timeStamp: TimeStamp,
             // winBet is the bet multiplied x2 cause must be the sum of the bet of the two adversary's
-            winBet: bet*2
+            winBet: bet * 2
         };
         const createdMatch = await matchesRef.push(matchObject);
         await matchesRef.child(createdMatch.key).update({ idMatch: createdMatch.key });
@@ -424,14 +433,14 @@ export async function deleteNotification(uid, notificationId) {
  * @param {string} matchChallengerUid User id of the user who challenges the match
  * @param {string} matchId            Id of the match
  */
-export async function isMatchAlreadyChallenged(matchCreatorUid, matchChallengerUid, matchId) 
+export async function isMatchAlreadyChallenged(matchCreatorUid, matchChallengerUid, matchId)
 {
     let res = false;
 
     try {
-        // Retrieve the notificationMatch Node with its childs ordered by order considering 
-        // the idUserSend. Why idUserSend? Because it's much more efficient to order by 
-        // idUsersend rather than matchId. Reason to say much more efficient is that the 
+        // Retrieve the notificationMatch Node with its childs ordered by order considering
+        // the idUserSend. Why idUserSend? Because it's much more efficient to order by
+        // idUsersend rather than matchId. Reason to say much more efficient is that the
         // ChallengedUser might have several notifications for a match 'A', whereas it will
         // have much more fewer notifications from the ChallengerUser.
         notArrSnap = await usersRef.child(matchCreatorUid).child('notificationMatch').orderByChild('idUserSend').equalTo(matchChallengerUid).once('value');
@@ -648,6 +657,20 @@ export async function sendUserFeedback(message, userId) {
 // -----------------------------------------------
 // Tournaments
 // -----------------------------------------------
+
+/**
+ * Allow the user to join the given event
+ * @param {string} uid User identifier on database
+ * @param {string} eventId Event identifier on the database
+ * @param {number} totalPuntos The total of points of the event
+ */
+export async function joinEvent(uid, eventId) {
+    eventParticipantsRef.child(eventId).child(uid).update({
+        email: '',
+        priceQaploins: 0,
+        userNamve: 'DHVS'
+    });
+}
 
 /**
  * Allow the user to join in the given tournament

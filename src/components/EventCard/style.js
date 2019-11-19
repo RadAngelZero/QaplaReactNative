@@ -48,14 +48,14 @@ export default styles = StyleSheet.create({
     colBContainer: {
         flex: 1,
         justifyContent: 'space-between',
-        marginTop: heightPercentageToPx(1.48)
+        marginTop: heightPercentageToPx(2.28)
     },
     colBSocialContainer: {
         width: widthPercentageToPx(37),
         marginRight: widthPercentageToPx(2)
     },
     picture: {
-        marginTop: heightPercentageToPx(1.8),
+        marginTop: heightPercentageToPx(2.46),
         width: 60,
         height: 60
     },
@@ -101,8 +101,8 @@ export default styles = StyleSheet.create({
         fontWeight: '600',
         letterSpacing: .2,
         color: '#FFF',
-        marginTop: heightPercentageToPx(1.48),
-        maxWidth: widthPercentageToPx(85),
+        marginTop: heightPercentageToPx(2.28),
+        maxWidth: '85%',
         alignSelf: 'flex-start'
     },
     description: {
@@ -126,7 +126,7 @@ export default styles = StyleSheet.create({
         backgroundColor: '#1A1D34',
         height: 4,
         marginLeft: widthPercentageToPx(4.27),
-        marginBottom: heightPercentageToPx(1.85),
+        marginBottom: heightPercentageToPx(1.72),
         borderRadius: 18,
         alignSelf: 'baseline'
     },

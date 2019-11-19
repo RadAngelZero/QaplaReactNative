@@ -1,3 +1,4 @@
+// diego          - 14-11-2019 - us146 - Support for EventCard added
 // diego          - 04-10-2019 - us113 - Added LogroCompletedCard
 // josep.sanahuja - 19-09-2019 - us114 - File creation
 
@@ -9,6 +10,7 @@ import LogroSocial from './LogroSocial';
 import LogroVerification from './LogroVerification/LogroVerification';
 import LogroCompletedCard from '../LogroCompletedCard/LogroCompletedCard';
 import TournamentCard from '../TournamentCard/TournamentCard';
+import EventCard from '../EventCard/EventCard';
 
 /**
  * Container to add extra marginBottom on the last child of the list
@@ -47,6 +49,9 @@ class LogroCardItem extends Component {
                 break;
             case 'tournament':
                 res = <CardContainer lastChild={lastChild}><TournamentCard {...this.props} /></CardContainer>;
+                break;
+            case 'event':
+                res = <CardContainer lastChild={lastChild}><EventCard {...this.props} /></CardContainer>;
                 break;
             default:
                 break;

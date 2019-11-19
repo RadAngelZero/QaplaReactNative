@@ -11,7 +11,7 @@ const initialState = {
 
 function logrosReducer(state = initialState, action) {
     const { logrosActivos, logrosCompletados } = state;
-    
+
     switch (action.type) {
         case LOAD_USER_VERIFICATION_STATUS:
 
@@ -22,7 +22,7 @@ function logrosReducer(state = initialState, action) {
             return { ...state, ...logrosActivos, fetched: true };
         case REMOVE_LOGRO_ACTIVO:
             delete logrosActivos[action.payload];
-            
+
             return { ...state, logrosActivos };
         case LOAD_LOGROS_COMPLETOS:
             logrosCompletados[action.payload.id] = { ...logrosActivos[action.payload.id], ...action.payload };

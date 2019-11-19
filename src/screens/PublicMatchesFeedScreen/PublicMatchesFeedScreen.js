@@ -1,3 +1,4 @@
+// diego          - 14-11-2019 - us146 - Removed logs and blank spaces
 // josep.sanahuja - 26-08-2019 - us90 - Add CreateRetasButton Highlight
 // diego          - 03-09-2019 - us96 - Bug fixed: load duplicated matches
 // diego          - 09-08-2019 - bug4 - update remove listener methods on willBlur and make unshift of the new data on array
@@ -70,6 +71,7 @@ class PublicMatchesFeedScreen extends Component {
                             date,
                             game,
                             hour,
+                            hourResult,
                             numMatches,
                             observations,
                             platform,
@@ -84,6 +86,7 @@ class PublicMatchesFeedScreen extends Component {
                             date,
                             game,
                             hour,
+                            hourResult,
                             idMatch: newPublicMatch.key,
                             numMatches,
                             observations,

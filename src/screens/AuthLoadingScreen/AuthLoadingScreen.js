@@ -1,3 +1,4 @@
+// diego             - 14-11-2019 - us146 - Load server time offset
 // josep.sanahuja    - 26-08-2019 - us90 - loadShowHg1Modal
 // diego             - 02-09-2019 - us91 - Initialize segment
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
@@ -13,6 +14,7 @@ import { getUserNameWithUID, saveFCMUserToken } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
+import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 
 class AuthLoadingScreen extends Component {
     state = {
@@ -36,6 +38,12 @@ class AuthLoadingScreen extends Component {
 
                 await this.checkNotificationPermission(user.uid);
 
+                /**
+                 * Get the offset between the server timeStamps and the users timeStamp
+                 * (You can see this description also in the function declaration/implementation)
+                 */
+                await this.props.getServerTimeOffset();
+
                 /*
                 * When the app loads we check if is opened from a notification, also we check if the notificatios
                 * has instructions and useful params
@@ -51,9 +59,9 @@ class AuthLoadingScreen extends Component {
                         navigationParams = notification._data;
                     }
                 }
-                
+
                 const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
-                
+
                 if(userName === ''){
                     return this.props.navigation.navigate('ChooseUserNameScreen');
                 }
@@ -71,9 +79,9 @@ class AuthLoadingScreen extends Component {
                 if (isTutorialDone) {
 
                     return this.props.navigation.navigate('Publicas', { firstMatchCreated: (await retrieveData('first-match-created')) === 'true' });
-                } 
+                }
                 else {
-                    
+
                     return this.props.navigation.navigate('Welcome');
                 }
             }
@@ -156,7 +164,8 @@ function mapDispatchToProps(dispatch) {
     return {
         loadUserData: (uid) => getUserNode(uid)(dispatch),
         loadListOfGames: () => getListOfGames()(dispatch),
-        loadShowHg1Modal: () => getHg1CreateMatch()(dispatch)
+        loadShowHg1Modal: () => getHg1CreateMatch()(dispatch),
+        getServerTimeOffset: () => getServerTimeOffset()(dispatch)
     };
 }
 

@@ -16,37 +16,46 @@ class MatchCardItem extends PureComponent {
     getCurrentGameResources() {
         return gamesResources[this.props.games[this.props.platform][this.props.game].replace(/ +/g, "")];
     }
-    
+
     render() {
         const {navigate} = this.props.navigation;
         const game = this.getCurrentGameResources();
+
+        /**
+         * timeStamps are added on the server, so we need to calculate the timeStamp for the user
+         * (this.props.timeStamp - this.props.serverTimeOffset)
+         */
+        const localUserTime = new Date(this.props.timeStamp - this.props.serverTimeOffset);
+        const formatedHour = `${localUserTime.getHours() < 10 ? '0' : ''}${localUserTime.getHours()}`;
+        const formatedMinutes = `${localUserTime.getMinutes() < 10 ? '0' : ''}${localUserTime.getMinutes()}`;
+
         return (
             <TouchableWithoutFeedback onPress={() => navigate('MatchCard', {matchCard: this.props})}>
                 <View style={styles.container}>
-                        <View style={styles.rowGame}>
-                            <View style={styles.gameContainer}>
-                                <game.Icon width={28} height={28} />
-                                <Text style={styles.leftTextStyle}>{game.name}</Text>
+                    <View style={styles.rowGame}>
+                        <View style={styles.gameContainer}>
+                            <game.Icon width={28} height={28} />
+                            <Text style={styles.leftTextStyle}>{game.name}</Text>
+                        </View>
+                        <View style={styles.matchDetailInfoContainer}>
+                            <View style={styles.betContainer}>
+                                <QaploinIcon style={styles.qaploinIcon} />
+                                <Text style={styles.rightTextStyle}>{this.props.bet}</Text>
                             </View>
-                            <View style={styles.matchDetailInfoContainer}>
-                                <View style={styles.betContainer}>
-                                    <QaploinIcon style={styles.qaploinIcon} />
-                                    <Text style={styles.rightTextStyle}>{this.props.bet}</Text>
-                                </View>
-                                <View style={styles.hourContainer}>
-                                    <Text style={styles.rightTextStyle}>{this.props.hour}</Text>
-                                </View>
+                            <View style={styles.hourContainer}>
+                                <Text style={styles.rightTextStyle}>{`${formatedHour}:${formatedMinutes}`}</Text>
                             </View>
                         </View>
-                        <View style={[styles.rowUserName, styles.marginBottom10]}>
-                            <View style={styles.adversaryDataContainer}>
-                                <View style={styles.avatarImage}></View>
-                                <Text style={styles.leftFooterTextStyle}>{this.props.userName}</Text>
-                            </View>
-                            <View style={styles.idMatchContainer}>
-                                <Text style={styles.rightFooterTextStyle}>ID {this.props.alphaNumericIdMatch}</Text>
-                            </View>
+                    </View>
+                    <View style={[styles.rowUserName, styles.marginBottom10]}>
+                        <View style={styles.adversaryDataContainer}>
+                            <View style={styles.avatarImage}></View>
+                            <Text style={styles.leftFooterTextStyle}>{this.props.userName}</Text>
                         </View>
+                        <View style={styles.idMatchContainer}>
+                            <Text style={styles.rightFooterTextStyle}>ID {this.props.alphaNumericIdMatch}</Text>
+                        </View>
+                    </View>
                 </View>
             </TouchableWithoutFeedback>
         );

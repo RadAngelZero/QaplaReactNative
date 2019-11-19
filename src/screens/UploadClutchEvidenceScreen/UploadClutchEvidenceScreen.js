@@ -1,3 +1,4 @@
+// diego              - 14-11-2019 - us146 - AutoCapitalize disabled on TextInput
 // diego              - 12-09-2019 - us99 - Added backToUploadMatchResultScreen to handle
 //                                          the back to UploadMatchResultScreen
 // diego              - 13-08-2019 - us77 - File creation
@@ -58,6 +59,8 @@ export class UploadClutchEvidenceScreen extends Component {
                     backToUploadMatchResultScreen={this.props.backToUploadMatchResultScreen} />
                 <TextInput placeholder='Inserta aqui el URL del clip'
                     placeholderTextColor='#898A97'
+                    keyboardType='url'
+                    autoCapitalize='none'
                     onChangeText={this.setUrlText}
                     style={[styles.urlTextInput, { borderBottomColor: this.state.showUrlError ? '#FF0000' : 'transparent' }]} />
                 <Text style={styles.instructions}>

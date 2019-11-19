@@ -1,3 +1,4 @@
+// diego             - 14-11-2019 - us146 - Added NOTIFICATION_TYPE_TIE and NOTIFICATION_MATCH_ACCEPTED
 // diego             - 04-09-2019 - us105 - Added text for different type of notifications
 // diego             - 14-08-2019 - us80 - File creation
 
@@ -10,7 +11,8 @@ import {
     NOTIFICATION_TYPE_LOSER,
     NOTIFICATION_TYPE_RESULT,
     NOTIFICATION_TYPE_REVISION,
-    NOTIFICATION_TYPE_TIE
+    NOTIFICATION_TYPE_TIE,
+    NOTIFICATION_MATCH_ACCEPTED
 } from '../../utilities/Constants';
 
 export class ActivityNotificationCard extends Component {
@@ -31,6 +33,9 @@ export class ActivityNotificationCard extends Component {
                 break;
             case NOTIFICATION_TYPE_TIE:
                 notificationText = `Tu partida con ${this.props.userName} concluyó sin un ganador.`;
+                break;
+            case NOTIFICATION_MATCH_ACCEPTED:
+                notificationText = `${this.props.userName} ha aceptado tu desafío.`;
                 break;
             default:
                 break;

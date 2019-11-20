@@ -2,12 +2,14 @@
 
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, SafeAreaView, Image } from 'react-native';
-import styles from './style';
-import Images from './../../../assets/images';
 import { connect } from 'react-redux';
 
-import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTagModal';
+import styles from './style';
+import Images from './../../../assets/images';
 import { signOut } from '../../services/auth';
+
+import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTagModal';
+import AddBioModal from '../../components/AddBioModal/AddBioModal';
 
 const QaplaAppIcon = Images.png.qaplaAppIcon.img;
 
@@ -16,7 +18,8 @@ class AppSettingsMenuScreen extends Component {
         super(props);
 
         this.state = {
-            discordModalOpen: false
+            discordModalOpen: false,
+            bioModalOpen: false
         };
     }
 
@@ -35,6 +38,8 @@ class AppSettingsMenuScreen extends Component {
         this.props.navigation.navigate('Publicas');
     }
 
+    toggleBioModal = () => this.setState({ bioModalOpen: !this.state.bioModalOpen });
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -52,6 +57,11 @@ class AppSettingsMenuScreen extends Component {
                             <Text style={styles.menuItemRowText}> Soporte </Text>
                         </View>
                     </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={this.toggleBioModal}>
+                        <View style={styles.menuItemRow}>
+                            <Text style={styles.menuItemRowText}>Editar Biografía</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={this.toggleDiscordModal}>
                         <View style={styles.menuItemRow}>
                             <Text style={styles.menuItemRowText}> Editar Discord </Text>
@@ -66,6 +76,9 @@ class AppSettingsMenuScreen extends Component {
                 <AddDiscordTagModal
                     open={this.state.discordModalOpen}
                     onClose={this.toggleDiscordModal} />
+                <AddBioModal
+                    open={this.state.bioModalOpen}
+                    onClose={this.toggleBioModal} />
             </SafeAreaView>
         );
     }

@@ -142,6 +142,9 @@ class HeaderBar extends Component {
       this.props.navigation.navigate('AppSettingsMenu');
     }
 
+    /**
+     * Check if the user have unread notifications
+     */
     userHaveUnreadNotifications = () => {
 
         if (this.props.notifications && this.checkUnreadNotifications(this.props.notifications)) {
@@ -155,6 +158,10 @@ class HeaderBar extends Component {
         return false;
     }
 
+    /**
+     * Return true if the given object contains unreaded notifications
+     * @param {object} notifications Set of notifications to check
+     */
     checkUnreadNotifications = (notifications) => {
         return Object.keys(notifications).some((notification) => {
             return !notifications[notification].hasOwnProperty('notiChecked') || !notifications[notification].notiChecked;

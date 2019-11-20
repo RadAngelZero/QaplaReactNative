@@ -10,6 +10,7 @@ import {
     TouchableWithoutFeedback,
     Linking
 } from 'react-native';
+import { Svg, Circle } from 'react-native-svg';
 import { styles } from './style';
 import { connect } from 'react-redux';
 import images from './../../../assets/images';
@@ -26,7 +27,7 @@ const SettingsIcon = images.svg.settingsIcon;
 class HeaderBar extends Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
             showHg2Modal: false
         };
@@ -38,12 +39,12 @@ class HeaderBar extends Component {
 
     shouldComponentUpdate(nextProp, nextState) {
 
-        // We check flags when there is a change of state in hg1CreateMatch, which 
+        // We check flags when there is a change of state in hg1CreateMatch, which
         // indicates that a match was created for the first time by a user.
         if (nextProp.hg1CreateMatch === true && this.props.hg1CreateMatch === false) {
             this.checkHighlightsFlags();
         }
-        
+
         return true;
     }
 
@@ -52,14 +53,14 @@ class HeaderBar extends Component {
      * Perform a serie of function calls after match creation button is pressed.
      */
     onNotiPressBttn = () => {
-        
+
         // If showHg1Modal is enabled then
         if (this.state.showHg2Modal){
 
             // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
             // and it should not show up again.
             this.markHg2();
-            
+
             // Hide HIGHLIGHT_1_CREATE_MATCH Modal
             this.toggleHg2Modal();
         }
@@ -68,7 +69,7 @@ class HeaderBar extends Component {
     }
 
     /**
-     * @description 
+     * @description
      * Checks Highlights flags stored in AsyncStorage, and evaluates which flags
      * to activate in the component state.
      *
@@ -83,23 +84,23 @@ class HeaderBar extends Component {
             const value = await retrieveData(HIGHLIGHT_2_NOTIFICATIONS);
 
             if (value !== null && this.props.hg1CreateMatch === true) {
- 
+
                 // There is data stored for the flag, it can be either 'false' or 'true'.
                 this.setState({
                     showHg2Modal: JSON.parse(value)
                 });
             }
             else {
-                
+
                 // That means there is no value stored for the flag, therefore
                 // result should be 'true', meaning the highlight will activate.
                 if (this.props.hg1CreateMatch === true) {
-                    
+
                     this.setState({
                         showHg2Modal: true
                     });
                 }
-                
+
             }
         } catch (error) {
           // Error retrieving flag data
@@ -108,20 +109,20 @@ class HeaderBar extends Component {
     }
 
     /**
-     * @description 
+     * @description
      * Toggles the flag 'showHg2Modal' in the component state. If value is 'true' then it becomes
      * 'false'. If it is 'false' then it becomes 'true'.
      *
      * TODO: Consider in a future and be aware of toggle instead of a setTrue or setFalse mecanism. 
      */
-    toggleHg2Modal = () => {  
+    toggleHg2Modal = () => {
         this.setState({
             showHg2Modal: !this.state.showHg2Modal
         })
     }
 
     /**
-     * @description 
+     * @description
      * Mark the Highlight flag 'HIGHLIGHT_1_CREATE_MATCH' that indicates
      * a highlight for rName of specific user only if that username is not
      * already in use. Flag is stored in AsyncStorage
@@ -141,12 +142,31 @@ class HeaderBar extends Component {
       this.props.navigation.navigate('AppSettingsMenu');
     }
 
+    userHaveUnreadNotifications = () => {
+
+        if (this.props.notifications && this.checkUnreadNotifications(this.props.notifications)) {
+            return true;
+        }
+
+        if (this.props.matchNotifications && this.checkUnreadNotifications(this.props.matchNotifications)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    checkUnreadNotifications = (notifications) => {
+        return Object.keys(notifications).some((notification) => {
+            return !notifications[notification].hasOwnProperty('notiChecked') || !notifications[notification].notiChecked;
+        });
+    }
+
     render() {
 
         return (
             <View style={styles.container} testID='container'>
                 <View style={styles.imageContainer}>
-                    <HighlightModal 
+                    <HighlightModal
                       visible={this.state.showHg2Modal}
                       onClose={this.toggleHg2Modal}
                       showDelay={1000}
@@ -158,6 +178,11 @@ class HeaderBar extends Component {
                               testID='NotificationButton'>
                               <View style={styles.imageAndButtonDimensions}>
                                   <NotificationIcon height={24} width={24} />
+                                  {this.userHaveUnreadNotifications() &&
+                                    <Svg height={12} width={12} style={styles.unreadNotificationsIcon}>
+                                        <Circle cx={5} cy={5} r={5} fill='#FF0000' />
+                                    </Svg>
+                                  }
                               </View>
                           </TouchableWithoutFeedback>
                     </HighlightModal>
@@ -197,7 +222,9 @@ class HeaderBar extends Component {
 function mapStateToProps(state) {
     return {
         hg1CreateMatch: state.highlightsReducer.hg1CreateMatch,
-        currentScreenId: state.screensReducer.currentScreenId
+        currentScreenId: state.screensReducer.currentScreenId,
+        notifications: state.userReducer.user.notification,
+        matchNotifications: state.userReducer.user.notificationMatch
     }
 }
 

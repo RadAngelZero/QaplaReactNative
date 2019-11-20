@@ -20,6 +20,11 @@ export const styles = StyleSheet.create({
         height: 28,
         width: 28
     },
+    unreadNotificationsIcon: {
+        position: 'absolute',
+        right: 2,
+        bottom: 0
+    },
     textContainer: {
         flexGrow: 1,
         marginTop: heightPercentageToPx(2.46)

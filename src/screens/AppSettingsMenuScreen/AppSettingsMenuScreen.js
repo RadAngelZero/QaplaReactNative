@@ -7,6 +7,7 @@ import Images from './../../../assets/images';
 import { connect } from 'react-redux';
 
 import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTagModal';
+import RegulationModal from '../../components/RegulationModal/RegulationModal';
 import { signOut } from '../../services/auth';
 
 const QaplaAppIcon = Images.png.qaplaAppIcon.img;
@@ -16,7 +17,8 @@ class AppSettingsMenuScreen extends Component {
         super(props);
 
         this.state = {
-            discordModalOpen: false
+            discordModalOpen: false,
+            regulationModalOpen: false
         };
     }
 
@@ -27,6 +29,15 @@ class AppSettingsMenuScreen extends Component {
     toggleDiscordModal = () => {
         this.setState({
             discordModalOpen: !this.state.discordModalOpen
+        })
+    }
+
+    /* Toggle Regulation Modal, if opened then when pressing 
+     * it will be closed. And the way around.
+     */
+    toggleRegulationModal = () => {
+        this.setState({
+            regulationModalOpen: !this.state.regulationModalOpen
         })
     }
 
@@ -62,10 +73,18 @@ class AppSettingsMenuScreen extends Component {
                             <Text style={styles.menuItemRowText}>Cerrar sesión</Text>
                         </View>
                     </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={this.toggleRegulationModal}>
+                        <View style={styles.menuItemRow}>
+                            <Text style={styles.menuItemRowText}>Reglamento</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
                 </View>
                 <AddDiscordTagModal
                     open={this.state.discordModalOpen}
                     onClose={this.toggleDiscordModal} />
+                <RegulationModal
+                    open={this.state.regulationModalOpen}
+                    onClose={this.toggleRegulationModal} />
             </SafeAreaView>
         );
     }

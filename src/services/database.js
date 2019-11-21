@@ -44,6 +44,7 @@ export const eventsRef = database.ref('/eventosEspeciales');
 export const activeEventsRef = eventsRef.child('eventsData');
 export const eventParticipantsRef = database.ref('/EventParticipants');
 export const announcementsActRef = database.ref('/Announcements/Active');
+export const regulationRef = database.ref('/Regulation');
 
 /**
  * Returns the userName of the specified user
@@ -732,4 +733,31 @@ export async function updateUserDiscordTag(uid, discordTag) {
     } catch (error) {
         console.error(error);
     }
+}
+
+// -----------------------------------------------
+// Regulation
+// -----------------------------------------------
+
+/**
+ * Gets the regulation from the Qapla App
+ * @returns
+ * SUCCESS - {Array}  Content of Qapla app regulation. 
+ * FAIL    - {string} Empty string
+ */
+export async function getQaplaAppRegulation() {
+    let res = [];
+
+    try {
+        const textSnap = await regulationRef.child('text').once('value');
+        let text = textSnap.val();
+        //console.log("text: " + JSON.stringify(text, null, 2));
+        res = text.split("QaplaMoo");
+        //console.log("res: " + JSON.stringify(res, null, 2));
+        //res = res.replace(/QaplaMoo/g, "{" + '"\n"' + "}");
+    } catch (error) {
+        console.error(error);
+    }
+
+    return res;
 }

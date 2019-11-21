@@ -4,7 +4,7 @@
 // diego           - 18-09-2019 - us110 - Created LogrosTabNavigator
 // diego           - 18-09-2019 - us109 - Added Tab for logros on TabMainNavigator
 // diego           - 03-09-2019 - us96 - Added TopNavOptions to allow users without back button navigate to previous screens
-// diego           - 19-08-2019 - us89 - Added logic to show label only when tab is focused added on TabMainNavigator 
+// diego           - 19-08-2019 - us89 - Added logic to show label only when tab is focused added on TabMainNavigator
 // josep.sanahuja  - 12-08-2019 - us85 - + UploadMatchResult in AppNoHeaderStackNavigator
 // josep.sanahuja  - 06-08-2019 - us78 - + UploadMatchResultScreen
 // diego           - 01-08-2019 - us58 - created NotificationTabNavigator
@@ -50,6 +50,7 @@ import HeaderBar from './components/HeaderBar/HeaderBar';
 import NotificationsHeader from './components/NotificationsHeader/NotificationsHeader';
 import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeForNotificationTab';
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
+import TermsAndConditionsScreen from './screens/TermsAndConditionsScreen/TermsAndConditionsScreen';
 
 // Svg Icons
 const ProfileIcon = Images.svg.profileIcon;
@@ -196,7 +197,7 @@ const TabMainNavigator = createBottomTabNavigator({
     })
   }
 },
-{ 
+{
   tabBarOptions: {
     style: { backgroundColor: '#0C1021', height: 60, padding:0, margin:0 },
     showLabel: false,
@@ -319,6 +320,12 @@ class Router extends React.Component {
           navigationOptions: {
             header: props => <TopNavOptions back {...props} />
           }
+        },
+        TermsAndConditions: {
+          screen: TermsAndConditionsScreen,
+          navigationOptions: {
+            header: props => <TopNavOptions back {...props} />
+          }
         }
       },
       {
@@ -338,7 +345,7 @@ class Router extends React.Component {
         initialRouteName: 'AuthLoadingScreen'
       }
     );
-    
+
     // Create main router entry point for the app
     const AppContainer = createAppContainer(MainNavigator);
 
@@ -355,7 +362,7 @@ class Router extends React.Component {
 
         if (navigationState) {
             const route = navigationState.routes[navigationState.index];
-            
+
             // dive into nested navigators
             if (route.routes) {
                 res = getActiveRouteName(route);
@@ -368,7 +375,7 @@ class Router extends React.Component {
     }
 
     return (
-      <AppContainer 
+      <AppContainer
           onNavigationStateChange={(prevState, currentState, action) => {
               const currentRouteName = getActiveRouteName(currentState);
               const previousRouteName = getActiveRouteName(prevState);

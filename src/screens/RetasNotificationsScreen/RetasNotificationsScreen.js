@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import {
     View,
-    ScrollView,
+    FlatList,
     SafeAreaView,
     InteractionManager
 } from 'react-native';
@@ -15,6 +15,7 @@ import styles from './style';
 import MatchNotificationCard from '../../components/MatchNotificationCard/MatchNotificationCard';
 import { connect } from 'react-redux';
 import { recordScreenOnSegment } from '../../services/statistics';
+import { markMatchNotificationAsRead } from '../../services/database';
 
 class RetasNotificationsScreen extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class RetasNotificationsScreen extends Component {
        // 1: set didFinishInitialAnimation to false
        // This will render only the navigation bar and activity indicator
        this.state = {
-         didFinishInitialAnimation: false,
+         didFinishInitialAnimation: false
        };
     }
 
@@ -59,7 +60,19 @@ class RetasNotificationsScreen extends Component {
     componentWillUnmount() {
         //Remove willBlur and willFocus listeners on navigation
         this.list.forEach((item) => item.remove());
-	}
+    }
+
+    /**
+     * Get the viewable notifications and mark it as readed
+     * @param {array} viewableItems Array with data from FlatList onViewableItemsChanged event
+     */
+    markNotificationsAsRead = ({ viewableItems }) => {
+        viewableItems.forEach((viewableItem) => {
+            if (!this.props.notifications[viewableItem.item].hasOwnProperty('notiChecked') || !this.props.notifications[viewableItem.item].notiChecked) {
+                markMatchNotificationAsRead(this.props.uid, viewableItem.item);
+            }
+        });
+    }
 
     render() {
         return (
@@ -67,14 +80,16 @@ class RetasNotificationsScreen extends Component {
                 {this.state.didFinishInitialAnimation
                 ?
                     <View style={styles.container}>
-                        <ScrollView>
-                            {Object.keys(this.props.notifications).reverse().map((notificationKey) => (
-                                <MatchNotificationCard key={`MatchNotification-${notificationKey}`}
-                                    notification={this.props.notifications[notificationKey]}
-                                    notificationKey={notificationKey}
+                        <FlatList
+                            data={Object.keys(this.props.notifications).reverse()}
+                            renderItem={({ item }) => (
+                                <MatchNotificationCard
+                                    notification={this.props.notifications[item]}
+                                    notificationKey={item}
                                     uid={this.props.uid} />
-                            ))}
-                        </ScrollView>
+                            )}
+                            onViewableItemsChanged={this.markNotificationsAsRead}
+                            keyExtractor={(item) => `MatchNotification-${item}`} />
                     </View>
                 :
                 null

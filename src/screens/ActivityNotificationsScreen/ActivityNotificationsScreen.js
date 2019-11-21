@@ -5,13 +5,14 @@
 // diego 			 - 01-08-2019 - us58 - File creation
 
 import React, { Component } from 'react';
-import { SafeAreaView, View, ScrollView, InteractionManager } from 'react-native';
+import { SafeAreaView, View, FlatList, InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
 import ActivityNotificationCard from '../../components/ActivityNotificationCard/ActivityNotificationCard';
-import AnnouncementsScrollView from '../../components/AnnouncementsScrollView/AnnouncementsScrollView'; 
+import AnnouncementsScrollView from '../../components/AnnouncementsScrollView/AnnouncementsScrollView';
 import { recordScreenOnSegment } from '../../services/statistics';
+import { markActivityNotificationAsRead } from '../../services/database';
 
 class ActivityNotificationsScreen extends Component {
     constructor(props) {
@@ -53,7 +54,19 @@ class ActivityNotificationsScreen extends Component {
     componentWillUnmount() {
         //Remove willBlur and willFocus listeners on navigation
         this.list.forEach((item) => item.remove());
-	}
+    }
+
+    /**
+     * Get the viewable notifications and mark it as readed
+     * @param {array} viewableItems Array with data from FlatList onViewableItemsChanged event
+     */
+    markNotificationsAsRead = ({ viewableItems = [] }) => {
+        viewableItems.forEach((viewableItem) => {
+            if (!this.props.notifications[viewableItem.item].hasOwnProperty('notiChecked') || !this.props.notifications[viewableItem.item].notiChecked) {
+                markActivityNotificationAsRead(this.props.uid, viewableItem.item);
+            }
+        });
+    }
 
     render() {
         return (
@@ -62,15 +75,13 @@ class ActivityNotificationsScreen extends Component {
                 {this.state.didFinishInitialAnimation
                     ?
     	            <View style={styles.container}>
-                        <ScrollView>
-                            {/**
-                             * Sort the notifications in order by their key
-                             */}
-    						{Object.keys(this.props.notifications).sort((a, b) => a < b).map((notificationKey) => (
-    							<ActivityNotificationCard key={`ActivityNotification-${notificationKey}`}
-    							{...this.props.notifications[notificationKey]} />
-    						))}
-    					</ScrollView>
+                        <FlatList
+                            data={Object.keys(this.props.notifications).sort((a, b) => a < b)}
+                            renderItem={({ item }) => (
+                                <ActivityNotificationCard {...this.props.notifications[item]} />
+                            )}
+                            onViewableItemsChanged={this.markNotificationsAsRead}
+                            keyExtractor={(item) => `ActivityNotification-${item}`} />
                     </View>
     	            :
     	            null
@@ -80,13 +91,16 @@ class ActivityNotificationsScreen extends Component {
     }
 }
 
-function mapDispatchToProps(state) {
+function mapStateToProps(state) {
 	let notifications = {};
 	if (Object.keys(state.userReducer.user).length > 0 && state.userReducer.user.hasOwnProperty('notification')) {
 		notifications = state.userReducer.user.notification;
     }
 
-	return { notifications };
+	return {
+        notifications,
+        uid: state.userReducer.user.id
+    };
 }
 
-export default connect(mapDispatchToProps)(ActivityNotificationsScreen);
+export default connect(mapStateToProps)(ActivityNotificationsScreen);

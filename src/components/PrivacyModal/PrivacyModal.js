@@ -1,42 +1,34 @@
-// diego          - 13-11-2019 - us148 - File creation
+// josep-sanahuja          - 21-12-2019 - us152 - File creation
 
 import React, { Component } from 'react';
-import { Modal, View, SafeAreaView, TouchableWithoutFeedback, Text, TextInput, FlatList, ScrollView } from 'react-native';
+import { Modal, View, SafeAreaView, TouchableWithoutFeedback, Text, ScrollView } from 'react-native';
 
 import styles from './style';
 import Images from './../../../assets/images';
-import { getQaplaAppRegulation } from '../../services/database';
-import { withNavigationFocus } from 'react-navigation';
-import TopNavOptions from '../TopNavOptions/TopNavOptions';
+import { getQaplaAppPrivacy } from '../../services/database';
 
 const CloseIcon = Images.svg.closeIcon;
 
-class RegulationModal extends Component {
+class PrivacyModal extends Component {
     state = {
-        regulationText: []
+        privacyText: []
     };
 
     componentDidUpdate(prevProps) {
         if ((prevProps.open === false) && this.props.open) {
-            this.loadRegulation();
+            this.loadPrivacy();
         }
     }
 
-    loadRegulation = async () => {
-        const reg = await getQaplaAppRegulation();
-        console.log("miau");
+    /**
+     * Clean the local state and then close the modal
+     */
+    loadPrivacy = async () => {
+        const reg = await getQaplaAppPrivacy();
+        
         this.setState({
-            regulationText: reg
+            privacyText: reg
         })
-    }
-
-    printRegulationLines() {
-        //console.log("regulation: " + JSON.stringify(this.state.regulationText, null, 2));
-            
-                {this.state.regulationText.map((item) => (
-                   <Text style={{color: 'white'}}>{item}</Text>) 
-                )}
-
     }
 
     /**
@@ -44,7 +36,7 @@ class RegulationModal extends Component {
      */
     closeModal = () => {
         this.setState({ 
-            regulationText: []
+            privacyText: []
         });
 
         this.props.onClose();
@@ -65,10 +57,10 @@ class RegulationModal extends Component {
                                     <CloseIcon />
                                 </View>
                             </TouchableWithoutFeedback>
-                            <Text style={styles.modalTitle}>Reglamento</Text>
+                            <Text style={styles.modalTitle}>Aviso Privacidad</Text>
                             <View style={styles.textContainer}>
                             <ScrollView>
-                                {this.state.regulationText.map((item, index) => (
+                                {this.state.privacyText.map((item, index) => (
                                       <Text style={{color: 'white'}}>{item}</Text>) 
                                 )}
                             </ScrollView>
@@ -81,4 +73,4 @@ class RegulationModal extends Component {
     }
 }
 
-export default withNavigationFocus(RegulationModal);
+export default PrivacyModal;

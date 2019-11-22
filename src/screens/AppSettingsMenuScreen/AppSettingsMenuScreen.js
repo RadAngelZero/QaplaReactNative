@@ -1,3 +1,4 @@
+// josep.sanahuja  - 21-12-2019 - us152 - Add Privacy Modal
 // josep.sanahuja  - 13-11-2019 - us147 - File creation
 
 import React, { Component } from 'react';
@@ -7,7 +8,7 @@ import Images from './../../../assets/images';
 import { connect } from 'react-redux';
 
 import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTagModal';
-import RegulationModal from '../../components/RegulationModal/RegulationModal';
+import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import { signOut } from '../../services/auth';
 
 const QaplaAppIcon = Images.png.qaplaAppIcon.img;
@@ -18,7 +19,7 @@ class AppSettingsMenuScreen extends Component {
 
         this.state = {
             discordModalOpen: false,
-            regulationModalOpen: false
+            privacyModalOpen: false
         };
     }
 
@@ -32,12 +33,12 @@ class AppSettingsMenuScreen extends Component {
         })
     }
 
-    /* Toggle Regulation Modal, if opened then when pressing 
+    /* Toggle Privacy Modal, if opened then when pressing 
      * it will be closed. And the way around.
      */
-    toggleRegulationModal = () => {
+    togglePrivacyModal = () => {
         this.setState({
-            regulationModalOpen: !this.state.regulationModalOpen
+            privacyModalOpen: !this.state.privacyModalOpen
         })
     }
 
@@ -73,18 +74,18 @@ class AppSettingsMenuScreen extends Component {
                             <Text style={styles.menuItemRowText}>Cerrar sesión</Text>
                         </View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={this.toggleRegulationModal}>
+                    <TouchableWithoutFeedback onPress={this.togglePrivacyModal}>
                         <View style={styles.menuItemRow}>
-                            <Text style={styles.menuItemRowText}>Reglamento</Text>
+                            <Text style={styles.menuItemRowText}>Aviso Privacidad</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
                 <AddDiscordTagModal
                     open={this.state.discordModalOpen}
                     onClose={this.toggleDiscordModal} />
-                <RegulationModal
-                    open={this.state.regulationModalOpen}
-                    onClose={this.toggleRegulationModal} />
+                <PrivacyModal
+                    open={this.state.privacyModalOpen}
+                    onClose={this.togglePrivacyModal} />
             </SafeAreaView>
         );
     }

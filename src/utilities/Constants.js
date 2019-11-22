@@ -1,3 +1,4 @@
+// josep.sanahuja - 21-12-2019 - us152 - Add DB_NEW_LINE_SEPARATOR
 // diego          - 14-11-2019 - us146 - created SET_SERVER_TIME_OFFSET
 // diego          - 13-11-2019 - us135 - Created SIGN_OUT_USER constant
 // diego          - 21-10-2019 - us135 - Created QAPLOIN_PACKAGES constant
@@ -74,3 +75,6 @@ export const HOURS_IN_DAY = 24;
  * informative (also is a suggestion for the moment when we build the structure on the database)
  */
 export const QAPLOIN_PACKAGES = [ { qaploins: 300, price: '$2 USD' } ];
+
+// New line separator used in DB text
+export const DB_NEW_LINE_SEPARATOR = "QaplaMoo";

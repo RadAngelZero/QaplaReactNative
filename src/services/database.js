@@ -1,3 +1,4 @@
+// josep-sanahuja - 21-12-2019 - us152 - Add getQaplaAppPrivacy & DB_NEW_LINE_SEPARATOR
 // diego          - 14-11-2019 - us146 - Events support added
 // josep.sanahuja - 18-10-2019 - us140 - Added getAnnouncements()
 // josep.sanahuja - 04-10-2019 - XXXXX - Added sendUserFeedback()
@@ -24,6 +25,7 @@
 
 import { database, TimeStamp } from '../utilities/firebase';
 import { randomString } from '../utilities/utils';
+import { DB_NEW_LINE_SEPARATOR } from '../utilities/Constants';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
@@ -44,7 +46,7 @@ export const eventsRef = database.ref('/eventosEspeciales');
 export const activeEventsRef = eventsRef.child('eventsData');
 export const eventParticipantsRef = database.ref('/EventParticipants');
 export const announcementsActRef = database.ref('/Announcements/Active');
-export const regulationRef = database.ref('/Regulation');
+export const privacyRef = database.ref('/Privacy');
 
 /**
  * Returns the userName of the specified user
@@ -736,25 +738,23 @@ export async function updateUserDiscordTag(uid, discordTag) {
 }
 
 // -----------------------------------------------
-// Regulation
+// Privacy terms
 // -----------------------------------------------
 
 /**
- * Gets the regulation from the Qapla App
+ * Gets the privacy terms from the Qapla App
  * @returns
- * SUCCESS - {Array}  Content of Qapla app regulation. 
+ * SUCCESS - {Array}  Content of Qapla app privacy terms. 
  * FAIL    - {string} Empty string
  */
-export async function getQaplaAppRegulation() {
+export async function getQaplaAppPrivacy() {
     let res = [];
 
     try {
-        const textSnap = await regulationRef.child('text').once('value');
+        const textSnap = await privacyRef.child('text').once('value');
         let text = textSnap.val();
-        //console.log("text: " + JSON.stringify(text, null, 2));
-        res = text.split("QaplaMoo");
-        //console.log("res: " + JSON.stringify(res, null, 2));
-        //res = res.replace(/QaplaMoo/g, "{" + '"\n"' + "}");
+    
+        res = text.split(DB_NEW_LINE_SEPARATOR);
     } catch (error) {
         console.error(error);
     }

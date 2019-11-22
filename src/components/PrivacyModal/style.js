@@ -1,3 +1,5 @@
+// josep-sanahuja          - 21-12-2019 - us152 - File creation
+
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
@@ -27,7 +29,7 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: heightPercentageToPx(5),
-        paddingBottom: heightPercentageToPx(20)
+        paddingBottom: heightPercentageToPx(35)
     },
     closeIcon: {
         marginRight: widthPercentageToPx(5.33),

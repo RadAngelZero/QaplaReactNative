@@ -1,13 +1,16 @@
+// diego           - 22-11-2019 - us151 - Added TermsAndConditionsScreen
 // josep.sanahuja  - 13-11-2019 - us147 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback, SafeAreaView, Image } from 'react-native';
-import styles from './style';
-import Images from './../../../assets/images';
+import { SafeAreaView, View, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 
-import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTagModal';
+import styles from './style';
+import Images from './../../../assets/images';
 import { signOut } from '../../services/auth';
+
+import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTagModal';
+import AddBioModal from '../../components/AddBioModal/AddBioModal';
 
 const QaplaAppIcon = Images.png.qaplaAppIcon.img;
 
@@ -16,7 +19,8 @@ class AppSettingsMenuScreen extends Component {
         super(props);
 
         this.state = {
-            discordModalOpen: false
+            discordModalOpen: false,
+            bioModalOpen: false
         };
     }
 
@@ -35,6 +39,10 @@ class AppSettingsMenuScreen extends Component {
         this.props.navigation.navigate('Publicas');
     }
 
+    toggleBioModal = () => this.setState({ bioModalOpen: !this.state.bioModalOpen });
+
+    goToTermsAndConditions = () => this.props.navigation.navigate('TermsAndConditions');
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -47,25 +55,40 @@ class AppSettingsMenuScreen extends Component {
                     <View style={styles.menuHeader}>
                         <Text style={styles.menuHeaderText}> CONFIGURACIÓN </Text>
                     </View>
-                    <TouchableWithoutFeedback onPress={this.goToSupport}>
-                        <View style={styles.menuItemRow}>
-                            <Text style={styles.menuItemRowText}> Soporte </Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={this.toggleDiscordModal}>
-                        <View style={styles.menuItemRow}>
-                            <Text style={styles.menuItemRowText}> Editar Discord </Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={this.closeSession}>
-                        <View style={styles.menuItemRow}>
-                            <Text style={styles.menuItemRowText}>Cerrar sesión</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
+                    <ScrollView>
+                        <TouchableWithoutFeedback onPress={this.goToSupport}>
+                            <View style={styles.menuItemRow}>
+                                <Text style={styles.menuItemRowText}> Soporte </Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={this.toggleBioModal}>
+                            <View style={styles.menuItemRow}>
+                                <Text style={styles.menuItemRowText}>Editar Biografía</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={this.toggleDiscordModal}>
+                            <View style={styles.menuItemRow}>
+                                <Text style={styles.menuItemRowText}> Editar Discord </Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={this.goToTermsAndConditions}>
+                            <View style={styles.menuItemRow}>
+                                <Text style={styles.menuItemRowText}>Términos y Condiciones</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={this.closeSession}>
+                            <View style={styles.menuItemRow}>
+                                <Text style={styles.menuItemRowText}>Cerrar sesión</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </ScrollView>
                 </View>
                 <AddDiscordTagModal
                     open={this.state.discordModalOpen}
                     onClose={this.toggleDiscordModal} />
+                <AddBioModal
+                    open={this.state.bioModalOpen}
+                    onClose={this.toggleBioModal} />
             </SafeAreaView>
         );
     }

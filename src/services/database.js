@@ -733,3 +733,16 @@ export async function updateUserDiscordTag(uid, discordTag) {
         console.error(error);
     }
 }
+
+/**
+ * Update the bio of the user
+ * @param {string} uid User identifier on the database
+ * @param {string} bio The value of the biograpy to save
+ */
+export async function updateUserBio(uid, bio) {
+    try {
+        await usersRef.child(uid).update({ bio });
+    } catch (error) {
+        console.error(error);
+    }
+}

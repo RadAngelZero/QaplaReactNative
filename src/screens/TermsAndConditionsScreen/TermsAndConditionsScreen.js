@@ -1,3 +1,5 @@
+// diego           - 22-11-2019 - us151 - File creation
+
 import React, { Component } from 'react';
 import { SafeAreaView, Text, ScrollView, View } from 'react-native';
 

@@ -1,3 +1,4 @@
+// diego           - 22-11-2019 - us151 - Added TermsAndConditionsScreen
 // josep.sanahuja  - 13-11-2019 - us147 - Add AppSettingsMenuScreen + Redux connect
 // josep.sanahuja  - 04-10-2019 - XXXXX - Added TabtScreen
 // diego           - 18-09-2019 - us119 - Added VerificationScreen

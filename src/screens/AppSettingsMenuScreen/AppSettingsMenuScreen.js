@@ -1,3 +1,4 @@
+// diego           - 22-11-2019 - us151 - Added TermsAndConditionsScreen
 // josep.sanahuja  - 13-11-2019 - us147 - File creation
 
 import React, { Component } from 'react';

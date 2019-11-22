@@ -1,3 +1,5 @@
+// diego           - 22-11-2019 - us151 - File creation
+
 import { StyleSheet } from 'react-native';
 
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';

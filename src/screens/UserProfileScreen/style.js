@@ -1,4 +1,5 @@
-// diego           - 20-08-2019 - us89 - File creation
+// josep.sanahuja  - 22-11-2019 - us153 - Add editImg
+// diego           - 20-08-2019 - us89  - File creation
 
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';

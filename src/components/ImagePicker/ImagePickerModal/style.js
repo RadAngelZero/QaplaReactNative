@@ -1,3 +1,4 @@
+// josep.sanahuja    - 22-11-2019 - us153 - Add closeIcon
 // josep.sanahuja    - 30-09-2019 - us118 - File creation
 
 import { StyleSheet } from 'react-native';

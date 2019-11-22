@@ -1,10 +1,7 @@
-// diego -          01-08-2019 - us58 - File creation
+// josep-sanahuja - 22-11-2019 - us153 - File creation
 
 import React, { Component } from 'react';
-import {
-    View,
-    Text
-} from 'react-native';
+import { View,Text } from 'react-native';
 import styles from './style';
 
 class EditProfileImgBadge extends Component {

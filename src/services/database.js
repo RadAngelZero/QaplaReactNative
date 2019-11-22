@@ -1,3 +1,4 @@
+// josep.sanahuja - 22-11-2019 - us153 - Add updateUserProfileImg
 // diego          - 14-11-2019 - us146 - Events support added
 // josep.sanahuja - 18-10-2019 - us140 - Added getAnnouncements()
 // josep.sanahuja - 04-10-2019 - XXXXX - Added sendUserFeedback()
@@ -735,10 +736,10 @@ export async function updateUserDiscordTag(uid, discordTag) {
 }
 
 /**
- * Update the discord tag of the given user
+ * Update the user profile image
  *
- * @param {string} uid User identifier on the database
- * @param {string} discordTag The value of the tag (data to update on the database)
+ * @param {string} uid    User identifier on the database
+ * @param {string} imgUrl The fullPath from the local image to upload to DB
  */
 export async function updateUserProfileImg(uid, imgUrl) {
     try {

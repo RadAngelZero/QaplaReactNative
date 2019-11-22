@@ -1,11 +1,12 @@
+// josep.sanahuja  - 22-11-2019 - us153 - Add EditProfileImgBadge
 // diego           - 15-11-2019 - us149 - Check if user data is loaded on mapStateToProps
-// diego           - 03-09-2019 - us96 - Send flag onCloseGoTo when add game, so the header knows
-//                                       where go if the user closes the procces
-// diego           - 02-09-2019 - us91 - Add record screen segment statistic
-// diego           - 21-08-2019 - us89 - Add redirect logic to LoadGamesScreen
-// diego           - 20-08-2019 - us89 - Show user statistics by game
-//                                       Added BuyQaploinsModal
-// diego           - 19-08-2019 - us89 - File creation
+// diego           - 03-09-2019 - us96  - Send flag onCloseGoTo when add game, so the header knows
+//                                        where go if the user closes the procces
+// diego           - 02-09-2019 - us91  - Add record screen segment statistic
+// diego           - 21-08-2019 - us89  - Add redirect logic to LoadGamesScreen
+// diego           - 20-08-2019 - us89  - Show user statistics by game
+//                                        Added BuyQaploinsModal
+// diego           - 19-08-2019 - us89  - File creation
 
 import React, { Component } from 'react';
 import { SafeAreaView, View, Image, Text, TouchableWithoutFeedback, ScrollView } from 'react-native';

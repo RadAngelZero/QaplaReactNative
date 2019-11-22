@@ -1,3 +1,5 @@
+// diego             - 22-11-2019 - us148 - unreadNotificationsIcon added
+
 import { StyleSheet, Platform } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx, hasSafeAreaView } from '../../utilities/iosAndroidDim';
 
@@ -19,6 +21,11 @@ export const styles = StyleSheet.create({
     imageAndButtonDimensions: {
         height: 28,
         width: 28
+    },
+    unreadNotificationsIcon: {
+        position: 'absolute',
+        right: widthPercentageToPx(.75),
+        bottom: 0
     },
     textContainer: {
         flexGrow: 1,

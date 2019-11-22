@@ -59,6 +59,8 @@ class AddBioModal extends Component {
                             placeholder='Inserta tu biografía'
                             placeholderTextColor='#B5B5B5'
                             defaultValue={this.props.bio}
+                            multiline
+                            numberOfLines={2}
                             style={[styles.qaplaTextInput, { borderBottomColor: this.state.selected ? '#3DF9DF' : '#B5B5B5' } ]}
                             onChangeText={(bio) => this.setState({ bio })} />
                         <View style={styles.buttonsContainer}>

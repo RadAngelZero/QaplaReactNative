@@ -31,17 +31,15 @@ export default styles = StyleSheet.create({
     avatarImage: {
         height: 60,
         width: 60,
-        borderRadius: 100,
-        backgroundColor: '#131833',
-        marginBottom: heightPercentageToPx(1)
-    },
-    avatarImagee: {
-        height: 60,
-        width: 60,
         borderRadius: 60 / 2,
         backgroundColor: '#131833',
         marginBottom: heightPercentageToPx(1),
         resizeMode: 'cover'
+    },
+    editImg: {
+        position: 'absolute',
+        bottom: heightPercentageToPx(1),
+        right: widthPercentageToPx(-0.5)
     },
     userName: {
         fontSize: 14,

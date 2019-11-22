@@ -3,11 +3,17 @@
 import React, { Component } from 'react';
 import {
 	Modal,
-	SafeAreaView
+	SafeAreaView,
+	TouchableWithoutFeedback,
+	View
 } from 'react-native';
 
 import styles from './style';
+import Images from './../../../../assets/images';
+
 import ImagePicker from '../ImagePicker';
+
+const CloseIcon = Images.svg.closeIcon;
 
 class ImagePickerModal extends Component {
     /**
@@ -34,6 +40,11 @@ class ImagePickerModal extends Component {
 					visible={this.props.visible}
 					onRequestClose={this.props.onClose}>
 					<SafeAreaView style={styles.sfvContainer}>
+						<TouchableWithoutFeedback onPress={this.closeModal}>
+                            <View style={styles.closeIcon}>
+                                <CloseIcon />
+                            </View>
+                        </TouchableWithoutFeedback>
 						<ImagePicker
 							saveImage={this.saveImage} 
 							selectImgBttnTxt={'Quiero esta foto!'}

@@ -17,6 +17,7 @@ import images from '../../../assets/images';
 import UserProfilePlatformGameList from '../../components/UserProfilePlatformGameList/UserProfilePlatformGameList';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
+import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
 
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import { recordScreenOnSegment } from '../../services/statistics';
@@ -153,16 +154,21 @@ export class UserProfileScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.userInfoContainer}>
-                    <TouchableWithoutFeedback onPress={this.openImgPckModal}>
                     <View style={styles.imageAndNameContainer}>
-                        {this.props.userProfilePhoto ?
-                            <Image style={styles.avatarImagee} source={{ uri: this.props.userProfilePhoto }} />
-                            :
-                            <View style={styles.avatarImage} />
-                        }
+                        <View>
+                            {this.props.userProfilePhoto ?
+                                <Image style={styles.avatarImage} source={{ uri: this.props.userProfilePhoto }} />
+                                :
+                                <View style={styles.avatarImage} />
+                            }
+                            <TouchableWithoutFeedback onPress={this.openImgPckModal}>
+                                <View style={styles.editImg}>
+                                    <EditProfileImgBadge/>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
                         <Text style={styles.userName}>{this.props.userName}</Text>
                     </View>
-                    </TouchableWithoutFeedback>
                     <View style={styles.manageQaploinsContainer}>
                         <View style={styles.qaploinInfoContainer}>
                             <QaploinExchangeIcon style={styles.qaploinImage} />

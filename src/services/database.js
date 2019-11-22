@@ -1,3 +1,4 @@
+// diego          - 21-11-2019 - us149 - Mark notifications as redaded
 // diego          - 14-11-2019 - us146 - Events support added
 // josep.sanahuja - 18-10-2019 - us140 - Added getAnnouncements()
 // josep.sanahuja - 04-10-2019 - XXXXX - Added sendUserFeedback()
@@ -497,6 +498,7 @@ export function markActivityNotificationAsRead(uid, notificationId) {
 export function markMatchNotificationAsRead(uid, notificationId) {
     usersRef.child(uid).child('notificationMatch').child(notificationId).update({ notiChecked: true });
 }
+
 // -----------------------------------------------
 // Qaploins
 // -----------------------------------------------

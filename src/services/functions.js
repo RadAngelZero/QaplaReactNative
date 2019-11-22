@@ -19,8 +19,8 @@ export function acceptChallengeRequest(notificationObj, idChallenged) {
 	return callCloudFunction({
 		cfName: 'acceptChallengeRequest',
 		params: {
-			notificationObj: notificationObj,
-			idChallenged: idChallenged
+			notificationObj,
+			idChallenged
 		}
 	})
 }

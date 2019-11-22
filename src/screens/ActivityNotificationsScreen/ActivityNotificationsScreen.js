@@ -1,3 +1,4 @@
+// diego             - 21-11-2019 - us149 - Mark notifications as redaded & replaced ScrollView of notifications by FlatList
 // josep.sanahuja    - 18-10-2019 - us140 - Added AnnouncementsScrollView
 // diego             - 02-09-2019 - us91 - Add track segment statistic
 // diego             - 14-08-2019 - us80 - Added load of ActivityNotificationCard
@@ -57,18 +58,30 @@ class ActivityNotificationsScreen extends Component {
     }
 
     /**
-     * Get the viewable notifications and mark it as readed
+     * Receive an array with the keys from the visible (by the user) notifications
+     * and use that array to mark as read the notifications
      * @param {array} viewableItems Array with data from FlatList onViewableItemsChanged event
+     * { index: 0,
+     * item: 'IdFromTheNotification',
+     * key: 'ActivityNotification-IdFromTheNotification',
+     * isViewable: true }
      */
     markNotificationsAsRead = ({ viewableItems = [] }) => {
         viewableItems.forEach((viewableItem) => {
-            if (!this.props.notifications[viewableItem.item].hasOwnProperty('notiChecked') || !this.props.notifications[viewableItem.item].notiChecked) {
+
+            /**
+             * If the property notiChecked doesn't exist or exist but is false
+             * then we mark the notification as read
+             */
+            if (!this.props.notifications[viewableItem.item].notiChecked) {
                 markActivityNotificationAsRead(this.props.uid, viewableItem.item);
             }
         });
     }
 
     render() {
+        const sortedNotifications = Object.keys(this.props.notifications).sort((a, b) => a < b);
+
         return (
         	<SafeAreaView style={styles.sfvContainer}>
                 <AnnouncementsScrollView />
@@ -76,7 +89,7 @@ class ActivityNotificationsScreen extends Component {
                     ?
     	            <View style={styles.container}>
                         <FlatList
-                            data={Object.keys(this.props.notifications).sort((a, b) => a < b)}
+                            data={sortedNotifications}
                             renderItem={({ item }) => (
                                 <ActivityNotificationCard {...this.props.notifications[item]} />
                             )}
@@ -92,7 +105,12 @@ class ActivityNotificationsScreen extends Component {
 }
 
 function mapStateToProps(state) {
-	let notifications = {};
+    let notifications = {};
+
+    /**
+     * Check if the user redux data is filled (if the user is logged)
+     * Check if the user have notifications
+     */
 	if (Object.keys(state.userReducer.user).length > 0 && state.userReducer.user.hasOwnProperty('notification')) {
 		notifications = state.userReducer.user.notification;
     }

@@ -1,3 +1,4 @@
+// diego             - 21-11-2019 - us149 - Mark notifications as redaded & replaced ScrollView of notifications by FlatList
 // josep.sanahuja    - 13-09-2019 - us90 - Add didFinishInitialAnimation
 // diego             - 02-09-2019 - us91 - Add track and record screen segment statistic
 // diego             - 15-08-2019 - us80 - Order of notifications reversed to show it in the right order
@@ -63,25 +64,38 @@ class RetasNotificationsScreen extends Component {
     }
 
     /**
-     * Get the viewable notifications and mark it as readed
+     * Receive an array with the keys from the visible (by the user) notifications
+     * and use that array to mark as read the notifications
      * @param {array} viewableItems Array with data from FlatList onViewableItemsChanged event
+     * Shape of element form viewableItems array:
+     * { index: 0,
+     * item: 'IdFromTheNotification',
+     * key: 'MatchNotification-IdFromTheNotification',
+     * isViewable: true }
      */
     markNotificationsAsRead = ({ viewableItems }) => {
         viewableItems.forEach((viewableItem) => {
-            if (!this.props.notifications[viewableItem.item].hasOwnProperty('notiChecked') || !this.props.notifications[viewableItem.item].notiChecked) {
+
+            /**
+             * If the property notiChecked doesn't exist or exist but is false
+             * then we mark the notification as read
+             */
+            if (!this.props.notifications[viewableItem.item].notiChecked) {
                 markMatchNotificationAsRead(this.props.uid, viewableItem.item);
             }
         });
     }
 
     render() {
+        const sortedMatchNotifications = Object.keys(this.props.notifications).reverse();
+
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 {this.state.didFinishInitialAnimation
                 ?
                     <View style={styles.container}>
                         <FlatList
-                            data={Object.keys(this.props.notifications).reverse()}
+                            data={sortedMatchNotifications}
                             renderItem={({ item }) => (
                                 <MatchNotificationCard
                                     notification={this.props.notifications[item]}

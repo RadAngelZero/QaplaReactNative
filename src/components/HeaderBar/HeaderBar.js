@@ -1,3 +1,4 @@
+// diego             - 22-11-2019 - us148 - Notification badge added
 // josep.sanahuja    - 13-11-2019 - us147 - Connect currentScreenId
 // josep.sanahuja    - 26-08-2019 - us90 - Added notification highlight
 // diego             - 01-08-2019 - us58 - Navigation implemented to notificationRouter
@@ -113,7 +114,7 @@ class HeaderBar extends Component {
      * Toggles the flag 'showHg2Modal' in the component state. If value is 'true' then it becomes
      * 'false'. If it is 'false' then it becomes 'true'.
      *
-     * TODO: Consider in a future and be aware of toggle instead of a setTrue or setFalse mecanism. 
+     * TODO: Consider in a future and be aware of toggle instead of a setTrue or setFalse mecanism.
      */
     toggleHg2Modal = () => {
         this.setState({
@@ -143,10 +144,14 @@ class HeaderBar extends Component {
     }
 
     /**
-     * Check if the user have unread notifications
+     * Check if the user have unread notifications or match notifications
      */
     userHaveUnreadNotifications = () => {
 
+        /**
+         * notifications = Activity notifications
+         * matchNotifications = Match notifications
+         */
         if (this.props.notifications && this.checkUnreadNotifications(this.props.notifications)) {
             return true;
         }

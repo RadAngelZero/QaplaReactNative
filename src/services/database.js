@@ -733,3 +733,19 @@ export async function updateUserDiscordTag(uid, discordTag) {
         console.error(error);
     }
 }
+
+/**
+ * Update the discord tag of the given user
+ *
+ * @param {string} uid User identifier on the database
+ * @param {string} discordTag The value of the tag (data to update on the database)
+ */
+export async function updateUserProfileImg(uid, imgUrl) {
+    try {
+        await usersRef.child(uid).update({ photoUrl: imgUrl });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+

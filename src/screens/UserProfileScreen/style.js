@@ -35,6 +35,14 @@ export default styles = StyleSheet.create({
         backgroundColor: '#131833',
         marginBottom: heightPercentageToPx(1)
     },
+    avatarImagee: {
+        height: 60,
+        width: 60,
+        borderRadius: 60 / 2,
+        backgroundColor: '#131833',
+        marginBottom: heightPercentageToPx(1),
+        resizeMode: 'cover'
+    },
     userName: {
         fontSize: 14,
         fontWeight: 'bold',

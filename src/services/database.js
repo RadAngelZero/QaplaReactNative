@@ -1,3 +1,4 @@
+// diego          - 21-11-2019 - us149 - Mark notifications as redaded
 // diego          - 14-11-2019 - us146 - Events support added
 // josep.sanahuja - 18-10-2019 - us140 - Added getAnnouncements()
 // josep.sanahuja - 04-10-2019 - XXXXX - Added sendUserFeedback()
@@ -17,7 +18,7 @@
 // diego          - 16-07-2019 - us34 - Substract of qaploins logic implemented
 // diego          - 16-07-2019 - Create createPublicMatch and bug fixed on addGameToUser
 // diego          - 15-07-2019 - Create commissionRef and getCurrentQaplaCommission
-// diego          - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions 
+// diego          - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
 //                                      for new references on database and errors detecrted on addGameToUser
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
@@ -477,6 +478,25 @@ export async function saveFCMUserToken(uid, token) {
     } catch (error) {
         console.error(error);
     }
+}
+
+/**
+ * Mark as read an activity notification
+ * @param {string} uid User identifier on the database
+ * @param {string} notificationId Notification identifier on the database
+ */
+export function markActivityNotificationAsRead(uid, notificationId) {
+    usersRef.child(uid).child('notification').child(notificationId).update({ notiChecked: true });
+}
+
+
+/**
+ * Mark as read a match notification
+ * @param {string} uid User identifier on the database
+ * @param {string} notificationId Notification identifier on the database
+ */
+export function markMatchNotificationAsRead(uid, notificationId) {
+    usersRef.child(uid).child('notificationMatch').child(notificationId).update({ notiChecked: true });
 }
 
 // -----------------------------------------------

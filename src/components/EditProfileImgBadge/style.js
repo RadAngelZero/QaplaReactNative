@@ -3,7 +3,6 @@
 import { StyleSheet } from 'react-native';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
-
 export default styles = StyleSheet.create({
     container: {
         width: widthPercentageToPx(5),

@@ -17,22 +17,17 @@ import images from '../../../assets/images';
 
 import UserProfilePlatformGameList from '../../components/UserProfilePlatformGameList/UserProfilePlatformGameList';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
-import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
 import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
 
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import { recordScreenOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
-import { saveUserProfileImg, getUserProfileImgUrl } from '../../services/storage';
-import { updateUserProfileImg } from '../../services/database';
 
 const QaploinExchangeIcon = images.svg.qaploinsIcon;
 
 export class UserProfileScreen extends Component {
     state = {
         showBuyQaploinsModal: false,
-        showImgPckModal: false,
-        picture: ''
     };
 
     componentWillMount() {
@@ -81,57 +76,6 @@ export class UserProfileScreen extends Component {
      */
     isLastChild = (currentIndex, objectLength) => (currentIndex === objectLength - 1);
 
-    /**
-     * Sends the selected picture by ImagePickerModal and sends it to 
-     * Firebase Storage.
-     * 
-     * @params {Object} picture Picture selected in ImagePickerModal
-     */
-    saveImage = async (picture) => {
-        this.setState({
-            picture: picture
-        });
-
-        let task = saveUserProfileImg(this.props.uid, picture.node.image.uri);
-        
-        // In case the picture is successfully stored in Firebase Datastorage,
-        // then an evidence of that picture will be saved in Firebase DB for
-        // verification purposes.
-        if (task !== null) {
-            task.then(async () => {
-                try {
-                    const imgUrl = await getUserProfileImgUrl(this.props.uid);
-                    
-                    if (imgUrl !== null && imgUrl !== undefined){
-                        updateUserProfileImg(this.props.uid, imgUrl);
-                    }
-                }
-                catch(error) {
-
-                }
-            })
-            
-        }
-    }
-
-    /**
-     * Closes ImagePickerModal
-     */
-    closeImgPckModal = () => {
-        this.setState({
-            showImgPckModal: false  
-        });
-    }
-
-    /**
-     * Opens ImagePickerModal
-     */
-    openImgPckModal = () => {
-        this.setState({
-            showImgPckModal: true  
-        });
-    }
-
     render() {
         /**
          * userGames must be look like this:
@@ -162,11 +106,9 @@ export class UserProfileScreen extends Component {
                                 :
                                 <View style={styles.avatarImage} />
                             }
-                            <TouchableWithoutFeedback onPress={this.openImgPckModal}>
-                                <View style={styles.editImg}>
-                                    <EditProfileImgBadge/>
-                                </View>
-                            </TouchableWithoutFeedback>
+                            <View style={styles.editImg}>
+                                <EditProfileImgBadge/>
+                            </View>
                         </View>
                         <Text style={styles.userName}>{this.props.userName}</Text>
                     </View>
@@ -204,10 +146,6 @@ export class UserProfileScreen extends Component {
                 <BuyQaploinsModal 
                     open={this.state.showBuyQaploinsModal}
                     onClose={this.closeBuyQaploinsModal} />
-                <ImagePickerModal
-                      visible={this.state.showImgPckModal}
-                      saveImage={this.saveImage}
-                      onClose={this.closeImgPckModal} />
             </SafeAreaView>
         );
     }

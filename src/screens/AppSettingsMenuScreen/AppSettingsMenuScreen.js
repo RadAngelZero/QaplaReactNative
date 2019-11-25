@@ -1,4 +1,5 @@
 // diego           - 22-11-2019 - us151 - Added TermsAndConditionsScreen
+// josep.sanahuja  - 21-12-2019 - us152 - Add Privacy Modal
 // josep.sanahuja  - 13-11-2019 - us147 - File creation
 
 import React, { Component } from 'react';
@@ -11,6 +12,8 @@ import { signOut } from '../../services/auth';
 
 import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTagModal';
 import AddBioModal from '../../components/AddBioModal/AddBioModal';
+import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
+import { signOut } from '../../services/auth';
 
 const QaplaAppIcon = Images.png.qaplaAppIcon.img;
 
@@ -21,6 +24,7 @@ class AppSettingsMenuScreen extends Component {
         this.state = {
             discordModalOpen: false,
             bioModalOpen: false
+            privacyModalOpen: false
         };
     }
 
@@ -31,6 +35,15 @@ class AppSettingsMenuScreen extends Component {
     toggleDiscordModal = () => {
         this.setState({
             discordModalOpen: !this.state.discordModalOpen
+        })
+    }
+
+    /* Toggle Privacy Modal, if opened then when pressing 
+     * it will be closed. And the way around.
+     */
+    togglePrivacyModal = () => {
+        this.setState({
+            privacyModalOpen: !this.state.privacyModalOpen
         })
     }
 
@@ -81,14 +94,19 @@ class AppSettingsMenuScreen extends Component {
                                 <Text style={styles.menuItemRowText}>Cerrar sesión</Text>
                             </View>
                         </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={this.togglePrivacyModal}>
+	                        <View style={styles.menuItemRow}>
+	                            <Text style={styles.menuItemRowText}>Aviso Privacidad</Text>
+	                        </View>
+                        </TouchableWithoutFeedback>
                     </ScrollView>
                 </View>
                 <AddDiscordTagModal
                     open={this.state.discordModalOpen}
                     onClose={this.toggleDiscordModal} />
-                <AddBioModal
-                    open={this.state.bioModalOpen}
-                    onClose={this.toggleBioModal} />
+                <PrivacyModal
+                    open={this.state.privacyModalOpen}
+                    onClose={this.togglePrivacyModal} />
             </SafeAreaView>
         );
     }

@@ -745,7 +745,7 @@ export async function updateUserDiscordTag(uid, discordTag) {
  * Gets the privacy terms from the Qapla App
  * @returns
  * SUCCESS - {Array}  Content of Qapla app privacy terms. 
- * FAIL    - {string} Empty string
+ * FAIL    - {Array}  Empty array
  */
 export async function getQaplaAppPrivacy() {
     let res = [];

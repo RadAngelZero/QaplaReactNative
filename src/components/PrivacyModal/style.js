@@ -42,5 +42,8 @@ export default styles = StyleSheet.create({
         fontSize: 24,
         maxWidth: widthPercentageToPx(70),
         
+    },
+    lineText: {
+        color: 'white'
     }
 });

@@ -24,11 +24,9 @@ class PrivacyModal extends Component {
      * Clean the local state and then close the modal
      */
     loadPrivacy = async () => {
-        const reg = await getQaplaAppPrivacy();
+        const privacyText = await getQaplaAppPrivacy();
         
-        this.setState({
-            privacyText: reg
-        })
+        this.setState({ privacyText });
     }
 
     /**
@@ -61,7 +59,7 @@ class PrivacyModal extends Component {
                             <View style={styles.textContainer}>
                             <ScrollView>
                                 {this.state.privacyText.map((item, index) => (
-                                      <Text style={{color: 'white'}}>{item}</Text>) 
+                                      <Text key={index} style={styles.lineText}>{item}</Text>) 
                                 )}
                             </ScrollView>
                             </View>

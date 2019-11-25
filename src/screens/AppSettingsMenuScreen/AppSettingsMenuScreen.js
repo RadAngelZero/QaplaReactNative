@@ -13,7 +13,6 @@ import { signOut } from '../../services/auth';
 import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTagModal';
 import AddBioModal from '../../components/AddBioModal/AddBioModal';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
-import { signOut } from '../../services/auth';
 
 const QaplaAppIcon = Images.png.qaplaAppIcon.img;
 
@@ -23,7 +22,7 @@ class AppSettingsMenuScreen extends Component {
 
         this.state = {
             discordModalOpen: false,
-            bioModalOpen: false
+            bioModalOpen: false,
             privacyModalOpen: false
         };
     }

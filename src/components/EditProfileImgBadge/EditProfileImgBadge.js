@@ -5,11 +5,13 @@ import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import styles from './style';
 import { connect } from 'react-redux';
 
+import Images from '../../../assets/images';
 import { saveUserProfileImg, getUserProfileImgUrl } from '../../services/storage';
 import { updateUserProfileImg } from '../../services/database';
 
 import ImagePickerModal from '../ImagePicker/ImagePickerModal/ImagePickerModal';
 
+const EditIcon = Images.svg.editIcon;
 
 class EditProfileImgBadge extends Component {
     constructor(props) {
@@ -42,8 +44,8 @@ class EditProfileImgBadge extends Component {
                         updateUserProfileImg(this.props.uid, imgUrl);
                     }
                 }
-                catch(error) {
-
+                catch(err) {
+                	console.error(err);
                 }
             })
             
@@ -66,7 +68,6 @@ class EditProfileImgBadge extends Component {
         this.setState({
             showImgPckModal: true  
         });
-        console.log('Hello World');
     }
 
     render() {
@@ -74,7 +75,7 @@ class EditProfileImgBadge extends Component {
         	<>
 	        	<TouchableWithoutFeedback onPress={this.openImgPckModal}>
 		            <View style={styles.container}>
-		                <Text style={styles.badge}>e</Text>
+		            	<EditIcon style={styles.badge} />
 		            </View>
 		        </TouchableWithoutFeedback>
 		        <ImagePickerModal

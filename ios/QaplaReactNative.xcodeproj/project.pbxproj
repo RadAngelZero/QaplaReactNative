@@ -417,6 +417,8 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F920B9DF23706E30006059A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleServicesInfo-IOS/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F97D0A29233BF33000C00713 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
+		F9F4B79223885C80003AD8FC /* QaplaReactNativeRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = QaplaReactNativeRelease.entitlements; path = QaplaReactNative/QaplaReactNativeRelease.entitlements; sourceTree = "<group>"; };
+		F9F4B7BE23885FBE003AD8FC /* QaplaReactNative.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = QaplaReactNative.entitlements; path = QaplaReactNative/QaplaReactNative.entitlements; sourceTree = "<group>"; };
 		FEFC30DCC651B0B2BC1D121F /* libPods-QaplaReactNative-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -567,6 +569,8 @@
 		13B07FAE1A68108700A75B9A /* QaplaReactNative */ = {
 			isa = PBXGroup;
 			children = (
+				F9F4B7BE23885FBE003AD8FC /* QaplaReactNative.entitlements */,
+				F9F4B79223885C80003AD8FC /* QaplaReactNativeRelease.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -1541,6 +1545,7 @@
 			baseConfigurationReference = 6DD599BCCA5F5D80DAE78351 /* Pods-QaplaReactNative.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = QaplaReactNative/QaplaReactNative.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 9DKYMDN2KS;
@@ -1561,7 +1566,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
 				PRODUCT_NAME = QaplaReactNative;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1572,7 +1577,9 @@
 			baseConfigurationReference = 8687C8670DBA8624622AB07E /* Pods-QaplaReactNative.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_ENTITLEMENTS = QaplaReactNative/QaplaReactNativeRelease.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
@@ -1594,7 +1601,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
 				PRODUCT_NAME = QaplaReactNative;
-				PROVISIONING_PROFILE_SPECIFIER = IosReactNativeDevelopment;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

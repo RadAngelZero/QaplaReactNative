@@ -1,3 +1,4 @@
+// josep.sanahuja - 22-11-2019 - us153 - Add updateUserProfileImg
 // diego          - 21-11-2019 - us149 - Mark notifications as redaded
 // josep-sanahuja - 21-12-2019 - us152 - Add getQaplaAppPrivacy & DB_NEW_LINE_SEPARATOR
 // diego          - 14-11-2019 - us146 - Events support added
@@ -755,42 +756,4 @@ export async function updateUserDiscordTag(uid, discordTag) {
     } catch (error) {
         console.error(error);
     }
-}
 
-/**
- * Update the bio of the user
- * @param {string} uid User identifier on the database
- * @param {string} bio The value of the biograpy to save
- */
-export async function updateUserBio(uid, bio) {
-    try {
-        await usersRef.child(uid).update({ bio });
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-// -----------------------------------------------
-// Privacy terms
-// -----------------------------------------------
-
-/**
- * Gets the privacy terms from the Qapla App
- * @returns
- * SUCCESS - {Array}  Content of Qapla app privacy terms. 
- * FAIL    - {Array}  Empty array
- */
-export async function getQaplaAppPrivacy() {
-    let res = [];
-
-    try {
-        const textSnap = await privacyRef.child('text').once('value');
-        let text = textSnap.val();
-    
-        res = text.split(DB_NEW_LINE_SEPARATOR);
-    } catch (error) {
-        console.error(error);
-    }
-
-    return res;
-}

@@ -1,4 +1,5 @@
-// diego           - 20-08-2019 - us89 - File creation
+// josep.sanahuja  - 22-11-2019 - us153 - Add editImg
+// diego           - 20-08-2019 - us89  - File creation
 
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
@@ -31,9 +32,15 @@ export default styles = StyleSheet.create({
     avatarImage: {
         height: 60,
         width: 60,
-        borderRadius: 100,
+        borderRadius: 60 / 2,
         backgroundColor: '#131833',
-        marginBottom: heightPercentageToPx(1)
+        marginBottom: heightPercentageToPx(1),
+        resizeMode: 'cover'
+    },
+    editImg: {
+        position: 'absolute',
+        bottom: heightPercentageToPx(1),
+        right: widthPercentageToPx(-0.5)
     },
     userName: {
         fontSize: 14,

@@ -88,21 +88,24 @@ class AppSettingsMenuScreen extends Component {
                                 <Text style={styles.menuItemRowText}>Términos y Condiciones</Text>
                             </View>
                         </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={this.togglePrivacyModal}>
+                            <View style={styles.menuItemRow}>
+                                <Text style={styles.menuItemRowText}>Aviso Privacidad</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.closeSession}>
                             <View style={styles.menuItemRow}>
                                 <Text style={styles.menuItemRowText}>Cerrar sesión</Text>
                             </View>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={this.togglePrivacyModal}>
-	                        <View style={styles.menuItemRow}>
-	                            <Text style={styles.menuItemRowText}>Aviso Privacidad</Text>
-	                        </View>
                         </TouchableWithoutFeedback>
                     </ScrollView>
                 </View>
                 <AddDiscordTagModal
                     open={this.state.discordModalOpen}
                     onClose={this.toggleDiscordModal} />
+                <AddBioModal
+                    open={this.state.bioModalOpen}
+                    onClose={this.toggleBioModal} />
                 <PrivacyModal
                     open={this.state.privacyModalOpen}
                     onClose={this.togglePrivacyModal} />

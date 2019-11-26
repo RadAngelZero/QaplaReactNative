@@ -758,3 +758,28 @@ export async function updateUserDiscordTag(uid, discordTag) {
     }
 }
 
+// -----------------------------------------------
+// Privacy terms
+// -----------------------------------------------
+
+/**
+ * Gets the privacy terms from the Qapla App
+ * @returns
+ * SUCCESS - {Array}  Content of Qapla app privacy terms. 
+ * FAIL    - {Array}  Empty array
+ */
+export async function getQaplaAppPrivacy() {
+    let res = [];
+
+    try {
+        const textSnap = await privacyRef.child('text').once('value');
+        let text = textSnap.val();
+
+        res = text.split(DB_NEW_LINE_SEPARATOR);
+    } catch (error) {
+        console.error(error);
+    }
+
+    return res;
+}
+

@@ -756,4 +756,5 @@ export async function updateUserDiscordTag(uid, discordTag) {
     } catch (error) {
         console.error(error);
     }
+}
 

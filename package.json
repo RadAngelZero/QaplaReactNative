@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "@segment/analytics-react-native": "^1.1.0-beta.2",
+    "@segment/analytics-react-native-amplitude": "^1.1.0",
+    "@segment/analytics-react-native-mixpanel": "^1.1.0",
     "jetifier": "^1.6.4",
     "react": "16.8.3",
     "react-native": "0.59.9",

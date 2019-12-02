@@ -16,6 +16,7 @@ target 'QaplaReactNative' do
     'RCTAnimation', # Needed for FlatList and animations running on native UI thread
     'RCTImage'
   ]
+  
   # Explicitly include Yoga if you are using RN >= 0.42.0
   pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
 
@@ -30,21 +31,28 @@ target 'QaplaReactNative' do
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   
+  pod 'RNAnalytics', :path => '../node_modules/@segment/analytics-react-native'
+
+  pod 'RNAnalyticsIntegration-Mixpanel', :path => '../node_modules/@segment/analytics-react-native-mixpanel'
+  pod 'RNAnalyticsIntegration-Amplitude', :path => '../node_modules/@segment/analytics-react-native-amplitude'
+
+  pod 'Firebase/Core', '~> 6.9.0'
+
+  pod 'Segment-Firebase', '~>2.0'
+
+  pod 'Analytics', '~> 3.0'
+
+  pod 'Firebase/Messaging'
+
   pod 'Firebase/Functions'
 
   pod 'Firebase/Storage'
 
-  pod 'RNAnalytics', :path => '../node_modules/@segment/analytics-react-native'
-
-  pod 'Firebase/Core', '~> 6.9.0'
-  
-  pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios' 
-  
   pod 'Firebase/Database'
 
-  pod 'Firebase/Messaging'
-
   pod 'Firebase/Auth'
+  
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios' 
 
   pod 'react-native-camera', path: '../node_modules/react-native-camera'
 

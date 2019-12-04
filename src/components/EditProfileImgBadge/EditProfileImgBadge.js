@@ -1,7 +1,7 @@
 // josep-sanahuja - 22-11-2019 - us153 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
 import styles from './style';
 import { connect } from 'react-redux';
 
@@ -11,9 +11,7 @@ import { updateUserProfileImg } from '../../services/database';
 
 import ImagePickerModal from '../ImagePicker/ImagePickerModal/ImagePickerModal';
 
-// This code (that we actually have on release-1) contain a reference
-// that doesn't exist
-// const EditIcon = Images.svg.editIcon;
+const EditIcon = Images.svg.editIcon;
 
 class EditProfileImgBadge extends Component {
     constructor(props) {
@@ -27,7 +25,7 @@ class EditProfileImgBadge extends Component {
 
     /**
      * Sends the selected picture by ImagePickerModal and sends it to Firebase Storage.
-     * 
+     *
      * @params {Object} picture Picture selected in ImagePickerModal
      */
     saveImage = async (picture) => {
@@ -77,10 +75,7 @@ class EditProfileImgBadge extends Component {
         	<>
 	        	<TouchableWithoutFeedback onPress={this.openImgPckModal}>
 		            <View style={styles.container}>
-                        {/*
-                        This code (that we actually have on release-1) contain a reference
-                        that doesn't exist
-                        <EditIcon style={styles.badge} /> */}
+                        <EditIcon style={styles.badge} />
 		            </View>
 		        </TouchableWithoutFeedback>
 		        <ImagePickerModal

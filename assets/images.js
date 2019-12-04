@@ -45,7 +45,7 @@ import VerifyIcon from './icons/verificado.svg';
 import SupportIcon from './icons/support.svg';
 import DiscordIcon from './icons/discord.svg';
 import SettingsIcon from './icons/settings.svg';
-// import EditIcon from './icons/edit.svg';
+ import EditIcon from './icons/edit.svg';
 
 // Images
 
@@ -208,7 +208,7 @@ const images = {
 		haloIcon: HaloIcon,
 		discordIcon: DiscordIcon,
 		settingsIcon: SettingsIcon,
-		// editIcon: EditIcon
+		editIcon: EditIcon
 	}
 };
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="43px" viewBox="0 0 44 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>Edit Dim</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M0,12.3198608 C0,19.1398862 5.50987166,24.6397217 12.3423423,24.6397217 C19.1745832,24.6397217 24.6846847,19.1398862 24.6846847,12.3198608 C24.6846847,5.50006487 19.1745832,0 12.3423423,0 C5.50987166,0 0,5.50006487 0,12.3198608 Z" id="path-1"></path>
+        <filter x="-64.8%" y="-56.8%" width="229.6%" height="229.9%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Prefil" transform="translate(-58.000000, -38.000000)">
+            <g id="Profile-Pic" transform="translate(20.000000, 0.169399)">
+                <g id="Edit-Dim" transform="translate(48.000000, 45.000000)">
+                    <g id="Fill-2">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                        <use fill="#ACACAC" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    </g>
+                    <g id="Edit-Pen" transform="translate(7.432432, 7.418894)" fill="#FFFFFF" fill-rule="evenodd">
+                        <polygon id="Fill-4" points="6.52944788 1.88657236 0.0243993994 8.38873973 0.0243993994 10.0998129 1.70445473 10.0998129 8.25262763 3.59786859"></polygon>
+                        <polygon id="Fill-6" points="6.96696697 1.45882645 8.6811541 3.1698912 9.79542042 2.10047573 8.08123329 0.346589759"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,6 +1,7 @@
 // diego          - 02-09-2019 - us91 - File creation
 
 import analytics from '@segment/analytics-react-native';
+
 import { SEGMENT_KEY } from '../utilities/Constants';
 
 /**
@@ -9,6 +10,10 @@ import { SEGMENT_KEY } from '../utilities/Constants';
 export async function initializeSegment() {
     try {
         await analytics.setup(SEGMENT_KEY, {
+            
+            recordScreenViews: true,
+            trackAttributionData: true,
+
             // Track events like open app, app installed, app backgrounded etc.
             trackAppLifecycleEvents: true,
             // Send the statistics to segment when have 5 events recorded on the local

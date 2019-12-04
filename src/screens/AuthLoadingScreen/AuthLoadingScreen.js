@@ -78,7 +78,7 @@ class AuthLoadingScreen extends Component {
                 this.setState({ firstLoad: false });
                 if (isTutorialDone) {
 
-                    return this.props.navigation.navigate('Publicas', { firstMatchCreated: (await retrieveData('first-match-created')) === 'true' });
+                    return this.props.navigation.navigate('Logros');
                 }
                 else {
 

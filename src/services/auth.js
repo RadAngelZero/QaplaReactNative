@@ -11,7 +11,7 @@ import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
 
-const webClientIdForGoogleAuth = '66587586976-m04tjhp3or1f2c27jd5pvh2m3vf9cq4b.apps.googleusercontent.com';
+const webClientIdForGoogleAuth = '779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com';
 
 export function signInWithFacebook(navigation) {
     LoginManager.logInWithPermissions(['public_profile', 'email'])
@@ -76,11 +76,11 @@ export function setupGoogleSignin() {
     }
 }
 
-export function signInWithEmailAndPassword(email, password) {
+export function signInWithEmailAndPassword(email, password, navigation) {
     auth.signInWithEmailAndPassword(email, password)
     .then((user) => {
-        console.log(user.user.uid);
         setUserIdOnSegment(user.user.uid);
+        navigation.popToTop();
         //Do something with the user data
     })
     .catch((error) => {

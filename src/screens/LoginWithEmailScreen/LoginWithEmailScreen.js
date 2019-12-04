@@ -34,7 +34,7 @@ class LoginWithEmailScreen extends Component {
                         <Text style={styles.forgotPasswordText} >¿Olvidaste tu contraseña?</Text>
                     </View>
                     <View>
-                        <TouchableWithoutFeedback onPress={() => signInWithEmailAndPassword(this.state.email, this.state.password)}>
+                        <TouchableWithoutFeedback onPress={() => signInWithEmailAndPassword(this.state.email, this.state.password, this.props.navigation)}>
                             <View style={styles.buttonContainer}>
                                 <Text style={styles.buttonText} >INICIAR SESION</Text>
                             </View>

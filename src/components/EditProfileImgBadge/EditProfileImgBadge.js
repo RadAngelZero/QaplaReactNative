@@ -11,12 +11,14 @@ import { updateUserProfileImg } from '../../services/database';
 
 import ImagePickerModal from '../ImagePicker/ImagePickerModal/ImagePickerModal';
 
-const EditIcon = Images.svg.editIcon;
+// This code (that we actually have on release-1) contain a reference
+// that doesn't exist
+// const EditIcon = Images.svg.editIcon;
 
 class EditProfileImgBadge extends Component {
     constructor(props) {
     	super(props);
-    
+
     	this.state = {
     		showImgPckModal: false,
         	picture: ''
@@ -32,14 +34,14 @@ class EditProfileImgBadge extends Component {
         this.setState({ picture });
 
         let task = saveUserProfileImg(this.props.uid, picture.node.image.uri);
-        
+
         // In case the picture is successfully stored in Firebase Datastorage,
         // then an url of this image will be saved in Firebase DB.
         if (task !== null) {
             task.then(async () => {
                 try {
                     const imgUrl = await getUserProfileImgUrl(this.props.uid);
-                    
+
                     if (imgUrl !== null && imgUrl !== undefined){
                         updateUserProfileImg(this.props.uid, imgUrl);
                     }
@@ -47,8 +49,8 @@ class EditProfileImgBadge extends Component {
                 catch(err) {
                 	console.error(err);
                 }
-            })
-            
+            });
+
         }
     }
 
@@ -57,7 +59,7 @@ class EditProfileImgBadge extends Component {
      */
     closeImgPckModal = () => {
         this.setState({
-            showImgPckModal: false  
+            showImgPckModal: false
         });
     }
 
@@ -66,7 +68,7 @@ class EditProfileImgBadge extends Component {
      */
     openImgPckModal = () => {
         this.setState({
-            showImgPckModal: true  
+            showImgPckModal: true
         });
     }
 
@@ -75,7 +77,10 @@ class EditProfileImgBadge extends Component {
         	<>
 	        	<TouchableWithoutFeedback onPress={this.openImgPckModal}>
 		            <View style={styles.container}>
-		            	<EditIcon style={styles.badge} />
+                        {/*
+                        This code (that we actually have on release-1) contain a reference
+                        that doesn't exist
+                        <EditIcon style={styles.badge} /> */}
 		            </View>
 		        </TouchableWithoutFeedback>
 		        <ImagePickerModal

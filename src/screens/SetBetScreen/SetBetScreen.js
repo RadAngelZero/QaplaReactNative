@@ -182,7 +182,10 @@ class SetBetScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    <BuyQaploinsModal open={this.state.open} onClose={() => this.setState({ open: false })} />
+                    <BuyQaploinsModal
+                        open={this.state.open}
+                        body='Puedes devolver los 300 Qaploins cuando quieras ¡y te haremos un reembolso!'
+                        onClose={() => this.setState({ open: false })} />
                     <MatchExpireRememberModal
                         visible={this.state.timeActionMsgOpen}
                         onClose={this.closeMatchExpireRememberModal} />

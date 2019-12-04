@@ -143,8 +143,9 @@ export class UserProfileScreen extends Component {
                          <Image source={images.png.addButton.img} />
                     </View>
                 </TouchableWithoutFeedback>
-                <BuyQaploinsModal 
+                <BuyQaploinsModal
                     open={this.state.showBuyQaploinsModal}
+                    body='Puedes devolver los 300 Qaploins cuando quieras ¡y te haremos un reembolso!'
                     onClose={this.closeBuyQaploinsModal} />
             </SafeAreaView>
         );

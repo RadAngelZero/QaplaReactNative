@@ -33,8 +33,8 @@ target 'QaplaReactNative' do
   
   pod 'RNAnalytics', :path => '../node_modules/@segment/analytics-react-native'
 
-  pod 'RNAnalyticsIntegration-Mixpanel', :path => '../node_modules/@segment/analytics-react-native-mixpanel'
-  pod 'RNAnalyticsIntegration-Amplitude', :path => '../node_modules/@segment/analytics-react-native-amplitude'
+  #pod 'RNAnalyticsIntegration-Mixpanel', :path => '../node_modules/@segment/analytics-react-native-mixpanel'
+  #pod 'RNAnalyticsIntegration-Amplitude', :path => '../node_modules/@segment/analytics-react-native-amplitude'
 
   pod 'Firebase/Core', '~> 6.9.0'
 

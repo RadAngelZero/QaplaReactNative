@@ -35,6 +35,7 @@ import NotEnoughQaploinsModal from '../../components/NotEnoughQaploinsModal/NotE
 import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constants';
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 import UserDontHaveGameModal from '../../components/UserDontHaveGameModal/UserDontHaveGameModal';
+import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
@@ -57,7 +58,8 @@ class PublicMatchCardScreen extends Component {
             openNoQaploinsModal: false,
             validTimeLeft: 0,
             expired: false,
-            openUserDontHaveGameModal: false
+            openUserDontHaveGameModal: false,
+            openBuyQaploinsModal: false
         };
     }
 
@@ -185,6 +187,7 @@ class PublicMatchCardScreen extends Component {
             // Get the info of the match
             const matchCard = this.props.navigation.getParam('matchCard');
 
+
             // Check if the match created by adversaryUid, with matchId was already challenged
             // by the user uid, we want to avoid to challenge a match twice or more.
             const already = await isMatchAlreadyChallenged(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
@@ -192,10 +195,15 @@ class PublicMatchCardScreen extends Component {
             if (!already) {
 
                 if (this.props.userGamesList.indexOf(matchCard.game) !== -1) {
-                    // Challenge the user to play the match
-                    challengeUser(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
 
-                    this.props.navigation.navigate('Publicas');
+                    if(this.props.userQaploins >= matchCard.bet) {
+                        // Challenge the user to play the match
+                        challengeUser(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
+
+                        this.props.navigation.navigate('Publicas');
+                    } else {
+                        this.setState({ openBuyQaploinsModal: true });
+                    }
                 } else {
                     this.setState({ openUserDontHaveGameModal: true });
                 }
@@ -414,6 +422,10 @@ class PublicMatchCardScreen extends Component {
                     userToChallenge={matchCard.userName}
                     gameName={gameData.name}
                     onClose={() => this.setState({ openUserDontHaveGameModal: false })} />
+                <BuyQaploinsModal
+                    open={this.state.openBuyQaploinsModal}
+                    body='Compra qaploins para desafiar esta partida'
+                    onClose={() => this.setState({ openBuyQaploinsModal: false })} />
             </SafeAreaView>
         );
     }
@@ -470,7 +482,8 @@ function mapStateToProps(state) {
     return {
         games: state.gamesReducer.games,
         uid: state.userReducer.user.id,
-        userGamesList: state.userReducer.user.gameList
+        userGamesList: state.userReducer.user.gameList,
+        userQaploins: state.userReducer.user.credits
     }
 }
 

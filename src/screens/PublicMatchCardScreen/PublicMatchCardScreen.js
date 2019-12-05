@@ -1,3 +1,4 @@
+// diego          - 04-12-2019 - us161 - Added BuyQaploinsModal when user have not enough qaploins to challenge a match
 // diego          - 14-09-2019 - bug86 - Show correct text when the user has uploaded their results, but the adversary no
 // diego          - 05-09-2019 - us104 - Added logic to allow just one result per user on the displayed match
 // diego          - 05-09-2019 - us101 - Added timer to show user time before match from matches play expire
@@ -186,7 +187,6 @@ class PublicMatchCardScreen extends Component {
         if (isUserLogged()) {
             // Get the info of the match
             const matchCard = this.props.navigation.getParam('matchCard');
-
 
             // Check if the match created by adversaryUid, with matchId was already challenged
             // by the user uid, we want to avoid to challenge a match twice or more.
@@ -424,7 +424,7 @@ class PublicMatchCardScreen extends Component {
                     onClose={() => this.setState({ openUserDontHaveGameModal: false })} />
                 <BuyQaploinsModal
                     open={this.state.openBuyQaploinsModal}
-                    body='Compra qaploins para desafiar esta partida'
+                    body='Compra Qaploins para desafiar esta partida'
                     onClose={() => this.setState({ openBuyQaploinsModal: false })} />
             </SafeAreaView>
         );

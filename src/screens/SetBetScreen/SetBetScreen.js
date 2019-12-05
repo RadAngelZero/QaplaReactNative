@@ -1,3 +1,4 @@
+// diego          - 04-12-2019 - us161 - Added body property to BuyQaploinsModal
 // josep.sanahuja - 14-09-2019 - bug5 - Redirect backButton on Android from MatchExpireRememberModal
 // diego          - 06-09-2019 - us93 - Convert modal to remember the time of life of the match on component: MatchExpireRememberModal
 // diego          - 03-09-2019 - us96 - Removed X text icon (now this screen have custom header)
@@ -166,7 +167,7 @@ class SetBetScreen extends Component {
      * Close the modal and enable the button again
      */
     closeMatchExpireRememberModal = () => {
-        
+
         this.setState({
             timeActionMsgOpen: false,
             loading: false

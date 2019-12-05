@@ -243,8 +243,8 @@ class PublicMatchesFeedScreen extends Component {
                     onClose={this.toggleHg1Modal}
                     showDelay={1000}
                     cb1={this.markHg1}
-                    header='Crea una Reta'
-                    body='Empieza a competir con otros jugadores. Crea tu reta y gana!'>
+                    header='Crea una Partida'
+                    body='Empieza a competir con otros jugadores. Crea tu partida y gana!'>
                     <CreateRetasButton
                             highlighted={!this.props.navigation.getParam('firstMatchCreated')}
                             onPress={this.onCrearRetaButtonPress}/>

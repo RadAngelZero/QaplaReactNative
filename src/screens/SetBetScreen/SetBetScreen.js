@@ -1,3 +1,4 @@
+// diego          - 04-12-2019 - us161 - Added body property to BuyQaploinsModal
 // josep.sanahuja - 14-09-2019 - bug5 - Redirect backButton on Android from MatchExpireRememberModal
 // diego          - 06-09-2019 - us93 - Convert modal to remember the time of life of the match on component: MatchExpireRememberModal
 // diego          - 03-09-2019 - us96 - Removed X text icon (now this screen have custom header)
@@ -166,7 +167,7 @@ class SetBetScreen extends Component {
      * Close the modal and enable the button again
      */
     closeMatchExpireRememberModal = () => {
-        
+
         this.setState({
             timeActionMsgOpen: false,
             loading: false
@@ -182,7 +183,10 @@ class SetBetScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    <BuyQaploinsModal open={this.state.open} onClose={() => this.setState({ open: false })} />
+                    <BuyQaploinsModal
+                        open={this.state.open}
+                        body='Puedes devolver los 300 Qaploins cuando quieras ¡y te haremos un reembolso!'
+                        onClose={() => this.setState({ open: false })} />
                     <MatchExpireRememberModal
                         visible={this.state.timeActionMsgOpen}
                         onClose={this.closeMatchExpireRememberModal} />

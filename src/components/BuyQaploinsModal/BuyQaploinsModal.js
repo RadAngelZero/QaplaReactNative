@@ -68,7 +68,7 @@ class BuyQaploinsModal extends Component {
                             {this.state.qaploinsAdded ?
                                 'Gratis para usuarios de la versión beta'
                                 :
-                                'Puedes devolver los 300 Qaploins cuando quieras ¡y te haremos un reembolso!'
+                                this.props.body
                             }
                         </Text>
                         <TouchableWithoutFeedback onPress={this.addQaploinsToUser}>

@@ -1,3 +1,4 @@
+// diego           - 04-12-2019 - us161 - Added body property to BuyQaploinsModal
 // josep.sanahuja  - 22-11-2019 - us153 - Add EditProfileImgBadge
 // diego           - 15-11-2019 - us149 - Check if user data is loaded on mapStateToProps
 // diego           - 03-09-2019 - us96  - Send flag onCloseGoTo when add game, so the header knows
@@ -143,8 +144,9 @@ export class UserProfileScreen extends Component {
                          <Image source={images.png.addButton.img} />
                     </View>
                 </TouchableWithoutFeedback>
-                <BuyQaploinsModal 
+                <BuyQaploinsModal
                     open={this.state.showBuyQaploinsModal}
+                    body='Puedes devolver los 300 Qaploins cuando quieras ¡y te haremos un reembolso!'
                     onClose={this.closeBuyQaploinsModal} />
             </SafeAreaView>
         );

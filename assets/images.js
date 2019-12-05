@@ -14,7 +14,7 @@ import FacebookIcon from './icons/F_icon.svg';
 import FavouritesIcon from './icons/favorite-heart-button.svg';
 import TestIcon from './icons/facebook.svg';
 
-import PublicFeedMatchIcon from './icons/Explore.svg';
+import PublicFeedMatchIcon from './icons/Partidas.svg';
 import QaploinsIcon from './icons/qaploins.svg';
 import ProfileIcon from './icons/ProfileActive.svg';
 import NotificationIcon from './icons/Notifications.svg';

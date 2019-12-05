@@ -154,30 +154,26 @@ const RetasTabNavigator = createMaterialTopTabNavigator(
 );
 
 const TabMainNavigator = createBottomTabNavigator({
-  Retas: {
-    screen:   RetasTabNavigator,
-    navigationOptions: ({ navigation }) => ({
-      title: "Home",  //Tried to hide this for next tab Search.,
-      tabBarIcon: ({ tintColor, focused }) => (
-        <View>
-          <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
-          {focused &&
-            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Retas</Text>
-          }
-        </View>
-      )
-    })
-  },
   Logros: {
     screen: LogrosTabNavigator,
     navigationOptions: ({ navigation }) => ({
       title: "Logros",  //Tried to hide this for next tab Search.,
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
-          <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'} />
-          {focused &&
-            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Logros</Text>
-          }
+          <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
+            <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>Eventos</Text>
+        </View>
+      )
+    })
+  },
+  Retas: {
+    screen:   RetasTabNavigator,
+    navigationOptions: ({ navigation }) => ({
+      title: "Home",  //Tried to hide this for next tab Search.,
+      tabBarIcon: ({ tintColor, focused }) => (
+        <View>
+          <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
+            <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>Partidas</Text>
         </View>
       )
     })
@@ -189,10 +185,8 @@ const TabMainNavigator = createBottomTabNavigator({
       title: 'Perfil',
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
-          <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : 'gray'}/> 
-          {focused &&
-            <Text style={{ color: '#36E5CE', fontSize: 12, lineHeight: 14 }}>Perfil</Text>
-          }
+          <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'}/>
+            <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>Perfil</Text>
         </View>
       )
     })

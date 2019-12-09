@@ -185,6 +185,7 @@ class SetBetScreen extends Component {
                 <View style={styles.container}>
                     <BuyQaploinsModal
                         open={this.state.open}
+                        openWhen='User try to create a match'
                         body='Puedes devolver los 300 Qaploins cuando quieras ¡y te haremos un reembolso!'
                         onClose={() => this.setState({ open: false })} />
                     <MatchExpireRememberModal

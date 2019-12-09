@@ -240,7 +240,7 @@ class PublicMatchCardScreen extends Component {
          * if the user is the author (creator) of the match, is the adversary1, if not, is the adversary2, and
          * that information is important when their result is uploaded
          */
-        this.props.navigation.navigate('UploadMatchResult', { idMatch: matchCard.idMatch, currentUserAdversary: matchCard.currentUserAdversary });
+        this.props.navigation.navigate('UploadMatchResult', { matchData: matchCard, currentUserAdversary: matchCard.currentUserAdversary });
     }
 
     /**
@@ -425,6 +425,7 @@ class PublicMatchCardScreen extends Component {
                 <BuyQaploinsModal
                     open={this.state.openBuyQaploinsModal}
                     body='Compra Qaploins para desafiar esta partida'
+                    openWhen='User try to challenge a match'
                     onClose={() => this.setState({ openBuyQaploinsModal: false })} />
             </SafeAreaView>
         );

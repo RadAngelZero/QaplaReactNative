@@ -7,6 +7,7 @@
 import React, { Component } from 'react';
 import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
 
 import styles from './style';
 import { addQaploinsToUserCloudFunction } from '../../services/functions';
@@ -35,7 +36,10 @@ class BuyQaploinsModal extends Component {
             if (!this.state.qaploinsAdded) {
                 addQaploinsToUserCloudFunction();
                 this.setState({ qaploinsAdded: true });
-                trackOnSegment('Add Qaploins To User');
+                trackOnSegment('User Buy Qaploins', {
+                    UserQaploins: this.props.userQaploins,
+                    Origin: this.props.openWhen
+                });
             } else {
                 this.props.onClose();
             }
@@ -86,4 +90,10 @@ class BuyQaploinsModal extends Component {
     }
 }
 
-export default withNavigation(BuyQaploinsModal);
+function mapStateToProps(state) {
+    return {
+        userQaploins: state.userReducer.user.credits
+    };
+}
+
+export default connect(mapStateToProps)(withNavigation(BuyQaploinsModal));

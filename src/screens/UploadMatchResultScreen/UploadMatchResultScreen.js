@@ -10,6 +10,8 @@ import {
     Text,
     TouchableWithoutFeedback
 } from 'react-native';
+import { connect } from 'react-redux';
+
 import styles from './style';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
@@ -19,6 +21,7 @@ import { uploadMatchResult } from '../../services/database';
 import UploadMatchResultsModal from '../../components/UploadMatchResultsModal/UploadMatchResultsModal';
 import UploadMatchEvidenceModal from '../../components/UploadMatchEvidenceModal/UploadMatchEvidenceModal';
 import { WON_RESULT, TIE_RESULT, LOST_RESULT, OTHER_RESULT } from '../../utilities/Constants';
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 
 const CloseIcon = Images.svg.closeIcon;
 const WinIcon = Images.svg.winIcon;
@@ -31,7 +34,7 @@ class UploadMatchResultScreen extends Component {
 
     constructor(props) {
       super(props);
-    
+
       this.state = {
           matchResultStatus: null,
           evidenceUrl: '',
@@ -41,6 +44,17 @@ class UploadMatchResultScreen extends Component {
       };
     }
 
+    componentWillMount(){
+        this.list = [
+            /**
+             * This event is triggered when the user enter (focus) on this screen
+             */
+            this.props.navigation.addListener(
+                'willFocus',
+                (payload) => recordScreenOnSegment('Upload result Screen')
+            )
+        ];
+    }
     /**
      * Description:
      * Toogles and hightlight the correct match result button. If a button is activated
@@ -95,6 +109,8 @@ class UploadMatchResultScreen extends Component {
         try {
             let {matchResultStatus} = this.state;
 
+            const matchData = this.props.navigation.getParam('matchData');
+
             /**
              * A result of type 'TIE_RESULT' has (in the cloud functions) the same logic than 'OTHER_RESULT',
              * we just need to identify wich one here for UI questions
@@ -103,11 +119,22 @@ class UploadMatchResultScreen extends Component {
                 matchResultStatus = OTHER_RESULT;
             }
             await uploadMatchResult(
-                this.props.navigation.getParam('idMatch'),
+                matchData.idMatch,
                 this.props.navigation.getParam('currentUserAdversary'),
                 matchResultStatus,
                 this.state.evidenceUrl
             );
+
+            const analitycsProperties = {
+                Game: matchData.gameKey,
+                Platform: matchData.platform,
+                Bet: matchData.bet,
+                UserQaploins: this.props.userQaploins,
+                Result: matchResultStatus,
+                Evidence: this.state.evidenceUrl !== ''
+            };
+
+            trackOnSegment('Upload result Button', analitycsProperties);
             this.setState({ showUploadMatchResultsModal: true })
         } catch (error) {
             console.error(error);
@@ -226,4 +253,10 @@ class UploadMatchResultScreen extends Component {
     }
 }
 
-export default UploadMatchResultScreen;
+function mapStateToProps(state) {
+    return {
+        userQaploins: state.userReducer.user.credits
+    };
+}
+
+export default connect(mapStateToProps)(UploadMatchResultScreen);

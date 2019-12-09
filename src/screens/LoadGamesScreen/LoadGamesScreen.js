@@ -43,15 +43,15 @@ class LoadGamesScreen extends React.Component {
 
     componentDidMount() {
         this.list = [
-            
+
             /**
              * This event is triggered when the user goes to other screen
              */
             this.props.navigation.addListener(
                 'willFocus',
                 (payload) => {
-                    if (this.props.navigation.getParam('loadGamesThatUserDontHave', false)) {
-                        recordScreenOnSegment('Load Games (Add Game)');
+                    if (this.props.navigation.getParam('loadGamesUserDontHave', false)) {
+                        recordScreenOnSegment('Clicked Add Games from profile');
                     } else {
                         recordScreenOnSegment('Load Games (Create Match)');
                     }
@@ -60,7 +60,7 @@ class LoadGamesScreen extends React.Component {
         ]
         this.props.navigation.setParams({ onCloseGoTo: this.props.navigation.getParam('onCloseGoTo', 'Home') });
         BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
-        
+
         // #bug2:
         // At the beginning of the components life, there should not be any game selected,
         // the way we ensure that is by overwriting the value it may have when the component

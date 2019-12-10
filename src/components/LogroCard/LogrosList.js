@@ -24,7 +24,8 @@ class LogrosList extends React.Component {
                     renderItem={({item, index}) => <LogroCardItem
                         {...item}
                         userId={this.props.userId}
-                        verified={this.props.isUserVerified}
+                        verified={true} // Remove if the verification is a requirement again
+                        // verified={this.props.isUserVerified} uncomment if the verification is a requirement again
                         lastChild={index === this.props.logros.length - 1} />}
                         keyExtractor={(item) => item.id} />
             </View>

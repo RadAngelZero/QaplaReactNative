@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
     },
     discordIcon: {
         flex: 1,
-        flexDirection: 'row-reverse',
+        flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: heightPercentageToPx(2.96)
     }

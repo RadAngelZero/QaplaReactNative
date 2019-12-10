@@ -3,8 +3,12 @@
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
+import { withNavigation } from 'react-navigation';
+
 import styles from './style';
 import { joinEvent } from '../../services/database';
+import { isUserLogged } from '../../services/auth';
+
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
 
 class EventCard extends Component {
@@ -12,7 +16,11 @@ class EventCard extends Component {
      * Allow the user to join the tournament
      */
     joinEvent = () => {
-        joinEvent(this.props.uid, this.props.id);
+        if (isUserLogged()) {
+            joinEvent(this.props.uid, this.props.id);
+        } else {
+            this.props.navigation.navigate('SignIn');
+        }
     }
 
     render() {
@@ -57,4 +65,4 @@ function mapDispatchToProps(state) {
     }
 }
 
-export default connect(mapDispatchToProps)(EventCard);
+export default connect(mapDispatchToProps)(withNavigation(EventCard));

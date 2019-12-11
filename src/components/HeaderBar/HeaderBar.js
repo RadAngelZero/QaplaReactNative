@@ -1,3 +1,4 @@
+// diego             - 11-12-2019 - us164 - NoVerifiedIcon added
 // diego             - 22-11-2019 - us148 - Notification badge added
 // josep.sanahuja    - 13-11-2019 - us147 - Connect currentScreenId
 // josep.sanahuja    - 26-08-2019 - us90 - Added notification highlight
@@ -144,6 +145,9 @@ class HeaderBar extends Component {
       this.props.navigation.navigate('AppSettingsMenu');
     }
 
+    /**
+     * Redirecto to VerificationScreen
+     */
     goToVerificationStack = () => this.props.navigation.navigate('Verification');
 
     /**

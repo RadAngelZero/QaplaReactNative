@@ -1,3 +1,4 @@
+// diego	      - 11-12-2019 - us164 - Added NoVerifiedIcon
 // josep
 // diego	      - 20-09-2019 - us133 - Added VerifyIcon
 // diego	      - 18-09-2019 - us109 - Added LogroIcon

@@ -1,3 +1,4 @@
+// diego          - 11-12-2019 - us164 - verified prop changed to true to show all the "logros" of the list always
 // josep.sanahuja - 26-09-2019 - us118 - Added userId to LogroCardItem
 // josep.sanahuja - 20-09-2019 - us111 - Added verified on LogroCardItem
 // josep.sanahuja - 19-09-2019 - us114 - File creation

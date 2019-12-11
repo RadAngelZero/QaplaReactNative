@@ -244,10 +244,7 @@ const MatchWizardStackNavigator = createStackNavigator(
       }
     },
     CheckOut: {
-      screen: CheckOutPaymentScreen,
-      navigationOptions: {
-        header: props => <TopNavOptions back close {...props} onCloseGoTo='Publicas' />
-      }
+      screen: CheckOutPaymentScreen
     }
   },
   {

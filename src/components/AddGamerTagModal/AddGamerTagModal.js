@@ -1,3 +1,5 @@
+// josep.sanahuja - 12-12-2019 - us160 - Events 'Add gamertag Screen' & 'Gamertag Added' & 
+//                                       'Add Gamer Tag Cancelled With Info' & 'Add Gamer Tag Cancelled Empty'
 // diego          - 12-09-2019 - us99 - Added close icon to allow user cancelation
 // diego          - 02-09-2019 - us91 - Add track segment statistic
 // diego          - 21-08-2019 - us89 - File creation
@@ -9,7 +11,7 @@ import { withNavigation } from 'react-navigation';
 import styles from './style';
 import { addGameToUser } from '../../services/database';
 import Images from './../../../assets/images';
-import { trackOnSegment } from '../../services/statistics';
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -17,6 +19,22 @@ export class AddGamerTagModal extends Component {
     state = {
         gamerTagText: ''
     };
+
+    componentDidMount() {
+        this.list = [
+            
+            /**
+             * This event is triggered when the user goes to other screen
+             */
+            this.props.navigation.addListener(
+                'willFocus',
+                (payload) => {
+                    recordScreenOnSegment('Add gamertag Screen');
+                }
+            )
+        ]
+    }
+
 
     /**
      * Check if the gamerTag is valid
@@ -33,12 +51,15 @@ export class AddGamerTagModal extends Component {
     }
 
     saveGameOnUser = async () => {
-        try {
+        try 
+        {
             await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
                 this.props.selectedGame.gameKey, this.state.gamerTagText);
             
-            trackOnSegment('Add Gamer Tag Process Completed',
-                { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });
+            trackOnSegment('Gamertag Added',{
+                Game: this.props.selectedGame.gameKey,
+                Platform: this.props.selectedGame.platform 
+            });     
             
             if (this.props.loadGamesUserDontHave) {
                 this.props.navigation.navigate('Perfil');
@@ -51,6 +72,29 @@ export class AddGamerTagModal extends Component {
         }
     }
 
+    /**
+     * Sends an event tracking canceling action and closes the modal.
+     */
+    closeModal = () => {
+        
+        if (this.state.gamerTagText.length === 0) {
+            trackOnSegment('Add Gamer Tag Cancelled Empty', {
+                Game: this.props.selectedGame.gameKey,
+                Platform: this.props.selectedGame.platform,
+                Gamertag: this.state.gamerTagText
+            });
+        }
+        else {
+            trackOnSegment('Add Gamer Tag Cancelled With Info', {
+                Game: this.props.selectedGame.gameKey,
+                Platform: this.props.selectedGame.platform,
+                Gamertag: this.state.gamerTagText
+            });
+        }
+
+        this.props.onClose();
+    }
+
     render() {
         return (
             <Modal
@@ -61,7 +105,7 @@ export class AddGamerTagModal extends Component {
                     <View style={styles.mainContainer}>
                         <View style={styles.modalContainer}>
                             <View style={styles.modalControls}>
-                                <TouchableWithoutFeedback onPress={this.props.onClose}>
+                                <TouchableWithoutFeedback onPress={this.closeModal}>
                                     <View style={styles.closeIcon}>
                                         <CloseIcon />
                                     </View>

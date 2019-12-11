@@ -1,3 +1,4 @@
+// josep.sanahuja - 12-12-2019 - us160 - 'Set Bet' -> 'Select Qaploins Screen' and custom header
 // diego          - 04-12-2019 - us161 - Added body property to BuyQaploinsModal
 // josep.sanahuja - 14-09-2019 - bug5 - Redirect backButton on Android from MatchExpireRememberModal
 // diego          - 06-09-2019 - us93 - Convert modal to remember the time of life of the match on component: MatchExpireRememberModal
@@ -36,6 +37,7 @@ import {
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/MatchExpireRememberModal';
+import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
 const QaploinIcon       = images.svg.qaploinsIcon;
@@ -43,6 +45,16 @@ const LessQaploinsIcon  = images.svg.lessQaploins;
 const MoreQaploinsIcon  = images.svg.moreQaploins;
 
 class SetBetScreen extends Component {
+    static navigationOptions = ({ navigation }) => ({
+        header: ({ props }) => (
+            <TopNavOptions
+                close
+                navigation={navigation}
+                back
+                onCloseGoTo={'Publicas'}
+                closeAnalyticsEvent={this.closeEvent} />)
+    });
+
     constructor(props) {
         super(props);
 
@@ -65,7 +77,7 @@ class SetBetScreen extends Component {
             this.props.navigation.addListener(
                 'willFocus',
                 (payload) => {
-                    recordScreenOnSegment('Set Bet');
+                    recordScreenOnSegment('Select Qaploins Screen');
                 }
             )
         ]
@@ -80,6 +92,17 @@ class SetBetScreen extends Component {
         //Remove willFocus listener on navigation
         this.list.forEach((item) => item.remove());
         BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
+    }
+
+    /**
+     * Callback triggered in TopNavOptions when 'close' button is pressed.
+     * Tracks info from user.
+     */
+    closeEvent = () => {
+        trackOnSegment('Cancel Match Select Qaploins', {
+            Bet: this.state.currentBet,
+            UserQaploins: this.props.userQaploins,
+        });
     }
 
     /**
@@ -132,9 +155,9 @@ class SetBetScreen extends Component {
                 await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet);
 
                 trackOnSegment('Match created', {
-                    bet: this.state.currentBet,
-                    gameKey: this.props.selectedGame.gameKey,
-                    platform: this.props.selectedGame.platform
+                    Bet: this.state.currentBet,
+                    GameKey: this.props.selectedGame.gameKey,
+                    Platform: this.props.selectedGame.platform
                 });
 
                 // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
@@ -159,6 +182,14 @@ class SetBetScreen extends Component {
                 console.log(error);
             }
         } else {
+            // us160: Duplicate event code, reason is that the way it is implemented match creation,
+            // healty creation (not multiple triggers by one or multiple clicks) happens in those two
+            // if blocks because of loading.
+            trackOnSegment('Match created', {
+                Bet: this.state.currentBet,
+                GameKey: this.props.selectedGame.gameKey,
+                Platform: this.props.selectedGame.platform
+            });
             this.setState({ open: !this.state.open });
         }
     }

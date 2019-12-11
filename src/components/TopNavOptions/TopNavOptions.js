@@ -1,3 +1,4 @@
+// josep.sanahuja  - 12-12-2019 - us160 - Add close() for closeAnalyticsEvent
 // diego           - 03-09-2019 - us96 - File creation
 
 import React, { Component } from 'react';
@@ -10,6 +11,18 @@ const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
 
 export class TopNavOptions extends Component {
+    
+    /**
+     * Check if some game is selected
+     */
+    close = () => {
+        if (this.props.closeEvent) {
+            this.props.closeEvent();
+        }
+
+        this.props.navigation.navigate(this.props.onCloseGoTo);
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -25,7 +38,7 @@ export class TopNavOptions extends Component {
                     </View>
                     <View style={styles.closeIconContainer}>
                         {this.props.close &&
-                            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate(this.props.onCloseGoTo)}>
+                            <TouchableWithoutFeedback onPress={this.close}>
                                 <View style={styles.buttonDimensions}>
                                     <CloseIcon />
                                 </View>

@@ -1,3 +1,5 @@
+// josep.sanahuja - 12-12-2019 - us160 - 'Load Games (Create Match)' -> Add Games Screen First Match
+//                                       'Load Games (Add Game)'' -> 'Add Games Screen'
 // diego          - 03-09-2019 - us96 - Added custom header (TopNavOptions)
 // diego          - 02-09-2019 - us91 - Add track and record screen segment statistic
 // diego          - 21-08-2019 - us89 - Added loadGamesUserDontHave prop
@@ -51,9 +53,9 @@ class LoadGamesScreen extends React.Component {
                 'willFocus',
                 (payload) => {
                     if (this.props.navigation.getParam('loadGamesThatUserDontHave', false)) {
-                        recordScreenOnSegment('Load Games (Add Game)');
+                        recordScreenOnSegment('Add Games Screen');
                     } else {
-                        recordScreenOnSegment('Load Games (Create Match)');
+                        recordScreenOnSegment('Add Games Screen First Match');
                     }
                 }
             )

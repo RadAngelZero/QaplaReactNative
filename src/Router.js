@@ -238,10 +238,7 @@ const MatchWizardStackNavigator = createStackNavigator(
       }
     },
     SetBet: {
-      screen: SetBetScreen,
-      navigationOptions: {
-        header: props => <TopNavOptions back close {...props} onCloseGoTo='Publicas' />
-      }
+      screen: SetBetScreen
     },
     CheckOut: {
       screen: CheckOutPaymentScreen,

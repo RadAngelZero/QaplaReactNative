@@ -1,3 +1,5 @@
+// diego          - 11-12-2019 - us165 - Validate if the user is logged before execute joinInTournament
+
 import React, { Component } from 'react';
 import { Animated, View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';

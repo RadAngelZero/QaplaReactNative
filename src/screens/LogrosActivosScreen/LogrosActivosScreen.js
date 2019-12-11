@@ -1,3 +1,4 @@
+// diego           - 11-12-2019 - us165 - loadQaplaLogros moved to AuthLoadingScreen
 // diego           - 18-09-2019 - us110 - File creation
 
 import React, { Component } from 'react';

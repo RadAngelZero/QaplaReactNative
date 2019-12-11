@@ -1,3 +1,4 @@
+// diego          - 11-12-2019 - us165 - Validate if the user is logged before redirect or open modal
 // josep.sanahuja - 26-09-2019 - us118 - Added goToSocialLink & ImagePickerModal
 // josep.sanahuja - 20-09-2019 - us111 - Added disabledContainer logic
 // josep.sanahuja - 19-09-2019 - us114 - File creation

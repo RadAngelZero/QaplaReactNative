@@ -1,3 +1,4 @@
+// diego          - 11-12-2019 - us165 - EMPTY_LOGROS case added
 // diego          - 04-10-2019 - us113 - File creation
 
 import { LOAD_USER_VERIFICATION_STATUS, LOAD_LOGROS_ACTIVOS, REMOVE_LOGRO_ACTIVO, LOAD_LOGROS_COMPLETOS, EMPTY_LOGROS } from '../utilities/Constants';

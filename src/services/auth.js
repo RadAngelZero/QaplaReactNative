@@ -1,3 +1,4 @@
+// diego                - 11-12-2019 - us165 - emptyLogros called on signOut
 // diego                - 02-09-2019 - us91 - signOut function created
 // diego                - 02-09-2019 - us91 - Added setUserIdOnSegment on different signins
 // diego                - 24-07-2019 - us31 - removed unnecessary code from

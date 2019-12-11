@@ -1,3 +1,4 @@
+// diego           - 11-12-2019 - us165 - Validate if the user is logged before execute joinEvent
 // diego           - 14-11-2019 - us146 - File creation
 
 import React, { Component } from 'react';

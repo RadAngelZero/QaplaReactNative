@@ -1,3 +1,4 @@
+// diego           - 11-12-2019 - us165 - Validate the uid before make query & empty logros added
 // diego           - 14-11-2019 - us146 - Support for events added
 // diego           - 26-09-2019 - us130 - File creation
 
@@ -66,7 +67,6 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
                     };
 
                     dispatch(loadLogrosActivosSuccess(eventProgressObject));
-
                 }
             });
         }
@@ -134,10 +134,16 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
     }
 }
 
+/**
+ * Make the dispatch of emptyLogrosSuccess
+ */
 export const emptyLogros = () => (dispatch) => {
     dispatch(emptyLogrosSuccess());
 }
 
+/**
+ * It tell to redux that all the "logros" information must be removed
+ */
 export const emptyLogrosSuccess = () => {
     return {
         type: EMPTY_LOGROS

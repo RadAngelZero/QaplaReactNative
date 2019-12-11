@@ -1,3 +1,4 @@
+// diego             - 11-12-2019 - us165 - loadQaplaLogros added
 // diego             - 14-11-2019 - us146 - Load server time offset
 // josep.sanahuja    - 26-08-2019 - us90 - loadShowHg1Modal
 // diego             - 02-09-2019 - us91 - Initialize segment

@@ -118,6 +118,7 @@ class LoadGamesScreen extends React.Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <AddGamerTagModal
+                        redirect
                         selectedGame={this.props.selectedGame}
                         uid={this.props.uid}
                         userName={this.props.userName}

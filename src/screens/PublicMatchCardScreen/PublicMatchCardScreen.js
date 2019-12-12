@@ -24,19 +24,20 @@ import { connect } from 'react-redux';
 import styles from './style'
 
 import Images from '../../../assets/images'
-import { challengeUser, isMatchAlreadyChallenged, userHasQaploinsToPlayMatch, getGamerTagWithUID } from '../../services/database';
+import { challengeUser, isMatchAlreadyChallenged, userHasQaploinsToPlayMatch, getGamerTagWithUID, addGameToUser } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
 import { cancelPublicMatch, acceptChallengeRequest } from '../../services/functions';
 import { getGamerTagStringWithGameAndPlatform } from '../../utilities/utils';
 import { trackOnSegment } from '../../services/statistics';
+
 // Custom Components
 import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBttnModal'
 import AcceptChallengeModal from '../../components/AcceptChallengeModal/AcceptChallengeModal';
 import NotEnoughQaploinsModal from '../../components/NotEnoughQaploinsModal/NotEnoughQaploinsModal';
 import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constants';
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
-import UserDontHaveGameModal from '../../components/UserDontHaveGameModal/UserDontHaveGameModal';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
+import { AddGamerTagModal } from '../../components/AddGamerTagModal/AddGamerTagModal';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
@@ -59,7 +60,7 @@ class PublicMatchCardScreen extends Component {
             openNoQaploinsModal: false,
             validTimeLeft: 0,
             expired: false,
-            openUserDontHaveGameModal: false,
+            openAddGamerTagModal: false,
             openBuyQaploinsModal: false
         };
     }
@@ -194,7 +195,7 @@ class PublicMatchCardScreen extends Component {
 
             if (!already) {
 
-                if (this.props.userGamesList.indexOf(matchCard.game) !== -1) {
+                if (this.props.userGamesList instanceof Array && this.props.userGamesList.indexOf(matchCard.game) !== -1) {
 
                     if(this.props.userQaploins >= matchCard.bet) {
                         // Challenge the user to play the match
@@ -205,7 +206,14 @@ class PublicMatchCardScreen extends Component {
                         this.setState({ openBuyQaploinsModal: true });
                     }
                 } else {
-                    this.setState({ openUserDontHaveGameModal: true });
+                    const gamerTag = await getGamerTagWithUID(this.props.uid, matchCard.game, matchCard.platform);
+                    if(gamerTag.gamerTag){
+                        await addGameToUser(this.props.uid, this.props.userName, matchCard.platform,
+                            matchCard.game, gamerTag.gamerTag);
+                        this.tryToChallengeUser();
+                    } else {
+                        this.setState({ openAddGamerTagModal: true });
+                    }
                 }
             } else {
                 // Show Modal
@@ -417,11 +425,13 @@ class PublicMatchCardScreen extends Component {
                     notificationKey={this.props.navigation.getParam('notificationKey')}
                     deletedFromMatchDetail={true}
                     onClose={() => this.setState({openNoQaploinsModal: false})} />
-                <UserDontHaveGameModal
-                    visible={this.state.openUserDontHaveGameModal}
-                    userToChallenge={matchCard.userName}
-                    gameName={gameData.name}
-                    onClose={() => this.setState({ openUserDontHaveGameModal: false })} />
+                <AddGamerTagModal
+                    selectedGame={ { gameKey: matchCard.game, platform: matchCard.platform } }
+                    open={this.state.openAddGamerTagModal}
+                    uid={this.props.uid}
+                    userName={matchCard.userName}
+                    onSuccess={this.tryToChallengeUser}
+                    onClose={() => this.setState({ openAddGamerTagModal: false }) } />
                 <BuyQaploinsModal
                     open={this.state.openBuyQaploinsModal}
                     body='Compra Qaploins para desafiar esta partida'
@@ -482,6 +492,7 @@ function mapStateToProps(state) {
     return {
         games: state.gamesReducer.games,
         uid: state.userReducer.user.id,
+        userName: state.userReducer.user.userName,
         userGamesList: state.userReducer.user.gameList,
         userQaploins: state.userReducer.user.credits
     }

@@ -8,6 +8,7 @@ import {
     SafeAreaView
 } from 'react-native';
 
+import { trackOnSegment } from '../../services/statistics';
 import { getIdTokenFromUser } from '../../services/auth';
 import { withNavigation } from 'react-navigation';
 import styles from './style';

@@ -223,14 +223,16 @@ class HeaderBar extends Component {
                 }
                 {this.props.currentScreenId === 'Perfil' &&
                     <View style={styles.discordIcon}>
-                        <TouchableWithoutFeedback onPress={this.goToVerificationStack}>
-                            <View style={styles.imageAndButtonDimensions}>
-                                <NoVerifiedIcon
-                                    height={24}
-                                    width={24}
-                                    fill='#FFF' />
-                            </View>
-                        </TouchableWithoutFeedback>
+                        {!this.props.isUserVerified &&
+                            <TouchableWithoutFeedback onPress={this.goToVerificationStack}>
+                                <View style={styles.imageAndButtonDimensions}>
+                                    <NoVerifiedIcon
+                                        height={24}
+                                        width={24}
+                                        fill='#FFF' />
+                                </View>
+                            </TouchableWithoutFeedback>
+                        }
                         <TouchableWithoutFeedback onPress={this.goToUserProfile}>
                             <View style={styles.imageAndButtonDimensions}>
                                 <SettingsIcon
@@ -251,7 +253,8 @@ function mapStateToProps(state) {
         hg1CreateMatch: state.highlightsReducer.hg1CreateMatch,
         currentScreenId: state.screensReducer.currentScreenId,
         notifications: state.userReducer.user.notification,
-        matchNotifications: state.userReducer.user.notificationMatch
+        matchNotifications: state.userReducer.user.notificationMatch,
+        isUserVerified: state.logrosReducer.isUserVerified
     }
 }
 

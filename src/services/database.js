@@ -758,6 +758,20 @@ export async function updateUserDiscordTag(uid, discordTag) {
     }
 }
 
+/**
+ * Update the user profile image
+ *
+ * @param {string} uid    User identifier on the database
+ * @param {string} imgUrl The fullPath from the local image to upload to DB
+ */
+export async function updateUserProfileImg(uid, photoUrl) {
+    try {
+        await usersRef.child(uid).update({ photoUrl });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 // -----------------------------------------------
 // Privacy terms
 // -----------------------------------------------

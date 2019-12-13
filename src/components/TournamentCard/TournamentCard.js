@@ -1,12 +1,18 @@
+// diego          - 11-12-2019 - us165 - Validate if the user is logged before execute joinInTournament
+
 import React, { Component } from 'react';
 import { Animated, View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
+import { withNavigation } from 'react-navigation';
+
 import styles from './style';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { joinInTournament } from '../../services/database';
+import { isUserLogged } from '../../services/auth';
+
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
 
-export class TournamentCard extends Component {
+class TournamentCard extends Component {
     state = {
         progressBarWidth: new Animated.Value(0),
         completedPoints: 0
@@ -38,7 +44,11 @@ export class TournamentCard extends Component {
      * Allow the user to join in the tournament
      */
     joinInTournament = () => {
-        joinInTournament(this.props.uid, this.props.id /* <- Tournament id */, this.props.totalPuntos );
+        if (isUserLogged()) {
+            joinInTournament(this.props.uid, this.props.id /* <- Tournament id */, this.props.totalPuntos );
+        } else {
+            this.props.navigation.navigate('SignIn');
+        }
     }
 
     render() {
@@ -89,4 +99,4 @@ function mapDispatchToProps(state) {
     }
 }
 
-export default connect(mapDispatchToProps)(TournamentCard);
+export default connect(mapDispatchToProps)(withNavigation(TournamentCard));

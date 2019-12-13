@@ -1,4 +1,4 @@
-// josep.sanahuja - 20-09-2019 - us111 - Added disabledContainer logic 
+// josep.sanahuja - 20-09-2019 - us111 - Added disabledContainer logic
 // josep.sanahuja - 19-09-2019 - us114 - File creation
 
 import React, { Component } from 'react';
@@ -58,7 +58,7 @@ class LogroQapla extends Component {
                     <View style={styles.colBContainer}>
                         <View style={styles.qaploinsContainer}>
                             <QaploinIcon height={31} width={31} style={styles.qaploinIcon} />
-                            <Text style={styles.qaploinsText}>{qaploins}</Text>  
+                            <Text style={styles.qaploinsText}>{qaploins}</Text>
                         </View>
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />
                         {puntosCompletados >= totalPuntos &&

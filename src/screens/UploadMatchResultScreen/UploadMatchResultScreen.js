@@ -127,7 +127,7 @@ class UploadMatchResultScreen extends Component {
             );
 
             trackOnSegment('Upload result Button', {
-                Game: matchData.gameKey,
+                Game: matchData.game,
                 Platform: matchData.platform,
                 Bet: matchData.bet,
                 UserQaploins: this.props.userQaploins,

@@ -1,3 +1,5 @@
+// diego          - 11-12-2019 - us160 - Updated segment key
+// diego          - 11-12-2019 - us165 - EMPTY_LOGROS created
 // josep.sanahuja - 21-12-2019 - us152 - Add DB_NEW_LINE_SEPARATOR
 // diego          - 14-11-2019 - us146 - created SET_SERVER_TIME_OFFSET
 // diego          - 13-11-2019 - us135 - Created SIGN_OUT_USER constant
@@ -7,7 +9,7 @@
 // diego          - 01-08-2019 - us58 - Update user constants for the new way to load their data
 
 // Segment key
-export const SEGMENT_KEY = 'OOfS23UPyUoQSD1mzsdPpRJPzLqTh5aF';
+export const SEGMENT_KEY = 'fCfir8yrQiZRVrpuwLHYRePN68SqW8AS';
 
 // User constants
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
@@ -41,6 +43,7 @@ export const LOAD_USER_VERIFICATION_STATUS = 'LOAD_USER_VERIFICATION_STATUS';
 export const LOAD_LOGROS_ACTIVOS = 'LOAD_LOGROS_ACTIVOS';
 export const REMOVE_LOGRO_ACTIVO = 'REMOVE_LOGRO_ACTIVO';
 export const LOAD_LOGROS_COMPLETOS = 'LOAD_LOGROS_COMPLETOS';
+export const EMPTY_LOGROS = 'EMPTY_LOGROS';
 
 // Adversary numbers
 export const ADVERSARY_1_NUMBER = 1;

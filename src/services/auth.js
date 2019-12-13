@@ -1,3 +1,4 @@
+// diego                - 11-12-2019 - us165 - emptyLogros called on signOut
 // diego                - 02-09-2019 - us91 - signOut function created
 // diego                - 02-09-2019 - us91 - Added setUserIdOnSegment on different signins
 // diego                - 24-07-2019 - us31 - removed unnecessary code from
@@ -10,6 +11,7 @@ import {GoogleSignin} from 'react-native-google-signin';
 import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
+import { emptyLogros } from '../actions/logrosActions';
 
 const webClientIdForGoogleAuth = '779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com';
 
@@ -126,8 +128,9 @@ export async function getIdTokenFromUser() {
  */
 export async function signOut() {
     try {
+        await store.dispatch(emptyLogros());
+        await store.dispatch(signOutUser());
         await auth.signOut();
-        store.dispatch(signOutUser());
     } catch (error) {
         console.error(error);
     }

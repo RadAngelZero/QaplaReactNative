@@ -1,4 +1,5 @@
 // diego          - 12-12-2019 - us169 - Add game when challenge behavior added
+// diego          - 11-12-2019 - us160 - Updated analitycs
 // diego          - 04-12-2019 - us161 - Added BuyQaploinsModal when user have not enough qaploins to challenge a match
 // diego          - 14-09-2019 - bug86 - Show correct text when the user has uploaded their results, but the adversary no
 // diego          - 05-09-2019 - us104 - Added logic to allow just one result per user on the displayed match
@@ -249,7 +250,7 @@ class PublicMatchCardScreen extends Component {
          * if the user is the author (creator) of the match, is the adversary1, if not, is the adversary2, and
          * that information is important when their result is uploaded
          */
-        this.props.navigation.navigate('UploadMatchResult', { idMatch: matchCard.idMatch, currentUserAdversary: matchCard.currentUserAdversary });
+        this.props.navigation.navigate('UploadMatchResult', { matchData: matchCard, currentUserAdversary: matchCard.currentUserAdversary });
     }
 
     /**
@@ -436,6 +437,7 @@ class PublicMatchCardScreen extends Component {
                 <BuyQaploinsModal
                     open={this.state.openBuyQaploinsModal}
                     body='Compra Qaploins para desafiar esta partida'
+                    openWhen='User try to challenge a match'
                     onClose={() => this.setState({ openBuyQaploinsModal: false })} />
             </SafeAreaView>
         );

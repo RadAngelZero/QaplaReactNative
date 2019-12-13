@@ -1,3 +1,4 @@
+// diego             - 11-12-2019 - us165 - loadQaplaLogros added
 // diego             - 14-11-2019 - us146 - Load server time offset
 // josep.sanahuja    - 26-08-2019 - us90 - loadShowHg1Modal
 // diego             - 02-09-2019 - us91 - Initialize segment
@@ -15,6 +16,7 @@ import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
+import { loadQaplaLogros } from '../../actions/logrosActions';
 
 class AuthLoadingScreen extends Component {
     state = {
@@ -31,18 +33,18 @@ class AuthLoadingScreen extends Component {
         auth.onAuthStateChanged(async (user) => {
             this.props.loadListOfGames();
 
+            /**
+             * Get the offset between the server timeStamps and the users timeStamp
+             */
+            await this.props.getServerTimeOffset();
+
             let navigateToScreen = 'Home';
             let navigationParams = {};
             if (user) {
                 this.props.loadUserData(user.uid);
+                this.props.loadQaplaLogros(user.uid);
 
                 await this.checkNotificationPermission(user.uid);
-
-                /**
-                 * Get the offset between the server timeStamps and the users timeStamp
-                 * (You can see this description also in the function declaration/implementation)
-                 */
-                await this.props.getServerTimeOffset();
 
                 /*
                 * When the app loads we check if is opened from a notification, also we check if the notificatios
@@ -65,6 +67,8 @@ class AuthLoadingScreen extends Component {
                 if(userName === ''){
                     return this.props.navigation.navigate('ChooseUserNameScreen');
                 }
+            } else {
+                this.props.loadQaplaLogros(null);
             }
 
             /**
@@ -165,7 +169,8 @@ function mapDispatchToProps(dispatch) {
         loadUserData: (uid) => getUserNode(uid)(dispatch),
         loadListOfGames: () => getListOfGames()(dispatch),
         loadShowHg1Modal: () => getHg1CreateMatch()(dispatch),
-        getServerTimeOffset: () => getServerTimeOffset()(dispatch)
+        getServerTimeOffset: () => getServerTimeOffset()(dispatch),
+        loadQaplaLogros: (uid) => loadQaplaLogros(uid)(dispatch)
     };
 }
 

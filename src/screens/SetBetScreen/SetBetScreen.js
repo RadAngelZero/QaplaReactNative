@@ -1,3 +1,4 @@
+// diego          - 11-12-2019 - us160 - Updated analitycs
 // diego          - 04-12-2019 - us161 - Added body property to BuyQaploinsModal
 // josep.sanahuja - 14-09-2019 - bug5 - Redirect backButton on Android from MatchExpireRememberModal
 // diego          - 06-09-2019 - us93 - Convert modal to remember the time of life of the match on component: MatchExpireRememberModal
@@ -185,6 +186,7 @@ class SetBetScreen extends Component {
                 <View style={styles.container}>
                     <BuyQaploinsModal
                         open={this.state.open}
+                        openWhen='User try to create a match'
                         body='Puedes devolver los 300 Qaploins cuando quieras ¡y te haremos un reembolso!'
                         onClose={() => this.setState({ open: false })} />
                     <MatchExpireRememberModal

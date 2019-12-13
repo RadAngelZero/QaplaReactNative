@@ -1,3 +1,4 @@
+// diego          - 12-12-2019 - us169 - Redirect prop added on AddGamerTagModal    
 // diego          - 03-09-2019 - us96 - Added custom header (TopNavOptions)
 // diego          - 02-09-2019 - us91 - Add track and record screen segment statistic
 // diego          - 21-08-2019 - us89 - Added loadGamesUserDontHave prop

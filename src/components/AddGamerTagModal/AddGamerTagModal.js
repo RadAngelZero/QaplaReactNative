@@ -1,3 +1,4 @@
+// diego          - 12-12-2019 - us169 - Redirect prop added
 // diego          - 12-09-2019 - us99 - Added close icon to allow user cancelation
 // diego          - 02-09-2019 - us91 - Add track segment statistic
 // diego          - 21-08-2019 - us89 - File creation
@@ -43,6 +44,10 @@ export class AddGamerTagModal extends Component {
             trackOnSegment('Add Gamer Tag Process Completed',
                 { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });
 
+                /**
+                 * redirect: prop to know if the modal should redirect to other screen
+                 * or just call a function and then hide
+                 */
             if (this.props.redirect) {
                 if (this.props.loadGamesUserDontHave) {
                     this.props.navigation.navigate('Perfil');

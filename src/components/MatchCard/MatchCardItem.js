@@ -1,3 +1,4 @@
+// diego -        12-12-2019 - us169 - Validation on games added
 // diego -        12-08-2019 - bug4 - Icons of games and qaploins added to match card
 // diego -        06-08-2019 - us75 - Class now extends from PureComponent instead of Component and defaultProps added
 // diego -        29-07-2019 - us55 - Remove unnecessary log from on press event
@@ -14,6 +15,9 @@ const QaploinIcon = Images.svg.qaploinsIcon;
 
 class MatchCardItem extends PureComponent {
     getCurrentGameResources() {
+        /**
+         * Check if the game exists on our object of games (from redux)
+         */
         if (this.props.games[this.props.platform][this.props.game]) {
             return gamesResources[this.props.games[this.props.platform][this.props.game].replace(/ +/g, "")];
         } else {
@@ -25,6 +29,10 @@ class MatchCardItem extends PureComponent {
         const {navigate} = this.props.navigation;
         const game = this.getCurrentGameResources();
 
+        /**
+         * If the game doesn't exist we return null, otherwise we can get an error on render function
+         * also we can not fill the card with the data of a game that we don't have on our local resources
+         */
         if (game) {
             /**
              * timeStamps are added on the server, so we need to calculate the timeStamp for the user

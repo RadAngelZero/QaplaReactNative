@@ -53,7 +53,7 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
         dispatch(loadLogrosActivosSuccess(activeEventObject));
 
         /**
-         * Only if the uid is valid (different from null) we load the user progress in the achievments
+         * Only if the uid is valid (different from null) we load the user progress in the achievements
          */
         if (uid) {
             /**

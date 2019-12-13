@@ -1,3 +1,4 @@
+// diego          - 12-12-2019 - us169 - Redirect prop added on AddGamerTagModal
 // diego          - 11-12-2019 - us160 - Updated analitycs
 // diego          - 03-09-2019 - us96 - Added custom header (TopNavOptions)
 // diego          - 02-09-2019 - us91 - Add track and record screen segment statistic
@@ -119,6 +120,7 @@ class LoadGamesScreen extends React.Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <AddGamerTagModal
+                        redirect
                         selectedGame={this.props.selectedGame}
                         uid={this.props.uid}
                         userName={this.props.userName}

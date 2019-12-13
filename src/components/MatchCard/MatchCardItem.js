@@ -1,3 +1,4 @@
+// diego -        12-12-2019 - us169 - Validation on games added
 // diego -        12-08-2019 - bug4 - Icons of games and qaploins added to match card
 // diego -        06-08-2019 - us75 - Class now extends from PureComponent instead of Component and defaultProps added
 // diego -        29-07-2019 - us55 - Remove unnecessary log from on press event
@@ -14,7 +15,14 @@ const QaploinIcon = Images.svg.qaploinsIcon;
 
 class MatchCardItem extends PureComponent {
     getCurrentGameResources() {
-        return gamesResources[this.props.games[this.props.platform][this.props.game].replace(/ +/g, "")];
+        /**
+         * Check if the game exists on our object of games (from redux)
+         */
+        if (this.props.games[this.props.platform][this.props.game]) {
+            return gamesResources[this.props.games[this.props.platform][this.props.game].replace(/ +/g, "")];
+        } else {
+            return null;
+        }
     }
 
     render() {
@@ -22,43 +30,51 @@ class MatchCardItem extends PureComponent {
         const game = this.getCurrentGameResources();
 
         /**
-         * timeStamps are added on the server, so we need to calculate the timeStamp for the user
-         * (this.props.timeStamp - this.props.serverTimeOffset)
+         * If the game doesn't exist we return null, otherwise we can get an error on render function
+         * also we can not fill the card with the data of a game that we don't have on our local resources
          */
-        const localUserTime = new Date(this.props.timeStamp - this.props.serverTimeOffset);
-        const formatedHour = `${localUserTime.getHours() < 10 ? '0' : ''}${localUserTime.getHours()}`;
-        const formatedMinutes = `${localUserTime.getMinutes() < 10 ? '0' : ''}${localUserTime.getMinutes()}`;
+        if (game) {
+            /**
+             * timeStamps are added on the server, so we need to calculate the timeStamp for the user
+             * (this.props.timeStamp - this.props.serverTimeOffset)
+             */
+            const localUserTime = new Date(this.props.timeStamp - this.props.serverTimeOffset);
+            const formatedHour = `${localUserTime.getHours() < 10 ? '0' : ''}${localUserTime.getHours()}`;
+            const formatedMinutes = `${localUserTime.getMinutes() < 10 ? '0' : ''}${localUserTime.getMinutes()}`;
 
-        return (
-            <TouchableWithoutFeedback onPress={() => navigate('MatchCard', {matchCard: this.props})}>
-                <View style={styles.container}>
-                    <View style={styles.rowGame}>
-                        <View style={styles.gameContainer}>
-                            <game.Icon width={28} height={28} />
-                            <Text style={styles.leftTextStyle}>{game.name}</Text>
-                        </View>
-                        <View style={styles.matchDetailInfoContainer}>
-                            <View style={styles.betContainer}>
-                                <QaploinIcon style={styles.qaploinIcon} />
-                                <Text style={styles.rightTextStyle}>{this.props.bet}</Text>
+            return (
+                <TouchableWithoutFeedback onPress={() => navigate('MatchCard', {matchCard: this.props})}>
+                    <View style={styles.container}>
+                        <View style={styles.rowGame}>
+                            <View style={styles.gameContainer}>
+                                <game.Icon width={28} height={28} />
+                                <Text style={styles.leftTextStyle}>{game.name}</Text>
                             </View>
-                            <View style={styles.hourContainer}>
-                                <Text style={styles.rightTextStyle}>{`${formatedHour}:${formatedMinutes}`}</Text>
+                            <View style={styles.matchDetailInfoContainer}>
+                                <View style={styles.betContainer}>
+                                    <QaploinIcon style={styles.qaploinIcon} />
+                                    <Text style={styles.rightTextStyle}>{this.props.bet}</Text>
+                                </View>
+                                <View style={styles.hourContainer}>
+                                    <Text style={styles.rightTextStyle}>{`${formatedHour}:${formatedMinutes}`}</Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.rowUserName, styles.marginBottom10]}>
+                            <View style={styles.adversaryDataContainer}>
+                                <View style={styles.avatarImage}></View>
+                                <Text style={styles.leftFooterTextStyle}>{this.props.userName}</Text>
+                            </View>
+                            <View style={styles.idMatchContainer}>
+                                <Text style={styles.rightFooterTextStyle}>ID {this.props.alphaNumericIdMatch}</Text>
                             </View>
                         </View>
                     </View>
-                    <View style={[styles.rowUserName, styles.marginBottom10]}>
-                        <View style={styles.adversaryDataContainer}>
-                            <View style={styles.avatarImage}></View>
-                            <Text style={styles.leftFooterTextStyle}>{this.props.userName}</Text>
-                        </View>
-                        <View style={styles.idMatchContainer}>
-                            <Text style={styles.rightFooterTextStyle}>ID {this.props.alphaNumericIdMatch}</Text>
-                        </View>
-                    </View>
-                </View>
-            </TouchableWithoutFeedback>
-        );
+                </TouchableWithoutFeedback>
+            );
+        } else {
+            return null;
+        }
     }
 }
 

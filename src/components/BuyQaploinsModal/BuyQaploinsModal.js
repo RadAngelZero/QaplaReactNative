@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import Images from './../../../assets/images';
 import { QAPLOIN_PACKAGES } from '../../utilities/Constants';
+import { trackOnSegment } from '../../services/statistics';
 
 const CloseIcon = Images.svg.closeIcon;
 const QaploinIcon = Images.svg.qaploinsIcon;

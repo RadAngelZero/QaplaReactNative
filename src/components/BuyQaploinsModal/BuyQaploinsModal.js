@@ -1,3 +1,4 @@
+// diego             - 12-12-2019 - us166 - Added checkout (removed addQaploinsToUser)
 // diego             - 21-10-2019 - us135 - Update reference for qaploins and price
 // diego             - 12-09-2019 - us99 - Updated closeIcon (changed text icon for SVG icon)
 // diego             - 02-09-2019 - us91 - Add track segment statistic

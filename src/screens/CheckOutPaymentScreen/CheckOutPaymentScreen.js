@@ -1,3 +1,4 @@
+// diego             - 12-12-2019 - us166 - Updated cloud function reference for checkout
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 // diego             - 24-07-2019 - us31 - update headers in WebView and componentWillMount
 

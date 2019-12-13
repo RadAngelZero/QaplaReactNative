@@ -1,3 +1,4 @@
+// diego             - 11-12-2019 - us160 - Updated analitycs
 // diego             - 21-10-2019 - us135 - Update reference for qaploins and price
 // diego             - 12-09-2019 - us99 - Updated closeIcon (changed text icon for SVG icon)
 // diego             - 02-09-2019 - us91 - Add track segment statistic
@@ -36,6 +37,7 @@ class BuyQaploinsModal extends Component {
             if (!this.state.qaploinsAdded) {
                 addQaploinsToUserCloudFunction();
                 this.setState({ qaploinsAdded: true });
+
                 trackOnSegment('User Buy Qaploins', {
                     UserQaploins: this.props.userQaploins,
                     Origin: this.props.openWhen

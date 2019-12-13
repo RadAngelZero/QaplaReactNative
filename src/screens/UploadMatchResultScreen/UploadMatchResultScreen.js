@@ -1,3 +1,4 @@
+// diego          - 11-12-2019 - us160 - Updated analitycs
 // diego          - 12-09-2019 - us99 - Added close icon to allow user cancelation on upload result
 // diego          - 19-08-2019 - us89 - Add UploadMatchEvidenceModal and UploadMatchResultsModal
 // diego          - 13-08-2019 - us77 - Added navigation to UploadClutchEvidenceScreen
@@ -125,16 +126,14 @@ class UploadMatchResultScreen extends Component {
                 this.state.evidenceUrl
             );
 
-            const analitycsProperties = {
+            trackOnSegment('Upload result Button', {
                 Game: matchData.gameKey,
                 Platform: matchData.platform,
                 Bet: matchData.bet,
                 UserQaploins: this.props.userQaploins,
                 Result: matchResultStatus,
                 Evidence: this.state.evidenceUrl !== ''
-            };
-
-            trackOnSegment('Upload result Button', analitycsProperties);
+            });
             this.setState({ showUploadMatchResultsModal: true })
         } catch (error) {
             console.error(error);

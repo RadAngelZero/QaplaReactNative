@@ -1,3 +1,4 @@
+// diego           - 11-12-2019 - us160 - Updated analitycs
 // diego           - 04-12-2019 - us161 - Added body property to BuyQaploinsModal
 // josep.sanahuja  - 22-11-2019 - us153 - Add EditProfileImgBadge
 // diego           - 15-11-2019 - us149 - Check if user data is loaded on mapStateToProps

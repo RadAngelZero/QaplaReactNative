@@ -1,3 +1,4 @@
+// diego          - 11-12-2019 - us160 - Updated analitycs
 // diego          - 04-12-2019 - us161 - Added BuyQaploinsModal when user have not enough qaploins to challenge a match
 // diego          - 14-09-2019 - bug86 - Show correct text when the user has uploaded their results, but the adversary no
 // diego          - 05-09-2019 - us104 - Added logic to allow just one result per user on the displayed match

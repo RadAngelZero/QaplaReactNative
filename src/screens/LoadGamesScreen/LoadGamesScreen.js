@@ -1,3 +1,4 @@
+// diego          - 11-12-2019 - us160 - Updated analitycs
 // diego          - 03-09-2019 - us96 - Added custom header (TopNavOptions)
 // diego          - 02-09-2019 - us91 - Add track and record screen segment statistic
 // diego          - 21-08-2019 - us89 - Added loadGamesUserDontHave prop
@@ -99,12 +100,12 @@ class LoadGamesScreen extends React.Component {
         return result;
     }
 
-    /** 
+    /**
      * If there are no games on the profile of the user and a game is selected
      * the modal should open
      */
     openAddGamerTagModal = () => !this.userHaveGame();
-    
+
     /**
      * Close the modal by setting to null the selectedGame on redux
      */

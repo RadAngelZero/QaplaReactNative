@@ -1,3 +1,4 @@
+// diego          - 11-12-2019 - us160 - Updated segment key
 // josep.sanahuja - 21-12-2019 - us152 - Add DB_NEW_LINE_SEPARATOR
 // diego          - 14-11-2019 - us146 - created SET_SERVER_TIME_OFFSET
 // diego          - 13-11-2019 - us135 - Created SIGN_OUT_USER constant

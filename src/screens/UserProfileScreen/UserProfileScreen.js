@@ -1,3 +1,4 @@
+// diego           - 11-12-2019 - us160 - Updated analitycs
 // diego           - 04-12-2019 - us161 - Added body property to BuyQaploinsModal
 // josep.sanahuja  - 22-11-2019 - us153 - Add EditProfileImgBadge
 // diego           - 15-11-2019 - us149 - Check if user data is loaded on mapStateToProps
@@ -21,7 +22,7 @@ import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal
 import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
 
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
-import { recordScreenOnSegment } from '../../services/statistics';
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
 
 const QaploinExchangeIcon = images.svg.qaploinsIcon;
@@ -40,7 +41,7 @@ export class UserProfileScreen extends Component {
             this.props.navigation.addListener(
                 'willFocus',
                 (payload) => {
-                    recordScreenOnSegment('User Profile');
+                    recordScreenOnSegment('User Profile Screen');
                     if(!isUserLogged()){
                         this.props.navigation.navigate('SignIn');
                     }
@@ -57,7 +58,10 @@ export class UserProfileScreen extends Component {
     /**
      * Open the modal of buy qaploins
      */
-    openBuyQaploinsModal = () => this.setState({ showBuyQaploinsModal: true });
+    openBuyQaploinsModal = () => {
+        trackOnSegment('User Profile Add Qaploins Button', { UserQaploins: this.props.userQaploins });
+        this.setState({ showBuyQaploinsModal: true });
+    }
 
     /**
      * Close the modal of buy qaploins
@@ -146,6 +150,7 @@ export class UserProfileScreen extends Component {
                 </TouchableWithoutFeedback>
                 <BuyQaploinsModal
                     open={this.state.showBuyQaploinsModal}
+                    openWhen='User wants to buy qaploins on profile'
                     body='Puedes devolver los 300 Qaploins cuando quieras ¡y te haremos un reembolso!'
                     onClose={this.closeBuyQaploinsModal} />
             </SafeAreaView>

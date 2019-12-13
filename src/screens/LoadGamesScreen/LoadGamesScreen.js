@@ -1,3 +1,4 @@
+// diego          - 11-12-2019 - us160 - Updated analitycs
 // diego          - 03-09-2019 - us96 - Added custom header (TopNavOptions)
 // diego          - 02-09-2019 - us91 - Add track and record screen segment statistic
 // diego          - 21-08-2019 - us89 - Added loadGamesUserDontHave prop
@@ -43,15 +44,15 @@ class LoadGamesScreen extends React.Component {
 
     componentDidMount() {
         this.list = [
-            
+
             /**
              * This event is triggered when the user goes to other screen
              */
             this.props.navigation.addListener(
                 'willFocus',
                 (payload) => {
-                    if (this.props.navigation.getParam('loadGamesThatUserDontHave', false)) {
-                        recordScreenOnSegment('Load Games (Add Game)');
+                    if (this.props.navigation.getParam('loadGamesUserDontHave', false)) {
+                        recordScreenOnSegment('Clicked Add Games from profile');
                     } else {
                         recordScreenOnSegment('Load Games (Create Match)');
                     }
@@ -60,7 +61,7 @@ class LoadGamesScreen extends React.Component {
         ]
         this.props.navigation.setParams({ onCloseGoTo: this.props.navigation.getParam('onCloseGoTo', 'Home') });
         BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
-        
+
         // #bug2:
         // At the beginning of the components life, there should not be any game selected,
         // the way we ensure that is by overwriting the value it may have when the component
@@ -99,12 +100,12 @@ class LoadGamesScreen extends React.Component {
         return result;
     }
 
-    /** 
+    /**
      * If there are no games on the profile of the user and a game is selected
      * the modal should open
      */
     openAddGamerTagModal = () => !this.userHaveGame();
-    
+
     /**
      * Close the modal by setting to null the selectedGame on redux
      */

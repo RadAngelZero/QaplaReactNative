@@ -4,7 +4,6 @@
 
 import { UPDATE_USER_DATA, REMOVE_USER_DATA, SIGN_OUT_USER } from '../utilities/Constants';
 import { usersRef, gamesRef, gamersRef } from '../services/database';
-import { signOut } from '../services/auth';
 
 export const getUserNode = (uid) => async (dispatch) => {
 

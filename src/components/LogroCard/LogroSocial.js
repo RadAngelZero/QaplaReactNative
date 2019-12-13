@@ -1,9 +1,11 @@
+// diego          - 11-12-2019 - us165 - Validate if the user is logged before redirect or open modal
 // josep.sanahuja - 26-09-2019 - us118 - Added goToSocialLink & ImagePickerModal
 // josep.sanahuja - 20-09-2019 - us111 - Added disabledContainer logic
 // josep.sanahuja - 19-09-2019 - us114 - File creation
 
 import React, { Component } from 'react';
 import { View, Image, TouchableWithoutFeedback, Text, Linking } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import styles from './style';
 import Images from '../../../assets/images';
@@ -11,6 +13,7 @@ import Images from '../../../assets/images';
 import { redeemLogroCloudFunction } from '../../services/functions';
 import { saveImgEvidenceUrlLogroSocial, createLogroIncompletoChild } from '../../services/database';
 import { savePictureEvidenceLogroSocial } from '../../services/storage';
+import { isUserLogged } from '../../services/auth';
 
 import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
 import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
@@ -46,13 +49,17 @@ class LogroSocial extends Component {
      * Send the user to the social link page (if app is installed then asked to open with the app)
      */
     goToSocialLink = () => {
-        Linking.openURL(this.props.pageLink);
+        if (isUserLogged()) {
+            Linking.openURL(this.props.pageLink);
+        } else {
+            this.props.navigation.navigate('SignIn');
+        }
     }
 
     /**
-     * Sends the selected picture by ImagePickerModal and sends it to 
+     * Sends the selected picture by ImagePickerModal and sends it to
      * Firebase Storage.
-     * 
+     *
      * @params {Object} picture Picture selected in ImagePickerModal
      */
     saveImage = (picture) => {
@@ -62,7 +69,7 @@ class LogroSocial extends Component {
         });
 
         let evProm = savePictureEvidenceLogroSocial(picture.node.image.uri, this.props.id, this.props.userId);
-        
+
         // In case the picture is successfully stored in Firebase Datastorage,
         // then an evidence of that picture will be saved in Firebase DB for
         // verification purposes.
@@ -71,7 +78,7 @@ class LogroSocial extends Component {
 
             // After the reference to the evidence image is written to DB,
             // an entry for the logro is created to DB in logroIcompleto child,
-            // to track the status of the completeness of the logro. 
+            // to track the status of the completeness of the logro.
             if (dbRes !== null) {
                 createLogroIncompletoChild(this.props.id, this.props.userId);
             }
@@ -83,7 +90,7 @@ class LogroSocial extends Component {
      */
     closeImgPckModal = () => {
         this.setState({
-            showImgPckModal: false  
+            showImgPckModal: false
         });
     }
 
@@ -91,9 +98,13 @@ class LogroSocial extends Component {
      * Opens ImagePickerModal
      */
     openImgPckModal = () => {
-        this.setState({
-            showImgPckModal: true  
-        });
+        if (isUserLogged()) {
+            this.setState({
+                showImgPckModal: true
+            });
+        } else {
+            this.props.navigation.navigate('SignIn');
+        }
     }
 
     /**
@@ -112,7 +123,7 @@ class LogroSocial extends Component {
         this.setState({
           openThankyouModal: !this.state.openThankyouModal
         });
-    } 
+    }
 
     render() {
         const { titulo, descripcion, qaploins, photoUrl, puntosCompletados, totalPuntos, tiempoLimite, verified } = this.props;
@@ -131,7 +142,7 @@ class LogroSocial extends Component {
                     <View style={styles.colCSocialContainer}>
                         <View style={styles.qaploinsContainer}>
                             <QaploinIcon height={31} width={31} style={styles.qaploinIcon} />
-                            <Text style={styles.qaploinsText}>{qaploins}</Text>  
+                            <Text style={styles.qaploinsText}>{qaploins}</Text>
                         </View>
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />
                         {puntosCompletados >= totalPuntos &&
@@ -181,5 +192,5 @@ class LogroSocial extends Component {
     }
 }
 
-export default LogroSocial;
+export default withNavigation(LogroSocial);
 

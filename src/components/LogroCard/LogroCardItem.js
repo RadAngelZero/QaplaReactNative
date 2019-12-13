@@ -1,3 +1,4 @@
+// diego          - 11-12-2019 - us164 - case 'verificado' removed
 // diego          - 14-11-2019 - us146 - Support for EventCard added
 // diego          - 04-10-2019 - us113 - Added LogroCompletedCard
 // josep.sanahuja - 19-09-2019 - us114 - File creation
@@ -41,9 +42,9 @@ class LogroCardItem extends Component {
             case 'like':
                 res = <CardContainer lastChild={lastChild}><LogroSocial {...this.props} /></CardContainer>;
                 break;
-            case 'verificado':
+            /*case 'verificado':
                 res = <CardContainer lastChild={lastChild}><LogroVerification {...this.props} /></CardContainer>;
-                break;
+                break;*/
             case 'completado':
                 res = <CardContainer lastChild={lastChild}><LogroCompletedCard {...this.props} /></CardContainer>;
                 break;

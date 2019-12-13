@@ -1,4 +1,4 @@
-// josep
+// diego	      - 11-12-2019 - us164 - Added NoVerifiedIcon
 // diego	      - 20-09-2019 - us133 - Added VerifyIcon
 // diego	      - 18-09-2019 - us109 - Added LogroIcon
 // diego	      - 18-09-2019 - us109 - Added LogrosIcon
@@ -45,7 +45,8 @@ import VerifyIcon from './icons/verificado.svg';
 import SupportIcon from './icons/support.svg';
 import DiscordIcon from './icons/discord.svg';
 import SettingsIcon from './icons/settings.svg';
- import EditIcon from './icons/edit.svg';
+import EditIcon from './icons/edit.svg';
+import NoVerifiedIcon from './icons/sin-verificar.svg';
 
 // Images
 
@@ -208,7 +209,8 @@ const images = {
 		haloIcon: HaloIcon,
 		discordIcon: DiscordIcon,
 		settingsIcon: SettingsIcon,
-		editIcon: EditIcon
+		editIcon: EditIcon,
+		noVerifiedIcon: NoVerifiedIcon
 	}
 };
 

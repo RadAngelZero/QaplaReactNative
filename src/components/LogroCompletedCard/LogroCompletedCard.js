@@ -6,7 +6,7 @@ import Images from '../../../assets/images';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
-export class LogroCompletedCard extends Component {
+class LogroCompletedCard extends Component {
     render() {
         return (
             <View style={styles.container}>

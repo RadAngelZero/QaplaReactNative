@@ -1,3 +1,4 @@
+// diego             - 11-12-2019 - us164 - NoVerifiedIcon added
 // diego             - 22-11-2019 - us148 - Notification badge added
 // josep.sanahuja    - 13-11-2019 - us147 - Connect currentScreenId
 // josep.sanahuja    - 26-08-2019 - us90 - Added notification highlight
@@ -24,6 +25,7 @@ import { HIGHLIGHT_2_NOTIFICATIONS, QAPLA_DISCORD_CHANNEL } from '../../utilitie
 const NotificationIcon = images.svg.notificationIcon;
 const DiscordIcon = images.svg.discordIcon;
 const SettingsIcon = images.svg.settingsIcon;
+const NoVerifiedIcon = images.svg.noVerifiedIcon;
 
 class HeaderBar extends Component {
     constructor(props) {
@@ -144,6 +146,11 @@ class HeaderBar extends Component {
     }
 
     /**
+     * Redirecto to VerificationScreen
+     */
+    goToVerificationStack = () => this.props.navigation.navigate('Verification');
+
+    /**
      * Check if the user have unread notifications or match notifications
      */
     userHaveUnreadNotifications = () => {
@@ -216,6 +223,16 @@ class HeaderBar extends Component {
                 }
                 {this.props.currentScreenId === 'Perfil' &&
                     <View style={styles.discordIcon}>
+                        {!this.props.isUserVerified &&
+                            <TouchableWithoutFeedback onPress={this.goToVerificationStack}>
+                                <View style={styles.imageAndButtonDimensions}>
+                                    <NoVerifiedIcon
+                                        height={24}
+                                        width={24}
+                                        fill='#FFF' />
+                                </View>
+                            </TouchableWithoutFeedback>
+                        }
                         <TouchableWithoutFeedback onPress={this.goToUserProfile}>
                             <View style={styles.imageAndButtonDimensions}>
                                 <SettingsIcon
@@ -236,7 +253,8 @@ function mapStateToProps(state) {
         hg1CreateMatch: state.highlightsReducer.hg1CreateMatch,
         currentScreenId: state.screensReducer.currentScreenId,
         notifications: state.userReducer.user.notification,
-        matchNotifications: state.userReducer.user.notificationMatch
+        matchNotifications: state.userReducer.user.notificationMatch,
+        isUserVerified: state.logrosReducer.isUserVerified
     }
 }
 

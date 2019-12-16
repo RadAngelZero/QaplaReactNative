@@ -31,9 +31,7 @@ class VerificationScreen extends Component {
         personData:{
             name: '',
             firstSurname: '',
-            secondSurname: ''
-        },
-        ageData:{
+            secondSurname: '',
             age: 0
         },
         phoneData: {
@@ -77,16 +75,6 @@ class VerificationScreen extends Component {
     }
 
     /**
-     * Set how many years has the user
-     * @param {number} age Number oy years of living of the user
-     */
-    setAge = (age) => {
-        const { ageData } = this.state;
-        ageData.age = age;
-        this.setState({ ageData });
-    }
-
-    /**
      * Set the telephonic number of the user
      * @param {string} phoneNumber Phone number of the user
      */
@@ -116,7 +104,7 @@ class VerificationScreen extends Component {
         firebaseVerificationData.verificationCode = verificationCode;
         this.setState({ firebaseVerificationData });
     }
-        
+
     /**
      * Add the position of the different slides (one per call)
      * @param {number} position X value of the given component (slide)
@@ -167,7 +155,7 @@ class VerificationScreen extends Component {
             case 1:
                 isValidData = Object.keys(this.state.personData).some((value) => this.state.personData[value] !== '');
                 break;
-            case 2: 
+            case 2:
                 isValidData = Object.keys(this.state.ageData).some((value) => this.state.ageData[value] > 0);
                 break;
             case this.state.indexPositions.length - 2:
@@ -217,7 +205,7 @@ class VerificationScreen extends Component {
                         }
                         await createVerificationRequest(this.props.uid, verificationRequest);
                     } catch (error) {
-                        
+
                         /**
                          * If the code is incorrect we mark the data as invalid and provide feedback to the user
                          * with a specific message
@@ -329,9 +317,6 @@ class VerificationScreen extends Component {
                             <VerificationPersonalData
                                 setUserPersonalData={this.setUserPersonalData}
                                 goToNextStep={this.goToNextStep} />
-                        </View>
-                        <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
-                            <VerificationAskAge setAge={this.setAge} goToNextStep={this.goToNextStep}/>
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
                             <VerificationPhoneNumber

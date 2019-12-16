@@ -32,6 +32,12 @@ export class VerificationPersonalData extends Component {
                         placeholder='Apellido Materno*'
                         placeholderTextColor='#898A97'
                         onChangeText={(text) => this.props.setUserPersonalData('secondSurname', text)} />
+                    <TextInput
+                        style={styles.qaplaTextInput}
+                        placeholder='Edad*'
+                        placeholderTextColor='#898A97'
+                        keyboardType='numeric'
+                        onChangeText={(text) => this.props.setUserPersonalData('age', text)} />
                 </KeyboardAvoidingView>
             </View>
         );

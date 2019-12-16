@@ -3,14 +3,25 @@
 
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback, TextInput, SafeAreaView } from 'react-native';
+
+import { signInWithEmailAndPassword } from '../../services/auth';
+
 import Images from './../../../assets/images';
 import styles from './style';
-import { signInWithEmailAndPassword } from '../../services/auth';
+
+import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
 
 class LoginWithEmailScreen extends Component {
+    static navigationOptions = ({ navigation }) => ({
+        header: () => (
+            <TopNavOptions
+                navigation={navigation}
+                back />)
+    });
+
     state = {
         email: '',
         password: ''

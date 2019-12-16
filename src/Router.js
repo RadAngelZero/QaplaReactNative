@@ -276,10 +276,7 @@ class Router extends React.Component {
           }
         },
         Login: {
-          screen: LoginWithEmailScreen,
-          navigationOptions: {
-            header: null
-          }
+          screen: LoginWithEmailScreen
         },
         Home: {
           screen: AppWithHeaderStackNavigator,

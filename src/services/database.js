@@ -692,7 +692,7 @@ export async function joinEvent(uid, eventId) {
     eventParticipantsRef.child(eventId).child(uid).update({
         email: '',
         priceQaploins: 0,
-        userNamve: 'DHVS'
+        userNamve: await getUserNameWithUID(uid)
     });
 }
 

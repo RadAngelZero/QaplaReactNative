@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 import styles from './style';
 import Images from './../../../assets/images';
 import VerificationPersonalData from '../../components/VerificationPersonalData/VerificationPersonalData';
-import VerificationAskAge from '../../components/VerificationAskAge/VerificationAskAge';
 import VerificationPhoneNumber from '../../components/VerificationPhoneNumber/VerificationPhoneNumber';
 import VerificationCode from '../../components/VerificationCode/VerificationCode';
 import ProgressStepsIndicator from '../../components/ProgressStepsIndicator/ProgressStepsIndicator';

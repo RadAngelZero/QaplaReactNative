@@ -21,22 +21,31 @@ export class VerificationPersonalData extends Component {
                         style={styles.qaplaTextInput}
                         placeholder='Nombre(s)*'
                         placeholderTextColor='#898A97'
-                        onChangeText={(text) => this.props.setUserPersonalData('name', text)} />
+                        onChangeText={(text) => this.props.setUserPersonalData('name', text)}
+                        onSubmitEditing={() => this.firstSurname.focus()}
+                        returnKeyType='next' />
                     <TextInput
                         style={styles.qaplaTextInput}
                         placeholder='Apellido Paterno*'
                         placeholderTextColor='#898A97'
-                        onChangeText={(text) => this.props.setUserPersonalData('firstSurname', text)} />
+                        ref={(firstSurname) => this.firstSurname = firstSurname}
+                        onChangeText={(text) => this.props.setUserPersonalData('firstSurname', text)}
+                        onSubmitEditing={() => this.secondSurname.focus()}
+                        returnKeyType='next' />
                     <TextInput
                         style={styles.qaplaTextInput}
                         placeholder='Apellido Materno*'
                         placeholderTextColor='#898A97'
-                        onChangeText={(text) => this.props.setUserPersonalData('secondSurname', text)} />
+                        ref={(secondSurname) => this.secondSurname = secondSurname}
+                        onChangeText={(text) => this.props.setUserPersonalData('secondSurname', text)}
+                        onSubmitEditing={() => this.age.focus()}
+                        returnKeyType='next' />
                     <TextInput
                         style={styles.qaplaTextInput}
                         placeholder='Edad*'
                         placeholderTextColor='#898A97'
                         keyboardType='numeric'
+                        ref={(age) => this.age = age}
                         onChangeText={(text) => this.props.setUserPersonalData('age', text)} />
                 </KeyboardAvoidingView>
             </View>

@@ -16,6 +16,8 @@ class LoginWithEmailScreen extends Component {
         password: ''
     };
 
+    logInUser = () => signInWithEmailAndPassword(this.state.email, this.state.password, this.props.navigation);
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -26,15 +28,19 @@ class LoginWithEmailScreen extends Component {
                     <View style={{ width: '100%' }}>
                         <TextInput style={styles.inputText}
                             placeholder='Email o Usuario'
-                            onChangeText={(text) => this.setState({ email: text })} />
+                            onChangeText={(text) => this.setState({ email: text })}
+                            onSubmitEditing={() => this.passwordInput.focus()}
+                            returnKeyType='next' />
                         <TextInput style={styles.inputText}
                             placeholder='Contraseña'
                             onChangeText={(text) => this.setState({ password: text })}
-                            secureTextEntry />
+                            secureTextEntry
+                            ref={(passwordInput) => this.passwordInput = passwordInput}
+                            onSubmitEditing={this.logInUser} />
                         <Text style={styles.forgotPasswordText} >¿Olvidaste tu contraseña?</Text>
                     </View>
                     <View>
-                        <TouchableWithoutFeedback onPress={() => signInWithEmailAndPassword(this.state.email, this.state.password, this.props.navigation)}>
+                        <TouchableWithoutFeedback onPress={this.logInUser}>
                             <View style={styles.buttonContainer}>
                                 <Text style={styles.buttonText} >INICIAR SESION</Text>
                             </View>

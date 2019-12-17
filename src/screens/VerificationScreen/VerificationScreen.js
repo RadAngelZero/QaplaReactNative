@@ -154,9 +154,6 @@ class VerificationScreen extends Component {
             case 1:
                 isValidData = Object.keys(this.state.personData).some((value) => this.state.personData[value] !== '');
                 break;
-            case 2:
-                isValidData = Object.keys(this.state.ageData).some((value) => this.state.ageData[value] > 0);
-                break;
             case this.state.indexPositions.length - 2:
                 isValidData = Object.keys(this.state.phoneData).some((value) => this.state.phoneData[value] !== '');
                 try {

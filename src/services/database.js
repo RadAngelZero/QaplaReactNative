@@ -147,19 +147,14 @@ export function createUserProfile(Uid, email) {
  *
  * Return: {boolean} user was created or otherwise it was not
  */
-export async function createUserName(uid, userName) {
-    return await usersRef.orderByChild('city').equalTo(userName.toUpperCase()).once('value').then(async (userNameAlready) => {
+export async function createUserName(uid, userName, navigation, onFail) {
+    return await usersRef.orderByChild('city').equalTo(userName.toUpperCase()).once('value').then((userNameAlready) => {
         if (!userNameAlready.exists()) {
-            await usersRef.child(uid).update({ userName, city: userName.toUpperCase() });
+            usersRef.child(uid).update({ userName, city: userName.toUpperCase() });
 
-            // #us83: Removed return navigation.navigate('Retas'); and replace it with a boolean value
-            //.so that it can be consumed by others. Removing the navigation method complies with
-            // trying to decouple as much as possible what each method does. This one, creates a UserName
-            // in to the database, we delegate navigation to others.
-            return true;
+            navigation.pop();
         } else {
-            // The username is already being used
-            return false;
+            onFail();
         }
     });
 }

@@ -319,6 +319,12 @@ class Router extends React.Component {
           navigationOptions: {
             header: props => <TopNavOptions back {...props} />
           }
+        },
+        ChooseUserNameScreen: {
+          screen: ChooseUserNameScreen,
+          navigationOptions: {
+            header: null
+          }
         }
       },
       {
@@ -331,7 +337,6 @@ class Router extends React.Component {
         AuthLoadingScreen: AuthLoadingScreen,
         App: RootStack,
         Welcome: WelcomeOnboardingScreen,
-        ChooseUserNameScreen: ChooseUserNameScreen,
         Verification: VerificationScreen
       },
       {

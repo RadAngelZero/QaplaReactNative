@@ -151,7 +151,6 @@ class PublicMatchesFeedScreen extends Component {
         // introduction
         if(!this.props.navigation.getParam('firstMatchCreated')){
             storeData('first-match-created', 'true');
-            storeData('userName-creation-scenario', 'CreateFirstMatchFromRetas');
         }
 
         // If showHg1Modal is enabled then

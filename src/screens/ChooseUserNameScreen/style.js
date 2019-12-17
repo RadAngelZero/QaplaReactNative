@@ -34,14 +34,6 @@ export default styles = StyleSheet.create({
         paddingHorizontal: widthPercentageToPx(4.27),
         paddingVertical: heightPercentageToPx(1.48)
     },
-    inputTextTaken: {
-        marginTop: heightPercentageToPx(1.72),
-        borderRadius: 6,
-        backgroundColor: '#FFF',
-        paddingHorizontal: widthPercentageToPx(4.27),
-        paddingVertical: heightPercentageToPx(1.48),
-        color: 'red'
-    },
     buttonContainer: {
         borderRadius: 100,
         backgroundColor: '#FA2D79',

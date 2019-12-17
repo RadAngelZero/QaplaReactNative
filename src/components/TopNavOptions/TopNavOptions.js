@@ -13,7 +13,9 @@ const CloseIcon = Images.svg.closeIcon;
 export class TopNavOptions extends Component {
     
     /**
-     * Check if some game is selected
+     * Closing action executed when pressing CloseIcon, 
+     * it performs a series of instruction previous to close the screen
+     * where the component is placed.
      */
     close = () => {
         if (this.props.closeEvent) {

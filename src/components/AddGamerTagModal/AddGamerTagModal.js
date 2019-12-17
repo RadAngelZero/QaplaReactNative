@@ -24,7 +24,7 @@ export class AddGamerTagModal extends Component {
         this.list = [
             
             /**
-             * This event is triggered when the user goes to other screen
+             * This event is triggered when the user enters to the screen
              */
             this.props.navigation.addListener(
                 'willFocus',
@@ -73,7 +73,7 @@ export class AddGamerTagModal extends Component {
     }
 
     /**
-     * Sends an event tracking canceling action and closes the modal.
+     * Sends an event tracking cancelling action and closes the modal.
      */
     closeModal = () => {
         

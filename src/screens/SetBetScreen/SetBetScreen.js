@@ -52,7 +52,7 @@ class SetBetScreen extends Component {
                 navigation={navigation}
                 back
                 onCloseGoTo={'Publicas'}
-                closeAnalyticsEvent={this.closeEvent} />)
+                closeEvent={this.closeEvent} />)
     });
 
     constructor(props) {
@@ -156,7 +156,7 @@ class SetBetScreen extends Component {
 
                 trackOnSegment('Match created', {
                     Bet: this.state.currentBet,
-                    GameKey: this.props.selectedGame.gameKey,
+                    Game: this.props.selectedGame.gameKey,
                     Platform: this.props.selectedGame.platform
                 });
 
@@ -187,7 +187,7 @@ class SetBetScreen extends Component {
             // if blocks because of loading.
             trackOnSegment('Match created', {
                 Bet: this.state.currentBet,
-                GameKey: this.props.selectedGame.gameKey,
+                Game: this.props.selectedGame.gameKey,
                 Platform: this.props.selectedGame.platform
             });
             this.setState({ open: !this.state.open });

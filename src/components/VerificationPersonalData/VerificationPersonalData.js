@@ -1,3 +1,5 @@
+// diego           - 17-12-2019 - us172 - Refs added to pass from one text field to another
+//                                        autamatically with keyboard
 // diego           - 18-09-2019 - us119 - File creation
 
 import React, { Component } from 'react';

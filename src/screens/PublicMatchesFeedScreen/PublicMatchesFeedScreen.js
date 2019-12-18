@@ -1,3 +1,4 @@
+// diego          - 17-12-2019 - us172 - userName-creation-scenario async storage flag removed
 // diego          - 14-11-2019 - us146 - Removed logs and blank spaces
 // josep.sanahuja - 26-08-2019 - us90 - Add CreateRetasButton Highlight
 // diego          - 03-09-2019 - us96 - Bug fixed: load duplicated matches

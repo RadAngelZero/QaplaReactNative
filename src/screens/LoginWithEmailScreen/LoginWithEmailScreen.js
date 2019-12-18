@@ -1,3 +1,4 @@
+// diego             - 17-12-2019 - us172 - Refs added to continue/end the process from text field with the keyboard
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 // Diego             - 11-07-2019 - Qapla logo added to the top and Controllers image background created
 
@@ -16,7 +17,17 @@ class LoginWithEmailScreen extends Component {
         password: ''
     };
 
-    logInUser = () => signInWithEmailAndPassword(this.state.email, this.state.password, this.props.navigation);
+    /**
+     * Try SignIn the user using the email and password values from the state
+     */
+    logInUser = async () => {
+        try {
+            await signInWithEmailAndPassword(this.state.email, this.state.password);
+            this.props.navigation.popToTop();
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     render() {
         return (

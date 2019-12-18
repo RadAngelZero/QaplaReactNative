@@ -1,3 +1,4 @@
+// diego          - 17-12-2019 - us172 - createUserName function updated
 // josep.sanahuja - 22-11-2019 - us153 - Add updateUserProfileImg
 // diego          - 21-11-2019 - us149 - Mark notifications as redaded
 // josep-sanahuja - 21-12-2019 - us152 - Add getQaplaAppPrivacy & DB_NEW_LINE_SEPARATOR
@@ -147,12 +148,12 @@ export function createUserProfile(Uid, email) {
  *
  * Return: {boolean} user was created or otherwise it was not
  */
-export async function createUserName(uid, userName, navigation, onFail) {
+export async function createUserName(uid, userName, onSuccess, onFail) {
     return await usersRef.orderByChild('city').equalTo(userName.toUpperCase()).once('value').then((userNameAlready) => {
         if (!userNameAlready.exists()) {
             usersRef.child(uid).update({ userName, city: userName.toUpperCase() });
 
-            navigation.pop();
+            onSuccess();
         } else {
             onFail();
         }

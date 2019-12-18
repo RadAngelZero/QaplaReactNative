@@ -44,7 +44,6 @@ export class VerificationPhoneNumber extends Component {
                                     onChangeText={this.props.setVerificationCode} />
                                 <Text style={styles.smallText}>Te enviamos un código de verificación</Text>
                             </View>
-
                         }
                     </View>
                 </View>

@@ -1,14 +1,12 @@
+// diego             - 17-12-2019 - us171 - TopNavOptions added
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 // Diego             - 11-07-2019 - Qapla logo added to the top and Controllers image background created
 
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback, TextInput, SafeAreaView } from 'react-native';
-
 import { signInWithEmailAndPassword } from '../../services/auth';
-
 import Images from './../../../assets/images';
 import styles from './style';
-
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;

@@ -1,3 +1,4 @@
+// diego          - 17-12-2019 - us171 - joinEvent function updated
 // josep.sanahuja - 22-11-2019 - us153 - Add updateUserProfileImg
 // diego          - 21-11-2019 - us149 - Mark notifications as redaded
 // josep-sanahuja - 21-12-2019 - us152 - Add getQaplaAppPrivacy & DB_NEW_LINE_SEPARATOR

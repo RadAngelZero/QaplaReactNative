@@ -269,7 +269,7 @@ class VerificationScreen extends Component {
         
         this.setState({
             nextIndex: this.state.nextIndex - 1,
-            codeSent: true
+            codeSent: false
         });
     }
 

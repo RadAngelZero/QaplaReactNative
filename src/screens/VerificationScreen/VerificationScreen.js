@@ -1,3 +1,5 @@
+// josep.sanahuja  - 18-12-2019 - us178 - Add ResendVerCodeCountdown &
+//                                        ProgressStepsIndicator <= indexPositions.length
 // josep.sanahuja  - 18-12-2019 - us177 - Add resend verification code logic & UI
 // josep.sanahuja  - 18-12-2019 - us176 - Phone Verification in one screen
 // josep.sanahuja  - 17-10-2019 - us134 - Added phone prefix to SMS verification
@@ -19,10 +21,12 @@ import VerificationPersonalData from '../../components/VerificationPersonalData/
 import VerificationAskAge from '../../components/VerificationAskAge/VerificationAskAge';
 import VerificationPhoneNumber from '../../components/VerificationPhoneNumber/VerificationPhoneNumber';
 import ProgressStepsIndicator from '../../components/ProgressStepsIndicator/ProgressStepsIndicator';
-import { sendVerificationSMSToUser, linkUserAccountWithPhone } from '../../services/auth';
-import { PhoneProvider } from '../../utilities/firebase';
+import ResendVerCodeCountdown from '../../components/ResendVerCodeCountdown/ResendVerCodeCountdown';
 import VerificationProccessSuccess from '../../components/VerificationProccessSuccess/VerificationProccessSuccess';
+
+import { sendVerificationSMSToUser, linkUserAccountWithPhone } from '../../services/auth';
 import { createVerificationRequest } from '../../services/database';
+import { PhoneProvider } from '../../utilities/firebase';
 
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
@@ -381,15 +385,10 @@ class VerificationScreen extends Component {
                         </View>
                     </ScrollView>
                 </View>
-                {this.state.nextIndex === this.state.indexPositions.length && this.state.codeSent &&
-                    <TouchableWithoutFeedback onPress={this.sendVerificationCode} >
-                      <View style={styles.resendContainer}>
-                          <Text style={styles.resendText}>Reenviar Código</Text>
-                          {this.state.numAttemptsCodeSent > 1 &&
-                              <Text style={styles.smsWarning}>El código fue reenviado...</Text>
-                          }
-                      </View>
-                    </TouchableWithoutFeedback>
+                {((this.state.nextIndex === this.state.indexPositions.length) && this.state.codeSent) &&
+                    <View style={styles.resendContainer}>
+                        <ResendVerCodeCountdown sendCode={this.sendVerificationCode} />
+                    </View>
                 }
                 {this.state.nextIndex !== this.state.indexPositions.length ?
                     <TouchableWithoutFeedback
@@ -421,7 +420,7 @@ class VerificationScreen extends Component {
                    * currentIndex for the goToNextStep and goToPrevStep functions, can be changed to current
                    * in the future, actually don't have a major implication, is just a way to do the work
                 */}
-                {this.state.nextIndex !== this.state.indexPositions.length &&
+                {this.state.nextIndex <= this.state.indexPositions.length &&
                     <ProgressStepsIndicator
                         steps={this.state.indexPositions.length}
                         selected={this.state.nextIndex - 1} />

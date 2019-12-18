@@ -1,3 +1,4 @@
+// diego           - 18-12-2019 - us173 - onSubmitEditing event added to execute goToNextStep
 // diego           - 23-09-2019 - us127 - File creation
 
 import React, { Component } from 'react';
@@ -24,7 +25,8 @@ class VerificationCode extends Component {
                         style={styles.qaplaTextInput}
                         placeholder='Ingresar Código'
                         placeholderTextColor='#898A97'
-                        onChangeText={this.props.setVerificationCode} />
+                        onChangeText={this.props.setVerificationCode}
+                        onSubmitEditing={this.props.goToNextStep} />
                     <Text style={styles.smallText}>Te enviamos un código de verificación</Text>
                 </View>
             </View>

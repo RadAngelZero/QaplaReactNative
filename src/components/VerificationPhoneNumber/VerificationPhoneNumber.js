@@ -1,3 +1,4 @@
+// diego           - 18-12-2019 - us173 - onSubmitEditing event added to execute goToNextStep
 // josep.sanahuja  - 17-10-2019 - us134 - Added PhonePrefixPicker
 // diego           - 19-09-2019 - us126 - File creation
 
@@ -29,6 +30,7 @@ export class VerificationPhoneNumber extends Component {
                                 style={styles.qaplaTextInput}
                                 placeholder='Telefono*'
                                 placeholderTextColor='#898A97'
+                                onSubmitEditing={this.props.goToNextStep}
                                 onChangeText={this.props.setPhoneNumber} />
                         </View>
                     </View>

@@ -1,3 +1,4 @@
+// diego           - 18-12-2019 - us173 - Removed age case
 // josep.sanahuja  - 17-10-2019 - us134 - Added phone prefix to SMS verification
 // josep.sanahuja  - 17-10-2019 - us141 - Add age to verificationRequest
 // josep.sanahuja  - 08-10-2019 - usXXX - Removed VerificationTakeSelfie && added
@@ -144,18 +145,15 @@ class VerificationScreen extends Component {
             // sort array of x offsets from smaller to bigger
             indexPositions.sort((a, b) => {return a - b});
 
-            await this.setState({
+            this.setState({
                 indexPositions: indexPositions,
                 indexPositionsIsSorted: true
-            })
+            });
         }
 
         switch (this.state.nextIndex) {
             case 1:
                 isValidData = Object.keys(this.state.personData).some((value) => this.state.personData[value] !== '');
-                break;
-            case 2:
-                isValidData = Object.keys(this.state.ageData).some((value) => this.state.ageData[value] > 0);
                 break;
             case this.state.indexPositions.length - 2:
                 isValidData = Object.keys(this.state.phoneData).some((value) => this.state.phoneData[value] !== '');

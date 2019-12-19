@@ -182,14 +182,6 @@ class SetBetScreen extends Component {
                 console.log(error);
             }
         } else {
-            // us160: Duplicate event code, reason is that the way it is implemented match creation,
-            // healty creation (not multiple triggers by one or multiple clicks) happens in those two
-            // if blocks because of loading.
-            trackOnSegment('Match created', {
-                Bet: this.state.currentBet,
-                Game: this.props.selectedGame.gameKey,
-                Platform: this.props.selectedGame.platform
-            });
             this.setState({ open: !this.state.open });
         }
     }

@@ -1,3 +1,4 @@
+// diego           - 17-12-2019 - us174 - Age TextInput added to this screen
 // diego           - 18-09-2019 - us119 - File creation
 
 import React, { Component } from 'react';

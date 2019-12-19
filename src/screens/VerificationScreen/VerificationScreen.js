@@ -1,3 +1,4 @@
+// diego           - 17-12-2019 - us174 - Age case merged into personal data case
 // josep.sanahuja  - 17-10-2019 - us134 - Added phone prefix to SMS verification
 // josep.sanahuja  - 17-10-2019 - us141 - Add age to verificationRequest
 // josep.sanahuja  - 08-10-2019 - usXXX - Removed VerificationTakeSelfie && added

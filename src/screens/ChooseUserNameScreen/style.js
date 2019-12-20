@@ -1,3 +1,4 @@
+// diego           - 17-12-2019 - us172 - inputTextTaken style removed
 // josep.sanahuja - 05-08-2019 - us84 - + sfvContainer
 // josep.sanahuja - 08-07-2019 - us83 - + inputTextTaken
 

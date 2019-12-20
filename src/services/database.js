@@ -1,4 +1,4 @@
-// diego          - 17-12-2019 - us172 - createUserName function updated
+// diego          - 17-12-2019 - us172 - Added onSuccess and onFail params to createUserName
 // josep.sanahuja - 22-11-2019 - us153 - Add updateUserProfileImg
 // diego          - 21-11-2019 - us149 - Mark notifications as redaded
 // josep-sanahuja - 21-12-2019 - us152 - Add getQaplaAppPrivacy & DB_NEW_LINE_SEPARATOR
@@ -145,6 +145,8 @@ export function createUserProfile(Uid, email) {
  * Update the userName of specific user only if that username is not already in use
  * @param {string} uid User identifier of the user on firebase
  * @param {string} userName The name that the user want to use in Qapla
+ * @param {function} onSuccess Callback called when the username is succesfully seted
+ * @param {function} onFail Callback called when the username can not be seted
  *
  * Return: {boolean} user was created or otherwise it was not
  */

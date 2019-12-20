@@ -1,4 +1,4 @@
-// diego                - 17-12-2019 - us172 - signInWithEmailAndPassword function updated
+// diego                - 17-12-2019 - us172 - Navigation removed from signInWithEmailAndPassword function
 // diego                - 11-12-2019 - us165 - emptyLogros called on signOut
 // diego                - 02-09-2019 - us91 - signOut function created
 // diego                - 02-09-2019 - us91 - Added setUserIdOnSegment on different signins

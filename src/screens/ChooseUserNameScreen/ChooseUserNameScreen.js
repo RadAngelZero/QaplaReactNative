@@ -1,4 +1,4 @@
-// diego           - 17-12-2019 - us172 - Refs added to end the process from text field with the keyboard
+// diego          - 17-12-2019 - us172 - Refs added to end the process from text field with the keyboard
 // diego          - 15-11-2019 - us149 - Check if user data is loaded on mapStateToProps
 // josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
 // josep.sanahuja - 08-07-2019 - us83 - Added 'goToScreen' logic & 'constructor'

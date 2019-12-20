@@ -1,17 +1,26 @@
+// diego             - 17-12-2019 - us171 - TopNavOptions added
 // diego             - 17-12-2019 - us172 - Refs added to continue/end the process from text field with the keyboard
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 // Diego             - 11-07-2019 - Qapla logo added to the top and Controllers image background created
 
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback, TextInput, SafeAreaView } from 'react-native';
+import { signInWithEmailAndPassword } from '../../services/auth';
 import Images from './../../../assets/images';
 import styles from './style';
-import { signInWithEmailAndPassword } from '../../services/auth';
+import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
 
 class LoginWithEmailScreen extends Component {
+    static navigationOptions = ({ navigation }) => ({
+        header: () => (
+            <TopNavOptions
+                navigation={navigation}
+                back />)
+    });
+
     state = {
         email: '',
         password: ''

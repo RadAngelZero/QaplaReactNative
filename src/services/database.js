@@ -1,3 +1,4 @@
+// diego          - 17-12-2019 - us171 - joinEvent function updated
 // diego          - 17-12-2019 - us172 - Added onSuccess and onFail params to createUserName
 // josep.sanahuja - 22-11-2019 - us153 - Add updateUserProfileImg
 // diego          - 21-11-2019 - us149 - Mark notifications as redaded
@@ -690,7 +691,7 @@ export async function joinEvent(uid, eventId) {
     eventParticipantsRef.child(eventId).child(uid).update({
         email: '',
         priceQaploins: 0,
-        userNamve: 'DHVS'
+        userNamve: await getUserNameWithUID(uid)
     });
 }
 

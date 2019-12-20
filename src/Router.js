@@ -1,3 +1,4 @@
+// diego           - 17-12-2019 - us171 - Remove navigationOptions from LoginWithEmailScreen
 // diego           - 17-12-2019 - us172 - ChooseUserNameScreen moved to RootStack
 // diego           - 12-12-2019 - us166 - Remove header from CheckOutPaymentScreen
 // diego           - 22-11-2019 - us151 - Added TermsAndConditionsScreen
@@ -274,10 +275,7 @@ class Router extends React.Component {
           }
         },
         Login: {
-          screen: LoginWithEmailScreen,
-          navigationOptions: {
-            header: null
-          }
+          screen: LoginWithEmailScreen
         },
         Home: {
           screen: AppWithHeaderStackNavigator,

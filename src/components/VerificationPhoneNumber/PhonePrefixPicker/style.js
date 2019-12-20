@@ -1,3 +1,4 @@
+// josep.sanahuja  - 18-12-2019 - us176 - Added closeIcon and flex 0.8 to modalContainer
 // josep.sanahuja  - 17-10-2019 - us134 - File creation
 
 import { StyleSheet } from 'react-native';
@@ -24,8 +25,7 @@ export default styles = StyleSheet.create({
         backgroundColor: '#141833',
     },
     modalContainer: {
-      	height: heightPercentageToPx(70),
-        width: getDimensions().width * 5,
+      	flex: 0.8,
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#141833',
@@ -41,7 +41,13 @@ export default styles = StyleSheet.create({
         shadowRadius: 3.84,
         marginRight: widthPercentageToPx(5.33),
         marginLeft: widthPercentageToPx(5.33),
-        paddingTop: heightPercentageToPx(20)
+        marginTop: heightPercentageToPx(5)
+    },
+    closeIcon: {
+        marginRight: widthPercentageToPx(5.5),
+        marginBottom: heightPercentageToPx(2.46),
+        marginTop: heightPercentageToPx(-0.2),
+        alignSelf: 'flex-end'
     },
     prefixCardItem: {
         backgroundColor: '#11152D',

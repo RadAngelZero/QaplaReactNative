@@ -1,3 +1,4 @@
+// diego           - 20-12-2019 - us179 - Added phone autoverification, only works for android
 // josep.sanahuja  - 18-12-2019 - us178 - Add ResendVerCodeCountdown &
 //                                        ProgressStepsIndicator <= indexPositions.length
 // josep.sanahuja  - 18-12-2019 - us177 - Add resend verification code logic & UI
@@ -58,7 +59,8 @@ class VerificationScreen extends Component {
         verificationObject: {},
         indexPositions: [],
         indexPositionsIsSorted: false,
-        numAttemptsCodeSent: 0
+        numAttemptsCodeSent: 0,
+        codeSent: false
     };
 
     provideFeedBackToUserOnCurrentScren(optionalMessage) {
@@ -128,7 +130,7 @@ class VerificationScreen extends Component {
         firebaseVerificationData.verificationCode = verificationCode;
         this.setState({ firebaseVerificationData });
     }
-        
+
     /**
      * Add the position of the different slides (one per call)
      * @param {number} position X value of the given component (slide)
@@ -169,7 +171,7 @@ class VerificationScreen extends Component {
             // sort array of x offsets from smaller to bigger
             indexPositions.sort((a, b) => {return a - b});
 
-            await this.setState({
+            this.setState({
                 indexPositions: indexPositions,
                 indexPositionsIsSorted: true
             })
@@ -179,33 +181,23 @@ class VerificationScreen extends Component {
             case 1:
                 isValidData = Object.keys(this.state.personData).some((value) => this.state.personData[value] !== '');
                 break;
-            case 2: 
+            case 2:
                 isValidData = Object.keys(this.state.ageData).some((value) => this.state.ageData[value] > 0);
                 break;
             case this.state.indexPositions.length - 1:
                 isValidData = Object.keys(this.state.phoneData).some((value) => this.state.phoneData[value] !== '');
                 try {
 
-                    /**
-                     * Scroll to the position of the nextIndex, and update next index (we make that action here because
-                     * the sendVerificationSMSToUser can take a (long) time in send the SMS, but we need to await for the result
-                     * so we change the "slide", that other slide indicates the user that we are sending the code)
-                     */
-                    // this.scrollViewRef.scrollTo({x: this.state.indexPositions[this.state.nextIndex], y: 0, animated: true});
-                    this.setState({ nextIndex: this.state.nextIndex + 1 });
-                    
                     isUserOnSendCodeScreen = true;
-                    
+
                     // Mechanism to control in VerificationPhoneNumber component if code was sent
-                    this.setState({
-                        codeSent: true
-                    });
+                    this.setState({ nextIndex: this.state.nextIndex + 1, codeSent: true });
 
                     /**
                      * Once we have the verification object (after we await for the SMS) we add it to the state
                      * so we can render new things on the screen, to let the user add their code and procceed
                      */
-                    this.sendVerificationCode();
+                    await this.sendVerificationCode();
                 } catch (error) {
                     console.error(error);
                 }
@@ -213,37 +205,8 @@ class VerificationScreen extends Component {
             case this.state.indexPositions.length:
                 isValidData = Object.keys(this.state.firebaseVerificationData).some((value) => this.state.firebaseVerificationData[value] !== '');
 
-                /**
-                 * Build of the credential object (to link current account with phone account)
-                 */
-                const phoneCredentials = PhoneProvider.credential(this.state.verificationObject.verificationId,
-                    this.state.firebaseVerificationData.verificationCode);
-                    try {
-                        await linkUserAccountWithPhone(phoneCredentials);
-
-                        /**
-                         * The object to write on the database as the request of verification of the user
-                         */
-                        const verificationRequest = {
-                            curp: '',
-                            nombre: `${this.state.personData.name} ${this.state.personData.firstSurname} ${this.state.personData.secondSurname}`,
-                            foto: '',
-                            status: 1,
-                            usuario: this.props.userName,
-
-                        }
-                        await createVerificationRequest(this.props.uid, verificationRequest);
-                    } catch (error) {
-                        
-                        /**
-                         * If the code is incorrect we mark the data as invalid and provide feedback to the user
-                         * with a specific message
-                         */
-                        if (error.code === 'auth/invalid-verification-code') {
-                            isValidData = false;
-                            this.provideFeedBackToUserOnCurrentScren('Codigo de verificación incorrecto');
-                        }
-                    }
+                await this.verifyUserPhone(this.state.verificationObject.verificationId, this.state.firebaseVerificationData.verificationCode);
+                break;
             default:
                 break;
         }
@@ -254,7 +217,13 @@ class VerificationScreen extends Component {
                  * Scroll to the position of the nextIndex, so we can make things like validate data
                  * before that we show to the user the next "slide"
                  */
-                this.scrollViewRef.scrollTo({x: this.state.indexPositions[this.state.nextIndex], y: 0, animated: true});
+                if (this.state.nextIndex === this.state.indexPositions.length) {
+                    this.scrollViewRef.scrollTo({ x: this.state.indexPositions[this.state.nextIndex - 1], y: 0, animated: true });
+                } else if(this.state.nextIndex === this.state.indexPositions.length + 1){
+                    this.scrollViewRef.scrollTo({ x: this.state.indexPositions[this.state.nextIndex - 2], y: 0, animated: true });
+                } else {
+                    this.scrollViewRef.scrollTo({ x: this.state.indexPositions[this.state.nextIndex], y: 0, animated: true });
+                }
                 this.setState({ nextIndex: this.state.nextIndex + 1 });
             }
         }
@@ -271,10 +240,49 @@ class VerificationScreen extends Component {
          * So to get 0 you need to remove 2 fromthis.stat.nextIndex (2 - 2 = 0)
          */
         this.scrollViewRef.scrollTo({x: this.state.indexPositions[this.state.nextIndex - 2], y: 0, animated: true});
-        
+
         this.setState({
             nextIndex: this.state.nextIndex - 1,
             codeSent: false
+        });
+    }
+
+    verifyUserPhone = async (verificationId, verificationCode) => {
+        /**
+         * Build of the credential object (to link current account with phone account)
+         */
+        try {
+            const phoneCredentials = PhoneProvider.credential(verificationId, verificationCode);
+            await linkUserAccountWithPhone(phoneCredentials);
+
+            /**
+             * The object to write on the database as the request of verification of the user
+             */
+            const verificationRequest = {
+                curp: '',
+                nombre: `${this.state.personData.name} ${this.state.personData.firstSurname} ${this.state.personData.secondSurname}`,
+                foto: '',
+                status: 1,
+                usuario: this.props.userName,
+
+            }
+            await createVerificationRequest(this.props.uid, verificationRequest);
+        } catch (error) {
+
+            /**
+             * If the code is incorrect we mark the data as invalid and provide feedback to the user
+             * with a specific message
+             */
+            if (error.code === 'auth/invalid-verification-code') {
+                this.provideFeedBackToUserOnCurrentScren('Codigo de verificación incorrecto');
+            }
+        }
+    }
+
+    autoVerifyUserPhone = async (verificationId, verificationCode) => {
+        await this.verifyUserPhone(verificationId, verificationCode);
+        this.setState({ nextIndex: this.state.nextIndex + 2 }, () => {
+            this.goToNextStep();
         });
     }
 
@@ -290,12 +298,8 @@ class VerificationScreen extends Component {
             if (this.state.nextIndex === this.state.indexPositions.length - 1) {
                 buttonText = 'Enviar Código';
             } else if (this.state.nextIndex === this.state.indexPositions.length) {
-                if (Object.keys(this.state.verificationObject).length <= 0) {
-                    buttonText = 'Enviando codigo...';
-                } else {
-                    buttonText = 'Verificar';
-                }
-            } else if (this.state.nextIndex === this.state.indexPositions.length) {
+                buttonText = 'Verificar';
+            } else if (this.state.nextIndex === this.state.indexPositions.length + 1) {
                 buttonText = 'Finalizar';
             }
         }
@@ -307,28 +311,26 @@ class VerificationScreen extends Component {
      * Sends again the verification code via Firebase
      */
     sendVerificationCode = async () => {
-        this.setState({
-            numAttemptsCodeSent: this.state.numAttemptsCodeSent + 1
-        });
 
         /**
          * Once we have the verification object (after we await for the SMS) we add it to the state
          * so we can render new things on the screen, to let the user add their code and procceed
          */
         this.setState({
-            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`)   
+            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`, this.autoVerifyUserPhone),
+            numAttemptsCodeSent: this.state.numAttemptsCodeSent + 1
         });
     }
 
     /**
      * Close the verification procces (interrupt the proccess)
      */
-    closeVerificationProccess = () => this.props.navigation.navigate('Logros');
+    closeVerificationProccess = () => this.props.navigation.pop();
 
     /**
      * End the verification procces (once the procces is completed)
      */
-    endVerificationProccess = () => this.props.navigation.navigate('Logros');
+    endVerificationProccess = () => this.props.navigation.pop();
 
     render() {
         return (
@@ -390,7 +392,7 @@ class VerificationScreen extends Component {
                         <ResendVerCodeCountdown sendCode={this.sendVerificationCode} />
                     </View>
                 }
-                {this.state.nextIndex !== this.state.indexPositions.length ?
+                {this.state.nextIndex !== this.state.indexPositions.length + 1 ?
                     <TouchableWithoutFeedback
                         onPress={this.goToNextStep}
                         disabled={this.state.nextIndex === this.state.indexPositions.length && Object.keys(this.state.verificationObject).length <= 0}>
@@ -410,11 +412,6 @@ class VerificationScreen extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 }
-                {(this.state.nextIndex === this.state.indexPositions.length && Object.keys(this.state.verificationObject).length <= 0) &&
-                    <Text style={styles.smsWarning}>
-                        Este proceso puede tomar{'\n'}algunos minutos, espera porfavor
-                    </Text>
-                }
                 {/**
                     * The selected (or current) index is the nextIndex - 1, we use nextIndex instead of
                    * currentIndex for the goToNextStep and goToPrevStep functions, can be changed to current
@@ -422,7 +419,7 @@ class VerificationScreen extends Component {
                 */}
                 {this.state.nextIndex <= this.state.indexPositions.length &&
                     <ProgressStepsIndicator
-                        steps={this.state.indexPositions.length}
+                        steps={this.state.indexPositions.length - 1}
                         selected={this.state.nextIndex - 1} />
                 }
             </SafeAreaView>

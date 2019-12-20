@@ -1,4 +1,4 @@
-import { Dimensions, Platform, PixelRatio } from 'react-native';
+cimport { Dimensions, Platform, PixelRatio } from 'react-native';
 
 function getPercentHeight(value) {
   return (value/812) * 100;

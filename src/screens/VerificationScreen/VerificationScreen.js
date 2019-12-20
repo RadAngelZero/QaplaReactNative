@@ -1,3 +1,4 @@
+// josep.sanahuja  - 18-12-2019 - us177 - Add resend verification code logic & UI
 // josep.sanahuja  - 18-12-2019 - us176 - Phone Verification in one screen
 // josep.sanahuja  - 17-10-2019 - us134 - Added phone prefix to SMS verification
 // josep.sanahuja  - 17-10-2019 - us141 - Add age to verificationRequest
@@ -53,7 +54,7 @@ class VerificationScreen extends Component {
         verificationObject: {},
         indexPositions: [],
         indexPositionsIsSorted: false,
-        codeSent: false
+        numAttemptsCodeSent: 0
     };
 
     provideFeedBackToUserOnCurrentScren(optionalMessage) {
@@ -200,7 +201,7 @@ class VerificationScreen extends Component {
                      * Once we have the verification object (after we await for the SMS) we add it to the state
                      * so we can render new things on the screen, to let the user add their code and procceed
                      */
-                    this.setState({ verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`) });
+                    this.sendVerificationCode();
                 } catch (error) {
                     console.error(error);
                 }
@@ -269,7 +270,7 @@ class VerificationScreen extends Component {
         
         this.setState({
             nextIndex: this.state.nextIndex - 1,
-            codeSent: true
+            codeSent: false
         });
     }
 
@@ -296,6 +297,23 @@ class VerificationScreen extends Component {
         }
 
         return buttonText;
+    }
+
+    /**
+     * Sends again the verification code via Firebase
+     */
+    sendVerificationCode = async () => {
+        this.setState({
+            numAttemptsCodeSent: this.state.numAttemptsCodeSent + 1
+        });
+
+        /**
+         * Once we have the verification object (after we await for the SMS) we add it to the state
+         * so we can render new things on the screen, to let the user add their code and procceed
+         */
+        this.setState({
+            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`)   
+        });
     }
 
     /**
@@ -363,6 +381,16 @@ class VerificationScreen extends Component {
                         </View>
                     </ScrollView>
                 </View>
+                {this.state.nextIndex === this.state.indexPositions.length && this.state.codeSent &&
+                    <TouchableWithoutFeedback onPress={this.sendVerificationCode} >
+                      <View style={styles.resendContainer}>
+                          <Text style={styles.resendText}>Reenviar Código</Text>
+                          {this.state.numAttemptsCodeSent > 1 &&
+                              <Text style={styles.smsWarning}>El código fue reenviado...</Text>
+                          }
+                      </View>
+                    </TouchableWithoutFeedback>
+                }
                 {this.state.nextIndex !== this.state.indexPositions.length ?
                     <TouchableWithoutFeedback
                         onPress={this.goToNextStep}
@@ -376,7 +404,7 @@ class VerificationScreen extends Component {
                     :
                     <TouchableWithoutFeedback
                         onPress={this.endVerificationProccess}>
-                        <View style={styles.button}>
+                        <View style={this.state.codeSent ? styles.buttonResendScenario : styles.button}>
                             <Text style={styles.buttonText}>
                                 {this.setButtonText()}
                             </Text>

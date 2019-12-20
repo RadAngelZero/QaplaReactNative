@@ -1,12 +1,15 @@
+// josep.sanahuja  - 18-12-2019 - us176 - Added CloseIcon and resized scrollview items
 // josep.sanahuja  - 17-10-2019 - us134 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableWithoutFeedback, FlatList, Modal } from 'react-native';
+import { SafeAreaView, View, Text, Image, TouchableWithoutFeedback, FlatList, Modal } from 'react-native';
 import styles from './style';
 
 import Images from '../../../../assets/images';
 
 const Divider = Images.png.divider.img;
+const CloseIcon = Images.svg.closeIcon;
+
 const MEXICO_FLAT_LIST_INDEX = 144;
 
 export class PhonePrefixPicker extends Component {
@@ -106,32 +109,36 @@ export class PhonePrefixPicker extends Component {
                     transparent={false}
                     visible={this.state.showModal}
                     >
-                        <View style={styles.modalMainContainer}>
-                            <View>
-                                <Text style={styles.title}>Selecciona tu prefijo</Text>
-                                <View style={styles.divider}>
-                                    <Image source={Divider} />
+                        <SafeAreaView style={styles.sfvContainer}>
+                            <View style={styles.modalMainContainer}>
+                                <TouchableWithoutFeedback onPress={this.closeModal}>
+                                    <View style={styles.closeIcon}>
+                                        <CloseIcon />
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                <View>
+                                    <Text style={styles.title}>Selecciona tu prefijo</Text>
+                                    <View style={styles.divider}>
+                                        <Image source={Divider} />
+                                    </View>
+                                </View>
+                                <View style={styles.modalContainer}>
+                                    <FlatList
+                                        windowSize={30}
+                                        data={this.state.countriesList}
+                                        renderItem={({item}) =>
+                                            <TouchableWithoutFeedback onPress={() => this.itemSelected(item)}>
+                                                <View style={styles.prefixCardItem}>
+                                                    <Text style={styles.prefixCardTxt}>
+                                                        +{item.callingCodes[0]}, {item.name}
+                                                    </Text> 
+                                                </View>
+                                            </TouchableWithoutFeedback>
+                                        }
+                                        keyExtractor={(item) => {item.alpha2code}} /> 
                                 </View>
                             </View>
-                            <View style={styles.modalContainer}>
-                                <FlatList
-                                    windowSize={15}
-                                    data={this.state.countriesList}
-                                    initialNumToRender={7}
-                                    initialScrollIndex={MEXICO_FLAT_LIST_INDEX}
-                                    renderItem={({item}) =>
-                                        <TouchableWithoutFeedback onPress={() => this.itemSelected(item)}>
-                                            <View style={styles.prefixCardItem}>
-                                                <Text style={styles.prefixCardTxt}>
-                                                    +{item.callingCodes[0]}, {item.name}
-                                                </Text> 
-                                            </View>
-                                        </TouchableWithoutFeedback>
-                                    }
-                                    keyExtractor={(item) => {item.alpha2code}} /> 
-                            </View>
-                        </View>
-                        
+                        </SafeAreaView>
                 </Modal>
             </>
         );

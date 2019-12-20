@@ -53,18 +53,19 @@ export class AddGamerTagModal extends Component {
     }
 
     saveGameOnUser = async () => {
-        try 
-        {
-            await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
-                this.props.selectedGame.gameKey, this.state.gamerTagText);
+        // TODO: Fill it right
+        // try 
+        // {
+        //     await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
+        //         this.props.selectedGame.gameKey, this.state.gamerTagText);
 
-            } else {
-                this.props.onSuccess();
-                this.props.onClose();
-            }
-        } catch (error) {
-            console.error(error);
-        }
+        //     } else {
+        //         this.props.onSuccess();
+        //         this.props.onClose();
+        //     }
+        // } catch (error) {
+        //     console.error(error);
+        // }
     }
 
     /**

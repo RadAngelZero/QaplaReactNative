@@ -1,11 +1,12 @@
-// josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
+// josep.sanahuja    - 12-12-2019 - us160 - Added trackOnSegment import
+// josep.sanahuja    - 05-08-2019 - us84  - + SafeAreaView
 
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import { Svg } from 'react-native-svg';
 import styles from './style';
 import Images from '../../../assets/images';
-import { recordScreenOnSegment } from '../../services/statistics';
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
 
 const LightningIcon = Images.svg.lightningIcon;
@@ -32,6 +33,15 @@ class ChooseMatchTypeScreen extends Component {
         this.list.forEach((item) => item.remove());
     }
 
+    /**
+     * @description
+     * Sends an event tracking public match button pressed and navigate to LoadGames screen.
+     */
+    goToLoadGames = () => {
+        trackOnSegment('Public Match Button');
+        this.props.navigation.navigate('LoadGames');
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -42,14 +52,14 @@ class ChooseMatchTypeScreen extends Component {
                             <LightningIcon />
                         </Svg>
                     </View>
-                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('LoadGames')}>
+                    <TouchableWithoutFeedback onPress={this.goToLoadGames}>
                         <View style={styles.publicMatchButton}>
                             <Text style={styles.publicMatchButtonText}>
                                 RETA PÚBLICA
                             </Text>
                         </View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('ChooseOponent')}>
+                    <TouchableWithoutFeedback>
                         <View style={styles.directMatchButton}>
                             <View style={styles.directMatchButtonSearchIcon}>
                                 <SearchIcon width={18} height={18} />

@@ -1,3 +1,4 @@
+// josep.sanahuja  - 18-12-2019 - us176 - Added codeContainer
 // josep.sanahuja  - 17-10-2019 - us134 - Added prefixContainer
 // diego           - 19-09-2019 - us126 - File creation
 
@@ -7,7 +8,6 @@ import { heightPercentageToPx, widthPercentageToPx, getDimensions } from '../../
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'space-around',
         backgroundColor:'#131833',
         marginLeft: widthPercentageToPx(4),
         width: widthPercentageToPx(100)
@@ -21,13 +21,22 @@ export default styles = StyleSheet.create({
     divider: {
         marginTop: heightPercentageToPx(2.5)
     },
+    phoneMainContainer: {
+        flex: 1,
+        justifyContent: 'center'
+    },
     phoneContainer: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginLeft: widthPercentageToPx(6),
+        marginRight: widthPercentageToPx(12),
+        marginTop: heightPercentageToPx(10),
+    },
+   codeContainer: { 
         justifyContent: 'center',
         marginLeft: widthPercentageToPx(6),
         marginRight: widthPercentageToPx(12),
-    },
-    phoneContainerRow: {
-        flexDirection: 'row'
+        marginTop: heightPercentageToPx(10),
     },
     prefixContainer: {
         borderColor: '#6D7DDE',
@@ -39,6 +48,7 @@ export default styles = StyleSheet.create({
         flex: 1, 
         backgroundColor: '#11152D',
         height: heightPercentageToPx(8),
+        minHeight: heightPercentageToPx(8),
         borderBottomColor: '#6D7DDE',
         color: '#FFF',
         borderRadius: 4,

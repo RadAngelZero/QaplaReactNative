@@ -1,3 +1,4 @@
+// diego           - 17-12-2019 - us172 - ChooseUserNameScreen moved to RootStack
 // diego           - 12-12-2019 - us166 - Remove header from CheckOutPaymentScreen
 // diego           - 22-11-2019 - us151 - Added TermsAndConditionsScreen
 // josep.sanahuja  - 13-11-2019 - us147 - Add AppSettingsMenuScreen + Redux connect
@@ -316,6 +317,12 @@ class Router extends React.Component {
           navigationOptions: {
             header: props => <TopNavOptions back {...props} />
           }
+        },
+        ChooseUserNameScreen: {
+          screen: ChooseUserNameScreen,
+          navigationOptions: {
+            header: null
+          }
         }
       },
       {
@@ -328,7 +335,6 @@ class Router extends React.Component {
         AuthLoadingScreen: AuthLoadingScreen,
         App: RootStack,
         Welcome: WelcomeOnboardingScreen,
-        ChooseUserNameScreen: ChooseUserNameScreen,
         Verification: VerificationScreen
       },
       {

@@ -1,3 +1,4 @@
+// diego           - 18-12-2019 - us173 - Removed age case
 // josep.sanahuja  - 18-12-2019 - us178 - Add ResendVerCodeCountdown &
 //                                        ProgressStepsIndicator <= indexPositions.length
 // josep.sanahuja  - 18-12-2019 - us177 - Add resend verification code logic & UI
@@ -18,7 +19,6 @@ import { connect } from 'react-redux';
 import styles from './style';
 import Images from './../../../assets/images';
 import VerificationPersonalData from '../../components/VerificationPersonalData/VerificationPersonalData';
-import VerificationAskAge from '../../components/VerificationAskAge/VerificationAskAge';
 import VerificationPhoneNumber from '../../components/VerificationPhoneNumber/VerificationPhoneNumber';
 import ProgressStepsIndicator from '../../components/ProgressStepsIndicator/ProgressStepsIndicator';
 import ResendVerCodeCountdown from '../../components/ResendVerCodeCountdown/ResendVerCodeCountdown';
@@ -36,9 +36,7 @@ class VerificationScreen extends Component {
         personData:{
             name: '',
             firstSurname: '',
-            secondSurname: ''
-        },
-        ageData:{
+            secondSurname: '',
             age: 0
         },
         phoneData: {
@@ -89,16 +87,6 @@ class VerificationScreen extends Component {
     }
 
     /**
-     * Set how many years has the user
-     * @param {number} age Number oy years of living of the user
-     */
-    setAge = (age) => {
-        const { ageData } = this.state;
-        ageData.age = age;
-        this.setState({ ageData });
-    }
-
-    /**
      * Set the telephonic number of the user
      * @param {string} phoneNumber Phone number of the user
      */
@@ -128,7 +116,7 @@ class VerificationScreen extends Component {
         firebaseVerificationData.verificationCode = verificationCode;
         this.setState({ firebaseVerificationData });
     }
-        
+
     /**
      * Add the position of the different slides (one per call)
      * @param {number} position X value of the given component (slide)
@@ -169,18 +157,15 @@ class VerificationScreen extends Component {
             // sort array of x offsets from smaller to bigger
             indexPositions.sort((a, b) => {return a - b});
 
-            await this.setState({
+            this.setState({
                 indexPositions: indexPositions,
                 indexPositionsIsSorted: true
-            })
+            });
         }
 
         switch (this.state.nextIndex) {
             case 1:
                 isValidData = Object.keys(this.state.personData).some((value) => this.state.personData[value] !== '');
-                break;
-            case 2: 
-                isValidData = Object.keys(this.state.ageData).some((value) => this.state.ageData[value] > 0);
                 break;
             case this.state.indexPositions.length - 1:
                 isValidData = Object.keys(this.state.phoneData).some((value) => this.state.phoneData[value] !== '');
@@ -191,11 +176,10 @@ class VerificationScreen extends Component {
                      * the sendVerificationSMSToUser can take a (long) time in send the SMS, but we need to await for the result
                      * so we change the "slide", that other slide indicates the user that we are sending the code)
                      */
-                    // this.scrollViewRef.scrollTo({x: this.state.indexPositions[this.state.nextIndex], y: 0, animated: true});
                     this.setState({ nextIndex: this.state.nextIndex + 1 });
-                    
+
                     isUserOnSendCodeScreen = true;
-                    
+
                     // Mechanism to control in VerificationPhoneNumber component if code was sent
                     this.setState({
                         codeSent: true
@@ -234,7 +218,7 @@ class VerificationScreen extends Component {
                         }
                         await createVerificationRequest(this.props.uid, verificationRequest);
                     } catch (error) {
-                        
+
                         /**
                          * If the code is incorrect we mark the data as invalid and provide feedback to the user
                          * with a specific message
@@ -368,9 +352,6 @@ class VerificationScreen extends Component {
                             <VerificationPersonalData
                                 setUserPersonalData={this.setUserPersonalData}
                                 goToNextStep={this.goToNextStep} />
-                        </View>
-                        <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
-                            <VerificationAskAge setAge={this.setAge} goToNextStep={this.goToNextStep}/>
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
                             <VerificationPhoneNumber

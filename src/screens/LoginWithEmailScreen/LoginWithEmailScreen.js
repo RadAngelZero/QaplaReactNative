@@ -1,4 +1,5 @@
 // diego             - 17-12-2019 - us171 - TopNavOptions added
+// diego             - 17-12-2019 - us172 - Refs added to continue/end the process from text field with the keyboard
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 // Diego             - 11-07-2019 - Qapla logo added to the top and Controllers image background created
 
@@ -25,6 +26,18 @@ class LoginWithEmailScreen extends Component {
         password: ''
     };
 
+    /**
+     * Try SignIn the user using the email and password values from the state
+     */
+    logInUser = async () => {
+        try {
+            await signInWithEmailAndPassword(this.state.email, this.state.password);
+            this.props.navigation.popToTop();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -35,15 +48,19 @@ class LoginWithEmailScreen extends Component {
                     <View style={{ width: '100%' }}>
                         <TextInput style={styles.inputText}
                             placeholder='Email o Usuario'
-                            onChangeText={(text) => this.setState({ email: text })} />
+                            onChangeText={(text) => this.setState({ email: text })}
+                            onSubmitEditing={() => this.passwordInput.focus()}
+                            returnKeyType='next' />
                         <TextInput style={styles.inputText}
                             placeholder='Contraseña'
                             onChangeText={(text) => this.setState({ password: text })}
-                            secureTextEntry />
+                            secureTextEntry
+                            ref={(passwordInput) => this.passwordInput = passwordInput}
+                            onSubmitEditing={this.logInUser} />
                         <Text style={styles.forgotPasswordText} >¿Olvidaste tu contraseña?</Text>
                     </View>
                     <View>
-                        <TouchableWithoutFeedback onPress={() => signInWithEmailAndPassword(this.state.email, this.state.password, this.props.navigation)}>
+                        <TouchableWithoutFeedback onPress={this.logInUser}>
                             <View style={styles.buttonContainer}>
                                 <Text style={styles.buttonText} >INICIAR SESION</Text>
                             </View>

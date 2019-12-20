@@ -1,3 +1,4 @@
+// josep.sanahuja - 18-12-2019 - us178 - Add VERIFICATION_COUNTDOWN_MILISECONDS & ONE_SECOND_IN_MILISECONDS
 // diego          - 11-12-2019 - us160 - Updated segment key
 // diego          - 11-12-2019 - us165 - EMPTY_LOGROS created
 // josep.sanahuja - 21-12-2019 - us152 - Add DB_NEW_LINE_SEPARATOR
@@ -69,6 +70,7 @@ export const QAPLA_DISCORD_CHANNEL = 'https://discordapp.com/invite/6GBHn78';
 // Date constants
 
 export const ONE_HOUR_MILISECONDS = 3600000;
+export const ONE_SECOND_IN_MILISECONDS = 1000;
 export const HOURS_IN_DAY = 24;
 
 // On sale qaploins packages
@@ -81,3 +83,5 @@ export const QAPLOIN_PACKAGES = [ { qaploins: 300, price: '$2 USD' } ];
 
 // New line separator used in DB text
 export const DB_NEW_LINE_SEPARATOR = "QaplaMoo";
+
+export const VERIFICATION_COUNTDOWN_MILISECONDS = 120000;

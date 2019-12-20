@@ -1,3 +1,4 @@
+// josep.sanahuja  - 18-12-2019 - us177 - Add resendContainer && resendtext
 // diego           - 18-09-2019 - us119 - File creation
 
 import { StyleSheet } from 'react-native';
@@ -29,12 +30,33 @@ export default styles = StyleSheet.create({
     scrollViewContainer: {
         height: heightPercentageToPx(60)
     },
+    resendContainer: {
+        alignItems: 'center',
+        marginTop: heightPercentageToPx(5),
+        marginBottom: heightPercentageToPx(2)
+    },
+    buttonResendScenario: {
+        marginBottom: heightPercentageToPx(2),
+        borderRadius: 100,
+        backgroundColor: '#FA2D79',
+        alignSelf: 'center'
+    },
     button: {
         marginTop: heightPercentageToPx(10),
         marginBottom: heightPercentageToPx(2),
         borderRadius: 100,
         backgroundColor: '#FA2D79',
         alignSelf: 'center'
+    },
+    resendText: {
+        height: heightPercentageToPx(1.7),
+        width: 'auto',
+        color: '#3df9df',
+        fontSize: 12,
+        fontWeight: '900',
+        letterSpacing: 0.15,
+        lineHeight: 14,
+        textAlign: 'center'
     },
     buttonText: {
         color: '#FFF',

@@ -1,3 +1,4 @@
+// diego           - 18-12-2019 - us173 - onSubmitEditing event added to execute goToNextStep
 // diego           - 17-12-2019 - us172 - Refs added to pass from one text field to another
 //                                        autamatically with keyboard
 // diego           - 18-09-2019 - us119 - File creation
@@ -48,6 +49,7 @@ export class VerificationPersonalData extends Component {
                         placeholderTextColor='#898A97'
                         keyboardType='numeric'
                         ref={(age) => this.age = age}
+                        onSubmitEditing={this.props.goToNextStep}
                         onChangeText={(text) => this.props.setUserPersonalData('age', text)} />
                 </KeyboardAvoidingView>
             </View>

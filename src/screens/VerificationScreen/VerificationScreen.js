@@ -1,3 +1,8 @@
+// diego           - 18-12-2019 - us173 - Removed age case
+// josep.sanahuja  - 18-12-2019 - us178 - Add ResendVerCodeCountdown &
+//                                        ProgressStepsIndicator <= indexPositions.length
+// josep.sanahuja  - 18-12-2019 - us177 - Add resend verification code logic & UI
+// josep.sanahuja  - 18-12-2019 - us176 - Phone Verification in one screen
 // josep.sanahuja  - 17-10-2019 - us134 - Added phone prefix to SMS verification
 // josep.sanahuja  - 17-10-2019 - us141 - Add age to verificationRequest
 // josep.sanahuja  - 08-10-2019 - usXXX - Removed VerificationTakeSelfie && added
@@ -15,12 +20,13 @@ import styles from './style';
 import Images from './../../../assets/images';
 import VerificationPersonalData from '../../components/VerificationPersonalData/VerificationPersonalData';
 import VerificationPhoneNumber from '../../components/VerificationPhoneNumber/VerificationPhoneNumber';
-import VerificationCode from '../../components/VerificationCode/VerificationCode';
 import ProgressStepsIndicator from '../../components/ProgressStepsIndicator/ProgressStepsIndicator';
-import { sendVerificationSMSToUser, linkUserAccountWithPhone } from '../../services/auth';
-import { PhoneProvider } from '../../utilities/firebase';
+import ResendVerCodeCountdown from '../../components/ResendVerCodeCountdown/ResendVerCodeCountdown';
 import VerificationProccessSuccess from '../../components/VerificationProccessSuccess/VerificationProccessSuccess';
+
+import { sendVerificationSMSToUser, linkUserAccountWithPhone } from '../../services/auth';
 import { createVerificationRequest } from '../../services/database';
+import { PhoneProvider } from '../../utilities/firebase';
 
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
@@ -35,7 +41,13 @@ class VerificationScreen extends Component {
         },
         phoneData: {
             phoneNumber: '',
-            prefixObj: {}
+            prefixObj: {
+                "alpha2Code": "MX",
+                "name": "México",
+                "callingCodes": [
+                  "52"
+                ]
+            }
         },
         firebaseVerificationData: {
             verificationCode: ''
@@ -43,7 +55,8 @@ class VerificationScreen extends Component {
         nextIndex: 1,
         verificationObject: {},
         indexPositions: [],
-        indexPositionsIsSorted: false
+        indexPositionsIsSorted: false,
+        numAttemptsCodeSent: 0
     };
 
     provideFeedBackToUserOnCurrentScren(optionalMessage) {
@@ -144,20 +157,17 @@ class VerificationScreen extends Component {
             // sort array of x offsets from smaller to bigger
             indexPositions.sort((a, b) => {return a - b});
 
-            await this.setState({
+            this.setState({
                 indexPositions: indexPositions,
                 indexPositionsIsSorted: true
-            })
+            });
         }
 
         switch (this.state.nextIndex) {
             case 1:
                 isValidData = Object.keys(this.state.personData).some((value) => this.state.personData[value] !== '');
                 break;
-            case 2:
-                isValidData = Object.keys(this.state.ageData).some((value) => this.state.ageData[value] > 0);
-                break;
-            case this.state.indexPositions.length - 2:
+            case this.state.indexPositions.length - 1:
                 isValidData = Object.keys(this.state.phoneData).some((value) => this.state.phoneData[value] !== '');
                 try {
 
@@ -166,21 +176,25 @@ class VerificationScreen extends Component {
                      * the sendVerificationSMSToUser can take a (long) time in send the SMS, but we need to await for the result
                      * so we change the "slide", that other slide indicates the user that we are sending the code)
                      */
-                    this.scrollViewRef.scrollTo({x: this.state.indexPositions[this.state.nextIndex], y: 0, animated: true});
                     this.setState({ nextIndex: this.state.nextIndex + 1 });
 
                     isUserOnSendCodeScreen = true;
+
+                    // Mechanism to control in VerificationPhoneNumber component if code was sent
+                    this.setState({
+                        codeSent: true
+                    });
 
                     /**
                      * Once we have the verification object (after we await for the SMS) we add it to the state
                      * so we can render new things on the screen, to let the user add their code and procceed
                      */
-                    this.setState({ verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`) });
+                    this.sendVerificationCode();
                 } catch (error) {
                     console.error(error);
                 }
                 break;
-            case this.state.indexPositions.length - 1:
+            case this.state.indexPositions.length:
                 isValidData = Object.keys(this.state.firebaseVerificationData).some((value) => this.state.firebaseVerificationData[value] !== '');
 
                 /**
@@ -241,7 +255,11 @@ class VerificationScreen extends Component {
          * So to get 0 you need to remove 2 fromthis.stat.nextIndex (2 - 2 = 0)
          */
         this.scrollViewRef.scrollTo({x: this.state.indexPositions[this.state.nextIndex - 2], y: 0, animated: true});
-        this.setState({ nextIndex: this.state.nextIndex - 1 });
+        
+        this.setState({
+            nextIndex: this.state.nextIndex - 1,
+            codeSent: false
+        });
     }
 
     /**
@@ -251,10 +269,11 @@ class VerificationScreen extends Component {
         // TODO Josep Maria: (maybe) 17-10-2019 : Create each button per separated insteda of applying
         // a lot of logic to one only button.
         let buttonText = 'Continuar';
-        if (this.state.indexPositions.length >= 4) {
-            if (this.state.nextIndex === this.state.indexPositions.length - 2) {
+
+        if (this.state.indexPositions.length >= 3) {
+            if (this.state.nextIndex === this.state.indexPositions.length - 1) {
                 buttonText = 'Enviar Código';
-            } else if (this.state.nextIndex === this.state.indexPositions.length - 1) {
+            } else if (this.state.nextIndex === this.state.indexPositions.length) {
                 if (Object.keys(this.state.verificationObject).length <= 0) {
                     buttonText = 'Enviando codigo...';
                 } else {
@@ -266,6 +285,23 @@ class VerificationScreen extends Component {
         }
 
         return buttonText;
+    }
+
+    /**
+     * Sends again the verification code via Firebase
+     */
+    sendVerificationCode = async () => {
+        this.setState({
+            numAttemptsCodeSent: this.state.numAttemptsCodeSent + 1
+        });
+
+        /**
+         * Once we have the verification object (after we await for the SMS) we add it to the state
+         * so we can render new things on the screen, to let the user add their code and procceed
+         */
+        this.setState({
+            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`)   
+        });
     }
 
     /**
@@ -284,7 +320,7 @@ class VerificationScreen extends Component {
                 <View style={styles.backAndCloseOptions}>
                     <View style={styles.backIconContainer}>
                         {/** Just show BackIcon if the user has already passed at least the first slide */}
-                        {(this.state.nextIndex > 1 && this.state.nextIndex !== this.state.indexPositions.length) ?
+                        {(this.state.nextIndex > 1 && this.state.nextIndex !== this.state.indexPositions.length + 1) ?
                             <TouchableWithoutFeedback onPress={this.goToPreviousStep}>
                                 <View style={styles.buttonDimensions}>
                                     <BackIcon />
@@ -295,7 +331,7 @@ class VerificationScreen extends Component {
                         }
                     </View>
                     <View style={styles.closeIconContainer}>
-                        {this.state.nextIndex !== this.state.indexPositions.length ?
+                        {this.state.nextIndex !== this.state.indexPositions.length + 1 ?
                             <TouchableWithoutFeedback onPress={this.closeVerificationProccess}>
                                 <View style={styles.buttonDimensions}>
                                     <CloseIcon />
@@ -320,23 +356,25 @@ class VerificationScreen extends Component {
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
                             <VerificationPhoneNumber
                                 setPhoneNumber={this.setPhoneNumber}
-                                goToNextStep={this.goToNextStep}
-                                setPhonePrefix={this.setPhonePrefixObj} />
-                        </View>
-                        <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
-                            <VerificationCode
+                                setPhonePrefix={this.setPhonePrefixObj}
                                 setVerificationCode={this.setVerificationCode}
-                                goToNextStep={this.goToNextStep} />
+                                goToNextStep={this.goToNextStep}
+                                codeSent={this.state.codeSent} />
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
                             <VerificationProccessSuccess endVerificationProccess={this.endVerificationProccess} />
                         </View>
                     </ScrollView>
                 </View>
+                {((this.state.nextIndex === this.state.indexPositions.length) && this.state.codeSent) &&
+                    <View style={styles.resendContainer}>
+                        <ResendVerCodeCountdown sendCode={this.sendVerificationCode} />
+                    </View>
+                }
                 {this.state.nextIndex !== this.state.indexPositions.length ?
                     <TouchableWithoutFeedback
                         onPress={this.goToNextStep}
-                        disabled={this.state.nextIndex === this.state.indexPositions.length - 1 && Object.keys(this.state.verificationObject).length <= 0}>
+                        disabled={this.state.nextIndex === this.state.indexPositions.length && Object.keys(this.state.verificationObject).length <= 0}>
                         <View style={styles.button}>
                             <Text style={styles.buttonText}>
                                 {this.setButtonText()}
@@ -346,14 +384,14 @@ class VerificationScreen extends Component {
                     :
                     <TouchableWithoutFeedback
                         onPress={this.endVerificationProccess}>
-                        <View style={styles.button}>
+                        <View style={this.state.codeSent ? styles.buttonResendScenario : styles.button}>
                             <Text style={styles.buttonText}>
                                 {this.setButtonText()}
                             </Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
-                {(this.state.nextIndex === this.state.indexPositions.length - 1 && Object.keys(this.state.verificationObject).length <= 0) &&
+                {(this.state.nextIndex === this.state.indexPositions.length && Object.keys(this.state.verificationObject).length <= 0) &&
                     <Text style={styles.smsWarning}>
                         Este proceso puede tomar{'\n'}algunos minutos, espera porfavor
                     </Text>
@@ -363,7 +401,7 @@ class VerificationScreen extends Component {
                    * currentIndex for the goToNextStep and goToPrevStep functions, can be changed to current
                    * in the future, actually don't have a major implication, is just a way to do the work
                 */}
-                {this.state.nextIndex !== this.state.indexPositions.length &&
+                {this.state.nextIndex <= this.state.indexPositions.length &&
                     <ProgressStepsIndicator
                         steps={this.state.indexPositions.length}
                         selected={this.state.nextIndex - 1} />

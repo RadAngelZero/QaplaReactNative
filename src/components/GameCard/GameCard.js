@@ -1,3 +1,4 @@
+// josep.sanahuja - 12-12-2019 - us160 - Add 'Game Added' event in openModal
 // diego          - 21-08-2019 - us89 - Add game on the user if they don't have it but have a valid gamer tag
 //                                      (e.g.: in all the xbox games you use the xboxLive,
 //                                      so don't need to add a new gamer tag every time)
@@ -20,13 +21,14 @@ import { connect } from 'react-redux';
 import { getGamerTagWithUID, addGameToUser } from '../../services/database';
 import { withNavigation } from 'react-navigation';
 import { subscribeUserToTopic } from '../../services/messaging';
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 
 class GameCard extends Component {
 
     render() {
         const { game, backgroundColor} = this.props;
         return (
-            <TouchableWithoutFeedback onPress={this.openModal.bind(this)}>
+            <TouchableWithoutFeedback onPress={this.openModal}>
                 <LinearGradient useAngle={true}
                     angle={150}
                     angleCenter={{ x: .5, y: .5}}
@@ -50,8 +52,12 @@ class GameCard extends Component {
         );
     }
 
-    openModal = async() => {
-        
+    openModal = async() => {  
+        trackOnSegment('Game Added', {
+            Platform: this.props.platform,
+            Game: this.props.gameKey
+        });
+
         // Create a new game object which is extended with the platform member
         // so that it can be used in LoadGamesScreen inside the modal.
         let newGame = this.props.game;

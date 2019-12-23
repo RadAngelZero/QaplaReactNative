@@ -1,4 +1,5 @@
 // diego                - 20-12-2019 - us179 - Phone auto verification logic added on sendVerificationSMSToUser
+// diego                - 17-12-2019 - us172 - Navigation removed from signInWithEmailAndPassword function
 // diego                - 11-12-2019 - us165 - emptyLogros called on signOut
 // diego                - 02-09-2019 - us91 - signOut function created
 // diego                - 02-09-2019 - us91 - Added setUserIdOnSegment on different signins
@@ -85,12 +86,10 @@ export function setupGoogleSignin() {
     }
 }
 
-export function signInWithEmailAndPassword(email, password, navigation) {
-    auth.signInWithEmailAndPassword(email, password)
+export async function signInWithEmailAndPassword(email, password) {
+    await auth.signInWithEmailAndPassword(email, password)
     .then((user) => {
         setUserIdOnSegment(user.user.uid);
-        navigation.popToTop();
-        //Do something with the user data
     })
     .catch((error) => {
         console.log(error.code, error.message);

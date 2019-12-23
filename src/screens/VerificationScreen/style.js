@@ -49,9 +49,9 @@ export default styles = StyleSheet.create({
         alignSelf: 'center'
     },
     resendText: {
-        height: 14.49,
+        height: heightPercentageToPx(1.7),
         width: 'auto',
-        color: 'rgb(61, 249, 223)',
+        color: '#3df9df',
         fontSize: 12,
         fontWeight: '900',
         letterSpacing: 0.15,

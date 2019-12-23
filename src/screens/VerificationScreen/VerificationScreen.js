@@ -1,4 +1,5 @@
 // diego           - 20-12-2019 - us179 - Added phone autoverification, only works for android
+// diego           - 18-12-2019 - us173 - Removed age case
 // josep.sanahuja  - 18-12-2019 - us178 - Add ResendVerCodeCountdown &
 //                                        ProgressStepsIndicator <= indexPositions.length
 // josep.sanahuja  - 18-12-2019 - us177 - Add resend verification code logic & UI
@@ -19,7 +20,6 @@ import { connect } from 'react-redux';
 import styles from './style';
 import Images from './../../../assets/images';
 import VerificationPersonalData from '../../components/VerificationPersonalData/VerificationPersonalData';
-import VerificationAskAge from '../../components/VerificationAskAge/VerificationAskAge';
 import VerificationPhoneNumber from '../../components/VerificationPhoneNumber/VerificationPhoneNumber';
 import ProgressStepsIndicator from '../../components/ProgressStepsIndicator/ProgressStepsIndicator';
 import ResendVerCodeCountdown from '../../components/ResendVerCodeCountdown/ResendVerCodeCountdown';
@@ -37,9 +37,7 @@ class VerificationScreen extends Component {
         personData:{
             name: '',
             firstSurname: '',
-            secondSurname: ''
-        },
-        ageData:{
+            secondSurname: '',
             age: 0
         },
         phoneData: {
@@ -88,16 +86,6 @@ class VerificationScreen extends Component {
         const { personData } = this.state;
         personData[dataKey] = data;
         this.setState({ personData });
-    }
-
-    /**
-     * Set how many years has the user
-     * @param {number} age Number oy years of living of the user
-     */
-    setAge = (age) => {
-        const { ageData } = this.state;
-        ageData.age = age;
-        this.setState({ ageData });
     }
 
     /**
@@ -174,15 +162,12 @@ class VerificationScreen extends Component {
             this.setState({
                 indexPositions: indexPositions,
                 indexPositionsIsSorted: true
-            })
+            });
         }
 
         switch (this.state.nextIndex) {
             case 1:
                 isValidData = Object.keys(this.state.personData).some((value) => this.state.personData[value] !== '');
-                break;
-            case 2:
-                isValidData = Object.keys(this.state.ageData).some((value) => this.state.ageData[value] > 0);
                 break;
             case this.state.indexPositions.length - 1:
                 isValidData = Object.keys(this.state.phoneData).some((value) => this.state.phoneData[value] !== '');
@@ -389,9 +374,6 @@ class VerificationScreen extends Component {
                             <VerificationPersonalData
                                 setUserPersonalData={this.setUserPersonalData}
                                 goToNextStep={this.goToNextStep} />
-                        </View>
-                        <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
-                            <VerificationAskAge setAge={this.setAge} goToNextStep={this.goToNextStep}/>
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
                             <VerificationPhoneNumber

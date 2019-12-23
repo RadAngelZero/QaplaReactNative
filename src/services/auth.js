@@ -100,6 +100,7 @@ export function signInWithEmailAndPassword(email, password, navigation) {
 /**
  * Send a SMS to the given number of the user to verify their phone number
  * @param {string} phoneNumber Phone number of the user
+ * @param {function} isAutoVerified Callback called only if the phone is autoverifiable, must make the link of the account here
  */
 export async function sendVerificationSMSToUser(phoneNumber, isAutoVerified) {
     /**
@@ -111,7 +112,6 @@ export async function sendVerificationSMSToUser(phoneNumber, isAutoVerified) {
              * This case only apply for both platforms (android and iOS)
              */
             case phoneAuthErrorState:
-                // Error's are already catched on VerificationScreen
                 console.error(phoneAuth.error);
                 break;
 

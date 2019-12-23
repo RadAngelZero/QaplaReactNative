@@ -214,15 +214,19 @@ class VerificationScreen extends Component {
         if (isValidData) {
             if (!isUserOnSendCodeScreen) {
                 /**
-                 * Scroll to the position of the nextIndex, so we can make things like validate data
-                 * before that we show to the user the next "slide"
+                 * If the nextIndex is smaller than the lenght of index we need to move just one screen
                  */
-                if (this.state.nextIndex === this.state.indexPositions.length) {
-                    this.scrollViewRef.scrollTo({ x: this.state.indexPositions[this.state.nextIndex - 1], y: 0, animated: true });
-                } else if(this.state.nextIndex === this.state.indexPositions.length + 1){
-                    this.scrollViewRef.scrollTo({ x: this.state.indexPositions[this.state.nextIndex - 2], y: 0, animated: true });
-                } else {
+                if (this.state.nextIndex < this.state.indexPositions.length) {
+                    /**
+                     * Scroll to the position of the nextIndex, so we can make things like validate data
+                     * before that we show to the user the next "slide"
+                     */
                     this.scrollViewRef.scrollTo({ x: this.state.indexPositions[this.state.nextIndex], y: 0, animated: true });
+                } else {
+                    /**
+                     * If the nextIndex is greater than the lenght of index we move to the last "slide" (this.state.indexPositions.length - 1)
+                     */
+                    this.scrollViewRef.scrollTo({ x: this.state.indexPositions[this.state.indexPositions.length - 1], y: 0, animated: true });
                 }
                 this.setState({ nextIndex: this.state.nextIndex + 1 });
             }
@@ -239,14 +243,16 @@ class VerificationScreen extends Component {
          * this.stat.nextIndex = 2 so currentIndex = 1 so previousIndex = 0
          * So to get 0 you need to remove 2 fromthis.stat.nextIndex (2 - 2 = 0)
          */
-        this.scrollViewRef.scrollTo({x: this.state.indexPositions[this.state.nextIndex - 2], y: 0, animated: true});
+        this.scrollViewRef.scrollTo({ x: this.state.indexPositions[this.state.nextIndex - 2], y: 0, animated: true });
 
-        this.setState({
-            nextIndex: this.state.nextIndex - 1,
-            codeSent: false
-        });
+        this.setState({ nextIndex: this.state.nextIndex - 1, codeSent: false });
     }
 
+    /**
+     * Verify the user phone and end the process (as verify the phone is the last case of the process)
+     * @param {string} verificationId Id of the verification process (given by firebase)
+     * @param {number} verificationCode Code sended to the user to verify their phone number
+     */
     verifyUserPhone = async (verificationId, verificationCode) => {
         /**
          * Build of the credential object (to link current account with phone account)
@@ -264,8 +270,8 @@ class VerificationScreen extends Component {
                 foto: '',
                 status: 1,
                 usuario: this.props.userName,
+            };
 
-            }
             await createVerificationRequest(this.props.uid, verificationRequest);
         } catch (error) {
 
@@ -279,9 +285,22 @@ class VerificationScreen extends Component {
         }
     }
 
+    /**
+     * Execute an automatic phone verification (available only for android devices at the 23/12/2019)
+     * @param {string} verificationId Id of the verification process (given by firebase)
+     * @param {number} verificationCode Code sended to the user to verify their phone number
+     */
     autoVerifyUserPhone = async (verificationId, verificationCode) => {
         await this.verifyUserPhone(verificationId, verificationCode);
+        /**
+         * We update the next index by two, we need to update by two because we need to count the
+         * step of add the code, and one more to go to the final screen
+         */
         this.setState({ nextIndex: this.state.nextIndex + 2 }, () => {
+            /**
+             * After we update the nextIndex we execute goToNextStep automatically, to continue with the
+             * process (finishing the process actually)
+             */
             this.goToNextStep();
         });
     }
@@ -299,7 +318,7 @@ class VerificationScreen extends Component {
                 buttonText = 'Enviar Código';
             } else if (this.state.nextIndex === this.state.indexPositions.length) {
                 buttonText = 'Verificar';
-            } else if (this.state.nextIndex === this.state.indexPositions.length + 1) {
+            } else if (this.state.nextIndex >= this.state.indexPositions.length + 1) {
                 buttonText = 'Finalizar';
             }
         }
@@ -392,7 +411,7 @@ class VerificationScreen extends Component {
                         <ResendVerCodeCountdown sendCode={this.sendVerificationCode} />
                     </View>
                 }
-                {this.state.nextIndex !== this.state.indexPositions.length + 1 ?
+                {this.state.nextIndex < this.state.indexPositions.length + 1 ?
                     <TouchableWithoutFeedback
                         onPress={this.goToNextStep}
                         disabled={this.state.nextIndex === this.state.indexPositions.length && Object.keys(this.state.verificationObject).length <= 0}>

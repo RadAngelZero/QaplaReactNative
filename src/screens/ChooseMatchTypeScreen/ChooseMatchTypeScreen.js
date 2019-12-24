@@ -55,7 +55,7 @@ class ChooseMatchTypeScreen extends Component {
                     <TouchableWithoutFeedback onPress={this.goToLoadGames}>
                         <View style={styles.publicMatchButton}>
                             <Text style={styles.publicMatchButtonText}>
-                                RETA PÚBLICA
+                                Reta Pública
                             </Text>
                         </View>
                     </TouchableWithoutFeedback>
@@ -65,7 +65,7 @@ class ChooseMatchTypeScreen extends Component {
                                 <SearchIcon width={18} height={18} />
                             </View>
                             <Text style={styles.directMatchButtonText}>
-                                RETAR USUARIO
+                                Retar Usuario
                             </Text>
                             <View style={styles.directMatchButtonSearchIcon}></View>
                         </View>

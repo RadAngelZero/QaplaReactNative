@@ -40,9 +40,9 @@ import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
-const QaploinIcon       = images.svg.qaploinsIcon;
-const LessQaploinsIcon  = images.svg.lessQaploins;
-const MoreQaploinsIcon  = images.svg.moreQaploins;
+const QaploinIcon = images.svg.qaploinsIcon;
+const LessQaploinsIcon = images.svg.lessQaploins;
+const MoreQaploinsIcon = images.svg.moreQaploins;
 
 class SetBetScreen extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -239,7 +239,7 @@ class SetBetScreen extends Component {
                     </View>
                     <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
                         <View style={styles.createButton}>
-                            <Text style={styles.createButtonText}>CREAR AHORA</Text>
+                            <Text style={styles.createButtonText}>Crear Ahora</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>

@@ -51,7 +51,7 @@ export class MatchExpireRememberModal extends Component {
                         <View style={styles.containerMsgModal}>
                             <Text style={styles.headerText}>Recuerda</Text>
                             <Text style={styles.paragraph}>
-                                La Reta expirará después de 10 minutos si no recibe y se acepta un desafio de otro jugador.                  
+                                La Reta expirará después de 10 minutos si no recibe y se acepta un desafio de otro jugador.
                             </Text>
                             <CheckBox
                                 style={styles.checkbox}

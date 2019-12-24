@@ -255,7 +255,7 @@ class VerificationScreen extends Component {
          * So to get 0 you need to remove 2 fromthis.stat.nextIndex (2 - 2 = 0)
          */
         this.scrollViewRef.scrollTo({x: this.state.indexPositions[this.state.nextIndex - 2], y: 0, animated: true});
-        
+
         this.setState({
             nextIndex: this.state.nextIndex - 1,
             codeSent: false
@@ -300,7 +300,7 @@ class VerificationScreen extends Component {
          * so we can render new things on the screen, to let the user add their code and procceed
          */
         this.setState({
-            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`)   
+            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`)
         });
     }
 

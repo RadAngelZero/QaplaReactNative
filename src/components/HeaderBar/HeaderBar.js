@@ -1,3 +1,4 @@
+// diego             - 23-12-2019 - us182 - Header reordered, letters on left, icons on right
 // diego             - 11-12-2019 - us164 - NoVerifiedIcon added
 // diego             - 22-11-2019 - us148 - Notification badge added
 // josep.sanahuja    - 13-11-2019 - us147 - Connect currentScreenId
@@ -7,6 +8,7 @@
 
 import React, { Component } from 'react';
 import {
+    SafeAreaView,
     View,
     Text,
     TouchableWithoutFeedback,
@@ -181,49 +183,48 @@ class HeaderBar extends Component {
     }
 
     render() {
-
         return (
-            <View style={styles.container} testID='container'>
-                <View style={styles.imageContainer}>
-                    <HighlightModal
-                      visible={this.state.showHg2Modal}
-                      onClose={this.toggleHg2Modal}
-                      showDelay={1000}
-                      cb1={this.markHg2}
-                      header='Ve tus Notificaciones'
-                      body='Tus retas recibirán notificaciones de desafio, recuerda checar las notificaciones!'>
-                          <TouchableWithoutFeedback
-                              onPress={this.onNotiPressBttn}
-                              testID='NotificationButton'>
-                              <View style={styles.imageAndButtonDimensions}>
-                                  <NotificationIcon height={24} width={24} />
-                                  {this.userHaveUnreadNotifications() &&
-                                    <Svg height={12} width={12} style={styles.unreadNotificationsIcon}>
-                                        <Circle cx={5} cy={5} r={5} fill='#FF0000' />
-                                    </Svg>
-                                  }
-                              </View>
-                          </TouchableWithoutFeedback>
-                    </HighlightModal>
-                </View>
+            <SafeAreaView style={styles.container} testID='container'>
                 <View style={styles.textContainer} testID='textContainer'>
                     <Text style={styles.textStyle} testID='text'>Qapla</Text>
                 </View>
-                {this.props.currentScreenId !== 'Perfil' &&
-                  <View style={styles.discordIcon} testID='discordIcon'>
-                      <TouchableWithoutFeedback onPress={this.sendToDiscord}>
-                          <View style={styles.imageAndButtonDimensions}>
-                              <DiscordIcon
-                                  height={32}
-                                  width={32}
-                                  fill='#FFF' />
-                          </View>
-                      </TouchableWithoutFeedback>
-                  </View>
-                }
-                {this.props.currentScreenId === 'Perfil' &&
-                    <View style={styles.discordIcon}>
-                        {!this.props.isUserVerified &&
+                <View style={styles.rightIconsContainer}>
+                    <View style={styles.notificationsIconContainer}>
+                        <HighlightModal
+                        visible={this.state.showHg2Modal}
+                        onClose={this.toggleHg2Modal}
+                        showDelay={1000}
+                        cb1={this.markHg2}
+                        header='Ve tus Notificaciones'
+                        body='Tus retas recibirán notificaciones de desafio, recuerda checar las notificaciones!'>
+                            <TouchableWithoutFeedback
+                                onPress={this.onNotiPressBttn}
+                                testID='NotificationButton'>
+                                <View style={styles.imageAndButtonDimensions}>
+                                    <NotificationIcon height={24} width={24} />
+                                    {this.userHaveUnreadNotifications() &&
+                                        <Svg height={12} width={12} style={styles.unreadNotificationsIcon}>
+                                            <Circle cx={5} cy={5} r={5} fill='#FF0000' />
+                                        </Svg>
+                                    }
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </HighlightModal>
+                    </View>
+                    {this.props.currentScreenId !== 'Perfil' &&
+                        <View style={styles.discordIcon} testID='discordIcon'>
+                            <TouchableWithoutFeedback onPress={this.sendToDiscord}>
+                                <View style={styles.imageAndButtonDimensions}>
+                                    <DiscordIcon
+                                        height={32}
+                                        width={32}
+                                        fill='#FFF' />
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
+                    }
+                    {(this.props.currentScreenId === 'Perfil' && !this.props.isUserVerified) &&
+                        <View style={styles.discordIcon}>
                             <TouchableWithoutFeedback onPress={this.goToVerificationStack}>
                                 <View style={styles.imageAndButtonDimensions}>
                                     <NoVerifiedIcon
@@ -232,18 +233,22 @@ class HeaderBar extends Component {
                                         fill='#FFF' />
                                 </View>
                             </TouchableWithoutFeedback>
-                        }
-                        <TouchableWithoutFeedback onPress={this.goToUserProfile}>
-                            <View style={styles.imageAndButtonDimensions}>
-                                <SettingsIcon
-                                    height={24}
-                                    width={24}
-                                    fill='#FFF' />
-                            </View>
-                        </TouchableWithoutFeedback>
-                    </View>
-                }
-            </View>
+                        </View>
+                    }
+                    {this.props.currentScreenId === 'Perfil' &&
+                        <View style={styles.discordIcon}>
+                            <TouchableWithoutFeedback onPress={this.goToUserProfile}>
+                                <View style={styles.imageAndButtonDimensions}>
+                                    <SettingsIcon
+                                        height={24}
+                                        width={24}
+                                        fill='#FFF' />
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
+                    }
+                </View>
+            </SafeAreaView>
         );
     }
 }

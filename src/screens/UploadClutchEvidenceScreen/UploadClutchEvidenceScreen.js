@@ -71,7 +71,7 @@ export class UploadClutchEvidenceScreen extends Component {
                         <Text style={styles.readyButtonText}>Listo</Text>
                     </View>
                 </TouchableWithoutFeedback>
-                <Text style={styles.goToClutchButtonText} onPress={this.linkToClutchApp} >IR A CLUTCH</Text>
+                <Text style={styles.goToClutchButtonText} onPress={this.linkToClutchApp} >Ir a clutch</Text>
             </View>
         );
     }

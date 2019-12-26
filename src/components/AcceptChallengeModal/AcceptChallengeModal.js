@@ -27,18 +27,18 @@ class AcceptChallengeModal extends Component {
         if (this.state.dontShowModalAgain) {
             storeData('dont-show-delete-notifications-modal', 'true');
         }
-        
+
         acceptChallengeRequest(this.props.notification, this.props.uid);
         this.props.navigation.navigate('MisRetas');
     }
-    
+
     /**
      * @description Toogle the dontShowModalAgain flag to the selected state of the checkbox
      */
     setCheckBoxState = (newState) => {
         this.setState({ dontShowModalAgain: newState });
     }
-    
+
     render() {
         return (
             <Modal
@@ -54,7 +54,7 @@ class AcceptChallengeModal extends Component {
                                 </View>
                             </TouchableWithoutFeedback>
                             <Text style={styles.paragraph}>
-                                Al aceptar este desafio todos los otros desafios que te han hecho a esta reta seran eliminados.
+                                Al aceptar este desafio todos los otros desafios que te han hecho a esta partida seran eliminados.
                             </Text>
                             <CheckBox
                                 style={styles.checkbox}

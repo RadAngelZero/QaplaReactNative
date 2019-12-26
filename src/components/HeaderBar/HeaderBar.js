@@ -191,7 +191,7 @@ class HeaderBar extends Component {
                       showDelay={1000}
                       cb1={this.markHg2}
                       header='Ve tus Notificaciones'
-                      body='Tus retas recibirán notificaciones de desafio, recuerda checar las notificaciones!'>
+                      body='Tus partidas recibirán notificaciones de desafio, recuerda checar las notificaciones!'>
                           <TouchableWithoutFeedback
                               onPress={this.onNotiPressBttn}
                               testID='NotificationButton'>

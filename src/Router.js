@@ -1,3 +1,4 @@
+// diego           - 27-12-2019 - us183 - Replaced default TopTabNavigator with QaplaTopTabNavigator
 // diego           - 17-12-2019 - us171 - Remove navigationOptions from LoginWithEmailScreen
 // diego           - 17-12-2019 - us172 - ChooseUserNameScreen moved to RootStack
 // diego           - 12-12-2019 - us166 - Remove header from CheckOutPaymentScreen
@@ -47,112 +48,61 @@ import VerificationScreen from './screens/VerificationScreen/VerificationScreen'
 import SupportScreen from './screens/SupportScreen/SupportScreen';
 import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
 
-import MockScreen1 from './screens/MockScreen1/MockScreen1';
-
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
 import NotificationsHeader from './components/NotificationsHeader/NotificationsHeader';
 import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeForNotificationTab';
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 import TermsAndConditionsScreen from './screens/TermsAndConditionsScreen/TermsAndConditionsScreen';
+import QaplaTopTabNavigator from './components/QaplaTopTabNavigator/QaplaTopTabNavigator';
 
 // Svg Icons
 const ProfileIcon = Images.svg.profileIcon;
 const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
 const LogrosIcon = Images.svg.logrosIcon;
-const SupportIcon = Images.svg.supportIcon;
 
 const LogrosTabNavigator = createMaterialTopTabNavigator(
   {
     LogrosActivos: {
-      screen: LogrosActivosScreen,
-      navigationOptions: () => ({
-        title: 'Activos'
-      })
+      screen: LogrosActivosScreen
     },
     LogrosCompletados: {
-      screen: LogrosCompletadosScreen,
-      navigationOptions: () => ({
-        title: 'Completados'
-      })
+      screen: LogrosCompletadosScreen
     }
   },
   {
     initialRouteName: 'LogrosActivos',
-    tabBarOptions: {
-      style: { backgroundColor: '#0C1021' },
-      activeTintColor: '#36E5CE',
-      inactiveTintColor: 'gray',
-      indicatorStyle: {
-        borderBottomColor: '#36E5CE',
-        borderBottomWidth: 2,
-      }
-    },
+    tabBarComponent: (props) => <QaplaTopTabNavigator {...props} options={[{ title: 'Activos' }, { title: 'Completados' }]} />
   }
 );
 
 const NotificationTabNavigator = createMaterialTopTabNavigator(
   {
     NotificationActividad: {
-      screen: ActivityNotificationsScreen,
-      navigationOptions: ({ navigation }) => ({
-        title: 'Actividad'
-      })
+      screen: ActivityNotificationsScreen
     },
     NotificationRetas: {
-      screen: RetasNotificationsScreen,
-      navigationOptions: ({ navigation }) => ({
-        title: 'Retas',
-        tabBarIcon: ({ tintColor, focused }) => (
-          <BadgeForNotificationTab />
-        )
-      })
+      screen: RetasNotificationsScreen
     }
   },
   {
     initialRouteName: 'NotificationActividad',
-    tabBarOptions: {
-      showIcon: true,
-      style: { backgroundColor: '#0C1021' },
-      activeTintColor: '#36E5CE',
-      inactiveTintColor: 'gray',
-      indicatorStyle: {
-        borderBottomColor: '#36E5CE',
-        borderBottomWidth: 2,
-      },
-      tabStyle: {
-        flexDirection: 'row-reverse'
-      }
-    },
+    tabBarComponent: (props) => <QaplaTopTabNavigator {...props} options={[{ title: 'Actividad' }, { title: 'Partidas', icon: BadgeForNotificationTab }]} />
   }
 );
 
 const RetasTabNavigator = createMaterialTopTabNavigator(
   {
     Publicas: {
-      screen: PublicMatchesFeedScreen,
-      navigationOptions: ({ navigation }) => ({
-        title: 'PÚBLICAS',
-      })
+      screen: PublicMatchesFeedScreen
     },
     MisRetas: {
-      screen: MyMatchesScreen,
-      navigationOptions: ({ navigation }) => ({
-        title: 'MIS RETAS'
-      })
+      screen: MyMatchesScreen
     }
   },
   {
     initialRouteName: 'Publicas',
-    tabBarOptions: {
-      style: { backgroundColor: '#0C1021' },
-      activeTintColor: '#36E5CE',
-      inactiveTintColor: 'gray',
-      indicatorStyle: {
-        borderBottomColor: '#36E5CE',
-        borderBottomWidth: 2,
-      },
-    },
+    tabBarComponent: (props) => <QaplaTopTabNavigator {...props} options={[{ title: 'Públicas' }, { title: 'Mis Retas' }]} />
   }
 );
 

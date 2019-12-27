@@ -8,6 +8,7 @@ export default styles = StyleSheet.create({
     container: {
         borderRadius: 11.5,
         width: widthPercentageToPx(6),
+        marginRight: widthPercentageToPx(1.33),
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#FFF'

@@ -1,4 +1,4 @@
-// diego             - 23-12-2019 - us182 - Header reordered, letters on left, icons on right
+// diego             - 23-12-2019 - us182 - Replaced container by topNavBarView
 // diego             - 11-12-2019 - us164 - discordIcon flexDirection changed
 // diego             - 22-11-2019 - us148 - unreadNotificationsIcon added
 
@@ -6,44 +6,56 @@ import { StyleSheet, Platform } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx, hasSafeAreaView } from '../../utilities/iosAndroidDim';
 
 export const styles = StyleSheet.create({
-    container: {
-        height: hasSafeAreaView() ? 100 : 90,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems:'flex-start',
-        marginTop: ((Platform.OS == 'ios') && !hasSafeAreaView()) ? heightPercentageToPx(2.46) : heightPercentageToPx(0),
-        paddingTop: hasSafeAreaView() ? heightPercentageToPx(2.46) : heightPercentageToPx(0),
-        backgroundColor: '#0e1222'
+    sfvContainer: {
+        justifyContent: 'center',
+        backgroundColor:'#0e1222',
+        flex: 1
     },
-    textContainer: {
-        marginLeft: widthPercentageToPx(1.97),
-        marginTop: heightPercentageToPx(2.46)
+    topNavBarView: {
+        backgroundColor: "transparent",
+        height: 25,
+        marginLeft: 16,
+        marginRight: 16,
+        marginTop: 20,
+        marginBottom: 30,
+        flexDirection: "row",
+        alignItems: "center",
     },
-    textStyle: {
-        fontSize: 24,
-        textAlign: 'center',
-        color: '#fff'
+    qaplaImage: {
+        backgroundColor: "transparent",
+        resizeMode: 'contain',
+        width: 80,
+        height: 32,
     },
-    rightIconsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginRight: widthPercentageToPx(2.09)
-    },
-    notificationsIconContainer: {
-        marginLeft: widthPercentageToPx(5.33),
-        marginTop: heightPercentageToPx(2.96)
-    },
-    imageAndButtonDimensions: {
-        height: 28,
-        width: 28
+    notificationsImage: {
+        backgroundColor: "transparent",
+        resizeMode: "center",
+        width: 25,
+        height: 25,
+        marginRight: 9,
     },
     unreadNotificationsIcon: {
         position: 'absolute',
         right: widthPercentageToPx(.75),
         bottom: 0
     },
-    discordIcon: {
-        marginTop: heightPercentageToPx(2.96),
-        marginLeft: widthPercentageToPx(1.74)
-    }
+    discordImage: {
+        backgroundColor: "transparent",
+        resizeMode: "center",
+        width: 25,
+        height: 25,
+        marginLeft: widthPercentageToPx(2)
+    },
+    settingsIcon: {
+        marginLeft: widthPercentageToPx(1.8)
+    },
+    settingsButtonDimensions: {
+        height: 23,
+        width: 23
+    },
+    imageAndButtonDimensions: {
+        height: 28,
+        width: 28
+    },
+
 });

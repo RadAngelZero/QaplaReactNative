@@ -164,7 +164,7 @@ class PublicMatchesFeedScreen extends Component {
             this.toggleHg1Modal();
         }
 
-        this.props.navigation.navigate(isUserLogged() ? 'MatchWizard' : 'SignIn');
+        this.props.navigation.navigate(isUserLogged() ? 'ChooseMatchType' : 'SignIn');
     }
 
     /**
@@ -238,9 +238,17 @@ class PublicMatchesFeedScreen extends Component {
                 <View style={style.container}>
                     <MatchCardList {...this.state} />
                 </View>
+                <HighlightModal
+                    visible={this.state.showHg1Modal}
+                    onClose={this.toggleHg1Modal}
+                    showDelay={1000}
+                    cb1={this.markHg1}
+                    header='Crea una Partida'
+                    body='Empieza a competir con otros jugadores. Crea tu partida y gana!'>
                     <CreateRetasButton
                             highlighted={!this.props.navigation.getParam('firstMatchCreated')}
                             onPress={this.onCrearRetaButtonPress}/>
+                </HighlightModal>
             </>
         );
     }

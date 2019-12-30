@@ -1,3 +1,4 @@
+// diego           - 30-12-2019 - us189 - Removed margin top of container
 // diego           - 03-09-2019 - us96 - Update container marginTop to be the same in all the match wizard
 
 import {StyleSheet} from 'react-native'
@@ -5,9 +6,7 @@ import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAn
 
 export default StyleSheet.create({
   	container:{
-		flex: 1,
-        backgroundColor:'#131833',
-        marginTop: heightPercentageToPx(5)
+        backgroundColor:'#131833'
 	},
 	title: {
         fontSize: 32,

@@ -1,3 +1,4 @@
+// diego          - 30-12-2019 - us189 - Put title inside of scroll view
 // diego          - 21-08-2019 - us89 - Add logic to load the games that the user don't have
 // diego          - 10-07-2019 - us22 - Update in the way that load the game name
 
@@ -74,8 +75,8 @@ class VideoGamesList extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Elige tu juego</Text>
                 <ScrollView style={styles.scrollViewMargin}>
+                    <Text style={styles.title}>Elige tu juego</Text>
                     {Object.keys(this.state.gamesToLoad).map((platform) => (
                         <PlatformGamesList
                             key={platform}

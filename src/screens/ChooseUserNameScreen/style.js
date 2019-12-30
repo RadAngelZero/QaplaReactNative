@@ -1,3 +1,4 @@
+// diego           - 17-12-2019 - us172 - inputTextTaken style removed
 // josep.sanahuja - 05-08-2019 - us84 - + sfvContainer
 // josep.sanahuja - 08-07-2019 - us83 - + inputTextTaken
 
@@ -33,14 +34,6 @@ export default styles = StyleSheet.create({
         backgroundColor: '#FFF',
         paddingHorizontal: widthPercentageToPx(4.27),
         paddingVertical: heightPercentageToPx(1.48)
-    },
-    inputTextTaken: {
-        marginTop: heightPercentageToPx(1.72),
-        borderRadius: 6,
-        backgroundColor: '#FFF',
-        paddingHorizontal: widthPercentageToPx(4.27),
-        paddingVertical: heightPercentageToPx(1.48),
-        color: 'red'
     },
     buttonContainer: {
         borderRadius: 100,

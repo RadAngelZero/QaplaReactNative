@@ -1,5 +1,5 @@
+// josep.sanahuja - 12-12-2019 - us160 - Add 'User Has Canceled Match' event in tryToCancelMatch
 // diego          - 12-12-2019 - us169 - Add game when challenge behavior added
-// diego          - 11-12-2019 - us160 - Updated analitycs
 // diego          - 04-12-2019 - us161 - Added BuyQaploinsModal when user have not enough qaploins to challenge a match
 // diego          - 14-09-2019 - bug86 - Show correct text when the user has uploaded their results, but the adversary no
 // diego          - 05-09-2019 - us104 - Added logic to allow just one result per user on the displayed match
@@ -233,9 +233,30 @@ class PublicMatchCardScreen extends Component {
      */
     tryToCancelMatch = () => {
         const matchCard = this.props.navigation.getParam('matchCard');
-        cancelPublicMatch(matchCard.idMatch);
-        trackOnSegment('User Has Canceled Match');
+        let numMatchNoti = 0;
 
+        // If there are notifications on the match, we apply filter() to this.props.matchNotifications
+        // with its Object keys, to obtain an array with notifications that has match id equal to 
+        // id from the Match card being cancelled.
+        if (this.props.notificationMatch === undefined || this.props.notificationMatch === null){
+            const mNotiKeys = Object.keys(this.props.matchNotifications);
+            
+            const numNotiArr = mNotiKeys.filter( (keyValue) => {
+                return this.props.matchNotifications[keyValue] === matchCard.idMatch;
+            });
+
+            numMatchNoti = numNotiArr.length;
+        }
+
+        trackOnSegment('User Has Canceled Match', {
+            Game: matchCard.game.gameKey,
+            Platform: matchCard.platform,
+            Bet: matchCard.bet,
+            NumMatchNoti: numMatchNoti,
+            UserQaploins: this.props.userQaploins
+        });
+
+        cancelPublicMatch(matchCard.idMatch);
         this.props.navigation.navigate('Publicas');
     }
 
@@ -497,7 +518,8 @@ function mapStateToProps(state) {
         uid: state.userReducer.user.id,
         userName: state.userReducer.user.userName,
         userGamesList: state.userReducer.user.gameList,
-        userQaploins: state.userReducer.user.credits
+        userQaploins: state.userReducer.user.credits,
+        matchNotifications: state.userReducer.user.notificationMatch
     }
 }
 

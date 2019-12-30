@@ -1,4 +1,4 @@
-// diego           - 20-12-2019 - us179 - Added phone autoverification, only works for android
+// diego           - 20-12-2019 - us179 - Added phone autoverification, only works for Android
 // diego           - 18-12-2019 - us173 - Removed age case
 // josep.sanahuja  - 18-12-2019 - us178 - Add ResendVerCodeCountdown &
 //                                        ProgressStepsIndicator <= indexPositions.length
@@ -176,13 +176,16 @@ class VerificationScreen extends Component {
                     isUserOnSendCodeScreen = true;
 
                     // Mechanism to control in VerificationPhoneNumber component if code was sent
-                    this.setState({ nextIndex: this.state.nextIndex + 1, codeSent: true });
+                    this.setState({
+                        nextIndex: this.state.nextIndex + 1,
+                        codeSent: true
+                    });
 
                     /**
                      * Once we have the verification object (after we await for the SMS) we add it to the state
                      * so we can render new things on the screen, to let the user add their code and procceed
                      */
-                    await this.sendVerificationCode();
+                    this.sendVerificationCode();
                 } catch (error) {
                     console.error(error);
                 }
@@ -230,7 +233,10 @@ class VerificationScreen extends Component {
          */
         this.scrollViewRef.scrollTo({ x: this.state.indexPositions[this.state.nextIndex - 2], y: 0, animated: true });
 
-        this.setState({ nextIndex: this.state.nextIndex - 1, codeSent: false });
+        this.setState({
+            nextIndex: this.state.nextIndex - 1,
+            codeSent: false
+        });
     }
 
     /**
@@ -277,8 +283,9 @@ class VerificationScreen extends Component {
      */
     autoVerifyUserPhone = async (verificationId, verificationCode) => {
         await this.verifyUserPhone(verificationId, verificationCode);
+
         /**
-         * We update the next index by two, we need to update by two because we need to count the
+         * We update the next index by 2, we need to update by 2 because we need to count the
          * step of add the code, and one more to go to the final screen
          */
         this.setState({ nextIndex: this.state.nextIndex + 2 }, () => {
@@ -315,14 +322,16 @@ class VerificationScreen extends Component {
      * Sends again the verification code via Firebase
      */
     sendVerificationCode = async () => {
+        this.setState({
+            numAttemptsCodeSent: this.state.numAttemptsCodeSent + 1
+        });
 
         /**
          * Once we have the verification object (after we await for the SMS) we add it to the state
          * so we can render new things on the screen, to let the user add their code and procceed
          */
         this.setState({
-            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`, this.autoVerifyUserPhone),
-            numAttemptsCodeSent: this.state.numAttemptsCodeSent + 1
+            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`, this.autoVerifyUserPhone)
         });
     }
 

@@ -1,4 +1,5 @@
 // diego           - 20-12-2019 - us179 - Added phone autoverification, only works for Android
+// diego           - 17-12-2019 - us174 - Age case merged into personal data case
 // diego           - 18-12-2019 - us173 - Removed age case
 // josep.sanahuja  - 18-12-2019 - us178 - Add ResendVerCodeCountdown &
 //                                        ProgressStepsIndicator <= indexPositions.length

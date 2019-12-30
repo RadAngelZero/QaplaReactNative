@@ -55,6 +55,7 @@ import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeF
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 import TermsAndConditionsScreen from './screens/TermsAndConditionsScreen/TermsAndConditionsScreen';
 import QaplaTopTabNavigator from './components/QaplaTopTabNavigator/QaplaTopTabNavigator';
+import { widthPercentageToPx } from './utilities/iosAndroidDim';
 
 // Svg Icons
 const ProfileIcon = Images.svg.profileIcon;
@@ -64,45 +65,122 @@ const LogrosIcon = Images.svg.logrosIcon;
 const LogrosTabNavigator = createMaterialTopTabNavigator(
   {
     LogrosActivos: {
-      screen: LogrosActivosScreen
+      screen: LogrosActivosScreen,
+      navigationOptions: () => ({
+        title: 'Activos'
+      })
     },
     LogrosCompletados: {
-      screen: LogrosCompletadosScreen
+      screen: LogrosCompletadosScreen,
+      navigationOptions: () => ({
+        title: 'Completados'
+      })
     }
   },
   {
     initialRouteName: 'LogrosActivos',
-    tabBarComponent: (props) => <QaplaTopTabNavigator {...props} options={[{ title: 'Activos' }, { title: 'Completados' }]} />
+    tabBarOptions: {
+      upperCaseLabel: false,
+      style: {
+        backgroundColor: '#0C1021'
+      },
+      tabStyle: {
+        width: widthPercentageToPx(35)
+      },
+      labelStyle: {
+        fontSize: 14
+      },
+      activeTintColor: '#FFF',
+      inactiveTintColor: '#FFF',
+      indicatorStyle: {
+        borderBottomColor: '#36E5CE',
+        borderBottomWidth: 2,
+        width: widthPercentageToPx(35)
+      }
+    }
   }
 );
 
 const NotificationTabNavigator = createMaterialTopTabNavigator(
   {
     NotificationActividad: {
-      screen: ActivityNotificationsScreen
+      screen: ActivityNotificationsScreen,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Actividad'
+      })
     },
     NotificationRetas: {
-      screen: RetasNotificationsScreen
+      screen: RetasNotificationsScreen,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Retas',
+        tabBarIcon: ({ tintColor, focused }) => (
+          <BadgeForNotificationTab />
+        )
+      })
     }
   },
   {
     initialRouteName: 'NotificationActividad',
-    tabBarComponent: (props) => <QaplaTopTabNavigator {...props} options={[{ title: 'Actividad' }, { title: 'Partidas', icon: BadgeForNotificationTab }]} />
+    tabBarOptions: {
+      upperCaseLabel: false,
+      style: {
+        backgroundColor: '#0C1021'
+      },
+      tabStyle: {
+        width: widthPercentageToPx(35)
+      },
+      labelStyle: {
+        fontSize: 14
+      },
+      showIcon: true,
+      activeTintColor: '#FFF',
+      inactiveTintColor: '#FFF',
+      indicatorStyle: {
+        borderBottomColor: '#36E5CE',
+        borderBottomWidth: 2,
+        width: widthPercentageToPx(35)
+      }
+    },
   }
 );
 
 const RetasTabNavigator = createMaterialTopTabNavigator(
   {
     Publicas: {
-      screen: PublicMatchesFeedScreen
+      screen: PublicMatchesFeedScreen,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Públicas',
+      })
     },
     MisRetas: {
-      screen: MyMatchesScreen
+      screen: MyMatchesScreen,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Mis Retas',
+      })
     }
   },
   {
     initialRouteName: 'Publicas',
-    tabBarComponent: (props) => <QaplaTopTabNavigator {...props} options={[{ title: 'Públicas' }, { title: 'Mis Retas' }]} />
+    tabBarOptions: {
+      upperCaseLabel: false,
+      style: {
+        backgroundColor: '#0C1021'
+      },
+      tabStyle: {
+        width: widthPercentageToPx(35)
+      },
+      labelStyle: {
+        fontSize: 14
+      },
+      showIcon: true,
+      activeTintColor: '#FFF',
+      inactiveTintColor: '#FFF',
+      indicatorStyle: {
+        borderBottomColor: '#36E5CE',
+        borderBottomWidth: 2,
+        width: widthPercentageToPx(35)
+      }
+    },
   }
 );
 

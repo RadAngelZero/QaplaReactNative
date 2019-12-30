@@ -8,8 +8,7 @@ import { heightPercentageToPx, widthPercentageToPx, hasSafeAreaView } from '../.
 export const styles = StyleSheet.create({
     sfvContainer: {
         justifyContent: 'center',
-        backgroundColor:'#0e1222',
-        flex: 1
+        backgroundColor:'#0e1222'
     },
     topNavBarView: {
         backgroundColor: "transparent",

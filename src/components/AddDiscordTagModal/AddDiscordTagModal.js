@@ -61,6 +61,7 @@ class AddDiscordTagModal extends Component {
                             placeholder='Inserta tu DiscordTag'
                             placeholderTextColor='#B5B5B5'
                             style={[styles.qaplaTextInput, { borderBottomColor: this.state.selected ? '#3DF9DF' : '#B5B5B5' } ]}
+                            autoCapitalize='none'
                             onChangeText={(discordTag) => this.setState({ discordTag })} />
                         <View style={styles.buttonsContainer}>
                             <TouchableWithoutFeedback onPress={this.closeModal}>

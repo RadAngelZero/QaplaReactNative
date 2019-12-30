@@ -1,3 +1,4 @@
+// josep.sanahuja - 13-11-2019 - us182 - +qaplaHeaderIcon
 // diego	      - 11-12-2019 - us164 - Added NoVerifiedIcon
 // diego	      - 20-09-2019 - us133 - Added VerifyIcon
 // diego	      - 18-09-2019 - us109 - Added LogroIcon
@@ -131,6 +132,9 @@ const images = {
 		},
 		qaplaAppIcon: {
 			img: require('./icons/qapla-app-icon.png')
+		},
+		qaplaHeaderIcon: {
+			img: require('./icons/qapla.png')
 		},
 		fifaXboxImg: {
 			img: require('./images/FIFAXbox.png'),

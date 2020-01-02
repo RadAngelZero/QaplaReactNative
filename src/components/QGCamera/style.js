@@ -2,7 +2,10 @@
 
 import { StyleSheet } from 'react-native';
 import { hasSafeAreaView, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-
+import {
+    NAV_TOPBAR_ICON_RIGHT_MARGIN,
+    NAV_TOPBAR_ICON_TOP_MARGIN
+} from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({
     container: {
@@ -38,8 +41,8 @@ export default styles = StyleSheet.create({
     },
     closeIconContainer: {
         position: 'absolute',
-        right: widthPercentageToPx(9.33),
-        top: heightPercentageToPx(5.54),
+        right: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
+        top: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
         
     }
 });

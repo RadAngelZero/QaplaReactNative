@@ -12,7 +12,6 @@ import {
 } from './../../utilities/Constants';
 
 const BackIcon = Images.svg.backIcon;
-const CloseIcon = Images.svg.closeIcon;
 
 export class ResendVerCodeCountdown extends Component {
     constructor(props) {

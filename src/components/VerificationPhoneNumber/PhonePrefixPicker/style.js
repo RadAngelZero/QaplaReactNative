@@ -3,10 +3,13 @@
 
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx, getDimensions } from '../../../utilities/iosAndroidDim';
+import {
+    NAV_TOPBAR_ICON_RIGHT_MARGIN,
+    NAV_TOPBAR_ICON_TOP_MARGIN
+} from '../../../utilities/Constants';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
-		flex: 1,
 		justifyContent: 'center',
 		backgroundColor:'#131833'
     },
@@ -18,7 +21,6 @@ export default styles = StyleSheet.create({
     },
     modalMainContainer: {
         flexDirection: 'column',
-        justifyContent: 'center',
         alignItems: 'center',
         width: widthPercentageToPx(100),
         height: heightPercentageToPx(100),
@@ -41,12 +43,11 @@ export default styles = StyleSheet.create({
         shadowRadius: 3.84,
         marginRight: widthPercentageToPx(5.33),
         marginLeft: widthPercentageToPx(5.33),
-        marginTop: heightPercentageToPx(5)
     },
     closeIcon: {
-        marginRight: widthPercentageToPx(5.5),
+        marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
         marginBottom: heightPercentageToPx(2.46),
-        marginTop: heightPercentageToPx(-0.2),
+        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
         alignSelf: 'flex-end'
     },
     prefixCardItem: {
@@ -78,6 +79,7 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(80)
     },
     divider: {
-        marginTop: heightPercentageToPx(2.5)
+        marginTop: heightPercentageToPx(2.5),
+        marginBottom: heightPercentageToPx(4),
     },
 });

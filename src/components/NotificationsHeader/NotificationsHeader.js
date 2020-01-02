@@ -2,7 +2,7 @@
 // diego 			 - 01-08-2019 - us58 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 
 import styles from './style';
 import Images from './../../../assets/images';
@@ -20,14 +20,16 @@ class NotificationsHeader extends Component {
 
     render() {
         return (
-	        <View style={styles.container}>
-	            <Text style={styles.title}>Notificaciones</Text>
-                <TouchableWithoutFeedback onPress={this.closeNotifications}>
-                    <View style={styles.closeIcon}>
-                        <CloseIcon />
-                    </View>
-                </TouchableWithoutFeedback>
-	        </View>
+            <SafeAreaView style={styles.sfvContainer}>
+    	        <View style={styles.container}>
+    	            <Text style={styles.title}>Notificaciones</Text>
+                    <TouchableWithoutFeedback onPress={this.closeNotifications}>
+                        <View style={styles.closeIcon}>
+                            <CloseIcon />
+                        </View>
+                    </TouchableWithoutFeedback>
+    	        </View>
+            </SafeAreaView>
         );
     }
 }

@@ -2,6 +2,11 @@
 
 import { StyleSheet, Platform } from 'react-native';
 import { hasSafeAreaView, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import {
+    NAV_TOPBAR_ICON_LEFT_MARGIN,
+    NAV_TOPBAR_ICON_RIGHT_MARGIN,
+    NAV_TOPBAR_ICON_TOP_MARGIN
+} from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
@@ -11,11 +16,10 @@ export default styles = StyleSheet.create({
     optionsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: heightPercentageToPx(2.28)
     },
     backIconContainer: {
-        marginLeft: widthPercentageToPx(8),
-        marginTop: heightPercentageToPx(2.28),
+        marginLeft: widthPercentageToPx(NAV_TOPBAR_ICON_LEFT_MARGIN),
+        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
         alignSelf: 'flex-end'
     },
     buttonDimensions: {
@@ -26,8 +30,8 @@ export default styles = StyleSheet.create({
         height: 18
     },
     closeIconContainer: {
-        marginRight: widthPercentageToPx(8),
-        marginTop: heightPercentageToPx(2.28),
+        marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
+        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
         alignSelf: 'flex-end'
     }
 });

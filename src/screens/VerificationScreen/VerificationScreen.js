@@ -62,14 +62,6 @@ class VerificationScreen extends Component {
         codeSent: false
     };
 
-    provideFeedBackToUserOnCurrentScren(optionalMessage) {
-        if (optionalMessage) {
-            console.log(optionalMessage);
-        } else {
-            console.log('Revise bien la informacion ingresada');
-        }
-    }
-
     /**
      * Define a ref for the ScrollView UI element
      * @param {element} element ScrollView
@@ -264,16 +256,9 @@ class VerificationScreen extends Component {
                 usuario: this.props.userName,
             };
 
-            await createVerificationRequest(this.props.uid, verificationRequest);
+            createVerificationRequest(this.props.uid, verificationRequest);
         } catch (error) {
-
-            /**
-             * If the code is incorrect we mark the data as invalid and provide feedback to the user
-             * with a specific message
-             */
-            if (error.code === 'auth/invalid-verification-code') {
-                this.provideFeedBackToUserOnCurrentScren('Codigo de verificación incorrecto');
-            }
+            console.error(error);
         }
     }
 
@@ -398,11 +383,6 @@ class VerificationScreen extends Component {
                         </View>
                     </ScrollView>
                 </View>
-                {((this.state.nextIndex === this.state.indexPositions.length) && this.state.codeSent) &&
-                    <View style={styles.resendContainer}>
-                        <ResendVerCodeCountdown sendCode={this.sendVerificationCode} />
-                    </View>
-                }
                 {this.state.nextIndex < this.state.indexPositions.length + 1 ?
                     <TouchableWithoutFeedback
                         onPress={this.goToNextStep}
@@ -423,14 +403,19 @@ class VerificationScreen extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 }
+                {((this.state.nextIndex === this.state.indexPositions.length) && this.state.codeSent) &&
+                    <View style={styles.resendContainer}>
+                        <ResendVerCodeCountdown sendCode={this.sendVerificationCode} />
+                    </View>
+                }
                 {/**
                     * The selected (or current) index is the nextIndex - 1, we use nextIndex instead of
                    * currentIndex for the goToNextStep and goToPrevStep functions, can be changed to current
                    * in the future, actually don't have a major implication, is just a way to do the work
                 */}
-                {this.state.nextIndex <= this.state.indexPositions.length &&
+                {this.state.nextIndex <= this.state.indexPositions.length + 1 &&
                     <ProgressStepsIndicator
-                        steps={this.state.indexPositions.length - 1}
+                        steps={this.state.indexPositions.length}
                         selected={this.state.nextIndex - 1} />
                 }
             </SafeAreaView>

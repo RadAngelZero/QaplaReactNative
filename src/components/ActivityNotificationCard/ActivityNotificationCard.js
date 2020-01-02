@@ -20,10 +20,10 @@ export class ActivityNotificationCard extends Component {
         let notificationText = '';
         switch (this.props.type) {
             case NOTIFICATION_TYPE_WINNER:
-                notificationText = 'Has sido declarado ganador de la reta';
+                notificationText = 'Has sido declarado ganador de la partida';
                 break;
             case NOTIFICATION_TYPE_LOSER:
-                notificationText = `${this.props.userName} ha sido declarado ganador de la reta.`;
+                notificationText = `${this.props.userName} ha sido declarado ganador de la partida.`;
                 break;
             case NOTIFICATION_TYPE_RESULT:
                 notificationText = `¡${this.props.userName} ha subido su resultado, tienes 15 minutos para subir el tuyo!`;

@@ -161,7 +161,7 @@ export class TermsAndConditionsScreen extends Component {
                             1. Sistema de recompensas a través de Qoins.
                         </Text>
                         <Text style={styles.paragraph}>
-                            2. Supervisión y administración del sistema de competencia denominado “Retas”.
+                            2. Supervisión y administración del sistema de competencia denominado “Partidas”.
                         </Text>
                         <Text style={styles.paragraph}>
                             3. Organización y planeación de torneos para los usuarios.
@@ -180,13 +180,13 @@ export class TermsAndConditionsScreen extends Component {
                         </Text>
                     </View>
                     <Text style={styles.subtitle}>
-                        VI.- Sobre los Qoins, las retas y los torneos.
+                        VI.- Sobre los Qoins, las partidas y los torneos.
                     </Text>
                     <Text style={styles.paragraph}>
-                        <StrongText>VI.I.- Qoin:</StrongText> Es la moneda virtual que utilizamos dentro de la plataforma, el cual sirve para poder participar en retas o torneos dentro de la plataforma que <StrongText>Qapla</StrongText> pone a su servicio, así como otros servicios que se encuentren dentro la misma.
+                        <StrongText>VI.I.- Qoin:</StrongText> Es la moneda virtual que utilizamos dentro de la plataforma, el cual sirve para poder participar en partidas o torneos dentro de la plataforma que <StrongText>Qapla</StrongText> pone a su servicio, así como otros servicios que se encuentren dentro la misma.
                     </Text>
                     <Text style={styles.paragraph}>
-                        <StrongText>VI.II.- Reta:</StrongText> Es un desafío entre dos o más personas o equipos.
+                        <StrongText>VI.II.- Partida:</StrongText> Es un desafío entre dos o más personas o equipos.
                     </Text>
                     <Text style={styles.paragraph}>
                         <StrongText>VI.III. - Torneo:</StrongText> Serie de encuentros deportivos o de juegos en los que compiten entre sí varias personas o equipos que se eliminan unos a otros progresivamente.
@@ -207,7 +207,7 @@ export class TermsAndConditionsScreen extends Component {
                         <StrongText>VII.IV.- Qapla</StrongText> tendrá el derecho a determinar si los productos que ha solicitado que se acrediten a su cuenta están disponibles, después de recibir confirmación aceptable para nosotros por parte de PayPal de conformidad con los procedimientos de aprobación de tal proveedor de pagos para que tales transacciones hayan sido conciliado y aprobado. Solamente cuando sus depósitos hayan sido conciliados y aprobados a nuestra satisfacción por el proveedor de pago, su cuenta será acreditada con los fondos.
                     </Text>
                     <Text style={styles.paragraph}>
-                        <StrongText>VII.V.-</StrongText> Cualquier participación en retas o torneos que se encuentren disponibles en la plataforma de <StrongText>Qapla</StrongText>, será tratada por nosotros como una autorización para descontar a la cuenta del <StrongText>Usuario</StrongText> el saldo correspondiente siempre y cuando tenga el suficiente.
+                        <StrongText>VII.V.-</StrongText> Cualquier participación en partidas o torneos que se encuentren disponibles en la plataforma de <StrongText>Qapla</StrongText>, será tratada por nosotros como una autorización para descontar a la cuenta del <StrongText>Usuario</StrongText> el saldo correspondiente siempre y cuando tenga el suficiente.
                     </Text>
                     <Text style={styles.paragraph}>
                         <StrongText>VII.VI. -</StrongText> Así como cualquier otro proceso de verificación podemos solicitar a cualquier titular de la cuenta a presentar pruebas adicionales de su identidad para ayudar en la verificación de del <StrongText>Usuario</StrongText> antes de hacer algún retiro, por lo que <StrongText>Qapla se reserva el derecho de solicitar documentación o fotografías de identidad</StrongText> antes de cualquier proceso.
@@ -284,7 +284,7 @@ export class TermsAndConditionsScreen extends Component {
                     </Text>
                     <View style={styles.numericList}>
                         <Text style={styles.paragraph}>
-                            1. Por supervisión y administración del sistema denominado “retas” se cobrará el 10% (diez por ciento) del monto total de las inscripciones.
+                            1. Por supervisión y administración del sistema denominado “partidas” se cobrará el 10% (diez por ciento) del monto total de las inscripciones.
                         </Text>
                         <Text style={styles.paragraph}>
                             2. Por organización, supervisión y administración de sistema denominado “torneos” se cobrará el 15% (quince por ciento) del monto total de las inscripciones.
@@ -355,32 +355,32 @@ export class TermsAndConditionsScreen extends Component {
                         <StrongText>XVII.III. -</StrongText> El usuario deberá tener una cuenta en la plataforma de QAPLA y de los juegos que estén incorporados a la plataforma.
                     </Text>
                     <Text style={styles.paragraph}>
-                        El gamertag que el usuario proporcione a QAPLA como el utilizado en sus plataformas de origen (Xbox, Play Station, Nintendo o PC) deberá coincidir y ser el mismo con el que se reta al adversario, de caso contrario quedará descalificado de la partida y no podrá hacer efectivo ningún resultado a su favor.
+                        El gamertag que el usuario proporcione a QAPLA como el utilizado en sus plataformas de origen (Xbox, Play Station, Nintendo o PC) deberá coincidir y ser el mismo con el que se partida al adversario, de caso contrario quedará descalificado de la partida y no podrá hacer efectivo ningún resultado a su favor.
                     </Text>
                     <Text style={styles.paragraph}>
                         <StrongText>XVII.IV. -</StrongText> Dentro de la plataforma de QAPLA se celebrarán diversos torneos/eventos, en los cuales al momento de lanzar la convocatoria se establecerán las bases para participar y sus reglas, atendiendo que al ingresar a los torneos/eventos el usuario está completamente de acuerdo en la manera en que se llevará a cabo cada uno de ellos y no podrán objetar las decisiones que se tomen.
                     </Text>
                     <Text style={styles.paragraph}>
-                        <StrongText>XVII.V. -</StrongText> El usuario que desee crear una reta puede agregar un monto de inscripción, el usuario que desee unirse a la reta creada por otro usuario deberá cubrir el total de la inscripción de la reta. Una vez finalizada la reta, Qapla bonificará al usuario vencedor el total del acumulado de las inscripciones menos sus respectivas comisiones.{'\n'}El procedimiento para retar a otros usuarios será el siguiente:
+                        <StrongText>XVII.V. -</StrongText> El usuario que desee crear una partida puede agregar un monto de inscripción, el usuario que desee unirse a la partida creada por otro usuario deberá cubrir el total de la inscripción de la partida. Una vez finalizada la partida, Qapla bonificará al usuario vencedor el total del acumulado de las inscripciones menos sus respectivas comisiones.{'\n'}El procedimiento para retar a otros usuarios será el siguiente:
                     </Text>
                     <View style={styles.numericList}>
                         <Text style={styles.paragraph}>
-                            a) El usuario podrá retar a cualquiera que se encuentre registrado dentro de la plataforma QAPLA, para lo que enviará una solicitud de reta o desafío. O bien, crear una reta pública y esperar a que sea aceptada por un oponente o equipo (en caso de que la reta creada no sea aceptada por ningún oponente o equipo, los qoins serán bonificados en un lapso no mayor a 30 minutos).
+                            a) El usuario podrá retar a cualquiera que se encuentre registrado dentro de la plataforma QAPLA, para lo que enviará una solicitud de partida o desafío. O bien, crear una partida pública y esperar a que sea aceptada por un oponente o equipo (en caso de que la partida creada no sea aceptada por ningún oponente o equipo, los qoins serán bonificados en un lapso no mayor a 30 minutos).
                         </Text>
                         <Text style={styles.paragraph}>
                             b) El otro jugador aceptará o declinará dicha solicitud, la cual puede ser de manera individual o en equipo.
                         </Text>
                         <Text style={styles.paragraph}>
-                            c) De ser aceptada, ambos jugadores convendrán el juego en el que el desafío o reta se llevará a cabo (de los que se encuentran contemplados en la plataforma QAPLA).
+                            c) De ser aceptada, ambos jugadores convendrán el juego en el que el desafío o partida se llevará a cabo (de los que se encuentran contemplados en la plataforma QAPLA).
                         </Text>
                         <Text style={styles.paragraph}>
-                            d) Los usuarios serán libres en configurar las partidas en las que se desarrollará el desafío o retas, por lo que ambas partes al permanecer en el lobby del juego e ingresar a la partida, consentirán en ese momento su acuerdo y conformidad de la configuración y ya no podrán retirarse de ella.
+                            d) Los usuarios serán libres en configurar las partidas en las que se desarrollará el desafío o partidas, por lo que ambas partes al permanecer en el lobby del juego e ingresar a la partida, consentirán en ese momento su acuerdo y conformidad de la configuración y ya no podrán retirarse de ella.
                         </Text>
                         <Text style={styles.paragraph}>
                             e) El abandono de la partida por cualquiera de las partes una vez iniciado el juego, se entenderá a favor del contrario, por lo que los puntos y qoins pasarán a este último.
                         </Text>
                         <Text style={styles.paragraph}>
-                            f) Para acreditar y desafiar el resultado, el jugador o equipo vencedor/perdedor deberá subir su clip de evidencia a la aplicación “Clutch” con el hashtag #qaplagaming, acompañado con el ID de la reta, esto mientras la reta se mantenga activa.
+                            f) Para acreditar y desafiar el resultado, el jugador o equipo vencedor/perdedor deberá subir su clip de evidencia a la aplicación “Clutch” con el hashtag #qaplagaming, acompañado con el ID de la partida, esto mientras la partida se mantenga activa.
                         </Text>
                         <Text style={styles.paragraph}>
                             g) Una vez que se haya acreditado o desafiado el resultado, la parte contraria tendrá un término de 15 minutos para contravenir dicha solicitud, o de lo contrario se entenderá por conforme y se cerrará definitivamente la partida.
@@ -389,7 +389,7 @@ export class TermsAndConditionsScreen extends Component {
                             h) En caso de resultar la partida en controversia, se levantará un reporte y el equipo de QAPLA resolverá en un término no mayor a 72 horas. La resolución será irrevocable e inapelable.
                         </Text>
                         <Text style={styles.paragraph}>
-                            i) En el caso de que una reta creada no se haya jugado o se haya empatado, Qapla reintegrará el monto total de las inscripciones de cada jugador en un término no mayor a 30 minutos.
+                            i) En el caso de que una partida creada no se haya jugado o se haya empatado, Qapla reintegrará el monto total de las inscripciones de cada jugador en un término no mayor a 30 minutos.
                         </Text>
                     </View>
                     <Text style={styles.paragraph}>

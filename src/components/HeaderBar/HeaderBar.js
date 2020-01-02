@@ -196,13 +196,13 @@ class HeaderBar extends Component {
                       flex: 1,
                     }}/>
                    <View style={styles.imageContainer}>
-                      <HighlightModal 
+                      <HighlightModal
                         visible={this.state.showHg2Modal}
                         onClose={this.toggleHg2Modal}
                         showDelay={1000}
                         cb1={this.markHg2}
                         header='Ve tus Notificaciones'
-                        body='Tus retas recibirán notificaciones de desafio, recuerda checar las notificaciones!'>
+                        body='Tus partidas recibirán notificaciones de desafio, recuerda checar las notificaciones!'>
                             <TouchableWithoutFeedback style={styles.imageAndButtonDimensions}
                                 onPress={this.onNotiPressBttn}
                                 testID='NotificationButton'>
@@ -218,7 +218,6 @@ class HeaderBar extends Component {
                       </HighlightModal>
                   </View>
                   {this.props.currentScreenId !== 'Perfil' &&
-                        
                             <TouchableWithoutFeedback onPress={this.sendToDiscord}>
                                 <View style={styles.discordImage}>
                                     <DiscordIcon
@@ -227,7 +226,6 @@ class HeaderBar extends Component {
                                         fill='#FFF' />
                                 </View>
                             </TouchableWithoutFeedback>
-                        
                     }
                     {(this.props.currentScreenId === 'Perfil' && !this.props.isUserVerified) &&
                         <View style={styles.discordIcon}>

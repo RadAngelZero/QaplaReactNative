@@ -11,7 +11,7 @@ class CreateRetasButton extends Component {
         return (
             <TouchableWithoutFeedback onPress={this.props.onPress}>
                 <View style={[styles.buttonContainer, styles.container]}>
-                    <Text style={styles.textStyle}>Crear reta</Text>
+                    <Text style={styles.textStyle}>Jugar Ahora</Text>
                 </View>
             </TouchableWithoutFeedback>
         );

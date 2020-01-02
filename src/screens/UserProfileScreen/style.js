@@ -27,7 +27,8 @@ export default styles = StyleSheet.create({
         flexDirection: 'column',
         marginRight: widthPercentageToPx(8),
         marginLeft: widthPercentageToPx(23),
-        marginBottom: heightPercentageToPx(4.43)
+        marginBottom: heightPercentageToPx(4.43),
+        alignItems: 'center'
     },
     avatarImage: {
         height: 60,

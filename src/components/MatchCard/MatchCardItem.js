@@ -1,10 +1,11 @@
-// diego -        12-12-2019 - us169 - Validation on games added
-// diego -        12-08-2019 - bug4 - Icons of games and qaploins added to match card
-// diego -        06-08-2019 - us75 - Class now extends from PureComponent instead of Component and defaultProps added
-// diego -        29-07-2019 - us55 - Remove unnecessary log from on press event
+// josep.sanahuja - 30-12-2019 - us183 - Restructured layout based on supernova
+// diego -          12-12-2019 - us169 - Validation on games added
+// diego -          12-08-2019 - bug4 - Icons of games and qaploins added to match card
+// diego -          06-08-2019 - us75 - Class now extends from PureComponent instead of Component and defaultProps added
+// diego -          29-07-2019 - us55 - Remove unnecessary log from on press event
 
 import React, { PureComponent } from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -12,6 +13,7 @@ import { styles } from './style';
 import Images from '../../../assets/images';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
+const ClashIcon = Images.svg.clashIcon;
 
 class MatchCardItem extends PureComponent {
     getCurrentGameResources() {
@@ -44,30 +46,58 @@ class MatchCardItem extends PureComponent {
 
             return (
                 <TouchableWithoutFeedback onPress={() => navigate('MatchCard', {matchCard: this.props})}>
-                    <View style={styles.container}>
-                        <View style={styles.rowGame}>
-                            <View style={styles.gameContainer}>
-                                <game.Icon width={28} height={28} />
-                                <Text style={styles.leftTextStyle}>{game.name}</Text>
-                            </View>
-                            <View style={styles.matchDetailInfoContainer}>
-                                <View style={styles.betContainer}>
-                                    <QaploinIcon style={styles.qaploinIcon} />
-                                    <Text style={styles.rightTextStyle}>{this.props.bet}</Text>
+                    <View style={styles.matchMainContainer}>    
+                        <View
+                            style={styles.matchContainer}>
+                            <game.Icon
+                                style={styles.gameLogoImage}
+                                width={35}
+                                height={31} />
+                            <Text style={styles.gameText}>{game.name}</Text>
+                            <View
+                                pointerEvents="box-none"
+                                style={{
+                                    flex: 1,
+                                    alignSelf: "stretch",
+                                    marginRight: 14,
+                                    marginTop: 16,
+                                    alignItems: "flex-end"
+                                }}>
+                                <View
+                                    pointerEvents="box-none"
+                                    style={{
+                                        width: 94,
+                                        height: 39,
+                                        flexDirection: "row",
+                                        justifyContent: "flex-end",
+                                        alignItems: "flex-start"
+                                    }}>
+                                    <Text style={styles.betText}>{this.props.bet}</Text>
+                                    <QaploinIcon 
+                                        style={styles.qaploinGradientImage}
+                                        width={24}
+                                        height={24}
+                                        />
                                 </View>
-                                <View style={styles.hourContainer}>
-                                    <Text style={styles.rightTextStyle}>{`${formatedHour}:${formatedMinutes}`}</Text>
-                                </View>
+                                <Text style={styles.timeText}>{`${formatedHour}:${formatedMinutes}`}</Text>
+                                <View style={{flex: 1}}/>
                             </View>
                         </View>
-                        <View style={[styles.rowUserName, styles.marginBottom10]}>
-                            <View style={styles.adversaryDataContainer}>
-                                <View style={styles.avatarImage}></View>
-                                <Text style={styles.leftFooterTextStyle}>{this.props.userName}</Text>
+                        <View style={{flex: 1}}/>
+                        <View style={{flex: 1}}>
+                            <View style={styles.matchContainerRow}>
+                                {this.props.userProfilePhoto ?
+                                    <Image 
+                                        style={styles.avatarImage}
+                                        source={{ uri: this.props.userProfilePhoto }} />
+                                    :
+                                    <View style={styles.avatarImage} />
+                                }
+                                <Text style={styles.usernameText}>{this.props.userName}</Text>
+                                <View style={{flex: 1}}/>
+                                <Text style={styles.idRetaText}>ID {this.props.alphaNumericIdMatch}</Text>
                             </View>
-                            <View style={styles.idMatchContainer}>
-                                <Text style={styles.rightFooterTextStyle}>ID {this.props.alphaNumericIdMatch}</Text>
-                            </View>
+                            <View style={{flex: 1}}/>
                         </View>
                     </View>
                 </TouchableWithoutFeedback>
@@ -118,6 +148,23 @@ const gamesResources = {
 };
 
 function mapStateToProps(state) {
+    /**
+     * Check if user object (in redux) contains data (when a user is not logged
+     * or a user make signout their redux object is empty)
+     */
+    if (Object.keys(state.userReducer.user).length > 0) {
+        return {
+            userProfilePhoto: state.userReducer.user.photoUrl,
+            games: state.gamesReducer.games
+        }
+    }
+
+    /**
+     * If the user is not logged, then the user will be rejected from this
+     * screen, it doesn't matter this return, is just added because
+     * the screen is showed (some miliseconds) and we must return an object
+     * from this functions (redux requirements)
+     */
     return {
         games: state.gamesReducer.games
     }

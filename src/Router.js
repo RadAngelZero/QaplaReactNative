@@ -1,3 +1,4 @@
+// diego           - 20-12-2019 - us179 - Verification moved to RootStack
 // diego           - 17-12-2019 - us171 - Remove navigationOptions from LoginWithEmailScreen
 // diego           - 17-12-2019 - us172 - ChooseUserNameScreen moved to RootStack
 // diego           - 12-12-2019 - us166 - Remove header from CheckOutPaymentScreen
@@ -315,6 +316,12 @@ class Router extends React.Component {
             header: props => <TopNavOptions back {...props} />
           }
         },
+        Verification:{
+          screen: VerificationScreen,
+          navigationOptions: {
+            header: null
+          }
+        },
         ChooseUserNameScreen: {
           screen: ChooseUserNameScreen,
           navigationOptions: {
@@ -331,8 +338,7 @@ class Router extends React.Component {
       {
         AuthLoadingScreen: AuthLoadingScreen,
         App: RootStack,
-        Welcome: WelcomeOnboardingScreen,
-        Verification: VerificationScreen
+        Welcome: WelcomeOnboardingScreen
       },
       {
         initialRouteName: 'AuthLoadingScreen'

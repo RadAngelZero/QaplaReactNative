@@ -1,3 +1,4 @@
+// diego                - 20-12-2019 - us179 - Phone auto verification logic added on sendVerificationSMSToUser
 // diego                - 17-12-2019 - us172 - Navigation removed from signInWithEmailAndPassword function
 // diego                - 11-12-2019 - us165 - emptyLogros called on signOut
 // diego                - 02-09-2019 - us91 - signOut function created
@@ -5,7 +6,13 @@
 // diego                - 24-07-2019 - us31 - removed unnecessary code from
 //                                          getIdTokenFromUser function
 
-import { auth, FBProvider, GoogleProvider } from './../utilities/firebase';
+import {
+    auth,
+    FBProvider,
+    GoogleProvider,
+    phoneAuthErrorState,
+    phoneAuthAutoVerifiedState,
+} from './../utilities/firebase';
 import { createUserProfile } from './database';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import {GoogleSignin} from 'react-native-google-signin';
@@ -92,13 +99,31 @@ export async function signInWithEmailAndPassword(email, password) {
 /**
  * Send a SMS to the given number of the user to verify their phone number
  * @param {string} phoneNumber Phone number of the user
+ * @param {function} isAutoVerified Callback called only if the phone is autoverifiable, must make the link of the account here
  */
-export async function sendVerificationSMSToUser(phoneNumber) {
-
+export async function sendVerificationSMSToUser(phoneNumber, isAutoVerified) {
     /**
      * https://rnfirebase.io/docs/v5.x.x/auth/reference/auth#verifyPhoneNumber
      */
-    return await auth.verifyPhoneNumber(phoneNumber, false, true);
+    return await auth.verifyPhoneNumber(phoneNumber, false, true).on('state_changed', (phoneAuth) => {
+        switch (phoneAuth.state) {
+            /**
+             * This case only apply for both platforms (android and iOS)
+             */
+            case phoneAuthErrorState:
+                console.error(phoneAuth.error);
+                break;
+
+            /**
+             * This case only apply for android at the 19/12/2019
+             */
+            case phoneAuthAutoVerifiedState:
+                isAutoVerified(phoneAuth.verificationId, phoneAuth.code);
+                break;
+            default:
+                break;
+        }
+    });
 }
 
 /**

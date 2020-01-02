@@ -32,8 +32,7 @@ export default styles = StyleSheet.create({
     },
     resendContainer: {
         alignItems: 'center',
-        marginTop: heightPercentageToPx(5),
-        marginBottom: heightPercentageToPx(2)
+        marginTop: heightPercentageToPx(.25)
     },
     buttonResendScenario: {
         marginBottom: heightPercentageToPx(2),

@@ -80,6 +80,7 @@ const LogrosTabNavigator = createMaterialTopTabNavigator(
   {
     initialRouteName: 'LogrosActivos',
     tabBarOptions: {
+      upperCaseLabel: false,
       style: { backgroundColor: '#0C1021' },
       activeTintColor: '#36E5CE',
       inactiveTintColor: 'gray',
@@ -112,6 +113,7 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
   {
     initialRouteName: 'NotificationActividad',
     tabBarOptions: {
+      upperCaseLabel: false,
       showIcon: true,
       style: { backgroundColor: '#0C1021' },
       activeTintColor: '#36E5CE',
@@ -132,7 +134,7 @@ const RetasTabNavigator = createMaterialTopTabNavigator(
     Publicas: {
       screen: PublicMatchesFeedScreen,
       navigationOptions: ({ navigation }) => ({
-        title: 'PÚBLICAS',
+        title: 'Públicas',
       })
     },
     MisRetas: {
@@ -145,6 +147,7 @@ const RetasTabNavigator = createMaterialTopTabNavigator(
   {
     initialRouteName: 'Publicas',
     tabBarOptions: {
+      upperCaseLabel: false,
       style: { backgroundColor: '#0C1021' },
       activeTintColor: '#36E5CE',
       inactiveTintColor: 'gray',

@@ -1,4 +1,5 @@
 // diego          - 30-12-2019 - us189 - Removed unnecesary BackHandler (removed code do the same that the default behavior)
+//                                       SafeAreaView handled with react navigation SafeAreaView, to avoid bottom margin
 // josep.sanahuja - 12-12-2019 - us160 - 'Load Games (Create Match)' -> Add Games Screen First Match
 //                                       'Load Games (Add Game)'' -> 'Add Games Screen'
 // diego          - 12-12-2019 - us169 - Redirect prop added on AddGamerTagModal
@@ -18,7 +19,8 @@
 // josep.sanahuja - 15-07-2019 - us25 - + addGameProfile Modal logic
 
 import React from 'react';
-import { View, SafeAreaView } from 'react-native'
+import { View } from 'react-native'
+import { SafeAreaView } from 'react-navigation';
 
 import styles from './style'
 import VideoGamesList from '../../components/VideoGamesList/VideoGamesList';
@@ -115,7 +117,7 @@ class LoadGamesScreen extends React.Component {
 
     render() {
         return (
-            <SafeAreaView style={styles.sfvContainer}>
+            <SafeAreaView forceInset={{ bottom: 'never' }} style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <AddGamerTagModal
                         redirect

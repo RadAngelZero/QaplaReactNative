@@ -1,4 +1,4 @@
-// diego           - 27-12-2019 - us183 - Replaced default TopTabNavigator with QaplaTopTabNavigator
+// diego           - 27-12-2019 - us183 - Added styles on label and tabs of every TopTabNavigator
 // diego           - 17-12-2019 - us171 - Remove navigationOptions from LoginWithEmailScreen
 // diego           - 17-12-2019 - us172 - ChooseUserNameScreen moved to RootStack
 // diego           - 12-12-2019 - us166 - Remove header from CheckOutPaymentScreen
@@ -54,7 +54,6 @@ import NotificationsHeader from './components/NotificationsHeader/NotificationsH
 import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeForNotificationTab';
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 import TermsAndConditionsScreen from './screens/TermsAndConditionsScreen/TermsAndConditionsScreen';
-import QaplaTopTabNavigator from './components/QaplaTopTabNavigator/QaplaTopTabNavigator';
 import { widthPercentageToPx } from './utilities/iosAndroidDim';
 
 // Svg Icons

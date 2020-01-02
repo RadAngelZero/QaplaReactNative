@@ -14,7 +14,7 @@ export class MatchExpireRememberModal extends Component {
     };
 
     /**
-     * @description It checks if the modal will be shown in future occasions and store the configuration so 
+     * @description It checks if the modal will be shown in future occasions and store the configuration so
      * that it remains in the future. It redirects to 'Public Matches Feed' screen.
      */
     confirmModal = () => {
@@ -23,7 +23,7 @@ export class MatchExpireRememberModal extends Component {
          * If checkbox is selected then that means that this screen should
          * not show up again when creating a Match. This is why we set flag value
          * to false, indicating that the modal should not open again.
-         */ 
+         */
         if (this.state.dontShowModalAgain) {
             storeData('create-match-time-action-msg', JSON.stringify(false));
         }
@@ -51,7 +51,7 @@ export class MatchExpireRememberModal extends Component {
                         <View style={styles.containerMsgModal}>
                             <Text style={styles.headerText}>Recuerda</Text>
                             <Text style={styles.paragraph}>
-                                La Reta expirará después de 10 minutos si no recibe y se acepta un desafio de otro jugador.
+                                La partida expirará después de 10 minutos si no recibe y se acepta un desafio de otro jugador.
                             </Text>
                             <CheckBox
                                 style={styles.checkbox}

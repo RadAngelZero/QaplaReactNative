@@ -151,7 +151,7 @@ class MatchNotificationCard extends Component {
                                 }
                             </View>
                             <View style={styles.infoContainer}>
-                                <Text style={styles.infoText}>¡{this.state.userName} quiere desafiar tu reta de {this.state.gameName}!</Text>
+                                <Text style={styles.infoText}>¡{this.state.userName} quiere desafiar tu partida de {this.state.gameName}!</Text>
                                 <View style={styles.infoButtonsMenu}>
                                     <TouchableWithoutFeedback onPress={() => this.tryToAcceptChallengeRequest()}>
                                         <View style={[styles.infoAcceptButton, styles.infoButton]}>

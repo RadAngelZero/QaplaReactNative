@@ -103,7 +103,7 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
     NotificationRetas: {
       screen: RetasNotificationsScreen,
       navigationOptions: ({ navigation }) => ({
-        title: 'Retas',
+        title: 'Partidas',
         tabBarIcon: ({ tintColor, focused }) => (
           <BadgeForNotificationTab />
         )
@@ -140,7 +140,7 @@ const RetasTabNavigator = createMaterialTopTabNavigator(
     MisRetas: {
       screen: MyMatchesScreen,
       navigationOptions: ({ navigation }) => ({
-        title: 'Mis retas'
+        title: 'Mis Partidas'
       })
     }
   },
@@ -163,7 +163,6 @@ const TabMainNavigator = createBottomTabNavigator({
   Logros: {
     screen: LogrosTabNavigator,
     navigationOptions: ({ navigation }) => ({
-      title: "Logros",  //Tried to hide this for next tab Search.,
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
@@ -175,7 +174,6 @@ const TabMainNavigator = createBottomTabNavigator({
   Retas: {
     screen:   RetasTabNavigator,
     navigationOptions: ({ navigation }) => ({
-      title: "Home",  //Tried to hide this for next tab Search.,
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
@@ -187,8 +185,6 @@ const TabMainNavigator = createBottomTabNavigator({
   Perfil: {
     screen:   UserProfileScreen,
     navigationOptions: ({ navigation }) => ({
-      //If no title it shows the name as Search.
-      title: 'Perfil',
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'}/>
@@ -251,7 +247,7 @@ const MatchWizardStackNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'ChooseMatchType',
+    initialRouteName: 'LoadGames',
   }
 );
 

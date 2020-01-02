@@ -46,7 +46,7 @@ class ChooseMatchTypeScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    <Text style={styles.titleText}>Escoge un tipo de reta</Text>
+                    <Text style={styles.titleText}>Escoge un tipo de partida</Text>
                     <View style={styles.lightningImage}>
                         <Svg>
                             <LightningIcon />
@@ -55,19 +55,8 @@ class ChooseMatchTypeScreen extends Component {
                     <TouchableWithoutFeedback onPress={this.goToLoadGames}>
                         <View style={styles.publicMatchButton}>
                             <Text style={styles.publicMatchButtonText}>
-                                Reta Pública
+                                Partida Pública
                             </Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback>
-                        <View style={styles.directMatchButton}>
-                            <View style={styles.directMatchButtonSearchIcon}>
-                                <SearchIcon width={18} height={18} />
-                            </View>
-                            <Text style={styles.directMatchButtonText}>
-                                Retar Usuario
-                            </Text>
-                            <View style={styles.directMatchButtonSearchIcon}></View>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>

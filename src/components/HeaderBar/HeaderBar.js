@@ -228,7 +228,7 @@ class HeaderBar extends Component {
                             </TouchableWithoutFeedback>
                     }
                     {(this.props.currentScreenId === 'Perfil' && !this.props.isUserVerified) &&
-                        <View style={styles.discordIcon}>
+                        <View style={styles.discordImage}>
                             <TouchableWithoutFeedback onPress={this.goToVerificationStack}>
                                 <View style={styles.imageAndButtonDimensions}>
                                     <NoVerifiedIcon
@@ -237,7 +237,7 @@ class HeaderBar extends Component {
                                         fill='#FFF' />
                                 </View>
                             </TouchableWithoutFeedback>
-                         </View>
+                        </View>
                     }
                     {this.props.currentScreenId === 'Perfil' &&
                         <View style={styles.settingsIcon}>

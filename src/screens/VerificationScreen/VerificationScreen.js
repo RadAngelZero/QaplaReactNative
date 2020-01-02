@@ -254,11 +254,11 @@ class VerificationScreen extends Component {
                 foto: '',
                 status: 1,
                 usuario: this.props.userName,
+                age: this.state.personData.age
             };
 
             createVerificationRequest(this.props.uid, verificationRequest);
         } catch (error) {
-            console.error(error);
         }
     }
 

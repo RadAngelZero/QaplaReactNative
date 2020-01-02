@@ -5,17 +5,6 @@ import { View, Text, TextInput, BackHandler, SafeAreaView } from 'react-native';
 import styles from './style';
 
 class ChooseOpponentScreen extends Component {
-    componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
-    }
-    componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
-    }
-
-    backToMatchTypeScreen = () => {
-        this.props.navigation.navigate('ChooseMatchType');
-        return true;
-    }
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>

@@ -62,6 +62,7 @@ class AddBioModal extends Component {
                             multiline
                             numberOfLines={2}
                             style={[styles.qaplaTextInput, { borderBottomColor: this.state.selected ? '#3DF9DF' : '#B5B5B5' } ]}
+                            autoCapitalize='none'
                             onChangeText={(bio) => this.setState({ bio })} />
                         <View style={styles.buttonsContainer}>
                             <TouchableWithoutFeedback onPress={this.closeModal}>

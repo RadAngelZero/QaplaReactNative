@@ -1,3 +1,4 @@
+// diego           - 27-12-2019 - us183 - Added styles on label and tabs of every TopTabNavigator
 // diego           - 20-12-2019 - us179 - Verification moved to RootStack
 // diego           - 17-12-2019 - us171 - Remove navigationOptions from LoginWithEmailScreen
 // diego           - 17-12-2019 - us172 - ChooseUserNameScreen moved to RootStack
@@ -48,20 +49,18 @@ import VerificationScreen from './screens/VerificationScreen/VerificationScreen'
 import SupportScreen from './screens/SupportScreen/SupportScreen';
 import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
 
-import MockScreen1 from './screens/MockScreen1/MockScreen1';
-
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
 import NotificationsHeader from './components/NotificationsHeader/NotificationsHeader';
 import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeForNotificationTab';
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 import TermsAndConditionsScreen from './screens/TermsAndConditionsScreen/TermsAndConditionsScreen';
+import { widthPercentageToPx } from './utilities/iosAndroidDim';
 
 // Svg Icons
 const ProfileIcon = Images.svg.profileIcon;
 const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
 const LogrosIcon = Images.svg.logrosIcon;
-const SupportIcon = Images.svg.supportIcon;
 
 const LogrosTabNavigator = createMaterialTopTabNavigator(
   {
@@ -82,14 +81,23 @@ const LogrosTabNavigator = createMaterialTopTabNavigator(
     initialRouteName: 'LogrosActivos',
     tabBarOptions: {
       upperCaseLabel: false,
-      style: { backgroundColor: '#0C1021' },
-      activeTintColor: '#36E5CE',
-      inactiveTintColor: 'gray',
+      style: {
+        backgroundColor: '#0C1021'
+      },
+      tabStyle: {
+        width: widthPercentageToPx(35)
+      },
+      labelStyle: {
+        fontSize: 14
+      },
+      activeTintColor: '#FFF',
+      inactiveTintColor: '#FFF',
       indicatorStyle: {
         borderBottomColor: '#36E5CE',
         borderBottomWidth: 2,
+        width: widthPercentageToPx(35)
       }
-    },
+    }
   }
 );
 
@@ -115,16 +123,22 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
     initialRouteName: 'NotificationActividad',
     tabBarOptions: {
       upperCaseLabel: false,
+      style: {
+        backgroundColor: '#0C1021'
+      },
+      tabStyle: {
+        width: widthPercentageToPx(35)
+      },
+      labelStyle: {
+        fontSize: 14
+      },
       showIcon: true,
-      style: { backgroundColor: '#0C1021' },
-      activeTintColor: '#36E5CE',
-      inactiveTintColor: 'gray',
+      activeTintColor: '#FFF',
+      inactiveTintColor: '#FFF',
       indicatorStyle: {
         borderBottomColor: '#36E5CE',
         borderBottomWidth: 2,
-      },
-      tabStyle: {
-        flexDirection: 'row-reverse'
+        width: widthPercentageToPx(35)
       }
     },
   }
@@ -149,13 +163,23 @@ const RetasTabNavigator = createMaterialTopTabNavigator(
     initialRouteName: 'Publicas',
     tabBarOptions: {
       upperCaseLabel: false,
-      style: { backgroundColor: '#0C1021' },
-      activeTintColor: '#36E5CE',
-      inactiveTintColor: 'gray',
+      style: {
+        backgroundColor: '#0C1021'
+      },
+      tabStyle: {
+        width: widthPercentageToPx(35)
+      },
+      labelStyle: {
+        fontSize: 14
+      },
+      showIcon: true,
+      activeTintColor: '#FFF',
+      inactiveTintColor: '#FFF',
       indicatorStyle: {
         borderBottomColor: '#36E5CE',
         borderBottomWidth: 2,
-      },
+        width: widthPercentageToPx(35)
+      }
     },
   }
 );

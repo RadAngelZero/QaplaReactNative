@@ -32,8 +32,7 @@ export default styles = StyleSheet.create({
     },
     resendContainer: {
         alignItems: 'center',
-        marginTop: heightPercentageToPx(5),
-        marginBottom: heightPercentageToPx(2)
+        marginTop: heightPercentageToPx(.25)
     },
     buttonResendScenario: {
         marginBottom: heightPercentageToPx(2),
@@ -48,20 +47,9 @@ export default styles = StyleSheet.create({
         backgroundColor: '#FA2D79',
         alignSelf: 'center'
     },
-    resendText: {
-        height: heightPercentageToPx(1.7),
-        width: 'auto',
-        color: '#3df9df',
-        fontSize: 12,
-        fontWeight: '900',
-        letterSpacing: 0.15,
-        lineHeight: 14,
-        textAlign: 'center'
-    },
     buttonText: {
         color: '#FFF',
         alignSelf: 'center',
-        textTransform: 'uppercase',
         fontWeight: 'bold',
         marginTop: heightPercentageToPx(2),
         marginBottom: heightPercentageToPx(2),

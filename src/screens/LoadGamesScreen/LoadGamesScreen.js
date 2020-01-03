@@ -36,7 +36,6 @@ class LoadGamesScreen extends React.Component {
             <TopNavOptions
                 close
                 navigation={navigation}
-                back={navigation.getParam('onCloseGoTo', '') !== 'Perfil'}
                 onCloseGoTo={navigation.getParam('onCloseGoTo', '')} />)
     });
 
@@ -78,6 +77,7 @@ class LoadGamesScreen extends React.Component {
     }
 
     componentWillUnmount() {
+
         //Remove willFocus listener on navigation
         this.list.forEach((item) => item.remove());
     }

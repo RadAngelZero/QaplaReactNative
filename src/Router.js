@@ -1,3 +1,5 @@
+// diego           - 27-12-2019 - us183 - Added styles on label and tabs of every TopTabNavigator
+// diego           - 20-12-2019 - us179 - Verification moved to RootStack
 // diego           - 17-12-2019 - us171 - Remove navigationOptions from LoginWithEmailScreen
 // diego           - 17-12-2019 - us172 - ChooseUserNameScreen moved to RootStack
 // diego           - 12-12-2019 - us166 - Remove header from CheckOutPaymentScreen
@@ -47,20 +49,18 @@ import VerificationScreen from './screens/VerificationScreen/VerificationScreen'
 import SupportScreen from './screens/SupportScreen/SupportScreen';
 import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
 
-import MockScreen1 from './screens/MockScreen1/MockScreen1';
-
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
 import NotificationsHeader from './components/NotificationsHeader/NotificationsHeader';
 import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeForNotificationTab';
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 import TermsAndConditionsScreen from './screens/TermsAndConditionsScreen/TermsAndConditionsScreen';
+import { widthPercentageToPx } from './utilities/iosAndroidDim';
 
 // Svg Icons
 const ProfileIcon = Images.svg.profileIcon;
 const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
 const LogrosIcon = Images.svg.logrosIcon;
-const SupportIcon = Images.svg.supportIcon;
 
 const LogrosTabNavigator = createMaterialTopTabNavigator(
   {
@@ -80,14 +80,24 @@ const LogrosTabNavigator = createMaterialTopTabNavigator(
   {
     initialRouteName: 'LogrosActivos',
     tabBarOptions: {
-      style: { backgroundColor: '#0C1021' },
-      activeTintColor: '#36E5CE',
-      inactiveTintColor: 'gray',
+      upperCaseLabel: false,
+      style: {
+        backgroundColor: '#0C1021'
+      },
+      tabStyle: {
+        width: widthPercentageToPx(35)
+      },
+      labelStyle: {
+        fontSize: 14
+      },
+      activeTintColor: '#FFF',
+      inactiveTintColor: '#FFF',
       indicatorStyle: {
         borderBottomColor: '#36E5CE',
         borderBottomWidth: 2,
+        width: widthPercentageToPx(35)
       }
-    },
+    }
   }
 );
 
@@ -102,7 +112,7 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
     NotificationRetas: {
       screen: RetasNotificationsScreen,
       navigationOptions: ({ navigation }) => ({
-        title: 'Retas',
+        title: 'Partidas',
         tabBarIcon: ({ tintColor, focused }) => (
           <BadgeForNotificationTab />
         )
@@ -112,16 +122,23 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
   {
     initialRouteName: 'NotificationActividad',
     tabBarOptions: {
+      upperCaseLabel: false,
+      style: {
+        backgroundColor: '#0C1021'
+      },
+      tabStyle: {
+        width: widthPercentageToPx(35)
+      },
+      labelStyle: {
+        fontSize: 14
+      },
       showIcon: true,
-      style: { backgroundColor: '#0C1021' },
-      activeTintColor: '#36E5CE',
-      inactiveTintColor: 'gray',
+      activeTintColor: '#FFF',
+      inactiveTintColor: '#FFF',
       indicatorStyle: {
         borderBottomColor: '#36E5CE',
         borderBottomWidth: 2,
-      },
-      tabStyle: {
-        flexDirection: 'row-reverse'
+        width: widthPercentageToPx(35)
       }
     },
   }
@@ -132,26 +149,37 @@ const RetasTabNavigator = createMaterialTopTabNavigator(
     Publicas: {
       screen: PublicMatchesFeedScreen,
       navigationOptions: ({ navigation }) => ({
-        title: 'PÚBLICAS',
+        title: 'Públicas',
       })
     },
     MisRetas: {
       screen: MyMatchesScreen,
       navigationOptions: ({ navigation }) => ({
-        title: 'MIS RETAS'
+        title: 'Mis Partidas'
       })
     }
   },
   {
     initialRouteName: 'Publicas',
     tabBarOptions: {
-      style: { backgroundColor: '#0C1021' },
-      activeTintColor: '#36E5CE',
-      inactiveTintColor: 'gray',
+      upperCaseLabel: false,
+      style: {
+        backgroundColor: '#0C1021'
+      },
+      tabStyle: {
+        width: widthPercentageToPx(35)
+      },
+      labelStyle: {
+        fontSize: 14
+      },
+      showIcon: true,
+      activeTintColor: '#FFF',
+      inactiveTintColor: '#FFF',
       indicatorStyle: {
         borderBottomColor: '#36E5CE',
         borderBottomWidth: 2,
-      },
+        width: widthPercentageToPx(35)
+      }
     },
   }
 );
@@ -160,7 +188,6 @@ const TabMainNavigator = createBottomTabNavigator({
   Logros: {
     screen: LogrosTabNavigator,
     navigationOptions: ({ navigation }) => ({
-      title: "Logros",  //Tried to hide this for next tab Search.,
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
@@ -172,7 +199,6 @@ const TabMainNavigator = createBottomTabNavigator({
   Retas: {
     screen:   RetasTabNavigator,
     navigationOptions: ({ navigation }) => ({
-      title: "Home",  //Tried to hide this for next tab Search.,
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
@@ -184,8 +210,6 @@ const TabMainNavigator = createBottomTabNavigator({
   Perfil: {
     screen:   UserProfileScreen,
     navigationOptions: ({ navigation }) => ({
-      //If no title it shows the name as Search.
-      title: 'Perfil',
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'}/>
@@ -248,7 +272,7 @@ const MatchWizardStackNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'ChooseMatchType',
+    initialRouteName: 'LoadGames',
   }
 );
 
@@ -316,6 +340,12 @@ class Router extends React.Component {
             header: props => <TopNavOptions back {...props} />
           }
         },
+        Verification:{
+          screen: VerificationScreen,
+          navigationOptions: {
+            header: null
+          }
+        },
         ChooseUserNameScreen: {
           screen: ChooseUserNameScreen,
           navigationOptions: {
@@ -332,8 +362,7 @@ class Router extends React.Component {
       {
         AuthLoadingScreen: AuthLoadingScreen,
         App: RootStack,
-        Welcome: WelcomeOnboardingScreen,
-        Verification: VerificationScreen
+        Welcome: WelcomeOnboardingScreen
       },
       {
         initialRouteName: 'AuthLoadingScreen'

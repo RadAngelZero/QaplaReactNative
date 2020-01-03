@@ -1,23 +1,19 @@
+// diego          - 20-12-2019 - us179 - Reset countDownSecs when code is re-sended to the user
 // josep.sanahuja - 18-12-2019 - us178 - File creation
 
 import React, { Component } from 'react';
 import { View, TouchableWithoutFeedback, Text } from 'react-native';
 
 import styles from './style';
-import Images from './../../../assets/images';
 
 import {
     VERIFICATION_COUNTDOWN_MILISECONDS,
     ONE_SECOND_IN_MILISECONDS
 } from './../../utilities/Constants';
 
-const BackIcon = Images.svg.backIcon;
-const CloseIcon = Images.svg.closeIcon;
-
 export class ResendVerCodeCountdown extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             codeResent: false,
             countFinished: false,
@@ -35,7 +31,7 @@ export class ResendVerCodeCountdown extends Component {
             countFinished: false
         });
 
-        // Update countdown secs 
+        // Update countdown secs
         let interval = setInterval(() => {
             this.setState({
                 countDownSecs: this.state.countDownSecs - ONE_SECOND_IN_MILISECONDS
@@ -45,7 +41,8 @@ export class ResendVerCodeCountdown extends Component {
         // check countdown finished
         setTimeout(() => {
             this.setState({
-                countFinished: true
+                countFinished: true,
+                countDownSecs: VERIFICATION_COUNTDOWN_MILISECONDS
             });
 
             // delete interval
@@ -62,7 +59,7 @@ export class ResendVerCodeCountdown extends Component {
     render() {
         return (
             <View style={styles.container}>
-                {this.state.countFinished && 
+                {this.state.countFinished ?
                     <View>
                         <TouchableWithoutFeedback onPress={this.send} >
                             <Text style={styles.resendText}>Reenviar Código</Text>
@@ -71,12 +68,10 @@ export class ResendVerCodeCountdown extends Component {
                             <Text style={styles.textWarning}>El código fue reenviado...</Text>
                         }
                     </View>
-                }
-                {!this.state.countFinished && 
+                    :
                     <Text style={styles.textWarning}>Reenviar código en... {this.state.countDownSecs / ONE_SECOND_IN_MILISECONDS} segundos</Text>
                 }
             </View>
-            
         );
     }
 }

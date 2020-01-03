@@ -113,7 +113,7 @@ class PublicMatchCardScreen extends Component {
                          * If there's no more time to interact with the match
                          */
                         if (minutes <= 0 && seconds <= 0) {
-                            validTimeLeft = 'Reta expirada';
+                            validTimeLeft = 'Partida expirada';
 
                             /**
                              * We set the match as expired (this action disable the button)
@@ -411,7 +411,7 @@ class PublicMatchCardScreen extends Component {
                     ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
                     ||
                     (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0'))) ?
-                    <Text style={styles.alreadyHaveResult}>Ya has subido un resultado a esta reta</Text>
+                    <Text style={styles.alreadyHaveResult}>Ya has subido un resultado a esta partida</Text>
                     :
                     <>
                     {/*TODO: disabled=this.state.expired} */}

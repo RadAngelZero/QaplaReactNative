@@ -17,7 +17,7 @@
 // josep.sanahuja - 15-07-2019 - us25 - + addGameProfile Modal logic
 
 import React from 'react';
-import { View, BackHandler, SafeAreaView } from 'react-native'
+import { View, SafeAreaView } from 'react-native'
 
 import styles from './style'
 import VideoGamesList from '../../components/VideoGamesList/VideoGamesList';
@@ -33,7 +33,6 @@ class LoadGamesScreen extends React.Component {
             <TopNavOptions
                 close
                 navigation={navigation}
-                back={navigation.getParam('onCloseGoTo', '') !== 'Perfil'}
                 onCloseGoTo={navigation.getParam('onCloseGoTo', '')} />)
     });
 
@@ -66,7 +65,6 @@ class LoadGamesScreen extends React.Component {
             )
         ]
         this.props.navigation.setParams({ onCloseGoTo: this.props.navigation.getParam('onCloseGoTo', 'Home') });
-        BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
 
         // #bug2:
         // At the beginning of the components life, there should not be any game selected,
@@ -76,15 +74,9 @@ class LoadGamesScreen extends React.Component {
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
 
         //Remove willFocus listener on navigation
         this.list.forEach((item) => item.remove());
-    }
-
-    backToMatchTypeScreen = () => {
-        this.props.navigation.navigate('ChooseMatchType');
-        return true;
     }
 
     /**

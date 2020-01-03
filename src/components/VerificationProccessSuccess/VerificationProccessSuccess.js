@@ -17,7 +17,7 @@ class VerificationProccessSuccess extends Component {
                 <View style={styles.greetingContainer}>
                     <Text style={styles.title}>¡Gracias!</Text>
                     <Text style={styles.body}>
-                        Hemos recibido tu solicitud, este proceso puede tardar hasta 24 hrs. Apreciamos tu paciencia, estamos trabajando para ti :D  
+                        Hemos recibido tu solicitud, este proceso puede tardar hasta 24 hrs. Apreciamos tu paciencia, estamos trabajando para ti :D
                     </Text>
                 </View>
             </View>

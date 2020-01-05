@@ -1,3 +1,4 @@
+// josep.sanahuja  - 05-01-2020 - us187 - Standarized margins for CloseIcon and BackIcon
 // diego           - 03-09-2019 - us96 - File creation
 
 import { StyleSheet, Platform } from 'react-native';

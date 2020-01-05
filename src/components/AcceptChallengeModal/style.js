@@ -1,3 +1,4 @@
+// josep.sanahuja - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
 // diego          - 12-09-2019 - us99 - Added close icon styles
 // diego          - 06-09-2019 - us93 - Added checkbox style
 // diego          - 04-09-2019 - us106 - Added styles for react native modal

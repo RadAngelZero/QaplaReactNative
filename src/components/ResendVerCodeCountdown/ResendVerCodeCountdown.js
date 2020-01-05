@@ -1,3 +1,4 @@
+// josep.sanahuja - 05-01-2020 - us187 - Removed CloseIcon
 // josep.sanahuja - 18-12-2019 - us178 - File creation
 
 import React, { Component } from 'react';

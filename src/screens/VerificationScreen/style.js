@@ -1,3 +1,4 @@
+// josep.sanahuja  - 05-01-2020 - us187 - Standardized margins for CloseIcon and backIcon
 // josep.sanahuja  - 18-12-2019 - us177 - Add resendContainer && resendtext
 // diego           - 18-09-2019 - us119 - File creation
 

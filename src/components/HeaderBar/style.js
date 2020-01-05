@@ -1,9 +1,11 @@
+// josep.sanahuja    - 05-01-2020 - us187 - Added HEADER_SIZE import
 // diego             - 23-12-2019 - us182 - Replaced container by topNavBarView
 // diego             - 11-12-2019 - us164 - discordIcon flexDirection changed
 // diego             - 22-11-2019 - us148 - unreadNotificationsIcon added
 
 import { StyleSheet, Platform } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx, hasSafeAreaView } from '../../utilities/iosAndroidDim';
+import { HEADER_SIZE } from '../../utilities/Constants';
 
 export const styles = StyleSheet.create({
     sfvContainer: {
@@ -12,7 +14,7 @@ export const styles = StyleSheet.create({
     },
     topNavBarView: {
         backgroundColor: "transparent",
-        height: 25,
+        height: heightPercentageToPx(HEADER_SIZE),
         marginLeft: 16,
         marginRight: 16,
         marginTop: 20,

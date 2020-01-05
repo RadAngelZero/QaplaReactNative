@@ -1,3 +1,4 @@
+// josep.sanahuja  - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
 // josep.sanahuja  - 18-12-2019 - us176 - Added closeIcon and flex 0.8 to modalContainer
 // josep.sanahuja  - 17-10-2019 - us134 - File creation
 

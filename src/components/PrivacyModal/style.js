@@ -1,3 +1,4 @@
+// josep.sanahuja          - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
 // josep-sanahuja          - 21-12-2019 - us152 - File creation
 
 import { StyleSheet } from 'react-native';

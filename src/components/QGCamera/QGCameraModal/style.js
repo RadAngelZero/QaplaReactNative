@@ -1,3 +1,4 @@
+// josep.sanahuja - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
 // josep.sanahuja - 22-09-2019 - us122 - Added picture
 // josep.sanahuja - 22-09-2019 - us123 - File creation
 

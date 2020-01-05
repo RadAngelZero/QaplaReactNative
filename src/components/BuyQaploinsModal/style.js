@@ -1,3 +1,4 @@
+// josep.sanahuja    - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
 // diego             - 12-09-2019 - us99 - Updated closeIcon styles to make it consistent with new
 //                                         closeIcon implementation (changed text icon for SVG icon)
 // diego             - 20-08-2019 - us89 - +getDimensions & closeIcon

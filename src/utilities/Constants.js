@@ -1,5 +1,5 @@
 // josep.sanahuja - 02-01-2020 - us187 - Add NAV_TOPBAR_ICON_LEFT_MARGIN & NAV_TOPBAR_ICON_RIGHT_MARGIN & 
-//										 NAV_TOPBAR_ICON_TOP_MARGIN
+//										 NAV_TOPBAR_ICON_TOP_MARGIN & HEADER_SIZE
 // josep.sanahuja - 18-12-2019 - us178 - Add VERIFICATION_COUNTDOWN_MILISECONDS & ONE_SECOND_IN_MILISECONDS
 // diego          - 11-12-2019 - us160 - Updated segment key
 // diego          - 11-12-2019 - us165 - EMPTY_LOGROS created
@@ -93,3 +93,7 @@ export const VERIFICATION_COUNTDOWN_MILISECONDS = 120000;
 export const NAV_TOPBAR_ICON_LEFT_MARGIN = 8;
 export const NAV_TOPBAR_ICON_RIGHT_MARGIN = 8;
 export const NAV_TOPBAR_ICON_TOP_MARGIN = 2.28;
+
+// APP Header
+export const HEADER_SIZE = 2.9;
+

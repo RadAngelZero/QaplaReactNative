@@ -1,3 +1,5 @@
+// josep.sanahuja - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
+
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import {

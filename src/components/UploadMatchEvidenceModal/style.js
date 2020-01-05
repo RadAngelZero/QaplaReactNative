@@ -1,3 +1,4 @@
+// josep.sanahuja - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
 // diego          - 19-08-2019 - us89 - Responsive behavior added to width and removed height property on container
 // josep.sanahuja - 12-08-2019 - us79 - File creation
 

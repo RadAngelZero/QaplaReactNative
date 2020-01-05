@@ -1,3 +1,4 @@
+// josep.sanahuja    - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
 // diego             - 12-09-2019 - us99 - Updated closeIcon styles to make it consistent with new
 //                                         closeIcon implementation (changed text icon for SVG icon)
 // josep.sanahuja    - 05-08-2019 - us84 - Changed container to identify notch area
@@ -8,7 +9,7 @@ import { hasSafeAreaView } from './../../utilities/iosAndroidDim'
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import {
     NAV_TOPBAR_ICON_RIGHT_MARGIN,
-    NAV_TOPBAR_ICON_TOP_MARGIN
+    HEADER_SIZE
 } from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({
@@ -20,7 +21,7 @@ export default styles = StyleSheet.create({
         backgroundColor: '#0E1222',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        height: 25,
+        height: heightPercentageToPx(HEADER_SIZE),
         alignItems:'flex-start',
         marginTop: heightPercentageToPx(2.46),
         marginBottom: heightPercentageToPx(3.69),

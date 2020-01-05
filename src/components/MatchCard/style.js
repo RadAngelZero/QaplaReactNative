@@ -20,6 +20,23 @@ export const styles = StyleSheet.create({
         shadowRadius: 6.27,
         elevation: 10
     },
+    mainBetContainer: {
+        flex: 1,
+        alignSelf: "stretch",
+        marginRight: widthPercentageToPx(3.73),
+        marginTop: heightPercentageToPx(1.97),
+        alignItems: "flex-end"
+    },
+    betContainer: {
+        width: 94,
+        height: 39,
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        alignItems: "flex-start"
+    },
+    padding: {
+        flex: 1
+    },
     rowGame: {
         flexDirection: 'row',
         justifyContent: 'space-between',

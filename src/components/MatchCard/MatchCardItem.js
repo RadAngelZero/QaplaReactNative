@@ -54,24 +54,8 @@ class MatchCardItem extends PureComponent {
                                 width={35}
                                 height={31} />
                             <Text style={styles.gameText}>{game.name}</Text>
-                            <View
-                                pointerEvents="box-none"
-                                style={{
-                                    flex: 1,
-                                    alignSelf: "stretch",
-                                    marginRight: 14,
-                                    marginTop: 16,
-                                    alignItems: "flex-end"
-                                }}>
-                                <View
-                                    pointerEvents="box-none"
-                                    style={{
-                                        width: 94,
-                                        height: 39,
-                                        flexDirection: "row",
-                                        justifyContent: "flex-end",
-                                        alignItems: "flex-start"
-                                    }}>
+                            <View style={styles.mainBetContainer}>
+                                <View style={styles.betContainer}>
                                     <Text style={styles.betText}>{this.props.bet}</Text>
                                     <QaploinIcon 
                                         style={styles.qaploinGradientImage}
@@ -80,11 +64,11 @@ class MatchCardItem extends PureComponent {
                                         />
                                 </View>
                                 <Text style={styles.timeText}>{`${formatedHour}:${formatedMinutes}`}</Text>
-                                <View style={{flex: 1}}/>
+                                <View style={styles.padding}/>
                             </View>
                         </View>
-                        <View style={{flex: 1}}/>
-                        <View style={{flex: 1}}>
+                        <View style={styles.padding}/>
+                        <View style={styles.padding}>
                             <View style={styles.matchContainerRow}>
                                 {this.props.userProfilePhoto ?
                                     <Image 
@@ -94,10 +78,10 @@ class MatchCardItem extends PureComponent {
                                     <View style={styles.avatarImage} />
                                 }
                                 <Text style={styles.usernameText}>{this.props.userName}</Text>
-                                <View style={{flex: 1}}/>
+                                <View style={styles.padding}/>
                                 <Text style={styles.idRetaText}>ID {this.props.alphaNumericIdMatch}</Text>
                             </View>
-                            <View style={{flex: 1}}/>
+                            <View style={styles.padding}/>
                         </View>
                     </View>
                 </TouchableWithoutFeedback>

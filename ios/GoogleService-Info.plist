@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>614138734637-ru8iav3e6bt8bnnd45g1i1ifk2e1itc2.apps.googleusercontent.com</string>
+	<string>779347879760-uljnbjffsseg2b7lgb23dvcqm6r6m40u.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.614138734637-ru8iav3e6bt8bnnd45g1i1ifk2e1itc2</string>
+	<string>com.googleusercontent.apps.779347879760-uljnbjffsseg2b7lgb23dvcqm6r6m40u</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>614138734637-fdr2shoks0p7qmul6alld00881lkt4qs.apps.googleusercontent.com</string>
+	<string>779347879760-c71rv9hbclep82s0uaflcdae00i2suic.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDN7nMCID5RGkqB6MqQE2zr6PkWeW-zyNg</string>
+	<string>AIzaSyCf0Mtn_89M1FdkPgQ6TvLH7PRUCPgQgJU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>614138734637</string>
+	<string>779347879760</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>org.reactjs.native.example.QaplaReactNative</string>
+	<string>org.Qapla.QaplaApp</string>
 	<key>PROJECT_ID</key>
-	<string>reactnativeprueba-8f6f8</string>
+	<string>qapplaapp</string>
 	<key>STORAGE_BUCKET</key>
-	<string>reactnativeprueba-8f6f8.appspot.com</string>
+	<string>qapplaapp.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:614138734637:ios:ffc5b076c0887242</string>
+	<string>1:779347879760:ios:aae40c52a25fd8fa20ee55</string>
 	<key>DATABASE_URL</key>
-	<string>https://reactnativeprueba-8f6f8.firebaseio.com</string>
+	<string>https://qapplaapp.firebaseio.com</string>
 </dict>
 </plist>

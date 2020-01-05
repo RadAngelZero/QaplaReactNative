@@ -1,9 +1,14 @@
+// josep.sanahuja - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
 // diego          - 12-09-2019 - us99 - Added close icon styles
 // diego          - 13-08-2019 - us77 - Upload result and other result buttons styles updated
 // josep.sanahuja - 05-08-2019 - us78 - File creation
 
 import { StyleSheet, Platform } from 'react-native';
 import { heightPercentageToPx, getDimensions, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import {
+    NAV_TOPBAR_ICON_RIGHT_MARGIN,
+    NAV_TOPBAR_ICON_TOP_MARGIN
+} from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
@@ -16,8 +21,8 @@ export default styles = StyleSheet.create({
         flex: 1
     },
     closeIcon: {
-        marginTop: heightPercentageToPx(4.43),
-        marginRight: widthPercentageToPx(8),
+        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
+        marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
         marginBottom: heightPercentageToPx(2.46),
         alignSelf: 'flex-end'
     },

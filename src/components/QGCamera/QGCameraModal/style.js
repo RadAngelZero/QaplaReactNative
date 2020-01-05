@@ -1,8 +1,13 @@
+// josep.sanahuja - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
 // josep.sanahuja - 22-09-2019 - us122 - Added picture
 // josep.sanahuja - 22-09-2019 - us123 - File creation
 
 import { StyleSheet } from 'react-native';
 import { hasSafeAreaView, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import {
+    NAV_TOPBAR_ICON_RIGHT_MARGIN,
+    NAV_TOPBAR_ICON_TOP_MARGIN
+} from '../../../utilities/Constants';
 
 export default styles = StyleSheet.create({
 	mainContainer: {
@@ -64,9 +69,9 @@ export default styles = StyleSheet.create({
         backgroundColor: '#6D7DDE'
     },
     closeIcon: {
-        marginRight: widthPercentageToPx(5.33),
+        marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
         marginBottom: heightPercentageToPx(2.46),
-        marginTop: heightPercentageToPx(8),
+        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
         alignSelf: 'flex-end'
     },
     picture: {

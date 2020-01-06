@@ -1,3 +1,4 @@
+// diego          - 03-01-2020 - us191 - Adjust of UI based on supernova mockup
 // josep.sanahuja - 12-12-2019 - us160 - 'Set Bet' -> 'Select Qaploins Screen' and custom header
 // diego          - 04-12-2019 - us161 - Added body property to BuyQaploinsModal
 // josep.sanahuja - 14-09-2019 - bug5 - Redirect backButton on Android from MatchExpireRememberModal
@@ -214,16 +215,14 @@ class SetBetScreen extends Component {
                     <MatchExpireRememberModal
                         visible={this.state.timeActionMsgOpen}
                         onClose={this.closeMatchExpireRememberModal} />
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
-                    </View>
+                    <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
                     <View style={styles.prizeImage}>
-                        <QaploinsPrizeIcon />
+                        <QaploinsPrizeIcon width={110} height={107} />
                     </View>
                     <Text style={styles.winBet}>{this.defineWinBet()}</Text>
                     <View style={styles.qaploinIconContainer}>
                         <QaploinIcon height={24} width={24} />
-                        <Text style={styles.qaploinIconText}>Qaploins</Text>
+                        <Text style={styles.qaploinIconText}>Qoins</Text>
                     </View>
                     <View style={styles.betContainer}>
                         <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>

@@ -172,7 +172,6 @@ const RetasTabNavigator = createMaterialTopTabNavigator(
       labelStyle: {
         fontSize: 14
       },
-      showIcon: true,
       activeTintColor: '#FFF',
       inactiveTintColor: '#FFF',
       indicatorStyle: {

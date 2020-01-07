@@ -28,8 +28,8 @@ export const styles = StyleSheet.create({
         alignItems: "flex-end"
     },
     betContainer: {
-        width: 94,
-        height: 39,
+        width: widthPercentageToPx(25),
+        height: heightPercentageToPx(4.8),
         flexDirection: "row",
         justifyContent: "flex-end",
         alignItems: "flex-start"
@@ -117,7 +117,7 @@ export const styles = StyleSheet.create({
         shadowColor: "rgba(0, 0, 0, 0.14)",
         shadowRadius: 5,
         shadowOpacity: 1,
-        height: 130,
+        height: heightPercentageToPx(16),
         marginLeft: widthPercentageToPx(3.4),
         marginRight: widthPercentageToPx(3.4),
         marginTop: heightPercentageToPx(3.9),
@@ -181,7 +181,7 @@ export const styles = StyleSheet.create({
     matchContainerRow: {
         backgroundColor: "transparent",
         alignSelf: "stretch",
-        height: 22,
+        height: heightPercentageToPx(2.7),
         flexDirection: "row",
         alignItems: "center",
         paddingLeft: widthPercentageToPx(3.73),

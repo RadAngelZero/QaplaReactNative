@@ -24,7 +24,7 @@ export class LogroVerification extends Component {
             <View style={styles.container}>
                 <View style={styles.contentContainer}>
                     <View style={styles.titleContainer}>
-                        <Text style={styles.title}>¡Verifica tu identidad! y desbloquea los logros.</Text>
+                        <Text style={styles.title}>¡Verifica tu identidad! y desbloquea los eventos.</Text>
                         <VerifyIcon />
                     </View>
                     <Text style={styles.description}>

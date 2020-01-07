@@ -638,10 +638,9 @@ export async function createLogroIncompletoChild(logroId, userId) {
  * Write a request for verification on the database
  * @param {string} uid user identifier on database
  * @param {object} verificationInfo Object with the necessary information to write the request
- *
  */
-export async function createVerificationRequest(uid, verificationInfo) {
-    await verificationOnProccessRef.child(uid).set(verificationInfo);
+export function createVerificationRequest(uid, verificationInfo) {
+    verificationOnProccessRef.child(uid).set(verificationInfo);
 }
 
 // -----------------------------------------------

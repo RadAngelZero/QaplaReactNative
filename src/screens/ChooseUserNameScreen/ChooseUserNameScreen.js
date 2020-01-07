@@ -34,6 +34,7 @@ class ChooseUserNameScreen extends Component {
                         <TextInput
                             style = {styles.inputText}
                             placeholder = 'Introduce tu Usuario'
+                            autoCapitalize='none'
                             onChangeText = {(text) => this.setState({ userName: text, userNameTaken: false })}
                             value = {this.state.userName}
                             onSubmitEditing={this.validateAndSaveUserName} />

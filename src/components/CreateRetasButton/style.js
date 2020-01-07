@@ -17,7 +17,6 @@ export default styles = StyleSheet.create({
     textStyle: {
         color: '#FFF',
         alignSelf: 'center',
-        textTransform: 'uppercase',
         fontWeight: 'bold',
         marginTop: heightPercentageToPx(2.46),
         marginBottom: heightPercentageToPx(2.46),

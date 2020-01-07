@@ -1,8 +1,13 @@
+// josep.sanahuja - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
 // diego          - 19-08-2019 - us89 - Responsive behavior added to width and removed height property on container
 // josep.sanahuja - 12-08-2019 - us79 - File creation
 
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import {
+    NAV_TOPBAR_ICON_RIGHT_MARGIN,
+    NAV_TOPBAR_ICON_TOP_MARGIN
+} from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({
 	mainContainer: {
@@ -33,9 +38,9 @@ export default styles = StyleSheet.create({
         marginLeft: widthPercentageToPx(5.33)
     },
     closeIcon: {
-        marginRight: widthPercentageToPx(5.33),
+        marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
         marginBottom: heightPercentageToPx(2.46),
-        marginTop: heightPercentageToPx(8),
+        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
         alignSelf: 'flex-end'
     },
     headerText: {

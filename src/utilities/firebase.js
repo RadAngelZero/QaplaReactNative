@@ -1,3 +1,4 @@
+// diego          - 20-12-2019 - us179 - Added states for phoneAuth (phoneAuthErrorState, phoneAuthAutoVerifiedState)
 // josep.sanahuja - 26-09-2019 - us118 - Added firebase.storage
 // diego          - 16-07-2019 - us30  - TimeStamp const created
 
@@ -32,6 +33,10 @@ export const notifications = firebase.notifications();
 export const FBProvider = firebase.auth.FacebookAuthProvider;
 export const GoogleProvider = firebase.auth.GoogleAuthProvider;
 export const PhoneProvider = firebase.auth.PhoneAuthProvider;
+
+// Phone authentication states
+export const phoneAuthErrorState = firebase.auth.PhoneAuthState.ERROR;
+export const phoneAuthAutoVerifiedState = firebase.auth.PhoneAuthState.AUTO_VERIFIED; // <- Only android at the 19/12/2019
 
 // TimeStamp
 export const TimeStamp = firebase.database.ServerValue.TIMESTAMP;

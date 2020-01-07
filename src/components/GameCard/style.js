@@ -1,4 +1,6 @@
+// diego          - 30-12-2019 - us189 - Updated width of the game cards
 // diego          - 17-07-2019 - NA   - update images styles and remove unnecesary code
+
 import {StyleSheet} from 'react-native'
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
@@ -7,7 +9,7 @@ export default StyleSheet.create({
         marginTop: heightPercentageToPx(1.48),
         marginHorizontal: widthPercentageToPx(2.67),
         borderRadius: 10,
-        width: widthPercentageToPx(95),
+        width: widthPercentageToPx(75),
         alignSelf: 'center'
 	},
 	titleContainer: {

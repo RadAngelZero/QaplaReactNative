@@ -3,11 +3,9 @@
 
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
-import { Svg } from 'react-native-svg';
 import styles from './style';
 import Images from '../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
-import { getPercentWidth, getPercentHeight } from '../../utilities/iosAndroidDim';
 
 const LightningIcon = Images.svg.lightningIcon;
 const SearchIcon = Images.svg.searchIcon;
@@ -46,16 +44,16 @@ class ChooseMatchTypeScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    <Text style={styles.titleText}>Escoge un tipo de reta</Text>
+                    <Text style={styles.titleText}>Escoge un tipo de partida</Text>
                     <View style={styles.lightningImage}>
-                        <Svg>
-                            <LightningIcon />
-                        </Svg>
+                        <LightningIcon
+                            width={121}
+                            height={150} />
                     </View>
                     <TouchableWithoutFeedback onPress={this.goToLoadGames}>
                         <View style={styles.publicMatchButton}>
                             <Text style={styles.publicMatchButtonText}>
-                                RETA PÚBLICA
+                                Partida Pública
                             </Text>
                         </View>
                     </TouchableWithoutFeedback>
@@ -65,7 +63,7 @@ class ChooseMatchTypeScreen extends Component {
                                 <SearchIcon width={18} height={18} />
                             </View>
                             <Text style={styles.directMatchButtonText}>
-                                RETAR USUARIO
+                                Buscar Usuario
                             </Text>
                             <View style={styles.directMatchButtonSearchIcon}></View>
                         </View>

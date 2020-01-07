@@ -1,8 +1,14 @@
+// josep.sanahuja  - 05-01-2020 - us187 - Standardized margins for CloseIcon and backIcon
 // josep.sanahuja  - 18-12-2019 - us177 - Add resendContainer && resendtext
 // diego           - 18-09-2019 - us119 - File creation
 
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import {
+    NAV_TOPBAR_ICON_LEFT_MARGIN,
+    NAV_TOPBAR_ICON_RIGHT_MARGIN,
+    NAV_TOPBAR_ICON_TOP_MARGIN
+} from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
@@ -12,19 +18,18 @@ export default styles = StyleSheet.create({
     backAndCloseOptions: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: heightPercentageToPx(2.22)
     },
     backIconContainer: {
-        marginLeft: widthPercentageToPx(8),
-        marginTop: heightPercentageToPx(2.22),
+        marginLeft: widthPercentageToPx(NAV_TOPBAR_ICON_LEFT_MARGIN),
+        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
         alignSelf: 'flex-end'
     },
     buttonDimensions: {
         height: heightPercentageToPx(5)
     },
     closeIconContainer: {
-        marginRight: widthPercentageToPx(8),
-        marginTop: heightPercentageToPx(2.22),
+        marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
+        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
         alignSelf: 'flex-end'
     },
     scrollViewContainer: {
@@ -32,8 +37,7 @@ export default styles = StyleSheet.create({
     },
     resendContainer: {
         alignItems: 'center',
-        marginTop: heightPercentageToPx(5),
-        marginBottom: heightPercentageToPx(2)
+        marginTop: heightPercentageToPx(.25)
     },
     buttonResendScenario: {
         marginBottom: heightPercentageToPx(2),
@@ -48,20 +52,9 @@ export default styles = StyleSheet.create({
         backgroundColor: '#FA2D79',
         alignSelf: 'center'
     },
-    resendText: {
-        height: heightPercentageToPx(1.7),
-        width: 'auto',
-        color: '#3df9df',
-        fontSize: 12,
-        fontWeight: '900',
-        letterSpacing: 0.15,
-        lineHeight: 14,
-        textAlign: 'center'
-    },
     buttonText: {
         color: '#FFF',
         alignSelf: 'center',
-        textTransform: 'uppercase',
         fontWeight: 'bold',
         marginTop: heightPercentageToPx(2),
         marginBottom: heightPercentageToPx(2),

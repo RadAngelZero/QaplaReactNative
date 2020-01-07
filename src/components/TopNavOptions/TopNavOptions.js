@@ -11,9 +11,9 @@ const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
 
 export class TopNavOptions extends Component {
-    
+
     /**
-     * Closing action executed when pressing CloseIcon, 
+     * Closing action executed when pressing CloseIcon,
      * it performs a series of instruction previous to close the screen
      * where the component is placed.
      */

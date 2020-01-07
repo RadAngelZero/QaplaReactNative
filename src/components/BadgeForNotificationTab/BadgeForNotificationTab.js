@@ -12,9 +12,9 @@ class BadgeForNotificationTab extends Component {
     render() {
         return (
             <>
-                {this.props.retasCount > 0 ?
+                {this.props.matchesCount > 0 ?
                     <View style={styles.container}>
-                        <Text style={styles.badge}>{this.props.retasCount}</Text>
+                        <Text style={styles.badge}>{this.props.matchesCount}</Text>
                     </View>
                     :
                     null
@@ -25,12 +25,12 @@ class BadgeForNotificationTab extends Component {
 }
 
 function mapDispatchToProps(state) {
-    let retasCount = 0
+    let matchesCount = 0
     if (Object.keys(state.userReducer.user).length > 0 && state.userReducer.user.hasOwnProperty('notificationMatch')) {
-        retasCount = Object.keys(state.userReducer.user.notificationMatch).length;
+        matchesCount = Object.keys(state.userReducer.user.notificationMatch).length;
     }
     return {
-        retasCount
+        matchesCount
     }
 }
 

@@ -1,9 +1,14 @@
+// josep.sanahuja    - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
 // diego             - 12-09-2019 - us99 - Updated closeIcon styles to make it consistent with new
 //                                         closeIcon implementation (changed text icon for SVG icon)
 // diego             - 20-08-2019 - us89 - +getDimensions & closeIcon
 
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import {
+    NAV_TOPBAR_ICON_RIGHT_MARGIN,
+    NAV_TOPBAR_ICON_TOP_MARGIN
+} from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({
     mainContainer: {
@@ -16,9 +21,9 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(100),
     },
     closeIcon: {
-        marginRight: widthPercentageToPx(5.33),
+        marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
         marginBottom: heightPercentageToPx(2.46),
-        marginTop: heightPercentageToPx(2.46),
+        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
         alignSelf: 'flex-end'
     },
     container: {

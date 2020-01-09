@@ -10,9 +10,10 @@
 // diego          - 01-08-2019 - us58 - File creation
 
 import React, { Component } from 'react';
-import { View, Image, TouchableWithoutFeedback, Text, ActivityIndicator, Modal } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Text, ActivityIndicator } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import {
@@ -138,9 +139,10 @@ class MatchNotificationCard extends Component {
     }
 
     render() {
+        const { userName, gameName } = this.state;
         return (
             <>
-                {this.state.userName !== '' ?
+                {userName !== '' ?
                     <>
                         <View style={styles.container}>
                             <View style={styles.avatarContainer}>
@@ -151,16 +153,16 @@ class MatchNotificationCard extends Component {
                                 }
                             </View>
                             <View style={styles.infoContainer}>
-                                <Text style={styles.infoText}>¡{this.state.userName} quiere desafiar tu partida de {this.state.gameName}!</Text>
+                                <Text style={styles.infoText}>{i18n.t('notificationsScreen.notificationTypes.matchNotification.title', { userName, gameName })}</Text>
                                 <View style={styles.infoButtonsMenu}>
                                     <TouchableWithoutFeedback onPress={() => this.tryToAcceptChallengeRequest()}>
                                         <View style={[styles.infoAcceptButton, styles.infoButton]}>
-                                            <Text style={styles.infoButtonText}>Aceptar</Text>
+                                            <Text style={styles.infoButtonText}>{i18n.t('notificationsScreen.notificationTypes.matchNotification.accept')}</Text>
                                         </View>
                                     </TouchableWithoutFeedback>
                                     <TouchableWithoutFeedback onPress={this.declineMatch}>
                                         <View style={[styles.infoDeclineButton, styles.infoButton]}>
-                                            <Text style={styles.infoButtonText}>Rechazar</Text>
+                                            <Text style={styles.infoButtonText}>{i18n.t('notificationsScreen.notificationTypes.matchNotification.decline')}</Text>
                                         </View>
                                     </TouchableWithoutFeedback>
                                 </View>

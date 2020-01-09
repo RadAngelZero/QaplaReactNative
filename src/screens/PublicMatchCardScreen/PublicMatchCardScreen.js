@@ -21,9 +21,10 @@
 // diego          - 29-07-2019 - us55 - Challenge match logic added
 
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
-import styles from './style'
+import styles from './style';
+import i18n from 'i18n-js';
 
 import Images from '../../../assets/images'
 import { challengeUser, isMatchAlreadyChallenged, userHasQaploinsToPlayMatch, getGamerTagWithUID, addGameToUser } from '../../services/database';
@@ -236,11 +237,11 @@ class PublicMatchCardScreen extends Component {
         let numMatchNoti = 0;
 
         // If there are notifications on the match, we apply filter() to this.props.matchNotifications
-        // with its Object keys, to obtain an array with notifications that has match id equal to 
+        // with its Object keys, to obtain an array with notifications that has match id equal to
         // id from the Match card being cancelled.
         if (this.props.notificationMatch === undefined || this.props.notificationMatch === null){
             const mNotiKeys = Object.keys(this.props.matchNotifications);
-            
+
             const numNotiArr = mNotiKeys.filter( (keyValue) => {
                 return this.props.matchNotifications[keyValue] === matchCard.idMatch;
             });
@@ -337,7 +338,7 @@ class PublicMatchCardScreen extends Component {
                     <View style={styles.row}>
                         <View style={styles.infoContainer}>
                             <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>No. de Integrantes</Text>
+                            <Text style={styles.elemR1}>{i18n.t('publicMatchCardScreen.numberOfMembers')}</Text>
                         </View>
                         <View style={styles.infoContainer}>
                             <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</Text>
@@ -356,11 +357,11 @@ class PublicMatchCardScreen extends Component {
                                     ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
                                     ||
                                     (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0')) ?
-                                        'Esperando resultado de tu rival:'
+                                        i18n.t('publicMatchCardScreen.waitingResult')
                                         :
-                                        'Sube tu resultado en:'
+                                        i18n.t('publicMatchCardScreen.uploadResultIn')
                                     :
-                                    'Expira en:'
+                                    i18n.t('publicMatchCardScreen.expireIn')
                                 }
                             </Text>
                         </View>
@@ -372,7 +373,7 @@ class PublicMatchCardScreen extends Component {
                     <View style={styles.row}>
                         <View style={styles.infoContainer}>
                             <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>Qaploins</Text>
+                            <Text style={styles.elemR1}>Qoins</Text>
                         </View>
                         <View style={styles.infoContainer}>
                             <Text style={styles.rightTextStyle}>{matchCard.bet}</Text>
@@ -387,7 +388,7 @@ class PublicMatchCardScreen extends Component {
                 {(this.props.uid !== matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()} disabled={this.state.expired}>
                         <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>Retar</Text>
+                            <Text style={styles.bottomButtonText}>{i18n.t('publicMatchCardScreen.challenge')}</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
@@ -398,7 +399,7 @@ class PublicMatchCardScreen extends Component {
                 {(this.props.uid === matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()} disabled={this.state.expired}>
                         <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>Cancelar</Text>
+                            <Text style={styles.bottomButtonText}>{i18n.t('publicMatchCardScreen.cancel')}</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
@@ -411,14 +412,14 @@ class PublicMatchCardScreen extends Component {
                     ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
                     ||
                     (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0'))) ?
-                    <Text style={styles.alreadyHaveResult}>Ya has subido un resultado a esta partida</Text>
+                    <Text style={styles.alreadyHaveResult}>{i18n.t('publicMatchCardScreen.resultUploaded')}</Text>
                     :
                     <>
                     {/*TODO: disabled=this.state.expired} */}
                     {matchCard.matchesPlay &&
                         <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult} disabled={this.state.expired}>
                             <View style={styles.bottomButton}>
-                                <Text style={styles.bottomButtonText}>Subir Resultado</Text>
+                                <Text style={styles.bottomButtonText}>{i18n.t('publicMatchCardScreen.uploadResult')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     }
@@ -427,16 +428,16 @@ class PublicMatchCardScreen extends Component {
                 {matchCard.isChallenge &&
                     <TouchableWithoutFeedback onPress={this.tryToAcceptChallengeRequest} disabled={this.state.expired}>
                         <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>Aceptar desafio</Text>
+                            <Text style={styles.bottomButtonText}>{i18n.t('publicMatchCardScreen.acceptChallenge')}</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
                 <OneTxtOneBttnModal
                     visible={ this.state.openChalExModal }
                     onClose={ this.toggleOpenChalExModal }
-                    header={ 'Lo sentimos' }
-                    body={ 'Ya enviaste un desafio al jugador para esta Partida' }
-                    textButton={ 'Entendido' } />
+                    header={i18n.t('publicMatchCardScreen.alreadyChallengedModal.header')}
+                    body={i18n.t('publicMatchCardScreen.alreadyChallengedModal.body')}
+                    textButton={i18n.t('publicMatchCardScreen.alreadyChallengedModal.textButton')} />
                 <AcceptChallengeModal
                     visible={this.state.openAcceptChallengeModal}
                     uid={this.props.uid}
@@ -457,7 +458,7 @@ class PublicMatchCardScreen extends Component {
                     onClose={() => this.setState({ openAddGamerTagModal: false }) } />
                 <BuyQaploinsModal
                     open={this.state.openBuyQaploinsModal}
-                    body='Compra Qaploins para desafiar esta partida'
+                    body={i18n.t('publicMatchCardScreen.buyQaploinsModal.body')}
                     openWhen='User try to challenge a match'
                     onClose={() => this.setState({ openBuyQaploinsModal: false })} />
             </SafeAreaView>

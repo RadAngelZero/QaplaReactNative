@@ -10,6 +10,7 @@ import {
   Text,
   SafeAreaView
 } from 'react-native'
+import i18n from 'i18n-js';
 
 import styles from './style'
 
@@ -19,7 +20,6 @@ import { storeData } from '../../utilities/persistance';
 
 export default class WelcomeOnboardingScreen extends React.Component {
 	constructor(props) {
-	    // Required step: always call the parent class' constructor
 	    super(props);
 	    this.state = {
 	    	selectedIndex: 0
@@ -40,23 +40,23 @@ export default class WelcomeOnboardingScreen extends React.Component {
     const carrouselData = [
       	{
 			Image: Images.png.connectOnBoarding.img,
-			description: 'Conecta con otros gamers de tu nivel en competencias individuales o multijugador.',
-			title: 'Conecta'
+			description: i18n.t('onBoardingScreen.connect.description'),
+			title: i18n.t('onBoardingScreen.connect.title')
 		},
       	{
 			Image: Images.png.compiteOnBoarding.img,
-			description: 'Compite como todo un pro, monetiza tus scrims y participa en eventos por bolsas de premios.',
-			title: 'Compite'
+			description: i18n.t('onBoardingScreen.compete.description'),
+			title: i18n.t('onBoardingScreen.compete.title')
 		},
       	{
 			Image: Images.png.shareOnBoarding.img,
-			description: 'Comparte los clips de tus partidas, toda la comunidad podrá ver la evidencia de tus victorias.',
-			title: 'Comparte'
+			description: i18n.t('onBoardingScreen.share.description'),
+			title: i18n.t('onBoardingScreen.share.title')
 		},
       	{
 			Image: Images.png.walletOnBoarding.img,
-			description:'Retira tu Saldo Qapla o úsalo para comprar productos de Amazon Prime, ¡Los enviamos gratis a tu casa!',
-			title: 'Convierte'
+			description: i18n.t('onBoardingScreen.withdraw.description'),
+			title: i18n.t('onBoardingScreen.withdraw.title')
 		}
     ];
 
@@ -73,7 +73,7 @@ export default class WelcomeOnboardingScreen extends React.Component {
 				<View style={styles.progressRow}>
 					<Text onPress={this.goToScreenPublicas} style={styles.finishTextButton}>
 						{this.state.selectedIndex === carrouselData.length - 1 &&
-							'TERMINAR'
+							i18n.t('onBoardingScreen.finish')
 						}
 					</Text>
 				</View>

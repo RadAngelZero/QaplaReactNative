@@ -14,7 +14,6 @@ class MatchCardList extends Component {
         const reversedMatchesArray = this.getSortedMatchesArr([...this.props.matches]);
 
         return (
-            
                 <FlatList data={reversedMatchesArray}
                     initialNumToRender={5}
                     renderItem={({item}) =>

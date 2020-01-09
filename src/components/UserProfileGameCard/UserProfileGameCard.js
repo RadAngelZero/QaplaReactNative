@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import AnimatedCircleIndicator from '../AnimatedCircleIndicator/AnimatedCircleIndicator';
@@ -30,7 +31,7 @@ export class UserProfileGameCard extends Component {
                         <AnimatedCircleIndicator fill={this.props.experience} description='Exp' />
                     </View>
                     <View style={styles.indicatorContainer}>
-                        <AnimatedCircleIndicator fill={this.props.level} description='Nivel' />
+                        <AnimatedCircleIndicator fill={this.props.level} description={i18n.t('userProfileScreen.userProfileGameCard.level')} />
                     </View>
                 </View>
             </View>

@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import { View, Image, TouchableWithoutFeedback, Text, Linking } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from '../../../assets/images';
@@ -60,7 +61,7 @@ class LogroSocial extends Component {
      * Sends the selected picture by ImagePickerModal and sends it to
      * Firebase Storage.
      *
-     * @params {Object} picture Picture selected in ImagePickerModal
+     * @param {object} picture Picture selected in ImagePickerModal
      */
     saveImage = (picture) => {
         this.setState({
@@ -151,7 +152,7 @@ class LogroSocial extends Component {
                                 /**Just a double check on disabled property of the button */
                                 disabled={puntosCompletados < totalPuntos}>
                                 <View style={styles.redimirButton}>
-                                    <Text style={styles.redimirTextButton}>Redimir</Text>
+                                    <Text style={styles.redimirTextButton}>{i18n.t('activeAchievementsScreen.socialAchievement.redeem')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         }
@@ -166,12 +167,12 @@ class LogroSocial extends Component {
                     <View style={styles.shareContainer}>
                         <TouchableWithoutFeedback onPress={this.goToSocialLink}>
                             <View>
-                                <Text style={styles.likeText}>Dar Like</Text>
+                                <Text style={styles.likeText}>{i18n.t('activeAchievementsScreen.socialAchievement.like')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.openImgPckModal}>
                             <View>
-                                <Text style={styles.uploadText}>Subir</Text>
+                                <Text style={styles.uploadText}>{i18n.t('activeAchievementsScreen.socialAchievement.upload')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
@@ -183,9 +184,9 @@ class LogroSocial extends Component {
                 <OneTxtOneBttnModal
                     visible={ this.state.openThankyouModal }
                     onClose={ this.toggleOpenThankyouModal }
-                    header={ 'Felicidades!' }
-                    body={ 'Tu imágen será verificada en breve y podrás redimir tu logro en breve' }
-                    textButton={ 'Entendido' } />
+                    header={i18n.t('activeAchievementsScreen.socialAchievement.modal.header')}
+                    body={i18n.t('activeAchievementsScreen.socialAchievement.modal.body')}
+                    textButton={i18n.t('activeAchievementsScreen.socialAchievement.modal.textButton')} />
 
             </View>
         );

@@ -5,6 +5,7 @@
 
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, SafeAreaView } from 'react-native';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -18,7 +19,7 @@ export class VerificationPhoneNumber extends Component {
         return (
                 <View style={styles.container}>
                     <View>
-                        <Text style={styles.title}>¡Verifica tu Whatsapp!</Text>
+                        <Text style={styles.title}>{i18n.t('verificationScreen.verificationPhoneNumber.title')}</Text>
                         <View style={styles.divider}>
                             <Image source={Divider} />
                         </View>
@@ -30,7 +31,7 @@ export class VerificationPhoneNumber extends Component {
                                 <TextInput
                                     keyboardType='numeric'
                                     style={styles.qaplaTextInput}
-                                    placeholder='Telefono*'
+                                    placeholder={i18n.t('verificationScreen.verificationPhoneNumber.phonePlaceholder')}
                                     placeholderTextColor='#898A97'
                                     onSubmitEditing={this.props.goToNextStep}
                                     onChangeText={this.props.setPhoneNumber} />
@@ -40,11 +41,11 @@ export class VerificationPhoneNumber extends Component {
                                 <TextInput
                                     keyboardType='numeric'
                                     style={styles.qaplaTextInput}
-                                    placeholder='Ingresar Código'
+                                    placeholder={i18n.t('verificationScreen.verificationPhoneNumber.codePlaceholder')}
                                     placeholderTextColor='#898A97'
                                     onSubmitEditing={this.props.goToNextStep}
                                     onChangeText={this.props.setVerificationCode} />
-                                <Text style={styles.smallText}>Te enviamos un código de verificación</Text>
+                                <Text style={styles.smallText}>{i18n.t('verificationScreen.verificationPhoneNumber.codeSended')}</Text>
                             </View>
                         }
                     </View>

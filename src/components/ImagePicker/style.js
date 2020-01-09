@@ -11,7 +11,7 @@ export default StyleSheet.create({
   imageContainer: {
       justifyContent: 'flex-start',
       alignSelf: 'center',
-      marginBottom: heightPercentageToPx(2), 
+      marginBottom: heightPercentageToPx(2),
       width: widthPercentageToPx(95),
       height: heightPercentageToPx(40)
   },
@@ -23,22 +23,24 @@ export default StyleSheet.create({
       borderRadius: 3
   },
   okButtonContainer: {
-      bottom: heightPercentageToPx(12.31),
-      alignSelf: 'center',
-      position: 'absolute',
-      borderRadius: 100,
-      backgroundColor: '#FA2D79',
-      elevation: 10,
-      width: widthPercentageToPx(66.6)
-  },
-  cancelButtonContainer: {
+      right: widthPercentageToPx(4.30),
       bottom: heightPercentageToPx(4.30),
       alignSelf: 'center',
       position: 'absolute',
       borderRadius: 100,
       backgroundColor: '#FA2D79',
       elevation: 10,
-      width: widthPercentageToPx(66.6)
+      width: widthPercentageToPx(45)
+  },
+  cancelButtonContainer: {
+      left: widthPercentageToPx(4.30),
+      bottom: heightPercentageToPx(4.30),
+      alignSelf: 'center',
+      position: 'absolute',
+      borderRadius: 100,
+      backgroundColor: '#FA2D79',
+      elevation: 10,
+      width: widthPercentageToPx(45)
   },
   moreButtonContainer: {
       alignSelf: 'center',
@@ -49,7 +51,7 @@ export default StyleSheet.create({
   },
   textStyle: {
       color: '#FFF',
-      alignSelf: 'center',
+      textAlign: 'center',
       fontWeight: 'bold',
       marginTop: heightPercentageToPx(2.46),
       marginBottom: heightPercentageToPx(2.46),
@@ -60,6 +62,6 @@ export default StyleSheet.create({
   picture: {
       height: heightPercentageToPx(40),
       width: widthPercentageToPx(95),
-      resizeMode: 'cover'  
+      resizeMode: 'cover'
   }
 })

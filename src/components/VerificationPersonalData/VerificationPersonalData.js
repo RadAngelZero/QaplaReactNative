@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import { View, Text, Image, KeyboardAvoidingView, TextInput } from 'react-native';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -16,21 +17,21 @@ export class VerificationPersonalData extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>¿Cómo te llamas?</Text>
+                <Text style={styles.title}>{i18n.t('verificationScreen.verificationPersonalData.title')}</Text>
                 <View style={styles.divider}>
                     <Image source={Divider} />
                 </View>
                 <KeyboardAvoidingView style={styles.userDataForm} behavior='padding'>
                     <TextInput
                         style={styles.qaplaTextInput}
-                        placeholder='Nombre(s)*'
+                        placeholder={i18n.t('verificationScreen.verificationPersonalData.namePlaceholder')}
                         placeholderTextColor='#898A97'
                         onChangeText={(text) => this.props.setUserPersonalData('name', text)}
                         onSubmitEditing={() => this.firstSurname.focus()}
                         returnKeyType='next' />
                     <TextInput
                         style={styles.qaplaTextInput}
-                        placeholder='Apellido Paterno*'
+                        placeholder={i18n.t('verificationScreen.verificationPersonalData.firstSurnamePlaceholder')}
                         placeholderTextColor='#898A97'
                         ref={(firstSurname) => this.firstSurname = firstSurname}
                         onChangeText={(text) => this.props.setUserPersonalData('firstSurname', text)}
@@ -38,7 +39,7 @@ export class VerificationPersonalData extends Component {
                         returnKeyType='next' />
                     <TextInput
                         style={styles.qaplaTextInput}
-                        placeholder='Apellido Materno*'
+                        placeholder={i18n.t('verificationScreen.verificationPersonalData.secondSurnamePlacholder')}
                         placeholderTextColor='#898A97'
                         ref={(secondSurname) => this.secondSurname = secondSurname}
                         onChangeText={(text) => this.props.setUserPersonalData('secondSurname', text)}
@@ -46,7 +47,7 @@ export class VerificationPersonalData extends Component {
                         returnKeyType='next' />
                     <TextInput
                         style={styles.qaplaTextInput}
-                        placeholder='Edad*'
+                        placeholder={i18n.t('verificationScreen.verificationPersonalData.agePlaceholder')}
                         placeholderTextColor='#898A97'
                         keyboardType='numeric'
                         ref={(age) => this.age = age}

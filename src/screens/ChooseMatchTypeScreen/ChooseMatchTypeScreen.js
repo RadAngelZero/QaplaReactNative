@@ -3,6 +3,8 @@
 
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+import i18n from 'i18n-js';
+
 import styles from './style';
 import Images from '../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
@@ -44,7 +46,7 @@ class ChooseMatchTypeScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    <Text style={styles.titleText}>Escoge un tipo de partida</Text>
+                    <Text style={styles.titleText}>{i18n.t('chooseMatchTypeScreen.title')}</Text>
                     <View style={styles.lightningImage}>
                         <LightningIcon
                             width={121}
@@ -53,7 +55,7 @@ class ChooseMatchTypeScreen extends Component {
                     <TouchableWithoutFeedback onPress={this.goToLoadGames}>
                         <View style={styles.publicMatchButton}>
                             <Text style={styles.publicMatchButtonText}>
-                                Partida Pública
+                                {i18n.t('chooseMatchTypeScreen.publicMatch')}
                             </Text>
                         </View>
                     </TouchableWithoutFeedback>
@@ -63,7 +65,7 @@ class ChooseMatchTypeScreen extends Component {
                                 <SearchIcon width={18} height={18} />
                             </View>
                             <Text style={styles.directMatchButtonText}>
-                                Buscar Usuario
+                                {i18n.t('chooseMatchTypeScreen.directMatch')}
                             </Text>
                             <View style={styles.directMatchButtonSearchIcon}></View>
                         </View>

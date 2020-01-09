@@ -18,6 +18,8 @@ import {
 import { Svg, Circle } from 'react-native-svg';
 import { styles } from './style';
 import { connect } from 'react-redux';
+import i18n from 'i18n-js';
+
 import images from './../../../assets/images';
 
 import HighlightModal from '../HighlightModal/HighlightModal';
@@ -201,8 +203,8 @@ class HeaderBar extends Component {
                         onClose={this.toggleHg2Modal}
                         showDelay={1000}
                         cb1={this.markHg2}
-                        header='Ve tus Notificaciones'
-                        body='Tus partidas recibirán notificaciones de desafio, recuerda checar las notificaciones!'>
+                        header={i18n.t('headerBar.highlightModal.header')}
+                        body={i18n.t('headerBar.highlightModal.body')}>
                             <TouchableWithoutFeedback style={styles.imageAndButtonDimensions}
                                 onPress={this.onNotiPressBttn}
                                 testID='NotificationButton'>

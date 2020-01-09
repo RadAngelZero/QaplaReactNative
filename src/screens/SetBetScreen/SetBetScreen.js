@@ -21,6 +21,7 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 import { connect } from 'react-redux';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import images from './../../../assets/images';
@@ -147,7 +148,7 @@ class SetBetScreen extends Component {
 
     async createMatch() {
        if (!this.state.loading && this.props.userQaploins >= this.state.currentBet) {
-            // this.state.loading is used as a mechanism to prevent users to press the 
+            // this.state.loading is used as a mechanism to prevent users to press the
             // Android back button and create several matches at the same time
             this.setState({ loading: true });
 
@@ -166,7 +167,7 @@ class SetBetScreen extends Component {
                 // previous flag update.
                 let openMsgFlag = JSON.parse(await retrieveData('create-match-time-action-msg'));
 
-                // When creating a match 'this.state.timeActionMsgOpen' is expected to be false, 
+                // When creating a match 'this.state.timeActionMsgOpen' is expected to be false,
                 // otherwise when loading the Component the Modal would automatically open, which is
                 // a behaviour we don't want.
                 if (openMsgFlag || openMsgFlag === null) {
@@ -210,12 +211,12 @@ class SetBetScreen extends Component {
                     <BuyQaploinsModal
                         open={this.state.open}
                         openWhen='User try to create a match'
-                        body='Puedes devolver los 300 Qaploins cuando quieras ¡y te haremos un reembolso!'
+                        body={i18n.t('setBetScreen.buyQaploinsModal.body')}
                         onClose={() => this.setState({ open: false })} />
                     <MatchExpireRememberModal
                         visible={this.state.timeActionMsgOpen}
                         onClose={this.closeMatchExpireRememberModal} />
-                    <Text style={styles.titleText}>¿Cuánto quieres ganar?</Text>
+                    <Text style={styles.titleText}>{i18n.t('setBetScreen.title')}</Text>
                     <View style={styles.prizeImage}>
                         <QaploinsPrizeIcon width={110} height={107} />
                     </View>
@@ -230,7 +231,7 @@ class SetBetScreen extends Component {
                         </TouchableWithoutFeedback>
                         <View style={styles.betTextContainer}>
                             <Text style={styles.betText}>{this.state.currentBet}</Text>
-                            <Text style={styles.betEntrada}>Entrada</Text>
+                            <Text style={styles.betEntrada}>{i18n.t('setBetScreen.entry')}</Text>
                         </View>
                         <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
                             <MoreQaploinsIcon style={styles.changeBetIcon} />
@@ -238,7 +239,7 @@ class SetBetScreen extends Component {
                     </View>
                     <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
                         <View style={styles.createButton}>
-                            <Text style={styles.createButtonText}>Crear Ahora</Text>
+                            <Text style={styles.createButtonText}>{i18n.t('setBetScreen.createMatch')}</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>

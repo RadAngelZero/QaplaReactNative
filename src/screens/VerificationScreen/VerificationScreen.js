@@ -17,6 +17,7 @@
 import React, { Component } from 'react';
 import { SafeAreaView, ScrollView, View, TouchableWithoutFeedback, Text } from 'react-native';
 import { connect } from 'react-redux';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from './../../../assets/images';
@@ -289,15 +290,15 @@ class VerificationScreen extends Component {
     setButtonText = () => {
         // TODO Josep Maria: (maybe) 17-10-2019 : Create each button per separated insteda of applying
         // a lot of logic to one only button.
-        let buttonText = 'Continuar';
+        let buttonText = i18n.t('verificationScreen.continue');
 
         if (this.state.indexPositions.length >= 3) {
             if (this.state.nextIndex === this.state.indexPositions.length - 1) {
-                buttonText = 'Enviar Código';
+                buttonText = i18n.t('verificationScreen.sendCode');
             } else if (this.state.nextIndex === this.state.indexPositions.length) {
-                buttonText = 'Verificar';
+                buttonText = i18n.t('verificationScreen.verify');
             } else if (this.state.nextIndex >= this.state.indexPositions.length + 1) {
-                buttonText = 'Finalizar';
+                buttonText = i18n.t('verificationScreen.finish');
             }
         }
 
@@ -394,8 +395,7 @@ class VerificationScreen extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                     :
-                    <TouchableWithoutFeedback
-                        onPress={this.endVerificationProccess}>
+                    <TouchableWithoutFeedback onPress={this.endVerificationProccess}>
                         <View style={this.state.codeSent ? styles.buttonResendScenario : styles.button}>
                             <Text style={styles.buttonText}>
                                 {this.setButtonText()}

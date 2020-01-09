@@ -1,0 +1,215 @@
+{
+    "platforms": {
+        "mobile": "PC/Mobile"
+    },
+    "router": {
+        "topNavigators": {
+            "achievements": {
+                "active": "Active",
+                "completed": "Completed"
+            },
+            "notifications": {
+                "activity": "Activity",
+                "matches": "Matches"
+            },
+            "matches": {
+                "public": "Public",
+                "myMatches": "My Matches"
+            }
+        },
+        "bottomNavigators": {
+            "mainNavigator": {
+                "events": "Events",
+                "matches": "Matches",
+                "profile": "Profile"
+            }
+        }
+    },
+    "loadingScreen": {
+        "activityIndicatorText": "Loading..."
+    },
+    "onBoardingScreen": {
+        "connect": {
+            "description": "Connect with other gamers of your level in individual or multiplayer competitions.",
+            "title": "Connect"
+        },
+        "compete": {
+            "description": "Compete as an all pro, monetize your scrims and join in events for prize bags.",
+			"title": "Compete"
+        },
+        "share": {
+            "description": "Share the clips of your matches, all the community will be able to see the evidence of your victories.",
+            "title": "Share"
+        },
+        "withdraw": {
+            "description": "Withdraw you Qapla balance or use it to buy Amazon Prime products, we send them free to your home!",
+            "title": "Withdraw"
+        },
+        "finish": "Finish"
+    },
+    "activeAchievementsScreen": {
+        "qaplaAchievement": {
+            "redeem": "Redeem"
+        },
+        "socialAchievement": {
+            "redeem": "Redeem",
+            "like": "Like",
+            "upload": "Upload",
+            "modal": {
+                "header": "Congratulations!",
+                "body": "Your evidence will be reviewed soon. After that you can redeem the achievement.",
+                "textButton": "Ok"
+            }
+        },
+        "tournamentAchivement": {
+            "participate": "Participate"
+        },
+        "eventAchievement": {
+            "participate": "Participate",
+            "alreadyParticipating": "You are already participating in this event"
+        }
+    },
+    "publicMatchesFeedScreen": {
+        "highlightModal": {
+            "header": "Creates a Match",
+            "body": "Compete with other players. Create your match and win!"
+        },
+        "createMatchesButton": "Play Now"
+    },
+    "publicMatchCardScreen": {
+        "numberOfMembers": "Number of members",
+        "waitingResult": "Waiting for your adversary result",
+        "uploadResultIn": "Upload yout result in:",
+        "expireIn": "Expires in:",
+        "challenge": "Challenge",
+        "cancel": "Cancel",
+        "resultUploaded": "You has already uploaded your result",
+        "uploadResult": "Upload Result",
+        "acceptChallenge": "Accept Challenge",
+        "alreadyChallengedModal": {
+            "header": "We are sorry",
+            "body": "You has already challenge this match",
+            "textButton": "Ok"
+        },
+        "buyQaploinsModal": {
+            "body": "Buy Qaploins to challenge this match"
+        }
+    },
+    "userProfileScreen": {
+        "buy": "Buy",
+        "userProfileGameCard": {
+            "level": "Level"
+        },
+        "buyQaploinsModal": {
+            "body": "You can return the 300 Qoins when you want and we will give you a refund!"
+        }
+    },
+    "notificationsScreen":{
+        "notificationsHeader": "Notificaciones",
+        "notificationTypes": {
+            "notificationWinner": "You has been declared the winner of the match.",
+            "notificationLooser": "%{userName} has been declared the winner of the match.",
+            "notificationResult": "%{userName} has upload their result, you have 15 minutes to upload yours!",
+            "notificationRevision": "You match is under review. As soon as it is ready, you will be notified.",
+            "notificationTie": "Your match with %{userName} has finished without winner.",
+            "notificationMatchAccepted": "%{userName} has accepted your challenge.",
+            "matchNotification": {
+                "title": "%{userName} wants to challenge your match of %{gameName}!",
+                "accept": "Accept",
+                "decline": "Decline"
+            }
+        },
+        "acceptChallengeModal": {
+            "body": "When accept this challenge all the other challenges made to this match will be deleted.",
+            "dontShowItAgain": "Don't show this message again",
+            "continue": "Continue"
+        }
+    },
+    "settingsMenuScreen": {
+        "header": "Configuration",
+        "menuHeader": "CONFIGURATION",
+        "support": "Support",
+        "editBio": "Edit Biography",
+        "editDiscord": "Edit Discord",
+        "termsAndConditions": "Terms and Conditions",
+        "privacyNotice": "Privacy Notice",
+        "closeSession": "Close Session",
+        "addDiscordTagModal": {
+            "title": "Add your Discord tag",
+            "placeholder": "Insert here your Discord tag",
+            "cancel": "Cancel",
+            "done": "Done"
+        },
+        "addBioModal": {
+            "title": "Add your biography",
+            "placeholder": "Insert here you biography",
+            "cancel": "Cancel",
+            "done": "Done"
+        }
+    },
+    "supportScreen": {
+        "placeholder": "Happy? Frustrated? Sad? Share your opinion here",
+        "send": "Send comment",
+        "gratitudeModal": {
+            "header": "Thanks for your comments"
+        }
+    },
+    "chooseMatchTypeScreen": {
+        "title": "Choose a type of match",
+        "publicMatch": "Public Match",
+        "directMatch": "Search User"
+    },
+    "loadGamesScreen": {
+        "title": "Choose your game"
+    },
+    "setBetScreen": {
+        "title": "How much you want to win?",
+        "entry": "Entry",
+        "createMatch": "Create Match",
+        "buyQaploinsModal": {
+            "body": "You can return the 300 Qoins when you want and we will give you a refund!"
+        }
+    },
+    "verificationScreen": {
+        "continue": "Continue",
+        "sendCode": "Send Code",
+        "verify": "Verify",
+        "finish": "Finish",
+        "resendVerCodeCountdown": {
+            "title": "Resend code",
+            "codeWasResent": "The code was resent...",
+            "resendCountdown": "Resend code in... %{countDownSecs} seconds"
+        },
+        "verificationPersonalData": {
+            "title": "Whats your name?",
+            "namePlaceholder": "Name(s)",
+            "firstSurnamePlaceholder": "First Surname*",
+            "secondSurnamePlacholder": "Second Surname*",
+            "agePlaceholder": "Age*"
+        },
+        "verificationPhoneNumber": {
+            "title": "¡Verify your Whatsapp!",
+            "phonePlaceholder": "Phone Number*",
+            "codePlaceholder": "Insert your Code",
+            "codeSended": "We have sent you a verification code"
+        },
+        "verificationProcessSuccess": {
+            "title": "Thanks!",
+            "body": "We got your request, this process can take 24 hrs. We apreciate your patiente, We are working for you."
+        }
+    },
+    "headerBar": {
+        "highlightModal": {
+            "header": "Check your notifications",
+            "body": "Your matches will receive notification challenges, remember check your notifications!"
+        }
+    },
+    "highlightModal": {
+        "acceptButton": "Got it!"
+    },
+    "imagePicker": {
+        "showMorePhotos": "Show more photos",
+        "selectImage": "Select this photo!",
+        "discardImage": "I don't want this photo"
+    }
+}

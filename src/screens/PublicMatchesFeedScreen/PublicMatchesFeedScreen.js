@@ -9,6 +9,8 @@
 
 import React, { Component } from 'react';
 import { View } from 'react-native'
+import i18n from 'i18n-js';
+
 import style from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
 import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
@@ -238,17 +240,8 @@ class PublicMatchesFeedScreen extends Component {
                 <View style={style.container}>
                     <MatchCardList {...this.state} />
                 </View>
-                <HighlightModal
-                    visible={this.state.showHg1Modal}
-                    onClose={this.toggleHg1Modal}
-                    showDelay={1000}
-                    cb1={this.markHg1}
-                    header='Crea una Partida'
-                    body='Empieza a competir con otros jugadores. Crea tu partida y gana!'>
                     <CreateRetasButton
-                            highlighted={!this.props.navigation.getParam('firstMatchCreated')}
-                            onPress={this.onCrearRetaButtonPress}/>
-                </HighlightModal>
+                        onPress={this.onCrearRetaButtonPress} />
             </>
         );
     }

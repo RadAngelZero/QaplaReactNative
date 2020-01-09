@@ -5,6 +5,7 @@
 
 import React, { Component } from 'react';
 import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import { storeData } from '../../utilities/persistance';
@@ -54,16 +55,16 @@ class AcceptChallengeModal extends Component {
                                 </View>
                             </TouchableWithoutFeedback>
                             <Text style={styles.paragraph}>
-                                Al aceptar este desafio todos los otros desafios que te han hecho a esta partida seran eliminados.
+                                {i18n.t('notificationsScreen.acceptChallengeModal.body')}
                             </Text>
                             <CheckBox
                                 style={styles.checkbox}
-                                label='Entendido, no volver a mostrar este mensaje'
+                                label={i18n.t('notificationsScreen.acceptChallengeModal.dontShowItAgain')}
                                 selected={this.state.dontShowModalAgain}
                                 onPress={this.setCheckBoxState} />
                             <TouchableWithoutFeedback onPress={this.acceptDelete}>
                                 <View style={styles.gotItButton}>
-                                    <Text style={styles.gotItButtonText}>Continuar</Text>
+                                    <Text style={styles.gotItButtonText}>{i18n.t('notificationsScreen.acceptChallengeModal.continue')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

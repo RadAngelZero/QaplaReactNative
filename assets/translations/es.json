@@ -1,0 +1,215 @@
+{
+    "platforms": {
+        "mobile": "PC/Móvil"
+    },
+    "router": {
+        "topNavigators": {
+            "achievements": {
+                "active": "Activos",
+                "completed": "Completados"
+            },
+            "notifications": {
+                "activity": "Actividad",
+                "matches": "Partidas"
+            },
+            "matches": {
+                "public": "Públicas",
+                "myMatches": "Mis Partidas"
+            }
+        },
+        "bottomNavigators": {
+            "mainNavigator": {
+                "events": "Eventos",
+                "matches": "Partidas",
+                "profile": "Perfil"
+            }
+        }
+    },
+    "loadingScreen": {
+        "activityIndicatorText": "Cargando..."
+    },
+    "onBoardingScreen": {
+        "connect": {
+            "description": "Conecta con otros gamers de tu nivel en competencias individuales o multijugador.",
+            "title": "Conecta"
+        },
+        "compete": {
+            "description": "Compite como todo un pro, monetiza tus scrims y participa en eventos por bolsas de premios.",
+			"title": "Compite"
+        },
+        "share": {
+            "description": "Comparte los clips de tus partidas, toda la comunidad podrá ver la evidencia de tus victorias.",
+            "title": "Comparte"
+        },
+        "converts": {
+            "description": "Retira tu Saldo Qapla o úsalo para comprar productos de Amazon Prime, ¡Los enviamos gratis a tu casa!",
+            "title": "Convierte"
+        },
+        "finish": "Terminar"
+    },
+    "activeAchievementsScreen": {
+        "qaplaAchievement": {
+            "redeem": "Redimir"
+        },
+        "socialAchievement": {
+            "redeem": "Redimir",
+            "like": "Dar Like",
+            "upload": "Subir",
+            "modal": {
+                "header": "¡Felicidades!",
+                "body": "Tu imágen será verificada en breve y podrás redimir tu logro en breve",
+                "textButton": "Entendido"
+            }
+        },
+        "tournamentAchivement": {
+            "participate": "Participar"
+        },
+        "eventAchievement": {
+            "participate": "Participar",
+            "alreadyParticipating": "Estas inscrito a este evento."
+        }
+    },
+    "publicMatchesFeedScreen": {
+        "highlightModal": {
+            "header": "Crea una Partida",
+            "body": "Empieza a competir con otros jugadores. ¡Crea tu partida y gana!"
+        },
+        "createMatchesButton": "Jugar Ahora"
+    },
+    "publicMatchCardScreen": {
+        "numberOfMembers": "No. de Integrantes",
+        "waitingResult": "Esperando resultado de tu rival",
+        "uploadResultIn": "Sube tu resultado en:",
+        "expireIn": "Expira en:",
+        "challenge": "Retar",
+        "cancel": "Cancelar",
+        "resultUploaded": "Ya has subido un resultado a esta partida",
+        "uploadResult": "Subir Resultado",
+        "acceptChallenge": "Aceptar desafio",
+        "alreadyChallengedModal": {
+            "header": "Lo sentimos",
+            "body": "Ya enviaste un desafio al jugador para esta Partida",
+            "textButton": "Entendido"
+        },
+        "buyQaploinsModal": {
+            "body": "Compra Qaploins para desafiar esta partida"
+        }
+    },
+    "userProfileScreen": {
+        "buy": "Abonar",
+        "userProfileGameCard": {
+            "level": "Nivel"
+        },
+        "buyQaploinsModal": {
+            "body": "Puedes devolver los 300 Qoins cuando quieras ¡y te haremos un reembolso!"
+        }
+    },
+    "notificationsScreen":{
+        "notificationsHeader": "Notificaciones",
+        "notificationTypes": {
+            "notificationWinner": "Has sido declarado ganador de la partida",
+            "notificationLooser": "%{userName} ha sido declarado ganador de la partida.",
+            "notificationResult": "¡%{userName} ha subido su resultado, tienes 15 minutos para subir el tuyo!",
+            "notificationRevision": "Tu partida entro en disputa y esta siendo revisada. En cuanto este lista se te notificara.",
+            "notificationTie": "Tu partida con %{userName} concluyó sin un ganador.",
+            "notificationMatchAccepted": "%{userName} ha aceptado tu desafío.",
+            "matchNotification": {
+                "title": "¡%{userName} quiere desafiar tu partida de %{gameName}!",
+                "accept": "Aceptar",
+                "decline": "Rechazar"
+            }
+        },
+        "acceptChallengeModal": {
+            "body": "Al aceptar este desafio todos los otros desafios que te han hecho a esta partida seran eliminados.",
+            "dontShowItAgain": "Entendido, no volver a mostrar este mensaje",
+            "continue": "Continuar"
+        }
+    },
+    "settingsMenuScreen": {
+        "header": "Configuración",
+        "menuHeader": "CONFIGURACIÓN",
+        "support": "Soporte",
+        "editBio": "Editar Biografía",
+        "editDiscord": "Editar Discord",
+        "termsAndConditions": "Términos y Condiciones",
+        "privacyNotice": "Aviso de Privacidad",
+        "closeSession": "Cerrar sesión",
+        "addDiscordTagModal": {
+            "title": "Agrega tu tag de Discord",
+            "placeholder": "Inserta tu Discord tag",
+            "cancel": "Cancelar",
+            "done": "Listo"
+        },
+        "addBioModal": {
+            "title": "Agrega tu biografía",
+            "placeholder": "Inserta tu biografía",
+            "cancel": "Cancelar",
+            "done": "Listo"
+        }
+    },
+    "supportScreen": {
+        "placeholder": "¿Contento? ¿Frustrado? ¿Triste? Compártenos tu opinión aquí",
+        "send": "Enviar comentario",
+        "gratitudeModal": {
+            "header": "Gracias por tu comentario"
+        }
+    },
+    "chooseMatchTypeScreen": {
+        "title": "Escoge un tipo de partida",
+        "publicMatch": "Partida Pública",
+        "directMatch": "Buscar Usuario"
+    },
+    "loadGamesScreen": {
+        "title": "Elige tu juego"
+    },
+    "setBetScreen": {
+        "title": "¿Cuánto quieres ganar?",
+        "entry": "Entrada",
+        "createMatch": "Crear Ahora",
+        "buyQaploinsModal": {
+            "body": "Puedes devolver los 300 Qoins cuando quieras ¡y te haremos un reembolso!"
+        }
+    },
+    "verificationScreen": {
+        "continue": "Continuar",
+        "sendCode": "Enviar Código",
+        "verify": "Verificar",
+        "finish": "Finalizar",
+        "resendVerCodeCountdown": {
+            "title": "Reenviar Código",
+            "codeWasResent": "El código fue reenviado...",
+            "resendCountdown": "Reenviar código en... %{countDownSecs} segundos"
+        },
+        "verificationPersonalData": {
+            "title": "¿Cómo te llamas?",
+            "namePlaceholder": "Nombre(s)",
+            "firstSurnamePlaceholder": "Apellido Paterno*",
+            "secondSurnamePlacholder": "Apellido Materno*",
+            "agePlaceholder": "Edad*"
+        },
+        "verificationPhoneNumber": {
+            "title": "¡Verifica tu Whatsapp!",
+            "phonePlaceholder": "Telefono*",
+            "codePlaceholder": "Ingresa tu Código",
+            "codeSended": "Te enviamos un código de verificación"
+        },
+        "verificationProcessSuccess": {
+            "title": "¡Gracias!",
+            "body": "Hemos recibido tu solicitud, este proceso puede tardar hasta 24 hrs. Apreciamos tu paciencia, estamos trabajando para ti."
+        }
+    },
+    "headerBar": {
+        "highlightModal": {
+            "header": "Ve tus Notificaciones",
+            "body": "Tus partidas recibirán notificaciones de desafio, ¡recuerda checar las notificaciones!"
+        }
+    },
+    "highlightModal": {
+        "acceptButton": "Entendido"
+    },
+    "imagePicker": {
+        "showMorePhotos": "Mostrar más fotografías",
+        "selectImage": "¡Quiero esta foto!",
+        "discardImage": "No quiero esta foto"
+    }
+}

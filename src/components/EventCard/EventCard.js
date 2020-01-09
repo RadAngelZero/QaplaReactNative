@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import { joinEvent } from '../../services/database';
@@ -44,7 +45,7 @@ class EventCard extends Component {
                         {(priceQaploins === null || priceQaploins === undefined) &&
                             <TouchableWithoutFeedback onPress={this.joinEvent}>
                                 <View style={styles.redimirButton}>
-                                    <Text style={styles.redimirTextButton}>Participar</Text>
+                                    <Text style={styles.redimirTextButton}>{i18n.t('activeAchievementsScreen.eventAchievement.participate')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         }
@@ -52,7 +53,7 @@ class EventCard extends Component {
                 </View>
                 {(priceQaploins !== null && priceQaploins !== undefined) &&
                     <View style={styles.progressContainer}>
-                        <Text style={styles.progressBarCounter}>Estas inscrito a este evento.</Text>
+                        <Text style={styles.progressBarCounter}>{i18n.t('activeAchievementsScreen.eventAchievement.alreadyParticipating')}</Text>
                     </View>
                 }
             </View>

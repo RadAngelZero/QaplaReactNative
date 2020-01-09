@@ -5,8 +5,10 @@
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 
 import React, { Component } from 'react';
-import { View, ActivityIndicator, Text, SafeAreaView } from 'react-native';
+import { NativeModules, Platform, View, ActivityIndicator, Text, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
+import i18n from 'i18n-js';
+
 import { auth, messaging, notifications } from '../../utilities/firebase';
 import { retrieveData } from '../../utilities/persistance';
 import styles from './style';
@@ -17,6 +19,30 @@ import { initializeSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
+import es from './../../../assets/translations/es.json';
+import en from './../../../assets/translations/en.json';
+
+i18n.defaultLocale = 'en';
+
+/**
+ * According to the operative system, we take the local user language, after that we make a substring with the first two characters
+ * so we avoid create a lot of cases because any language have some variations, for example: 'en', 'en_US', 'en_UK', etc. we only take 'en'
+ * for the english, however in the future as the app evolve we can evolve the translations files to get cover any variation of the supported languages
+ */
+i18n.locale =
+    Platform.OS === 'ios' ?
+        NativeModules.SettingsManager.settings.AppleLocale.substring(0, 2)
+    :
+        NativeModules.I18nManager.localeIdentifier.substring(0, 2);
+
+/**
+ * Flag to support fallbacks, that means, when it's true, if the app can't find a translation for the user language (i18n.locale property)
+ * takes the default language (i18n.defaultLocale property)
+ * For some reason this flag is false by default. So don't remove this line, at least that we have all the languages covered, in this case
+ * we can remove it
+ */
+i18n.fallbacks = true;
+i18n.translations = { es, en };
 
 class AuthLoadingScreen extends Component {
     state = {
@@ -151,7 +177,7 @@ class AuthLoadingScreen extends Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
-                    <Text style={styles.textColor}>Cargando...</Text>
+                    <Text style={styles.textColor}>{i18n.t('loadingScreen.activityIndicatorText')}</Text>
                 </View>
             </SafeAreaView>
         );

@@ -5,6 +5,7 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from './../../../assets/images';
@@ -37,7 +38,7 @@ class AppSettingsMenuScreen extends Component {
         })
     }
 
-    /* Toggle Privacy Modal, if opened then when pressing 
+    /* Toggle Privacy Modal, if opened then when pressing
      * it will be closed. And the way around.
      */
     togglePrivacyModal = () => {
@@ -59,43 +60,43 @@ class AppSettingsMenuScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    <Text style={styles.headerText}>Configuración</Text>
+                    <Text style={styles.headerText}>{i18n.t('settingsMenuScreen.header')}</Text>
                     <Image style={styles.mainImage}
                         source={QaplaAppIcon} />
                     <Text style={styles.littleText}>{this.props.userName}</Text>
 
                     <View style={styles.menuHeader}>
-                        <Text style={styles.menuHeaderText}> CONFIGURACIÓN </Text>
+                        <Text style={styles.menuHeaderText}>{i18n.t('settingsMenuScreen.menuHeader')}</Text>
                     </View>
                     <ScrollView>
                         <TouchableWithoutFeedback onPress={this.goToSupport}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}> Soporte </Text>
+                                <Text style={styles.menuItemRowText}>{i18n.t('settingsMenuScreen.support')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.toggleBioModal}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>Editar Biografía</Text>
+                                <Text style={styles.menuItemRowText}>{i18n.t('settingsMenuScreen.editBio')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.toggleDiscordModal}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}> Editar Discord </Text>
+                                <Text style={styles.menuItemRowText}>{i18n.t('settingsMenuScreen.editDiscord')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.goToTermsAndConditions}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>Términos y Condiciones</Text>
+                                <Text style={styles.menuItemRowText}>{i18n.t('settingsMenuScreen.termsAndConditions')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.togglePrivacyModal}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>Aviso Privacidad</Text>
+                                <Text style={styles.menuItemRowText}>{i18n.t('settingsMenuScreen.privacyNotice')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.closeSession}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>Cerrar sesión</Text>
+                                <Text style={styles.menuItemRowText}>{i18n.t('settingsMenuScreen.closeSession')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </ScrollView>

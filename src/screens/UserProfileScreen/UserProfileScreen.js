@@ -13,6 +13,7 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, Image, Text, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -124,7 +125,7 @@ export class UserProfileScreen extends Component {
                         </View>
                         <TouchableWithoutFeedback onPress={this.openBuyQaploinsModal}>
                             <View style={styles.addQaploinsButton}>
-                                <Text style={styles.addQaploinsButtonText}>Abonar</Text>
+                                <Text style={styles.addQaploinsButtonText}>{i18n.t('userProfileScreen.buy')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
@@ -151,7 +152,7 @@ export class UserProfileScreen extends Component {
                 <BuyQaploinsModal
                     open={this.state.showBuyQaploinsModal}
                     openWhen='User wants to buy qaploins on profile'
-                    body='Puedes devolver los 300 Qaploins cuando quieras ¡y te haremos un reembolso!'
+                    body={i18n.t('userProfileScreen.buyQaploinsModal.body')}
                     onClose={this.closeBuyQaploinsModal} />
             </SafeAreaView>
         );

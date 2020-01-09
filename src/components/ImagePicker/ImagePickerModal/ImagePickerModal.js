@@ -36,7 +36,7 @@ class ImagePickerModal extends Component {
     render() {
         return (
 	        	<Modal
-					animationType="slide"
+					animationType='fade'
 					transparent={false}
 					visible={this.props.visible}
 					onRequestClose={this.props.onClose}>
@@ -46,11 +46,7 @@ class ImagePickerModal extends Component {
                                 <CloseIcon />
                             </View>
                         </TouchableWithoutFeedback>
-						<ImagePicker
-							saveImage={this.saveImage} 
-							selectImgBttnTxt={'Quiero esta foto!'}
-							discardImgBttnTxt={'No quiero esta foto'}
-						/> 
+						<ImagePicker saveImage={this.saveImage} />
 					</SafeAreaView>
 		        </Modal>
         );

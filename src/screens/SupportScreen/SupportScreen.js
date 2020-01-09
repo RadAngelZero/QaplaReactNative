@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import styles from './style'
 import { connect } from 'react-redux';
+import i18n from 'i18n-js';
 
 import { sendUserFeedback } from '../../services/database';
 
@@ -19,7 +20,6 @@ import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBtt
 class SupportScreen extends React.Component {
   constructor(props) {
       super(props);
-  
       this.state = {
           text: '',
           openModal: false
@@ -27,16 +27,13 @@ class SupportScreen extends React.Component {
   }
 
   /**
-    * Description:
-    * Closes Modal that reminds that a challenge was already sent for a match
-    *
-    * @param None
+    * @description Toggle modal visibility
     */
   toggleOpenModal = () => {
       this.setState({
         openModal: !this.state.openModal
       });
-  } 
+  }
 
   gotoPreviousScreen = () => {
       this.toggleOpenModal();
@@ -47,7 +44,7 @@ class SupportScreen extends React.Component {
       sendUserFeedback(this.state.text, this.props.uid);
       this.setState({
           text: ''
-      })  
+      });
       this.toggleOpenModal();
   }
 
@@ -57,7 +54,7 @@ class SupportScreen extends React.Component {
               <View style={styles.container}>
                   <TextInput
                         style={styles.textInput}
-                        placeholder='Contento? Frustrado? Triste? Compártenos tu opinión aquí ...'
+                        placeholder={i18n.t('supportScreen.placeholder')}
                         placeholderTextColor='#898A97'
                         onChangeText={(text) => this.setState({text})}
                         multiline
@@ -67,16 +64,15 @@ class SupportScreen extends React.Component {
                         value={this.state.text} />
                     <TouchableWithoutFeedback onPress={this.sendFeedback}>
                         <View style={styles.sendButtonContainer}>
-                            <Text style={styles.textStyle}>Envia tu comentario :)</Text>
+                            <Text style={styles.textStyle}>{i18n.t('supportScreen.send')}</Text>
                         </View>
                   </TouchableWithoutFeedback>
               </View>
               <OneTxtOneBttnModal
                     visible={ this.state.openModal }
                     onClose={ this.gotoPreviousScreen }
-                    header={ 'Gracias por tu comentario' }
-                    body={ '' }
-                    textButton={ 'OK' } />
+                    header={i18n.t('supportScreen.gratitudeModal.header')}
+                    textButton={'OK'} />
           </SafeAreaView>
       );
   }

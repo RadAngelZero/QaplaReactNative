@@ -20,6 +20,7 @@ import React from 'react';
 
 import { View, Text } from 'react-native';
 import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createSwitchNavigator} from 'react-navigation';
+import i18n from 'i18n-js';
 
 import { setCurrentScreenId, setPreviousScreenId } from './actions/screensActions';
 import { connect } from 'react-redux';
@@ -67,13 +68,13 @@ const LogrosTabNavigator = createMaterialTopTabNavigator(
     LogrosActivos: {
       screen: LogrosActivosScreen,
       navigationOptions: () => ({
-        title: 'Activos'
+        title: i18n.t('router.topNavigators.achievements.active')
       })
     },
     LogrosCompletados: {
       screen: LogrosCompletadosScreen,
       navigationOptions: () => ({
-        title: 'Completados'
+        title: i18n.t('router.topNavigators.achievements.completed')
       })
     }
   },
@@ -106,13 +107,13 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
     NotificationActividad: {
       screen: ActivityNotificationsScreen,
       navigationOptions: ({ navigation }) => ({
-        title: 'Actividad'
+        title: i18n.t('router.topNavigators.notifications.activity')
       })
     },
     NotificationRetas: {
       screen: RetasNotificationsScreen,
       navigationOptions: ({ navigation }) => ({
-        title: 'Partidas',
+        title: i18n.t('router.topNavigators.notifications.matches'),
         tabBarIcon: ({ tintColor, focused }) => (
           <BadgeForNotificationTab />
         )
@@ -148,13 +149,13 @@ const RetasTabNavigator = createMaterialTopTabNavigator(
     Publicas: {
       screen: PublicMatchesFeedScreen,
       navigationOptions: ({ navigation }) => ({
-        title: 'Públicas',
+        title: i18n.t('router.topNavigators.matches.public')
       })
     },
     MisRetas: {
       screen: MyMatchesScreen,
       navigationOptions: ({ navigation }) => ({
-        title: 'Mis Partidas'
+        title: i18n.t('router.topNavigators.matches.myMatches')
       })
     }
   },
@@ -189,7 +190,7 @@ const TabMainNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
-            <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>Eventos</Text>
+          <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{i18n.t('router.bottomNavigators.mainNavigator.events')}</Text>
         </View>
       )
     })
@@ -200,7 +201,7 @@ const TabMainNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
-            <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>Partidas</Text>
+            <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{i18n.t('router.bottomNavigators.mainNavigator.matches')}</Text>
         </View>
       )
     })
@@ -211,7 +212,7 @@ const TabMainNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'}/>
-            <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>Perfil</Text>
+            <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{i18n.t('router.bottomNavigators.mainNavigator.profile')}</Text>
         </View>
       )
     })

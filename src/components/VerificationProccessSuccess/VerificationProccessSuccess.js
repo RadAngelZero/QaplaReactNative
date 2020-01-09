@@ -3,6 +3,7 @@
 
 import React, { Component } from 'react';
 import { View, Image, Text } from 'react-native';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from '../../../assets/images';
@@ -15,9 +16,9 @@ class VerificationProccessSuccess extends Component {
             <View style={styles.container}>
                 <Image source={VerificationSuccess} />
                 <View style={styles.greetingContainer}>
-                    <Text style={styles.title}>¡Gracias!</Text>
+                    <Text style={styles.title}>{i18n.t('verificationScreen.verificationProcessSuccess.title')}</Text>
                     <Text style={styles.body}>
-                        Hemos recibido tu solicitud, este proceso puede tardar hasta 24 hrs. Apreciamos tu paciencia, estamos trabajando para ti :D
+                        {i18n.t('verificationScreen.verificationProcessSuccess.body')}
                     </Text>
                 </View>
             </View>

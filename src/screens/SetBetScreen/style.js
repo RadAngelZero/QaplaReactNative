@@ -74,7 +74,8 @@ export default styles = StyleSheet.create({
     },
     betEntrada: {
         fontSize: 12,
-        color: '#B5B5B5'
+        color: '#B5B5B5',
+        textAlign: 'center'
     },
     changeBetIcon: {
         marginTop: heightPercentageToPx(0.49)

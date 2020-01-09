@@ -10,7 +10,6 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 export default StyleSheet.create({
     sfvContainer: {
       flex: 1,
-      
       backgroundColor:'#131833'
     },
     mainContainer: {

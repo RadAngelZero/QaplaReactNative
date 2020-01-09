@@ -6,6 +6,8 @@
 import React, { Component } from 'react';
 import { View, TextInput, Text, TouchableWithoutFeedback, Image, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
+import i18n from 'i18n-js';
+
 import Images from './../../../assets/images';
 import styles from './style';
 
@@ -30,24 +32,23 @@ class ChooseUserNameScreen extends Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <View style={styles.formContainer}>
-                        <Text style={styles.title}>Crea tu nombre de usuario</Text>
+                        <Text style={styles.title}>{i18n.t('chooseUserNameScreen.title')}</Text>
                         <TextInput
                             style = {styles.inputText}
-                            placeholder = 'Introduce tu Usuario'
+                            placeholder={i18n.t('chooseUserNameScreen.userNamePlaceholder')}
                             autoCapitalize='none'
-                            onChangeText = {(text) => this.setState({ userName: text, userNameTaken: false })}
-                            value = {this.state.userName}
+                            onChangeText= {(text) => this.setState({ userName: text, userNameTaken: false })}
                             onSubmitEditing={this.validateAndSaveUserName} />
                     </View>
                     {this.state.showErrorMessage &&
                     <View>
-                        <Text style={styles.buttonText}>Ese nombre de usuario ya esta en uso, prueba con otro</Text>
+                        <Text style={styles.buttonText}>{i18n.t('chooseUserNameScreen.userNameAlreadyTaken')}</Text>
                     </View>
                     }
                     <View>
                         <TouchableWithoutFeedback onPress={this.validateAndSaveUserName}>
                             <View style={styles.buttonContainer}>
-                                <Text style={styles.buttonText}>Continuar</Text>
+                                <Text style={styles.buttonText}>{i18n.t('chooseUserNameScreen.continue')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>

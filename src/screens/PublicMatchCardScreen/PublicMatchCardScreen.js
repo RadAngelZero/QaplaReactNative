@@ -239,10 +239,10 @@ class PublicMatchCardScreen extends Component {
         // If there are notifications on the match, we apply filter() to this.props.matchNotifications
         // with its Object keys, to obtain an array with notifications that has match id equal to
         // id from the Match card being cancelled.
-        if (this.props.notificationMatch === undefined || this.props.notificationMatch === null){
+        if (this.props.matchNotifications !== undefined && this.props.matchNotifications !== null){
             const mNotiKeys = Object.keys(this.props.matchNotifications);
 
-            const numNotiArr = mNotiKeys.filter( (keyValue) => {
+            const numNotiArr = mNotiKeys.filter((keyValue) => {
                 return this.props.matchNotifications[keyValue] === matchCard.idMatch;
             });
 

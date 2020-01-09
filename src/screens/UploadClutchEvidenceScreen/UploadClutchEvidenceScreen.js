@@ -5,6 +5,7 @@
 
 import React, { Component } from 'react';
 import { View, TextInput, Text, TouchableWithoutFeedback, Linking } from 'react-native';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from './../../../assets/images';
@@ -57,21 +58,26 @@ export class UploadClutchEvidenceScreen extends Component {
                 <TutorialCarousel
                     images={images}
                     backToUploadMatchResultScreen={this.props.backToUploadMatchResultScreen} />
-                <TextInput placeholder='Inserta aqui el URL del clip'
+                <TextInput placeholder={i18n.t('uploadClutchEvidenceScreen.insertClipPlaceholder')}
                     placeholderTextColor='#898A97'
                     keyboardType='url'
                     autoCapitalize='none'
                     onChangeText={this.setUrlText}
-                    style={[styles.urlTextInput, { borderBottomColor: this.state.showUrlError ? '#FF0000' : 'transparent' }]} />
+                    style={[styles.urlTextInput, { borderBottomColor: this.state.showUrlError ? '#FF0000' : 'transparent' }]}
+                    onSubmitEditing={this.submitData} />
                 <Text style={styles.instructions}>
-                    Sube tu clip a tu perfil de CLUTCH usando el <Text style={styles.highlightedText}>#qaplagaming</Text> con el <Text style={styles.highlightedText}>ID de la partida</Text> en la descripción y compártenos el link, como se muestra en la imagen de arriba ;)
+                    {i18n.t('uploadClutchEvidenceScreen.instructions.firstPart')}
+                    <Text style={styles.highlightedText}>{i18n.t('uploadClutchEvidenceScreen.instructions.highlightedText1')}</Text>
+                    {i18n.t('uploadClutchEvidenceScreen.instructions.connector')}
+                    <Text style={styles.highlightedText}>{i18n.t('uploadClutchEvidenceScreen.instructions.highlightedText2')}</Text>
+                    {i18n.t('uploadClutchEvidenceScreen.instructions.secondPart')}
                 </Text>
                 <TouchableWithoutFeedback onPress={this.submitData}>
                     <View style={styles.readyButton}>
-                        <Text style={styles.readyButtonText}>Listo</Text>
+                        <Text style={styles.readyButtonText}>{i18n.t('uploadClutchEvidenceScreen.done')}</Text>
                     </View>
                 </TouchableWithoutFeedback>
-                <Text style={styles.goToClutchButtonText} onPress={this.linkToClutchApp} >Ir a Clutch</Text>
+                <Text style={styles.goToClutchButtonText} onPress={this.linkToClutchApp}>{i18n.t('uploadClutchEvidenceScreen.goToClutch')}</Text>
             </View>
         );
     }

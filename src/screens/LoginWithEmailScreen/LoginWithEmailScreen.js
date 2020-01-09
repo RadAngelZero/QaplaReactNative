@@ -5,6 +5,8 @@
 
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback, TextInput, SafeAreaView } from 'react-native';
+import i18n from 'i18n-js';
+
 import { signInWithEmailAndPassword } from '../../services/auth';
 import Images from './../../../assets/images';
 import styles from './style';
@@ -47,24 +49,24 @@ class LoginWithEmailScreen extends Component {
                     </View>
                     <View style={{ width: '100%' }}>
                         <TextInput style={styles.inputText}
-                            placeholder='Email o Usuario'
+                            placeholder={i18n.t('loginWithEmailScreen.emailPlaceholder')}
                             autoCapitalize='none'
                             onChangeText={(text) => this.setState({ email: text })}
                             onSubmitEditing={() => this.passwordInput.focus()}
                             returnKeyType='next' />
                         <TextInput style={styles.inputText}
-                            placeholder='Contraseña'
+                            placeholder={i18n.t('loginWithEmailScreen.passwordPlaceholder')}
                             autoCapitalize='none'
                             onChangeText={(text) => this.setState({ password: text })}
                             secureTextEntry
                             ref={(passwordInput) => this.passwordInput = passwordInput}
                             onSubmitEditing={this.logInUser} />
-                        <Text style={styles.forgotPasswordText} >¿Olvidaste tu contraseña?</Text>
+                        <Text style={styles.forgotPasswordText}>{i18n.t('loginWithEmailScreen.forgotPassword')}</Text>
                     </View>
                     <View>
                         <TouchableWithoutFeedback onPress={this.logInUser}>
                             <View style={styles.buttonContainer}>
-                                <Text style={styles.buttonText} >INICIAR SESION</Text>
+                                <Text style={styles.buttonText}>{i18n.t('loginWithEmailScreen.login')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>

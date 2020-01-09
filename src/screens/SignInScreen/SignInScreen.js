@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+import i18n from 'i18n-js';
+
 import styles from './style';
 import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
@@ -13,7 +15,7 @@ class SignInScreen extends Component {
     componentDidMount() {
         setupGoogleSignin();
     }
-    
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -24,17 +26,19 @@ class SignInScreen extends Component {
                     <View>
                         <TouchableWithoutFeedback onPress={() => signInWithFacebook(this.props.navigation)}>
                             <View style={styles.facebookButtonContainer}>
-                                <Text style={[styles.whiteColor, styles.alignSelfCenter]}>Continuar con Facebook</Text>
+                                <Text style={[styles.whiteColor, styles.alignSelfCenter]}>{i18n.t('signInScreen.facebookSignin')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={() => signInWithGoogle(this.props.navigation)}>
                             <View style={styles.googleButtonContainer}>
-                                <Text style={[styles.googleButtonText, styles.alignSelfCenter]}>Continuar con Google</Text>
+                                <Text style={[styles.googleButtonText, styles.alignSelfCenter]}>{i18n.t('signInScreen.googleSignin')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <View style={styles.alreadyHaveAccountTextContainer}>
-                            <Text style={[styles.whiteColor, styles.alignSelfCenter, styles.fontBold]}>¿Ya tienes cuenta?</Text>
-                            <Text style={[styles.enterWithEmailText, styles.alignSelfCenter, styles.fontBold]} onPress={() => this.props.navigation.navigate('Login')}>Ingresa con correo</Text>
+                            <Text style={[styles.whiteColor, styles.alignSelfCenter, styles.fontBold]}>{i18n.t('signInScreen.alreadyHaveAccount')}</Text>
+                            <Text style={[styles.enterWithEmailText, styles.alignSelfCenter, styles.fontBold]} onPress={() => this.props.navigation.navigate('Login')}>
+                                {i18n.t('signInScreen.emailSignin')}
+                            </Text>
                         </View>
                     </View>
                     <Image style={styles.backgroundImage}

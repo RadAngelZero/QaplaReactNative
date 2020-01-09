@@ -1,13 +1,15 @@
 // josep.sanahuja - 22-09-2019 - us123 - File creation
 
 import React, { Component } from 'react';
-import { 
+import {
   View,
   Text,
   Modal,
   TouchableWithoutFeedback,
   Image
 } from 'react-native';
+import i18n from 'i18n-js';
+
 import styles from './style';
 import { withNavigation } from 'react-navigation';
 
@@ -17,7 +19,7 @@ const CloseIcon = Images.svg.closeIcon;
 
 class QGCameraModal extends Component {
 
-    /** 
+    /**
     * Saves the picture taken by Camera, hides the modal and navigates
     * to a next screen in case of beeing it defined.
     */
@@ -37,10 +39,8 @@ class QGCameraModal extends Component {
     /**
     * Description:
     * Closes the Modal by using the function given in props.
-    * 
-    * @param None
     */
-    closeModal = async () => {
+    closeModal = () => {
       // Close the Modal
       this.props.onClose();
     }
@@ -48,7 +48,7 @@ class QGCameraModal extends Component {
     render() {
         return (
         	<Modal
-	          animationType="slide"
+	          animationType='fade'
 	          transparent={false}
 	          visible={this.props.visible}
 	          onRequestClose={this.props.onClose}>
@@ -62,10 +62,10 @@ class QGCameraModal extends Component {
 					            <Text style={styles.headerText}>{this.props.header}</Text>
 					            <Image
 		            	        source={{uri: this.props.pictureUri}}
-		                      style={styles.picture} /> 
+		                      style={styles.picture} />
 					            <TouchableWithoutFeedback onPress={this.action}>
 						              <View style={styles.okButton}>
-							                <Text style={styles.text}>{this.props.okTextButton}</Text>
+							                <Text style={styles.text}>{i18n.t('qGCameraModal.selectImage')}</Text>
 						              </View>
 					            </TouchableWithoutFeedback>
 			            </View>

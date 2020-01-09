@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import i18n from 'i18n-js';
 
 import styles from './style';
 import CheckBox from '../CheckBox/CheckBox';
@@ -43,24 +44,24 @@ export class MatchExpireRememberModal extends Component {
         return (
             <Modal
                 transparent
-                animationType='none'
+                animationType='fade'
                 visible={this.props.visible}
                 onRequestClose={this.props.onClose}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
                         <View style={styles.containerMsgModal}>
-                            <Text style={styles.headerText}>Recuerda</Text>
+                            <Text style={styles.headerText}>{i18n.t('matchExpireRememberModal.header')}</Text>
                             <Text style={styles.paragraph}>
-                                La partida expirará después de 10 minutos si no recibe y se acepta un desafio de otro jugador.
+                                {i18n.t('matchExpireRememberModal.paragraph')}
                             </Text>
                             <CheckBox
                                 style={styles.checkbox}
-                                label='Entendido, no volver a mostrar este mensaje'
+                                label={i18n.t('matchExpireRememberModal.dontShowItAgain')}
                                 selected={this.state.dontShowModalAgain}
                                 onPress={this.toogleCheckBox} />
                             <TouchableWithoutFeedback onPress={this.confirmModal}>
                                 <View style={styles.okButton}>
-                                    <Text style={styles.buttonText}>Confirmar</Text>
+                                    <Text style={styles.buttonText}>{i18n.t('matchExpireRememberModal.okButton')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

@@ -240,8 +240,15 @@ class PublicMatchesFeedScreen extends Component {
                 <View style={style.container}>
                     <MatchCardList {...this.state} />
                 </View>
-                    <CreateRetasButton
-                        onPress={this.onCrearRetaButtonPress} />
+                <HighlightModal
+                    visible={this.state.showHg1Modal}
+                    onClose={this.toggleHg1Modal}
+                    showDelay={1000}
+                    cb1={this.markHg1}
+                    header={i18n.t('publicMatchesFeedScreen.highlightModal.header')}
+                    body={i18n.t('publicMatchesFeedScreen.highlightModal.body')}>
+                    <CreateRetasButton onPress={this.onCrearRetaButtonPress} />
+                </HighlightModal>
             </>
         );
     }

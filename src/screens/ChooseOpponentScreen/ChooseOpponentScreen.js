@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 import { View, Text, TextInput, BackHandler, SafeAreaView } from 'react-native';
+import i18n from 'i18n-js';
+
 import styles from './style';
 
 class ChooseOpponentScreen extends Component {
@@ -12,13 +14,13 @@ class ChooseOpponentScreen extends Component {
                     <View style={styles.headerContainer}>
                         <View style={styles.titleRow}>
                             <Text style={styles.titleText}>
-                                Buscar usuario a retar
+                                {i18n.t('chooseOpponentScreen.title')}
                             </Text>
                             <Text style={styles.titleText} onPress={this.backToMatchTypeScreen}>
                                 X
                             </Text>
                         </View>
-                        <TextInput placeholder='Buscar usuarios'
+                        <TextInput placeholder={i18n.t('chooseOpponentScreen.searchPlaceholder')}
                             style={styles.inputText} />
                     </View>
                 </View>

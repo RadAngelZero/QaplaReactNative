@@ -105,7 +105,7 @@
         }
     },
     "notificationsScreen":{
-        "notificationsHeader": "Notificaciones",
+        "notificationsHeader": "Notifications",
         "notificationTypes": {
             "notificationWinner": "You has been declared the winner of the match.",
             "notificationLooser": "%{userName} has been declared the winner of the match.",
@@ -198,6 +198,60 @@
             "body": "We got your request, this process can take 24 hrs. We apreciate your patiente, We are working for you."
         }
     },
+    "uploadMatchResultScreen": {
+        "results": {
+            "won": "Won",
+            "draw": "Draw",
+            "lost": "Lost",
+            "dontPlayed": "Don't Played"
+        },
+        "evidence": "Evidence",
+        "uploadResult": "Upload Result"
+    },
+    "uploadClutchEvidenceScreen": {
+        "insertClipPlaceholder": "Insert here the URL of the clip",
+        "instructions": {
+            "firstPart": "Upload your clip to your profile by using the ",
+            "highlightedText1": "#qaplagaming",
+            "connector": " with the ",
+            "highlightedText2": "ID of the match",
+            "secondPart": " in the description and share us the link, just like in the image of the top ;)"
+        },
+        "done": "Done",
+        "goToClutch": "Go to Clutch",
+        "uploadMatchResultsModal": {
+            "header": "¡Congratulations!",
+            "paragraph": "Your result was uploaded correctly",
+            "okButton": "Got it"
+        },
+        "uploadMatchEvidenceModal": {
+            "header": "Upload your evidence",
+            "paragraph": "Remember upload your evidence of the played match! in case of dispute for the results the evidence is your better proof!",
+            "okButton": "Continue without evidence"
+        }
+    },
+    "signInScreen": {
+        "facebookSignin": "Continue with Facebook",
+        "googleSignin": "Continue with Google",
+        "alreadyHaveAccount": "Already have account?",
+        "emailSignin": "Sign in with email"
+    },
+    "loginWithEmailScreen": {
+        "emailPlaceholder": "Email",
+        "passwordPlaceholder": "Password",
+        "forgotPassword": "Forgot your password",
+        "login": "Log in"
+    },
+    "chooseUserNameScreen": {
+        "title": "Create yout username",
+        "userNamePlaceholder": "Insert here your username",
+        "userNameAlreadyTaken": "This name is already in use, try with other",
+        "continue": "Continue"
+    },
+    "chooseOpponentScreen": {
+        "title": "Search user to challenge",
+        "searchPlaceholder": "Search user"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Check your notifications",
@@ -211,5 +265,32 @@
         "showMorePhotos": "Show more photos",
         "selectImage": "Select this photo!",
         "discardImage": "I don't want this photo"
+    },
+    "qGCamera": {
+        "androidPermissions": {
+            "title": "Permission to use the camera",
+            "message": "We need your permission to use your camera",
+            "buttonPositive": "Accept",
+            "buttonNegative": "Cancel"
+        },
+        "takePhoto": "Take Photo"
+    },
+    "qGCameraModal": {
+        "selectImage": "I want to use this photo!"
+    },
+    "addGamerTagModal": {
+        "body": "The game %{selectedGame} is going to be added to your profile with the gamertag %{gamerTag}. Are you sure?",
+        "accept": "Accept"
+    },
+    "notEnoughQaploinsModal": {
+        "header": "The adversary has not enough Qoins",
+        "accept": "Got it!",
+        "warning": "The notification will be removed from the list"
+    },
+    "matchExpireRememberModal": {
+        "header": "Remember",
+        "paragraph": "The match expires after 10 minutes if you don't accept a challenge from other user or if it's not challenged from other user.",
+        "dontShowItAgain": "Don't show this message again",
+        "okButton": "Got it"
     }
 }

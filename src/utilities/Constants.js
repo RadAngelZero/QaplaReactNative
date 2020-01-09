@@ -87,7 +87,7 @@ export const QAPLOIN_PACKAGES = [ { qaploins: 300, price: '$2 USD' } ];
 export const DB_NEW_LINE_SEPARATOR = "QaplaMoo";
 
 // Verification Process
-export const VERIFICATION_COUNTDOWN_MILISECONDS = 120000;
+export const VERIFICATION_COUNTDOWN_MILISECONDS = 60000;
 
 // Navigation Top Bar Icons
 export const NAV_TOPBAR_ICON_LEFT_MARGIN = 8;

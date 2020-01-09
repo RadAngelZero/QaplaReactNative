@@ -661,7 +661,7 @@ export async function sendUserFeedback(message, userId) {
     let res = null;
     const date = new Date();
     const year = date.getUTCFullYear();
-    const month = date.getUTCMonth();
+    const month = date.getUTCMonth() + 1; // The months with this functions start from 0 (January = 0)
     const dayHourMinuteSecond = date.getUTCDay().toString() + ' d:' + date.getUTCHours().toString() + ' h:' + date.getUTCMinutes().toString() + ' m:' + date.getUTCSeconds().toString() + ' s';
 
     try {
@@ -751,6 +751,19 @@ export async function getAnnouncements() {
 export async function updateUserDiscordTag(uid, discordTag) {
     try {
         await usersRef.child(uid).update({ discordTag });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+/**
+ * Update the bio of the user
+ * @param {string} uid User identifier on the database
+ * @param {string} bio The value of the biograpy to save
+ */
+export async function updateUserBio(uid, bio) {
+    try {
+        await usersRef.child(uid).update({ bio });
     } catch (error) {
         console.error(error);
     }

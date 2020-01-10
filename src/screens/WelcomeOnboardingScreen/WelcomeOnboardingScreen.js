@@ -10,13 +10,13 @@ import {
   Text,
   SafeAreaView
 } from 'react-native'
-import i18n from 'i18n-js';
 
 import styles from './style'
 
 import CarouselPng from '../../components/CarouselPng/CarouselPng'
 import Images from '@assets/images'
 import { storeData } from '../../utilities/persistance';
+import { translate } from '../../utilities/i18';
 
 export default class WelcomeOnboardingScreen extends React.Component {
 	constructor(props) {
@@ -40,23 +40,23 @@ export default class WelcomeOnboardingScreen extends React.Component {
     const carrouselData = [
       	{
 			Image: Images.png.connectOnBoarding.img,
-			description: i18n.t('onBoardingScreen.connect.description'),
-			title: i18n.t('onBoardingScreen.connect.title')
+			description: translate('onBoardingScreen.connect.description'),
+			title: translate('onBoardingScreen.connect.title')
 		},
       	{
 			Image: Images.png.compiteOnBoarding.img,
-			description: i18n.t('onBoardingScreen.compete.description'),
-			title: i18n.t('onBoardingScreen.compete.title')
+			description: translate('onBoardingScreen.compete.description'),
+			title: translate('onBoardingScreen.compete.title')
 		},
       	{
 			Image: Images.png.shareOnBoarding.img,
-			description: i18n.t('onBoardingScreen.share.description'),
-			title: i18n.t('onBoardingScreen.share.title')
+			description: translate('onBoardingScreen.share.description'),
+			title: translate('onBoardingScreen.share.title')
 		},
       	{
 			Image: Images.png.walletOnBoarding.img,
-			description: i18n.t('onBoardingScreen.withdraw.description'),
-			title: i18n.t('onBoardingScreen.withdraw.title')
+			description: translate('onBoardingScreen.withdraw.description'),
+			title: translate('onBoardingScreen.withdraw.title')
 		}
     ];
 
@@ -73,7 +73,7 @@ export default class WelcomeOnboardingScreen extends React.Component {
 				<View style={styles.progressRow}>
 					<Text onPress={this.goToScreenPublicas} style={styles.finishTextButton}>
 						{this.state.selectedIndex === carrouselData.length - 1 &&
-							i18n.t('onBoardingScreen.finish')
+							translate('onBoardingScreen.finish')
 						}
 					</Text>
 				</View>

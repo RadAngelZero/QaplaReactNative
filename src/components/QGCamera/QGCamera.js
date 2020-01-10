@@ -8,7 +8,6 @@ import {
   TouchableWithoutFeedback,
   Modal
 } from 'react-native'
-import i18n from 'i18n-js';
 
 import styles from './style'
 import Images from './../../../assets/images';
@@ -16,6 +15,7 @@ import { withNavigation } from 'react-navigation';
 import { RNCamera } from 'react-native-camera';
 
 import QGCameraModal from './QGCameraModal/QGCameraModal';
+import { translate } from '../../utilities/i18';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -127,10 +127,10 @@ class QGCamera extends React.Component {
                             flashMode={RNCamera.Constants.FlashMode.off}
                             captureAudio={false}
                             androidCameraPermissionOptions={{
-                              title: i18n.t('qGCamera.androidPermissions.title'),
-                              message: i18n.t('qGCamera.androidPermissions.message'),
-                              buttonPositive: i18n.t('qGCamera.androidPermissions.buttonPositive'),
-                              buttonNegative: i18n.t('qGCamera.androidPermissions.buttonNegative'),
+                              title: translate('qGCamera.androidPermissions.title'),
+                              message: translate('qGCamera.androidPermissions.message'),
+                              buttonPositive: translate('qGCamera.androidPermissions.buttonPositive'),
+                              buttonNegative: translate('qGCamera.androidPermissions.buttonNegative'),
                             }}
                           />
                           <View style={styles.closeIconContainer}>
@@ -142,7 +142,7 @@ class QGCamera extends React.Component {
                           </View>
                           <TouchableWithoutFeedback onPress={this.takePicture}>
                               <View style={styles.buttonContainer}>
-                                  <Text style={styles.textStyle}>{i18n.t('qGCamera.takePhoto')}</Text>
+                                  <Text style={styles.textStyle}>{translate('qGCamera.takePhoto')}</Text>
                               </View>
                           </TouchableWithoutFeedback>
                       </View>

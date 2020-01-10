@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Modal, View, TouchableWithoutFeedback, Text, TextInput } from 'react-native';
 import { connect } from 'react-redux';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from './../../../assets/images';
 import { updateUserBio } from '../../services/database';
+import { translate } from '../../utilities/i18';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -53,11 +53,11 @@ class AddBioModal extends Component {
                                 <CloseIcon />
                             </View>
                         </TouchableWithoutFeedback>
-                        <Text style={styles.modalTitle}>{i18n.t('settingsMenuScreen.addBioModal.title')}</Text>
+                        <Text style={styles.modalTitle}>{translate('settingsMenuScreen.addBioModal.title')}</Text>
                         <TextInput
                             onFocus={this.toggleInputSelection}
                             onBlur={this.toggleInputSelection}
-                            placeholder={i18n.t('settingsMenuScreen.addBioModal.placeholder')}
+                            placeholder={translate('settingsMenuScreen.addBioModal.placeholder')}
                             placeholderTextColor='#B5B5B5'
                             defaultValue={this.props.bio}
                             multiline
@@ -68,12 +68,12 @@ class AddBioModal extends Component {
                         <View style={styles.buttonsContainer}>
                             <TouchableWithoutFeedback onPress={this.closeModal}>
                                 <View style={styles.cancelTextButton}>
-                                    <Text style={styles.textOfButtons}>{i18n.t('settingsMenuScreen.addBioModal.cancel')}</Text>
+                                    <Text style={styles.textOfButtons}>{translate('settingsMenuScreen.addBioModal.cancel')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={this.updateBio}>
                                 <View style={styles.saveTextButton}>
-                                    <Text style={styles.textOfButtons}>{i18n.t('settingsMenuScreen.addBioModal.done')}</Text>
+                                    <Text style={styles.textOfButtons}>{translate('settingsMenuScreen.addBioModal.done')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

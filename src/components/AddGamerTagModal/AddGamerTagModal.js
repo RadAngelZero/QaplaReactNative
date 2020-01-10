@@ -8,13 +8,13 @@
 import React, { Component } from 'react';
 import { Modal, View, TextInput, Text, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import { addGameToUser } from '../../services/database';
 import Images from './../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { subscribeUserToTopic } from '../../services/messaging';
+import { translate } from '../../utilities/i18';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -126,7 +126,7 @@ export class AddGamerTagModal extends Component {
                                     onChangeText={(text) => this.setState({ gamerTagText: text })}
                                     value={this.state.gamerTagText}
                                     onSubmitEditing={this.saveGameOnUser} />
-                                <Text style={styles.modalText}>{i18n.t('addGamerTagModal.body', { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText })}</Text>
+                                <Text style={styles.modalText}>{translate('addGamerTagModal.body', { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText })}</Text>
                                 <TouchableWithoutFeedback
                                     disabled={!this.isValidGamerTag}
                                     onPress={this.saveGameOnUser}>

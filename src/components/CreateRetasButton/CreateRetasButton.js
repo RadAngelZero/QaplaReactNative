@@ -2,16 +2,16 @@
 
 import React, { Component } from 'react';
 import { TouchableWithoutFeedback, View, Text } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
+import { translate } from '../../utilities/i18';
 
 class CreateRetasButton extends Component {
     render() {
         return (
             <TouchableWithoutFeedback onPress={this.props.onPress}>
                 <View style={[styles.buttonContainer, styles.container]}>
-                    <Text style={styles.textStyle}>{i18n.t('publicMatchesFeedScreen.createMatchesButton')}</Text>
+                    <Text style={styles.textStyle}>{translate('publicMatchesFeedScreen.createMatchesButton')}</Text>
                 </View>
             </TouchableWithoutFeedback>
         );

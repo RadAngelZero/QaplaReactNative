@@ -8,7 +8,6 @@ import {
 	Modal,
 	TouchableWithoutFeedback
 } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import {
@@ -17,6 +16,7 @@ import {
 import {
 	withNavigation
 } from 'react-navigation';
+import { translate } from '../../utilities/i18';
 
 /**
  * Risky praxis, always call the components with the same name as the file (NotEnoughQaploinsModal in this case)
@@ -54,13 +54,13 @@ class NotEnoughQaploins extends Component {
 	          	onRequestClose={this.props.onClose}>
 	          		<View style={styles.mainContainer}>
               			<View style={styles.container}>
-			                <Text style={styles.headerText}>{i18n.t('notEnoughQaploinsModal.header')}</Text>
+			                <Text style={styles.headerText}>{translate('notEnoughQaploinsModal.header')}</Text>
 			                <TouchableWithoutFeedback onPress={this.action}>
 			                  <View style={styles.okButton}>
-			                    <Text style={styles.text}>{i18n.t('notEnoughQaploinsModal.accept')}</Text>
+			                    <Text style={styles.text}>{translate('notEnoughQaploinsModal.accept')}</Text>
 			                  </View>
 			                </TouchableWithoutFeedback>
-			                <Text style={styles.smallText}>{i18n.t('notEnoughQaploinsModal.warning')}</Text>
+			                <Text style={styles.smallText}>{translate('notEnoughQaploinsModal.warning')}</Text>
 		                </View>
 		            </View>
 	        </Modal>

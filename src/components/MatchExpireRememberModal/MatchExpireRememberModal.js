@@ -3,11 +3,11 @@
 import React, { Component } from 'react';
 import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import CheckBox from '../CheckBox/CheckBox';
 import { storeData } from '../../utilities/persistance';
+import { translate } from '../../utilities/i18';
 
 export class MatchExpireRememberModal extends Component {
     state = {
@@ -50,18 +50,18 @@ export class MatchExpireRememberModal extends Component {
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
                         <View style={styles.containerMsgModal}>
-                            <Text style={styles.headerText}>{i18n.t('matchExpireRememberModal.header')}</Text>
+                            <Text style={styles.headerText}>{translate('matchExpireRememberModal.header')}</Text>
                             <Text style={styles.paragraph}>
-                                {i18n.t('matchExpireRememberModal.paragraph')}
+                                {translate('matchExpireRememberModal.paragraph')}
                             </Text>
                             <CheckBox
                                 style={styles.checkbox}
-                                label={i18n.t('matchExpireRememberModal.dontShowItAgain')}
+                                label={translate('matchExpireRememberModal.dontShowItAgain')}
                                 selected={this.state.dontShowModalAgain}
                                 onPress={this.toogleCheckBox} />
                             <TouchableWithoutFeedback onPress={this.confirmModal}>
                                 <View style={styles.okButton}>
-                                    <Text style={styles.buttonText}>{i18n.t('matchExpireRememberModal.okButton')}</Text>
+                                    <Text style={styles.buttonText}>{translate('matchExpireRememberModal.okButton')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

@@ -17,7 +17,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, ScrollView, View, TouchableWithoutFeedback, Text } from 'react-native';
 import { connect } from 'react-redux';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from './../../../assets/images';
@@ -30,6 +29,7 @@ import VerificationProccessSuccess from '../../components/VerificationProccessSu
 import { sendVerificationSMSToUser, linkUserAccountWithPhone } from '../../services/auth';
 import { createVerificationRequest } from '../../services/database';
 import { PhoneProvider } from '../../utilities/firebase';
+import { translate } from '../../utilities/i18';
 
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
@@ -290,15 +290,15 @@ class VerificationScreen extends Component {
     setButtonText = () => {
         // TODO Josep Maria: (maybe) 17-10-2019 : Create each button per separated insteda of applying
         // a lot of logic to one only button.
-        let buttonText = i18n.t('verificationScreen.continue');
+        let buttonText = translate('verificationScreen.continue');
 
         if (this.state.indexPositions.length >= 3) {
             if (this.state.nextIndex === this.state.indexPositions.length - 1) {
-                buttonText = i18n.t('verificationScreen.sendCode');
+                buttonText = translate('verificationScreen.sendCode');
             } else if (this.state.nextIndex === this.state.indexPositions.length) {
-                buttonText = i18n.t('verificationScreen.verify');
+                buttonText = translate('verificationScreen.verify');
             } else if (this.state.nextIndex >= this.state.indexPositions.length + 1) {
-                buttonText = i18n.t('verificationScreen.finish');
+                buttonText = translate('verificationScreen.finish');
             }
         }
 

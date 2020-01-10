@@ -12,7 +12,7 @@ import {
     TouchableWithoutFeedback
 } from 'react-native'
 import styles from './style'
-import i18n from 'i18n-js';
+import { translate } from '../../utilities/i18';
 
 export default class ImagePicker extends React.Component {
   constructor(props) {
@@ -41,29 +41,26 @@ export default class ImagePicker extends React.Component {
   */
   loadPictures = async () => {
       try {
+            let deviceImages;
             if (Platform.OS === 'android') {
                 const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
                 if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                    const deviceImages = await CameraRoll.getPhotos({
+                    deviceImages = await CameraRoll.getPhotos({
                         first: this.state.numPictures,
                         assetType: 'Photos'
                     });
-
-                    this.setState({
-                        photos: deviceImages.edges
-                    });
-                  }
+                }
             } else {
-                const res = await CameraRoll.getPhotos({
+                deviceImages = await CameraRoll.getPhotos({
                     first: this.state.numPictures,
                     assetType: 'Photos',
                     groupTypes: 'All'
                 });
-
-                this.setState({
-                    photos: res.edges
-                });
             }
+
+            this.setState({
+                photos: deviceImages.edges
+            });
       }
       catch (err) {
           console.log(err);
@@ -164,7 +161,7 @@ export default class ImagePicker extends React.Component {
             {this.state.photos.length > 0 && this.state.morePictures && !this.state.pictureSelected &&
                 <TouchableWithoutFeedback onPress={this.loadMorePictures}>
                     <View style={styles.moreButtonContainer}>
-                        <Text style={styles.textStyle}>{i18n.t('imagePicker.showMorePhotos')}</Text>
+                        <Text style={styles.textStyle}>{translate('imagePicker.showMorePhotos')}</Text>
                     </View>
                 </TouchableWithoutFeedback>
             }
@@ -173,12 +170,12 @@ export default class ImagePicker extends React.Component {
             <>
                 <TouchableWithoutFeedback onPress={this.saveImage}>
                     <View style={styles.okButtonContainer}>
-                        <Text style={styles.textStyle}>{i18n.t('imagePicker.selectImage')}</Text>
+                        <Text style={styles.textStyle}>{translate('imagePicker.selectImage')}</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={this.unselectPicture}>
                     <View style={styles.cancelButtonContainer}>
-                        <Text style={styles.textStyle}>{i18n.t('imagePicker.discardImage')}</Text>
+                        <Text style={styles.textStyle}>{translate('imagePicker.discardImage')}</Text>
                     </View>
                 </TouchableWithoutFeedback>
             </>

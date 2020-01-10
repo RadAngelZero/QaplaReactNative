@@ -8,12 +8,12 @@ import {
   TouchableWithoutFeedback,
   Image
 } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import { withNavigation } from 'react-navigation';
 
 import Images from './../../../../assets/images';
+import { translate } from '../../../utilities/i18';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -65,7 +65,7 @@ class QGCameraModal extends Component {
 		                      style={styles.picture} />
 					            <TouchableWithoutFeedback onPress={this.action}>
 						              <View style={styles.okButton}>
-							                <Text style={styles.text}>{i18n.t('qGCameraModal.selectImage')}</Text>
+							                <Text style={styles.text}>{translate('qGCameraModal.selectImage')}</Text>
 						              </View>
 					            </TouchableWithoutFeedback>
 			            </View>

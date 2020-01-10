@@ -8,10 +8,10 @@ import {
   TouchableWithoutFeedback,
   Dimensions
 } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import { withNavigation } from 'react-navigation';
+import { translate } from '../../utilities/i18';
 
 const TOP_QUADRANT            = 0;
 const BOTTOM_QUADRANT         = 1;
@@ -185,7 +185,7 @@ class HighlightModal extends Component {
                           <View style={styles.infoContainer}>
                             <TouchableWithoutFeedback onPress={this.action}>
                                 <View>
-                                    <Text style={styles.okButton}>{i18n.t('highlightModal.acceptButton')}</Text>
+                                    <Text style={styles.okButton}>{translate('highlightModal.acceptButton')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                           </View>

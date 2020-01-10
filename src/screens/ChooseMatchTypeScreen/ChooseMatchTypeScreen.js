@@ -3,11 +3,11 @@
 
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from '../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
+import { translate } from '../../utilities/i18';
 
 const LightningIcon = Images.svg.lightningIcon;
 const SearchIcon = Images.svg.searchIcon;
@@ -46,7 +46,7 @@ class ChooseMatchTypeScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    <Text style={styles.titleText}>{i18n.t('chooseMatchTypeScreen.title')}</Text>
+                    <Text style={styles.titleText}>{translate('chooseMatchTypeScreen.title')}</Text>
                     <View style={styles.lightningImage}>
                         <LightningIcon
                             width={121}
@@ -55,7 +55,7 @@ class ChooseMatchTypeScreen extends Component {
                     <TouchableWithoutFeedback onPress={this.goToLoadGames}>
                         <View style={styles.publicMatchButton}>
                             <Text style={styles.publicMatchButtonText}>
-                                {i18n.t('chooseMatchTypeScreen.publicMatch')}
+                                {translate('chooseMatchTypeScreen.publicMatch')}
                             </Text>
                         </View>
                     </TouchableWithoutFeedback>
@@ -65,7 +65,7 @@ class ChooseMatchTypeScreen extends Component {
                                 <SearchIcon width={18} height={18} />
                             </View>
                             <Text style={styles.directMatchButtonText}>
-                                {i18n.t('chooseMatchTypeScreen.directMatch')}
+                                {translate('chooseMatchTypeScreen.directMatch')}
                             </Text>
                             <View style={styles.directMatchButtonSearchIcon}></View>
                         </View>

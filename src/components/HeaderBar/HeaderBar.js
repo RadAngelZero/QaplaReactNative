@@ -18,7 +18,6 @@ import {
 import { Svg, Circle } from 'react-native-svg';
 import { styles } from './style';
 import { connect } from 'react-redux';
-import i18n from 'i18n-js';
 
 import images from './../../../assets/images';
 
@@ -26,6 +25,7 @@ import HighlightModal from '../HighlightModal/HighlightModal';
 
 import { storeData, retrieveData } from '../../utilities/persistance';
 import { HIGHLIGHT_2_NOTIFICATIONS, QAPLA_DISCORD_CHANNEL } from '../../utilities/Constants';
+import { translate } from '../../utilities/i18';
 
 const NotificationIcon = images.svg.notificationIcon;
 const DiscordIcon = images.svg.discordIcon;
@@ -203,8 +203,8 @@ class HeaderBar extends Component {
                         onClose={this.toggleHg2Modal}
                         showDelay={1000}
                         cb1={this.markHg2}
-                        header={i18n.t('headerBar.highlightModal.header')}
-                        body={i18n.t('headerBar.highlightModal.body')}>
+                        header={translate('headerBar.highlightModal.header')}
+                        body={translate('headerBar.highlightModal.body')}>
                             <TouchableWithoutFeedback style={styles.imageAndButtonDimensions}
                                 onPress={this.onNotiPressBttn}
                                 testID='NotificationButton'>

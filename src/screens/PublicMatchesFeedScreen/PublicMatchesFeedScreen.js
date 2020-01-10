@@ -9,7 +9,6 @@
 
 import React, { Component } from 'react';
 import { View } from 'react-native'
-import i18n from 'i18n-js';
 
 import style from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
@@ -26,6 +25,7 @@ import HighlightModal from '../../components/HighlightModal/HighlightModal'
 
 import { setHg1CreateMatch } from '../../actions/highlightsActions';
 import { connect } from 'react-redux';
+import { translate } from '../../utilities/i18';
 
 class PublicMatchesFeedScreen extends Component {
     state = {
@@ -245,8 +245,8 @@ class PublicMatchesFeedScreen extends Component {
                     onClose={this.toggleHg1Modal}
                     showDelay={1000}
                     cb1={this.markHg1}
-                    header={i18n.t('publicMatchesFeedScreen.highlightModal.header')}
-                    body={i18n.t('publicMatchesFeedScreen.highlightModal.body')}>
+                    header={translate('publicMatchesFeedScreen.highlightModal.header')}
+                    body={translate('publicMatchesFeedScreen.highlightModal.body')}>
                     <CreateRetasButton onPress={this.onCrearRetaButtonPress} />
                 </HighlightModal>
             </>

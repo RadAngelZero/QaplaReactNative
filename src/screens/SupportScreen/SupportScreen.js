@@ -11,11 +11,11 @@ import {
 } from 'react-native'
 import styles from './style'
 import { connect } from 'react-redux';
-import i18n from 'i18n-js';
 
 import { sendUserFeedback } from '../../services/database';
 
 import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBttnModal';
+import { translate } from '../../utilities/i18';
 
 class SupportScreen extends React.Component {
   constructor(props) {
@@ -54,7 +54,7 @@ class SupportScreen extends React.Component {
               <View style={styles.container}>
                   <TextInput
                         style={styles.textInput}
-                        placeholder={i18n.t('supportScreen.placeholder')}
+                        placeholder={translate('supportScreen.placeholder')}
                         placeholderTextColor='#898A97'
                         onChangeText={(text) => this.setState({text})}
                         multiline
@@ -64,14 +64,14 @@ class SupportScreen extends React.Component {
                         value={this.state.text} />
                     <TouchableWithoutFeedback onPress={this.sendFeedback}>
                         <View style={styles.sendButtonContainer}>
-                            <Text style={styles.textStyle}>{i18n.t('supportScreen.send')}</Text>
+                            <Text style={styles.textStyle}>{translate('supportScreen.send')}</Text>
                         </View>
                   </TouchableWithoutFeedback>
               </View>
               <OneTxtOneBttnModal
                     visible={ this.state.openModal }
                     onClose={ this.gotoPreviousScreen }
-                    header={i18n.t('supportScreen.gratitudeModal.header')}
+                    header={translate('supportScreen.gratitudeModal.header')}
                     textButton={'OK'} />
           </SafeAreaView>
       );

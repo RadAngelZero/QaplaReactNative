@@ -7,10 +7,10 @@ import {
 	Modal,
 	TouchableWithoutFeedback
 } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import { withNavigation } from 'react-navigation';
+import { translate } from '../../utilities/i18';
 
 class UploadMatchResultsModal extends Component {
 	/**
@@ -61,11 +61,11 @@ class UploadMatchResultsModal extends Component {
 	          onRequestClose={this.props.onClose}>
 	          <View style={styles.mainContainer}>
 			    <View style={styles.container}>
-					<Text style={styles.headerText}>{i18n.t('uploadClutchEvidenceScreen.uploadMatchResultsModal.header')}</Text>
-					<Text style={styles.paragraph}>{i18n.t('uploadClutchEvidenceScreen.uploadMatchResultsModal.paragraph')}</Text>
+					<Text style={styles.headerText}>{translate('uploadClutchEvidenceScreen.uploadMatchResultsModal.header')}</Text>
+					<Text style={styles.paragraph}>{translate('uploadClutchEvidenceScreen.uploadMatchResultsModal.paragraph')}</Text>
 					<TouchableWithoutFeedback onPress={this.action}>
 						<View style={styles.okButton}>
-							<Text style={styles.text}>{i18n.t('uploadClutchEvidenceScreen.uploadMatchResultsModal.okButton')}</Text>
+							<Text style={styles.text}>{translate('uploadClutchEvidenceScreen.uploadMatchResultsModal.okButton')}</Text>
 						</View>
 					</TouchableWithoutFeedback>
 			    </View>

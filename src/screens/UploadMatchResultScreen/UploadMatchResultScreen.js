@@ -12,7 +12,6 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 import { connect } from 'react-redux';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
@@ -24,6 +23,7 @@ import UploadMatchResultsModal from '../../components/UploadMatchResultsModal/Up
 import UploadMatchEvidenceModal from '../../components/UploadMatchEvidenceModal/UploadMatchEvidenceModal';
 import { WON_RESULT, TIE_RESULT, LOST_RESULT, OTHER_RESULT } from '../../utilities/Constants';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
+import { translate } from '../../utilities/i18';
 
 const CloseIcon = Images.svg.closeIcon;
 const WinIcon = Images.svg.winIcon;
@@ -187,7 +187,7 @@ class UploadMatchResultScreen extends Component {
                                         height={heightPercentageToPx(20)}
                                         fill={this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3'} />
                                     <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3' }]}>
-                                        {i18n.t('uploadMatchResultScreen.results.won')}
+                                        {translate('uploadMatchResultScreen.results.won')}
                                     </Text>
                                 </View>
                             </TouchableWithoutFeedback>
@@ -199,7 +199,7 @@ class UploadMatchResultScreen extends Component {
                                         height={heightPercentageToPx(14)}
                                         fill={this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3'} />
                                     <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
-                                        {i18n.t('uploadMatchResultScreen.results.draw')}
+                                        {translate('uploadMatchResultScreen.results.draw')}
                                     </Text>
                                 </View>
                             </TouchableWithoutFeedback>
@@ -211,7 +211,7 @@ class UploadMatchResultScreen extends Component {
                                         height={heightPercentageToPx(20)}
                                         fill={this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3'} />
                                     <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3' }]}>
-                                        {i18n.t('uploadMatchResultScreen.results.lost')}
+                                        {translate('uploadMatchResultScreen.results.lost')}
                                     </Text>
                                 </View>
                             </TouchableWithoutFeedback>
@@ -225,16 +225,16 @@ class UploadMatchResultScreen extends Component {
                                 }
                             </TouchableWithoutFeedback>
                         </View>
-                        <Text style={styles.footerEvidence}>{i18n.t('uploadMatchResultScreen.evidence')}</Text>
+                        <Text style={styles.footerEvidence}>{translate('uploadMatchResultScreen.evidence')}</Text>
                         <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, OTHER_RESULT)}>
                             <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === OTHER_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
-                                <Text style={styles.buttonText}>{i18n.t('uploadMatchResultScreen.results.dontPlayed')}</Text>
+                                <Text style={styles.buttonText}>{translate('uploadMatchResultScreen.results.dontPlayed')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         {this.state.matchResultStatus &&
                             <TouchableWithoutFeedback onPress={this.validateResultToUpload}>
                                 <View style={styles.uploadResultButton}>
-                                    <Text style={styles.buttonText}>{i18n.t('uploadMatchResultScreen.uploadResult')}</Text>
+                                    <Text style={styles.buttonText}>{translate('uploadMatchResultScreen.uploadResult')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         }

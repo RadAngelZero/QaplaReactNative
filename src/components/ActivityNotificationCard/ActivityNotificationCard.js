@@ -4,7 +4,6 @@
 
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import {
@@ -15,6 +14,7 @@ import {
     NOTIFICATION_TYPE_TIE,
     NOTIFICATION_MATCH_ACCEPTED
 } from '../../utilities/Constants';
+import { translate } from '../../utilities/i18';
 
 export class ActivityNotificationCard extends Component {
     determineNotificationText = () => {
@@ -22,22 +22,22 @@ export class ActivityNotificationCard extends Component {
         const userName = this.props.userName;
         switch (this.props.type) {
             case NOTIFICATION_TYPE_WINNER:
-                notificationText = i18n.t('notificationsScreen.notificationTypes.notificationWinner');
+                notificationText = translate('notificationsScreen.notificationTypes.notificationWinner');
                 break;
             case NOTIFICATION_TYPE_LOSER:
-                notificationText = i18n.t('notificationsScreen.notificationTypes.notificationLooser', { userName });
+                notificationText = translate('notificationsScreen.notificationTypes.notificationLooser', { userName });
                 break;
             case NOTIFICATION_TYPE_RESULT:
-                notificationText = i18n.t('notificationsScreen.notificationTypes.notificationResult', { userName });
+                notificationText = translate('notificationsScreen.notificationTypes.notificationResult', { userName });
                 break;
             case NOTIFICATION_TYPE_REVISION:
-                notificationText = i18n.t('notificationsScreen.notificationTypes.notificationRevision');
+                notificationText = translate('notificationsScreen.notificationTypes.notificationRevision');
                 break;
             case NOTIFICATION_TYPE_TIE:
-                notificationText = i18n.t('notificationsScreen.notificationTypes.notificationTie', { userName });
+                notificationText = translate('notificationsScreen.notificationTypes.notificationTie', { userName });
                 break;
             case NOTIFICATION_MATCH_ACCEPTED:
-                notificationText = i18n.t('notificationsScreen.notificationTypes.notificationMatchAccepted', { userName });
+                notificationText = translate('notificationsScreen.notificationTypes.notificationMatchAccepted', { userName });
                 break;
             default:
                 break;

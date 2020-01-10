@@ -5,7 +5,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from './../../../assets/images';
@@ -14,6 +13,7 @@ import { signOut } from '../../services/auth';
 import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTagModal';
 import AddBioModal from '../../components/AddBioModal/AddBioModal';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
+import { translate } from '../../utilities/i18';
 
 const QaplaAppIcon = Images.png.qaplaAppIcon.img;
 
@@ -60,43 +60,43 @@ class AppSettingsMenuScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    <Text style={styles.headerText}>{i18n.t('settingsMenuScreen.header')}</Text>
+                    <Text style={styles.headerText}>{translate('settingsMenuScreen.header')}</Text>
                     <Image style={styles.mainImage}
                         source={QaplaAppIcon} />
                     <Text style={styles.littleText}>{this.props.userName}</Text>
 
                     <View style={styles.menuHeader}>
-                        <Text style={styles.menuHeaderText}>{i18n.t('settingsMenuScreen.menuHeader')}</Text>
+                        <Text style={styles.menuHeaderText}>{translate('settingsMenuScreen.menuHeader')}</Text>
                     </View>
                     <ScrollView>
                         <TouchableWithoutFeedback onPress={this.goToSupport}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>{i18n.t('settingsMenuScreen.support')}</Text>
+                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.support')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.toggleBioModal}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>{i18n.t('settingsMenuScreen.editBio')}</Text>
+                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.editBio')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.toggleDiscordModal}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>{i18n.t('settingsMenuScreen.editDiscord')}</Text>
+                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.editDiscord')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.goToTermsAndConditions}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>{i18n.t('settingsMenuScreen.termsAndConditions')}</Text>
+                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.termsAndConditions')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.togglePrivacyModal}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>{i18n.t('settingsMenuScreen.privacyNotice')}</Text>
+                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.privacyNotice')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.closeSession}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>{i18n.t('settingsMenuScreen.closeSession')}</Text>
+                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.closeSession')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </ScrollView>

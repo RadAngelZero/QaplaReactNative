@@ -3,10 +3,10 @@
 
 import React, { Component } from 'react';
 import { View, Image, Text } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from '../../../assets/images';
+import { translate } from '../../utilities/i18';
 
 const VerificationSuccess = Images.png.verificationProccesSuccess.img;
 
@@ -16,9 +16,9 @@ class VerificationProccessSuccess extends Component {
             <View style={styles.container}>
                 <Image source={VerificationSuccess} />
                 <View style={styles.greetingContainer}>
-                    <Text style={styles.title}>{i18n.t('verificationScreen.verificationProcessSuccess.title')}</Text>
+                    <Text style={styles.title}>{translate('verificationScreen.verificationProcessSuccess.title')}</Text>
                     <Text style={styles.body}>
-                        {i18n.t('verificationScreen.verificationProcessSuccess.body')}
+                        {translate('verificationScreen.verificationProcessSuccess.body')}
                     </Text>
                 </View>
             </View>

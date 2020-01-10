@@ -5,12 +5,12 @@
 
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, SafeAreaView } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import images from '../../../assets/images';
 
 import PhonePrefixPicker from './PhonePrefixPicker/PhonePrefixPicker';
+import { translate } from '../../utilities/i18';
 
 const Divider = images.png.divider.img;
 
@@ -19,7 +19,7 @@ export class VerificationPhoneNumber extends Component {
         return (
                 <View style={styles.container}>
                     <View>
-                        <Text style={styles.title}>{i18n.t('verificationScreen.verificationPhoneNumber.title')}</Text>
+                        <Text style={styles.title}>{translate('verificationScreen.verificationPhoneNumber.title')}</Text>
                         <View style={styles.divider}>
                             <Image source={Divider} />
                         </View>
@@ -31,7 +31,7 @@ export class VerificationPhoneNumber extends Component {
                                 <TextInput
                                     keyboardType='numeric'
                                     style={styles.qaplaTextInput}
-                                    placeholder={i18n.t('verificationScreen.verificationPhoneNumber.phonePlaceholder')}
+                                    placeholder={translate('verificationScreen.verificationPhoneNumber.phonePlaceholder')}
                                     placeholderTextColor='#898A97'
                                     onSubmitEditing={this.props.goToNextStep}
                                     onChangeText={this.props.setPhoneNumber} />
@@ -41,11 +41,11 @@ export class VerificationPhoneNumber extends Component {
                                 <TextInput
                                     keyboardType='numeric'
                                     style={styles.qaplaTextInput}
-                                    placeholder={i18n.t('verificationScreen.verificationPhoneNumber.codePlaceholder')}
+                                    placeholder={translate('verificationScreen.verificationPhoneNumber.codePlaceholder')}
                                     placeholderTextColor='#898A97'
                                     onSubmitEditing={this.props.goToNextStep}
                                     onChangeText={this.props.setVerificationCode} />
-                                <Text style={styles.smallText}>{i18n.t('verificationScreen.verificationPhoneNumber.codeSended')}</Text>
+                                <Text style={styles.smallText}>{translate('verificationScreen.verificationPhoneNumber.codeSended')}</Text>
                             </View>
                         }
                     </View>

@@ -4,10 +4,10 @@
 
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, TouchableWithoutFeedback } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from './../../../assets/images';
+import { translate } from '../../utilities/i18';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -24,7 +24,7 @@ class NotificationsHeader extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
     	        <View style={styles.container}>
-    	            <Text style={styles.title}>{i18n.t('notificationsScreen.notificationsHeader')}</Text>
+    	            <Text style={styles.title}>{translate('notificationsScreen.notificationsHeader')}</Text>
                     <TouchableWithoutFeedback onPress={this.closeNotifications}>
                         <View style={styles.closeIcon}>
                             <CloseIcon />

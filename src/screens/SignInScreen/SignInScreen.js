@@ -2,11 +2,11 @@
 
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
+import { translate } from '../../utilities/i18';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
@@ -26,18 +26,18 @@ class SignInScreen extends Component {
                     <View>
                         <TouchableWithoutFeedback onPress={() => signInWithFacebook(this.props.navigation)}>
                             <View style={styles.facebookButtonContainer}>
-                                <Text style={[styles.whiteColor, styles.alignSelfCenter]}>{i18n.t('signInScreen.facebookSignin')}</Text>
+                                <Text style={[styles.whiteColor, styles.alignSelfCenter]}>{translate('signInScreen.facebookSignin')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={() => signInWithGoogle(this.props.navigation)}>
                             <View style={styles.googleButtonContainer}>
-                                <Text style={[styles.googleButtonText, styles.alignSelfCenter]}>{i18n.t('signInScreen.googleSignin')}</Text>
+                                <Text style={[styles.googleButtonText, styles.alignSelfCenter]}>{translate('signInScreen.googleSignin')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <View style={styles.alreadyHaveAccountTextContainer}>
-                            <Text style={[styles.whiteColor, styles.alignSelfCenter, styles.fontBold]}>{i18n.t('signInScreen.alreadyHaveAccount')}</Text>
+                            <Text style={[styles.whiteColor, styles.alignSelfCenter, styles.fontBold]}>{translate('signInScreen.alreadyHaveAccount')}</Text>
                             <Text style={[styles.enterWithEmailText, styles.alignSelfCenter, styles.fontBold]} onPress={() => this.props.navigation.navigate('Login')}>
-                                {i18n.t('signInScreen.emailSignin')}
+                                {translate('signInScreen.emailSignin')}
                             </Text>
                         </View>
                     </View>

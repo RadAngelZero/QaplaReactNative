@@ -24,7 +24,6 @@ import React, { Component } from 'react';
 import { View, Text, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import styles from './style';
-import i18n from 'i18n-js';
 
 import Images from '../../../assets/images'
 import { challengeUser, isMatchAlreadyChallenged, userHasQaploinsToPlayMatch, getGamerTagWithUID, addGameToUser } from '../../services/database';
@@ -41,6 +40,7 @@ import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constant
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 import { AddGamerTagModal } from '../../components/AddGamerTagModal/AddGamerTagModal';
+import { translate } from '../../utilities/i18';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
@@ -338,7 +338,7 @@ class PublicMatchCardScreen extends Component {
                     <View style={styles.row}>
                         <View style={styles.infoContainer}>
                             <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>{i18n.t('publicMatchCardScreen.numberOfMembers')}</Text>
+                            <Text style={styles.elemR1}>{translate('publicMatchCardScreen.numberOfMembers')}</Text>
                         </View>
                         <View style={styles.infoContainer}>
                             <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</Text>
@@ -357,11 +357,11 @@ class PublicMatchCardScreen extends Component {
                                     ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
                                     ||
                                     (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0')) ?
-                                        i18n.t('publicMatchCardScreen.waitingResult')
+                                        translate('publicMatchCardScreen.waitingResult')
                                         :
-                                        i18n.t('publicMatchCardScreen.uploadResultIn')
+                                        translate('publicMatchCardScreen.uploadResultIn')
                                     :
-                                    i18n.t('publicMatchCardScreen.expireIn')
+                                    translate('publicMatchCardScreen.expireIn')
                                 }
                             </Text>
                         </View>
@@ -388,7 +388,7 @@ class PublicMatchCardScreen extends Component {
                 {(this.props.uid !== matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()} disabled={this.state.expired}>
                         <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>{i18n.t('publicMatchCardScreen.challenge')}</Text>
+                            <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.challenge')}</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
@@ -399,7 +399,7 @@ class PublicMatchCardScreen extends Component {
                 {(this.props.uid === matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()} disabled={this.state.expired}>
                         <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>{i18n.t('publicMatchCardScreen.cancel')}</Text>
+                            <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.cancel')}</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
@@ -412,14 +412,14 @@ class PublicMatchCardScreen extends Component {
                     ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
                     ||
                     (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0'))) ?
-                    <Text style={styles.alreadyHaveResult}>{i18n.t('publicMatchCardScreen.resultUploaded')}</Text>
+                    <Text style={styles.alreadyHaveResult}>{translate('publicMatchCardScreen.resultUploaded')}</Text>
                     :
                     <>
                     {/*TODO: disabled=this.state.expired} */}
                     {matchCard.matchesPlay &&
                         <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult} disabled={this.state.expired}>
                             <View style={styles.bottomButton}>
-                                <Text style={styles.bottomButtonText}>{i18n.t('publicMatchCardScreen.uploadResult')}</Text>
+                                <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.uploadResult')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     }
@@ -428,16 +428,16 @@ class PublicMatchCardScreen extends Component {
                 {matchCard.isChallenge &&
                     <TouchableWithoutFeedback onPress={this.tryToAcceptChallengeRequest} disabled={this.state.expired}>
                         <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>{i18n.t('publicMatchCardScreen.acceptChallenge')}</Text>
+                            <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.acceptChallenge')}</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
                 <OneTxtOneBttnModal
                     visible={ this.state.openChalExModal }
                     onClose={ this.toggleOpenChalExModal }
-                    header={i18n.t('publicMatchCardScreen.alreadyChallengedModal.header')}
-                    body={i18n.t('publicMatchCardScreen.alreadyChallengedModal.body')}
-                    textButton={i18n.t('publicMatchCardScreen.alreadyChallengedModal.textButton')} />
+                    header={translate('publicMatchCardScreen.alreadyChallengedModal.header')}
+                    body={translate('publicMatchCardScreen.alreadyChallengedModal.body')}
+                    textButton={translate('publicMatchCardScreen.alreadyChallengedModal.textButton')} />
                 <AcceptChallengeModal
                     visible={this.state.openAcceptChallengeModal}
                     uid={this.props.uid}
@@ -458,7 +458,7 @@ class PublicMatchCardScreen extends Component {
                     onClose={() => this.setState({ openAddGamerTagModal: false }) } />
                 <BuyQaploinsModal
                     open={this.state.openBuyQaploinsModal}
-                    body={i18n.t('publicMatchCardScreen.buyQaploinsModal.body')}
+                    body={translate('publicMatchCardScreen.buyQaploinsModal.body')}
                     openWhen='User try to challenge a match'
                     onClose={() => this.setState({ openBuyQaploinsModal: false })} />
             </SafeAreaView>

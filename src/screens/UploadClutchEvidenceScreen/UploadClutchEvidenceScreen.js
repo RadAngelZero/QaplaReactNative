@@ -5,11 +5,11 @@
 
 import React, { Component } from 'react';
 import { View, TextInput, Text, TouchableWithoutFeedback, Linking } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from './../../../assets/images';
 import TutorialCarousel from '../../components/TutorialCarousel/TutorialCarousel';
+import { translate } from '../../utilities/i18';
 
 const images = [Images.png.uploadVideoClutch.img, Images.png.shareClutchLink.img];
 
@@ -58,7 +58,7 @@ export class UploadClutchEvidenceScreen extends Component {
                 <TutorialCarousel
                     images={images}
                     backToUploadMatchResultScreen={this.props.backToUploadMatchResultScreen} />
-                <TextInput placeholder={i18n.t('uploadClutchEvidenceScreen.insertClipPlaceholder')}
+                <TextInput placeholder={translate('uploadClutchEvidenceScreen.insertClipPlaceholder')}
                     placeholderTextColor='#898A97'
                     keyboardType='url'
                     autoCapitalize='none'
@@ -66,18 +66,18 @@ export class UploadClutchEvidenceScreen extends Component {
                     style={[styles.urlTextInput, { borderBottomColor: this.state.showUrlError ? '#FF0000' : 'transparent' }]}
                     onSubmitEditing={this.submitData} />
                 <Text style={styles.instructions}>
-                    {i18n.t('uploadClutchEvidenceScreen.instructions.firstPart')}
-                    <Text style={styles.highlightedText}>{i18n.t('uploadClutchEvidenceScreen.instructions.highlightedText1')}</Text>
-                    {i18n.t('uploadClutchEvidenceScreen.instructions.connector')}
-                    <Text style={styles.highlightedText}>{i18n.t('uploadClutchEvidenceScreen.instructions.highlightedText2')}</Text>
-                    {i18n.t('uploadClutchEvidenceScreen.instructions.secondPart')}
+                    {translate('uploadClutchEvidenceScreen.instructions.firstPart')}
+                    <Text style={styles.highlightedText}>{translate('uploadClutchEvidenceScreen.instructions.highlightedText1')}</Text>
+                    {translate('uploadClutchEvidenceScreen.instructions.connector')}
+                    <Text style={styles.highlightedText}>{translate('uploadClutchEvidenceScreen.instructions.highlightedText2')}</Text>
+                    {translate('uploadClutchEvidenceScreen.instructions.secondPart')}
                 </Text>
                 <TouchableWithoutFeedback onPress={this.submitData}>
                     <View style={styles.readyButton}>
-                        <Text style={styles.readyButtonText}>{i18n.t('uploadClutchEvidenceScreen.done')}</Text>
+                        <Text style={styles.readyButtonText}>{translate('uploadClutchEvidenceScreen.done')}</Text>
                     </View>
                 </TouchableWithoutFeedback>
-                <Text style={styles.goToClutchButtonText} onPress={this.linkToClutchApp}>{i18n.t('uploadClutchEvidenceScreen.goToClutch')}</Text>
+                <Text style={styles.goToClutchButtonText} onPress={this.linkToClutchApp}>{translate('uploadClutchEvidenceScreen.goToClutch')}</Text>
             </View>
         );
     }

@@ -6,7 +6,6 @@
 import React, { Component } from 'react';
 import { View, Image, TouchableWithoutFeedback, Text, Linking } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from '../../../assets/images';
@@ -19,6 +18,7 @@ import { isUserLogged } from '../../services/auth';
 import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
 import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
 import OneTxtOneBttnModal from '../OneTxtOneBttnModal/OneTxtOneBttnModal'
+import { translate } from '../../utilities/i18';
 
 
 const QaploinIcon = Images.svg.qaploinsIcon;
@@ -152,7 +152,7 @@ class LogroSocial extends Component {
                                 /**Just a double check on disabled property of the button */
                                 disabled={puntosCompletados < totalPuntos}>
                                 <View style={styles.redimirButton}>
-                                    <Text style={styles.redimirTextButton}>{i18n.t('activeAchievementsScreen.socialAchievement.redeem')}</Text>
+                                    <Text style={styles.redimirTextButton}>{translate('activeAchievementsScreen.socialAchievement.redeem')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         }
@@ -167,12 +167,12 @@ class LogroSocial extends Component {
                     <View style={styles.shareContainer}>
                         <TouchableWithoutFeedback onPress={this.goToSocialLink}>
                             <View>
-                                <Text style={styles.likeText}>{i18n.t('activeAchievementsScreen.socialAchievement.like')}</Text>
+                                <Text style={styles.likeText}>{translate('activeAchievementsScreen.socialAchievement.like')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.openImgPckModal}>
                             <View>
-                                <Text style={styles.uploadText}>{i18n.t('activeAchievementsScreen.socialAchievement.upload')}</Text>
+                                <Text style={styles.uploadText}>{translate('activeAchievementsScreen.socialAchievement.upload')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
@@ -184,9 +184,9 @@ class LogroSocial extends Component {
                 <OneTxtOneBttnModal
                     visible={ this.state.openThankyouModal }
                     onClose={ this.toggleOpenThankyouModal }
-                    header={i18n.t('activeAchievementsScreen.socialAchievement.modal.header')}
-                    body={i18n.t('activeAchievementsScreen.socialAchievement.modal.body')}
-                    textButton={i18n.t('activeAchievementsScreen.socialAchievement.modal.textButton')} />
+                    header={translate('activeAchievementsScreen.socialAchievement.modal.header')}
+                    body={translate('activeAchievementsScreen.socialAchievement.modal.body')}
+                    textButton={translate('activeAchievementsScreen.socialAchievement.modal.textButton')} />
 
             </View>
         );

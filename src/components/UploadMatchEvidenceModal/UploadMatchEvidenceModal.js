@@ -8,10 +8,10 @@ import {
 	Modal,
 	TouchableWithoutFeedback
 } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import Images from './../../../assets/images';
+import { translate } from '../../utilities/i18';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -64,11 +64,11 @@ class UploadMatchEvidenceModal extends Component {
 								<CloseIcon />
 							</View>
 						</TouchableWithoutFeedback>
-						<Text style={styles.headerText}>{i18n.t('uploadClutchEvidenceScreen.uploadMatchEvidenceModal.header')}</Text>
-						<Text style={styles.paragraph}>{i18n.t('uploadClutchEvidenceScreen.uploadMatchEvidenceModal.paragraph')}</Text>
+						<Text style={styles.headerText}>{translate('uploadClutchEvidenceScreen.uploadMatchEvidenceModal.header')}</Text>
+						<Text style={styles.paragraph}>{translate('uploadClutchEvidenceScreen.uploadMatchEvidenceModal.paragraph')}</Text>
 						<TouchableWithoutFeedback onPress={this.action}>
 							<View style={styles.okButton}>
-								<Text style={styles.text}>{i18n.t('uploadClutchEvidenceScreen.uploadMatchEvidenceModal.okButton')}</Text>
+								<Text style={styles.text}>{translate('uploadClutchEvidenceScreen.uploadMatchEvidenceModal.okButton')}</Text>
 							</View>
 						</TouchableWithoutFeedback>
 					</View>

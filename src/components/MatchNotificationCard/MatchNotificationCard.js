@@ -13,7 +13,6 @@ import React, { Component } from 'react';
 import { View, Image, TouchableWithoutFeedback, Text, ActivityIndicator } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import {
@@ -33,6 +32,7 @@ import { acceptChallengeRequest } from '../../services/functions';
 // Components
 import AcceptChallengeModal from '../AcceptChallengeModal/AcceptChallengeModal';
 import NotEnoughQaploinsModal from '../NotEnoughQaploinsModal/NotEnoughQaploinsModal';
+import { translate } from '../../utilities/i18';
 
 
 class MatchNotificationCard extends Component {
@@ -153,16 +153,16 @@ class MatchNotificationCard extends Component {
                                 }
                             </View>
                             <View style={styles.infoContainer}>
-                                <Text style={styles.infoText}>{i18n.t('notificationsScreen.notificationTypes.matchNotification.title', { userName, gameName })}</Text>
+                                <Text style={styles.infoText}>{translate('notificationsScreen.notificationTypes.matchNotification.title', { userName, gameName })}</Text>
                                 <View style={styles.infoButtonsMenu}>
                                     <TouchableWithoutFeedback onPress={() => this.tryToAcceptChallengeRequest()}>
                                         <View style={[styles.infoAcceptButton, styles.infoButton]}>
-                                            <Text style={styles.infoButtonText}>{i18n.t('notificationsScreen.notificationTypes.matchNotification.accept')}</Text>
+                                            <Text style={styles.infoButtonText}>{translate('notificationsScreen.notificationTypes.matchNotification.accept')}</Text>
                                         </View>
                                     </TouchableWithoutFeedback>
                                     <TouchableWithoutFeedback onPress={this.declineMatch}>
                                         <View style={[styles.infoDeclineButton, styles.infoButton]}>
-                                            <Text style={styles.infoButtonText}>{i18n.t('notificationsScreen.notificationTypes.matchNotification.decline')}</Text>
+                                            <Text style={styles.infoButtonText}>{translate('notificationsScreen.notificationTypes.matchNotification.decline')}</Text>
                                         </View>
                                     </TouchableWithoutFeedback>
                                 </View>

@@ -5,7 +5,6 @@
 
 import React, { Component } from 'react';
 import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import { storeData } from '../../utilities/persistance';
@@ -13,6 +12,7 @@ import { acceptChallengeRequest } from '../../services/functions';
 import { withNavigation } from 'react-navigation';
 import CheckBox from '../CheckBox/CheckBox';
 import Images from './../../../assets/images';
+import { translate } from '../../utilities/i18';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -55,16 +55,16 @@ class AcceptChallengeModal extends Component {
                                 </View>
                             </TouchableWithoutFeedback>
                             <Text style={styles.paragraph}>
-                                {i18n.t('notificationsScreen.acceptChallengeModal.body')}
+                                {translate('notificationsScreen.acceptChallengeModal.body')}
                             </Text>
                             <CheckBox
                                 style={styles.checkbox}
-                                label={i18n.t('notificationsScreen.acceptChallengeModal.dontShowItAgain')}
+                                label={translate('notificationsScreen.acceptChallengeModal.dontShowItAgain')}
                                 selected={this.state.dontShowModalAgain}
                                 onPress={this.setCheckBoxState} />
                             <TouchableWithoutFeedback onPress={this.acceptDelete}>
                                 <View style={styles.gotItButton}>
-                                    <Text style={styles.gotItButtonText}>{i18n.t('notificationsScreen.acceptChallengeModal.continue')}</Text>
+                                    <Text style={styles.gotItButtonText}>{translate('notificationsScreen.acceptChallengeModal.continue')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

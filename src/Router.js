@@ -20,7 +20,6 @@ import React from 'react';
 
 import { View, Text } from 'react-native';
 import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createSwitchNavigator} from 'react-navigation';
-import i18n from 'i18n-js';
 
 import { setCurrentScreenId, setPreviousScreenId } from './actions/screensActions';
 import { connect } from 'react-redux';
@@ -57,6 +56,7 @@ import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeF
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 import TermsAndConditionsScreen from './screens/TermsAndConditionsScreen/TermsAndConditionsScreen';
 import { widthPercentageToPx } from './utilities/iosAndroidDim';
+import { translate } from './utilities/i18';
 
 // Svg Icons
 const ProfileIcon = Images.svg.profileIcon;
@@ -68,13 +68,13 @@ const LogrosTabNavigator = createMaterialTopTabNavigator(
     LogrosActivos: {
       screen: LogrosActivosScreen,
       navigationOptions: () => ({
-        title: i18n.t('router.topNavigators.achievements.active')
+        title: translate('router.topNavigators.achievements.active')
       })
     },
     LogrosCompletados: {
       screen: LogrosCompletadosScreen,
       navigationOptions: () => ({
-        title: i18n.t('router.topNavigators.achievements.completed')
+        title: translate('router.topNavigators.achievements.completed')
       })
     }
   },
@@ -107,13 +107,13 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
     NotificationActividad: {
       screen: ActivityNotificationsScreen,
       navigationOptions: ({ navigation }) => ({
-        title: i18n.t('router.topNavigators.notifications.activity')
+        title: translate('router.topNavigators.notifications.activity')
       })
     },
     NotificationRetas: {
       screen: RetasNotificationsScreen,
       navigationOptions: ({ navigation }) => ({
-        title: i18n.t('router.topNavigators.notifications.matches'),
+        title: translate('router.topNavigators.notifications.matches'),
         tabBarIcon: ({ tintColor, focused }) => (
           <BadgeForNotificationTab />
         )
@@ -149,13 +149,13 @@ const RetasTabNavigator = createMaterialTopTabNavigator(
     Publicas: {
       screen: PublicMatchesFeedScreen,
       navigationOptions: ({ navigation }) => ({
-        title: i18n.t('router.topNavigators.matches.public')
+        title: translate('router.topNavigators.matches.public')
       })
     },
     MisRetas: {
       screen: MyMatchesScreen,
       navigationOptions: ({ navigation }) => ({
-        title: i18n.t('router.topNavigators.matches.myMatches')
+        title: translate('router.topNavigators.matches.myMatches')
       })
     }
   },
@@ -190,7 +190,7 @@ const TabMainNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
-          <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{i18n.t('router.bottomNavigators.mainNavigator.events')}</Text>
+          <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.events')}</Text>
         </View>
       )
     })
@@ -201,7 +201,7 @@ const TabMainNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
-            <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{i18n.t('router.bottomNavigators.mainNavigator.matches')}</Text>
+            <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.matches')}</Text>
         </View>
       )
     })
@@ -212,7 +212,7 @@ const TabMainNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
           <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'}/>
-            <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{i18n.t('router.bottomNavigators.mainNavigator.profile')}</Text>
+            <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.profile')}</Text>
         </View>
       )
     })

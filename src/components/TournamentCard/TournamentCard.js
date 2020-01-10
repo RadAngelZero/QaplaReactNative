@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { Animated, View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
@@ -12,6 +11,7 @@ import { joinInTournament } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
+import { translate } from '../../utilities/i18';
 
 class TournamentCard extends Component {
     state = {
@@ -72,7 +72,7 @@ class TournamentCard extends Component {
                         {(puntosCompletados === null || puntosCompletados === undefined) &&
                             <TouchableWithoutFeedback onPress={this.joinInTournament}>
                                 <View style={styles.redimirButton}>
-                                    <Text style={styles.redimirTextButton}>{i18n.t('activeAchievementsScreen.tournamentAchivement.participate')}</Text>
+                                    <Text style={styles.redimirTextButton}>{translate('activeAchievementsScreen.tournamentAchivement.participate')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         }

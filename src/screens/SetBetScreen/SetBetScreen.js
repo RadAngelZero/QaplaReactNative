@@ -21,7 +21,6 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 import { connect } from 'react-redux';
-import i18n from 'i18n-js';
 
 import styles from './style';
 import images from './../../../assets/images';
@@ -40,6 +39,7 @@ import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/MatchExpireRememberModal';
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
+import { translate } from '../../utilities/i18';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
 const QaploinIcon = images.svg.qaploinsIcon;
@@ -211,12 +211,12 @@ class SetBetScreen extends Component {
                     <BuyQaploinsModal
                         open={this.state.open}
                         openWhen='User try to create a match'
-                        body={i18n.t('setBetScreen.buyQaploinsModal.body')}
+                        body={translate('setBetScreen.buyQaploinsModal.body')}
                         onClose={() => this.setState({ open: false })} />
                     <MatchExpireRememberModal
                         visible={this.state.timeActionMsgOpen}
                         onClose={this.closeMatchExpireRememberModal} />
-                    <Text style={styles.titleText}>{i18n.t('setBetScreen.title')}</Text>
+                    <Text style={styles.titleText}>{translate('setBetScreen.title')}</Text>
                     <View style={styles.prizeImage}>
                         <QaploinsPrizeIcon width={110} height={107} />
                     </View>
@@ -231,7 +231,7 @@ class SetBetScreen extends Component {
                         </TouchableWithoutFeedback>
                         <View style={styles.betTextContainer}>
                             <Text style={styles.betText}>{this.state.currentBet}</Text>
-                            <Text style={styles.betEntrada}>{i18n.t('setBetScreen.entry')}</Text>
+                            <Text style={styles.betEntrada}>{translate('setBetScreen.entry')}</Text>
                         </View>
                         <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
                             <MoreQaploinsIcon style={styles.changeBetIcon} />
@@ -239,7 +239,7 @@ class SetBetScreen extends Component {
                     </View>
                     <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
                         <View style={styles.createButton}>
-                            <Text style={styles.createButtonText}>{i18n.t('setBetScreen.createMatch')}</Text>
+                            <Text style={styles.createButtonText}>{translate('setBetScreen.createMatch')}</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>

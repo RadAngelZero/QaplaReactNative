@@ -225,7 +225,7 @@ const TabMainNavigator = createBottomTabNavigator({
       height: 60, 
       padding:0, 
       margin:0, 
-      borderTopColor: "transparent"
+      borderTopColor: 'transparent'
     },
     showLabel: false,
     activeTintColor: '#36E5CE',

@@ -1,3 +1,4 @@
+// josep.sanahuja - 09-01-2020 - NA    - componentDidMount check this.props.userGameList is valid
 // diego          - 30-12-2019 - us189 - Removed unnecesary BackHandler (removed code do the same that the default behavior)
 //                                       SafeAreaView handled with react navigation SafeAreaView, to avoid bottom margin
 // josep.sanahuja - 12-12-2019 - us160 - 'Load Games (Create Match)' -> Add Games Screen First Match
@@ -61,7 +62,7 @@ class LoadGamesScreen extends React.Component {
                         recordScreenOnSegment('Add Games Screen');
                     }
 
-                    if (this.props.userGameList.length === 0) {
+                    if (this.props.userGameList && this.props.userGameList.length === 0) {
                     	recordScreenOnSegment('Add Games Screen First Match');
                     }
                 }

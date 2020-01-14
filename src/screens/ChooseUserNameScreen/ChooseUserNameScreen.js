@@ -25,7 +25,7 @@ class ChooseUserNameScreen extends Component {
         };
     }
 
-    validateAndSaveUserName = () => createUserName(this.props.uid, this.state.userName, () => this.props.navigation.pop(), () => this.setState({ showErrorMessage: true }));
+    validateAndSaveUserName = () => createUserName(this.props.uid, this.state.userName, () => this.props.navigation.popToTop(), () => this.setState({ showErrorMessage: true }));
 
     render() {
         return (

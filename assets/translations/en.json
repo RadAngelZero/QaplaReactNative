@@ -292,5 +292,14 @@
         "paragraph": "The match expires after 10 minutes if you don't accept a challenge from other user or if it's not challenged from other user.",
         "dontShowItAgain": "Don't show this message again",
         "okButton": "Got it"
+    },
+    "AllowTermsAndConditionsModal": {
+        "bodyFirstPart": "Before you use Qapla Gaming make sure you have read and accepted our",
+        "termsAndConditions": "Terms and Conditions",
+        "bodySecondPart": "and our",
+        "privacyPolicy": "Privacy policy",
+        "agreeWithTerms": "I read and agree with terms and conditions",
+        "agreeWithPrivacy": "I read and agree the privacy policy",
+        "acceptButton": "Continue"
     }
 }

@@ -29,6 +29,7 @@ import VerificationProccessSuccess from '../../components/VerificationProccessSu
 import { sendVerificationSMSToUser, linkUserAccountWithPhone } from '../../services/auth';
 import { createVerificationRequest } from '../../services/database';
 import { PhoneProvider } from '../../utilities/firebase';
+import { translate } from '../../utilities/i18';
 
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
@@ -289,15 +290,15 @@ class VerificationScreen extends Component {
     setButtonText = () => {
         // TODO Josep Maria: (maybe) 17-10-2019 : Create each button per separated insteda of applying
         // a lot of logic to one only button.
-        let buttonText = 'Continuar';
+        let buttonText = translate('verificationScreen.continue');
 
         if (this.state.indexPositions.length >= 3) {
             if (this.state.nextIndex === this.state.indexPositions.length - 1) {
-                buttonText = 'Enviar Código';
+                buttonText = translate('verificationScreen.sendCode');
             } else if (this.state.nextIndex === this.state.indexPositions.length) {
-                buttonText = 'Verificar';
+                buttonText = translate('verificationScreen.verify');
             } else if (this.state.nextIndex >= this.state.indexPositions.length + 1) {
-                buttonText = 'Finalizar';
+                buttonText = translate('verificationScreen.finish');
             }
         }
 
@@ -394,8 +395,7 @@ class VerificationScreen extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                     :
-                    <TouchableWithoutFeedback
-                        onPress={this.endVerificationProccess}>
+                    <TouchableWithoutFeedback onPress={this.endVerificationProccess}>
                         <View style={this.state.codeSent ? styles.buttonResendScenario : styles.button}>
                             <Text style={styles.buttonText}>
                                 {this.setButtonText()}

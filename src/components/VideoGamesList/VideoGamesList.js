@@ -5,10 +5,12 @@
 
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
+
 import styles from './style';
 import PlatformGamesList from '../PlatformGamesList/PlatformGamesList';
 import { connect } from 'react-redux';
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
+import { translate } from '../../utilities/i18';
 
 class VideoGamesList extends Component {
     state = {
@@ -77,7 +79,7 @@ class VideoGamesList extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.scrollViewMargin} showsVerticalScrollIndicator={false}>
-                    <Text style={styles.title}>Elige tu juego</Text>
+                    <Text style={styles.title}>{translate('loadGamesScreen.title')}</Text>
                     {Object.keys(this.state.gamesToLoad).map((platform) => (
                         <PlatformGamesList
                             key={platform}

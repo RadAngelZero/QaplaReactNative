@@ -46,7 +46,7 @@ class MatchCardItem extends PureComponent {
 
             return (
                 <TouchableWithoutFeedback onPress={() => navigate('MatchCard', {matchCard: this.props})}>
-                    <View style={styles.matchMainContainer}>    
+                    <View style={styles.matchMainContainer}>
                         <View
                             style={styles.matchContainer}>
                             <game.Icon
@@ -57,7 +57,7 @@ class MatchCardItem extends PureComponent {
                             <View style={styles.mainBetContainer}>
                                 <View style={styles.betContainer}>
                                     <Text style={styles.betText}>{this.props.bet}</Text>
-                                    <QaploinIcon 
+                                    <QaploinIcon
                                         style={styles.qaploinGradientImage}
                                         width={24}
                                         height={24}
@@ -71,7 +71,7 @@ class MatchCardItem extends PureComponent {
                         <View style={styles.padding}>
                             <View style={styles.matchContainerRow}>
                                 {this.props.userProfilePhoto ?
-                                    <Image 
+                                    <Image
                                         style={styles.avatarImage}
                                         source={{ uri: this.props.userProfilePhoto }} />
                                     :

@@ -7,6 +7,7 @@
 import React, { Component } from 'react';
 import { View, ActivityIndicator, Text, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
+
 import { auth, messaging, notifications } from '../../utilities/firebase';
 import { retrieveData } from '../../utilities/persistance';
 import styles from './style';
@@ -17,6 +18,7 @@ import { initializeSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
+import { translate } from '../../utilities/i18';
 
 class AuthLoadingScreen extends Component {
     state = {
@@ -151,7 +153,7 @@ class AuthLoadingScreen extends Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
-                    <Text style={styles.textColor}>Cargando...</Text>
+                    <Text style={styles.textColor}>{translate('loadingScreen.activityIndicatorText')}</Text>
                 </View>
             </SafeAreaView>
         );

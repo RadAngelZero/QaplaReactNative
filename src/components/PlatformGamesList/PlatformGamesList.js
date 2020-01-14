@@ -8,9 +8,11 @@
 
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
+
 import styles from './style';
 import Images from '../../../assets/images';
 import GameCard from '../GameCard/GameCard';
+import { translate } from '../../utilities/i18';
 
 class PlatformGamesList extends Component {
     render() {
@@ -48,7 +50,7 @@ const platformResources = {
             primary: '#B670E1',
             secondary: '#7726C6'
         },
-        name: 'Móvil / PC'
+        name: translate('platforms.mobile')
     },
     xbox_white: {
         platformColor: '#119910',

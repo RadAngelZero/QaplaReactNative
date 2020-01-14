@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import Images from './../../../assets/images';
 import { updateUserDiscordTag } from '../../services/database';
+import { translate } from '../../utilities/i18';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -54,24 +55,25 @@ class AddDiscordTagModal extends Component {
                                 <CloseIcon />
                             </View>
                         </TouchableWithoutFeedback>
-                        <Text style={styles.modalTitle}>Agrega tu tag de Discord</Text>
+                        <Text style={styles.modalTitle}>{translate('settingsMenuScreen.addDiscordTagModal.title')}</Text>
                         <TextInput
                             onFocus={this.toggleInputSelection}
                             onBlur={this.toggleInputSelection}
-                            placeholder='Inserta tu DiscordTag'
+                            placeholder={translate('settingsMenuScreen.addDiscordTagModal.placeholder')}
                             placeholderTextColor='#B5B5B5'
                             style={[styles.qaplaTextInput, { borderBottomColor: this.state.selected ? '#3DF9DF' : '#B5B5B5' } ]}
                             autoCapitalize='none'
-                            onChangeText={(discordTag) => this.setState({ discordTag })} />
+                            onChangeText={(discordTag) => this.setState({ discordTag })}
+                            onSubmitEditing={this.updateDiscordTag} />
                         <View style={styles.buttonsContainer}>
                             <TouchableWithoutFeedback onPress={this.closeModal}>
                                 <View style={styles.cancelTextButton}>
-                                    <Text style={styles.textOfButtons}>Cancelar</Text>
+                                    <Text style={styles.textOfButtons}>{translate('settingsMenuScreen.addDiscordTagModal.cancel')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={this.updateDiscordTag}>
                                 <View style={styles.saveTextButton}>
-                                    <Text style={styles.textOfButtons}>Listo</Text>
+                                    <Text style={styles.textOfButtons}>{translate('settingsMenuScreen.addDiscordTagModal.done')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

@@ -20,10 +20,6 @@ const CloseIcon = Images.svg.closeIcon;
 const QaploinIcon = Images.svg.qaploinsIcon;
 
 class BuyQaploinsModal extends Component {
-    state = {
-        qaploinsAdded: false
-    };
-
     /**
      * Redirect to checkout screen (PayPal process to buy qaploins)
      */
@@ -55,20 +51,16 @@ class BuyQaploinsModal extends Component {
                             Goingo to the definition of QAPLOIN_PACKAGES to get more info. about this array
                          */}
                         <Text style={styles.qaploinsToBuyText}>{QAPLOIN_PACKAGES[0].qaploins}</Text>
-                        <Text style={styles.qaploinsText}>Qaploins</Text>
+                        <Text style={styles.qaploinsText}>Qoins</Text>
                         <Text style={styles.paragraph}>
-                            {this.state.qaploinsAdded ?
-                                'Gratis para usuarios de la versión beta'
-                                :
-                                this.props.body
-                            }
+                            {this.props.body}
                         </Text>
                         <TouchableWithoutFeedback onPress={this.addQaploinsToUser}>
                             <View style={styles.buyButton}>
                                 {/**
                                     Goingo to the definition of QAPLOIN_PACKAGES to get more info. about this array
                                 */}
-                                <Text style={styles.priceText}>{this.state.qaploinsAdded ? 'Qaploins listos!' : QAPLOIN_PACKAGES[0].price }</Text>
+                                <Text style={styles.priceText}>{QAPLOIN_PACKAGES[0].price }</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>

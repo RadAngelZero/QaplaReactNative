@@ -16,10 +16,10 @@ import styles from './style'
 import CarouselPng from '../../components/CarouselPng/CarouselPng'
 import Images from '@assets/images'
 import { storeData } from '../../utilities/persistance';
+import { translate } from '../../utilities/i18';
 
 export default class WelcomeOnboardingScreen extends React.Component {
 	constructor(props) {
-	    // Required step: always call the parent class' constructor
 	    super(props);
 	    this.state = {
 	    	selectedIndex: 0
@@ -40,23 +40,23 @@ export default class WelcomeOnboardingScreen extends React.Component {
     const carrouselData = [
       	{
 			Image: Images.png.connectOnBoarding.img,
-			description: 'Conecta con otros gamers de tu nivel en competencias individuales o multijugador.',
-			title: 'Conecta'
+			description: translate('onBoardingScreen.connect.description'),
+			title: translate('onBoardingScreen.connect.title')
 		},
       	{
 			Image: Images.png.compiteOnBoarding.img,
-			description: 'Compite como todo un pro, monetiza tus scrims y participa en eventos por bolsas de premios.',
-			title: 'Compite'
+			description: translate('onBoardingScreen.compete.description'),
+			title: translate('onBoardingScreen.compete.title')
 		},
       	{
 			Image: Images.png.shareOnBoarding.img,
-			description: 'Comparte los clips de tus partidas, toda la comunidad podrá ver la evidencia de tus victorias.',
-			title: 'Comparte'
+			description: translate('onBoardingScreen.share.description'),
+			title: translate('onBoardingScreen.share.title')
 		},
       	{
 			Image: Images.png.walletOnBoarding.img,
-			description:'Retira tu Saldo Qapla o úsalo para comprar productos de Amazon Prime, ¡Los enviamos gratis a tu casa!',
-			title: 'Convierte'
+			description: translate('onBoardingScreen.withdraw.description'),
+			title: translate('onBoardingScreen.withdraw.title')
 		}
     ];
 
@@ -73,7 +73,7 @@ export default class WelcomeOnboardingScreen extends React.Component {
 				<View style={styles.progressRow}>
 					<Text onPress={this.goToScreenPublicas} style={styles.finishTextButton}>
 						{this.state.selectedIndex === carrouselData.length - 1 &&
-							'TERMINAR'
+							translate('onBoardingScreen.finish')
 						}
 					</Text>
 				</View>

@@ -37,6 +37,12 @@ class LoadGamesScreen extends React.Component {
             <TopNavOptions
                 close
                 navigation={navigation}
+                /**
+                 * For some reason when the user press the back button, the stack is closed
+                 * and returns to PublicFeedMatches (when the PR become part of release-1
+                 * remember to report a bug)
+                 */
+                back={!navigation.getParam('loadGamesUserDontHave', false)}
                 onCloseGoTo={navigation.getParam('onCloseGoTo', '')} />)
     });
 

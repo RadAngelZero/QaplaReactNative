@@ -24,6 +24,7 @@ import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfil
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
+import { translate } from '../../utilities/i18';
 
 const QaploinExchangeIcon = images.svg.qaploinsIcon;
 
@@ -124,7 +125,7 @@ export class UserProfileScreen extends Component {
                         </View>
                         <TouchableWithoutFeedback onPress={this.openBuyQaploinsModal}>
                             <View style={styles.addQaploinsButton}>
-                                <Text style={styles.addQaploinsButtonText}>Abonar</Text>
+                                <Text style={styles.addQaploinsButtonText}>{translate('userProfileScreen.buy')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
@@ -151,7 +152,7 @@ export class UserProfileScreen extends Component {
                 <BuyQaploinsModal
                     open={this.state.showBuyQaploinsModal}
                     openWhen='User wants to buy qaploins on profile'
-                    body='Puedes devolver los 300 Qaploins cuando quieras ¡y te haremos un reembolso!'
+                    body={translate('userProfileScreen.buyQaploinsModal.body')}
                     onClose={this.closeBuyQaploinsModal} />
             </SafeAreaView>
         );

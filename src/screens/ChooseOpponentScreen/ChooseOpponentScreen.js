@@ -2,7 +2,9 @@
 
 import React, { Component } from 'react';
 import { View, Text, TextInput, BackHandler, SafeAreaView } from 'react-native';
+
 import styles from './style';
+import { translate } from '../../utilities/i18';
 
 class ChooseOpponentScreen extends Component {
     render() {
@@ -12,13 +14,13 @@ class ChooseOpponentScreen extends Component {
                     <View style={styles.headerContainer}>
                         <View style={styles.titleRow}>
                             <Text style={styles.titleText}>
-                                Buscar usuario a retar
+                                {translate('chooseOpponentScreen.title')}
                             </Text>
                             <Text style={styles.titleText} onPress={this.backToMatchTypeScreen}>
                                 X
                             </Text>
                         </View>
-                        <TextInput placeholder='Buscar usuarios'
+                        <TextInput placeholder={translate('chooseOpponentScreen.searchPlaceholder')}
                             style={styles.inputText} />
                     </View>
                 </View>

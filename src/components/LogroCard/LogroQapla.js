@@ -9,6 +9,7 @@ import Images from '../../../assets/images';
 import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { redeemLogroCloudFunction } from '../../services/functions';
+import { translate } from '../../utilities/i18';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
@@ -67,7 +68,7 @@ class LogroQapla extends Component {
                                 /**Just a double check on disabled property of the button */
                                 disabled={puntosCompletados < totalPuntos}>
                                 <View style={styles.redimirButton}>
-                                    <Text style={styles.redimirTextButton}>Redimir</Text>
+                                    <Text style={styles.redimirTextButton}>{translate('activeAchievementsScreen.qaplaAchievement.redeem')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         }

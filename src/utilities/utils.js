@@ -4,6 +4,7 @@
 // diego     - 16-07-2019 - us30 - File creation
 
 import { Linking } from 'react-native';
+import { translate } from './i18';
 
 /**Generador ramdom de claves para retas
  * basado en el metodo de android
@@ -55,7 +56,7 @@ export function getGamerTagStringWithGameAndPlatform(platform, game) {
 export function getPlatformNameWithKey(platformKey) {
     switch (platformKey) {
         case 'pc_white':
-            return 'PC/Movil';
+            return translate('platforms.mobile');
         case 'ps4_white':
             return 'Play Station 4';
         case 'xbox_white':

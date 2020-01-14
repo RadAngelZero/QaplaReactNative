@@ -15,13 +15,14 @@ import { withNavigation } from 'react-navigation';
 import { RNCamera } from 'react-native-camera';
 
 import QGCameraModal from './QGCameraModal/QGCameraModal';
+import { translate } from '../../utilities/i18';
 
 const CloseIcon = Images.svg.closeIcon;
 
-class QGCamera extends React.Component {       
+class QGCamera extends React.Component {
   constructor(props) {
     super(props);
-  
+
     this.state = {
       pictureTaken: false,
       picture: {uri: "", base64: ""}
@@ -55,7 +56,7 @@ class QGCamera extends React.Component {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options);
-      
+
       this.setState({
         pictureTaken: true,
         picture: {uri: data.uri, base64: data.base64}
@@ -89,7 +90,7 @@ class QGCamera extends React.Component {
   * Closes the QGCamera modal.
   */
   closeCamera = () => {
-      this.props.onClose();  
+      this.props.onClose();
   }
 
   /**
@@ -104,14 +105,14 @@ class QGCamera extends React.Component {
         res = RNCamera.Constants.Type.front;
       }
 
-      return res; 
+      return res;
   }
 
   render() {
       return (
         <View>
           <Modal
-              animationType="slide"
+              animationType='fade'
               transparent={false}
               visible={this.props.visible && !this.state.pictureTaken}
               onRequestClose={this.closeCamera}>
@@ -126,10 +127,10 @@ class QGCamera extends React.Component {
                             flashMode={RNCamera.Constants.FlashMode.off}
                             captureAudio={false}
                             androidCameraPermissionOptions={{
-                              title: 'Permiso para usar la cámara',
-                              message: 'Necesitamos tu permiso para usar tu cámara',
-                              buttonPositive: 'Ok',
-                              buttonNegative: 'Cancelar',
+                              title: translate('qGCamera.androidPermissions.title'),
+                              message: translate('qGCamera.androidPermissions.message'),
+                              buttonPositive: translate('qGCamera.androidPermissions.buttonPositive'),
+                              buttonNegative: translate('qGCamera.androidPermissions.buttonNegative'),
                             }}
                           />
                           <View style={styles.closeIconContainer}>
@@ -141,19 +142,17 @@ class QGCamera extends React.Component {
                           </View>
                           <TouchableWithoutFeedback onPress={this.takePicture}>
                               <View style={styles.buttonContainer}>
-                                  <Text style={styles.textStyle}>Tomar Foto :)</Text>
+                                  <Text style={styles.textStyle}>{translate('qGCamera.takePhoto')}</Text>
                               </View>
-                          </TouchableWithoutFeedback> 
+                          </TouchableWithoutFeedback>
                       </View>
                   }
           </Modal>
           <QGCameraModal
               visible={this.state.pictureTaken}
-              okTextButton={"Quiero usar esta foto!"}
               pictureUri={this.state.picture.uri}
               savePicture={this.savePicture}
-              onClose={this.closeQGCameraModal} 
-          />
+              onClose={this.closeQGCameraModal} />
         </View>
       );
   }

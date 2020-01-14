@@ -14,6 +14,7 @@ import { addGameToUser } from '../../services/database';
 import Images from './../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { subscribeUserToTopic } from '../../services/messaging';
+import { translate } from '../../utilities/i18';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -123,8 +124,9 @@ export class AddGamerTagModal extends Component {
                                     placeholderTextColor = '#FFF'
                                     autoCapitalize='none'
                                     onChangeText={(text) => this.setState({ gamerTagText: text })}
-                                    value={this.state.gamerTagText} />
-                                <Text style={styles.modalText}>Se va a añadir el Juego {this.isThereSelectedGame() && this.props.selectedGame.name } a tu perfil con Gamertag {this.state.gamerTagText}. Estás seguro?</Text>
+                                    value={this.state.gamerTagText}
+                                    onSubmitEditing={this.saveGameOnUser} />
+                                <Text style={styles.modalText}>{translate('addGamerTagModal.body', { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText })}</Text>
                                 <TouchableWithoutFeedback
                                     disabled={!this.isValidGamerTag}
                                     onPress={this.saveGameOnUser}>

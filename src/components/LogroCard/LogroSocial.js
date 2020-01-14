@@ -18,6 +18,7 @@ import { isUserLogged } from '../../services/auth';
 import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
 import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
 import OneTxtOneBttnModal from '../OneTxtOneBttnModal/OneTxtOneBttnModal'
+import { translate } from '../../utilities/i18';
 
 
 const QaploinIcon = Images.svg.qaploinsIcon;
@@ -60,7 +61,7 @@ class LogroSocial extends Component {
      * Sends the selected picture by ImagePickerModal and sends it to
      * Firebase Storage.
      *
-     * @params {Object} picture Picture selected in ImagePickerModal
+     * @param {object} picture Picture selected in ImagePickerModal
      */
     saveImage = (picture) => {
         this.setState({
@@ -151,7 +152,7 @@ class LogroSocial extends Component {
                                 /**Just a double check on disabled property of the button */
                                 disabled={puntosCompletados < totalPuntos}>
                                 <View style={styles.redimirButton}>
-                                    <Text style={styles.redimirTextButton}>Redimir</Text>
+                                    <Text style={styles.redimirTextButton}>{translate('activeAchievementsScreen.socialAchievement.redeem')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         }
@@ -166,12 +167,12 @@ class LogroSocial extends Component {
                     <View style={styles.shareContainer}>
                         <TouchableWithoutFeedback onPress={this.goToSocialLink}>
                             <View>
-                                <Text style={styles.likeText}>Dar Like</Text>
+                                <Text style={styles.likeText}>{translate('activeAchievementsScreen.socialAchievement.like')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.openImgPckModal}>
                             <View>
-                                <Text style={styles.uploadText}>Subir</Text>
+                                <Text style={styles.uploadText}>{translate('activeAchievementsScreen.socialAchievement.upload')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
@@ -183,9 +184,9 @@ class LogroSocial extends Component {
                 <OneTxtOneBttnModal
                     visible={ this.state.openThankyouModal }
                     onClose={ this.toggleOpenThankyouModal }
-                    header={ 'Felicidades!' }
-                    body={ 'Tu imágen será verificada en breve y podrás redimir tu logro en breve' }
-                    textButton={ 'Entendido' } />
+                    header={translate('activeAchievementsScreen.socialAchievement.modal.header')}
+                    body={translate('activeAchievementsScreen.socialAchievement.modal.body')}
+                    textButton={translate('activeAchievementsScreen.socialAchievement.modal.textButton')} />
 
             </View>
         );

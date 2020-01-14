@@ -11,6 +11,7 @@ import { joinInTournament } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
+import { translate } from '../../utilities/i18';
 
 class TournamentCard extends Component {
     state = {
@@ -71,7 +72,7 @@ class TournamentCard extends Component {
                         {(puntosCompletados === null || puntosCompletados === undefined) &&
                             <TouchableWithoutFeedback onPress={this.joinInTournament}>
                                 <View style={styles.redimirButton}>
-                                    <Text style={styles.redimirTextButton}>Participar</Text>
+                                    <Text style={styles.redimirTextButton}>{translate('activeAchievementsScreen.tournamentAchivement.participate')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         }

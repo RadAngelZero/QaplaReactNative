@@ -9,6 +9,7 @@
 
 import React, { Component } from 'react';
 import { View } from 'react-native'
+
 import style from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
 import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
@@ -24,6 +25,7 @@ import HighlightModal from '../../components/HighlightModal/HighlightModal'
 
 import { setHg1CreateMatch } from '../../actions/highlightsActions';
 import { connect } from 'react-redux';
+import { translate } from '../../utilities/i18';
 
 class PublicMatchesFeedScreen extends Component {
     state = {
@@ -243,11 +245,9 @@ class PublicMatchesFeedScreen extends Component {
                     onClose={this.toggleHg1Modal}
                     showDelay={1000}
                     cb1={this.markHg1}
-                    header='Crea una Partida'
-                    body='Empieza a competir con otros jugadores. Crea tu partida y gana!'>
-                    <CreateRetasButton
-                            highlighted={!this.props.navigation.getParam('firstMatchCreated')}
-                            onPress={this.onCrearRetaButtonPress}/>
+                    header={translate('publicMatchesFeedScreen.highlightModal.header')}
+                    body={translate('publicMatchesFeedScreen.highlightModal.body')}>
+                    <CreateRetasButton onPress={this.onCrearRetaButtonPress} />
                 </HighlightModal>
             </>
         );

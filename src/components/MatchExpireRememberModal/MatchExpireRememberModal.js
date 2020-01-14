@@ -7,6 +7,7 @@ import { withNavigation } from 'react-navigation';
 import styles from './style';
 import CheckBox from '../CheckBox/CheckBox';
 import { storeData } from '../../utilities/persistance';
+import { translate } from '../../utilities/i18';
 
 export class MatchExpireRememberModal extends Component {
     state = {
@@ -43,24 +44,24 @@ export class MatchExpireRememberModal extends Component {
         return (
             <Modal
                 transparent
-                animationType='none'
+                animationType='fade'
                 visible={this.props.visible}
                 onRequestClose={this.props.onClose}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
                         <View style={styles.containerMsgModal}>
-                            <Text style={styles.headerText}>Recuerda</Text>
+                            <Text style={styles.headerText}>{translate('matchExpireRememberModal.header')}</Text>
                             <Text style={styles.paragraph}>
-                                La partida expirará después de 10 minutos si no recibe y se acepta un desafio de otro jugador.
+                                {translate('matchExpireRememberModal.paragraph')}
                             </Text>
                             <CheckBox
                                 style={styles.checkbox}
-                                label='Entendido, no volver a mostrar este mensaje'
+                                label={translate('matchExpireRememberModal.dontShowItAgain')}
                                 selected={this.state.dontShowModalAgain}
                                 onPress={this.toogleCheckBox} />
                             <TouchableWithoutFeedback onPress={this.confirmModal}>
                                 <View style={styles.okButton}>
-                                    <Text style={styles.buttonText}>Confirmar</Text>
+                                    <Text style={styles.buttonText}>{translate('matchExpireRememberModal.okButton')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

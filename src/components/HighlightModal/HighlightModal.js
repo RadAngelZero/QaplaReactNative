@@ -1,7 +1,7 @@
 // josep.sanahuja - 17-08-2019 - us90 - File creation
 
 import React, { Component } from 'react';
-import { 
+import {
   View,
   Text,
   Modal,
@@ -11,6 +11,7 @@ import {
 
 import styles from './style';
 import { withNavigation } from 'react-navigation';
+import { translate } from '../../utilities/i18';
 
 const TOP_QUADRANT            = 0;
 const BOTTOM_QUADRANT         = 1;
@@ -20,10 +21,9 @@ const BOTTOM_QUADRANT_TOP     = 4;
 const BOTTOM_QUADRANT_BOTTOM  = 5;
 
 class HighlightModal extends Component {
-  
     constructor(props) {
         super(props);
-        
+
         // Reference for the View that contains the cloned element highlighted in props.children
         this.childWrapper = React.createRef();
 
@@ -47,12 +47,9 @@ class HighlightModal extends Component {
     */
 
     /**
-    * Description:
-    * Perform a series of actions for the Modal, including the main one which is 'closing the modal'
+    * @description Perform a series of actions for the Modal, including the main one which is 'closing the modal'
     * and navigation to next screen. The other actions are performed via cb1 and cb2 props,
     * which are executed sequentially, cb1 1st, cb2 2nd, and they are executed in a synchronous way.
-    * 
-    * @param None
     */
     action = async () => {
       // Close the Modal
@@ -61,7 +58,7 @@ class HighlightModal extends Component {
       // cb1 executes before cb2, and in case cb1 is not defined and cb2 is, then cb2 is excecuted
       // even though cb1 is undefined.
       if (this.props.cb1 !== undefined && this.props.cb1 !== null){
-        await this.props.cb1();  
+        await this.props.cb1();
       }
 
       if (this.props.cb2 !== undefined && this.props.cb2 !== null){
@@ -75,19 +72,15 @@ class HighlightModal extends Component {
     }
 
     /**
-    * Description:
-    * Closes the Modal by using the function given in props.
-    * 
-    * @param None
+    * @description Closes the Modal by using the function given in props.
     */
-    closeModal = async () => {
+    closeModal = () => {
       // Close the Modal
       this.props.onClose();
     }
 
     /**
-    * @description
-    * It computes the layout properties from a specific reference passed to a component.
+    * @description It computes the layout properties from a specific reference passed to a component.
     * Layout info is x, y absolute position on screen, and width and height from the component.
     * Beware that measureInWindow used inside this function, can give layout info from a very early rendered
     * stage, and therefore to us, it can represent that the component we are trying to get layout info,
@@ -96,13 +89,12 @@ class HighlightModal extends Component {
     * @param None
     */
     measureChildComponent = (event) => {
-      
       if (!this.state.timeoutStarted) {
-        
+
         // 27-08-2019: measureInWindow can get invalid and non intended values for pageX, pageY,
         // width, height. Therefore, a setTimeOut what makes is to delay the calculus
         // that gets layout info for our object in the final position on screen in absolute
-        // values. It can depend on whether the element is rendered after a scrollview that 
+        // values. It can depend on whether the element is rendered after a scrollview that
         // nurtures from data and therefore it delays the correct position of our object because
         // it does not expand the view completely. (At least thats a theory, you can play with
         // that and add more details here in the documentation)
@@ -114,7 +106,7 @@ class HighlightModal extends Component {
             // the state, to prevent a re-render. However, at this point this might have 0 consecuences
             // as a result of the timeoutStarted timeoutEnded flags. Leaving it though.
             // TODO: Check if the if condition really makes sense to be here.
-            if ((this.state.elemPosX !== pageX) || (this.state.elemPosY !== pageY)){ 
+            if ((this.state.elemPosX !== pageX) || (this.state.elemPosY !== pageY)){
               this.setState({
                 elemPosX: pageX,
                 elemPosY: pageY,
@@ -126,22 +118,22 @@ class HighlightModal extends Component {
                 timeoutEnded: true
               });
             }
-          }); 
-        }, this.props.showDelay);   
+          });
+        }, this.props.showDelay);
 
-        // timeoutStarted indicates that a setTimeout was scheduled for this.props.showDelay. 
-        // timeoutEnded will indicate when the computing of the object layout dimensions is finished. 
+        // timeoutStarted indicates that a setTimeout was scheduled for this.props.showDelay.
+        // timeoutEnded will indicate when the computing of the object layout dimensions is finished.
         this.setState({
               timeoutStarted: true
         });
-      }  
+      }
     }
 
     render() {
         const { children, visible, onClose } = this.props;
         const { elemPosX, elemPosY, elemHeight, elemWidth} = this.state;
 
-        const ChildComponentWithRef = React.forwardRef((props, ref) => 
+        const ChildComponentWithRef = React.forwardRef((props, ref) =>
             React.cloneElement(this.props.children, {
                 ...props,
                 ref,
@@ -149,10 +141,6 @@ class HighlightModal extends Component {
             })
         );
 
-        // Get Mobile window dimensions (height, width)
-        const displayHeight = Dimensions.get('window').height;
-        const displayMid = displayHeight / 2;
-        
         // measures Object is initialized with init values (all 0's), it is updated once
         // elemPosX / elemPosY / elemWidth / elemHeight changes value then measures has
         // new internal value.
@@ -197,7 +185,7 @@ class HighlightModal extends Component {
                           <View style={styles.infoContainer}>
                             <TouchableWithoutFeedback onPress={this.action}>
                                 <View>
-                                    <Text style={styles.okButton}>Entendido :) </Text>
+                                    <Text style={styles.okButton}>{translate('highlightModal.acceptButton')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                           </View>
@@ -260,7 +248,7 @@ function getAbsComponentPosOffsetsStyle(measures, quad) {
             left: measures.elemPosX
         };
     }
-    
+
     return res;
 }
 
@@ -271,8 +259,7 @@ function getAbsComponentPosOffsetsStyle(measures, quad) {
 * @param {Object} measures  Contains layout info from a component
 * @param {Num} quad  Quadrant number
 *
-* @return
-* It returns a style Object depending on the Quadrant
+* @returns {object} It returns a style Object depending on the Quadrant
 */
 function getAbsTextInfoPosOffsetsStyle(subQuad) {
     let res = null;
@@ -305,14 +292,13 @@ function getAbsTextInfoPosOffsetsStyle(subQuad) {
             bottom: 240
         };
     }
-    
+
     return res;
 }
 
 function computeQuadrant(measures) {
     let res = TOP_QUADRANT;
 
-    const displayWidth = Dimensions.get('window').width;
     const displayHeight = Dimensions.get('window').height;
     const displayMid = displayHeight / 2;
 
@@ -331,18 +317,17 @@ function computeQuadrant(measures) {
 }
 
 function computeSubQuadrant(measures) {
-    const displayWidth  = Dimensions.get('window').width;
     const displayHeight = Dimensions.get('window').height;
     const displayMid    = displayHeight / 2;
     const displayQuad   = displayMid / 2;
-    
+
     let res = TOP_QUADRANT;
-    
-    // First compute Quadrant 
+
+    // First compute Quadrant
     let quad = computeQuadrant(measures);
 
     if (quad === TOP_QUADRANT) {
-      
+
         // TOT-TOP
         if (measures.elemPosY + measures.elemHeight < displayQuad){
             res = TOP_QUADRANT_TOP;
@@ -357,7 +342,7 @@ function computeSubQuadrant(measures) {
         }
     }
     else if (quad === BOTTOM_QUADRANT){
-      
+
         // BOTTOM-TOP
         if (measures.elemPosY + measures.elemHeight > displayMid &&
             measures.elemPosY + measures.elemHeight <= (displayMid + displayQuad))

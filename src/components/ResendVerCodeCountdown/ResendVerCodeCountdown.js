@@ -11,6 +11,7 @@ import {
     VERIFICATION_COUNTDOWN_MILISECONDS,
     ONE_SECOND_IN_MILISECONDS
 } from './../../utilities/Constants';
+import { translate } from '../../utilities/i18';
 
 export class ResendVerCodeCountdown extends Component {
     constructor(props) {
@@ -63,14 +64,16 @@ export class ResendVerCodeCountdown extends Component {
                 {this.state.countFinished ?
                     <View>
                         <TouchableWithoutFeedback onPress={this.send} >
-                            <Text style={styles.resendText}>Reenviar Código</Text>
+                            <Text style={styles.resendText}>{translate('verificationScreen.resendVerCodeCountdown.title')}</Text>
                         </TouchableWithoutFeedback>
                         {this.state.codeResent &&
-                            <Text style={styles.textWarning}>El código fue reenviado...</Text>
+                            <Text style={styles.textWarning}>{translate('verificationScreen.resendVerCodeCountdown.codeWasResent')}</Text>
                         }
                     </View>
                     :
-                    <Text style={styles.textWarning}>Reenviar código en... {this.state.countDownSecs / ONE_SECOND_IN_MILISECONDS} segundos</Text>
+                    <Text style={styles.textWarning}>
+                        {translate('verificationScreen.resendVerCodeCountdown.resendCountdown', { countDownSecs: this.state.countDownSecs / ONE_SECOND_IN_MILISECONDS })}
+                    </Text>
                 }
             </View>
         );

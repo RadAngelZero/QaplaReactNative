@@ -11,6 +11,7 @@ import { joinEvent } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
+import { translate } from '../../utilities/i18';
 
 class EventCard extends Component {
     /**
@@ -44,7 +45,7 @@ class EventCard extends Component {
                         {(priceQaploins === null || priceQaploins === undefined) &&
                             <TouchableWithoutFeedback onPress={this.joinEvent}>
                                 <View style={styles.redimirButton}>
-                                    <Text style={styles.redimirTextButton}>Participar</Text>
+                                    <Text style={styles.redimirTextButton}>{translate('activeAchievementsScreen.eventAchievement.participate')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         }
@@ -52,7 +53,7 @@ class EventCard extends Component {
                 </View>
                 {(priceQaploins !== null && priceQaploins !== undefined) &&
                     <View style={styles.progressContainer}>
-                        <Text style={styles.progressBarCounter}>Estas inscrito a este evento.</Text>
+                        <Text style={styles.progressBarCounter}>{translate('activeAchievementsScreen.eventAchievement.alreadyParticipating')}</Text>
                     </View>
                 }
             </View>

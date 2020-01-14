@@ -148,8 +148,6 @@ export function createUserProfile(Uid, email) {
  * @param {string} userName The name that the user want to use in Qapla
  * @param {function} onSuccess Callback called when the username is succesfully seted
  * @param {function} onFail Callback called when the username can not be seted
- *
- * Return: {boolean} user was created or otherwise it was not
  */
 export async function createUserName(uid, userName, onSuccess, onFail) {
     return await usersRef.orderByChild('city').equalTo(userName.toUpperCase()).once('value').then((userNameAlready) => {

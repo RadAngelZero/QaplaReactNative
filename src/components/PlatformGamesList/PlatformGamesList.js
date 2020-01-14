@@ -1,3 +1,4 @@
+// diego          - 07-01-2019 - NA   - Hide scroll indicators on ScrollView
 // diego          - 21-08-2019 - us89 - Added loadGamesUserDontHave prop
 // josep.sanahuja - 15-07-2019 - us25 - added 'gameKey' to GameCard comp props
 // diego          - 11-07-2019 - Update platform's names for new references on database
@@ -20,7 +21,7 @@ class PlatformGamesList extends Component {
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>{platformResources[this.props.platform].name}</Text><View style={[styles.circleIcon, { backgroundColor: platformResources[this.props.platform].platformColor }]}></View>
                 </View>
-                <ScrollView horizontal style={styles.scrollViewStyle}>
+                <ScrollView horizontal style={styles.scrollViewStyle} showsHorizontalScrollIndicator={false}>
                     {Object.keys(this.props.listOfGames).map((game) => (
                         //Remove any game that actually dont exist (like counter strike o street figther) from database
                         //or this component is going to fail

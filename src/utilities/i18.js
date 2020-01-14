@@ -26,13 +26,16 @@ i18n.fallbacks = true;
 i18n.translations = { es, en };
 
 /**
- * Returns the translation of the content based on the given scope and
+ * Returns the translation of the content based on the given key and
  * with the given options
- * @param {string} scope Route of the element to translate on the files inside of folder translations
- * @param {object} options Object with aditional parameters to add
+ * For options see: https://github.com/fnando/i18n-js/wiki/Usage
+ * @param {string} key Route of the element to translate on the files inside of folder translations
+ * @param {object} options Object with aditional parameters to add on the text
  * @returns {string} Translated text
- * @example translate('welcomeMessage', { userName: 'DHVS' }): 'Welcome DHVS'
+ * @example For translation: "messages": { "welcomMessage": "Welcome %{userName}" } Use: translate('messages.welcomeMessage', { userName: 'DHVS' }) returns: 'Welcome DHVS'
+ * Optionaly you can set the scope in the options
+ * @example For translation: "messages": { "welcomMessage": "Welcome %{userName}" } Use: translate('welcomeMessage', { userName: 'DHVS', scope: 'messages' }) returns: 'Welcome DHVS'
  */
-export function translate(scope, options) {
-    return i18n.t(scope, options);
+export function translate(key, options) {
+    return i18n.t(key, options);
 }

@@ -661,7 +661,8 @@ export async function sendUserFeedback(message, userId) {
     let res = null;
     const date = new Date();
     const year = date.getUTCFullYear();
-    const month = date.getUTCMonth() + 1; // The months with this functions start from 0 (January = 0)
+    // The months with this functions start from 0 (January = 0)
+    const month = date.getUTCMonth() + 1;
     const dayHourMinuteSecond = date.getUTCDay().toString() + ' d:' + date.getUTCHours().toString() + ' h:' + date.getUTCMinutes().toString() + ' m:' + date.getUTCSeconds().toString() + ' s';
 
     try {

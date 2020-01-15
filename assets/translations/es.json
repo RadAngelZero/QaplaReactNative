@@ -1,4 +1,9 @@
 {
+    "App": {
+        "noInternetConnection": {
+            "title": "No estas conectado a internet, revisa tu conexión."
+        }
+    },
     "platforms": {
         "mobile": "PC/Móvil"
     },

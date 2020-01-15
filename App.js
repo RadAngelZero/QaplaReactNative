@@ -2,27 +2,42 @@
 
 import React from 'react';
 import { Provider } from 'react-redux';
+import NetInfo from '@react-native-community/netinfo';
 
 import Router from './src/Router';
 import { notifications } from './src/utilities/firebase';
 import store from './src/store/store';
+import Snackbar from './src/components/Snackbar/Snackbar';
+import { translate } from './src/utilities/i18';
 
 console.disableYellowBox = true;
 
 class App extends React.Component {
+    state = {
+        openSnackbar: false
+    };
+
     componentDidMount() {
         this.enableNotificationListeners();
+        this.networkListener = NetInfo.addEventListener((state) => {
+            if (!state.isConnected || !state.isInternetReachable) {
+                this.setState({ openSnackbar: true });
+            } else {
+                this.setState({ openSnackbar: false });
+            }
+        });
     }
 
     componentWillUnmount() {
         this.notificationListener();
         this.notificationOpenedListener();
+        this.networkListener();
     }
 
     /**
      * Enable listeners for Firebase Cloud Messaging notifications
      */
-    async enableNotificationListeners() {
+    enableNotificationListeners() {
         /*
         * Triggered when a particular notification has been received in foreground
         */
@@ -46,7 +61,14 @@ class App extends React.Component {
     }
 
     render() {
-        return <Router />
+        return (
+            <>
+                <Snackbar
+                    visible={this.state.openSnackbar}
+                    message={translate('App.noInternetConnection.title')} />
+                <Router />
+            </>
+        )
     }
 }
 

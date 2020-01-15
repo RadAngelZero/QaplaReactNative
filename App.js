@@ -14,14 +14,15 @@ console.disableYellowBox = true;
 
 class App extends React.Component {
     state = {
-        openSnackbar: false
+        openSnackbar: false,
+        snackbarMessage: ''
     };
 
     componentDidMount() {
         this.enableNotificationListeners();
         this.networkListener = NetInfo.addEventListener((state) => {
             if (!state.isConnected || !state.isInternetReachable) {
-                this.setState({ openSnackbar: true });
+                this.setState({ openSnackbar: true, snackbarMessage: translate('App.noInternetConnection.title') });
             } else {
                 this.setState({ openSnackbar: false });
             }
@@ -65,7 +66,7 @@ class App extends React.Component {
             <>
                 <Snackbar
                     visible={this.state.openSnackbar}
-                    message={translate('App.noInternetConnection.title')} />
+                    message={this.state.snackbarMessage} />
                 <Router />
             </>
         )

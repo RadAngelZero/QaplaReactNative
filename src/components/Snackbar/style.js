@@ -24,23 +24,23 @@ export default styles = StyleSheet.create({
         fontSize: 14,
         color: '#FFF',
         textAlignVertical: 'center',
-        marginRight: 16,
-        marginLeft: 16
+        marginRight: widthPercentageToPx(5),
+        marginLeft: widthPercentageToPx(5)
     },
     messageWithAction: {
         fontSize: 14,
         color: '#FFF',
         textAlignVertical: 'center',
         maxWidth: '65%',
-        marginRight: 16,
-        marginLeft: 16
+        marginRight: widthPercentageToPx(5),
+        marginLeft: widthPercentageToPx(5)
     },
     actionTextButton: {
         fontSize: 14,
         fontWeight: 'bold',
         color: '#36E5CE',
         textAlignVertical: 'center',
-        marginRight: 8,
-        marginLeft: 8
+        marginRight: widthPercentageToPx(2.5),
+        marginLeft: widthPercentageToPx(2.5)
     }
 });

@@ -34,6 +34,7 @@ class Snackbar extends Component {
     }
 
     render() {
+        const haveAction = this.props.action && this.props.actionMessage;
         return (
             <Animated.View style={[styles.container, {
                 transform: [
@@ -42,10 +43,10 @@ class Snackbar extends Component {
                     }
                 ]
             }]}>
-                <Text style={(this.props.action && this.props.actionMessage) ? styles.messageWithAction : styles.message}>
+                <Text style={haveAction ? styles.messageWithAction : styles.message}>
                     {this.props.message}
                 </Text>
-                {(this.props.action && this.props.actionMessage) &&
+                {haveAction &&
                     <Text style={styles.actionTextButton} onPress={this.props.action}>
                         {this.props.actionMessage}
                     </Text>
@@ -55,13 +56,11 @@ class Snackbar extends Component {
     }
 }
 
-
 Snackbar.propTypes = {
     action: PropTypes.func,
     actionMessage: PropTypes.string,
     message: PropTypes.string.isRequired,
     visible: PropTypes.bool.isRequired
 };
-
 
 export default Snackbar;

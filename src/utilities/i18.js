@@ -12,7 +12,10 @@ i18n.defaultLocale = 'en';
  */
 i18n.locale =
     Platform.OS === 'ios' ?
-        NativeModules.SettingsManager.settings.AppleLocale.substring(0, 2)
+    	NativeModules.SettingsManager.settings.AppleLocale === undefined ?
+    		NativeModules.SettingsManager.settings.AppleLanguages[0].substring(0, 2)
+    	:
+        	NativeModules.SettingsManager.settings.AppleLocale.substring(0, 2)
     :
         NativeModules.I18nManager.localeIdentifier.substring(0, 2);
 

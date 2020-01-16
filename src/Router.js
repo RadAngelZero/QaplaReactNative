@@ -278,7 +278,7 @@ const MatchWizardStackNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'LoadGames',
+    initialRouteName: 'ChooseMatchType',
   }
 );
 

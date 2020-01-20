@@ -246,6 +246,14 @@
         "title": "Crea tu nombre de usuario",
         "userNamePlaceholder": "Introduce tu nombre de usuario",
         "userNameAlreadyTaken": "Ese nombre de usuario ya esta en uso, prueba con otro",
+        "bodyFirstPart": "Antes de registrate en Qapla gaming asegurate de haber leido y aceptado nuestros",
+        "termsAndConditions": "Términos y Condiciones",
+        "bodySecondPart": "y nuestra",
+        "privacyPolicy": "Politica de privacidad",
+        "agreeWithTerms": "He leido y acepto los terminos y condiciones",
+        "agreeWithPrivacy": "He leido y acepto la politica de privacidad",
+        "validatingUserName": "Validando Username...",
+        "acceptButton": "Continuar",
         "continue": "Continuar"
     },
     "chooseOpponentScreen": {
@@ -292,14 +300,5 @@
         "paragraph": "La partida expirará después de 10 minutos si no recibe y se acepta un desafio de otro jugador.",
         "dontShowItAgain": "Entendido, no volver a mostrar este mensaje",
         "okButton": "Entendido"
-    },
-    "AllowTermsAndConditionsModal": {
-        "bodyFirstPart": "Antes de registrate en Qapla gaming asegurate de haber leido y aceptado nuestros",
-        "termsAndConditions": "Términos y Condiciones",
-        "bodySecondPart": "y nuestra",
-        "privacyPolicy": "Politica de privacidad",
-        "agreeWithTerms": "He leido y acepto los terminos y condiciones",
-        "agreeWithPrivacy": "He leido y acepto la politica de privacidad",
-        "acceptButton": "Continuar"
     }
 }

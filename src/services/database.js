@@ -142,23 +142,31 @@ export function createUserProfile(Uid, email) {
     });
 }
 
+
 /**
  * Update the userName of specific user only if that username is not already in use
- * @param {string} uid User identifier of the user on firebase
+ * @param {string} uid User identifier on the database
  * @param {string} userName The name that the user want to use in Qapla
- * @param {function} onSuccess Callback called when the username is succesfully seted
- * @param {function} onFail Callback called when the username can not be seted
  */
-export async function createUserName(uid, userName, onSuccess, onFail) {
-    return await usersRef.orderByChild('city').equalTo(userName.toUpperCase()).once('value').then((userNameAlready) => {
-        if (!userNameAlready.exists()) {
-            usersRef.child(uid).update({ userName, city: userName.toUpperCase() });
+export function createUserName(uid, userName) {
+    /**
+     * We use city to save the userName in uppercase, so we can check if the username is available, the username must be unique
+     * doesn't matter CAPS and lowers
+     */
+    usersRef.child(uid).update({ userName, city: userName.toUpperCase() });
+}
 
-            onSuccess();
-        } else {
-            onFail();
-        }
-    });
+/**
+ * Update the userName of specific user only if that username is not already in use
+ * @param {string} userName The name that the user want to use in Qapla
+ */
+export async function validateUserName(userName) {
+    if (userName !== '') {
+        const usedUsername = await usersRef.orderByChild('city').equalTo(userName.toUpperCase()).once('value');
+        return !usedUsername.exists();
+    }
+
+    return false;
 }
 
 /**

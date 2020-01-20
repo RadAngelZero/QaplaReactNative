@@ -7,54 +7,43 @@ import styles from './style';
 import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle, signOut } from '../../services/auth';
 import { translate } from '../../utilities/i18';
-import AllowTermsAndConditionsModal from '../../components/AllowTermsAndConditionsModal/AllowTermsAndConditionsModal';
-import { createUserProfile, usersRef } from '../../services/database';
+import { createUserProfile } from '../../services/database';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
 
 class SignInScreen extends Component {
-    state = {
-        openTermsAndConditionsModal: false
-    };
-
     componentDidMount() {
         setupGoogleSignin();
     }
 
     signInWithFacebook = async () => {
-        const user = await signInWithFacebook();
-        if (user.additionalUserInfo.isNewUser) {
-            this.setState({ openTermsAndConditionsModal: true });
-        } else {
-            this.props.navigation.pop();
+        try {
+            const user = await signInWithFacebook();
+            this.succesfullSignIn(user);
+        } catch (error) {
+            console.error(error);
         }
     }
 
     signInWithGoogle = async () => {
-        const user = await signInWithGoogle();
+        try {
+            const user = await signInWithGoogle();
+            this.succesfullSignIn(user);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    succesfullSignIn = (user) => {
         if (user.additionalUserInfo.isNewUser) {
-            this.setState({ openTermsAndConditionsModal: true });
+            createUserProfile(user.user.uid, user.user.email);
+            this.props.navigation.navigate('ChooseUserNameScreen');
         } else {
             this.props.navigation.pop();
         }
     }
 
-    closeTermsAndConditionsModal = () => {
-        this.setState({ openTermsAndConditionsModal: false });
-    }
-
-    termsAndConditionsAccepted = (user) => {
-        this.closeTermsAndConditionsModal();
-        createUserProfile(user.uid, user.email);
-        this.props.navigation.navigate('ChooseUserNameScreen', { uid: user.uid });
-    }
-
-    termsAndConditionsRejected = async (user) => {
-        await user.delete();
-        await usersRef.child(user.uid).remove();
-        this.closeTermsAndConditionsModal();
-    }
 
     render() {
         return (
@@ -84,11 +73,6 @@ class SignInScreen extends Component {
                     <Image style={styles.backgroundImage}
                         source={SignUpControllersBackgroundImage} />
                 </View>
-                <AllowTermsAndConditionsModal
-                    open={this.state.openTermsAndConditionsModal}
-                    onClose={this.closeTermsAndConditionsModal}
-                    termsAndConditionAccepted={this.termsAndConditionsAccepted}
-                    termsAndConditionRejected={this.termsAndConditionsRejected} />
             </SafeAreaView>
         );
     }

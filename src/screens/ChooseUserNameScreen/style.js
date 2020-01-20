@@ -35,13 +35,6 @@ export default styles = StyleSheet.create({
         paddingHorizontal: widthPercentageToPx(4.27),
         paddingVertical: heightPercentageToPx(1.48)
     },
-    buttonContainer: {
-        borderRadius: 100,
-        backgroundColor: '#FA2D79',
-        paddingVertical: heightPercentageToPx(1.97),
-        paddingHorizontal: widthPercentageToPx(10.66),
-        marginTop: heightPercentageToPx(5.17)
-    },
     buttonText: {
         color: '#FFF',
         alignSelf: 'center'
@@ -55,5 +48,48 @@ export default styles = StyleSheet.create({
         opacity: .68,
         width: widthPercentageToPx(100),
         height: heightPercentageToPx(50)
+    },
+    modalText: {
+        fontSize: 14,
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.28),
+        lineHeight: 21,
+        color: '#FFF',
+        textAlignVertical: 'center',
+        justifyContent:'center',
+        marginLeft: widthPercentageToPx(2.67),
+        marginRight: widthPercentageToPx(2.67),
+        textAlign: 'center'
+    },
+    hyperlinkText: {
+        color: '#3df9df',
+        fontWeight: 'bold'
+    },
+    bottomCheckBox: {
+        marginTop: heightPercentageToPx(1.33)
+    },
+    confirmButton: {
+        borderRadius: 100,
+        backgroundColor: '#FA2D79',
+        elevation: 6,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.34),
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        marginTop: heightPercentageToPx(1.66),
+    },
+    confirmButtonText: {
+    	color: '#FFF',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        letterSpacing: .5,
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(9.6),
+        marginRight: widthPercentageToPx(9.6)
     }
 });

@@ -10,8 +10,11 @@ import { connect } from 'react-redux';
 import Images from './../../../assets/images';
 import styles from './style';
 
-import { createUserName } from '../../services/database';
+import { validateUserName, createUserName } from '../../services/database';
 import { translate } from '../../utilities/i18';
+import CheckBox from '../../components/CheckBox/CheckBox';
+import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
+import TermsAndConditionsModal from '../../components/TermsAndConditionsModal/TermsAndConditionsModal';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 
@@ -21,11 +24,34 @@ class ChooseUserNameScreen extends Component {
 
         this.state = {
             userName: '',
-            showErrorMessage: false
+            showErrorMessage: false,
+            checkingUserName: false,
+            agreementTermsState: false,
+            agreementPrivacyState: false,
+            openTermsModal: false,
+            openPrivacyModal: false
         };
     }
 
-    validateAndSaveUserName = () => createUserName(this.props.uid, this.state.userName, () => this.props.navigation.popToTop(), () => this.setState({ showErrorMessage: true }));
+    checkTermsConditionsAndUsername = () => {
+        if (this.state.agreementTermsState && this.state.agreementPrivacyState) {
+            this.setState({ checkingUserName: true, showErrorMessage: false }, async () => {
+                if(this.state.userName !== '' && await validateUserName(this.state.userName)) {
+                    createUserName(this.props.uid, this.state.userName);
+                    this.props.navigation.popToTop();
+                } else {
+                    this.setState({
+                        showErrorMessage: true,
+                        checkingUserName: false
+                    });
+                }
+            });
+        }
+    }
+
+    toggleAgreementTermsState = () => this.setState({ agreementTermsState: !this.state.agreementTermsState });
+
+    toggleAgreementPrivacyState = () => this.setState({ agreementPrivacyState: !this.state.agreementPrivacyState });
 
     render() {
         return (
@@ -37,23 +63,57 @@ class ChooseUserNameScreen extends Component {
                             style = {styles.inputText}
                             placeholder={translate('chooseUserNameScreen.userNamePlaceholder')}
                             autoCapitalize='none'
-                            onChangeText= {(text) => this.setState({ userName: text, userNameTaken: false })}
-                            onSubmitEditing={this.validateAndSaveUserName} />
+                            onChangeText= {(userName) => this.setState({ userName })}
+                            onSubmitEditing={this.checkTermsConditionsAndUsername} />
                     </View>
                     {this.state.showErrorMessage &&
                     <View>
                         <Text style={styles.buttonText}>{translate('chooseUserNameScreen.userNameAlreadyTaken')}</Text>
                     </View>
                     }
-                    <View>
-                        <TouchableWithoutFeedback onPress={this.validateAndSaveUserName}>
-                            <View style={styles.buttonContainer}>
-                                <Text style={styles.buttonText}>{translate('chooseUserNameScreen.continue')}</Text>
-                            </View>
+                    <Text style={styles.modalText}>
+                        {`${translate('chooseUserNameScreen.bodyFirstPart')} `}
+                        <TouchableWithoutFeedback onPress={() => this.setState({ openTermsModal: true })}>
+                            <Text style={styles.hyperlinkText}>
+                                {translate('chooseUserNameScreen.termsAndConditions')}
+                            </Text>
                         </TouchableWithoutFeedback>
-                    </View>
+                        {` ${translate('chooseUserNameScreen.bodySecondPart')} `}
+                        <TouchableWithoutFeedback onPress={() => this.setState({ openPrivacyModal: true })}>
+                            <Text style={styles.hyperlinkText}>
+                                {translate('chooseUserNameScreen.privacyPolicy')}
+                            </Text>
+                        </TouchableWithoutFeedback>
+                    </Text>
+                    <CheckBox
+                        label={translate('chooseUserNameScreen.agreeWithTerms')}
+                        onPress={this.toggleAgreementTermsState} />
+                    <CheckBox
+                        label={translate('chooseUserNameScreen.agreeWithPrivacy')}
+                        onPress={this.toggleAgreementPrivacyState}
+                        style={styles.bottomCheckBox} />
+                    <TouchableWithoutFeedback
+                        disabled={this.state.userName === '' || this.state.checkingUserName}
+                        onPress={this.checkTermsConditionsAndUsername}>
+                        <View style={styles.confirmButton}>
+                            <Text style={styles.confirmButtonText}>
+                                {translate('chooseUserNameScreen.acceptButton')}
+                            </Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    {this.state.checkingUserName &&
+                        <View>
+                            <Text style={styles.buttonText}>{translate('chooseUserNameScreen.validatingUserName')}</Text>
+                        </View>
+                    }
                     <Image style={styles.backgroundImage}
                         source={SignUpControllersBackgroundImage} />
+                    <PrivacyModal
+                        open={this.state.openPrivacyModal}
+                        onClose={() => this.setState({ openPrivacyModal: false })} />
+                    <TermsAndConditionsModal
+                        open={this.state.openTermsModal}
+                        onClose={() => this.setState({ openTermsModal: false })} />
                 </View>
             </SafeAreaView>
         );

@@ -16,9 +16,10 @@ export default styles = StyleSheet.create({
         shadowRadius: 4.65,
         elevation: 6,
         position: 'absolute',
-        alignSelf: 'center',
+        alignItems: 'center',
         width: widthPercentageToPx(85),
-        height: heightPercentageToPx(12)
+        height: heightPercentageToPx(12),
+        left: widthPercentageToPx((100-85) / 2)
     },
     message: {
         fontSize: 14,

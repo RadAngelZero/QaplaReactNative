@@ -5,7 +5,8 @@
 // diego             - 01-08-2019 - us58 - File creation
 
 import { StyleSheet, Platform } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
+import { hasSafeAreaView } from './../../utilities/iosAndroidDim'
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import {
     NAV_TOPBAR_ICON_RIGHT_MARGIN,
     HEADER_SIZE
@@ -14,8 +15,7 @@ import {
 export default styles = StyleSheet.create({
     sfvContainer: {
         justifyContent: 'center',
-        backgroundColor:'#0e1222',
-        paddingTop: paddingTopForAndroidDevicesWithNotch()
+        backgroundColor:'#0e1222'
     },
     container: {
         backgroundColor: '#0E1222',

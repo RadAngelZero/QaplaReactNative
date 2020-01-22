@@ -5,7 +5,7 @@ import { View, Image, Text, TouchableWithoutFeedback, SafeAreaView } from 'react
 
 import styles from './style';
 import Images from './../../../assets/images';
-import { signInWithFacebook, setupGoogleSignin, signInWithGoogle, signOut } from '../../services/auth';
+import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
 import { translate } from '../../utilities/i18';
 import { createUserProfile } from '../../services/database';
 
@@ -17,6 +17,9 @@ class SignInScreen extends Component {
         setupGoogleSignin();
     }
 
+    /**
+     * Start a session with facebook
+     */
     signInWithFacebook = async () => {
         try {
             const user = await signInWithFacebook();
@@ -26,6 +29,9 @@ class SignInScreen extends Component {
         }
     }
 
+    /**
+     * Start a session with google
+     */
     signInWithGoogle = async () => {
         try {
             const user = await signInWithGoogle();
@@ -35,6 +41,11 @@ class SignInScreen extends Component {
         }
     }
 
+    /**
+     * Check if the user is new, if it's new create the profile and send the user
+     * to ChooseUserNameScreen
+     * If isn't just close and back to the previous flow
+     */
     succesfullSignIn = (user) => {
         if (user.additionalUserInfo.isNewUser) {
             createUserProfile(user.user.uid, user.user.email);

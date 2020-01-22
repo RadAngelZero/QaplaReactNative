@@ -33,6 +33,10 @@ class ChooseUserNameScreen extends Component {
         };
     }
 
+    /**
+     * Validate the agreements (terms and privacy), also validate the userName
+     * if everything is right add the userName and returns the user to the previous flow
+     */
     checkTermsConditionsAndUsername = () => {
         if (this.state.agreementTermsState && this.state.agreementPrivacyState) {
             this.setState({ checkingUserName: true, showErrorMessage: false }, async () => {
@@ -49,9 +53,31 @@ class ChooseUserNameScreen extends Component {
         }
     }
 
+    /**
+     * Toggle the agreementTermsState (checkbox)
+     */
     toggleAgreementTermsState = () => this.setState({ agreementTermsState: !this.state.agreementTermsState });
 
+    /**
+     * Toggle the agreementPrivacyState (checkbox)
+     */
     toggleAgreementPrivacyState = () => this.setState({ agreementPrivacyState: !this.state.agreementPrivacyState });
+
+    /**
+     * Set the userName
+     * @param {string} userName Value of the userName given by the user
+     */
+    setUserName = (userName) => this.setState({ userName });
+
+    /**
+     * Close the terms and conditions modal
+     */
+    closeTermsAndConditionsModal = () => this.setState({ openTermsModal: false });
+
+    /**
+     * Close the privacy
+     */
+    closePrivacyModal = () => this.setState({ openPrivacyModal: false })
 
     render() {
         return (
@@ -63,7 +89,7 @@ class ChooseUserNameScreen extends Component {
                             style = {styles.inputText}
                             placeholder={translate('chooseUserNameScreen.userNamePlaceholder')}
                             autoCapitalize='none'
-                            onChangeText= {(userName) => this.setState({ userName })}
+                            onChangeText= {this.setUserName}
                             onSubmitEditing={this.checkTermsConditionsAndUsername} />
                     </View>
                     {this.state.showErrorMessage &&
@@ -103,17 +129,19 @@ class ChooseUserNameScreen extends Component {
                     </TouchableWithoutFeedback>
                     {this.state.checkingUserName &&
                         <View>
-                            <Text style={styles.buttonText}>{translate('chooseUserNameScreen.validatingUserName')}</Text>
+                            <Text style={styles.buttonText}>
+                                {translate('chooseUserNameScreen.validatingUserName')}
+                            </Text>
                         </View>
                     }
                     <Image style={styles.backgroundImage}
                         source={SignUpControllersBackgroundImage} />
                     <PrivacyModal
                         open={this.state.openPrivacyModal}
-                        onClose={() => this.setState({ openPrivacyModal: false })} />
+                        onClose={this.closePrivacyModal} />
                     <TermsAndConditionsModal
                         open={this.state.openTermsModal}
-                        onClose={() => this.setState({ openTermsModal: false })} />
+                        onClose={this.closeTermsAndConditionsModal} />
                 </View>
             </SafeAreaView>
         );

@@ -194,9 +194,10 @@
         },
         "verificationPhoneNumber": {
             "title": "¡Verifica tu Whatsapp!",
-            "phonePlaceholder": "Telefono*",
+            "phonePlaceholder": "Telefono* ej: 6505551234",
             "codePlaceholder": "Ingresa tu Código",
-            "codeSended": "Te enviamos un código de verificación"
+            "codeSended": "Te enviamos un código de verificación",
+            "smsCodeError": "El código de verificación es incorrecto"
         },
         "verificationProcessSuccess": {
             "title": "¡Gracias!",

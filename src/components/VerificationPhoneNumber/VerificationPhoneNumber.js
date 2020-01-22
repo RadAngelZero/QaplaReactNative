@@ -45,7 +45,13 @@ export class VerificationPhoneNumber extends Component {
                                     placeholderTextColor='#898A97'
                                     onSubmitEditing={this.props.goToNextStep}
                                     onChangeText={this.props.setVerificationCode} />
-                                <Text style={styles.smallText}>{translate('verificationScreen.verificationPhoneNumber.codeSended')}</Text>
+                                <Text style={styles.smallText}>
+                                    {this.props.error ?
+                                        translate('verificationScreen.verificationPhoneNumber.smsCodeError')
+                                        :
+                                        translate('verificationScreen.verificationPhoneNumber.codeSended')
+                                    }
+                                </Text>
                             </View>
                         }
                     </View>

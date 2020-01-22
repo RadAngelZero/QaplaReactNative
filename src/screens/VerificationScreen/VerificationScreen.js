@@ -60,7 +60,8 @@ class VerificationScreen extends Component {
         indexPositions: [],
         indexPositionsIsSorted: false,
         numAttemptsCodeSent: 0,
-        codeSent: false
+        codeSent: false,
+        errorOnSMSCode: false
     };
 
     /**
@@ -161,33 +162,38 @@ class VerificationScreen extends Component {
 
         switch (this.state.nextIndex) {
             case 1:
-                isValidData = Object.keys(this.state.personData).some((value) => this.state.personData[value] !== '');
+                isValidData = !Object.keys(this.state.personData).some((value) => this.state.personData[value] === '' || this.state.personData[value] === 0);
                 break;
             case this.state.indexPositions.length - 1:
-                isValidData = Object.keys(this.state.phoneData).some((value) => this.state.phoneData[value] !== '');
-                try {
+                isValidData = this.state.phoneData.phoneNumber.length >= 10;
+                if (isValidData) {
+                    try {
 
-                    isUserOnSendCodeScreen = true;
+                        isUserOnSendCodeScreen = true;
 
-                    // Mechanism to control in VerificationPhoneNumber component if code was sent
-                    this.setState({
-                        nextIndex: this.state.nextIndex + 1,
-                        codeSent: true
-                    });
+                        // Mechanism to control in VerificationPhoneNumber component if code was sent
+                        this.setState({
+                            nextIndex: this.state.nextIndex + 1,
+                            codeSent: true
+                        });
 
-                    /**
-                     * Once we have the verification object (after we await for the SMS) we add it to the state
-                     * so we can render new things on the screen, to let the user add their code and procceed
-                     */
-                    this.sendVerificationCode();
-                } catch (error) {
-                    console.error(error);
+                        /**
+                         * Once we have the verification object (after we await for the SMS) we add it to the state
+                         * so we can render new things on the screen, to let the user add their code and procceed
+                         */
+                        this.sendVerificationCode();
+                    } catch (error) {
+                        console.error(error);
+                    }
                 }
                 break;
             case this.state.indexPositions.length:
-                isValidData = Object.keys(this.state.firebaseVerificationData).some((value) => this.state.firebaseVerificationData[value] !== '');
+                isValidData = !Object.keys(this.state.firebaseVerificationData).some((value) => this.state.firebaseVerificationData[value] === '');
 
-                await this.verifyUserPhone(this.state.verificationObject.verificationId, this.state.firebaseVerificationData.verificationCode);
+                if (isValidData) {
+                    this.setState({ errorOnSMSCode: false });
+                    isValidData = await this.verifyUserPhone(this.state.verificationObject.verificationId, this.state.firebaseVerificationData.verificationCode);
+                }
                 break;
             default:
                 break;
@@ -259,7 +265,13 @@ class VerificationScreen extends Component {
             };
 
             createVerificationRequest(this.props.uid, verificationRequest);
+
+            return true;
         } catch (error) {
+            console.log(error);
+            this.setState({ errorOnSMSCode: true });
+
+            return false;
         }
     }
 
@@ -377,6 +389,7 @@ class VerificationScreen extends Component {
                                 setPhonePrefix={this.setPhonePrefixObj}
                                 setVerificationCode={this.setVerificationCode}
                                 goToNextStep={this.goToNextStep}
+                                error={this.state.errorOnSMSCode}
                                 codeSent={this.state.codeSent} />
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>

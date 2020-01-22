@@ -3,14 +3,15 @@
 // diego             - 11-12-2019 - us164 - discordIcon flexDirection changed
 // diego             - 22-11-2019 - us148 - unreadNotificationsIcon added
 
-import { StyleSheet, Platform } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx, hasSafeAreaView } from '../../utilities/iosAndroidDim';
+import { StyleSheet } from 'react-native';
+import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
 import { HEADER_SIZE } from '../../utilities/Constants';
 
 export const styles = StyleSheet.create({
     sfvContainer: {
         justifyContent: 'center',
-        backgroundColor:'#0e1222'
+        backgroundColor:'#0e1222',
+        paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     topNavBarView: {
         backgroundColor: "transparent",

@@ -2,7 +2,7 @@
 
 import { StyleSheet } from 'react-native';
 
-import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx, heightPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
 import { NAV_TOPBAR_ICON_RIGHT_MARGIN, NAV_TOPBAR_ICON_TOP_MARGIN } from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({
@@ -11,8 +11,11 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#141833',
+        marginLeft: widthPercentageToPx(3),
+        marginRight: widthPercentageToPx(1),
         width: widthPercentageToPx(100),
-        height: heightPercentageToPx(100)
+        height: heightPercentageToPx(100),
+        paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     closeIcon: {
         marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),

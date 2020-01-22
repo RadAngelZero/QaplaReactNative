@@ -1,4 +1,9 @@
 {
+    "App": {
+        "noInternetConnection": {
+            "title": "No internet, check your connection."
+        }
+    },
     "platforms": {
         "mobile": "PC/Mobile"
     },

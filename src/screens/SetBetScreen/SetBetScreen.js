@@ -17,7 +17,6 @@ import {
     SafeAreaView,
     View,
     Text,
-    BackHandler,
     TouchableWithoutFeedback
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -85,15 +84,10 @@ class SetBetScreen extends Component {
         ]
     }
 
-    componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
-    }
-
     componentWillUnmount() {
 
         //Remove willFocus listener on navigation
         this.list.forEach((item) => item.remove());
-        BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
     }
 
     /**
@@ -111,7 +105,6 @@ class SetBetScreen extends Component {
      * Description:
      * Retrieves the Qapla comission for transactions and sets it into the state.
      *
-     * Params NONE
      */
     async setQaplaComission() {
         try {
@@ -123,11 +116,6 @@ class SetBetScreen extends Component {
         } catch(err) {
             console.log(err);
         }
-    }
-
-    backToMatchTypeScreen = () => {
-        this.props.navigation.navigate('LoadGames');
-        return true;
     }
 
     defineWinBet() {

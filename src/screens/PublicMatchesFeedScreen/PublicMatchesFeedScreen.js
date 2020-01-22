@@ -240,15 +240,19 @@ class PublicMatchesFeedScreen extends Component {
                 <View style={style.container}>
                     <MatchCardList {...this.state} />
                 </View>
-                <HighlightModal
-                    visible={this.state.showHg1Modal}
-                    onClose={this.toggleHg1Modal}
-                    showDelay={1000}
-                    cb1={this.markHg1}
-                    header={translate('publicMatchesFeedScreen.highlightModal.header')}
-                    body={translate('publicMatchesFeedScreen.highlightModal.body')}>
+                {this.state.showHg1Modal ?
+                    <HighlightModal
+                        visible={this.state.showHg1Modal}
+                        onClose={this.toggleHg1Modal}
+                        showDelay={1000}
+                        cb1={this.markHg1}
+                        header={translate('publicMatchesFeedScreen.highlightModal.header')}
+                        body={translate('publicMatchesFeedScreen.highlightModal.body')}>
+                        <CreateRetasButton onPress={this.onCrearRetaButtonPress} />
+                    </HighlightModal>
+                :
                     <CreateRetasButton onPress={this.onCrearRetaButtonPress} />
-                </HighlightModal>
+                }
             </>
         );
     }

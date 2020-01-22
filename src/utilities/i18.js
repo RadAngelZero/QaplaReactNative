@@ -1,23 +1,26 @@
 import i18n from 'i18n-js';
-import { NativeModules, Platform } from 'react-native';
+// import { NativeModules, Platform } from 'react-native'; Back to this code once the test phase has finished
 import es from './../../assets/translations/es.json';
 import en from './../../assets/translations/en.json';
 
-i18n.defaultLocale = 'en';
+i18n.defaultLocale = 'es';
 
 /**
  * According to the operative system, we take the local user language, after that we make a substring with the first two characters
  * so we avoid create a lot of cases because any language have some variations, for example: 'en', 'en_US', 'en_UK', etc. we only take 'en'
  * for the english, however in the future as the app evolve we can evolve the translations files to get cover any variation of the supported languages
  */
-i18n.locale =
-    Platform.OS === 'ios' ?
-    	NativeModules.SettingsManager.settings.AppleLocale === undefined ?
-    		NativeModules.SettingsManager.settings.AppleLanguages[0].substring(0, 2)
-    	:
-        	NativeModules.SettingsManager.settings.AppleLocale.substring(0, 2)
-    :
-        NativeModules.I18nManager.localeIdentifier.substring(0, 2);
+i18n.locale = 'es';
+    /**
+     * Back to this code and erase fixed language once the test phase has finished
+     */
+    /* Platform.OS === 'ios' ?
+        NativeModules.SettingsManager.settings.AppleLocale === undefined ?
+            NativeModules.SettingsManager.settings.AppleLanguages[0].substring(0, 2)
+            :
+            NativeModules.SettingsManager.settings.AppleLocale.substring(0, 2)
+        :
+        NativeModules.I18nManager.localeIdentifier.substring(0, 2); */
 
 /**
  * Flag to support fallbacks, that means, when it's true, if the app can't find a translation for the user language (i18n.locale property)

@@ -2,7 +2,7 @@
 
 import { StyleSheet } from 'react-native';
 
-import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx, heightPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
@@ -10,7 +10,8 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor:'#FFF',
         marginLeft: widthPercentageToPx(3),
-        marginRight: widthPercentageToPx(1)
+        marginRight: widthPercentageToPx(1),
+        paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     title: {
         fontSize: 24,

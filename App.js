@@ -1,6 +1,7 @@
 // diego           - 15-11-2019 - us149 - Store moved to an independent file
 
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 
 import Router from './src/Router';
@@ -52,8 +53,9 @@ class App extends React.Component {
 
 const AppReduxContainer = () => (
   <Provider store={store}>
+      <StatusBar backgroundColor='#0e1222' />
       <App />
   </Provider>
-)
+);
 
 export default AppReduxContainer;

@@ -70,12 +70,22 @@ class ChooseUserNameScreen extends Component {
     setUserName = (userName) => this.setState({ userName });
 
     /**
+     * Open the terms and conditions modal
+     */
+    openTermsModal = () => this.setState({ openTermsModal: true });
+
+    /**
+     * Open the privacy modal
+     */
+    openPrivacyModal = () => this.setState({ openPrivacyModal: true });
+
+    /**
      * Close the terms and conditions modal
      */
     closeTermsAndConditionsModal = () => this.setState({ openTermsModal: false });
 
     /**
-     * Close the privacy
+     * Close the privacy modal
      */
     closePrivacyModal = () => this.setState({ openPrivacyModal: false })
 
@@ -99,13 +109,13 @@ class ChooseUserNameScreen extends Component {
                     }
                     <Text style={styles.modalText}>
                         {`${translate('chooseUserNameScreen.bodyFirstPart')} `}
-                        <TouchableWithoutFeedback onPress={() => this.setState({ openTermsModal: true })}>
+                        <TouchableWithoutFeedback onPress={this.openTermsModal}>
                             <Text style={styles.hyperlinkText}>
                                 {translate('chooseUserNameScreen.termsAndConditions')}
                             </Text>
                         </TouchableWithoutFeedback>
                         {` ${translate('chooseUserNameScreen.bodySecondPart')} `}
-                        <TouchableWithoutFeedback onPress={() => this.setState({ openPrivacyModal: true })}>
+                        <TouchableWithoutFeedback onPress={this.openPrivacyModal}>
                             <Text style={styles.hyperlinkText}>
                                 {translate('chooseUserNameScreen.privacyPolicy')}
                             </Text>

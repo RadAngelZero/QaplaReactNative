@@ -56,6 +56,9 @@ class AppSettingsMenuScreen extends Component {
 
     toggleBioModal = () => this.setState({ bioModalOpen: !this.state.bioModalOpen });
 
+    /**
+     * Toggle the Terms and conditions modal
+     */
     toggleTermsAndConditionsModal = () => this.setState({ termsModalOpen: !this.state.termsModalOpen });
 
     render() {

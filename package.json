@@ -7,6 +7,7 @@
     "test": "mocha --require test/config/mocha.js ./test/*.test.js"
   },
   "dependencies": {
+    "@react-native-community/netinfo": "^5.3.3",
     "@segment/analytics-react-native": "^1.1.0-beta.2",
     "i18n-js": "^3.5.1",
     "jetifier": "^1.6.4",

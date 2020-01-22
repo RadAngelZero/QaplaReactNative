@@ -14,7 +14,7 @@ import {
     phoneAuthAutoVerifiedState,
 } from './../utilities/firebase';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
-import {GoogleSignin} from 'react-native-google-signin';
+import { GoogleSignin } from 'react-native-google-signin';
 import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
@@ -22,6 +22,9 @@ import { emptyLogros } from '../actions/logrosActions';
 
 const webClientIdForGoogleAuth = '779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com';
 
+/**
+ * Signin a user using facebook
+ */
 export async function signInWithFacebook() {
     const facebookResult = await LoginManager.logInWithPermissions(['public_profile', 'email']);
     if (facebookResult.isCancelled) {
@@ -35,6 +38,9 @@ export async function signInWithFacebook() {
     }
 }
 
+/**
+ * Signin a user using Google
+ */
 export async function signInWithGoogle() {
     const googleResult = await GoogleSignin.signIn();
     const credential = GoogleProvider.credential(googleResult.idToken, googleResult.accessToken);

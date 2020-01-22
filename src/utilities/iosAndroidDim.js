@@ -1,4 +1,8 @@
-import { Dimensions, Platform, PixelRatio } from 'react-native';
+import { StatusBar, Dimensions, Platform, PixelRatio } from 'react-native';
+
+export function paddingTopForAndroidDevicesWithNotch() {
+  return StatusBar.currentHeight > 25 ? StatusBar.currentHeight - 25 : 0
+}
 
 function getPercentHeight(value) {
   return (value/812) * 100;

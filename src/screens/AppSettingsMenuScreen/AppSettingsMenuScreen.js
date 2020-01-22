@@ -14,6 +14,7 @@ import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTa
 import AddBioModal from '../../components/AddBioModal/AddBioModal';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import { translate } from '../../utilities/i18';
+import TermsAndConditionsModal from './../../components/TermsAndConditionsModal/TermsAndConditionsModal';
 
 const QaplaAppIcon = Images.png.qaplaAppIcon.img;
 
@@ -24,7 +25,8 @@ class AppSettingsMenuScreen extends Component {
         this.state = {
             discordModalOpen: false,
             bioModalOpen: false,
-            privacyModalOpen: false
+            privacyModalOpen: false,
+            termsModalOpen: false
         };
     }
 
@@ -54,7 +56,10 @@ class AppSettingsMenuScreen extends Component {
 
     toggleBioModal = () => this.setState({ bioModalOpen: !this.state.bioModalOpen });
 
-    goToTermsAndConditions = () => this.props.navigation.navigate('TermsAndConditions');
+    /**
+     * Toggle the Terms and conditions modal
+     */
+    toggleTermsAndConditionsModal = () => this.setState({ termsModalOpen: !this.state.termsModalOpen });
 
     render() {
         return (
@@ -84,7 +89,7 @@ class AppSettingsMenuScreen extends Component {
                                 <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.editDiscord')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={this.goToTermsAndConditions}>
+                        <TouchableWithoutFeedback onPress={this.toggleTermsAndConditionsModal}>
                             <View style={styles.menuItemRow}>
                                 <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.termsAndConditions')}</Text>
                             </View>
@@ -110,6 +115,9 @@ class AppSettingsMenuScreen extends Component {
                 <PrivacyModal
                     open={this.state.privacyModalOpen}
                     onClose={this.togglePrivacyModal} />
+                <TermsAndConditionsModal
+                    open={this.state.termsModalOpen}
+                    onClose={this.toggleTermsAndConditionsModal} />
             </SafeAreaView>
         );
     }

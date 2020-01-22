@@ -25,7 +25,7 @@ class PrivacyModal extends Component {
      */
     loadPrivacy = async () => {
         const privacyText = await getQaplaAppPrivacy();
-        
+
         this.setState({ privacyText });
     }
 
@@ -33,7 +33,7 @@ class PrivacyModal extends Component {
      * Clean the local state and then close the modal
      */
     closeModal = () => {
-        this.setState({ 
+        this.setState({
             privacyText: []
         });
 
@@ -49,7 +49,7 @@ class PrivacyModal extends Component {
                 onRequestClose={this.props.onClose}>
                 <SafeAreaView style={styles.sfvContainer}>
                     <View style={styles.mainContainer}>
-                        <View style={styles.container}> 
+                        <View style={styles.container}>
                             <TouchableWithoutFeedback onPress={this.closeModal}>
                                 <View style={styles.closeIcon}>
                                     <CloseIcon />
@@ -59,7 +59,7 @@ class PrivacyModal extends Component {
                             <View style={styles.textContainer}>
                             <ScrollView>
                                 {this.state.privacyText.map((item, index) => (
-                                      <Text key={index} style={styles.lineText}>{item}</Text>) 
+                                      <Text key={index} style={styles.lineText}>{item}</Text>)
                                 )}
                             </ScrollView>
                             </View>

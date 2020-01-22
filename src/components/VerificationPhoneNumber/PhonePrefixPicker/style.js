@@ -3,7 +3,7 @@
 // josep.sanahuja  - 17-10-2019 - us134 - File creation
 
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx, getDimensions } from '../../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../../utilities/iosAndroidDim';
 import {
     NAV_TOPBAR_ICON_RIGHT_MARGIN,
     NAV_TOPBAR_ICON_TOP_MARGIN
@@ -12,7 +12,8 @@ import {
 export default styles = StyleSheet.create({
     sfvContainer: {
 		justifyContent: 'center',
-		backgroundColor: '#0d1021'
+		backgroundColor: '#0d1021',
+        paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     container: {
         flexDirection: 'row',

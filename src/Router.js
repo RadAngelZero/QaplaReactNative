@@ -55,7 +55,6 @@ import HeaderBar from './components/HeaderBar/HeaderBar';
 import NotificationsHeader from './components/NotificationsHeader/NotificationsHeader';
 import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeForNotificationTab';
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
-import TermsAndConditionsScreen from './screens/TermsAndConditionsScreen/TermsAndConditionsScreen';
 import { widthPercentageToPx } from './utilities/iosAndroidDim';
 import { translate } from './utilities/i18';
 
@@ -336,12 +335,6 @@ class Router extends React.Component {
         },
         Support: {
           screen: SupportScreen,
-          navigationOptions: {
-            header: props => <TopNavOptions back {...props} />
-          }
-        },
-        TermsAndConditions: {
-          screen: TermsAndConditionsScreen,
           navigationOptions: {
             header: props => <TopNavOptions back {...props} />
           }

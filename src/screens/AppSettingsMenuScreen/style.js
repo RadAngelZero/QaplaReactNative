@@ -1,13 +1,14 @@
 // josep.sanahuja  - 13-11-2019 - us147 - File creation
 
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim'
+import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
     sfvContainer: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor:'#0d1021'
+        backgroundColor:'#0d1021',
+        paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     container: {
         flex: 1,

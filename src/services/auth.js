@@ -13,9 +13,8 @@ import {
     phoneAuthErrorState,
     phoneAuthAutoVerifiedState,
 } from './../utilities/firebase';
-import { createUserProfile } from './database';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
-import {GoogleSignin} from 'react-native-google-signin';
+import { GoogleSignin } from 'react-native-google-signin';
 import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
@@ -23,55 +22,31 @@ import { emptyLogros } from '../actions/logrosActions';
 
 const webClientIdForGoogleAuth = '779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com';
 
-export function signInWithFacebook(navigation) {
-    LoginManager.logInWithPermissions(['public_profile', 'email'])
-    .then((result) => {
-        if (result.isCancelled) {
-            console.log('Facebook authentication cancelled');
-        } else {
-            AccessToken.getCurrentAccessToken()
-            .then((data) => {
-                const credential = FBProvider.credential(data.accessToken)
-                auth.signInWithCredential(credential)
-                .then((user) => {
-                    setUserIdOnSegment(user.user.uid);
-
-                    if (user.additionalUserInfo.isNewUser) {
-                        createUserProfile(user.user.uid, user.user.email);
-                        navigation.navigate('ChooseUserNameScreen', { uid: user.user.uid });
-                    } else {
-                        navigation.pop();
-                    }
-                }).catch((error) => {
-                    console.log('ERROR:',error);
-                });
-            });
-        }
-    });
+/**
+ * Signin a user using facebook
+ */
+export async function signInWithFacebook() {
+    const facebookResult = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+    if (facebookResult.isCancelled) {
+        console.log('Facebook authentication cancelled');
+    } else {
+        const facebookToken = await AccessToken.getCurrentAccessToken();
+        const credential = FBProvider.credential(facebookToken.accessToken);
+        const finalUser = await auth.signInWithCredential(credential);
+        setUserIdOnSegment(finalUser.user.uid);
+        return finalUser;
+    }
 }
 
-export function signInWithGoogle(navigation) {
-    GoogleSignin.signIn()
-    .then((user) => {
-        const credential = GoogleProvider.credential(user.idToken, user.accessToken);
-        auth.signInWithCredential(credential)
-        .then((user) => {
-            setUserIdOnSegment(user.user.uid);
-
-            if (user.additionalUserInfo.isNewUser) {
-                createUserProfile(user.user.uid, user.user.email);
-                navigation.navigate('ChooseUserNameScreen', { uid: user.user.uid });
-            } else {
-                navigation.pop();
-            }
-        }).catch((error) => {
-            console.log('ERROR:',error);
-        });
-    })
-    .catch((err) => {
-        console.log(err);
-    })
-    .done();
+/**
+ * Signin a user using Google
+ */
+export async function signInWithGoogle() {
+    const googleResult = await GoogleSignin.signIn();
+    const credential = GoogleProvider.credential(googleResult.idToken, googleResult.accessToken);
+    const finalUser = await auth.signInWithCredential(credential);
+    setUserIdOnSegment(finalUser.user.uid);
+    return finalUser;
 }
 
 export function setupGoogleSignin() {

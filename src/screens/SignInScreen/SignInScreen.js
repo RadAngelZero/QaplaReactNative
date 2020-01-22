@@ -7,6 +7,7 @@ import styles from './style';
 import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
 import { translate } from '../../utilities/i18';
+import { createUserProfile } from '../../services/database';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
@@ -16,6 +17,45 @@ class SignInScreen extends Component {
         setupGoogleSignin();
     }
 
+    /**
+     * Start a session with facebook
+     */
+    signInWithFacebook = async () => {
+        try {
+            const user = await signInWithFacebook();
+            this.succesfullSignIn(user);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    /**
+     * Start a session with google
+     */
+    signInWithGoogle = async () => {
+        try {
+            const user = await signInWithGoogle();
+            this.succesfullSignIn(user);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    /**
+     * Check if the user is new, if it's new create the profile and send the user
+     * to ChooseUserNameScreen
+     * If isn't just close and back to the previous flow
+     */
+    succesfullSignIn = (user) => {
+        if (user.additionalUserInfo.isNewUser) {
+            createUserProfile(user.user.uid, user.user.email);
+            this.props.navigation.navigate('ChooseUserNameScreen');
+        } else {
+            this.props.navigation.pop();
+        }
+    }
+
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -24,12 +64,12 @@ class SignInScreen extends Component {
                         <Image source={QaplaSignUpLogo} />
                     </View>
                     <View>
-                        <TouchableWithoutFeedback onPress={() => signInWithFacebook(this.props.navigation)}>
+                        <TouchableWithoutFeedback onPress={this.signInWithFacebook}>
                             <View style={styles.facebookButtonContainer}>
                                 <Text style={[styles.whiteColor, styles.alignSelfCenter]}>{translate('signInScreen.facebookSignin')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={() => signInWithGoogle(this.props.navigation)}>
+                        <TouchableWithoutFeedback onPress={this.signInWithGoogle}>
                             <View style={styles.googleButtonContainer}>
                                 <Text style={[styles.googleButtonText, styles.alignSelfCenter]}>{translate('signInScreen.googleSignin')}</Text>
                             </View>

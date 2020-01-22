@@ -1,4 +1,9 @@
 {
+    "App": {
+        "noInternetConnection": {
+            "title": "No internet, check your connection."
+        }
+    },
     "platforms": {
         "mobile": "PC/Mobile"
     },
@@ -246,6 +251,14 @@
         "title": "Create your username",
         "userNamePlaceholder": "Insert here your username",
         "userNameAlreadyTaken": "This name is already in use, try with other",
+        "bodyFirstPart": "Before you use Qapla Gaming make sure you have read and accepted our",
+        "termsAndConditions": "Terms and Conditions",
+        "bodySecondPart": "and our",
+        "privacyPolicy": "Privacy policy",
+        "agreeWithTerms": "I read and agree with terms and conditions",
+        "agreeWithPrivacy": "I read and agree the privacy policy",
+        "validatingUserName": "Validating Username...",
+        "acceptButton": "Continue",
         "continue": "Continue"
     },
     "chooseOpponentScreen": {

@@ -28,7 +28,7 @@ export default class WelcomeOnboardingScreen extends React.Component {
 
 	goToScreenPublicas = () => {
 		storeData('tutorial-done', 'true');
-		this.props.navigation.navigate('Publicas', { firstMatchCreated: true });
+		this.props.navigation.navigate('Logros');
 	}
 
 	setCurrentIndex = (index) => {

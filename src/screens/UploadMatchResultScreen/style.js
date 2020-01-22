@@ -3,8 +3,8 @@
 // diego          - 13-08-2019 - us77 - Upload result and other result buttons styles updated
 // josep.sanahuja - 05-08-2019 - us78 - File creation
 
-import { StyleSheet, Platform } from 'react-native';
-import { heightPercentageToPx, getDimensions, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { StyleSheet } from 'react-native';
+import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
 import {
     NAV_TOPBAR_ICON_RIGHT_MARGIN,
     NAV_TOPBAR_ICON_TOP_MARGIN
@@ -14,6 +14,7 @@ export default styles = StyleSheet.create({
     sfvContainer: {
         flex: 1,
         backgroundColor: '#0d1021',
+        paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     container: {
         backgroundColor: '#0d1021',

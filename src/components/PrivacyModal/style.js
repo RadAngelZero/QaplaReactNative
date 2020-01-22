@@ -2,7 +2,7 @@
 // josep-sanahuja          - 21-12-2019 - us152 - File creation
 
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
 import {
     NAV_TOPBAR_ICON_RIGHT_MARGIN,
     NAV_TOPBAR_ICON_TOP_MARGIN
@@ -12,7 +12,8 @@ export default styles = StyleSheet.create({
     sfvContainer: {
       flex:1,
       justifyContent: 'center',
-      backgroundColor:'#131833'
+      backgroundColor:'#131833',
+      paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     mainContainer: {
         flex: 1,
@@ -46,7 +47,6 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 24,
         maxWidth: widthPercentageToPx(70),
-        
     },
     lineText: {
         color: 'white'

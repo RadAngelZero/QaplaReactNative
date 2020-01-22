@@ -31,7 +31,7 @@ export class CheckBox extends Component {
              * Based on material design, the speed in this kind of controls
              * (selection controls) must be of 100ms
              * https://material.io/design/motion/speed.html#duration
-             */ 
+             */
             duration: 100
         }).start();
 

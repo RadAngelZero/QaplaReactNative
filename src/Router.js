@@ -353,7 +353,8 @@ class Router extends React.Component {
         }
       },
       {
-        initialRouteName:  'Home'
+        initialRouteName:  'Home',
+        headerMode: 'screen'
       }
     );
 

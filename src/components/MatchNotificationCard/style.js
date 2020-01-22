@@ -30,8 +30,9 @@ export default styles = StyleSheet.create({
     avatarImage: {
         height: 48,
         width: 48,
-        borderRadius: 100,
-        backgroundColor: '#131833'
+        borderRadius: 48 / 2,
+        backgroundColor: '#131833',
+        resizeMode: 'cover'
     },
     infoContainer: {
         flexDirection: 'column',

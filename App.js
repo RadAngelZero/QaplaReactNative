@@ -39,7 +39,7 @@ class App extends React.Component {
      */
     enableNetworkListener() {
         this.networkListener = NetInfo.addEventListener((state) => {
-            if (!state.isConnected || !state.isInternetReachable) {
+            if (!state.isConnected || state.isInternetReachable === false) {
                 this.setState({ openSnackbar: true, snackbarMessage: translate('App.noInternetConnection.title') });
             } else {
                 this.setState({ openSnackbar: false });

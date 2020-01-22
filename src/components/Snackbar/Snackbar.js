@@ -15,22 +15,17 @@ class Snackbar extends Component {
     };
 
     static getDerivedStateFromProps(props, state) {
-        if (props.visible) {
+        if (props.visible !== state.visible) {
             Animated.timing(state.yAxisValue, {
-                toValue: heightPercentageToPx(100) - heightPercentageToPx(20),
-                duration: 250
+                toValue: props.visible ? heightPercentageToPx(80) : heightPercentageToPx(100),
+                duration: props.visible ? 200 : 250,
+                easing: props.visible ? Easing.inOut(Easing.ease) : Easing.in(Easing.cubic)
             }).start();
 
-            return { visible: true };
+            return { visible: props.visible };
         }
 
-        Animated.timing(state.yAxisValue, {
-            toValue: heightPercentageToPx(100),
-            duration: 200,
-            easing: Easing.in(Easing.cubic)
-        }).start();
-
-        return { visible: false };
+        return null;
     }
 
     render() {

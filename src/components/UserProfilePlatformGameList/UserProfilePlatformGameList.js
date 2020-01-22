@@ -61,7 +61,7 @@ export class UserProfilePlatformGameList extends Component {
         return (
             <View style={{ marginBottom: this.props.lastChild ? 20 : 0 }}>
                 <Text style={styles.title}>{getPlatformNameWithKey(this.props.platform)}</Text>
-                <ScrollView horizontal>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {Object.keys(this.props.userGames).map((gameKey, index) => {
                         let gamerStatistics = null;
                         if (this.props.gamerStatistics[gameKey]) {

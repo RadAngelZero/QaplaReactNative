@@ -19,7 +19,15 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         width: widthPercentageToPx(85),
         height: heightPercentageToPx(12),
-        left: widthPercentageToPx((100-85) / 2)
+        /**
+         * The left value is given by the width of the snackbar (widthPercentageToPx(85))
+         * and the next operation
+         * 100 - 85 (these are values of the screen, all the width from the screen less the width of the snackbar)
+         * (100 - 85) / 2 we divide the result between two, in this way we add only the necessary margin for the snackbar
+         * In other words, we have the 85% of the screen filled with the snackbar so we make a margin of 7.5% from the left
+         * so we have a centered snackbar
+         */
+        left: widthPercentageToPx(7.5)
     },
     message: {
         fontSize: 14,

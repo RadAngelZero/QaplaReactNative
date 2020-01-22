@@ -20,6 +20,23 @@ class App extends React.Component {
 
     componentDidMount() {
         this.enableNotificationListeners();
+        this.enableNetworkListener();
+    }
+
+    componentWillUnmount() {
+        /**
+         * Usually call a subscriber in this way in the componentWillUnmount event
+         * means that we are removing that listener, in this case we are doing that
+         */
+        this.notificationListener();
+        this.notificationOpenedListener();
+        this.networkListener();
+    }
+
+    /**
+     * Enable the listener for network events (internet connection)
+     */
+    enableNetworkListener() {
         this.networkListener = NetInfo.addEventListener((state) => {
             if (!state.isConnected || !state.isInternetReachable) {
                 this.setState({ openSnackbar: true, snackbarMessage: translate('App.noInternetConnection.title') });
@@ -27,12 +44,6 @@ class App extends React.Component {
                 this.setState({ openSnackbar: false });
             }
         });
-    }
-
-    componentWillUnmount() {
-        this.notificationListener();
-        this.notificationOpenedListener();
-        this.networkListener();
     }
 
     /**

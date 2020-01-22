@@ -10,8 +10,11 @@ import { connect } from 'react-redux';
 import Images from './../../../assets/images';
 import styles from './style';
 
-import { createUserName } from '../../services/database';
+import { validateUserName, createUserName } from '../../services/database';
 import { translate } from '../../utilities/i18';
+import CheckBox from '../../components/CheckBox/CheckBox';
+import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
+import TermsAndConditionsModal from '../../components/TermsAndConditionsModal/TermsAndConditionsModal';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 
@@ -21,11 +24,70 @@ class ChooseUserNameScreen extends Component {
 
         this.state = {
             userName: '',
-            showErrorMessage: false
+            showErrorMessage: false,
+            checkingUserName: false,
+            agreementTermsState: false,
+            agreementPrivacyState: false,
+            openTermsModal: false,
+            openPrivacyModal: false
         };
     }
 
-    validateAndSaveUserName = () => createUserName(this.props.uid, this.state.userName, () => this.props.navigation.pop(), () => this.setState({ showErrorMessage: true }));
+    /**
+     * Validate the agreements (terms and privacy), also validate the userName
+     * if everything is right add the userName and returns the user to the previous flow
+     */
+    checkTermsConditionsAndUsername = () => {
+        if (this.state.agreementTermsState && this.state.agreementPrivacyState) {
+            this.setState({ checkingUserName: true, showErrorMessage: false }, async () => {
+                if(this.state.userName !== '' && await validateUserName(this.state.userName)) {
+                    createUserName(this.props.uid, this.state.userName);
+                    this.props.navigation.popToTop();
+                } else {
+                    this.setState({
+                        showErrorMessage: true,
+                        checkingUserName: false
+                    });
+                }
+            });
+        }
+    }
+
+    /**
+     * Toggle the agreementTermsState (checkbox)
+     */
+    toggleAgreementTermsState = () => this.setState({ agreementTermsState: !this.state.agreementTermsState });
+
+    /**
+     * Toggle the agreementPrivacyState (checkbox)
+     */
+    toggleAgreementPrivacyState = () => this.setState({ agreementPrivacyState: !this.state.agreementPrivacyState });
+
+    /**
+     * Set the userName
+     * @param {string} userName Value of the userName given by the user
+     */
+    setUserName = (userName) => this.setState({ userName });
+
+    /**
+     * Open the terms and conditions modal
+     */
+    openTermsModal = () => this.setState({ openTermsModal: true });
+
+    /**
+     * Open the privacy modal
+     */
+    openPrivacyModal = () => this.setState({ openPrivacyModal: true });
+
+    /**
+     * Close the terms and conditions modal
+     */
+    closeTermsAndConditionsModal = () => this.setState({ openTermsModal: false });
+
+    /**
+     * Close the privacy modal
+     */
+    closePrivacyModal = () => this.setState({ openPrivacyModal: false })
 
     render() {
         return (
@@ -37,23 +99,59 @@ class ChooseUserNameScreen extends Component {
                             style = {styles.inputText}
                             placeholder={translate('chooseUserNameScreen.userNamePlaceholder')}
                             autoCapitalize='none'
-                            onChangeText= {(text) => this.setState({ userName: text, userNameTaken: false })}
-                            onSubmitEditing={this.validateAndSaveUserName} />
+                            onChangeText= {this.setUserName}
+                            onSubmitEditing={this.checkTermsConditionsAndUsername} />
                     </View>
                     {this.state.showErrorMessage &&
                     <View>
                         <Text style={styles.buttonText}>{translate('chooseUserNameScreen.userNameAlreadyTaken')}</Text>
                     </View>
                     }
-                    <View>
-                        <TouchableWithoutFeedback onPress={this.validateAndSaveUserName}>
-                            <View style={styles.buttonContainer}>
-                                <Text style={styles.buttonText}>{translate('chooseUserNameScreen.continue')}</Text>
-                            </View>
+                    <Text style={styles.modalText}>
+                        {`${translate('chooseUserNameScreen.bodyFirstPart')} `}
+                        <TouchableWithoutFeedback onPress={this.openTermsModal}>
+                            <Text style={styles.hyperlinkText}>
+                                {translate('chooseUserNameScreen.termsAndConditions')}
+                            </Text>
                         </TouchableWithoutFeedback>
-                    </View>
+                        {` ${translate('chooseUserNameScreen.bodySecondPart')} `}
+                        <TouchableWithoutFeedback onPress={this.openPrivacyModal}>
+                            <Text style={styles.hyperlinkText}>
+                                {translate('chooseUserNameScreen.privacyPolicy')}
+                            </Text>
+                        </TouchableWithoutFeedback>
+                    </Text>
+                    <CheckBox
+                        label={translate('chooseUserNameScreen.agreeWithTerms')}
+                        onPress={this.toggleAgreementTermsState} />
+                    <CheckBox
+                        label={translate('chooseUserNameScreen.agreeWithPrivacy')}
+                        onPress={this.toggleAgreementPrivacyState}
+                        style={styles.bottomCheckBox} />
+                    <TouchableWithoutFeedback
+                        disabled={this.state.userName === '' || this.state.checkingUserName}
+                        onPress={this.checkTermsConditionsAndUsername}>
+                        <View style={styles.confirmButton}>
+                            <Text style={styles.confirmButtonText}>
+                                {translate('chooseUserNameScreen.acceptButton')}
+                            </Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    {this.state.checkingUserName &&
+                        <View>
+                            <Text style={styles.buttonText}>
+                                {translate('chooseUserNameScreen.validatingUserName')}
+                            </Text>
+                        </View>
+                    }
                     <Image style={styles.backgroundImage}
                         source={SignUpControllersBackgroundImage} />
+                    <PrivacyModal
+                        open={this.state.openPrivacyModal}
+                        onClose={this.closePrivacyModal} />
+                    <TermsAndConditionsModal
+                        open={this.state.openTermsModal}
+                        onClose={this.closeTermsAndConditionsModal} />
                 </View>
             </SafeAreaView>
         );

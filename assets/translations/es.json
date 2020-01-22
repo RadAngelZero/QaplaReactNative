@@ -250,7 +250,15 @@
     "chooseUserNameScreen": {
         "title": "Crea tu nombre de usuario",
         "userNamePlaceholder": "Introduce tu nombre de usuario",
-        "userNameAlreadyTaken": "Ese nombre de usuario ya esta en uso, prueba con otro",
+        "userNameAlreadyTaken": "Ese nombre de usuario ya está en uso, prueba con otro",
+        "bodyFirstPart": "Antes de registrate en Qapla gaming asegúrate de haber leido y aceptado nuestros",
+        "termsAndConditions": "Términos y Condiciones",
+        "bodySecondPart": "y nuestra",
+        "privacyPolicy": "Política de privacidad",
+        "agreeWithTerms": "He leido y acepto los términos y condiciones",
+        "agreeWithPrivacy": "He leido y acepto la política de privacidad",
+        "validatingUserName": "Validando Username...",
+        "acceptButton": "Continuar",
         "continue": "Continuar"
     },
     "chooseOpponentScreen": {

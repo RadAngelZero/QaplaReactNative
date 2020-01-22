@@ -12,7 +12,7 @@ import {
 export default styles = StyleSheet.create({
     sfvContainer: {
         justifyContent: 'center',
-        backgroundColor:'#131833'
+        backgroundColor:'#0d1021'
     },
     optionsContainer: {
         flexDirection: 'row',

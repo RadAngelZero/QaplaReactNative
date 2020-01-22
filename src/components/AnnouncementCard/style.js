@@ -12,7 +12,7 @@ export default StyleSheet.create({
         height: heightPercentageToPx(18),
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#0E1222'
+        backgroundColor: '#141833'
 	},
     imageContainer: {
         height: widthPercentageToPx(15),
@@ -30,7 +30,7 @@ export default StyleSheet.create({
     description: {
         height: heightPercentageToPx(5.17),
         width: widthPercentageToPx(40),
-        color: '#FFF',
+        color: '#ACACAC',
         fontSize: 12,
         fontWeight: '700',
         lineHeight: 14,

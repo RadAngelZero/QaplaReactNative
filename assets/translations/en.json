@@ -243,7 +243,7 @@
         "login": "Log in"
     },
     "chooseUserNameScreen": {
-        "title": "Create yout username",
+        "title": "Create your username",
         "userNamePlaceholder": "Insert here your username",
         "userNameAlreadyTaken": "This name is already in use, try with other",
         "continue": "Continue"

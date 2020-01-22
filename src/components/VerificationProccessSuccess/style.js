@@ -8,7 +8,7 @@ export default styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor:'#131833',
+        backgroundColor: '#0d1021',
         marginLeft: widthPercentageToPx(4),
         marginTop: heightPercentageToPx(10),
         width: widthPercentageToPx(100)

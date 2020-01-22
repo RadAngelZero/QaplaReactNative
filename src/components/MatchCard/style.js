@@ -112,7 +112,7 @@ export const styles = StyleSheet.create({
         marginRight: widthPercentageToPx(3.13)
     },
     matchMainContainer: {
-        backgroundColor: "rgb(20, 24, 51)",
+        backgroundColor: '#141833',
         borderRadius: 10,
         shadowColor: "rgba(0, 0, 0, 0.14)",
         shadowRadius: 5,

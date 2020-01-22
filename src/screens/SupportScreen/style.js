@@ -8,7 +8,7 @@ export default StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor:'#131833'
+      backgroundColor: '#0d1021'
   },
   container:{
     flex:1,
@@ -22,7 +22,7 @@ export default StyleSheet.create({
     borderRadius:3
   },
   textInput: {
-        backgroundColor: '#11152D',
+        backgroundColor: '#141833',
         height: heightPercentageToPx(20),
         width: widthPercentageToPx(90),
         borderBottomColor: '#6D7DDE',

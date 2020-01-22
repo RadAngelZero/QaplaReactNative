@@ -6,7 +6,7 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 export default styles = StyleSheet.create({
     container: {
         height: heightPercentageToPx(14),
-        backgroundColor: '#0e1222',
+        backgroundColor: '#141833',
         alignSelf: 'center',
         width: widthPercentageToPx(90),
         marginTop: heightPercentageToPx(1.85),
@@ -51,7 +51,7 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(67.5)
     },
     infoText: {
-        color: '#FFF',
+        color: '#ACACAC',
         fontSize: 14
     }
 });

@@ -8,7 +8,7 @@ import { heightPercentageToPx, widthPercentageToPx, getDimensions } from '../../
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:'#131833',
+        backgroundColor: '#0d1021',
         marginLeft: widthPercentageToPx(4),
         width: widthPercentageToPx(100)
     },
@@ -37,6 +37,7 @@ export default styles = StyleSheet.create({
         marginLeft: widthPercentageToPx(6),
         marginRight: widthPercentageToPx(12),
         marginTop: heightPercentageToPx(10),
+        height: heightPercentageToPx(6),
     },
     prefixContainer: {
         borderColor: '#6D7DDE',
@@ -46,10 +47,8 @@ export default styles = StyleSheet.create({
     },
     qaplaTextInput: {
         flex: 1, 
-        backgroundColor: '#11152D',
-        height: heightPercentageToPx(8),
-        minHeight: heightPercentageToPx(8),
-        borderBottomColor: '#6D7DDE',
+        height: heightPercentageToPx(5),
+        borderBottomColor: '#B5B5B5',
         color: '#FFF',
         borderRadius: 4,
         borderBottomWidth: 2

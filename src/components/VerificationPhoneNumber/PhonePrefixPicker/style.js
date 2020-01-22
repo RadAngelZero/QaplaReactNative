@@ -12,7 +12,7 @@ import {
 export default styles = StyleSheet.create({
     sfvContainer: {
 		justifyContent: 'center',
-		backgroundColor:'#131833'
+		backgroundColor: '#0d1021'
     },
     container: {
         flexDirection: 'row',
@@ -25,13 +25,13 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         width: widthPercentageToPx(100),
         height: heightPercentageToPx(100),
-        backgroundColor: '#141833',
+        backgroundColor: '#0d1021',
     },
     modalContainer: {
       	flex: 0.8,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#141833',
+        backgroundColor: '#0d1021',
         borderRadius: 20,
         zIndex: 1000,
         elevation: 6,
@@ -52,10 +52,10 @@ export default styles = StyleSheet.create({
         alignSelf: 'flex-end'
     },
     prefixCardItem: {
-        backgroundColor: '#11152D',
+        backgroundColor: '#0d1021',
         height: heightPercentageToPx(7),
         width: widthPercentageToPx(80),
-        borderBottomColor: '#6D7DDE',
+        borderBottomColor: '#B5B5B5',
         color: '#FFF',
         borderRadius: 4,
         borderBottomWidth: 2,

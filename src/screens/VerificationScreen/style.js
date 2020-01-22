@@ -13,7 +13,7 @@ import {
 export default styles = StyleSheet.create({
     sfvContainer: {
         flex: 1,
-        backgroundColor:'#131833'
+        backgroundColor: '#0d1021'
     },
     backAndCloseOptions: {
         flexDirection: 'row',

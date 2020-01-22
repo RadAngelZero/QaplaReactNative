@@ -11,12 +11,12 @@ export default StyleSheet.create({
   	sfvContainer: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor:'#131833'
+        backgroundColor:'#0d1021'
     },
     container:{
 		flex: 1,
 		justifyContent:'center',
-		backgroundColor:'#131833'
+		backgroundColor: '#0d1021'
 	},
 	headerOptions: {
 		flexDirection: 'row',

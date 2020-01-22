@@ -9,10 +9,10 @@ export default styles = StyleSheet.create({
     sfvContainer: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor:'#131833'
+        backgroundColor:'#0d1021'
     },
     container: {
-        backgroundColor:'#131833',
+        backgroundColor: '#0d1021',
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,

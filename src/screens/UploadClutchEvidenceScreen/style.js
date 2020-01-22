@@ -8,7 +8,7 @@ export default styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'#131833'
+        backgroundColor: '#0d1021'
     },
     urlTextInput: {
         marginLeft: widthPercentageToPx(17.07),

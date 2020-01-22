@@ -15,8 +15,11 @@ i18n.locale = 'es';
      * Back to this code and erase fixed language once the test phase has finished
      */
     /* Platform.OS === 'ios' ?
-        NativeModules.SettingsManager.settings.AppleLocale.substring(0, 2)
-    :
+        NativeModules.SettingsManager.settings.AppleLocale === undefined ?
+            NativeModules.SettingsManager.settings.AppleLanguages[0].substring(0, 2)
+            :
+            NativeModules.SettingsManager.settings.AppleLocale.substring(0, 2)
+        :
         NativeModules.I18nManager.localeIdentifier.substring(0, 2); */
 
 /**

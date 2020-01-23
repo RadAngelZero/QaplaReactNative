@@ -3,6 +3,7 @@
 
 import React, { Component } from 'react';
 import { SafeAreaView, View, TouchableWithoutFeedback } from 'react-native';
+import { connect } from 'react-redux';
 
 import styles from './style';
 import Images from './../../../assets/images';
@@ -27,7 +28,8 @@ export class TopNavOptions extends Component {
 
     render() {
         return (
-            <SafeAreaView style={styles.sfvContainer}>
+            <SafeAreaView style={this.props.currentScreenId !== 'Login' ? 
+                styles.sfvContainer : styles.sfvContainerSignInWithEmail}>
                 <View style={styles.optionsContainer}>
                     <View style={styles.backIconContainer}>
                         {this.props.back &&
@@ -53,4 +55,10 @@ export class TopNavOptions extends Component {
     }
 }
 
-export default TopNavOptions;
+function mapStateToProps(state) {
+    return {
+        currentScreenId: state.screensReducer.currentScreenId,
+    }
+}
+
+export default connect(mapStateToProps)(TopNavOptions);

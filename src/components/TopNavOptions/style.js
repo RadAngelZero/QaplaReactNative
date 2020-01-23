@@ -15,6 +15,11 @@ export default styles = StyleSheet.create({
         backgroundColor: '#0D1021',
         paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
+    sfvContainerSignInWithEmail: {
+        justifyContent: 'center',
+        backgroundColor: '#131833',
+        paddingTop: paddingTopForAndroidDevicesWithNotch()
+    },
     optionsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',

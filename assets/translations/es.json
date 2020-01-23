@@ -102,6 +102,7 @@
     },
     "userProfileScreen": {
         "buy": "Abonar",
+        "exchange": "Canjear",
         "userProfileGameCard": {
             "level": "Nivel"
         },

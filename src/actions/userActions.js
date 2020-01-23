@@ -21,6 +21,8 @@ export const getUserNode = (uid) => async (dispatch) => {
         dispatch(updateUserDataSuccess({ key: childAdded.key, value: childAdded.val() }));
     });
 
+    dispatch(updateUserDataSuccess({ key: 'id', value: uid }));
+
     usersRef.child(uid).on('child_changed', (childChanged) => {
 
         /*

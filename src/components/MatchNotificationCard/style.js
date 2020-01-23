@@ -30,7 +30,7 @@ export default styles = StyleSheet.create({
     avatarImage: {
         height: 48,
         width: 48,
-        borderRadius: 48 / 2,
+        borderRadius: 48 / 2,    // height = weight = 48 -> borderRadius: height / 2
         backgroundColor: '#131833',
         resizeMode: 'cover'
     },
@@ -40,7 +40,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'center'
     },
     infoText: {
-        color: '#acacac',
+        color: '#ACACAC',
         fontSize: 12,
         textAlign: 'justify',
         width: widthPercentageToPx(50)

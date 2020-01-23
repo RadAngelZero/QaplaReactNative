@@ -7,10 +7,10 @@ export default styles = StyleSheet.create({
     sfvContainer: {
       flex: 1,
       justifyContent: 'center',
-      backgroundColor: '#0d1021'
+      backgroundColor: '#0D1021'
     },
     container: {
-        backgroundColor: '#0d1021',
+        backgroundColor: '#0D1021',
         flex: 1
     }
 });

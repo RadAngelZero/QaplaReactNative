@@ -7,12 +7,12 @@ export default styles = StyleSheet.create({
     sfvContainer: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor:'#0d1021',
+        backgroundColor:'#0D1021',
         paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     container: {
         flex: 1,
-        backgroundColor:'#0d1021',
+        backgroundColor:'#0D1021',
         alignItems: 'center',
         justifyContent: 'flex-start'
     },

@@ -14,6 +14,17 @@ import { translate } from '../../utilities/i18';
 const Divider = images.png.divider.img;
 
 export class VerificationPersonalData extends Component {
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            tiAselected: false,
+            tiBselected: false,
+            tiCselected: false,
+            tiDselected: false
+        };
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -23,14 +34,18 @@ export class VerificationPersonalData extends Component {
                 </View>
                 <KeyboardAvoidingView style={styles.userDataForm} behavior='padding'>
                     <TextInput
-                        style={styles.qaplaTextInput}
+                        style={[styles.qaplaTextInput, { borderBottomColor: this.state.tiAselected ? '#3DF9DF' : '#B5B5B5' } ]}
+                        onFocus={() => this.setState({tiAselected: true})}
+                        onBlur={() => this.setState({tiAselected: false})}
                         placeholder={translate('verificationScreen.verificationPersonalData.namePlaceholder')}
                         placeholderTextColor='#898A97'
                         onChangeText={(text) => this.props.setUserPersonalData('name', text)}
                         onSubmitEditing={() => this.firstSurname.focus()}
                         returnKeyType='next' />
                     <TextInput
-                        style={styles.qaplaTextInput}
+                        style={[styles.qaplaTextInput, { borderBottomColor: this.state.tiBselected ? '#3DF9DF' : '#B5B5B5' } ]}
+                        onFocus={() => this.setState({tiBselected: true})}
+                        onBlur={() => this.setState({tiBselected: false})}
                         placeholder={translate('verificationScreen.verificationPersonalData.firstSurnamePlaceholder')}
                         placeholderTextColor='#898A97'
                         ref={(firstSurname) => this.firstSurname = firstSurname}
@@ -38,7 +53,9 @@ export class VerificationPersonalData extends Component {
                         onSubmitEditing={() => this.secondSurname.focus()}
                         returnKeyType='next' />
                     <TextInput
-                        style={styles.qaplaTextInput}
+                        style={[styles.qaplaTextInput, { borderBottomColor: this.state.tiCselected ? '#3DF9DF' : '#B5B5B5' } ]}
+                        onFocus={() => this.setState({tiCselected: true})}
+                        onBlur={() => this.setState({tiCselected: false})}
                         placeholder={translate('verificationScreen.verificationPersonalData.secondSurnamePlacholder')}
                         placeholderTextColor='#898A97'
                         ref={(secondSurname) => this.secondSurname = secondSurname}
@@ -46,7 +63,9 @@ export class VerificationPersonalData extends Component {
                         onSubmitEditing={() => this.age.focus()}
                         returnKeyType='next' />
                     <TextInput
-                        style={styles.qaplaTextInput}
+                        style={[styles.qaplaTextInput, { borderBottomColor: this.state.tiDselected ? '#3DF9DF' : '#B5B5B5' } ]}
+                        onFocus={() => this.setState({tiDselected: true})}
+                        onBlur={() => this.setState({tiDselected: false})}
                         placeholder={translate('verificationScreen.verificationPersonalData.agePlaceholder')}
                         placeholderTextColor='#898A97'
                         keyboardType='numeric'

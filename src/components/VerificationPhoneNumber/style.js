@@ -8,7 +8,7 @@ import { heightPercentageToPx, widthPercentageToPx, getDimensions } from '../../
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0d1021',
+        backgroundColor: '#0D1021',
         marginLeft: widthPercentageToPx(4),
         width: widthPercentageToPx(100)
     },

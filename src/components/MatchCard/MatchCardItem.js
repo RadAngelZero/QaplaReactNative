@@ -15,7 +15,6 @@ import { styles } from './style';
 import Images from '../../../assets/images';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
-const ClashIcon = Images.svg.clashIcon;
 
 class MatchCardItem extends PureComponent {
 
@@ -25,6 +24,10 @@ class MatchCardItem extends PureComponent {
         this.state = {
             avatarUrl: undefined
         };
+    }
+
+    componentDidMount() {
+        this.fetchAvatarImageUrlFromUserUid(this.props.adversaryUid);  
     }
 
     getCurrentGameResources() {
@@ -48,10 +51,6 @@ class MatchCardItem extends PureComponent {
         } catch (error) {
             console.error(error);
         }
-    }
-
-    componentDidMount() {
-        this.fetchAvatarImageUrlFromUserUid(this.props.adversaryUid);  
     }
 
     render() {
@@ -165,7 +164,6 @@ function mapStateToProps(state) {
      */
     if (Object.keys(state.userReducer.user).length > 0) {
         return {
-            userProfilePhoto: state.userReducer.user.photoUrl,
             games: state.gamesReducer.games
         }
     }

@@ -12,7 +12,7 @@ import {
 export default styles = StyleSheet.create({
     sfvContainer: {
         justifyContent: 'center',
-        backgroundColor: '#0d1021',
+        backgroundColor: '#0D1021',
         paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     optionsContainer: {

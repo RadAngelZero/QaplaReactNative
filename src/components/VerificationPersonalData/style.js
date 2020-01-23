@@ -6,7 +6,7 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 export default styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
-        backgroundColor: '#0d1021',
+        backgroundColor: '#0D1021',
         marginLeft: widthPercentageToPx(4),
         marginRight: widthPercentageToPx(4),
         width: widthPercentageToPx(100)

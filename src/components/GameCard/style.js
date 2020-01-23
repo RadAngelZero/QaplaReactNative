@@ -23,7 +23,7 @@ export default StyleSheet.create({
         resizeMode: 'cover'
     },
 	detailsContainer: {
-        backgroundColor: "rgb(20, 24, 51)",
+        backgroundColor: "#141833",
         flexDirection: 'row',
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10

@@ -46,7 +46,7 @@
             "description": "Comparte los clips de tus partidas, toda la comunidad podrá ver la evidencia de tus victorias.",
             "title": "Comparte"
         },
-        "converts": {
+        "withdraw": {
             "description": "Retira tu Saldo Qapla o úsalo para comprar productos de Amazon Prime, ¡Los enviamos gratis a tu casa!",
             "title": "Convierte"
         },

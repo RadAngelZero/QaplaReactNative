@@ -110,7 +110,7 @@ export default styles = StyleSheet.create({
         fontWeight: '500',
         letterSpacing: .1,
         lineHeight: 10,
-        color: '#ebebf5',
+        color: '#EBEBF5',
         marginTop: heightPercentageToPx(1)
     },
     progressContainer: {

@@ -194,7 +194,7 @@
         },
         "verificationPhoneNumber": {
             "title": "¡Verifica tu Whatsapp!",
-            "phonePlaceholder": "Telefono* ej: 6505551234",
+            "phonePlaceholder": "Teléfono* ej: 6505551234",
             "codePlaceholder": "Ingresa tu Código",
             "codeSended": "Te enviamos un código de verificación",
             "smsCodeError": "El código de verificación es incorrecto"

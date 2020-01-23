@@ -61,7 +61,7 @@ class VerificationScreen extends Component {
         indexPositionsIsSorted: false,
         numAttemptsCodeSent: 0,
         codeSent: false,
-        errorOnSMSCode: false
+        errorSMSCode: false
     };
 
     /**
@@ -168,7 +168,6 @@ class VerificationScreen extends Component {
                 isValidData = this.state.phoneData.phoneNumber.length >= 10;
                 if (isValidData) {
                     try {
-
                         isUserOnSendCodeScreen = true;
 
                         // Mechanism to control in VerificationPhoneNumber component if code was sent
@@ -191,7 +190,7 @@ class VerificationScreen extends Component {
                 isValidData = !Object.keys(this.state.firebaseVerificationData).some((value) => this.state.firebaseVerificationData[value] === '');
 
                 if (isValidData) {
-                    this.setState({ errorOnSMSCode: false });
+                    this.setState({ errorSMSCode: false });
                     isValidData = await this.verifyUserPhone(this.state.verificationObject.verificationId, this.state.firebaseVerificationData.verificationCode);
                 }
                 break;
@@ -245,6 +244,8 @@ class VerificationScreen extends Component {
      * @param {number} verificationCode Code sended to the user to verify their phone number
      */
     verifyUserPhone = async (verificationId, verificationCode) => {
+        let accountsLinked = true;
+
         /**
          * Build of the credential object (to link current account with phone account)
          */
@@ -266,13 +267,13 @@ class VerificationScreen extends Component {
 
             createVerificationRequest(this.props.uid, verificationRequest);
 
-            return true;
         } catch (error) {
             console.log(error);
-            this.setState({ errorOnSMSCode: true });
-
-            return false;
+            this.setState({ errorSMSCode: true });
+            accountsLinked = false;
         }
+
+        return accountsLinked;
     }
 
     /**
@@ -389,7 +390,7 @@ class VerificationScreen extends Component {
                                 setPhonePrefix={this.setPhonePrefixObj}
                                 setVerificationCode={this.setVerificationCode}
                                 goToNextStep={this.goToNextStep}
-                                error={this.state.errorOnSMSCode}
+                                error={this.state.errorSMSCode}
                                 codeSent={this.state.codeSent} />
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>

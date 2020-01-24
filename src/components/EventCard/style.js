@@ -72,7 +72,7 @@ export default styles = StyleSheet.create({
         color: '#ACACAC',
         marginTop: heightPercentageToPx(1)
     },
-    redimirButton: {
+    participateButton: {
         borderRadius: 100,
         backgroundColor: '#FA2D79',
         shadowColor: '#000',
@@ -87,7 +87,7 @@ export default styles = StyleSheet.create({
         maxWidth: widthPercentageToPx(33),
         marginBottom: heightPercentageToPx(1)
     },
-    redimirTextButton: {
+    participateTextButton: {
         fontSize: 12,
         fontWeight: 'bold',
         color: '#FFF',
@@ -113,29 +113,25 @@ export default styles = StyleSheet.create({
         color: '#ACACAC',
         marginTop: heightPercentageToPx(1)
     },
-    progressContainer: {
+    eventInfoContainer: {
         flexDirection: 'row',
-        width: widthPercentageToPx(95),
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        marginBottom: heightPercentageToPx(2.28)
+        justifyContent: 'space-between',
+        marginLeft: widthPercentageToPx(6.13)
     },
-    progressBar: {
-        marginTop: heightPercentageToPx(1.48),
-        width: widthPercentageToPx(70),
-        backgroundColor: '#1A1D34',
-        height: 4,
-        marginLeft: widthPercentageToPx(4.27),
-        marginBottom: heightPercentageToPx(1.72),
-        borderRadius: 18,
-        alignSelf: 'baseline'
+    goToEvent: {
+        color: '#6D7DDE',
+        fontSize: 12,
+        fontWeight: '900',
+        letterSpacing: 0.15,
+        lineHeight: 14
     },
-    progressBarContent: {
-        backgroundColor: '#6D7DDE',
-        height: 4,
-        borderRadius: 18
+    participatingTextContainer: {
+        flexDirection: 'row',
+        alignSelf: 'flex-start',
+        marginBottom: heightPercentageToPx(2.28),
+        marginRight: widthPercentageToPx(4)
     },
-    progressBarCounter: {
+    participatingText: {
         fontSize: 10,
         fontWeight: '700',
         color: '#3DF9DF',

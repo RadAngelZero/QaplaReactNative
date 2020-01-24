@@ -11,17 +11,24 @@ export default styles = StyleSheet.create({
       paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     container: {
-        flex:1,
+        flex: 1,
         backgroundColor:'#131833',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
     },
-    facebookButtonContainer: {
+    socialMediaSignInButton: {
+        flexDirection: 'row',
         borderRadius: 100,
-        backgroundColor: '#364fe2',
         paddingVertical: heightPercentageToPx(1.97),
-        paddingHorizontal: widthPercentageToPx(4.27),
+        width: widthPercentageToPx(60)
+    },
+    socialMediaIconStyle: {
+        marginLeft:widthPercentageToPx(4.44),
+        marginRight: widthPercentageToPx(2.22)
+    },
+    facebookSignInButton: {
+        backgroundColor: '#364FE2',
         marginTop: heightPercentageToPx(5.41)
     },
     whiteColor: {
@@ -30,11 +37,12 @@ export default styles = StyleSheet.create({
     alignSelfCenter: {
         alignSelf: 'center'
     },
-    googleButtonContainer: {
-        borderRadius: 100,
+    textButton: {
+        textAlign: 'center',
+        textAlignVertical: 'center'
+    },
+    googleSignInButton: {
         backgroundColor: '#FFFFFF',
-        paddingVertical: heightPercentageToPx(1.97),
-        paddingHorizontal: widthPercentageToPx(4.27),
         marginTop: heightPercentageToPx(2.96)
     },
     googleButtonText: {
@@ -45,7 +53,7 @@ export default styles = StyleSheet.create({
         marginTop: heightPercentageToPx(3.08)
     },
     enterWithEmailText: {
-        color: 'rgba(61,249,223,1)',
+        color: '#3DF9DF',
         marginLeft: widthPercentageToPx(1.33)
     },
     fontBold: {

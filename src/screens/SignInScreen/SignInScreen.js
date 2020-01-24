@@ -2,15 +2,19 @@
 
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+import { Svg } from 'react-native-svg';
 
 import styles from './style';
 import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
 import { translate } from '../../utilities/i18';
 import { createUserProfile } from '../../services/database';
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
+const FacebookIcon = Images.svg.facebookIcon;
+const GoogleIcon = Images.svg.googleIcon;
 
 class SignInScreen extends Component {
     componentDidMount() {
@@ -55,7 +59,6 @@ class SignInScreen extends Component {
         }
     }
 
-
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -65,13 +68,19 @@ class SignInScreen extends Component {
                     </View>
                     <View>
                         <TouchableWithoutFeedback onPress={this.signInWithFacebook}>
-                            <View style={styles.facebookButtonContainer}>
-                                <Text style={[styles.whiteColor, styles.alignSelfCenter]}>{translate('signInScreen.facebookSignin')}</Text>
+                            <View style={[styles.socialMediaSignInButton, styles.facebookSignInButton]}>
+                                <Svg style={styles.socialMediaIconStyle}>
+                                    <FacebookIcon />
+                                </Svg>
+                                <Text style={[styles.textButton, styles.whiteColor]}>{translate('signInScreen.facebookSignin')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.signInWithGoogle}>
-                            <View style={styles.googleButtonContainer}>
-                                <Text style={[styles.googleButtonText, styles.alignSelfCenter]}>{translate('signInScreen.googleSignin')}</Text>
+                            <View style={[styles.socialMediaSignInButton, styles.googleSignInButton]}>
+                                <Svg style={styles.socialMediaIconStyle}>
+                                    <GoogleIcon />
+                                </Svg>
+                                <Text style={[styles.textButton, styles.googleButtonText]}>{translate('signInScreen.googleSignin')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <View style={styles.alreadyHaveAccountTextContainer}>

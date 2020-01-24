@@ -127,13 +127,12 @@ export default styles = StyleSheet.create({
     },
     participatingTextContainer: {
         flexDirection: 'row',
-        alignSelf: 'flex-start',
         marginBottom: heightPercentageToPx(2.28),
         marginRight: widthPercentageToPx(4)
     },
     participatingText: {
-        fontSize: 10,
-        fontWeight: '700',
+        fontSize: 12,
+        fontWeight: '900',
         color: '#3DF9DF',
         marginLeft: widthPercentageToPx(2.13)
     },

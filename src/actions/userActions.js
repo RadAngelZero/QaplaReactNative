@@ -21,6 +21,11 @@ export const getUserNode = (uid) => async (dispatch) => {
         dispatch(updateUserDataSuccess({ key: childAdded.key, value: childAdded.val() }));
     });
 
+    /**
+     * Just a double check to add the id field the the user profile for an error detected once,
+     * the user did not have the id field on the database remove this code once we ensure
+     * that all the users have this field
+     */
     dispatch(updateUserDataSuccess({ key: 'id', value: uid }));
 
     usersRef.child(uid).on('child_changed', (childChanged) => {

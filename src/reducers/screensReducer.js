@@ -2,19 +2,20 @@
 
 import {
     SET_CURRENT_SCREEN_ID,
-    GET_CURRENT_SCREEN_ID,
+    SET_PREVIOUS_SCREEN_ID
 } from '../utilities/Constants';
 
 const initialState = {
-    currentScreenId: 'none'
+    currentScreenId: 'none',
+    previousScreenId: 'none'
 };
 
 function screensReducer(state = initialState, action) {
       switch (action.type) {
         case SET_CURRENT_SCREEN_ID:
             return { ...state, currentScreenId: action.payload };
-        case GET_CURRENT_SCREEN_ID:
-            return {...state};
+        case SET_PREVIOUS_SCREEN_ID:
+            return { ...state, previousScreenId: action.payload };
         default:
             return state;
       }

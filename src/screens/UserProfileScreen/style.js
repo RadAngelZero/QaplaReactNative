@@ -56,7 +56,7 @@ export default styles = StyleSheet.create({
     qaploinInfoContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        alignSelf: 'center',
+        alignSelf: 'flex-end',
         marginBottom: heightPercentageToPx(2.21)
     },
     qaploinImage: {

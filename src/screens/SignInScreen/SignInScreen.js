@@ -9,7 +9,6 @@ import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
 import { translate } from '../../utilities/i18';
 import { createUserProfile } from '../../services/database';
-import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;

@@ -24,7 +24,7 @@ class SignInScreen extends Component {
     }
 
     /**
-     * Check to what screen must be redirected the user if press the back button (only apply to android)
+     * Check to what screen must be redirected the user if presses the back button (only apply to android)
      */
     handleAndroidBackButton = () => {
         if (this.props.originScreen === 'Perfil') {

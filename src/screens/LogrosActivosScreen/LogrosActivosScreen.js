@@ -19,8 +19,7 @@ export class LogrosActivosScreen extends Component {
             }
 
             return false;
-        })
-        .map((logroKey) => this.props.logros.logrosActivos[logroKey]);
+        }).map((logroKey) => this.props.logros.logrosActivos[logroKey]);
 
         //logros = Object.keys(logros).map((logroKey) => this.props.logros.logrosActivos[logroKey]);
 

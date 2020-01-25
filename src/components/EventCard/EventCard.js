@@ -12,6 +12,7 @@ import { isUserLogged } from '../../services/auth';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
 import { translate } from '../../utilities/i18';
+import { QAPLA_DISCORD_CHANNEL } from '../../utilities/Constants';
 
 class EventCard extends Component {
     /**
@@ -26,9 +27,9 @@ class EventCard extends Component {
     }
 
     /**
-     * Send the user to the event (a discord channel)
+     * Sends the user to the event (a discord channel)
      */
-    goToEvent = () => Linking.openURL('https://discord.gg/6GBHn78');
+    goToEvent = () => Linking.openURL(QAPLA_DISCORD_CHANNEL);
 
     render() {
         const { photoUrl, titulo, description, tiempoLimite, verified, priceQaploins } = this.props;
@@ -60,7 +61,7 @@ class EventCard extends Component {
                     <View style={styles.eventInfoContainer}>
                         <TouchableWithoutFeedback onPress={this.goToEvent}>
                             <Text style={styles.goToEvent}>
-                                Ir al evento
+                                {translate('activeAchievementsScreen.eventAchievement.goToEvent')}
                             </Text>
                         </TouchableWithoutFeedback>
                         <View style={styles.participatingTextContainer}>

@@ -102,6 +102,7 @@
     },
     "userProfileScreen": {
         "buy": "Buy",
+        "exchange": "Exchange",
         "userProfileGameCard": {
             "level": "Level"
         },
@@ -194,9 +195,10 @@
         },
         "verificationPhoneNumber": {
             "title": "¡Verify your Whatsapp!",
-            "phonePlaceholder": "Phone Number*",
+            "phonePlaceholder": "Phone Number* e.g. 6505551234",
             "codePlaceholder": "Insert your Code",
-            "codeSended": "We have sent you a verification code"
+            "codeSended": "We have sent you a verification code",
+            "smsCodeError": "The verification code is incorrect"
         },
         "verificationProcessSuccess": {
             "title": "Thanks!",

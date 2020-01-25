@@ -11,7 +11,7 @@
 // diego           - 19-08-2019 - us89  - File creation
 
 import React, { Component } from 'react';
-import { SafeAreaView, View, Image, Text, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { Linking, SafeAreaView, View, Image, Text, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -25,6 +25,7 @@ import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
 import { translate } from '../../utilities/i18';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 const QaploinExchangeIcon = images.svg.qaploinsIcon;
 
@@ -63,6 +64,12 @@ export class UserProfileScreen extends Component {
         trackOnSegment('User Profile Add Qaploins Button', { UserQaploins: this.props.userQaploins });
         this.setState({ showBuyQaploinsModal: true });
     }
+
+    /**
+     * Begins the process of redeem qaploins
+     * (At this point, only send the user to discord)
+     */
+    exchangeQaploins = () => Linking.openURL('https://discord.gg/bYF7XSR');
 
     /**
      * Close the modal of buy qaploins
@@ -120,14 +127,24 @@ export class UserProfileScreen extends Component {
                     </View>
                     <View style={styles.manageQaploinsContainer}>
                         <View style={styles.qaploinInfoContainer}>
-                            <QaploinExchangeIcon style={styles.qaploinImage} />
+                            <QaploinExchangeIcon
+                                height={heightPercentageToPx(4)}
+                                width={widthPercentageToPx(10)}
+                                style={styles.qaploinImage} />
                             <Text style={styles.qaploinsAmount}>{this.props.userQaploins}</Text>
                         </View>
-                        <TouchableWithoutFeedback onPress={this.openBuyQaploinsModal}>
-                            <View style={styles.addQaploinsButton}>
-                                <Text style={styles.addQaploinsButtonText}>{translate('userProfileScreen.buy')}</Text>
-                            </View>
-                        </TouchableWithoutFeedback>
+                        <View style={styles.buttonGroup}>
+                            <TouchableWithoutFeedback onPress={this.openBuyQaploinsModal}>
+                                <View style={styles.addQaploinsButton}>
+                                    <Text style={styles.addQaploinsButtonText}>{translate('userProfileScreen.buy')}</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                            <TouchableWithoutFeedback onPress={this.exchangeQaploins}>
+                                <View style={styles.cashoutQaploins}>
+                                    <Text style={styles.addQaploinsButtonText}>{translate('userProfileScreen.exchange')}</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
                     </View>
                 </View>
                 <ScrollView>

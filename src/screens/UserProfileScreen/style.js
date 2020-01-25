@@ -25,8 +25,8 @@ export default styles = StyleSheet.create({
     },
     imageAndNameContainer: {
         flexDirection: 'column',
-        marginRight: widthPercentageToPx(8),
-        marginLeft: widthPercentageToPx(23),
+        marginRight: widthPercentageToPx(10),
+        marginLeft: widthPercentageToPx(10),
         marginBottom: heightPercentageToPx(4.43),
         alignItems: 'center'
     },
@@ -56,28 +56,36 @@ export default styles = StyleSheet.create({
     qaploinInfoContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        alignSelf: 'center',
         marginBottom: heightPercentageToPx(2.21)
     },
     qaploinImage: {
-        marginRight: widthPercentageToPx(2.67),
-        height: heightPercentageToPx(3.7),
-        width: widthPercentageToPx(8)
+        marginRight: widthPercentageToPx(2.67)
     },
     qaploinsAmount: {
-        fontSize: 24,
+        fontSize: 26,
         color: '#FFF',
-        textAlign: 'right'
+        fontWeight: 'bold'
+    },
+    buttonGroup: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     addQaploinsButton: {
         borderRadius: 100,
-        backgroundColor: '#FA2D79'
+        backgroundColor: '#FA2D79',
+        textAlignVertical: 'center'
+    },
+    cashoutQaploins: {
+        borderRadius: 100,
+        backgroundColor: '#6D7DDE',
+        marginLeft: widthPercentageToPx(1.66),
+        textAlignVertical: 'center'
     },
     addQaploinsButtonText: {
         color: '#FFF',
         fontSize: 16,
         fontWeight: 'bold',
-        textAlignVertical: 'center',
         textAlign: 'center',
         marginTop: heightPercentageToPx(1.23),
         marginBottom: heightPercentageToPx(1.23),

@@ -27,12 +27,14 @@ const webClientIdForGoogleAuth = '779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.
  */
 export async function signInWithFacebook() {
     const facebookResult = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+
     if (facebookResult.isCancelled) {
         console.log('Facebook authentication cancelled');
     } else {
         const facebookToken = await AccessToken.getCurrentAccessToken();
         const credential = FBProvider.credential(facebookToken.accessToken);
         const finalUser = await auth.signInWithCredential(credential);
+        
         setUserIdOnSegment(finalUser.user.uid);
         return finalUser;
     }

@@ -2,7 +2,7 @@
 // diego           - 14-11-2019 - us146 - File creation
 
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, Image, Text, TouchableWithoutFeedback, Linking } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 
@@ -12,6 +12,7 @@ import { isUserLogged } from '../../services/auth';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
 import { translate } from '../../utilities/i18';
+import { QAPLA_DISCORD_CHANNEL } from '../../utilities/Constants';
 
 class EventCard extends Component {
     /**
@@ -24,6 +25,11 @@ class EventCard extends Component {
             this.props.navigation.navigate('SignIn');
         }
     }
+
+    /**
+     * Sends the user to the event (a discord channel)
+     */
+    goToEvent = () => Linking.openURL(QAPLA_DISCORD_CHANNEL);
 
     render() {
         const { photoUrl, titulo, description, tiempoLimite, verified, priceQaploins } = this.props;
@@ -44,16 +50,23 @@ class EventCard extends Component {
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />
                         {(priceQaploins === null || priceQaploins === undefined) &&
                             <TouchableWithoutFeedback onPress={this.joinEvent}>
-                                <View style={styles.redimirButton}>
-                                    <Text style={styles.redimirTextButton}>{translate('activeAchievementsScreen.eventAchievement.participate')}</Text>
+                                <View style={styles.participateButton}>
+                                    <Text style={styles.participateTextButton}>{translate('activeAchievementsScreen.eventAchievement.participate')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         }
                     </View>
                 </View>
                 {(priceQaploins !== null && priceQaploins !== undefined) &&
-                    <View style={styles.progressContainer}>
-                        <Text style={styles.progressBarCounter}>{translate('activeAchievementsScreen.eventAchievement.alreadyParticipating')}</Text>
+                    <View style={styles.eventInfoContainer}>
+                        <TouchableWithoutFeedback onPress={this.goToEvent}>
+                            <Text style={styles.goToEvent}>
+                                {translate('activeAchievementsScreen.eventAchievement.goToEvent')}
+                            </Text>
+                        </TouchableWithoutFeedback>
+                        <View style={styles.participatingTextContainer}>
+                            <Text style={styles.participatingText}>{translate('activeAchievementsScreen.eventAchievement.alreadyParticipating')}</Text>
+                        </View>
                     </View>
                 }
             </View>

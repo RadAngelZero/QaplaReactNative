@@ -71,7 +71,8 @@
         },
         "eventAchievement": {
             "participate": "Participar",
-            "alreadyParticipating": "Estas inscrito a este evento."
+            "alreadyParticipating": "Estas inscrito a este evento.",
+            "goToEvent": "Ir al evento"
         }
     },
     "publicMatchesFeedScreen": {

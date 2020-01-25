@@ -10,7 +10,18 @@ import LogrosList from '../../components/LogroCard/LogrosList';
 
 export class LogrosActivosScreen extends Component {
     render() {
-        const logros = Object.keys(this.props.logros.logrosActivos).map((logroKey) => this.props.logros.logrosActivos[logroKey]);
+        let logros = Object.keys(this.props.logros.logrosActivos).filter((logroKey) => {
+            if (this.props.logros.logrosActivos[logroKey].tiempoLimite) {
+                const [day, month, year] = this.props.logros.logrosActivos[logroKey].tiempoLimite.split('-');
+                const date = new Date();
+
+                return parseInt(month) >= date.getMonth() + 1 && parseInt(day) >= date.getDate() && parseInt(year) >= date.getFullYear();
+            }
+
+            return false;
+        }).map((logroKey) => this.props.logros.logrosActivos[logroKey]);
+
+        //logros = Object.keys(logros).map((logroKey) => this.props.logros.logrosActivos[logroKey]);
 
         return (
             <SafeAreaView style={styles.sfvContainer}>

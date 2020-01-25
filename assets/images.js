@@ -11,7 +11,6 @@
 
 // Icons
 import InstagramIcon from './icons/Instagram_logo_2016.svgx';
-import FacebookIcon from './icons/F_icon.svg';
 import FavouritesIcon from './icons/favorite-heart-button.svg';
 import TestIcon from './icons/facebook.svg';
 
@@ -48,6 +47,9 @@ import DiscordIcon from './icons/discord.svg';
 import SettingsIcon from './icons/settings.svg';
 import EditIcon from './icons/edit.svg';
 import NoVerifiedIcon from './icons/sin-verificar.svg';
+import FacebookIcon from './icons/facebook_round.svg';
+import GoogleIcon from './icons/google-logo.svg';
+
 
 // Images
 
@@ -180,6 +182,7 @@ const images = {
 	svg: {
 		instagramIcon: InstagramIcon,
 		facebookIcon: FacebookIcon,
+		googleIcon: GoogleIcon,
 		favouritesIcon: FavouritesIcon,
 		testIcon: TestIcon,
 		publicFeedMatchIcon: PublicFeedMatchIcon,

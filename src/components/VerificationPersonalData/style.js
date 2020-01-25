@@ -21,14 +21,14 @@ export default styles = StyleSheet.create({
         marginTop: heightPercentageToPx(2.5)
     },
     userDataForm: {
-        marginTop: heightPercentageToPx(10),
-        justifyContent: 'flex-start',
+        marginTop: heightPercentageToPx(4),
+        justifyContent: 'space-between',
         marginLeft: widthPercentageToPx(6),
         marginRight: widthPercentageToPx(12),
         height: heightPercentageToPx(44)
     },
     qaplaTextInput: {
-        height: heightPercentageToPx(5),
+        height: heightPercentageToPx(8),
         marginBottom: heightPercentageToPx(5),
         borderBottomColor: '#B5B5B5',
         color: '#FFF',

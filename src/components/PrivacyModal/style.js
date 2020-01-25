@@ -9,19 +9,13 @@ import {
 } from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({
-    sfvContainer: {
-      flex:1,
-      justifyContent: 'center',
-      backgroundColor:'#131833',
-      paddingTop: paddingTopForAndroidDevicesWithNotch()
-    },
     mainContainer: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#141833',
         width: widthPercentageToPx(100),
         height: heightPercentageToPx(100),
+        paddingTop: paddingTopForAndroidDevicesWithNotch() + 80
     },
     container: {
         width: widthPercentageToPx(100),
@@ -35,7 +29,7 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: heightPercentageToPx(5),
-        paddingBottom: heightPercentageToPx(35)
+        paddingBottom: heightPercentageToPx(0)
     },
     closeIcon: {
         marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
@@ -50,5 +44,8 @@ export default styles = StyleSheet.create({
     },
     lineText: {
         color: 'white'
+    },
+    lastChild: {
+        paddingTop: heightPercentageToPx(20)
     }
 });

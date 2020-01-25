@@ -9,13 +9,27 @@ import { View, Text, TouchableWithoutFeedback, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 
+import { getProfileImageWithUID } from '../../services/database';
+
 import { styles } from './style';
 import Images from '../../../assets/images';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
-const ClashIcon = Images.svg.clashIcon;
 
 class MatchCardItem extends PureComponent {
+
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            avatarUrl: undefined
+        };
+    }
+
+    componentDidMount() {
+        this.fetchAvatarImageUrlFromUserUid(this.props.adversaryUid);  
+    }
+
     getCurrentGameResources() {
         /**
          * Check if the game exists on our object of games (from redux)
@@ -24,6 +38,18 @@ class MatchCardItem extends PureComponent {
             return gamesResources[this.props.games[this.props.platform][this.props.game].replace(/ +/g, "")];
         } else {
             return null;
+        }
+    }
+
+    /**
+     * @description Get adversary profile image and sets it to state
+     */
+    async fetchAvatarImageUrlFromUserUid(uid) {
+        try {
+            const avatarUrl = await getProfileImageWithUID(uid);
+            this.setState({ avatarUrl });
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -70,10 +96,10 @@ class MatchCardItem extends PureComponent {
                         <View style={styles.padding}/>
                         <View style={styles.padding}>
                             <View style={styles.matchContainerRow}>
-                                {this.props.userProfilePhoto ?
+                                {this.state.avatarUrl !== undefined ?
                                     <Image
                                         style={styles.avatarImage}
-                                        source={{ uri: this.props.userProfilePhoto }} />
+                                        source={{ uri: this.state.avatarUrl }} />
                                     :
                                     <View style={styles.avatarImage} />
                                 }
@@ -138,7 +164,6 @@ function mapStateToProps(state) {
      */
     if (Object.keys(state.userReducer.user).length > 0) {
         return {
-            userProfilePhoto: state.userReducer.user.photoUrl,
             games: state.gamesReducer.games
         }
     }

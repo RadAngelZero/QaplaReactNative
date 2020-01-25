@@ -6,7 +6,7 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 export default styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
-        backgroundColor:'#131833',
+        backgroundColor: '#0D1021',
         marginLeft: widthPercentageToPx(4),
         marginRight: widthPercentageToPx(4),
         width: widthPercentageToPx(100)
@@ -21,16 +21,16 @@ export default styles = StyleSheet.create({
         marginTop: heightPercentageToPx(2.5)
     },
     userDataForm: {
-        marginTop: heightPercentageToPx(4),
-        justifyContent: 'space-between',
+        marginTop: heightPercentageToPx(10),
+        justifyContent: 'flex-start',
         marginLeft: widthPercentageToPx(6),
         marginRight: widthPercentageToPx(12),
         height: heightPercentageToPx(44)
     },
     qaplaTextInput: {
-        backgroundColor: '#11152D',
-        height: heightPercentageToPx(8),
-        borderBottomColor: '#6D7DDE',
+        height: heightPercentageToPx(5),
+        marginBottom: heightPercentageToPx(5),
+        borderBottomColor: '#B5B5B5',
         color: '#FFF',
         borderRadius: 4,
         borderBottomWidth: 2

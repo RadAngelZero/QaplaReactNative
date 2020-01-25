@@ -7,7 +7,7 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 export default styles = StyleSheet.create({
     container: {
         height: heightPercentageToPx(15),
-        backgroundColor: '#0e1222',
+        backgroundColor: '#141833',
         alignSelf: 'center',
         width: widthPercentageToPx(90),
         marginTop: 15,
@@ -30,8 +30,9 @@ export default styles = StyleSheet.create({
     avatarImage: {
         height: 48,
         width: 48,
-        borderRadius: 100,
-        backgroundColor: '#131833'
+        borderRadius: 48 / 2,    // height = weight = 48 -> borderRadius: height / 2
+        backgroundColor: '#131833',
+        resizeMode: 'cover'
     },
     infoContainer: {
         flexDirection: 'column',
@@ -39,7 +40,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'center'
     },
     infoText: {
-        color: '#FFF',
+        color: '#ACACAC',
         fontSize: 12,
         textAlign: 'justify',
         width: widthPercentageToPx(50)

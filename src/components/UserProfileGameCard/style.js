@@ -8,7 +8,7 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 export default styles = StyleSheet.create({
     container: {
         height: heightPercentageToPx(15),
-        backgroundColor: '#0D1021',
+        backgroundColor: '#141833',
         borderRadius: 10,
         opacity: .82,
         elevation: 1,

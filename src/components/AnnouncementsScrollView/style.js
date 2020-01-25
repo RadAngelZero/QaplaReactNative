@@ -5,7 +5,7 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 
 export default StyleSheet.create({
   	container:{
-        backgroundColor:'#131833'
+        backgroundColor: '#0D1021'
 	},
 	titleContainer: {
 		flexDirection: 'row',

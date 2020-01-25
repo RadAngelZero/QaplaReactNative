@@ -15,6 +15,22 @@ import { translate } from '../../utilities/i18';
 const Divider = images.png.divider.img;
 
 export class VerificationPhoneNumber extends Component {
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            selected: false
+        };
+    }
+
+    /**
+     * Toggle the selection of the TextInput so the user can know when the text input is selected
+     * (we show the cool border bottom color when selected is true)
+     */
+    toggleInputSelection = () => {
+        this.setState({ selected: !this.state.selected });
+    }
+
     render() {
         return (
                 <View style={styles.container}>
@@ -30,7 +46,9 @@ export class VerificationPhoneNumber extends Component {
                                 <PhonePrefixPicker onChangePrefix={this.props.setPhonePrefix}/>
                                 <TextInput
                                     keyboardType='numeric'
-                                    style={styles.qaplaTextInput}
+                                    style={[styles.qaplaTextInput, { borderBottomColor: this.state.selected ? '#3DF9DF' : '#B5B5B5' } ]}
+                                    onFocus={this.toggleInputSelection}
+                                    onBlur={this.toggleInputSelection}
                                     placeholder={translate('verificationScreen.verificationPhoneNumber.phonePlaceholder')}
                                     placeholderTextColor='#898A97'
                                     onSubmitEditing={this.props.goToNextStep}
@@ -40,7 +58,9 @@ export class VerificationPhoneNumber extends Component {
                             <View style={styles.codeContainer}>
                                 <TextInput
                                     keyboardType='numeric'
-                                    style={styles.qaplaTextInput}
+                                    style={[styles.qaplaTextInput, { borderBottomColor: this.state.selected ? '#3DF9DF' : '#B5B5B5' } ]}
+                                    onFocus={this.toggleInputSelection}
+                                    onBlur={this.toggleInputSelection}
                                     placeholder={translate('verificationScreen.verificationPhoneNumber.codePlaceholder')}
                                     placeholderTextColor='#898A97'
                                     onSubmitEditing={this.props.goToNextStep}

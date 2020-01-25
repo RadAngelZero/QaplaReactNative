@@ -6,12 +6,12 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 
 export default styles = StyleSheet.create({
     sfvContainer: {
-        backgroundColor:'#131833',
+        backgroundColor: '#0D1021',
         justifyContent: 'center',
         flex: 1
     },
     userInfoContainer: {
-        backgroundColor: '#0e1222',
+        backgroundColor: '#0E1222',
         flexDirection: 'row',
         alignItems: 'center',
         shadowColor: '#000',

@@ -13,11 +13,11 @@ import {
 export default styles = StyleSheet.create({
     sfvContainer: {
         flex: 1,
-        backgroundColor:'#131833',
+        backgroundColor: '#0D1021',
         paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     container: {
-        backgroundColor:'#131833',
+        backgroundColor: '#0D1021',
         alignItems: 'center',
         flex: 1
     },

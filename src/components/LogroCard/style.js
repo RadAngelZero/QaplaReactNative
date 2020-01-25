@@ -13,7 +13,7 @@ export default styles = StyleSheet.create({
     },
     container: {
         marginTop: heightPercentageToPx(2.83),
-        backgroundColor: '#0E1222',
+        backgroundColor: '#141833',
         alignSelf: 'center',
         width: widthPercentageToPx(95),
         borderRadius: 10,
@@ -105,7 +105,7 @@ export default styles = StyleSheet.create({
         fontWeight: '500',
         letterSpacing: .1,
         lineHeight: 10,
-        color: '#ACACAC',
+        color: '#EBEBF5',
         marginTop: heightPercentageToPx(1)
     },
     qaploinsText: {
@@ -179,7 +179,7 @@ export default styles = StyleSheet.create({
     progressBar: {
         marginTop: heightPercentageToPx(1.48),
         width: widthPercentageToPx(70),
-        backgroundColor: '#1A1D34',
+        backgroundColor: '#ACACAC',
         height: 4,
         marginLeft: widthPercentageToPx(4.27),
         marginBottom: heightPercentageToPx(1.85),

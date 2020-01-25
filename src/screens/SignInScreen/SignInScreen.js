@@ -1,7 +1,8 @@
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+import { BackHandler, View, Image, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+import { connect } from 'react-redux';
 import { Svg } from 'react-native-svg';
 
 import styles from './style';
@@ -18,6 +19,24 @@ const GoogleIcon = Images.svg.googleIcon;
 class SignInScreen extends Component {
     componentDidMount() {
         setupGoogleSignin();
+        this.backHandlerListener = BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBackButton);
+    }
+
+    componentWillUnmount() {
+        this.backHandlerListener.remove();
+    }
+
+    /**
+     * Check to what screen must be redirected the user if presses the back button (only apply to android)
+     */
+    handleAndroidBackButton = () => {
+        if (this.props.originScreen === 'Perfil') {
+            this.props.navigation.navigate('Logros');
+        } else {
+            this.props.navigation.navigate(this.props.originScreen);
+        }
+
+        return true;
     }
 
     /**
@@ -54,7 +73,11 @@ class SignInScreen extends Component {
             createUserProfile(user.user.uid, user.user.email);
             this.props.navigation.navigate('ChooseUserNameScreen');
         } else {
-            this.props.navigation.pop();
+            if (this.props.originScreen === 'Publicas') {
+                this.props.navigation.navigate('ChooseMatchType');
+            } else {
+                this.props.navigation.pop();
+            }
         }
     }
 
@@ -97,4 +120,10 @@ class SignInScreen extends Component {
     }
 }
 
-export default SignInScreen;
+function mapDispatchToProps(state) {
+    return {
+        originScreen: state.screensReducer.previousScreenId
+    }
+}
+
+export default connect(mapDispatchToProps)(SignInScreen);

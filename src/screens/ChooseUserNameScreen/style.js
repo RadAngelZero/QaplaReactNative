@@ -40,6 +40,12 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         alignSelf: 'center'
     },
+    validatingText: {
+        color: '#FFF',
+        alignSelf: 'center',
+        fontSize: 20,
+        marginTop: heightPercentageToPx(1),
+    },
     backgroundImage: {
         flex: 1,
         position: 'absolute',

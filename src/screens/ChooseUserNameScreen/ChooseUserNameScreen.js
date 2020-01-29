@@ -147,7 +147,7 @@ class ChooseUserNameScreen extends Component {
                     </TouchableWithoutFeedback>
                     {this.state.checkingUserName &&
                         <View>
-                            <Text style={styles.buttonText}>
+                            <Text style={styles.validatingText}>
                                 {translate('chooseUserNameScreen.validatingUserName')}
                             </Text>
                         </View>

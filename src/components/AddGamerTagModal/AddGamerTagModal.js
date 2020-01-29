@@ -25,6 +25,11 @@ export class AddGamerTagModal extends Component {
     };
 
     /**
+     * Check if the gamerTag is valid
+     */
+    isValidGamerTag = () => this.state.gamerTagText !== '';
+
+    /**
      * Check if some game is selected
      */
     isThereSelectedGame = () => {
@@ -32,7 +37,7 @@ export class AddGamerTagModal extends Component {
     }
 
     saveGameOnUser = async () => {
-        if (this.state.gamerTagText !== '') {
+        if (this.isValidGamerTag()) {
             try
             {
                 await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
@@ -52,7 +57,11 @@ export class AddGamerTagModal extends Component {
                         this.props.navigation.navigate('Perfil');
                     } else {
                         this.props.navigation.navigate('SetBet',
-                            { game: { gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform } });
+                            { game: {
+                                gameKey: this.props.selectedGame.gameKey,
+                                platform: this.props.selectedGame.platform
+                            }
+                        });
                     }
                 } else {
                     this.props.onSuccess();

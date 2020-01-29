@@ -297,7 +297,7 @@
     "addGamerTagModal": {
         "body": "Se va a añadir el Juego %{selectedGame} a tu perfil con el gamertag %{gamerTag}. Estás seguro?",
         "gamerTagPlaceholder": "Escribe tu Gamertag",
-        "invalidGamerTag": "Gamertag invalido",
+        "invalidGamerTag": "Gamertag inválido",
         "accept": "Aceptar"
     },
     "notEnoughQaploinsModal": {

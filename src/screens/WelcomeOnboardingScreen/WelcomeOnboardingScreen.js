@@ -23,8 +23,8 @@ export default class WelcomeOnboardingScreen extends React.Component {
 	    super(props);
 	    this.state = {
 	    	selectedIndex: 0
-	    };
-	}
+	    }
+  	}
 
 	goToScreenPublicas = () => {
 		storeData('tutorial-done', 'true');

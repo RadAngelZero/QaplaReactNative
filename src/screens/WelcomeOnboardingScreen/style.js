@@ -34,7 +34,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         borderRadius: 100,
-        marginRight: 16,
+        marginRight: widthPercentageToPx(11.29),
         width: widthPercentageToPx(2.4),
         height:  widthPercentageToPx(2.4)
     },

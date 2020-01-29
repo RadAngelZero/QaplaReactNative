@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     backgroundColor:'#131833'
   },
   content:{
-    backgroundColor:'#FFF',
+    backgroundColor:'white',
     marginHorizontal: widthPercentageToPx(2.67),
     paddingHorizontal: widthPercentageToPx(2.67),
     paddingVertical: heightPercentageToPx(0.62),

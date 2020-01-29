@@ -29,7 +29,8 @@ class ChooseUserNameScreen extends Component {
             agreementTermsState: false,
             agreementPrivacyState: false,
             openTermsModal: false,
-            openPrivacyModal: false
+            openPrivacyModal: false,
+            allowTextInputEdition: true
         };
     }
 
@@ -39,15 +40,21 @@ class ChooseUserNameScreen extends Component {
      */
     checkTermsConditionsAndUsername = () => {
         if (this.state.agreementTermsState && this.state.agreementPrivacyState) {
-            this.setState({ checkingUserName: true, showErrorMessage: false }, async () => {
+            this.setState({
+                checkingUserName: true,
+                showErrorMessage: false,
+                allowTextInputEdition: false
+            },
+            async () => {
                 if(this.state.userName !== '' && await validateUserName(this.state.userName)) {
                     createUserName(this.props.uid, this.state.userName);
                     this.props.navigation.popToTop();
                 } else {
-                    this.setState({
-                        showErrorMessage: true,
-                        checkingUserName: false
-                    });
+                this.setState({
+                    showErrorMessage: true,
+                    checkingUserName: false,
+                    allowTextInputEdition: true
+                });
                 }
             });
         }
@@ -99,6 +106,7 @@ class ChooseUserNameScreen extends Component {
                             style = {styles.inputText}
                             placeholder={translate('chooseUserNameScreen.userNamePlaceholder')}
                             autoCapitalize='none'
+                            editable={this.state.allowTextInputEdition}
                             onChangeText= {this.setUserName}
                             onSubmitEditing={this.checkTermsConditionsAndUsername} />
                     </View>

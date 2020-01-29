@@ -12,9 +12,6 @@ async function retrieveData(key) {
     if (value !== null) {
       result = value;
     }
-    else {
-    	console.log("[retrieveData 2] : " + value);
-    }
   } catch (error) {
     // Error retrieving data
   }

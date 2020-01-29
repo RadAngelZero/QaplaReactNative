@@ -1,7 +1,8 @@
 {
     "App": {
         "noInternetConnection": {
-            "title": "No internet, check your connection."
+            "title": "No internet, check your connection.",
+            "wifiDetails": "Your wifi connection might be experiencing some issues, please try to connect to your data plan"
         }
     },
     "platforms": {

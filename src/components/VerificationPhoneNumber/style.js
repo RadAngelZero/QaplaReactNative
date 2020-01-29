@@ -48,7 +48,6 @@ export default styles = StyleSheet.create({
     qaplaTextInput: {
         flex: 1, 
         height: heightPercentageToPx(8),
-        minHeight: heightPercentageToPx(8),
         borderBottomColor: '#B5B5B5',
         color: '#FFF',
         borderRadius: 4,

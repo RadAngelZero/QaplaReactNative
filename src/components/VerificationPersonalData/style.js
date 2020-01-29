@@ -25,7 +25,6 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginLeft: widthPercentageToPx(6),
         marginRight: widthPercentageToPx(12),
-        height: heightPercentageToPx(44)
     },
     qaplaTextInput: {
         height: heightPercentageToPx(8),

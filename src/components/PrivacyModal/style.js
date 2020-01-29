@@ -29,7 +29,6 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: heightPercentageToPx(5),
-        paddingBottom: heightPercentageToPx(0)
     },
     closeIcon: {
         marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
@@ -43,7 +42,7 @@ export default styles = StyleSheet.create({
         maxWidth: widthPercentageToPx(70),
     },
     lineText: {
-        color: 'white'
+        color: '#FFF'
     },
     lastChild: {
         paddingTop: heightPercentageToPx(20)

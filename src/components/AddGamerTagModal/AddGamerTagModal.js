@@ -20,15 +20,9 @@ const CloseIcon = Images.svg.closeIcon;
 
 export class AddGamerTagModal extends Component {
     state = {
-        gamerTagText: ''
+        gamerTagText: '',
+        gamerTagError: false
     };
-
-    /**
-     * Check if the gamerTag is valid
-     */
-    isValidGamerTag = () => {
-        return this.state.gamerTagText.length > 0;
-    }
 
     /**
      * Check if some game is selected
@@ -38,43 +32,37 @@ export class AddGamerTagModal extends Component {
     }
 
     saveGameOnUser = async () => {
+        if (this.state.gamerTagText !== '') {
+            try
+            {
+                await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
+                    this.props.selectedGame.gameKey, this.state.gamerTagText);
 
-        /**
-         * This code is working, and is a necesary part of the app, if must be updated please make the update instead of just comment the code
-         * and leave a TODO, if something is not working we can report a bug here: https://github.com/QaplaGaming/QaplaReactNative/issues,
-         * also remember send pull request instead of just push on the production (current release) branch, we can do that process from the following link:
-         * https://github.com/QaplaGaming/QaplaReactNative/compare
-         * Github can show things that the header lines can not show, thats why the header lines are useless, we have not a real control on them, is not a real history
-         * of changes, just have the changes that we want to write, as we can see on this commit (maded over release-1, not part of a pull request and without a header line)
-         * (https://github.com/QaplaGaming/QaplaReactNative/commit/0ed9031116bf8778b493ab2c9ef63dd0788669a6#diff-8156c12eaeec868ddf8c2afc59b8390a)
-         */
-        try
-        {
-            await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
-                this.props.selectedGame.gameKey, this.state.gamerTagText);
+                subscribeUserToTopic(this.props.selectedGame.gameKey);
 
-            subscribeUserToTopic(this.props.selectedGame.gameKey);
+                trackOnSegment('Add Gamer Tag Process Completed',
+                    { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });
 
-            trackOnSegment('Add Gamer Tag Process Completed',
-                { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });
-
-            /**
-             * redirect: prop to know if the modal should redirect to other screen
-             * or just call a function and then hide
-             */
-            if (this.props.redirect) {
-                if (this.props.loadGamesUserDontHave) {
-                    this.props.navigation.navigate('Perfil');
+                /**
+                 * redirect: prop to know if the modal should redirect to other screen
+                 * or just call a function and then hide
+                 */
+                if (this.props.redirect) {
+                    if (this.props.loadGamesUserDontHave) {
+                        this.props.navigation.navigate('Perfil');
+                    } else {
+                        this.props.navigation.navigate('SetBet',
+                            { game: { gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform } });
+                    }
                 } else {
-                    this.props.navigation.navigate('SetBet',
-                        { game: { gameKey: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform } });
+                    this.props.onSuccess();
+                    this.props.onClose();
                 }
-            } else {
-                this.props.onSuccess();
-                this.props.onClose();
+            } catch (error) {
+                console.error(error);
             }
-        } catch (error) {
-            console.error(error);
+        } else {
+            this.setState({ gamerTagError: true });
         }
     }
 
@@ -120,16 +108,16 @@ export class AddGamerTagModal extends Component {
                             <View style={styles.modalBody}>
                                 <TextInput
                                     style={styles.gamerTagTextInput}
-                                    placeholder='Escribe tu Gamer Tag'
-                                    placeholderTextColor = '#FFF'
+                                    placeholder={translate('addGamerTagModal.gamerTagPlaceholder')}
+                                    placeholderTextColor='#FFF'
                                     autoCapitalize='none'
                                     onChangeText={(text) => this.setState({ gamerTagText: text })}
-                                    value={this.state.gamerTagText}
                                     onSubmitEditing={this.saveGameOnUser} />
+                                {this.state.gamerTagError &&
+                                    <Text style={styles.smallText}>{translate('addGamerTagModal.invalidGamerTag')}</Text>
+                                }
                                 <Text style={styles.modalText}>{translate('addGamerTagModal.body', { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText })}</Text>
-                                <TouchableWithoutFeedback
-                                    disabled={!this.isValidGamerTag}
-                                    onPress={this.saveGameOnUser}>
+                                <TouchableWithoutFeedback onPress={this.saveGameOnUser}>
                                         <View style={styles.confirmButton}>
                                             <Text style={styles.confirmButtonText}>Aceptar</Text>
                                         </View>

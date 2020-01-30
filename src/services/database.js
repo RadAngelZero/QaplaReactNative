@@ -51,6 +51,7 @@ export const activeEventsRef = eventsRef.child('eventsData');
 export const eventParticipantsRef = database.ref('/EventParticipants');
 export const announcementsActRef = database.ref('/Announcements/Active');
 export const privacyRef = database.ref('/Privacy');
+export const usersBalance = database.ref('usersQaplaBalance');
 
 /**
  * Returns the userName of the specified user

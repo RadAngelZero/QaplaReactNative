@@ -1,7 +1,7 @@
 // josep.sanahuja          - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
 // josep-sanahuja          - 21-12-2019 - us152 - File creation
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
 import {
     NAV_TOPBAR_ICON_RIGHT_MARGIN,
@@ -15,7 +15,14 @@ export default styles = StyleSheet.create({
         backgroundColor: '#141833',
         width: widthPercentageToPx(100),
         height: heightPercentageToPx(100),
-        paddingTop: paddingTopForAndroidDevicesWithNotch() + 80
+        ...Platform.select({
+          ios: {
+            paddingTop: 80
+          },
+          android: {
+            paddingTop: paddingTopForAndroidDevicesWithNotch()
+          }
+        }),    
     },
     container: {
         width: widthPercentageToPx(100),

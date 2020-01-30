@@ -75,11 +75,11 @@ class App extends React.Component {
 
     render() {
         return (
-            <>    
-                <Router />
+            <>
                 <Snackbar
                     visible={this.state.openSnackbar}
-                    message={this.state.snackbarMessage} /> 
+                    message={this.state.snackbarMessage} />
+                <Router />
             </>
         )
     }

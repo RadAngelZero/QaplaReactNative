@@ -14,6 +14,7 @@ async function retrieveData(key) {
     }
   } catch (error) {
     // Error retrieving data
+    console.error(error);
   }
 
   return result;
@@ -27,6 +28,7 @@ async function storeData(key, value) {
     await AsyncStorage.setItem('@QaplaRN:'+ key, value);
   } catch (error) {
     // Error saving data
+    console.error(error);
   }
 };
 
@@ -37,6 +39,7 @@ async function removeDataItem(key) {
     await AsyncStorage.removeItem('@QaplaRN:'+ key);
   } catch (error) {
     // Error saving data
+    console.error(error);
   }
 };
 

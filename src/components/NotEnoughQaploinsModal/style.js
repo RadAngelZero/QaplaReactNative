@@ -16,7 +16,6 @@ export default styles = StyleSheet.create({
 	},
 	container: {
         width: widthPercentageToPx(80),
-        height: heightPercentageToPx(80),
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#141833',
@@ -31,13 +30,13 @@ export default styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         marginRight: widthPercentageToPx(5.33),
-        marginLeft: widthPercentageToPx(5.33),
-        paddingTop: heightPercentageToPx(20)
+        marginLeft: widthPercentageToPx(5.33)
     },
     headerText: {
-        marginBottom: heightPercentageToPx(30),
+        marginTop: 16,
+        marginBottom: 8,
         color: '#FFF',
-        fontSize: 40,
+        fontSize: 24,
         textAlign: 'center'
     },
     text: {
@@ -52,6 +51,7 @@ export default styles = StyleSheet.create({
     },
     smallText: {
         marginTop: heightPercentageToPx(1.23),
+        marginBottom: 16,
         color: '#909299',
         fontSize: 10,
         textAlign: 'center'

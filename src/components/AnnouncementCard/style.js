@@ -9,7 +9,6 @@ export default StyleSheet.create({
         marginHorizontal: widthPercentageToPx(1.0),
         borderRadius: 10,
         width: widthPercentageToPx(49),
-        height: heightPercentageToPx(18),
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#141833'
@@ -18,18 +17,17 @@ export default StyleSheet.create({
         height: widthPercentageToPx(15),
         width: widthPercentageToPx(15),
         marginBottom: heightPercentageToPx(1),
-        
+        marginTop: 16
     },
     imageStyle: {
         height: widthPercentageToPx(15),
         width: widthPercentageToPx(15),
         alignSelf: 'center',
         resizeMode: 'contain'
-        
     },
     description: {
-        height: heightPercentageToPx(5.17),
         width: widthPercentageToPx(40),
+        marginBottom: 16,
         color: '#ACACAC',
         fontSize: 12,
         fontWeight: '700',

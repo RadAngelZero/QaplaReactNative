@@ -15,6 +15,14 @@ class CarouselPng extends Component {
         userHasFinishedCarousel: false
     };
 
+    componentDidMount() {
+        this.makeAutomaticScroll();
+	}
+
+    /**
+     * Performs an automatic scroll every 5 seconds, so the user don't need to scroll
+     * every slide by himself
+     */
     makeAutomaticScroll = () => {
         if (!this.state.userHasFinishedCarousel) {
 
@@ -33,10 +41,6 @@ class CarouselPng extends Component {
         }
     }
 
-    componentDidMount() {
-        this.makeAutomaticScroll();
-	}
-
     onScrollEnd = (e) => {
         let contentOffset = e.nativeEvent.contentOffset;
         let viewSize = e.nativeEvent.layoutMeasurement;
@@ -46,14 +50,15 @@ class CarouselPng extends Component {
 
         /**
          * Disable the automatic scroll if the user returns to a previous slide, this user behavior can mean
-         * that he wants to read something again or he has not enough time to read a slide the first time
+         * that he wants to read something again or had not enough time to read a slide the first time
          * so we do not what to cause the same problem again.
-         * ONLY Do this once we ensure that all the users can reach the final slide of the carousel
+         * ONLY do this once we ensure that all the users can reach the final slide of the carousel
          * at this moment we have a report from a user with a Xiaomi Redmi note 8 pro, Android 9, this user
          * can not see the last screen and we are not able to reproduce this error, so do not do this validation yet
          */
 
         clearTimeout(this.changeSlideTimeout);
+
         this.setState({ currentIndex: pageNum }, this.makeAutomaticScroll);
         this.props.setCurrentIndex(pageNum);
     }

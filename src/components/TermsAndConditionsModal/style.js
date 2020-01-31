@@ -11,10 +11,10 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#141833',
-        marginLeft: widthPercentageToPx(3),
-        marginRight: widthPercentageToPx(1),
+        alignSelf: 'center',
+        paddingLeft: widthPercentageToPx(3),
+        paddingRight: widthPercentageToPx(1),
         width: widthPercentageToPx(100),
-        height: heightPercentageToPx(100),
         paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     closeIcon: {

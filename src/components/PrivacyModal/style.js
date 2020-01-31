@@ -10,32 +10,15 @@ import {
 
 export default styles = StyleSheet.create({
     sfvContainer: {
-      flex:1,
+      flex: 1,
       justifyContent: 'center',
       backgroundColor:'#131833',
+      alignSelf: 'center',
+      alignItems: 'center',
+      paddingLeft: widthPercentageToPx(3),
+      paddingRight: widthPercentageToPx(1),
+      width: widthPercentageToPx(100),
       paddingTop: paddingTopForAndroidDevicesWithNotch()
-    },
-    mainContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#141833',
-        width: widthPercentageToPx(100),
-        height: heightPercentageToPx(100),
-    },
-    container: {
-        width: widthPercentageToPx(100),
-        alignSelf: 'center',
-        justifyContent: 'flex-start',
-        backgroundColor: '#141833',
-        alignItems: 'center'
-    },
-    textContainer: {
-        width: widthPercentageToPx(90),
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: heightPercentageToPx(5),
-        paddingBottom: heightPercentageToPx(35)
     },
     closeIcon: {
         marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
@@ -47,8 +30,13 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 24,
         maxWidth: widthPercentageToPx(70),
+        marginBottom: heightPercentageToPx(2)
+    },
+    textContainer: {
+        marginTop: heightPercentageToPx(1.33),
+        paddingBottom: heightPercentageToPx(2.66) // <- For android devices with full screen
     },
     lineText: {
-        color: 'white'
+        color: '#FFF'
     }
 });

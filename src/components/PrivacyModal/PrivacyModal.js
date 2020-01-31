@@ -48,23 +48,17 @@ class PrivacyModal extends Component {
                 visible={this.props.open}
                 onRequestClose={this.props.onClose}>
                 <SafeAreaView style={styles.sfvContainer}>
-                    <View style={styles.mainContainer}>
-                        <View style={styles.container}>
-                            <TouchableWithoutFeedback onPress={this.closeModal}>
-                                <View style={styles.closeIcon}>
-                                    <CloseIcon />
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <Text style={styles.modalTitle}>Aviso Privacidad</Text>
-                            <View style={styles.textContainer}>
-                            <ScrollView>
-                                {this.state.privacyText.map((item, index) => (
-                                      <Text key={index} style={styles.lineText}>{item}</Text>)
-                                )}
-                            </ScrollView>
-                            </View>
+                    <TouchableWithoutFeedback onPress={this.closeModal}>
+                        <View style={styles.closeIcon}>
+                            <CloseIcon />
                         </View>
-                    </View>
+                    </TouchableWithoutFeedback>
+                    <Text style={styles.modalTitle}>Aviso Privacidad</Text>
+                    <ScrollView contentContainerStyle={styles.textContainer}>
+                        {this.state.privacyText.map((item, index) => (
+                            <Text key={index} style={styles.lineText}>{item}</Text>)
+                        )}
+                    </ScrollView>
                 </SafeAreaView>
             </Modal>
         );

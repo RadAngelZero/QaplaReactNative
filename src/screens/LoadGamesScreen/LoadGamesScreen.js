@@ -86,6 +86,10 @@ class LoadGamesScreen extends React.Component {
         this.list.forEach((item) => item.remove());
     }
 
+    /**
+     * This screen can be opened from different places, so when android users press back
+     * we need to determine (with logic) where must be returned the user (until we update the router file)
+     */
     handleAndroidBackButton = () => {
         if (this.props.navigation.getParam('loadGamesUserDontHave', false)) {
             this.props.navigation.navigate('Perfil');

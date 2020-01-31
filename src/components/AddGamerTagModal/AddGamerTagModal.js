@@ -38,8 +38,7 @@ export class AddGamerTagModal extends Component {
 
     saveGameOnUser = async () => {
         if (this.isValidGamerTag()) {
-            try
-            {
+            try {
                 await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
                     this.props.selectedGame.gameKey, this.state.gamerTagText);
 

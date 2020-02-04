@@ -39,8 +39,14 @@ class App extends React.Component {
      */
     enableNetworkListener() {
         this.networkListener = NetInfo.addEventListener((state) => {
-            if (!state.isConnected || ((state.isInternetReachable !== undefined) && (state.isInternetReachable !== null)&& !state.isInternetReachable)) {
-                this.setState({ openSnackbar: true, snackbarMessage: translate('App.noInternetConnection.title') });
+            if (!state.isConnected || ((state.isInternetReachable !== undefined) && (state.isInternetReachable !== null) && !state.isInternetReachable)) {
+                const wifiMessage = (state.type === 'wifi') ? translate('App.noInternetConnection.wifiDetails') : '';
+                const msg = `${translate('App.noInternetConnection.title')} ${wifiMessage}`;
+                
+                this.setState({
+                  openSnackbar: true,
+                  snackbarMessage: msg
+                });
             } else {
                 this.setState({ openSnackbar: false });
             }

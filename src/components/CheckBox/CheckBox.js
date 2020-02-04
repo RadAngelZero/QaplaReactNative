@@ -5,7 +5,6 @@ import { Animated, View, TouchableWithoutFeedback, Text } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';
-import { isFunction } from '../../utilities/utils';
 
 const OkIcon = images.svg.okIcon;
 
@@ -15,45 +14,34 @@ export class CheckBox extends Component {
         selected: false
     };
 
-    /**
-     * @description Toggle the state of the checbox
-     */
-    toggleCheckBox = () => {
-
-        /**
-         * Create an animation to set the opacity of the selectedContainer
-         * (show with opacity animation that the checkbox is selected or unselected)
-         */
-        Animated.timing(this.state.backgroundOpacity, {
-            toValue: !this.state.selected ? 1 : 0,
+    static getDerivedStateFromProps(props, state) {
+        if (props.selected !== state.selected) {
 
             /**
-             * Based on material design, the speed in this kind of controls
-             * (selection controls) must be of 100ms
-             * https://material.io/design/motion/speed.html#duration
+             * Create an animation to set the opacity of the selectedContainer
+             * (show with opacity animation that the checkbox is selected or unselected)
              */
-            duration: 100
-        }).start();
+            Animated.timing(state.backgroundOpacity, {
+                toValue: props.selected ? 1 : 0,
 
-        /**
-         * Check if exist a onPress prop and if it's a function
-         */
-        if (isFunction(this.props.onPress)) {
+                /**
+                 * Based on material design, the speed in this kind of controls
+                 * (selection controls) must be of 100ms
+                 * https://material.io/design/motion/speed.html#duration
+                 */
+                duration: 100
+            }).start();
 
-            /**
-             * Execute the onPress sended by the father to perform the necessary actions
-             * on the top component (doesn't matter the action)
-             */
-            this.props.onPress(!this.state.selected);
+            return { selected: props.selected };
         }
 
-        this.setState({ selected: !this.state.selected });
+        return null;
     }
 
     render() {
         return (
             <View style={[styles.container, this.props.style]}>
-                <TouchableWithoutFeedback onPress={this.toggleCheckBox}>
+                <TouchableWithoutFeedback disabled={this.props.disabled} onPress={this.props.onPress}>
                     <View style={styles.selectionArea}>
                         <View style={styles.checkboxContainer}>
                             <Animated.View style={[styles.selectedContainer, { opacity: this.state.backgroundOpacity }]}>

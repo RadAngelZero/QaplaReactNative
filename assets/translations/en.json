@@ -1,7 +1,8 @@
 {
     "App": {
         "noInternetConnection": {
-            "title": "No internet, check your connection."
+            "title": "No internet, check your connection.",
+            "wifiDetails": "Try connect with your data plan"
         }
     },
     "platforms": {
@@ -296,6 +297,8 @@
     },
     "addGamerTagModal": {
         "body": "The game %{selectedGame} is going to be added to your profile with the gamertag %{gamerTag}. Are you sure?",
+        "gamerTagPlaceholder": "Insert your Gamertag",
+        "invalidGamerTag": "Invalid gamertag",
         "accept": "Accept"
     },
     "notEnoughQaploinsModal": {

@@ -25,7 +25,6 @@ class CarouselPng extends Component {
      */
     makeAutomaticScroll = () => {
         if (!this.state.userHasFinishedCarousel) {
-
             /**
              * Once the user (or the timeout callback) has scrolled to the end of the Carousel we disable the scroll
              */

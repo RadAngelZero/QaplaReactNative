@@ -27,6 +27,15 @@ export default styles = StyleSheet.create({
         marginBottom: heightPercentageToPx(2.46),
         alignSelf: 'flex-end'
     },
+    title: {
+        color: '#FFF',
+        alignSelf: 'flex-start',
+        marginLeft: widthPercentageToPx(6.4),
+        fontSize: 32,
+        fontWeight: 'bold',
+        width: widthPercentageToPx(70),
+        letterSpacing: 0.51
+    },
     winLooseContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -75,10 +84,12 @@ export default styles = StyleSheet.create({
     },
     uploadResultButton: {
         marginTop: heightPercentageToPx(3.01),
+        position: 'absolute',
+        bottom: 16,
         borderRadius: 100,
         backgroundColor: '#FA2D79',
         elevation: 6,
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: heightPercentageToPx(0.37),

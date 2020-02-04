@@ -64,6 +64,12 @@ export default styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white'
     },
+    smallText: {
+        fontSize: 12,
+        color: '#909299',
+        marginBottom: heightPercentageToPx(1.14),
+        textAlign: 'center'
+    },
     modalText: {
         fontSize: 14,
         marginTop: heightPercentageToPx(2.46),

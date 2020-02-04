@@ -131,15 +131,15 @@ export class UserProfileScreen extends Component {
                         <TouchableWithoutFeedback onPress={() => this.setState({ showQaploinsToUser: !this.state.showQaploinsToUser })}>
                             <View style={styles.qaploinInfoContainer}>
                                 {this.state.showQaploinsToUser ?
-                                <QaploinExchangeIcon
-                                    height={heightPercentageToPx(4)}
-                                    width={widthPercentageToPx(10)}
-                                    style={styles.qaploinImage} />
+                                    <QaploinExchangeIcon
+                                        height={heightPercentageToPx(4)}
+                                        width={widthPercentageToPx(10)}
+                                        style={styles.qaploinImage} />
                                     :
-                                <BalanceExchangeIcon
-                                    height={heightPercentageToPx(4)}
-                                    width={widthPercentageToPx(10)}
-                                    style={styles.qaploinImage} />
+                                    <BalanceExchangeIcon
+                                        height={heightPercentageToPx(4)}
+                                        width={widthPercentageToPx(10)}
+                                        style={styles.qaploinImage} />
                                 }
                                 <Text style={styles.qaploinsAmount}>
                                     {this.state.showQaploinsToUser ? this.props.userQaploins : this.props.userBalance || 0}

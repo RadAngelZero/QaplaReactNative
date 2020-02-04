@@ -816,3 +816,11 @@ export async function getQaplaAppPrivacy() {
     return res;
 }
 
+/**
+ * Add a real time listener for the userQaplaBalance node
+ * @param {string} uid User identifier
+ * @param {function} callback Handler for the 'value' event of the userQaplaBalance node
+ */
+export async function userQaplaBalanceListener(uid, callback) {
+    usersBalance.child(uid).on('value', callback);
+}

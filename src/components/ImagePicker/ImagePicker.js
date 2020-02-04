@@ -79,10 +79,7 @@ export default class ImagePicker extends React.Component {
           {
               this.setState({
                   numPictures: this.state.numPictures + 20
-              },
-              this.loadPictures);
-
-              
+              }, this.loadPictures);
           }
           else {
               this.setState({

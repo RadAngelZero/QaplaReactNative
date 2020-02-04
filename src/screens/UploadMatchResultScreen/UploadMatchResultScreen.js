@@ -17,8 +17,10 @@ import styles from './style';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 import Images from './../../../assets/images';
+import UploadClutchEvidenceScreen from '../UploadClutchEvidenceScreen/UploadClutchEvidenceScreen';
 import { uploadMatchResult } from '../../services/database';
 import UploadMatchResultsModal from '../../components/UploadMatchResultsModal/UploadMatchResultsModal';
+import UploadMatchEvidenceModal from '../../components/UploadMatchEvidenceModal/UploadMatchEvidenceModal';
 import { WON_RESULT, TIE_RESULT, LOST_RESULT, OTHER_RESULT } from '../../utilities/Constants';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { translate } from '../../utilities/i18';
@@ -27,6 +29,8 @@ const CloseIcon = Images.svg.closeIcon;
 const WinIcon = Images.svg.winIcon;
 const LostIcon = Images.svg.lostIcon;
 const TieIcon = Images.svg.tieIcon;
+const ChooseClipIcon = Images.svg.chooseClipIcon;
+const AlreadyChoosedClipIcon = Images.svg.alreadyChoosedClipIcon;
 
 class UploadMatchResultScreen extends Component {
 
@@ -35,6 +39,8 @@ class UploadMatchResultScreen extends Component {
 
       this.state = {
           matchResultStatus: null,
+          evidenceUrl: '',
+          uploadingEvidence: false,
           showUploadMatchResultsModal: false,
           showUploadMatchEvidenceModal: false
       };
@@ -68,11 +74,42 @@ class UploadMatchResultScreen extends Component {
     }
 
     /**
+     * Open the UploadClutchEvidenceScreen
+     */
+    sendToUploadEvidence = () => {
+        this.setState({
+            uploadingEvidence: true
+        });
+    }
+
+    /**
+     * Get the inserted url afther that was validated on UploadClutchEvidenceScreen and back to the initial screen
+     * @param {string} url Url inserted by the user on the UploadClutchEvidenceScreen
+     */
+    getEvidenceData = (url) => {
+        this.setState({
+            evidenceUrl: url,
+            uploadingEvidence: false
+        });
+    }
+
+    /**
+     * Validate the result checking if the user have uploaded evidence, if have, upload the result, if not, open the modal
+     */
+    validateResultToUpload = () => {
+        if (this.state.evidenceUrl !== '') {
+            this.uploadResult();
+        } else {
+            this.setState({ showUploadMatchEvidenceModal: true });
+        }
+    }
+
+    /**
      * Upload user match result to firebase database
      */
     uploadResult = async () => {
         try {
-            let { matchResultStatus } = this.state;
+            let {matchResultStatus} = this.state;
 
             const matchData = this.props.navigation.getParam('matchData');
 
@@ -95,7 +132,8 @@ class UploadMatchResultScreen extends Component {
                 Platform: matchData.platform,
                 Bet: matchData.bet,
                 UserQaploins: this.props.userQaploins,
-                Result: matchResultStatus
+                Result: matchResultStatus,
+                Evidence: this.state.evidenceUrl !== ''
             });
             this.setState({ showUploadMatchResultsModal: true })
         } catch (error) {
@@ -111,74 +149,105 @@ class UploadMatchResultScreen extends Component {
     }
 
     /**
+     * Close the UploadMatchEvidenceModal
+     */
+    closeUploadMatchEvidenceModal = () => {
+        this.setState({ showUploadMatchEvidenceModal: false });
+    }
+
+    /**
      * Close the UploadMatchResultScreen
      */
     closeUploadMatchResultScreen = () => this.props.navigation.pop();
 
+    /**
+     * Close clutch screen and back to UploadMatchResultScreen
+     */
+    backToUploadMatchResultScreen = () => this.setState({ uploadingEvidence: false });
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
-                <View style={styles.container}>
-                    <TouchableWithoutFeedback onPress={this.closeUploadMatchResultScreen}>
-                        <View style={styles.closeIcon}>
-                            <CloseIcon />
+                {this.state.uploadingEvidence ?
+                    <UploadClutchEvidenceScreen
+                        backToUploadMatchResultScreen={this.backToUploadMatchResultScreen}
+                        sendEvidenceData={this.getEvidenceData} />
+                    :
+                    <View style={styles.container}>
+                        <TouchableWithoutFeedback onPress={this.closeUploadMatchResultScreen}>
+                            <View style={styles.closeIcon}>
+                                <CloseIcon />
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <View style={styles.winLooseContainer}>
+                            <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, WON_RESULT)}>
+                                <View>
+                                    <WinIcon
+                                        width={widthPercentageToPx(25)}
+                                        height={heightPercentageToPx(20)}
+                                        fill={this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3'} />
+                                    <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3' }]}>
+                                        {translate('uploadMatchResultScreen.results.won')}
+                                    </Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                            <View style={styles.winLooseSeparator} />
+                            <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, TIE_RESULT)}>
+                                <View style={{ alignSelf: 'center' }}>
+                                    <TieIcon
+                                        width={widthPercentageToPx(18)}
+                                        height={heightPercentageToPx(14)}
+                                        fill={this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3'} />
+                                    <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
+                                        {translate('uploadMatchResultScreen.results.draw')}
+                                    </Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                            <View style={styles.winLooseSeparator} />
+                            <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, LOST_RESULT)}>
+                                <View>
+                                    <LostIcon
+                                        width={widthPercentageToPx(25)}
+                                        height={heightPercentageToPx(20)}
+                                        fill={this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3'} />
+                                    <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3' }]}>
+                                        {translate('uploadMatchResultScreen.results.lost')}
+                                    </Text>
+                                </View>
+                            </TouchableWithoutFeedback>
                         </View>
-                    </TouchableWithoutFeedback>
-                    <Text style={styles.title}>{translate('uploadMatchResultScreen.title')}</Text>
-                    <View style={styles.winLooseContainer}>
-                        <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, WON_RESULT)}>
-                            <View>
-                                <WinIcon
-                                    width={widthPercentageToPx(25)}
-                                    height={heightPercentageToPx(20)}
-                                    fill={this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3'} />
-                                <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3' }]}>
-                                    {translate('uploadMatchResultScreen.results.won')}
-                                </Text>
+                        <View style={styles.uploadEvidence}>
+                            <TouchableWithoutFeedback onPress={this.sendToUploadEvidence}>
+                                {this.state.evidenceUrl !== '' ?
+                                    <AlreadyChoosedClipIcon height={150} width={150} fill='#FF0000' />
+                                    :
+                                    <ChooseClipIcon height={150} width={150} fill='#FF0000' />
+                                }
+                            </TouchableWithoutFeedback>
+                        </View>
+                        <Text style={styles.footerEvidence}>{translate('uploadMatchResultScreen.evidence')}</Text>
+                        <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, OTHER_RESULT)}>
+                            <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === OTHER_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
+                                <Text style={styles.buttonText}>{translate('uploadMatchResultScreen.results.dontPlayed')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
-                        <View style={styles.winLooseSeparator} />
-                        <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, TIE_RESULT)}>
-                            <View style={{ alignSelf: 'center' }}>
-                                <TieIcon
-                                    width={widthPercentageToPx(18)}
-                                    height={heightPercentageToPx(14)}
-                                    fill={this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3'} />
-                                <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
-                                    {translate('uploadMatchResultScreen.results.draw')}
-                                </Text>
-                            </View>
-                        </TouchableWithoutFeedback>
-                        <View style={styles.winLooseSeparator} />
-                        <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, LOST_RESULT)}>
-                            <View>
-                                <LostIcon
-                                    width={widthPercentageToPx(25)}
-                                    height={heightPercentageToPx(20)}
-                                    fill={this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3'} />
-                                <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3' }]}>
-                                    {translate('uploadMatchResultScreen.results.lost')}
-                                </Text>
-                            </View>
-                        </TouchableWithoutFeedback>
+                        {this.state.matchResultStatus &&
+                            <TouchableWithoutFeedback onPress={this.validateResultToUpload}>
+                                <View style={styles.uploadResultButton}>
+                                    <Text style={styles.buttonText}>{translate('uploadMatchResultScreen.uploadResult')}</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        }
+                        <UploadMatchResultsModal
+                            visible={this.state.showUploadMatchResultsModal}
+                            onClose={this.closeUploadMatchResultsModal}
+                            nextScreen='Publicas' />
+                        <UploadMatchEvidenceModal
+                            visible={this.state.showUploadMatchEvidenceModal}
+                            onClose={this.closeUploadMatchEvidenceModal}
+                            cb1={this.uploadResult} />
                     </View>
-                    <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, OTHER_RESULT)}>
-                        <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === OTHER_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
-                            <Text style={styles.buttonText}>{translate('uploadMatchResultScreen.results.dontPlayed')}</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    {this.state.matchResultStatus &&
-                        <TouchableWithoutFeedback onPress={this.uploadResult}>
-                            <View style={styles.uploadResultButton}>
-                                <Text style={styles.buttonText}>{translate('uploadMatchResultScreen.uploadResult')}</Text>
-                            </View>
-                        </TouchableWithoutFeedback>
-                    }
-                    <UploadMatchResultsModal
-                        visible={this.state.showUploadMatchResultsModal}
-                        onClose={this.closeUploadMatchResultsModal}
-                        nextScreen='Publicas' />
-                </View>
+                }
             </SafeAreaView>
         );
     }

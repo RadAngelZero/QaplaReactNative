@@ -208,7 +208,6 @@
         }
     },
     "uploadMatchResultScreen": {
-        "title": "Selecciona tu resultado",
         "results": {
             "won": "Ganado",
             "draw": "Empatado",

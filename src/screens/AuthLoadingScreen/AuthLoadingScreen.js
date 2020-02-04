@@ -84,7 +84,7 @@ class AuthLoadingScreen extends Component {
                 this.setState({ firstLoad: false });
                 if (isTutorialDone) {
 
-                    return this.props.navigation.navigate('UploadMatchResult');
+                    return this.props.navigation.navigate('Logros');
                 }
                 else {
 

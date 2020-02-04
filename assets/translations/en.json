@@ -208,7 +208,6 @@
         }
     },
     "uploadMatchResultScreen": {
-        "title": "Choose your result",
         "results": {
             "won": "Won",
             "draw": "Draw",

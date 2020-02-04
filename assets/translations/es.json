@@ -2,7 +2,7 @@
     "App": {
         "noInternetConnection": {
             "title": "No estas conectado a internet, revisa tu conexión.",
-            "wifiDetails": "Tu conexión wifi podría tener problemas, intenta con tu conexión de datos." 
+            "wifiDetails": "Usa tu connexión de datos" 
         }
     },
     "platforms": {

@@ -20,7 +20,7 @@
 // josep.sanahuja - 15-07-2019 - us25 - + addGameProfile Modal logic
 
 import React from 'react';
-import { View } from 'react-native'
+import { BackHandler, View } from 'react-native'
 import { SafeAreaView } from 'react-navigation';
 
 import styles from './style'
@@ -49,6 +49,7 @@ class LoadGamesScreen extends React.Component {
     }
 
     componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBackButton);
         this.list = [
 
             /**
@@ -79,9 +80,24 @@ class LoadGamesScreen extends React.Component {
     }
 
     componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBackButton);
 
         //Remove willFocus listener on navigation
         this.list.forEach((item) => item.remove());
+    }
+
+    /**
+     * This screen can be opened from different places, so when android users press back
+     * we need to determine (with logic) where must be returned the user (until we update the router file)
+     */
+    handleAndroidBackButton = () => {
+        if (this.props.navigation.getParam('loadGamesUserDontHave', false)) {
+            this.props.navigation.navigate('Perfil');
+        } else {
+            this.props.navigation.navigate('ChooseMatchType');
+        }
+
+        return true;
     }
 
     /**

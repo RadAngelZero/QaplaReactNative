@@ -38,12 +38,10 @@ class ChooseUserNameScreen extends Component {
      * if everything is right add the userName and returns the user to the previous flow
      */
     checkTermsConditionsAndUsername = () => {
-        if (this.state.agreementTermsState && this.state.agreementPrivacyState) {
+        if (this.state.userName !== '' && !this.state.checkingUserName && this.state.agreementPrivacyState && this.state.agreementTermsState) {
             this.setState({
-                checkingUserName: true,
-                showErrorMessage: false
-            },
-            async () => {
+            	checkingUserName: true,
+            	showErrorMessage: false }, async () => {
                 if(this.state.userName !== '' && await validateUserName(this.state.userName)) {
                     createUserName(this.props.uid, this.state.userName);
                     this.props.navigation.popToTop();
@@ -91,7 +89,7 @@ class ChooseUserNameScreen extends Component {
     /**
      * Close the privacy modal
      */
-    closePrivacyModal = () => this.setState({ openPrivacyModal: false })
+    closePrivacyModal = () => this.setState({ openPrivacyModal: false });
 
     render() {
         return (
@@ -128,13 +126,17 @@ class ChooseUserNameScreen extends Component {
                     </Text>
                     <CheckBox
                         label={translate('chooseUserNameScreen.agreeWithTerms')}
-                        onPress={this.toggleAgreementTermsState} />
+                        onPress={this.toggleAgreementTermsState}
+                        selected={this.state.agreementTermsState}
+                        disabled={this.state.checkingUserName} />
                     <CheckBox
                         label={translate('chooseUserNameScreen.agreeWithPrivacy')}
                         onPress={this.toggleAgreementPrivacyState}
+                        selected={this.state.agreementPrivacyState}
+                        disabled={this.state.checkingUserName}
                         style={styles.bottomCheckBox} />
                     <TouchableWithoutFeedback
-                        disabled={this.state.userName === '' || this.state.checkingUserName}
+                        disabled={this.state.userName === '' || this.state.checkingUserName || !(this.state.agreementPrivacyState && this.state.agreementTermsState)}
                         onPress={this.checkTermsConditionsAndUsername}>
                         <View style={styles.confirmButton}>
                             <Text style={styles.confirmButtonText}>

@@ -47,7 +47,8 @@ export default StyleSheet.create({
       borderRadius: 100,
       backgroundColor: '#FA2D79',
       elevation: 10,
-      width: widthPercentageToPx(66.6)
+      width: widthPercentageToPx(66.6),
+      marginBottom: heightPercentageToPx(4.30)
   },
   textStyle: {
       color: '#FFF',

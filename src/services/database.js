@@ -51,6 +51,7 @@ export const activeEventsRef = eventsRef.child('eventsData');
 export const eventParticipantsRef = database.ref('/EventParticipants');
 export const announcementsActRef = database.ref('/Announcements/Active');
 export const privacyRef = database.ref('/Privacy');
+export const usersBalance = database.ref('usersQaplaBalance');
 
 /**
  * Returns the userName of the specified user
@@ -815,3 +816,11 @@ export async function getQaplaAppPrivacy() {
     return res;
 }
 
+/**
+ * Add a real time listener for the userQaplaBalance node
+ * @param {string} uid User identifier
+ * @param {function} callback Handler for the 'value' event of the userQaplaBalance node
+ */
+export async function userQaplaBalanceListener(uid, callback) {
+    usersBalance.child(uid).on('value', callback);
+}

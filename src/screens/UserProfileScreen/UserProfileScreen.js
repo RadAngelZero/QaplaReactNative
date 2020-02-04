@@ -27,11 +27,13 @@ import { isUserLogged } from '../../services/auth';
 import { translate } from '../../utilities/i18';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
-const QaploinExchangeIcon = images.svg.qaploinsIcon;
+const QaploinExchangeIcon = images.svg.qoinFlipIcon;
+const BalanceExchangeIcon = images.svg.balanceFlipIcon;
 
 export class UserProfileScreen extends Component {
     state = {
         showBuyQaploinsModal: false,
+        showQaploinsToUser: true
     };
 
     componentWillMount() {
@@ -126,13 +128,24 @@ export class UserProfileScreen extends Component {
                         <Text style={styles.userName}>{this.props.userName}</Text>
                     </View>
                     <View style={styles.manageQaploinsContainer}>
-                        <View style={styles.qaploinInfoContainer}>
-                            <QaploinExchangeIcon
-                                height={heightPercentageToPx(4)}
-                                width={widthPercentageToPx(10)}
-                                style={styles.qaploinImage} />
-                            <Text style={styles.qaploinsAmount}>{this.props.userQaploins}</Text>
-                        </View>
+                        <TouchableWithoutFeedback onPress={() => this.setState({ showQaploinsToUser: !this.state.showQaploinsToUser })}>
+                            <View style={styles.qaploinInfoContainer}>
+                                {this.state.showQaploinsToUser ?
+                                    <QaploinExchangeIcon
+                                        height={heightPercentageToPx(4)}
+                                        width={widthPercentageToPx(10)}
+                                        style={styles.qaploinImage} />
+                                    :
+                                    <BalanceExchangeIcon
+                                        height={heightPercentageToPx(4)}
+                                        width={widthPercentageToPx(10)}
+                                        style={styles.qaploinImage} />
+                                }
+                                <Text style={styles.qaploinsAmount}>
+                                    {this.state.showQaploinsToUser ? this.props.userQaploins : this.props.userBalance || 0}
+                                </Text>
+                            </View>
+                        </TouchableWithoutFeedback>
                         <View style={styles.buttonGroup}>
                             <TouchableWithoutFeedback onPress={this.openBuyQaploinsModal}>
                                 <View style={styles.addQaploinsButton}>
@@ -187,6 +200,7 @@ function mapStateToProps(state) {
             userName: state.userReducer.user.userName,
             uid: state.userReducer.user.id,
             userQaploins: state.userReducer.user.credits,
+            userBalance: state.userReducer.user.userBalance,
             userGames: state.userReducer.user.gameList,
             qaplaGames: state.gamesReducer.games
         }

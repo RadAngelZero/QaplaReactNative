@@ -2,8 +2,8 @@
 // diego           - 20-08-2019 - us89 - Load user games statistics
 // diego           - 01-08-2019 - us58 - Change the way to load the user data and the way for listen changes
 
-import { UPDATE_USER_DATA, REMOVE_USER_DATA, SIGN_OUT_USER } from '../utilities/Constants';
-import { usersRef, gamesRef, gamersRef } from '../services/database';
+import { UPDATE_USER_DATA, REMOVE_USER_DATA, SIGN_OUT_USER, USER_BALANCE } from '../utilities/Constants';
+import { usersRef, gamesRef, gamersRef, userQaplaBalanceListener } from '../services/database';
 
 export const getUserNode = (uid) => async (dispatch) => {
 
@@ -19,6 +19,10 @@ export const getUserNode = (uid) => async (dispatch) => {
             or notificationMatch, that nodes appear and disappears constantly
         */
         dispatch(updateUserDataSuccess({ key: childAdded.key, value: childAdded.val() }));
+    });
+
+    userQaplaBalanceListener(uid, (userBalance) => {
+        dispatch(updateUserDataSuccess({ key: USER_BALANCE, value: userBalance.val() }));
     });
 
     /**

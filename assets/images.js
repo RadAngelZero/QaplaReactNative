@@ -49,7 +49,8 @@ import EditIcon from './icons/edit.svg';
 import NoVerifiedIcon from './icons/sin-verificar.svg';
 import FacebookIcon from './icons/facebook_round.svg';
 import GoogleIcon from './icons/google-logo.svg';
-
+import QoinFlipIcon from './icons/qoins-flip.svg';
+import BalanceFlipIcon from './icons/qapla-balance-flip.svg';
 
 // Images
 
@@ -217,7 +218,9 @@ const images = {
 		discordIcon: DiscordIcon,
 		settingsIcon: SettingsIcon,
 		editIcon: EditIcon,
-		noVerifiedIcon: NoVerifiedIcon
+		noVerifiedIcon: NoVerifiedIcon,
+		qoinFlipIcon: QoinFlipIcon,
+		balanceFlipIcon: BalanceFlipIcon
 	}
 };
 

@@ -39,15 +39,17 @@ class ChooseUserNameScreen extends Component {
      */
     checkTermsConditionsAndUsername = () => {
         if (this.state.userName !== '' && !this.state.checkingUserName && this.state.agreementPrivacyState && this.state.agreementTermsState) {
-            this.setState({ checkingUserName: true, showErrorMessage: false }, async () => {
+            this.setState({
+            	checkingUserName: true,
+            	showErrorMessage: false }, async () => {
                 if(this.state.userName !== '' && await validateUserName(this.state.userName)) {
                     createUserName(this.props.uid, this.state.userName);
                     this.props.navigation.popToTop();
                 } else {
-                    this.setState({
-                        showErrorMessage: true,
-                        checkingUserName: false
-                    });
+                this.setState({
+                    showErrorMessage: true,
+                    checkingUserName: false
+                });
                 }
             });
         }
@@ -99,6 +101,7 @@ class ChooseUserNameScreen extends Component {
                             style = {styles.inputText}
                             placeholder={translate('chooseUserNameScreen.userNamePlaceholder')}
                             autoCapitalize='none'
+                            editable={!this.state.checkingUserName}
                             onChangeText= {this.setUserName}
                             onSubmitEditing={this.checkTermsConditionsAndUsername} />
                     </View>
@@ -143,7 +146,7 @@ class ChooseUserNameScreen extends Component {
                     </TouchableWithoutFeedback>
                     {this.state.checkingUserName &&
                         <View>
-                            <Text style={styles.buttonText}>
+                            <Text style={styles.validatingText}>
                                 {translate('chooseUserNameScreen.validatingUserName')}
                             </Text>
                         </View>

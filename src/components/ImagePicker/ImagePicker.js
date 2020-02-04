@@ -77,19 +77,9 @@ export default class ImagePicker extends React.Component {
       if (this.state.morePictures) {
           if (this.state.numPictures <= this.state.photos.length)
           {
-              /**
-               * If you are getting problems when want to load more picture
-               * try adding the code as a callback for the setState sentence
-               * example:
-               * this.setState({
-               *  numPictures: this.state.numPictures + 20
-               * }, this.loadPictures);
-               */
               this.setState({
                   numPictures: this.state.numPictures + 20
-              });
-
-              this.loadPictures();
+              }, this.loadPictures);
           }
           else {
               this.setState({

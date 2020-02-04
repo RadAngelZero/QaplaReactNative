@@ -14,8 +14,7 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(100),
 	},
 	container: {
-        height: heightPercentageToPx(50),
-        width: widthPercentageToPx(100),
+        width: widthPercentageToPx(80),
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#141833',
@@ -59,6 +58,7 @@ export default styles = StyleSheet.create({
     },
     okButton: {
         marginTop: heightPercentageToPx(4.93),
+        marginBottom: 16,
         borderRadius: 100,
         backgroundColor: '#6D7DDE'
     }

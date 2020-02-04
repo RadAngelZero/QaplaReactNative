@@ -11,13 +11,13 @@ import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 class Snackbar extends Component {
     state = {
         visible: false,
-        yAxisValue: new Animated.Value(heightPercentageToPx(100)),
+        yAxisValue: new Animated.Value(heightPercentageToPx(110))
     };
 
     static getDerivedStateFromProps(props, state) {
         if (props.visible !== state.visible) {
             Animated.timing(state.yAxisValue, {
-                toValue: props.visible ? heightPercentageToPx(80) : heightPercentageToPx(100),
+                toValue: props.visible ? heightPercentageToPx(80) : heightPercentageToPx(110),
                 duration: props.visible ? 200 : 250,
                 easing: props.visible ? Easing.inOut(Easing.ease) : Easing.in(Easing.cubic)
             }).start();

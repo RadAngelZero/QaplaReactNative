@@ -15,8 +15,8 @@ export default styles = StyleSheet.create({
       backgroundColor:'#131833',
       alignSelf: 'center',
       alignItems: 'center',
-      paddingLeft: widthPercentageToPx(3),
-      paddingRight: widthPercentageToPx(1),
+      paddingLeft: 16,
+      paddingRight: 8,
       width: widthPercentageToPx(100),
       paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
@@ -29,14 +29,12 @@ export default styles = StyleSheet.create({
     modalTitle: {
         color: '#FFF',
         fontSize: 24,
-        maxWidth: widthPercentageToPx(70),
-        marginBottom: heightPercentageToPx(2)
-    },
-    textContainer: {
-        marginTop: heightPercentageToPx(1.33),
-        paddingBottom: heightPercentageToPx(2.66) // <- For android devices with full screen
+        marginBottom: 8
     },
     lineText: {
         color: '#FFF'
+    },
+    separator: {
+        marginBottom: 8
     }
 });

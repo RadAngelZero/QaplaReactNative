@@ -86,7 +86,7 @@ const LogrosTabNavigator = createMaterialTopTabNavigator(
         backgroundColor: '#0C1021'
       },
       tabStyle: {
-        width: widthPercentageToPx(35)
+        width: widthPercentageToPx(36)
       },
       labelStyle: {
         fontSize: 14
@@ -96,7 +96,7 @@ const LogrosTabNavigator = createMaterialTopTabNavigator(
       indicatorStyle: {
         borderBottomColor: '#36E5CE',
         borderBottomWidth: 2,
-        width: widthPercentageToPx(35)
+        width: widthPercentageToPx(36)
       }
     }
   }

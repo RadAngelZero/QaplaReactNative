@@ -15,6 +15,7 @@
 import React, { Component } from 'react';
 import {
     SafeAreaView,
+    ScrollView,
     View,
     Text,
     TouchableWithoutFeedback
@@ -39,6 +40,7 @@ import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics
 import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/MatchExpireRememberModal';
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 import { translate } from '../../utilities/i18';
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
 const QaploinIcon = images.svg.qaploinsIcon;
@@ -195,42 +197,46 @@ class SetBetScreen extends Component {
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
-                <View style={styles.container}>
-                    <BuyQaploinsModal
-                        open={this.state.open}
-                        openWhen='User try to create a match'
-                        body={translate('setBetScreen.buyQaploinsModal.body')}
-                        onClose={() => this.setState({ open: false })} />
-                    <MatchExpireRememberModal
-                        visible={this.state.timeActionMsgOpen}
-                        onClose={this.closeMatchExpireRememberModal} />
-                    <Text style={styles.titleText}>{translate('setBetScreen.title')}</Text>
-                    <View style={styles.prizeImage}>
-                        <QaploinsPrizeIcon width={110} height={107} />
-                    </View>
-                    <Text style={styles.winBet}>{this.defineWinBet()}</Text>
-                    <View style={styles.qaploinIconContainer}>
-                        <QaploinIcon height={24} width={24} />
-                        <Text style={styles.qaploinIconText}>Qoins</Text>
-                    </View>
-                    <View style={styles.betContainer}>
-                        <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
-                            <LessQaploinsIcon style={styles.changeBetIcon} />
-                        </TouchableWithoutFeedback>
-                        <View style={styles.betTextContainer}>
-                            <Text style={styles.betText}>{this.state.currentBet}</Text>
-                            <Text style={styles.betEntrada}>{translate('setBetScreen.entry')}</Text>
+                <ScrollView>
+                    <View style={styles.container}>
+                        <BuyQaploinsModal
+                            open={this.state.open}
+                            openWhen='User try to create a match'
+                            body={translate('setBetScreen.buyQaploinsModal.body')}
+                            onClose={() => this.setState({ open: false })} />
+                        <MatchExpireRememberModal
+                            visible={this.state.timeActionMsgOpen}
+                            onClose={this.closeMatchExpireRememberModal} />
+                        <Text style={styles.titleText}>{translate('setBetScreen.title')}</Text>
+                        <View style={styles.prizeImage}>
+                            <QaploinsPrizeIcon
+                                width={widthPercentageToPx(30)}
+                                height={heightPercentageToPx(30)} />
                         </View>
-                        <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
-                            <MoreQaploinsIcon style={styles.changeBetIcon} />
+                        <Text style={styles.winBet}>{this.defineWinBet()}</Text>
+                        <View style={styles.qaploinIconContainer}>
+                            <QaploinIcon height={24} width={24} />
+                            <Text style={styles.qaploinIconText}>Qoins</Text>
+                        </View>
+                        <View style={styles.betContainer}>
+                            <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
+                                <LessQaploinsIcon style={styles.changeBetIcon} />
+                            </TouchableWithoutFeedback>
+                            <View style={styles.betTextContainer}>
+                                <Text style={styles.betText}>{this.state.currentBet}</Text>
+                                <Text style={styles.betEntrada}>{translate('setBetScreen.entry')}</Text>
+                            </View>
+                            <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
+                                <MoreQaploinsIcon style={styles.changeBetIcon} />
+                            </TouchableWithoutFeedback>
+                        </View>
+                        <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
+                            <View style={styles.createButton}>
+                                <Text style={styles.createButtonText}>{translate('setBetScreen.createMatch')}</Text>
+                            </View>
                         </TouchableWithoutFeedback>
                     </View>
-                    <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
-                        <View style={styles.createButton}>
-                            <Text style={styles.createButtonText}>{translate('setBetScreen.createMatch')}</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
+                </ScrollView>
             </SafeAreaView>
         );
     }

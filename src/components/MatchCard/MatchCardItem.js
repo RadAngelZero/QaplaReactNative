@@ -20,7 +20,7 @@ class MatchCardItem extends PureComponent {
 
     constructor(props) {
         super(props);
-    
+
         this.state = {
             avatarUrl: undefined
         };
@@ -73,8 +73,7 @@ class MatchCardItem extends PureComponent {
             return (
                 <TouchableWithoutFeedback onPress={() => navigate('MatchCard', {matchCard: this.props})}>
                     <View style={styles.matchMainContainer}>
-                        <View
-                            style={styles.matchContainer}>
+                        <View style={styles.matchContainer}>
                             <game.Icon
                                 style={styles.gameLogoImage}
                                 width={35}

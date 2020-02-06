@@ -23,6 +23,7 @@ import { getGamerTagWithUID, addGameToUser } from '../../services/database';
 import { withNavigation } from 'react-navigation';
 import { subscribeUserToTopic } from '../../services/messaging';
 import { trackOnSegment } from '../../services/statistics';
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class GameCard extends Component {
 
@@ -90,7 +91,7 @@ class GameCard extends Component {
                         source={game.image[this.props.platform]}/>
                     <View style={styles.detailsContainer}>
                         <Svg style={styles.iconContainer}>
-                            <game.Icon width={30} height={30} />
+                            <game.Icon width={widthPercentageToPx(5)} height={heightPercentageToPx(5)} />
                         </Svg>
                         <Text style={styles.gameName}>
                             {game.name}

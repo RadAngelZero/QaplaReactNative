@@ -5,7 +5,7 @@
 // diego           - 18-09-2019 - us119 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, Image, KeyboardAvoidingView, TextInput } from 'react-native';
+import { ScrollView, View, Text, Image, KeyboardAvoidingView, TextInput } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -16,7 +16,7 @@ const Divider = images.png.divider.img;
 export class VerificationPersonalData extends Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
             tiAselected: false,
             tiBselected: false,
@@ -27,7 +27,7 @@ export class VerificationPersonalData extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <ScrollView contentContainerStyle={styles.container}>
                 <Text style={styles.title}>{translate('verificationScreen.verificationPersonalData.title')}</Text>
                 <View style={styles.divider}>
                     <Image source={Divider} />
@@ -73,7 +73,7 @@ export class VerificationPersonalData extends Component {
                         onSubmitEditing={this.props.goToNextStep}
                         onChangeText={(text) => this.props.setUserPersonalData('age', text)} />
                 </KeyboardAvoidingView>
-            </View>
+            </ScrollView>
         );
     }
 }

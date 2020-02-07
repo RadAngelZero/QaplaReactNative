@@ -40,11 +40,15 @@ class AuthLoadingScreen extends Component {
              */
             await this.props.getServerTimeOffset();
 
-            let navigateToScreen = 'Home';
-            let navigationParams = {};
             if (user) {
                 this.props.loadUserData(user.uid);
                 this.props.loadQaplaLogros(user.uid);
+
+                const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
+
+                if(userName === ''){
+                    return this.props.navigation.navigate('ChooseUserNameScreen');
+                }
 
                 await this.checkNotificationPermission(user.uid);
 
@@ -59,15 +63,8 @@ class AuthLoadingScreen extends Component {
                     const { navigateTo } = notification._data;
 
                     if (navigateTo) {
-                        navigateToScreen = navigateTo;
-                        navigationParams = notification._data;
+                        return this.props.navigation.navigate(navigateTo, notification._data);
                     }
-                }
-
-                const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
-
-                if(userName === ''){
-                    return this.props.navigation.navigate('ChooseUserNameScreen');
                 }
             } else {
                 this.props.loadQaplaLogros(null);

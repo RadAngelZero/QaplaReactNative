@@ -12,10 +12,10 @@ export const styles = StyleSheet.create({
         marginLeft: 12,
         marginRight: 12,
         marginTop: 16,
-        paddingTop: 8,
-        paddingBottom: 8,
-        paddingLeft: 8,
-        paddingRight: 8,
+        paddingTop: 16,
+        paddingBottom: 16,
+        paddingLeft: 12,
+        paddingRight: 12,
         justifyContent: 'center',
         flexDirection: 'column'
     },
@@ -56,17 +56,18 @@ export const styles = StyleSheet.create({
         fontStyle: 'normal',
         fontWeight: 'normal',
         textAlign: 'right',
+        alignSelf: 'flex-end',
+        marginTop: 24,
         lineHeight: 16
     },
     matchDetailInfoContainer: {
-        marginTop: 12,
         justifyContent: 'space-between',
         flexDirection: 'row'
     },
     avatarImage: {
         height: 24,
         width: 24,
-        borderRadius: 100,
+        borderRadius: 24 / 2,
         backgroundColor: '#0E1222',
         resizeMode: 'cover'
     },

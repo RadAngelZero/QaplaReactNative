@@ -27,7 +27,7 @@ class MatchCardItem extends PureComponent {
     }
 
     componentDidMount() {
-        this.fetchAvatarImageUrlFromUserUid(this.props.adversaryUid);  
+        this.fetchAvatarImageUrlFromUserUid(this.props.adversaryUid);
     }
 
     getCurrentGameResources() {
@@ -90,19 +90,21 @@ class MatchCardItem extends PureComponent {
                                     height={24} />
                             </View>
                         </View>
-                        <Text style={styles.timeText}>{`${formatedHour}:${formatedMinutes}`}</Text>
-                        <View style={styles.matchDetailInfoContainer}>
-                            <View style={styles.matchContainerRow}>
-                                {this.state.avatarUrl !== undefined ?
-                                    <Image
-                                        style={styles.avatarImage}
-                                        source={{ uri: this.state.avatarUrl }} />
-                                    :
-                                    <View style={styles.avatarImage} />
-                                }
-                                <Text style={styles.usernameText}>{this.props.userName}</Text>
+                        <View>
+                            <Text style={styles.timeText}>{`${formatedHour}:${formatedMinutes}`}</Text>
+                            <View style={styles.matchDetailInfoContainer}>
+                                <View style={styles.matchContainerRow}>
+                                    {this.state.avatarUrl !== undefined ?
+                                        <Image
+                                            style={styles.avatarImage}
+                                            source={{ uri: this.state.avatarUrl }} />
+                                        :
+                                        <View style={styles.avatarImage} />
+                                    }
+                                    <Text style={styles.usernameText}>{this.props.userName}</Text>
+                                </View>
+                                <Text style={styles.idRetaText}>ID {this.props.alphaNumericIdMatch}</Text>
                             </View>
-                            <Text style={styles.idRetaText}>ID {this.props.alphaNumericIdMatch}</Text>
                         </View>
                     </View>
                 </TouchableWithoutFeedback>

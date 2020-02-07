@@ -13,7 +13,7 @@ export default StyleSheet.create({
         alignSelf: 'center'
 	},
     imageStyle: {
-        height: heightPercentageToPx(20),
+        height: heightPercentageToPx(25),
         width: widthPercentageToPx(80),
         alignSelf: 'center',
         resizeMode: 'cover'

@@ -19,6 +19,7 @@ import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
 import { emptyLogros } from '../actions/logrosActions';
+import { subscribeUserToTopic } from './messaging';
 
 const webClientIdForGoogleAuth = '779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com';
 
@@ -34,8 +35,8 @@ export async function signInWithFacebook() {
         const facebookToken = await AccessToken.getCurrentAccessToken();
         const credential = FBProvider.credential(facebookToken.accessToken);
         const finalUser = await auth.signInWithCredential(credential);
-        
         setUserIdOnSegment(finalUser.user.uid);
+        subscribeUserToTopic('events');
         return finalUser;
     }
 }
@@ -44,11 +45,16 @@ export async function signInWithFacebook() {
  * Signin a user using Google
  */
 export async function signInWithGoogle() {
-    const googleResult = await GoogleSignin.signIn();
-    const credential = GoogleProvider.credential(googleResult.idToken, googleResult.accessToken);
-    const finalUser = await auth.signInWithCredential(credential);
-    setUserIdOnSegment(finalUser.user.uid);
-    return finalUser;
+    try {
+        const googleResult = await GoogleSignin.signIn();
+        const credential = GoogleProvider.credential(googleResult.idToken, googleResult.accessToken);
+        const finalUser = await auth.signInWithCredential(credential);
+        setUserIdOnSegment(finalUser.user.uid);
+        subscribeUserToTopic('events');
+        return finalUser;
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 export function setupGoogleSignin() {
@@ -64,13 +70,13 @@ export function setupGoogleSignin() {
 }
 
 export async function signInWithEmailAndPassword(email, password) {
-    await auth.signInWithEmailAndPassword(email, password)
-    .then((user) => {
+    try {
+        const user = await auth.signInWithEmailAndPassword(email, password);
         setUserIdOnSegment(user.user.uid);
-    })
-    .catch((error) => {
+        subscribeUserToTopic('events');
+    } catch(error) {
         console.log(error.code, error.message);
-    });
+    }
 }
 
 /**

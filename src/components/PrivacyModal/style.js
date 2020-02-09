@@ -15,10 +15,12 @@ export default styles = StyleSheet.create({
       backgroundColor:'#131833',
       alignSelf: 'center',
       alignItems: 'center',
-      paddingLeft: 16,
-      paddingRight: 8,
       width: widthPercentageToPx(100),
       paddingTop: paddingTopForAndroidDevicesWithNotch()
+    },
+    scrollViewContainer: {
+        paddingLeft: 16,
+        paddingRight: 8,
     },
     closeIcon: {
         marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),

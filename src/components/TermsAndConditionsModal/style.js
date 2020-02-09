@@ -17,6 +17,10 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(100),
         paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
+    scrollViewContainer: {
+        paddingLeft: 16,
+        paddingRight: 8,
+    },
     closeIcon: {
         marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
         marginBottom: heightPercentageToPx(2.46),

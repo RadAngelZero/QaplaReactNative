@@ -32,7 +32,7 @@ export class TermsAndConditionsModal extends Component {
                         Términos y Condiciones de Uso
                     </Text>
                     <ScrollView>
-                        <View style={{paddingLeft: 16, paddingRight: 8}}>
+                        <View style={styles.scrollViewContainer}>
                             <Text style={styles.paragraph}>
                                 Los siguientes términos y condiciones de uso, constituyen el contenido del Contrato que regula la relación jurídica entre Qapla Gaming Sociedad de Responsabilidad Limitada (en lo sucesivo <StrongText>“Qapla”</StrongText>) Y USTED (en lo sucesivo designado como el <StrongText>“Usuario”</StrongText>), y le serán aplicables por el simple hecho de darse de alta como Usuario de los “SERVICIOS QAPLA” a través de cualquiera de nuestras plataformas, por lo que su aceptación (cualquiera que sea en el medio en que se realice) en someterse a estos Términos y Condiciones de uso, será una manifestación expresa de su voluntad, plena y sin reservas.
                             </Text>

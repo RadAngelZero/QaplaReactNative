@@ -55,10 +55,12 @@ class PrivacyModal extends Component {
                     </TouchableWithoutFeedback>
                     <Text style={styles.modalTitle}>Aviso Privacidad</Text>
                     <ScrollView>
-                        {this.state.privacyText.map((item, index) => (
-                            <Text key={index} style={styles.lineText}>{item}</Text>)
-                        )}
-                        <View style={styles.separator} />
+                        <View style={styles.scrollViewContainer}>
+                            {this.state.privacyText.map((item, index) => (
+                                <Text key={index} style={styles.lineText}>{item}</Text>)
+                            )}
+                            <View style={styles.separator} />
+                        </View>
                     </ScrollView>
                 </SafeAreaView>
             </Modal>

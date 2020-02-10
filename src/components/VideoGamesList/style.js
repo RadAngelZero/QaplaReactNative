@@ -12,7 +12,7 @@ export default StyleSheet.create({
 	title: {
         fontSize: 32,
         color: '#FFF',
-        marginLeft: widthPercentageToPx(6.4),
+        marginLeft: 24,
 		fontWeight: 'bold',
 		marginBottom: heightPercentageToPx(0.49)
 	},

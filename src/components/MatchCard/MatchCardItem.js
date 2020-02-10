@@ -20,14 +20,14 @@ class MatchCardItem extends PureComponent {
 
     constructor(props) {
         super(props);
-    
+
         this.state = {
             avatarUrl: undefined
         };
     }
 
     componentDidMount() {
-        this.fetchAvatarImageUrlFromUserUid(this.props.adversaryUid);  
+        this.fetchAvatarImageUrlFromUserUid(this.props.adversaryUid);
     }
 
     getCurrentGameResources() {
@@ -73,41 +73,38 @@ class MatchCardItem extends PureComponent {
             return (
                 <TouchableWithoutFeedback onPress={() => navigate('MatchCard', {matchCard: this.props})}>
                     <View style={styles.matchMainContainer}>
-                        <View
-                            style={styles.matchContainer}>
-                            <game.Icon
-                                style={styles.gameLogoImage}
-                                width={35}
-                                height={31} />
-                            <Text style={styles.gameText}>{game.name}</Text>
-                            <View style={styles.mainBetContainer}>
-                                <View style={styles.betContainer}>
-                                    <Text style={styles.betText}>{this.props.bet}</Text>
-                                    <QaploinIcon
-                                        style={styles.qaploinGradientImage}
-                                        width={24}
-                                        height={24}
-                                        />
-                                </View>
-                                <Text style={styles.timeText}>{`${formatedHour}:${formatedMinutes}`}</Text>
-                                <View style={styles.padding}/>
+                        <View style={styles.matchContainerRow}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <game.Icon
+                                    style={styles.gameLogoImage}
+                                    width={37}
+                                    height={37} />
+                                <Text style={styles.gameText}>{game.name}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={styles.betText}>
+                                    {this.props.bet}
+                                </Text>
+                                <QaploinIcon
+                                    width={24}
+                                    height={24} />
                             </View>
                         </View>
-                        <View style={styles.padding}/>
-                        <View style={styles.padding}>
-                            <View style={styles.matchContainerRow}>
-                                {this.state.avatarUrl !== undefined ?
-                                    <Image
-                                        style={styles.avatarImage}
-                                        source={{ uri: this.state.avatarUrl }} />
-                                    :
-                                    <View style={styles.avatarImage} />
-                                }
-                                <Text style={styles.usernameText}>{this.props.userName}</Text>
-                                <View style={styles.padding}/>
+                        <View>
+                            <Text style={styles.timeText}>{`${formatedHour}:${formatedMinutes}`}</Text>
+                            <View style={styles.matchDetailInfoContainer}>
+                                <View style={styles.matchContainerRow}>
+                                    {this.state.avatarUrl !== undefined ?
+                                        <Image
+                                            style={styles.avatarImage}
+                                            source={{ uri: this.state.avatarUrl }} />
+                                        :
+                                        <View style={styles.avatarImage} />
+                                    }
+                                    <Text style={styles.usernameText}>{this.props.userName}</Text>
+                                </View>
                                 <Text style={styles.idRetaText}>ID {this.props.alphaNumericIdMatch}</Text>
                             </View>
-                            <View style={styles.padding}/>
                         </View>
                     </View>
                 </TouchableWithoutFeedback>

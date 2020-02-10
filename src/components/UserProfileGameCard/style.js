@@ -3,23 +3,24 @@
 // diego           - 20-08-2019 - us89 - File creation
 
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
-        height: heightPercentageToPx(15),
         backgroundColor: '#141833',
         borderRadius: 10,
         opacity: .82,
         elevation: 1,
-        marginLeft: widthPercentageToPx(2.67),
-        marginTop: heightPercentageToPx(2.28),
+        marginLeft: 12,
+        marginTop: 16,
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 12,
+        paddingRight: 12,
         flexDirection: 'row'
     },
     gameData: {
         alignSelf: 'center',
         justifyContent: 'center',
-        marginLeft: widthPercentageToPx(4.8),
         flexDirection: 'column'
     },
     descriptionText: {
@@ -27,16 +28,15 @@ export default styles = StyleSheet.create({
         fontWeight: '600',
         textAlign: 'center',
         color: '#FFF',
-        marginTop: heightPercentageToPx(1.48)
+        marginTop: 8
     },
     gamerInfo: {
-        marginLeft: widthPercentageToPx(4.0),
+        marginLeft: 16,
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'row',
-        marginRight: widthPercentageToPx(4.8)
+        flexDirection: 'row'
     },
     indicatorContainer: {
-        marginLeft: widthPercentageToPx(4.0)
+        marginLeft: 8
     }
 });

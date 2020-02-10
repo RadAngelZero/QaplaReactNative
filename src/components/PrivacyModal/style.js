@@ -9,26 +9,18 @@ import {
 } from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({
-    mainContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#141833',
-        width: widthPercentageToPx(100),
-        height: heightPercentageToPx(100),
-        paddingTop: paddingTopForAndroidDevicesWithNotch() + 80
+    sfvContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      backgroundColor:'#131833',
+      alignSelf: 'center',
+      alignItems: 'center',
+      width: widthPercentageToPx(100),
+      paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
-    container: {
-        width: widthPercentageToPx(100),
-        alignSelf: 'center',
-        justifyContent: 'flex-start',
-        backgroundColor: '#141833',
-        alignItems: 'center'
-    },
-    textContainer: {
-        width: widthPercentageToPx(90),
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: heightPercentageToPx(5),
+    scrollViewContainer: {
+        paddingLeft: 16,
+        paddingRight: 8,
     },
     closeIcon: {
         marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
@@ -39,12 +31,12 @@ export default styles = StyleSheet.create({
     modalTitle: {
         color: '#FFF',
         fontSize: 24,
-        maxWidth: widthPercentageToPx(70),
+        marginBottom: 8
     },
     lineText: {
         color: '#FFF'
     },
-    lastChild: {
-        paddingTop: heightPercentageToPx(20)
+    separator: {
+        marginBottom: 8
     }
 });

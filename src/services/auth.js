@@ -20,6 +20,7 @@ import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
 import { emptyLogros } from '../actions/logrosActions';
 import { subscribeUserToTopic } from './messaging';
+import { EVENTS_TOPIC } from '../utilities/Constants';
 
 const webClientIdForGoogleAuth = '779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com';
 
@@ -36,7 +37,7 @@ export async function signInWithFacebook() {
         const credential = FBProvider.credential(facebookToken.accessToken);
         const finalUser = await auth.signInWithCredential(credential);
         setUserIdOnSegment(finalUser.user.uid);
-        subscribeUserToTopic('events');
+        subscribeUserToTopic(EVENTS_TOPIC);
         return finalUser;
     }
 }
@@ -50,7 +51,7 @@ export async function signInWithGoogle() {
         const credential = GoogleProvider.credential(googleResult.idToken, googleResult.accessToken);
         const finalUser = await auth.signInWithCredential(credential);
         setUserIdOnSegment(finalUser.user.uid);
-        subscribeUserToTopic('events');
+        subscribeUserToTopic(EVENTS_TOPIC);
         return finalUser;
     } catch (error) {
         console.error(error);
@@ -73,7 +74,7 @@ export async function signInWithEmailAndPassword(email, password) {
     try {
         const user = await auth.signInWithEmailAndPassword(email, password);
         setUserIdOnSegment(user.user.uid);
-        subscribeUserToTopic('events');
+        subscribeUserToTopic(EVENTS_TOPIC);
     } catch(error) {
         console.log(error.code, error.message);
     }

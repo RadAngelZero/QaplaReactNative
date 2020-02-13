@@ -37,7 +37,6 @@ import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBtt
 import AcceptChallengeModal from '../../components/AcceptChallengeModal/AcceptChallengeModal';
 import NotEnoughQaploinsModal from '../../components/NotEnoughQaploinsModal/NotEnoughQaploinsModal';
 import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constants';
-import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 import { AddGamerTagModal } from '../../components/AddGamerTagModal/AddGamerTagModal';
 import { translate } from '../../utilities/i18';
@@ -46,14 +45,6 @@ const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
 
 class PublicMatchCardScreen extends Component {
-    static navigationOptions = ({ navigation }) => ({
-        header: () => (
-            <TopNavOptions
-                close
-                navigation={navigation}
-                onCloseGoTo={navigation.getParam('matchCard').matchesPlay ? 'MisRetas' : 'Publicas'} />)
-    });
-
     constructor(props) {
         super(props);
 
@@ -69,7 +60,6 @@ class PublicMatchCardScreen extends Component {
     }
 
     componentDidMount() {
-        this.props.navigation.setParams({ onCloseGoTo: this.props.navigation.getParam('onCloseGoTo', 'Home') });
         this.list = [
 
             /**
@@ -204,7 +194,7 @@ class PublicMatchCardScreen extends Component {
                         // Challenge the user to play the match
                         challengeUser(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
 
-                        this.props.navigation.navigate('Publicas');
+                        this.props.navigation.navigate('Public');
                     } else {
                         this.setState({ openBuyQaploinsModal: true });
                     }
@@ -258,7 +248,7 @@ class PublicMatchCardScreen extends Component {
         });
 
         cancelPublicMatch(matchCard.idMatch);
-        this.props.navigation.navigate('Publicas');
+        this.props.navigation.navigate('Public');
     }
 
     /**
@@ -303,7 +293,7 @@ class PublicMatchCardScreen extends Component {
         } else {
             // bug6: Added user id as 2nd arg.
             acceptChallengeRequest(notification, this.props.uid);
-            this.props.navigation.navigate('MisRetas')
+            this.props.navigation.navigate('MyMatches');
         }
     }
 

@@ -54,7 +54,6 @@ class SetBetScreen extends Component {
                 close
                 navigation={navigation}
                 back
-                onCloseGoTo={'Publicas'}
                 closeEvent={this.closeEvent} />)
     });
 
@@ -168,7 +167,7 @@ class SetBetScreen extends Component {
                     });
                 }
                 else{
-                    this.props.navigation.navigate('Publicas');
+                    this.props.navigation.dismiss();
                 }
             } catch (error) {
                 console.log(error);
@@ -188,10 +187,7 @@ class SetBetScreen extends Component {
             loading: false
         });
 
-        // bug5: BackHandler aparently is not called in MatchExpireRememberModal.js, therefore
-        // a tradeoff is to redirect to 'Publicas' here, taking advantage that this is
-        // the onClose function for MatchExpireRememberModal.
-        this.props.navigation.navigate('Publicas');
+        this.props.navigation.dismiss();
     }
 
     render() {

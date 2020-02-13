@@ -67,7 +67,7 @@ class MatchNotificationCard extends Component {
                 matchData['isChallenge'] = true;
                 matchData['acceptChallenge'] = this.tryToAcceptChallengeRequest;
 
-                this.props.navigation.navigate('MatchCard', {
+                this.props.navigation.navigate('MatchDetails', {
                         matchCard: matchData,
                         notification: this.props.notification,
                         notificationKey: this.props.notificationKey
@@ -126,7 +126,7 @@ class MatchNotificationCard extends Component {
                 await acceptChallengeRequest(this.props.notification, this.props.uid);
                 trackOnSegment('Match Challenge Accepted');
 
-                this.props.navigation.navigate('MisRetas');
+                this.props.navigation.navigate('MyMatches');
             } catch (error) {
                 console.error(error);
             }

@@ -47,7 +47,7 @@ export class UserProfileScreen extends Component {
                 (payload) => {
                     recordScreenOnSegment('User Profile Screen');
                     if(!isUserLogged()){
-                        this.props.navigation.navigate('SignIn');
+                        this.props.navigation.navigate('Auth');
                     }
                 }
             )
@@ -81,7 +81,7 @@ export class UserProfileScreen extends Component {
     /**
      * Redirect to LoadGames screen
      */
-    addGame = () => this.props.navigation.navigate('LoadGames', { loadGamesUserDontHave: true, onCloseGoTo: 'Perfil' });
+    addGame = () => this.props.navigation.navigate('AddGame', { loadGamesUserDontHave: true, onCloseGoTo: 'Perfil' });
 
     /**
      * Check if the given index is the last from a list of size quantityOfElements

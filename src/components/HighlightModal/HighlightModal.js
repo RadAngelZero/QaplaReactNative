@@ -100,25 +100,27 @@ class HighlightModal extends Component {
         // that and add more details here in the documentation)
         setTimeout( () => {
 
-          // pageX, pageY, width, height are absolute values within the display
-          this.childWrapper.current.measureInWindow((pageX, pageY, width, height) => {
-            // Initially elemPosX and elemPosY have 0 value, therefore we prevent and update of
-            // the state, to prevent a re-render. However, at this point this might have 0 consecuences
-            // as a result of the timeoutStarted timeoutEnded flags. Leaving it though.
-            // TODO: Check if the if condition really makes sense to be here.
-            if ((this.state.elemPosX !== pageX) || (this.state.elemPosY !== pageY)){
-              this.setState({
-                elemPosX: pageX,
-                elemPosY: pageY,
-                elemHeight: height,
-                elemWidth: width
-              });
+            if (this.childWrapper.current) {
+                // pageX, pageY, width, height are absolute values within the display
+                this.childWrapper.current.measureInWindow((pageX, pageY, width, height) => {
+                    // Initially elemPosX and elemPosY have 0 value, therefore we prevent and update of
+                    // the state, to prevent a re-render. However, at this point this might have 0 consecuences
+                    // as a result of the timeoutStarted timeoutEnded flags. Leaving it though.
+                    // TODO: Check if the if condition really makes sense to be here.
+                    if ((this.state.elemPosX !== pageX) || (this.state.elemPosY !== pageY)){
+                    this.setState({
+                        elemPosX: pageX,
+                        elemPosY: pageY,
+                        elemHeight: height,
+                        elemWidth: width
+                    });
 
-              this.setState({
-                timeoutEnded: true
-              });
+                    this.setState({
+                        timeoutEnded: true
+                    });
+                    }
+                });
             }
-          });
         }, this.props.showDelay);
 
         // timeoutStarted indicates that a setTimeout was scheduled for this.props.showDelay.

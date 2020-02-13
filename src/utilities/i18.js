@@ -45,3 +45,7 @@ i18n.translations = { es, en };
 export function translate(key, options) {
     return i18n.t(key, options);
 }
+
+export function getLocaleLanguage() {
+    return i18n.locale;
+}

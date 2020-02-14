@@ -10,7 +10,9 @@ import { signInWithEmailAndPassword } from '../../services/auth';
 import Images from './../../../assets/images';
 import styles from './style';
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
-import { translate } from '../../utilities/i18';
+import { translate, getLocaleLanguage } from '../../utilities/i18';
+import { subscribeUserToTopic } from '../../services/messaging';
+import { EVENTS_TOPIC } from '../../utilities/Constants';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
@@ -34,6 +36,7 @@ class LoginWithEmailScreen extends Component {
     logInUser = async () => {
         try {
             await signInWithEmailAndPassword(this.state.email, this.state.password);
+            subscribeUserToTopic(`${EVENTS_TOPIC}_${getLocaleLanguage()}`);
             this.props.navigation.popToTop();
         } catch (error) {
             console.error(error);

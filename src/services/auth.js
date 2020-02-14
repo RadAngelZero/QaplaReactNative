@@ -38,7 +38,7 @@ export async function signInWithFacebook() {
         const credential = FBProvider.credential(facebookToken.accessToken);
         const finalUser = await auth.signInWithCredential(credential);
         setUserIdOnSegment(finalUser.user.uid);
-        subscribeUserToTopic(`${EVENTS_TOPIC}_${getLocaleLanguage()}`);
+
         return finalUser;
     }
 }
@@ -52,7 +52,7 @@ export async function signInWithGoogle() {
         const credential = GoogleProvider.credential(googleResult.idToken, googleResult.accessToken);
         const finalUser = await auth.signInWithCredential(credential);
         setUserIdOnSegment(finalUser.user.uid);
-        subscribeUserToTopic(`${EVENTS_TOPIC}_${getLocaleLanguage()}`);
+
         return finalUser;
     } catch (error) {
         console.error(error);
@@ -75,7 +75,6 @@ export async function signInWithEmailAndPassword(email, password) {
     try {
         const user = await auth.signInWithEmailAndPassword(email, password);
         setUserIdOnSegment(user.user.uid);
-        subscribeUserToTopic(`${EVENTS_TOPIC}_${getLocaleLanguage()}`);
     } catch(error) {
         console.log(error.code, error.message);
     }

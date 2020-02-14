@@ -94,7 +94,7 @@ class MatchCardItem extends PureComponent {
                             <Text style={styles.timeText}>{`${formatedHour}:${formatedMinutes}`}</Text>
                             <View style={styles.matchDetailInfoContainer}>
                                 <View style={styles.matchContainerRow}>
-                                    {this.state.avatarUrl !== undefined ?
+                                    {(this.state.avatarUrl !== undefined && this.state.avatarUrl !== '') ?
                                         <Image
                                             style={styles.avatarImage}
                                             source={{ uri: this.state.avatarUrl }} />

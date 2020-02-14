@@ -135,46 +135,45 @@ class SetBetScreen extends Component {
         this.setState({ currentBet: oldBet > 0 ? oldBet - 75 : this.state.currentBet });
     }
 
-    async createMatch() {
-       if (!this.state.loading && this.props.userQaploins >= this.state.currentBet) {
-            // this.state.loading is used as a mechanism to prevent users to press the
-            // Android back button and create several matches at the same time
-            this.setState({ loading: true });
+    createMatch() {
+        this.setState({ loading: true }, async () => {
+            if (this.props.userQaploins >= this.state.currentBet) {
 
-            try {
-                await createPublicMatch(this.props.uid, this.state.currentBet, this.props.selectedGame);
-                await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet);
+                try {
+                    await createPublicMatch(this.props.uid, this.state.currentBet, this.props.selectedGame);
+                    await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet);
 
-                trackOnSegment('Match created', {
-                    Bet: this.state.currentBet,
-                    Game: this.props.selectedGame.gameKey,
-                    Platform: this.props.selectedGame.platform
-                });
-
-                // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
-                // return a 'null' value, otherwise it would return a 'false' 'true' value from a
-                // previous flag update.
-                let openMsgFlag = JSON.parse(await retrieveData('create-match-time-action-msg'));
-
-                // When creating a match 'this.state.timeActionMsgOpen' is expected to be false,
-                // otherwise when loading the Component the Modal would automatically open, which is
-                // a behaviour we don't want.
-                if (openMsgFlag || openMsgFlag === null) {
-
-                    // Tooggle modal state to open
-                    this.setState({
-                        timeActionMsgOpen: true
+                    trackOnSegment('Match created', {
+                        Bet: this.state.currentBet,
+                        Game: this.props.selectedGame.gameKey,
+                        Platform: this.props.selectedGame.platform
                     });
+
+                    // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
+                    // return a 'null' value, otherwise it would return a 'false' 'true' value from a
+                    // previous flag update.
+                    let openMsgFlag = JSON.parse(await retrieveData('create-match-time-action-msg'));
+
+                    // When creating a match 'this.state.timeActionMsgOpen' is expected to be false,
+                    // otherwise when loading the Component the Modal would automatically open, which is
+                    // a behaviour we don't want.
+                    if (openMsgFlag || openMsgFlag === null) {
+
+                        // Tooggle modal state to open
+                        this.setState({
+                            timeActionMsgOpen: true
+                        });
+                    }
+                    else{
+                        this.props.navigation.dismiss();
+                    }
+                } catch (error) {
+                    console.log(error);
                 }
-                else{
-                    this.props.navigation.dismiss();
-                }
-            } catch (error) {
-                console.log(error);
+            } else {
+                this.setState({ open: !this.state.open });
             }
-        } else {
-            this.setState({ open: !this.state.open });
-        }
+        });
     }
 
     /**
@@ -226,7 +225,9 @@ class SetBetScreen extends Component {
                                 <MoreQaploinsIcon style={styles.changeBetIcon} />
                             </TouchableWithoutFeedback>
                         </View>
-                        <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
+                        <TouchableWithoutFeedback
+                            onPress={this.createMatch.bind(this)}
+                            disabled={this.state.loading}>
                             <View style={styles.createButton}>
                                 <Text style={styles.createButtonText}>{translate('setBetScreen.createMatch')}</Text>
                             </View>

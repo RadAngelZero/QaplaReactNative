@@ -363,8 +363,10 @@ const RootStackNavigator = createStackNavigator({
     CheckOut: CheckOutStackNavigator,
     Auth: AuthStackNavigator
 },{
+    headerMode: 'screen',
     defaultNavigationOptions: {
-        header: null
+        header: null,
+        headerVisible: false
     }
 });
 

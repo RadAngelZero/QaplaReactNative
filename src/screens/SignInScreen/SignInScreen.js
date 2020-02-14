@@ -71,6 +71,12 @@ class SignInScreen extends Component {
      * If isn't just close and back to the previous flow
      */
     succesfullSignIn = (user) => {
+        /**
+         * All the logged users must be subscribed to the event topic at this point, because we want
+         * all the users to receive notifications when a new event is created, we use the language suffix
+         * because we want to send the notifications in different languages (based on the user cellphone
+         * language)
+         */
         subscribeUserToTopic(`${EVENTS_TOPIC}_${getLocaleLanguage()}`);
         if (user.additionalUserInfo.isNewUser) {
             createUserProfile(user.user.uid, user.user.email);

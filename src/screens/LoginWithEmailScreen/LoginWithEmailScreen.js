@@ -17,10 +17,10 @@ const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
 
 class LoginWithEmailScreen extends Component {
     static navigationOptions = ({ navigation }) => ({
-        header: () => (
+        header: () =>
             <TopNavOptions
                 navigation={navigation}
-                back />)
+                back />
     });
 
     state = {

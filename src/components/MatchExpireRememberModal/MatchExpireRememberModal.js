@@ -30,7 +30,7 @@ export class MatchExpireRememberModal extends Component {
         }
         this.props.onClose();
 
-        this.props.navigation.navigate('Publicas');
+        this.props.navigation.navigate('Public');
     }
 
     /**

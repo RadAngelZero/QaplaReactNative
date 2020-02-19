@@ -44,7 +44,12 @@ class ChooseUserNameScreen extends Component {
             	showErrorMessage: false }, async () => {
                 if(this.state.userName !== '' && await validateUserName(this.state.userName)) {
                     createUserName(this.props.uid, this.state.userName);
-                    this.props.navigation.popToTop();
+                    const originScreen = this.props.navigation.getParam('originScreen', 'Achievements');
+                    if (originScreen !== 'Public') {
+                        this.props.navigation.navigate(originScreen);
+                    } else {
+                        this.props.navigation.navigate('MatchWizard');
+                    }
                 } else {
                 this.setState({
                     showErrorMessage: true,

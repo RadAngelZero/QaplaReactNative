@@ -17,8 +17,20 @@ const FacebookIcon = Images.svg.facebookIcon;
 const GoogleIcon = Images.svg.googleIcon;
 
 class SignInScreen extends Component {
+    state = {
+        originScreenWhenComponentMounted: 'Achievements'
+    };
+
     componentDidMount() {
         setupGoogleSignin();
+
+        /**
+         * When the component is recently mounted (and because we are changing from a stack navigator to the switch navigator)
+         * the currentScreen prop contains the Id of the last screen visited befor this one, we save this data on the state
+         * so we can know the true origin, and we can handle the logic of the user switching between social media sign in
+         * and email login
+         */
+        this.setState({ originScreenWhenComponentMounted: this.props.currentScreen });
         this.backHandlerListener = BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBackButton);
     }
 
@@ -30,13 +42,16 @@ class SignInScreen extends Component {
      * Check to what screen must be redirected the user if presses the back button (only apply to android)
      */
     handleAndroidBackButton = () => {
-        if (this.props.originScreen === 'Perfil') {
-            this.props.navigation.navigate('Logros');
-        } else {
-            this.props.navigation.navigate(this.props.originScreen);
+        /**
+         * If the user are on SignIn screen and comes from profile we navigate to achievements
+         */
+        if (this.props.currentScreen === 'SignIn' && this.state.originScreenWhenComponentMounted === 'Profile') {
+            this.props.navigation.navigate('Achievements');
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
@@ -71,14 +86,20 @@ class SignInScreen extends Component {
     succesfullSignIn = (user) => {
         if (user.additionalUserInfo.isNewUser) {
             createUserProfile(user.user.uid, user.user.email);
-            this.props.navigation.navigate('ChooseUserNameScreen');
+            this.props.navigation.navigate('ChooseUserName', { originScreen: this.state.originScreenWhenComponentMounted });
         } else {
-            if (this.props.originScreen === 'Publicas') {
-                this.props.navigation.navigate('ChooseMatchType');
+            if (this.props.originScreen !== 'Public') {
+                this.props.navigation.dismiss();
             } else {
-                this.props.navigation.pop();
+                this.props.navigation.navigate('MatchWizard');
             }
         }
+    }
+
+    navigateToLoginWithEmail = () => {
+        this.props.navigation.navigate('LogIn', {
+            originScreen: this.state.originScreenWhenComponentMounted
+        });
     }
 
     render() {
@@ -107,7 +128,7 @@ class SignInScreen extends Component {
                         </TouchableWithoutFeedback>
                         <View style={styles.alreadyHaveAccountTextContainer}>
                             <Text style={[styles.whiteColor, styles.alignSelfCenter, styles.fontBold]}>{translate('signInScreen.alreadyHaveAccount')}</Text>
-                            <Text style={[styles.enterWithEmailText, styles.alignSelfCenter, styles.fontBold]} onPress={() => this.props.navigation.navigate('Login')}>
+                            <Text style={[styles.enterWithEmailText, styles.alignSelfCenter, styles.fontBold]} onPress={this.navigateToLoginWithEmail}>
                                 {translate('signInScreen.emailSignin')}
                             </Text>
                         </View>
@@ -122,7 +143,8 @@ class SignInScreen extends Component {
 
 function mapDispatchToProps(state) {
     return {
-        originScreen: state.screensReducer.previousScreenId
+        originScreen: state.screensReducer.previousScreenId,
+        currentScreen: state.screensReducer.currentScreenId
     }
 }
 

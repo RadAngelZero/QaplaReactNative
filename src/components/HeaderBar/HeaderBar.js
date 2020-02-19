@@ -147,7 +147,7 @@ class HeaderBar extends Component {
     }
 
     goToUserProfile = () => {
-      this.props.navigation.navigate('AppSettingsMenu');
+        this.props.navigation.navigate('SettingsMenu');
     }
 
     /**
@@ -219,7 +219,7 @@ class HeaderBar extends Component {
                             </TouchableWithoutFeedback>
                       </HighlightModal>
                   </View>
-                  {this.props.currentScreenId !== 'Perfil' &&
+                  {this.props.currentScreenId !== 'Profile' &&
                             <TouchableWithoutFeedback onPress={this.sendToDiscord}>
                                 <View style={styles.discordImage}>
                                     <DiscordIcon
@@ -229,7 +229,7 @@ class HeaderBar extends Component {
                                 </View>
                             </TouchableWithoutFeedback>
                     }
-                    {(this.props.currentScreenId === 'Perfil' && !this.props.isUserVerified) &&
+                    {(this.props.currentScreenId === 'Profile' && !this.props.isUserVerified) &&
                         <View style={styles.discordImage}>
                             <TouchableWithoutFeedback onPress={this.goToVerificationStack}>
                                 <View style={styles.imageAndButtonDimensions}>
@@ -241,7 +241,7 @@ class HeaderBar extends Component {
                             </TouchableWithoutFeedback>
                         </View>
                     }
-                    {this.props.currentScreenId === 'Perfil' &&
+                    {this.props.currentScreenId === 'Profile' &&
                         <View style={styles.settingsIcon}>
                             <TouchableWithoutFeedback onPress={this.goToUserProfile}>
                                 <View style={styles.settingsButtonDimensions}>

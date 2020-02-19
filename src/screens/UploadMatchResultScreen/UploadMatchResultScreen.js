@@ -6,9 +6,8 @@
 
 import React, { Component } from 'react';
 import {
-    SafeAreaView,
-    ScrollView,
     View,
+    SafeAreaView,
     Text,
     TouchableWithoutFeedback
 } from 'react-native';
@@ -24,7 +23,6 @@ import { WON_RESULT, TIE_RESULT, LOST_RESULT, OTHER_RESULT } from '../../utiliti
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { translate } from '../../utilities/i18';
 
-const CloseIcon = Images.svg.closeIcon;
 const WinIcon = Images.svg.winIcon;
 const LostIcon = Images.svg.lostIcon;
 const TieIcon = Images.svg.tieIcon;
@@ -98,7 +96,7 @@ class UploadMatchResultScreen extends Component {
                 UserQaploins: this.props.userQaploins,
                 Result: matchResultStatus
             });
-            this.setState({ showUploadMatchResultsModal: true })
+            this.setState({ showUploadMatchResultsModal: true });
         } catch (error) {
             console.error(error);
         }
@@ -119,88 +117,62 @@ class UploadMatchResultScreen extends Component {
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
-                <ScrollView>
-                    {this.state.uploadingEvidence ?
-                        <UploadClutchEvidenceScreen
-                            backToUploadMatchResultScreen={this.backToUploadMatchResultScreen}
-                            sendEvidenceData={this.getEvidenceData} />
-                        :
-                        <View style={styles.container}>
-                            <TouchableWithoutFeedback onPress={this.closeUploadMatchResultScreen}>
-                                <View style={styles.closeIcon}>
-                                    <CloseIcon />
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <View style={styles.winLooseContainer}>
-                                <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, WON_RESULT)}>
-                                    <View>
-                                        <WinIcon
-                                            width={widthPercentageToPx(25)}
-                                            height={heightPercentageToPx(20)}
-                                            fill={this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3'} />
-                                        <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3' }]}>
-                                            {translate('uploadMatchResultScreen.results.won')}
-                                        </Text>
-                                    </View>
-                                </TouchableWithoutFeedback>
-                                <View style={styles.winLooseSeparator} />
-                                <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, TIE_RESULT)}>
-                                    <View style={{ alignSelf: 'center' }}>
-                                        <TieIcon
-                                            width={widthPercentageToPx(18)}
-                                            height={heightPercentageToPx(14)}
-                                            fill={this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3'} />
-                                        <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
-                                            {translate('uploadMatchResultScreen.results.draw')}
-                                        </Text>
-                                    </View>
-                                </TouchableWithoutFeedback>
-                                <View style={styles.winLooseSeparator} />
-                                <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, LOST_RESULT)}>
-                                    <View>
-                                        <LostIcon
-                                            width={widthPercentageToPx(25)}
-                                            height={heightPercentageToPx(20)}
-                                            fill={this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3'} />
-                                        <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3' }]}>
-                                            {translate('uploadMatchResultScreen.results.lost')}
-                                        </Text>
-                                    </View>
-                                </TouchableWithoutFeedback>
+                <View style={styles.container}>
+                    <Text style={styles.title}>{translate('uploadMatchResultScreen.title')}</Text>
+                    <View style={styles.winLooseContainer}>
+                        <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, WON_RESULT)}>
+                            <View>
+                                <WinIcon
+                                    width={widthPercentageToPx(25)}
+                                    height={heightPercentageToPx(20)}
+                                    fill={this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3'} />
+                                <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3' }]}>
+                                    {translate('uploadMatchResultScreen.results.won')}
+                                </Text>
                             </View>
-                            <View style={styles.uploadEvidence}>
-                                <TouchableWithoutFeedback onPress={this.sendToUploadEvidence}>
-                                    {this.state.evidenceUrl !== '' ?
-                                        <AlreadyChoosedClipIcon height={150} width={150} fill='#FF0000' />
-                                        :
-                                        <ChooseClipIcon height={150} width={150} fill='#FF0000' />
-                                    }
-                                </TouchableWithoutFeedback>
+                        </TouchableWithoutFeedback>
+                        <View style={styles.winLooseSeparator} />
+                        <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, TIE_RESULT)}>
+                            <View style={{ alignSelf: 'center' }}>
+                                <TieIcon
+                                    width={widthPercentageToPx(18)}
+                                    height={heightPercentageToPx(14)}
+                                    fill={this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3'} />
+                                <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
+                                    {translate('uploadMatchResultScreen.results.draw')}
+                                </Text>
                             </View>
-                            <Text style={styles.footerEvidence}>{translate('uploadMatchResultScreen.evidence')}</Text>
-                            <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, OTHER_RESULT)}>
-                                <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === OTHER_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
-                                    <Text style={styles.buttonText}>{translate('uploadMatchResultScreen.results.dontPlayed')}</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            {this.state.matchResultStatus &&
-                                <TouchableWithoutFeedback onPress={this.validateResultToUpload}>
-                                    <View style={styles.uploadResultButton}>
-                                        <Text style={styles.buttonText}>{translate('uploadMatchResultScreen.uploadResult')}</Text>
-                                    </View>
-                                </TouchableWithoutFeedback>
-                            }
-                            <UploadMatchResultsModal
-                                visible={this.state.showUploadMatchResultsModal}
-                                onClose={this.closeUploadMatchResultsModal}
-                                nextScreen='Publicas' />
-                            <UploadMatchEvidenceModal
-                                visible={this.state.showUploadMatchEvidenceModal}
-                                onClose={this.closeUploadMatchEvidenceModal}
-                                cb1={this.uploadResult} />
+                        </TouchableWithoutFeedback>
+                        <View style={styles.winLooseSeparator} />
+                        <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, LOST_RESULT)}>
+                            <View>
+                                <LostIcon
+                                    width={widthPercentageToPx(25)}
+                                    height={heightPercentageToPx(20)}
+                                    fill={this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3'} />
+                                <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3' }]}>
+                                    {translate('uploadMatchResultScreen.results.lost')}
+                                </Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                    <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, OTHER_RESULT)}>
+                        <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === OTHER_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
+                            <Text style={styles.buttonText}>{translate('uploadMatchResultScreen.results.dontPlayed')}</Text>
                         </View>
+                    </TouchableWithoutFeedback>
+                    {this.state.matchResultStatus &&
+                        <TouchableWithoutFeedback onPress={this.uploadResult}>
+                            <View style={styles.uploadResultButton}>
+                                <Text style={styles.buttonText}>{translate('uploadMatchResultScreen.uploadResult')}</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
                     }
-                </ScrollView>
+                    <UploadMatchResultsModal
+                        visible={this.state.showUploadMatchResultsModal}
+                        onClose={this.closeUploadMatchResultsModal}
+                        nextScreen='Public' />
+                </View>
             </SafeAreaView>
         );
     }

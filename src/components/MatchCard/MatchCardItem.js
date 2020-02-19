@@ -71,7 +71,7 @@ class MatchCardItem extends PureComponent {
             const formatedMinutes = `${localUserTime.getMinutes() < 10 ? '0' : ''}${localUserTime.getMinutes()}`;
 
             return (
-                <TouchableWithoutFeedback onPress={() => navigate('MatchCard', {matchCard: this.props})}>
+                <TouchableWithoutFeedback onPress={() => navigate('MatchDetails', { matchCard: this.props })}>
                     <View style={styles.matchMainContainer}>
                         <View style={styles.matchContainerRow}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

@@ -62,7 +62,7 @@ class GameCard extends Component {
                      * about specific games
                      */
                     subscribeUserToTopic(newGame.gameKey);
-                    this.props.navigation.navigate('Perfil');
+                    this.props.navigation.navigate('Profile');
                 } catch (error) {
                     console.error(error);
                 }

@@ -26,9 +26,9 @@ export default class WelcomeOnboardingScreen extends React.Component {
 	    };
 	}
 
-	goToScreenPublicas = () => {
+	finishOnBoarding = () => {
 		storeData('tutorial-done', 'true');
-		this.props.navigation.navigate('Logros');
+		this.props.navigation.navigate('Achievements');
 	}
 
 	setCurrentIndex = (index) => {
@@ -71,7 +71,7 @@ export default class WelcomeOnboardingScreen extends React.Component {
 					))}
 				</View>
 				<View style={styles.progressRow}>
-					<Text onPress={this.goToScreenPublicas} style={styles.finishTextButton}>
+					<Text onPress={this.finishOnBoarding} style={styles.finishTextButton}>
 						{this.state.selectedIndex === carrouselData.length - 1 &&
 							translate('onBoardingScreen.finish')
 						}

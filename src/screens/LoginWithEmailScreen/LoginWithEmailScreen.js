@@ -9,20 +9,12 @@ import { View, Image, Text, TouchableWithoutFeedback, TextInput, SafeAreaView } 
 import { signInWithEmailAndPassword } from '../../services/auth';
 import Images from './../../../assets/images';
 import styles from './style';
-import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 import { translate } from '../../utilities/i18';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
 
 class LoginWithEmailScreen extends Component {
-    static navigationOptions = ({ navigation }) => ({
-        header: () =>
-            <TopNavOptions
-                navigation={navigation}
-                back />
-    });
-
     state = {
         email: '',
         password: ''
@@ -34,7 +26,12 @@ class LoginWithEmailScreen extends Component {
     logInUser = async () => {
         try {
             await signInWithEmailAndPassword(this.state.email, this.state.password);
-            this.props.navigation.popToTop();
+            const originScreen = this.props.navigation.getParam('originScreen', 'Achievements');
+            if (originScreen !== 'Public') {
+                this.props.navigation.dismiss();
+            } else {
+                this.props.navigation.navigate('MatchWizard');
+            }
         } catch (error) {
             console.error(error);
         }

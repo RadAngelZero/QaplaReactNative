@@ -11,8 +11,7 @@ import Images from './../../../assets/images';
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
 
-export class TopNavOptions extends Component {
-
+class TopNavOptions extends Component {
     /**
      * Closing action executed when pressing CloseIcon,
      * it performs a series of instruction previous to close the screen
@@ -23,12 +22,23 @@ export class TopNavOptions extends Component {
             this.props.closeEvent();
         }
 
-        this.props.navigation.navigate(this.props.onCloseGoTo);
+        /**
+         * As we want to avoid that the user can access to the profile screen if is not logged we need to define manually
+         * the navigation flow on the SignIn/LogIn screens
+         *
+         * If we are on the SignIn/LogIn screen
+         */
+        if ((this.props.currentScreen === 'SignIn' && this.props.previousScreen === 'Profile') || this.props.currentScreen === 'LogIn') {
+
+            return this.props.navigation.navigate('Achievements');
+        }
+
+        return this.props.navigation.dismiss();
     }
 
     render() {
         return (
-            <SafeAreaView style={this.props.currentScreenId !== 'Login' ? 
+            <SafeAreaView style={(this.props.currentScreen !== 'LogIn' && this.props.currentScreen !== 'SignIn') ?
                 styles.sfvContainer : styles.sfvContainerSignInWithEmail}>
                 <View style={styles.optionsContainer}>
                     <View style={styles.backIconContainer}>
@@ -57,7 +67,8 @@ export class TopNavOptions extends Component {
 
 function mapStateToProps(state) {
     return {
-        currentScreenId: state.screensReducer.currentScreenId,
+        currentScreen: state.screensReducer.currentScreenId,
+        previousScreen: state.screensReducer.previousScreenId,
     }
 }
 

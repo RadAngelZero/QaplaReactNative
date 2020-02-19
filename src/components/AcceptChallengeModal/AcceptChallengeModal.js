@@ -30,7 +30,7 @@ class AcceptChallengeModal extends Component {
         }
 
         acceptChallengeRequest(this.props.notification, this.props.uid);
-        this.props.navigation.navigate('MisRetas');
+        this.props.navigation.navigate('MyMatches');
     }
 
     /**

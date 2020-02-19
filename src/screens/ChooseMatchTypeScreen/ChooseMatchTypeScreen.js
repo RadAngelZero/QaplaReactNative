@@ -40,7 +40,7 @@ class ChooseMatchTypeScreen extends Component {
      */
     goToLoadGames = () => {
         trackOnSegment('Public Match Button');
-        this.props.navigation.navigate('LoadGames');
+        this.props.navigation.navigate('SelectGame');
     }
 
     render() {

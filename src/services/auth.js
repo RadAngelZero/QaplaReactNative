@@ -19,9 +19,6 @@ import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
 import { emptyLogros } from '../actions/logrosActions';
-import { subscribeUserToTopic } from './messaging';
-import { EVENTS_TOPIC } from '../utilities/Constants';
-import { getLocaleLanguage } from '../utilities/i18';
 
 const webClientIdForGoogleAuth = '779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com';
 

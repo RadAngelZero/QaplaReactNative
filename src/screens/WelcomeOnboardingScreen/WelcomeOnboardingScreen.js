@@ -10,15 +10,20 @@ import {
   Text,
   SafeAreaView
 } from 'react-native'
+import { connect } from 'react-redux';
 
 import styles from './style'
+
+import { EVENTS_TOPIC } from './../../utilities/Constants';
 
 import CarouselPng from '../../components/CarouselPng/CarouselPng'
 import Images from '@assets/images'
 import { storeData } from '../../utilities/persistance';
-import { translate } from '../../utilities/i18';
+import { translate, getLocaleLanguage } from '../../utilities/i18';
+import { subscribeUserToTopic } from './../../services/messaging';
+import { saveUserSubscriptionToTopic } from '../../services/database';
 
-export default class WelcomeOnboardingScreen extends React.Component {
+class WelcomeOnboardingScreen extends React.Component {
 	constructor(props) {
 	    super(props);
 	    this.state = {
@@ -28,6 +33,29 @@ export default class WelcomeOnboardingScreen extends React.Component {
 
 	goToScreenPublicas = () => {
 		storeData('tutorial-done', 'true');
+		const eventsTopic = `${EVENTS_TOPIC}_${getLocaleLanguage()}`;
+		/**
+         * All the logged users must be subscribed to the event topic at this point, because we want
+         * all the users to receive notifications when a new event is created, we use the language suffix
+         * because we want to send the notifications in different languages (based on the user cellphone
+         * language)
+         */
+		subscribeUserToTopic(eventsTopic);
+		if (this.props.uid !== '') {
+			saveUserSubscriptionToTopic(this.props.uid, eventsTopic);
+		}
+
+		/**
+		 * If the user has games (that means that we have a logged user)
+		 * we subscribe him to all the topics related to their games
+		 */
+		this.props.userGames.forEach((gameKey) => {
+			if (gameKey) {
+				subscribeUserToTopic(gameKey);
+				saveUserSubscriptionToTopic(this.props.uid, gameKey);
+			}
+		});
+
 		this.props.navigation.navigate('Logros');
 	}
 
@@ -82,3 +110,12 @@ export default class WelcomeOnboardingScreen extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+	return {
+		uid: state.userReducer.user.id ? state.userReducer.user.id : '',
+		userGames: state.userReducer.user.gameList ? state.userReducer.user.gameList : []
+	}
+}
+
+export default connect(mapStateToProps)(WelcomeOnboardingScreen);

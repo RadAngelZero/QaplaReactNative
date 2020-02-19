@@ -10,9 +10,7 @@ import { signInWithEmailAndPassword } from '../../services/auth';
 import Images from './../../../assets/images';
 import styles from './style';
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
-import { translate, getLocaleLanguage } from '../../utilities/i18';
-import { subscribeUserToTopic } from '../../services/messaging';
-import { EVENTS_TOPIC } from '../../utilities/Constants';
+import { translate } from '../../utilities/i18';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
@@ -36,14 +34,6 @@ class LoginWithEmailScreen extends Component {
     logInUser = async () => {
         try {
             await signInWithEmailAndPassword(this.state.email, this.state.password);
-
-            /**
-             * All the logged users must be subscribed to the event topic at this point, because we want
-             * all the users to receive notifications when a new event is created, we use the language suffix
-             * because we want to send the notifications in different languages (based on the user cellphone
-             * language)
-             */
-            subscribeUserToTopic(`${EVENTS_TOPIC}_${getLocaleLanguage()}`);
             this.props.navigation.popToTop();
         } catch (error) {
             console.error(error);

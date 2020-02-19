@@ -8,10 +8,8 @@ import { Svg } from 'react-native-svg';
 import styles from './style';
 import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
-import { translate, getLocaleLanguage } from '../../utilities/i18';
+import { translate } from '../../utilities/i18';
 import { createUserProfile } from '../../services/database';
-import { subscribeUserToTopic } from '../../services/messaging';
-import { EVENTS_TOPIC } from '../../utilities/Constants';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
@@ -71,13 +69,6 @@ class SignInScreen extends Component {
      * If isn't just close and back to the previous flow
      */
     succesfullSignIn = (user) => {
-        /**
-         * All the logged users must be subscribed to the event topic at this point, because we want
-         * all the users to receive notifications when a new event is created, we use the language suffix
-         * because we want to send the notifications in different languages (based on the user cellphone
-         * language)
-         */
-        subscribeUserToTopic(`${EVENTS_TOPIC}_${getLocaleLanguage()}`);
         if (user.additionalUserInfo.isNewUser) {
             createUserProfile(user.user.uid, user.user.email);
             this.props.navigation.navigate('ChooseUserNameScreen');

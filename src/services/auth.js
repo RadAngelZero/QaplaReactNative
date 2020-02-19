@@ -34,7 +34,7 @@ export async function signInWithFacebook() {
         const facebookToken = await AccessToken.getCurrentAccessToken();
         const credential = FBProvider.credential(facebookToken.accessToken);
         const finalUser = await auth.signInWithCredential(credential);
-        
+
         setUserIdOnSegment(finalUser.user.uid);
         return finalUser;
     }
@@ -64,13 +64,8 @@ export function setupGoogleSignin() {
 }
 
 export async function signInWithEmailAndPassword(email, password) {
-    await auth.signInWithEmailAndPassword(email, password)
-    .then((user) => {
-        setUserIdOnSegment(user.user.uid);
-    })
-    .catch((error) => {
-        console.log(error.code, error.message);
-    });
+    const user = await auth.signInWithEmailAndPassword(email, password)
+    setUserIdOnSegment(user.user.uid);
 }
 
 /**

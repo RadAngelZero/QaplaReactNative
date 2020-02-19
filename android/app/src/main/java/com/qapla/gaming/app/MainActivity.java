@@ -1,4 +1,4 @@
-package com.qaplareactnative;
+package com.qapla.gaming.app;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

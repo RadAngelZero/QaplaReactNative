@@ -62,14 +62,6 @@
             {
               "client_id": "779347879760-4qlprn3t6vbejgj2e657umru1i984k3c.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "779347879760-uljnbjffsseg2b7lgb23dvcqm6r6m40u.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "org.Qapla.QaplaApp",
-                "app_store_id": "1485332229"
-              }
             }
           ]
         }
@@ -139,14 +131,6 @@
             {
               "client_id": "779347879760-4qlprn3t6vbejgj2e657umru1i984k3c.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "779347879760-uljnbjffsseg2b7lgb23dvcqm6r6m40u.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "org.Qapla.QaplaApp",
-                "app_store_id": "1485332229"
-              }
             }
           ]
         }
@@ -176,14 +160,6 @@
             {
               "client_id": "779347879760-4qlprn3t6vbejgj2e657umru1i984k3c.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "779347879760-uljnbjffsseg2b7lgb23dvcqm6r6m40u.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "org.Qapla.QaplaApp",
-                "app_store_id": "1485332229"
-              }
             }
           ]
         }
@@ -193,7 +169,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:779347879760:android:d283297f3166483620ee55",
         "android_client_info": {
-          "package_name": "com.qaplareactnative"
+          "package_name": "com.qapla.gaming.app"
         }
       },
       "oauth_client": [
@@ -201,7 +177,7 @@
           "client_id": "779347879760-c71rv9hbclep82s0uaflcdae00i2suic.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.qaplareactnative",
+            "package_name": "com.qapla.gaming.app",
             "certificate_hash": "4e279d145e3cc5088d790a54c8e227c2184f03a2"
           }
         },
@@ -221,14 +197,6 @@
             {
               "client_id": "779347879760-4qlprn3t6vbejgj2e657umru1i984k3c.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "779347879760-uljnbjffsseg2b7lgb23dvcqm6r6m40u.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "org.Qapla.QaplaApp",
-                "app_store_id": "1485332229"
-              }
             }
           ]
         }

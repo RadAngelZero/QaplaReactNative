@@ -53,7 +53,7 @@ export class AddGamerTagModal extends Component {
                  */
                 if (this.props.redirect) {
                     if (this.props.loadGamesUserDontHave) {
-                        this.props.navigation.navigate('Perfil');
+                        this.props.navigation.navigate('Profile');
                     } else {
                         this.props.navigation.navigate('SetBet',
                             { game: {

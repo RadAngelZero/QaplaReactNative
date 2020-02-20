@@ -166,7 +166,7 @@ class PublicMatchesFeedScreen extends Component {
             this.toggleHg1Modal();
         }
 
-        this.props.navigation.navigate(isUserLogged() ? 'ChooseMatchType' : 'SignIn');
+        this.props.navigation.navigate(isUserLogged() ? 'MatchWizard' : 'SignIn');
     }
 
     /**

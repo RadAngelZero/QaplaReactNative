@@ -6,37 +6,33 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 
 export default StyleSheet.create({
   	container:{
-        marginTop: heightPercentageToPx(1.48),
-        marginHorizontal: widthPercentageToPx(2.67),
+        marginTop: 16,
+        marginRight: 6,
+        marginLeft: 6,
         borderRadius: 10,
-        width: widthPercentageToPx(75),
         alignSelf: 'center'
 	},
-	titleContainer: {
-		flexDirection: 'row',
-		marginTop: heightPercentageToPx(2.96)
-    },
     imageStyle: {
         height: heightPercentageToPx(25),
-        width: widthPercentageToPx(95),
+        width: widthPercentageToPx(80),
         alignSelf: 'center',
         resizeMode: 'cover'
     },
 	detailsContainer: {
-        backgroundColor: "#141833",
+        backgroundColor: '#141833',
         flexDirection: 'row',
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10
     },
     iconContainer: {
-        marginLeft: widthPercentageToPx(4.27),
-        marginTop: heightPercentageToPx(2.46),
-        marginBottom: heightPercentageToPx(2.83)
+        marginLeft: 12,
+        marginTop: 12,
+        marginBottom: 12
     },
     gameName: {
         fontSize: 18,
         color: '#FFF',
         alignSelf: 'center',
-        marginLeft: widthPercentageToPx(2.67)
+        marginLeft: 8
     }
 });

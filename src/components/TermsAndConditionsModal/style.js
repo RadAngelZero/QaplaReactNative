@@ -11,11 +11,15 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#141833',
-        marginLeft: widthPercentageToPx(3),
-        marginRight: widthPercentageToPx(1),
+        alignSelf: 'center',
+        paddingLeft: 16,
+        paddingRight: 8,
         width: widthPercentageToPx(100),
-        height: heightPercentageToPx(100),
         paddingTop: paddingTopForAndroidDevicesWithNotch()
+    },
+    scrollViewContainer: {
+        paddingLeft: 16,
+        paddingRight: 8,
     },
     closeIcon: {
         marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
@@ -27,10 +31,10 @@ export default styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: '700',
         color: '#FFF',
-        marginBottom: heightPercentageToPx(2)
+        marginBottom: 8
     },
     paragraph: {
-        marginBottom: heightPercentageToPx(2),
+        marginBottom: 8,
         color: '#FFF'
     },
     strongText: {
@@ -41,12 +45,12 @@ export default styles = StyleSheet.create({
     subtitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: heightPercentageToPx(2),
+        marginBottom: 8,
         color: '#FFF'
     },
     numericList: {
-        marginLeft: widthPercentageToPx(4),
-        marginRight: widthPercentageToPx(1)
+        marginLeft: 16,
+        marginRight: 12
     },
     underline: {
         textDecorationLine: 'underline'

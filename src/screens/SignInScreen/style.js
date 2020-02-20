@@ -20,12 +20,11 @@ export default styles = StyleSheet.create({
     socialMediaSignInButton: {
         flexDirection: 'row',
         borderRadius: 100,
-        paddingVertical: heightPercentageToPx(1.97),
-        width: widthPercentageToPx(60)
+        justifyContent: 'center'
     },
     socialMediaIconStyle: {
-        marginLeft:widthPercentageToPx(4.44),
-        marginRight: widthPercentageToPx(2.22)
+        marginLeft: 12,
+        alignSelf: 'center'
     },
     facebookSignInButton: {
         backgroundColor: '#364FE2',
@@ -39,7 +38,11 @@ export default styles = StyleSheet.create({
     },
     textButton: {
         textAlign: 'center',
-        textAlignVertical: 'center'
+        textAlignVertical: 'center',
+        marginLeft: 8,
+        marginRight: 16,
+        marginTop: 18,
+        marginBottom: 18
     },
     googleSignInButton: {
         backgroundColor: '#FFFFFF',

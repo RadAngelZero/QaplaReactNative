@@ -69,12 +69,8 @@ export function setupGoogleSignin() {
 }
 
 export async function signInWithEmailAndPassword(email, password) {
-    try {
-        const user = await auth.signInWithEmailAndPassword(email, password);
-        setUserIdOnSegment(user.user.uid);
-    } catch(error) {
-        console.log(error.code, error.message);
-    }
+    const user = await auth.signInWithEmailAndPassword(email, password)
+    setUserIdOnSegment(user.user.uid);
 }
 
 /**

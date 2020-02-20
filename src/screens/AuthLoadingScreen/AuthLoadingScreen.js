@@ -46,7 +46,7 @@ class AuthLoadingScreen extends Component {
 
                 const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
 
-                if(userName === ''){
+                if (userName === ''){
                     return this.props.navigation.navigate('ChooseUserNameScreen');
                 }
 
@@ -73,7 +73,7 @@ class AuthLoadingScreen extends Component {
             /**
              * We only make this process the first time the app loads (when it's opened) because
              * may can cause problems with the signin/login of a user, if the status changes
-             * and this process is executed again we are goint to be redirected to the 'Publicas'
+             * and this process is executed again we are going to be redirected to the 'Achievements'
              * screen, no to the place that we need
              */
             if (this.state.firstLoad) {
@@ -81,11 +81,11 @@ class AuthLoadingScreen extends Component {
                 this.setState({ firstLoad: false });
                 if (isTutorialDone) {
 
-                    return this.props.navigation.navigate('Logros');
+                    return this.props.navigation.navigate('Achievements');
                 }
                 else {
 
-                    return this.props.navigation.navigate('Welcome');
+                    return this.props.navigation.navigate('onBoarding');
                 }
             }
         });

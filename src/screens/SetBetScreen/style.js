@@ -15,25 +15,24 @@ export default styles = StyleSheet.create({
     },
     container: {
 		flex: 1,
-		alignItems: "center"
+		alignItems: 'center'
     },
     titleContainer: {
         marginTop: heightPercentageToPx(5)
 	},
     titleText: {
         color: '#FFF',
-        marginLeft: widthPercentageToPx(6.4),
+        marginLeft: 24,
         fontSize: 32,
         fontWeight: 'bold',
         width: widthPercentageToPx(70),
         lineHeight: 38,
         letterSpacing: 0.51,
 		paddingTop: 1,
-		backgroundColor: "transparent",
-		alignSelf: "flex-start"
+		backgroundColor: 'transparent',
+		alignSelf: 'flex-start'
     },
     prizeImage: {
-        marginTop: heightPercentageToPx(7.97),
         alignItems: 'center'
     },
     winBet: {
@@ -41,7 +40,6 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 54,
         textAlign: 'center',
-        marginTop: heightPercentageToPx(4.69),
         marginBottom: heightPercentageToPx(1.56),
         lineHeight: 56,
         letterSpacing: 0.59
@@ -83,25 +81,21 @@ export default styles = StyleSheet.create({
     createButton: {
         borderRadius: 30,
         backgroundColor: '#FA2D79',
-        marginLeft: widthPercentageToPx(21.33),
-        marginRight: widthPercentageToPx(21.33),
-        position: 'absolute',
+        marginTop: 24,
+        marginBottom: 16,
         alignSelf: 'center',
-        bottom: heightPercentageToPx(2.46)
+        width: widthPercentageToPx(60)
     },
     createButtonText: {
-        marginTop: heightPercentageToPx(2.46),
-        marginBottom: heightPercentageToPx(2.46),
-        marginLeft: widthPercentageToPx(8.53),
-        marginRight: widthPercentageToPx(8.53),
+        marginTop: 18,
+        marginBottom: 18,
         letterSpacing: .5,
         fontSize: 17,
         textAlign: 'center',
-        textAlignVertical: 'center',
         color: '#FFF',
         fontWeight: 'bold',
         elevation: 6,
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
             width: widthPercentageToPx(0),
             height: heightPercentageToPx(0.34)

@@ -14,17 +14,7 @@ import { getIdTokenFromUser } from '../../services/auth';
 import { withNavigation } from 'react-navigation';
 import styles from './style';
 
-import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
-
 class CheckOutPaymentScreen extends Component {
-    static navigationOptions = ({ navigation }) => ({
-        header: () => (
-            <TopNavOptions
-                navigation={navigation}
-                close
-                onCloseGoTo={navigation.getParam('previousScreen', '')} />)
-    });
-
     state = {
         idToken: ''
     };

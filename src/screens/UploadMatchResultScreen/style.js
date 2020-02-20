@@ -21,12 +21,6 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1
     },
-    closeIcon: {
-        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
-        marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
-        marginBottom: heightPercentageToPx(2.46),
-        alignSelf: 'flex-end'
-    },
     title: {
         color: '#FFF',
         alignSelf: 'flex-start',

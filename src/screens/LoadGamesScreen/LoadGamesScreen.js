@@ -20,7 +20,7 @@
 // josep.sanahuja - 15-07-2019 - us25 - + addGameProfile Modal logic
 
 import React from 'react';
-import { BackHandler, View } from 'react-native'
+import { View } from 'react-native'
 import { SafeAreaView } from 'react-navigation';
 
 import styles from './style'
@@ -29,18 +29,8 @@ import { connect } from 'react-redux';
 import { setSelectedGame } from '../../actions/gamesActions';
 import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
-import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
 class LoadGamesScreen extends React.Component {
-    static navigationOptions = ({ navigation }) => ({
-        header: ({ props }) => (
-            <TopNavOptions
-                close
-                navigation={navigation}
-                back={!navigation.getParam('loadGamesUserDontHave', false)}
-                onCloseGoTo={navigation.getParam('onCloseGoTo', '')} />)
-    });
-
     constructor(props) {
       super(props);
       this.state = {
@@ -49,7 +39,6 @@ class LoadGamesScreen extends React.Component {
     }
 
     componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBackButton);
         this.list = [
 
             /**
@@ -70,7 +59,6 @@ class LoadGamesScreen extends React.Component {
                 }
             )
         ]
-        this.props.navigation.setParams({ onCloseGoTo: this.props.navigation.getParam('onCloseGoTo', 'Home') });
 
         // #bug2:
         // At the beginning of the components life, there should not be any game selected,
@@ -80,24 +68,8 @@ class LoadGamesScreen extends React.Component {
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBackButton);
-
         //Remove willFocus listener on navigation
         this.list.forEach((item) => item.remove());
-    }
-
-    /**
-     * This screen can be opened from different places, so when android users press back
-     * we need to determine (with logic) where must be returned the user (until we update the router file)
-     */
-    handleAndroidBackButton = () => {
-        if (this.props.navigation.getParam('loadGamesUserDontHave', false)) {
-            this.props.navigation.navigate('Perfil');
-        } else {
-            this.props.navigation.navigate('ChooseMatchType');
-        }
-
-        return true;
     }
 
     /**

@@ -47,24 +47,22 @@ class PrivacyModal extends Component {
                 transparent={true}
                 visible={this.props.open}
                 onRequestClose={this.props.onClose}>
-                    <View style={styles.mainContainer}>
-                        <View style={styles.container}>
-                            <TouchableWithoutFeedback onPress={this.closeModal}>
-                                <View style={styles.closeIcon}>
-                                    <CloseIcon />
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <Text style={styles.modalTitle}>Aviso Privacidad</Text>
-                            <View style={styles.textContainer}>
-                            <ScrollView>
-                                {this.state.privacyText.map((item, index) => (
-                                      <Text key={index} style={styles.lineText}>{item}</Text>)
-                                )}
-                                <View style={styles.lastChild}/>
-                            </ScrollView>
-                            </View>
+                <SafeAreaView style={styles.sfvContainer}>
+                    <TouchableWithoutFeedback onPress={this.closeModal}>
+                        <View style={styles.closeIcon}>
+                            <CloseIcon />
                         </View>
-                    </View>
+                    </TouchableWithoutFeedback>
+                    <Text style={styles.modalTitle}>Aviso Privacidad</Text>
+                    <ScrollView>
+                        <View style={styles.scrollViewContainer}>
+                            {this.state.privacyText.map((item, index) => (
+                                <Text key={index} style={styles.lineText}>{item}</Text>)
+                            )}
+                            <View style={styles.separator} />
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
             </Modal>
         );
     }

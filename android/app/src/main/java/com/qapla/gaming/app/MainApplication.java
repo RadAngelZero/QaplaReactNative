@@ -1,8 +1,9 @@
-package com.qaplareactnative;
+package com.qapla.gaming.app;
 
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.qapla.gaming.app.BuildConfig;
 import com.reactnativecommunity.netinfo.NetInfoPackage;
 import com.segment.analytics.reactnative.core.RNAnalyticsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;

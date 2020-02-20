@@ -15,6 +15,7 @@
 import React, { Component } from 'react';
 import {
     SafeAreaView,
+    ScrollView,
     View,
     Text,
     TouchableWithoutFeedback
@@ -39,6 +40,7 @@ import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics
 import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/MatchExpireRememberModal';
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 import { translate } from '../../utilities/i18';
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
 const QaploinIcon = images.svg.qaploinsIcon;
@@ -52,7 +54,6 @@ class SetBetScreen extends Component {
                 close
                 navigation={navigation}
                 back
-                onCloseGoTo={'Publicas'}
                 closeEvent={this.closeEvent} />)
     });
 
@@ -134,46 +135,45 @@ class SetBetScreen extends Component {
         this.setState({ currentBet: oldBet > 0 ? oldBet - 75 : this.state.currentBet });
     }
 
-    async createMatch() {
-       if (!this.state.loading && this.props.userQaploins >= this.state.currentBet) {
-            // this.state.loading is used as a mechanism to prevent users to press the
-            // Android back button and create several matches at the same time
-            this.setState({ loading: true });
+    createMatch() {
+        this.setState({ loading: true }, async () => {
+            if (this.props.userQaploins >= this.state.currentBet) {
 
-            try {
-                await createPublicMatch(this.props.uid, this.state.currentBet, this.props.selectedGame);
-                await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet);
+                try {
+                    await createPublicMatch(this.props.uid, this.state.currentBet, this.props.selectedGame);
+                    await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet);
 
-                trackOnSegment('Match created', {
-                    Bet: this.state.currentBet,
-                    Game: this.props.selectedGame.gameKey,
-                    Platform: this.props.selectedGame.platform
-                });
-
-                // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
-                // return a 'null' value, otherwise it would return a 'false' 'true' value from a
-                // previous flag update.
-                let openMsgFlag = JSON.parse(await retrieveData('create-match-time-action-msg'));
-
-                // When creating a match 'this.state.timeActionMsgOpen' is expected to be false,
-                // otherwise when loading the Component the Modal would automatically open, which is
-                // a behaviour we don't want.
-                if (openMsgFlag || openMsgFlag === null) {
-
-                    // Tooggle modal state to open
-                    this.setState({
-                        timeActionMsgOpen: true
+                    trackOnSegment('Match created', {
+                        Bet: this.state.currentBet,
+                        Game: this.props.selectedGame.gameKey,
+                        Platform: this.props.selectedGame.platform
                     });
+
+                    // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
+                    // return a 'null' value, otherwise it would return a 'false' 'true' value from a
+                    // previous flag update.
+                    let openMsgFlag = JSON.parse(await retrieveData('create-match-time-action-msg'));
+
+                    // When creating a match 'this.state.timeActionMsgOpen' is expected to be false,
+                    // otherwise when loading the Component the Modal would automatically open, which is
+                    // a behaviour we don't want.
+                    if (openMsgFlag || openMsgFlag === null) {
+
+                        // Tooggle modal state to open
+                        this.setState({
+                            timeActionMsgOpen: true
+                        });
+                    }
+                    else{
+                        this.props.navigation.dismiss();
+                    }
+                } catch (error) {
+                    console.log(error);
                 }
-                else{
-                    this.props.navigation.navigate('Publicas');
-                }
-            } catch (error) {
-                console.log(error);
+            } else {
+                this.setState({ open: !this.state.open });
             }
-        } else {
-            this.setState({ open: !this.state.open });
-        }
+        });
     }
 
     /**
@@ -186,51 +186,54 @@ class SetBetScreen extends Component {
             loading: false
         });
 
-        // bug5: BackHandler aparently is not called in MatchExpireRememberModal.js, therefore
-        // a tradeoff is to redirect to 'Publicas' here, taking advantage that this is
-        // the onClose function for MatchExpireRememberModal.
-        this.props.navigation.navigate('Publicas');
+        this.props.navigation.dismiss();
     }
 
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
-                <View style={styles.container}>
-                    <BuyQaploinsModal
-                        open={this.state.open}
-                        openWhen='User try to create a match'
-                        body={translate('setBetScreen.buyQaploinsModal.body')}
-                        onClose={() => this.setState({ open: false })} />
-                    <MatchExpireRememberModal
-                        visible={this.state.timeActionMsgOpen}
-                        onClose={this.closeMatchExpireRememberModal} />
-                    <Text style={styles.titleText}>{translate('setBetScreen.title')}</Text>
-                    <View style={styles.prizeImage}>
-                        <QaploinsPrizeIcon width={110} height={107} />
-                    </View>
-                    <Text style={styles.winBet}>{this.defineWinBet()}</Text>
-                    <View style={styles.qaploinIconContainer}>
-                        <QaploinIcon height={24} width={24} />
-                        <Text style={styles.qaploinIconText}>Qoins</Text>
-                    </View>
-                    <View style={styles.betContainer}>
-                        <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
-                            <LessQaploinsIcon style={styles.changeBetIcon} />
-                        </TouchableWithoutFeedback>
-                        <View style={styles.betTextContainer}>
-                            <Text style={styles.betText}>{this.state.currentBet}</Text>
-                            <Text style={styles.betEntrada}>{translate('setBetScreen.entry')}</Text>
+                <ScrollView>
+                    <View style={styles.container}>
+                        <BuyQaploinsModal
+                            open={this.state.open}
+                            openWhen='User try to create a match'
+                            body={translate('setBetScreen.buyQaploinsModal.body')}
+                            onClose={() => this.setState({ open: false })} />
+                        <MatchExpireRememberModal
+                            visible={this.state.timeActionMsgOpen}
+                            onClose={this.closeMatchExpireRememberModal} />
+                        <Text style={styles.titleText}>{translate('setBetScreen.title')}</Text>
+                        <View style={styles.prizeImage}>
+                            <QaploinsPrizeIcon
+                                width={widthPercentageToPx(30)}
+                                height={heightPercentageToPx(30)} />
                         </View>
-                        <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
-                            <MoreQaploinsIcon style={styles.changeBetIcon} />
+                        <Text style={styles.winBet}>{this.defineWinBet()}</Text>
+                        <View style={styles.qaploinIconContainer}>
+                            <QaploinIcon height={24} width={24} />
+                            <Text style={styles.qaploinIconText}>Qoins</Text>
+                        </View>
+                        <View style={styles.betContainer}>
+                            <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
+                                <LessQaploinsIcon style={styles.changeBetIcon} />
+                            </TouchableWithoutFeedback>
+                            <View style={styles.betTextContainer}>
+                                <Text style={styles.betText}>{this.state.currentBet}</Text>
+                                <Text style={styles.betEntrada}>{translate('setBetScreen.entry')}</Text>
+                            </View>
+                            <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
+                                <MoreQaploinsIcon style={styles.changeBetIcon} />
+                            </TouchableWithoutFeedback>
+                        </View>
+                        <TouchableWithoutFeedback
+                            onPress={this.createMatch.bind(this)}
+                            disabled={this.state.loading}>
+                            <View style={styles.createButton}>
+                                <Text style={styles.createButtonText}>{translate('setBetScreen.createMatch')}</Text>
+                            </View>
                         </TouchableWithoutFeedback>
                     </View>
-                    <TouchableWithoutFeedback onPress={this.createMatch.bind(this)}>
-                        <View style={styles.createButton}>
-                            <Text style={styles.createButtonText}>{translate('setBetScreen.createMatch')}</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
+                </ScrollView>
             </SafeAreaView>
         );
     }

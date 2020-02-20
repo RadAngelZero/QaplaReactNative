@@ -23,7 +23,6 @@ import { WON_RESULT, TIE_RESULT, LOST_RESULT, OTHER_RESULT } from '../../utiliti
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { translate } from '../../utilities/i18';
 
-const CloseIcon = Images.svg.closeIcon;
 const WinIcon = Images.svg.winIcon;
 const LostIcon = Images.svg.lostIcon;
 const TieIcon = Images.svg.tieIcon;
@@ -97,7 +96,7 @@ class UploadMatchResultScreen extends Component {
                 UserQaploins: this.props.userQaploins,
                 Result: matchResultStatus
             });
-            this.setState({ showUploadMatchResultsModal: true })
+            this.setState({ showUploadMatchResultsModal: true });
         } catch (error) {
             console.error(error);
         }
@@ -119,11 +118,6 @@ class UploadMatchResultScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    <TouchableWithoutFeedback onPress={this.closeUploadMatchResultScreen}>
-                        <View style={styles.closeIcon}>
-                            <CloseIcon />
-                        </View>
-                    </TouchableWithoutFeedback>
                     <Text style={styles.title}>{translate('uploadMatchResultScreen.title')}</Text>
                     <View style={styles.winLooseContainer}>
                         <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, WON_RESULT)}>
@@ -177,7 +171,7 @@ class UploadMatchResultScreen extends Component {
                     <UploadMatchResultsModal
                         visible={this.state.showUploadMatchResultsModal}
                         onClose={this.closeUploadMatchResultsModal}
-                        nextScreen='Publicas' />
+                        nextScreen='Public' />
                 </View>
             </SafeAreaView>
         );

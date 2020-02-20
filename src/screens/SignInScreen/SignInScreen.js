@@ -105,6 +105,8 @@ class SignInScreen extends Component {
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
+                <Image style={styles.backgroundImage}
+                        source={SignUpControllersBackgroundImage} />
                 <View style={styles.container}>
                     <View>
                         <Image source={QaplaSignUpLogo} />
@@ -133,8 +135,6 @@ class SignInScreen extends Component {
                             </Text>
                         </View>
                     </View>
-                    <Image style={styles.backgroundImage}
-                        source={SignUpControllersBackgroundImage} />
                 </View>
             </SafeAreaView>
         );

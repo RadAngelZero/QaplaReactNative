@@ -440,7 +440,7 @@ class PublicMatchCardScreen extends Component {
                     deletedFromMatchDetail={true}
                     onClose={() => this.setState({openNoQaploinsModal: false})} />
                 <AddGamerTagModal
-                    selectedGame={ { gameKey: matchCard.game, platform: matchCard.platform } }
+                    selectedGame={{ name: gameData.name, gameKey: matchCard.game, platform: matchCard.platform }}
                     open={this.state.openAddGamerTagModal}
                     uid={this.props.uid}
                     userName={matchCard.userName}

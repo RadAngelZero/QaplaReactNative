@@ -16,7 +16,8 @@ console.disableYellowBox = true;
 class App extends React.Component {
     state = {
         openSnackbar: false,
-        snackbarMessage: ''
+        snackbarMessage: '',
+        timerOnSnackBar: false
     };
 
     componentDidMount() {
@@ -42,10 +43,11 @@ class App extends React.Component {
             if (!state.isConnected || ((state.isInternetReachable !== undefined) && (state.isInternetReachable !== null) && !state.isInternetReachable)) {
                 const wifiMessage = (state.type === 'wifi') ? translate('App.noInternetConnection.wifiDetails') : '';
                 const msg = `${translate('App.noInternetConnection.title')} ${wifiMessage}`;
-                
+
                 this.setState({
                   openSnackbar: true,
-                  snackbarMessage: msg
+                  snackbarMessage: msg,
+                  timerOnSnackBar: false
                 });
             } else {
                 this.setState({ openSnackbar: false });
@@ -61,12 +63,16 @@ class App extends React.Component {
         * Triggered when a particular notification has been received in foreground
         */
         this.notificationListener = notifications.onNotification((notification) => {
-            const { title, body, _data } = notification;
+            const { title, body } = notification;
             /**
              * Do something cool with the notification, maybe show a modal or even better,
              * show a snackbar
              * https://material.io/components/snackbars/#usage
              */
+            this.setState({
+                snackbarMessage: `${title}. ${body}`,
+                timerOnSnackBar: true
+            });
         });
 
 
@@ -85,7 +91,8 @@ class App extends React.Component {
                 <Router />
                 <Snackbar
                     visible={this.state.openSnackbar}
-                    message={this.state.snackbarMessage} />
+                    message={this.state.snackbarMessage}
+                    openAndCollapse={this.state.timerOnSnackBar} />
             </>
         )
     }

@@ -52,6 +52,7 @@ export const eventParticipantsRef = database.ref('/EventParticipants');
 export const announcementsActRef = database.ref('/Announcements/Active');
 export const privacyRef = database.ref('/Privacy');
 export const usersBalance = database.ref('usersQaplaBalance');
+export const userTopicSubscriptions = database.ref('userTopicSubscriptions');
 
 /**
  * Returns the userName of the specified user
@@ -789,6 +790,19 @@ export async function updateUserProfileImg(uid, photoUrl) {
     } catch (error) {
         console.error(error);
     }
+}
+
+/**
+ * User Subscriptions
+ */
+
+ /**
+  * Saves the topics on the database which the user has been subscribed on FCM
+  * @param {string} uid User identifier on the database
+  * @param {string} topic Name of the topic to which the user has subscribed
+  */
+export function saveUserSubscriptionToTopic(uid, topic) {
+    userTopicSubscriptions.child(uid).update({ [topic]: true });
 }
 
 // -----------------------------------------------

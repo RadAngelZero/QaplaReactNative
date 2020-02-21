@@ -10,7 +10,7 @@ import { Modal, View, TextInput, Text, TouchableWithoutFeedback } from 'react-na
 import { withNavigation } from 'react-navigation';
 
 import styles from './style';
-import { addGameToUser } from '../../services/database';
+import { addGameToUser, saveUserSubscriptionToTopic } from '../../services/database';
 import Images from './../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { subscribeUserToTopic } from '../../services/messaging';
@@ -43,6 +43,7 @@ export class AddGamerTagModal extends Component {
                     this.props.selectedGame.gameKey, this.state.gamerTagText);
 
                 subscribeUserToTopic(this.props.selectedGame.gameKey);
+                saveUserSubscriptionToTopic(this.props.uid, this.props.selectedGame.gameKey);
 
                 trackOnSegment('Add Gamer Tag Process Completed',
                     { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });

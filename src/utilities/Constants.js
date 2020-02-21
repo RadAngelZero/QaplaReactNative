@@ -70,7 +70,7 @@ export const OTHER_RESULT = '7';
 export const TIE_RESULT = '3';
 
 // Discord Qapla Channel link
-export const QAPLA_DISCORD_CHANNEL = 'https://discordapp.com/invite/6GBHn78';
+export const QAPLA_DISCORD_CHANNEL = 'https://discord.gg/G4BuRZD';
 
 // Date constants
 
@@ -100,3 +100,5 @@ export const NAV_TOPBAR_ICON_TOP_MARGIN = 2.28;
 // APP Header
 export const HEADER_SIZE = 2.9;
 
+// Firebase Cloud Messaging Topics
+export const EVENTS_TOPIC = 'events';

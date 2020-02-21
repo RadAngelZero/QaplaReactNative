@@ -23,6 +23,20 @@ class Snackbar extends Component {
             }).start();
 
             return { visible: props.visible };
+        } else if (props.openAndCollapse) {
+            Animated.timing(state.yAxisValue, {
+                toValue: heightPercentageToPx(80),
+                duration: 200,
+                easing: Easing.inOut(Easing.ease)
+            }).start();
+
+            setTimeout(() => {
+                Animated.timing(state.yAxisValue, {
+                    toValue: heightPercentageToPx(110),
+                    duration: 250,
+                    easing: Easing.in(Easing.cubic)
+                }).start();
+            }, 4000);
         }
 
         return null;

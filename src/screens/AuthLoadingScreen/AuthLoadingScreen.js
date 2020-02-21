@@ -47,7 +47,7 @@ class AuthLoadingScreen extends Component {
                 const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
 
                 if (userName === ''){
-                    return this.props.navigation.navigate('ChooseUserNameScreen');
+                    return this.props.navigation.navigate('ChooseUserName');
                 }
 
                 await this.checkNotificationPermission(user.uid);

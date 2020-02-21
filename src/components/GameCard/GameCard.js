@@ -19,7 +19,7 @@ import {
 
 import { connect } from 'react-redux';
 
-import { getGamerTagWithUID, addGameToUser } from '../../services/database';
+import { getGamerTagWithUID, addGameToUser, saveUserSubscriptionToTopic } from '../../services/database';
 import { withNavigation } from 'react-navigation';
 import { subscribeUserToTopic } from '../../services/messaging';
 import { trackOnSegment } from '../../services/statistics';
@@ -62,7 +62,9 @@ class GameCard extends Component {
                      * about specific games
                      */
                     subscribeUserToTopic(newGame.gameKey);
-                    this.props.navigation.navigate('Profile');
+                    saveUserSubscriptionToTopic(this.props.user.id, newGame.gameKey);
+
+                    this.props.navigation.pop();
                 } catch (error) {
                     console.error(error);
                 }

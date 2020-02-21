@@ -26,6 +26,7 @@ import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics
 import { isUserLogged } from '../../services/auth';
 import { translate } from '../../utilities/i18';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { QAPLA_DISCORD_CHANNEL } from '../../utilities/Constants';
 
 const QaploinExchangeIcon = images.svg.qoinFlipIcon;
 const BalanceExchangeIcon = images.svg.balanceFlipIcon;
@@ -71,7 +72,7 @@ export class UserProfileScreen extends Component {
      * Begins the process of redeem qaploins
      * (At this point, only send the user to discord)
      */
-    exchangeQaploins = () => Linking.openURL('https://discord.gg/bYF7XSR');
+    exchangeQaploins = () => Linking.openURL(QAPLA_DISCORD_CHANNEL);
 
     /**
      * Close the modal of buy qaploins

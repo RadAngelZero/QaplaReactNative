@@ -198,7 +198,7 @@ class SetBetScreen extends Component {
                             open={this.state.open}
                             openWhen='User try to create a match'
                             body={translate('setBetScreen.buyQaploinsModal.body')}
-                            onClose={() => this.setState({ open: false })} />
+                            onClose={() => this.setState({ open: false, loading: false })} />
                         <MatchExpireRememberModal
                             visible={this.state.timeActionMsgOpen}
                             onClose={this.closeMatchExpireRememberModal} />

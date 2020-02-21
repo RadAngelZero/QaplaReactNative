@@ -7,7 +7,8 @@ import {
   SafeAreaView,
   TextInput,
   TouchableWithoutFeedback,
-  Text
+  Text,
+  Keyboard
 } from 'react-native'
 import styles from './style'
 import { connect } from 'react-redux';
@@ -50,30 +51,32 @@ class SupportScreen extends React.Component {
 
   render() {
       return (
-          <SafeAreaView style={styles.sfvContainer}>
-              <View style={styles.container}>
-                  <TextInput
-                        style={styles.textInput}
-                        placeholder={translate('supportScreen.placeholder')}
-                        placeholderTextColor='#898A97'
-                        onChangeText={(text) => this.setState({text})}
-                        multiline
-                        numberOfLines={200}
-                        clearTextOnFocus={true}
-                        placeholderTextColor={'#FFFF'}
-                        value={this.state.text} />
-                    <TouchableWithoutFeedback onPress={this.sendFeedback}>
-                        <View style={styles.sendButtonContainer}>
-                            <Text style={styles.textStyle}>{translate('supportScreen.send')}</Text>
-                        </View>
-                  </TouchableWithoutFeedback>
-              </View>
-              <OneTxtOneBttnModal
-                    visible={ this.state.openModal }
-                    onClose={ this.gotoPreviousScreen }
-                    header={translate('supportScreen.gratitudeModal.header')}
-                    textButton={'OK'} />
-          </SafeAreaView>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <SafeAreaView style={styles.sfvContainer}>
+                    <View style={styles.container}>
+                        <TextInput
+                                style={styles.textInput}
+                                placeholder={translate('supportScreen.placeholder')}
+                                placeholderTextColor='#898A97'
+                                onChangeText={(text) => this.setState({text})}
+                                multiline
+                                clearTextOnFocus={true}
+                                placeholderTextColor={'#FFFF'}
+                                value={this.state.text} />
+                            <TouchableWithoutFeedback onPress={this.sendFeedback}>
+                                <View style={styles.sendButtonContainer}>
+                                    <Text style={styles.textStyle}>{translate('supportScreen.send')}</Text>
+                                </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                <OneTxtOneBttnModal
+                        visible={ this.state.openModal }
+                        onClose={ this.gotoPreviousScreen }
+                        header={translate('supportScreen.gratitudeModal.header')}
+                        textButton={'OK'} />
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
+
       );
   }
 }

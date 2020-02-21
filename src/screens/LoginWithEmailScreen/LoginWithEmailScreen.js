@@ -40,6 +40,8 @@ class LoginWithEmailScreen extends Component {
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
+                <Image style={styles.backgroundImage}
+                        source={SignUpControllersBackgroundImage} />
                 <View style={styles.container}>
                     <View>
                         <Image source={QaplaSignUpLogo} />
@@ -67,8 +69,6 @@ class LoginWithEmailScreen extends Component {
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
-                    <Image style={styles.backgroundImage}
-                        source={SignUpControllersBackgroundImage} />
                 </View>
             </SafeAreaView>
         );

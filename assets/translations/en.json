@@ -109,7 +109,7 @@
             "level": "Level"
         },
         "buyQaploinsModal": {
-            "body": "You can return the 300 Qoins when you want and we will give you a refund!"
+        "body": ""
         }
     },
     "notificationsScreen":{
@@ -175,7 +175,7 @@
         "entry": "Entry",
         "createMatch": "Create Match",
         "buyQaploinsModal": {
-            "body": "You can return the 300 Qoins when you want and we will give you a refund!"
+            "body": ""
         }
     },
     "verificationScreen": {

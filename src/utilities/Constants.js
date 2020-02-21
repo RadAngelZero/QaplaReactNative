@@ -70,7 +70,7 @@ export const OTHER_RESULT = '7';
 export const TIE_RESULT = '3';
 
 // Discord Qapla Channel link
-export const QAPLA_DISCORD_CHANNEL = 'https://discordapp.com/invite/6GBHn78';
+export const QAPLA_DISCORD_CHANNEL = 'https://discord.gg/G4BuRZD';
 
 // Date constants
 

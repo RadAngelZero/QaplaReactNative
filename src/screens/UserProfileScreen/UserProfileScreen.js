@@ -64,15 +64,25 @@ export class UserProfileScreen extends Component {
      * Open the modal of buy qaploins
      */
     openBuyQaploinsModal = () => {
-        trackOnSegment('User Profile Add Qaploins Button', { UserQaploins: this.props.userQaploins });
-        this.setState({ showBuyQaploinsModal: true });
+        if (isUserLogged()) {
+            trackOnSegment('User Profile Add Qaploins Button', { UserQaploins: this.props.userQaploins });
+            this.setState({ showBuyQaploinsModal: true });
+        } else {
+            this.props.navigation.navigate('Auth');
+        }
     }
 
     /**
      * Begins the process of redeem qaploins
      * (At this point, only send the user to discord)
      */
-    exchangeQaploins = () => Linking.openURL(QAPLA_DISCORD_CHANNEL);
+    exchangeQaploins = () => {
+        if (isUserLogged()) {
+            Linking.openURL(QAPLA_DISCORD_CHANNEL);
+        } else {
+            this.props.navigation.navigate('Auth');
+        }
+    }
 
     /**
      * Close the modal of buy qaploins
@@ -82,7 +92,13 @@ export class UserProfileScreen extends Component {
     /**
      * Redirect to LoadGames screen
      */
-    addGame = () => this.props.navigation.navigate('AddGame', { loadGamesUserDontHave: true, onCloseGoTo: 'Perfil' });
+    addGame = () => {
+        if (isUserLogged()) {
+            this.props.navigation.navigate('AddGame', { loadGamesUserDontHave: true, onCloseGoTo: 'Perfil' });
+        } else {
+            this.props.navigation.navigate('Auth');
+        }
+    }
 
     /**
      * Check if the given index is the last from a list of size quantityOfElements

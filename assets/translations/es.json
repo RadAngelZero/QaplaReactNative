@@ -2,7 +2,7 @@
     "App": {
         "noInternetConnection": {
             "title": "No estas conectado a internet, revisa tu conexión.",
-            "wifiDetails": "Usa tu connexión de datos" 
+            "wifiDetails": "Usa tu conexión de datos"
         }
     },
     "platforms": {
@@ -63,7 +63,7 @@
             "upload": "Subir",
             "modal": {
                 "header": "¡Felicidades!",
-                "body": "Tu imágen será verificada en breve y podrás redimir tu logro en breve",
+                "body": "Tu imagen será verificada en breve y podrás redimir tu logro en breve",
                 "textButton": "Entendido"
             }
         },
@@ -92,10 +92,10 @@
         "cancel": "Cancelar",
         "resultUploaded": "Ya has subido un resultado a esta partida",
         "uploadResult": "Subir Resultado",
-        "acceptChallenge": "Aceptar desafio",
+        "acceptChallenge": "Aceptar desafío",
         "alreadyChallengedModal": {
             "header": "Lo sentimos",
-            "body": "Ya enviaste un desafio al jugador para esta Partida",
+            "body": "Ya enviaste un desafío al jugador para esta Partida",
             "textButton": "Entendido"
         },
         "buyQaploinsModal": {
@@ -109,7 +109,7 @@
             "level": "Nivel"
         },
         "buyQaploinsModal": {
-            "body": "Puedes devolver los 300 Qoins cuando quieras ¡y te haremos un reembolso!"
+            "body": ""
         }
     },
     "notificationsScreen":{
@@ -118,7 +118,7 @@
             "notificationWinner": "Has sido declarado ganador de la partida",
             "notificationLooser": "%{userName} ha sido declarado ganador de la partida.",
             "notificationResult": "¡%{userName} ha subido su resultado, tienes 15 minutos para subir el tuyo!",
-            "notificationRevision": "Tu partida entro en disputa y esta siendo revisada. En cuanto este lista se te notificara.",
+            "notificationRevision": "Tu partida entró en disputa y está siendo revisada. En cuanto este lista se te notificara.",
             "notificationTie": "Tu partida con %{userName} concluyó sin un ganador.",
             "notificationMatchAccepted": "%{userName} ha aceptado tu desafío.",
             "matchNotification": {
@@ -128,7 +128,7 @@
             }
         },
         "acceptChallengeModal": {
-            "body": "Al aceptar este desafio todos los otros desafios que te han hecho a esta partida seran eliminados.",
+            "body": "Al aceptar este desafío todos los otros desafíos que te han hecho a esta partida seran eliminados.",
             "dontShowItAgain": "Entendido, no volver a mostrar este mensaje",
             "continue": "Continuar"
         }
@@ -175,7 +175,7 @@
         "entry": "Entrada",
         "createMatch": "Crear Ahora",
         "buyQaploinsModal": {
-            "body": "Puedes devolver los 300 Qoins cuando quieras ¡y te haremos un reembolso!"
+            "body": ""
         }
     },
     "verificationScreen": {
@@ -256,12 +256,12 @@
         "title": "Crea tu nombre de usuario",
         "userNamePlaceholder": "Introduce tu nombre de usuario",
         "userNameAlreadyTaken": "Ese nombre de usuario ya está en uso, prueba con otro",
-        "bodyFirstPart": "Antes de registrate en Qapla gaming asegúrate de haber leido y aceptado nuestros",
+        "bodyFirstPart": "Antes de registrate en Qapla gaming asegúrate de haber leído y aceptado nuestros",
         "termsAndConditions": "Términos y Condiciones",
         "bodySecondPart": "y nuestra",
         "privacyPolicy": "Política de privacidad",
-        "agreeWithTerms": "He leido y acepto los términos y condiciones",
-        "agreeWithPrivacy": "He leido y acepto la política de privacidad",
+        "agreeWithTerms": "He leído y acepto los términos y condiciones",
+        "agreeWithPrivacy": "He leído y acepto la política de privacidad",
         "validatingUserName": "Validando Username...",
         "acceptButton": "Continuar",
         "continue": "Continuar"
@@ -273,7 +273,7 @@
     "headerBar": {
         "highlightModal": {
             "header": "Ve tus Notificaciones",
-            "body": "Tus partidas recibirán notificaciones de desafio, ¡recuerda checar las notificaciones!"
+            "body": "Tus partidas recibirán notificaciones de desafío, ¡recuerda checar las notificaciones!"
         }
     },
     "highlightModal": {
@@ -309,7 +309,7 @@
     },
     "matchExpireRememberModal": {
         "header": "Recuerda",
-        "paragraph": "La partida expirará después de 10 minutos si no recibe y se acepta un desafio de otro jugador.",
+        "paragraph": "La partida expirará después de 10 minutos si no recibe y se acepta un desafío de otro jugador.",
         "dontShowItAgain": "Entendido, no volver a mostrar este mensaje",
         "okButton": "Entendido"
     }

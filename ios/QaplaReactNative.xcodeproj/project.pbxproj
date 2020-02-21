@@ -384,7 +384,7 @@
 		06C0AE7AC14ADB1E9852D219 /* Pods-QaplaGaming-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaGaming-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-QaplaGaming-tvOSTests/Pods-QaplaGaming-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* QaplaGaming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QaplaGaming.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Qapla Gaming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Qapla Gaming.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = QaplaReactNative/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = QaplaReactNative/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -713,7 +713,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* QaplaGaming.app */,
+				13B07F961A680F5B00A75B9A /* Qapla Gaming.app */,
 				00E356EE1AD99517003FC87E /* QaplaReactNativeTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* QaplaReactNative-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* QaplaReactNative-tvOSTests.xctest */,
@@ -814,7 +814,7 @@
 			);
 			name = QaplaReactNative;
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* QaplaGaming.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Qapla Gaming.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* QaplaReactNative-tvOS */ = {
@@ -1525,7 +1525,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QaplaGaming.app/QaplaGaming";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Qapla Gaming.app/Qapla Gaming";
 			};
 			name = Debug;
 		};
@@ -1561,7 +1561,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QaplaGaming.app/QaplaGaming";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Qapla Gaming.app/Qapla Gaming";
 			};
 			name = Release;
 		};
@@ -1571,7 +1571,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = QaplaReactNative/QaplaReactNative.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 9;
 				DEAD_CODE_STRIPPING = NO;
@@ -1595,8 +1595,8 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
-				PRODUCT_NAME = QaplaGaming;
-				PROVISIONING_PROFILE_SPECIFIER = IosReactNativeDistribution;
+				PRODUCT_NAME = "Qapla Gaming";
+				PROVISIONING_PROFILE_SPECIFIER = IosQaplaDevelopment;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1607,7 +1607,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = QaplaReactNative/QaplaReactNativeRelease.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = TRFNHWRW5M;
@@ -1630,8 +1630,8 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
-				PRODUCT_NAME = QaplaGaming;
-				PROVISIONING_PROFILE_SPECIFIER = IosReactNativeDistribution;
+				PRODUCT_NAME = "Qapla Gaming";
+				PROVISIONING_PROFILE_SPECIFIER = IosQaplaDevelopment;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

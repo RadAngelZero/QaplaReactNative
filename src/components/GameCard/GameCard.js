@@ -61,8 +61,7 @@ class GameCard extends Component {
                      * Every game is a topic, so we can send push notifications to the user
                      * about specific games
                      */
-                    subscribeUserToTopic(newGame.gameKey);
-                    saveUserSubscriptionToTopic(this.props.user.id, newGame.gameKey);
+                    subscribeUserToTopic(newGame.gameKey, this.props.user.id);
 
                     this.props.navigation.pop();
                 } catch (error) {

@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "QaplaSignUpLogo.png",
+      "filename" : "1024pt.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "QaplaSignUpLogo2x.png",
+      "filename" : "1024pt-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "QaplaSignUpLogo3x.png",
+      "filename" : "1024pt-2.png",
       "scale" : "3x"
     }
   ],

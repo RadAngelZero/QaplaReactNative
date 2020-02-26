@@ -20,7 +20,9 @@
 import React from 'react';
 
 import { View, Text } from 'react-native';
-import {createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createSwitchNavigator} from 'react-navigation';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import {createMaterialTopTabNavigator, createBottomTabNavigator} from 'react-navigation-tabs';
 
 import { setCurrentScreenId, setPreviousScreenId } from './actions/screensActions';
 import { connect } from 'react-redux';

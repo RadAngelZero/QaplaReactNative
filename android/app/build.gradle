@@ -160,14 +160,10 @@ android {
 
 dependencies {
     implementation project(':@react-native-community_netinfo')
-    implementation project(':react-native-camera')
-    implementation project(':react-native-firebase')
     implementation project(':@segment_analytics-react-native')
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-google-signin')
     implementation project(':react-native-fbsdk')
-    implementation project(':react-native-svg')
-    implementation project(':react-native-gesture-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules

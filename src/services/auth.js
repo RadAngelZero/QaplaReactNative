@@ -14,7 +14,7 @@ import {
     phoneAuthAutoVerifiedState,
 } from './../utilities/firebase';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
-import { GoogleSignin } from 'react-native-google-signin';
+import { GoogleSignin } from '@react-native-community/google-signin';
 import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
 import { signOutUser } from '../actions/userActions';

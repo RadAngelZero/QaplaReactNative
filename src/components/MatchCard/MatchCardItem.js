@@ -8,6 +8,7 @@ import React, { PureComponent } from 'react';
 import { View, Text, TouchableWithoutFeedback, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
+import { SvgUri } from 'react-native-svg';
 
 import { getProfileImageWithUID } from '../../services/database';
 
@@ -30,17 +31,6 @@ class MatchCardItem extends PureComponent {
         this.fetchAvatarImageUrlFromUserUid(this.props.adversaryUid);
     }
 
-    getCurrentGameResources() {
-        /**
-         * Check if the game exists on our object of games (from redux)
-         */
-        if (this.props.games[this.props.platform][this.props.game]) {
-            return gamesResources[this.props.games[this.props.platform][this.props.game].replace(/ +/g, "")];
-        } else {
-            return null;
-        }
-    }
-
     /**
      * @description Get adversary profile image and sets it to state
      */
@@ -55,7 +45,7 @@ class MatchCardItem extends PureComponent {
 
     render() {
         const {navigate} = this.props.navigation;
-        const game = this.getCurrentGameResources();
+        const game = this.props.games[this.props.platform][this.props.game];
 
         /**
          * If the game doesn't exist we return null, otherwise we can get an error on render function
@@ -75,10 +65,19 @@ class MatchCardItem extends PureComponent {
                     <View style={styles.matchMainContainer}>
                         <View style={styles.matchContainerRow}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <game.Icon
-                                    style={styles.gameLogoImage}
-                                    width={37}
-                                    height={37} />
+                                {game.local ?
+                                    <game.icon
+                                        style={styles.gameLogoImage}
+                                        width={37}
+                                        height={37} />
+                                    :
+                                    <SvgUri
+                                        style={styles.gameLogoImage}
+                                        width={37}
+                                        height={37}
+                                        uri={game.icon}
+                                        fill='#3DF9DF' />
+                                }
                                 <Text style={styles.gameText}>{game.name}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -119,58 +118,7 @@ MatchCardItem.defaultProps = {
     matchesPlay: false
 };
 
-const gamesResources = {
-    Fifa17: {
-        Icon: Images.svg.fifaIcon,
-        name: 'FIFA 19'
-    },
-    ClashRoyale: {
-        Icon: Images.svg.clashIcon,
-        name: 'Clash Royale'
-    },
-    GearsofWar: {
-        Icon: Images.svg.gowIcon,
-        name: 'Gears of War 4'
-    },
-    Halo: {
-        Icon: Images.svg.haloIcon,
-        name: 'Halo 5'
-    },
-    Hearthstone: {
-        Icon: Images.svg.heartstoneIcon,
-        name: 'Hearthstone'
-    },
-    Overwatch: {
-        Icon: Images.svg.overwatchIcon,
-        name: 'Overwatch'
-    },
-    LOL: {
-        Icon: Images.svg.lolIcon,
-        name: 'League of legends'
-    },
-    Smashbrothers: {
-        Icon: Images.svg.smashIcon,
-        name: 'Smash Ultimate'
-    }
-};
-
 function mapStateToProps(state) {
-    /**
-     * Check if user object (in redux) contains data (when a user is not logged
-     * or a user make signout their redux object is empty)
-     */
-    if (Object.keys(state.userReducer.user).length > 0) {
-        return {
-            games: state.gamesReducer.games
-        }
-    }
-
-    /**
-     * If the user is not logged, then the user will be rejected from this
-     * screen, it doesn't matter this return, is just added because
-     * the screen is showed (some miliseconds) and we must return an object
-     * from this functions (redux requirements)
-     */
     return {
         games: state.gamesReducer.games
     }

@@ -15,12 +15,6 @@ const EXPERIENCE_REQUIRED_TO_LEVEL_UP = 20;
 export class UserProfilePlatformGameList extends Component {
 
     /**
-     * Return resources (Icon and name) of the game
-     * @param {string} game Game to get resources
-     */
-    getGameResources = (game) => gamesResources[game.replace(/ +/g, '')];
-
-    /**
      * Return the win rate of the user from game with gameKey
      * @param {string} gameKey Key of the game
      */
@@ -58,6 +52,7 @@ export class UserProfilePlatformGameList extends Component {
     lastChild = (currentIndex, quantityOfElements) => (currentIndex === quantityOfElements - 1);
 
     render() {
+
         return (
             <View style={{ marginBottom: this.props.lastChild ? 20 : 0 }}>
                 <Text style={styles.title}>{getPlatformNameWithKey(this.props.platform)}</Text>
@@ -72,7 +67,7 @@ export class UserProfilePlatformGameList extends Component {
                                  */
                                 key={`${this.props.platform}-${gameKey}`}
                                 platform={this.props.platform}
-                                game={this.getGameResources(this.props.userGames[gameKey])}
+                                game={this.props.games[this.props.platform][gameKey]}
                                 winRate={this.getWinRate(gameKey)}
                                 experience={this.getExperience(gameKey)}
                                 level={this.determineUserLevel(gameKey)}
@@ -86,44 +81,10 @@ export class UserProfilePlatformGameList extends Component {
     }
 }
 
-const gamesResources = {
-    Fifa17: {
-        Icon: Images.svg.fifaIcon,
-        name: 'FIFA'
-    },
-    ClashRoyale: {
-        Icon: Images.svg.clashIcon,
-        name: 'Clash'
-    },
-    GearsofWar: {
-        Icon: Images.svg.gowIcon,
-        name: 'GOW'
-    },
-    Halo: {
-        Icon: Images.svg.haloIcon,
-        name: 'Halo'
-    },
-    Hearthstone: {
-        Icon: Images.svg.heartstoneIcon,
-        name: 'Hearthstone'
-    },
-    Overwatch: {
-        Icon: Images.svg.overwatchIcon,
-        name: 'Overwatch'
-    },
-    LOL: {
-        Icon: Images.svg.lolIcon,
-        name: 'LOL'
-    },
-    Smashbrothers: {
-        Icon: Images.svg.smashIcon,
-        name: 'Smash'
-    }
-};
-
 function mapDispatchToProps(state) {
     return {
-        gamerStatistics: state.userReducer.user
+        gamerStatistics: state.userReducer.user,
+        games: state.gamesReducer.games
     }
 }
 

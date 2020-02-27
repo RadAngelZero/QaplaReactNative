@@ -10,7 +10,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import styles from './style'
-import Svg from 'react-native-svg';
+import Svg, { SvgUri } from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {
@@ -89,10 +89,20 @@ class GameCard extends Component {
                     style={styles.container}>
                     <Image
                         style={styles.imageStyle}
-                        source={game.image[this.props.platform]}/>
+                        source={game.local ? game.image : { uri: game.image }}/>
                     <View style={styles.detailsContainer}>
                         <Svg style={styles.iconContainer}>
-                            <game.Icon width={widthPercentageToPx(5)} height={heightPercentageToPx(5)} />
+                            {game.local ?
+                                <game.icon
+                                    width={widthPercentageToPx(5)}
+                                    height={heightPercentageToPx(5)} />
+                                :
+                                <SvgUri
+                                    width={widthPercentageToPx(5)}
+                                    height={heightPercentageToPx(5)}
+                                    uri={game.icon}
+                                    fill='#3DF9DF' />
+                            }
                         </Svg>
                         <Text style={styles.gameName}>
                             {game.name}

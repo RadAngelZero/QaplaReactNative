@@ -23,6 +23,7 @@
 import React, { Component } from 'react';
 import { View, Text, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
+import { SvgUri } from 'react-native-svg';
 import styles from './style';
 
 import Images from '../../../assets/images'
@@ -299,12 +300,20 @@ class PublicMatchCardScreen extends Component {
 
     render() {
         const matchCard = this.props.navigation.getParam('matchCard');
-        const gameData = getGameData(matchCard.game, this.props.games);
+        const gameData = this.props.games[matchCard.platform][matchCard.game];
 
         return (
             <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
                 <View style={styles.imageHeader}>
-                    <gameData.Icon width={50} height={50} />
+                    {gameData.local ?
+                        <gameData.icon width={50} height={50} />
+                        :
+                        <SvgUri
+                            width={50}
+                            height={50}
+                            uri={gameData.icon}
+                            fill='#3DF9DF' />
+                    }
                 </View>
                 <View style={styles.rowContainer}>
                     <View style={styles.headerRow1}>
@@ -455,53 +464,6 @@ class PublicMatchCardScreen extends Component {
         );
     }
 }
-
-function getGameData(game, listOfAllGames) {
-    let gameData;
-    Object.keys(listOfAllGames).map((platformKey) => {
-        Object.keys(listOfAllGames[platformKey]).map((gameKey) => {
-            if (gameKey === game) {
-                gameData = gamesResources[listOfAllGames[platformKey][gameKey].replace(/ +/g, "")];
-            }
-        });
-    });
-    return gameData;
-}
-
-const gamesResources = {
-    Fifa17: {
-        Icon: Images.svg.fifaIcon,
-        name: 'FIFA 19'
-    },
-    ClashRoyale: {
-        Icon: Images.svg.clashIcon,
-        name: 'Clash Royale'
-    },
-    GearsofWar: {
-        Icon: Images.svg.gowIcon,
-        name: 'Gears of War 4'
-    },
-    Halo: {
-        Icon: Images.svg.haloIcon,
-        name: 'Halo 5'
-    },
-    Hearthstone: {
-        Icon: Images.svg.heartstoneIcon,
-        name: 'Hearthstone'
-    },
-    Overwatch: {
-        Icon: Images.svg.overwatchIcon,
-        name: 'Overwatch'
-    },
-    LOL: {
-        Icon: Images.svg.lolIcon,
-        name: 'League of legends'
-    },
-    Smashbrothers: {
-        Icon: Images.svg.smashIcon,
-        name: 'Smash Ultimate'
-    }
-};
 
 function mapStateToProps(state) {
     return {

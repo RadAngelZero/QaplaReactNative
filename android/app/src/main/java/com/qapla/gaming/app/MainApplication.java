@@ -1,21 +1,17 @@
 package com.qapla.gaming.app;
 
 import android.app.Application;
+import android.content.Context;
 
+import com.facebook.react.PackageList;
+import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
+import com.facebook.react.bridge.JavaScriptExecutorFactory;
 import com.facebook.react.ReactApplication;
-import com.qapla.gaming.app.BuildConfig;
-import com.reactnativecommunity.netinfo.NetInfoPackage;
-import com.segment.analytics.reactnative.core.RNAnalyticsPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
-import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.facebook.reactnative.androidsdk.FBSDKPackage;
-import com.facebook.FacebookSdk;
-import com.facebook.CallbackManager;
-import com.facebook.appevents.AppEventsLogger;
+
+import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import io.invertase.firebase.functions.RNFirebaseFunctionsPackage;
@@ -23,14 +19,11 @@ import io.invertase.firebase.storage.RNFirebaseStoragePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 
-import java.util.Arrays;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
-  private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
-  protected static CallbackManager getCallbackManager() {
-    return mCallbackManager;
-  }
+
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
     public boolean getUseDeveloperSupport() {
@@ -39,20 +32,17 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new NetInfoPackage(),
-            new RNFirebaseAuthPackage(),
-            new RNFirebaseDatabasePackage(),
-            new RNFirebaseFunctionsPackage(),
-            new RNFirebaseStoragePackage(),
-            new RNFirebaseMessagingPackage(),
-            new RNFirebaseNotificationsPackage(),
-            new RNAnalyticsPackage(),
-            new LinearGradientPackage(),
-            new RNGoogleSigninPackage(),
-            new FBSDKPackage(mCallbackManager)
-      );
+      @SuppressWarnings("UnnecessaryLocalVariable")
+      List<ReactPackage> packages = new PackageList(this).getPackages();
+      packages.add(new RNFirebaseAuthPackage());
+      packages.add(new RNFirebaseDatabasePackage());
+      packages.add(new RNFirebaseFunctionsPackage());
+      packages.add(new RNFirebaseStoragePackage());
+      packages.add(new RNFirebaseMessagingPackage());
+      packages.add(new RNFirebaseNotificationsPackage());
+      // Packages that cannot be autolinked yet can be added manually here, for example:
+      // packages.add(new MyReactNativePackage());
+      return packages;
     }
 
     @Override
@@ -70,5 +60,33 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    initializeFlipper(this); // Remove this line if you don't want Flipper enabled
+  }
+
+  /**
+   * Loads Flipper in React Native templates.
+   *
+   * @param context
+   */
+  private static void initializeFlipper(Context context) {
+    if (BuildConfig.DEBUG) {
+      try {
+        /*
+         We use reflection here to pick up the class that initializes Flipper,
+        since Flipper library is not available in release mode
+        */
+        Class<?> aClass = Class.forName("com.facebook.flipper.ReactNativeFlipper");
+        aClass.getMethod("initializeFlipper", Context.class).invoke(null, context);
+      } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+      } catch (NoSuchMethodException e) {
+        e.printStackTrace();
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      } catch (InvocationTargetException e) {
+        e.printStackTrace();
+      }
+    }
   }
 }
+

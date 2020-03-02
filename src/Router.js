@@ -90,6 +90,14 @@ const MatchWizardStackNavigator = createStackNavigator({
         }
     },
     SetBet: SetBetScreen
+},
+{
+  defaultNavigationOptions :{
+    gesturesEnabled: false
+  },
+  navigationOptions: {
+    gesturesEnabled: false
+  }
 });
 
 const MatchDetailsStackNavigator = createStackNavigator({

@@ -1,3 +1,4 @@
+// diego             - 14-11-2019 - us146 - Added NOTIFICATION_TYPE_TIE and NOTIFICATION_MATCH_ACCEPTED
 // diego             - 04-09-2019 - us105 - Added text for different type of notifications
 // diego             - 14-08-2019 - us80 - File creation
 
@@ -10,27 +11,33 @@ import {
     NOTIFICATION_TYPE_LOSER,
     NOTIFICATION_TYPE_RESULT,
     NOTIFICATION_TYPE_REVISION,
-    NOTIFICATION_TYPE_TIE
+    NOTIFICATION_TYPE_TIE,
+    NOTIFICATION_MATCH_ACCEPTED
 } from '../../utilities/Constants';
+import { translate } from '../../utilities/i18';
 
 export class ActivityNotificationCard extends Component {
     determineNotificationText = () => {
         let notificationText = '';
+        const userName = this.props.userName;
         switch (this.props.type) {
             case NOTIFICATION_TYPE_WINNER:
-                notificationText = 'Has sido declarado ganador de la reta';
+                notificationText = translate('notificationsScreen.notificationTypes.notificationWinner');
                 break;
             case NOTIFICATION_TYPE_LOSER:
-                notificationText = `${this.props.userName} ha sido declarado ganador de la reta.`;
+                notificationText = translate('notificationsScreen.notificationTypes.notificationLooser', { userName });
                 break;
             case NOTIFICATION_TYPE_RESULT:
-                notificationText = `¡${this.props.userName} ha subido su resultado, tienes 15 minutos para subir el tuyo!`;
+                notificationText = translate('notificationsScreen.notificationTypes.notificationResult', { userName });
                 break;
             case NOTIFICATION_TYPE_REVISION:
-                notificationText = 'Tu partida entro en disputa y esta siendo revisada. En cuanto este lista se te notificara.';
+                notificationText = translate('notificationsScreen.notificationTypes.notificationRevision');
                 break;
             case NOTIFICATION_TYPE_TIE:
-                notificationText = `Tu partida con ${this.props.userName} concluyó sin un ganador.`;
+                notificationText = translate('notificationsScreen.notificationTypes.notificationTie', { userName });
+                break;
+            case NOTIFICATION_MATCH_ACCEPTED:
+                notificationText = translate('notificationsScreen.notificationTypes.notificationMatchAccepted', { userName });
                 break;
             default:
                 break;

@@ -1,6 +1,7 @@
 // diego           - 20-08-2019 - us89 - File creation
 
 import { StyleSheet } from 'react-native';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
     container: {
@@ -16,6 +17,6 @@ export default styles = StyleSheet.create({
         fontWeight: '600',
         textAlign: 'center',
         color: '#FFF',
-        marginTop: 12
+        marginTop: heightPercentageToPx(1.48)
     }
 });

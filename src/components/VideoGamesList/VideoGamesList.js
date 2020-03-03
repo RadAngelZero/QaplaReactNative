@@ -1,12 +1,16 @@
+// diego          - 07-01-2019 - NA   - Hide scroll indicators on ScrollView
+// diego          - 30-12-2019 - us189 - Put title inside of scroll view
 // diego          - 21-08-2019 - us89 - Add logic to load the games that the user don't have
 // diego          - 10-07-2019 - us22 - Update in the way that load the game name
 
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
+
 import styles from './style';
 import PlatformGamesList from '../PlatformGamesList/PlatformGamesList';
 import { connect } from 'react-redux';
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
+import { translate } from '../../utilities/i18';
 
 class VideoGamesList extends Component {
     state = {
@@ -74,8 +78,8 @@ class VideoGamesList extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Elige tu juego</Text>
-                <ScrollView style={styles.scrollViewMargin}>
+                <ScrollView style={styles.scrollViewMargin} showsVerticalScrollIndicator={false}>
+                    <Text style={styles.title}>{translate('loadGamesScreen.title')}</Text>
                     {Object.keys(this.state.gamesToLoad).map((platform) => (
                         <PlatformGamesList
                             key={platform}

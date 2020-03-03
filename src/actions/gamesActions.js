@@ -1,4 +1,4 @@
-//josep maria
+// josep.sanahuja    - 20-08-2019 - XXX - Load user games statistics
 
 import {
     GET_LIST_OF_GAMES,

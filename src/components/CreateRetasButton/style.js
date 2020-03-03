@@ -1,8 +1,11 @@
+// josep.sanahuja - 30-12-2019 - us183 - Removed highlightedExterior && highlightedInterior
+
 import { StyleSheet } from 'react-native';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
-        bottom: 35,
+        bottom: heightPercentageToPx(4.30),
         alignSelf: 'center',
         position: 'absolute',
     },
@@ -14,34 +17,11 @@ export default styles = StyleSheet.create({
     textStyle: {
         color: '#FFF',
         alignSelf: 'center',
-        textTransform: 'uppercase',
         fontWeight: 'bold',
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32,
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53),
         letterSpacing: .57
-    },
-    highlightedExterior: {
-        paddingVertical: 12,
-        paddingHorizontal: 45,
-        backgroundColor: '#3DF9DF',
-        position: 'absolute',
-        bottom: 16,
-        alignSelf: 'center',
-        justifyContent: 'center',
-        borderRadius: 100,
-        paddingRight: 40,
-        paddingLeft: 40
-    },
-    highlightedInterior: {
-        paddingVertical: 12,
-        paddingHorizontal: 45,
-        backgroundColor: '#6D7DDE',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        borderRadius: 100,
-        paddingRight: 40,
-        paddingLeft: 40
     }
 });

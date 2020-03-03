@@ -8,7 +8,7 @@ import {functions} from '../utilities/firebase'
 
 /**
  * Accept challenge for idMatch
- * @param {string} notificationObj Notification object from the challenge request
+ * @param {object} notificationObj Notification object from the challenge request
  * @param {string} idChallenged    uid from the user that receives the challenge request
  *
  * josep.sanahuja - us85: Removed auth.currentUser.uid and include it as parameter 'idChallenged',
@@ -19,8 +19,8 @@ export function acceptChallengeRequest(notificationObj, idChallenged) {
 	return callCloudFunction({
 		cfName: 'acceptChallengeRequest',
 		params: {
-			notificationObj: notificationObj,
-			idChallenged: idChallenged
+			notificationObj,
+			idChallenged
 		}
 	})
 }
@@ -43,6 +43,21 @@ export function addQaploinsToUserCloudFunction() {
 	return callCloudFunction({
 		cfName: 'addQaploinsToUserBETA',
 		params: {}
+	});
+}
+
+/**
+ * Allow the user to redeem a completed logro (completed on points)
+ * @param {string} idLogro Identifier of the logro on the database
+ * @param {number} qaploins Quantity of qaploins to add
+ */
+export function redeemLogroCloudFunction(idLogro, qaploins) {
+	return callCloudFunction({
+		cfName: 'redeemLogro',
+		params: {
+			idLogro,
+			qaploins
+		}
 	});
 }
 

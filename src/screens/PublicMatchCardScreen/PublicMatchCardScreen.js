@@ -1,3 +1,7 @@
+// josep.sanahuja - 12-12-2019 - us160 - Add 'User Has Canceled Match' event in tryToCancelMatch
+// diego          - 12-12-2019 - us169 - Add game when challenge behavior added
+// diego          - 04-12-2019 - us161 - Added BuyQaploinsModal when user have not enough qaploins to challenge a match
+// diego          - 14-09-2019 - bug86 - Show correct text when the user has uploaded their results, but the adversary no
 // diego          - 05-09-2019 - us104 - Added logic to allow just one result per user on the displayed match
 // diego          - 05-09-2019 - us101 - Added timer to show user time before match from matches play expire
 //                                       Added timer to show user time for upload result once the adversary was uploaded their result
@@ -17,49 +21,45 @@
 // diego          - 29-07-2019 - us55 - Challenge match logic added
 
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
-import styles from './style'
+import styles from './style';
 
 import Images from '../../../assets/images'
-import { challengeUser, isMatchAlreadyChallenged, userHasQaploinsToPlayMatch } from '../../services/database';
+import { challengeUser, isMatchAlreadyChallenged, userHasQaploinsToPlayMatch, getGamerTagWithUID, addGameToUser } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
 import { cancelPublicMatch, acceptChallengeRequest } from '../../services/functions';
 import { getGamerTagStringWithGameAndPlatform } from '../../utilities/utils';
 import { trackOnSegment } from '../../services/statistics';
+
 // Custom Components
 import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBttnModal'
 import AcceptChallengeModal from '../../components/AcceptChallengeModal/AcceptChallengeModal';
 import NotEnoughQaploinsModal from '../../components/NotEnoughQaploinsModal/NotEnoughQaploinsModal';
 import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constants';
-import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
+import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
+import { AddGamerTagModal } from '../../components/AddGamerTagModal/AddGamerTagModal';
+import { translate } from '../../utilities/i18';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
 
 class PublicMatchCardScreen extends Component {
-    static navigationOptions = ({ navigation }) => ({
-        header: () => (
-            <TopNavOptions
-                close
-                navigation={navigation}
-                onCloseGoTo={navigation.getParam('matchCard').matchesPlay ? 'MisRetas' : 'Publicas'} />)
-    });
-    
     constructor(props) {
         super(props);
-    
+
         this.state = {
             openChalExModal: false,
             openAcceptChallengeModal: false,
             openNoQaploinsModal: false,
             validTimeLeft: 0,
-            expired: false
+            expired: false,
+            openAddGamerTagModal: false,
+            openBuyQaploinsModal: false
         };
     }
 
     componentDidMount() {
-        this.props.navigation.setParams({ onCloseGoTo: this.props.navigation.getParam('onCloseGoTo', 'Home') });
         this.list = [
 
             /**
@@ -86,16 +86,17 @@ class PublicMatchCardScreen extends Component {
                         let validTimeLeft = 0;
 
                         // If some result was uploaded
-                        if (hourResult) {
+                        if (hourResult !== '') {
                             leftTime = (this.convertHourToTimeStamp(date, hourResult) + this.convertMinutesToMiliSeconds(15)) - now;
                         } else if (matchesPlay) {
-                            leftTime = (timeStamp + this.convertMinutesToMiliSeconds(60)) - now;
+                            leftTime = (timeStamp + this.convertMinutesToMiliSeconds(80)) - now;
                         }
                          else {
                             leftTime = (timeStamp + this.convertMinutesToMiliSeconds(15)) - now;
                         }
 
                         // Calculate minutes and seconds befor match expire
+                        let hours = Math.floor((leftTime % (1000 * 60 * 60 * 60)) / (1000 * 60 * 60));
                         let minutes = Math.floor((leftTime % (1000 * 60 * 60)) / (1000 * 60));
                         let seconds = Math.floor((leftTime % (1000 * 60)) / 1000);
 
@@ -103,7 +104,7 @@ class PublicMatchCardScreen extends Component {
                          * If there's no more time to interact with the match
                          */
                         if (minutes <= 0 && seconds <= 0) {
-                            validTimeLeft = 'Reta expirada';
+                            validTimeLeft = 'Partida expirada';
 
                             /**
                              * We set the match as expired (this action disable the button)
@@ -114,12 +115,16 @@ class PublicMatchCardScreen extends Component {
                             /**
                              * If the minute or second value is less than 10 (like 9 or 8)
                              * then we add a 0 before the numeric value (so the value look like: 09 or 08)
-                             */ 
+                             */
                             minutes = minutes < 10 ? `0${minutes}` : minutes;
                             seconds = seconds < 10 ? `0${seconds}` : seconds;
 
                             // Legible user string
-                            validTimeLeft = `${minutes}:${seconds}`;
+                            if (hours > 0) {
+                                validTimeLeft = `${hours}:${minutes}:${seconds}`;
+                            } else {
+                                validTimeLeft = `${minutes}:${seconds}`;
+                            }
                         }
 
                         this.setState({ validTimeLeft });
@@ -145,7 +150,7 @@ class PublicMatchCardScreen extends Component {
     convertHourToTimeStamp(date, hour) {
         const [day, month] = date.split('/').map(p => parseInt(p, 10));
         const [h, min] = hour.split(':').map(p => parseInt(p, 10));
-        
+
         return new Date(Date.UTC((new Date).getUTCFullYear(), month - 1, day, h, min, 0, 0)).getTime();
     }
 
@@ -159,7 +164,7 @@ class PublicMatchCardScreen extends Component {
         this.setState({
           openChalExModal: !this.state.openChalExModal
         });
-    } 
+    }
 
     /**
     * Description:
@@ -171,24 +176,39 @@ class PublicMatchCardScreen extends Component {
     */
     tryToChallengeUser = async () => {
         trackOnSegment('User Wants To Challenge A Match');
-  
+
         // If the user is logged
         if (isUserLogged()) {
             // Get the info of the match
             const matchCard = this.props.navigation.getParam('matchCard');
-            
-            // Check if the match created by adversaryUid, with matchId was already challenged 
+
+            // Check if the match created by adversaryUid, with matchId was already challenged
             // by the user uid, we want to avoid to challenge a match twice or more.
             const already = await isMatchAlreadyChallenged(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
- 
-            if (!already)
-            {
-                // Challenge the user to play the match
-                challengeUser(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
 
-                this.props.navigation.navigate('Publicas');
-            }
-            else {
+            if (!already) {
+
+                if (this.props.userGamesList instanceof Array && this.props.userGamesList.indexOf(matchCard.game) !== -1) {
+
+                    if(this.props.userQaploins >= matchCard.bet) {
+                        // Challenge the user to play the match
+                        challengeUser(matchCard.adversaryUid, this.props.uid, matchCard.idMatch);
+
+                        this.props.navigation.navigate('Public');
+                    } else {
+                        this.setState({ openBuyQaploinsModal: true });
+                    }
+                } else {
+                    const gamerTag = await getGamerTagWithUID(this.props.uid, matchCard.game, matchCard.platform);
+                    if(gamerTag.gamerTag){
+                        await addGameToUser(this.props.uid, this.props.userName, matchCard.platform,
+                            matchCard.game, gamerTag.gamerTag);
+                        this.tryToChallengeUser();
+                    } else {
+                        this.setState({ openAddGamerTagModal: true });
+                    }
+                }
+            } else {
                 // Show Modal
                 this.toggleOpenChalExModal();
             }
@@ -204,10 +224,31 @@ class PublicMatchCardScreen extends Component {
      */
     tryToCancelMatch = () => {
         const matchCard = this.props.navigation.getParam('matchCard');
-        cancelPublicMatch(matchCard.idMatch);
-        trackOnSegment('User Has Canceled Match');
+        let numMatchNoti = 0;
 
-        this.props.navigation.navigate('Publicas');
+        // If there are notifications on the match, we apply filter() to this.props.matchNotifications
+        // with its Object keys, to obtain an array with notifications that has match id equal to
+        // id from the Match card being cancelled.
+        if (this.props.matchNotifications !== undefined && this.props.matchNotifications !== null){
+            const mNotiKeys = Object.keys(this.props.matchNotifications);
+
+            const numNotiArr = mNotiKeys.filter((keyValue) => {
+                return this.props.matchNotifications[keyValue] === matchCard.idMatch;
+            });
+
+            numMatchNoti = numNotiArr.length;
+        }
+
+        trackOnSegment('User Has Canceled Match', {
+            Game: matchCard.game.gameKey,
+            Platform: matchCard.platform,
+            Bet: matchCard.bet,
+            NumMatchNoti: numMatchNoti,
+            UserQaploins: this.props.userQaploins
+        });
+
+        cancelPublicMatch(matchCard.idMatch);
+        this.props.navigation.navigate('Public');
     }
 
     /**
@@ -221,7 +262,7 @@ class PublicMatchCardScreen extends Component {
          * if the user is the author (creator) of the match, is the adversary1, if not, is the adversary2, and
          * that information is important when their result is uploaded
          */
-        this.props.navigation.navigate('UploadMatchResult', { idMatch: matchCard.idMatch, currentUserAdversary: matchCard.currentUserAdversary });
+        this.props.navigation.navigate('UploadMatchResult', { matchData: matchCard, currentUserAdversary: matchCard.currentUserAdversary });
     }
 
     /**
@@ -236,15 +277,15 @@ class PublicMatchCardScreen extends Component {
         const dontShowAcceptChallengeModal = false;// await retrieveData('dont-show-delete-notifications-modal');
 
         let enoughQaploins = false;
-        
+
         // Check if the challenger user have enough Qaploins (match bet) in his account so that it can
         // play against the challenged user.
         try {
-            enoughQaploins = await userHasQaploinsToPlayMatch(notification.idUserSend, notification.idMatch); 
+            enoughQaploins = await userHasQaploinsToPlayMatch(notification.idUserSend, notification.idMatch);
         } catch (error) {
             console.error(error);
         }
-        
+
         if (enoughQaploins !== null && !enoughQaploins) {
             this.setState({ openNoQaploinsModal: true });
         } else if (dontShowAcceptChallengeModal !== 'true') {
@@ -252,7 +293,7 @@ class PublicMatchCardScreen extends Component {
         } else {
             // bug6: Added user id as 2nd arg.
             acceptChallengeRequest(notification, this.props.uid);
-            this.props.navigation.navigate('MisRetas')
+            this.props.navigation.navigate('MyMatches');
         }
     }
 
@@ -287,7 +328,7 @@ class PublicMatchCardScreen extends Component {
                     <View style={styles.row}>
                         <View style={styles.infoContainer}>
                             <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>No. de Integrantes</Text>
+                            <Text style={styles.elemR1}>{translate('publicMatchCardScreen.numberOfMembers')}</Text>
                         </View>
                         <View style={styles.infoContainer}>
                             <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</Text>
@@ -298,10 +339,19 @@ class PublicMatchCardScreen extends Component {
                         <View style={styles.infoContainer}>
                             <ProfileIcon style={styles.rowIcon}/>
                             <Text style={styles.elemR1}>
+                                {/**
+                                 * bug86: When a user has uploaded a result, text has to show different message
+                                 * so the user can know that their result is saved and just can wait for theira adversary result
+                                 */}
                                 {matchCard.matchesPlay ?
-                                    'Sube tu resultado en:'
+                                    ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
+                                    ||
+                                    (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0')) ?
+                                        translate('publicMatchCardScreen.waitingResult')
+                                        :
+                                        translate('publicMatchCardScreen.uploadResultIn')
                                     :
-                                    'Expira en:'
+                                    translate('publicMatchCardScreen.expireIn')
                                 }
                             </Text>
                         </View>
@@ -313,13 +363,14 @@ class PublicMatchCardScreen extends Component {
                     <View style={styles.row}>
                         <View style={styles.infoContainer}>
                             <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>Qaploins</Text>
+                            <Text style={styles.elemR1}>Qoins</Text>
                         </View>
                         <View style={styles.infoContainer}>
                             <Text style={styles.rightTextStyle}>{matchCard.bet}</Text>
                         </View>
                     </View>
                 </View>
+
                 {/*
                     If the user isn't the creator of the match, and this match is not in matches play and isn't a challenge
                     we show 'Retar' button
@@ -327,7 +378,7 @@ class PublicMatchCardScreen extends Component {
                 {(this.props.uid !== matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()} disabled={this.state.expired}>
                         <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>Retar</Text>
+                            <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.challenge')}</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
@@ -338,7 +389,7 @@ class PublicMatchCardScreen extends Component {
                 {(this.props.uid === matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
                     <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()} disabled={this.state.expired}>
                         <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>Cancelar</Text>
+                            <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.cancel')}</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
@@ -348,16 +399,17 @@ class PublicMatchCardScreen extends Component {
                     just a text
                 */}
                 {(matchCard.matchesPlay &&
-                    ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1)
+                    ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
                     ||
-                    (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2))) ?
-                    <Text style={styles.alreadyHaveResult}>Ya has subido un resultado a esta reta</Text>
+                    (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0'))) ?
+                    <Text style={styles.alreadyHaveResult}>{translate('publicMatchCardScreen.resultUploaded')}</Text>
                     :
                     <>
+                    {/*TODO: disabled=this.state.expired} */}
                     {matchCard.matchesPlay &&
                         <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult} disabled={this.state.expired}>
                             <View style={styles.bottomButton}>
-                                <Text style={styles.bottomButtonText}>Subir Resultado</Text>
+                                <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.uploadResult')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     }
@@ -366,16 +418,16 @@ class PublicMatchCardScreen extends Component {
                 {matchCard.isChallenge &&
                     <TouchableWithoutFeedback onPress={this.tryToAcceptChallengeRequest} disabled={this.state.expired}>
                         <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>Aceptar desafio</Text>
+                            <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.acceptChallenge')}</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 }
                 <OneTxtOneBttnModal
                     visible={ this.state.openChalExModal }
                     onClose={ this.toggleOpenChalExModal }
-                    header={ 'Lo sentimos' }
-                    body={ 'Ya enviaste un desafio al jugador para esta Partida' }
-                    textButton={ 'Entendido' } />
+                    header={translate('publicMatchCardScreen.alreadyChallengedModal.header')}
+                    body={translate('publicMatchCardScreen.alreadyChallengedModal.body')}
+                    textButton={translate('publicMatchCardScreen.alreadyChallengedModal.textButton')} />
                 <AcceptChallengeModal
                     visible={this.state.openAcceptChallengeModal}
                     uid={this.props.uid}
@@ -387,6 +439,18 @@ class PublicMatchCardScreen extends Component {
                     notificationKey={this.props.navigation.getParam('notificationKey')}
                     deletedFromMatchDetail={true}
                     onClose={() => this.setState({openNoQaploinsModal: false})} />
+                <AddGamerTagModal
+                    selectedGame={{ name: gameData.name, gameKey: matchCard.game, platform: matchCard.platform }}
+                    open={this.state.openAddGamerTagModal}
+                    uid={this.props.uid}
+                    userName={matchCard.userName}
+                    onSuccess={this.tryToChallengeUser}
+                    onClose={() => this.setState({ openAddGamerTagModal: false }) } />
+                <BuyQaploinsModal
+                    open={this.state.openBuyQaploinsModal}
+                    body={translate('publicMatchCardScreen.buyQaploinsModal.body')}
+                    openWhen='User try to challenge a match'
+                    onClose={() => this.setState({ openBuyQaploinsModal: false })} />
             </SafeAreaView>
         );
     }
@@ -442,7 +506,11 @@ const gamesResources = {
 function mapStateToProps(state) {
     return {
         games: state.gamesReducer.games,
-        uid: state.userReducer.user.id
+        uid: state.userReducer.user.id,
+        userName: state.userReducer.user.userName,
+        userGamesList: state.userReducer.user.gameList,
+        userQaploins: state.userReducer.user.credits,
+        matchNotifications: state.userReducer.user.notificationMatch
     }
 }
 

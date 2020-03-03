@@ -1,20 +1,20 @@
 // diego             - 14-08-2019 - us80 - File creation
 
 import { StyleSheet } from 'react-native';
-import { getDimensions } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
     container: {
-        height: getDimensions().height/7,
-        backgroundColor: '#0e1222',
+        height: heightPercentageToPx(14),
+        backgroundColor: '#141833',
         alignSelf: 'center',
-        width: getDimensions().width*.9,
-        marginTop: 15,
+        width: widthPercentageToPx(90),
+        marginTop: heightPercentageToPx(1.85),
         borderRadius: 10,
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 5,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.62),
         },
         shadowOpacity: .34,
         shadowRadius: 6.27,
@@ -23,35 +23,35 @@ export default styles = StyleSheet.create({
     },
     readStateContainer: {
         alignSelf: 'center',
-        marginLeft: 3,
-        width: (getDimensions().width*.9)*.15
+        marginLeft: widthPercentageToPx(0.8),
+        width: widthPercentageToPx(13.5)
     },
     unreadNotification: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 18,
-        height: 18,
-        width: 18,
+        marginLeft: widthPercentageToPx(4.8),
+        height: heightPercentageToPx(2.28),
+        width: heightPercentageToPx(2.28),
         borderRadius: 100,
         backgroundColor: '#3DF9DF'
     },
     readNotification: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 18,
-        height: 18,
-        width: 18,
+        marginLeft: widthPercentageToPx(4.8),
+        height: heightPercentageToPx(2.28),
+        width: widthPercentageToPx(4.8),
         borderRadius: 100,
         backgroundColor: '#FA2D79'
     },
     infoContainer: {
         flexDirection: 'column',
-        marginLeft: 3,
+        marginLeft: widthPercentageToPx(0.8),
         justifyContent: 'center',
-        width: (getDimensions().width*.9)*.75
+        width: widthPercentageToPx(67.5)
     },
     infoText: {
-        color: '#FFF',
+        color: '#ACACAC',
         fontSize: 14
     }
 });

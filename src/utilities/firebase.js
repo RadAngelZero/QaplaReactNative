@@ -1,9 +1,14 @@
-//diego         - 16-07-2019 - us30 - TimeStamp const created
+// diego          - 20-12-2019 - us179 - Added states for phoneAuth (phoneAuthErrorState, phoneAuthAutoVerifiedState)
+// josep.sanahuja - 26-09-2019 - us118 - Added firebase.storage
+// diego          - 16-07-2019 - us30  - TimeStamp const created
 
-import * as firebase from 'firebase/app';
+import firebase from 'react-native-firebase';
+
+/*import * as firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
 import '@firebase/functions';
+import 'firebase/storage';
 
 var firebaseConfig = {
     apiKey: "AIzaSyDBCB9kPA5NPKDR6gWSwTLbtVyR_9aCAA0",
@@ -15,15 +20,23 @@ var firebaseConfig = {
     appId: "1:614138734637:web:7c5772f22f05f8fe"
 };
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);*/
 
 export const database = firebase.database();
 export const auth = firebase.auth();
 export const functions = firebase.functions();
+export const storage = firebase.storage();
+export const messaging = firebase.messaging();
+export const notifications = firebase.notifications();
 
-//Authentication providers
+// Authentication providers
 export const FBProvider = firebase.auth.FacebookAuthProvider;
 export const GoogleProvider = firebase.auth.GoogleAuthProvider;
+export const PhoneProvider = firebase.auth.PhoneAuthProvider;
 
-//TimeStamp
+// Phone authentication states
+export const phoneAuthErrorState = firebase.auth.PhoneAuthState.ERROR;
+export const phoneAuthAutoVerifiedState = firebase.auth.PhoneAuthState.AUTO_VERIFIED; // <- Only android at the 19/12/2019
+
+// TimeStamp
 export const TimeStamp = firebase.database.ServerValue.TIMESTAMP;

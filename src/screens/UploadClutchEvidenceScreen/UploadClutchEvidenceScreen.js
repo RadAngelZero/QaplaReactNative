@@ -1,3 +1,4 @@
+// diego              - 14-11-2019 - us146 - AutoCapitalize disabled on TextInput
 // diego              - 12-09-2019 - us99 - Added backToUploadMatchResultScreen to handle
 //                                          the back to UploadMatchResultScreen
 // diego              - 13-08-2019 - us77 - File creation
@@ -8,6 +9,7 @@ import { View, TextInput, Text, TouchableWithoutFeedback, Linking } from 'react-
 import styles from './style';
 import Images from './../../../assets/images';
 import TutorialCarousel from '../../components/TutorialCarousel/TutorialCarousel';
+import { translate } from '../../utilities/i18';
 
 const images = [Images.png.uploadVideoClutch.img, Images.png.shareClutchLink.img];
 
@@ -56,19 +58,26 @@ export class UploadClutchEvidenceScreen extends Component {
                 <TutorialCarousel
                     images={images}
                     backToUploadMatchResultScreen={this.props.backToUploadMatchResultScreen} />
-                <TextInput placeholder='Inserta aqui el URL del clip'
+                <TextInput placeholder={translate('uploadClutchEvidenceScreen.insertClipPlaceholder')}
                     placeholderTextColor='#898A97'
+                    keyboardType='url'
+                    autoCapitalize='none'
                     onChangeText={this.setUrlText}
-                    style={[styles.urlTextInput, { borderBottomColor: this.state.showUrlError ? '#FF0000' : 'transparent' }]} />
+                    style={[styles.urlTextInput, { borderBottomColor: this.state.showUrlError ? '#FF0000' : 'transparent' }]}
+                    onSubmitEditing={this.submitData} />
                 <Text style={styles.instructions}>
-                    Sube tu clip a tu perfil de CLUTCH usando el <Text style={styles.highlightedText}>#qaplagaming</Text> con el <Text style={styles.highlightedText}>ID de la partida</Text> en la descripción y compártenos el link, como se muestra en la imagen de arriba ;)
+                    {translate('uploadClutchEvidenceScreen.instructions.firstPart')}
+                    <Text style={styles.highlightedText}>{translate('uploadClutchEvidenceScreen.instructions.highlightedText1')}</Text>
+                    {translate('uploadClutchEvidenceScreen.instructions.connector')}
+                    <Text style={styles.highlightedText}>{translate('uploadClutchEvidenceScreen.instructions.highlightedText2')}</Text>
+                    {translate('uploadClutchEvidenceScreen.instructions.secondPart')}
                 </Text>
                 <TouchableWithoutFeedback onPress={this.submitData}>
                     <View style={styles.readyButton}>
-                        <Text style={styles.readyButtonText}>Listo</Text>
+                        <Text style={styles.readyButtonText}>{translate('uploadClutchEvidenceScreen.done')}</Text>
                     </View>
                 </TouchableWithoutFeedback>
-                <Text style={styles.goToClutchButtonText} onPress={this.linkToClutchApp} >IR A CLUTCH</Text>
+                <Text style={styles.goToClutchButtonText} onPress={this.linkToClutchApp}>{translate('uploadClutchEvidenceScreen.goToClutch')}</Text>
             </View>
         );
     }

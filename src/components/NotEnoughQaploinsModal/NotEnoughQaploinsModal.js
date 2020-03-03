@@ -1,10 +1,8 @@
 // diego          - 04-09-2019 - us106 - Logic to delete notification implemented
 // josep.sanahuja - 08-08-2019 - us85 - File creation
 
-import React, {
-	Component
-} from 'react';
-import { 
+import React, { Component } from 'react';
+import {
 	View,
 	Text,
 	Modal,
@@ -18,9 +16,13 @@ import {
 import {
 	withNavigation
 } from 'react-navigation';
+import { translate } from '../../utilities/i18';
 
+/**
+ * Risky praxis, always call the components with the same name as the file (NotEnoughQaploinsModal in this case)
+ */
 class NotEnoughQaploins extends Component {
-    
+
 	/**
 	 *	Callbacks used in render()
 	 */
@@ -46,21 +48,21 @@ class NotEnoughQaploins extends Component {
     render() {
         return (
         	<Modal
-	          animationType='slide'
-	          transparent={true}
-	          visible={this.props.visible}
-	          onRequestClose={this.props.onClose}>
-	          <View style={styles.mainContainer}>
-              <View style={styles.container}>
-                <Text style={styles.headerText}>Adversario sin Qaploins</Text>
-                <TouchableWithoutFeedback onPress={this.action}>
-                  <View style={styles.okButton}>
-                    <Text style={styles.text}>Entendido</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-                <Text style={styles.smallText}>La notificación se borrará de la lista</Text>
-                </View>
-            </View>
+	        	animationType='slide'
+	          	transparent={true}
+	          	visible={this.props.visible}
+	          	onRequestClose={this.props.onClose}>
+	          		<View style={styles.mainContainer}>
+              			<View style={styles.container}>
+			                <Text style={styles.headerText}>{translate('notEnoughQaploinsModal.header')}</Text>
+			                <TouchableWithoutFeedback onPress={this.action}>
+			                  <View style={styles.okButton}>
+			                    <Text style={styles.text}>{translate('notEnoughQaploinsModal.accept')}</Text>
+			                  </View>
+			                </TouchableWithoutFeedback>
+			                <Text style={styles.smallText}>{translate('notEnoughQaploinsModal.warning')}</Text>
+		                </View>
+		            </View>
 	        </Modal>
         );
     }

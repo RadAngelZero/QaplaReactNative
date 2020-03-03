@@ -1,3 +1,5 @@
+// diego          - 17-12-2019 - us172 - userName-creation-scenario async storage flag removed
+// diego          - 14-11-2019 - us146 - Removed logs and blank spaces
 // josep.sanahuja - 26-08-2019 - us90 - Add CreateRetasButton Highlight
 // diego          - 03-09-2019 - us96 - Bug fixed: load duplicated matches
 // diego          - 09-08-2019 - bug4 - update remove listener methods on willBlur and make unshift of the new data on array
@@ -7,6 +9,7 @@
 
 import React, { Component } from 'react';
 import { View } from 'react-native'
+
 import style from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
 import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
@@ -22,7 +25,7 @@ import HighlightModal from '../../components/HighlightModal/HighlightModal'
 
 import { setHg1CreateMatch } from '../../actions/highlightsActions';
 import { connect } from 'react-redux';
-
+import { translate } from '../../utilities/i18';
 
 class PublicMatchesFeedScreen extends Component {
     state = {
@@ -71,6 +74,7 @@ class PublicMatchesFeedScreen extends Component {
                             date,
                             game,
                             hour,
+                            hourResult,
                             numMatches,
                             observations,
                             platform,
@@ -85,6 +89,7 @@ class PublicMatchesFeedScreen extends Component {
                             date,
                             game,
                             hour,
+                            hourResult,
                             idMatch: newPublicMatch.key,
                             numMatches,
                             observations,
@@ -137,7 +142,7 @@ class PublicMatchesFeedScreen extends Component {
     }
 
     componentDidMount() {
-        this.checkHighlightsFlags();  
+        this.checkHighlightsFlags();
     }
 
     /**
@@ -149,7 +154,6 @@ class PublicMatchesFeedScreen extends Component {
         // introduction
         if(!this.props.navigation.getParam('firstMatchCreated')){
             storeData('first-match-created', 'true');
-            storeData('userName-creation-scenario', 'CreateFirstMatchFromRetas');
         }
 
         // If showHg1Modal is enabled then
@@ -157,16 +161,16 @@ class PublicMatchesFeedScreen extends Component {
             // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
             // and it should not show up again.
             this.markHg1();
-            
+
             // Hide HIGHLIGHT_1_CREATE_MATCH Modal
             this.toggleHg1Modal();
         }
 
-        this.props.navigation.navigate(isUserLogged() ? 'ChooseMatchType' : 'SignIn');
+        this.props.navigation.navigate(isUserLogged() ? 'MatchWizard' : 'SignIn');
     }
 
     /**
-     * @description 
+     * @description
      * Checks Highlights flags stored in AsyncStorage, and evaluates which flags
      * to activate in the component state.
      *
@@ -181,7 +185,7 @@ class PublicMatchesFeedScreen extends Component {
             // Get the value for the highlight flag stored in AsynStorage.
             const value = await retrieveData(HIGHLIGHT_1_CREATE_MATCH);
 
-            if (value !== null) 
+            if (value !== null)
             {
                 // There is data stored for the flag, it can be either 'false' or 'true'.
                 this.setState({
@@ -189,7 +193,7 @@ class PublicMatchesFeedScreen extends Component {
                 });
             }
             else
-            {    
+            {
                 // That means there is no value stored for the flag, therefore
                 // result should be 'true', meaning the highlight will activate.
                 this.setState({
@@ -203,12 +207,12 @@ class PublicMatchesFeedScreen extends Component {
     }
 
     /**
-     * @description 
+     * @description
      * Toggles the flag 'showHg1Modal' in the component state. If value is 'true' then it becomes
      * 'false'. If it is 'false' then it becomes 'true'.
      *
      * TODO: Consider in a future to consider if the toggle mecanism is the ideal, instead,
-     * of using a setTrue or setFalse mecanism. 
+     * of using a setTrue or setFalse mecanism.
      */
     toggleHg1Modal = () => {
         this.setState({
@@ -217,7 +221,7 @@ class PublicMatchesFeedScreen extends Component {
     }
 
     /**
-     * @description 
+     * @description
      * Mark the Highlight flag 'HIGHLIGHT_1_CREATE_MATCH' that indicates
      * a highlight for rName of specific user only if that username is not already in use.
      * Flag is stored in AsyncStorage
@@ -225,27 +229,31 @@ class PublicMatchesFeedScreen extends Component {
     markHg1 = async () => {
         // flag in asyncStorage for component purpose
         storeData(HIGHLIGHT_1_CREATE_MATCH, 'false');
-        
+
         // Flag in redux to know when a hg has been completed. Using AsyncStorage
         this.props.setHg1CreateMatch(true);
     }
 
     render() {
         return (
-            <View style={style.container}>
-                <MatchCardList {...this.state} /> 
-                <HighlightModal 
-                    visible={this.state.showHg1Modal}
-                    onClose={this.toggleHg1Modal}
-                    showDelay={4000}
-                    cb1={this.markHg1}
-                    header='Crea una Reta'
-                    body='Empieza a competir con otros jugadores. Crea tu reta y gana!'>
-                    <CreateRetasButton 
-                            highlighted={!this.props.navigation.getParam('firstMatchCreated')}
-                            onPress={this.onCrearRetaButtonPress}/>
-                </HighlightModal>
-            </View>  
+            <>
+                <View style={style.container}>
+                    <MatchCardList {...this.state} />
+                </View>
+                {this.state.showHg1Modal ?
+                    <HighlightModal
+                        visible={this.state.showHg1Modal}
+                        onClose={this.toggleHg1Modal}
+                        showDelay={1000}
+                        cb1={this.markHg1}
+                        header={translate('publicMatchesFeedScreen.highlightModal.header')}
+                        body={translate('publicMatchesFeedScreen.highlightModal.body')}>
+                        <CreateRetasButton onPress={this.onCrearRetaButtonPress} />
+                    </HighlightModal>
+                :
+                    <CreateRetasButton onPress={this.onCrearRetaButtonPress} />
+                }
+            </>
         );
     }
 }

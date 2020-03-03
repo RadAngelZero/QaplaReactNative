@@ -2,7 +2,7 @@
 // josep.sanahuja - 13-08-2019 - us88 - File creation
 
 import { StyleSheet } from 'react-native';
-import { getDimensions } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
 	mainContainer: {
@@ -11,11 +11,11 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        width: '100%',
-        height: '100%',
+        width: widthPercentageToPx(100),
+        height: heightPercentageToPx(100),
 	},
 	container: {
-        maxWidth: getDimensions().width * .8,
+        maxWidth: widthPercentageToPx(80),
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#141833',
@@ -29,12 +29,12 @@ export default styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        marginRight: 20,
-        marginLeft: 20,
-        paddingTop: '20%'
+        marginRight: widthPercentageToPx(5.33),
+        marginLeft: widthPercentageToPx(5.33),
+        paddingTop: heightPercentageToPx(20)
     },
     headerText: {
-        marginBottom: '15%',
+        marginBottom: heightPercentageToPx(15),
         color: '#FFF',
         fontSize: 40,
         textAlign: 'center'
@@ -44,23 +44,23 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 16,
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53)
     },
     paragraph: {
-        marginTop: 5,
-        marginRight: 30,
-        marginLeft: 30,
+        marginTop: heightPercentageToPx(0.62),
+        marginRight: widthPercentageToPx(8),
+        marginLeft: widthPercentageToPx(8),
         color: '#CFD1DB',
         fontSize: 16,
         textAlign: 'center'
     },
     okButton: {
-        marginTop: 40,
+        marginTop: heightPercentageToPx(4.93),
         borderRadius: 100,
         backgroundColor: '#6D7DDE',
-        marginBottom: 18
+        marginBottom: heightPercentageToPx(2.28)
     }
 })

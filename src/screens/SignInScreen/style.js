@@ -1,26 +1,33 @@
 // josep.sanahuja    - 05-08-2019 - us84 - + sfvContainer
 
 import { StyleSheet } from 'react-native';
+import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
      sfvContainer: {
       flex: 1,
       justifyContent: 'center',
-      backgroundColor:'#131833'
+      backgroundColor:'#131833',
+      paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     container: {
-        flex:1,
-        backgroundColor:'#131833',
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
     },
-    facebookButtonContainer: {
+    socialMediaSignInButton: {
+        flexDirection: 'row',
         borderRadius: 100,
-        backgroundColor: '#364fe2',
-        paddingVertical: 16,
-        paddingHorizontal: 16,
-        marginTop: 44
+        justifyContent: 'center'
+    },
+    socialMediaIconStyle: {
+        marginLeft: 12,
+        alignSelf: 'center'
+    },
+    facebookSignInButton: {
+        backgroundColor: '#364FE2',
+        marginTop: heightPercentageToPx(5.41)
     },
     whiteColor: {
         color: '#FFF'
@@ -28,23 +35,28 @@ export default styles = StyleSheet.create({
     alignSelfCenter: {
         alignSelf: 'center'
     },
-    googleButtonContainer: {
-        borderRadius: 100,
+    textButton: {
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        marginLeft: 8,
+        marginRight: 16,
+        marginTop: 18,
+        marginBottom: 18
+    },
+    googleSignInButton: {
         backgroundColor: '#FFFFFF',
-        paddingVertical: 16,
-        paddingHorizontal: 16,
-        marginTop: 24
+        marginTop: heightPercentageToPx(2.96)
     },
     googleButtonText: {
         color: 'rgba(0, 0, 0, .541)'
     },
     alreadyHaveAccountTextContainer: {
         flexDirection: 'row',
-        marginTop: 25
+        marginTop: heightPercentageToPx(3.08)
     },
     enterWithEmailText: {
-        color: 'rgba(61,249,223,1)',
-        marginLeft: 5
+        color: '#3DF9DF',
+        marginLeft: widthPercentageToPx(1.33)
     },
     fontBold: {
         fontSize: 13,
@@ -53,11 +65,11 @@ export default styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         position: 'absolute',
-        left: 0,
-        bottom: 0,
+        left: widthPercentageToPx(0),
+        bottom: heightPercentageToPx(0),
         zIndex: -1,
         opacity: .68,
-        width: '100%',
-        height: '50%'
+        width: widthPercentageToPx(100),
+        height: heightPercentageToPx(50)
     }
 });

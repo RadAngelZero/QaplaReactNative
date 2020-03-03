@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "66587586976",
+    "firebase_url": "https://qaplatesting.firebaseio.com",
+    "project_id": "qaplatesting",
+    "storage_bucket": "qaplatesting.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66587586976:android:dc894d2805ef50de5b34c5",
+        "android_client_info": {
+          "package_name": "com.qaplareactnative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "66587586976-v6vnqou3n41nj0teplkl2akgavcane4d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qaplareactnative",
+            "certificate_hash": "4e279d145e3cc5088d790a54c8e227c2184f03a2"
+          }
+        },
+        {
+          "client_id": "66587586976-m04tjhp3or1f2c27jd5pvh2m3vf9cq4b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwv-qPIj88c-zpEzJQz_IjmApY9FG2ENs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "66587586976-m04tjhp3or1f2c27jd5pvh2m3vf9cq4b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

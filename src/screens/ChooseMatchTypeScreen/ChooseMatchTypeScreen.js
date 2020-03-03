@@ -1,11 +1,14 @@
-// josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
+// josep.sanahuja    - 12-12-2019 - us160 - Added trackOnSegment import
+// josep.sanahuja    - 05-08-2019 - us84  - + SafeAreaView
 
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
-import { Svg } from 'react-native-svg';
+import { SafeAreaView, ScrollView, View, Text, TouchableWithoutFeedback } from 'react-native';
+
 import styles from './style';
 import Images from '../../../assets/images';
-import { recordScreenOnSegment } from '../../services/statistics';
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
+import { translate } from '../../utilities/i18';
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 const LightningIcon = Images.svg.lightningIcon;
 const SearchIcon = Images.svg.searchIcon;
@@ -31,35 +34,46 @@ class ChooseMatchTypeScreen extends Component {
         this.list.forEach((item) => item.remove());
     }
 
+    /**
+     * @description
+     * Sends an event tracking public match button pressed and navigate to LoadGames screen.
+     */
+    goToLoadGames = () => {
+        trackOnSegment('Public Match Button');
+        this.props.navigation.navigate('SelectGame');
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
-                <View style={styles.container}>
-                    <Text style={styles.titleText}>Escoge un tipo de reta</Text>
-                    <View style={styles.lightningImage}>
-                        <Svg>
-                            <LightningIcon />
-                        </Svg>
-                    </View>
-                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('LoadGames')}>
-                        <View style={styles.publicMatchButton}>
-                            <Text style={styles.publicMatchButtonText}>
-                                RETA PÚBLICA
-                            </Text>
+                <ScrollView>
+                    <View style={styles.container}>
+                        <Text style={styles.titleText}>{translate('chooseMatchTypeScreen.title')}</Text>
+                        <View style={styles.lightningImage}>
+                            <LightningIcon
+                                width={widthPercentageToPx(30)}
+                                height={heightPercentageToPx(30)} />
                         </View>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('ChooseOponent')}>
-                        <View style={styles.directMatchButton}>
-                            <View style={styles.directMatchButtonSearchIcon}>
-                                <SearchIcon width={18} height={18} />
+                        <TouchableWithoutFeedback onPress={this.goToLoadGames}>
+                            <View style={styles.publicMatchButton}>
+                                <Text style={styles.publicMatchButtonText}>
+                                    {translate('chooseMatchTypeScreen.publicMatch')}
+                                </Text>
                             </View>
-                            <Text style={styles.directMatchButtonText}>
-                                RETAR USUARIO
-                            </Text>
-                            <View style={styles.directMatchButtonSearchIcon}></View>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback>
+                            <View style={styles.directMatchButton}>
+                                <View style={styles.directMatchButtonSearchIcon}>
+                                    <SearchIcon width={18} height={18} />
+                                </View>
+                                <Text style={styles.directMatchButtonText}>
+                                    {translate('chooseMatchTypeScreen.directMatch')}
+                                </Text>
+                                <View style={styles.directMatchButtonSearchIcon}></View>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                </ScrollView>
             </SafeAreaView>
         );
     }

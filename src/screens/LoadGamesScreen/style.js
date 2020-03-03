@@ -5,32 +5,33 @@
 // diego          - 17-07-2019 - NA   - Remove unnecesary code to make more legible and efficient
 
 import {StyleSheet} from 'react-native'
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default StyleSheet.create({
   	sfvContainer: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor:'#131833'
+        backgroundColor:'#0D1021'
     },
     container:{
 		flex: 1,
 		justifyContent:'center',
-		backgroundColor:'#131833'
+		backgroundColor: '#0D1021'
 	},
 	headerOptions: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		marginTop: 24
+		marginTop: heightPercentageToPx(2,96)
 	},
 	backIcon: {
-		marginLeft: 30
+		marginLeft: widthPercentageToPx(8)
 	},
 	closeIcon: {
 		fontSize: 20,
 		textAlignVertical: 'top',
-		width: 24,
-		height: 24,
-		marginRight: 20,
+		width: widthPercentageToPx(6.4),
+		height: heightPercentageToPx(2.96),
+		marginRight: widthPercentageToPx(5.33),
 		color: '#FFF'
 	},
 });

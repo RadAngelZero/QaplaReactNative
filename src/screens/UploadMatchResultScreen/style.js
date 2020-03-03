@@ -1,32 +1,39 @@
+// josep.sanahuja - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
 // diego          - 12-09-2019 - us99 - Added close icon styles
 // diego          - 13-08-2019 - us77 - Upload result and other result buttons styles updated
 // josep.sanahuja - 05-08-2019 - us78 - File creation
 
-import { StyleSheet, Platform } from 'react-native';
-import { hasSafeAreaView, heightPercentageToPx, getDimensions } from '../../utilities/iosAndroidDim';
+import { StyleSheet } from 'react-native';
+import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
+import {
+    NAV_TOPBAR_ICON_RIGHT_MARGIN,
+    NAV_TOPBAR_ICON_TOP_MARGIN
+} from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
         flex: 1,
-        justifyContent: 'center',
-        backgroundColor:'#131833',
-        marginTop: ((Platform.OS === 'ios') && !hasSafeAreaView()) ? 20 : 0
+        backgroundColor: '#0D1021',
+        paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     container: {
-        backgroundColor:'#131833',
+        backgroundColor: '#0D1021',
         alignItems: 'center',
         flex: 1
     },
-    closeIcon: {
-        marginTop: 36,
-        marginRight: 30,
-        marginBottom: 20,
-        alignSelf: 'flex-end'
+    title: {
+        color: '#FFF',
+        alignSelf: 'flex-start',
+        marginLeft: widthPercentageToPx(6.4),
+        fontSize: 32,
+        fontWeight: 'bold',
+        width: widthPercentageToPx(70),
+        letterSpacing: 0.51
     },
     winLooseContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: '2%'
+        marginTop: heightPercentageToPx(2)
     },
     resultDecription: {
         color: '#B3B3B3',
@@ -35,10 +42,10 @@ export default styles = StyleSheet.create({
         textAlign: 'center'
     },
     winLooseSeparator: {
-        width: '6%'
+        width: widthPercentageToPx(6)
     },
     uploadEvidence: {
-        marginTop: '10%',
+        marginTop: heightPercentageToPx(10),
         alignItems: 'center'
     },
     footerEvidence: {
@@ -53,9 +60,9 @@ export default styles = StyleSheet.create({
         borderWidth: 3,
         borderStyle: 'solid',
         backgroundColor: 'transparent',
-        marginTop: heightPercentageToPx('5%'),
-        marginRight: 40,
-        marginLeft: 40
+        marginTop: heightPercentageToPx(5),
+        marginRight: widthPercentageToPx(10.67),
+        marginLeft: widthPercentageToPx(10.67)
     },
     buttonText: {
         color: '#FFF',
@@ -63,26 +70,28 @@ export default styles = StyleSheet.create({
         fontWeight: '900',
         textAlign: 'center',
         letterSpacing: .5,
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32,
-        width: getDimensions().width * .4
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53),
+        width: widthPercentageToPx(40)
     },
     uploadResultButton: {
-        marginTop: 24.5,
+        marginTop: heightPercentageToPx(3.01),
+        position: 'absolute',
+        bottom: 16,
         borderRadius: 100,
         backgroundColor: '#FA2D79',
         elevation: 6,
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
-            height: 3,
+            height: heightPercentageToPx(0.37),
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-        marginRight: 40,
-        marginLeft: 40,
-        marginBottom: 24
+        marginRight: widthPercentageToPx(10.67),
+        marginLeft: widthPercentageToPx(10.67),
+        marginBottom: heightPercentageToPx(2.95)
     }
 });

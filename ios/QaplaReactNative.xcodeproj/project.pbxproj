@@ -23,6 +23,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		1C7DF1DA170A43FF9067622F /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B9B853A061B4470950B6613 /* libRNFirebase.a */; };
 		1E90C74E7E254F929365151D /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A72D8BF411434CFFA420543C /* libRNSVG.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -38,16 +39,17 @@
 		2DCD954D1E0B4F2C00145EB5 /* QaplaReactNativeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* QaplaReactNativeTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		370EF3D9F81D4C1DB5AB3C5D /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 922E5D38CA6B45598622DD88 /* libRNGestureHandler.a */; };
+		3CEE516DF49C3EAF2A8D24EF /* libPods-QaplaReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBF927A9EB9D21FEB290CB4A /* libPods-QaplaReactNative.a */; };
 		41136B8672F94535B2ED57C1 /* libRNGestureHandler-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A60BC48C48B4C85B4829170 /* libRNGestureHandler-tvOS.a */; };
-		61D7D7A1791BAA77CC6428A1 /* libPods-QaplaReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2990C7E4F42EE465AFFF0AF9 /* libPods-QaplaReactNative.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		A7E6DD3590B1B1DE2D3D5406 /* libPods-QaplaReactNative-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F40E0519AB473A2FDFA955 /* libPods-QaplaReactNative-tvOSTests.a */; };
+		8D36FBD26427ADFC0B4EC5CA /* libPods-QaplaReactNative-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B98E919169838B00A0DD24C /* libPods-QaplaReactNative-tvOSTests.a */; };
+		A2B20DC443759F97FF2FF447 /* libPods-QaplaReactNative-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 967A61B0BC9EABE46ECA8107 /* libPods-QaplaReactNative-tvOS.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		C8983909D9124FFBB2B1E2DD /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 804A4C544EF34401B305DB30 /* libRNSVG-tvOS.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
-		F99FA6EB22E77F3000D0BBFB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F99FA6EA22E77F3000D0BBFB /* GoogleService-Info.plist */; };
-		FBF77EE29EB4F9143C0420F1 /* libPods-QaplaReactNative-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFC30DCC651B0B2BC1D121F /* libPods-QaplaReactNative-tvOS.a */; };
+		F92EA55B23D7E8A8004455A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F92EA52F23D7E8A8004455A5 /* GoogleService-Info.plist */; };
+		F97D0A5A233BF67D00C00713 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F97D0A33233BF33000C00713 /* libRCTCameraRoll.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,6 +298,13 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		F917ADC32343D98D00DF98A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1EC46B75F6D14A2D93FF00D7 /* RNFirebase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNFirebase;
+		};
 		F951DB6C22D518B100801C80 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -352,6 +361,13 @@
 			remoteGlobalIDString = B5C32A36220C603B000FFB8D;
 			remoteInfo = "RNGestureHandler-tvOS";
 		};
+		F97D0A32233BF33000C00713 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F97D0A29233BF33000C00713 /* RCTCameraRoll.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
+			remoteInfo = RCTCameraRoll;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -364,9 +380,11 @@
 		00E356EE1AD99517003FC87E /* QaplaReactNativeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QaplaReactNativeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* QaplaReactNativeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QaplaReactNativeTests.m; sourceTree = "<group>"; };
+		0525A109F7A264CD45E505D3 /* Pods-QaplaGaming-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaGaming-tvOS.release.xcconfig"; path = "Target Support Files/Pods-QaplaGaming-tvOS/Pods-QaplaGaming-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		06C0AE7AC14ADB1E9852D219 /* Pods-QaplaGaming-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaGaming-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-QaplaGaming-tvOSTests/Pods-QaplaGaming-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* QaplaReactNative.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QaplaReactNative.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Qapla Gaming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Qapla Gaming.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = QaplaReactNative/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = QaplaReactNative/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -374,31 +392,40 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = QaplaReactNative/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = QaplaReactNative/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		2990C7E4F42EE465AFFF0AF9 /* libPods-QaplaReactNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1EC46B75F6D14A2D93FF00D7 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* QaplaReactNative-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QaplaReactNative-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* QaplaReactNative-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "QaplaReactNative-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		37DD9AAB7E7C2DAAFF7F2B00 /* Pods-QaplaReactNative-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaReactNative-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-QaplaReactNative-tvOS/Pods-QaplaReactNative-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		37F40E0519AB473A2FDFA955 /* libPods-QaplaReactNative-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A60BC48C48B4C85B4829170 /* libRNGestureHandler-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNGestureHandler-tvOS.a"; sourceTree = "<group>"; };
+		535E6244ECFAD466CDFC7166 /* Pods-QaplaGaming-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaGaming-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-QaplaGaming-tvOSTests/Pods-QaplaGaming-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		6DD599BCCA5F5D80DAE78351 /* Pods-QaplaReactNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaReactNative.debug.xcconfig"; path = "Target Support Files/Pods-QaplaReactNative/Pods-QaplaReactNative.debug.xcconfig"; sourceTree = "<group>"; };
 		72D2792BCC8840D0A194B5E6 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
+		769550AADC6E9157702A6A41 /* Pods-QaplaGaming.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaGaming.release.xcconfig"; path = "Target Support Files/Pods-QaplaGaming/Pods-QaplaGaming.release.xcconfig"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		7B98E919169838B00A0DD24C /* libPods-QaplaReactNative-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		804A4C544EF34401B305DB30 /* libRNSVG-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNSVG-tvOS.a"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8687C8670DBA8624622AB07E /* Pods-QaplaReactNative.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaReactNative.release.xcconfig"; path = "Target Support Files/Pods-QaplaReactNative/Pods-QaplaReactNative.release.xcconfig"; sourceTree = "<group>"; };
 		911B4CC1AF01C5BED4BAF4A7 /* Pods-QaplaReactNative-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaReactNative-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-QaplaReactNative-tvOSTests/Pods-QaplaReactNative-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		922E5D38CA6B45598622DD88 /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = "<group>"; };
 		9523726E470B40A49AB6B1FB /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
+		967A61B0BC9EABE46ECA8107 /* libPods-QaplaReactNative-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AA60F2F18E107E5DA436968 /* Pods-QaplaReactNative-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaReactNative-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-QaplaReactNative-tvOSTests/Pods-QaplaReactNative-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9B9B853A061B4470950B6613 /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		A72D8BF411434CFFA420543C /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSVG.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B6B8741564C6E040BCA7B6F8 /* Pods-QaplaReactNative-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaReactNative-tvOS.release.xcconfig"; path = "Target Support Files/Pods-QaplaReactNative-tvOS/Pods-QaplaReactNative-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		C0DEE64A4E2E8883D9A0ABC8 /* Pods-QaplaGaming.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaGaming.debug.xcconfig"; path = "Target Support Files/Pods-QaplaGaming/Pods-QaplaGaming.debug.xcconfig"; sourceTree = "<group>"; };
+		EC8BF1F0EFF03E57B1ED856F /* Pods-QaplaGaming-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaGaming-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-QaplaGaming-tvOS/Pods-QaplaGaming-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		F99FA6EA22E77F3000D0BBFB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Miyabi Labs/fit2018/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		FEFC30DCC651B0B2BC1D121F /* libPods-QaplaReactNative-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F92EA52F23D7E8A8004455A5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F97D0A29233BF33000C00713 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
+		F9F4B79223885C80003AD8FC /* QaplaReactNativeRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = QaplaReactNativeRelease.entitlements; path = QaplaReactNative/QaplaReactNativeRelease.entitlements; sourceTree = "<group>"; };
+		F9F4B7BE23885FBE003AD8FC /* QaplaReactNative.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = QaplaReactNative.entitlements; path = QaplaReactNative/QaplaReactNative.entitlements; sourceTree = "<group>"; };
+		FBF927A9EB9D21FEB290CB4A /* libPods-QaplaReactNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -427,9 +454,11 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				F97D0A5A233BF67D00C00713 /* libRCTCameraRoll.a in Frameworks */,
 				370EF3D9F81D4C1DB5AB3C5D /* libRNGestureHandler.a in Frameworks */,
 				1E90C74E7E254F929365151D /* libRNSVG.a in Frameworks */,
-				61D7D7A1791BAA77CC6428A1 /* libPods-QaplaReactNative.a in Frameworks */,
+				1C7DF1DA170A43FF9067622F /* libRNFirebase.a in Frameworks */,
+				3CEE516DF49C3EAF2A8D24EF /* libPods-QaplaReactNative.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,7 +477,7 @@
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
 				41136B8672F94535B2ED57C1 /* libRNGestureHandler-tvOS.a in Frameworks */,
 				C8983909D9124FFBB2B1E2DD /* libRNSVG-tvOS.a in Frameworks */,
-				FBF77EE29EB4F9143C0420F1 /* libPods-QaplaReactNative-tvOS.a in Frameworks */,
+				A2B20DC443759F97FF2FF447 /* libPods-QaplaReactNative-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,7 +486,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */,
-				A7E6DD3590B1B1DE2D3D5406 /* libPods-QaplaReactNative-tvOSTests.a in Frameworks */,
+				8D36FBD26427ADFC0B4EC5CA /* libPods-QaplaReactNative-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,6 +575,8 @@
 		13B07FAE1A68108700A75B9A /* QaplaReactNative */ = {
 			isa = PBXGroup;
 			children = (
+				F9F4B7BE23885FBE003AD8FC /* QaplaReactNative.entitlements */,
+				F9F4B79223885C80003AD8FC /* QaplaReactNativeRelease.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -586,9 +617,9 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
-				2990C7E4F42EE465AFFF0AF9 /* libPods-QaplaReactNative.a */,
-				FEFC30DCC651B0B2BC1D121F /* libPods-QaplaReactNative-tvOS.a */,
-				37F40E0519AB473A2FDFA955 /* libPods-QaplaReactNative-tvOSTests.a */,
+				FBF927A9EB9D21FEB290CB4A /* libPods-QaplaReactNative.a */,
+				967A61B0BC9EABE46ECA8107 /* libPods-QaplaReactNative-tvOS.a */,
+				7B98E919169838B00A0DD24C /* libPods-QaplaReactNative-tvOSTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -602,6 +633,12 @@
 				B6B8741564C6E040BCA7B6F8 /* Pods-QaplaReactNative-tvOS.release.xcconfig */,
 				9AA60F2F18E107E5DA436968 /* Pods-QaplaReactNative-tvOSTests.debug.xcconfig */,
 				911B4CC1AF01C5BED4BAF4A7 /* Pods-QaplaReactNative-tvOSTests.release.xcconfig */,
+				C0DEE64A4E2E8883D9A0ABC8 /* Pods-QaplaGaming.debug.xcconfig */,
+				769550AADC6E9157702A6A41 /* Pods-QaplaGaming.release.xcconfig */,
+				EC8BF1F0EFF03E57B1ED856F /* Pods-QaplaGaming-tvOS.debug.xcconfig */,
+				0525A109F7A264CD45E505D3 /* Pods-QaplaGaming-tvOS.release.xcconfig */,
+				06C0AE7AC14ADB1E9852D219 /* Pods-QaplaGaming-tvOSTests.debug.xcconfig */,
+				535E6244ECFAD466CDFC7166 /* Pods-QaplaGaming-tvOSTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -627,6 +664,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				F97D0A29233BF33000C00713 /* RCTCameraRoll.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -641,6 +679,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				9523726E470B40A49AB6B1FB /* RNGestureHandler.xcodeproj */,
 				72D2792BCC8840D0A194B5E6 /* RNSVG.xcodeproj */,
+				1EC46B75F6D14A2D93FF00D7 /* RNFirebase.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -657,7 +696,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				F99FA6EA22E77F3000D0BBFB /* GoogleService-Info.plist */,
+				F92EA52F23D7E8A8004455A5 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* QaplaReactNative */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* QaplaReactNativeTests */,
@@ -674,7 +713,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* QaplaReactNative.app */,
+				13B07F961A680F5B00A75B9A /* Qapla Gaming.app */,
 				00E356EE1AD99517003FC87E /* QaplaReactNativeTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* QaplaReactNative-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* QaplaReactNative-tvOSTests.xctest */,
@@ -691,6 +730,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		F917ADC02343D98C00DF98A3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F917ADC42343D98D00DF98A3 /* libRNFirebase.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F951DB4622D518B000801C80 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -698,6 +745,7 @@
 				A72D8BF411434CFFA420543C /* libRNSVG.a */,
 				3A60BC48C48B4C85B4829170 /* libRNGestureHandler-tvOS.a */,
 				804A4C544EF34401B305DB30 /* libRNSVG-tvOS.a */,
+				9B9B853A061B4470950B6613 /* libRNFirebase.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -716,6 +764,14 @@
 			children = (
 				F951DB8B22D518B100801C80 /* libRNGestureHandler.a */,
 				F951DB8D22D518B100801C80 /* libRNGestureHandler-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F97D0A2A233BF33000C00713 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F97D0A33233BF33000C00713 /* libRCTCameraRoll.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -758,7 +814,7 @@
 			);
 			name = QaplaReactNative;
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* QaplaReactNative.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Qapla Gaming.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* QaplaReactNative-tvOS */ = {
@@ -810,10 +866,13 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = TRFNHWRW5M;
+						ProvisioningStyle = Manual;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 9DKYMDN2KS;
+						DevelopmentTeam = TRFNHWRW5M;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -852,6 +911,10 @@
 					ProjectRef = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
 				},
 				{
+					ProductGroup = F97D0A2A233BF33000C00713 /* Products */;
+					ProjectRef = F97D0A29233BF33000C00713 /* RCTCameraRoll.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
 					ProjectRef = 00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */;
 				},
@@ -886,6 +949,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = F917ADC02343D98C00DF98A3 /* Products */;
+					ProjectRef = 1EC46B75F6D14A2D93FF00D7 /* RNFirebase.xcodeproj */;
 				},
 				{
 					ProductGroup = F951DB8622D518B100801C80 /* Products */;
@@ -1138,6 +1205,13 @@
 			remoteRef = ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		F917ADC42343D98D00DF98A3 /* libRNFirebase.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFirebase.a;
+			remoteRef = F917ADC32343D98D00DF98A3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		F951DB6D22D518B100801C80 /* libjsi.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1194,6 +1268,13 @@
 			remoteRef = F951DB8C22D518B100801C80 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		F97D0A33233BF33000C00713 /* libRCTCameraRoll.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCameraRoll.a;
+			remoteRef = F97D0A32233BF33000C00713 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1210,7 +1291,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				F99FA6EB22E77F3000D0BBFB /* GoogleService-Info.plist in Resources */,
+				F92EA55B23D7E8A8004455A5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1415,6 +1496,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1425,18 +1508,24 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
+					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 				);
 				INFOPLIST_FILE = QaplaReactNativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QaplaReactNative.app/QaplaReactNative";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Qapla Gaming.app/Qapla Gaming";
 			};
 			name = Debug;
 		};
@@ -1444,25 +1533,35 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
+					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 				);
 				INFOPLIST_FILE = QaplaReactNativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QaplaReactNative.app/QaplaReactNative";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Qapla Gaming.app/Qapla Gaming";
 			};
 			name = Release;
 		};
@@ -1471,26 +1570,33 @@
 			baseConfigurationReference = 6DD599BCCA5F5D80DAE78351 /* Pods-QaplaReactNative.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_ENTITLEMENTS = QaplaReactNative/QaplaReactNative.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 13;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 9DKYMDN2KS;
+				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
+					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/CameraRoll/**",
 				);
 				INFOPLIST_FILE = QaplaReactNative/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = QaplaReactNative;
+				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
+				PRODUCT_NAME = "Qapla Gaming";
+				PROVISIONING_PROFILE_SPECIFIER = IosQaplaDevelopment;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1500,25 +1606,32 @@
 			baseConfigurationReference = 8687C8670DBA8624622AB07E /* Pods-QaplaReactNative.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9DKYMDN2KS;
+				CODE_SIGN_ENTITLEMENTS = QaplaReactNative/QaplaReactNativeRelease.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 13;
+				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
+					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/CameraRoll/**",
 				);
 				INFOPLIST_FILE = QaplaReactNative/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = QaplaReactNative;
+				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
+				PRODUCT_NAME = "Qapla Gaming";
+				PROVISIONING_PROFILE_SPECIFIER = IosQaplaDevelopment;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1542,10 +1655,14 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
+					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 				);
 				INFOPLIST_FILE = "QaplaReactNative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1577,10 +1694,14 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
+					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 				);
 				INFOPLIST_FILE = "QaplaReactNative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1611,10 +1732,14 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
+					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 				);
 				INFOPLIST_FILE = "QaplaReactNative-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1622,7 +1747,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.QaplaReactNative-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QaplaReactNative-tvOS.app/QaplaReactNative-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QaplaGaming-tvOS.app/QaplaGaming-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
@@ -1645,10 +1770,14 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
 					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
+					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 				);
 				INFOPLIST_FILE = "QaplaReactNative-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1656,7 +1785,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.QaplaReactNative-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QaplaReactNative-tvOS.app/QaplaReactNative-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QaplaGaming-tvOS.app/QaplaGaming-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;

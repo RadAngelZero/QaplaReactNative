@@ -12,6 +12,7 @@ import { acceptChallengeRequest } from '../../services/functions';
 import { withNavigation } from 'react-navigation';
 import CheckBox from '../CheckBox/CheckBox';
 import Images from './../../../assets/images';
+import { translate } from '../../utilities/i18';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -27,18 +28,18 @@ class AcceptChallengeModal extends Component {
         if (this.state.dontShowModalAgain) {
             storeData('dont-show-delete-notifications-modal', 'true');
         }
-        
+
         acceptChallengeRequest(this.props.notification, this.props.uid);
-        this.props.navigation.navigate('MisRetas');
+        this.props.navigation.navigate('MyMatches');
     }
-    
+
     /**
      * @description Toogle the dontShowModalAgain flag to the selected state of the checkbox
      */
     setCheckBoxState = (newState) => {
         this.setState({ dontShowModalAgain: newState });
     }
-    
+
     render() {
         return (
             <Modal
@@ -54,17 +55,16 @@ class AcceptChallengeModal extends Component {
                                 </View>
                             </TouchableWithoutFeedback>
                             <Text style={styles.paragraph}>
-                                Al aceptar este desafio todos los otros desafios que te han hecho a esta reta seran eliminados.
+                                {translate('notificationsScreen.acceptChallengeModal.body')}
                             </Text>
-                            <Text style={styles.smallText}>No mostrar de nuevo</Text>
                             <CheckBox
                                 style={styles.checkbox}
-                                label='Entendido, no volver a mostrar este mensaje'
+                                label={translate('notificationsScreen.acceptChallengeModal.dontShowItAgain')}
                                 selected={this.state.dontShowModalAgain}
                                 onPress={this.setCheckBoxState} />
                             <TouchableWithoutFeedback onPress={this.acceptDelete}>
                                 <View style={styles.gotItButton}>
-                                    <Text style={styles.gotItButtonText}>Continuar</Text>
+                                    <Text style={styles.gotItButtonText}>{translate('notificationsScreen.acceptChallengeModal.continue')}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

@@ -3,6 +3,9 @@
 // diego     - 06-08-2019 - us76 - Function to get the gamer tag key on string created
 // diego     - 16-07-2019 - us30 - File creation
 
+import { Linking } from 'react-native';
+import { translate } from './i18';
+
 /**Generador ramdom de claves para retas
  * basado en el metodo de android
 */
@@ -46,14 +49,14 @@ export function getGamerTagStringWithGameAndPlatform(platform, game) {
 
 /**
  * Return the name of the platform based on their key
- * 
+ *
  * @param {string} platformKey Key of the platform
  * @returns {string} Platform name
  */
 export function getPlatformNameWithKey(platformKey) {
     switch (platformKey) {
         case 'pc_white':
-            return 'PC/Movil';
+            return translate('platforms.mobile');
         case 'ps4_white':
             return 'Play Station 4';
         case 'xbox_white':
@@ -67,7 +70,7 @@ export function getPlatformNameWithKey(platformKey) {
 
 /**
  * Sort all the games from a user based on their platform
- * 
+ *
  * @param {Array} userGames Array with all the game keys of the current user
  * @param {Object} allQaplaGames List that contains all the games on Qapla
  */
@@ -91,10 +94,10 @@ export function getUserGamesOrderedByPlatform(userGames, allQaplaGames) {
 
     Object.keys(allQaplaGames).map((gamePlatform) => {
         userGames.sort().map((gameToLoadKey) => {
-            
+
             // If the platform on the current iteration have a child with key of the current user game
             if(allQaplaGames[gamePlatform].hasOwnProperty(gameToLoadKey)) {
-                
+
                 // Check if the user don't have games on that platform
                 if(!gamesOrderedByPlatform[gamePlatform]){
 
@@ -117,7 +120,7 @@ export function getUserGamesOrderedByPlatform(userGames, allQaplaGames) {
 /**
  * @description Return true if the functionToCheck param is a function
  * otherwise return false
- * 
+ *
  * @param {function} functionToCheck The function to verify
  */
 export function isFunction(functionToCheck) {
@@ -128,4 +131,8 @@ export function isFunction(functionToCheck) {
      * Check if the type of the object is [object function]
      */
     return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+}
+
+export function withdrawQaploins() {
+    Linking.openURL('whatsapp://send?text=Hola, quiero retirar mis qaploins&phone=+523312971299'/*<= Change for the suport number */);
 }

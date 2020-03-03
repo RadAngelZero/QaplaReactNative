@@ -1,3 +1,9 @@
+// josep.sanahuja - 09-01-2020 - NA    - componentDidMount check this.props.userGameList is valid
+// diego          - 30-12-2019 - us189 - Removed unnecesary BackHandler (removed code do the same that the default behavior)
+//                                       SafeAreaView handled with react navigation SafeAreaView, to avoid bottom margin
+// josep.sanahuja - 12-12-2019 - us160 - 'Load Games (Create Match)' -> Add Games Screen First Match
+//                                       'Load Games (Add Game)'' -> 'Add Games Screen'
+// diego          - 12-12-2019 - us169 - Redirect prop added on AddGamerTagModal
 // diego          - 03-09-2019 - us96 - Added custom header (TopNavOptions)
 // diego          - 02-09-2019 - us91 - Add track and record screen segment statistic
 // diego          - 21-08-2019 - us89 - Added loadGamesUserDontHave prop
@@ -14,7 +20,8 @@
 // josep.sanahuja - 15-07-2019 - us25 - + addGameProfile Modal logic
 
 import React from 'react';
-import { View, BackHandler, SafeAreaView } from 'react-native'
+import { View } from 'react-native'
+import { SafeAreaView } from 'react-navigation';
 
 import styles from './style'
 import VideoGamesList from '../../components/VideoGamesList/VideoGamesList';
@@ -22,18 +29,8 @@ import { connect } from 'react-redux';
 import { setSelectedGame } from '../../actions/gamesActions';
 import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
-import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 
 class LoadGamesScreen extends React.Component {
-    static navigationOptions = ({ navigation }) => ({
-        header: ({ props }) => (
-            <TopNavOptions
-                close
-                navigation={navigation}
-                back={navigation.getParam('onCloseGoTo', '') !== 'Perfil'}
-                onCloseGoTo={navigation.getParam('onCloseGoTo', '')} />)
-    });
-
     constructor(props) {
       super(props);
       this.state = {
@@ -43,24 +40,26 @@ class LoadGamesScreen extends React.Component {
 
     componentDidMount() {
         this.list = [
-            
+
             /**
              * This event is triggered when the user goes to other screen
              */
             this.props.navigation.addListener(
                 'willFocus',
                 (payload) => {
-                    if (this.props.navigation.getParam('loadGamesThatUserDontHave', false)) {
-                        recordScreenOnSegment('Load Games (Add Game)');
+                    if (this.props.navigation.getParam('loadGamesUserDontHave', false)) {
+                        recordScreenOnSegment('Clicked Add Games from profile');
                     } else {
-                        recordScreenOnSegment('Load Games (Create Match)');
+                        recordScreenOnSegment('Add Games Screen');
+                    }
+
+                    if (this.props.userGameList && this.props.userGameList.length === 0) {
+                    	recordScreenOnSegment('Add Games Screen First Match');
                     }
                 }
             )
         ]
-        this.props.navigation.setParams({ onCloseGoTo: this.props.navigation.getParam('onCloseGoTo', 'Home') });
-        BackHandler.addEventListener('hardwareBackPress', this.backToMatchTypeScreen);
-        
+
         // #bug2:
         // At the beginning of the components life, there should not be any game selected,
         // the way we ensure that is by overwriting the value it may have when the component
@@ -69,15 +68,8 @@ class LoadGamesScreen extends React.Component {
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.backToMatchTypeScreen);
-
         //Remove willFocus listener on navigation
         this.list.forEach((item) => item.remove());
-    }
-
-    backToMatchTypeScreen = () => {
-        this.props.navigation.navigate('ChooseMatchType');
-        return true;
     }
 
     /**
@@ -93,14 +85,13 @@ class LoadGamesScreen extends React.Component {
     userHaveGame() {
         let result = true;
         if (this.isThereSelectedGame()) {
-
             result = this.props.userGameList instanceof Array ? this.props.userGameList.indexOf(this.props.selectedGame.gameKey) !== -1 : false;
         }
 
         return result;
     }
 
-    /** 
+    /**
      * If there are no games on the profile of the user and a game is selected
      * the modal should open
      */
@@ -116,9 +107,10 @@ class LoadGamesScreen extends React.Component {
 
     render() {
         return (
-            <SafeAreaView style={styles.sfvContainer}>
+            <SafeAreaView forceInset={{ bottom: 'never' }} style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <AddGamerTagModal
+                        redirect
                         selectedGame={this.props.selectedGame}
                         uid={this.props.uid}
                         userName={this.props.userName}

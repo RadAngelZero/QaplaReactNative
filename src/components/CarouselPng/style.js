@@ -1,7 +1,7 @@
 // diego	  	  - 03-09-2019 - us92 - Update carousel styles according to inVision design
 
 import {StyleSheet} from 'react-native'
-import {getDimensions} from '@utilities/iosAndroidDim'
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export const styles = StyleSheet.create({
   container:{
@@ -10,49 +10,49 @@ export const styles = StyleSheet.create({
     backgroundColor:'#131833'
   },
   content:{
-    backgroundColor:'white',
-    marginHorizontal:10,
-    paddingHorizontal:10,
-    paddingVertical:5,
+    backgroundColor:'#FFF',
+    marginHorizontal: widthPercentageToPx(2.67),
+    paddingHorizontal: widthPercentageToPx(2.67),
+    paddingVertical: heightPercentageToPx(0.62),
     borderRadius:3
   },
   flatListContainer: {
-    width: getDimensions().width,
+    width: widthPercentageToPx(100),
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   imageContainer: {
-    height: getDimensions().height * .35,
+    height: heightPercentageToPx(35)
   },
   image: {
-    marginTop: '30%',
-     justifyContent: 'flex-start'
+    marginTop: heightPercentageToPx(17.66),
+    justifyContent: 'flex-start'
   },
   title: {
-    marginTop: '25%',
+    marginTop: heightPercentageToPx(14.69),
     fontSize: 24,
     color: '#FFF',
     fontWeight: 'bold',
     textAlign: 'center'
   },
   divider: {
-    marginTop: '4%'
+    marginTop: heightPercentageToPx(3.59)
   },
   description: {
-    marginTop: '10%',
+    marginTop: heightPercentageToPx(6.56),
     fontSize: 18,
     fontWeight: '500',
     lineHeight: 21,
     color: '#FFF',
     textAlign: 'center',
-    marginBottom: '5%',
-    maxWidth: getDimensions().width - 64
+    marginBottom: heightPercentageToPx(5),
+    maxWidth: widthPercentageToPx(83)
   },
   switch: {
-    marginBottom: '5%'
+    marginBottom: heightPercentageToPx(5)
   },
   hideTutorial: {
-    marginRight: '10%',
+    marginRight: widthPercentageToPx(10),
     color: '#36E5CE',
   },
   switchContainer: {

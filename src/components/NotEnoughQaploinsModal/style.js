@@ -2,7 +2,7 @@
 // josep.sanahuja - 08-08-2019 - us85 - File creation
 
 import { StyleSheet } from 'react-native';
-import { getDimensions } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
 	mainContainer: {
@@ -11,11 +11,11 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        width: '100%',
-        height: '100%',
+        width: widthPercentageToPx(100),
+        height: heightPercentageToPx(100),
 	},
 	container: {
-        width: getDimensions().width * .8,
+        width: widthPercentageToPx(80),
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#141833',
@@ -24,19 +24,19 @@ export default styles = StyleSheet.create({
         elevation: 6,
         shadowColor: '#000',
         shadowOffset: {
-            width: 0,
-            height: 2,
+            width: widthPercentageToPx(0),
+            height: heightPercentageToPx(0.25),
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        marginRight: 20,
-        marginLeft: 20,
-        paddingTop: '20%'
+        marginRight: widthPercentageToPx(5.33),
+        marginLeft: widthPercentageToPx(5.33)
     },
     headerText: {
-        marginBottom: '30%',
+        marginTop: 16,
+        marginBottom: 8,
         color: '#FFF',
-        fontSize: 40,
+        fontSize: 24,
         textAlign: 'center'
     },
     text: {
@@ -44,19 +44,20 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 16,
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 32,
-        marginRight: 32
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53)
     },
     smallText: {
-        marginTop: 10,
+        marginTop: heightPercentageToPx(1.23),
+        marginBottom: 16,
         color: '#909299',
         fontSize: 10,
         textAlign: 'center'
     },
     okButton: {
-        marginTop: 11,
+        marginTop: heightPercentageToPx(1.31),
         borderRadius: 100,
         backgroundColor: '#6D7DDE'
     },

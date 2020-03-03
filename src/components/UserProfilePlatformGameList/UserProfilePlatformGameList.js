@@ -16,14 +16,12 @@ export class UserProfilePlatformGameList extends Component {
 
     /**
      * Return resources (Icon and name) of the game
-     * 
      * @param {string} game Game to get resources
      */
     getGameResources = (game) => gamesResources[game.replace(/ +/g, '')];
 
     /**
      * Return the win rate of the user from game with gameKey
-     * 
      * @param {string} gameKey Key of the game
      */
     getWinRate = (gameKey) => {
@@ -35,7 +33,6 @@ export class UserProfilePlatformGameList extends Component {
 
     /**
      * Return the experience level of the user
-     * 
      * @param {string} gameKey Key of the game
      */
     getExperience = (gameKey) => {
@@ -49,14 +46,12 @@ export class UserProfilePlatformGameList extends Component {
     /**
      * Determine the user level of a game based on the experience of the user
      * in that game
-     * 
      * @param {string} gameKey Identifier of the game
      */
     determineUserLevel = (gameKey) => this.props.gamerStatistics[gameKey].gameExp / 20;
 
     /**
      * Check if the given index is the last from a list of size quantityOfElements
-     * 
      * @param {number} currentIndex Index to evaluate
      * @param {number} quantityOfElements Quantity of elements from the list to evaluate
      */
@@ -66,7 +61,7 @@ export class UserProfilePlatformGameList extends Component {
         return (
             <View style={{ marginBottom: this.props.lastChild ? 20 : 0 }}>
                 <Text style={styles.title}>{getPlatformNameWithKey(this.props.platform)}</Text>
-                <ScrollView horizontal>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {Object.keys(this.props.userGames).map((gameKey, index) => {
                         let gamerStatistics = null;
                         if (this.props.gamerStatistics[gameKey]) {

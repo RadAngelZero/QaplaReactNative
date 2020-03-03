@@ -1,20 +1,23 @@
-// diego           - 20-08-2019 - us89 - File creation
+// josep.sanahuja  - 22-11-2019 - us153 - Add editImg
+// diego           - 20-08-2019 - us89  - File creation
 
 import { StyleSheet } from 'react-native';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
-        backgroundColor:'#131833',
+        backgroundColor: '#0D1021',
+        justifyContent: 'center',
         flex: 1
     },
     userInfoContainer: {
-        backgroundColor: '#0e1222',
+        backgroundColor: '#0E1222',
         flexDirection: 'row',
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: heightPercentageToPx(0.25),
         },
         shadowOpacity: 0.23,
         shadowRadius: 2.62,
@@ -22,16 +25,23 @@ export default styles = StyleSheet.create({
     },
     imageAndNameContainer: {
         flexDirection: 'column',
-        marginRight: 30,
-        marginLeft: 86,
-        marginBottom: 36
+        marginRight: widthPercentageToPx(10),
+        marginLeft: widthPercentageToPx(10),
+        marginBottom: heightPercentageToPx(4.43),
+        alignItems: 'center'
     },
     avatarImage: {
         height: 60,
         width: 60,
-        borderRadius: 100,
+        borderRadius: 60 / 2,
         backgroundColor: '#131833',
-        marginBottom: 8
+        marginBottom: heightPercentageToPx(1),
+        resizeMode: 'cover'
+    },
+    editImg: {
+        position: 'absolute',
+        bottom: heightPercentageToPx(1),
+        right: widthPercentageToPx(-0.5)
     },
     userName: {
         fontSize: 14,
@@ -41,44 +51,52 @@ export default styles = StyleSheet.create({
     },
     manageQaploinsContainer: {
         flexDirection: 'column',
-        marginBottom: 25
+        marginBottom: heightPercentageToPx(3.07)
     },
     qaploinInfoContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: 18
+        alignSelf: 'flex-end',
+        marginBottom: heightPercentageToPx(2.21)
     },
     qaploinImage: {
-        marginRight: 10,
-        height: 30,
-        width: 30
+        marginRight: widthPercentageToPx(2.67)
     },
     qaploinsAmount: {
-        fontSize: 24,
+        fontSize: 26,
         color: '#FFF',
-        textAlign: 'right'
+        fontWeight: 'bold'
+    },
+    buttonGroup: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     addQaploinsButton: {
         borderRadius: 100,
-        backgroundColor: '#FA2D79'
+        backgroundColor: '#FA2D79',
+        textAlignVertical: 'center'
+    },
+    cashoutQaploins: {
+        borderRadius: 100,
+        backgroundColor: '#6D7DDE',
+        marginLeft: widthPercentageToPx(1.66),
+        textAlignVertical: 'center'
     },
     addQaploinsButtonText: {
         color: '#FFF',
         fontSize: 16,
         fontWeight: 'bold',
-        textAlignVertical: 'center',
         textAlign: 'center',
-        marginTop: 10,
-        marginBottom: 10,
-        marginLeft: 22,
-        marginRight: 22
+        marginTop: heightPercentageToPx(1.23),
+        marginBottom: heightPercentageToPx(1.23),
+        marginLeft: widthPercentageToPx(5.87),
+        marginRight: widthPercentageToPx(5.87)
     },
     fab: {
-        bottom: 16,
-        right: 16,
-        width: 48,
-        height: 48,
+        bottom: heightPercentageToPx(2),
+        right: widthPercentageToPx(4.26),
+        width: widthPercentageToPx(12.8),
+        height: heightPercentageToPx(6),
         borderRadius: 100,
         position: 'absolute',
         backgroundColor: '#FA2D79',
@@ -87,7 +105,7 @@ export default styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 3,
+            height: heightPercentageToPx(0.37),
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,

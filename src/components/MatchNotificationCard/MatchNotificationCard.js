@@ -10,7 +10,7 @@
 // diego          - 01-08-2019 - us58 - File creation
 
 import React, { Component } from 'react';
-import { View, Image, TouchableWithoutFeedback, Text, ActivityIndicator, Modal } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Text, ActivityIndicator } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -21,7 +21,6 @@ import {
     getMatchWitMatchId,
     declineMatch,
     getGamerTagWithUID,
-    deleteNotification,
     userHasQaploinsToPlayMatch
 } from '../../services/database';
 import { retrieveData } from '../../utilities/persistance';
@@ -33,6 +32,7 @@ import { acceptChallengeRequest } from '../../services/functions';
 // Components
 import AcceptChallengeModal from '../AcceptChallengeModal/AcceptChallengeModal';
 import NotEnoughQaploinsModal from '../NotEnoughQaploinsModal/NotEnoughQaploinsModal';
+import { translate } from '../../utilities/i18';
 
 
 class MatchNotificationCard extends Component {
@@ -60,14 +60,14 @@ class MatchNotificationCard extends Component {
         try {
             this.setState({ loading: true });
             const matchData = await getMatchWitMatchId(this.props.notification.idMatch);
-            
+
             if (matchData) {
                 matchData['userName'] = this.props.notification.userName;
                 matchData['gamerTag'] = await getGamerTagWithUID(this.props.notification.idUserSend, matchData.game, matchData.platform);
                 matchData['isChallenge'] = true;
                 matchData['acceptChallenge'] = this.tryToAcceptChallengeRequest;
 
-                this.props.navigation.navigate('MatchCard', {
+                this.props.navigation.navigate('MatchDetails', {
                         matchCard: matchData,
                         notification: this.props.notification,
                         notificationKey: this.props.notificationKey
@@ -90,7 +90,7 @@ class MatchNotificationCard extends Component {
         try {
             const avatar = await getProfileImageWithUID(this.props.notification.idUserSend);
             const gameName = await getGameNameOfMatch(this.props.notification.idMatch);
-            
+
             this.setState({
                 avatar,
                 userName: this.props.notification.userName,
@@ -111,9 +111,9 @@ class MatchNotificationCard extends Component {
         const dontShowAcceptChallengeModal = await retrieveData('dont-show-delete-notifications-modal');
 
         // Check if the challenger user have enough Qaploins (match bet) in his account so that it can
-        // play against the challenged user. 
-        const enoughQaploins = await userHasQaploinsToPlayMatch(this.props.notification.idUserSend, this.props.notification.idMatch); 
-        
+        // play against the challenged user.
+        const enoughQaploins = await userHasQaploinsToPlayMatch(this.props.notification.idUserSend, this.props.notification.idMatch);
+
         if (enoughQaploins !== null && !enoughQaploins) {
             this.setState({ openNoQaploinsModal: true });
         } else if (dontShowAcceptChallengeModal !== 'true') {
@@ -126,7 +126,7 @@ class MatchNotificationCard extends Component {
                 await acceptChallengeRequest(this.props.notification, this.props.uid);
                 trackOnSegment('Match Challenge Accepted');
 
-                this.props.navigation.navigate('MisRetas');
+                this.props.navigation.navigate('MyMatches');
             } catch (error) {
                 console.error(error);
             }
@@ -139,9 +139,10 @@ class MatchNotificationCard extends Component {
     }
 
     render() {
+        const { userName, gameName } = this.state;
         return (
             <>
-                {this.state.userName !== '' ?
+                {userName !== '' ?
                     <>
                         <View style={styles.container}>
                             <View style={styles.avatarContainer}>
@@ -152,16 +153,16 @@ class MatchNotificationCard extends Component {
                                 }
                             </View>
                             <View style={styles.infoContainer}>
-                                <Text style={styles.infoText}>¡{this.state.userName} quiere desafiar tu reta de {this.state.gameName}!</Text>
+                                <Text style={styles.infoText}>{translate('notificationsScreen.notificationTypes.matchNotification.title', { userName, gameName })}</Text>
                                 <View style={styles.infoButtonsMenu}>
                                     <TouchableWithoutFeedback onPress={() => this.tryToAcceptChallengeRequest()}>
                                         <View style={[styles.infoAcceptButton, styles.infoButton]}>
-                                            <Text style={styles.infoButtonText}>Aceptar</Text>
+                                            <Text style={styles.infoButtonText}>{translate('notificationsScreen.notificationTypes.matchNotification.accept')}</Text>
                                         </View>
                                     </TouchableWithoutFeedback>
                                     <TouchableWithoutFeedback onPress={this.declineMatch}>
                                         <View style={[styles.infoDeclineButton, styles.infoButton]}>
-                                            <Text style={styles.infoButtonText}>Rechazar</Text>
+                                            <Text style={styles.infoButtonText}>{translate('notificationsScreen.notificationTypes.matchNotification.decline')}</Text>
                                         </View>
                                     </TouchableWithoutFeedback>
                                 </View>

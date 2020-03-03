@@ -1,12 +1,13 @@
 // diego	      - 06-09-2019 - us93 - File creation
 
 import { StyleSheet } from 'react-native';
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: '100%'
+        width: widthPercentageToPx(100)
     },
     selectionArea: {
         flexDirection: 'row',
@@ -31,6 +32,6 @@ export default styles = StyleSheet.create({
         fontSize: 11,
         color: '#909299',
         textAlignVertical: 'center',
-        marginLeft: 8
+        marginLeft: widthPercentageToPx(2.13)
     }
 })

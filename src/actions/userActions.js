@@ -1,8 +1,9 @@
+// diego           - 13-11-2019 - us89 - signOutUser created
 // diego           - 20-08-2019 - us89 - Load user games statistics
 // diego           - 01-08-2019 - us58 - Change the way to load the user data and the way for listen changes
 
-import { UPDATE_USER_DATA, REMOVE_USER_DATA } from '../utilities/Constants';
-import { usersRef, gamesRef, gamersRef } from '../services/database';
+import { UPDATE_USER_DATA, REMOVE_USER_DATA, SIGN_OUT_USER, USER_BALANCE } from '../utilities/Constants';
+import { usersRef, gamesRef, gamersRef, userQaplaBalanceListener } from '../services/database';
 
 export const getUserNode = (uid) => async (dispatch) => {
 
@@ -19,6 +20,17 @@ export const getUserNode = (uid) => async (dispatch) => {
         */
         dispatch(updateUserDataSuccess({ key: childAdded.key, value: childAdded.val() }));
     });
+
+    userQaplaBalanceListener(uid, (userBalance) => {
+        dispatch(updateUserDataSuccess({ key: USER_BALANCE, value: userBalance.val() }));
+    });
+
+    /**
+     * Just a double check to add the id field the the user profile for an error detected once,
+     * the user did not have the id field on the database remove this code once we ensure
+     * that all the users have this field
+     */
+    dispatch(updateUserDataSuccess({ key: 'id', value: uid }));
 
     usersRef.child(uid).on('child_changed', (childChanged) => {
 
@@ -62,7 +74,7 @@ export const getUserNode = (uid) => async (dispatch) => {
     platformsWithGames.forEach((platformGames) => {
         Object.keys(platformGames.val()).forEach((gameKey) => {
             gamersRef.child(gameKey).orderByChild('userUid').equalTo(uid).on('value', (gamerGameData) => {
-                
+
                 if (gamerGameData.exists()) {
                     gamerGameData.forEach((gamerProfile) => {
                         dispatch(updateUserDataSuccess({ key: gameKey, value: gamerProfile.val() }));
@@ -71,6 +83,20 @@ export const getUserNode = (uid) => async (dispatch) => {
             });
         });
     });
+}
+
+export const signOutUser = () => async (dispatch) => {
+    try {
+        dispatch(signOutUserSuccess());
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const signOutUserSuccess = () => {
+    return {
+        type: SIGN_OUT_USER
+    }
 }
 
 export const updateUserDataSuccess = (payload) => {

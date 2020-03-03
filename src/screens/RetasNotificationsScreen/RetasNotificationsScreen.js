@@ -1,3 +1,4 @@
+// diego             - 21-11-2019 - us149 - Mark notifications as redaded & replaced ScrollView of notifications by FlatList
 // josep.sanahuja    - 13-09-2019 - us90 - Add didFinishInitialAnimation
 // diego             - 02-09-2019 - us91 - Add track and record screen segment statistic
 // diego             - 15-08-2019 - us80 - Order of notifications reversed to show it in the right order
@@ -7,7 +8,7 @@
 import React, { Component } from 'react';
 import {
     View,
-    ScrollView,
+    FlatList,
     SafeAreaView,
     InteractionManager
 } from 'react-native';
@@ -15,6 +16,7 @@ import styles from './style';
 import MatchNotificationCard from '../../components/MatchNotificationCard/MatchNotificationCard';
 import { connect } from 'react-redux';
 import { recordScreenOnSegment } from '../../services/statistics';
+import { markMatchNotificationAsRead } from '../../services/database';
 
 class RetasNotificationsScreen extends Component {
     constructor(props) {
@@ -23,7 +25,7 @@ class RetasNotificationsScreen extends Component {
        // 1: set didFinishInitialAnimation to false
        // This will render only the navigation bar and activity indicator
        this.state = {
-         didFinishInitialAnimation: false,
+         didFinishInitialAnimation: false
        };
     }
 
@@ -32,7 +34,7 @@ class RetasNotificationsScreen extends Component {
          // 2: Component is done animating
          // 3: Start fetching the team
          //this.props.dispatchTeamFetchStart();
-        
+
          // 4: set didFinishInitialAnimation to false
          // This will render the navigation bar and a list of players
          this.setState({
@@ -43,7 +45,7 @@ class RetasNotificationsScreen extends Component {
 
     componentWillMount() {
         this.list = [
-            
+
             /**
              * This event is triggered when the user goes to other screen
              */
@@ -59,27 +61,54 @@ class RetasNotificationsScreen extends Component {
     componentWillUnmount() {
         //Remove willBlur and willFocus listeners on navigation
         this.list.forEach((item) => item.remove());
-	}
-    
+    }
+
+    /**
+     * Receive an array with the keys from the visible (by the user) notifications
+     * and use that array to mark as read the notifications
+     * @param {array} viewableItems Array with data from FlatList onViewableItemsChanged event
+     * Shape of element form viewableItems array:
+     * { index: 0,
+     * item: 'IdFromTheNotification',
+     * key: 'MatchNotification-IdFromTheNotification',
+     * isViewable: true }
+     */
+    markNotificationsAsRead = ({ viewableItems }) => {
+        viewableItems.forEach((viewableItem) => {
+
+            /**
+             * If the property notiChecked doesn't exist or exist but is false
+             * then we mark the notification as read
+             */
+            if (!this.props.notifications[viewableItem.item].notiChecked) {
+                markMatchNotificationAsRead(this.props.uid, viewableItem.item);
+            }
+        });
+    }
+
     render() {
+        const sortedMatchNotifications = Object.keys(this.props.notifications).reverse();
+
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 {this.state.didFinishInitialAnimation
                 ?
                     <View style={styles.container}>
-                        <ScrollView>
-                            {Object.keys(this.props.notifications).reverse().map((notificationKey) => (
-                                <MatchNotificationCard key={`MatchNotification-${notificationKey}`}
-                                    notification={this.props.notifications[notificationKey]}
-                                    notificationKey={notificationKey}
+                        <FlatList
+                            data={sortedMatchNotifications}
+                            renderItem={({ item }) => (
+                                <MatchNotificationCard
+                                    notification={this.props.notifications[item]}
+                                    notificationKey={item}
                                     uid={this.props.uid} />
-                            ))}
-                        </ScrollView>
-                    </View> 
+                            )}
+                            onViewableItemsChanged={this.markNotificationsAsRead}
+                            keyExtractor={(item) => `MatchNotification-${item}`} />
+                    </View>
                 :
                 null
                 }
-                
+
             </SafeAreaView>
         );
     }

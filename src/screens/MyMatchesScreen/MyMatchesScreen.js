@@ -1,3 +1,4 @@
+// diego             - 15-11-2019 - us149 - Check if user data is loaded on mapStateToProps
 // diego             - 05-09-2019 - us104 - Send pickResult's as prop for allow just one upload of result by user in a match
 // diego             - 05-09-2019 - us101 - Send hour result for set timer on detail match screen
 // diego             - 03-09-2019 - us96 - Bug fixed: load duplicated matches
@@ -80,7 +81,7 @@ export class MyMatchesScreen extends Component {
                             } catch (error) {
                                 console.error(error);
                             }
-                          
+
                             //Object with the necesary fields to load the match in the app (the card and the detailed view)
                             const matchObject = {
                                 adversaryUid: adversary2,
@@ -144,7 +145,7 @@ export class MyMatchesScreen extends Component {
                         } catch (error) {
                             console.error(error);
                         }
-                      
+
                         //Object with the necesary fields to load the match in the app (the card and the detailed view)
                         const matchObject = {
                             adversaryUid: adversary1,
@@ -171,7 +172,7 @@ export class MyMatchesScreen extends Component {
                             return { matches };
                         });
                     });
-                    
+
                     /**
                      * Listen for deleted matches where the current user is the adversary1
                      */
@@ -226,7 +227,11 @@ export class MyMatchesScreen extends Component {
 }
 
 function mapStateToProps(state) {
-    if (state.userReducer.user.hasOwnProperty('id')) {
+    /**
+     * Check if user object (in redux) contains data (when a user is not logged
+     * or a user make signout their redux object is empty)
+     */
+    if (Object.keys(state.userReducer.user).length > 0 && state.userReducer.user.hasOwnProperty('id')) {
         return {
             id: state.userReducer.user.id
         };

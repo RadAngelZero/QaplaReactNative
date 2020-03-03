@@ -14,8 +14,9 @@ target 'QaplaReactNative' do
     'RCTNetwork',
     'RCTWebSocket', # Needed for debugging
     'RCTAnimation', # Needed for FlatList and animations running on native UI thread
-    # Add any other subspecs you want to use in your project
+    'RCTImage'
   ]
+  
   # Explicitly include Yoga if you are using RN >= 0.42.0
   pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
 
@@ -26,15 +27,40 @@ target 'QaplaReactNative' do
 
   pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
 
-  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+  pod 'FBSDKCoreKit','~> 5.6.0'
+  pod 'FBSDKLoginKit','~> 5.6.0'
+  pod 'FBSDKShareKit', '~> 5.6.0'
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   
-  pod 'Firebase/Functions'
-  
-  pod 'Firebase/Analytics'
-
   pod 'RNAnalytics', :path => '../node_modules/@segment/analytics-react-native'
+
+  #pod 'RNAnalyticsIntegration-Mixpanel', :path => '../node_modules/@segment/analytics-react-native-mixpanel'
+  #pod 'RNAnalyticsIntegration-Amplitude', :path => '../node_modules/@segment/analytics-react-native-amplitude'
+
+  pod 'Firebase/Core', '~> 6.9.0'
+
+  pod 'Segment-Firebase', '~>2.0'
+
+  pod 'Analytics', '~> 3.0'
+
+  pod 'Firebase/Messaging'
+
+  pod 'Firebase/Functions'
+
+  pod 'Firebase/Storage'
+
+  pod 'Firebase/Database'
+
+  pod 'Firebase/Auth'
+  
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios' 
+
+  pod 'react-native-camera', path: '../node_modules/react-native-camera'
+
+  pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+
+  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
 end
 
@@ -47,3 +73,21 @@ target 'QaplaReactNative-tvOS' do
   end
 
 end
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+
+      # The following is needed to ensure the "archive" step works in XCode.
+      # It removes React & Yoga from the Pods project, as it is already included in the main project.
+      # Without this, you'd see errors when you archive like:
+      # "Multiple commands produce ... libReact.a"
+      # "Multiple commands produce ... libyoga.a"
+
+      targets_to_ignore = %w(React yoga RNFirebase)
+      
+      if targets_to_ignore.include? target.name
+        target.remove_from_project
+      end
+
+    end
+  end

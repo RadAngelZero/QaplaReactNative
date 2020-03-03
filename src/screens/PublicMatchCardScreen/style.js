@@ -5,34 +5,37 @@
 // josep.sanahuja - 15-07-2019 - us25 - Remv. cancelButton
 
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim'
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default StyleSheet.create({
     sfvContainer: {
       flex: 1,
-      justifyContent: 'center',
-      backgroundColor:'#131833'
+      backgroundColor: '#0D1021'
+    },
+    mainContainer: {
+        flex:1,
+        justifyContent: 'flex-start'
     },
     rowContainer: {
-        marginRight: 30,
-        marginLeft: 30,
+        marginRight: widthPercentageToPx(8),
+        marginLeft: widthPercentageToPx(8),
         alignSelf: 'center'
     },
     imageHeader: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: '10%'
+        marginTop: heightPercentageToPx(10)
     },
     headerRow1: {
     	flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: heightPercentageToPx('5%')
+        marginTop: heightPercentageToPx(5)
     },
     hr1: {
-       marginRight: '25%',
-       width: '25',
-       height: '25'
+       marginRight: widthPercentageToPx(25),
+       width: widthPercentageToPx(6.67),
+       height: heightPercentageToPx(3.08)
     },
     gameName: {
         fontSize: 16,
@@ -40,27 +43,27 @@ export default StyleSheet.create({
         textAlignVertical: 'center'
     },
     hr3: {
-        marginLeft: '25%',
+        marginLeft: widthPercentageToPx(25),
         alignSelf: 'flex-end'
     },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 20,
+        marginTop: heightPercentageToPx(2.46),
         borderBottomWidth: 1,
         borderBottomColor: '#3DF9DF',
     },
     rowIcon: {
-        width: '20',
-        height: '20',
-        marginRight: '6%'
+        width: widthPercentageToPx(5.33),
+        height: heightPercentageToPx(2.46),
+        marginRight: widthPercentageToPx(6)
     },
     infoContainer: {
     	flexDirection: 'row',
-        marginBottom: 8
+        marginBottom: heightPercentageToPx(0.98)
     },
     elemR1: {
-    	marginRight: '10%',
+    	marginRight: widthPercentageToPx(10),
         color: '#FFF',
         textAlignVertical: 'top',
         fontSize: 12
@@ -74,37 +77,39 @@ export default StyleSheet.create({
         color: '#FFF',
         textAlign: 'center',
         fontSize: 12,
-        marginTop: 10
+        marginTop: heightPercentageToPx(1.23)
     },
     activeColor: {
         color: '#3DF9DF'
     },
     bottomButton: {
-        marginTop: heightPercentageToPx('28%'),
         backgroundColor: '#FA2D79',
         borderRadius: 100,
         elevation: 6,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 3,
+            height: heightPercentageToPx(0.37),
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-        marginRight: 80,
-        marginLeft: 80
+        position: 'absolute',
+        alignSelf: 'center',
+        bottom: heightPercentageToPx(4)
     },
     bottomButtonText: {
         color: '#FFF',
-        marginTop: 20,
-        marginBottom: 20,
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginRight: widthPercentageToPx(21.33),
+        marginLeft: widthPercentageToPx(21.33),
         fontSize: 16,
         textAlign: 'center',
         fontWeight: 'bold',
-        color: '#FFF'
+        color: '#FFF',
     },
     alreadyHaveResult: {
-        marginTop: 36,
+        marginTop: heightPercentageToPx(4.43),
         fontSize: 16,
         textAlign: 'center',
         color: '#FFF'

@@ -4,7 +4,7 @@
 // diego           - 19-09-2019 - us126 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput, SafeAreaView, findNodeHandle } from 'react-native';
+import { View, Text, Image, TextInput } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';

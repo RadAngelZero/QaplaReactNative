@@ -75,13 +75,6 @@ class UploadMatchResultScreen extends Component {
 
             const matchData = this.props.navigation.getParam('matchData');
 
-            /**
-             * A result of type 'TIE_RESULT' has (in the cloud functions) the same logic than 'OTHER_RESULT',
-             * we just need to identify wich one here for UI questions
-             */
-            if (matchResultStatus === TIE_RESULT) {
-                matchResultStatus = OTHER_RESULT;
-            }
             await uploadMatchResult(
                 matchData.idMatch,
                 this.props.navigation.getParam('currentUserAdversary'),

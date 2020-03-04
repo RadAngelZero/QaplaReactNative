@@ -693,13 +693,14 @@ export async function sendUserFeedback(message, userId) {
  * Allow the user to join the given event
  * @param {string} uid User identifier on database
  * @param {string} eventId Event identifier on the database
- * @param {number} totalPuntos The total of points of the event
  */
-export async function joinEvent(uid, eventId) {
+export function joinEvent(uid, eventId) {
     eventParticipantsRef.child(eventId).child(uid).update({
-        email: '',
+        email: store.getState().userReducer.user.email,
         priceQaploins: 0,
-        userNamve: await getUserNameWithUID(uid)
+        matchesPlayed: 0,
+        victorys: 0,
+        userName: store.getState().userReducer.user.userName
     });
 }
 

@@ -4,7 +4,7 @@
 // diego           - 19-09-2019 - us126 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput, SafeAreaView } from 'react-native';
+import { View, Text, Image, TextInput, SafeAreaView, findNodeHandle } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -32,6 +32,13 @@ export class VerificationPhoneNumber extends Component {
     }
 
     render() {
+        let feedbackForUser = translate('verificationScreen.verificationPhoneNumber.codeSended');
+        if (this.props.wrongCode) {
+            feedbackForUser = translate('verificationScreen.verificationPhoneNumber.smsCodeError');
+        } else if (this.props.alreadyLinkedError) {
+            feedbackForUser = translate('verificationScreen.verificationPhoneNumber.alreadyLinkedAccountError');
+        }
+
         return (
                 <View style={styles.container}>
                     <View>
@@ -66,11 +73,7 @@ export class VerificationPhoneNumber extends Component {
                                     onSubmitEditing={this.props.goToNextStep}
                                     onChangeText={this.props.setVerificationCode} />
                                 <Text style={styles.smallText}>
-                                    {this.props.error ?
-                                        translate('verificationScreen.verificationPhoneNumber.smsCodeError')
-                                        :
-                                        translate('verificationScreen.verificationPhoneNumber.codeSended')
-                                    }
+                                    {feedbackForUser}
                                 </Text>
                             </View>
                         }

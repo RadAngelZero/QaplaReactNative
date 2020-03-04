@@ -200,7 +200,8 @@
             "phonePlaceholder": "Teléfono* ej: 6505551234",
             "codePlaceholder": "Ingresa tu Código",
             "codeSended": "Te enviamos un código de verificación",
-            "smsCodeError": "El código de verificación es incorrecto"
+            "smsCodeError": "El código de verificación es incorrecto",
+            "alreadyLinkedAccountError": "Este numero de telefono ya está vinculado con una cuenta."
         },
         "verificationProcessSuccess": {
             "title": "¡Gracias!",

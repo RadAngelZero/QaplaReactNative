@@ -9,6 +9,7 @@ import Svg, { SvgUri } from 'react-native-svg';
 import styles from './style';
 import AnimatedCircleIndicator from '../AnimatedCircleIndicator/AnimatedCircleIndicator';
 import { translate } from '../../utilities/i18';
+import Colors from '../../utilities/Colors';
 
 export class UserProfileGameCard extends Component {
     render() {
@@ -30,7 +31,7 @@ export class UserProfileGameCard extends Component {
                             width={48}
                             height={48}
                             uri={this.props.game.icon}
-                            fill='#3DF9DF' />
+                            fill={Colors.greenQapla} />
                     }
                     <Text style={styles.descriptionText}>{this.props.game.name}</Text>
                 </View>

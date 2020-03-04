@@ -52,7 +52,6 @@ export class UserProfilePlatformGameList extends Component {
     lastChild = (currentIndex, quantityOfElements) => (currentIndex === quantityOfElements - 1);
 
     render() {
-
         return (
             <View style={{ marginBottom: this.props.lastChild ? 20 : 0 }}>
                 <Text style={styles.title}>{getPlatformNameWithKey(this.props.platform)}</Text>

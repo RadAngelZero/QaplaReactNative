@@ -14,6 +14,7 @@ import { getProfileImageWithUID } from '../../services/database';
 
 import { styles } from './style';
 import Images from '../../../assets/images';
+import Colors from '../../utilities/Colors';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
@@ -76,7 +77,7 @@ class MatchCardItem extends PureComponent {
                                         width={37}
                                         height={37}
                                         uri={game.icon}
-                                        fill='#3DF9DF' />
+                                        fill={Colors.greenQapla} />
                                 }
                                 <Text style={styles.gameText}>{game.name}</Text>
                             </View>

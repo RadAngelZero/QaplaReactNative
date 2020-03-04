@@ -41,6 +41,7 @@ import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constant
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 import { AddGamerTagModal } from '../../components/AddGamerTagModal/AddGamerTagModal';
 import { translate } from '../../utilities/i18';
+import Colors from '../../utilities/Colors';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
@@ -312,7 +313,7 @@ class PublicMatchCardScreen extends Component {
                             width={50}
                             height={50}
                             uri={gameData.icon}
-                            fill='#3DF9DF' />
+                            fill={Colors.greenQapla} />
                     }
                 </View>
                 <View style={styles.rowContainer}>

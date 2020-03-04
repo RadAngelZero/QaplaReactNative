@@ -24,6 +24,7 @@ import { withNavigation } from 'react-navigation';
 import { subscribeUserToTopic } from '../../services/messaging';
 import { trackOnSegment } from '../../services/statistics';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import Colors from '../../utilities/Colors';
 
 class GameCard extends Component {
 
@@ -101,7 +102,7 @@ class GameCard extends Component {
                                     width={widthPercentageToPx(5)}
                                     height={heightPercentageToPx(5)}
                                     uri={game.icon}
-                                    fill='#3DF9DF' />
+                                    fill={Colors.greenQapla} />
                             }
                         </Svg>
                         <Text style={styles.gameName}>

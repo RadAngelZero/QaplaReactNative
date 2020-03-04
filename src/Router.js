@@ -80,7 +80,7 @@ const MatchWizardStackNavigator = createStackNavigator({
     ChooseMatchType: {
         screen: ChooseMatchTypeScreen,
         navigationOptions: {
-            header: (props) => <TopNavOptions close {...props} />
+            header: (props) => <TopNavOptions close {...props} onCloseNavigateTo='Public' />
         }
     },
     SelectGame: {

@@ -2,7 +2,7 @@
 // josep.sanahuja    - 05-08-2019 - us84  - + SafeAreaView
 
 import React, { Component } from 'react';
-import { SafeAreaView, ScrollView, View, Text, TouchableWithoutFeedback } from 'react-native';
+import { BackHandler, SafeAreaView, ScrollView, View, Text, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './style';
 import Images from '../../../assets/images';
@@ -15,6 +15,7 @@ const SearchIcon = Images.svg.searchIcon;
 
 class ChooseMatchTypeScreen extends Component {
     componentWillMount() {
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBackButton);
         this.list = [
 
             /**
@@ -30,8 +31,16 @@ class ChooseMatchTypeScreen extends Component {
     }
 
     componentWillUnmount() {
+        this.backHandler.remove();
+
         //Remove willBlur and willFocus listeners on navigation
         this.list.forEach((item) => item.remove());
+    }
+
+    handleAndroidBackButton = () => {
+        this.props.navigation.navigate('Public');
+
+        return true;
     }
 
     /**

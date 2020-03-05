@@ -94,8 +94,8 @@ const images = {
 			uri: '@assets/images/signup.svg'
 		},
 		qaplaSignupLogo: {
-			img: require('./images/QaplaSignUpLogo.png'),
-			uri: '@assets/images/QaplaSignUpLogo.png'
+			img: require('./images/qaplaSignUpLogo.png'),
+			uri: '@assets/images/qaplaSignUpLogo.png'
 		},
 		uploadVideoClutch: {
 			img: require('./images/UploadVideoClutch.jpg'),
@@ -220,8 +220,7 @@ const images = {
 		editIcon: EditIcon,
 		noVerifiedIcon: NoVerifiedIcon,
 		qoinFlipIcon: QoinFlipIcon,
-		balanceFlipIcon: BalanceFlipIcon
-	}
+		balanceFlipIcon: BalanceFlipIcon	}
 };
 
 export default images;

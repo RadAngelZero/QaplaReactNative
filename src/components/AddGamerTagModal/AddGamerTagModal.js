@@ -8,6 +8,7 @@
 import React, { Component } from 'react';
 import { Modal, View, TextInput, Text, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
 
 import styles from './style';
 import { addGameToUser, saveUserSubscriptionToTopic } from '../../services/database';
@@ -15,13 +16,15 @@ import Images from './../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { subscribeUserToTopic } from '../../services/messaging';
 import { translate } from '../../utilities/i18';
+import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
 
 const CloseIcon = Images.svg.closeIcon;
 
 export class AddGamerTagModal extends Component {
     state = {
         gamerTagText: '',
-        gamerTagError: false
+        gamerTagError: false,
+        openDiscordTagModal: false
     };
 
     /**
@@ -38,40 +41,48 @@ export class AddGamerTagModal extends Component {
 
     saveGameOnUser = async () => {
         if (this.isValidGamerTag()) {
-            try {
-                await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
-                    this.props.selectedGame.gameKey, this.state.gamerTagText);
-
-                subscribeUserToTopic(this.props.selectedGame.gameKey);
-                saveUserSubscriptionToTopic(this.props.uid, this.props.selectedGame.gameKey);
-
-                trackOnSegment('Add Gamer Tag Process Completed',
-                    { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });
-
-                /**
-                 * redirect: prop to know if the modal should redirect to other screen
-                 * or just call a function and then hide
-                 */
-                if (this.props.redirect) {
-                    if (this.props.loadGamesUserDontHave) {
-                        this.props.navigation.navigate('Profile');
-                    } else {
-                        this.props.navigation.navigate('SetBet',
-                            { game: {
-                                gameKey: this.props.selectedGame.gameKey,
-                                platform: this.props.selectedGame.platform
-                            }
-                        });
-                    }
-                } else {
-                    this.props.onSuccess();
-                    this.props.onClose();
-                }
-            } catch (error) {
-                console.error(error);
+            if (this.props.discordTag) {
+                await this.addGameAndRedirectUser();
+            } else {
+                this.setState({ openDiscordTagModal: true });
             }
         } else {
             this.setState({ gamerTagError: true });
+        }
+    }
+
+    addGameAndRedirectUser = async () => {
+        try {
+            await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
+                this.props.selectedGame.gameKey, this.state.gamerTagText);
+
+            subscribeUserToTopic(this.props.selectedGame.gameKey);
+            saveUserSubscriptionToTopic(this.props.uid, this.props.selectedGame.gameKey);
+
+            trackOnSegment('Add Gamer Tag Process Completed',
+                { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });
+
+            /**
+             * redirect: prop to know if the modal should redirect to other screen
+             * or just call a function and then hide
+             */
+            if (this.props.redirect) {
+                if (this.props.loadGamesUserDontHave) {
+                    this.props.navigation.navigate('Profile');
+                } else {
+                    this.props.navigation.navigate('SetBet',
+                        { game: {
+                            gameKey: this.props.selectedGame.gameKey,
+                            platform: this.props.selectedGame.platform
+                        }
+                    });
+                }
+            } else {
+                this.props.onSuccess();
+                this.props.onClose();
+            }
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -95,6 +106,10 @@ export class AddGamerTagModal extends Component {
         }
 
         this.props.onClose();
+    }
+
+    closeDiscordTagModal = () => {
+        this.setState({ openDiscordTagModal: false });
     }
 
     render() {
@@ -131,6 +146,10 @@ export class AddGamerTagModal extends Component {
                                             <Text style={styles.confirmButtonText}>Aceptar</Text>
                                         </View>
                                 </TouchableWithoutFeedback>
+                                <AddDiscordTagModal
+                                    open={this.state.openDiscordTagModal}
+                                    onClose={this.closeDiscordTagModal}
+                                    onSuccess={this.addGameAndRedirectUser} />
                             </View>
                         </View>
                     </View>
@@ -139,4 +158,10 @@ export class AddGamerTagModal extends Component {
     }
 }
 
-export default withNavigation(AddGamerTagModal);
+function mapStateToProps(state) {
+    return {
+        discordTag: state.userReducer.user.discordTag
+    };
+}
+
+export default connect(mapStateToProps)(withNavigation(AddGamerTagModal));

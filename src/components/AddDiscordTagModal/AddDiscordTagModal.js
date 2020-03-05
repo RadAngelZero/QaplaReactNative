@@ -14,7 +14,8 @@ const CloseIcon = Images.svg.closeIcon;
 class AddDiscordTagModal extends Component {
     state = {
         discordTag: '',
-        selected: false
+        selected: false,
+        showFeedback: false
     };
 
     /**
@@ -37,8 +38,17 @@ class AddDiscordTagModal extends Component {
      * Call to the database function to update the discord tag of the user and then close the modal
      */
     updateDiscordTag = () => {
-        updateUserDiscordTag(this.props.uid, this.state.discordTag);
-        this.closeModal();
+        if (this.state.discordTag) {
+            updateUserDiscordTag(this.props.uid, this.state.discordTag);
+
+            if (this.props.onSuccess) {
+                this.props.onSuccess();
+            }
+
+            this.closeModal();
+        } else {
+            this.setState({ showFeedback: true });
+        }
     }
 
     render() {
@@ -47,7 +57,7 @@ class AddDiscordTagModal extends Component {
                 animationType='fade'
                 transparent={true}
                 visible={this.props.open}
-                onRequestClose={this.props.onClose}>
+                onRequestClose={this.props.closeModal}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
                         <TouchableWithoutFeedback onPress={this.closeModal}>
@@ -61,9 +71,9 @@ class AddDiscordTagModal extends Component {
                             onBlur={this.toggleInputSelection}
                             placeholder={translate('settingsMenuScreen.addDiscordTagModal.placeholder')}
                             placeholderTextColor='#B5B5B5'
-                            style={[styles.qaplaTextInput, { borderBottomColor: this.state.selected ? '#3DF9DF' : '#B5B5B5' } ]}
+                            style={[styles.qaplaTextInput, { borderBottomColor: this.state.showFeedback ? '#FF0000' : this.state.selected ? '#3DF9DF' : '#B5B5B5' } ]}
                             autoCapitalize='none'
-                            onChangeText={(discordTag) => this.setState({ discordTag })}
+                            onChangeText={(discordTag) => this.setState({ discordTag, showFeedback: false })}
                             onSubmitEditing={this.updateDiscordTag} />
                         <View style={styles.buttonsContainer}>
                             <TouchableWithoutFeedback onPress={this.closeModal}>

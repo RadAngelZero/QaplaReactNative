@@ -271,6 +271,7 @@ class VerificationScreen extends Component {
             createVerificationRequest(this.props.uid, verificationRequest);
 
         } catch (error) {
+            console.log(error);
             switch (error.code) {
                 case ACCOUNT_INVALID_CREDENTIAL:
                     this.setState({ errorSMSCode: true });
@@ -284,34 +285,10 @@ class VerificationScreen extends Component {
                     this.setState({ errorAlreadyLinkedAccount: true });
                     accountsLinked = false;
                     break;
-                default:
-                    console.log(error);
-                    break;
             }
         }
 
         return accountsLinked;
-    }
-
-    /**
-     * Execute an automatic phone verification (available only for android devices at the 23/12/2019)
-     * @param {string} verificationId Id of the verification process (given by firebase)
-     * @param {number} verificationCode Code sended to the user to verify their phone number
-     */
-    autoVerifyUserPhone = async (verificationId, verificationCode) => {
-        if (await this.verifyUserPhone(verificationId, verificationCode)) {
-            /**
-             * We update the next index by 2, we need to update by 2 because we need to count the
-             * step of add the code, and one more to go to the final screen
-             */
-            this.setState({ nextIndex: this.state.nextIndex + 2 }, () => {
-                /**
-                 * After we update the nextIndex we execute goToNextStep automatically, to continue with the
-                 * process (finishing the process actually)
-                 */
-                this.goToNextStep();
-            });
-        }
     }
 
     /**
@@ -348,7 +325,7 @@ class VerificationScreen extends Component {
          * so we can render new things on the screen, to let the user add their code and procceed
          */
         this.setState({
-            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`, this.autoVerifyUserPhone)
+            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`)
         });
     }
 

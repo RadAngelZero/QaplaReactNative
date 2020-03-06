@@ -30,7 +30,13 @@ import { sendVerificationSMSToUser, linkUserAccountWithPhone } from '../../servi
 import { createVerificationRequest } from '../../services/database';
 import { PhoneProvider } from '../../utilities/firebase';
 import { translate } from '../../utilities/i18';
-import { ACCOUNT_ALREADY_IN_USE, ACCOUNT_INVALID_CREDENTIAL, ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT } from '../../utilities/Constants';
+
+import {
+    ACCOUNT_ALREADY_IN_USE,
+    ACCOUNT_INVALID_CREDENTIAL,
+    ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT,
+    ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS
+} from '../../utilities/Constants';
 
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
@@ -282,6 +288,10 @@ class VerificationScreen extends Component {
                     accountsLinked = false;
                     break;
                 case ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT:
+                    this.setState({ errorAlreadyLinkedAccount: true });
+                    accountsLinked = false;
+                    break;
+                case ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS:
                     this.setState({ errorAlreadyLinkedAccount: true });
                     accountsLinked = false;
                     break;

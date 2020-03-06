@@ -45,6 +45,16 @@ class WelcomeOnboardingScreen extends React.Component {
 			saveUserSubscriptionToTopic(this.props.uid, eventsTopic);
 		}
 
+		subscribeUserToTopic('Prueba');
+		if (this.props.uid !== '') {
+			saveUserSubscriptionToTopic(this.props.uid, 'Prueba');
+		}
+
+		subscribeUserToTopic('Miau');
+		if (this.props.uid !== '') {
+			saveUserSubscriptionToTopic(this.props.uid, 'Miau');
+		}
+
 		/**
 		 * If the user has games (that means that we have a logged user)
 		 * we subscribe him to all the topics related to their games

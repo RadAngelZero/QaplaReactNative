@@ -98,6 +98,7 @@ class AuthLoadingScreen extends Component {
      */
     async checkNotificationPermission(uid) {
         try {
+            //await messaging.ios.registerForRemoteNotifications();
             const notificationPermissionEnabled = await messaging.hasPermission();
 
             if (notificationPermissionEnabled) {

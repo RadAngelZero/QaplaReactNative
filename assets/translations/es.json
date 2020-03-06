@@ -199,8 +199,9 @@
             "title": "¡Verifica tu Whatsapp!",
             "phonePlaceholder": "Teléfono* ej: 6505551234",
             "codePlaceholder": "Ingresa tu Código",
-            "codeSended": "Te enviamos un código de verificación",
-            "smsCodeError": "El código de verificación es incorrecto"
+            "codeSent": "Te enviamos un código de verificación",
+            "smsCodeError": "El código de verificación es incorrecto",
+            "alreadyLinkedAccountError": "Este número de teléfono ya está vinculado con una cuenta."
         },
         "verificationProcessSuccess": {
             "title": "¡Gracias!",

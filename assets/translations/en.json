@@ -199,7 +199,7 @@
             "title": "¡Verify your Whatsapp!",
             "phonePlaceholder": "Phone Number* e.g. 6505551234",
             "codePlaceholder": "Insert your Code",
-            "codeSended": "We have sent you a verification code",
+            "codeSent": "We have sent you a verification code",
             "smsCodeError": "The verification code is incorrect",
             "alreadyLinkedAccountError": "This phone number is already linked to an account."
         },

@@ -318,10 +318,20 @@ class PublicMatchCardScreen extends Component {
                     <View style={styles.row}>
                         <View style={styles.infoContainer}>
                             <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={[styles.elemR1, styles.activeColor]}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
+                            <Text style={[styles.elemR1, styles.activeColor]}>{translate('publicMatchCardScreen.discordTag')}</Text>
                         </View>
                         <View style={styles.infoContainer}>
-                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.gamerTag.gamerTag}</Text>
+                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.discordTag}</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.row}>
+                        <View style={styles.infoContainer}>
+                            <ProfileIcon style={styles.rowIcon}/>
+                            <Text style={styles.elemR1}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.rightTextStyle}>{matchCard.gamerTag.gamerTag}</Text>
                         </View>
                     </View>
 

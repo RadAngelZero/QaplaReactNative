@@ -84,6 +84,7 @@
         "createMatchesButton": "Play Now"
     },
     "publicMatchCardScreen": {
+        "discordTag": "Discord Tag",
         "numberOfMembers": "Number of members",
         "waitingResult": "Waiting for your adversary result",
         "uploadResultIn": "Upload yout result in:",

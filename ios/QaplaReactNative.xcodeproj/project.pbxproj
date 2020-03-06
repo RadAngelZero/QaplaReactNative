@@ -33,7 +33,7 @@
 		F0CF95A8DA355EE4DF4F753C /* libPods-QaplaReactNativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C6CEB466B7597707196E72DF /* libPods-QaplaReactNativeTests.a */; };
 		F9073A872406D29500BB648D /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = F9073A862406D29500BB648D /* main.jsbundle */; };
 		F9073AB024070EA900BB648D /* assets in Resources */ = {isa = PBXBuildFile; fileRef = F9073AAF24070EA900BB648D /* assets */; };
-		F92EA55B23D7E8A8004455A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F92EA52F23D7E8A8004455A5 /* GoogleService-Info.plist */; };
+		F95269BF2412F4C200DA0EE9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F95269BE2412F4C200DA0EE9 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -366,7 +366,7 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F9073A862406D29500BB648D /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		F9073AAF24070EA900BB648D /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
-		F92EA52F23D7E8A8004455A5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F95269BE2412F4C200DA0EE9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Documents/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F97D0A29233BF33000C00713 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		F9F4B79223885C80003AD8FC /* QaplaReactNativeRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = QaplaReactNativeRelease.entitlements; path = QaplaReactNative/QaplaReactNativeRelease.entitlements; sourceTree = "<group>"; };
 		F9F4B7BE23885FBE003AD8FC /* QaplaReactNative.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = QaplaReactNative.entitlements; path = QaplaReactNative/QaplaReactNative.entitlements; sourceTree = "<group>"; };
@@ -623,8 +623,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F95269BE2412F4C200DA0EE9 /* GoogleService-Info.plist */,
 				F9073AAF24070EA900BB648D /* assets */,
-				F92EA52F23D7E8A8004455A5 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* QaplaReactNative */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* QaplaReactNativeTests */,
@@ -1142,8 +1142,8 @@
 			files = (
 				F9073AB024070EA900BB648D /* assets in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				F95269BF2412F4C200DA0EE9 /* GoogleService-Info.plist in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				F92EA55B23D7E8A8004455A5 /* GoogleService-Info.plist in Resources */,
 				F9073A872406D29500BB648D /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1463,7 +1463,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
 				PRODUCT_NAME = "Qapla Gaming";
-				PROVISIONING_PROFILE_SPECIFIER = IosQaplaDevelopment;
+				PROVISIONING_PROFILE_SPECIFIER = "match Development org.Qapla.QaplaApp";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1496,7 +1496,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
 				PRODUCT_NAME = "Qapla Gaming";
-				PROVISIONING_PROFILE_SPECIFIER = IosQaplaDevelopment;
+				PROVISIONING_PROFILE_SPECIFIER = "match Development org.Qapla.QaplaApp";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

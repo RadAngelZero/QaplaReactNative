@@ -17,7 +17,7 @@ const Divider = images.png.divider.img;
 export class VerificationPhoneNumber extends Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
             selected: false
         };
@@ -32,7 +32,8 @@ export class VerificationPhoneNumber extends Component {
     }
 
     render() {
-        let feedbackForUser = translate('verificationScreen.verificationPhoneNumber.codeSended');
+        let feedbackForUser = translate('verificationScreen.verificationPhoneNumber.codeSent');
+
         if (this.props.wrongCode) {
             feedbackForUser = translate('verificationScreen.verificationPhoneNumber.smsCodeError');
         } else if (this.props.alreadyLinkedError) {
@@ -62,20 +63,22 @@ export class VerificationPhoneNumber extends Component {
                                     onChangeText={this.props.setPhoneNumber} />
                             </View>
                             :
-                            <View style={styles.codeContainer}>
-                                <TextInput
-                                    keyboardType='numeric'
-                                    style={[styles.qaplaTextInput, { borderBottomColor: this.state.selected ? '#3DF9DF' : '#B5B5B5' } ]}
-                                    onFocus={this.toggleInputSelection}
-                                    onBlur={this.toggleInputSelection}
-                                    placeholder={translate('verificationScreen.verificationPhoneNumber.codePlaceholder')}
-                                    placeholderTextColor='#898A97'
-                                    onSubmitEditing={this.props.goToNextStep}
-                                    onChangeText={this.props.setVerificationCode} />
+                            <>
+                                <View style={styles.codeContainer}>
+                                    <TextInput
+                                        keyboardType='numeric'
+                                        style={[styles.qaplaTextInput, { borderBottomColor: this.state.selected ? '#3DF9DF' : '#B5B5B5' } ]}
+                                        onFocus={this.toggleInputSelection}
+                                        onBlur={this.toggleInputSelection}
+                                        placeholder={translate('verificationScreen.verificationPhoneNumber.codePlaceholder')}
+                                        placeholderTextColor='#898A97'
+                                        onSubmitEditing={this.props.goToNextStep}
+                                        onChangeText={this.props.setVerificationCode} />
+                                </View>
                                 <Text style={styles.smallText}>
                                     {feedbackForUser}
                                 </Text>
-                            </View>
+                            </>
                         }
                     </View>
                 </View>

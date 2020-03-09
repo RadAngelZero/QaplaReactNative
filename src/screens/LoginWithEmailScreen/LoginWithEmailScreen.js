@@ -50,6 +50,7 @@ class LoginWithEmailScreen extends Component {
                         <TextInput style={styles.inputText}
                             placeholder={translate('loginWithEmailScreen.emailPlaceholder')}
                             autoCapitalize='none'
+                            textContentType='emailAddress'
                             onChangeText={(text) => this.setState({ email: text })}
                             onSubmitEditing={() => this.passwordInput.focus()}
                             returnKeyType='next' />

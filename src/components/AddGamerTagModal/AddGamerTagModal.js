@@ -11,7 +11,7 @@ import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import { addGameToUser, saveUserSubscriptionToTopic } from '../../services/database';
+import { addGameToUser } from '../../services/database';
 import Images from './../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { subscribeUserToTopic } from '../../services/messaging';
@@ -56,8 +56,7 @@ export class AddGamerTagModal extends Component {
             await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
                 this.props.selectedGame.gameKey, this.state.gamerTagText);
 
-            subscribeUserToTopic(this.props.selectedGame.gameKey);
-            saveUserSubscriptionToTopic(this.props.uid, this.props.selectedGame.gameKey);
+            subscribeUserToTopic(this.props.selectedGame.gameKey, this.props.uid);
 
             trackOnSegment('Add Gamer Tag Process Completed',
                 { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });

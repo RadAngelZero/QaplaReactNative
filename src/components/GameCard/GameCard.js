@@ -10,7 +10,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import styles from './style'
-import Svg from 'react-native-svg';
+import Svg, { SvgUri } from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {
@@ -19,12 +19,13 @@ import {
 
 import { connect } from 'react-redux';
 
-import { getGamerTagWithUID, addGameToUser, saveUserSubscriptionToTopic } from '../../services/database';
+import { getGamerTagWithUID, addGameToUser } from '../../services/database';
 import { withNavigation } from 'react-navigation';
 import { subscribeUserToTopic } from '../../services/messaging';
 import { trackOnSegment } from '../../services/statistics';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
+import Colors from '../../utilities/Colors';
 
 class GameCard extends Component {
     state = {
@@ -86,8 +87,7 @@ class GameCard extends Component {
                  * Every game is a topic, so we can send push notifications to the user
                  * about specific games
                  */
-                subscribeUserToTopic(newGame.gameKey);
-                saveUserSubscriptionToTopic(this.props.user.id, newGame.gameKey);
+                subscribeUserToTopic(newGame.gameKey, this.props.user.id);
 
                 this.props.navigation.pop();
             } catch (error) {
@@ -115,10 +115,20 @@ class GameCard extends Component {
                         style={styles.container}>
                         <Image
                             style={styles.imageStyle}
-                            source={game.image[this.props.platform]}/>
+                            source={game.local ? game.image : { uri: game.image }}/>
                         <View style={styles.detailsContainer}>
                             <Svg style={styles.iconContainer}>
-                                <game.Icon width={widthPercentageToPx(5)} height={heightPercentageToPx(5)} />
+                                {game.local ?
+                                    <game.icon
+                                        width={widthPercentageToPx(5)}
+                                        height={heightPercentageToPx(5)} />
+                                    :
+                                    <SvgUri
+                                        width={widthPercentageToPx(5)}
+                                        height={heightPercentageToPx(5)}
+                                        uri={game.icon}
+                                        fill={Colors.greenQapla} />
+                                }
                             </Svg>
                             <Text style={styles.gameName}>
                                 {game.name}
@@ -127,9 +137,9 @@ class GameCard extends Component {
                     </LinearGradient>
                 </TouchableWithoutFeedback>
                 <AddDiscordTagModal
-                    open={this.state.openDiscordTagModal}
-                    onClose={this.closeDiscordTagModal}
-                    onSuccess={this.handleGameSelectionLogic} />
+                open={this.state.openDiscordTagModal}
+                onClose={this.closeDiscordTagModal}
+                onSuccess={this.handleGameSelectionLogic} />
             </>
         );
     }

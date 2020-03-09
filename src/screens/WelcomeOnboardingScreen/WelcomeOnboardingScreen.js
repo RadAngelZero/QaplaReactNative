@@ -40,10 +40,7 @@ class WelcomeOnboardingScreen extends React.Component {
          * because we want to send the notifications in different languages (based on the user cellphone
          * language)
          */
-		subscribeUserToTopic(eventsTopic);
-		if (this.props.uid !== '') {
-			saveUserSubscriptionToTopic(this.props.uid, eventsTopic);
-		}
+		subscribeUserToTopic(eventsTopic, this.props.uid);
 
 		/**
 		 * If the user has games (that means that we have a logged user)
@@ -51,8 +48,7 @@ class WelcomeOnboardingScreen extends React.Component {
 		 */
 		this.props.userGames.forEach((gameKey) => {
 			if (gameKey) {
-				subscribeUserToTopic(gameKey);
-				saveUserSubscriptionToTopic(this.props.uid, gameKey);
+				subscribeUserToTopic(gameKey, this.props.uid);
 			}
 		});
 

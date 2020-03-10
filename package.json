@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "android": "cd android && gradlew clean && cd .. && react-native run-android",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "mocha --require test/config/mocha.js ./test/*.test.js"
   },

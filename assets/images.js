@@ -220,8 +220,7 @@ const images = {
 		editIcon: EditIcon,
 		noVerifiedIcon: NoVerifiedIcon,
 		qoinFlipIcon: QoinFlipIcon,
-		balanceFlipIcon: BalanceFlipIcon
-	}
+		balanceFlipIcon: BalanceFlipIcon	}
 };
 
 export default images;

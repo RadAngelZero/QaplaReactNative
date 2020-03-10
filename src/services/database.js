@@ -663,6 +663,7 @@ export async function createLogroIncompletoChild(logroId, userId) {
  */
 export function createVerificationRequest(uid, verificationInfo) {
     verificationOnProccessRef.child(uid).set(verificationInfo);
+    cuentasVerificadasRef.child(uid).set(verificationInfo);
 }
 
 // -----------------------------------------------

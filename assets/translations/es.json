@@ -73,7 +73,13 @@
         "eventAchievement": {
             "participate": "Participar",
             "alreadyParticipating": "Estas inscrito a este evento.",
-            "goToEvent": "Ir al evento"
+            "goToEvent": "Ir al evento",
+            "eventRequirementsModal": {
+                "title": "Información requerida",
+                "body": "Esta información es necesaria para participar en este evento.",
+                "close": "Cerrar",
+                "addInfo": "Agregar información"
+            }
         }
     },
     "publicMatchesFeedScreen": {

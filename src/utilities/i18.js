@@ -43,6 +43,15 @@ export function translate(key, options) {
     return i18n.t(key, options);
 }
 
+/**
+ * Return the language used by the user
+ */
 export function getLocaleLanguage() {
-    return i18n.locale;
+
+    /**
+     * We check if the locale language of the user exists in our translations, if exist we return it
+     * otherwise we return the defaultLocale (because we know if the locale does not exist in our
+     * translations then we use the defaultLocale)
+     */
+    return i18n.translations[i18n.locale] ? i18n.locale : i18n.defaultLocale;
 }

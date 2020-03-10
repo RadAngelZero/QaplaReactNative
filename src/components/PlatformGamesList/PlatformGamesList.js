@@ -10,7 +10,6 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 
 import styles from './style';
-import Images from '../../../assets/images';
 import GameCard from '../GameCard/GameCard';
 import { translate } from '../../utilities/i18';
 
@@ -19,21 +18,17 @@ class PlatformGamesList extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>{platformResources[this.props.platform].name}</Text><View style={[styles.circleIcon, { backgroundColor: platformResources[this.props.platform].platformColor }]}></View>
+                    <Text style={styles.title}>{platformResources[this.props.platform].platformName}</Text><View style={[styles.circleIcon, { backgroundColor: platformResources[this.props.platform].platformColor }]}></View>
                 </View>
                 <ScrollView horizontal style={styles.scrollViewStyle} showsHorizontalScrollIndicator={false}>
-                    {Object.keys(this.props.listOfGames).map((game) => (
-                        //Remove any game that actually dont exist (like counter strike o street figther) from database
-                        //or this component is going to fail
+                    {Object.keys(this.props.listOfGames).map((gameKey) => (
                         <GameCard
-                            key={game}
-                            // Replace is needed because the key of the game objects in the gamesResources object
-                            // are the name of the game but without spaces (replace function remove that spaces)
+                            key={gameKey}
                             loadGamesUserDontHave={this.props.loadGamesUserDontHave}
-                            game={gamesResources[(this.props.listOfGames[game]).replace(/ +/g, "")]}
+                            game={this.props.listOfGames[gameKey]}
                             platform={this.props.platform}
                             backgroundColor={platformResources[this.props.platform].backgroundColor}
-                            gameKey={game} />
+                            gameKey={gameKey} />
                     ))}
                 </ScrollView>
             </View>
@@ -50,7 +45,7 @@ const platformResources = {
             primary: '#B670E1',
             secondary: '#7726C6'
         },
-        name: translate('platforms.mobile')
+        platformName: translate('platforms.mobile')
     },
     xbox_white: {
         platformColor: '#119910',
@@ -58,7 +53,7 @@ const platformResources = {
             primary: '#3DF9DF',
             secondary: '#42B85E'
         },
-        name: 'Xbox One'
+        platformName: 'Xbox One'
     },
     ps4_white: {
         platformColor: '#0053CC',
@@ -66,7 +61,7 @@ const platformResources = {
             primary: '#3DBFF4',
             secondary: '#1A52CF'
         },
-        name: 'PS4'
+        platformName: 'PS4'
     },
     switch_white: {
         platformColor: '#CC003A',
@@ -74,69 +69,7 @@ const platformResources = {
             primary: '#FF1658',
             secondary: '#1A52CF'
         },
-        name: 'Switch'
-    }
-};
-
-const gamesResources = {
-    Fifa17: {
-        image: {
-            ps4_white: Images.png.fifaPsImg.img,
-            xbox_white: Images.png.fifaXboxImg.img
-        },
-        Icon: Images.svg.fifaIcon,
-        name: 'FIFA 19'
-    },
-    ClashRoyale: {
-        image: {
-            pc_white: Images.png.peekaImg.img
-        },
-        Icon: Images.svg.clashIcon,
-        name: 'Clash Royale'
-    },
-    GearsofWar: {
-        image: {
-            xbox_white: Images.png.GOW4Xbox.img
-        },
-        Icon: Images.svg.gowIcon,
-        name: 'Gears of War 4'
-    },
-    Halo: {
-        image: {
-            xbox_white: Images.png.HALO5Xbox.img,
-        },
-        Icon: Images.svg.haloIcon,
-        name: 'Halo 5'
-    },
-    Hearthstone: {
-        image: {
-            pc_white: Images.png.heartstoneImg.img,
-        },
-        Icon: Images.svg.heartstoneIcon,
-        name: 'Hearthstone'
-    },
-    Overwatch: {
-        image: {
-            ps4_white: Images.png.overwatchPsImg.img,
-            pc_white: Images.png.overwatchPcImg.img,
-            xbox_white: Images.png.overwatchXboxImg.img
-        },
-        Icon: Images.svg.overwatchIcon,
-        name: 'Overwatch'
-    },
-    LOL: {
-        image: {
-            pc_white: Images.png.lolImg.img
-        },
-        Icon: Images.svg.lolIcon,
-        name: 'League of legends'
-    },
-    Smashbrothers: {
-        image: {
-            switch_white: Images.png.smashImg.img
-        },
-        Icon: Images.svg.smashIcon,
-        name: 'Smash Ultimate'
+        platformName: 'Switch'
     }
 };
 

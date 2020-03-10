@@ -34,8 +34,9 @@ export function getGamerTagStringWithGameAndPlatform(platform, game) {
                 return 'Gamertag';
             } else if (game === 'pHearth' || game === 'pOver'){
                 return 'BattleTag';
+            } else {
+                return 'GamerTag'
             }
-            break;
         case 'ps4_white':
             return 'PSN';
         case 'xbox_white':
@@ -43,7 +44,7 @@ export function getGamerTagStringWithGameAndPlatform(platform, game) {
         case 'switch_white':
             return 'NintendoID';
         default:
-            break;
+            return 'GamerTag'
     }
 }
 

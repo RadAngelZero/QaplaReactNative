@@ -33,7 +33,7 @@
 		F0CF95A8DA355EE4DF4F753C /* libPods-QaplaReactNativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C6CEB466B7597707196E72DF /* libPods-QaplaReactNativeTests.a */; };
 		F9073A872406D29500BB648D /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = F9073A862406D29500BB648D /* main.jsbundle */; };
 		F9073AB024070EA900BB648D /* assets in Resources */ = {isa = PBXBuildFile; fileRef = F9073AAF24070EA900BB648D /* assets */; };
-		F95269BF2412F4C200DA0EE9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F95269BE2412F4C200DA0EE9 /* GoogleService-Info.plist */; };
+		F968D5012416CA10007A72DD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F968D5002416CA10007A72DD /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -366,8 +366,9 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F9073A862406D29500BB648D /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		F9073AAF24070EA900BB648D /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
-		F95269BE2412F4C200DA0EE9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Documents/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F968D5002416CA10007A72DD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Documents/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F97D0A29233BF33000C00713 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
+		F9D86F412416DCA900712411 /* Qapla Gaming.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Qapla Gaming.entitlements"; path = "QaplaReactNative/Qapla Gaming.entitlements"; sourceTree = "<group>"; };
 		F9F4B79223885C80003AD8FC /* QaplaReactNativeRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = QaplaReactNativeRelease.entitlements; path = QaplaReactNative/QaplaReactNativeRelease.entitlements; sourceTree = "<group>"; };
 		F9F4B7BE23885FBE003AD8FC /* QaplaReactNative.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = QaplaReactNative.entitlements; path = QaplaReactNative/QaplaReactNative.entitlements; sourceTree = "<group>"; };
 		FBF927A9EB9D21FEB290CB4A /* libPods-QaplaReactNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -502,6 +503,7 @@
 		13B07FAE1A68108700A75B9A /* QaplaReactNative */ = {
 			isa = PBXGroup;
 			children = (
+				F9D86F412416DCA900712411 /* Qapla Gaming.entitlements */,
 				F9073A862406D29500BB648D /* main.jsbundle */,
 				F9F4B7BE23885FBE003AD8FC /* QaplaReactNative.entitlements */,
 				F9F4B79223885C80003AD8FC /* QaplaReactNativeRelease.entitlements */,
@@ -623,7 +625,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				F95269BE2412F4C200DA0EE9 /* GoogleService-Info.plist */,
+				F968D5002416CA10007A72DD /* GoogleService-Info.plist */,
 				F9073AAF24070EA900BB648D /* assets */,
 				13B07FAE1A68108700A75B9A /* QaplaReactNative */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -1142,7 +1144,7 @@
 			files = (
 				F9073AB024070EA900BB648D /* assets in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				F95269BF2412F4C200DA0EE9 /* GoogleService-Info.plist in Resources */,
+				F968D5012416CA10007A72DD /* GoogleService-Info.plist in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				F9073A872406D29500BB648D /* main.jsbundle in Resources */,
 			);
@@ -1439,45 +1441,11 @@
 			baseConfigurationReference = 6DD599BCCA5F5D80DAE78351 /* Pods-QaplaReactNative.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = QaplaReactNative/QaplaReactNative.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_ENTITLEMENTS = "QaplaReactNative/Qapla Gaming.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = TRFNHWRW5M;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
-					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
-					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
-					"$(SRCROOT)/../node_modules/react-native/Libraries/CameraRoll/**",
-				);
-				INFOPLIST_FILE = QaplaReactNative/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.1;
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
-				PRODUCT_NAME = "Qapla Gaming";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.Qapla.QaplaApp";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Debug;
-		};
-		13B07F951A680F5B00A75B9A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8687C8670DBA8624622AB07E /* Pods-QaplaReactNative.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = QaplaReactNative/QaplaReactNativeRelease.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1498,7 +1466,41 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
 				PRODUCT_NAME = "Qapla Gaming";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.Qapla.QaplaApp";
+				PROVISIONING_PROFILE_SPECIFIER = iosQaplaDev;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		13B07F951A680F5B00A75B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8687C8670DBA8624622AB07E /* Pods-QaplaReactNative.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "QaplaReactNative/Qapla Gaming.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 23;
+				DEVELOPMENT_TEAM = TRFNHWRW5M;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
+					"$(SRCROOT)..\node_modules\neact-native-google-signiniosRNGoogleSignin",
+					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/CameraRoll/**",
+				);
+				INFOPLIST_FILE = QaplaReactNative/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.1;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
+				PRODUCT_NAME = "Qapla Gaming";
+				PROVISIONING_PROFILE_SPECIFIER = iosQaplaDev;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

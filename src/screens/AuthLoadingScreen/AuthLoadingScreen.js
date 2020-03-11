@@ -1,9 +1,3 @@
-// diego             - 11-12-2019 - us165 - loadQaplaLogros added
-// diego             - 14-11-2019 - us146 - Load server time offset
-// josep.sanahuja    - 26-08-2019 - us90 - loadShowHg1Modal
-// diego             - 02-09-2019 - us91 - Initialize segment
-// josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
-
 import React, { Component } from 'react';
 import { View, ActivityIndicator, Text, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
@@ -79,12 +73,11 @@ class AuthLoadingScreen extends Component {
             if (this.state.firstLoad) {
                 const isTutorialDone = await retrieveData('tutorial-done');
                 this.setState({ firstLoad: false });
+                
                 if (isTutorialDone) {
-
                     return this.props.navigation.navigate('Achievements');
                 }
                 else {
-
                     return this.props.navigation.navigate('onBoarding');
                 }
             }
@@ -98,7 +91,6 @@ class AuthLoadingScreen extends Component {
      */
     async checkNotificationPermission(uid) {
         try {
-            //await messaging.ios.registerForRemoteNotifications();
             const notificationPermissionEnabled = await messaging.hasPermission();
 
             if (notificationPermissionEnabled) {

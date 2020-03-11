@@ -51,6 +51,8 @@
 	<string>270131990285283</string>
 	<key>FacebookDisplayName</key>
 	<string>QaplaReactNative</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<true/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

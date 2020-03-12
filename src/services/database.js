@@ -695,12 +695,13 @@ export async function sendUserFeedback(message, userId) {
  * @param {string} eventId Event identifier on the database
  */
 export function joinEvent(uid, eventId) {
+    const user = store.getState().userReducer.user;
     eventParticipantsRef.child(eventId).child(uid).update({
-        email: store.getState().userReducer.user.email,
+        email: user.email,
         priceQaploins: 0,
         matchesPlayed: 0,
-        victorys: 0,
-        userName: store.getState().userReducer.user.userName
+        victories: 0,
+        userName: user.userName
     });
 }
 

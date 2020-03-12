@@ -46,7 +46,7 @@ class EventCard extends Component {
     }
 
     /**
-     * If the user cancel the process of adding gamer/discord tag we show a modal
+     * If the user cancels the process of adding gamer/discord tag we show a modal
      * saying that he/she can not join to the event without that data
      */
     onRequestTagsFail = () => this.setState({ showRequirementsModal: true });
@@ -70,6 +70,9 @@ class EventCard extends Component {
      */
     closeGamerTagModal = () => this.setState({ showGamerTagModal: false, showRequirementsModal: true });
 
+    /**
+     * Closes the requirements modal
+     */
     closeRequirementsModal = () => this.setState({ showRequirementsModal: false });
 
     render() {

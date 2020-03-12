@@ -821,17 +821,25 @@ export function saveUserSubscriptionToTopic(uid, topic, type) {
     userTopicSubscriptions.child(uid).child(type).update({ [topic]: true });
 }
 
+/**
+ * Update the notificationPermission flag of the given type
+ * @param {string} notificationType Key of the category of the topics
+ * @param {boolean} value True if the user allow push notifications
+ */
 export function updateNotificationPermission(notificationType, value) {
     usersRef.child(store.getState().userReducer.user.id).child('notificationPermissions').update({ [notificationType]: value });
 }
 
+/**
+ * Return a snapshot with the list of the user topics of the given type
+ * @param {string} type Key of the category of the topics
+ */
 export async function getUserTopicSubscriptions(type) {
     return await userTopicSubscriptions.child(store.getState().userReducer.user.id).child(type).once('value');
 }
 
 /**
  * Check if the user allows push notifications on a given topic
- * @param {string} uid User identifier
  * @param {string} notificationType Key of the notification permission to check
  */
 export function userAllowsNotificationsFrom(notificationType) {

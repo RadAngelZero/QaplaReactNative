@@ -52,8 +52,10 @@ class VideoGamesList extends Component {
                             gamesToLoad[gamePlatform] = {};
                         }
 
-                        // Add the game to the list of games to load
-                        gamesToLoad[gamePlatform][gameKey] = this.props.games[gamePlatform][gameKey];
+                        if (!this.props.games[gamePlatform][gameKey].hide) {
+                            // Add the game to the list of games to load
+                            gamesToLoad[gamePlatform][gameKey] = this.props.games[gamePlatform][gameKey];
+                        }
                     }
                 });
             });

@@ -57,6 +57,7 @@ import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeF
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 import { widthPercentageToPx } from './utilities/iosAndroidDim';
 import { translate } from './utilities/i18';
+import NotificationsSettingsScreen from './screens/NotificationsSettingsScreen/NotificationsSettingsScreen';
 
 // Svg Icons
 const ProfileIcon = Images.svg.profileIcon;
@@ -114,6 +115,12 @@ const SettingsMenuStackNavigator = createStackNavigator({
     },
     Support: {
         screen: SupportScreen,
+        navigationOptions: {
+            header: (props) => <TopNavOptions back close {...props} />
+        }
+    },
+    NotificationsSettings: {
+        screen: NotificationsSettingsScreen,
         navigationOptions: {
             header: (props) => <TopNavOptions back close {...props} />
         }

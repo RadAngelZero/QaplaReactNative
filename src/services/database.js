@@ -124,6 +124,16 @@ export async function getGamerTagWithUID(Uid, game, platform) {
     });
 }
 
+/**
+ * Return the discord tag of a user
+ *
+ * @param {string} uid User identifier on database
+ * @returns {string} userDiscordTag
+ */
+export async function getUserDiscordTag(uid) {
+    return (await usersRef.child(uid).child('discordTag').once('value')).val();
+}
+
 export function createUserProfile(Uid, email) {
     usersRef.child(Uid).set({
         bio: '',

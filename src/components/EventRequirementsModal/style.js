@@ -4,6 +4,7 @@ import {
     NAV_TOPBAR_ICON_RIGHT_MARGIN,
     NAV_TOPBAR_ICON_TOP_MARGIN
 } from '../../utilities/Constants';
+import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
     mainContainer: {
@@ -19,7 +20,7 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(80),
         alignSelf: 'center',
         justifyContent: 'center',
-        backgroundColor: '#141833',
+        backgroundColor: Colors.modals.backgroundDarkModal,
         borderRadius: 20,
         shadowColor: "#000",
         shadowOffset: {
@@ -45,7 +46,7 @@ export default styles = StyleSheet.create({
     description: {
         fontSize: 16,
         marginTop: 12,
-        color: '#CFD1DB',
+        color: Colors.modals.body,
         marginLeft: 16,
         marginRight: 16,
         textAlign: 'center'
@@ -61,7 +62,7 @@ export default styles = StyleSheet.create({
         alignSelf: 'flex-end'
     },
     textOfButtons: {
-        color: '#3DF9DF',
+        color: Colors.greenQapla,
         margin: heightPercentageToPx(1.97)
     },
     saveTextButton: {

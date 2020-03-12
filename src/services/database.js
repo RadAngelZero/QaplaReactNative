@@ -241,7 +241,7 @@ export async function addGameToUser(uid, userName, platform, gameKey, gamerTag) 
 }
 
 /**
- * Update the value of the user gamertag for a given name
+ * Update the value of the user gamertag
  * @param {string} uid User identifier
  * @param {string} platform Platform key: platformName_white
  * @param {string} gameKey Key of the game

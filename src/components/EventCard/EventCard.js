@@ -27,7 +27,7 @@ class EventCard extends Component {
     };
 
     /**
-     * Allow the user to join the tournament
+     * Check if the user has the necessary data to join to the event
      */
     requestUserTags = () => {
         if (isUserLogged()) {
@@ -46,7 +46,7 @@ class EventCard extends Component {
     }
 
     /**
-     * If the user cancel the process of add gamer/discord tag we show a modal
+     * If the user cancel the process of adding gamer/discord tag we show a modal
      * saying that he/she can not join to the event without that data
      */
     onRequestTagsFail = () => this.setState({ showRequirementsModal: true });
@@ -55,7 +55,7 @@ class EventCard extends Component {
      * Add the user to the list of participants of the selected event and
      * subscribe him/her to the FCM topic of the event
      */
-    joinEvent = () => {
+    subscribeUserToEvent = () => {
         joinEvent(this.props.uid, this.props.id);
         subscribeUserToTopic(this.props.id, this.props.uid);
     }
@@ -69,6 +69,8 @@ class EventCard extends Component {
      * Close the gamer tag moddal and opens the event requirements modal
      */
     closeGamerTagModal = () => this.setState({ showGamerTagModal: false, showRequirementsModal: true });
+
+    closeRequirementsModal = () => this.setState({ showRequirementsModal: false });
 
     render() {
         const { photoUrl, titulo, description, tiempoLimite, verified, priceQaploins, game, platform } = this.props;
@@ -104,7 +106,7 @@ class EventCard extends Component {
                 <AddGamerTagModal
                     open={this.state.showGamerTagModal}
                     onClose={() => this.setState({ showGamerTagModal: false })}
-                    onSuccess={this.joinEvent}
+                    onSuccess={this.subscribeUserToEvent}
                     onCancel={this.onRequestTagsFail}
                     selectedGame={selectedGame}
                     uid={this.props.uid}
@@ -113,7 +115,7 @@ class EventCard extends Component {
                     previousGamerTag={this.state.previousGamerTag} />
                 <EventRequirementsModal
                     open={this.state.showRequirementsModal}
-                    closeModal={() => this.setState({ showRequirementsModal: false })}
+                    closeModal={this.closeRequirementsModal}
                     reTry={this.requestUserTags} />
                 {(priceQaploins !== null && priceQaploins !== undefined) &&
                     <View style={styles.eventInfoContainer}>

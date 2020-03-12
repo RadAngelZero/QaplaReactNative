@@ -31,19 +31,25 @@ class EventRequirementsModal extends Component {
                                 <CloseIcon />
                             </View>
                         </TouchableWithoutFeedback>
-                        <Text style={styles.modalTitle}>{translate('activeAchievementsScreen.eventAchievement.eventRequirementsModal.title')}</Text>
+                        <Text style={styles.modalTitle}>
+                            {translate('activeAchievementsScreen.eventAchievement.eventRequirementsModal.title')}
+                        </Text>
                         <Text style={styles.description}>
                             {translate('activeAchievementsScreen.eventAchievement.eventRequirementsModal.body')}
                         </Text>
                         <View style={styles.buttonsContainer}>
                             <TouchableWithoutFeedback onPress={this.props.closeModal}>
                                 <View style={styles.cancelTextButton}>
-                                    <Text style={styles.textOfButtons}>{translate('activeAchievementsScreen.eventAchievement.eventRequirementsModal.close')}</Text>
+                                    <Text style={styles.textOfButtons}>
+                                        {translate('activeAchievementsScreen.eventAchievement.eventRequirementsModal.close')}
+                                    </Text>
                                 </View>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={this.reTryEvent}>
                                 <View style={styles.saveTextButton}>
-                                    <Text style={styles.textOfButtons}>{translate('activeAchievementsScreen.eventAchievement.eventRequirementsModal.addInfo')}</Text>
+                                    <Text style={styles.textOfButtons}>
+                                        {translate('activeAchievementsScreen.eventAchievement.eventRequirementsModal.addInfo')}
+                                    </Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

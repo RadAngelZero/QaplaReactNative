@@ -50,7 +50,7 @@ export function getGamerTagStringWithGameAndPlatform(platform, game) {
 
 /**
  * @description returns a user readable string that contains the name of the
- * tag in the diferent games and platforms
+ * tag in different games and platforms
  * @param {string} platform The platform key (platform_white)
  * @param {string} game The key of the game
  */

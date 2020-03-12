@@ -52,7 +52,7 @@ class AddGamerTagModal extends Component {
     }
 
     /**
-     * Check if the user has a valid discorTag and save the game else open the discordTag modal
+     * Check if the user has a valid discorTag and save the game, otherwise, open the discordTag modal
      */
     validateOrRequestDiscordTag = async () => {
         if (this.props.discordTag) {
@@ -164,7 +164,9 @@ class AddGamerTagModal extends Component {
                                 {this.state.gamerTagError &&
                                     <Text style={styles.smallText}>{translate('addGamerTagModal.invalidGamerTag')}</Text>
                                 }
-                                <Text style={styles.modalText}>{translate('addGamerTagModal.body', { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText || this.props.previousGamerTag })}</Text>
+                                <Text style={styles.modalText}>
+                                    {translate('addGamerTagModal.body', { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText || this.props.previousGamerTag })}
+                                </Text>
                                 <TouchableWithoutFeedback onPress={this.saveGameOnUser}>
                                         <View style={styles.confirmButton}>
                                             <Text style={styles.confirmButtonText}>Aceptar</Text>

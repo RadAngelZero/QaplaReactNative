@@ -17,6 +17,9 @@ class PlatformGamesList extends Component {
     render() {
         return (
             <View style={styles.container}>
+                {/**
+                 * Obviously, only if the user have games on the given platform we render the title
+                 */}
                 {Object.keys(this.props.listOfGames).length > 0 &&
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>{platformResources[this.props.platform].platformName}</Text><View style={[styles.circleIcon, { backgroundColor: platformResources[this.props.platform].platformColor }]}></View>

@@ -34,6 +34,7 @@ class WelcomeOnboardingScreen extends React.Component {
 	finishOnBoarding = () => {
 		storeData('tutorial-done', 'true');
 		const eventsTopic = `${EVENTS_TOPIC}_${getLocaleLanguage()}`;
+		
 		/**
          * All the users must be subscribed to the event topic at this point, because we want
          * all the users to receive notifications when a new event is created, we use the language suffix
@@ -43,16 +44,6 @@ class WelcomeOnboardingScreen extends React.Component {
 		subscribeUserToTopic(eventsTopic);
 		if (this.props.uid !== '') {
 			saveUserSubscriptionToTopic(this.props.uid, eventsTopic);
-		}
-
-		subscribeUserToTopic('Prueba');
-		if (this.props.uid !== '') {
-			saveUserSubscriptionToTopic(this.props.uid, 'Prueba');
-		}
-
-		subscribeUserToTopic('Miau');
-		if (this.props.uid !== '') {
-			saveUserSubscriptionToTopic(this.props.uid, 'Miau');
 		}
 
 		/**

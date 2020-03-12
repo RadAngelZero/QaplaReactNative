@@ -21,7 +21,6 @@ import Images from '@assets/images'
 import { storeData } from '../../utilities/persistance';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { subscribeUserToTopic } from './../../services/messaging';
-import { saveUserSubscriptionToTopic } from '../../services/database';
 
 class WelcomeOnboardingScreen extends React.Component {
 	constructor(props) {

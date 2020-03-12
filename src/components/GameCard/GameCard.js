@@ -19,7 +19,7 @@ import {
 
 import { connect } from 'react-redux';
 
-import { getGamerTagWithUID, addGameToUser, saveUserSubscriptionToTopic } from '../../services/database';
+import { getGamerTagWithUID, addGameToUser } from '../../services/database';
 import { withNavigation } from 'react-navigation';
 import { subscribeUserToTopic } from '../../services/messaging';
 import { trackOnSegment } from '../../services/statistics';

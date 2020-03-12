@@ -10,7 +10,7 @@ import { Modal, View, TextInput, Text, TouchableWithoutFeedback } from 'react-na
 import { withNavigation } from 'react-navigation';
 
 import styles from './style';
-import { addGameToUser, saveUserSubscriptionToTopic } from '../../services/database';
+import { addGameToUser } from '../../services/database';
 import Images from './../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { subscribeUserToTopic } from '../../services/messaging';

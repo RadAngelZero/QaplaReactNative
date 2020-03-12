@@ -15,7 +15,7 @@ export function subscribeUserToTopic(topic, uid = '') {
      * If the user is logged with an account we save their subscription to the topic
      * (some topics does not require authentication)
      */
-    if (uid !== '') {
+    if (uid) {
         saveUserSubscriptionToTopic(uid, topic);
     }
 }

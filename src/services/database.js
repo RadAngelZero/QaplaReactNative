@@ -815,9 +815,32 @@ export async function updateUserProfileImg(uid, photoUrl) {
   * Saves the topics on the database which the user has been subscribed on FCM
   * @param {string} uid User identifier on the database
   * @param {string} topic Name of the topic to which the user has subscribed
+  * @param {string} type Key of the category of the topic
   */
-export function saveUserSubscriptionToTopic(uid, topic) {
-    userTopicSubscriptions.child(uid).update({ [topic]: true });
+export function saveUserSubscriptionToTopic(uid, topic, type) {
+    userTopicSubscriptions.child(uid).child(type).update({ [topic]: true });
+}
+
+export function updateNotificationPermission(notificationType, value) {
+    usersRef.child(store.getState().userReducer.user.id).child('notificationPermissions').update({ [notificationType]: value });
+}
+
+export async function getUserTopicSubscriptions(type) {
+    return await userTopicSubscriptions.child(store.getState().userReducer.user.id).child(type).once('value');
+}
+
+/**
+ * Check if the user allows push notifications on a given topic
+ * @param {string} uid User identifier
+ * @param {string} notificationType Key of the notification permission to check
+ */
+export function userAllowsNotificationsFrom(notificationType) {
+    const notificationsPermissions = store.getState().userReducer.user.notificationPermissions;
+    if (notificationsPermissions && notificationsPermissions.hasOwnProperty(notificationType)) {
+        return notificationsPermissions[notificationType];
+    }
+
+    return true;
 }
 
 // -----------------------------------------------
@@ -827,7 +850,7 @@ export function saveUserSubscriptionToTopic(uid, topic) {
 /**
  * Gets the privacy terms from the Qapla App
  * @returns
- * SUCCESS - {Array}  Content of Qapla app privacy terms. 
+ * SUCCESS - {Array}  Content of Qapla app privacy terms.
  * FAIL    - {Array}  Empty array
  */
 export async function getQaplaAppPrivacy() {

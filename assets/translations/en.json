@@ -139,6 +139,7 @@
         "support": "Support",
         "editBio": "Edit Biography",
         "editDiscord": "Edit Discord",
+        "notifications": "Push notifications",
         "termsAndConditions": "Terms and Conditions",
         "privacyNotice": "Privacy Notice",
         "closeSession": "Close Session",
@@ -270,6 +271,11 @@
     "chooseOpponentScreen": {
         "title": "Search user to challenge",
         "searchPlaceholder": "Search user"
+    },
+    "notificationsSettingsScreen": {
+        "title": "Notifications",
+        "gamesPermissionDescription": "Receive notifications about new matches of games that interest me",
+        "eventsPermissionDescription": "Receive notifications about the events to which I am subscribed"
     },
     "headerBar": {
         "highlightModal": {

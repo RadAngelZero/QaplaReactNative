@@ -96,7 +96,7 @@
         "acceptChallenge": "Accept Challenge",
         "alreadyChallengedModal": {
             "header": "We are sorry",
-            "body": "You have already challengeg this match",
+            "body": "You have already challenged this match",
             "textButton": "Ok"
         },
         "buyQaploinsModal": {

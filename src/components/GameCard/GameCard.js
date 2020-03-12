@@ -69,7 +69,7 @@ class GameCard extends Component {
         newGame.gameKey = this.props.gameKey;
 
         /**
-         * If receive a flag to load the games that the user don't have, but have a gamerTag for this game
+         * If receive a flag to load the games that the user doesn't have, but have a gamerTag for this game
          * (as happens on xbox or ps4) add the game to the user with ask no question and redirect to profile
          * because the user is adding games on their profile, no creating a match
          */

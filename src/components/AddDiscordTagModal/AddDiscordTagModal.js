@@ -8,6 +8,7 @@ import styles from './style';
 import Images from './../../../assets/images';
 import { updateUserDiscordTag } from '../../services/database';
 import { translate } from '../../utilities/i18';
+import Colors from '../../utilities/Colors';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -71,7 +72,7 @@ class AddDiscordTagModal extends Component {
                             onBlur={this.toggleInputSelection}
                             placeholder={translate('settingsMenuScreen.addDiscordTagModal.placeholder')}
                             placeholderTextColor='#B5B5B5'
-                            style={[styles.qaplaTextInput, { borderBottomColor: this.state.showFeedback ? '#FF0000' : this.state.selected ? '#3DF9DF' : '#B5B5B5' } ]}
+                            style={[styles.qaplaTextInput, { borderBottomColor: this.state.showFeedback ? Colors.textInputs.error : this.state.selected ? Colors.greenQapla : Colors.textInputs.unselected } ]}
                             autoCapitalize='none'
                             onChangeText={(discordTag) => this.setState({ discordTag, showFeedback: false })}
                             onSubmitEditing={this.updateDiscordTag} />

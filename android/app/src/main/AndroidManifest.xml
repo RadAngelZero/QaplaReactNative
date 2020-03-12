@@ -26,6 +26,9 @@
       <meta-data
         android:name="com.google.firebase.messaging.default_notification_channel_id"
         android:value="@string/default_notification_channel_id"/>
+      <meta-data
+        android:name="com.google.firebase.messaging.default_notification_icon"
+        android:resource="@drawable/ic_notification_icon" />
       <activity
         android:name="com.qapla.gaming.app.MainActivity"
         android:label="@string/app_name"

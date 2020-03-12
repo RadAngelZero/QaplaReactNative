@@ -22,6 +22,10 @@ class TopNavOptions extends Component {
             this.props.closeEvent();
         }
 
+        if (this.props.onCloseNavigateTo) {
+            this.props.navigation.navigate(this.props.onCloseNavigateTo);
+        }
+
         /**
          * As we want to avoid that the user can access to the profile screen if is not logged we need to define manually
          * the navigation flow on the SignIn/LogIn screens

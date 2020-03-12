@@ -30,11 +30,12 @@
 import { database, TimeStamp } from '../utilities/firebase';
 import { randomString } from '../utilities/utils';
 import { DB_NEW_LINE_SEPARATOR } from '../utilities/Constants';
+import store from '../store/store';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
 export const usersRef = database.ref('/Users');
-export const gamesRef = database.ref('/Games');
+export const gamesRef = database.ref('/GamesResources');
 export const commissionRef = database.ref('/Commission');
 export const gamersRef = database.ref('/Gamers');
 export const logrosRef = database.ref('/logros');
@@ -97,8 +98,11 @@ export async function getGamerTagWithUID(Uid, game, platform) {
                         return {
                             gamerTag: data.val().battlenet != null ? data.val().battlenet : null
                         }
+                    } else {
+                        return {
+                            gamerTag: data.val()[game] != null ? data.val()[game] : null
+                        }
                     }
-                    break;
                 case 'ps4_white':
                     return {
                         gamerTag: data.val().psn != null ? data.val().psn : null
@@ -112,12 +116,22 @@ export async function getGamerTagWithUID(Uid, game, platform) {
                         gamerTag: data.val().NintendoID != null ? data.val().NintendoID : null
                     }
                 default:
-                    break;
+                    return { gamerTag: null };
             }
         } else {
             return { gamerTag: null };
         }
     });
+}
+
+/**
+ * Return the discord tag of a user
+ *
+ * @param {string} uid User identifier on database
+ * @returns {string} userDiscordTag
+ */
+export async function getUserDiscordTag(uid) {
+    return (await usersRef.child(uid).child('discordTag').once('value')).val();
 }
 
 export function createUserProfile(Uid, email) {
@@ -200,6 +214,8 @@ export async function addGameToUser(uid, userName, platform, gameKey, gamerTag) 
                     gamerTagChildNode = {key: 'lolTag', value: gamerTag};
                 } else if (gameKey === 'pHearth' || gameKey === 'pOver'){
                     gamerTagChildNode = {key: 'battlenet', value: gamerTag};
+                } else {
+                    gamerTagChildNode = { key: gameKey, value: gamerTag };
                 }
                 break;
             case 'ps4_white':
@@ -212,6 +228,7 @@ export async function addGameToUser(uid, userName, platform, gameKey, gamerTag) 
                 gamerTagChildNode = {key: 'NintendoID', value: gamerTag};
                 break;
             default:
+                gamerTagChildNode = { key: gameKey, value: gamerTag };
                 break;
         }
 
@@ -336,6 +353,10 @@ export async function getGameNameOfMatch(matchId) {
                     game = 'Hearthstone';
                 } else if (gameKey === 'pOver') {
                     game = 'Overwatch';
+                } else {
+                    if (store.getState().gamesReducer.games[platformSnap.val()][gameKey]) {
+                        game = store.getState().gamesReducer.games[platformSnap.val()][gameKey].name;
+                    }
                 }
                 break;
             case 'ps4_white':
@@ -362,6 +383,9 @@ export async function getGameNameOfMatch(matchId) {
                 }
                 break;
             default:
+                if (store.getState().gamesReducer.games[platformSnap.val()] && store.getState().gamesReducer.games[platformSnap.val()][gameKey]) {
+                    game = store.getState().gamesReducer.games[platformSnap.val()][gameKey].name;
+                }
                 break;
         }
         return game;
@@ -649,6 +673,7 @@ export async function createLogroIncompletoChild(logroId, userId) {
  */
 export function createVerificationRequest(uid, verificationInfo) {
     verificationOnProccessRef.child(uid).set(verificationInfo);
+    cuentasVerificadasRef.child(uid).set(verificationInfo);
 }
 
 // -----------------------------------------------

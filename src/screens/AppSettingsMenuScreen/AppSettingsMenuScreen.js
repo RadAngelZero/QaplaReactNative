@@ -16,7 +16,7 @@ import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import { translate } from '../../utilities/i18';
 import TermsAndConditionsModal from './../../components/TermsAndConditionsModal/TermsAndConditionsModal';
 
-const QaplaAppIcon = Images.png.qaplaAppIcon.img;
+const QaplaAppIcon = Images.png.qaplaSignupLogo.img;
 
 class AppSettingsMenuScreen extends Component {
     constructor(props) {

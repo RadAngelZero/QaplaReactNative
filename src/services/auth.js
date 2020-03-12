@@ -14,7 +14,7 @@ import {
     phoneAuthAutoVerifiedState,
 } from './../utilities/firebase';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
-import { GoogleSignin } from 'react-native-google-signin';
+import { GoogleSignin } from '@react-native-community/google-signin';
 import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
@@ -76,31 +76,12 @@ export async function signInWithEmailAndPassword(email, password) {
 /**
  * Send a SMS to the given number of the user to verify their phone number
  * @param {string} phoneNumber Phone number of the user
- * @param {function} isAutoVerified Callback called only if the phone is autoverifiable, must make the link of the account here
  */
-export async function sendVerificationSMSToUser(phoneNumber, isAutoVerified) {
+export async function sendVerificationSMSToUser(phoneNumber) {
     /**
      * https://rnfirebase.io/docs/v5.x.x/auth/reference/auth#verifyPhoneNumber
      */
-    return await auth.verifyPhoneNumber(phoneNumber, false, true).on('state_changed', (phoneAuth) => {
-        switch (phoneAuth.state) {
-            /**
-             * This case only apply for both platforms (android and iOS)
-             */
-            case phoneAuthErrorState:
-                console.error(phoneAuth.error);
-                break;
-
-            /**
-             * This case only apply for android at the 19/12/2019
-             */
-            case phoneAuthAutoVerifiedState:
-                isAutoVerified(phoneAuth.verificationId, phoneAuth.code);
-                break;
-            default:
-                break;
-        }
-    });
+    return await auth.verifyPhoneNumber(phoneNumber, false, true);
 }
 
 /**

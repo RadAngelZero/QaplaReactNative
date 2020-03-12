@@ -5,9 +5,10 @@
 import React, { Component } from 'react';
 import {
     View,
-    WebView,
     SafeAreaView
 } from 'react-native';
+
+import { WebView } from 'react-native-webview';
 
 import { trackOnSegment } from '../../services/statistics';
 import { getIdTokenFromUser } from '../../services/auth';

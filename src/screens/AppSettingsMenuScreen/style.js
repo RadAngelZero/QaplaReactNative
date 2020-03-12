@@ -52,8 +52,8 @@ export default styles = StyleSheet.create({
     },
     mainImage: {
         resizeMode: 'contain',
-        width: widthPercentageToPx(20),
-        height: widthPercentageToPx(20),
+        width: widthPercentageToPx(25),
+        height: widthPercentageToPx(25),
         marginTop: heightPercentageToPx(2)
     }
 

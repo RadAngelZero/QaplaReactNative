@@ -121,7 +121,7 @@ export async function getGamerTagWithUID(Uid, game, platform) {
 }
 
 /**
- * Return the discord tag of an user
+ * Return the discord tag of a user
  *
  * @param {string} uid User identifier on database
  * @returns {string} userDiscordTag

@@ -14,14 +14,13 @@ import { connect } from 'react-redux';
 
 import styles from './style'
 
-import { EVENTS_TOPIC } from './../../utilities/Constants';
+import { EVENTS_TOPIC, GAMES_TOPICS } from './../../utilities/Constants';
 
 import CarouselPng from '../../components/CarouselPng/CarouselPng'
 import Images from '@assets/images'
 import { storeData } from '../../utilities/persistance';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { subscribeUserToTopic } from './../../services/messaging';
-import { saveUserSubscriptionToTopic } from '../../services/database';
 
 class WelcomeOnboardingScreen extends React.Component {
 	constructor(props) {
@@ -40,7 +39,7 @@ class WelcomeOnboardingScreen extends React.Component {
          * because we want to send the notifications in different languages (based on the user cellphone
          * language)
          */
-		subscribeUserToTopic(eventsTopic, this.props.uid);
+		subscribeUserToTopic(eventsTopic, this.props.uid, EVENTS_TOPIC);
 
 		/**
 		 * If the user has games (that means that we have a logged user)
@@ -48,7 +47,7 @@ class WelcomeOnboardingScreen extends React.Component {
 		 */
 		this.props.userGames.forEach((gameKey) => {
 			if (gameKey) {
-				subscribeUserToTopic(gameKey, this.props.uid);
+				subscribeUserToTopic(gameKey, this.props.uid, GAMES_TOPICS);
 			}
 		});
 

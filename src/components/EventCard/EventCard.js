@@ -12,7 +12,7 @@ import { isUserLogged } from '../../services/auth';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
 import { translate } from '../../utilities/i18';
-import { QAPLA_DISCORD_CHANNEL } from '../../utilities/Constants';
+import { QAPLA_DISCORD_CHANNEL, GAMES_TOPICS } from '../../utilities/Constants';
 import { subscribeUserToTopic } from '../../services/messaging';
 
 class EventCard extends Component {
@@ -22,7 +22,7 @@ class EventCard extends Component {
     joinEvent = () => {
         if (isUserLogged()) {
             joinEvent(this.props.uid, this.props.id);
-            subscribeUserToTopic(this.props.id, this.props.uid);
+            subscribeUserToTopic(this.props.id, this.props.uid, GAMES_TOPICS);
         } else {
             this.props.navigation.navigate('SignIn');
         }

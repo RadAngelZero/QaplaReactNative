@@ -15,6 +15,7 @@ import Images from './../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { subscribeUserToTopic } from '../../services/messaging';
 import { translate } from '../../utilities/i18';
+import { GAMES_TOPICS } from '../../utilities/Constants';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -42,7 +43,7 @@ export class AddGamerTagModal extends Component {
                 await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
                     this.props.selectedGame.gameKey, this.state.gamerTagText);
 
-                subscribeUserToTopic(this.props.selectedGame.gameKey, this.props.uid);
+                subscribeUserToTopic(this.props.selectedGame.gameKey, this.props.uid, GAMES_TOPICS);
 
                 trackOnSegment('Add Gamer Tag Process Completed',
                     { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });

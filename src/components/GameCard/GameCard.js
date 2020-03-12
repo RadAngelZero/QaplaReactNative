@@ -25,6 +25,7 @@ import { subscribeUserToTopic } from '../../services/messaging';
 import { trackOnSegment } from '../../services/statistics';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import Colors from '../../utilities/Colors';
+import { GAMES_TOPICS } from '../../utilities/Constants';
 
 class GameCard extends Component {
 
@@ -62,7 +63,7 @@ class GameCard extends Component {
                      * Every game is a topic, so we can send push notifications to the user
                      * about specific games
                      */
-                    subscribeUserToTopic(newGame.gameKey, this.props.user.id);
+                    subscribeUserToTopic(newGame.gameKey, this.props.user.id, GAMES_TOPICS);
 
                     this.props.navigation.pop();
                 } catch (error) {

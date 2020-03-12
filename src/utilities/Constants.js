@@ -102,3 +102,9 @@ export const HEADER_SIZE = 2.9;
 
 // Firebase Cloud Messaging Topics
 export const EVENTS_TOPIC = 'events';
+
+// Firebase auth error
+export const ACCOUNT_ALREADY_IN_USE = 'auth/credential-already-in-use';
+export const ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT = 'auth/unknown';
+export const ACCOUNT_INVALID_CREDENTIAL = 'auth/invalid-credential';
+export const ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS =  'auth/provider-already-linked';

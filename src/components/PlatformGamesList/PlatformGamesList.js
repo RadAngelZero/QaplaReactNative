@@ -18,7 +18,10 @@ class PlatformGamesList extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>{platformResources[this.props.platform].platformName}</Text><View style={[styles.circleIcon, { backgroundColor: platformResources[this.props.platform].platformColor }]}></View>
+                    <Text style={styles.title}>
+                        {platformResources[this.props.platform].platformName}
+                    </Text>
+                    <View style={[styles.circleIcon, { backgroundColor: platformResources[this.props.platform].platformColor }]}></View>
                 </View>
                 <ScrollView horizontal style={styles.scrollViewStyle} showsHorizontalScrollIndicator={false}>
                     {Object.keys(this.props.listOfGames).map((gameKey) => (

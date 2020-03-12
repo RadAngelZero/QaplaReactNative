@@ -56,7 +56,7 @@ class AddDiscordTagModal extends Component {
         return (
             <Modal
                 animationType='fade'
-                transparent={true}
+                transparent
                 visible={this.props.open}
                 onRequestClose={this.props.closeModal}>
                 <View style={styles.mainContainer}>

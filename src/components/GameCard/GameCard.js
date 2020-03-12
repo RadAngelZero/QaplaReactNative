@@ -19,7 +19,7 @@ import {
 
 import { connect } from 'react-redux';
 
-import { getGamerTagWithUID, addGameToUser, saveUserSubscriptionToTopic } from '../../services/database';
+import { getGamerTagWithUID, addGameToUser } from '../../services/database';
 import { withNavigation } from 'react-navigation';
 import { subscribeUserToTopic } from '../../services/messaging';
 import { trackOnSegment } from '../../services/statistics';
@@ -87,7 +87,7 @@ class GameCard extends Component {
                  * Every game is a topic, so we can send push notifications to the user
                  * about specific games
                  */
-                subscribeUserToTopic(newGame.gameKey, this.props.id);
+                subscribeUserToTopic(newGame.gameKey, this.props.user.id);
 
                 this.props.navigation.pop();
             } catch (error) {
@@ -137,9 +137,9 @@ class GameCard extends Component {
                     </LinearGradient>
                 </TouchableWithoutFeedback>
                 <AddDiscordTagModal
-                    open={this.state.openDiscordTagModal}
-                    onClose={this.closeDiscordTagModal}
-                    onSuccess={this.handleGameSelectionLogic} />
+                open={this.state.openDiscordTagModal}
+                onClose={this.closeDiscordTagModal}
+                onSuccess={this.handleGameSelectionLogic} />
             </>
         );
     }

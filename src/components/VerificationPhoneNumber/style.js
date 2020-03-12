@@ -32,7 +32,7 @@ export default styles = StyleSheet.create({
         marginRight: widthPercentageToPx(12),
         marginTop: heightPercentageToPx(10),
     },
-   codeContainer: { 
+   codeContainer: {
         justifyContent: 'center',
         marginLeft: widthPercentageToPx(6),
         marginRight: widthPercentageToPx(12),
@@ -46,7 +46,7 @@ export default styles = StyleSheet.create({
         borderWidth: 2
     },
     qaplaTextInput: {
-        flex: 1, 
+        flex: 1,
         height: heightPercentageToPx(8),
         borderBottomColor: '#B5B5B5',
         color: '#FFF',
@@ -56,6 +56,7 @@ export default styles = StyleSheet.create({
     smallText: {
         fontSize: 12,
         fontWeight: '700',
-        color: '#8A8D92'
+        color: '#8A8D92',
+        marginLeft: widthPercentageToPx(6)
     }
 });

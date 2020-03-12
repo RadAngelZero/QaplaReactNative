@@ -31,6 +31,13 @@ import { createVerificationRequest } from '../../services/database';
 import { PhoneProvider } from '../../utilities/firebase';
 import { translate } from '../../utilities/i18';
 
+import {
+    ACCOUNT_ALREADY_IN_USE,
+    ACCOUNT_INVALID_CREDENTIAL,
+    ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT,
+    ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS
+} from '../../utilities/Constants';
+
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
 
@@ -61,7 +68,8 @@ class VerificationScreen extends Component {
         indexPositionsIsSorted: false,
         numAttemptsCodeSent: 0,
         codeSent: false,
-        errorSMSCode: false
+        errorSMSCode: false,
+        errorAlreadyLinkedAccount: false
     };
 
     /**
@@ -190,7 +198,7 @@ class VerificationScreen extends Component {
                 isValidData = !Object.keys(this.state.firebaseVerificationData).some((value) => this.state.firebaseVerificationData[value] === '');
 
                 if (isValidData) {
-                    this.setState({ errorSMSCode: false });
+                    this.setState({ errorSMSCode: false, errorAlreadyLinkedAccount: false });
                     isValidData = await this.verifyUserPhone(this.state.verificationObject.verificationId, this.state.firebaseVerificationData.verificationCode);
                 }
                 break;
@@ -259,6 +267,7 @@ class VerificationScreen extends Component {
             const verificationRequest = {
                 curp: '',
                 nombre: `${this.state.personData.name} ${this.state.personData.firstSurname} ${this.state.personData.secondSurname}`,
+                telefono: `+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`,
                 foto: '',
                 status: 1,
                 usuario: this.props.userName,
@@ -269,32 +278,27 @@ class VerificationScreen extends Component {
 
         } catch (error) {
             console.log(error);
-            this.setState({ errorSMSCode: true });
-            accountsLinked = false;
+            switch (error.code) {
+                case ACCOUNT_INVALID_CREDENTIAL:
+                    this.setState({ errorSMSCode: true });
+                    accountsLinked = false;
+                    break;
+                case ACCOUNT_ALREADY_IN_USE:
+                    this.setState({ errorAlreadyLinkedAccount: true });
+                    accountsLinked = false;
+                    break;
+                case ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT:
+                    this.setState({ errorAlreadyLinkedAccount: true });
+                    accountsLinked = false;
+                    break;
+                case ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS:
+                    this.setState({ errorAlreadyLinkedAccount: true });
+                    accountsLinked = false;
+                    break;
+            }
         }
 
         return accountsLinked;
-    }
-
-    /**
-     * Execute an automatic phone verification (available only for android devices at the 23/12/2019)
-     * @param {string} verificationId Id of the verification process (given by firebase)
-     * @param {number} verificationCode Code sended to the user to verify their phone number
-     */
-    autoVerifyUserPhone = async (verificationId, verificationCode) => {
-        await this.verifyUserPhone(verificationId, verificationCode);
-
-        /**
-         * We update the next index by 2, we need to update by 2 because we need to count the
-         * step of add the code, and one more to go to the final screen
-         */
-        this.setState({ nextIndex: this.state.nextIndex + 2 }, () => {
-            /**
-             * After we update the nextIndex we execute goToNextStep automatically, to continue with the
-             * process (finishing the process actually)
-             */
-            this.goToNextStep();
-        });
     }
 
     /**
@@ -331,7 +335,7 @@ class VerificationScreen extends Component {
          * so we can render new things on the screen, to let the user add their code and procceed
          */
         this.setState({
-            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`, this.autoVerifyUserPhone)
+            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`)
         });
     }
 
@@ -390,7 +394,8 @@ class VerificationScreen extends Component {
                                 setPhonePrefix={this.setPhonePrefixObj}
                                 setVerificationCode={this.setVerificationCode}
                                 goToNextStep={this.goToNextStep}
-                                error={this.state.errorSMSCode}
+                                wrongCode={this.state.errorSMSCode}
+                                alreadyLinkedError={this.state.errorAlreadyLinkedAccount}
                                 codeSent={this.state.codeSent} />
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>

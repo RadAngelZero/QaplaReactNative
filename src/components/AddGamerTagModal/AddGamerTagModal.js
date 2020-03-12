@@ -77,8 +77,10 @@ class AddGamerTagModal extends Component {
 
             subscribeUserToTopic(this.props.selectedGame.gameKey, this.props.uid);
 
-            trackOnSegment('Add Gamer Tag Process Completed',
-                { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });
+            trackOnSegment('Add Gamer Tag Process Completed', {
+                game: this.props.selectedGame.gameKey,
+                platform: this.props.selectedGame.platform
+            });
 
             /**
              * redirect: prop to know if the modal should redirect to other screen

@@ -3,5 +3,9 @@ export default Colors = {
     modals: {
         backgroundDarkModal: '#141833',
         body: '#CFD1DB'
+    },
+    textInputs: {
+        error: '#FF0000',
+        unselected: '#B5B5B5'
     }
 };

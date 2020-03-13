@@ -9,6 +9,13 @@ import { trackOnSegment } from '../../services/statistics';
 import { translate } from '../../utilities/i18';
 
 class NotificationsSettingsScreen extends Component {
+
+    /**
+     * Callback to update the permissions of an specific type
+     *
+     * @param {string} type Permission type (at this point must be one either games and events)
+     * @param {boolean} value New state of the permission, true = allow push notifications
+     */
     updateNotificationPermission = async (type, value) => {
         updateNotificationPermission(type, value);
 

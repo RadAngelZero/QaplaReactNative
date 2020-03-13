@@ -40,6 +40,9 @@ class AppSettingsMenuScreen extends Component {
         })
     }
 
+    /**
+     * Redirect the user to the notifications settings screen
+     */
     goToNotificationsSettings = () => this.props.navigation.navigate('NotificationsSettings');
 
     /* Toggle Privacy Modal, if opened then when pressing

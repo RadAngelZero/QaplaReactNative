@@ -812,7 +812,7 @@ export async function updateUserProfileImg(uid, photoUrl) {
  */
 
  /**
-  * Saves the topics on the database which the user has been subscribed on FCM
+  * Saves topics on the database which the user has been subscribed on FCM
   * @param {string} uid User identifier on the database
   * @param {string} topic Name of the topic to which the user has subscribed
   * @param {string} type Key of the category of the topic
@@ -843,12 +843,14 @@ export async function getUserTopicSubscriptions(type) {
  * @param {string} notificationType Key of the notification permission to check
  */
 export function userAllowsNotificationsFrom(notificationType) {
+    let permissionStatus = true;
     const notificationsPermissions = store.getState().userReducer.user.notificationPermissions;
+
     if (notificationsPermissions && notificationsPermissions.hasOwnProperty(notificationType)) {
-        return notificationsPermissions[notificationType];
+        permissionStatus = notificationsPermissions[notificationType];
     }
 
-    return true;
+    return permissionStatus;
 }
 
 // -----------------------------------------------

@@ -1,17 +1,18 @@
 import { StyleSheet } from 'react-native';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
         flex: 1,
-        backgroundColor:'#0d1021'
+        backgroundColor: Colors.backgroundColor
     },
     titleText: {
         color: '#FFF',
         marginLeft: 24,
         fontSize: 32,
         fontWeight: 'bold',
-        width: '70%',
+        width: widthPercentageToPx(70),
         lineHeight: 38,
         letterSpacing: 0.51,
         paddingTop: 1

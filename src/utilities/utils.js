@@ -135,8 +135,10 @@ export function getUserGamesOrderedByPlatform(userGames, allQaplaGames) {
                     gamesOrderedByPlatform[gamePlatform] = {};
                 }
 
-                // Add the game to the list of games
-                gamesOrderedByPlatform[gamePlatform][gameToLoadKey] = allQaplaGames[gamePlatform][gameToLoadKey];
+                if (!allQaplaGames[gamePlatform][gameToLoadKey].hide) {
+                    // Add the game to the list of games
+                    gamesOrderedByPlatform[gamePlatform][gameToLoadKey] = allQaplaGames[gamePlatform][gameToLoadKey];
+                }
             }
 
             // Remove the game from the list of the user games

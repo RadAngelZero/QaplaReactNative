@@ -49,6 +49,35 @@ export function getGamerTagStringWithGameAndPlatform(platform, game) {
 }
 
 /**
+ * @description returns a user readable string that contains the name of the
+ * tag in different games and platforms
+ * @param {string} platform The platform key (platform_white)
+ * @param {string} game The key of the game
+ */
+export function getGamerTagKeyWithGameAndPlatform(platform, game) {
+    switch (platform) {
+        case 'pc_white':
+            if (game === 'aClash') {
+                return 'clashTag';
+            } else if (game === 'pcLol'){
+                return 'lolTag';
+            } else if (game === 'pHearth' || game === 'pOver'){
+                return 'battlenet';
+            } else {
+                return game;
+            }
+        case 'ps4_white':
+            return 'psn';
+        case 'xbox_white':
+            return 'xboxLive';
+        case 'switch_white':
+            return 'NintendoID';
+        default:
+            break;
+    }
+}
+
+/**
  * Return the name of the platform based on their key
  *
  * @param {string} platformKey Key of the platform

@@ -8,20 +8,23 @@
 import React, { Component } from 'react';
 import { Modal, View, TextInput, Text, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
 
 import styles from './style';
-import { addGameToUser } from '../../services/database';
+import { addGameToUser, updateUserGamerTag } from '../../services/database';
 import Images from './../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { subscribeUserToTopic } from '../../services/messaging';
 import { translate } from '../../utilities/i18';
+import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
 
 const CloseIcon = Images.svg.closeIcon;
 
-export class AddGamerTagModal extends Component {
+class AddGamerTagModal extends Component {
     state = {
         gamerTagText: '',
-        gamerTagError: false
+        gamerTagError: false,
+        openDiscordTagModal: false
     };
 
     /**
@@ -38,39 +41,68 @@ export class AddGamerTagModal extends Component {
 
     saveGameOnUser = async () => {
         if (this.isValidGamerTag()) {
-            try {
-                await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
-                    this.props.selectedGame.gameKey, this.state.gamerTagText);
-
-                subscribeUserToTopic(this.props.selectedGame.gameKey, this.props.uid);
-
-                trackOnSegment('Add Gamer Tag Process Completed',
-                    { game: this.props.selectedGame.gameKey, platform: this.props.selectedGame.platform });
-
-                /**
-                 * redirect: prop to know if the modal should redirect to other screen
-                 * or just call a function and then hide
-                 */
-                if (this.props.redirect) {
-                    if (this.props.loadGamesUserDontHave) {
-                        this.props.navigation.navigate('Profile');
-                    } else {
-                        this.props.navigation.navigate('SetBet',
-                            { game: {
-                                gameKey: this.props.selectedGame.gameKey,
-                                platform: this.props.selectedGame.platform
-                            }
-                        });
-                    }
-                } else {
-                    this.props.onSuccess();
-                    this.props.onClose();
-                }
-            } catch (error) {
-                console.error(error);
-            }
+            this.validateOrRequestDiscordTag();
+        } else if (this.props.previousGamerTag) {
+            this.setState({ gamerTagText: this.props.previousGamerTag }, () => {
+                this.validateOrRequestDiscordTag();
+            });
         } else {
             this.setState({ gamerTagError: true });
+        }
+    }
+
+    /**
+     * Check if the user has a valid discorTag and save the game, otherwise, open the discordTag modal
+     */
+    validateOrRequestDiscordTag = async () => {
+        if (this.props.discordTag) {
+            await this.addGameAndRedirectUser();
+        } else {
+            this.setState({ openDiscordTagModal: true });
+        }
+    }
+
+    /**
+     * Add the game to the user, subscribe him/her to the topic of the game
+     * and finally redirect him/her or execute the onSuccess callback
+     */
+    addGameAndRedirectUser = async () => {
+        try {
+            if (this.props.newGame) {
+                await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
+                    this.props.selectedGame.gameKey, this.state.gamerTagText);
+            } else {
+                updateUserGamerTag(this.props.uid, this.props.selectedGame.platform, this.props.selectedGame.gameKey, this.state.gamerTagText);
+            }
+
+            subscribeUserToTopic(this.props.selectedGame.gameKey, this.props.uid);
+
+            trackOnSegment('Add Gamer Tag Process Completed', {
+                game: this.props.selectedGame.gameKey,
+                platform: this.props.selectedGame.platform
+            });
+
+            /**
+             * redirect: prop to know if the modal should redirect to other screen
+             * or just call a function and then hide
+             */
+            if (this.props.redirect) {
+                if (this.props.loadGamesUserDontHave) {
+                    this.props.navigation.navigate('Profile');
+                } else {
+                    this.props.navigation.navigate('SetBet',
+                        { game: {
+                            gameKey: this.props.selectedGame.gameKey,
+                            platform: this.props.selectedGame.platform
+                        }
+                    });
+                }
+            } else {
+                this.props.onSuccess();
+                this.props.onClose();
+            }
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -78,6 +110,10 @@ export class AddGamerTagModal extends Component {
      * Sends an event tracking cancelling action and closes the modal.
      */
     closeModal = () => {
+        if (this.props.onCancel) {
+            this.props.onCancel();
+        }
+
         if (this.state.gamerTagText.length === 0) {
             trackOnSegment('Add Gamer Tag Cancelled Empty', {
                 Game: this.props.selectedGame.gameKey,
@@ -96,13 +132,18 @@ export class AddGamerTagModal extends Component {
         this.props.onClose();
     }
 
+    /**
+     * Close the discordTag modal
+     */
+    closeDiscordTagModal = () => this.setState({ openDiscordTagModal: false });
+
     render() {
         return (
             <Modal
                 animationType='fade'
                 transparent
                 visible={this.props.open}
-                onRequestClose={this.props.onClose}
+                onRequestClose={this.closeModal}
                 onShow={() => recordScreenOnSegment('Add gamertag Screen')}>
                     <View style={styles.mainContainer}>
                         <View style={styles.modalContainer}>
@@ -120,16 +161,23 @@ export class AddGamerTagModal extends Component {
                                     placeholderTextColor='#FFF'
                                     autoCapitalize='none'
                                     onChangeText={(text) => this.setState({ gamerTagText: text })}
-                                    onSubmitEditing={this.saveGameOnUser} />
+                                    onSubmitEditing={this.saveGameOnUser}
+                                    defaultValue={this.props.previousGamerTag} />
                                 {this.state.gamerTagError &&
                                     <Text style={styles.smallText}>{translate('addGamerTagModal.invalidGamerTag')}</Text>
                                 }
-                                <Text style={styles.modalText}>{translate('addGamerTagModal.body', { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText })}</Text>
+                                <Text style={styles.modalText}>
+                                    {translate('addGamerTagModal.body', { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText || this.props.previousGamerTag })}
+                                </Text>
                                 <TouchableWithoutFeedback onPress={this.saveGameOnUser}>
                                         <View style={styles.confirmButton}>
                                             <Text style={styles.confirmButtonText}>Aceptar</Text>
                                         </View>
                                 </TouchableWithoutFeedback>
+                                <AddDiscordTagModal
+                                    open={this.state.openDiscordTagModal}
+                                    onClose={this.closeDiscordTagModal}
+                                    onSuccess={this.addGameAndRedirectUser} />
                             </View>
                         </View>
                     </View>
@@ -138,4 +186,15 @@ export class AddGamerTagModal extends Component {
     }
 }
 
-export default withNavigation(AddGamerTagModal);
+AddGamerTagModal.defaultProps = {
+    newGame: true,
+    previousGamerTag: ''
+};
+
+function mapStateToProps(state) {
+    return {
+        discordTag: state.userReducer.user.discordTag
+    };
+}
+
+export default connect(mapStateToProps)(withNavigation(AddGamerTagModal));

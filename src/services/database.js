@@ -28,7 +28,7 @@
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
 
 import { database, TimeStamp } from '../utilities/firebase';
-import { randomString } from '../utilities/utils';
+import { randomString, getGamerTagKeyWithGameAndPlatform } from '../utilities/utils';
 import { DB_NEW_LINE_SEPARATOR } from '../utilities/Constants';
 import store from '../store/store';
 
@@ -248,6 +248,18 @@ export async function addGameToUser(uid, userName, platform, gameKey, gamerTag) 
     } catch (error) {
         console.error(error);
     }
+}
+
+/**
+ * Update the value of the user gamertag
+ * @param {string} uid User identifier
+ * @param {string} platform Platform key: platformName_white
+ * @param {string} gameKey Key of the game
+ * @param {string} newGamerTag New gamer tag value
+ */
+export function updateUserGamerTag(uid, platform, gameKey, newGamerTag) {
+    const gamerTagKey = getGamerTagKeyWithGameAndPlatform(platform, gameKey);
+    usersRef.child(uid).child('gamerTags').update({ [gamerTagKey]: newGamerTag});
 }
 
 /**

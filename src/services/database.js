@@ -28,7 +28,7 @@
 // josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
 
 import { database, TimeStamp } from '../utilities/firebase';
-import { randomString } from '../utilities/utils';
+import { randomString, getGamerTagKeyWithGameAndPlatform } from '../utilities/utils';
 import { DB_NEW_LINE_SEPARATOR } from '../utilities/Constants';
 import store from '../store/store';
 
@@ -122,6 +122,16 @@ export async function getGamerTagWithUID(Uid, game, platform) {
             return { gamerTag: null };
         }
     });
+}
+
+/**
+ * Return the discord tag of a user
+ *
+ * @param {string} uid User identifier on database
+ * @returns {string} userDiscordTag
+ */
+export async function getUserDiscordTag(uid) {
+    return (await usersRef.child(uid).child('discordTag').once('value')).val();
 }
 
 export function createUserProfile(Uid, email) {
@@ -238,6 +248,18 @@ export async function addGameToUser(uid, userName, platform, gameKey, gamerTag) 
     } catch (error) {
         console.error(error);
     }
+}
+
+/**
+ * Update the value of the user gamertag
+ * @param {string} uid User identifier
+ * @param {string} platform Platform key: platformName_white
+ * @param {string} gameKey Key of the game
+ * @param {string} newGamerTag New gamer tag value
+ */
+export function updateUserGamerTag(uid, platform, gameKey, newGamerTag) {
+    const gamerTagKey = getGamerTagKeyWithGameAndPlatform(platform, gameKey);
+    usersRef.child(uid).child('gamerTags').update({ [gamerTagKey]: newGamerTag});
 }
 
 /**
@@ -708,13 +730,15 @@ export async function sendUserFeedback(message, userId) {
  * Allow the user to join the given event
  * @param {string} uid User identifier on database
  * @param {string} eventId Event identifier on the database
- * @param {number} totalPuntos The total of points of the event
  */
-export async function joinEvent(uid, eventId) {
+export function joinEvent(uid, eventId) {
+    const user = store.getState().userReducer.user;
     eventParticipantsRef.child(eventId).child(uid).update({
-        email: '',
+        email: user.email,
         priceQaploins: 0,
-        userNamve: await getUserNameWithUID(uid)
+        matchesPlayed: 0,
+        victories: 0,
+        userName: user.userName
     });
 }
 

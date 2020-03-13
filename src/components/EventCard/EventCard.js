@@ -14,12 +14,21 @@ import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBad
 import { translate } from '../../utilities/i18';
 import { QAPLA_DISCORD_CHANNEL, GAMES_TOPICS } from '../../utilities/Constants';
 import { subscribeUserToTopic } from '../../services/messaging';
+import AddGamerTagModal from '../AddGamerTagModal/AddGamerTagModal';
+import EventRequirementsModal from '../EventRequirementsModal/EventRequirementsModal';
 
 class EventCard extends Component {
+    state = {
+        showGamerTagModal: false,
+        userHasGameAdded: false,
+        showRequirementsModal: false,
+        previousGamerTag: ''
+    };
+
     /**
-     * Allow the user to join the tournament
+     * Check if the user has the necessary data to join to the event
      */
-    joinEvent = () => {
+    requestUserTags = () => {
         if (isUserLogged()) {
             joinEvent(this.props.uid, this.props.id);
             subscribeUserToTopic(this.props.id, this.props.uid, GAMES_TOPICS);
@@ -29,12 +38,42 @@ class EventCard extends Component {
     }
 
     /**
+     * If the user cancels the process of adding gamer/discord tag we show a modal
+     * saying that he/she can not join to the event without that data
+     */
+    onRequestTagsFail = () => this.setState({ showRequirementsModal: true });
+
+    /**
+     * Add the user to the list of participants of the selected event and
+     * subscribe him/her to the FCM topic of the event
+     */
+    subscribeUserToEvent = () => {
+        joinEvent(this.props.uid, this.props.id);
+        subscribeUserToTopic(this.props.id, this.props.uid);
+    }
+
+    /**
      * Sends the user to the event (a discord channel)
      */
     goToEvent = () => Linking.openURL(QAPLA_DISCORD_CHANNEL);
 
+    /**
+     * Close the gamer tag moddal and opens the event requirements modal
+     */
+    closeGamerTagModal = () => this.setState({ showGamerTagModal: false, showRequirementsModal: true });
+
+    /**
+     * Closes the requirements modal
+     */
+    closeRequirementsModal = () => this.setState({ showRequirementsModal: false });
+
     render() {
-        const { photoUrl, titulo, description, tiempoLimite, verified, priceQaploins } = this.props;
+        const { photoUrl, titulo, description, tiempoLimite, verified, priceQaploins, game, platform } = this.props;
+        const selectedGame = {
+            gameKey: game,
+            platform: platform,
+            name: this.props.games[platform][game].name || ''
+        };
 
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
@@ -51,7 +90,7 @@ class EventCard extends Component {
                     <View style={styles.colBContainer}>
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />
                         {(priceQaploins === null || priceQaploins === undefined) &&
-                            <TouchableWithoutFeedback onPress={this.joinEvent}>
+                            <TouchableWithoutFeedback onPress={this.requestUserTags}>
                                 <View style={styles.participateButton}>
                                     <Text style={styles.participateTextButton}>{translate('activeAchievementsScreen.eventAchievement.participate')}</Text>
                                 </View>
@@ -59,6 +98,20 @@ class EventCard extends Component {
                         }
                     </View>
                 </View>
+                <AddGamerTagModal
+                    open={this.state.showGamerTagModal}
+                    onClose={() => this.setState({ showGamerTagModal: false })}
+                    onSuccess={this.subscribeUserToEvent}
+                    onCancel={this.onRequestTagsFail}
+                    selectedGame={selectedGame}
+                    uid={this.props.uid}
+                    userName={this.props.userName}
+                    newGame={!this.state.userHasGameAdded}
+                    previousGamerTag={this.state.previousGamerTag} />
+                <EventRequirementsModal
+                    open={this.state.showRequirementsModal}
+                    closeModal={this.closeRequirementsModal}
+                    reTry={this.requestUserTags} />
                 {(priceQaploins !== null && priceQaploins !== undefined) &&
                     <View style={styles.eventInfoContainer}>
                         <TouchableWithoutFeedback onPress={this.goToEvent}>
@@ -78,7 +131,11 @@ class EventCard extends Component {
 
 function mapDispatchToProps(state) {
     return {
-        uid: state.userReducer.user.id
+        uid: state.userReducer.user.id,
+        userName: state.userReducer.user.userName,
+        gamerTags: state.userReducer.user.gamerTags,
+        discordTag: state.userReducer.user.discordTag,
+        games: state.gamesReducer.games
     }
 }
 

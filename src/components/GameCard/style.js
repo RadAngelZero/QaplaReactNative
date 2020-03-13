@@ -33,6 +33,9 @@ export default StyleSheet.create({
         fontSize: 18,
         color: '#FFF',
         alignSelf: 'center',
-        marginLeft: 8
+        marginLeft: 8,
+        position: 'absolute',
+        bottom: 16,
+        left: 32
     }
 });

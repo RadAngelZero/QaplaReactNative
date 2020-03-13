@@ -1,7 +1,7 @@
 {
     "App": {
         "noInternetConnection": {
-            "title": "No estas conectado a internet, revisa tu conexión.",
+            "title": "No estás conectado a internet, revisa tu conexión.",
             "wifiDetails": "Usa tu conexión de datos"
         }
     },
@@ -72,8 +72,14 @@
         },
         "eventAchievement": {
             "participate": "Participar",
-            "alreadyParticipating": "Estas inscrito a este evento.",
-            "goToEvent": "Ir al evento"
+            "alreadyParticipating": "Estás inscrito.",
+            "goToEvent": "Ir al evento",
+            "eventRequirementsModal": {
+                "title": "Información requerida",
+                "body": "Esta información es necesaria para participar en este evento.",
+                "close": "Cerrar",
+                "addInfo": "Agregar información"
+            }
         }
     },
     "publicMatchesFeedScreen": {
@@ -84,6 +90,7 @@
         "createMatchesButton": "Jugar Ahora"
     },
     "publicMatchCardScreen": {
+        "discordTag": "Discord Tag",
         "numberOfMembers": "No. de Integrantes",
         "waitingResult": "Esperando resultado de tu rival",
         "uploadResultIn": "Sube tu resultado en:",
@@ -99,7 +106,7 @@
             "textButton": "Entendido"
         },
         "buyQaploinsModal": {
-            "body": "Compra Qaploins para desafiar esta partida"
+            "body": "Compra Qoins para desafiar esta partida"
         }
     },
     "userProfileScreen": {
@@ -118,7 +125,7 @@
             "notificationWinner": "Has sido declarado ganador de la partida",
             "notificationLooser": "%{userName} ha sido declarado ganador de la partida.",
             "notificationResult": "¡%{userName} ha subido su resultado, tienes 15 minutos para subir el tuyo!",
-            "notificationRevision": "Tu partida entró en disputa y está siendo revisada. En cuanto este lista se te notificara.",
+            "notificationRevision": "Tu partida entró en disputa y está siendo revisada. En cuanto este lista se te notificará.",
             "notificationTie": "Tu partida con %{userName} concluyó sin un ganador.",
             "notificationMatchAccepted": "%{userName} ha aceptado tu desafío.",
             "matchNotification": {
@@ -221,7 +228,7 @@
         "uploadResult": "Subir Resultado"
     },
     "uploadClutchEvidenceScreen": {
-        "insertClipPlaceholder": "Inserta aqui el URL del clip",
+        "insertClipPlaceholder": "Inserta aquí el URL del clip",
         "instructions": {
             "firstPart": "Sube tu clip a tu perfil de CLUTCH usando el ",
             "highlightedText1": "#qaplagaming",
@@ -258,7 +265,7 @@
         "title": "Crea tu nombre de usuario",
         "userNamePlaceholder": "Introduce tu nombre de usuario",
         "userNameAlreadyTaken": "Ese nombre de usuario ya está en uso, prueba con otro",
-        "bodyFirstPart": "Antes de registrate en Qapla gaming asegúrate de haber leído y aceptado nuestros",
+        "bodyFirstPart": "Antes de registrarte en Qapla gaming asegúrate de haber leído y aceptado nuestros",
         "termsAndConditions": "Términos y Condiciones",
         "bodySecondPart": "y nuestra",
         "privacyPolicy": "Política de privacidad",
@@ -301,7 +308,7 @@
         "takePhoto": "Tomar Foto"
     },
     "qGCameraModal": {
-        "selectImage": "¡Quiero user esta foto!"
+        "selectImage": "¡Quiero usar esta foto!"
     },
     "addGamerTagModal": {
         "body": "Se va a añadir el Juego %{selectedGame} a tu perfil con el gamertag %{gamerTag}. Estás seguro?",

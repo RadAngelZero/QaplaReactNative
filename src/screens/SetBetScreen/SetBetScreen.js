@@ -168,7 +168,8 @@ class SetBetScreen extends Component {
                             this.props.navigation.dismiss();
                         }
                     } catch (error) {
-                        this.setState({ loading: false }); // In case of error enable the button again, so the user can try again
+                        // In case of error enable the button again, so the user can try again
+                        this.setState({ loading: false });
                         console.log(error);
                     }
                 } else {

@@ -17,7 +17,11 @@ class App extends React.Component {
     state = {
         openSnackbar: false,
         snackbarMessage: '',
-        timerOnSnackBar: false
+        timerOnSnackBar: false,
+        snackbarAction: null,
+        snackbarActionMessage: '',
+        navigateTo: '',
+        closeSnackBar: false
     };
 
     componentDidMount() {
@@ -63,15 +67,19 @@ class App extends React.Component {
         * Triggered when a particular notification has been received in foreground
         */
         this.notificationListener = notifications.onNotification((notification) => {
-            const { title, body } = notification;
+            const { title, body, data } = notification;
+            const { navigateTo } = data;
+
             /**
-             * Do something cool with the notification, maybe show a modal or even better,
-             * show a snackbar
-             * https://material.io/components/snackbars/#usage
+             * Shows the snackbar with the title and body of the notification
+             * if the notification have the navigateTo property we set the action
+             * with the forceNavigation function
              */
             this.setState({
                 snackbarMessage: `${title}. ${body}`,
-                timerOnSnackBar: true
+                timerOnSnackBar: true,
+                snackbarAction: () => this.forceNavigation(navigateTo),
+                snackbarActionMessage: navigateTo ? translate('App.snackBar.details') : ''
             });
         });
 
@@ -85,14 +93,37 @@ class App extends React.Component {
         });
     }
 
+    /**
+     * Indicates to the router that must navigate to the given screen
+     * also close the SnackBar and clean their props
+     */
+    forceNavigation = (navigateTo) => {
+        this.setState({
+            navigateTo,
+            timerOnSnackBar: false,
+            closeSnackBar: true
+        }, () =>
+            this.setState({
+                navigateTo: '',
+                snackbarActionMessage: '',
+                snackbarAction: null,
+                closeSnackBar: false,
+                snackbarMessage: ''
+            })
+        );
+    }
+
     render() {
         return (
             <>
-                <Router />
+                <Router forceNavigation={this.state.navigateTo} />
                 <Snackbar
+                    forceClose={this.state.closeSnackBar}
                     visible={this.state.openSnackbar}
                     message={this.state.snackbarMessage}
-                    openAndCollapse={this.state.timerOnSnackBar} />
+                    openAndCollapse={this.state.timerOnSnackBar}
+                    action={this.state.snackbarAction}
+                    actionMessage={this.state.snackbarActionMessage} />
             </>
         )
     }

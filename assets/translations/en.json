@@ -3,6 +3,9 @@
         "noInternetConnection": {
             "title": "No internet, check your connection.",
             "wifiDetails": "Try connecting with your data plan"
+        },
+        "snackBar": {
+            "details": "Details"
         }
     },
     "platforms": {

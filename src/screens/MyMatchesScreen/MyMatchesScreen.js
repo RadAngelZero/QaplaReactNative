@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 
 import styles from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
-import { matchesPlayRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
+import { matchesPlayRef, getUserNameWithUID, getGamerTagWithUID, getUserDiscordTag } from '../../services/database';
 import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constants';
 
 export class MyMatchesScreen extends Component {
@@ -75,9 +75,11 @@ export class MyMatchesScreen extends Component {
 
                             let userName = '';
                             let gamerTag = '';
+                            let discordTag = '';
                             try {
                                 userName = await getUserNameWithUID(hostedMatches.val().adversary2);
                                 gamerTag = await getGamerTagWithUID(hostedMatches.val().adversary2, hostedMatches.val().game, hostedMatches.val().platform);
+                                discordTag = await getUserDiscordTag(adversary2);
                             } catch (error) {
                                 console.error(error);
                             }
@@ -105,7 +107,8 @@ export class MyMatchesScreen extends Component {
                                 pickResult1,
                                 hourResult,
                                 userName,
-                                gamerTag
+                                gamerTag,
+                                discordTag
                             };
                             this.setState((state) => {
                                 //Add the matchObject to the matches array of the state
@@ -139,9 +142,11 @@ export class MyMatchesScreen extends Component {
 
                         let userName = '';
                         let gamerTag = '';
+                        let discordTag = '';
                         try {
                             userName = await getUserNameWithUID(challengedMatches.val().adversary1);
                             gamerTag = await getGamerTagWithUID(challengedMatches.val().adversary1, challengedMatches.val().game, challengedMatches.val().platform);
+                            discordTag = await getUserDiscordTag(adversary1);
                         } catch (error) {
                             console.error(error);
                         }
@@ -164,7 +169,8 @@ export class MyMatchesScreen extends Component {
                             pickResult2,
                             hourResult,
                             userName,
-                            gamerTag
+                            gamerTag,
+                            discordTag
                         };
                         this.setState((state) => {
                             //Add the matchObject to the matches array of the state

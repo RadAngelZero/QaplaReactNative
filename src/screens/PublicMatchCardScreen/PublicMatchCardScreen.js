@@ -23,6 +23,7 @@
 import React, { Component } from 'react';
 import { View, Text, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
+import { SvgUri } from 'react-native-svg';
 import styles from './style';
 
 import Images from '../../../assets/images'
@@ -40,6 +41,7 @@ import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constant
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 import { AddGamerTagModal } from '../../components/AddGamerTagModal/AddGamerTagModal';
 import { translate } from '../../utilities/i18';
+import Colors from '../../utilities/Colors';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
@@ -299,12 +301,20 @@ class PublicMatchCardScreen extends Component {
 
     render() {
         const matchCard = this.props.navigation.getParam('matchCard');
-        const gameData = getGameData(matchCard.game, this.props.games);
+        const gameData = this.props.games[matchCard.platform][matchCard.game];
 
         return (
             <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
                 <View style={styles.imageHeader}>
-                    <gameData.Icon width={50} height={50} />
+                    {gameData.local ?
+                        <gameData.icon width={50} height={50} />
+                        :
+                        <SvgUri
+                            width={50}
+                            height={50}
+                            uri={gameData.icon}
+                            fill={Colors.greenQapla} />
+                    }
                 </View>
                 <View style={styles.rowContainer}>
                     <View style={styles.headerRow1}>
@@ -318,10 +328,20 @@ class PublicMatchCardScreen extends Component {
                     <View style={styles.row}>
                         <View style={styles.infoContainer}>
                             <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={[styles.elemR1, styles.activeColor]}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
+                            <Text style={[styles.elemR1, styles.activeColor]}>{translate('publicMatchCardScreen.discordTag')}</Text>
                         </View>
                         <View style={styles.infoContainer}>
-                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.gamerTag.gamerTag}</Text>
+                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.discordTag}</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.row}>
+                        <View style={styles.infoContainer}>
+                            <ProfileIcon style={styles.rowIcon}/>
+                            <Text style={styles.elemR1}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.rightTextStyle}>{matchCard.gamerTag.gamerTag}</Text>
                         </View>
                     </View>
 
@@ -455,53 +475,6 @@ class PublicMatchCardScreen extends Component {
         );
     }
 }
-
-function getGameData(game, listOfAllGames) {
-    let gameData;
-    Object.keys(listOfAllGames).map((platformKey) => {
-        Object.keys(listOfAllGames[platformKey]).map((gameKey) => {
-            if (gameKey === game) {
-                gameData = gamesResources[listOfAllGames[platformKey][gameKey].replace(/ +/g, "")];
-            }
-        });
-    });
-    return gameData;
-}
-
-const gamesResources = {
-    Fifa17: {
-        Icon: Images.svg.fifaIcon,
-        name: 'FIFA 19'
-    },
-    ClashRoyale: {
-        Icon: Images.svg.clashIcon,
-        name: 'Clash Royale'
-    },
-    GearsofWar: {
-        Icon: Images.svg.gowIcon,
-        name: 'Gears of War 4'
-    },
-    Halo: {
-        Icon: Images.svg.haloIcon,
-        name: 'Halo 5'
-    },
-    Hearthstone: {
-        Icon: Images.svg.heartstoneIcon,
-        name: 'Hearthstone'
-    },
-    Overwatch: {
-        Icon: Images.svg.overwatchIcon,
-        name: 'Overwatch'
-    },
-    LOL: {
-        Icon: Images.svg.lolIcon,
-        name: 'League of legends'
-    },
-    Smashbrothers: {
-        Icon: Images.svg.smashIcon,
-        name: 'Smash Ultimate'
-    }
-};
 
 function mapStateToProps(state) {
     return {

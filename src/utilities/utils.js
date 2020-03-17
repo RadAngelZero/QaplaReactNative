@@ -34,12 +34,42 @@ export function getGamerTagStringWithGameAndPlatform(platform, game) {
                 return 'Gamertag';
             } else if (game === 'pHearth' || game === 'pOver'){
                 return 'BattleTag';
+            } else {
+                return 'GamerTag'
             }
-            break;
         case 'ps4_white':
             return 'PSN';
         case 'xbox_white':
             return 'Xbox live';
+        case 'switch_white':
+            return 'NintendoID';
+        default:
+            return 'GamerTag'
+    }
+}
+
+/**
+ * @description returns a user readable string that contains the name of the
+ * tag in different games and platforms
+ * @param {string} platform The platform key (platform_white)
+ * @param {string} game The key of the game
+ */
+export function getGamerTagKeyWithGameAndPlatform(platform, game) {
+    switch (platform) {
+        case 'pc_white':
+            if (game === 'aClash') {
+                return 'clashTag';
+            } else if (game === 'pcLol'){
+                return 'lolTag';
+            } else if (game === 'pHearth' || game === 'pOver'){
+                return 'battlenet';
+            } else {
+                return game;
+            }
+        case 'ps4_white':
+            return 'psn';
+        case 'xbox_white':
+            return 'xboxLive';
         case 'switch_white':
             return 'NintendoID';
         default:
@@ -105,8 +135,10 @@ export function getUserGamesOrderedByPlatform(userGames, allQaplaGames) {
                     gamesOrderedByPlatform[gamePlatform] = {};
                 }
 
-                // Add the game to the list of games
-                gamesOrderedByPlatform[gamePlatform][gameToLoadKey] = allQaplaGames[gamePlatform][gameToLoadKey];
+                if (!allQaplaGames[gamePlatform][gameToLoadKey].hide) {
+                    // Add the game to the list of games
+                    gamesOrderedByPlatform[gamePlatform][gameToLoadKey] = allQaplaGames[gamePlatform][gameToLoadKey];
+                }
             }
 
             // Remove the game from the list of the user games

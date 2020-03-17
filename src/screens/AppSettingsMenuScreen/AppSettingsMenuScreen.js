@@ -40,13 +40,18 @@ class AppSettingsMenuScreen extends Component {
         })
     }
 
+    /**
+     * Redirect the user to the notifications settings screen
+     */
+    goToNotificationsSettings = () => this.props.navigation.navigate('NotificationsSettings');
+
     /* Toggle Privacy Modal, if opened then when pressing
      * it will be closed. And the way around.
      */
     togglePrivacyModal = () => {
         this.setState({
             privacyModalOpen: !this.state.privacyModalOpen
-        })
+        });
     }
 
     closeSession = () => {
@@ -87,6 +92,11 @@ class AppSettingsMenuScreen extends Component {
                         <TouchableWithoutFeedback onPress={this.toggleDiscordModal}>
                             <View style={styles.menuItemRow}>
                                 <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.editDiscord')}</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={this.goToNotificationsSettings}>
+                            <View style={styles.menuItemRow}>
+                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.notifications')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.toggleTermsAndConditionsModal}>

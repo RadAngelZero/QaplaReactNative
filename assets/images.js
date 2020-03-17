@@ -126,7 +126,7 @@ const images = {
 		verificationProccesSuccess: {
 			img: require('./images/VerificationProccesSuccess.png')
 		},
-		peekaImg: {
+		clashPC: {
 			img: require('./images/PEKKA.png'),
 			uri: '@assets/images/PEKKA.png'
 		},
@@ -139,43 +139,43 @@ const images = {
 		qaplaHeaderIcon: {
 			img: require('./icons/qapla.png')
 		},
-		fifaXboxImg: {
+		fifaXbox: {
 			img: require('./images/FIFAXbox.png'),
 			uri: '@assets/images/FIFA.png'
 		},
-		fifaPsImg: {
+		fifaPS: {
 			img: require('./images/FIFAPs.png'),
 			uri: '@assets/images/FIFAPs.png'
 		},
-		GOW4Xbox: {
+		GOWXbox: {
 			img: require('./images/GOW4Xbox.png'),
 			uri: '@assets/images/GOW4Xbox.png'
 		},
-		HALO5Xbox: {
+		HALOXbox: {
 			img: require('./images/HALO5Xbox.png'),
 			uri: '@assets/images/HALO5Xbox.png'
 		},
-		heartstoneImg: {
+		heartstonePC: {
 			img: require('./images/HEARTHSTONE.png'),
 			uri: '@assets/images/HEARTHSTONE.png'
 		},
-		overwatchPsImg: {
+		overwatchPS: {
 			img: require('./images/OverwatchPs.png'),
 			uri: '@assets/images/Overwatch.png'
 		},
-		overwatchPcImg: {
+		overwatchPC: {
 			img: require('./images/OVERWATCHPC.png'),
 			uri: '@assets/images/OVERWATCHPC.png'
 		},
-		overwatchXboxImg: {
+		overwatchXbox: {
 			img: require('./images/OVERWATCHXbox.png'),
 			uri: '@assets/images/OVERWATCHXbox.png'
 		},
-		lolImg: {
+		lolPC: {
 			img: require('./images/LEAGUELEGENDS.png'),
 			uri: '@assets/images/LEAGUELEGENDS.png'
 		},
-		smashImg: {
+		smashSW: {
 			img: require('./images/SAMSHBROS.png'),
 			uri: '@assets/images/SAMSHBROS.png'
 		}
@@ -220,7 +220,8 @@ const images = {
 		editIcon: EditIcon,
 		noVerifiedIcon: NoVerifiedIcon,
 		qoinFlipIcon: QoinFlipIcon,
-		balanceFlipIcon: BalanceFlipIcon	}
+		balanceFlipIcon: BalanceFlipIcon
+	}
 };
 
 export default images;

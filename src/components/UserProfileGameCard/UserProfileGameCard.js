@@ -4,10 +4,12 @@
 
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import Svg, { SvgUri } from 'react-native-svg';
 
 import styles from './style';
 import AnimatedCircleIndicator from '../AnimatedCircleIndicator/AnimatedCircleIndicator';
 import { translate } from '../../utilities/i18';
+import Colors from '../../utilities/Colors';
 
 export class UserProfileGameCard extends Component {
     render() {
@@ -20,7 +22,17 @@ export class UserProfileGameCard extends Component {
         return (
             <View style={[styles.container, { marginRight: this.props.lastChild ? 10 : 0 }]}>
                 <View style={styles.gameData}>
-                    <this.props.game.Icon width={48} height={48} />
+                    {this.props.game.local ?
+                        <this.props.game.icon
+                            width={48}
+                            height={48} />
+                        :
+                        <SvgUri
+                            width={48}
+                            height={48}
+                            uri={this.props.game.icon}
+                            fill={Colors.greenQapla} />
+                    }
                     <Text style={styles.descriptionText}>{this.props.game.name}</Text>
                 </View>
                 <View style={styles.gamerInfo}>

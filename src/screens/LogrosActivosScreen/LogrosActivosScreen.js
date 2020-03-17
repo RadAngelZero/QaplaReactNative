@@ -21,8 +21,6 @@ export class LogrosActivosScreen extends Component {
             return false;
         }).map((logroKey) => this.props.logros.logrosActivos[logroKey]);
 
-        //logros = Object.keys(logros).map((logroKey) => this.props.logros.logrosActivos[logroKey]);
-
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <LogrosList

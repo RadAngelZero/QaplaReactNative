@@ -126,11 +126,19 @@ class SetBetScreen extends Component {
 
     incrementeBet() {
         const oldBet = this.state.currentBet;
+        /**
+         * if the previous index of the array is not the last index then set the current index to
+         * the last index + 1, otherwise keep the previous index
+         */
         this.setState({ currentBet: oldBet < this.bets.length - 1 ? oldBet + 1 : oldBet });
     }
 
     decreaseBet() {
         const oldBet = this.state.currentBet;
+        /**
+         * if the previous index of the array is not the first index then set the current index to
+         * the last index - 1, otherwise keep the previous index
+         */
         this.setState({ currentBet: oldBet > 0 ? oldBet - 1 : oldBet });
     }
 

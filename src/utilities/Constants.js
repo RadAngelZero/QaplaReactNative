@@ -102,6 +102,7 @@ export const HEADER_SIZE = 2.9;
 
 // Firebase Cloud Messaging Topics
 export const EVENTS_TOPIC = 'events';
+export const GAMES_TOPICS = 'games';
 
 // Firebase auth error
 export const ACCOUNT_ALREADY_IN_USE = 'auth/credential-already-in-use';

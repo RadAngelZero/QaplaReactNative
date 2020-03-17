@@ -146,6 +146,7 @@
         "support": "Soporte",
         "editBio": "Editar Biografía",
         "editDiscord": "Editar Discord",
+        "notifications": "Notificaciones",
         "termsAndConditions": "Términos y Condiciones",
         "privacyNotice": "Aviso de Privacidad",
         "closeSession": "Cerrar sesión",
@@ -277,6 +278,11 @@
     "chooseOpponentScreen": {
         "title": "Buscar usuario a retar",
         "searchPlaceholder": "Buscar usuario"
+    },
+    "notificationsSettingsScreen": {
+        "title": "Notificaciones",
+        "gamesPermissionDescription": "Recibir notificaciones sobre nuevas partidas de juegos que me interesan",
+        "eventsPermissionDescription": "Recibir notificaciones sobre los eventos a los que estoy suscrito"
     },
     "headerBar": {
         "highlightModal": {

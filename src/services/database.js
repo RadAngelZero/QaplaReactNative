@@ -836,12 +836,45 @@ export async function updateUserProfileImg(uid, photoUrl) {
  */
 
  /**
-  * Saves the topics on the database which the user has been subscribed on FCM
+  * Saves topics on the database which the user has been subscribed on FCM
   * @param {string} uid User identifier on the database
   * @param {string} topic Name of the topic to which the user has subscribed
+  * @param {string} type Key of the category of the topic
   */
-export function saveUserSubscriptionToTopic(uid, topic) {
-    userTopicSubscriptions.child(uid).update({ [topic]: true });
+export function saveUserSubscriptionToTopic(uid, topic, type) {
+    userTopicSubscriptions.child(uid).child(type).update({ [topic]: true });
+}
+
+/**
+ * Update the notificationPermission flag of the given type
+ * @param {string} notificationType Key of the category of the topics
+ * @param {boolean} value True if the user allow push notifications
+ */
+export function updateNotificationPermission(notificationType, value) {
+    usersRef.child(store.getState().userReducer.user.id).child('notificationPermissions').update({ [notificationType]: value });
+}
+
+/**
+ * Return a snapshot with the list of the user topics of the given type
+ * @param {string} type Key of the category of the topics
+ */
+export async function getUserTopicSubscriptions(type) {
+    return await userTopicSubscriptions.child(store.getState().userReducer.user.id).child(type).once('value');
+}
+
+/**
+ * Check if the user allows push notifications on a given topic
+ * @param {string} notificationType Key of the notification permission to check
+ */
+export function userAllowsNotificationsFrom(notificationType) {
+    let permissionStatus = true;
+    const notificationsPermissions = store.getState().userReducer.user.notificationPermissions;
+
+    if (notificationsPermissions && notificationsPermissions.hasOwnProperty(notificationType)) {
+        permissionStatus = notificationsPermissions[notificationType];
+    }
+
+    return permissionStatus;
 }
 
 // -----------------------------------------------
@@ -851,7 +884,7 @@ export function saveUserSubscriptionToTopic(uid, topic) {
 /**
  * Gets the privacy terms from the Qapla App
  * @returns
- * SUCCESS - {Array}  Content of Qapla app privacy terms. 
+ * SUCCESS - {Array}  Content of Qapla app privacy terms.
  * FAIL    - {Array}  Empty array
  */
 export async function getQaplaAppPrivacy() {

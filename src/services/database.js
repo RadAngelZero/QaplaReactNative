@@ -1,32 +1,3 @@
-// diego          - 17-12-2019 - us171 - joinEvent function updated
-// diego          - 17-12-2019 - us172 - Added onSuccess and onFail params to createUserName
-// josep.sanahuja - 22-11-2019 - us153 - Add updateUserProfileImg
-// diego          - 21-11-2019 - us149 - Mark notifications as redaded
-// josep-sanahuja - 21-12-2019 - us152 - Add getQaplaAppPrivacy & DB_NEW_LINE_SEPARATOR
-// diego          - 14-11-2019 - us146 - Events support added
-// josep.sanahuja - 18-10-2019 - us140 - Added getAnnouncements()
-// josep.sanahuja - 04-10-2019 - XXXXX - Added sendUserFeedback()
-// josep.sanahuja - 02-10-2019 - us118 - Added createLogroIncompletoChild
-// josep.sanahuja - 26-09-2019 - us118 - Added saveImgEvidenceUrlLogroSocial
-// josep.sanahuja - 19-09-2019 - us114 - Add getQaplaActiveLogros && logrosActRef
-// diego          - 21-08-2019 - us89 - Updated addGameToUser to create gamer profile of the new game on GamersRef
-// diego          - 20-08-2019 - us89 - Created gamersRef
-// diego          - 14-08-2019 - us77 - Added uploadResultOfMatch
-// josep.sanahuja - 14-08-2019 - bug6 - - .credits from numQaploins
-// josep.sanahuja - 13-08-2019 - us86 - + isMatchAlreadyChallenged
-// josep.sanahuja - 08-08-2019 - us85 - + deleteNotification
-// diego          - 06-08-2019 - us75 - Add matchesPlayRef
-// diego          - 05-08-2019 - us60 - Add declineMatch logic
-// diego          - 01-08-2019 - us58 - Add logic to load info for notifications
-// diego          - 29-07-2019 - us55 - challengeUser method added
-// diego          - 16-07-2019 - us34 - Substract of qaploins logic implemented
-// diego          - 16-07-2019 - Create createPublicMatch and bug fixed on addGameToUser
-// diego          - 15-07-2019 - Create commissionRef and getCurrentQaplaCommission
-// diego          - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions
-// josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
-//                                      for new references on database and errors detecrted on addGameToUser
-// josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
-
 import { database, TimeStamp } from '../utilities/firebase';
 import { randomString, getGamerTagKeyWithGameAndPlatform } from '../utilities/utils';
 import { DB_NEW_LINE_SEPARATOR } from '../utilities/Constants';
@@ -54,6 +25,8 @@ export const announcementsActRef = database.ref('/Announcements/Active');
 export const privacyRef = database.ref('/Privacy');
 export const usersBalance = database.ref('usersQaplaBalance');
 export const userTopicSubscriptions = database.ref('userTopicSubscriptions');
+
+const versionApp = database.ref('VersionApp');
 
 /**
  * Returns the userName of the specified user
@@ -912,15 +885,21 @@ export async function userQaplaBalanceListener(uid, callback) {
 }
 
 // -----------------------------------------------
-// Privacy terms
+// App versioning
 // -----------------------------------------------
 
-export async function dbGetAppMinorVersion() {
+/**
+ * Retrieves the major version of the app from server
+ * @returns
+ * SUCCESS - {string}     res major version of QaplaGaming app retrieved from server
+ * FAIL    - {undefined}  res no major version was not retrieved   
+ */
+export async function dbGetAppVersion() {
     let res = undefined;
     
     try {
-        let resSnap = await database.ref('VersionApp').child('QaplaVersion').once('value');
-        let res = resSnap.val();
+        let resSnap = await versionApp.child('QaplaVersion').once('value');
+        res = resSnap.val();
     } catch(error) {
         console.log(error);
     }

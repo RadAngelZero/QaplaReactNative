@@ -1,35 +1,98 @@
 import {
-	dbGetAppMinorVersion
+	dbGetAppMinorVersion,
+	dbGetAppMajorVersion
 } from '../services/database';
 
-export async function verMinorVersion(versionObj) {
+import {version} from '../../package.json';
+
+/**
+ * Retrieves the version of the app from server
+ * @param {function}	callback function to be called when retrieving a result from db
+ *
+ * @returns
+ * SUCCESS - {string}     res version of QaplaGaming app retrieved from server
+ * FAIL    - {undefined}  res version was not retrieved   
+ */
+export async function verServerVersionCb(callback) {
+	dbGetAppMajorVersion()
+	.then((elem) => {
+		callback(elem);
+	})
+	.catch((error) => {
+		console.log(`[verServerVersionCb] err: `, error);
+	});
+}
+
+export async function verServerVersion() {
+	let res = null;
+
 	try {
-		const minorVersion = await dbGetAppMinorVersion();
-		versionObj = {minVer: minorVersion};
+		res = await dbGetAppVersion();
 	}
 	catch(error) {
-		console.log(`[verMinorVersion] err: `, error);
+		console.log(`[verServerVersion] err: `, error);
 	}
+
+	return res;
 }
 
-export async function verMinorVersionSync(versionObj) {
-	
+export function verLocalVersion() {
+	return version;
 }
 
-export async function verMajorVersion() {
-
+export function verMajorVersion(versionStr) {
+	return versionStr.split('.')[0];
 }
 
-export async function verMajorVersionSync() {
-
+export function verMinorVersion(versionStr) {
+	return versionStr.split('.')[1];
 }
 
-export async function verMinorMajorVersion() {
+export function verPatchVersion(versionStr) {
+	return versionStr.split('.')[2];
+}
+
+export function verIsMajorGreater(versionStr_1, versionStr_2) {
+	let res = false;
+
+	let maj_1 = versionStr_1.split('.')[0];
+	let maj_2 = versionStr_2.split('.')[0];
+
 	try {
-		const minor = await verMinorVersion();
-		const major = await verMajorVersion();
+		res = parseInt(maj_1) > parseInt(maj_2);
+	} catch (error) {
+		console.log(error);
 	}
-	catch(error) {
-		console.log('Miau');
+
+	return res;
+}
+
+export function verIsMinorGreater(versionStr_1, versionStr_2) {
+	let res = false;
+
+	let min_1 = versionStr_1.split('.')[1];
+	let min_2 = versionStr_2.split('.')[1];
+
+	try {
+		res = parseInt(min_1) > parseInt(min_2);
+	} catch (error) {
+		console.log(error);
 	}
+
+	return res;
+}
+
+export function verIsPatchGreater(versionStr_1, versionStr_2) {
+	let res = false;
+
+	let p_1 = versionStr_1.split('.')[2];
+	let p_2 = versionStr_2.split('.')[2];
+
+	try {
+		res = parseInt(p_1) > parseInt(p_2);
+	} catch (error) {
+		console.log(error);
+	}
+
+	return res;
 }

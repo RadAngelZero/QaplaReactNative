@@ -1,6 +1,3 @@
-// diego           - 11-12-2019 - us165 - loadQaplaLogros moved to AuthLoadingScreen
-// diego           - 18-09-2019 - us110 - File creation
-
 import React, { Component } from 'react';
 import { SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
@@ -8,16 +5,23 @@ import { connect } from 'react-redux';
 import styles from './style';
 import LogrosList from '../../components/LogroCard/LogrosList';
 
+import {
+    verLocalVersion,
+    verServerVersion,
+    verIsMajorGreater
+} from '../../utilities/version';
+
 export class LogrosActivosScreen extends Component {
     componentDidMount() {
-        this.getVersion();
+        this.ver();
     }
 
-    async getVersion() {
-        let versionObj = {};
-        let minorVersion = await verMinorVersion(versionObj);
-
-        console.log(`minorVersion: `, versionObj);
+    async ver() {
+        let localVer = verLocalVersion();
+        console.log('Miau');
+        let remoteVer = await verServerVersion();
+        console.log('mooo');
+        console.log(`verIsMajorGreater: `, verIsMajorGreater(localVer, remoteVer));
     }
 
     render() {

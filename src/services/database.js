@@ -906,3 +906,13 @@ export async function dbGetAppVersion() {
 
     return res;
 }
+
+export async function dbEnableAppVersionValueListener(callback) {
+    return versionApp.child('QaplaVersion').on('value', callback);
+}
+
+export async function dbRemoveAppVersionValueListener(ref) {
+    if (ref !== undefined && ref !== null) {
+        ref.off('value');
+    }
+}

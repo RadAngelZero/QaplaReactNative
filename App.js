@@ -9,7 +9,19 @@ import Router from './src/Router';
 import { notifications } from './src/utilities/firebase';
 import store from './src/store/store';
 import Snackbar from './src/components/Snackbar/Snackbar';
+import UpdateApp from './src/components/UpdateApp/UpdateApp';
 import { translate } from './src/utilities/i18';
+
+import {
+    verLocalVersion,
+    verServerVersion,
+    verShouldUpdateApp
+} from './src/utilities/version';
+
+import {
+  dbRemoveAppVersionValueListener,
+  dbEnableAppVersionValueListener
+} from './src/services/database';
 
 console.disableYellowBox = true;
 
@@ -17,12 +29,15 @@ class App extends React.Component {
     state = {
         openSnackbar: false,
         snackbarMessage: '',
-        timerOnSnackBar: false
+        timerOnSnackBar: false,
+        updateRequired: false
     };
 
     componentDidMount() {
         this.enableNotificationListeners();
         this.enableNetworkListener();
+        this.checkAppUpdates();
+        this.updateAppListener = dbEnableAppVersionValueListener(this.checkAppUpdates);
     }
 
     componentWillUnmount() {
@@ -33,6 +48,7 @@ class App extends React.Component {
         this.notificationListener();
         this.notificationOpenedListener();
         this.networkListener();
+        this.dbRemoveAppVersionValueListener(this.updateAppListener);
     }
 
     /**
@@ -85,17 +101,56 @@ class App extends React.Component {
         });
     }
 
+    async checkAppUpdates() {
+        console.log(`checkAppUpdates. entry`);
+        const localVer = verLocalVersion();
+        console.log(`checkAppUpdates after local`);
+        const remoteVer = await verServerVersion();
+        console.log(`checkAppUpdates after server`);
+        const updateRequired = verShouldUpdateApp(localVer, remoteVer);
+
+        console.log(`checkAppUpdates`, updateRequired);
+
+        if (updateRequired) {
+          this.setState({updateRequired}, () => {
+              // remove listener for app update
+              dbRemoveAppVersionValueListener(this.updateAppListener);
+          });
+            
+        }
+    }
+
     render() {
         return (
             <>
-                <Router />
-                <Snackbar
-                    visible={this.state.openSnackbar}
-                    message={this.state.snackbarMessage}
-                    openAndCollapse={this.state.timerOnSnackBar} />
-            </>
+                {this.state.updateRequired ?      
+                    <UpdateApp />
+                :
+                <>
+                    <Router />
+                    <Snackbar
+                        visible={this.state.openSnackbar}
+                        message={this.state.snackbarMessage}
+                        openAndCollapse={this.state.timerOnSnackBar} />
+                </>
+              }
+          </>
         )
     }
+
+    // render() {
+    //     return (
+    //         <>
+                
+    //                 <Router />
+    //                 <Snackbar
+    //                     visible={this.state.openSnackbar}
+    //                     message={this.state.snackbarMessage}
+    //                     openAndCollapse={this.state.timerOnSnackBar} />
+
+    //       </>
+    //     )
+    // }
 }
 
 const AppReduxContainer = () => (

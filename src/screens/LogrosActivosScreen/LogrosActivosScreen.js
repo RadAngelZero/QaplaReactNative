@@ -5,25 +5,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import LogrosList from '../../components/LogroCard/LogrosList';
 
-import {
-    verLocalVersion,
-    verServerVersion,
-    verIsMajorGreater
-} from '../../utilities/version';
-
 export class LogrosActivosScreen extends Component {
-    componentDidMount() {
-        this.ver();
-    }
-
-    async ver() {
-        let localVer = verLocalVersion();
-        console.log('Miau');
-        let remoteVer = await verServerVersion();
-        console.log('mooo');
-        console.log(`verIsMajorGreater: `, verIsMajorGreater(localVer, remoteVer));
-    }
-
     render() {
         let logros = Object.keys(this.props.logros.logrosActivos).filter((logroKey) => {
             if (this.props.logros.logrosActivos[logroKey].tiempoLimite) {

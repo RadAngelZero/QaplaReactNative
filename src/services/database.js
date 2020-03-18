@@ -738,7 +738,13 @@ export function joinEvent(uid, eventId) {
         priceQaploins: 0,
         matchesPlayed: 0,
         victories: 0,
-        userName: user.userName
+        userName: user.userName,
+
+        /**
+         * If the user win something in the event and we want to notify him/her
+         * save the token on this node allows us to accomplish this this with minimal cost
+         */
+        token: user.token
     });
 }
 

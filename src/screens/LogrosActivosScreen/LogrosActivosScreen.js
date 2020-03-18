@@ -9,6 +9,17 @@ import styles from './style';
 import LogrosList from '../../components/LogroCard/LogrosList';
 
 export class LogrosActivosScreen extends Component {
+    componentDidMount() {
+        this.getVersion();
+    }
+
+    async getVersion() {
+        let versionObj = {};
+        let minorVersion = await verMinorVersion(versionObj);
+
+        console.log(`minorVersion: `, versionObj);
+    }
+
     render() {
         let logros = Object.keys(this.props.logros.logrosActivos).filter((logroKey) => {
             if (this.props.logros.logrosActivos[logroKey].tiempoLimite) {

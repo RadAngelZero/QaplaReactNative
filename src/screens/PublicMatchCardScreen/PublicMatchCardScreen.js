@@ -43,6 +43,8 @@ import { AddGamerTagModal } from '../../components/AddGamerTagModal/AddGamerTagM
 import { translate } from '../../utilities/i18';
 import Colors from '../../utilities/Colors';
 
+import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal';
+
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
 

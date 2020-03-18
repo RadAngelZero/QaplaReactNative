@@ -910,3 +910,20 @@ export async function getQaplaAppPrivacy() {
 export async function userQaplaBalanceListener(uid, callback) {
     usersBalance.child(uid).on('value', callback);
 }
+
+// -----------------------------------------------
+// Privacy terms
+// -----------------------------------------------
+
+export async function dbGetAppMinorVersion() {
+    let res = undefined;
+    
+    try {
+        let resSnap = await database.ref('VersionApp').child('QaplaVersion').once('value');
+        let res = resSnap.val();
+    } catch(error) {
+        console.log(error);
+    }
+
+    return res;
+}

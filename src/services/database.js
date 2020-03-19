@@ -741,8 +741,8 @@ export function joinEvent(uid, eventId) {
         userName: user.userName,
 
         /**
-         * If the user win something in the event and we want to notify him/her
-         * save the token on this node allows us to accomplish this this with minimal cost
+         * If the user won something in the event and we want to notify him/her,
+         * saving the token on this node allows us to accomplish this this with minimal cost
          */
         token: user.token
     });

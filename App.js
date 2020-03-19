@@ -36,8 +36,8 @@ class App extends React.Component {
     componentDidMount() {
         this.enableNotificationListeners();
         this.enableNetworkListener();
-        this.checkAppUpdates();
         this.updateAppListener = dbEnableAppVersionValueListener(this.checkAppUpdates);
+        this.checkAppUpdates();
     }
 
     componentWillUnmount() {
@@ -48,6 +48,7 @@ class App extends React.Component {
         this.notificationListener();
         this.notificationOpenedListener();
         this.networkListener();
+
         this.dbRemoveAppVersionValueListener(this.updateAppListener);
     }
 
@@ -101,22 +102,21 @@ class App extends React.Component {
         });
     }
 
+    /**
+     * Check for app updates by consulting the app version from server
+     */
     async checkAppUpdates() {
-        console.log(`checkAppUpdates. entry`);
         const localVer = verLocalVersion();
-        console.log(`checkAppUpdates after local`);
         const remoteVer = await verServerVersion();
-        console.log(`checkAppUpdates after server`);
         const updateRequired = verShouldUpdateApp(localVer, remoteVer);
-
-        console.log(`checkAppUpdates`, updateRequired);
 
         if (updateRequired) {
           this.setState({updateRequired}, () => {
-              // remove listener for app update
+              // Remove listener for app version from server, we already
+              // know that we have to update and we have the info,
+              // therefore we can ommit the listener.
               dbRemoveAppVersionValueListener(this.updateAppListener);
           });
-            
         }
     }
 
@@ -137,20 +137,6 @@ class App extends React.Component {
           </>
         )
     }
-
-    // render() {
-    //     return (
-    //         <>
-                
-    //                 <Router />
-    //                 <Snackbar
-    //                     visible={this.state.openSnackbar}
-    //                     message={this.state.snackbarMessage}
-    //                     openAndCollapse={this.state.timerOnSnackBar} />
-
-    //       </>
-    //     )
-    // }
 }
 
 const AppReduxContainer = () => (

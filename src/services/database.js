@@ -907,10 +907,21 @@ export async function dbGetAppVersion() {
     return res;
 }
 
+/**
+ * Retrieves a value listener to QaplaVersion child
+ * @param {function} callback callback provided by the caller
+ *
+ * @returns
+ * {object} value listener to QaplaVersion child
+ * {null/undefined} value listener could not be obtained
+ */
 export async function dbEnableAppVersionValueListener(callback) {
     return versionApp.child('QaplaVersion').on('value', callback);
 }
 
+/**
+ * Removes a value listener
+ */
 export async function dbRemoveAppVersionValueListener(ref) {
     if (ref !== undefined && ref !== null) {
         ref.off('value');

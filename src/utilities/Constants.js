@@ -111,5 +111,5 @@ export const ACCOUNT_INVALID_CREDENTIAL = 'auth/invalid-credential';
 export const ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS =  'auth/provider-already-linked';
 
 // Android and IOS stores links
-export const ANDROID_STORE_LINK = 'https://testflight.apple.com/join/sYD6yqoh';
-export const IOS_STORE_LINK = 'https://play.google.com/store/apps/details?id=com.qapla.gaming.app&hl=en';
+export const ANDROID_STORE_LINK = 'https://play.google.com/store/apps/details?id=com.qapla.gaming.app&hl=en';
+export const IOS_STORE_LINK = 'https://apps.apple.com/mx/app/qapla-gaming/id1485332229?l=en';

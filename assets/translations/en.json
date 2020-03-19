@@ -326,5 +326,9 @@
         "paragraph": "The match expires after 10 minutes if you don't accept a challenge from other user or if it's not challenged by another user.",
         "dontShowItAgain": "Don't show this message again",
         "okButton": "Got it"
+    },
+    "updateApp": {
+        "header": "There is a new version of Qapla, please update to the latest version.",
+        "updateBttnTxt": "Update"
     }
 }

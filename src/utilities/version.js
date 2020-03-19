@@ -5,15 +5,11 @@ import {
 import {version} from '../../package.json';
 
 /**
- * Retrieves the version of the app from server
+ * Retrieves the version of the app from server and executes a callback onSucces
  * @param {function}	callback function to be called when retrieving a result from db
- *
- * @returns
- * SUCCESS - {string}     res version of QaplaGaming app retrieved from server
- * FAIL    - {undefined}  res version was not retrieved   
  */
 export async function verServerVersionCb(callback) {
-	dbGetAppMajorVersion()
+	dbGetAppVersion()
 	.then((elem) => {
 		callback(elem);
 	})
@@ -22,6 +18,13 @@ export async function verServerVersionCb(callback) {
 	});
 }
 
+/**
+ * Retrieves the version of the app from server
+ *
+ * @returns
+ * SUCCESS - {string}	res version of QaplaGaming app retrieved from server
+ * FAIL    - {null}  	res version was not retrieved   
+ */
 export async function verServerVersion() {
 	let res = null;
 
@@ -35,22 +38,49 @@ export async function verServerVersion() {
 	return res;
 }
 
+/**
+ * Retrieves the local version of the app
+ */
 export function verLocalVersion() {
 	return version;
 }
 
+/**
+ * Retrieves the major version from versionStr
+ * @param {string} 		versionStr version string containing x1.x2.x3
+ * @returns {string}	major version number in string format 	
+ */
 export function verMajorVersion(versionStr) {
 	return versionStr.split('.')[0];
 }
 
+/**
+ * Retrieves the minor version from versionStr
+ * @param {string} 		versionStr version string containing x1.x2.x3
+ * @returns {string}	minor version number in string format 	
+ */
 export function verMinorVersion(versionStr) {
 	return versionStr.split('.')[1];
 }
 
+/**
+ * Retrieves the patch version from versionStr
+ * @param {string} 		versionStr version string containing x1.x2.x3
+ * @returns {string}	patch version number in string format 	
+ */
 export function verPatchVersion(versionStr) {
 	return versionStr.split('.')[2];
 }
 
+/**
+ * Checks if major version from versionStr_1 is > than versionStr_2
+ * @param {string} 		versionStr_1 version string containing x1.x2.x3
+ * @param {string}		versionStr_2 version string containing x1.x2.x3
+ * 
+ * @returns 
+ * {boolean} true if versionStr_1 > versionStr_2
+ * {boolean} false if versionStr_1 <= versionStr_2
+ */
 export function verIsMajorGreater(versionStr_1, versionStr_2) {
 	let res = false;
 
@@ -67,6 +97,15 @@ export function verIsMajorGreater(versionStr_1, versionStr_2) {
 	return res;
 }
 
+/**
+ * Checks if minor version from versionStr_1 is > than versionStr_2
+ * @param {string} 		versionStr_1 version string containing x1.x2.x3
+ * @param {string}		versionStr_2 version string containing x1.x2.x3
+ * 
+ * @returns 
+ * {boolean} true if versionStr_1 > versionStr_2
+ * {boolean} false if versionStr_1 <= versionStr_2
+ */
 export function verIsMinorGreater(versionStr_1, versionStr_2) {
 	let res = false;
 
@@ -83,6 +122,15 @@ export function verIsMinorGreater(versionStr_1, versionStr_2) {
 	return res;
 }
 
+/**
+ * Checks if patch version from versionStr_1 is > than versionStr_2
+ * @param {string} 		versionStr_1 version string containing x1.x2.x3
+ * @param {string}		versionStr_2 version string containing x1.x2.x3
+ * 
+ * @returns 
+ * {boolean} true if versionStr_1 > versionStr_2
+ * {boolean} false if versionStr_1 <= versionStr_2
+ */
 export function verIsPatchGreater(versionStr_1, versionStr_2) {
 	let res = false;
 
@@ -98,7 +146,16 @@ export function verIsPatchGreater(versionStr_1, versionStr_2) {
 	return res;
 }
 
+/**
+ * Checks if app needs to update
+ * @param {string} 		localVersionStr  local app version string containing x1.x2.x3
+ * @param {string}		serverVersionStr server app version string containing x1.x2.x3
+ * 
+ * @returns 
+ * {boolean} true 	if serverVersionStr.major > localVersionStr.major
+ * {boolean} true 	if serverVersionStr.minor > localVersionStr.minor
+ * {boolean} false	other combinations
+ */
 export function verShouldUpdateApp(localVersionStr, serverVersionStr) {
-	const res =  verIsMajorGreater(serverVersionStr, localVersionStr) || verIsMinorGreater(serverVersionStr, localVersionStr);
-	return res;
+	return verIsMajorGreater(serverVersionStr, localVersionStr) || verIsMinorGreater(serverVersionStr, localVersionStr);
 }

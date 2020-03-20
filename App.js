@@ -71,7 +71,7 @@ class App extends React.Component {
             const { navigateTo } = data;
 
             /**
-             * Shows the SnackBar with the title and body of the notification
+             * Shows the SnackBar with the title and body of the notification.
              * If the notification have the navigateTo property we set the action
              * with the forceNavigation function
              */

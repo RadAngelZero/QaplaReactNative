@@ -60,6 +60,7 @@ import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 import { widthPercentageToPx } from './utilities/iosAndroidDim';
 import { translate } from './utilities/i18';
 import NotificationsSettingsScreen from './screens/NotificationsSettingsScreen/NotificationsSettingsScreen';
+import TodayTournamentsScreen from './screens/TodayTournamentsScreen/TodayTournamentsScreen';
 
 // Svg Icons
 const ProfileIcon = Images.svg.profileIcon;
@@ -375,7 +376,13 @@ const RootStackNavigator = createStackNavigator({
     AddGame: AddGameStackNavigator,
     Verification: VerificationStackNavigator,
     CheckOut: CheckOutStackNavigator,
-    Auth: AuthStackNavigator
+    Auth: AuthStackNavigator,
+    TodayEvents: {
+      screen: TodayTournamentsScreen,
+      navigationOptions: {
+          header: (props) => <TopNavOptions close onCloseNavigateTo='Achievements' {...props} />
+      }
+    }
 },{
     headerMode: 'screen',
     defaultNavigationOptions: {

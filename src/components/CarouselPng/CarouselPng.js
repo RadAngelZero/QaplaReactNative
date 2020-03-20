@@ -45,7 +45,7 @@ class CarouselPng extends Component {
         let viewSize = e.nativeEvent.layoutMeasurement;
 
         // Divide the horizontal offset by the width of the view to see which page is visible
-        let pageNum = Math.floor(contentOffset.x / viewSize.width);
+        let pageNum = Math.round(contentOffset.x / viewSize.width);
 
         /**
          * Disable the automatic scroll if the user returns to a previous slide, this user behavior can mean

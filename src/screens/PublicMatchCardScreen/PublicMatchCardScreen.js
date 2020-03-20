@@ -39,7 +39,7 @@ import AcceptChallengeModal from '../../components/AcceptChallengeModal/AcceptCh
 import NotEnoughQaploinsModal from '../../components/NotEnoughQaploinsModal/NotEnoughQaploinsModal';
 import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constants';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
-import { AddGamerTagModal } from '../../components/AddGamerTagModal/AddGamerTagModal';
+import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal';
 import { translate } from '../../utilities/i18';
 import Colors from '../../utilities/Colors';
 

@@ -69,11 +69,21 @@ class EventCard extends Component {
 
     render() {
         const { photoUrl, titulo, description, tiempoLimite, verified, priceQaploins, game, platform } = this.props;
-        const selectedGame = {
+        let selectedGame = {
             gameKey: game,
             platform: platform,
-            name: this.props.games[platform][game].name || ''
+            name: ''
         };
+
+        /**
+         * Before the app load the games (on redux) if we do not add this validation
+         * try to call to this.props.games[platform] can throw an error
+         */
+        if (this.props.games[platform] && this.props.games[platform][game]) {
+            selectedGame = {
+                name: this.props.games[platform][game].name
+            };
+        }
 
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>

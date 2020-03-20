@@ -3,7 +3,7 @@ import { View, ActivityIndicator, Text, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 
 import { auth, messaging, notifications } from '../../utilities/firebase';
-import { retrieveData } from '../../utilities/persistance';
+import { retrieveData, storeData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
 import { getUserNameWithUID, saveFCMUserToken } from '../../services/database';
@@ -73,8 +73,18 @@ class AuthLoadingScreen extends Component {
             if (this.state.firstLoad) {
                 const isTutorialDone = await retrieveData('tutorial-done');
                 this.setState({ firstLoad: false });
-                
+
                 if (isTutorialDone) {
+                    const lastDateUserSawEventRememberScreen = await retrieveData('event-remember-date');
+                    const date = new Date();
+                    const todayDate = `${date.getDate() + 1}/${date.getMonth()}/${date.getFullYear()}`;
+
+                    if ((!lastDateUserSawEventRememberScreen || lastDateUserSawEventRememberScreen !== todayDate)) {
+                        storeData('event-remember-date', todayDate);
+
+                        return this.props.navigation.navigate('TodayEvents');
+                    }
+
                     return this.props.navigation.navigate('Achievements');
                 }
                 else {

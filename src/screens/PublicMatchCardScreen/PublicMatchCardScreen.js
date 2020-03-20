@@ -62,78 +62,83 @@ class PublicMatchCardScreen extends Component {
     }
 
     componentDidMount() {
-        this.list = [
+        const matchCard = this.props.navigation.getParam('matchCard');
+        let matchExpired = (matchCard) ? matchCard.expired : false;
 
-            /**
-             * This event is triggered when the user goes to other screen
-             */
-            this.props.navigation.addListener(
-                'willBlur',
-                (payload) => {
-                    clearInterval(this.timer);
-                }
-            ),
+        if (!matchExpired) {
+            this.list = [
 
-            /**
-             * This event is triggered when the user enter to the screen
-             */
-            this.props.navigation.addListener(
-                'willFocus',
-                (payload) => {
-                    const { date, hourResult, timeStamp, matchesPlay } = this.props.navigation.getParam('matchCard');
+                /**
+                 * This event is triggered when the user goes to other screen
+                 */
+                this.props.navigation.addListener(
+                    'willBlur',
+                    (payload) => {
+                        clearInterval(this.timer);
+                    }
+                ),
 
-                    this.timer = setInterval(() => {
-                        let now = new Date().getTime();
-                        let leftTime = 0;
-                        let validTimeLeft = 0;
+                /**
+                 * This event is triggered when the user enter to the screen
+                 */
+                this.props.navigation.addListener(
+                    'willFocus',
+                    (payload) => {
+                        const { date, hourResult, timeStamp, matchesPlay } = this.props.navigation.getParam('matchCard');
 
-                        // If some result was uploaded
-                        if (hourResult !== '') {
-                            leftTime = (this.convertHourToTimeStamp(date, hourResult) + this.convertMinutesToMiliSeconds(15)) - now;
-                        } else if (matchesPlay) {
-                            leftTime = (timeStamp + this.convertMinutesToMiliSeconds(80)) - now;
-                        }
-                         else {
-                            leftTime = (timeStamp + this.convertMinutesToMiliSeconds(15)) - now;
-                        }
+                        this.timer = setInterval(() => {
+                            let now = new Date().getTime();
+                            let leftTime = 0;
+                            let validTimeLeft = 0;
 
-                        // Calculate minutes and seconds befor match expire
-                        let hours = Math.floor((leftTime % (1000 * 60 * 60 * 60)) / (1000 * 60 * 60));
-                        let minutes = Math.floor((leftTime % (1000 * 60 * 60)) / (1000 * 60));
-                        let seconds = Math.floor((leftTime % (1000 * 60)) / 1000);
-
-                        /**
-                         * If there's no more time to interact with the match
-                         */
-                        if (minutes <= 0 && seconds <= 0) {
-                            validTimeLeft = 'Partida expirada';
-
-                            /**
-                             * We set the match as expired (this action disable the button)
-                             */
-                            this.setState({ expired: true });
-                            clearInterval(this.timer);
-                        } else {
-                            /**
-                             * If the minute or second value is less than 10 (like 9 or 8)
-                             * then we add a 0 before the numeric value (so the value look like: 09 or 08)
-                             */
-                            minutes = minutes < 10 ? `0${minutes}` : minutes;
-                            seconds = seconds < 10 ? `0${seconds}` : seconds;
-
-                            // Legible user string
-                            if (hours > 0) {
-                                validTimeLeft = `${hours}:${minutes}:${seconds}`;
-                            } else {
-                                validTimeLeft = `${minutes}:${seconds}`;
+                            // If some result was uploaded
+                            if (hourResult !== '') {
+                                leftTime = (this.convertHourToTimeStamp(date, hourResult) + this.convertMinutesToMiliSeconds(15)) - now;
+                            } else if (matchesPlay) {
+                                leftTime = (timeStamp + this.convertMinutesToMiliSeconds(80)) - now;
                             }
-                        }
+                             else {
+                                leftTime = (timeStamp + this.convertMinutesToMiliSeconds(15)) - now;
+                            }
 
-                        this.setState({ validTimeLeft });
-                    }, 1000);
-                }
-            )
-        ];
+                            // Calculate minutes and seconds befor match expire
+                            let hours = Math.floor((leftTime % (1000 * 60 * 60 * 60)) / (1000 * 60 * 60));
+                            let minutes = Math.floor((leftTime % (1000 * 60 * 60)) / (1000 * 60));
+                            let seconds = Math.floor((leftTime % (1000 * 60)) / 1000);
+
+                            /**
+                             * If there's no more time to interact with the match
+                             */
+                            if (minutes <= 0 && seconds <= 0) {
+                                validTimeLeft = 'Partida expirada';
+
+                                /**
+                                 * We set the match as expired (this action disable the button)
+                                 */
+                                this.setState({ expired: true });
+                                clearInterval(this.timer);
+                            } else {
+                                /**
+                                 * If the minute or second value is less than 10 (like 9 or 8)
+                                 * then we add a 0 before the numeric value (so the value look like: 09 or 08)
+                                 */
+                                minutes = minutes < 10 ? `0${minutes}` : minutes;
+                                seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+                                // Legible user string
+                                if (hours > 0) {
+                                    validTimeLeft = `${hours}:${minutes}:${seconds}`;
+                                } else {
+                                    validTimeLeft = `${minutes}:${seconds}`;
+                                }
+                            }
+
+                            this.setState({ validTimeLeft });
+                        }, 1000);
+                    }
+                )
+            ];
+        }
     }
 
     /**
@@ -299,178 +304,201 @@ class PublicMatchCardScreen extends Component {
         }
     }
 
+    /**
+     * Navigate to PublicFeedMatchScreen screen
+     */
+    navigateToPublicas = () => {
+         this.props.navigation.navigate('Public');
+    }
+
     render() {
         const matchCard = this.props.navigation.getParam('matchCard');
-        const gameData = this.props.games[matchCard.platform][matchCard.game];
+        const matchExpired = (matchCard) ? matchCard.expired : false;
+        const gameData = matchExpired ? null : this.props.games[matchCard.platform][matchCard.game];
 
         return (
             <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
-                <View style={styles.imageHeader}>
-                    {gameData.local ?
-                        <gameData.icon width={50} height={50} />
-                        :
-                        <SvgUri
-                            width={50}
-                            height={50}
-                            uri={gameData.icon}
-                            fill={Colors.greenQapla} />
-                    }
-                </View>
-                <View style={styles.rowContainer}>
-                    <View style={styles.headerRow1}>
-                        <QaploinsIcon style={styles.hr1}/>
-                        <Text style={styles.gameName}>{gameData.name}</Text>
-                        <QaploinsIcon style={styles.hr3}/>
-                    </View>
-
-                    <Text style={styles.gamertag}>{matchCard.userName}</Text>
-
-                    <View style={styles.row}>
-                        <View style={styles.infoContainer}>
-                            <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={[styles.elemR1, styles.activeColor]}>{translate('publicMatchCardScreen.discordTag')}</Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.discordTag}</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.row}>
-                        <View style={styles.infoContainer}>
-                            <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.rightTextStyle}>{matchCard.gamerTag.gamerTag}</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.row}>
-                        <View style={styles.infoContainer}>
-                            <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>{translate('publicMatchCardScreen.numberOfMembers')}</Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.row}>
-                        <View style={styles.infoContainer}>
-                            <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>
-                                {/**
-                                 * bug86: When a user has uploaded a result, text has to show different message
-                                 * so the user can know that their result is saved and just can wait for theira adversary result
-                                 */}
-                                {matchCard.matchesPlay ?
-                                    ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
-                                    ||
-                                    (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0')) ?
-                                        translate('publicMatchCardScreen.waitingResult')
-                                        :
-                                        translate('publicMatchCardScreen.uploadResultIn')
-                                    :
-                                    translate('publicMatchCardScreen.expireIn')
-                                }
-                            </Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.rightTextStyle}>{this.state.validTimeLeft}</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.row}>
-                        <View style={styles.infoContainer}>
-                            <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={styles.elemR1}>Qoins</Text>
-                        </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.rightTextStyle}>{matchCard.bet}</Text>
-                        </View>
-                    </View>
-                </View>
-
-                {/*
-                    If the user isn't the creator of the match, and this match is not in matches play and isn't a challenge
-                    we show 'Retar' button
-                */}
-                {(this.props.uid !== matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
-                    <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()} disabled={this.state.expired}>
-                        <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.challenge')}</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                }
-                {/*
-                    If the user is the creator of the match, and this match is not in matches play and isn't a challenge
-                    we show 'Cancelar' button
-                */}
-                {(this.props.uid === matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
-                    <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()} disabled={this.state.expired}>
-                        <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.cancel')}</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                }
-                {/*
-                    If the match is on matches play and the user hasn't upload their result yet we show 'Subir Resultado'
-                    button, if the match is on matches play and the user has already uploaded their result, then we show
-                    just a text
-                */}
-                {(matchCard.matchesPlay &&
-                    ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
-                    ||
-                    (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0'))) ?
-                    <Text style={styles.alreadyHaveResult}>{translate('publicMatchCardScreen.resultUploaded')}</Text>
-                    :
-                    <>
-                    {/*TODO: disabled=this.state.expired} */}
-                    {matchCard.matchesPlay &&
-                        <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult} disabled={this.state.expired}>
-                            <View style={styles.bottomButton}>
-                                <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.uploadResult')}</Text>
+                {matchCard.expired ?
+                    <View style={styles.mExpiredContainer}>
+                        <Text style={styles.mExpiredText}>La partida expiró.</Text>
+                        <TouchableWithoutFeedback onPress={this.navigateToPublicas}>
+                            <View style={styles.mExpiredBttnContainer}>
+                                <Text style={styles.mExpiredBttnText}>
+                                    {'Buscar Partida'}
+                                </Text>
                             </View>
                         </TouchableWithoutFeedback>
-                    }
+                    </View>
+                    :
+                    <>
+                        <View style={styles.imageHeader}>
+                            {gameData.local ?
+                                <gameData.icon width={50} height={50} />
+                                :
+                                <SvgUri
+                                    width={50}
+                                    height={50}
+                                    uri={gameData.icon}
+                                    fill={Colors.greenQapla} />
+                            }
+                        </View>
+                        <View style={styles.rowContainer}>
+                            <View style={styles.headerRow1}>
+                                <QaploinsIcon style={styles.hr1}/>
+                                <Text style={styles.gameName}>{gameData.name}</Text>
+                                <QaploinsIcon style={styles.hr3}/>
+                            </View>
+
+                            <Text style={styles.gamertag}>{matchCard.userName}</Text>
+
+                            <View style={styles.row}>
+                                <View style={styles.infoContainer}>
+                                    <ProfileIcon style={styles.rowIcon}/>
+                                    <Text style={[styles.elemR1, styles.activeColor]}>{translate('publicMatchCardScreen.discordTag')}</Text>
+                                </View>
+                                <View style={styles.infoContainer}>
+                                    <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.discordTag}</Text>
+                                </View>
+                            </View>
+
+                            <View style={styles.row}>
+                                <View style={styles.infoContainer}>
+                                    <ProfileIcon style={styles.rowIcon}/>
+                                    <Text style={styles.elemR1}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
+                                </View>
+                                <View style={styles.infoContainer}>
+                                    <Text style={styles.rightTextStyle}>{matchCard.gamerTag.gamerTag}</Text>
+                                </View>
+                            </View>
+
+                            <View style={styles.row}>
+                                <View style={styles.infoContainer}>
+                                    <ProfileIcon style={styles.rowIcon}/>
+                                    <Text style={styles.elemR1}>{translate('publicMatchCardScreen.numberOfMembers')}</Text>
+                                </View>
+                                <View style={styles.infoContainer}>
+                                    <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</Text>
+                                </View>
+                            </View>
+
+                            <View style={styles.row}>
+                                <View style={styles.infoContainer}>
+                                    <ProfileIcon style={styles.rowIcon}/>
+                                    <Text style={styles.elemR1}>
+                                        {/**
+                                         * bug86: When a user has uploaded a result, text has to show different message
+                                         * so the user can know that their result is saved and just can wait for theira adversary result
+                                         */}
+                                        {matchCard.matchesPlay ?
+                                            ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
+                                            ||
+                                            (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0')) ?
+                                                translate('publicMatchCardScreen.waitingResult')
+                                                :
+                                                translate('publicMatchCardScreen.uploadResultIn')
+                                            :
+                                            translate('publicMatchCardScreen.expireIn')
+                                        }
+                                    </Text>
+                                </View>
+                                <View style={styles.infoContainer}>
+                                    <Text style={styles.rightTextStyle}>{this.state.validTimeLeft}</Text>
+                                </View>
+                            </View>
+
+                            <View style={styles.row}>
+                                <View style={styles.infoContainer}>
+                                    <ProfileIcon style={styles.rowIcon}/>
+                                    <Text style={styles.elemR1}>Qoins</Text>
+                                </View>
+                                <View style={styles.infoContainer}>
+                                    <Text style={styles.rightTextStyle}>{matchCard.bet}</Text>
+                                </View>
+                            </View>
+                        </View>
+
+                        {/*
+                            If the user isn't the creator of the match, and this match is not in matches play and isn't a challenge
+                            we show 'Retar' button
+                        */}
+                        {(this.props.uid !== matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
+                            <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()} disabled={this.state.expired}>
+                                <View style={styles.bottomButton}>
+                                    <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.challenge')}</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        }
+                        {/*
+                            If the user is the creator of the match, and this match is not in matches play and isn't a challenge
+                            we show 'Cancelar' button
+                        */}
+                        {(this.props.uid === matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
+                            <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()} disabled={this.state.expired}>
+                                <View style={styles.bottomButton}>
+                                    <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.cancel')}</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        }
+                        {/*
+                            If the match is on matches play and the user hasn't upload their result yet we show 'Subir Resultado'
+                            button, if the match is on matches play and the user has already uploaded their result, then we show
+                            just a text
+                        */}
+                        {(matchCard.matchesPlay &&
+                            ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
+                            ||
+                            (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0'))) ?
+                            <Text style={styles.alreadyHaveResult}>{translate('publicMatchCardScreen.resultUploaded')}</Text>
+                            :
+                            <>
+                            {/*TODO: disabled=this.state.expired} */}
+                            {matchCard.matchesPlay &&
+                                <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult} disabled={this.state.expired}>
+                                    <View style={styles.bottomButton}>
+                                        <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.uploadResult')}</Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                            }
+                            </>
+                        }
+                        {matchCard.isChallenge &&
+                            <TouchableWithoutFeedback onPress={this.tryToAcceptChallengeRequest} disabled={this.state.expired}>
+                                <View style={styles.bottomButton}>
+                                    <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.acceptChallenge')}</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        }
+                        <OneTxtOneBttnModal
+                            visible={ this.state.openChalExModal }
+                            onClose={ this.toggleOpenChalExModal }
+                            header={translate('publicMatchCardScreen.alreadyChallengedModal.header')}
+                            body={translate('publicMatchCardScreen.alreadyChallengedModal.body')}
+                            textButton={translate('publicMatchCardScreen.alreadyChallengedModal.textButton')} />
+                        <AcceptChallengeModal
+                            visible={this.state.openAcceptChallengeModal}
+                            uid={this.props.uid}
+                            notification={this.props.navigation.getParam('notification', {})}
+                            onClose={() => this.setState({ openAcceptChallengeModal: false })} />
+                        <NotEnoughQaploinsModal
+                            visible={this.state.openNoQaploinsModal}
+                            uid={this.props.uid}
+                            notificationKey={this.props.navigation.getParam('notificationKey')}
+                            deletedFromMatchDetail={true}
+                            onClose={() => this.setState({openNoQaploinsModal: false})} />
+                        <AddGamerTagModal
+                            selectedGame={{ name: gameData.name, gameKey: matchCard.game, platform: matchCard.platform }}
+                            open={this.state.openAddGamerTagModal}
+                            uid={this.props.uid}
+                            userName={matchCard.userName}
+                            onSuccess={this.tryToChallengeUser}
+                            onClose={() => this.setState({ openAddGamerTagModal: false }) } />
+                        <BuyQaploinsModal
+                            open={this.state.openBuyQaploinsModal}
+                            body={translate('publicMatchCardScreen.buyQaploinsModal.body')}
+                            openWhen='User try to challenge a match'
+                            onClose={() => this.setState({ openBuyQaploinsModal: false })} />
                     </>
                 }
-                {matchCard.isChallenge &&
-                    <TouchableWithoutFeedback onPress={this.tryToAcceptChallengeRequest} disabled={this.state.expired}>
-                        <View style={styles.bottomButton}>
-                            <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.acceptChallenge')}</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                }
-                <OneTxtOneBttnModal
-                    visible={ this.state.openChalExModal }
-                    onClose={ this.toggleOpenChalExModal }
-                    header={translate('publicMatchCardScreen.alreadyChallengedModal.header')}
-                    body={translate('publicMatchCardScreen.alreadyChallengedModal.body')}
-                    textButton={translate('publicMatchCardScreen.alreadyChallengedModal.textButton')} />
-                <AcceptChallengeModal
-                    visible={this.state.openAcceptChallengeModal}
-                    uid={this.props.uid}
-                    notification={this.props.navigation.getParam('notification', {})}
-                    onClose={() => this.setState({ openAcceptChallengeModal: false })} />
-                <NotEnoughQaploinsModal
-                    visible={this.state.openNoQaploinsModal}
-                    uid={this.props.uid}
-                    notificationKey={this.props.navigation.getParam('notificationKey')}
-                    deletedFromMatchDetail={true}
-                    onClose={() => this.setState({openNoQaploinsModal: false})} />
-                <AddGamerTagModal
-                    selectedGame={{ name: gameData.name, gameKey: matchCard.game, platform: matchCard.platform }}
-                    open={this.state.openAddGamerTagModal}
-                    uid={this.props.uid}
-                    userName={matchCard.userName}
-                    onSuccess={this.tryToChallengeUser}
-                    onClose={() => this.setState({ openAddGamerTagModal: false }) } />
-                <BuyQaploinsModal
-                    open={this.state.openBuyQaploinsModal}
-                    body={translate('publicMatchCardScreen.buyQaploinsModal.body')}
-                    openWhen='User try to challenge a match'
-                    onClose={() => this.setState({ openBuyQaploinsModal: false })} />
             </SafeAreaView>
         );
     }

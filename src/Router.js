@@ -51,6 +51,7 @@ import VerificationScreen from './screens/VerificationScreen/VerificationScreen'
 
 import SupportScreen from './screens/SupportScreen/SupportScreen';
 import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
+import LinkBrokenScreen from './screens/LinkBrokenScreen/LinkBrokenScreen';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
@@ -392,7 +393,8 @@ const MainSwitchNavigator = createSwitchNavigator({
     SplashScreen: AuthLoadingScreen,
     App: RootStackNavigator,
     onBoarding: WelcomeOnboardingScreen,
-    ChooseUserName: ChooseUserNameScreen
+    ChooseUserName: ChooseUserNameScreen,
+    LinkBroken: LinkBrokenScreen 
 });
 
 //#endregion

@@ -326,5 +326,11 @@
         "paragraph": "The match expires after 10 minutes if you don't accept a challenge from other user or if it's not challenged by another user.",
         "dontShowItAgain": "Don't show this message again",
         "okButton": "Got it"
+    },
+    "deepLinks": {
+        "matchCard": {
+            "description": "Play your favourite game with other players and win rewards",
+            "title": "Play a %{game} match (%{platform}) to win %{bet} Qoins!"
+        }
     }
 }

@@ -326,5 +326,11 @@
         "paragraph": "La partida expirará después de 10 minutos si no recibe y se acepta un desafío de otro jugador.",
         "dontShowItAgain": "Entendido, no volver a mostrar este mensaje",
         "okButton": "Entendido"
+    },
+    "deepLinks": {
+        "matchCard": {
+            "description": "Juega a tu juego favorito con otros jugadores y gana recompensas",
+            "title": "Juega una partida de %{game} (%{platform}) para ganar %{bet} Qoins!"
+        }
     }
 }

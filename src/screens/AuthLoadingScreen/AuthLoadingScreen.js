@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import { View, ActivityIndicator, Text, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 
-import { auth, messaging, notifications } from '../../utilities/firebase';
+import {
+    auth,
+    messaging,
+    notifications,
+    links
+} from '../../utilities/firebase';
+
 import { retrieveData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
@@ -82,6 +88,9 @@ class AuthLoadingScreen extends Component {
                 }
             }
         });
+
+        this.manageStartDeepLinks();
+        this.manageBackgroundDeepLinks();
     }
 
     /**
@@ -136,6 +145,95 @@ class AuthLoadingScreen extends Component {
         } catch (error) {
             console.error(error);
         }
+    }
+
+    /**
+     * Enable entry point when the app has been launched from a deeplink
+     */
+    async manageStartDeepLinks() {  
+        const url = await links.getInitialLink();
+        this.processLinkUrl(url);
+    }
+
+    manageBackgroundDeepLinks() {
+        if (!this.unsubscribeBackgroundDpl) {
+            this.unsubscribeBackgroundDpl = links.onLink(this.processLinkUrl);  
+        }
+    }
+
+    /**
+     * Enable entry point when the app has been launched from a deeplink
+     * @param {string | null} url Url of deeplink pressed by the user
+     */
+    processLinkUrl(url) {
+        if (url) {
+            let screenName = 'LinkBroken';
+            const type = this.getParameterFromUrl(url, 'type');
+
+            if (type === 'appDeepLink') {
+                const type2 = this.getParameterFromUrl(url, 'type2');
+
+                if (type2 === 'matchCard') {
+                    this.redirectUserToPublicMatchCard(url);
+                }
+            }
+            
+            // TODO: Create screen to notify user that the link is broken,
+            // allow him to dismiss the screen and go back to events screen
+            this.props.navigation.navigate(screenName);
+        }
+    }
+
+    /**
+     * Enable entry point when the app has been launched from a deeplink
+     * @param {string | null} url Url of deeplink pressed by the user
+     */
+    getParameterFromUrl(url, parm) {
+        var re = new RegExp(".*[?&]" + parm + "=([^&]+)(&|$)");
+        var match = url.match(re);
+        return (match ? match[1] : "");
+    }
+
+    /**
+     * Redirect to MatchCard screen with 'matchId'
+     * @param {string} url Url of deeplink pressed by the user
+     */
+    async redirectUserToPublicMatchCard(url) {
+        const matchId = this.getParameterFromUrl(url, 'matchId');
+        const matchDBObj = await getMatchWitMatchId(matchId);
+
+        let matchObj = {
+            deepLink: true,
+            expired: true 
+        };
+
+        if (matchDBObj) {
+            //Get the userName from a external function because the match object only have the UID
+            const userName = await getUserNameWithUID(matchDBObj.adversary1);
+            const gamerTag = await getGamerTagWithUID(matchDBObj.adversary1, matchDBObj.game, matchDBObj.platform);
+
+            matchObj = {
+                ...matchObj,
+                adversaryUid: matchDBObj.adversary1,
+                alphaNumericIdMatch: matchDBObj.alphaNumericIdMatch,
+                bet: matchDBObj.bet,
+                date: matchDBObj.date,
+                game: matchDBObj.game,
+                hour: matchDBObj.hour,
+                hourResult: matchDBObj.hourResult,
+                idMatch: matchId,
+                numMatches: matchDBObj.numMatches,
+                observations: matchDBObj.observations,
+                platform: matchDBObj.platform,
+                timeStamp: matchDBObj.timeStamp,
+                winBet: matchDBObj.winBet,
+                userName: userName,
+                gamerTag: gamerTag,
+                expired: false
+            };
+        }
+
+        this.props.navigation.navigate('MatchCard', {matchCard: matchObj});
     }
 
     render() {

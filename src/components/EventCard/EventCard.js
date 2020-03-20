@@ -68,7 +68,7 @@ class EventCard extends Component {
     closeRequirementsModal = () => this.setState({ showRequirementsModal: false });
 
     render() {
-        const { photoUrl, titulo, description, tiempoLimite, verified, priceQaploins, game, platform } = this.props;
+        const { photoUrl, titulo, description, tiempoLimite, verified, priceQaploins, game, platform, hour } = this.props;
         let selectedGame = {
             gameKey: game,
             platform: platform,
@@ -98,7 +98,9 @@ class EventCard extends Component {
                         <Text style={styles.description}>{description}</Text>
                     </View>
                     <View style={styles.colBContainer}>
-                        <LogroLifeTimeBadge limitDate={tiempoLimite} />
+                        <LogroLifeTimeBadge
+                            limitDate={tiempoLimite}
+                            hour={hour} />
                         {(priceQaploins === null || priceQaploins === undefined) &&
                             <TouchableWithoutFeedback onPress={this.requestUserTags}>
                                 <View style={styles.participateButton}>

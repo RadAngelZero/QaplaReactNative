@@ -9,11 +9,11 @@ import { version } from '../../package.json';
  *
  * @returns
  * SUCCESS - {string}	res version of QaplaGaming app retrieved from server
- * FAIL    - {null}  	res version was not retrieved   
+ * FAIL    - {null}  	res version was not retrieved
  */
 export async function verServerVersion() {
 	let res = null;
-	
+
 	res = await dbGetAppVersion();
 	return res;
 }
@@ -28,7 +28,7 @@ export function verLocalVersion() {
 /**
  * Retrieve the major version from versionStr
  * @param {string} 		versionStr version string containing x1.x2.x3
- * @returns {string}	major version number in string format 	
+ * @returns {string}	major version number in string format
  */
 export function verMajorVersion(versionStr) {
 	return versionStr.split('.')[0];
@@ -37,7 +37,7 @@ export function verMajorVersion(versionStr) {
 /**
  * Retrieve the minor version from versionStr
  * @param {string} 		versionStr version string containing x1.x2.x3
- * @returns {string}	minor version number in string format 	
+ * @returns {string}	minor version number in string format
  */
 export function verMinorVersion(versionStr) {
 	return versionStr.split('.')[1];
@@ -46,7 +46,7 @@ export function verMinorVersion(versionStr) {
 /**
  * Retrieve the patch version from versionStr
  * @param {string} 		versionStr version string containing x1.x2.x3
- * @returns {string}	patch version number in string format 	
+ * @returns {string}	patch version number in string format
  */
 export function verPatchVersion(versionStr) {
 	return versionStr.split('.')[2];
@@ -56,8 +56,8 @@ export function verPatchVersion(versionStr) {
  * Check if major version from versionStr_1 is > than versionStr_2
  * @param {string} 		versionStr_1 version string containing x1.x2.x3
  * @param {string}		versionStr_2 version string containing x1.x2.x3
- * 
- * @returns 
+ *
+ * @returns
  * {boolean} true if versionStr_1 > versionStr_2
  * {boolean} false if versionStr_1 <= versionStr_2
  */
@@ -72,8 +72,6 @@ export function verIsMajorGreater(versionStr_1, versionStr_2) {
 	} catch (error) {
 		console.error(`[verIsMajorGreater] err: `, error);
 	}
-	
-	console.log(`[verIsMajorGreater]`,res);
 
 	return res;
 }
@@ -82,8 +80,8 @@ export function verIsMajorGreater(versionStr_1, versionStr_2) {
  * Check if major version from versionStr_1 is = than versionStr_2
  * @param {string} 		versionStr_1 version string containing x1.x2.x3
  * @param {string}		versionStr_2 version string containing x1.x2.x3
- * 
- * @returns 
+ *
+ * @returns
  * {boolean} true if versionStr_1 = versionStr_2
  * {boolean} false if versionStr_1 != versionStr_2
  */
@@ -98,7 +96,7 @@ export function verIsMajorEqual(versionStr_1, versionStr_2) {
 	} catch (error) {
 		console.error(`[verIsMajorGreater] err: `, error);
 	}
-	
+
 	return res;
 }
 
@@ -106,8 +104,8 @@ export function verIsMajorEqual(versionStr_1, versionStr_2) {
  * Check if minor version from versionStr_1 is > than versionStr_2
  * @param {string} 		versionStr_1 version string containing x1.x2.x3
  * @param {string}		versionStr_2 version string containing x1.x2.x3
- * 
- * @returns 
+ *
+ * @returns
  * {boolean} true if versionStr_1 > versionStr_2
  * {boolean} false if versionStr_1 <= versionStr_2
  */
@@ -130,8 +128,8 @@ export function verIsMinorGreater(versionStr_1, versionStr_2) {
  * Check if patch version from versionStr_1 is > than versionStr_2
  * @param {string} 		versionStr_1 version string containing x1.x2.x3
  * @param {string}		versionStr_2 version string containing x1.x2.x3
- * 
- * @returns 
+ *
+ * @returns
  * {boolean} true if versionStr_1 > versionStr_2
  * {boolean} false if versionStr_1 <= versionStr_2
  */
@@ -154,8 +152,8 @@ export function verIsPatchGreater(versionStr_1, versionStr_2) {
  * Check if app needs to update
  * @param {string} 		localVersionStr  local app version string containing x1.x2.x3
  * @param {string}		serverVersionStr server app version string containing x1.x2.x3
- * 
- * @returns 
+ *
+ * @returns
  * {boolean} true 	if serverVersionStr.major > localVersionStr.major
  * {boolean} true 	if serverVersionStr.minor > localVersionStr.minor
  * {boolean} false	other combinations

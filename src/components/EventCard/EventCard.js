@@ -88,9 +88,7 @@ class EventCard extends Component {
          * try to call to this.props.games[platform] can throw an error
          */
         if (this.props.games[platform] && this.props.games[platform][game]) {
-            selectedGame = {
-                name: this.props.games[platform][game].name
-            };
+            selectedGame.name =this.props.games[platform][game].name;
         }
 
         return (

@@ -71,6 +71,7 @@ export const TIE_RESULT = '3';
 
 // Discord Qapla Channel link
 export const QAPLA_DISCORD_CHANNEL = 'https://discord.gg/G4BuRZD';
+export const FIND_ADVERSARY_DISCORD_CHANNEL = 'https://discordapp.com/channels/373252198773293066/676917105261805590';
 
 // Date constants
 

@@ -12,7 +12,7 @@ import { View } from 'react-native'
 
 import style from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
-import { matchesRef, getUserNameWithUID, getGamerTagWithUID } from '../../services/database';
+import { matchesRef, getUserNameWithUID, getGamerTagWithUID, getUserDiscordTag } from '../../services/database';
 import CreateRetasButton from '../../components/CreateRetasButton/CreateRetasButton';
 import { isUserLogged } from '../../services/auth';
 import { storeData, retrieveData } from '../../utilities/persistance';
@@ -98,7 +98,8 @@ class PublicMatchesFeedScreen extends Component {
                             winBet,
                             //Get the userName from a external function because the match object only have the UID
                             userName: await getUserNameWithUID(newPublicMatch.val().adversary1),
-                            gamerTag: await getGamerTagWithUID(newPublicMatch.val().adversary1, newPublicMatch.val().game, newPublicMatch.val().platform)
+                            gamerTag: await getGamerTagWithUID(newPublicMatch.val().adversary1, newPublicMatch.val().game, newPublicMatch.val().platform),
+                            discordTag: await getUserDiscordTag(newPublicMatch.val().adversary1)
                         };
                         this.setState((state) => {
                             //Add the matchObject to the matches array of the state

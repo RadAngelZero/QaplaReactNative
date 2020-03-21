@@ -76,7 +76,7 @@ class App extends React.Component {
              * with the forceNavigation function
              */
             this.setState({
-                snackbarMessage: `${title}. ${body}`,
+                snackbarMessage: `${title} ${body}`,
                 timerOnSnackBar: true,
                 snackbarAction: () => this.forceNavigation(navigateTo),
                 snackbarActionMessage: navigateTo ? translate('App.snackBar.details') : ''
@@ -88,8 +88,12 @@ class App extends React.Component {
         * If the app is in background, we listen for when a notification is opened
         */
         this.notificationOpenedListener = notifications.onNotificationOpened((notificationOpen) => {
-            const { title, body, _data } = notificationOpen.notification;
-            // The user has rehydrated the app, show him something cool
+            const { _data } = notificationOpen.notification;
+            const { navigateTo } = _data;
+
+            if (navigateTo) {
+                this.forceNavigation(navigateTo);
+            }
         });
     }
 

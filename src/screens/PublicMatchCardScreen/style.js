@@ -82,6 +82,13 @@ export default StyleSheet.create({
     activeColor: {
         color: '#3DF9DF'
     },
+    link: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginRight: 8,
+        marginLeft: 8,
+        textDecorationLine: 'underline'
+    },
     bottomButton: {
         backgroundColor: '#FA2D79',
         borderRadius: 100,

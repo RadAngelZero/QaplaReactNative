@@ -10,7 +10,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import styles from './style'
-import Svg, { SvgUri } from 'react-native-svg';
+import { SvgUri } from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {
@@ -118,19 +118,19 @@ class GameCard extends Component {
                             style={styles.imageStyle}
                             source={game.local ? game.image : { uri: game.image }}/>
                         <View style={styles.detailsContainer}>
-                            <Svg style={styles.iconContainer}>
-                                {game.local ?
-                                    <game.icon
-                                        width={widthPercentageToPx(5)}
-                                        height={heightPercentageToPx(5)} />
-                                    :
-                                    <SvgUri
-                                        width={widthPercentageToPx(5)}
-                                        height={heightPercentageToPx(5)}
-                                        uri={game.icon}
-                                        fill={Colors.greenQapla} />
-                                }
-                            </Svg>
+                            {game.local ?
+                                <game.icon
+                                    style={styles.iconContainer}
+                                    width={widthPercentageToPx(5)}
+                                    height={heightPercentageToPx(5)} />
+                                :
+                                <SvgUri
+                                    style={styles.iconContainer}
+                                    width={widthPercentageToPx(5)}
+                                    height={heightPercentageToPx(5)}
+                                    uri={game.icon}
+                                    fill={Colors.greenQapla} />
+                            }
                             <Text style={styles.gameName}>
                                 {game.name}
                             </Text>

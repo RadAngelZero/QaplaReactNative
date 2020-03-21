@@ -1,6 +1,6 @@
 {
   "name": "Qapla-React-Native",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "android": "cd android && gradlew clean && cd .. && react-native run-android",

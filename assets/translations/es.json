@@ -3,6 +3,9 @@
         "noInternetConnection": {
             "title": "No estás conectado a internet, revisa tu conexión.",
             "wifiDetails": "Usa tu conexión de datos"
+        },
+        "snackBar": {
+            "details": "Ver más"
         }
     },
     "platforms": {
@@ -326,6 +329,10 @@
         "paragraph": "La partida expirará después de 10 minutos si no recibe y se acepta un desafío de otro jugador.",
         "dontShowItAgain": "Entendido, no volver a mostrar este mensaje",
         "okButton": "Entendido"
+    },
+    "updateApp": {
+        "header": "Hay una nueva versión de Qapla, actualiza a la nueva versión.",
+        "updateBttnTxt": "Actualizar"
     },
     "deepLinks": {
         "matchCard": {

@@ -105,18 +105,13 @@ class App extends React.Component {
     /**
      * Check for app updates by consulting the app version from server
      */
-    async checkAppUpdates() {
+    checkAppUpdates = async () => {
         const localVer = verLocalVersion();
         const remoteVer = await verServerVersion();
         const updateRequired = verShouldUpdateApp(localVer, remoteVer);
 
         if (updateRequired) {
-          this.setState({updateRequired}, () => {
-              // Remove listener for app version from server, we already
-              // know that we have to update and we have the info,
-              // therefore we can ommit the listener.
-              dbRemoveAppVersionValueListener();
-          });
+          this.setState({updateRequired}, dbRemoveAppVersionValueListener);
         }
     }
 

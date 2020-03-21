@@ -94,10 +94,9 @@ export function verIsMinorGreater(versionStr_1, versionStr_2) {
 
 		res = parseInt(min_1) > parseInt(min_2);
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 	}
 
-	console.error(`[verIsMinorGreater] `,res);
 	return res;
 }
 

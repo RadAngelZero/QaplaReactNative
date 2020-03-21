@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { BackHandler, View, Image, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
-import { Svg } from 'react-native-svg';
 
 import styles from './style';
 import Images from './../../../assets/images';
@@ -114,17 +113,13 @@ class SignInScreen extends Component {
                     <View>
                         <TouchableWithoutFeedback onPress={this.signInWithFacebook}>
                             <View style={[styles.socialMediaSignInButton, styles.facebookSignInButton]}>
-                                <Svg style={styles.socialMediaIconStyle}>
-                                    <FacebookIcon />
-                                </Svg>
+                                <FacebookIcon style={styles.socialMediaIconStyle} />
                                 <Text style={[styles.textButton, styles.whiteColor]}>{translate('signInScreen.facebookSignin')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.signInWithGoogle}>
                             <View style={[styles.socialMediaSignInButton, styles.googleSignInButton]}>
-                                <Svg style={styles.socialMediaIconStyle}>
-                                    <GoogleIcon />
-                                </Svg>
+                                <GoogleIcon style={styles.socialMediaIconStyle} />
                                 <Text style={[styles.textButton, styles.googleButtonText]}>{translate('signInScreen.googleSignin')}</Text>
                             </View>
                         </TouchableWithoutFeedback>

@@ -12,10 +12,11 @@ import { isUserLogged } from '../../services/auth';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
 import { translate } from '../../utilities/i18';
-import { QAPLA_DISCORD_CHANNEL, GAMES_TOPICS } from '../../utilities/Constants';
+import { QAPLA_DISCORD_CHANNEL } from '../../utilities/Constants';
 import { subscribeUserToTopic } from '../../services/messaging';
 import AddGamerTagModal from '../AddGamerTagModal/AddGamerTagModal';
 import EventRequirementsModal from '../EventRequirementsModal/EventRequirementsModal';
+import { getGamerTagKeyWithGameAndPlatform } from '../../utilities/utils';
 
 class EventCard extends Component {
     state = {
@@ -30,8 +31,15 @@ class EventCard extends Component {
      */
     requestUserTags = () => {
         if (isUserLogged()) {
-            joinEvent(this.props.uid, this.props.id);
-            subscribeUserToTopic(this.props.id, this.props.uid, GAMES_TOPICS);
+            const gamerTagKey = getGamerTagKeyWithGameAndPlatform(this.props.platform, this.props.game);
+            const userHasGameAdded = this.props.gamerTags.hasOwnProperty(gamerTagKey);
+
+            this.setState({
+                userHasGameAdded,
+                previousGamerTag: userHasGameAdded ? this.props.gamerTags[gamerTagKey] : '',
+            }, () => {
+                this.setState({ showGamerTagModal: true });
+            });
         } else {
             this.props.navigation.navigate('SignIn');
         }

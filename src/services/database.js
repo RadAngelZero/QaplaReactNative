@@ -464,8 +464,8 @@ export async function isMatchAlreadyChallenged(matchCreatorUid, matchChallengerU
         // idUsersend rather than matchId. Reason to say much more efficient is that the
         // ChallengedUser might have several notifications for a match 'A', whereas it will
         // have much more fewer notifications from the ChallengerUser.
-        notArrSnap = await usersRef.child(matchCreatorUid).child('notificationMatch').orderByChild('idUserSend').equalTo(matchChallengerUid).once('value');
-        notArr = notArrSnap.val();
+        const notArrSnap = await usersRef.child(matchCreatorUid).child('notificationMatch').orderByChild('idUserSend').equalTo(matchChallengerUid).once('value');
+        const notArr = notArrSnap.val();
 
         if (notArr !== null && notArr !== undefined) {
 
@@ -711,7 +711,13 @@ export function joinEvent(uid, eventId) {
         priceQaploins: 0,
         matchesPlayed: 0,
         victories: 0,
-        userName: user.userName
+        userName: user.userName,
+
+        /**
+         * If the user won something in the event and we want to notify him/her,
+         * saving the token on this node allows us to accomplish this this with minimal cost
+         */
+        token: user.token
     });
 }
 

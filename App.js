@@ -30,6 +30,10 @@ class App extends React.Component {
         openSnackbar: false,
         snackbarMessage: '',
         timerOnSnackBar: false,
+        snackbarAction: null,
+        snackbarActionMessage: '',
+        navigateTo: '',
+        closeSnackBar: false
         updateRequired: false
     };
 
@@ -80,15 +84,19 @@ class App extends React.Component {
         * Triggered when a particular notification has been received in foreground
         */
         this.notificationListener = notifications.onNotification((notification) => {
-            const { title, body } = notification;
+            const { title, body, data } = notification;
+            const { navigateTo } = data;
+
             /**
-             * Do something cool with the notification, maybe show a modal or even better,
-             * show a snackbar
-             * https://material.io/components/snackbars/#usage
+             * Shows the SnackBar with the title and body of the notification.
+             * If the notification have the navigateTo property we set the action
+             * with the forceNavigation function
              */
             this.setState({
-                snackbarMessage: `${title}. ${body}`,
-                timerOnSnackBar: true
+                snackbarMessage: `${title} ${body}`,
+                timerOnSnackBar: true,
+                snackbarAction: () => this.forceNavigation(navigateTo),
+                snackbarActionMessage: navigateTo ? translate('App.snackBar.details') : ''
             });
         });
 
@@ -97,9 +105,33 @@ class App extends React.Component {
         * If the app is in background, we listen for when a notification is opened
         */
         this.notificationOpenedListener = notifications.onNotificationOpened((notificationOpen) => {
-            const { title, body, _data } = notificationOpen.notification;
-            // The user has rehydrated the app, show him something cool
+            const { _data } = notificationOpen.notification;
+            const { navigateTo } = _data;
+
+            if (navigateTo) {
+                this.forceNavigation(navigateTo);
+            }
         });
+    }
+
+    /**
+     * Indicates to the router that must navigate to the given screen
+     * also close the SnackBar and clean their props
+     */
+    forceNavigation = (navigateTo) => {
+        this.setState({
+            navigateTo,
+            timerOnSnackBar: false,
+            closeSnackBar: true
+        }, () =>
+            this.setState({
+                navigateTo: '',
+                snackbarActionMessage: '',
+                snackbarAction: null,
+                closeSnackBar: false,
+                snackbarMessage: ''
+            })
+        );
     }
 
     /**
@@ -122,11 +154,14 @@ class App extends React.Component {
                     <UpdateApp />
                 :
                 <>
-                    <Router />
-                    <Snackbar
-                        visible={this.state.openSnackbar}
-                        message={this.state.snackbarMessage}
-                        openAndCollapse={this.state.timerOnSnackBar} />
+                	<Router forceNavigation={this.state.navigateTo} />
+	                <Snackbar
+	                    forceClose={this.state.closeSnackBar}
+	                    visible={this.state.openSnackbar}
+	                    message={this.state.snackbarMessage}
+	                    openAndCollapse={this.state.timerOnSnackBar}
+	                    action={this.state.snackbarAction}
+	                    actionMessage={this.state.snackbarActionMessage} />
                 </>
               }
           </>

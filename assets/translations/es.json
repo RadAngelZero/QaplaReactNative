@@ -3,6 +3,9 @@
         "noInternetConnection": {
             "title": "No estás conectado a internet, revisa tu conexión.",
             "wifiDetails": "Usa tu conexión de datos"
+        },
+        "snackBar": {
+            "details": "Ver más"
         }
     },
     "platforms": {

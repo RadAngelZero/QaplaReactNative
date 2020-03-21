@@ -21,7 +21,7 @@
 // diego          - 29-07-2019 - us55 - Challenge match logic added
 
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, SafeAreaView, TouchableWithoutFeedback, Linking } from 'react-native';
 import { connect } from 'react-redux';
 import { SvgUri } from 'react-native-svg';
 import styles from './style';
@@ -37,9 +37,9 @@ import { trackOnSegment } from '../../services/statistics';
 import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBttnModal'
 import AcceptChallengeModal from '../../components/AcceptChallengeModal/AcceptChallengeModal';
 import NotEnoughQaploinsModal from '../../components/NotEnoughQaploinsModal/NotEnoughQaploinsModal';
-import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER } from '../../utilities/Constants';
+import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER, FIND_ADVERSARY_DISCORD_CHANNEL } from '../../utilities/Constants';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
-import { AddGamerTagModal } from '../../components/AddGamerTagModal/AddGamerTagModal';
+import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal';
 import { translate } from '../../utilities/i18';
 import Colors from '../../utilities/Colors';
 
@@ -331,7 +331,11 @@ class PublicMatchCardScreen extends Component {
                             <Text style={[styles.elemR1, styles.activeColor]}>{translate('publicMatchCardScreen.discordTag')}</Text>
                         </View>
                         <View style={styles.infoContainer}>
-                            <Text style={[styles.rightTextStyle, styles.activeColor]}>{matchCard.discordTag}</Text>
+                            <Text
+                                style={[styles.rightTextStyle, styles.activeColor, styles.link]}
+                                onPress={() => Linking.openURL(FIND_ADVERSARY_DISCORD_CHANNEL)}>
+                                {matchCard.discordTag}
+                            </Text>
                         </View>
                     </View>
 

@@ -33,7 +33,7 @@ class App extends React.Component {
         snackbarAction: null,
         snackbarActionMessage: '',
         navigateTo: '',
-        closeSnackBar: false
+        closeSnackBar: false,
         updateRequired: false
     };
 

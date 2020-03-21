@@ -72,7 +72,33 @@ export function verIsMajorGreater(versionStr_1, versionStr_2) {
 	} catch (error) {
 		console.error(`[verIsMajorGreater] err: `, error);
 	}
+	
+	console.log(`[verIsMajorGreater]`,res);
 
+	return res;
+}
+
+/**
+ * Check if major version from versionStr_1 is = than versionStr_2
+ * @param {string} 		versionStr_1 version string containing x1.x2.x3
+ * @param {string}		versionStr_2 version string containing x1.x2.x3
+ * 
+ * @returns 
+ * {boolean} true if versionStr_1 = versionStr_2
+ * {boolean} false if versionStr_1 != versionStr_2
+ */
+export function verIsMajorEqual(versionStr_1, versionStr_2) {
+	let res = false;
+
+	try {
+		let maj_1 = verMajorVersion(versionStr_1);
+		let maj_2 = verMajorVersion(versionStr_2);
+
+		res = parseInt(maj_1) === parseInt(maj_2);
+	} catch (error) {
+		console.error(`[verIsMajorGreater] err: `, error);
+	}
+	
 	return res;
 }
 
@@ -135,5 +161,5 @@ export function verIsPatchGreater(versionStr_1, versionStr_2) {
  * {boolean} false	other combinations
  */
 export function verShouldUpdateApp(localVersionStr, serverVersionStr) {
-	return verIsMajorGreater(serverVersionStr, localVersionStr) || verIsMinorGreater(serverVersionStr, localVersionStr);
+	return verIsMajorGreater(serverVersionStr, localVersionStr) || (verIsMajorEqual(serverVersionStr, localVersionStr) && verIsMinorGreater(serverVersionStr, localVersionStr));
 }

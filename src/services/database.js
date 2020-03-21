@@ -26,7 +26,7 @@ export const privacyRef = database.ref('/Privacy');
 export const usersBalance = database.ref('usersQaplaBalance');
 export const userTopicSubscriptions = database.ref('userTopicSubscriptions');
 
-const versionApp = database.ref('VersionApp');
+const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
 /**
  * Returns the userName of the specified user
@@ -892,16 +892,16 @@ export async function userQaplaBalanceListener(uid, callback) {
  * Retrieves the major version of the app from server
  * @returns
  * SUCCESS - {string}     res major version of QaplaGaming app retrieved from server
- * FAIL    - {undefined}  res no major version was not retrieved   
+ * FAIL    - {null}  res no major version was not retrieved   
  */
 export async function dbGetAppVersion() {
-    let res = undefined;
+    let res = null;
     
     try {
-        let resSnap = await versionApp.child('QaplaVersion').once('value');
+        let resSnap = await versionAppRef.once('value');
         res = resSnap.val();
     } catch(error) {
-        console.log(error);
+        console.error(error);
     }
 
     return res;
@@ -910,20 +910,14 @@ export async function dbGetAppVersion() {
 /**
  * Retrieves a value listener to QaplaVersion child
  * @param {function} callback callback provided by the caller
- *
- * @returns
- * {object} value listener to QaplaVersion child
- * {null/undefined} value listener could not be obtained
  */
 export async function dbEnableAppVersionValueListener(callback) {
-    return versionApp.child('QaplaVersion').on('value', callback);
+    versionAppRef.on('value', callback);
 }
 
 /**
  * Removes a value listener
  */
-export async function dbRemoveAppVersionValueListener(ref) {
-    if (ref !== undefined && ref !== null) {
-        ref.off('value');
-    }
+export async function dbRemoveAppVersionValueListener() {
+    versionAppRef.off('value');
 }

@@ -2,24 +2,10 @@ import {
 	dbGetAppVersion
 } from '../services/database';
 
-import {version} from '../../package.json';
+import { version } from '../../package.json';
 
 /**
- * Retrieves the version of the app from server and executes a callback onSucces
- * @param {function}	callback function to be called when retrieving a result from db
- */
-export async function verServerVersionCb(callback) {
-	dbGetAppVersion()
-	.then((elem) => {
-		callback(elem);
-	})
-	.catch((error) => {
-		console.log(`[verServerVersionCb] err: `, error);
-	});
-}
-
-/**
- * Retrieves the version of the app from server
+ * Retrieve the version of the app from server
  *
  * @returns
  * SUCCESS - {string}	res version of QaplaGaming app retrieved from server
@@ -27,26 +13,20 @@ export async function verServerVersionCb(callback) {
  */
 export async function verServerVersion() {
 	let res = null;
-
-	try {
-		res = await dbGetAppVersion();
-	}
-	catch(error) {
-		console.log(`[verServerVersion] err: `, error);
-	}
-
+	
+	res = await dbGetAppVersion();
 	return res;
 }
 
 /**
- * Retrieves the local version of the app
+ * Retrieve the local version of the app
  */
 export function verLocalVersion() {
 	return version;
 }
 
 /**
- * Retrieves the major version from versionStr
+ * Retrieve the major version from versionStr
  * @param {string} 		versionStr version string containing x1.x2.x3
  * @returns {string}	major version number in string format 	
  */
@@ -55,7 +35,7 @@ export function verMajorVersion(versionStr) {
 }
 
 /**
- * Retrieves the minor version from versionStr
+ * Retrieve the minor version from versionStr
  * @param {string} 		versionStr version string containing x1.x2.x3
  * @returns {string}	minor version number in string format 	
  */
@@ -64,7 +44,7 @@ export function verMinorVersion(versionStr) {
 }
 
 /**
- * Retrieves the patch version from versionStr
+ * Retrieve the patch version from versionStr
  * @param {string} 		versionStr version string containing x1.x2.x3
  * @returns {string}	patch version number in string format 	
  */
@@ -73,7 +53,7 @@ export function verPatchVersion(versionStr) {
 }
 
 /**
- * Checks if major version from versionStr_1 is > than versionStr_2
+ * Check if major version from versionStr_1 is > than versionStr_2
  * @param {string} 		versionStr_1 version string containing x1.x2.x3
  * @param {string}		versionStr_2 version string containing x1.x2.x3
  * 
@@ -85,20 +65,19 @@ export function verIsMajorGreater(versionStr_1, versionStr_2) {
 	let res = false;
 
 	try {
-		let maj_1 = versionStr_1.split('.')[0];
-		let maj_2 = versionStr_2.split('.')[0];
+		let maj_1 = verMajorVersion(versionStr_1);
+		let maj_2 = verMajorVersion(versionStr_2);
 
 		res = parseInt(maj_1) > parseInt(maj_2);
 	} catch (error) {
-		console.log(`[verIsMajorGreater] err: `, error);
+		console.error(`[verIsMajorGreater] err: `, error);
 	}
 
-	console.log(`[verIsMajorGreater] `,res);
 	return res;
 }
 
 /**
- * Checks if minor version from versionStr_1 is > than versionStr_2
+ * Check if minor version from versionStr_1 is > than versionStr_2
  * @param {string} 		versionStr_1 version string containing x1.x2.x3
  * @param {string}		versionStr_2 version string containing x1.x2.x3
  * 
@@ -110,20 +89,20 @@ export function verIsMinorGreater(versionStr_1, versionStr_2) {
 	let res = false;
 
 	try {
-		let min_1 = versionStr_1.split('.')[1];
-		let min_2 = versionStr_2.split('.')[1];
+		let min_1 = verMinorVersion(versionStr_1);
+		let min_2 = verMinorVersion(versionStr_2);
 
 		res = parseInt(min_1) > parseInt(min_2);
 	} catch (error) {
 		console.log(error);
 	}
 
-	console.log(`[verIsMinorGreater] `,res);
+	console.error(`[verIsMinorGreater] `,res);
 	return res;
 }
 
 /**
- * Checks if patch version from versionStr_1 is > than versionStr_2
+ * Check if patch version from versionStr_1 is > than versionStr_2
  * @param {string} 		versionStr_1 version string containing x1.x2.x3
  * @param {string}		versionStr_2 version string containing x1.x2.x3
  * 
@@ -135,19 +114,19 @@ export function verIsPatchGreater(versionStr_1, versionStr_2) {
 	let res = false;
 
 	try {
-		let p_1 = versionStr_1.split('.')[2];
-		let p_2 = versionStr_2.split('.')[2];
+		let p_1 = verPatchVersion(versionStr_1);
+		let p_2 = verPatchVersion(versionStr_2);
 
 		res = parseInt(p_1) > parseInt(p_2);
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 	}
 
 	return res;
 }
 
 /**
- * Checks if app needs to update
+ * Check if app needs to update
  * @param {string} 		localVersionStr  local app version string containing x1.x2.x3
  * @param {string}		serverVersionStr server app version string containing x1.x2.x3
  * 

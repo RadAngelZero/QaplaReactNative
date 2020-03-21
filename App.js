@@ -36,7 +36,7 @@ class App extends React.Component {
     componentDidMount() {
         this.enableNotificationListeners();
         this.enableNetworkListener();
-        this.updateAppListener = dbEnableAppVersionValueListener(this.checkAppUpdates);
+        dbEnableAppVersionValueListener(this.checkAppUpdates);
         this.checkAppUpdates();
     }
 
@@ -49,7 +49,7 @@ class App extends React.Component {
         this.notificationOpenedListener();
         this.networkListener();
 
-        this.dbRemoveAppVersionValueListener(this.updateAppListener);
+        dbRemoveAppVersionValueListener();
     }
 
     /**
@@ -115,7 +115,7 @@ class App extends React.Component {
               // Remove listener for app version from server, we already
               // know that we have to update and we have the info,
               // therefore we can ommit the listener.
-              dbRemoveAppVersionValueListener(this.updateAppListener);
+              dbRemoveAppVersionValueListener();
           });
         }
     }

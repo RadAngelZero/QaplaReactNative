@@ -13,7 +13,6 @@ import {
 import styles from './style';
 import Images from '../../../assets/images';
 
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { translate } from '../../utilities/i18';
 
 import {

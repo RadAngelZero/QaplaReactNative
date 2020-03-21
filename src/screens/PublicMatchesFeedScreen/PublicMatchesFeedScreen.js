@@ -27,10 +27,6 @@ import { setHg1CreateMatch } from '../../actions/highlightsActions';
 import { connect } from 'react-redux';
 import { translate } from '../../utilities/i18';
 
-import { dplCreateLinkMatchCard } from '../../services/links';
-import { discordPublishMessageToChannel } from '../../services/discord';
-
-
 class PublicMatchesFeedScreen extends Component {
     state = {
         matches: [],
@@ -155,35 +151,23 @@ class PublicMatchesFeedScreen extends Component {
      * Perform a serie of function calls after match creation button is pressed.
      */
     onCrearRetaButtonPress = async () => {
-        // // TODO: This if-code block could be removed I think after HIGHLIGHT_1_CREATE_MATCH
-        // // introduction
-        // if(!this.props.navigation.getParam('firstMatchCreated')){
-        //     storeData('first-match-created', 'true');
-        // }
-
-        // // If showHg1Modal is enabled then
-        // if (this.state.showHg1Modal){
-        //     // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
-        //     // and it should not show up again.
-        //     this.markHg1();
-
-        //     // Hide HIGHLIGHT_1_CREATE_MATCH Modal
-        //     this.toggleHg1Modal();
-        // }
-
-        // this.props.navigation.navigate(isUserLogged() ? 'MatchWizard' : 'SignIn');
-        const matchId = "1234";
-        const url = await dplCreateLinkMatchCard(matchId, {game: 'Smash Banana', platform: 'Nintendo Switch', bet: 10000});
-
-        const discordObj = {
-            creator: "12324",
-            bet: 1000,
-            platform: "Switch",
-            game: "Smash Banana",
-            url: url
+        // TODO: This if-code block could be removed I think after HIGHLIGHT_1_CREATE_MATCH
+        // introduction
+        if(!this.props.navigation.getParam('firstMatchCreated')){
+            storeData('first-match-created', 'true');
         }
 
-        discordPublishMessageToChannel(discordObj);
+        // If showHg1Modal is enabled then
+        if (this.state.showHg1Modal){
+            // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
+            // and it should not show up again.
+            this.markHg1();
+
+            // Hide HIGHLIGHT_1_CREATE_MATCH Modal
+            this.toggleHg1Modal();
+        }
+
+        this.props.navigation.navigate(isUserLogged() ? 'MatchWizard' : 'SignIn');
     }
 
     /**

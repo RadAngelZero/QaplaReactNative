@@ -12,7 +12,7 @@ import {
 import { retrieveData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
-import { getUserNameWithUID, saveFCMUserToken } from '../../services/database';
+import { getUserNameWithUID, getMatchWitMatchId, saveFCMUserToken, getGamerTagWithUID, getUserDiscordTag } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
@@ -150,12 +150,12 @@ class AuthLoadingScreen extends Component {
     /**
      * Enable entry point when the app has been launched from a deeplink
      */
-    async manageStartDeepLinks() {  
+    manageStartDeepLinks = async () => {  
         const url = await links.getInitialLink();
         this.processLinkUrl(url);
     }
 
-    manageBackgroundDeepLinks() {
+    manageBackgroundDeepLinks = () => {
         if (!this.unsubscribeBackgroundDpl) {
             this.unsubscribeBackgroundDpl = links.onLink(this.processLinkUrl);  
         }
@@ -165,13 +165,14 @@ class AuthLoadingScreen extends Component {
      * Enable entry point when the app has been launched from a deeplink
      * @param {string | null} url Url of deeplink pressed by the user
      */
-    processLinkUrl(url) {
+    processLinkUrl = (url) => {
         if (url) {
             let screenName = 'LinkBroken';
             const type = this.getParameterFromUrl(url, 'type');
-
+            console.log(`[processLinkUrl] type`, type);
             if (type === 'appDeepLink') {
                 const type2 = this.getParameterFromUrl(url, 'type2');
+                console.log(`[processLinkUrl] type2`, type2);
 
                 if (type2 === 'matchCard') {
                     this.redirectUserToPublicMatchCard(url);
@@ -229,11 +230,12 @@ class AuthLoadingScreen extends Component {
                 winBet: matchDBObj.winBet,
                 userName: userName,
                 gamerTag: gamerTag,
+                discordTag: await getUserDiscordTag(matchDBObj.adversary1),
                 expired: false
             };
         }
-
-        this.props.navigation.navigate('MatchCard', {matchCard: matchObj});
+        console.log(`[redirectUserToPublicMatchCard]`);
+        this.props.navigation.navigate('MatchDetails', {matchCard: matchObj});
     }
 
     render() {

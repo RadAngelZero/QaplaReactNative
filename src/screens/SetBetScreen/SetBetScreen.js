@@ -42,6 +42,7 @@ import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 import { translate } from '../../utilities/i18';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { getPlatformNameWithKey } from '../../utilities/utils';
 
 import {
     dplCreateLinkMatchCard
@@ -188,7 +189,7 @@ class SetBetScreen extends Component {
 
                         this.shareMatchToDiscord({
                             bet: this.state.currentBet,
-                            game: this.getCurrentGameResources(game.platform, game.gameKey).name,
+                            game: game.name,
                             platform: getPlatformNameWithKey(game.platform),
                             creatorUid: this.props.uid,
                             matchId

@@ -32,7 +32,7 @@ class EventCard extends Component {
     requestUserTags = () => {
         if (isUserLogged()) {
             const gamerTagKey = getGamerTagKeyWithGameAndPlatform(this.props.platform, this.props.game);
-            const userHasGameAdded = this.props.gamerTags.hasOwnProperty(gamerTagKey);
+            const userHasGameAdded = this.props.gamerTags && this.props.gamerTags.hasOwnProperty(gamerTagKey);
 
             this.setState({
                 userHasGameAdded,

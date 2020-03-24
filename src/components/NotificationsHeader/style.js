@@ -7,7 +7,6 @@
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
 import {
-    NAV_TOPBAR_ICON_RIGHT_MARGIN,
     HEADER_SIZE
 } from '../../utilities/Constants';
 
@@ -33,7 +32,6 @@ export default styles = StyleSheet.create({
         color: '#FFF',
     },
     closeIcon: {
-        marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
         alignSelf: 'baseline'
     }
 })

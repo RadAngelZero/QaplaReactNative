@@ -37,7 +37,7 @@ class Snackbar extends Component {
                         duration: 250,
                         easing: Easing.in(Easing.cubic)
                     }).start();
-                }, 4000);
+                }, props.action ? 8000 : 4000);
             }
         } else {
             Animated.timing(state.yAxisValue, {

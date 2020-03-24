@@ -95,7 +95,7 @@ class App extends React.Component {
             this.setState({
                 snackbarMessage: `${title} ${body}`,
                 timerOnSnackBar: true,
-                snackbarAction: () => this.forceNavigation(navigateTo),
+                snackbarAction: navigateTo ? () => this.forceNavigation(navigateTo) : null,
                 snackbarActionMessage: navigateTo ? translate('App.snackBar.details') : ''
             });
         });
@@ -150,7 +150,7 @@ class App extends React.Component {
     render() {
         return (
             <>
-                {this.state.updateRequired ?      
+                {this.state.updateRequired ?
                     <UpdateApp />
                 :
                 <>

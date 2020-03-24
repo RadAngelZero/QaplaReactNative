@@ -817,6 +817,12 @@ export async function updateUserProfileImg(uid, photoUrl) {
  * @param {boolean} isUserLogged True if the user is not logged
  */
 export function updateUserLoggedStatus(isUserLogged, uid = '') {
+
+    /**
+     * This flag was not part of the original app, thats why we use inverse logic here
+     * so if the data does not exist on the profile we can assume that the user is logged.
+     * In other words is not unlogged
+     */
     usersRef.child(uid || store.getState().userReducer.user.id).update({ isUserUnlogged: !isUserLogged });
 }
 

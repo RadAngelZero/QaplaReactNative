@@ -1,5 +1,6 @@
 import { messaging } from '../utilities/firebase';
-import { userAllowsNotificationsFrom, saveUserSubscriptionToTopic } from './database';
+import { userAllowsNotificationsFrom, saveUserSubscriptionToTopic, getAllUserTopicSubscriptions, updateNotificationPermission } from './database';
+import { EVENTS_TOPIC } from '../utilities/Constants';
 
 /**
  * Subscribe a user to a topic, so the user will receive all the notifications
@@ -29,9 +30,45 @@ export function subscribeUserToTopic(topic, uid = '', type) {
 }
 
 /**
+ * Subscribes the user to all the topics he has registred
+ * on userTopicSubscriptions node call this function on user sign in,
+ * if the user change their device or he/she log in other device for any reason
+ * he/she can get push notifications
+ * @param {string} uid User identifier
+ */
+export async function subscribeUserToAllRegistredTopics(uid) {
+    const userGlobalSubscription = await getAllUserTopicSubscriptions(uid);
+
+    userGlobalSubscription.forEach((subscriptionType) => {
+        updateNotificationPermission(subscriptionType.key, true);
+        subscriptionType.forEach((topicName) => {
+            subscribeUserToTopic(topicName.key);
+        });
+    });
+}
+
+/**
  * Unsubscribe a user from the given topic
  * @param {string} topic Name of the topic
  */
 export function unsubscribeUserFromTopic(topic) {
     messaging.unsubscribeFromTopic(topic);
+}
+
+/**
+ * Unubscribes the user to all the topics he has registred
+ * on userTopicSubscriptions node call this function on user sign out,
+ * if the user sign out of the device he/she must not receive push notifications
+ * related to the topics
+ * @param {string} uid User identifier
+ */
+export async function unsubscribeUserFromAllSubscribedTopics() {
+    const userGlobalSubscription = await getAllUserTopicSubscriptions();
+
+    userGlobalSubscription.forEach((subscriptionType) => {
+        updateNotificationPermission(subscriptionType.key, false);
+        subscriptionType.forEach((topicName) => {
+            unsubscribeUserFromTopic(topicName.key);
+        });
+    });
 }

@@ -127,6 +127,7 @@ export function createUserProfile(Uid, email) {
         status: false,
         token: '',
         userName: '',
+        isUserUnlogged: false,
         wins: 0
     });
 }
@@ -811,6 +812,15 @@ export async function updateUserProfileImg(uid, photoUrl) {
 }
 
 /**
+ * Set the status of the account of an specific user
+ * (if he/she have their account opened or closed)
+ * @param {boolean} isUserUnlogged True if the user is not logged
+ */
+export function updateUserAccountStatus(isUserUnlogged, uid = '') {
+    usersRef.child(uid || store.getState().userReducer.user.id).update({ isUserUnlogged });
+}
+
+/**
  * User Subscriptions
  */
 
@@ -839,6 +849,15 @@ export function updateNotificationPermission(notificationType, value) {
  */
 export async function getUserTopicSubscriptions(type) {
     return await userTopicSubscriptions.child(store.getState().userReducer.user.id).child(type).once('value');
+}
+
+/**
+ * Returns the user topic subscription object
+ * Format: { Games: { topic1, topic2 }, Events: { topic3, topic4 } ... }
+ * @param {string} uid User identifier
+ */
+export async function getAllUserTopicSubscriptions(uid) {
+    return await userTopicSubscriptions.child(uid).once('value');
 }
 
 /**
@@ -898,11 +917,11 @@ export async function userQaplaBalanceListener(uid, callback) {
  * Retrieves the major version of the app from server
  * @returns
  * SUCCESS - {string}     res major version of QaplaGaming app retrieved from server
- * FAIL    - {null}  res no major version was not retrieved   
+ * FAIL    - {null}  res no major version was not retrieved
  */
 export async function dbGetAppVersion() {
     let res = null;
-    
+
     try {
         let resSnap = await versionAppRef.once('value');
         res = resSnap.val();

@@ -70,6 +70,8 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
                     dispatch(loadLogrosActivosSuccess(eventProgressObject));
                 }
             });
+        } else {
+            eventParticipantsRef.child(activeEvent.key).child(uid).off('value');
         }
     });
 

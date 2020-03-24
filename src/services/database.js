@@ -820,12 +820,20 @@ export function updateUserLoggedStatus(isUserLogged, uid = '') {
     usersRef.child(uid || store.getState().userReducer.user.id).update({ isUserUnlogged: !isUserLogged });
 }
 
+/**
+ * Remove all the database listeners related to the userReducer
+ * @param {string} uid User identifier
+ */
 export function removeUserListeners(uid) {
     usersRef.child(uid).off('child_added');
     usersRef.child(uid).off('child_changed');
     usersRef.child(uid).off('child_removed');
 }
 
+/**
+ * Remove all the database listeners related to the logrosReducer
+ * @param {string} uid User identifier
+ */
 export function removeLogrosListeners(uid) {
     cuentasVerificadasRef.child(uid).off('value');
     logrosRef.child(uid).child('logroCompleto').off('child_added');

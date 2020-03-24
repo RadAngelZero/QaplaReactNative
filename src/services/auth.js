@@ -17,7 +17,7 @@ import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
 import { emptyLogros } from '../actions/logrosActions';
-import { updateUserAccountStatus } from './database';
+import { updateUserLoggedStatus, usersRef, removeUserListeners, removeLogrosListeners } from './database';
 import { unsubscribeUserFromAllSubscribedTopics } from './messaging';
 
 const webClientIdForGoogleAuth = '779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com';
@@ -112,8 +112,11 @@ export async function getIdTokenFromUser() {
  */
 export async function signOut() {
     try {
-        updateUserAccountStatus(true);
+        const { uid } = auth.currentUser;
+        updateUserLoggedStatus(false);
         await unsubscribeUserFromAllSubscribedTopics();
+        removeUserListeners(uid);
+        removeLogrosListeners(uid);
         await store.dispatch(emptyLogros());
         await store.dispatch(signOutUser());
         await auth.signOut();

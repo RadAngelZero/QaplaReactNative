@@ -37,7 +37,7 @@ class HeaderBar extends Component {
         super(props);
 
         this.state = {
-            showHg2Modal: true
+            showHg2Modal: false
         };
     }
 

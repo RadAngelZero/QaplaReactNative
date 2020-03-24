@@ -10,7 +10,7 @@ import { signInWithEmailAndPassword } from '../../services/auth';
 import Images from './../../../assets/images';
 import styles from './style';
 import { translate } from '../../utilities/i18';
-import { updateUserAccountStatus } from '../../services/database';
+import { updateUserLoggedStatus } from '../../services/database';
 import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
@@ -28,7 +28,7 @@ class LoginWithEmailScreen extends Component {
     logInUser = async () => {
         try {
             const user = await signInWithEmailAndPassword(this.state.email, this.state.password);
-            updateUserAccountStatus(false, user.user.uid);
+            updateUserLoggedStatus(true, user.user.uid);
             subscribeUserToAllRegistredTopics(user.user.uid);
             const originScreen = this.props.navigation.getParam('originScreen', 'Achievements');
             if (originScreen !== 'Public') {

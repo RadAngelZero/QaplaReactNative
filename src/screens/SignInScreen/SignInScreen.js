@@ -8,7 +8,7 @@ import styles from './style';
 import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
 import { translate } from '../../utilities/i18';
-import { createUserProfile, updateUserAccountStatus } from '../../services/database';
+import { createUserProfile, updateUserLoggedStatus } from '../../services/database';
 import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
@@ -88,7 +88,7 @@ class SignInScreen extends Component {
             createUserProfile(user.user.uid, user.user.email);
             this.props.navigation.navigate('ChooseUserName', { originScreen: this.state.originScreenWhenComponentMounted });
         } else {
-            updateUserAccountStatus(false, user.user.uid);
+            updateUserLoggedStatus(true, user.user.uid);
             subscribeUserToAllRegistredTopics(user.user.uid);
             if (this.props.originScreen !== 'Public') {
                 this.props.navigation.dismiss();

@@ -814,10 +814,23 @@ export async function updateUserProfileImg(uid, photoUrl) {
 /**
  * Set the status of the account of an specific user
  * (if he/she have their account opened or closed)
- * @param {boolean} isUserUnlogged True if the user is not logged
+ * @param {boolean} isUserLogged True if the user is not logged
  */
-export function updateUserAccountStatus(isUserUnlogged, uid = '') {
-    usersRef.child(uid || store.getState().userReducer.user.id).update({ isUserUnlogged });
+export function updateUserLoggedStatus(isUserLogged, uid = '') {
+    usersRef.child(uid || store.getState().userReducer.user.id).update({ isUserUnlogged: !isUserLogged });
+}
+
+export function removeUserListeners(uid) {
+    usersRef.child(uid).off('child_added');
+    usersRef.child(uid).off('child_changed');
+    usersRef.child(uid).off('child_removed');
+}
+
+export function removeLogrosListeners(uid) {
+    cuentasVerificadasRef.child(uid).off('value');
+    logrosRef.child(uid).child('logroCompleto').off('child_added');
+    logrosRef.child(uid).child('logroIncompleto').off('value');
+    pointsTournamentsRef.child(uid).off('value');
 }
 
 /**

@@ -12,6 +12,9 @@ import styles from './style';
 
 import { validateUserName, createUserName } from '../../services/database';
 import { translate } from '../../utilities/i18';
+import { createUserProfile } from '../../services/database';
+import { checkNotificationPermission } from '../../utilities/notifications';
+
 import CheckBox from '../../components/CheckBox/CheckBox';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import TermsAndConditionsModal from '../../components/TermsAndConditionsModal/TermsAndConditionsModal';
@@ -37,14 +40,21 @@ class ChooseUserNameScreen extends Component {
      * Validate the agreements (terms and privacy), also validate the userName
      * if everything is right add the userName and returns the user to the previous flow
      */
-    checkTermsConditionsAndUsername = () => {
+    checkTermsConditionsAndUsername = async () => {
         if (this.state.userName !== '' && !this.state.checkingUserName && this.state.agreementPrivacyState && this.state.agreementTermsState) {
             this.setState({
             	checkingUserName: true,
             	showErrorMessage: false }, async () => {
                 if(this.state.userName !== '' && await validateUserName(this.state.userName)) {
+                    // Profile must be created before creating the username which performs 
+                    // an update to the profile object on db.
+                    const email = this.props.navigation.getParam('email', '');
+                    await createUserProfile(this.props.uid, email);
+
                     createUserName(this.props.uid, this.state.userName);
+
                     const originScreen = this.props.navigation.getParam('originScreen', 'Achievements');
+                    
                     if (originScreen !== 'Public') {
                         this.props.navigation.navigate(originScreen);
                     } else {

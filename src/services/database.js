@@ -107,8 +107,8 @@ export async function getUserDiscordTag(uid) {
     return (await usersRef.child(uid).child('discordTag').once('value')).val();
 }
 
-export function createUserProfile(Uid, email) {
-    usersRef.child(Uid).set({
+export async function createUserProfile(Uid, email) {  
+    const queryParam = {
         bio: '',
         captain: 'false',
         city: '',
@@ -128,7 +128,9 @@ export function createUserProfile(Uid, email) {
         token: '',
         userName: '',
         wins: 0
-    });
+    }
+    
+    await usersRef.child(Uid).set(queryParam);
 }
 
 

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import {
     auth,
-    messaging,
     notifications,
     links
 } from '../../utilities/firebase';
@@ -19,6 +18,8 @@ import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
 import { translate } from '../../utilities/i18';
+import { checkNotificationPermission } from '../../utilities/notifications';
+
 
 class AuthLoadingScreen extends Component {
     state = {
@@ -50,7 +51,7 @@ class AuthLoadingScreen extends Component {
                     return this.props.navigation.navigate('ChooseUserName');
                 }
 
-                await this.checkNotificationPermission(user.uid);
+                await checkNotificationPermission(user.uid);
 
                 /*
                 * When the app loads we check if is opened from a notification, also we check if the notificatios
@@ -91,60 +92,6 @@ class AuthLoadingScreen extends Component {
 
         this.manageStartDeepLinks();
         this.manageBackgroundDeepLinks();
-    }
-
-    /**
-     * Check if the user has granted the required permission to receive
-     * our push notifications
-     * @param {string} uid User identifier on the database
-     */
-    async checkNotificationPermission(uid) {
-        try {
-            const notificationPermissionEnabled = await messaging.hasPermission();
-
-            if (notificationPermissionEnabled) {
-                this.handleUserToken(uid);
-            } else {
-                this.requestPermission(uid);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    /**
-     * Ask the user for the required permission to receive our push notifications
-     * @param {string} uid User identifier on the database
-     */
-    async requestPermission(uid) {
-        try {
-
-            /**
-             * If the user don't grant permission we go to the catch block automatically
-             */
-            await messaging.requestPermission();
-
-            /**
-             * If the user grant permission we handle their token
-             */
-            this.handleUserToken(uid);
-        } catch (error) {
-            // User has rejected permissions
-            console.log('permission rejected');
-        }
-    }
-
-    /**
-     * Get and save the FCM token of the user on the database
-     * @param {string} uid User identifier on the database
-     */
-    async handleUserToken(uid) {
-        try {
-            const FCMToken = await messaging.getToken();
-            await saveFCMUserToken(uid, FCMToken);
-        } catch (error) {
-            console.error(error);
-        }
     }
 
     /**

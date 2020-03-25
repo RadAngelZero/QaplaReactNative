@@ -8,7 +8,7 @@ import styles from './style';
 import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
 import { translate } from '../../utilities/i18';
-import { createUserProfile } from '../../services/database';
+// import { createUserProfile } from '../../services/database';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
@@ -84,8 +84,11 @@ class SignInScreen extends Component {
      */
     succesfullSignIn = (user) => {
         if (user.additionalUserInfo.isNewUser) {
-            createUserProfile(user.user.uid, user.user.email);
-            this.props.navigation.navigate('ChooseUserName', { originScreen: this.state.originScreenWhenComponentMounted });
+            // createUserProfile(user.user.uid, user.user.email);
+            this.props.navigation.navigate('ChooseUserName', {
+                originScreen: this.state.originScreenWhenComponentMounted,
+                email: user.user.email 
+            });
         } else {
             if (this.props.originScreen !== 'Public') {
                 this.props.navigation.dismiss();

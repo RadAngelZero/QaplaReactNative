@@ -11,7 +11,7 @@ import { joinInTournament } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
-import { translate } from '../../utilities/i18';
+import { translate, getLocaleLanguage } from '../../utilities/i18';
 
 class TournamentCard extends Component {
     state = {
@@ -52,8 +52,28 @@ class TournamentCard extends Component {
         }
     }
 
+    /**
+     * Select the correct event description according to the language used by the user
+     * in the app.
+     * 
+     * @param {object} descriptionObj Object containing in JSON format a description for each
+     *                                language supported by the app
+     */
+    getDescriptionBasedOnUserLanguage = (descriptionObj) => {
+        const res = '';
+        const userLanguage = getLocaleLanguage();
+
+        if (descriptionObj[userLanguage] !== null && descriptionObj[userLanguage] != undefined) {
+            res = descriptionObj[userLanguage].content;
+        }
+
+        return res;
+    }
+
     render() {
         const { photoUrl, titulo, descripcion, totalPuntos, puntosCompletados, tiempoLimite, verified } = this.props;
+
+        const description = getDescriptionBasedOnUserLanguage(descripcion);
 
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
@@ -65,7 +85,7 @@ class TournamentCard extends Component {
                         <View style={styles.titleContainer}>
                             <Text style={styles.title}>{titulo}</Text>
                         </View>
-                        <Text style={styles.description}>{descripcion}</Text>
+                        <Text style={styles.description}>{description}</Text>
                     </View>
                     <View style={styles.colBContainer}>
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />

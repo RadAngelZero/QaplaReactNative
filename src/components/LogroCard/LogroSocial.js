@@ -18,7 +18,7 @@ import { isUserLogged } from '../../services/auth';
 import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
 import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
 import OneTxtOneBttnModal from '../OneTxtOneBttnModal/OneTxtOneBttnModal'
-import { translate } from '../../utilities/i18';
+import { translate, getLocaleLanguage } from '../../utilities/i18';
 
 
 const QaploinIcon = Images.svg.qaploinsIcon;
@@ -126,8 +126,29 @@ class LogroSocial extends Component {
         });
     }
 
+    /**
+     * Select the correct event description according to the language used by the user
+     * in the app.
+     * 
+     * @param {object} descriptionObj Object containing in JSON format a description for each
+     *                                language supported by the app
+     */
+    getDescriptionBasedOnUserLanguage = (descriptionObj) => {
+        const res = '';
+        const userLanguage = getLocaleLanguage();
+
+        if (descriptionObj[userLanguage] !== null && descriptionObj[userLanguage] != undefined) {
+            res = descriptionObj[userLanguage].content;
+        }
+
+        return res;
+    }
+
     render() {
         const { titulo, descripcion, qaploins, photoUrl, puntosCompletados, totalPuntos, tiempoLimite, verified } = this.props;
+        
+        const description = getDescriptionBasedOnUserLanguage(descripcion);
+
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
                 <View style={styles.contentContainer}>
@@ -138,7 +159,7 @@ class LogroSocial extends Component {
                         <View style={styles.titleContainer}>
                             <Text style={styles.titleSocial}>{titulo}</Text>
                         </View>
-                        <Text style={styles.description}>{descripcion}</Text>
+                        <Text style={styles.description}>{description}</Text>
                     </View>
                     <View style={styles.colCSocialContainer}>
                         <View style={styles.qaploinsContainer}>

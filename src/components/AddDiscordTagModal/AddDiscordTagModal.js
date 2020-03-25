@@ -9,6 +9,7 @@ import Images from './../../../assets/images';
 import { updateUserDiscordTag } from '../../services/database';
 import { translate } from '../../utilities/i18';
 import Colors from '../../utilities/Colors';
+import QaplaIcon from '../QaplaIcon/QaplaIcon';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -61,11 +62,9 @@ class AddDiscordTagModal extends Component {
                 onRequestClose={this.props.closeModal}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
-                        <TouchableWithoutFeedback onPress={this.closeModal}>
-                            <View style={styles.closeIcon}>
-                                <CloseIcon />
-                            </View>
-                        </TouchableWithoutFeedback>
+                        <QaplaIcon onPress={this.closeModal} touchableStyle={styles.closeIcon}>
+                            <CloseIcon />
+                        </QaplaIcon>
                         <Text style={styles.modalTitle}>{translate('settingsMenuScreen.addDiscordTagModal.title')}</Text>
                         <TextInput
                             onFocus={this.toggleInputSelection}

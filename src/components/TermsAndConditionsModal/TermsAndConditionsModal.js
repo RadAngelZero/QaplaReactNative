@@ -1,10 +1,11 @@
 // diego           - 22-11-2019 - us151 - File creation
 
 import React, { Component } from 'react';
-import { Modal, SafeAreaView, TouchableWithoutFeedback, Text, ScrollView, View } from 'react-native';
+import { Modal, SafeAreaView, Text, ScrollView, View } from 'react-native';
 
 import styles from './style';
 import Images from './../../../assets/images';
+import QaplaIcon from '../QaplaIcon/QaplaIcon';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -23,11 +24,9 @@ export class TermsAndConditionsModal extends Component {
                 visible={this.props.open}
                 onRequestClose={this.props.onClose}>
                 <SafeAreaView style={styles.container}>
-                    <TouchableWithoutFeedback onPress={this.props.onClose}>
-                        <View style={styles.closeIcon}>
-                            <CloseIcon />
-                        </View>
-                    </TouchableWithoutFeedback>
+                    <QaplaIcon onPress={this.props.onClose} touchableStyle={styles.closeIcon}>
+                        <CloseIcon />
+                    </QaplaIcon>
                     <Text style={styles.title}>
                         Términos y Condiciones de Uso
                     </Text>

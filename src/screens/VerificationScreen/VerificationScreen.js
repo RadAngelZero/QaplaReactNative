@@ -37,6 +37,7 @@ import {
     ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT,
     ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS
 } from '../../utilities/Constants';
+import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
@@ -356,24 +357,20 @@ class VerificationScreen extends Component {
                     <View style={styles.backIconContainer}>
                         {/** Just show BackIcon if the user has already passed at least the first slide */}
                         {(this.state.nextIndex > 1 && this.state.nextIndex !== this.state.indexPositions.length + 1) ?
-                            <TouchableWithoutFeedback onPress={this.goToPreviousStep}>
-                                <View style={styles.buttonDimensions}>
-                                    <BackIcon />
-                                </View>
-                            </TouchableWithoutFeedback>
+                            <QaplaIcon onPress={this.goToPreviousStep}>
+                                <BackIcon />
+                            </QaplaIcon>
                             :
-                            <View style={styles.buttonDimensions} />
+                            null
                         }
                     </View>
                     <View style={styles.closeIconContainer}>
                         {this.state.nextIndex !== this.state.indexPositions.length + 1 ?
-                            <TouchableWithoutFeedback onPress={this.closeVerificationProccess}>
-                                <View style={styles.buttonDimensions}>
-                                    <CloseIcon />
-                                </View>
-                            </TouchableWithoutFeedback>
+                            <QaplaIcon onPress={this.closeVerificationProccess}>
+                                <CloseIcon />
+                            </QaplaIcon>
                             :
-                            <View style={styles.buttonDimensions} />
+                            null
                         }
                     </View>
                 </View>

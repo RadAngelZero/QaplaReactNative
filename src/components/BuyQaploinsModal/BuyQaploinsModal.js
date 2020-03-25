@@ -15,6 +15,7 @@ import styles from './style';
 import Images from './../../../assets/images';
 import { QAPLOIN_PACKAGES } from '../../utilities/Constants';
 import { trackOnSegment } from '../../services/statistics';
+import QaplaIcon from '../QaplaIcon/QaplaIcon';
 
 const CloseIcon = Images.svg.closeIcon;
 const QaploinIcon = Images.svg.qaploinsIcon;
@@ -41,11 +42,9 @@ class BuyQaploinsModal extends Component {
                 onRequestClose={this.props.onClose}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
-                        <TouchableWithoutFeedback onPress={this.props.onClose}>
-                            <View style={styles.closeIcon}>
-                                <CloseIcon />
-                            </View>
-                        </TouchableWithoutFeedback>
+                        <QaplaIcon onPress={this.props.onClose} touchableStyle={styles.closeIcon}>
+                            <CloseIcon />
+                        </QaplaIcon>
                         <QaploinIcon height={40} width={40} />
                         {/**
                             Goingo to the definition of QAPLOIN_PACKAGES to get more info. about this array

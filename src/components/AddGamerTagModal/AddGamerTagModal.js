@@ -18,6 +18,7 @@ import { subscribeUserToTopic } from '../../services/messaging';
 import { translate } from '../../utilities/i18';
 import { GAMES_TOPICS } from '../../utilities/Constants';
 import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
+import QaplaIcon from '../QaplaIcon/QaplaIcon';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -149,11 +150,9 @@ class AddGamerTagModal extends Component {
                     <View style={styles.mainContainer}>
                         <View style={styles.modalContainer}>
                             <View style={styles.modalControls}>
-                                <TouchableWithoutFeedback onPress={this.closeModal}>
-                                    <View style={styles.closeIcon}>
-                                        <CloseIcon />
-                                    </View>
-                                </TouchableWithoutFeedback>
+                                <QaplaIcon onPress={this.closeModal}>
+                                    <CloseIcon />
+                                </QaplaIcon>
                             </View>
                             <View style={styles.modalBody}>
                                 <TextInput

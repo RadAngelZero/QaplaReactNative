@@ -23,6 +23,10 @@ import {
   dbEnableAppVersionValueListener
 } from './src/services/database';
 
+import {
+    trackOnSegment
+} from './src/services/statistics';
+
 console.disableYellowBox = true;
 
 class App extends React.Component {
@@ -87,6 +91,13 @@ class App extends React.Component {
             const { title, body, data } = notification;
             const { navigateTo } = data;
 
+            trackOnSegment('Push Notification Foreground', {
+                screenToNavigate: navigateTo,
+                title: title,
+                body: body,
+                uid: user.uid
+            });
+
             /**
              * Shows the SnackBar with the title and body of the notification.
              * If the notification have the navigateTo property we set the action
@@ -107,6 +118,13 @@ class App extends React.Component {
         this.notificationOpenedListener = notifications.onNotificationOpened((notificationOpen) => {
             const { _data } = notificationOpen.notification;
             const { navigateTo } = _data;
+
+            trackOnSegment('Push Notification Background', {
+                screenToNavigate: navigateTo,
+                title: title,
+                body: body,
+                uid: user.uid
+            });
 
             if (navigateTo) {
                 this.forceNavigation(navigateTo);

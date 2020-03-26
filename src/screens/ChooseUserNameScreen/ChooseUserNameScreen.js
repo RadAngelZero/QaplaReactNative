@@ -10,10 +10,8 @@ import { connect } from 'react-redux';
 import Images from './../../../assets/images';
 import styles from './style';
 
-import { validateUserName, createUserName } from '../../services/database';
+import { validateUserName, createUserName, createUserProfile } from '../../services/database';
 import { translate } from '../../utilities/i18';
-import { createUserProfile } from '../../services/database';
-import { checkNotificationPermission } from '../../utilities/notifications';
 
 import CheckBox from '../../components/CheckBox/CheckBox';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
@@ -46,12 +44,9 @@ class ChooseUserNameScreen extends Component {
             	checkingUserName: true,
             	showErrorMessage: false }, async () => {
                 if(this.state.userName !== '' && await validateUserName(this.state.userName)) {
-                    // Profile must be created before creating the username which performs 
-                    // an update to the profile object on db.
                     const email = this.props.navigation.getParam('email', '');
-                    await createUserProfile(this.props.uid, email);
 
-                    createUserName(this.props.uid, this.state.userName);
+                    await createUserProfile(this.props.uid, email, this.state.userName);
 
                     const originScreen = this.props.navigation.getParam('originScreen', 'Achievements');
                     

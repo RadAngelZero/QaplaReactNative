@@ -57,16 +57,25 @@ class LogroQapla extends Component {
         const userLanguage = getLocaleLanguage();
 
         if (descriptionObj[userLanguage] !== null && descriptionObj[userLanguage] != undefined) {
-            res = descriptionObj[userLanguage].content;
+            res = descriptionObj[userLanguage];
         }
 
         return res;
     }
 
     render() {
-        const { titulo, descripcion, qaploins, puntosCompletados, totalPuntos, tiempoLimite, verified } = this.props;
+        const {
+            titulo,
+            descripcion,
+            description,
+            qaploins,
+            puntosCompletados,
+            totalPuntos,
+            tiempoLimite,
+            verified
+        } = this.props;
 
-        const description = getDescriptionBasedOnUserLanguage(descripcion);
+        const description_translated = getDescriptionBasedOnUserLanguage(description);
 
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
@@ -75,7 +84,7 @@ class LogroQapla extends Component {
                         <View style={styles.titleContainer}>
                             <Text style={styles.title}>{titulo}</Text>
                         </View>
-                        <Text style={styles.description}>{description}</Text>
+                        <Text style={styles.description}>{description_translated}</Text>
                     </View>
                     <View style={styles.colBContainer}>
                         <View style={styles.qaploinsContainer}>

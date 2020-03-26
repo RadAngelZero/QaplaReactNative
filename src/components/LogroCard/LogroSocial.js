@@ -138,16 +138,26 @@ class LogroSocial extends Component {
         const userLanguage = getLocaleLanguage();
 
         if (descriptionObj[userLanguage] !== null && descriptionObj[userLanguage] != undefined) {
-            res = descriptionObj[userLanguage].content;
+            res = descriptionObj[userLanguage];
         }
 
         return res;
     }
 
     render() {
-        const { titulo, descripcion, qaploins, photoUrl, puntosCompletados, totalPuntos, tiempoLimite, verified } = this.props;
+        const {
+            titulo,
+            descripcion,
+            description,
+            qaploins,
+            photoUrl,
+            puntosCompletados,
+            totalPuntos,
+            tiempoLimite,
+            verified
+        } = this.props;
         
-        const description = getDescriptionBasedOnUserLanguage(descripcion);
+        const description_translated = getDescriptionBasedOnUserLanguage(description);
 
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
@@ -159,7 +169,7 @@ class LogroSocial extends Component {
                         <View style={styles.titleContainer}>
                             <Text style={styles.titleSocial}>{titulo}</Text>
                         </View>
-                        <Text style={styles.description}>{description}</Text>
+                        <Text style={styles.description}>{description_translated}</Text>
                     </View>
                     <View style={styles.colCSocialContainer}>
                         <View style={styles.qaploinsContainer}>

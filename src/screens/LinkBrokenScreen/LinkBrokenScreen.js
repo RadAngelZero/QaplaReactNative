@@ -52,11 +52,15 @@ class LinkBrokenScreen extends Component {
                 <CloseIcon />
              </QaplaIcon>
              <View style={styles.container}>
-                 <Text style={styles.body}>Actualiza la app</Text>
-                 <Text style={styles.description}>El contenido que estás intentando acceder no está disponible en esta versión.</Text>
+                 <Text style={styles.body}>{translate("deepLinks.linkBroken.title")}</Text>
+                 <Text style={styles.description}>
+                     {translate("deepLinks.linkBroken.description")}
+                 </Text>
                  <TouchableWithoutFeedback onPress={this.navigateToStore}>
                      <View style={styles.bttnContainer}>
-                         <Text style={styles.bttnText}>{'Actualizar App'}</Text>
+                        <Text style={styles.bttnText}>
+                             {translate("deepLinks.linkBroken.bttnText")}
+                        </Text>
                      </View>
                  </TouchableWithoutFeedback>
              </View>

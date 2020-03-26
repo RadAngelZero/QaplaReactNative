@@ -169,16 +169,20 @@ class AuthLoadingScreen extends Component {
         if (url) {
             let screenName = 'LinkBroken';
             const type = this.getParameterFromUrl(url, 'type');
-            console.log(`[processLinkUrl] type`, type);
+            
             if (type === 'appDeepLink') {
                 const type2 = this.getParameterFromUrl(url, 'type2');
-                console.log(`[processLinkUrl] type2`, type2);
-
+                
                 if (type2 === 'matchCard') {
+                    // Resetting screen to none since redirectUserToPublicMatchCard
+                    // is an async function and navigates to another screen. As a
+                    // result of that, there is a window of 0.5 seconds where the app
+                    // update screen link broken shows because of screenName.
+                    screenName = '';
                     this.redirectUserToPublicMatchCard(url);
                 }
             }
-            
+
             // TODO: Create screen to notify user that the link is broken,
             // allow him to dismiss the screen and go back to events screen
             this.props.navigation.navigate(screenName);

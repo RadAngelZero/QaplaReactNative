@@ -9,7 +9,7 @@ import {
  */
 export async function discordPublishMessageToChannel(ctx) {
 	try {
-		const { game, platform, bet, url, discordImg, discordTag } = ctx;
+		const { game, platform, winBet, url, discordImg, discordTag } = ctx;
 
 		const imgUri = (discordImg) ? discordImg : DISCORD_GAME_IMAGE_PLACEHOLDER
 
@@ -20,7 +20,7 @@ export async function discordPublishMessageToChannel(ctx) {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				content: `Game: **${game}**  Platform: **${platform}** \n#Qoins: **${bet}**  Creator: **${discordTag}**\n***Match link***: ${url}`,
+				content: `Game: **${game}**  Platform: **${platform}** \n#Qoins: **${winBet}**  Creator: **${discordTag}**\n***Match link***: ${url}`,
             	username: "Qapla Match Announcer",
 				tts: false,
 				embeds: [{

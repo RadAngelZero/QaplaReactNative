@@ -189,7 +189,8 @@ class SetBetScreen extends Component {
                         const game = this.props.selectedGame;
 
                         this.shareMatchToDiscord({
-                            bet: this.state.currentBet,
+                            winBet: this.defineWinBet(),
+                            bet: this.bets[this.state.currentBet],
                             game: game.name,
                             platform: getPlatformNameWithKey(game.platform),
                             creatorUid: this.props.uid,

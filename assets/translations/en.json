@@ -338,6 +338,11 @@
         "matchCard": {
             "description": "Play your favourite game with other players and win rewards",
             "title": "Play a %{game} match (%{platform}) to win %{bet} Qoins!"
+        },
+        "linkBroken": {
+            "title": "Link broken",
+            "description": "The content you are trying to access could not be found, try again or update the app to latest version and try again.",
+            "bttnText": "Update" 
         }
     }
 }

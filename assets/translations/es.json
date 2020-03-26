@@ -338,6 +338,11 @@
         "matchCard": {
             "description": "Juega a tu juego favorito con otros jugadores y gana recompensas",
             "title": "Juega una partida de %{game} (%{platform}) para ganar %{bet} Qoins!"
+        },
+        "linkBroken": {
+            "title": "Enlace no encontrado",
+            "description": "El contenido que estás intentando acceder no se pudo acceder, prueba de nuevo o actualiza a una nueva versión y intenta de nuevo.",
+            "bttnText": "Actualizar" 
         }
     }
 }

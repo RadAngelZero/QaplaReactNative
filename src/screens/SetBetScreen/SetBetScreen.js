@@ -162,6 +162,7 @@ class SetBetScreen extends Component {
         const url = await dplCreateLinkMatchCard(ctx.matchId, ctx);
 
         ctx.url = url;
+        ctx.userDiscordTag = this.props.userDiscordTag;
         discordPublishMessageToChannel(ctx);
     }
 
@@ -192,7 +193,9 @@ class SetBetScreen extends Component {
                             game: game.name,
                             platform: getPlatformNameWithKey(game.platform),
                             creatorUid: this.props.uid,
-                            matchId
+                            matchId,
+                            discordImg: game.discordImg,
+                            discordTag: this.props.userDiscordTag
                         });
 
                         // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
@@ -292,7 +295,8 @@ function mapDispatchToProps(state) {
     return {
         userQaploins: state.userReducer.user.credits,
         uid: state.userReducer.user.id,
-        selectedGame: state.gamesReducer.selectedGame
+        selectedGame: state.gamesReducer.selectedGame,
+        userDiscordTag: state.userReducer.user.discordTag
     };
 }
 

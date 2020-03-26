@@ -73,6 +73,7 @@ export const TIE_RESULT = '3';
 export const QAPLA_DISCORD_CHANNEL = 'https://discord.gg/G4BuRZD';
 export const FIND_ADVERSARY_DISCORD_CHANNEL = 'https://discordapp.com/channels/373252198773293066/676917105261805590';
 export const QAPLA_DISCORD_WEBHOOK_URL = 'https://discordapp.com/api/webhooks/676965684957151253/dfNhkiYDwfbeBWYh-8wiBuIU5RLWhdwrniCEJKEQagyBU7jgXFx9miXW_inOCKOaldf9';
+export const DISCORD_GAME_IMAGE_PLACEHOLDER = 'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/discord_images%2Fplaceholder.png?alt=media&token=83b5e192-6973-4650-9246-bc0afcf117ab';
 
 // Date constants
 

@@ -1,4 +1,7 @@
-import { QAPLA_DISCORD_WEBHOOK_URL } from '../utilities/Constants';
+import {
+	QAPLA_DISCORD_WEBHOOK_URL,
+	DISCORD_GAME_IMAGE_PLACEHOLDER
+} from '../utilities/Constants';
 
 /**
  * Publish a deeplink from a MatchCard to Discord
@@ -6,7 +9,9 @@ import { QAPLA_DISCORD_WEBHOOK_URL } from '../utilities/Constants';
  */
 export async function discordPublishMessageToChannel(ctx) {
 	try {
-		const { game, platform, bet, url } = ctx;
+		const { game, platform, bet, url, discordImg, discordTag } = ctx;
+
+		const imgUri = (discordImg) ? discordImg : DISCORD_GAME_IMAGE_PLACEHOLDER
 
 		let response = await fetch(QAPLA_DISCORD_WEBHOOK_URL, {
 			method: 'POST',
@@ -15,11 +20,13 @@ export async function discordPublishMessageToChannel(ctx) {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				content: `Game: **${game}** Platform: **${platform}** #Qoins: **${bet}** \n***Match link***: ${url}`,
+				content: `Game: **${game}**  Platform: **${platform}** \n#Qoins: **${bet}**  Creator: **${discordTag}**\n***Match link***: ${url}`,
             	username: "Qapla Match Announcer",
 				tts: false,
 				embeds: [{
-                  image: {}
+                  image: {
+                  	url: imgUri
+                  }
                 }] 
 			})
 		});

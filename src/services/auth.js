@@ -17,7 +17,7 @@ import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
 import { emptyLogros } from '../actions/logrosActions';
-import { updateUserLoggedStatus, usersRef, removeUserListeners, removeLogrosListeners } from './database';
+import { updateUserLoggedStatus, removeUserListeners, removeLogrosListeners } from './database';
 import { unsubscribeUserFromAllSubscribedTopics } from './messaging';
 
 const webClientIdForGoogleAuth = '779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com';

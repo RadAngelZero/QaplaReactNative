@@ -848,6 +848,15 @@ export function removeLogrosListeners(uid) {
 }
 
 /**
+ * Remove the database listener related to an specific event
+ * @param {string} uid User identifier
+ * @param {string} eventKey Event identfier
+ */
+export function removeActiveEventUserSubscribedListener(uid, eventKey) {
+    eventParticipantsRef.child(eventKey).child(uid).off('value');
+}
+
+/**
  * User Subscriptions
  */
 
@@ -880,8 +889,10 @@ export async function getUserTopicSubscriptions(type) {
 
 /**
  * Returns the user topic subscription object
- * Format: { Games: { topic1, topic2 }, Events: { topic3, topic4 } ... }
+ * Notes: { Games: { topic1, topic2 }, Events: { topic3, topic4 } ... }
  * @param {string} uid User identifier
+ * @returns {Object | null} JSON that contains all the user subscriptions or null if the user does
+ * not have any subscription
  */
 export async function getAllUserTopicSubscriptions(uid) {
     return await userTopicSubscriptions.child(uid).once('value');

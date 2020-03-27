@@ -1,7 +1,9 @@
 import { database, TimeStamp } from '../utilities/firebase';
 import { randomString, getGamerTagKeyWithGameAndPlatform } from '../utilities/utils';
-import { DB_NEW_LINE_SEPARATOR } from '../utilities/Constants';
+import { DB_NEW_LINE_SEPARATOR, EVENTS_TOPIC } from '../utilities/Constants';
 import store from '../store/store';
+import { getLocaleLanguage } from '../utilities/i18';
+import { unsubscribeUserFromTopic, subscribeUserToTopic } from './messaging';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
@@ -128,7 +130,8 @@ export function createUserProfile(Uid, email) {
         token: '',
         userName: '',
         isUserLoggedOut: false,
-        wins: 0
+        wins: 0,
+        language: getLocaleLanguage()
     });
 }
 
@@ -811,6 +814,41 @@ export async function updateUserProfileImg(uid, photoUrl) {
     }
 }
 
+export async function updateUserLanguage(uid) {
+    const userProfileLanguage = (await usersRef.child(uid).child('language').once('value')).val();
+    const userDeviceLanguage = getLocaleLanguage();
+
+    if (userProfileLanguage !== userDeviceLanguage) {
+        usersRef.child(uid).update({ language: userDeviceLanguage });
+        const userSubscriptions = await getAllUserTopicSubscriptions(uid);
+
+        Object.keys(userSubscriptions.val()).forEach((userGlobalSubscription) => {
+            Object.keys(userSubscriptions.val()[userGlobalSubscription]).forEach((topicName) => {
+                if (userGlobalSubscription === 'undefined') {
+                    unsubscribeUserFromTopic(topicName);
+                    removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
+
+                    const topicNameWithoutLanguage = topicName.split('_')[0];
+                    const newTopicName = `${topicNameWithoutLanguage}_${userDeviceLanguage}`;
+
+                    subscribeUserToTopic(newTopicName);
+                    saveUserSubscriptionToTopic(uid, newTopicName, EVENTS_TOPIC);
+                } else {
+                    unsubscribeUserFromTopic(topicName);
+                    removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
+
+                    const topicNameWithoutLanguage = topicName.split('_')[0];
+                    const newTopicName = `${topicNameWithoutLanguage}_${userDeviceLanguage}`;
+
+                    subscribeUserToTopic(newTopicName);
+                    saveUserSubscriptionToTopic(uid, newTopicName, userGlobalSubscription);
+                }
+            });
+        });
+    }
+}
+
+
 /**
  * Set the status of the account of an specific user
  * (if he/she have their account opened or closed)
@@ -860,7 +898,7 @@ export function removeActiveEventUserSubscribedListener(uid, eventKey) {
  * User Subscriptions
  */
 
- /**
+/**
   * Saves topics on the database which the user has been subscribed on FCM
   * @param {string} uid User identifier on the database
   * @param {string} topic Name of the topic to which the user has subscribed
@@ -868,6 +906,16 @@ export function removeActiveEventUserSubscribedListener(uid, eventKey) {
   */
 export function saveUserSubscriptionToTopic(uid, topic, type) {
     userTopicSubscriptions.child(uid).child(type).update({ [topic]: true });
+}
+
+/**
+  * Removes topics on the database which the user has been unsubscribed on FCM
+  * @param {string} uid User identifier on the database
+  * @param {string} topic Name of the topic to which the user has subscribed
+  * @param {string} type Key of the category of the topic
+  */
+ export function removeUserSubscriptionToTopic(uid, topic, type) {
+    userTopicSubscriptions.child(uid).child(type).child(topic).remove();
 }
 
 /**

@@ -12,7 +12,7 @@ import {
 import { retrieveData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
-import { getUserNameWithUID, getMatchWitMatchId, saveFCMUserToken, getGamerTagWithUID, getUserDiscordTag } from '../../services/database';
+import { getUserNameWithUID, getMatchWitMatchId, saveFCMUserToken, getGamerTagWithUID, getUserDiscordTag, updateUserLanguage } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
@@ -43,6 +43,7 @@ class AuthLoadingScreen extends Component {
             if (user) {
                 this.props.loadUserData(user.uid);
                 this.props.loadQaplaLogros(user.uid);
+                updateUserLanguage(user.uid);
 
                 const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
 
@@ -79,7 +80,7 @@ class AuthLoadingScreen extends Component {
             if (this.state.firstLoad) {
                 const isTutorialDone = await retrieveData('tutorial-done');
                 this.setState({ firstLoad: false });
-                
+
                 if (isTutorialDone) {
                     return this.props.navigation.navigate('Achievements');
                 }

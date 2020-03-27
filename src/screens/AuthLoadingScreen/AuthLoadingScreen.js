@@ -67,9 +67,9 @@ class AuthLoadingScreen extends Component {
                     const { navigateTo, title, body } = notification._data;
 
                     trackOnSegment('Push Notification Start App', {
-                        screenToNavigate: navigateTo,
-                        title: title,
-                        body: body
+                        ScreenToNavigate: navigateTo,
+                        Title: title,
+                        Body: body
                     });
 
                     if (navigateTo) {

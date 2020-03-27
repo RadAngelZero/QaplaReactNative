@@ -11,7 +11,7 @@ export async function discordPublishMessageToChannel(ctx) {
 	try {
 		const { game, platform, winBet, url, discordImg, discordTag } = ctx;
 
-		const imgUri = (discordImg) ? discordImg : DISCORD_GAME_IMAGE_PLACEHOLDER
+		const imgUri = (discordImg) ? discordImg : DISCORD_GAME_IMAGE_PLACEHOLDER;
 
 		let response = await fetch(QAPLA_DISCORD_WEBHOOK_URL, {
 			method: 'POST',

@@ -337,7 +337,7 @@
     "deepLinks": {
         "matchCard": {
             "description": "Play your favourite game with other players and win rewards",
-            "title": "Play a %{game} match (%{platform}) to win %{bet} Qoins!"
+            "title": "Play a %{game} match (%{platform}) to win %{winBet} Qoins!"
         },
         "linkBroken": {
             "title": "Link broken",

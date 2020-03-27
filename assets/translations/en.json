@@ -50,10 +50,6 @@
             "description": "Share the clips of your matches, all the community will be able to see the evidence of your victories.",
             "title": "Share"
         },
-        "withdraw": {
-            "description": "Withdraw you Qapla balance or use it to buy Amazon Prime products, we send them free to your home!",
-            "title": "Withdraw"
-        },
         "finish": "Finish"
     },
     "activeAchievementsScreen": {

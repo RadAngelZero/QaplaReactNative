@@ -27,6 +27,7 @@ import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAn
 import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
 import Colors from '../../utilities/Colors';
 import { GAMES_TOPICS } from '../../utilities/Constants';
+import { getLocaleLanguage } from '../../utilities/i18';
 
 class GameCard extends Component {
     state = {
@@ -88,7 +89,7 @@ class GameCard extends Component {
                  * Every game is a topic, so we can send push notifications to the user
                  * about specific games
                  */
-                subscribeUserToTopic(newGame.gameKey, this.props.user.id, GAMES_TOPICS);
+                subscribeUserToTopic(`${newGame.gameKey}_${getLocaleLanguage()}`, this.props.user.id, GAMES_TOPICS);
 
                 this.props.navigation.pop();
             } catch (error) {

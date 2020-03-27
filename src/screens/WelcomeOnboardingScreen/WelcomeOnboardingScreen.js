@@ -48,7 +48,7 @@ class WelcomeOnboardingScreen extends React.Component {
 		 */
 		this.props.userGames.forEach((gameKey) => {
 			if (gameKey) {
-				subscribeUserToTopic(gameKey, this.props.uid, GAMES_TOPICS);
+				subscribeUserToTopic(`${gameKey}_${getLocaleLanguage()}`, this.props.uid, GAMES_TOPICS);
 			}
 		});
 

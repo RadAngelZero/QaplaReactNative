@@ -11,7 +11,7 @@ import { joinEvent } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
-import { translate } from '../../utilities/i18';
+import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { QAPLA_DISCORD_CHANNEL, EVENTS_TOPIC } from '../../utilities/Constants';
 import { subscribeUserToTopic } from '../../services/messaging';
 import AddGamerTagModal from '../AddGamerTagModal/AddGamerTagModal';
@@ -57,7 +57,7 @@ class EventCard extends Component {
      */
     subscribeUserToEvent = () => {
         joinEvent(this.props.uid, this.props.id);
-        subscribeUserToTopic(this.props.id, this.props.uid, EVENTS_TOPIC);
+        subscribeUserToTopic(`${this.props.id}_${getLocaleLanguage()}`, this.props.uid, EVENTS_TOPIC);
     }
 
     /**

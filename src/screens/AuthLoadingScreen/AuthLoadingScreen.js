@@ -19,6 +19,7 @@ import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
 import { translate } from '../../utilities/i18';
+import { getFCMToken } from '../../services/messaging';
 
 class AuthLoadingScreen extends Component {
     state = {

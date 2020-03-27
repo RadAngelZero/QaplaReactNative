@@ -46,18 +46,18 @@ class LogroQapla extends Component {
     }
 
     /**
-     * Select the correct event description according to the language used by the user
+     * Select the correct event text content according to the language used by the user
      * in the app.
      * 
-     * @param {object} descriptionObj Object containing in JSON format a description for each
-     *                                language supported by the app
+     * @param {object} textLangObj Object containing in JSON format a text content for each
+     *                             language supported by the app
      */
-    getDescriptionBasedOnUserLanguage = (descriptionObj) => {
+    getTextBasedOnUserLanguage = (textLangObj) => {
         const res = '';
         const userLanguage = getLocaleLanguage();
 
-        if (descriptionObj[userLanguage] !== null && descriptionObj[userLanguage] != undefined) {
-            res = descriptionObj[userLanguage];
+        if (textLangObj[userLanguage] !== null && textLangObj[userLanguage] !== undefined) {
+            res = textLangObj[userLanguage];
         }
 
         return res;
@@ -66,6 +66,7 @@ class LogroQapla extends Component {
     render() {
         const {
             titulo,
+            title,
             descripcion,
             description,
             qaploins,
@@ -75,16 +76,17 @@ class LogroQapla extends Component {
             verified
         } = this.props;
 
-        const description_translated = getDescriptionBasedOnUserLanguage(description);
-
+        const descriptionTranslated = getTextBasedOnUserLanguage(description);
+        const titleTranslated = getTextBasedOnUserLanguage(title);
+        
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
                 <View style={styles.contentContainer}>
                     <View style={styles.colAContainer}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{titulo}</Text>
+                            <Text style={styles.title}>{titleTranslated}</Text>
                         </View>
-                        <Text style={styles.description}>{description_translated}</Text>
+                        <Text style={styles.description}>{descriptionTranslated}</Text>
                     </View>
                     <View style={styles.colBContainer}>
                         <View style={styles.qaploinsContainer}>

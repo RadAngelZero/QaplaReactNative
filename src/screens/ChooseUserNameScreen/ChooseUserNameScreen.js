@@ -39,29 +39,34 @@ class ChooseUserNameScreen extends Component {
      * if everything is right add the userName and returns the user to the previous flow
      */
     checkTermsConditionsAndUsername = async () => {
-        if (this.state.userName !== '' && !this.state.checkingUserName && this.state.agreementPrivacyState && this.state.agreementTermsState) {
-            this.setState({
-            	checkingUserName: true,
-            	showErrorMessage: false }, async () => {
-                if(this.state.userName !== '' && await validateUserName(this.state.userName)) {
-                    const email = this.props.navigation.getParam('email', '');
-
-                    await createUserProfile(this.props.uid, email, this.state.userName);
-
-                    const originScreen = this.props.navigation.getParam('originScreen', 'Achievements');
-                    
-                    if (originScreen !== 'Public') {
-                        this.props.navigation.navigate(originScreen);
-                    } else {
-                        this.props.navigation.navigate('MatchWizard');
-                    }
-                } else {
+        try {
+            if (this.state.userName !== '' && !this.state.checkingUserName && this.state.agreementPrivacyState && this.state.agreementTermsState) {
                 this.setState({
-                    showErrorMessage: true,
-                    checkingUserName: false
+                    checkingUserName: true,
+                    showErrorMessage: false }, async () => {
+                    if(this.state.userName !== '' && await validateUserName(this.state.userName)) {
+                        const email = this.props.navigation.getParam('email', '');
+
+                        await createUserProfile(this.props.uid, email, this.state.userName);
+
+                        const originScreen = this.props.navigation.getParam('originScreen', 'Achievements');
+                        
+                        if (originScreen !== 'Public') {
+                            this.props.navigation.navigate(originScreen);
+                        } else {
+                            this.props.navigation.navigate('MatchWizard');
+                        }
+                    } else {
+                    this.setState({
+                        showErrorMessage: true,
+                        checkingUserName: false
+                    });
+                    }
                 });
-                }
-            });
+            }
+        }
+        catch(error) {
+            console.error(`[checkTermsConditionsAndUsername]`, error);
         }
     }
 

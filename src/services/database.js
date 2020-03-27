@@ -111,27 +111,18 @@ export async function getUserDiscordTag(uid) {
  * Create the profile of a user
  *
  * @param {string} Uid          User identifier on database
- * @oaram {string} email        Email from the user
+ * @param {string} email        Email from the user
  * @param {string} userName     Username selected before profile creation
  */
-export async function createUserProfile(Uid, email, userName) {  
-    
-    let uName = '';
-    let city = uName;
-
-    if (userName && typeof userName === 'string') {
-        uName = userName;
-        
-        
-        // We use city to save the userName in uppercase, so we can check if the 
-        // username is available, the username must be unique doesn't matter CAPS and lowers.     
-        city = userName.toUpperCase();
-    }
+export async function createUserProfile(Uid, email, userName ) {  
+    // We use city to save the userName in uppercase, so we can check if the 
+    // username is available, the username must be unique doesn't matter CAPS and lowers.     
+    let city = userName.toUpperCase();
 
     const profileObj = {
         bio: '',
         captain: 'false',
-        city: city,
+        city,
         country: 'Mexico',
         credits: 0,
         discordTag: '',
@@ -146,7 +137,7 @@ export async function createUserProfile(Uid, email, userName) {
         searching: '',
         status: false,
         token: '',
-        userName: uName,
+        userName: userName,
         wins: 0
     }
     

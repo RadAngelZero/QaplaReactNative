@@ -11,7 +11,7 @@ import {
 import { retrieveData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
-import { getUserNameWithUID, getMatchWitMatchId, saveFCMUserToken, getGamerTagWithUID, getUserDiscordTag } from '../../services/database';
+import { getUserNameWithUID, getMatchWitMatchId, getGamerTagWithUID, getUserDiscordTag } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
@@ -19,7 +19,6 @@ import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
 import { translate } from '../../utilities/i18';
 import { checkNotificationPermission } from '../../utilities/notifications';
-
 
 class AuthLoadingScreen extends Component {
     state = {
@@ -45,9 +44,11 @@ class AuthLoadingScreen extends Component {
                 this.props.loadUserData(user.uid);
                 this.props.loadQaplaLogros(user.uid);
 
+                // If username doe snot exist because profile does not exist as well, then 
+                // user is redirected to ChooUserName where they will create their profile.
                 const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
 
-                if (userName === ''){
+                if (userName){
                     return this.props.navigation.navigate('ChooseUserName');
                 }
 

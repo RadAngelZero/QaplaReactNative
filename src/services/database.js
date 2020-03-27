@@ -829,6 +829,9 @@ export async function updateUserLanguage(uid) {
         Object.keys(userSubscriptions.val()).forEach((userGlobalSubscription) => {
             Object.keys(userSubscriptions.val()[userGlobalSubscription]).forEach((topicName) => {
 
+                const topicNameWithoutLanguage = topicName.split('_')[0];
+                const newTopicName = `${topicNameWithoutLanguage}_${userDeviceLanguage}`;
+
                 /**
                  * An error was introduced with the events topics, the key of the node
                  * is undefined, this code is for solve this problem, we can remove it
@@ -838,17 +841,11 @@ export async function updateUserLanguage(uid) {
                     unsubscribeUserFromTopic(topicName);
                     removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
 
-                    const topicNameWithoutLanguage = topicName.split('_')[0];
-                    const newTopicName = `${topicNameWithoutLanguage}_${userDeviceLanguage}`;
-
                     subscribeUserToTopic(newTopicName);
                     saveUserSubscriptionToTopic(uid, newTopicName, EVENTS_TOPIC);
                 } else {
                     unsubscribeUserFromTopic(topicName);
                     removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
-
-                    const topicNameWithoutLanguage = topicName.split('_')[0];
-                    const newTopicName = `${topicNameWithoutLanguage}_${userDeviceLanguage}`;
 
                     subscribeUserToTopic(newTopicName);
                     saveUserSubscriptionToTopic(uid, newTopicName, userGlobalSubscription);

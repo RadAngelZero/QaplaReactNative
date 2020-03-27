@@ -9,9 +9,7 @@
 import {
     auth,
     FBProvider,
-    GoogleProvider,
-    phoneAuthErrorState,
-    phoneAuthAutoVerifiedState,
+    GoogleProvider
 } from './../utilities/firebase';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import { GoogleSignin } from '@react-native-community/google-signin';
@@ -19,6 +17,8 @@ import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
 import { emptyLogros } from '../actions/logrosActions';
+import { updateUserLoggedStatus, removeUserListeners, removeLogrosListeners } from './database';
+import { unsubscribeUserFromAllSubscribedTopics } from './messaging';
 
 const webClientIdForGoogleAuth = '779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com';
 
@@ -69,8 +69,10 @@ export function setupGoogleSignin() {
 }
 
 export async function signInWithEmailAndPassword(email, password) {
-    const user = await auth.signInWithEmailAndPassword(email, password)
+    const user = await auth.signInWithEmailAndPassword(email, password);
     setUserIdOnSegment(user.user.uid);
+
+    return user;
 }
 
 /**
@@ -110,6 +112,11 @@ export async function getIdTokenFromUser() {
  */
 export async function signOut() {
     try {
+        const { uid } = auth.currentUser;
+        updateUserLoggedStatus(false);
+        await unsubscribeUserFromAllSubscribedTopics();
+        removeUserListeners(uid);
+        removeLogrosListeners(uid);
         await store.dispatch(emptyLogros());
         await store.dispatch(signOutUser());
         await auth.signOut();

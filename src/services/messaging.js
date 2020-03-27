@@ -6,6 +6,13 @@ import { userAllowsNotificationsFrom,
 } from './database';
 
 /**
+ * Return the user device token
+ */
+export async function getFCMToken() {
+    return await messaging.getToken();
+}
+
+/**
  * Subscribe a user to a topic, so the user will receive all the notifications
  * related to the given topic (in games topics every gameKey is a topic in FCM)
  * A topic is automatically created when one user subscribes to it

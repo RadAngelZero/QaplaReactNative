@@ -3,7 +3,7 @@ import { randomString, getGamerTagKeyWithGameAndPlatform } from '../utilities/ut
 import { DB_NEW_LINE_SEPARATOR, EVENTS_TOPIC } from '../utilities/Constants';
 import store from '../store/store';
 import { getLocaleLanguage } from '../utilities/i18';
-import { unsubscribeUserFromTopic, subscribeUserToTopic } from './messaging';
+import { unsubscribeUserFromTopic, subscribeUserToTopic, getFCMToken } from './messaging';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
@@ -109,7 +109,9 @@ export async function getUserDiscordTag(uid) {
     return (await usersRef.child(uid).child('discordTag').once('value')).val();
 }
 
-export function createUserProfile(Uid, email) {
+export async function createUserProfile(Uid, email) {
+    const token = await getFCMToken();
+
     usersRef.child(Uid).set({
         bio: '',
         captain: 'false',
@@ -127,7 +129,7 @@ export function createUserProfile(Uid, email) {
         photoUrl: '',
         searching: '',
         status: false,
-        token: '',
+        token,
         userName: '',
         isUserLoggedOut: false,
         wins: 0,

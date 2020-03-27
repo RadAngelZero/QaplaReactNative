@@ -127,7 +127,7 @@ export function createUserProfile(Uid, email) {
         status: false,
         token: '',
         userName: '',
-        isUserUnlogged: false,
+        isUserLoggedOut: false,
         wins: 0
     });
 }
@@ -821,9 +821,9 @@ export function updateUserLoggedStatus(isUserLogged, uid = '') {
     /**
      * This flag was not part of the original app, thats why we use inverse logic here
      * so if the data does not exist on the profile we can assume that the user is logged.
-     * In other words is not unlogged
+     * In other words is not loggedOut
      */
-    usersRef.child(uid || store.getState().userReducer.user.id).update({ isUserUnlogged: !isUserLogged });
+    usersRef.child(uid || store.getState().userReducer.user.id).update({ isUserLoggedOut: !isUserLogged });
 }
 
 /**

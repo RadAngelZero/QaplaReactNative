@@ -20,6 +20,11 @@ import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
 import { translate } from '../../utilities/i18';
 
+import {
+    trackOnSegment
+} from '../../services/statistics';
+
+
 class AuthLoadingScreen extends Component {
     state = {
         firstLoad: true
@@ -174,6 +179,13 @@ class AuthLoadingScreen extends Component {
                 const type2 = this.getParameterFromUrl(url, 'type2');
                 
                 if (type2 === 'matchCard') {
+                    const matchId = this.getParameterFromUrl(url, 'matchId');
+                    
+                    trackOnSegment('Deep link - matchCard', {
+                        uid: this.props.user.uid,
+                        matchId: this.props.userQaploins,
+                    });
+
                     // Resetting screen to none since redirectUserToPublicMatchCard
                     // is an async function and navigates to another screen. As a
                     // result of that, there is a window of 0.5 seconds where the app

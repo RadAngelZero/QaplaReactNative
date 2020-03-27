@@ -79,7 +79,7 @@ class AuthLoadingScreen extends Component {
             if (this.state.firstLoad) {
                 const isTutorialDone = await retrieveData('tutorial-done');
                 this.setState({ firstLoad: false });
-                
+
                 if (isTutorialDone) {
                     return this.props.navigation.navigate('Achievements');
                 }

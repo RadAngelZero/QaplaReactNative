@@ -94,8 +94,7 @@ class App extends React.Component {
             trackOnSegment('Push Notification Foreground', {
                 screenToNavigate: navigateTo,
                 title: title,
-                body: body,
-                uid: user.uid
+                body: body
             });
 
             /**
@@ -122,8 +121,7 @@ class App extends React.Component {
             trackOnSegment('Push Notification Background', {
                 screenToNavigate: navigateTo,
                 title: title,
-                body: body,
-                uid: user.uid
+                body: body
             });
 
             if (navigateTo) {

@@ -31,8 +31,8 @@ export async function dplCreateLinkMatchCard(matchId, ctx) {
 	    .ios.setBundleId(IOS_BUNDLE_ID)
 	    .ios.setAppStoreId(APPSTORE_ID)
 	    .social.setDescriptionText(translate('deepLinks.matchCard.description'))
-	    .social.setImageUrl('https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_1024/https://qapla.gg/wp-content/uploads/2020/03/Q-gaming-logo.png')
-	    .social.setTitle(translate('deepLinks.matchCard.title', {game: ctx.game, platform: ctx.platform, bet: ctx.bet}));
+	    .social.setImageUrl('https://qapla.gg/wp-content/uploads/2020/03/ic_launcher_foreground.jpg')
+	    .social.setTitle(translate('deepLinks.matchCard.title', {game: ctx.game, platform: ctx.platform, winBet: ctx.winBet}));
 
 		url = await links.createShortDynamicLink(link, 'UNGUESSABLE');
 	}

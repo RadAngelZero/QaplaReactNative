@@ -9,7 +9,7 @@ class AnnouncementCard extends Component {
         return (
                 <View style={styles.container}>
                     <View style={styles.imageContainer}>
-                        <Image 
+                        <Image
                             style={styles.imageStyle}
                             source={{uri: this.props.photoUrl}}/>
                     </View>

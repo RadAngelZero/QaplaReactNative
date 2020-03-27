@@ -36,8 +36,12 @@ export class VerificationPhoneNumber extends Component {
 
         if (this.props.wrongCode) {
             feedbackForUser = translate('verificationScreen.verificationPhoneNumber.smsCodeError');
-        } else if (this.props.alreadyLinkedError) {
+        } 
+        else if (this.props.alreadyLinkedError) {
             feedbackForUser = translate('verificationScreen.verificationPhoneNumber.alreadyLinkedAccountError');
+        }
+        else if (this.props.minNumDigitsError) {
+            feedbackForUser = translate('verificationScreen.verificationPhoneNumber.noMinDigitsPhoneNum');
         }
 
         return (

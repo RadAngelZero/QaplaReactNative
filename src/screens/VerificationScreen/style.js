@@ -4,11 +4,6 @@
 
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
-import {
-    NAV_TOPBAR_ICON_LEFT_MARGIN,
-    NAV_TOPBAR_ICON_RIGHT_MARGIN,
-    NAV_TOPBAR_ICON_TOP_MARGIN
-} from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
@@ -21,16 +16,9 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     backIconContainer: {
-        marginLeft: widthPercentageToPx(NAV_TOPBAR_ICON_LEFT_MARGIN),
-        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
         alignSelf: 'flex-end'
     },
-    buttonDimensions: {
-        height: heightPercentageToPx(5)
-    },
     closeIconContainer: {
-        marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
-        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
         alignSelf: 'flex-end'
     },
     scrollViewContainer: {

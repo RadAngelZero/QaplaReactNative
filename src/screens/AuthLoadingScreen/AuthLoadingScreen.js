@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import {
     auth,
-    messaging,
     notifications,
     links
 } from '../../utilities/firebase';
@@ -12,13 +11,18 @@ import {
 import { retrieveData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
-import { getUserNameWithUID, getMatchWitMatchId, saveFCMUserToken, getGamerTagWithUID, getUserDiscordTag } from '../../services/database';
+import { getUserNameWithUID, getMatchWitMatchId, getGamerTagWithUID, getUserDiscordTag } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
 import { translate } from '../../utilities/i18';
+import { checkNotificationPermission } from '../../utilities/notifications';
+
+import {
+    trackOnSegment
+} from '../../services/statistics';
 
 class AuthLoadingScreen extends Component {
     state = {
@@ -44,13 +48,15 @@ class AuthLoadingScreen extends Component {
                 this.props.loadUserData(user.uid);
                 this.props.loadQaplaLogros(user.uid);
 
+                // If username doe snot exist because profile does not exist as well, then 
+                // user is redirected to ChooUserName where they will create their profile.
                 const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
 
-                if (userName === ''){
+                if (userName){
                     return this.props.navigation.navigate('ChooseUserName');
                 }
 
-                await this.checkNotificationPermission(user.uid);
+                await checkNotificationPermission(user.uid);
 
                 /*
                 * When the app loads we check if is opened from a notification, also we check if the notificatios
@@ -60,7 +66,13 @@ class AuthLoadingScreen extends Component {
 
                 if (notificationOpen) {
                     const { notification } = notificationOpen;
-                    const { navigateTo } = notification._data;
+                    const { navigateTo, title, body } = notification._data;
+
+                    trackOnSegment('Push Notification Start App', {
+                        ScreenToNavigate: navigateTo,
+                        Title: title,
+                        Body: body
+                    });
 
                     if (navigateTo) {
                         return this.props.navigation.navigate(navigateTo, notification._data);
@@ -79,7 +91,7 @@ class AuthLoadingScreen extends Component {
             if (this.state.firstLoad) {
                 const isTutorialDone = await retrieveData('tutorial-done');
                 this.setState({ firstLoad: false });
-                
+
                 if (isTutorialDone) {
                     return this.props.navigation.navigate('Achievements');
                 }
@@ -91,60 +103,6 @@ class AuthLoadingScreen extends Component {
 
         this.manageStartDeepLinks();
         this.manageBackgroundDeepLinks();
-    }
-
-    /**
-     * Check if the user has granted the required permission to receive
-     * our push notifications
-     * @param {string} uid User identifier on the database
-     */
-    async checkNotificationPermission(uid) {
-        try {
-            const notificationPermissionEnabled = await messaging.hasPermission();
-
-            if (notificationPermissionEnabled) {
-                this.handleUserToken(uid);
-            } else {
-                this.requestPermission(uid);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    /**
-     * Ask the user for the required permission to receive our push notifications
-     * @param {string} uid User identifier on the database
-     */
-    async requestPermission(uid) {
-        try {
-
-            /**
-             * If the user don't grant permission we go to the catch block automatically
-             */
-            await messaging.requestPermission();
-
-            /**
-             * If the user grant permission we handle their token
-             */
-            this.handleUserToken(uid);
-        } catch (error) {
-            // User has rejected permissions
-            console.log('permission rejected');
-        }
-    }
-
-    /**
-     * Get and save the FCM token of the user on the database
-     * @param {string} uid User identifier on the database
-     */
-    async handleUserToken(uid) {
-        try {
-            const FCMToken = await messaging.getToken();
-            await saveFCMUserToken(uid, FCMToken);
-        } catch (error) {
-            console.error(error);
-        }
     }
 
     /**
@@ -169,18 +127,18 @@ class AuthLoadingScreen extends Component {
         if (url) {
             let screenName = 'LinkBroken';
             const type = this.getParameterFromUrl(url, 'type');
-            console.log(`[processLinkUrl] type`, type);
+            
             if (type === 'appDeepLink') {
                 const type2 = this.getParameterFromUrl(url, 'type2');
-                console.log(`[processLinkUrl] type2`, type2);
-
+                
                 if (type2 === 'matchCard') {
-                    this.redirectUserToPublicMatchCard(url);
+
+                    // TODO: cobvert this multiple return approach into 
+                    // a single navigate operation inside processLinksUrl
+                    return this.redirectUserToPublicMatchCard(url);
                 }
             }
-            
-            // TODO: Create screen to notify user that the link is broken,
-            // allow him to dismiss the screen and go back to events screen
+
             this.props.navigation.navigate(screenName);
         }
     }
@@ -234,7 +192,7 @@ class AuthLoadingScreen extends Component {
                 expired: false
             };
         }
-        console.log(`[redirectUserToPublicMatchCard]`);
+
         this.props.navigation.navigate('MatchDetails', {matchCard: matchObj});
     }
 

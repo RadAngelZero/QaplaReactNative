@@ -32,6 +32,7 @@ export default styles = StyleSheet.create({
     inputText: {
         marginTop: heightPercentageToPx(1.72),
         borderRadius: 6,
+        color: '#000',
         backgroundColor: '#FFF',
         paddingHorizontal: widthPercentageToPx(4.27),
         paddingVertical: heightPercentageToPx(1.48)

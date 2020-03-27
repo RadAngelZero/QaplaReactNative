@@ -814,6 +814,10 @@ export async function updateUserProfileImg(uid, photoUrl) {
     }
 }
 
+/**
+ * Handle the logic when the user change the language of their device
+ * @param {string} uid User identifier
+ */
 export async function updateUserLanguage(uid) {
     const userProfileLanguage = (await usersRef.child(uid).child('language').once('value')).val();
     const userDeviceLanguage = getLocaleLanguage();
@@ -824,6 +828,12 @@ export async function updateUserLanguage(uid) {
 
         Object.keys(userSubscriptions.val()).forEach((userGlobalSubscription) => {
             Object.keys(userSubscriptions.val()[userGlobalSubscription]).forEach((topicName) => {
+
+                /**
+                 * An error was introduced with the events topics, the key of the node
+                 * is undefined, this code is for solve this problem, we can remove it
+                 * on the future
+                */
                 if (userGlobalSubscription === 'undefined') {
                     unsubscribeUserFromTopic(topicName);
                     removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
@@ -911,7 +921,7 @@ export function saveUserSubscriptionToTopic(uid, topic, type) {
 /**
   * Removes topics on the database which the user has been unsubscribed on FCM
   * @param {string} uid User identifier on the database
-  * @param {string} topic Name of the topic to which the user has subscribed
+  * @param {string} topic Name of the topic to which the user has unsubscribed
   * @param {string} type Key of the category of the topic
   */
  export function removeUserSubscriptionToTopic(uid, topic, type) {

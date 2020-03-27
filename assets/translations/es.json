@@ -212,7 +212,8 @@
             "codePlaceholder": "Ingresa tu Código",
             "codeSent": "Te enviamos un código de verificación",
             "smsCodeError": "El código de verificación es incorrecto",
-            "alreadyLinkedAccountError": "Este número de teléfono ya está vinculado con una cuenta."
+            "alreadyLinkedAccountError": "Este número de teléfono ya está vinculado con una cuenta.",
+            "noMinDigitsPhoneNum":  "El número de teléfono debe de tener mínimo 5 dígitos."
         },
         "verificationProcessSuccess": {
             "title": "¡Gracias!",

@@ -20,6 +20,10 @@ import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
 import { translate } from '../../utilities/i18';
 
+import {
+    trackOnSegment
+} from '../../services/statistics';
+
 class AuthLoadingScreen extends Component {
     state = {
         firstLoad: true
@@ -60,7 +64,13 @@ class AuthLoadingScreen extends Component {
 
                 if (notificationOpen) {
                     const { notification } = notificationOpen;
-                    const { navigateTo } = notification._data;
+                    const { navigateTo, title, body } = notification._data;
+
+                    trackOnSegment('Push Notification Start App', {
+                        ScreenToNavigate: navigateTo,
+                        Title: title,
+                        Body: body
+                    });
 
                     if (navigateTo) {
                         return this.props.navigation.navigate(navigateTo, notification._data);

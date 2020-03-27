@@ -3,11 +3,7 @@
 // josep.sanahuja    - 30-09-2019 - us118 - File creation
 
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../../utilities/iosAndroidDim';
-import {
-    NAV_TOPBAR_ICON_RIGHT_MARGIN,
-    NAV_TOPBAR_ICON_TOP_MARGIN
-} from '../../../utilities/Constants';
+import { paddingTopForAndroidDevicesWithNotch } from '../../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
 	sfvContainer: {
@@ -17,9 +13,6 @@ export default styles = StyleSheet.create({
       paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     closeIcon: {
-        marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
-        marginBottom: heightPercentageToPx(2.46),
-        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
         alignSelf: 'flex-end'
     },
 })

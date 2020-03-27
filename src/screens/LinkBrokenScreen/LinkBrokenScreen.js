@@ -1,23 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, SafeAreaView, TouchableWithoutFeedback, Linking, Platform } from 'react-native';
-import { connect } from 'react-redux';
 import styles from './style';
 
 import Images from '../../../assets/images'
-import { challengeUser, isMatchAlreadyChallenged, userHasQaploinsToPlayMatch, getGamerTagWithUID, addGameToUser } from '../../services/database';
-import { isUserLogged } from '../../services/auth';
-import { cancelPublicMatch, acceptChallengeRequest } from '../../services/functions';
-import { getGamerTagStringWithGameAndPlatform } from '../../utilities/utils';
-import { trackOnSegment } from '../../services/statistics';
 
-// Custom Components
-import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBttnModal'
-import AcceptChallengeModal from '../../components/AcceptChallengeModal/AcceptChallengeModal';
-import NotEnoughQaploinsModal from '../../components/NotEnoughQaploinsModal/NotEnoughQaploinsModal';
-
-import { 
- ADVERSARY_1_NUMBER,
- ADVERSARY_2_NUMBER,
+import {
  IOS_STORE_LINK,
  ANDROID_STORE_LINK
 } from '../../utilities/Constants';
@@ -26,6 +13,7 @@ import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 import { AddGamerTagModal } from '../../components/AddGamerTagModal/AddGamerTagModal';
 import { translate } from '../../utilities/i18';
+import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -59,22 +47,26 @@ class LinkBrokenScreen extends Component {
 
  render() {
      return (
-         <SafeAreaView style={styles.sfvContainer}>
-             <TouchableWithoutFeedback onPress={this.navigateToEvents}>
-                 <View style={styles.closeIcon}>
-                     <CloseIcon />
-                 </View>
-             </TouchableWithoutFeedback>
-             <View style={styles.container}>
-                 <Text style={styles.body}>Actualiza la app</Text>
-                 <Text style={styles.description}>El contenido que estás intentando acceder no está disponible en esta versión.</Text>
-                 <TouchableWithoutFeedback onPress={this.navigateToStore}>
-                     <View style={styles.bttnContainer}>
-                         <Text style={styles.bttnText}>{'Actualizar App'}</Text>
-                     </View>
-                 </TouchableWithoutFeedback>
-             </View>
-         </SafeAreaView>
+        <SafeAreaView style={styles.sfvContainer}>
+            <QaplaIcon onPress={this.navigateToEvents} touchableStyle={styles.closeIcon}>
+                <CloseIcon />
+            </QaplaIcon>
+            <View style={styles.container}>
+                <Text style={styles.title}>
+                     {translate("deepLinks.linkBroken.title")}
+                </Text>
+                <Text style={styles.description}>
+                    {translate("deepLinks.linkBroken.description")}
+                </Text>
+                <TouchableWithoutFeedback onPress={this.navigateToStore}>
+                    <View style={styles.bttnContainer}>
+                        <Text style={styles.bttnText}>
+                            {translate("deepLinks.linkBroken.bttnText")}
+                        </Text>
+                    </View>
+                </TouchableWithoutFeedback>
+            </View>
+        </SafeAreaView>
      );
  }
 }

@@ -20,6 +20,10 @@ import { loadQaplaLogros } from '../../actions/logrosActions';
 import { translate } from '../../utilities/i18';
 import { checkNotificationPermission } from '../../utilities/notifications';
 
+import {
+    trackOnSegment
+} from '../../services/statistics';
+
 class AuthLoadingScreen extends Component {
     state = {
         firstLoad: true
@@ -62,7 +66,13 @@ class AuthLoadingScreen extends Component {
 
                 if (notificationOpen) {
                     const { notification } = notificationOpen;
-                    const { navigateTo } = notification._data;
+                    const { navigateTo, title, body } = notification._data;
+
+                    trackOnSegment('Push Notification Start App', {
+                        ScreenToNavigate: navigateTo,
+                        Title: title,
+                        Body: body
+                    });
 
                     if (navigateTo) {
                         return this.props.navigation.navigate(navigateTo, notification._data);
@@ -81,7 +91,7 @@ class AuthLoadingScreen extends Component {
             if (this.state.firstLoad) {
                 const isTutorialDone = await retrieveData('tutorial-done');
                 this.setState({ firstLoad: false });
-                
+
                 if (isTutorialDone) {
                     return this.props.navigation.navigate('Achievements');
                 }
@@ -117,18 +127,18 @@ class AuthLoadingScreen extends Component {
         if (url) {
             let screenName = 'LinkBroken';
             const type = this.getParameterFromUrl(url, 'type');
-            console.log(`[processLinkUrl] type`, type);
+            
             if (type === 'appDeepLink') {
                 const type2 = this.getParameterFromUrl(url, 'type2');
-                console.log(`[processLinkUrl] type2`, type2);
-
+                
                 if (type2 === 'matchCard') {
-                    this.redirectUserToPublicMatchCard(url);
+
+                    // TODO: cobvert this multiple return approach into 
+                    // a single navigate operation inside processLinksUrl
+                    return this.redirectUserToPublicMatchCard(url);
                 }
             }
-            
-            // TODO: Create screen to notify user that the link is broken,
-            // allow him to dismiss the screen and go back to events screen
+
             this.props.navigation.navigate(screenName);
         }
     }
@@ -182,7 +192,7 @@ class AuthLoadingScreen extends Component {
                 expired: false
             };
         }
-        console.log(`[redirectUserToPublicMatchCard]`);
+
         this.props.navigation.navigate('MatchDetails', {matchCard: matchObj});
     }
 

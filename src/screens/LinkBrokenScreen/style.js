@@ -1,9 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim'
-import {
- NAV_TOPBAR_ICON_RIGHT_MARGIN,
- NAV_TOPBAR_ICON_TOP_MARGIN
-} from '../../utilities/Constants';
 
 export default StyleSheet.create({
  sfvContainer: {
@@ -15,7 +11,7 @@ export default StyleSheet.create({
      justifyContent: 'flex-start',
      alignItems: 'center'
  },
- body: {
+ title: {
      color: '#FFF',
      fontSize: 25,
      fontWeight: 'bold',
@@ -36,9 +32,6 @@ export default StyleSheet.create({
     alignSelf: 'center',
  },
  closeIcon: {
-     marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
-     marginBottom: heightPercentageToPx(2.46),
-     marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
      alignSelf: 'flex-end'
  },
  bttnText: {
@@ -51,4 +44,4 @@ export default StyleSheet.create({
      marginRight: widthPercentageToPx(8.53),
      letterSpacing: .57
  }
-}); 
+});

@@ -8,6 +8,8 @@ import styles from './style';
 import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
 import { translate } from '../../utilities/i18';
+import { updateUserLoggedStatus } from '../../services/database';
+import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
@@ -88,6 +90,8 @@ class SignInScreen extends Component {
                 email: user.user.email 
             });
         } else {
+            updateUserLoggedStatus(true, user.user.uid);
+            subscribeUserToAllRegistredTopics(user.user.uid);
             if (this.props.originScreen !== 'Public') {
                 this.props.navigation.dismiss();
             } else {

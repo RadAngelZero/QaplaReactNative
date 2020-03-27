@@ -146,9 +146,7 @@ class LogroSocial extends Component {
 
     render() {
         const {
-            titulo,
             title,
-            descripcion,
             description,
             qaploins,
             photoUrl,

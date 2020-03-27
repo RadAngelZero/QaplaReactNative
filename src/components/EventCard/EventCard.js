@@ -96,9 +96,7 @@ class EventCard extends Component {
     render() {
         const {
             photoUrl,
-            titulo,
             title,
-            description,
             descriptions,
             tiempoLimite,
             verified,

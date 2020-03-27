@@ -73,9 +73,7 @@ class TournamentCard extends Component {
     render() {
         const {
             photoUrl,
-            titulo,
             title,
-            descripcion,
             description,
             totalPuntos,
             puntosCompletados,

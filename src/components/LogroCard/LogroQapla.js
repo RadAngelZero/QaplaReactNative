@@ -65,9 +65,7 @@ class LogroQapla extends Component {
 
     render() {
         const {
-            titulo,
             title,
-            descripcion,
             description,
             qaploins,
             puntosCompletados,

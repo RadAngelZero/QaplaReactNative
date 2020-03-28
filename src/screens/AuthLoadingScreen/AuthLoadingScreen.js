@@ -182,8 +182,7 @@ class AuthLoadingScreen extends Component {
                     const matchId = this.getParameterFromUrl(url, 'matchId');
                     
                     trackOnSegment('Deep link - matchCard', {
-                        uid: this.props.user.uid,
-                        matchId: this.props.userQaploins,
+                        matchId,
                     });
 
                     // Resetting screen to none since redirectUserToPublicMatchCard
@@ -195,8 +194,6 @@ class AuthLoadingScreen extends Component {
                 }
             }
 
-            // TODO: Create screen to notify user that the link is broken,
-            // allow him to dismiss the screen and go back to events screen
             this.props.navigation.navigate(screenName);
         }
     }

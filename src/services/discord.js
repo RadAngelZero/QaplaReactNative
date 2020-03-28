@@ -20,7 +20,7 @@ export async function discordPublishMessageToChannel(ctx) {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				content: `Game: **${game}**  Platform: **${platform}** \n#Qoins: **${winBet}**  Creator: **${discordTag}**\n***Match link***: ${url}`,
+				content: `Game: **${game}**  Platform: **${platform}** \n#Qoins to win: **${winBet}**  Creator: **${discordTag}**\n***Match link***: ${url}`,
             	username: "Qapla Match Announcer",
 				tts: false,
 				embeds: [{

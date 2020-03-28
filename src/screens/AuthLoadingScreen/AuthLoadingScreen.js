@@ -12,14 +12,20 @@ import {
 import { retrieveData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
-import { getUserNameWithUID, getMatchWitMatchId, saveFCMUserToken, getGamerTagWithUID, getUserDiscordTag, updateUserLanguage } from '../../services/database';
+import {
+    getUserNameWithUID,
+    getMatchWitMatchId,
+    saveFCMUserToken,
+    getGamerTagWithUID,
+    getUserDiscordTag,
+    updateUserLanguage
+} from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
 import { translate } from '../../utilities/i18';
-import { getFCMToken } from '../../services/messaging';
 
 class AuthLoadingScreen extends Component {
     state = {

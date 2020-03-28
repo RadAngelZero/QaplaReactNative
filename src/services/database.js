@@ -3,7 +3,7 @@ import { randomString, getGamerTagKeyWithGameAndPlatform } from '../utilities/ut
 import { DB_NEW_LINE_SEPARATOR, EVENTS_TOPIC } from '../utilities/Constants';
 import store from '../store/store';
 import { getLocaleLanguage } from '../utilities/i18';
-import { unsubscribeUserFromTopic, subscribeUserToTopic, getFCMToken } from './messaging';
+import { unsubscribeUserFromTopic, subscribeUserToTopic } from './messaging';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
@@ -110,8 +110,6 @@ export async function getUserDiscordTag(uid) {
 }
 
 export async function createUserProfile(Uid, email) {
-    const token = await getFCMToken();
-
     usersRef.child(Uid).set({
         bio: '',
         captain: 'false',
@@ -817,43 +815,61 @@ export async function updateUserProfileImg(uid, photoUrl) {
 }
 
 /**
- * Handle the logic when the user change the language of their device
+ * Change user language database propertie when the user change the language of their device
+ * and update user topic subscriptions for new ones related to the new language
  * @param {string} uid User identifier
  */
 export async function updateUserLanguage(uid) {
-    const userProfileLanguage = (await usersRef.child(uid).child('language').once('value')).val();
-    const userDeviceLanguage = getLocaleLanguage();
+    try {
+        const userProfileLanguage = (await usersRef.child(uid).child('language').once('value')).val();
+        const userDeviceLanguage = getLocaleLanguage();
 
-    if (userProfileLanguage !== userDeviceLanguage) {
-        usersRef.child(uid).update({ language: userDeviceLanguage });
-        const userSubscriptions = await getAllUserTopicSubscriptions(uid);
+        if (userProfileLanguage !== userDeviceLanguage) {
+            usersRef.child(uid).update({ language: userDeviceLanguage });
+            const userSubscriptions = await getAllUserTopicSubscriptions(uid);
 
-        Object.keys(userSubscriptions.val()).forEach((userGlobalSubscription) => {
-            Object.keys(userSubscriptions.val()[userGlobalSubscription]).forEach((topicName) => {
+            /**
+             * The structure of the userSubscriptions object is the next:
+             * { games: { topic1, topic2 }, events: { topic3, topic4 } ... }
+             * We want the fields inside of the global keys (games and events)
+             * thats why we use a double forEach
+             */
+            Object.keys(userSubscriptions.val()).forEach((userGlobalSubscription) => {
+                Object.keys(userSubscriptions.val()[userGlobalSubscription]).forEach((topicName) => {
 
-                const topicNameWithoutLanguage = topicName.split('_')[0];
-                const newTopicName = `${topicNameWithoutLanguage}_${userDeviceLanguage}`;
+                    /**
+                     * Split the topicName variable, the topicName variable have the form:
+                     * topicKey_language, we need the topicKey to update the language,
+                     * the split function returns an array, the first index (index 0)
+                     * of that array is the topicKey, thats why we save that data on
+                     * this constant
+                     */
+                    const topicNameWithoutLanguage = topicName.split('_')[0];
+                    const newTopicName = `${topicNameWithoutLanguage}_${userDeviceLanguage}`;
 
-                /**
-                 * An error was introduced with the events topics, the key of the node
-                 * is undefined, this code is for solve this problem, we can remove it
-                 * on the future
-                */
-                if (userGlobalSubscription === 'undefined') {
-                    unsubscribeUserFromTopic(topicName);
-                    removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
+                    /**
+                     * An error was introduced with the events topics, the key of the node
+                     * event of the userSubscriptions constant was saved as undefined, this
+                     * code is for solve this problem, we can remove it on the future
+                    */
+                    if (userGlobalSubscription === 'undefined') {
+                        unsubscribeUserFromTopic(topicName);
+                        removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
 
-                    subscribeUserToTopic(newTopicName);
-                    saveUserSubscriptionToTopic(uid, newTopicName, EVENTS_TOPIC);
-                } else {
-                    unsubscribeUserFromTopic(topicName);
-                    removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
+                        subscribeUserToTopic(newTopicName);
+                        saveUserSubscriptionToTopic(uid, newTopicName, EVENTS_TOPIC);
+                    } else {
+                        unsubscribeUserFromTopic(topicName);
+                        removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
 
-                    subscribeUserToTopic(newTopicName);
-                    saveUserSubscriptionToTopic(uid, newTopicName, userGlobalSubscription);
-                }
+                        subscribeUserToTopic(newTopicName);
+                        saveUserSubscriptionToTopic(uid, newTopicName, userGlobalSubscription);
+                    }
+                });
             });
-        });
+        }
+    } catch (error) {
+        console.error(error);
     }
 }
 
@@ -908,7 +924,7 @@ export function removeActiveEventUserSubscribedListener(uid, eventKey) {
  */
 
 /**
-  * Saves topics on the database which the user has been subscribed on FCM
+  * Saves topics on the database which the user has been subscribed on Firebase Cloud Messaging
   * @param {string} uid User identifier on the database
   * @param {string} topic Name of the topic to which the user has subscribed
   * @param {string} type Key of the category of the topic
@@ -918,7 +934,7 @@ export function saveUserSubscriptionToTopic(uid, topic, type) {
 }
 
 /**
-  * Removes topics on the database which the user has been unsubscribed on FCM
+  * Removes topics on the database which the user has been unsubscribed on Firebase Cloud Messaging
   * @param {string} uid User identifier on the database
   * @param {string} topic Name of the topic to which the user has unsubscribed
   * @param {string} type Key of the category of the topic

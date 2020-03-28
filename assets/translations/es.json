@@ -50,10 +50,6 @@
             "description": "Comparte los clips de tus partidas, toda la comunidad podrá ver la evidencia de tus victorias.",
             "title": "Comparte"
         },
-        "withdraw": {
-            "description": "Retira tu Saldo Qapla o úsalo para comprar productos de Amazon Prime, ¡Los enviamos gratis a tu casa!",
-            "title": "Convierte"
-        },
         "finish": "Terminar"
     },
     "activeAchievementsScreen": {
@@ -212,7 +208,8 @@
             "codePlaceholder": "Ingresa tu Código",
             "codeSent": "Te enviamos un código de verificación",
             "smsCodeError": "El código de verificación es incorrecto",
-            "alreadyLinkedAccountError": "Este número de teléfono ya está vinculado con una cuenta."
+            "alreadyLinkedAccountError": "Este número de teléfono ya está vinculado con una cuenta.",
+            "noMinDigitsPhoneNum":  "El número de teléfono debe de tener mínimo 5 dígitos."
         },
         "verificationProcessSuccess": {
             "title": "¡Gracias!",
@@ -337,7 +334,7 @@
     "deepLinks": {
         "matchCard": {
             "description": "Juega a tu juego favorito con otros jugadores y gana recompensas",
-            "title": "Juega una partida de %{game} (%{platform}) para ganar %{bet} Qoins!"
+            "title": "Juega una partida de %{game} (%{platform}) para ganar %{winBet} Qoins!"
         },
         "linkBroken": {
             "title": "Enlace no encontrado",

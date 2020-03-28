@@ -11,8 +11,8 @@ import { joinEvent } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
-import { translate } from '../../utilities/i18';
-import { QAPLA_DISCORD_CHANNEL } from '../../utilities/Constants';
+import { translate, getLocaleLanguage } from '../../utilities/i18';
+import { QAPLA_DISCORD_CHANNEL, EVENTS_TOPIC } from '../../utilities/Constants';
 import { subscribeUserToTopic } from '../../services/messaging';
 import AddGamerTagModal from '../AddGamerTagModal/AddGamerTagModal';
 import EventRequirementsModal from '../EventRequirementsModal/EventRequirementsModal';
@@ -57,7 +57,7 @@ class EventCard extends Component {
      */
     subscribeUserToEvent = () => {
         joinEvent(this.props.uid, this.props.id);
-        subscribeUserToTopic(this.props.id, this.props.uid);
+        subscribeUserToTopic(`${this.props.id}_${getLocaleLanguage()}`, this.props.uid, EVENTS_TOPIC);
     }
 
     /**
@@ -75,8 +75,36 @@ class EventCard extends Component {
      */
     closeRequirementsModal = () => this.setState({ showRequirementsModal: false });
 
+    /**
+     * Select the correct event text content according to the language used by the user
+     * in the app.
+     * 
+     * @param {object} textLangObj Object containing in JSON format a text content for each
+     *                             language supported by the app
+     */
+    getTextBasedOnUserLanguage = (textLangObj) => {
+        const res = '';
+        const userLanguage = getLocaleLanguage();
+
+        if (textLangObj[userLanguage] !== null && textLangObj[userLanguage] !== undefined) {
+            res = textLangObj[userLanguage];
+        }
+
+        return res;
+    }
+
     render() {
-        const { photoUrl, titulo, description, tiempoLimite, verified, priceQaploins, game, platform } = this.props;
+        const {
+            photoUrl,
+            title,
+            descriptions,
+            tiempoLimite,
+            verified,
+            priceQaploins,
+            game,
+            platform
+        } = this.props;
+        
         let selectedGame = {
             gameKey: game,
             platform: platform,
@@ -91,6 +119,9 @@ class EventCard extends Component {
             selectedGame.name =this.props.games[platform][game].name;
         }
 
+        const descriptionTranslated = getTextBasedOnUserLanguage(descriptions);
+        const titleTranslated = getTextBasedOnUserLanguage(title);
+
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
                 <View style={styles.contentContainer}>
@@ -99,9 +130,9 @@ class EventCard extends Component {
                     </View>
                     <View style={styles.colBSocialContainer}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{titulo}</Text>
+                            <Text style={styles.title}>{titleTranslated}</Text>
                         </View>
-                        <Text style={styles.description}>{description}</Text>
+                        <Text style={styles.description}>{descriptionTranslated}</Text>
                     </View>
                     <View style={styles.colBContainer}>
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />

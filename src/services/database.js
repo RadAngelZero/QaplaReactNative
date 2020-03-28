@@ -1,7 +1,9 @@
 import { database, TimeStamp } from '../utilities/firebase';
 import { randomString, getGamerTagKeyWithGameAndPlatform } from '../utilities/utils';
-import { DB_NEW_LINE_SEPARATOR } from '../utilities/Constants';
+import { DB_NEW_LINE_SEPARATOR, EVENTS_TOPIC } from '../utilities/Constants';
 import store from '../store/store';
+import { getLocaleLanguage } from '../utilities/i18';
+import { unsubscribeUserFromTopic, subscribeUserToTopic } from './messaging';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
@@ -107,11 +109,22 @@ export async function getUserDiscordTag(uid) {
     return (await usersRef.child(uid).child('discordTag').once('value')).val();
 }
 
-export function createUserProfile(Uid, email) {
-    usersRef.child(Uid).set({
+/**
+ * Create the profile of a user
+ *
+ * @param {string} Uid          User identifier on database
+ * @param {string} email        Email from the user
+ * @param {string} userName     Username selected before profile creation
+ */
+export async function createUserProfile(Uid, email, userName ) {
+    // We use city to save the userName in uppercase, so we can check if the
+    // username is available, the username must be unique doesn't matter CAPS and lowers.
+    let city = userName.toUpperCase();
+
+    const profileObj = {
         bio: '',
         captain: 'false',
-        city: '',
+        city,
         country: 'Mexico',
         credits: 0,
         discordTag: '',
@@ -126,9 +139,13 @@ export function createUserProfile(Uid, email) {
         searching: '',
         status: false,
         token: '',
-        userName: '',
-        wins: 0
-    });
+        userName,
+        isUserLoggedOut: false,
+        wins: 0,
+        language: getLocaleLanguage()
+    };
+
+    await usersRef.child(Uid).set(profileObj);
 }
 
 
@@ -811,17 +828,132 @@ export async function updateUserProfileImg(uid, photoUrl) {
 }
 
 /**
+ * Change user language database propertie when the user change the language of their device
+ * and update user topic subscriptions for new ones related to the new language
+ * @param {string} uid User identifier
+ */
+export async function updateUserLanguage(uid) {
+    try {
+        const userProfileLanguage = (await usersRef.child(uid).child('language').once('value')).val();
+        const userDeviceLanguage = getLocaleLanguage();
+
+        if (userProfileLanguage !== userDeviceLanguage) {
+            usersRef.child(uid).update({ language: userDeviceLanguage });
+            const userSubscriptions = await getAllUserTopicSubscriptions(uid);
+
+            /**
+             * The structure of the userSubscriptions object is the next:
+             * { games: { topic1, topic2 }, events: { topic3, topic4 } ... }
+             * We want the fields inside of the global keys (games and events)
+             * thats why we use a double forEach
+             */
+            Object.keys(userSubscriptions.val()).forEach((userGlobalSubscription) => {
+                Object.keys(userSubscriptions.val()[userGlobalSubscription]).forEach((topicName) => {
+
+                    /**
+                     * Split the topicName variable, the topicName variable have the form:
+                     * topicKey_language, we need the topicKey to update the language,
+                     * the split function returns an array, the first index (index 0)
+                     * of that array is the topicKey, thats why we save that data on
+                     * this constant
+                     */
+                    const topicNameWithoutLanguage = topicName.split('_')[0];
+                    const newTopicName = `${topicNameWithoutLanguage}_${userDeviceLanguage}`;
+
+                    /**
+                     * An error was introduced with the events topics, the key of the node
+                     * event of the userSubscriptions constant was saved as undefined, this
+                     * code is for solve this problem, we can remove it on the future
+                    */
+                    if (userGlobalSubscription === 'undefined') {
+                        unsubscribeUserFromTopic(topicName);
+                        removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
+
+                        subscribeUserToTopic(newTopicName);
+                        saveUserSubscriptionToTopic(uid, newTopicName, EVENTS_TOPIC);
+                    } else {
+                        unsubscribeUserFromTopic(topicName);
+                        removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
+
+                        subscribeUserToTopic(newTopicName);
+                        saveUserSubscriptionToTopic(uid, newTopicName, userGlobalSubscription);
+                    }
+                });
+            });
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+/**
+ * Set the status of the account of an specific user
+ * (if he/she have their account opened or closed)
+ * @param {boolean} isUserLogged True if the user is not logged
+ */
+export function updateUserLoggedStatus(isUserLogged, uid = '') {
+
+    /**
+     * This flag was not part of the original app, thats why we use inverse logic here
+     * so if the data does not exist on the profile we can assume that the user is logged.
+     * In other words is not loggedOut
+     */
+    usersRef.child(uid || store.getState().userReducer.user.id).update({ isUserLoggedOut: !isUserLogged });
+}
+
+/**
+ * Remove all the database listeners related to the userReducer
+ * @param {string} uid User identifier
+ */
+export function removeUserListeners(uid) {
+    usersRef.child(uid).off('child_added');
+    usersRef.child(uid).off('child_changed');
+    usersRef.child(uid).off('child_removed');
+}
+
+/**
+ * Remove all the database listeners related to the logrosReducer
+ * @param {string} uid User identifier
+ */
+export function removeLogrosListeners(uid) {
+    cuentasVerificadasRef.child(uid).off('value');
+    logrosRef.child(uid).child('logroCompleto').off('child_added');
+    logrosRef.child(uid).child('logroIncompleto').off('value');
+    pointsTournamentsRef.child(uid).off('value');
+}
+
+/**
+ * Remove the database listener related to an specific event
+ * @param {string} uid User identifier
+ * @param {string} eventKey Event identfier
+ */
+export function removeActiveEventUserSubscribedListener(uid, eventKey) {
+    eventParticipantsRef.child(eventKey).child(uid).off('value');
+}
+
+/**
  * User Subscriptions
  */
 
- /**
-  * Saves topics on the database which the user has been subscribed on FCM
+/**
+  * Saves topics on the database which the user has been subscribed on Firebase Cloud Messaging
   * @param {string} uid User identifier on the database
   * @param {string} topic Name of the topic to which the user has subscribed
   * @param {string} type Key of the category of the topic
   */
 export function saveUserSubscriptionToTopic(uid, topic, type) {
     userTopicSubscriptions.child(uid).child(type).update({ [topic]: true });
+}
+
+/**
+  * Removes topics on the database which the user has been unsubscribed on Firebase Cloud Messaging
+  * @param {string} uid User identifier on the database
+  * @param {string} topic Name of the topic to which the user has unsubscribed
+  * @param {string} type Key of the category of the topic
+  */
+ export function removeUserSubscriptionToTopic(uid, topic, type) {
+    userTopicSubscriptions.child(uid).child(type).child(topic).remove();
 }
 
 /**
@@ -839,6 +971,17 @@ export function updateNotificationPermission(notificationType, value) {
  */
 export async function getUserTopicSubscriptions(type) {
     return await userTopicSubscriptions.child(store.getState().userReducer.user.id).child(type).once('value');
+}
+
+/**
+ * Returns the user topic subscription object
+ * Notes: { Games: { topic1, topic2 }, Events: { topic3, topic4 } ... }
+ * @param {string} uid User identifier
+ * @returns {Object | null} JSON that contains all the user subscriptions or null if the user does
+ * not have any subscription
+ */
+export async function getAllUserTopicSubscriptions(uid) {
+    return await userTopicSubscriptions.child(uid).once('value');
 }
 
 /**
@@ -898,11 +1041,11 @@ export async function userQaplaBalanceListener(uid, callback) {
  * Retrieves the major version of the app from server
  * @returns
  * SUCCESS - {string}     res major version of QaplaGaming app retrieved from server
- * FAIL    - {null}  res no major version was not retrieved   
+ * FAIL    - {null}  res no major version was not retrieved
  */
 export async function dbGetAppVersion() {
     let res = null;
-    
+
     try {
         let resSnap = await versionAppRef.once('value');
         res = resSnap.val();

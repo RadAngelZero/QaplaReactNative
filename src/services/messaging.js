@@ -9,9 +9,10 @@ import { userAllowsNotificationsFrom,
  * Subscribe a user to a topic, so the user will receive all the notifications
  * related to the given topic (in games topics every gameKey is a topic in FCM)
  * A topic is automatically created when one user subscribes to it
- * @param {string} topic Name of the topic
+ * @param {string} topic Name of the topic, always send this name with the sufix _${userLanguage}
  * @param {string | null} uid User identifier
  * @param {string} type Type of topic, for example game or event
+ * @example subscribeUserToTopic(`${topicName}_${userLanguage}`, 'userUid', 'Games');
  */
 export function subscribeUserToTopic(topic, uid = '', type) {
 

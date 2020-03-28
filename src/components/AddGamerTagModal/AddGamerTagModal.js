@@ -15,7 +15,7 @@ import { addGameToUser, updateUserGamerTag } from '../../services/database';
 import Images from './../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { subscribeUserToTopic } from '../../services/messaging';
-import { translate } from '../../utilities/i18';
+import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { GAMES_TOPICS } from '../../utilities/Constants';
 import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
@@ -77,7 +77,7 @@ class AddGamerTagModal extends Component {
                 updateUserGamerTag(this.props.uid, this.props.selectedGame.platform, this.props.selectedGame.gameKey, this.state.gamerTagText);
             }
 
-                subscribeUserToTopic(this.props.selectedGame.gameKey, this.props.uid, GAMES_TOPICS);
+                subscribeUserToTopic(`${this.props.selectedGame.gameKey}_${getLocaleLanguage()}`, this.props.uid, GAMES_TOPICS);
 
                 trackOnSegment('Add Gamer Tag Process Completed', {
                     game: this.props.selectedGame.gameKey,

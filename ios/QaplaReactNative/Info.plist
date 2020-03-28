@@ -34,11 +34,11 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-      <string>QaplaDeepLink</string>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>org.Qapla.QaplaApp</string>
-      </array>
+			<string>QaplaDeepLink</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>org.Qapla.QaplaApp</string>
+			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>

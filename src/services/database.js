@@ -109,11 +109,22 @@ export async function getUserDiscordTag(uid) {
     return (await usersRef.child(uid).child('discordTag').once('value')).val();
 }
 
-export async function createUserProfile(Uid, email) {
-    usersRef.child(Uid).set({
+/**
+ * Create the profile of a user
+ *
+ * @param {string} Uid          User identifier on database
+ * @param {string} email        Email from the user
+ * @param {string} userName     Username selected before profile creation
+ */
+export async function createUserProfile(Uid, email, userName ) {
+    // We use city to save the userName in uppercase, so we can check if the
+    // username is available, the username must be unique doesn't matter CAPS and lowers.
+    let city = userName.toUpperCase();
+
+    const profileObj = {
         bio: '',
         captain: 'false',
-        city: '',
+        city,
         country: 'Mexico',
         credits: 0,
         discordTag: '',
@@ -127,12 +138,14 @@ export async function createUserProfile(Uid, email) {
         photoUrl: '',
         searching: '',
         status: false,
-        token,
-        userName: '',
+        token: '',
+        userName,
         isUserLoggedOut: false,
         wins: 0,
         language: getLocaleLanguage()
-    });
+    };
+
+    await usersRef.child(Uid).set(profileObj);
 }
 
 

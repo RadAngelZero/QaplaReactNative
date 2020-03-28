@@ -11,7 +11,7 @@ export default StyleSheet.create({
      justifyContent: 'flex-start',
      alignItems: 'center'
  },
- body: {
+ title: {
      color: '#FFF',
      fontSize: 25,
      fontWeight: 'bold',

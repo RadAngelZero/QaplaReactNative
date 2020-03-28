@@ -50,10 +50,6 @@
             "description": "Share the clips of your matches, all the community will be able to see the evidence of your victories.",
             "title": "Share"
         },
-        "withdraw": {
-            "description": "Withdraw you Qapla balance or use it to buy Amazon Prime products, we send them free to your home!",
-            "title": "Withdraw"
-        },
         "finish": "Finish"
     },
     "activeAchievementsScreen": {
@@ -338,7 +334,12 @@
     "deepLinks": {
         "matchCard": {
             "description": "Play your favourite game with other players and win rewards",
-            "title": "Play a %{game} match (%{platform}) to win %{bet} Qoins!"
+            "title": "Play a %{game} match (%{platform}) to win %{winBet} Qoins!"
+        },
+        "linkBroken": {
+            "title": "Link broken",
+            "description": "The content you are trying to access could not be found, try again or update the app to latest version and try again.",
+            "bttnText": "Update" 
         }
     }
 }

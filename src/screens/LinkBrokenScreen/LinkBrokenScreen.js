@@ -47,20 +47,26 @@ class LinkBrokenScreen extends Component {
 
  render() {
      return (
-         <SafeAreaView style={styles.sfvContainer}>
-             <QaplaIcon onPress={this.navigateToEvents} touchableStyle={styles.closeIcon}>
+        <SafeAreaView style={styles.sfvContainer}>
+            <QaplaIcon onPress={this.navigateToEvents} touchableStyle={styles.closeIcon}>
                 <CloseIcon />
-             </QaplaIcon>
-             <View style={styles.container}>
-                 <Text style={styles.body}>Actualiza la app</Text>
-                 <Text style={styles.description}>El contenido que estás intentando acceder no está disponible en esta versión.</Text>
-                 <TouchableWithoutFeedback onPress={this.navigateToStore}>
-                     <View style={styles.bttnContainer}>
-                         <Text style={styles.bttnText}>{'Actualizar App'}</Text>
-                     </View>
-                 </TouchableWithoutFeedback>
-             </View>
-         </SafeAreaView>
+            </QaplaIcon>
+            <View style={styles.container}>
+                <Text style={styles.title}>
+                     {translate("deepLinks.linkBroken.title")}
+                </Text>
+                <Text style={styles.description}>
+                    {translate("deepLinks.linkBroken.description")}
+                </Text>
+                <TouchableWithoutFeedback onPress={this.navigateToStore}>
+                    <View style={styles.bttnContainer}>
+                        <Text style={styles.bttnText}>
+                            {translate("deepLinks.linkBroken.bttnText")}
+                        </Text>
+                    </View>
+                </TouchableWithoutFeedback>
+            </View>
+        </SafeAreaView>
      );
  }
 }

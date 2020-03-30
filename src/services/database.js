@@ -869,14 +869,12 @@ export async function updateUserLanguage(uid) {
                         unsubscribeUserFromTopic(topicName);
                         removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
 
-                        subscribeUserToTopic(newTopicName);
-                        saveUserSubscriptionToTopic(uid, newTopicName, EVENTS_TOPIC);
+                        subscribeUserToTopic(newTopicName, uid, EVENTS_TOPIC, false);
                     } else {
                         unsubscribeUserFromTopic(topicName);
                         removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
 
-                        subscribeUserToTopic(newTopicName);
-                        saveUserSubscriptionToTopic(uid, newTopicName, userGlobalSubscription);
+                        subscribeUserToTopic(newTopicName, uid, userGlobalSubscription, false);
                     }
                 });
             });

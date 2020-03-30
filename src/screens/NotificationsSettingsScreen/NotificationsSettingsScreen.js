@@ -7,6 +7,7 @@ import { userAllowsNotificationsFrom, updateNotificationPermission, getUserTopic
 import { subscribeUserToTopic, unsubscribeUserFromTopic } from '../../services/messaging';
 import { trackOnSegment } from '../../services/statistics';
 import { translate } from '../../utilities/i18';
+import { GAMES_TOPICS, EVENTS_TOPIC } from '../../utilities/Constants';
 
 class NotificationsSettingsScreen extends Component {
 
@@ -22,7 +23,7 @@ class NotificationsSettingsScreen extends Component {
         const userTopicSubscriptions = await getUserTopicSubscriptions(type);
         if (value) {
             userTopicSubscriptions.forEach((userSubscription) => {
-                subscribeUserToTopic(userSubscription.key, this.props.id, type);
+                subscribeUserToTopic(userSubscription.key, this.props.id, type, false);
             });
 
             trackOnSegment(`User has enabled push notifications of type ${type}`);
@@ -50,8 +51,8 @@ class NotificationsSettingsScreen extends Component {
                         </Text>
                         <Switch
                             style={styles.permissionSwitch}
-                            value={userAllowsNotificationsFrom('games')}
-                            onValueChange={(value) => this.updateNotificationPermission('games', value)} />
+                            value={userAllowsNotificationsFrom(GAMES_TOPICS)}
+                            onValueChange={(value) => this.updateNotificationPermission(GAMES_TOPICS, value)} />
                     </View>
                     <View style={styles.setting}>
                         <Text style={styles.settingDescription}>
@@ -59,8 +60,8 @@ class NotificationsSettingsScreen extends Component {
                         </Text>
                         <Switch
                             style={styles.permissionSwitch}
-                            value={userAllowsNotificationsFrom('events')}
-                            onValueChange={(value) => this.updateNotificationPermission('events', value)} />
+                            value={userAllowsNotificationsFrom(EVENTS_TOPIC)}
+                            onValueChange={(value) => this.updateNotificationPermission(EVENTS_TOPIC, value)} />
                     </View>
                 </View>
             </SafeAreaView>

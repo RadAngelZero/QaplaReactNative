@@ -1,13 +1,9 @@
-import { Platform } from 'react-native';
-
 import {
 	links,
 	firebaseLinks
 } from '../utilities/firebase';
 
 import {
- 	ANDROID_STORE_LINK,
- 	IOS_STORE_LINK,
  	APPSTORE_ID,
  	IOS_BUNDLE_ID,
  	ANDROID_PACKAGE_NAME
@@ -25,14 +21,14 @@ export async function dplCreateLinkMatchCard(matchId, ctx) {
 
 	try {
 		const link = new firebaseLinks.DynamicLink(
-		`https://qapla.gg/?type=appDeepLink\&type2=matchCard\&matchId=${matchId}`, 
+		`https://qapla.gg/?type=appDeepLink\&type2=matchCard\&matchId=${matchId}`,
 		'https://qapla.page.link')
 	    .android.setPackageName(ANDROID_PACKAGE_NAME)
 	    .ios.setBundleId(IOS_BUNDLE_ID)
 	    .ios.setAppStoreId(APPSTORE_ID)
 	    .social.setDescriptionText(translate('deepLinks.matchCard.description'))
 	    .social.setImageUrl('https://qapla.gg/wp-content/uploads/2020/03/ic_launcher_foreground.jpg')
-	    .social.setTitle(translate('deepLinks.matchCard.title', {game: ctx.game, platform: ctx.platform, winBet: ctx.winBet}));
+	    .social.setTitle(translate('deepLinks.matchCard.title', { ...ctx }));
 
 		url = await links.createShortDynamicLink(link, 'UNGUESSABLE');
 	}

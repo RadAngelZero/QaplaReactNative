@@ -55,8 +55,8 @@ class EventCard extends Component {
      * Add the user to the list of participants of the selected event and
      * subscribe him/her to the FCM topic of the event
      */
-    subscribeUserToEvent = () => {
-        joinEvent(this.props.uid, this.props.id);
+    subscribeUserToEvent = (gamerTag) => {
+        joinEvent(this.props.uid, this.props.id, gamerTag);
         subscribeUserToTopic(`${this.props.id}_${getLocaleLanguage()}`, this.props.uid, EVENTS_TOPIC);
     }
 

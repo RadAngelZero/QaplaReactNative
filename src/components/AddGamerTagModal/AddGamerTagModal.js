@@ -77,7 +77,7 @@ class AddGamerTagModal extends Component {
                 updateUserGamerTag(this.props.uid, this.props.selectedGame.platform, this.props.selectedGame.gameKey, this.state.gamerTagText);
             }
 
-                subscribeUserToTopic(`${this.props.selectedGame.gameKey}_${getLocaleLanguage()}`, this.props.uid, GAMES_TOPICS);
+                subscribeUserToTopic(this.props.selectedGame.gameKey, this.props.uid, GAMES_TOPICS);
 
                 trackOnSegment('Add Gamer Tag Process Completed', {
                     game: this.props.selectedGame.gameKey,

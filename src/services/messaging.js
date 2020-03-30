@@ -1,35 +1,45 @@
 import { messaging } from '../utilities/firebase';
-import { userAllowsNotificationsFrom,
+import {
+    userAllowsNotificationsFrom,
     saveUserSubscriptionToTopic,
     getAllUserTopicSubscriptions,
     updateNotificationPermission
 } from './database';
+import { getLocaleLanguage } from './../utilities/i18';
 
 /**
  * Subscribe a user to a topic, so the user will receive all the notifications
  * related to the given topic (in games topics every gameKey is a topic in FCM)
  * A topic is automatically created when one user subscribes to it
- * @param {string} topic Name of the topic, always send this name with the sufix _${userLanguage}
+ * @param {string} topic Name of the topic
  * @param {string | null} uid User identifier
  * @param {string} type Type of topic, for example game or event
- * @example subscribeUserToTopic(`${topicName}_${userLanguage}`, 'userUid', 'Games');
+ * @param {boolean} [addLanguageSuffix = true] False if the topic param already contain the _${language}
+ * data. True by default
  */
-export function subscribeUserToTopic(topic, uid = '', type) {
+export function subscribeUserToTopic(topic, uid = '', type, addLanguageSuffix = true) {
+    let topicName = '';
+
+    if (addLanguageSuffix) {
+        topicName = `${topic}_${getLocaleLanguage()}`;
+    } else {
+        topicName = topic;
+    }
 
     /**
      * Only if the user allow to receive push notifications of this type
      * we subscribe him
      */
     if (userAllowsNotificationsFrom(type)) {
-        messaging.subscribeToTopic(topic);
+        messaging.subscribeToTopic(topicName);
     }
 
     /**
      * If the user is logged with an account we save their subscription to the topic
      * (some topics does not require authentication)
      */
-    if (uid !== '') {
-        saveUserSubscriptionToTopic(uid, topic, type);
+    if (uid) {
+        saveUserSubscriptionToTopic(uid, topicName, type);
     }
 }
 

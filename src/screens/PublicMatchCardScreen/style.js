@@ -12,6 +12,35 @@ export default StyleSheet.create({
       flex: 1,
       backgroundColor: '#0D1021'
     },
+    mExpiredContainer: {
+         flex: 1,
+         justifyContent: 'center',
+         alignItems: 'center'
+    },
+    mExpiredText: {
+     color: '#FFF',
+     fontSize: 25,
+     fontWeight: 'bold',
+     position: 'absolute',
+     top: heightPercentageToPx(25)
+    },
+    mExpiredBttnContainer: {
+     borderRadius: 100,
+     backgroundColor: '#FA2D79',
+     elevation: 10,
+     alignSelf: 'center',
+     position: 'absolute',
+    },
+    mExpiredBttnText: {
+     color: '#FFF',
+     alignSelf: 'center',
+     fontWeight: 'bold',
+     marginTop: heightPercentageToPx(2.46),
+     marginBottom: heightPercentageToPx(2.46),
+     marginLeft: widthPercentageToPx(8.53),
+     marginRight: widthPercentageToPx(8.53),
+     letterSpacing: .57
+    },
     mainContainer: {
         flex:1,
         justifyContent: 'flex-start'
@@ -81,6 +110,13 @@ export default StyleSheet.create({
     },
     activeColor: {
         color: '#3DF9DF'
+    },
+    link: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginRight: 8,
+        marginLeft: 8,
+        textDecorationLine: 'underline'
     },
     bottomButton: {
         backgroundColor: '#FA2D79',

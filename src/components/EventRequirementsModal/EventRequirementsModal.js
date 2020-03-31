@@ -4,6 +4,7 @@ import { Modal, View, TouchableWithoutFeedback, Text } from 'react-native';
 import styles from './style';
 import Images from './../../../assets/images';
 import { translate } from '../../utilities/i18';
+import QaplaIcon from '../QaplaIcon/QaplaIcon';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -26,11 +27,9 @@ class EventRequirementsModal extends Component {
                 onRequestClose={this.props.closeModal}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
-                        <TouchableWithoutFeedback onPress={this.props.closeModal}>
-                            <View style={styles.closeIcon}>
-                                <CloseIcon />
-                            </View>
-                        </TouchableWithoutFeedback>
+                        <QaplaIcon onPress={this.props.closeModal} touchableStyle={styles.closeIcon}>
+                            <CloseIcon />
+                        </QaplaIcon>
                         <Text style={styles.modalTitle}>
                             {translate('activeAchievementsScreen.eventAchievement.eventRequirementsModal.title')}
                         </Text>

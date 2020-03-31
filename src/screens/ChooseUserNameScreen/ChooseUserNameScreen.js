@@ -10,8 +10,9 @@ import { connect } from 'react-redux';
 import Images from './../../../assets/images';
 import styles from './style';
 
-import { validateUserName, createUserName } from '../../services/database';
+import { validateUserName, createUserName, createUserProfile } from '../../services/database';
 import { translate } from '../../utilities/i18';
+
 import CheckBox from '../../components/CheckBox/CheckBox';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import TermsAndConditionsModal from '../../components/TermsAndConditionsModal/TermsAndConditionsModal';
@@ -37,26 +38,35 @@ class ChooseUserNameScreen extends Component {
      * Validate the agreements (terms and privacy), also validate the userName
      * if everything is right add the userName and returns the user to the previous flow
      */
-    checkTermsConditionsAndUsername = () => {
-        if (this.state.userName !== '' && !this.state.checkingUserName && this.state.agreementPrivacyState && this.state.agreementTermsState) {
-            this.setState({
-            	checkingUserName: true,
-            	showErrorMessage: false }, async () => {
-                if(this.state.userName !== '' && await validateUserName(this.state.userName)) {
-                    createUserName(this.props.uid, this.state.userName);
-                    const originScreen = this.props.navigation.getParam('originScreen', 'Achievements');
-                    if (originScreen !== 'Public') {
-                        this.props.navigation.navigate(originScreen);
-                    } else {
-                        this.props.navigation.navigate('MatchWizard');
-                    }
-                } else {
+    checkTermsConditionsAndUsername = async () => {
+        try {
+            if (this.state.userName !== '' && !this.state.checkingUserName && this.state.agreementPrivacyState && this.state.agreementTermsState) {
                 this.setState({
-                    showErrorMessage: true,
-                    checkingUserName: false
+                    checkingUserName: true,
+                    showErrorMessage: false }, async () => {
+                    if(this.state.userName !== '' && await validateUserName(this.state.userName)) {
+                        const email = this.props.navigation.getParam('email', '');
+
+                        await createUserProfile(this.props.uid, email, this.state.userName);
+
+                        const originScreen = this.props.navigation.getParam('originScreen', 'Achievements');
+                        
+                        if (originScreen !== 'Public') {
+                            this.props.navigation.navigate(originScreen);
+                        } else {
+                            this.props.navigation.navigate('MatchWizard');
+                        }
+                    } else {
+                    this.setState({
+                        showErrorMessage: true,
+                        checkingUserName: false
+                    });
+                    }
                 });
-                }
-            });
+            }
+        }
+        catch(error) {
+            console.error(`[checkTermsConditionsAndUsername]`, error);
         }
     }
 

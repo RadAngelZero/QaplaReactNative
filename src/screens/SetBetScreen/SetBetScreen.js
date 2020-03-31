@@ -20,6 +20,7 @@ import {
     Text,
     TouchableWithoutFeedback
 } from 'react-native';
+
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -41,6 +42,16 @@ import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 import { translate } from '../../utilities/i18';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { getPlatformNameWithKey } from '../../utilities/utils';
+
+import {
+    dplCreateLinkMatchCard
+} from '../../services/links';
+
+import {
+    discordPublishMessageToChannel
+} from '../../services/discord';
+
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
 const QaploinIcon = images.svg.qaploinsIcon;
@@ -142,19 +153,50 @@ class SetBetScreen extends Component {
         this.setState({ currentBet: oldBet > 0 ? oldBet - 1 : oldBet });
     }
 
+    /**
+     * Creates a deep link for a MatchCard and publishes it to Discord
+     * @param {object} ctx Context object containing required data to publish to Discord
+     */
+    async shareMatchToDiscord(ctx) {
+        // TODO: try with a promise returned to make it faster
+        const url = await dplCreateLinkMatchCard(ctx.matchId, ctx);
+
+        ctx.url = url;
+        ctx.userDiscordTag = this.props.userDiscordTag;
+        discordPublishMessageToChannel(ctx);
+    }
+
     createMatch() {
         if (!this.state.loading) {
             this.setState({ loading: true }, async () => {
                 if (this.props.userQaploins >= this.bets[this.state.currentBet]) {
 
                     try {
-                        await createPublicMatch(this.props.uid, this.bets[this.state.currentBet], this.props.selectedGame);
+                        const matchId = await createPublicMatch(this.props.uid, this.bets[this.state.currentBet], this.props.selectedGame);
                         await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.bets[this.state.currentBet]);
 
                         trackOnSegment('Match created', {
                             Bet: this.bets[this.state.currentBet],
                             Game: this.props.selectedGame.gameKey,
-                            Platform: this.props.selectedGame.platform
+                            Platform: this.props.selectedGame.platform,
+                            MatchId: matchId,
+                            Uid: this.props.uid
+                        });
+
+                        // TODO: move that into an asyn cfunction to be much quicker when the user
+                        // presses the crear reta button 
+                        // publish match created on link on Discord channel
+                        const game = this.props.selectedGame;
+
+                        this.shareMatchToDiscord({
+                            winBet: this.defineWinBet(),
+                            bet: this.bets[this.state.currentBet],
+                            game: game.name,
+                            platform: getPlatformNameWithKey(game.platform),
+                            creatorUid: this.props.uid,
+                            matchId,
+                            discordImg: game.discordImg,
+                            discordTag: this.props.userDiscordTag
                         });
 
                         // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
@@ -254,7 +296,8 @@ function mapDispatchToProps(state) {
     return {
         userQaploins: state.userReducer.user.credits,
         uid: state.userReducer.user.id,
-        selectedGame: state.gamesReducer.selectedGame
+        selectedGame: state.gamesReducer.selectedGame,
+        userDiscordTag: state.userReducer.user.discordTag
     };
 }
 

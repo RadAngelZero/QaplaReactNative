@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native'
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default StyleSheet.create({
-  	container:{
+  	container: {
         backgroundColor: '#0D1021'
 	},
 	titleContainer: {
@@ -25,6 +25,7 @@ export default StyleSheet.create({
 		height: heightPercentageToPx(1.23)
 	},
 	scrollViewStyle: {
-		marginRight: widthPercentageToPx(2.67)
+		marginRight: widthPercentageToPx(2.67),
+		marginLeft: widthPercentageToPx(2.67)
 	}
 });

@@ -48,7 +48,7 @@ class WelcomeOnboardingScreen extends React.Component {
 		 */
 		this.props.userGames.forEach((gameKey) => {
 			if (gameKey) {
-				subscribeUserToTopic(gameKey, this.props.uid, GAMES_TOPICS);
+				subscribeUserToTopic(`${gameKey}_${getLocaleLanguage()}`, this.props.uid, GAMES_TOPICS);
 			}
 		});
 
@@ -76,11 +76,6 @@ class WelcomeOnboardingScreen extends React.Component {
 			Image: Images.png.shareOnBoarding.img,
 			description: translate('onBoardingScreen.share.description'),
 			title: translate('onBoardingScreen.share.title')
-		},
-      	{
-			Image: Images.png.walletOnBoarding.img,
-			description: translate('onBoardingScreen.withdraw.description'),
-			title: translate('onBoardingScreen.withdraw.title')
 		}
     ];
 

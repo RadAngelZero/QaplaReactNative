@@ -1,9 +1,10 @@
 {
   "name": "Qapla-React-Native",
-  "version": "0.0.1",
+  "version": "2.0.1",
   "private": true,
   "scripts": {
     "android": "cd android && gradlew clean && cd .. && react-native run-android",
+    "buildAndroid": "cd android && gradlew assembleRelease",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "mocha --require test/config/mocha.js ./test/*.test.js",

@@ -2,8 +2,7 @@
 
 import { StyleSheet } from 'react-native';
 
-import { widthPercentageToPx, heightPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
-import { NAV_TOPBAR_ICON_RIGHT_MARGIN, NAV_TOPBAR_ICON_TOP_MARGIN } from '../../utilities/Constants';
+import { widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
@@ -22,9 +21,6 @@ export default styles = StyleSheet.create({
         paddingRight: 8,
     },
     closeIcon: {
-        marginRight: widthPercentageToPx(NAV_TOPBAR_ICON_RIGHT_MARGIN),
-        marginBottom: heightPercentageToPx(2.46),
-        marginTop: heightPercentageToPx(NAV_TOPBAR_ICON_TOP_MARGIN),
         alignSelf: 'flex-end'
     },
     title: {

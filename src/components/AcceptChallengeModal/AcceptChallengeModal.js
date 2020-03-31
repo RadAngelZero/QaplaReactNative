@@ -13,6 +13,7 @@ import { withNavigation } from 'react-navigation';
 import CheckBox from '../CheckBox/CheckBox';
 import Images from './../../../assets/images';
 import { translate } from '../../utilities/i18';
+import QaplaIcon from '../QaplaIcon/QaplaIcon';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -49,11 +50,9 @@ class AcceptChallengeModal extends Component {
                 onRequestClose={this.props.onClose}>
                     <View style={styles.mainContainer}>
                         <View style={styles.container}>
-                            <TouchableWithoutFeedback onPress={this.props.onClose}>
-                                <View style={styles.closeIcon}>
-                                    <CloseIcon />
-                                </View>
-                            </TouchableWithoutFeedback>
+                            <QaplaIcon onPress={this.props.onClose} touchableStyle={styles.closeIcon}>
+                                <CloseIcon />
+                            </QaplaIcon>
                             <Text style={styles.paragraph}>
                                 {translate('notificationsScreen.acceptChallengeModal.body')}
                             </Text>

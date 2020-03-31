@@ -18,12 +18,15 @@
 #import <Firebase.h>
 #import "RNFirebaseNotifications.h"
 #import "RNFirebaseMessaging.h"
+#import "RNFirebaseLinks.h"
+#import <React/RCTLinkingManager.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   // This line should be removed if React Native Firebase library is removed
+  [FIROptions defaultOptions].deepLinkURLScheme = @"org.Qapla.QaplaApp";
   [FIRApp configure];
   [RNFirebaseNotifications configure];
     
@@ -52,9 +55,21 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options {
-  return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] || [RNGoogleSignin application:application openURL:url options:options];
+  
+ BOOL handled = [RCTLinkingManager application:application openURL:url options:options];
+
+  if (!handled) {
+      handled = [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] || [RNGoogleSignin application:application openURL:url options:options] || [[RNFirebaseLinks instance] application:application openURL:url options:options];
+  }
+
+  return handled;
 }
 
+- (BOOL)application:(UIApplication *)application
+continueUserActivity:(NSUserActivity *)userActivity
+ restorationHandler:(void (^)(NSArray *))restorationHandler {
+     return [[RNFirebaseLinks instance] application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+}
 
 // Notifications helping functions
 // -------------------------------

@@ -71,6 +71,10 @@ export const TIE_RESULT = '3';
 
 // Discord Qapla Channel link
 export const QAPLA_DISCORD_CHANNEL = 'https://discord.gg/G4BuRZD';
+export const FIND_ADVERSARY_DISCORD_CHANNEL = 'https://discordapp.com/channels/373252198773293066/676917105261805590';
+export const QAPLA_DISCORD_WEBHOOK_URL = 'https://discordapp.com/api/webhooks/692814768054206485/o67Lre8VrLIo26suoTZvEJFN199kWB1y_thRwFqFshzddMkgZP1ajyWs9mL4VLjjv8p2';
+export const QAPLA_DISCORD_WEBHOOK_URL_TEST = 'https://discordapp.com/api/webhooks/692800624017801287/E68ViYaO34VMvCdfiRuADcTVSo_B-azRz0RiSo_L6EU39gAofnDTuOuiyWEYHbbMGQZE';
+export const DISCORD_GAME_IMAGE_PLACEHOLDER = 'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/discord_images%2Fplaceholder.png?alt=media&token=83b5e192-6973-4650-9246-bc0afcf117ab';
 
 // Date constants
 
@@ -109,3 +113,12 @@ export const ACCOUNT_ALREADY_IN_USE = 'auth/credential-already-in-use';
 export const ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT = 'auth/unknown';
 export const ACCOUNT_INVALID_CREDENTIAL = 'auth/invalid-credential';
 export const ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS =  'auth/provider-already-linked';
+
+// IOS and Android store
+export const IOS_STORE_LINK = 'https://apps.apple.com/mx/app/qapla-gaming/id1485332229';
+export const ANDROID_STORE_LINK = 'https://play.google.com/store/apps/details?id=com.qapla.gaming.app&hl=en';
+export const APPSTORE_ID = '1485332229';
+
+//App settings
+export const IOS_BUNDLE_ID = 'org.Qapla.QaplaApp';
+export const ANDROID_PACKAGE_NAME = 'com.qapla.gaming.app';

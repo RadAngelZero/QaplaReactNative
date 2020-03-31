@@ -15,28 +15,36 @@ class Snackbar extends Component {
     };
 
     static getDerivedStateFromProps(props, state) {
-        if (props.visible !== state.visible) {
-            Animated.timing(state.yAxisValue, {
-                toValue: props.visible ? heightPercentageToPx(80) : heightPercentageToPx(110),
-                duration: props.visible ? 200 : 250,
-                easing: props.visible ? Easing.inOut(Easing.ease) : Easing.in(Easing.cubic)
-            }).start();
-
-            return { visible: props.visible };
-        } else if (props.openAndCollapse) {
-            Animated.timing(state.yAxisValue, {
-                toValue: heightPercentageToPx(80),
-                duration: 200,
-                easing: Easing.inOut(Easing.ease)
-            }).start();
-
-            setTimeout(() => {
+        if (!props.forceClose) {
+            if (props.visible !== state.visible) {
                 Animated.timing(state.yAxisValue, {
-                    toValue: heightPercentageToPx(110),
-                    duration: 250,
-                    easing: Easing.in(Easing.cubic)
+                    toValue: props.visible ? heightPercentageToPx(72) : heightPercentageToPx(110),
+                    duration: props.visible ? 200 : 250,
+                    easing: props.visible ? Easing.inOut(Easing.ease) : Easing.in(Easing.cubic)
                 }).start();
-            }, 4000);
+
+                return { visible: props.visible };
+            } else if (props.openAndCollapse) {
+                Animated.timing(state.yAxisValue, {
+                    toValue: heightPercentageToPx(72),
+                    duration: 200,
+                    easing: Easing.inOut(Easing.ease)
+                }).start();
+
+                setTimeout(() => {
+                    Animated.timing(state.yAxisValue, {
+                        toValue: heightPercentageToPx(110),
+                        duration: 250,
+                        easing: Easing.in(Easing.cubic)
+                    }).start();
+                }, props.action ? 8000 : 4000);
+            }
+        } else {
+            Animated.timing(state.yAxisValue, {
+                toValue: heightPercentageToPx(110),
+                duration: 250,
+                easing: Easing.in(Easing.cubic)
+            }).start();
         }
 
         return null;
@@ -55,11 +63,11 @@ class Snackbar extends Component {
                 <Text style={haveAction ? styles.messageWithAction : styles.message}>
                     {this.props.message}
                 </Text>
-                {haveAction &&
-                    <Text style={styles.actionTextButton} onPress={this.props.action}>
-                        {this.props.actionMessage}
-                    </Text>
-                }
+                <Text style={styles.actionTextButton} onPress={this.props.action}>
+                    {haveAction &&
+                        this.props.actionMessage
+                    }
+                </Text>
             </Animated.View>
         );
     }

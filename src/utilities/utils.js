@@ -5,6 +5,7 @@
 
 import { Linking } from 'react-native';
 import { translate } from './i18';
+import store from '../store/store';
 
 /**Generador ramdom de claves para retas
  * basado en el metodo de android
@@ -169,4 +170,13 @@ export function isFunction(functionToCheck) {
 
 export function withdrawQaploins() {
     Linking.openURL('whatsapp://send?text=Hola, quiero retirar mis qaploins&phone=+523312971299'/*<= Change for the suport number */);
+}
+
+/**
+ * Check if the given game is a game that we have on the app
+ * @param {string} platform Platform of the game
+ * @param {string} game Game key
+ */
+export function isValidGame(platform, game) {
+    return platform && store.getState().gamesReducer.games[platform] && store.getState().gamesReducer.games[platform][game];
 }

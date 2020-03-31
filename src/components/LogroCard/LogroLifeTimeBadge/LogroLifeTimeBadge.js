@@ -6,19 +6,39 @@ import { ONE_HOUR_MILISECONDS, HOURS_IN_DAY } from './../../../utilities/Constan
 
 export class LogroLifeTimeBadge extends Component {
     render() {
+        const date = new Date();
+        const currentUTCdate = new Date(
+            Date.UTC(
+                date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+                date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()
+            )
+        );
+
         /**
          * The date come from the cards in the next format:
          * Day-Month-Year
          * So we need to split between the "-" to get the data, because
-         * the original format is not valide to create a date object
          */
         const [day, month, year] = this.props.limitDate.split('-');
-        const [hour, minutes] = this.props.hour.split(':');
+        const [hour, minutes] = this.props.startTime.split(':');
         const logroEndDate = new Date(`${month}/${day}/${year} ${hour}:${minutes}`);
-        const mexicoDate = new Date().toLocaleDateString('en-us', { timeZone: 'America/Mexico_City', year: '2-digit' });
-        const [currentMonth, currentDay, currentYear] = mexicoDate.split('/');
-        const mexicoHour = new Date().toLocaleTimeString('en-us', { timeZone: 'America/Mexico_City', hour12: false });
-        const [currentHour, currentMinutes] = mexicoHour.split(':');
+
+        /**
+         * toISOString doc: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+         * toISOString returned format: YYYY-MM-DDTHH:mm:ss.sssZ or ±YYYYY-MM-DDTHH:mm:ss.sssZ
+         */
+        const [UTCDate, UTCHourFormated] = currentUTCdate.toISOString().split('T');
+        let [currentYear, currentMonth, currentDay] = UTCDate.split('-');
+
+        /**
+         * Maybe this need an update on the year 9,999
+         */
+        if (currentYear.includes('+') || currentYear.includes('-')) {
+            currentYear = currentYear.substring(1, currentYear.length);
+        }
+
+        const UTCHour = UTCHourFormated.split('.')[0];
+        const [currentHour, currentMinutes] = UTCHour.split(':');
         const currentDate = new Date(
             `${currentMonth}/${currentDay}/${currentYear} ${currentHour}:${currentMinutes}`
         );

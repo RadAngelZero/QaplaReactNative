@@ -8,29 +8,49 @@ import LogrosList from '../../components/LogroCard/LogrosList';
 class TodayTournamentsScreen extends Component {
     render() {
         let logros = this.props.events.filter((event) => {
-            if (event.tiempoLimite) {
-                const [eventDay, eventMonth, eventYear] = event.tiempoLimite.split('-');
-                const mexicoDate = new Date().toLocaleDateString('en-us', { timeZone: 'America/Mexico_City', year: '2-digit' });
-                const [month, day, year] = mexicoDate.split('/');
+            if (event.dateUTC && event.hourUTC) {
+                const date = new Date();
+                const currentUTCdate = new Date(
+                    Date.UTC(
+                        date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+                        date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()
+                    )
+                );
 
-                const [eventHour, eventMinutes] = event.hour.split(':');
-                const mexicoHour = new Date().toLocaleTimeString('en-us', { timeZone: 'America/Mexico_City', hour12: false });
-                const [hour, minutes] = mexicoHour.split(':');
+                const [eventDay, eventMonth, eventYear] = event.dateUTC.split('-');
+                const [eventHour, eventMinutes] = event.hourUTC.split(':');
+
+                /**
+                 * toISOString doc: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+                 * toISOString returned format: YYYY-MM-DDTHH:mm:ss.sssZ or ±YYYYY-MM-DDTHH:mm:ss.sssZ
+                 */
+                const [UTCDate, UTCHourFormated] = currentUTCdate.toISOString().split('T');
+                let [currentYear, currentMonth, currentDay] = UTCDate.split('-');
+
+                /**
+                 * Maybe this need an update on the year 9,999
+                 */
+                if (currentYear.includes('+') || currentYear.includes('-')) {
+                    currentYear = currentYear.substring(1, currentYear.length);
+                }
+
+                const UTCHour = UTCHourFormated.split('.')[0];
+                const [currentHour, currentMinutes] = UTCHour.split(':');
 
                 /**
                  * We check if the event is today (this month, day, and year)
                  * and has not begun yet (if the hour is bigger than the current hour or if is in this hour but the minutes are bigger than the current minutes)
                  */
-                return parseInt(eventMonth) === parseInt(month)
+                return parseInt(eventMonth) === parseInt(currentMonth)
                     &&
-                    parseInt(eventDay) === parseInt(day)
+                    parseInt(eventDay) === parseInt(currentDay)
                     &&
-                    parseInt(eventYear.substring(1, 4)) === parseInt(year)
+                    parseInt(eventYear) === parseInt(currentYear)
                     &&
                     (
-                        parseInt(hour) < parseInt(eventHour)
+                        parseInt(currentHour) < parseInt(eventHour)
                         ||
-                        (parseInt(hour) === parseInt(eventHour) && parseInt(minutes) < parseInt(eventMinutes))
+                        (parseInt(currentHour) === parseInt(eventHour) && parseInt(currentMinutes) < parseInt(eventMinutes))
                     );
             }
         });

@@ -41,15 +41,11 @@ class TodayTournamentsScreen extends Component {
                  * We check if the event is today (this month, day, and year)
                  * and has not begun yet (if the hour is bigger than the current hour or if is in this hour but the minutes are bigger than the current minutes)
                  */
-                return parseInt(eventMonth) === parseInt(currentMonth)
-                    &&
-                    parseInt(eventDay) === parseInt(currentDay)
-                    &&
-                    parseInt(eventYear) === parseInt(currentYear)
-                    &&
+                return parseInt(eventMonth) === parseInt(currentMonth) &&
+                    parseInt(eventDay) === parseInt(currentDay) &&
+                    parseInt(eventYear) === parseInt(currentYear) &&
                     (
-                        parseInt(currentHour) < parseInt(eventHour)
-                        ||
+                        parseInt(currentHour) < parseInt(eventHour) ||
                         (parseInt(currentHour) === parseInt(eventHour) && parseInt(currentMinutes) < parseInt(eventMinutes))
                     );
             }

@@ -24,7 +24,7 @@ import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
 import { translate } from '../../utilities/i18';
-import { checkNotificationPermission } from '../../utilities/notifications';
+import { checkNotificationPermission } from '../../services/messaging';
 
 import {
     trackOnSegment
@@ -53,14 +53,21 @@ class AuthLoadingScreen extends Component {
             if (user) {
                 this.props.loadUserData(user.uid);
                 this.props.loadQaplaLogros(user.uid);
-                updateUserLanguage(user.uid);
 
-                // If username doe snot exist because profile does not exist as well, then
+                // If username does not exist because profile does not exist as well, then
                 // user is redirected to ChooUserName where they will create their profile.
                 const userName = await getUserNameWithUID(user.uid);
 
                 if (!userName){
                     return this.props.navigation.navigate('ChooseUserName');
+                } else {
+                    /**
+                     * Things to do if the user is logged and have a valid username
+                     * generally actions that implie write something in the user profile
+                     * the profile does not exist before the userName selection so write
+                     * on it will create trash on the database
+                     */
+                    updateUserLanguage(user.uid);
                 }
 
                 await checkNotificationPermission(user.uid);

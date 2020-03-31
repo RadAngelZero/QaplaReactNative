@@ -10,7 +10,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import styles from './style'
-import Svg, { SvgUri } from 'react-native-svg';
+import { SvgUri } from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {
@@ -27,6 +27,7 @@ import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAn
 import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
 import Colors from '../../utilities/Colors';
 import { GAMES_TOPICS } from '../../utilities/Constants';
+import { getLocaleLanguage } from '../../utilities/i18';
 
 class GameCard extends Component {
     state = {
@@ -88,7 +89,7 @@ class GameCard extends Component {
                  * Every game is a topic, so we can send push notifications to the user
                  * about specific games
                  */
-                subscribeUserToTopic(newGame.gameKey, this.props.user.id, GAMES_TOPICS);
+                subscribeUserToTopic(`${newGame.gameKey}_${getLocaleLanguage()}`, this.props.user.id, GAMES_TOPICS);
 
                 this.props.navigation.pop();
             } catch (error) {
@@ -118,19 +119,19 @@ class GameCard extends Component {
                             style={styles.imageStyle}
                             source={game.local ? game.image : { uri: game.image }}/>
                         <View style={styles.detailsContainer}>
-                            <Svg style={styles.iconContainer}>
-                                {game.local ?
-                                    <game.icon
-                                        width={widthPercentageToPx(5)}
-                                        height={heightPercentageToPx(5)} />
-                                    :
-                                    <SvgUri
-                                        width={widthPercentageToPx(5)}
-                                        height={heightPercentageToPx(5)}
-                                        uri={game.icon}
-                                        fill={Colors.greenQapla} />
-                                }
-                            </Svg>
+                            {game.local ?
+                                <game.icon
+                                    style={styles.iconContainer}
+                                    width={widthPercentageToPx(5)}
+                                    height={heightPercentageToPx(5)} />
+                                :
+                                <SvgUri
+                                    style={styles.iconContainer}
+                                    width={widthPercentageToPx(5)}
+                                    height={heightPercentageToPx(5)}
+                                    uri={game.icon}
+                                    fill={Colors.greenQapla} />
+                            }
                             <Text style={styles.gameName}>
                                 {game.name}
                             </Text>

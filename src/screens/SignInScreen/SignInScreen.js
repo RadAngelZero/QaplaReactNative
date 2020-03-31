@@ -3,13 +3,13 @@
 import React, { Component } from 'react';
 import { BackHandler, View, Image, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
-import { Svg } from 'react-native-svg';
 
 import styles from './style';
 import Images from './../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
 import { translate } from '../../utilities/i18';
-import { createUserProfile } from '../../services/database';
+import { updateUserLoggedStatus } from '../../services/database';
+import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
@@ -85,9 +85,13 @@ class SignInScreen extends Component {
      */
     succesfullSignIn = (user) => {
         if (user.additionalUserInfo.isNewUser) {
-            createUserProfile(user.user.uid, user.user.email);
-            this.props.navigation.navigate('ChooseUserName', { originScreen: this.state.originScreenWhenComponentMounted });
+            this.props.navigation.navigate('ChooseUserName', {
+                originScreen: this.state.originScreenWhenComponentMounted,
+                email: user.user.email 
+            });
         } else {
+            updateUserLoggedStatus(true, user.user.uid);
+            subscribeUserToAllRegistredTopics(user.user.uid);
             if (this.props.originScreen !== 'Public') {
                 this.props.navigation.dismiss();
             } else {
@@ -114,17 +118,13 @@ class SignInScreen extends Component {
                     <View>
                         <TouchableWithoutFeedback onPress={this.signInWithFacebook}>
                             <View style={[styles.socialMediaSignInButton, styles.facebookSignInButton]}>
-                                <Svg style={styles.socialMediaIconStyle}>
-                                    <FacebookIcon />
-                                </Svg>
+                                <FacebookIcon style={styles.socialMediaIconStyle} />
                                 <Text style={[styles.textButton, styles.whiteColor]}>{translate('signInScreen.facebookSignin')}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.signInWithGoogle}>
                             <View style={[styles.socialMediaSignInButton, styles.googleSignInButton]}>
-                                <Svg style={styles.socialMediaIconStyle}>
-                                    <GoogleIcon />
-                                </Svg>
+                                <GoogleIcon style={styles.socialMediaIconStyle} />
                                 <Text style={[styles.textButton, styles.googleButtonText]}>{translate('signInScreen.googleSignin')}</Text>
                             </View>
                         </TouchableWithoutFeedback>

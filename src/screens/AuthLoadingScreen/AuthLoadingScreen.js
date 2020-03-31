@@ -2,17 +2,32 @@ import React, { Component } from 'react';
 import { View, ActivityIndicator, Text, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 
-import { auth, messaging, notifications } from '../../utilities/firebase';
+import {
+    auth,
+    notifications,
+    links
+} from '../../utilities/firebase';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
-import { getUserNameWithUID, saveFCMUserToken } from '../../services/database';
+import {
+    getUserNameWithUID,
+    getMatchWitMatchId,
+    getGamerTagWithUID,
+    getUserDiscordTag,
+    updateUserLanguage
+} from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
 import { translate } from '../../utilities/i18';
+import { checkNotificationPermission } from '../../utilities/notifications';
+
+import {
+    trackOnSegment
+} from '../../services/statistics';
 
 class AuthLoadingScreen extends Component {
     state = {
@@ -37,14 +52,17 @@ class AuthLoadingScreen extends Component {
             if (user) {
                 this.props.loadUserData(user.uid);
                 this.props.loadQaplaLogros(user.uid);
+                updateUserLanguage(user.uid);
 
-                const userName = await getUserNameWithUID(user.uid).then((userName) => userName);
+                // If username doe snot exist because profile does not exist as well, then 
+                // user is redirected to ChooUserName where they will create their profile.
+                const userName = await getUserNameWithUID(user.uid);
 
-                if (userName === ''){
+                if (!userName){
                     return this.props.navigation.navigate('ChooseUserName');
                 }
 
-                await this.checkNotificationPermission(user.uid);
+                await checkNotificationPermission(user.uid);
 
                 /*
                 * When the app loads we check if is opened from a notification, also we check if the notificatios
@@ -54,7 +72,13 @@ class AuthLoadingScreen extends Component {
 
                 if (notificationOpen) {
                     const { notification } = notificationOpen;
-                    const { navigateTo } = notification._data;
+                    const { navigateTo, title, body } = notification._data;
+
+                    trackOnSegment('Push Notification Start App', {
+                        ScreenToNavigate: navigateTo,
+                        Title: title,
+                        Body: body
+                    });
 
                     if (navigateTo) {
                         return this.props.navigation.navigate(navigateTo, notification._data);
@@ -92,60 +116,105 @@ class AuthLoadingScreen extends Component {
                 }
             }
         });
+
+        this.manageStartDeepLinks();
+        this.manageBackgroundDeepLinks();
     }
 
     /**
-     * Check if the user has granted the required permission to receive
-     * our push notifications
-     * @param {string} uid User identifier on the database
+     * Enable entry point when the app has been launched from a deeplink
      */
-    async checkNotificationPermission(uid) {
-        try {
-            const notificationPermissionEnabled = await messaging.hasPermission();
+    manageStartDeepLinks = async () => {  
+        const url = await links.getInitialLink();
+        this.processLinkUrl(url);
+    }
 
-            if (notificationPermissionEnabled) {
-                this.handleUserToken(uid);
-            } else {
-                this.requestPermission(uid);
+    manageBackgroundDeepLinks = () => {
+        if (!this.unsubscribeBackgroundDpl) {
+            this.unsubscribeBackgroundDpl = links.onLink(this.processLinkUrl);  
+        }
+    }
+
+    /**
+     * Enable entry point when the app has been launched from a deeplink
+     * @param {string | null} url Url of deeplink pressed by the user
+     */
+    processLinkUrl = (url) => {
+        if (url) {
+            let screenName = 'LinkBroken';
+            const type = this.getParameterFromUrl(url, 'type');
+            
+            if (type === 'appDeepLink') {
+                const type2 = this.getParameterFromUrl(url, 'type2');
+                
+                if (type2 === 'matchCard') {
+                	const matchId = this.getParameterFromUrl(url, 'matchId');
+                    
+                    trackOnSegment('Deep link - matchCard', {
+                        MatchId: matchId
+                    });
+
+                    // TODO: cobvert this multiple return approach into 
+                    // a single navigate operation inside processLinksUrl
+                    return this.redirectUserToPublicMatchCard(url);
+                }
             }
-        } catch (error) {
-            console.error(error);
+
+            this.props.navigation.navigate(screenName);
         }
     }
 
     /**
-     * Ask the user for the required permission to receive our push notifications
-     * @param {string} uid User identifier on the database
+     * Enable entry point when the app has been launched from a deeplink
+     * @param {string | null} url Url of deeplink pressed by the user
      */
-    async requestPermission(uid) {
-        try {
-
-            /**
-             * If the user don't grant permission we go to the catch block automatically
-             */
-            await messaging.requestPermission();
-
-            /**
-             * If the user grant permission we handle their token
-             */
-            this.handleUserToken(uid);
-        } catch (error) {
-            // User has rejected permissions
-            console.log('permission rejected');
-        }
+    getParameterFromUrl(url, parm) {
+        var re = new RegExp(".*[?&]" + parm + "=([^&]+)(&|$)");
+        var match = url.match(re);
+        return (match ? match[1] : "");
     }
 
     /**
-     * Get and save the FCM token of the user on the database
-     * @param {string} uid User identifier on the database
+     * Redirect to MatchCard screen with 'matchId'
+     * @param {string} url Url of deeplink pressed by the user
      */
-    async handleUserToken(uid) {
-        try {
-            const FCMToken = await messaging.getToken();
-            await saveFCMUserToken(uid, FCMToken);
-        } catch (error) {
-            console.error(error);
+    async redirectUserToPublicMatchCard(url) {
+        const matchId = this.getParameterFromUrl(url, 'matchId');
+        const matchDBObj = await getMatchWitMatchId(matchId);
+
+        let matchObj = {
+            deepLink: true,
+            expired: true 
+        };
+
+        if (matchDBObj) {
+            //Get the userName from a external function because the match object only have the UID
+            const userName = await getUserNameWithUID(matchDBObj.adversary1);
+            const gamerTag = await getGamerTagWithUID(matchDBObj.adversary1, matchDBObj.game, matchDBObj.platform);
+
+            matchObj = {
+                ...matchObj,
+                adversaryUid: matchDBObj.adversary1,
+                alphaNumericIdMatch: matchDBObj.alphaNumericIdMatch,
+                bet: matchDBObj.bet,
+                date: matchDBObj.date,
+                game: matchDBObj.game,
+                hour: matchDBObj.hour,
+                hourResult: matchDBObj.hourResult,
+                idMatch: matchId,
+                numMatches: matchDBObj.numMatches,
+                observations: matchDBObj.observations,
+                platform: matchDBObj.platform,
+                timeStamp: matchDBObj.timeStamp,
+                winBet: matchDBObj.winBet,
+                userName: userName,
+                gamerTag: gamerTag,
+                discordTag: await getUserDiscordTag(matchDBObj.adversary1),
+                expired: false
+            };
         }
+
+        this.props.navigation.navigate('MatchDetails', {matchCard: matchObj});
     }
 
     render() {

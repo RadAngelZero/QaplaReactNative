@@ -59,6 +59,8 @@ target 'QaplaReactNative' do
   pod 'Firebase/Database'
 
   pod 'Firebase/Auth'
+
+  pod 'Firebase/DynamicLinks'
   
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios' 
 

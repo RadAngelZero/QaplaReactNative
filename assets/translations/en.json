@@ -3,6 +3,9 @@
         "noInternetConnection": {
             "title": "No internet, check your connection.",
             "wifiDetails": "Try connecting with your data plan"
+        },
+        "snackBar": {
+            "details": "Details"
         }
     },
     "platforms": {
@@ -46,10 +49,6 @@
         "share": {
             "description": "Share the clips of your matches, all the community will be able to see the evidence of your victories.",
             "title": "Share"
-        },
-        "withdraw": {
-            "description": "Withdraw you Qapla balance or use it to buy Amazon Prime products, we send them free to your home!",
-            "title": "Withdraw"
         },
         "finish": "Finish"
     },
@@ -209,7 +208,8 @@
             "codePlaceholder": "Insert your Code",
             "codeSent": "We have sent you a verification code",
             "smsCodeError": "The verification code is incorrect",
-            "alreadyLinkedAccountError": "This phone number is already linked to an account."
+            "alreadyLinkedAccountError": "This phone number is already linked to an account.",
+            "noMinDigitsPhoneNum":  "Phone number should have minimum of 5 digits."
         },
         "verificationProcessSuccess": {
             "title": "Thank you!",
@@ -326,5 +326,20 @@
         "paragraph": "The match expires after 10 minutes if you don't accept a challenge from other user or if it's not challenged by another user.",
         "dontShowItAgain": "Don't show this message again",
         "okButton": "Got it"
+    },
+    "updateApp": {
+        "header": "There is a new version of Qapla, please update to the latest version.",
+        "updateBttnTxt": "Update"
+    },
+    "deepLinks": {
+        "matchCard": {
+            "description": "Play your favourite game with other players and win rewards",
+            "title": "Play a %{game} match (%{platform}) to win %{winBet} Qoins!"
+        },
+        "linkBroken": {
+            "title": "Link broken",
+            "description": "The content you are trying to access could not be found, try again or update the app to latest version and try again.",
+            "bttnText": "Update" 
+        }
     }
 }

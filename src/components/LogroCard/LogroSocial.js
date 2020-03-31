@@ -18,7 +18,7 @@ import { isUserLogged } from '../../services/auth';
 import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
 import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
 import OneTxtOneBttnModal from '../OneTxtOneBttnModal/OneTxtOneBttnModal'
-import { translate } from '../../utilities/i18';
+import { translate, getLocaleLanguage } from '../../utilities/i18';
 
 
 const QaploinIcon = Images.svg.qaploinsIcon;
@@ -126,8 +126,39 @@ class LogroSocial extends Component {
         });
     }
 
+    /**
+     * Select the correct event text content according to the language used by the user
+     * in the app.
+     * 
+     * @param {object} textLangObj Object containing in JSON format a text content for each
+     *                             language supported by the app
+     */
+    getTextBasedOnUserLanguage = (textLangObj) => {
+        const res = '';
+        const userLanguage = getLocaleLanguage();
+
+        if (textLangObj[userLanguage] !== null && textLangObj[userLanguage] !== undefined) {
+            res = textLangObj[userLanguage];
+        }
+
+        return res;
+    }
+
     render() {
-        const { titulo, descripcion, qaploins, photoUrl, puntosCompletados, totalPuntos, tiempoLimite, verified } = this.props;
+        const {
+            title,
+            description,
+            qaploins,
+            photoUrl,
+            puntosCompletados,
+            totalPuntos,
+            tiempoLimite,
+            verified
+        } = this.props;
+        
+        const descriptionTranslated = getTextBasedOnUserLanguage(description);
+        const titleTranslated = getTextBasedOnUserLanguage(title);
+
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
                 <View style={styles.contentContainer}>
@@ -136,9 +167,9 @@ class LogroSocial extends Component {
                     </View>
                     <View style={styles.colBSocialContainer}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.titleSocial}>{titulo}</Text>
+                            <Text style={styles.titleSocial}>{titleTranslated}</Text>
                         </View>
-                        <Text style={styles.description}>{descripcion}</Text>
+                        <Text style={styles.description}>{descriptionTranslated}</Text>
                     </View>
                     <View style={styles.colCSocialContainer}>
                         <View style={styles.qaploinsContainer}>

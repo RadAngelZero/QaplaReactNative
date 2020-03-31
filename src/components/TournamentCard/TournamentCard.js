@@ -11,7 +11,7 @@ import { joinInTournament } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
-import { translate } from '../../utilities/i18';
+import { translate, getLocaleLanguage } from '../../utilities/i18';
 
 class TournamentCard extends Component {
     state = {
@@ -52,8 +52,37 @@ class TournamentCard extends Component {
         }
     }
 
+    /**
+     * Select the correct event text content according to the language used by the user
+     * in the app.
+     * 
+     * @param {object} textLangObj Object containing in JSON format a text content for each
+     *                             language supported by the app
+     */
+    getTextBasedOnUserLanguage = (textLangObj) => {
+        const res = '';
+        const userLanguage = getLocaleLanguage();
+
+        if (textLangObj[userLanguage] !== null && textLangObj[userLanguage] !== undefined) {
+            res = textLangObj[userLanguage];
+        }
+
+        return res;
+    }
+
     render() {
-        const { photoUrl, titulo, descripcion, totalPuntos, puntosCompletados, tiempoLimite, verified } = this.props;
+        const {
+            photoUrl,
+            title,
+            description,
+            totalPuntos,
+            puntosCompletados,
+            tiempoLimite,
+            verified
+        } = this.props;
+
+        const descriptionTranslated = getTextBasedOnUserLanguage(description);
+        const titleTranslated = getTextBasedOnUserLanguage(title);
 
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
@@ -63,9 +92,9 @@ class TournamentCard extends Component {
                     </View>
                     <View style={styles.colBSocialContainer}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{titulo}</Text>
+                            <Text style={styles.title}>{titleTranslated}</Text>
                         </View>
-                        <Text style={styles.description}>{descripcion}</Text>
+                        <Text style={styles.description}>{descriptionTranslated}</Text>
                     </View>
                     <View style={styles.colBContainer}>
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />

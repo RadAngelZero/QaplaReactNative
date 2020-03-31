@@ -3,6 +3,9 @@
         "noInternetConnection": {
             "title": "No estás conectado a internet, revisa tu conexión.",
             "wifiDetails": "Usa tu conexión de datos"
+        },
+        "snackBar": {
+            "details": "Ver más"
         }
     },
     "platforms": {
@@ -46,10 +49,6 @@
         "share": {
             "description": "Comparte los clips de tus partidas, toda la comunidad podrá ver la evidencia de tus victorias.",
             "title": "Comparte"
-        },
-        "withdraw": {
-            "description": "Retira tu Saldo Qapla o úsalo para comprar productos de Amazon Prime, ¡Los enviamos gratis a tu casa!",
-            "title": "Convierte"
         },
         "finish": "Terminar"
     },
@@ -209,7 +208,8 @@
             "codePlaceholder": "Ingresa tu Código",
             "codeSent": "Te enviamos un código de verificación",
             "smsCodeError": "El código de verificación es incorrecto",
-            "alreadyLinkedAccountError": "Este número de teléfono ya está vinculado con una cuenta."
+            "alreadyLinkedAccountError": "Este número de teléfono ya está vinculado con una cuenta.",
+            "noMinDigitsPhoneNum":  "El número de teléfono debe de tener mínimo 5 dígitos."
         },
         "verificationProcessSuccess": {
             "title": "¡Gracias!",
@@ -326,5 +326,20 @@
         "paragraph": "La partida expirará después de 10 minutos si no recibe y se acepta un desafío de otro jugador.",
         "dontShowItAgain": "Entendido, no volver a mostrar este mensaje",
         "okButton": "Entendido"
+    },
+    "updateApp": {
+        "header": "Hay una nueva versión de Qapla, actualiza a la nueva versión.",
+        "updateBttnTxt": "Actualizar"
+    },
+    "deepLinks": {
+        "matchCard": {
+            "description": "Juega a tu juego favorito con otros jugadores y gana recompensas",
+            "title": "Juega una partida de %{game} (%{platform}) para ganar %{winBet} Qoins!"
+        },
+        "linkBroken": {
+            "title": "Enlace no encontrado",
+            "description": "El contenido que estás intentando acceder no se pudo acceder, prueba de nuevo o actualiza a una nueva versión y intenta de nuevo.",
+            "bttnText": "Actualizar" 
+        }
     }
 }

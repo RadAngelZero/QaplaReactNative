@@ -85,8 +85,7 @@ class ActivityNotificationsScreen extends Component {
         return (
         	<SafeAreaView style={styles.sfvContainer}>
                 <AnnouncementsScrollView />
-                {this.state.didFinishInitialAnimation
-                    ?
+                {this.state.didFinishInitialAnimation ?
     	            <View style={styles.container}>
                         <FlatList
                             data={sortedNotifications}
@@ -97,7 +96,7 @@ class ActivityNotificationsScreen extends Component {
                             keyExtractor={(item) => `ActivityNotification-${item}`} />
                     </View>
     	            :
-    	            null
+    	            <View style={styles.container} />
     	        }
 	        </SafeAreaView>
         );

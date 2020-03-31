@@ -20,7 +20,7 @@
 import React from 'react';
 
 import { View, Text } from 'react-native';
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createAppContainer, createSwitchNavigator, NavigationActions} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createMaterialTopTabNavigator, createBottomTabNavigator} from 'react-navigation-tabs';
 
@@ -51,6 +51,7 @@ import VerificationScreen from './screens/VerificationScreen/VerificationScreen'
 
 import SupportScreen from './screens/SupportScreen/SupportScreen';
 import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
+import LinkBrokenScreen from './screens/LinkBrokenScreen/LinkBrokenScreen';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
@@ -399,43 +400,53 @@ const MainSwitchNavigator = createSwitchNavigator({
     SplashScreen: AuthLoadingScreen,
     App: RootStackNavigator,
     onBoarding: WelcomeOnboardingScreen,
-    ChooseUserName: ChooseUserNameScreen
+    ChooseUserName: ChooseUserNameScreen,
+    LinkBroken: LinkBrokenScreen 
 });
 
 //#endregion
 
-class Router extends React.Component {
-  render() {
-    // Create main router entry point for the app
-    const AppContainer = createAppContainer(MainSwitchNavigator);
+// Create main router entry point for the app
+const AppContainer = createAppContainer(MainSwitchNavigator);
 
-    /**
-     * @description
-     * Gets the current screen from navigation state
-     *
-     * @param {Object} navigationState Navigation state object
-     *
-     * @return {string} Router name of the current screen
-     */
-    function getActiveRouteName(navigationState) {
-        let res = null;
+/**
+ * @description Gets the current screen from navigation state
+ *
+ * @param {Object} navigationState Navigation state object
+ *
+ * @return {string} Router name of the current screen
+ */
+function getActiveRouteName(navigationState) {
+    let res = null;
 
-        if (navigationState) {
-            const route = navigationState.routes[navigationState.index];
+    if (navigationState) {
+        const route = navigationState.routes[navigationState.index];
 
-            // dive into nested navigators
-            if (route.routes) {
-                res = getActiveRouteName(route);
-            }
-            else {
-                res = route.routeName;
-            }
+        // dive into nested navigators
+        if (route.routes) {
+            res = getActiveRouteName(route);
         }
-        return res;
+        else {
+            res = route.routeName;
+        }
     }
+    return res;
+}
 
+class Router extends React.Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.forceNavigation && this.props.forceNavigation !== prevProps.forceNavigation) {
+      this.navigator &&
+      this.navigator.dispatch(
+        NavigationActions.navigate({ routeName: this.props.forceNavigation })
+      );
+    }
+  }
+
+  render() {
     return (
       <AppContainer
+          ref={(navigator) => this.navigator = navigator}
           onNavigationStateChange={(prevState, currentState, action) => {
               const currentRouteName = getActiveRouteName(currentState);
               const previousRouteName = getActiveRouteName(prevState);
@@ -444,9 +455,8 @@ class Router extends React.Component {
                   this.props.setCurrentScreenId(currentRouteName);
                   this.props.setPreviousScreenId(previousRouteName);
               }
-          }}
-      />
-    )
+          }} />
+    );
   }
 }
 

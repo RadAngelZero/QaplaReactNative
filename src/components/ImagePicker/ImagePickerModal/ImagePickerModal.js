@@ -4,15 +4,14 @@
 import React, { Component } from 'react';
 import {
 	Modal,
-	SafeAreaView,
-	TouchableWithoutFeedback,
-	View
+	SafeAreaView
 } from 'react-native';
 
 import styles from './style';
 import Images from './../../../../assets/images';
 
 import ImagePicker from '../ImagePicker';
+import QaplaIcon from '../../QaplaIcon/QaplaIcon';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -41,11 +40,9 @@ class ImagePickerModal extends Component {
 					visible={this.props.visible}
 					onRequestClose={this.props.onClose}>
 					<SafeAreaView style={styles.sfvContainer}>
-						<TouchableWithoutFeedback onPress={this.closeModal}>
-                            <View style={styles.closeIcon}>
-                                <CloseIcon />
-                            </View>
-                        </TouchableWithoutFeedback>
+						<QaplaIcon onPress={this.closeModal} touchableStyle={styles.closeIcon}>
+							<CloseIcon />
+                        </QaplaIcon>
 						<ImagePicker saveImage={this.saveImage} />
 					</SafeAreaView>
 		        </Modal>

@@ -37,6 +37,7 @@ import {
     ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT,
     ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS
 } from '../../utilities/Constants';
+import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
@@ -69,7 +70,8 @@ class VerificationScreen extends Component {
         numAttemptsCodeSent: 0,
         codeSent: false,
         errorSMSCode: false,
-        errorAlreadyLinkedAccount: false
+        errorAlreadyLinkedAccount: false,
+        errorMinPhoneDigits: false
     };
 
     /**
@@ -173,7 +175,15 @@ class VerificationScreen extends Component {
                 isValidData = !Object.keys(this.state.personData).some((value) => this.state.personData[value] === '' || this.state.personData[value] === 0);
                 break;
             case this.state.indexPositions.length - 1:
-                isValidData = this.state.phoneData.phoneNumber.length >= 10;
+                // In some countries like Spain the number of digits in a phone number is
+                // 9, in Mexico is 10. Therefore the approach for number validation is
+                // to require a ridiculous minim of digits, so that users don't go crazy 
+                // on trials with phone numbers of #2 #3 digits. If the phone number does not exist
+                // an UNKNOWN_ERROR should be expected (this last statement need to be 100% confirmed,
+                // it is an hypothesis).  
+                const MIN_PHONE_NUM_DIGITS = 5;
+                isValidData = this.state.phoneData.phoneNumber.length >= MIN_PHONE_NUM_DIGITS;
+                
                 if (isValidData) {
                     try {
                         isUserOnSendCodeScreen = true;
@@ -192,6 +202,9 @@ class VerificationScreen extends Component {
                     } catch (error) {
                         console.error(error);
                     }
+                }
+                else {
+                    this.setState({errorMinPhoneDigits: true});
                 }
                 break;
             case this.state.indexPositions.length:
@@ -356,24 +369,20 @@ class VerificationScreen extends Component {
                     <View style={styles.backIconContainer}>
                         {/** Just show BackIcon if the user has already passed at least the first slide */}
                         {(this.state.nextIndex > 1 && this.state.nextIndex !== this.state.indexPositions.length + 1) ?
-                            <TouchableWithoutFeedback onPress={this.goToPreviousStep}>
-                                <View style={styles.buttonDimensions}>
-                                    <BackIcon />
-                                </View>
-                            </TouchableWithoutFeedback>
+                            <QaplaIcon onPress={this.goToPreviousStep}>
+                                <BackIcon />
+                            </QaplaIcon>
                             :
-                            <View style={styles.buttonDimensions} />
+                            null
                         }
                     </View>
                     <View style={styles.closeIconContainer}>
                         {this.state.nextIndex !== this.state.indexPositions.length + 1 ?
-                            <TouchableWithoutFeedback onPress={this.closeVerificationProccess}>
-                                <View style={styles.buttonDimensions}>
-                                    <CloseIcon />
-                                </View>
-                            </TouchableWithoutFeedback>
+                            <QaplaIcon onPress={this.closeVerificationProccess}>
+                                <CloseIcon />
+                            </QaplaIcon>
                             :
-                            <View style={styles.buttonDimensions} />
+                            null
                         }
                     </View>
                 </View>
@@ -396,6 +405,7 @@ class VerificationScreen extends Component {
                                 goToNextStep={this.goToNextStep}
                                 wrongCode={this.state.errorSMSCode}
                                 alreadyLinkedError={this.state.errorAlreadyLinkedAccount}
+                                minNumDigitsError={this.state.errorMinPhoneDigits}
                                 codeSent={this.state.codeSent} />
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>

@@ -1,5 +1,5 @@
 import {
-	QAPLA_DISCORD_WEBHOOK_URL_TEST,
+	QAPLA_DISCORD_WEBHOOK_URL,
 	DISCORD_GAME_IMAGE_PLACEHOLDER
 } from '../utilities/Constants';
 
@@ -13,14 +13,14 @@ export async function discordPublishMessageToChannel(ctx) {
 
 		const imgUri = discordImg ? discordImg : DISCORD_GAME_IMAGE_PLACEHOLDER;
 
-		let response = await fetch(QAPLA_DISCORD_WEBHOOK_URL_TEST, {
+		let response = await fetch(QAPLA_DISCORD_WEBHOOK_URL, {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				content: `Game: **${game}**  Platform: **${platform}** #Qoins to win: **${winBet}**  Creator: **${discordTag}** ***Match link***: ${url}`,
+				content: `Game: **${game}**  Platform: **${platform}** \n#Qoins to win: **${winBet}**  Creator: **${discordTag}**\n***Match link***: ${url}`,
             	username: "Qapla Match Announcer",
 				tts: false,
 				embeds: [{

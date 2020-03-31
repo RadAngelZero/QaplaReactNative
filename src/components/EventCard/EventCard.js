@@ -57,7 +57,7 @@ class EventCard extends Component {
      */
     subscribeUserToEvent = (gamerTag) => {
         joinEvent(this.props.uid, this.props.id, gamerTag);
-        subscribeUserToTopic(`${this.props.id}_${getLocaleLanguage()}`, this.props.uid, EVENTS_TOPIC);
+        subscribeUserToTopic(this.props.id, this.props.uid, EVENTS_TOPIC);
     }
 
     /**

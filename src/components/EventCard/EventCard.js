@@ -55,9 +55,9 @@ class EventCard extends Component {
      * Add the user to the list of participants of the selected event and
      * subscribe him/her to the FCM topic of the event
      */
-    subscribeUserToEvent = () => {
-        joinEvent(this.props.uid, this.props.id);
-        subscribeUserToTopic(`${this.props.id}_${getLocaleLanguage()}`, this.props.uid, EVENTS_TOPIC);
+    subscribeUserToEvent = (gamerTag) => {
+        joinEvent(this.props.uid, this.props.id, gamerTag);
+        subscribeUserToTopic(this.props.id, this.props.uid, EVENTS_TOPIC);
     }
 
     /**
@@ -78,15 +78,15 @@ class EventCard extends Component {
     /**
      * Select the correct event text content according to the language used by the user
      * in the app.
-     * 
+     *
      * @param {object} textLangObj Object containing in JSON format a text content for each
      *                             language supported by the app
      */
     getTextBasedOnUserLanguage = (textLangObj) => {
-        const res = '';
+        let res = '';
         const userLanguage = getLocaleLanguage();
 
-        if (textLangObj[userLanguage] !== null && textLangObj[userLanguage] !== undefined) {
+        if (textLangObj[userLanguage]) {
             res = textLangObj[userLanguage];
         }
 
@@ -104,7 +104,7 @@ class EventCard extends Component {
             game,
             platform
         } = this.props;
-        
+
         let selectedGame = {
             gameKey: game,
             platform: platform,
@@ -119,8 +119,8 @@ class EventCard extends Component {
             selectedGame.name =this.props.games[platform][game].name;
         }
 
-        const descriptionTranslated = getTextBasedOnUserLanguage(descriptions);
-        const titleTranslated = getTextBasedOnUserLanguage(title);
+        const descriptionTranslated = this.getTextBasedOnUserLanguage(descriptions);
+        const titleTranslated = this.getTextBasedOnUserLanguage(title);
 
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>

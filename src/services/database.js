@@ -720,8 +720,9 @@ export async function sendUserFeedback(message, userId) {
  * Allow the user to join the given event
  * @param {string} uid User identifier on database
  * @param {string} eventId Event identifier on the database
+ * @param {string} gamerTag GamerTag selected by the user for the event
  */
-export function joinEvent(uid, eventId) {
+export function joinEvent(uid, eventId, gamerTag) {
     const user = store.getState().userReducer.user;
     eventParticipantsRef.child(eventId).child(uid).update({
         email: user.email,
@@ -729,6 +730,7 @@ export function joinEvent(uid, eventId) {
         matchesPlayed: 0,
         victories: 0,
         userName: user.userName,
+        gamerTag,
 
         /**
          * If the user won something in the event and we want to notify him/her,
@@ -869,14 +871,12 @@ export async function updateUserLanguage(uid) {
                         unsubscribeUserFromTopic(topicName);
                         removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
 
-                        subscribeUserToTopic(newTopicName);
-                        saveUserSubscriptionToTopic(uid, newTopicName, EVENTS_TOPIC);
+                        subscribeUserToTopic(newTopicName, uid, EVENTS_TOPIC, false);
                     } else {
                         unsubscribeUserFromTopic(topicName);
                         removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
 
-                        subscribeUserToTopic(newTopicName);
-                        saveUserSubscriptionToTopic(uid, newTopicName, userGlobalSubscription);
+                        subscribeUserToTopic(newTopicName, uid, userGlobalSubscription, false);
                     }
                 });
             });

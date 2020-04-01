@@ -125,7 +125,7 @@ export class UserProfileScreen extends Component {
         let userGames = {};
 
         if (this.props.userGames instanceof Array) {
-            userGames = getUserGamesOrderedByPlatform(this.props.userGames, this.props.qaplaGames);
+            userGames = getUserGamesOrderedByPlatform(this.props.userGames, this.props.qaplaGames, true);
         }
 
         return (
@@ -139,7 +139,7 @@ export class UserProfileScreen extends Component {
                                 <View style={styles.avatarImage} />
                             }
                             <View style={styles.editImg}>
-                                <EditProfileImgBadge/>
+                                <EditProfileImgBadge />
                             </View>
                         </View>
                         <Text style={styles.userName}>{this.props.userName}</Text>

@@ -32,15 +32,14 @@ class WelcomeOnboardingScreen extends React.Component {
 
 	finishOnBoarding = () => {
 		storeData('tutorial-done', 'true');
-		const eventsTopic = `${EVENTS_TOPIC}_${getLocaleLanguage()}`;
-		
+
 		/**
          * All the users must be subscribed to the event topic at this point, because we want
          * all the users to receive notifications when a new event is created, we use the language suffix
          * because we want to send the notifications in different languages (based on the user cellphone
          * language)
          */
-		subscribeUserToTopic(eventsTopic, this.props.uid, EVENTS_TOPIC);
+		subscribeUserToTopic(EVENTS_TOPIC, this.props.uid, EVENTS_TOPIC);
 
 		/**
 		 * If the user has games (that means that we have a logged user)
@@ -48,7 +47,7 @@ class WelcomeOnboardingScreen extends React.Component {
 		 */
 		this.props.userGames.forEach((gameKey) => {
 			if (gameKey) {
-				subscribeUserToTopic(`${gameKey}_${getLocaleLanguage()}`, this.props.uid, GAMES_TOPICS);
+				subscribeUserToTopic(gameKey, this.props.uid, GAMES_TOPICS);
 			}
 		});
 

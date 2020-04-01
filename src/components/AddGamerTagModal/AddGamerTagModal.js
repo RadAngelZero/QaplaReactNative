@@ -19,6 +19,7 @@ import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { GAMES_TOPICS } from '../../utilities/Constants';
 import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
+import { isValidGame } from '../../utilities/utils';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -70,26 +71,28 @@ class AddGamerTagModal extends Component {
      */
     addGameAndRedirectUser = async () => {
         try {
-            if (this.props.newGame) {
-                await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
-                    this.props.selectedGame.gameKey, this.state.gamerTagText);
-            } else {
-                updateUserGamerTag(this.props.uid, this.props.selectedGame.platform, this.props.selectedGame.gameKey, this.state.gamerTagText);
-            }
+            if (isValidGame(this.props.selectedGame.platform, this.props.selectedGame.gameKey)) {
+                if (this.props.newGame) {
+                    await addGameToUser(this.props.uid, this.props.userName, this.props.selectedGame.platform,
+                        this.props.selectedGame.gameKey, this.state.gamerTagText);
+                } else {
+                    updateUserGamerTag(this.props.uid, this.props.selectedGame.platform, this.props.selectedGame.gameKey, this.state.gamerTagText);
+                }
 
-                subscribeUserToTopic(`${this.props.selectedGame.gameKey}_${getLocaleLanguage()}`, this.props.uid, GAMES_TOPICS);
+                subscribeUserToTopic(this.props.selectedGame.gameKey, this.props.uid, GAMES_TOPICS);
 
                 trackOnSegment('Add Gamer Tag Process Completed', {
                     game: this.props.selectedGame.gameKey,
                     platform: this.props.selectedGame.platform
                 });
+            }
 
-                /**
-                 * redirect: prop to know if the modal should redirect to other screen
-                 * or just call a function and then hide
-                 */
-                if (this.props.redirect) {
-                    if (this.props.loadGamesUserDontHave) {
+            /**
+             * redirect: prop to know if the modal should redirect to other screen
+             * or just call a function and then hide
+             */
+            if (this.props.redirect) {
+                if (this.props.loadGamesUserDontHave) {
                         this.props.navigation.navigate('Profile');
                 } else {
                     this.props.navigation.navigate('SetBet',
@@ -100,7 +103,7 @@ class AddGamerTagModal extends Component {
                     });
                 }
             } else {
-                this.props.onSuccess();
+                this.props.onSuccess(this.state.gamerTagText);
                 this.props.onClose();
             }
         } catch (error) {

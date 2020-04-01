@@ -63,7 +63,7 @@ class EventCard extends Component {
     /**
      * Sends the user to the event (a discord channel)
      */
-    goToEvent = () => Linking.openURL(QAPLA_DISCORD_CHANNEL);
+    goToEvent = () => Linking.openURL(this.props.discordLink ? this.props.discordLink : QAPLA_DISCORD_CHANNEL);
 
     /**
      * Close the gamer tag moddal and opens the event requirements modal

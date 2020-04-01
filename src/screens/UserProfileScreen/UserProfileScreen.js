@@ -26,7 +26,7 @@ import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics
 import { isUserLogged } from '../../services/auth';
 import { translate } from '../../utilities/i18';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import { QAPLA_DISCORD_CHANNEL } from '../../utilities/Constants';
+import { QAPLA_DISCORD_EXCHANGE_CHANNEL } from '../../utilities/Constants';
 
 const QaploinExchangeIcon = images.svg.qoinFlipIcon;
 const BalanceExchangeIcon = images.svg.balanceFlipIcon;
@@ -78,7 +78,7 @@ export class UserProfileScreen extends Component {
      */
     exchangeQaploins = () => {
         if (isUserLogged()) {
-            Linking.openURL(QAPLA_DISCORD_CHANNEL);
+            Linking.openURL(QAPLA_DISCORD_EXCHANGE_CHANNEL);
         } else {
             this.props.navigation.navigate('Auth');
         }

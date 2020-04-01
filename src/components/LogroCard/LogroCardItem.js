@@ -41,8 +41,8 @@ class LogroCardItem extends Component {
                 break;
             case 'like':
                 res = <CardContainer lastChild={lastChild}><LogroSocial {...this.props} /></CardContainer>;
-                break;
-            /*case 'verificado':
+                break;/*
+            case 'verificado':
                 res = <CardContainer lastChild={lastChild}><LogroVerification {...this.props} /></CardContainer>;
                 break;*/
             case 'completado':

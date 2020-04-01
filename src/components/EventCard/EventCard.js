@@ -86,7 +86,7 @@ class EventCard extends Component {
         let res = '';
         const userLanguage = getLocaleLanguage();
 
-        if (textLangObj[userLanguage]) {
+        if (textLangObj && textLangObj[userLanguage]) {
             res = textLangObj[userLanguage];
         }
 
@@ -97,7 +97,9 @@ class EventCard extends Component {
         const {
             photoUrl,
             title,
+            titulo,
             descriptions,
+            descripcion,
             tiempoLimite,
             verified,
             priceQaploins,
@@ -121,6 +123,20 @@ class EventCard extends Component {
 
         const descriptionTranslated = this.getTextBasedOnUserLanguage(descriptions);
         const titleTranslated = this.getTextBasedOnUserLanguage(title);
+
+        // (01-04-2020) Events on 2019 and early 2020 used 'titulos' and 'descripcion' props, 
+        // as a result of a change on the events structure data in db descriptions and title
+        // were added for internationalization. These two if conditions for 'descriptionTranslated'
+        // and 'titleTranslated' are to check that the props exists in the db event element,
+        // otherwise a fallback is used (not ideal situation, but to prevent app crashes to the
+        // user)
+        if (descriptionTranslated === '') {
+            descriptionTranslated = descripcion;
+        }
+
+        if (titleTranslated === '') {
+            titleTranslated = titulo;
+        }
 
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>

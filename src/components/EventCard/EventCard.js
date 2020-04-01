@@ -99,7 +99,7 @@ class EventCard extends Component {
             title,
             titulo,
             descriptions,
-            descripcion,
+            description,
             tiempoLimite,
             verified,
             priceQaploins,
@@ -121,8 +121,8 @@ class EventCard extends Component {
             selectedGame.name =this.props.games[platform][game].name;
         }
 
-        const descriptionTranslated = this.getTextBasedOnUserLanguage(descriptions);
-        const titleTranslated = this.getTextBasedOnUserLanguage(title);
+        let descriptionTranslated = this.getTextBasedOnUserLanguage(descriptions);
+        let titleTranslated = this.getTextBasedOnUserLanguage(title);
 
         // (01-04-2020) Events on 2019 and early 2020 used 'titulos' and 'descripcion' props, 
         // as a result of a change on the events structure data in db descriptions and title
@@ -131,7 +131,7 @@ class EventCard extends Component {
         // otherwise a fallback is used (not ideal situation, but to prevent app crashes to the
         // user)
         if (descriptionTranslated === '') {
-            descriptionTranslated = descripcion;
+            descriptionTranslated = description;
         }
 
         if (titleTranslated === '') {

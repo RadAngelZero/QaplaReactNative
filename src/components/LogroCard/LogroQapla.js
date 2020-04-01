@@ -76,8 +76,8 @@ class LogroQapla extends Component {
             verified
         } = this.props;
 
-        const descriptionTranslated = getTextBasedOnUserLanguage(description);
-        const titleTranslated = getTextBasedOnUserLanguage(title);
+        let descriptionTranslated = getTextBasedOnUserLanguage(description);
+        let titleTranslated = getTextBasedOnUserLanguage(title);
 
         // (01-04-2020) Events on 2019 and early 2020 used 'titulos' and 'descripcion' props, 
         // as a result of a change on the events structure data in db description and title

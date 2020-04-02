@@ -18,7 +18,7 @@ import { isUserLogged } from '../../services/auth';
 import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
 import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
 import OneTxtOneBttnModal from '../OneTxtOneBttnModal/OneTxtOneBttnModal'
-import { translate } from '../../utilities/i18';
+import { translate, getLocaleLanguage } from '../../utilities/i18';
 
 
 const QaploinIcon = Images.svg.qaploinsIcon;
@@ -126,8 +126,55 @@ class LogroSocial extends Component {
         });
     }
 
+    /**
+     * Select the correct event text content according to the language used by the user
+     * in the app.
+     * 
+     * @param {object} textLangObj Object containing in JSON format a text content for each
+     *                             language supported by the app
+     */
+    getTextBasedOnUserLanguage = (textLangObj) => {
+        const res = '';
+        const userLanguage = getLocaleLanguage();
+
+        if (textLangObj && textLangObj[userLanguage]) {
+            res = textLangObj[userLanguage];
+        }
+
+        return res;
+    }
+
     render() {
-        const { titulo, descripcion, qaploins, photoUrl, puntosCompletados, totalPuntos, tiempoLimite, verified } = this.props;
+        const {
+            title,
+            titulo,
+            description,
+            descripcion,
+            qaploins,
+            photoUrl,
+            puntosCompletados,
+            totalPuntos,
+            tiempoLimite,
+            verified
+        } = this.props;
+        
+        let descriptionTranslated = getTextBasedOnUserLanguage(description);
+        let titleTranslated = getTextBasedOnUserLanguage(title);
+
+        // (01-04-2020) Events on 2019 and early 2020 used 'titulos' and 'descripcion' props, 
+        // as a result of a change on the events structure data in db description and title
+        // were added for internationalization. These two if conditions for 'descriptionTranslated'
+        // and 'titleTranslated' are to check that the props exists in the db event element,
+        // otherwise a fallback is used (not ideal situation, but to prevent app crashes to the
+        // user)
+        if (descriptionTranslated === '') {
+            descriptionTranslated = descripcion;
+        }
+
+        if (titleTranslated === '') {
+            titleTranslated = titulo;
+        }
+
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
                 <View style={styles.contentContainer}>
@@ -136,9 +183,9 @@ class LogroSocial extends Component {
                     </View>
                     <View style={styles.colBSocialContainer}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.titleSocial}>{titulo}</Text>
+                            <Text style={styles.titleSocial}>{titleTranslated}</Text>
                         </View>
-                        <Text style={styles.description}>{descripcion}</Text>
+                        <Text style={styles.description}>{descriptionTranslated}</Text>
                     </View>
                     <View style={styles.colCSocialContainer}>
                         <View style={styles.qaploinsContainer}>

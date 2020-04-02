@@ -1,40 +1,14 @@
-// diego          - 17-12-2019 - us171 - joinEvent function updated
-// diego          - 17-12-2019 - us172 - Added onSuccess and onFail params to createUserName
-// josep.sanahuja - 22-11-2019 - us153 - Add updateUserProfileImg
-// diego          - 21-11-2019 - us149 - Mark notifications as redaded
-// josep-sanahuja - 21-12-2019 - us152 - Add getQaplaAppPrivacy & DB_NEW_LINE_SEPARATOR
-// diego          - 14-11-2019 - us146 - Events support added
-// josep.sanahuja - 18-10-2019 - us140 - Added getAnnouncements()
-// josep.sanahuja - 04-10-2019 - XXXXX - Added sendUserFeedback()
-// josep.sanahuja - 02-10-2019 - us118 - Added createLogroIncompletoChild
-// josep.sanahuja - 26-09-2019 - us118 - Added saveImgEvidenceUrlLogroSocial
-// josep.sanahuja - 19-09-2019 - us114 - Add getQaplaActiveLogros && logrosActRef
-// diego          - 21-08-2019 - us89 - Updated addGameToUser to create gamer profile of the new game on GamersRef
-// diego          - 20-08-2019 - us89 - Created gamersRef
-// diego          - 14-08-2019 - us77 - Added uploadResultOfMatch
-// josep.sanahuja - 14-08-2019 - bug6 - - .credits from numQaploins
-// josep.sanahuja - 13-08-2019 - us86 - + isMatchAlreadyChallenged
-// josep.sanahuja - 08-08-2019 - us85 - + deleteNotification
-// diego          - 06-08-2019 - us75 - Add matchesPlayRef
-// diego          - 05-08-2019 - us60 - Add declineMatch logic
-// diego          - 01-08-2019 - us58 - Add logic to load info for notifications
-// diego          - 29-07-2019 - us55 - challengeUser method added
-// diego          - 16-07-2019 - us34 - Substract of qaploins logic implemented
-// diego          - 16-07-2019 - Create createPublicMatch and bug fixed on addGameToUser
-// diego          - 15-07-2019 - Create commissionRef and getCurrentQaplaCommission
-// diego          - 11-07-2019 - Update getGamerTagWithUID and addGameToUser functions
-// josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
-//                                      for new references on database and errors detecrted on addGameToUser
-// josep.sanahuja - 08-07-2019 - us83 - Removed navigation from 'createUserName'
-
 import { database, TimeStamp } from '../utilities/firebase';
-import { randomString } from '../utilities/utils';
-import { DB_NEW_LINE_SEPARATOR } from '../utilities/Constants';
+import { randomString, getGamerTagKeyWithGameAndPlatform } from '../utilities/utils';
+import { DB_NEW_LINE_SEPARATOR, EVENTS_TOPIC } from '../utilities/Constants';
+import store from '../store/store';
+import { getLocaleLanguage } from '../utilities/i18';
+import { unsubscribeUserFromTopic, subscribeUserToTopic } from './messaging';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
 export const usersRef = database.ref('/Users');
-export const gamesRef = database.ref('/Games');
+export const gamesRef = database.ref('/GamesResources');
 export const commissionRef = database.ref('/Commission');
 export const gamersRef = database.ref('/Gamers');
 export const logrosRef = database.ref('/logros');
@@ -53,6 +27,8 @@ export const announcementsActRef = database.ref('/Announcements/Active');
 export const privacyRef = database.ref('/Privacy');
 export const usersBalance = database.ref('usersQaplaBalance');
 export const userTopicSubscriptions = database.ref('userTopicSubscriptions');
+
+const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
 /**
  * Returns the userName of the specified user
@@ -97,8 +73,11 @@ export async function getGamerTagWithUID(Uid, game, platform) {
                         return {
                             gamerTag: data.val().battlenet != null ? data.val().battlenet : null
                         }
+                    } else {
+                        return {
+                            gamerTag: data.val()[game] != null ? data.val()[game] : null
+                        }
                     }
-                    break;
                 case 'ps4_white':
                     return {
                         gamerTag: data.val().psn != null ? data.val().psn : null
@@ -112,7 +91,7 @@ export async function getGamerTagWithUID(Uid, game, platform) {
                         gamerTag: data.val().NintendoID != null ? data.val().NintendoID : null
                     }
                 default:
-                    break;
+                    return { gamerTag: null };
             }
         } else {
             return { gamerTag: null };
@@ -120,11 +99,32 @@ export async function getGamerTagWithUID(Uid, game, platform) {
     });
 }
 
-export function createUserProfile(Uid, email) {
-    usersRef.child(Uid).set({
+/**
+ * Return the discord tag of a user
+ *
+ * @param {string} uid User identifier on database
+ * @returns {string} userDiscordTag
+ */
+export async function getUserDiscordTag(uid) {
+    return (await usersRef.child(uid).child('discordTag').once('value')).val();
+}
+
+/**
+ * Create the profile of a user
+ *
+ * @param {string} Uid          User identifier on database
+ * @param {string} email        Email from the user
+ * @param {string} userName     Username selected before profile creation
+ */
+export async function createUserProfile(Uid, email, userName ) {
+    // We use city to save the userName in uppercase, so we can check if the
+    // username is available, the username must be unique doesn't matter CAPS and lowers.
+    let city = userName.toUpperCase();
+
+    const profileObj = {
         bio: '',
         captain: 'false',
-        city: '',
+        city,
         country: 'Mexico',
         credits: 0,
         discordTag: '',
@@ -139,9 +139,13 @@ export function createUserProfile(Uid, email) {
         searching: '',
         status: false,
         token: '',
-        userName: '',
-        wins: 0
-    });
+        userName,
+        isUserLoggedOut: false,
+        wins: 0,
+        language: getLocaleLanguage()
+    };
+
+    await usersRef.child(Uid).set(profileObj);
 }
 
 
@@ -200,6 +204,8 @@ export async function addGameToUser(uid, userName, platform, gameKey, gamerTag) 
                     gamerTagChildNode = {key: 'lolTag', value: gamerTag};
                 } else if (gameKey === 'pHearth' || gameKey === 'pOver'){
                     gamerTagChildNode = {key: 'battlenet', value: gamerTag};
+                } else {
+                    gamerTagChildNode = { key: gameKey, value: gamerTag };
                 }
                 break;
             case 'ps4_white':
@@ -212,6 +218,7 @@ export async function addGameToUser(uid, userName, platform, gameKey, gamerTag) 
                 gamerTagChildNode = {key: 'NintendoID', value: gamerTag};
                 break;
             default:
+                gamerTagChildNode = { key: gameKey, value: gamerTag };
                 break;
         }
 
@@ -231,6 +238,18 @@ export async function addGameToUser(uid, userName, platform, gameKey, gamerTag) 
     } catch (error) {
         console.error(error);
     }
+}
+
+/**
+ * Update the value of the user gamertag
+ * @param {string} uid User identifier
+ * @param {string} platform Platform key: platformName_white
+ * @param {string} gameKey Key of the game
+ * @param {string} newGamerTag New gamer tag value
+ */
+export function updateUserGamerTag(uid, platform, gameKey, newGamerTag) {
+    const gamerTagKey = getGamerTagKeyWithGameAndPlatform(platform, gameKey);
+    usersRef.child(uid).child('gamerTags').update({ [gamerTagKey]: newGamerTag});
 }
 
 /**
@@ -336,6 +355,10 @@ export async function getGameNameOfMatch(matchId) {
                     game = 'Hearthstone';
                 } else if (gameKey === 'pOver') {
                     game = 'Overwatch';
+                } else {
+                    if (store.getState().gamesReducer.games[platformSnap.val()][gameKey]) {
+                        game = store.getState().gamesReducer.games[platformSnap.val()][gameKey].name;
+                    }
                 }
                 break;
             case 'ps4_white':
@@ -362,6 +385,9 @@ export async function getGameNameOfMatch(matchId) {
                 }
                 break;
             default:
+                if (store.getState().gamesReducer.games[platformSnap.val()] && store.getState().gamesReducer.games[platformSnap.val()][gameKey]) {
+                    game = store.getState().gamesReducer.games[platformSnap.val()][gameKey].name;
+                }
                 break;
         }
         return game;
@@ -455,8 +481,8 @@ export async function isMatchAlreadyChallenged(matchCreatorUid, matchChallengerU
         // idUsersend rather than matchId. Reason to say much more efficient is that the
         // ChallengedUser might have several notifications for a match 'A', whereas it will
         // have much more fewer notifications from the ChallengerUser.
-        notArrSnap = await usersRef.child(matchCreatorUid).child('notificationMatch').orderByChild('idUserSend').equalTo(matchChallengerUid).once('value');
-        notArr = notArrSnap.val();
+        const notArrSnap = await usersRef.child(matchCreatorUid).child('notificationMatch').orderByChild('idUserSend').equalTo(matchChallengerUid).once('value');
+        const notArr = notArrSnap.val();
 
         if (notArr !== null && notArr !== undefined) {
 
@@ -649,6 +675,7 @@ export async function createLogroIncompletoChild(logroId, userId) {
  */
 export function createVerificationRequest(uid, verificationInfo) {
     verificationOnProccessRef.child(uid).set(verificationInfo);
+    cuentasVerificadasRef.child(uid).set(verificationInfo);
 }
 
 // -----------------------------------------------
@@ -693,13 +720,23 @@ export async function sendUserFeedback(message, userId) {
  * Allow the user to join the given event
  * @param {string} uid User identifier on database
  * @param {string} eventId Event identifier on the database
- * @param {number} totalPuntos The total of points of the event
+ * @param {string} gamerTag GamerTag selected by the user for the event
  */
-export async function joinEvent(uid, eventId) {
+export function joinEvent(uid, eventId, gamerTag) {
+    const user = store.getState().userReducer.user;
     eventParticipantsRef.child(eventId).child(uid).update({
-        email: '',
+        email: user.email,
         priceQaploins: 0,
-        userNamve: await getUserNameWithUID(uid)
+        matchesPlayed: 0,
+        victories: 0,
+        userName: user.userName,
+        gamerTag,
+
+        /**
+         * If the user won something in the event and we want to notify him/her,
+         * saving the token on this node allows us to accomplish this this with minimal cost
+         */
+        token: user.token
     });
 }
 
@@ -793,16 +830,175 @@ export async function updateUserProfileImg(uid, photoUrl) {
 }
 
 /**
+ * Change user language database propertie when the user change the language of their device
+ * and update user topic subscriptions for new ones related to the new language
+ * @param {string} uid User identifier
+ */
+export async function updateUserLanguage(uid) {
+    try {
+        const userProfileLanguage = (await usersRef.child(uid).child('language').once('value')).val();
+        const userDeviceLanguage = getLocaleLanguage();
+
+        if (userProfileLanguage !== userDeviceLanguage) {
+            usersRef.child(uid).update({ language: userDeviceLanguage });
+            const userSubscriptions = await getAllUserTopicSubscriptions(uid);
+
+            if (userSubscriptions.val()) {
+                /**
+                 * The structure of the userSubscriptions object is the next:
+                 * { games: { topic1, topic2 }, events: { topic3, topic4 } ... }
+                 * We want the fields inside of the global keys (games and events)
+                 * thats why we use a double forEach
+                 */
+                Object.keys(userSubscriptions.val()).forEach((userGlobalSubscription) => {
+                    Object.keys(userSubscriptions.val()[userGlobalSubscription]).forEach((topicName) => {
+
+                        /**
+                         * Split the topicName variable, the topicName variable have the form:
+                         * topicKey_language, we need the topicKey to update the language,
+                         * the split function returns an array, the first index (index 0)
+                         * of that array is the topicKey, thats why we save that data on
+                         * this constant
+                         */
+                        const topicNameWithoutLanguage = topicName.split('_')[0];
+                        const newTopicName = `${topicNameWithoutLanguage}_${userDeviceLanguage}`;
+
+                        /**
+                         * An error was introduced with the events topics, the key of the node
+                         * event of the userSubscriptions constant was saved as undefined, this
+                         * code is for solve this problem, we can remove it on the future
+                        */
+                        if (userGlobalSubscription === 'undefined') {
+                            unsubscribeUserFromTopic(topicName);
+                            removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
+
+                            subscribeUserToTopic(newTopicName, uid, EVENTS_TOPIC, false);
+                        } else {
+                            unsubscribeUserFromTopic(topicName);
+                            removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
+
+                            subscribeUserToTopic(newTopicName, uid, userGlobalSubscription, false);
+                        }
+                    });
+                });
+            }
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+/**
+ * Set the status of the account of an specific user
+ * (if he/she have their account opened or closed)
+ * @param {boolean} isUserLogged True if the user is not logged
+ */
+export function updateUserLoggedStatus(isUserLogged, uid = '') {
+
+    /**
+     * This flag was not part of the original app, thats why we use inverse logic here
+     * so if the data does not exist on the profile we can assume that the user is logged.
+     * In other words is not loggedOut
+     */
+    usersRef.child(uid || store.getState().userReducer.user.id).update({ isUserLoggedOut: !isUserLogged });
+}
+
+/**
+ * Remove all the database listeners related to the userReducer
+ * @param {string} uid User identifier
+ */
+export function removeUserListeners(uid) {
+    usersRef.child(uid).off('child_added');
+    usersRef.child(uid).off('child_changed');
+    usersRef.child(uid).off('child_removed');
+}
+
+/**
+ * Remove all the database listeners related to the logrosReducer
+ * @param {string} uid User identifier
+ */
+export function removeLogrosListeners(uid) {
+    cuentasVerificadasRef.child(uid).off('value');
+    logrosRef.child(uid).child('logroCompleto').off('child_added');
+    logrosRef.child(uid).child('logroIncompleto').off('value');
+    pointsTournamentsRef.child(uid).off('value');
+}
+
+/**
+ * Remove the database listener related to an specific event
+ * @param {string} uid User identifier
+ * @param {string} eventKey Event identfier
+ */
+export function removeActiveEventUserSubscribedListener(uid, eventKey) {
+    eventParticipantsRef.child(eventKey).child(uid).off('value');
+}
+
+/**
  * User Subscriptions
  */
 
- /**
-  * Saves the topics on the database which the user has been subscribed on FCM
+/**
+  * Saves topics on the database which the user has been subscribed on Firebase Cloud Messaging
   * @param {string} uid User identifier on the database
   * @param {string} topic Name of the topic to which the user has subscribed
+  * @param {string} type Key of the category of the topic
   */
-export function saveUserSubscriptionToTopic(uid, topic) {
-    userTopicSubscriptions.child(uid).update({ [topic]: true });
+export function saveUserSubscriptionToTopic(uid, topic, type) {
+    userTopicSubscriptions.child(uid).child(type).update({ [topic]: true });
+}
+
+/**
+  * Removes topics on the database which the user has been unsubscribed on Firebase Cloud Messaging
+  * @param {string} uid User identifier on the database
+  * @param {string} topic Name of the topic to which the user has unsubscribed
+  * @param {string} type Key of the category of the topic
+  */
+ export function removeUserSubscriptionToTopic(uid, topic, type) {
+    userTopicSubscriptions.child(uid).child(type).child(topic).remove();
+}
+
+/**
+ * Update the notificationPermission flag of the given type
+ * @param {string} notificationType Key of the category of the topics
+ * @param {boolean} value True if the user allow push notifications
+ */
+export function updateNotificationPermission(notificationType, value) {
+    usersRef.child(store.getState().userReducer.user.id).child('notificationPermissions').update({ [notificationType]: value });
+}
+
+/**
+ * Return a snapshot with the list of the user topics of the given type
+ * @param {string} type Key of the category of the topics
+ */
+export async function getUserTopicSubscriptions(type) {
+    return await userTopicSubscriptions.child(store.getState().userReducer.user.id).child(type).once('value');
+}
+
+/**
+ * Returns the user topic subscription object
+ * Notes: { Games: { topic1, topic2 }, Events: { topic3, topic4 } ... }
+ * @param {string} uid User identifier
+ * @returns {Object | null} JSON that contains all the user subscriptions or null if the user does
+ * not have any subscription
+ */
+export async function getAllUserTopicSubscriptions(uid) {
+    return await userTopicSubscriptions.child(uid).once('value');
+}
+
+/**
+ * Check if the user allows push notifications on a given topic
+ * @param {string} notificationType Key of the notification permission to check
+ */
+export function userAllowsNotificationsFrom(notificationType) {
+    let permissionStatus = true;
+    const notificationsPermissions = store.getState().userReducer.user.notificationPermissions;
+
+    if (notificationsPermissions && notificationsPermissions.hasOwnProperty(notificationType)) {
+        permissionStatus = notificationsPermissions[notificationType];
+    }
+
+    return permissionStatus;
 }
 
 // -----------------------------------------------
@@ -812,7 +1008,7 @@ export function saveUserSubscriptionToTopic(uid, topic) {
 /**
  * Gets the privacy terms from the Qapla App
  * @returns
- * SUCCESS - {Array}  Content of Qapla app privacy terms. 
+ * SUCCESS - {Array}  Content of Qapla app privacy terms.
  * FAIL    - {Array}  Empty array
  */
 export async function getQaplaAppPrivacy() {
@@ -837,4 +1033,42 @@ export async function getQaplaAppPrivacy() {
  */
 export async function userQaplaBalanceListener(uid, callback) {
     usersBalance.child(uid).on('value', callback);
+}
+
+// -----------------------------------------------
+// App versioning
+// -----------------------------------------------
+
+/**
+ * Retrieves the major version of the app from server
+ * @returns
+ * SUCCESS - {string}     res major version of QaplaGaming app retrieved from server
+ * FAIL    - {null}  res no major version was not retrieved
+ */
+export async function dbGetAppVersion() {
+    let res = null;
+
+    try {
+        let resSnap = await versionAppRef.once('value');
+        res = resSnap.val();
+    } catch(error) {
+        console.error(error);
+    }
+
+    return res;
+}
+
+/**
+ * Retrieves a value listener to QaplaVersion child
+ * @param {function} callback callback provided by the caller
+ */
+export async function dbEnableAppVersionValueListener(callback) {
+    versionAppRef.on('value', callback);
+}
+
+/**
+ * Removes a value listener
+ */
+export async function dbRemoveAppVersionValueListener() {
+    versionAppRef.off('value');
 }

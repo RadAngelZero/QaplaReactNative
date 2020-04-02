@@ -2,7 +2,10 @@
     "App": {
         "noInternetConnection": {
             "title": "No internet, check your connection.",
-            "wifiDetails": "Try connect with your data plan"
+            "wifiDetails": "Try connecting with your data plan"
+        },
+        "snackBar": {
+            "details": "Details"
         }
     },
     "platforms": {
@@ -47,10 +50,6 @@
             "description": "Share the clips of your matches, all the community will be able to see the evidence of your victories.",
             "title": "Share"
         },
-        "withdraw": {
-            "description": "Withdraw you Qapla balance or use it to buy Amazon Prime products, we send them free to your home!",
-            "title": "Withdraw"
-        },
         "finish": "Finish"
     },
     "activeAchievementsScreen": {
@@ -72,34 +71,41 @@
         },
         "eventAchievement": {
             "participate": "Participate",
-            "alreadyParticipating": "You are already participating in this event",
-            "goToEvent": "Go to the event"
+            "alreadyParticipating": "You are already participating",
+            "goToEvent": "Go to the event",
+            "eventRequirementsModal": {
+                "title": "Required information",
+                "body": "This information is necessary to participate in this event.",
+                "close": "Close",
+                "addInfo": "Add information"
+            }
         }
     },
     "publicMatchesFeedScreen": {
         "highlightModal": {
-            "header": "Creates a Match",
+            "header": "Create a Match",
             "body": "Compete with other players. Create your match and win!"
         },
         "createMatchesButton": "Play Now"
     },
     "publicMatchCardScreen": {
+        "discordTag": "Discord Tag",
         "numberOfMembers": "Number of members",
         "waitingResult": "Waiting for your adversary result",
         "uploadResultIn": "Upload yout result in:",
         "expireIn": "Expires in:",
         "challenge": "Challenge",
         "cancel": "Cancel",
-        "resultUploaded": "You has already uploaded your result",
+        "resultUploaded": "You have already uploaded your result",
         "uploadResult": "Upload Result",
         "acceptChallenge": "Accept Challenge",
         "alreadyChallengedModal": {
             "header": "We are sorry",
-            "body": "You has already challenge this match",
+            "body": "You have already challenged this match",
             "textButton": "Ok"
         },
         "buyQaploinsModal": {
-            "body": "Buy Qaploins to challenge this match"
+            "body": "Buy Qoins to challenge this match"
         }
     },
     "userProfileScreen": {
@@ -115,10 +121,10 @@
     "notificationsScreen":{
         "notificationsHeader": "Notifications",
         "notificationTypes": {
-            "notificationWinner": "You has been declared the winner of the match.",
+            "notificationWinner": "You have been declared the winner of the match.",
             "notificationLooser": "%{userName} has been declared the winner of the match.",
-            "notificationResult": "%{userName} has upload their result, you have 15 minutes to upload yours!",
-            "notificationRevision": "You match is under review. As soon as it is ready, you will be notified.",
+            "notificationResult": "%{userName} has uploaded their result, you have 15 minutes to upload yours!",
+            "notificationRevision": "Your match is under review. As soon as it is ready, you will be notified.",
             "notificationTie": "Your match with %{userName} has finished without winner.",
             "notificationMatchAccepted": "%{userName} has accepted your challenge.",
             "matchNotification": {
@@ -128,7 +134,7 @@
             }
         },
         "acceptChallengeModal": {
-            "body": "When accept this challenge all the other challenges made to this match will be deleted.",
+            "body": "By accepting this challenge all the other challenges made to this match will be deleted.",
             "dontShowItAgain": "Don't show this message again",
             "continue": "Continue"
         }
@@ -139,6 +145,7 @@
         "support": "Support",
         "editBio": "Edit Biography",
         "editDiscord": "Edit Discord",
+        "notifications": "Push notifications",
         "termsAndConditions": "Terms and Conditions",
         "privacyNotice": "Privacy Notice",
         "closeSession": "Close Session",
@@ -159,7 +166,7 @@
         "placeholder": "Happy? Frustrated? Sad? Share your opinion here",
         "send": "Send comment",
         "gratitudeModal": {
-            "header": "Thanks for your comments"
+            "header": "Thank you for your comments"
         }
     },
     "chooseMatchTypeScreen": {
@@ -171,7 +178,7 @@
         "title": "Choose your game"
     },
     "setBetScreen": {
-        "title": "How much you want to win?",
+        "title": "How much do you want to win?",
         "entry": "Entry",
         "createMatch": "Create Match",
         "buyQaploinsModal": {
@@ -189,7 +196,7 @@
             "resendCountdown": "Resend code in... %{countDownSecs} seconds"
         },
         "verificationPersonalData": {
-            "title": "Whats your name?",
+            "title": "What is your name?",
             "namePlaceholder": "Name(s)",
             "firstSurnamePlaceholder": "First Surname*",
             "secondSurnamePlacholder": "Second Surname*",
@@ -199,12 +206,14 @@
             "title": "¡Verify your Whatsapp!",
             "phonePlaceholder": "Phone Number* e.g. 6505551234",
             "codePlaceholder": "Insert your Code",
-            "codeSended": "We have sent you a verification code",
-            "smsCodeError": "The verification code is incorrect"
+            "codeSent": "We have sent you a verification code",
+            "smsCodeError": "The verification code is incorrect",
+            "alreadyLinkedAccountError": "This phone number is already linked to an account.",
+            "noMinDigitsPhoneNum":  "Phone number should have minimum of 5 digits."
         },
         "verificationProcessSuccess": {
-            "title": "Thanks!",
-            "body": "We got your request, this process can take 24 hrs. We apreciate your patiente, We are working for you."
+            "title": "Thank you!",
+            "body": "We got your request, this process can take 24 hrs. We appreciate your patience. We are working for you."
         }
     },
     "uploadMatchResultScreen": {
@@ -236,14 +245,14 @@
         },
         "uploadMatchEvidenceModal": {
             "header": "Upload your evidence",
-            "paragraph": "Remember upload your evidence of the played match! in case of dispute for the results the evidence is your better proof!",
+            "paragraph": "Remember uploading your evidence of the played match! In case of dispute for the results the evidence is your better proof!",
             "okButton": "Continue without evidence"
         }
     },
     "signInScreen": {
         "facebookSignin": "Continue with Facebook",
         "googleSignin": "Continue with Google",
-        "alreadyHaveAccount": "Already have account?",
+        "alreadyHaveAccount": "Already have an account?",
         "emailSignin": "Sign in with email"
     },
     "loginWithEmailScreen": {
@@ -255,13 +264,13 @@
     "chooseUserNameScreen": {
         "title": "Create your username",
         "userNamePlaceholder": "Insert here your username",
-        "userNameAlreadyTaken": "This name is already in use, try with other",
+        "userNameAlreadyTaken": "This name is already taken, try another one",
         "bodyFirstPart": "Before you use Qapla Gaming make sure you have read and accepted our",
         "termsAndConditions": "Terms and Conditions",
         "bodySecondPart": "and our",
         "privacyPolicy": "Privacy policy",
-        "agreeWithTerms": "I read and agree with terms and conditions",
-        "agreeWithPrivacy": "I read and agree the privacy policy",
+        "agreeWithTerms": "I read and I agree with terms and conditions",
+        "agreeWithPrivacy": "I read and I agree the privacy policy",
         "validatingUserName": "Validating Username...",
         "acceptButton": "Continue",
         "continue": "Continue"
@@ -270,10 +279,15 @@
         "title": "Search user to challenge",
         "searchPlaceholder": "Search user"
     },
+    "notificationsSettingsScreen": {
+        "title": "Notifications",
+        "gamesPermissionDescription": "Receive notifications about new matches of games that interest me",
+        "eventsPermissionDescription": "Receive notifications about the events to which I am subscribed"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Check your notifications",
-            "body": "Your matches will receive notification challenges, remember check your notifications!"
+            "body": "Your matches will receive notification challenges, remember checking your notifications!"
         }
     },
     "highlightModal": {
@@ -309,8 +323,23 @@
     },
     "matchExpireRememberModal": {
         "header": "Remember",
-        "paragraph": "The match expires after 10 minutes if you don't accept a challenge from other user or if it's not challenged from other user.",
+        "paragraph": "The match expires after 10 minutes if you don't accept a challenge from other user or if it's not challenged by another user.",
         "dontShowItAgain": "Don't show this message again",
         "okButton": "Got it"
+    },
+    "updateApp": {
+        "header": "There is a new version of Qapla, please update to the latest version.",
+        "updateBttnTxt": "Update"
+    },
+    "deepLinks": {
+        "matchCard": {
+            "description": "Play your favourite game with other players and win rewards",
+            "title": "Play a %{game} match (%{platform}) to win %{winBet} Qoins!"
+        },
+        "linkBroken": {
+            "title": "Link broken",
+            "description": "The content you are trying to access could not be found, try again or update the app to latest version and try again.",
+            "bttnText": "Update" 
+        }
     }
 }

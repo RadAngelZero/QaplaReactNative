@@ -1,6 +1,3 @@
-// diego           - 11-12-2019 - us165 - loadQaplaLogros moved to AuthLoadingScreen
-// diego           - 18-09-2019 - us110 - File creation
-
 import React, { Component } from 'react';
 import { SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
@@ -20,8 +17,6 @@ export class LogrosActivosScreen extends Component {
 
             return false;
         }).map((logroKey) => this.props.logros.logrosActivos[logroKey]);
-
-        //logros = Object.keys(logros).map((logroKey) => this.props.logros.logrosActivos[logroKey]);
 
         return (
             <SafeAreaView style={styles.sfvContainer}>

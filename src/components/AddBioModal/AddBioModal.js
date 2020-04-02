@@ -6,6 +6,7 @@ import styles from './style';
 import Images from './../../../assets/images';
 import { updateUserBio } from '../../services/database';
 import { translate } from '../../utilities/i18';
+import QaplaIcon from '../QaplaIcon/QaplaIcon';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -48,11 +49,9 @@ class AddBioModal extends Component {
                 onRequestClose={this.props.onClose}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
-                        <TouchableWithoutFeedback onPress={this.closeModal}>
-                            <View style={styles.closeIcon}>
-                                <CloseIcon />
-                            </View>
-                        </TouchableWithoutFeedback>
+                        <QaplaIcon onPress={this.closeModal} touchableStyle={styles.closeIcon}>
+                            <CloseIcon />
+                        </QaplaIcon>
                         <Text style={styles.modalTitle}>{translate('settingsMenuScreen.addBioModal.title')}</Text>
                         <TextInput
                             onFocus={this.toggleInputSelection}

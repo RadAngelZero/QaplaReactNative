@@ -8,13 +8,16 @@ import styles from './style';
 import Images from './../../../assets/images';
 import { updateUserDiscordTag } from '../../services/database';
 import { translate } from '../../utilities/i18';
+import Colors from '../../utilities/Colors';
+import QaplaIcon from '../QaplaIcon/QaplaIcon';
 
 const CloseIcon = Images.svg.closeIcon;
 
 class AddDiscordTagModal extends Component {
     state = {
         discordTag: '',
-        selected: false
+        selected: false,
+        showFeedback: false
     };
 
     /**
@@ -37,33 +40,40 @@ class AddDiscordTagModal extends Component {
      * Call to the database function to update the discord tag of the user and then close the modal
      */
     updateDiscordTag = () => {
-        updateUserDiscordTag(this.props.uid, this.state.discordTag);
-        this.closeModal();
+        if (this.state.discordTag) {
+            updateUserDiscordTag(this.props.uid, this.state.discordTag);
+
+            if (this.props.onSuccess) {
+                this.props.onSuccess();
+            }
+
+            this.closeModal();
+        } else {
+            this.setState({ showFeedback: true });
+        }
     }
 
     render() {
         return (
             <Modal
                 animationType='fade'
-                transparent={true}
+                transparent
                 visible={this.props.open}
-                onRequestClose={this.props.onClose}>
+                onRequestClose={this.props.closeModal}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
-                        <TouchableWithoutFeedback onPress={this.closeModal}>
-                            <View style={styles.closeIcon}>
-                                <CloseIcon />
-                            </View>
-                        </TouchableWithoutFeedback>
+                        <QaplaIcon onPress={this.closeModal} touchableStyle={styles.closeIcon}>
+                            <CloseIcon />
+                        </QaplaIcon>
                         <Text style={styles.modalTitle}>{translate('settingsMenuScreen.addDiscordTagModal.title')}</Text>
                         <TextInput
                             onFocus={this.toggleInputSelection}
                             onBlur={this.toggleInputSelection}
                             placeholder={translate('settingsMenuScreen.addDiscordTagModal.placeholder')}
                             placeholderTextColor='#B5B5B5'
-                            style={[styles.qaplaTextInput, { borderBottomColor: this.state.selected ? '#3DF9DF' : '#B5B5B5' } ]}
+                            style={[styles.qaplaTextInput, { borderBottomColor: this.state.showFeedback ? Colors.textInputs.error : this.state.selected ? Colors.greenQapla : Colors.textInputs.unselected } ]}
                             autoCapitalize='none'
-                            onChangeText={(discordTag) => this.setState({ discordTag })}
+                            onChangeText={(discordTag) => this.setState({ discordTag, showFeedback: false })}
                             onSubmitEditing={this.updateDiscordTag} />
                         <View style={styles.buttonsContainer}>
                             <TouchableWithoutFeedback onPress={this.closeModal}>

@@ -5,7 +5,7 @@ export default styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         borderRadius: 4,
-        backgroundColor: '#141833',
+        backgroundColor: '#FFF',
         shadowColor: '#000',
         justifyContent: 'center',
         shadowOffset: {
@@ -31,14 +31,14 @@ export default styles = StyleSheet.create({
     },
     message: {
         fontSize: 14,
-        color: '#FFF',
+        color: '#000',
         textAlignVertical: 'center',
         marginRight: widthPercentageToPx(5),
         marginLeft: widthPercentageToPx(5)
     },
     messageWithAction: {
         fontSize: 14,
-        color: '#FFF',
+        color: '#000',
         textAlignVertical: 'center',
         maxWidth: '65%',
         marginRight: widthPercentageToPx(5),

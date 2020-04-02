@@ -11,7 +11,6 @@ import React, { Component } from 'react';
 import {
     SafeAreaView,
     View,
-    TouchableWithoutFeedback,
     Linking,
     Image
 } from 'react-native';
@@ -26,6 +25,7 @@ import HighlightModal from '../HighlightModal/HighlightModal';
 import { storeData, retrieveData } from '../../utilities/persistance';
 import { HIGHLIGHT_2_NOTIFICATIONS, QAPLA_DISCORD_CHANNEL } from '../../utilities/Constants';
 import { translate } from '../../utilities/i18';
+import QaplaIcon from '../QaplaIcon/QaplaIcon';
 
 const NotificationIcon = images.svg.notificationIcon;
 const DiscordIcon = images.svg.discordIcon;
@@ -188,26 +188,21 @@ class HeaderBar extends Component {
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer} testID='container'>
-                <View
-                  style={styles.topNavBarView}>
-                  <Image
-                    source={images.png.qaplaHeaderIcon.img}
-                    style={styles.qaplaImage}/>
-                  <View
-                    style={{
-                      flex: 1,
-                    }}/>
-                   <View style={styles.imageContainer}>
-                      <HighlightModal
-                        visible={this.state.showHg2Modal}
-                        onClose={this.toggleHg2Modal}
-                        showDelay={1000}
-                        cb1={this.markHg2}
-                        header={translate('headerBar.highlightModal.header')}
-                        body={translate('headerBar.highlightModal.body')}>
-                            <TouchableWithoutFeedback style={styles.imageAndButtonDimensions}
-                                onPress={this.onNotiPressBttn}
-                                testID='NotificationButton'>
+                <View style={styles.topNavBarView}>
+                    <View>
+                        <Image
+                            source={images.png.qaplaHeaderIcon.img}
+                            style={styles.qaplaImage}/>
+                    </View>
+                    <View style={styles.iconsContainer}>
+                        <HighlightModal
+                            visible={this.state.showHg2Modal}
+                            onClose={this.toggleHg2Modal}
+                            showDelay={1000}
+                            cb1={this.markHg2}
+                            header={translate('headerBar.highlightModal.header')}
+                            body={translate('headerBar.highlightModal.body')}>
+                            <QaplaIcon onPress={this.onNotiPressBttn}>
                                 <View>
                                     <NotificationIcon height={25} width={25} />
                                     {this.userHaveUnreadNotifications() &&
@@ -216,43 +211,33 @@ class HeaderBar extends Component {
                                         </Svg>
                                     }
                                 </View>
-                            </TouchableWithoutFeedback>
-                      </HighlightModal>
-                  </View>
-                  {this.props.currentScreenId !== 'Profile' &&
-                            <TouchableWithoutFeedback onPress={this.sendToDiscord}>
-                                <View style={styles.discordImage}>
+                            </QaplaIcon>
+                        </HighlightModal>
+                        {this.props.currentScreenId !== 'Profile' &&
+                                <QaplaIcon onPress={this.sendToDiscord}>
                                     <DiscordIcon
                                         height={25}
                                         width={25}
                                         fill='#FFF' />
-                                </View>
-                            </TouchableWithoutFeedback>
-                    }
-                    {(this.props.currentScreenId === 'Profile' && !this.props.isUserVerified) &&
-                        <View style={styles.discordImage}>
-                            <TouchableWithoutFeedback onPress={this.goToVerificationStack}>
-                                <View style={styles.imageAndButtonDimensions}>
-                                    <NoVerifiedIcon
-                                        height={24}
-                                        width={24}
-                                        fill='#FFF' />
-                                </View>
-                            </TouchableWithoutFeedback>
-                        </View>
-                    }
-                    {this.props.currentScreenId === 'Profile' &&
-                        <View style={styles.settingsIcon}>
-                            <TouchableWithoutFeedback onPress={this.goToUserProfile}>
-                                <View style={styles.settingsButtonDimensions}>
-                                    <SettingsIcon
-                                        height={23}
-                                        width={23}
-                                        fill='#FFF' />
-                                </View>
-                            </TouchableWithoutFeedback>
-                        </View>
-                    }
+                                </QaplaIcon>
+                        }
+                        {(this.props.currentScreenId === 'Profile' && !this.props.isUserVerified) &&
+                            <QaplaIcon onPress={this.goToVerificationStack}>
+                                <NoVerifiedIcon
+                                    height={24}
+                                    width={24}
+                                    fill='#FFF' />
+                            </QaplaIcon>
+                        }
+                        {this.props.currentScreenId === 'Profile' &&
+                            <QaplaIcon onPress={this.goToUserProfile}>
+                                <SettingsIcon
+                                    height={23}
+                                    width={23}
+                                    fill='#FFF' />
+                            </QaplaIcon>
+                        }
+                    </View>
                 </View>
             </SafeAreaView>
         );

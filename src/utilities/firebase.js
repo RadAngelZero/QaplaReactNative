@@ -1,7 +1,3 @@
-// diego          - 20-12-2019 - us179 - Added states for phoneAuth (phoneAuthErrorState, phoneAuthAutoVerifiedState)
-// josep.sanahuja - 26-09-2019 - us118 - Added firebase.storage
-// diego          - 16-07-2019 - us30  - TimeStamp const created
-
 import firebase from 'react-native-firebase';
 
 /*import * as firebase from 'firebase/app';
@@ -28,6 +24,8 @@ export const functions = firebase.functions();
 export const storage = firebase.storage();
 export const messaging = firebase.messaging();
 export const notifications = firebase.notifications();
+export const links = firebase.links();
+export const firebaseLinks = firebase.links;
 
 // Authentication providers
 export const FBProvider = firebase.auth.FacebookAuthProvider;

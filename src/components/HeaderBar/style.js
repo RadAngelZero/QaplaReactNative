@@ -14,14 +14,13 @@ export const styles = StyleSheet.create({
         paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     topNavBarView: {
-        backgroundColor: "transparent",
         height: heightPercentageToPx(HEADER_SIZE),
         marginLeft: 16,
-        marginRight: 16,
         marginTop: 20,
         marginBottom: 30,
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     qaplaImage: {
         backgroundColor: "transparent",
@@ -29,35 +28,12 @@ export const styles = StyleSheet.create({
         width: 80,
         height: 32,
     },
-    notificationsImage: {
-        backgroundColor: "transparent",
-        resizeMode: "center",
-        width: 25,
-        height: 25,
-        marginRight: 9,
+    iconsContainer: {
+        flexDirection: 'row'
     },
     unreadNotificationsIcon: {
         position: 'absolute',
         right: widthPercentageToPx(.75),
         bottom: 0
-    },
-    discordImage: {
-        backgroundColor: "transparent",
-        resizeMode: "center",
-        width: 25,
-        height: 25,
-        marginLeft: widthPercentageToPx(2)
-    },
-    settingsIcon: {
-        marginLeft: widthPercentageToPx(1.8)
-    },
-    settingsButtonDimensions: {
-        height: 23,
-        width: 23
-    },
-    imageAndButtonDimensions: {
-        height: 28,
-        width: 28
-    },
-
+    }
 });

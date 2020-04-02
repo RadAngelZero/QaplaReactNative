@@ -33,8 +33,12 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>QaplaDeepLink</string>
 			<key>CFBundleURLSchemes</key>
-			<array/>
+			<array>
+				<string>org.Qapla.QaplaApp</string>
+			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
@@ -51,6 +55,8 @@
 	<string>270131990285283</string>
 	<key>FacebookDisplayName</key>
 	<string>QaplaReactNative</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<true/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

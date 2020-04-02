@@ -2,11 +2,12 @@
 // diego           - 03-09-2019 - us96 - File creation
 
 import React, { Component } from 'react';
-import { SafeAreaView, View, TouchableWithoutFeedback } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
 import Images from './../../../assets/images';
+import QaplaIcon from '../QaplaIcon/QaplaIcon';
 
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
@@ -20,6 +21,10 @@ class TopNavOptions extends Component {
     close = () => {
         if (this.props.closeEvent) {
             this.props.closeEvent();
+        }
+
+        if (this.props.onCloseNavigateTo) {
+            this.props.navigation.navigate(this.props.onCloseNavigateTo);
         }
 
         /**
@@ -43,20 +48,16 @@ class TopNavOptions extends Component {
                 <View style={styles.optionsContainer}>
                     <View style={styles.backIconContainer}>
                         {this.props.back &&
-                            <TouchableWithoutFeedback onPress={() => this.props.navigation.pop()}>
-                                <View style={styles.buttonDimensions}>
-                                    <BackIcon />
-                                </View>
-                            </TouchableWithoutFeedback>
+                            <QaplaIcon onPress={() => this.props.navigation.pop()}>
+                                <BackIcon />
+                            </QaplaIcon>
                         }
                     </View>
                     <View style={styles.closeIconContainer}>
                         {this.props.close &&
-                            <TouchableWithoutFeedback onPress={this.close}>
-                                <View style={styles.buttonDimensions}>
-                                    <CloseIcon />
-                                </View>
-                            </TouchableWithoutFeedback>
+                            <QaplaIcon onPress={this.close}>
+                                <CloseIcon />
+                            </QaplaIcon>
                         }
                     </View>
                 </View>

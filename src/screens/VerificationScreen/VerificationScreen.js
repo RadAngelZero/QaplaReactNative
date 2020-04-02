@@ -31,6 +31,14 @@ import { createVerificationRequest } from '../../services/database';
 import { PhoneProvider } from '../../utilities/firebase';
 import { translate } from '../../utilities/i18';
 
+import {
+    ACCOUNT_ALREADY_IN_USE,
+    ACCOUNT_INVALID_CREDENTIAL,
+    ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT,
+    ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS
+} from '../../utilities/Constants';
+import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
+
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
 
@@ -61,7 +69,9 @@ class VerificationScreen extends Component {
         indexPositionsIsSorted: false,
         numAttemptsCodeSent: 0,
         codeSent: false,
-        errorSMSCode: false
+        errorSMSCode: false,
+        errorAlreadyLinkedAccount: false,
+        errorMinPhoneDigits: false
     };
 
     /**
@@ -165,7 +175,15 @@ class VerificationScreen extends Component {
                 isValidData = !Object.keys(this.state.personData).some((value) => this.state.personData[value] === '' || this.state.personData[value] === 0);
                 break;
             case this.state.indexPositions.length - 1:
-                isValidData = this.state.phoneData.phoneNumber.length >= 10;
+                // In some countries like Spain the number of digits in a phone number is
+                // 9, in Mexico is 10. Therefore the approach for number validation is
+                // to require a ridiculous minim of digits, so that users don't go crazy 
+                // on trials with phone numbers of #2 #3 digits. If the phone number does not exist
+                // an UNKNOWN_ERROR should be expected (this last statement need to be 100% confirmed,
+                // it is an hypothesis).  
+                const MIN_PHONE_NUM_DIGITS = 5;
+                isValidData = this.state.phoneData.phoneNumber.length >= MIN_PHONE_NUM_DIGITS;
+                
                 if (isValidData) {
                     try {
                         isUserOnSendCodeScreen = true;
@@ -185,12 +203,15 @@ class VerificationScreen extends Component {
                         console.error(error);
                     }
                 }
+                else {
+                    this.setState({errorMinPhoneDigits: true});
+                }
                 break;
             case this.state.indexPositions.length:
                 isValidData = !Object.keys(this.state.firebaseVerificationData).some((value) => this.state.firebaseVerificationData[value] === '');
 
                 if (isValidData) {
-                    this.setState({ errorSMSCode: false });
+                    this.setState({ errorSMSCode: false, errorAlreadyLinkedAccount: false });
                     isValidData = await this.verifyUserPhone(this.state.verificationObject.verificationId, this.state.firebaseVerificationData.verificationCode);
                 }
                 break;
@@ -259,6 +280,7 @@ class VerificationScreen extends Component {
             const verificationRequest = {
                 curp: '',
                 nombre: `${this.state.personData.name} ${this.state.personData.firstSurname} ${this.state.personData.secondSurname}`,
+                telefono: `+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`,
                 foto: '',
                 status: 1,
                 usuario: this.props.userName,
@@ -269,32 +291,27 @@ class VerificationScreen extends Component {
 
         } catch (error) {
             console.log(error);
-            this.setState({ errorSMSCode: true });
-            accountsLinked = false;
+            switch (error.code) {
+                case ACCOUNT_INVALID_CREDENTIAL:
+                    this.setState({ errorSMSCode: true });
+                    accountsLinked = false;
+                    break;
+                case ACCOUNT_ALREADY_IN_USE:
+                    this.setState({ errorAlreadyLinkedAccount: true });
+                    accountsLinked = false;
+                    break;
+                case ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT:
+                    this.setState({ errorAlreadyLinkedAccount: true });
+                    accountsLinked = false;
+                    break;
+                case ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS:
+                    this.setState({ errorAlreadyLinkedAccount: true });
+                    accountsLinked = false;
+                    break;
+            }
         }
 
         return accountsLinked;
-    }
-
-    /**
-     * Execute an automatic phone verification (available only for android devices at the 23/12/2019)
-     * @param {string} verificationId Id of the verification process (given by firebase)
-     * @param {number} verificationCode Code sended to the user to verify their phone number
-     */
-    autoVerifyUserPhone = async (verificationId, verificationCode) => {
-        await this.verifyUserPhone(verificationId, verificationCode);
-
-        /**
-         * We update the next index by 2, we need to update by 2 because we need to count the
-         * step of add the code, and one more to go to the final screen
-         */
-        this.setState({ nextIndex: this.state.nextIndex + 2 }, () => {
-            /**
-             * After we update the nextIndex we execute goToNextStep automatically, to continue with the
-             * process (finishing the process actually)
-             */
-            this.goToNextStep();
-        });
     }
 
     /**
@@ -331,7 +348,7 @@ class VerificationScreen extends Component {
          * so we can render new things on the screen, to let the user add their code and procceed
          */
         this.setState({
-            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`, this.autoVerifyUserPhone)
+            verificationObject: await sendVerificationSMSToUser(`+${this.state.phoneData.prefixObj.callingCodes[0]}${this.state.phoneData.phoneNumber}`)
         });
     }
 
@@ -352,24 +369,20 @@ class VerificationScreen extends Component {
                     <View style={styles.backIconContainer}>
                         {/** Just show BackIcon if the user has already passed at least the first slide */}
                         {(this.state.nextIndex > 1 && this.state.nextIndex !== this.state.indexPositions.length + 1) ?
-                            <TouchableWithoutFeedback onPress={this.goToPreviousStep}>
-                                <View style={styles.buttonDimensions}>
-                                    <BackIcon />
-                                </View>
-                            </TouchableWithoutFeedback>
+                            <QaplaIcon onPress={this.goToPreviousStep}>
+                                <BackIcon />
+                            </QaplaIcon>
                             :
-                            <View style={styles.buttonDimensions} />
+                            null
                         }
                     </View>
                     <View style={styles.closeIconContainer}>
                         {this.state.nextIndex !== this.state.indexPositions.length + 1 ?
-                            <TouchableWithoutFeedback onPress={this.closeVerificationProccess}>
-                                <View style={styles.buttonDimensions}>
-                                    <CloseIcon />
-                                </View>
-                            </TouchableWithoutFeedback>
+                            <QaplaIcon onPress={this.closeVerificationProccess}>
+                                <CloseIcon />
+                            </QaplaIcon>
                             :
-                            <View style={styles.buttonDimensions} />
+                            null
                         }
                     </View>
                 </View>
@@ -390,7 +403,9 @@ class VerificationScreen extends Component {
                                 setPhonePrefix={this.setPhonePrefixObj}
                                 setVerificationCode={this.setVerificationCode}
                                 goToNextStep={this.goToNextStep}
-                                error={this.state.errorSMSCode}
+                                wrongCode={this.state.errorSMSCode}
+                                alreadyLinkedError={this.state.errorAlreadyLinkedAccount}
+                                minNumDigitsError={this.state.errorMinPhoneDigits}
                                 codeSent={this.state.codeSent} />
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>

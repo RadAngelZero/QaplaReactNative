@@ -14,14 +14,13 @@ import { connect } from 'react-redux';
 
 import styles from './style'
 
-import { EVENTS_TOPIC } from './../../utilities/Constants';
+import { EVENTS_TOPIC, GAMES_TOPICS } from './../../utilities/Constants';
 
 import CarouselPng from '../../components/CarouselPng/CarouselPng'
 import Images from '@assets/images'
 import { storeData } from '../../utilities/persistance';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { subscribeUserToTopic } from './../../services/messaging';
-import { saveUserSubscriptionToTopic } from '../../services/database';
 
 class WelcomeOnboardingScreen extends React.Component {
 	constructor(props) {
@@ -33,17 +32,14 @@ class WelcomeOnboardingScreen extends React.Component {
 
 	finishOnBoarding = () => {
 		storeData('tutorial-done', 'true');
-		const eventsTopic = `${EVENTS_TOPIC}_${getLocaleLanguage()}`;
+
 		/**
          * All the users must be subscribed to the event topic at this point, because we want
          * all the users to receive notifications when a new event is created, we use the language suffix
          * because we want to send the notifications in different languages (based on the user cellphone
          * language)
          */
-		subscribeUserToTopic(eventsTopic);
-		if (this.props.uid !== '') {
-			saveUserSubscriptionToTopic(this.props.uid, eventsTopic);
-		}
+		subscribeUserToTopic(EVENTS_TOPIC, this.props.uid, EVENTS_TOPIC);
 
 		/**
 		 * If the user has games (that means that we have a logged user)
@@ -51,8 +47,7 @@ class WelcomeOnboardingScreen extends React.Component {
 		 */
 		this.props.userGames.forEach((gameKey) => {
 			if (gameKey) {
-				subscribeUserToTopic(gameKey);
-				saveUserSubscriptionToTopic(this.props.uid, gameKey);
+				subscribeUserToTopic(gameKey, this.props.uid, GAMES_TOPICS);
 			}
 		});
 
@@ -80,11 +75,6 @@ class WelcomeOnboardingScreen extends React.Component {
 			Image: Images.png.shareOnBoarding.img,
 			description: translate('onBoardingScreen.share.description'),
 			title: translate('onBoardingScreen.share.title')
-		},
-      	{
-			Image: Images.png.walletOnBoarding.img,
-			description: translate('onBoardingScreen.withdraw.description'),
-			title: translate('onBoardingScreen.withdraw.title')
 		}
     ];
 

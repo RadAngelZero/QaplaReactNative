@@ -1,0 +1,239 @@
+{
+  "project_info": {
+    "project_number": "779347879760",
+    "firebase_url": "https://qapplaapp.firebaseio.com",
+    "project_id": "qapplaapp",
+    "storage_bucket": "qapplaapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779347879760:android:b1d06accd2613b1d",
+        "android_client_info": {
+          "package_name": "com.example.paco.qapplaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "779347879760-tsjt81oslvi494o2htpl22rs3ihi7ek7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.paco.qapplaapp",
+            "certificate_hash": "a87b91d18814bd5fcf88a0e78701b73c36e8969c"
+          }
+        },
+        {
+          "client_id": "779347879760-r3fm0n9rj947qqu8pl5gd9rddol7fnhr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.paco.qapplaapp",
+            "certificate_hash": "0b74137c77c4cca1a41874efc021a44b87cb6a26"
+          }
+        },
+        {
+          "client_id": "779347879760-fim9drev7u4r9huh48phce4bq8mps46v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.paco.qapplaapp",
+            "certificate_hash": "eb029355bd313d20c05d6dab765d9be3a23b1c4d"
+          }
+        },
+        {
+          "client_id": "779347879760-lc2dfu0ekqqn5pf820ogq9jfab6e744t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.paco.qapplaapp",
+            "certificate_hash": "5fec3e53c686bcc70f7d62faee8383f7ca657a62"
+          }
+        },
+        {
+          "client_id": "779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKHbcGhEt1eg5eQg9_RuS3Q7OlX9gwBos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779347879760-4qlprn3t6vbejgj2e657umru1i984k3c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "779347879760-uljnbjffsseg2b7lgb23dvcqm6r6m40u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.Qapla.QaplaApp",
+                "app_store_id": "1485332229"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779347879760:android:f0d5181d2e092dea",
+        "android_client_info": {
+          "package_name": "com.qapla.gaming.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "779347879760-rht5g9ihsf66kv3mg8cbgau6nf5eio3l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qapla.gaming.app",
+            "certificate_hash": "3ee12c841ba8b7eb4d018aac4bbd4290a3610fbb"
+          }
+        },
+        {
+          "client_id": "779347879760-el9mlt13dim78rmf6isev2q9bkel6rj6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qapla.gaming.app",
+            "certificate_hash": "d1e3229f88b269e9c87f7991989cbf5f68575f7a"
+          }
+        },
+        {
+          "client_id": "779347879760-j0bkr0ioot7s2saqop6510ndooh8t9dq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qapla.gaming.app",
+            "certificate_hash": "8175182475461324eb36bc814883290d228e0b7e"
+          }
+        },
+        {
+          "client_id": "779347879760-4gacl3r0r6jpv41tr2im1ocd6nsdk86f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qapla.gaming.app",
+            "certificate_hash": "3de6488a89601069ced88c1511659de77dc418ce"
+          }
+        },
+        {
+          "client_id": "779347879760-66ui3lmadcvtdjis64krcflg4d9sncge.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qapla.gaming.app",
+            "certificate_hash": "5fec3e53c686bcc70f7d62faee8383f7ca657a62"
+          }
+        },
+        {
+          "client_id": "779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKHbcGhEt1eg5eQg9_RuS3Q7OlX9gwBos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779347879760-4qlprn3t6vbejgj2e657umru1i984k3c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "779347879760-uljnbjffsseg2b7lgb23dvcqm6r6m40u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.Qapla.QaplaApp",
+                "app_store_id": "1485332229"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779347879760:android:60426a8d2421af83",
+        "android_client_info": {
+          "package_name": "com.qapla.gaming.appqaplaedituser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKHbcGhEt1eg5eQg9_RuS3Q7OlX9gwBos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779347879760-4qlprn3t6vbejgj2e657umru1i984k3c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "779347879760-uljnbjffsseg2b7lgb23dvcqm6r6m40u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.Qapla.QaplaApp",
+                "app_store_id": "1485332229"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779347879760:android:d283297f3166483620ee55",
+        "android_client_info": {
+          "package_name": "com.qaplareactnative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "779347879760-c71rv9hbclep82s0uaflcdae00i2suic.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qaplareactnative",
+            "certificate_hash": "4e279d145e3cc5088d790a54c8e227c2184f03a2"
+          }
+        },
+        {
+          "client_id": "779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKHbcGhEt1eg5eQg9_RuS3Q7OlX9gwBos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779347879760-4qlprn3t6vbejgj2e657umru1i984k3c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "779347879760-uljnbjffsseg2b7lgb23dvcqm6r6m40u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.Qapla.QaplaApp",
+                "app_store_id": "1485332229"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

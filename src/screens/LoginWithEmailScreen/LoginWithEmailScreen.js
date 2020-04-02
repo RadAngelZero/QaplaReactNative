@@ -10,6 +10,8 @@ import { signInWithEmailAndPassword } from '../../services/auth';
 import Images from './../../../assets/images';
 import styles from './style';
 import { translate } from '../../utilities/i18';
+import { updateUserLoggedStatus } from '../../services/database';
+import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
@@ -25,7 +27,9 @@ class LoginWithEmailScreen extends Component {
      */
     logInUser = async () => {
         try {
-            await signInWithEmailAndPassword(this.state.email, this.state.password);
+            const user = await signInWithEmailAndPassword(this.state.email, this.state.password);
+            updateUserLoggedStatus(true, user.user.uid);
+            subscribeUserToAllRegistredTopics(user.user.uid);
             const originScreen = this.props.navigation.getParam('originScreen', 'Achievements');
             if (originScreen !== 'Public') {
                 this.props.navigation.dismiss();
@@ -50,6 +54,7 @@ class LoginWithEmailScreen extends Component {
                         <TextInput style={styles.inputText}
                             placeholder={translate('loginWithEmailScreen.emailPlaceholder')}
                             autoCapitalize='none'
+                            textContentType='emailAddress'
                             onChangeText={(text) => this.setState({ email: text })}
                             onSubmitEditing={() => this.passwordInput.focus()}
                             returnKeyType='next' />

@@ -21,7 +21,8 @@ export default styles = StyleSheet.create({
     gameData: {
         alignSelf: 'center',
         justifyContent: 'center',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        alignItems: 'center'
     },
     descriptionText: {
         fontSize: 12,

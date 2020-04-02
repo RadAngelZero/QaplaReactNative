@@ -20,6 +20,7 @@ import {
     Text,
     TouchableWithoutFeedback
 } from 'react-native';
+
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -41,6 +42,16 @@ import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 import { translate } from '../../utilities/i18';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { getPlatformNameWithKey } from '../../utilities/utils';
+
+import {
+    dplCreateLinkMatchCard
+} from '../../services/links';
+
+import {
+    discordPublishMessageToChannel
+} from '../../services/discord';
+
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
 const QaploinIcon = images.svg.qaploinsIcon;
@@ -60,9 +71,10 @@ class SetBetScreen extends Component {
     constructor(props) {
         super(props);
 
+        this.bets = [0, 15, 25, 50, 75, 150, 225, 300];
         this.state = {
             commission: 10,
-            currentBet: 150,
+            currentBet: this.bets.indexOf(75),
             open: false,
             loading: false,
             timeActionMsgOpen: false
@@ -97,83 +109,124 @@ class SetBetScreen extends Component {
      */
     closeEvent = () => {
         trackOnSegment('Cancel Match Select Qaploins', {
-            Bet: this.state.currentBet,
+            Bet: this.bets[this.state.currentBet],
             UserQaploins: this.props.userQaploins,
         });
     }
 
     /**
-     * Description:
-     * Retrieves the Qapla comission for transactions and sets it into the state.
+     * @description Retrieves the Qapla comission for transactions and sets it into the state.
      *
      */
     async setQaplaComission() {
         try {
-            const com = await getCurrentQaplaCommission();
+            const commission = await getCurrentQaplaCommission();
 
-            this.setState({
-                commission: com
-            });
+            this.setState({ commission });
         } catch(err) {
             console.log(err);
         }
     }
 
     defineWinBet() {
-        const totalBet = this.state.currentBet*2;
-        const qaploinsOfCommission = totalBet * this.state.commission/100;
+        const totalBet = this.bets[this.state.currentBet] * 2;
+        const qaploinsOfCommission = totalBet * this.state.commission / 100;
+
         return totalBet - qaploinsOfCommission;
     }
 
     incrementeBet() {
         const oldBet = this.state.currentBet;
-        this.setState({ currentBet: oldBet < 300 ? oldBet + 75 : this.state.currentBet });
+        /**
+         * if the previous index of the array is not the last index then set the current index to
+         * the last index + 1, otherwise keep the previous index
+         */
+        this.setState({ currentBet: oldBet < this.bets.length - 1 ? oldBet + 1 : oldBet });
     }
 
     decreaseBet() {
         const oldBet = this.state.currentBet;
-        this.setState({ currentBet: oldBet > 0 ? oldBet - 75 : this.state.currentBet });
+        /**
+         * if the previous index of the array is not the first index then set the current index to
+         * the last index - 1, otherwise keep the previous index
+         */
+        this.setState({ currentBet: oldBet > 0 ? oldBet - 1 : oldBet });
+    }
+
+    /**
+     * Creates a deep link for a MatchCard and publishes it to Discord
+     * @param {object} ctx Context object containing required data to publish to Discord
+     */
+    async shareMatchToDiscord(ctx) {
+        // TODO: try with a promise returned to make it faster
+        const url = await dplCreateLinkMatchCard(ctx.matchId, ctx);
+
+        ctx.url = url;
+        ctx.userDiscordTag = this.props.userDiscordTag;
+        discordPublishMessageToChannel(ctx);
     }
 
     createMatch() {
-        this.setState({ loading: true }, async () => {
-            if (this.props.userQaploins >= this.state.currentBet) {
+        if (!this.state.loading) {
+            this.setState({ loading: true }, async () => {
+                if (this.props.userQaploins >= this.bets[this.state.currentBet]) {
 
-                try {
-                    await createPublicMatch(this.props.uid, this.state.currentBet, this.props.selectedGame);
-                    await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.state.currentBet);
+                    try {
+                        const matchId = await createPublicMatch(this.props.uid, this.bets[this.state.currentBet], this.props.selectedGame);
+                        await substractQaploinsToUser(this.props.uid, this.props.userQaploins, this.bets[this.state.currentBet]);
 
-                    trackOnSegment('Match created', {
-                        Bet: this.state.currentBet,
-                        Game: this.props.selectedGame.gameKey,
-                        Platform: this.props.selectedGame.platform
-                    });
-
-                    // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
-                    // return a 'null' value, otherwise it would return a 'false' 'true' value from a
-                    // previous flag update.
-                    let openMsgFlag = JSON.parse(await retrieveData('create-match-time-action-msg'));
-
-                    // When creating a match 'this.state.timeActionMsgOpen' is expected to be false,
-                    // otherwise when loading the Component the Modal would automatically open, which is
-                    // a behaviour we don't want.
-                    if (openMsgFlag || openMsgFlag === null) {
-
-                        // Tooggle modal state to open
-                        this.setState({
-                            timeActionMsgOpen: true
+                        trackOnSegment('Match created', {
+                            Bet: this.bets[this.state.currentBet],
+                            Game: this.props.selectedGame.gameKey,
+                            Platform: this.props.selectedGame.platform,
+                            MatchId: matchId,
+                            Uid: this.props.uid
                         });
+
+                        // TODO: move that into an asyn cfunction to be much quicker when the user
+                        // presses the crear reta button 
+                        // publish match created on link on Discord channel
+                        const game = this.props.selectedGame;
+
+                        this.shareMatchToDiscord({
+                            winBet: this.defineWinBet(),
+                            bet: this.bets[this.state.currentBet],
+                            game: game.name,
+                            platform: getPlatformNameWithKey(game.platform),
+                            creatorUid: this.props.uid,
+                            matchId,
+                            discordImg: game.discordImg,
+                            discordTag: this.props.userDiscordTag
+                        });
+
+                        // When retrieving the flag from AsyncStorage if it hasn't been stored yet, it will
+                        // return a 'null' value, otherwise it would return a 'false' 'true' value from a
+                        // previous flag update.
+                        let openMsgFlag = JSON.parse(await retrieveData('create-match-time-action-msg'));
+
+                        // When creating a match 'this.state.timeActionMsgOpen' is expected to be false,
+                        // otherwise when loading the Component the Modal would automatically open, which is
+                        // a behaviour we don't want.
+                        if (openMsgFlag || openMsgFlag === null) {
+
+                            // Tooggle modal state to open
+                            this.setState({
+                                timeActionMsgOpen: true
+                            });
+                        }
+                        else {
+                            this.props.navigation.dismiss();
+                        }
+                    } catch (error) {
+                        // In case of error enable the button again, so the user can try again
+                        this.setState({ loading: false });
+                        console.log(error);
                     }
-                    else{
-                        this.props.navigation.dismiss();
-                    }
-                } catch (error) {
-                    console.log(error);
+                } else {
+                    this.setState({ open: !this.state.open, loading: false });
                 }
-            } else {
-                this.setState({ open: !this.state.open });
-            }
-        });
+            });
+        }
     }
 
     /**
@@ -218,7 +271,7 @@ class SetBetScreen extends Component {
                                 <LessQaploinsIcon style={styles.changeBetIcon} />
                             </TouchableWithoutFeedback>
                             <View style={styles.betTextContainer}>
-                                <Text style={styles.betText}>{this.state.currentBet}</Text>
+                                <Text style={styles.betText}>{this.bets[this.state.currentBet]}</Text>
                                 <Text style={styles.betEntrada}>{translate('setBetScreen.entry')}</Text>
                             </View>
                             <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
@@ -243,7 +296,8 @@ function mapDispatchToProps(state) {
     return {
         userQaploins: state.userReducer.user.credits,
         uid: state.userReducer.user.id,
-        selectedGame: state.gamesReducer.selectedGame
+        selectedGame: state.gamesReducer.selectedGame,
+        userDiscordTag: state.userReducer.user.discordTag
     };
 }
 

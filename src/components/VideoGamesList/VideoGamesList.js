@@ -52,8 +52,10 @@ class VideoGamesList extends Component {
                             gamesToLoad[gamePlatform] = {};
                         }
 
-                        // Add the game to the list of games to load
-                        gamesToLoad[gamePlatform][gameKey] = this.props.games[gamePlatform][gameKey];
+                        if (!this.props.games[gamePlatform][gameKey].hide) {
+                            // Add the game to the list of games to load
+                            gamesToLoad[gamePlatform][gameKey] = this.props.games[gamePlatform][gameKey];
+                        }
                     }
                 });
             });
@@ -68,7 +70,14 @@ class VideoGamesList extends Component {
                 gamesToLoad = getUserGamesOrderedByPlatform(userGameList, this.props.games);
             //If the user don't have games then we send all the games to be loaded
             } else {
-                gamesToLoad = this.props.games;
+                Object.keys(this.props.games).forEach((platformKey) => {
+                    gamesToLoad[platformKey] = {};
+                    Object.keys(this.props.games[platformKey]).forEach((gameKey) => {
+                        if (!this.props.games[platformKey][gameKey].hide) {
+                            gamesToLoad[platformKey][gameKey] = this.props.games[platformKey][gameKey];
+                        }
+                    })
+                });
             }
         }
 

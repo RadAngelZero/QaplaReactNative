@@ -843,43 +843,45 @@ export async function updateUserLanguage(uid) {
             usersRef.child(uid).update({ language: userDeviceLanguage });
             const userSubscriptions = await getAllUserTopicSubscriptions(uid);
 
-            /**
-             * The structure of the userSubscriptions object is the next:
-             * { games: { topic1, topic2 }, events: { topic3, topic4 } ... }
-             * We want the fields inside of the global keys (games and events)
-             * thats why we use a double forEach
-             */
-            Object.keys(userSubscriptions.val()).forEach((userGlobalSubscription) => {
-                Object.keys(userSubscriptions.val()[userGlobalSubscription]).forEach((topicName) => {
+            if (userSubscriptions.val()) {
+                /**
+                 * The structure of the userSubscriptions object is the next:
+                 * { games: { topic1, topic2 }, events: { topic3, topic4 } ... }
+                 * We want the fields inside of the global keys (games and events)
+                 * thats why we use a double forEach
+                 */
+                Object.keys(userSubscriptions.val()).forEach((userGlobalSubscription) => {
+                    Object.keys(userSubscriptions.val()[userGlobalSubscription]).forEach((topicName) => {
 
-                    /**
-                     * Split the topicName variable, the topicName variable have the form:
-                     * topicKey_language, we need the topicKey to update the language,
-                     * the split function returns an array, the first index (index 0)
-                     * of that array is the topicKey, thats why we save that data on
-                     * this constant
-                     */
-                    const topicNameWithoutLanguage = topicName.split('_')[0];
-                    const newTopicName = `${topicNameWithoutLanguage}_${userDeviceLanguage}`;
+                        /**
+                         * Split the topicName variable, the topicName variable have the form:
+                         * topicKey_language, we need the topicKey to update the language,
+                         * the split function returns an array, the first index (index 0)
+                         * of that array is the topicKey, thats why we save that data on
+                         * this constant
+                         */
+                        const topicNameWithoutLanguage = topicName.split('_')[0];
+                        const newTopicName = `${topicNameWithoutLanguage}_${userDeviceLanguage}`;
 
-                    /**
-                     * An error was introduced with the events topics, the key of the node
-                     * event of the userSubscriptions constant was saved as undefined, this
-                     * code is for solve this problem, we can remove it on the future
-                    */
-                    if (userGlobalSubscription === 'undefined') {
-                        unsubscribeUserFromTopic(topicName);
-                        removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
+                        /**
+                         * An error was introduced with the events topics, the key of the node
+                         * event of the userSubscriptions constant was saved as undefined, this
+                         * code is for solve this problem, we can remove it on the future
+                        */
+                        if (userGlobalSubscription === 'undefined') {
+                            unsubscribeUserFromTopic(topicName);
+                            removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
 
-                        subscribeUserToTopic(newTopicName, uid, EVENTS_TOPIC, false);
-                    } else {
-                        unsubscribeUserFromTopic(topicName);
-                        removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
+                            subscribeUserToTopic(newTopicName, uid, EVENTS_TOPIC, false);
+                        } else {
+                            unsubscribeUserFromTopic(topicName);
+                            removeUserSubscriptionToTopic(uid, topicName, userGlobalSubscription);
 
-                        subscribeUserToTopic(newTopicName, uid, userGlobalSubscription, false);
-                    }
+                            subscribeUserToTopic(newTopicName, uid, userGlobalSubscription, false);
+                        }
+                    });
                 });
-            });
+            }
         }
     } catch (error) {
         console.error(error);

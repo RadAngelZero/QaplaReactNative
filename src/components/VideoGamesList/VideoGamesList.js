@@ -73,7 +73,7 @@ class VideoGamesList extends Component {
                 Object.keys(this.props.games).forEach((platformKey) => {
                     gamesToLoad[platformKey] = {};
                     Object.keys(this.props.games[platformKey]).forEach((gameKey) => {
-                        if (this.props.games[platformKey][gameKey].hide) {
+                        if (!this.props.games[platformKey][gameKey].hide) {
                             gamesToLoad[platformKey][gameKey] = this.props.games[platformKey][gameKey];
                         }
                     })

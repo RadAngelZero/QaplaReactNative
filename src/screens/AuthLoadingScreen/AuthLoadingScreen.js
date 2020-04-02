@@ -53,7 +53,6 @@ class AuthLoadingScreen extends Component {
             if (user) {
                 this.props.loadUserData(user.uid);
                 this.props.loadQaplaLogros(user.uid);
-                updateUserLanguage(user.uid);
 
                 // If username doe snot exist because profile does not exist as well, then
                 // user is redirected to ChooUserName where they will create their profile.
@@ -61,6 +60,14 @@ class AuthLoadingScreen extends Component {
 
                 if (!userName){
                     return this.props.navigation.navigate('ChooseUserName');
+                } else {
+                    /**
+                     * Here add functions to write on the user profile, we only can perform
+                     * writes on the user profile if it exists, and it only existes
+                     * if the user has a valid userName (because we create the profile after
+                     * the userName selection)
+                     */
+                    updateUserLanguage(user.uid);
                 }
 
                 await checkNotificationPermission(user.uid);

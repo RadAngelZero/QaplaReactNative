@@ -115,7 +115,7 @@ class App extends React.Component {
         * If the app is in background, we listen for when a notification is opened
         */
         this.notificationOpenedListener = notifications.onNotificationOpened((notificationOpen) => {
-            const { _data } = notificationOpen.notification;
+            const { title, body, _data } = notificationOpen.notification;
             const { navigateTo } = _data;
 
             trackOnSegment('Push Notification Background', {

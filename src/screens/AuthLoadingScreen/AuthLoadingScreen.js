@@ -101,7 +101,7 @@ class AuthLoadingScreen extends Component {
                 if (isTutorialDone) {
                     const lastDateUserSawEventRememberScreen = await retrieveData('event-remember-date');
                     const date = new Date();
-                    const todayDate = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+                    const todayDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 
                     if ((!lastDateUserSawEventRememberScreen || lastDateUserSawEventRememberScreen !== todayDate)) {
                         storeData('event-remember-date', todayDate);

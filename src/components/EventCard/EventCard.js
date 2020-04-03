@@ -78,12 +78,12 @@ class EventCard extends Component {
     /**
      * Select the correct event text content according to the language used by the user
      * in the app.
-     * 
+     *
      * @param {object} textLangObj Object containing in JSON format a text content for each
      *                             language supported by the app
      */
     getTextBasedOnUserLanguage = (textLangObj) => {
-        const res = '';
+        let res = '';
         const userLanguage = getLocaleLanguage();
 
         if (textLangObj[userLanguage] !== null && textLangObj[userLanguage] !== undefined) {
@@ -98,13 +98,14 @@ class EventCard extends Component {
             photoUrl,
             title,
             descriptions,
-            tiempoLimite,
+            dateUTC,
             verified,
             priceQaploins,
             game,
-            platform
+            platform,
+            hourUTC
         } = this.props;
-        
+
         let selectedGame = {
             gameKey: game,
             platform: platform,
@@ -116,11 +117,11 @@ class EventCard extends Component {
          * try to call to this.props.games[platform] can throw an error
          */
         if (this.props.games[platform] && this.props.games[platform][game]) {
-            selectedGame.name =this.props.games[platform][game].name;
+            selectedGame.name = this.props.games[platform][game].name;
         }
 
-        const descriptionTranslated = getTextBasedOnUserLanguage(descriptions);
-        const titleTranslated = getTextBasedOnUserLanguage(title);
+        const descriptionTranslated = this.getTextBasedOnUserLanguage(descriptions);
+        const titleTranslated = this.getTextBasedOnUserLanguage(title);
 
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
@@ -135,7 +136,9 @@ class EventCard extends Component {
                         <Text style={styles.description}>{descriptionTranslated}</Text>
                     </View>
                     <View style={styles.colBContainer}>
-                        <LogroLifeTimeBadge limitDate={tiempoLimite} />
+                        <LogroLifeTimeBadge
+                            limitDate={dateUTC}
+                            startTime={hourUTC} />
                         {(priceQaploins === null || priceQaploins === undefined) &&
                             <TouchableWithoutFeedback onPress={this.requestUserTags}>
                                 <View style={styles.participateButton}>

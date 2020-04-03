@@ -46,6 +46,7 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
     activeEventsRef.on('child_added', (activeEvent) => {
         const activeEventObject = {
             id: activeEvent.key,
+            userSubscribed: false,
             ...activeEvent.val()
         };
 
@@ -64,6 +65,7 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
                 if (eventProgress.exists()) {
                     const eventProgressObject = {
                         id: activeEvent.key,
+                        userSubscribed: true,
                         ...eventProgress.val()
                     };
 

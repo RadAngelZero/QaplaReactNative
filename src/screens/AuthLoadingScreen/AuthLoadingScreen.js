@@ -7,8 +7,7 @@ import {
     notifications,
     links
 } from '../../utilities/firebase';
-
-import { retrieveData } from '../../utilities/persistance';
+import { retrieveData, storeData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
 import {
@@ -107,6 +106,16 @@ class AuthLoadingScreen extends Component {
                 this.setState({ firstLoad: false });
 
                 if (isTutorialDone) {
+                    const lastDateUserSawEventRememberScreen = await retrieveData('event-remember-date');
+                    const date = new Date();
+                    const todayDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+                    if ((!lastDateUserSawEventRememberScreen || lastDateUserSawEventRememberScreen !== todayDate)) {
+                        storeData('event-remember-date', todayDate);
+
+                        return this.props.navigation.navigate('TodayEvents');
+                    }
+
                     return this.props.navigation.navigate('Achievements');
                 }
                 else {

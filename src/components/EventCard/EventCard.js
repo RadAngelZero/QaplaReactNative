@@ -99,12 +99,14 @@ class EventCard extends Component {
             title,
             titulo,
             descriptions,
+            dateUTC,
             description,
             tiempoLimite,
             verified,
             priceQaploins,
             game,
-            platform
+            platform,
+            hourUTC
         } = this.props;
 
         let selectedGame = {
@@ -118,7 +120,7 @@ class EventCard extends Component {
          * try to call to this.props.games[platform] can throw an error
          */
         if (this.props.games[platform] && this.props.games[platform][game]) {
-            selectedGame.name =this.props.games[platform][game].name;
+            selectedGame.name = this.props.games[platform][game].name;
         }
 
         let descriptionTranslated = this.getTextBasedOnUserLanguage(descriptions);
@@ -151,7 +153,9 @@ class EventCard extends Component {
                         <Text style={styles.description}>{descriptionTranslated}</Text>
                     </View>
                     <View style={styles.colBContainer}>
-                        <LogroLifeTimeBadge limitDate={tiempoLimite} />
+                        <LogroLifeTimeBadge
+                            limitDate={dateUTC}
+                            startTime={hourUTC} />
                         {(priceQaploins === null || priceQaploins === undefined) &&
                             <TouchableWithoutFeedback onPress={this.requestUserTags}>
                                 <View style={styles.participateButton}>

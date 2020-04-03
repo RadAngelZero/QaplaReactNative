@@ -26,7 +26,7 @@ import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics
 import { isUserLogged } from '../../services/auth';
 import { translate } from '../../utilities/i18';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import { QAPLA_DISCORD_CHANNEL } from '../../utilities/Constants';
+import { QAPLA_DISCORD_EXCHANGE_CHANNEL } from '../../utilities/Constants';
 
 const QaploinExchangeIcon = images.svg.qoinFlipIcon;
 const BalanceExchangeIcon = images.svg.balanceFlipIcon;
@@ -78,7 +78,7 @@ export class UserProfileScreen extends Component {
      */
     exchangeQaploins = () => {
         if (isUserLogged()) {
-            Linking.openURL(QAPLA_DISCORD_CHANNEL);
+            Linking.openURL(QAPLA_DISCORD_EXCHANGE_CHANNEL);
         } else {
             this.props.navigation.navigate('Auth');
         }
@@ -125,7 +125,7 @@ export class UserProfileScreen extends Component {
         let userGames = {};
 
         if (this.props.userGames instanceof Array) {
-            userGames = getUserGamesOrderedByPlatform(this.props.userGames, this.props.qaplaGames);
+            userGames = getUserGamesOrderedByPlatform(this.props.userGames, this.props.qaplaGames, true);
         }
 
         return (
@@ -139,7 +139,7 @@ export class UserProfileScreen extends Component {
                                 <View style={styles.avatarImage} />
                             }
                             <View style={styles.editImg}>
-                                <EditProfileImgBadge/>
+                                <EditProfileImgBadge />
                             </View>
                         </View>
                         <Text style={styles.userName}>{this.props.userName}</Text>

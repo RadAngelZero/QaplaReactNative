@@ -11,13 +11,13 @@ export async function discordPublishMessageToChannel(ctx) {
 	try {
 		const { game, platform, winBet, url, discordImg, discordTag } = ctx;
 
-		const imgUri = (discordImg) ? discordImg : DISCORD_GAME_IMAGE_PLACEHOLDER;
+		const imgUri = discordImg ? discordImg : DISCORD_GAME_IMAGE_PLACEHOLDER;
 
 		let response = await fetch(QAPLA_DISCORD_WEBHOOK_URL, {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
-				'Content-Type': 'application/json',
+				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
 				content: `Game: **${game}**  Platform: **${platform}** \n#Qoins to win: **${winBet}**  Creator: **${discordTag}**\n***Match link***: ${url}`,
@@ -27,7 +27,7 @@ export async function discordPublishMessageToChannel(ctx) {
                   image: {
                   	url: imgUri
                   }
-                }] 
+                }]
 			})
 		});
 

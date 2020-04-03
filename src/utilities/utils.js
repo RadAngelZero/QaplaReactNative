@@ -5,6 +5,7 @@
 
 import { Linking } from 'react-native';
 import { translate } from './i18';
+import store from '../store/store';
 
 /**Generador ramdom de claves para retas
  * basado en el metodo de android
@@ -103,8 +104,10 @@ export function getPlatformNameWithKey(platformKey) {
  *
  * @param {Array} userGames Array with all the game keys of the current user
  * @param {Object} allQaplaGames List that contains all the games on Qapla
+ * @param {boolean} [loadHiddenGames = false] True if we want to show all the games, false if we want to hide
+ * the games with the hide flag. False by default
  */
-export function getUserGamesOrderedByPlatform(userGames, allQaplaGames) {
+export function getUserGamesOrderedByPlatform(userGames, allQaplaGames, loadHiddenGames = false) {
     /**
      * Based on the qapla structure we need to get (from database) all the games, that games are in the following form:
      * Games: {
@@ -122,20 +125,20 @@ export function getUserGamesOrderedByPlatform(userGames, allQaplaGames) {
      */
     let gamesOrderedByPlatform = {};
 
-    Object.keys(allQaplaGames).map((gamePlatform) => {
-        userGames.sort().map((gameToLoadKey) => {
+    Object.keys(allQaplaGames).forEach((gamePlatform) => {
+        userGames.sort().forEach((gameToLoadKey) => {
 
             // If the platform on the current iteration have a child with key of the current user game
-            if(allQaplaGames[gamePlatform].hasOwnProperty(gameToLoadKey)) {
+            if (allQaplaGames[gamePlatform].hasOwnProperty(gameToLoadKey)) {
 
                 // Check if the user don't have games on that platform
-                if(!gamesOrderedByPlatform[gamePlatform]){
+                if (!gamesOrderedByPlatform[gamePlatform]){
 
                     // Create a child on the object for that platform
                     gamesOrderedByPlatform[gamePlatform] = {};
                 }
 
-                if (!allQaplaGames[gamePlatform][gameToLoadKey].hide) {
+                if (!allQaplaGames[gamePlatform][gameToLoadKey].hide || loadHiddenGames) {
                     // Add the game to the list of games
                     gamesOrderedByPlatform[gamePlatform][gameToLoadKey] = allQaplaGames[gamePlatform][gameToLoadKey];
                 }
@@ -167,4 +170,13 @@ export function isFunction(functionToCheck) {
 
 export function withdrawQaploins() {
     Linking.openURL('whatsapp://send?text=Hola, quiero retirar mis qaploins&phone=+523312971299'/*<= Change for the suport number */);
+}
+
+/**
+ * Check if the given game is a game that we have on the app
+ * @param {string} platform Platform of the game
+ * @param {string} game Game key
+ */
+export function isValidGame(platform, game) {
+    return platform && store.getState().gamesReducer.games[platform] && store.getState().gamesReducer.games[platform][game];
 }

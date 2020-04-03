@@ -52,14 +52,21 @@ class AuthLoadingScreen extends Component {
             if (user) {
                 this.props.loadUserData(user.uid);
                 this.props.loadQaplaLogros(user.uid);
-                updateUserLanguage(user.uid);
 
-                // If username doe snot exist because profile does not exist as well, then 
+                // If username doe snot exist because profile does not exist as well, then
                 // user is redirected to ChooUserName where they will create their profile.
                 const userName = await getUserNameWithUID(user.uid);
 
                 if (!userName){
                     return this.props.navigation.navigate('ChooseUserName');
+                } else {
+                    /**
+                     * Here add functions to write on the user profile, we only can perform
+                     * writes on the user profile if it exists, and it only existes
+                     * if the user has a valid userName (because we create the profile after
+                     * the userName selection)
+                     */
+                    updateUserLanguage(user.uid);
                 }
 
                 await checkNotificationPermission(user.uid);
@@ -124,14 +131,14 @@ class AuthLoadingScreen extends Component {
     /**
      * Enable entry point when the app has been launched from a deeplink
      */
-    manageStartDeepLinks = async () => {  
+    manageStartDeepLinks = async () => {
         const url = await links.getInitialLink();
         this.processLinkUrl(url);
     }
 
     manageBackgroundDeepLinks = () => {
         if (!this.unsubscribeBackgroundDpl) {
-            this.unsubscribeBackgroundDpl = links.onLink(this.processLinkUrl);  
+            this.unsubscribeBackgroundDpl = links.onLink(this.processLinkUrl);
         }
     }
 
@@ -143,18 +150,18 @@ class AuthLoadingScreen extends Component {
         if (url) {
             let screenName = 'LinkBroken';
             const type = this.getParameterFromUrl(url, 'type');
-            
+
             if (type === 'appDeepLink') {
                 const type2 = this.getParameterFromUrl(url, 'type2');
-                
+
                 if (type2 === 'matchCard') {
                 	const matchId = this.getParameterFromUrl(url, 'matchId');
-                    
+
                     trackOnSegment('Deep link - matchCard', {
                         MatchId: matchId
                     });
 
-                    // TODO: cobvert this multiple return approach into 
+                    // TODO: cobvert this multiple return approach into
                     // a single navigate operation inside processLinksUrl
                     return this.redirectUserToPublicMatchCard(url);
                 }
@@ -184,7 +191,7 @@ class AuthLoadingScreen extends Component {
 
         let matchObj = {
             deepLink: true,
-            expired: true 
+            expired: true
         };
 
         if (matchDBObj) {

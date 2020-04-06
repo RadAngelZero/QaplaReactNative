@@ -4,6 +4,7 @@ import { DB_NEW_LINE_SEPARATOR, EVENTS_TOPIC } from '../utilities/Constants';
 import store from '../store/store';
 import { getLocaleLanguage } from '../utilities/i18';
 import { unsubscribeUserFromTopic, subscribeUserToTopic } from './messaging';
+import { checkNotificationPermission } from '../services/messaging';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
@@ -146,6 +147,14 @@ export async function createUserProfile(Uid, email, userName ) {
     };
 
     await usersRef.child(Uid).set(profileObj);
+
+    /**
+     * We call this function because we need to save the user token, before do this
+     * we need the users permission (espcially on iOS) this function perform the
+     * permission requirement and if the user allow us to send push notifications
+     * it saves the token
+     */
+    checkNotificationPermission(Uid);
 }
 
 

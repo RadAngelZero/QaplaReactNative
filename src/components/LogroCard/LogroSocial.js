@@ -137,7 +137,7 @@ class LogroSocial extends Component {
         const res = '';
         const userLanguage = getLocaleLanguage();
 
-        if (textLangObj[userLanguage] !== null && textLangObj[userLanguage] !== undefined) {
+        if (textLangObj && textLangObj[userLanguage]) {
             res = textLangObj[userLanguage];
         }
 
@@ -147,7 +147,9 @@ class LogroSocial extends Component {
     render() {
         const {
             title,
+            titulo,
             description,
+            descripcion,
             qaploins,
             photoUrl,
             puntosCompletados,
@@ -156,8 +158,22 @@ class LogroSocial extends Component {
             verified
         } = this.props;
         
-        const descriptionTranslated = getTextBasedOnUserLanguage(description);
-        const titleTranslated = getTextBasedOnUserLanguage(title);
+        let descriptionTranslated = getTextBasedOnUserLanguage(description);
+        let titleTranslated = getTextBasedOnUserLanguage(title);
+
+        // (01-04-2020) Events on 2019 and early 2020 used 'titulos' and 'descripcion' props, 
+        // as a result of a change on the events structure data in db description and title
+        // were added for internationalization. These two if conditions for 'descriptionTranslated'
+        // and 'titleTranslated' are to check that the props exists in the db event element,
+        // otherwise a fallback is used (not ideal situation, but to prevent app crashes to the
+        // user)
+        if (descriptionTranslated === '') {
+            descriptionTranslated = descripcion;
+        }
+
+        if (titleTranslated === '') {
+            titleTranslated = titulo;
+        }
 
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>

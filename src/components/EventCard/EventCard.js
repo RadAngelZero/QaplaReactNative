@@ -63,7 +63,7 @@ class EventCard extends Component {
     /**
      * Sends the user to the event (a discord channel)
      */
-    goToEvent = () => Linking.openURL(QAPLA_DISCORD_CHANNEL);
+    goToEvent = () => Linking.openURL(this.props.discordLink ? this.props.discordLink : QAPLA_DISCORD_CHANNEL);
 
     /**
      * Close the gamer tag moddal and opens the event requirements modal
@@ -86,7 +86,7 @@ class EventCard extends Component {
         let res = '';
         const userLanguage = getLocaleLanguage();
 
-        if (textLangObj[userLanguage]) {
+        if (textLangObj && textLangObj[userLanguage]) {
             res = textLangObj[userLanguage];
         }
 
@@ -97,12 +97,16 @@ class EventCard extends Component {
         const {
             photoUrl,
             title,
+            titulo,
             descriptions,
+            dateUTC,
+            description,
             tiempoLimite,
             verified,
             priceQaploins,
             game,
-            platform
+            platform,
+            hourUTC
         } = this.props;
 
         let selectedGame = {
@@ -116,11 +120,25 @@ class EventCard extends Component {
          * try to call to this.props.games[platform] can throw an error
          */
         if (this.props.games[platform] && this.props.games[platform][game]) {
-            selectedGame.name =this.props.games[platform][game].name;
+            selectedGame.name = this.props.games[platform][game].name;
         }
 
-        const descriptionTranslated = this.getTextBasedOnUserLanguage(descriptions);
-        const titleTranslated = this.getTextBasedOnUserLanguage(title);
+        let descriptionTranslated = this.getTextBasedOnUserLanguage(descriptions);
+        let titleTranslated = this.getTextBasedOnUserLanguage(title);
+
+        // (01-04-2020) Events on 2019 and early 2020 used 'titulos' and 'descripcion' props, 
+        // as a result of a change on the events structure data in db descriptions and title
+        // were added for internationalization. These two if conditions for 'descriptionTranslated'
+        // and 'titleTranslated' are to check that the props exists in the db event element,
+        // otherwise a fallback is used (not ideal situation, but to prevent app crashes to the
+        // user)
+        if (descriptionTranslated === '') {
+            descriptionTranslated = description;
+        }
+
+        if (titleTranslated === '') {
+            titleTranslated = titulo;
+        }
 
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
@@ -135,7 +153,9 @@ class EventCard extends Component {
                         <Text style={styles.description}>{descriptionTranslated}</Text>
                     </View>
                     <View style={styles.colBContainer}>
-                        <LogroLifeTimeBadge limitDate={tiempoLimite} />
+                        <LogroLifeTimeBadge
+                            limitDate={dateUTC}
+                            startTime={hourUTC} />
                         {(priceQaploins === null || priceQaploins === undefined) &&
                             <TouchableWithoutFeedback onPress={this.requestUserTags}>
                                 <View style={styles.participateButton}>

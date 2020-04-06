@@ -852,8 +852,7 @@ export async function updateUserLanguage(uid) {
             usersRef.child(uid).update({ language: userDeviceLanguage });
             const userSubscriptions = await getAllUserTopicSubscriptions(uid);
 
-            if (userSubscriptions) {
-
+            if (userSubscriptions.val()) {
                 /**
                  * The structure of the userSubscriptions object is the next:
                  * { games: { topic1, topic2 }, events: { topic3, topic4 } ... }

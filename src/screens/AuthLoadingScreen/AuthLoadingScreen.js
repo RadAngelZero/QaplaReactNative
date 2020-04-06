@@ -7,8 +7,7 @@ import {
     notifications,
     links
 } from '../../utilities/firebase';
-
-import { retrieveData } from '../../utilities/persistance';
+import { retrieveData, storeData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
 import {
@@ -62,10 +61,10 @@ class AuthLoadingScreen extends Component {
                     return this.props.navigation.navigate('ChooseUserName');
                 } else {
                     /**
-                     * Things to do if the user is logged and have a valid username
-                     * generally actions that implie write something in the user profile
-                     * the profile does not exist before the userName selection so write
-                     * on it will create trash on the database
+                     * Here add functions to write on the user profile, we only can perform
+                     * writes on the user profile if it exists, and it only existes
+                     * if the user has a valid userName (because we create the profile after
+                     * the userName selection)
                      */
                     updateUserLanguage(user.uid);
                 }
@@ -107,6 +106,16 @@ class AuthLoadingScreen extends Component {
                 this.setState({ firstLoad: false });
 
                 if (isTutorialDone) {
+                    const lastDateUserSawEventRememberScreen = await retrieveData('event-remember-date');
+                    const date = new Date();
+                    const todayDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+                    if ((!lastDateUserSawEventRememberScreen || lastDateUserSawEventRememberScreen !== todayDate)) {
+                        storeData('event-remember-date', todayDate);
+
+                        return this.props.navigation.navigate('TodayEvents');
+                    }
+
                     return this.props.navigation.navigate('Achievements');
                 }
                 else {

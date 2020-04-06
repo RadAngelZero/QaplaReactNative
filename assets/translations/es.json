@@ -341,5 +341,9 @@
             "description": "El contenido que estás intentando acceder no se pudo acceder, prueba de nuevo o actualiza a una nueva versión y intenta de nuevo.",
             "bttnText": "Actualizar" 
         }
+    },
+    "zeroQoinsEventModal" : {
+        "header": "Qoins insuficientes",
+        "body": "Únete y juega en eventos para ganar Qoins !"
     }
 }

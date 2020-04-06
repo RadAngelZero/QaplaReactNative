@@ -69,4 +69,21 @@ function getPixelSizeForLayoutSize(num) {
   return PixelRatio.getPixelSizeForLayoutSize(num);
 }
 
-export {getPercentHeight, getPercentWidth, isIphoneX, isIPhoneXSize, isIPhoneXrSize, getDimensions, hasSafeAreaView, widthPercentageToPx, heightPercentageToPx, getPixelSizeForLayoutSize };
+function isIOSDevice() {
+  return Platform.OS == 'ios';
+}
+
+
+export {
+  getPercentHeight,
+  getPercentWidth,
+  isIphoneX, 
+  isIPhoneXSize, 
+  isIPhoneXrSize, 
+  getDimensions, 
+  hasSafeAreaView, 
+  widthPercentageToPx, 
+  heightPercentageToPx, 
+  getPixelSizeForLayoutSize,
+  isIOSDevice 
+};

@@ -110,7 +110,7 @@
     },
     "userProfileScreen": {
         "buy": "Buy",
-        "exchange": "Exchange",
+        "exchange": "Redeem",
         "userProfileGameCard": {
             "level": "Level"
         },
@@ -341,5 +341,9 @@
             "description": "The content you are trying to access could not be found, try again or update the app to latest version and try again.",
             "bttnText": "Update" 
         }
+    },
+    "zeroQoinsEventModal" : {
+        "header": "Not enough Qoins",
+        "body": "Join and play in events to win Qoins !"
     }
 }

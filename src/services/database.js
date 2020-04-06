@@ -148,6 +148,12 @@ export async function createUserProfile(Uid, email, userName ) {
 
     await usersRef.child(Uid).set(profileObj);
 
+    /**
+     * We call this function because we need to save the user token, before do this
+     * we need the users permission (espcially on iOS) this function perform the
+     * permission requirement and if the user allow us to send push notifications
+     * it saves the token
+     */
     checkNotificationPermission(Uid);
 }
 

@@ -21,8 +21,6 @@ class ZeroQoinsEventsModal extends Component {
             Origin: this.props.openWhen
         });
 
-        console.log(`bet zero qoins`, this.props.bet);
-
         this.props.navigation.navigate('LogrosActivos');
         this.props.onClose();
     }
@@ -47,7 +45,7 @@ class ZeroQoinsEventsModal extends Component {
                         </Text>
                         <TouchableWithoutFeedback onPress={this.goToEvents}>
                             <View style={styles.eventsButton}>
-                                <Text style={styles.bttnText}>{ translate('zeroQoinsEventModal.bttnTxt') }</Text>
+                                <Text style={styles.bttnText}>{ translate('zeroQoinsEventModal.bttnText') }</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>

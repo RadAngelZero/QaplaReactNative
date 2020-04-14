@@ -344,6 +344,7 @@
     },
     "zeroQoinsEventModal" : {
         "header": "Qoins insuficientes",
-        "body": "Únete y juega en eventos para ganar Qoins !"
+        "body": "Únete y juega en eventos para ganar Qoins !",
+        "bttnText": "Ver Eventos"
     }
 }

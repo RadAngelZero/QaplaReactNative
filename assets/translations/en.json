@@ -344,6 +344,7 @@
     },
     "zeroQoinsEventModal" : {
         "header": "Not enough Qoins",
-        "body": "Join and play in events to win Qoins !"
+        "body": "Join and play in events to win Qoins !",
+        "bttnText": "Check Events"
     }
 }

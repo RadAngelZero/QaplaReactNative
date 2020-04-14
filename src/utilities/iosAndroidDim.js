@@ -70,7 +70,7 @@ function getPixelSizeForLayoutSize(num) {
 }
 
 function isIOSDevice() {
-  return Platform.OS == 'ios';
+  return Platform.OS === 'ios';
 }
 
 

@@ -5,6 +5,7 @@
 
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
     mainContainer: {
@@ -23,7 +24,7 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(80),
         alignSelf: 'center',
         justifyContent: 'center',
-        backgroundColor: '#141833',
+        backgroundColor: Colors.modals.backgroundDarkModal,
         borderRadius: 20,
         shadowColor: "#000",
         shadowOffset: {
@@ -50,14 +51,14 @@ export default styles = StyleSheet.create({
         marginBottom: 10,
         marginLeft: widthPercentageToPx(3.13),
         marginRight: widthPercentageToPx(3.13),
-        color: '#CFD1DB',
+        color: Colors.modals.body,
         fontSize: 16,
         textAlign: 'center'
     },
     eventsButton: {
         marginTop: heightPercentageToPx(1.31),
         borderRadius: 100,
-        backgroundColor: '#6D7DDE',
+        backgroundColor: Colors.modals.bttnColor,
         marginBottom: heightPercentageToPx(2.96)
     },
     bttnText: {

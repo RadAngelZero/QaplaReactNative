@@ -9,9 +9,6 @@ import {
  ANDROID_STORE_LINK
 } from '../../utilities/Constants';
 
-import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
-import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
-import { AddGamerTagModal } from '../../components/AddGamerTagModal/AddGamerTagModal';
 import { translate } from '../../utilities/i18';
 
 import {
@@ -25,19 +22,6 @@ import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 const CloseIcon = Images.svg.closeIcon;
 
 class LinkBrokenScreen extends Component {
- constructor(props) {
-     super(props);
-
-     this.state = {
-         openChalExModal: false,
-         openAcceptChallengeModal: false,
-         openNoQaploinsModal: false,
-         validTimeLeft: 0,
-         expired: false,
-         openAddGamerTagModal: false,
-         openBuyQaploinsModal: false
-     };
- }
 
  componentDidMount() {
 	recordScreenOnSegment('Link Broken');

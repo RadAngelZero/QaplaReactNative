@@ -3,7 +3,8 @@ export default Colors = {
     backgroundColor: '#0d1021',
     modals: {
         backgroundDarkModal: '#141833',
-        body: '#CFD1DB'
+        body: '#CFD1DB',
+        bttnColor: '#6D7DDE'
     },
     textInputs: {
         error: '#FF0000',

@@ -37,11 +37,12 @@ import {
 } from '../../services/database';
 
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
+import ZeroQoinsEventsModal from '../../components/ZeroQoinsEventsModal/ZeroQoinsEventsModal';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import MatchExpireRememberModal from '../../components/MatchExpireRememberModal/MatchExpireRememberModal';
 import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 import { translate } from '../../utilities/i18';
-import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx, heightPercentageToPx, isIOSDevice } from '../../utilities/iosAndroidDim';
 import { getPlatformNameWithKey } from '../../utilities/utils';
 
 import {
@@ -247,11 +248,20 @@ class SetBetScreen extends Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <ScrollView>
                     <View style={styles.container}>
-                        <BuyQaploinsModal
-                            open={this.state.open}
-                            openWhen='User try to create a match'
-                            body={translate('setBetScreen.buyQaploinsModal.body')}
-                            onClose={() => this.setState({ open: false, loading: false })} />
+                        {isIOSDevice() ?
+                            <ZeroQoinsEventsModal
+                                open={this.state.open}
+                                bet={this.bets[this.state.currentBet]}
+                                openWhen='User try to create a match'
+                                onClose={() => this.setState({ open: false, loading: false })}
+                            />
+                            :
+                            <BuyQaploinsModal
+                                open={this.state.open}
+                                openWhen='User try to create a match'
+                                body={translate('setBetScreen.buyQaploinsModal.body')}
+                                onClose={() => this.setState({ open: false, loading: false })} />
+                        }
                         <MatchExpireRememberModal
                             visible={this.state.timeActionMsgOpen}
                             onClose={this.closeMatchExpireRememberModal} />

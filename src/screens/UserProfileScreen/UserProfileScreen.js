@@ -25,7 +25,7 @@ import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
 import { translate } from '../../utilities/i18';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx, isIOSDevice } from '../../utilities/iosAndroidDim';
 import { QAPLA_DISCORD_EXCHANGE_CHANNEL } from '../../utilities/Constants';
 
 const QaploinExchangeIcon = images.svg.qoinFlipIcon;
@@ -164,11 +164,15 @@ export class UserProfileScreen extends Component {
                             </View>
                         </TouchableWithoutFeedback>
                         <View style={styles.buttonGroup}>
-                            <TouchableWithoutFeedback onPress={this.openBuyQaploinsModal}>
-                                <View style={styles.addQaploinsButton}>
-                                    <Text style={styles.addQaploinsButtonText}>{translate('userProfileScreen.buy')}</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
+                            {!isIOSDevice() ?
+                                <TouchableWithoutFeedback onPress={this.openBuyQaploinsModal}>
+                                    <View style={styles.addQaploinsButton}>
+                                        <Text style={styles.addQaploinsButtonText}>{translate('userProfileScreen.buy')}</Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                :
+                                <View />
+                            }
                             <TouchableWithoutFeedback onPress={this.exchangeQaploins}>
                                 <View style={styles.cashoutQaploins}>
                                     <Text style={styles.addQaploinsButtonText}>{translate('userProfileScreen.exchange')}</Text>

@@ -8,10 +8,10 @@ import {
     Text,
     Image,
     ScrollView,
-    CameraRoll,
     TouchableWithoutFeedback
-} from 'react-native'
-import styles from './style'
+} from 'react-native';
+import CameraRoll from "@react-native-community/cameraroll";
+import styles from './style';
 import { translate } from '../../utilities/i18';
 
 export default class ImagePicker extends React.Component {

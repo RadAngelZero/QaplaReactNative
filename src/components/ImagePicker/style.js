@@ -40,6 +40,10 @@ export default StyleSheet.create({
       elevation: 10,
       width: widthPercentageToPx(45)
   },
+  imageList: {
+    flex: 1,
+    marginVertical: 20
+  },
   moreButtonContainer: {
       alignSelf: 'center',
       bottom: heightPercentageToPx(4.30),

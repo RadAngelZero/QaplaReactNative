@@ -7,7 +7,6 @@ import {
     View,
     Text,
     Image,
-    ScrollView,
     FlatList,
     TouchableWithoutFeedback
 } from 'react-native';
@@ -16,7 +15,6 @@ import styles from './style';
 import { translate } from '../../utilities/i18';
 
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
-
 
 export default class ImagePicker extends React.Component {
   constructor(props) {
@@ -143,44 +141,54 @@ export default class ImagePicker extends React.Component {
   saveImage = () => {
       this.props.saveImage(this.state.picture);
   }
- 
-  renderItem = ({item, index}) => {
-      const widthImg = widthPercentageToPx(100) / this.state.numColumns;
-      
-      return (
-          <TouchableWithoutFeedback onPress={() => this.selectPicture(index, item)}>
-              <View style={[
-                styles.imageContainer,
-                {height: widthImg, width: widthImg}]}>
-              <Image
-                  key={item.node.image.uri}
-                  style={[{
-                      opacity: this.isImageSelected(index, this.state.pictureSelected) ? 0.4 : 1.0
-                      },
-                      styles.picture
-                  ]}
-                  source={{ uri: item.node.image.uri }} />   
-              </View>
-          </TouchableWithoutFeedback>
-      );    
-  }
 
-  reachEndOfFlatList = () => {
-      this.setState({endFlatList: true});
-  }
+    /**
+     * Render function for an Image component (FlatList element)
+     * @param {object} ListElementInfo Object with item and index for element to render on FlatList
+     * @returns {JSX.Element} Touchable Image
+     */
+    renderItem = ({item, index}) => {
+        const widthImg = widthPercentageToPx(100) / this.state.numColumns;
+
+        return (
+            <TouchableWithoutFeedback onPress={() => this.selectPicture(index, item)}>
+                <View style={[
+                    styles.imageContainer,
+                    { height: widthImg, width: widthImg }
+                ]}>
+                    <Image
+                        key={item.node.image.uri}
+                        style={[{
+                            opacity: this.isImageSelected(index, this.state.pictureSelected) ? 0.4 : 1.0
+                            },
+                            styles.picture
+                        ]}
+                        source={{ uri: item.node.image.uri }} />
+                </View>
+            </TouchableWithoutFeedback>
+        );
+    }
+
+    /**
+     * Callback to notify the component when reaching the end of the FlatList
+    */
+    reachEndOfFlatList = () => {
+        this.setState({ endFlatList: true });
+    }
 
   render() {
     return (
       <View style={styles.container}>
         <FlatList
-            style={{flex: 1, marginVertical: 20}}
+            style={styles.imageList}
             numColumns={this.state.numColumns}
             onEndReached={this.reachEndOfFlatList}
             onEndReachedThreshold={0.1}
             data={this.state.photos}
-            renderItem={this.renderItem}> 
+            renderItem={this.renderItem}>
         </FlatList>
-        {this.state.endFlatList && this.state.photos.length > 0 && this.state.morePictures && !this.state.pictureSelected &&
+        {this.state.endFlatList && this.state.photos.length > 0 &&
+        this.state.morePictures && !this.state.pictureSelected &&
             <TouchableWithoutFeedback onPress={this.loadMorePictures}>
                 <View style={styles.moreButtonContainer}>
                     <Text style={styles.textStyle}>{translate('imagePicker.showMorePhotos')}</Text>

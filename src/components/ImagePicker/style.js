@@ -6,14 +6,12 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 export default StyleSheet.create({
   container:{
       flex:1,
-      justifyContent:'center',
+      justifyContent:'center'
   },
   imageContainer: {
       justifyContent: 'flex-start',
       alignSelf: 'center',
-      marginBottom: heightPercentageToPx(2),
-      width: widthPercentageToPx(95),
-      height: heightPercentageToPx(40)
+      marginBottom: heightPercentageToPx(2)
   },
   content:{
       backgroundColor: 'white',
@@ -42,13 +40,19 @@ export default StyleSheet.create({
       elevation: 10,
       width: widthPercentageToPx(45)
   },
+  imageList: {
+    flex: 1,
+    marginVertical: 20
+  },
   moreButtonContainer: {
       alignSelf: 'center',
+      bottom: heightPercentageToPx(4.30),
+      alignSelf: 'center',
+      position: 'absolute',
       borderRadius: 100,
       backgroundColor: '#FA2D79',
       elevation: 10,
       width: widthPercentageToPx(66.6),
-      marginBottom: heightPercentageToPx(4.30)
   },
   textStyle: {
       color: '#FFF',
@@ -61,8 +65,8 @@ export default StyleSheet.create({
       letterSpacing: .57
   },
   picture: {
-      height: heightPercentageToPx(40),
-      width: widthPercentageToPx(95),
+      height: '100%',
+      width: '100%',
       resizeMode: 'cover'
   }
 })

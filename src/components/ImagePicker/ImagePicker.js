@@ -8,11 +8,15 @@ import {
     Text,
     Image,
     ScrollView,
+    FlatList,
     TouchableWithoutFeedback
 } from 'react-native';
 import CameraRoll from "@react-native-community/cameraroll";
 import styles from './style';
 import { translate } from '../../utilities/i18';
+
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
+
 
 export default class ImagePicker extends React.Component {
   constructor(props) {
@@ -24,7 +28,9 @@ export default class ImagePicker extends React.Component {
       pictureIndex: -1,
       numPictures: 20,
       morePictures: true,
-      picture: null
+      picture: null,
+      numColumns: 3,
+      endFlatList: false
     };
   }
 
@@ -86,6 +92,8 @@ export default class ImagePicker extends React.Component {
                   morePictures: false
               });
           }
+
+          this.setState({ endFlatList: false })
       }
   }
 
@@ -135,35 +143,50 @@ export default class ImagePicker extends React.Component {
   saveImage = () => {
       this.props.saveImage(this.state.picture);
   }
+ 
+  renderItem = ({item, index}) => {
+      const widthImg = widthPercentageToPx(100) / this.state.numColumns;
+      
+      return (
+          <TouchableWithoutFeedback onPress={() => this.selectPicture(index, item)}>
+              <View style={[
+                styles.imageContainer,
+                {height: widthImg, width: widthImg}]}>
+              <Image
+                  key={item.node.image.uri}
+                  style={[{
+                      opacity: this.isImageSelected(index, this.state.pictureSelected) ? 0.4 : 1.0
+                      },
+                      styles.picture
+                  ]}
+                  source={{ uri: item.node.image.uri }} />   
+              </View>
+          </TouchableWithoutFeedback>
+      );    
+  }
+
+  reachEndOfFlatList = () => {
+      this.setState({endFlatList: true});
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView>
-            {this.state.photos.map((p, i) => (
-                <TouchableWithoutFeedback onPress={() => this.selectPicture(i, p)}>
-                    <View
-                    style={styles.imageContainer}>
-                    <Image
-                        key={p.node.image.uri}
-                        style={[{
-                            opacity: this.isImageSelected(i, this.state.pictureSelected) ? 0.4 : 1.0
-                            },
-                            styles.picture
-                        ]}
-                        source={{ uri: p.node.image.uri }} />
-                    </View>
-                </TouchableWithoutFeedback>
-            ))
-            }
-            {this.state.photos.length > 0 && this.state.morePictures && !this.state.pictureSelected &&
-                <TouchableWithoutFeedback onPress={this.loadMorePictures}>
-                    <View style={styles.moreButtonContainer}>
-                        <Text style={styles.textStyle}>{translate('imagePicker.showMorePhotos')}</Text>
-                    </View>
-                </TouchableWithoutFeedback>
-            }
-        </ScrollView>
+        <FlatList
+            style={{flex: 1, marginVertical: 20}}
+            numColumns={this.state.numColumns}
+            onEndReached={this.reachEndOfFlatList}
+            onEndReachedThreshold={0.1}
+            data={this.state.photos}
+            renderItem={this.renderItem}> 
+        </FlatList>
+        {this.state.endFlatList && this.state.photos.length > 0 && this.state.morePictures && !this.state.pictureSelected &&
+            <TouchableWithoutFeedback onPress={this.loadMorePictures}>
+                <View style={styles.moreButtonContainer}>
+                    <Text style={styles.textStyle}>{translate('imagePicker.showMorePhotos')}</Text>
+                </View>
+            </TouchableWithoutFeedback>
+        }
         {this.state.pictureSelected &&
             <>
                 <TouchableWithoutFeedback onPress={this.saveImage}>

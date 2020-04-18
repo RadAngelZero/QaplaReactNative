@@ -66,7 +66,11 @@ class AuthLoadingScreen extends Component {
                      * if the user has a valid userName (because we create the profile after
                      * the userName selection)
                      */
-                    updateUserLanguage(user.uid);
+                    const cleanUpTopics = await retrieveData('clean-up-topics');
+                    if (!cleanUpTopics) {
+                        updateUserLanguage(user.uid);
+                        storeData('clean-up-topics', 'true');
+                    }
                 }
 
                 await checkNotificationPermission(user.uid);

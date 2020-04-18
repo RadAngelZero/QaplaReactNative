@@ -848,7 +848,7 @@ export async function updateUserLanguage(uid) {
         const userProfileLanguage = (await usersRef.child(uid).child('language').once('value')).val();
         const userDeviceLanguage = getLocaleLanguage();
 
-        if (userProfileLanguage !== userDeviceLanguage) {
+        // if (userProfileLanguage !== userDeviceLanguage) {
             usersRef.child(uid).update({ language: userDeviceLanguage });
             const userSubscriptions = await getAllUserTopicSubscriptions(uid);
 
@@ -890,7 +890,7 @@ export async function updateUserLanguage(uid) {
                         }
                     });
                 });
-            }
+            // }
         }
     } catch (error) {
         console.error(error);
@@ -999,9 +999,9 @@ export async function getAllUserTopicSubscriptions(uid) {
  * Check if the user allows push notifications on a given topic
  * @param {string} notificationType Key of the notification permission to check
  */
-export function userAllowsNotificationsFrom(notificationType) {
+export async function userAllowsNotificationsFrom(notificationType, uid) {
     let permissionStatus = true;
-    const notificationsPermissions = store.getState().userReducer.user.notificationPermissions;
+    const notificationsPermissions = (await usersRef.child(uid).child('notificationPermissions').once('value')).val();
 
     if (notificationsPermissions && notificationsPermissions.hasOwnProperty(notificationType)) {
         permissionStatus = notificationsPermissions[notificationType];

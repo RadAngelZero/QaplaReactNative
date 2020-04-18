@@ -54,12 +54,14 @@ export function subscribeUserToTopic(topic, uid = '', type, addLanguageSuffix = 
 export async function subscribeUserToAllRegistredTopics(uid) {
     const userAllSubscriptions = await getAllUserTopicSubscriptions(uid);
 
-    userAllSubscriptions.forEach((subscriptionType) => {
-        updateNotificationPermission(subscriptionType.key, true);
+    userAllSubscriptions.forEach(async (subscriptionType) => {
+        if (await userAllowsNotificationsFrom(subscriptionType.key, uid)) {
+            updateNotificationPermission(subscriptionType.key, true);
 
-        subscriptionType.forEach((topicName) => {
-            subscribeUserToTopic(topicName.key);
-        });
+            subscriptionType.forEach((topicName) => {
+                subscribeUserToTopic(topicName.key);
+            });
+        }
     });
 }
 

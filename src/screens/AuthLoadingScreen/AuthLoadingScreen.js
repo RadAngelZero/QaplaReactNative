@@ -31,7 +31,8 @@ import {
 
 class AuthLoadingScreen extends Component {
     state = {
-        firstLoad: true
+        firstLoad: true,
+        linkOnProgress: false
     };
 
     componentDidMount() {
@@ -101,7 +102,7 @@ class AuthLoadingScreen extends Component {
              * and this process is executed again we are going to be redirected to the 'Achievements'
              * screen, no to the place that we need
              */
-            if (this.state.firstLoad) {
+            if (!this.state.linkOnProgress && this.state.firstLoad) {
                 const isTutorialDone = await retrieveData('tutorial-done');
                 this.setState({ firstLoad: false });
 
@@ -133,6 +134,11 @@ class AuthLoadingScreen extends Component {
      */
     manageStartDeepLinks = async () => {
         const url = await links.getInitialLink();
+
+        if (url){
+            this.setState({linkOnProgress: true});
+        }
+
         this.processLinkUrl(url);
     }
 

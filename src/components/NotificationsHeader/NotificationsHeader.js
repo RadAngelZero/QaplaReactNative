@@ -26,7 +26,7 @@ class NotificationsHeader extends Component {
             <SafeAreaView style={styles.sfvContainer}>
     	        <View style={styles.container}>
     	            <Text style={styles.title}>{translate('notificationsScreen.notificationsHeader')}</Text>
-                    <QaplaIcon onPress={this.closeNotifications} touchableStyle={styles.closeIcon}>
+                    <QaplaIcon onPress={this.closeNotifications}>
                         <CloseIcon />
                     </QaplaIcon>
     	        </View>

@@ -21,7 +21,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         height: heightPercentageToPx(HEADER_SIZE),
-        alignItems:'flex-start',
+        alignItems:'center',
         marginTop: heightPercentageToPx(2.46),
         marginBottom: heightPercentageToPx(3.69),
         marginLeft: widthPercentageToPx(4.27),
@@ -29,9 +29,6 @@ export default styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#FFF',
-    },
-    closeIcon: {
-        alignSelf: 'baseline'
+        color: '#FFF'
     }
 })

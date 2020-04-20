@@ -22,9 +22,9 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         height: heightPercentageToPx(HEADER_SIZE),
         alignItems:'center',
-        marginTop: heightPercentageToPx(2.46),
-        marginBottom: heightPercentageToPx(3.69),
-        marginLeft: widthPercentageToPx(4.27),
+        marginTop: 12,
+        marginBottom: 30,
+        marginLeft: widthPercentageToPx(4.27)
     },
     title: {
         fontSize: 20,

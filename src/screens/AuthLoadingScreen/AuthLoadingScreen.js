@@ -135,10 +135,6 @@ class AuthLoadingScreen extends Component {
     manageStartDeepLinks = async () => {
         const url = await links.getInitialLink();
 
-        if (url){
-            this.setState({linkOnProgress: true});
-        }
-
         this.processLinkUrl(url);
     }
 
@@ -154,6 +150,8 @@ class AuthLoadingScreen extends Component {
      */
     processLinkUrl = (url) => {
         if (url) {
+            this.setState({linkOnProgress: true});
+
             let screenName = 'LinkBroken';
             const type = this.getParameterFromUrl(url, 'type');
 

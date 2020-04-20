@@ -171,11 +171,15 @@ class AddGamerTagModal extends Component {
                                 }
                                 {this.props.newGame ?
                                     <Text style={styles.modalText}>
-                                        {translate('addGamerTagModal.newGameBody', { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText || this.props.previousGamerTag })}
+                                        {translate('addGamerTagModal.newGameBody',
+                                            { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText || this.props.previousGamerTag })
+                                        }
                                     </Text>
                                     :
                                     <Text style={styles.modalText}>
-                                        {translate('addGamerTagModal.updateGameBody', { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText || this.props.previousGamerTag })}
+                                        {translate('addGamerTagModal.updateGameBody',
+                                            { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText || this.props.previousGamerTag })
+                                        }
                                     </Text>
                                 }
                                 <TouchableWithoutFeedback onPress={this.saveGameOnUser}>

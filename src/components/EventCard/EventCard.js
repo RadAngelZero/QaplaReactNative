@@ -16,13 +16,15 @@ import { QAPLA_DISCORD_CHANNEL, EVENTS_TOPIC } from '../../utilities/Constants';
 import { subscribeUserToTopic } from '../../services/messaging';
 import AddGamerTagModal from '../AddGamerTagModal/AddGamerTagModal';
 import EventRequirementsModal from '../EventRequirementsModal/EventRequirementsModal';
-import { getGamerTagKeyWithGameAndPlatform } from '../../utilities/utils';
+import { getGamerTagKeyWithGameAndPlatform, isValidGame } from '../../utilities/utils';
+import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
 
 class EventCard extends Component {
     state = {
         showGamerTagModal: false,
         userHasGameAdded: false,
         showRequirementsModal: false,
+        showDiscordTagModal: false,
         previousGamerTag: ''
     };
 
@@ -38,7 +40,15 @@ class EventCard extends Component {
                 userHasGameAdded,
                 previousGamerTag: userHasGameAdded ? this.props.gamerTags[gamerTagKey] : '',
             }, () => {
-                this.setState({ showGamerTagModal: true });
+                if (isValidGame(this.props.platform, this.props.game)) {
+                    this.setState({ showGamerTagModal: true });
+                } else {
+                    if (!this.props.discordTag) {
+                        this.setState({ showDiscordTagModal: true });
+                    } else {
+                        this.subscribeUserToEvent(this.props.discordTag);
+                    }
+                }
             });
         } else {
             this.props.navigation.navigate('SignIn');
@@ -126,7 +136,7 @@ class EventCard extends Component {
         let descriptionTranslated = this.getTextBasedOnUserLanguage(descriptions);
         let titleTranslated = this.getTextBasedOnUserLanguage(title);
 
-        // (01-04-2020) Events on 2019 and early 2020 used 'titulos' and 'descripcion' props, 
+        // (01-04-2020) Events on 2019 and early 2020 used 'titulos' and 'descripcion' props,
         // as a result of a change on the events structure data in db descriptions and title
         // were added for internationalization. These two if conditions for 'descriptionTranslated'
         // and 'titleTranslated' are to check that the props exists in the db event element,
@@ -175,6 +185,10 @@ class EventCard extends Component {
                     userName={this.props.userName}
                     newGame={!this.state.userHasGameAdded}
                     previousGamerTag={this.state.previousGamerTag} />
+                <AddDiscordTagModal
+                    open={this.state.showDiscordTagModal}
+                    onClose={() => this.setState({ showDiscordTagModal: false })}
+                    onSuccess={this.subscribeUserToEvent} />
                 <EventRequirementsModal
                     open={this.state.showRequirementsModal}
                     closeModal={this.closeRequirementsModal}

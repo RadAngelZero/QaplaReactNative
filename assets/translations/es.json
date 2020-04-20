@@ -106,6 +106,10 @@
         },
         "buyQaploinsModal": {
             "body": "Compra Qoins para desafiar esta partida"
+        },
+        "expired": {
+            "description": "La partida expiró",
+            "bttnText": "Buscar Partidas"
         }
     },
     "userProfileScreen": {

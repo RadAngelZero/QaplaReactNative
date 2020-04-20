@@ -311,7 +311,8 @@
         "selectImage": "¡Quiero usar esta foto!"
     },
     "addGamerTagModal": {
-        "body": "Se va a añadir el Juego %{selectedGame} a tu perfil con el gamertag %{gamerTag}. Estás seguro?",
+        "newGameBody": "Se va a añadir el Juego %{selectedGame} a tu perfil con el gamertag %{gamerTag}. Estás seguro?",
+        "updateGameBody": "Se actualizará tu gamertag de %{selectedGame}. Estás seguro?",
         "gamerTagPlaceholder": "Escribe tu Gamertag",
         "invalidGamerTag": "Gamertag inválido",
         "accept": "Aceptar"

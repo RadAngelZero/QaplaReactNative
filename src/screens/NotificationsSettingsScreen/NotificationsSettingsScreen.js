@@ -36,6 +36,11 @@ class NotificationsSettingsScreen extends Component {
         }
     }
 
+    /**
+     * Returns the status of the permission of a type
+     * true = allowed
+     * @param {string} type Name of the notification permission to check
+     */
     userNotificationPermissionStatus = (type) => {
         let permissionStatus = true;
         if (this.props.notificationPermissions && this.props.notificationPermissions.hasOwnProperty(type)) {

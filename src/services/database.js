@@ -848,6 +848,7 @@ export async function updateUserLanguage(uid) {
         const userProfileLanguage = (await usersRef.child(uid).child('language').once('value')).val();
         const userDeviceLanguage = getLocaleLanguage();
 
+        // TODO: Uncomment in the next version of the app
         // if (userProfileLanguage !== userDeviceLanguage) {
             usersRef.child(uid).update({ language: userDeviceLanguage });
             const userSubscriptions = await getAllUserTopicSubscriptions(uid);
@@ -1001,6 +1002,11 @@ export async function getAllUserTopicSubscriptions(uid) {
  */
 export async function userAllowsNotificationsFrom(notificationType, uid) {
     let permissionStatus = true;
+
+    /**
+     * Load from database the push notifications permissions, use this instead of redux to check the permissions
+     * correctly if the user is recently logged in
+     */
     const notificationsPermissions = (await usersRef.child(uid).child('notificationPermissions').once('value')).val();
 
     if (notificationsPermissions && notificationsPermissions.hasOwnProperty(notificationType)) {

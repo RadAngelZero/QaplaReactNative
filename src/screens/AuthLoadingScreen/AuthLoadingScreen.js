@@ -67,6 +67,11 @@ class AuthLoadingScreen extends Component {
                      * the userName selection)
                      */
                     const cleanUpTopics = await retrieveData('clean-up-topics');
+
+                    /**
+                     * Temporary code to update the topics of all the users because of some bugs
+                     * finded about this
+                     */
                     if (!cleanUpTopics) {
                         updateUserLanguage(user.uid);
                         storeData('clean-up-topics', 'true');

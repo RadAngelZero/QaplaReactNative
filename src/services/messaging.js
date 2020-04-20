@@ -55,6 +55,9 @@ export async function subscribeUserToAllRegistredTopics(uid) {
     const userAllSubscriptions = await getAllUserTopicSubscriptions(uid);
 
     userAllSubscriptions.forEach(async (subscriptionType) => {
+        /**
+         * Check if the user allows us to send push notifications for the subscription type
+         */
         if (await userAllowsNotificationsFrom(subscriptionType.key, uid)) {
             updateNotificationPermission(subscriptionType.key, true);
 

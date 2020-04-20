@@ -323,11 +323,13 @@ class PublicMatchCardScreen extends Component {
             <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
                 {matchCard.expired ?
                     <View style={styles.mExpiredContainer}>
-                        <Text style={styles.mExpiredText}>translate('PublicMatchCardScreen.expired.description')</Text>
+                        <Text style={styles.mExpiredText}>
+                            {translate('publicMatchCardScreen.expired.description')}
+                        </Text>
                         <TouchableWithoutFeedback onPress={this.navigateToPublicas}>
                             <View style={styles.mExpiredBttnContainer}>
                                 <Text style={styles.mExpiredBttnText}>
-                                    {translate('PublicMatchCardScreen.expired.bttnText')}
+                                    {translate('publicMatchCardScreen.expired.bttnText')}
                                 </Text>
                             </View>
                         </TouchableWithoutFeedback>

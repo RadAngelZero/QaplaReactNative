@@ -132,11 +132,22 @@ class VerificationScreen extends Component {
         const { indexPositions } = this.state;
 
         /**
-         * Save the X position of the slide to know where to scroll to show the right element of
-         * the "carousel"
+         * Save the X position of the slide to know where to scroll
+         * to show the right element of the "carousel"
          */
-        indexPositions.push(position);
-        this.setState({ indexPositions });
+
+        // Bug - App version 2.0.1 - (20-04-2020)
+        // Description: In IOS indexPositions legth grows to 6,
+        // that makes the screens of the verification process to duplicate,
+        // instead of 3, there are 6. This behaviour only happens in IOS.
+        // Theory is that there is a re-render due to a setState or maybe
+        // due to how RN component initializes in IOS. To avoid that problem,
+        // the lenght of indexPositions is limited to < 3, so that no
+        // extra screens positions are added to indexPositions array.
+        if (indexPositions.length < 3) {
+            indexPositions.push(position);
+            this.setState({ indexPositions });
+        }   
     }
 
     /**
@@ -167,7 +178,7 @@ class VerificationScreen extends Component {
             this.setState({
                 indexPositions: indexPositions,
                 indexPositionsIsSorted: true
-            });
+            });              
         }
 
         switch (this.state.nextIndex) {
@@ -187,13 +198,13 @@ class VerificationScreen extends Component {
                 if (isValidData) {
                     try {
                         isUserOnSendCodeScreen = true;
-
+                        
                         // Mechanism to control in VerificationPhoneNumber component if code was sent
                         this.setState({
                             nextIndex: this.state.nextIndex + 1,
                             codeSent: true
                         });
-
+                        
                         /**
                          * Once we have the verification object (after we await for the SMS) we add it to the state
                          * so we can render new things on the screen, to let the user add their code and procceed
@@ -236,7 +247,8 @@ class VerificationScreen extends Component {
                      */
                     this.scrollViewRef.scrollTo({ x: this.state.indexPositions[this.state.indexPositions.length - 1], y: 0, animated: true });
                 }
-                this.setState({ nextIndex: this.state.nextIndex + 1 });
+                        
+                this.setState({ nextIndex: this.state.nextIndex + 1 });        
             }
         }
     }

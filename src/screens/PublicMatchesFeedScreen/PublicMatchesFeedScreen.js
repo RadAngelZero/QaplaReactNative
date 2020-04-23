@@ -8,7 +8,7 @@
 // josep.sanahuja - 08-07-2019 - us83 - + 'userName-creation-scenario' asyncStg flag & 'constructor'
 
 import React, { Component } from 'react';
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
 import style from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
@@ -27,10 +27,16 @@ import { setHg1CreateMatch } from '../../actions/highlightsActions';
 import { connect } from 'react-redux';
 import { translate } from '../../utilities/i18';
 
+import { remoteConfig } from '../../utilities/firebase';
+
 class PublicMatchesFeedScreen extends Component {
     state = {
         matches: [],
-        showHg1Modal: false
+        showHg1Modal: false,
+        textObj: {
+            title: 'mu',
+            description: 'mu'
+        }
     };
 
     componentWillMount(){
@@ -150,24 +156,53 @@ class PublicMatchesFeedScreen extends Component {
      * @description
      * Perform a serie of function calls after match creation button is pressed.
      */
+    // onCrearRetaButtonPress = async () => {
+    //     // TODO: This if-code block could be removed I think after HIGHLIGHT_1_CREATE_MATCH
+    //     // introduction
+    //     if(!this.props.navigation.getParam('firstMatchCreated')){
+    //         storeData('first-match-created', 'true');
+    //     }
+
+    //     // If showHg1Modal is enabled then
+    //     if (this.state.showHg1Modal){
+    //         // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
+    //         // and it should not show up again.
+    //         this.markHg1();
+
+    //         // Hide HIGHLIGHT_1_CREATE_MATCH Modal
+    //         this.toggleHg1Modal();
+    //     }
+
+    //     this.props.navigation.navigate(isUserLogged() ? 'MatchWizard' : 'SignIn');
+    // }
+
     onCrearRetaButtonPress = async () => {
-        // TODO: This if-code block could be removed I think after HIGHLIGHT_1_CREATE_MATCH
-        // introduction
-        if(!this.props.navigation.getParam('firstMatchCreated')){
-            storeData('first-match-created', 'true');
-        }
+        
+        console.log('fa pudor');
+        remoteConfig.enableDeveloperMode();
+       
+        remoteConfig.setDefaults({
+            TEST: {title: 'empty', description: 'empty'}
+        });
 
-        // If showHg1Modal is enabled then
-        if (this.state.showHg1Modal){
-            // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
-            // and it should not show up again.
-            this.markHg1();
+        console.log('after setting defaults');
 
-            // Hide HIGHLIGHT_1_CREATE_MATCH Modal
-            this.toggleHg1Modal();
-        }
-
-        this.props.navigation.navigate(isUserLogged() ? 'MatchWizard' : 'SignIn');
+        remoteConfig.fetch(0)
+        .then(() => remoteConfig.activateFetched())
+        .then((activated) => {
+            if (!activated){
+                console.log('Not activated');
+            }
+            
+            return remoteConfig.getValue('TEST');    
+        })
+        .then((data) => {
+            
+            console.log(`this is data`, data.val());
+            console.log(`this is data 2`, JSON.parse(data.val()).title);
+            this.setState({textObj: data.val()})
+        })
+        .catch((error) => console.log(`Error processing config: ${error}`))
     }
 
     /**
@@ -238,6 +273,9 @@ class PublicMatchesFeedScreen extends Component {
     render() {
         return (
             <>
+                <Text style={{color: 'black', fontSize: 20}}>
+                    {this.state.textObj.title} {this.state.textObj.description}
+                </Text>
                 <View style={style.container}>
                     <MatchCardList {...this.state} />
                 </View>

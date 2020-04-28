@@ -1,4 +1,7 @@
 import { remoteConfig } from '../utilities/firebase';
+import { Colors } from '../utilities/Colors';
+
+const rcColors = Colors;
 
 export const fetchChangesNowAndActivate = async () => {
 	let result = null;
@@ -7,7 +10,7 @@ export const fetchChangesNowAndActivate = async () => {
 	const activated = await remoteConfig.activateFetched();
 
 	if (activated){
-        result = remoteConfig.getValue('TEST'); 
+        result = remoteConfig.getValue(TEST); 
     }
 
     return result; 
@@ -15,4 +18,8 @@ export const fetchChangesNowAndActivate = async () => {
 
 export const getValuesFromKeys = (keyArr) => {
 	return remoteConfig.getValues(keyArr);
+}
+
+export const fetchChangesNowFromRemote = async () => {
+	remoteConfig.fetch(0);
 }

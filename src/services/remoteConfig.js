@@ -9,13 +9,12 @@ export default remoteConf = {
 		let confObj = JSON.parse(await retrieveData('remoteConf-configurationObj'));
 		
 		if (!confObj) {
-			confObj = JSON.parse({Discord: Discord});
+			confObj = JSON.parse({ Discord });
 		}
 
 		remoteConfig.setDefaults(confObj);
 	},
 	async fetchAndActivate() {
-		let result = null;
 		try {
 			// fetch(0) cleans cache and gets data from server,
 			// default time to fetch data again is 12h.
@@ -31,7 +30,7 @@ export default remoteConf = {
 				    });
 
 				    storeData('remoteConf-configurationObj', JSON.stringify(data));
-				})
+				});
 			}
 		}
 		catch(error) {

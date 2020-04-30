@@ -8,7 +8,7 @@
 // josep.sanahuja - 08-07-2019 - us83 - + 'userName-creation-scenario' asyncStg flag & 'constructor'
 
 import React, { Component } from 'react';
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
 import style from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
@@ -17,8 +17,6 @@ import HighlightModal from '../../components/HighlightModal/HighlightModal'
 
 import { matchesRef, getUserNameWithUID, getGamerTagWithUID, getUserDiscordTag } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
-import { remoteConf } from '../../services/remoteConfig';
-
 import { storeData, retrieveData } from '../../utilities/persistance';
 import {
     HIGHLIGHT_1_CREATE_MATCH

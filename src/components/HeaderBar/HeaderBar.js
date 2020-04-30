@@ -23,7 +23,7 @@ import images from './../../../assets/images';
 import HighlightModal from '../HighlightModal/HighlightModal';
 
 import { storeData, retrieveData } from '../../utilities/persistance';
-import { HIGHLIGHT_2_NOTIFICATIONS, QAPLA_DISCORD_CHANNEL } from '../../utilities/Constants';
+import { HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';
 import { translate } from '../../utilities/i18';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 
@@ -142,8 +142,9 @@ class HeaderBar extends Component {
     /**
      * Redirect the user to the discord channel of Qapla
      */
-    sendToDiscord = () => {
-        Linking.openURL(QAPLA_DISCORD_CHANNEL);
+    sendToDiscord = async () => {
+        const link = (await remoteConf.getDataFromKey('Discord')).QAPLA_DISCORD_CHANNEL;
+        Linking.openURL(link);
     }
 
     goToUserProfile = () => {

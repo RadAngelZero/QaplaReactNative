@@ -12,31 +12,27 @@ import { View, Text } from 'react-native'
 
 import style from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
-import { matchesRef, getUserNameWithUID, getGamerTagWithUID, getUserDiscordTag } from '../../services/database';
 import CreateRetasButton from '../../components/CreateRetasButton/CreateRetasButton';
-import { isUserLogged } from '../../services/auth';
-import { storeData, retrieveData } from '../../utilities/persistance';
+import HighlightModal from '../../components/HighlightModal/HighlightModal'
 
+import { matchesRef, getUserNameWithUID, getGamerTagWithUID, getUserDiscordTag } from '../../services/database';
+import { isUserLogged } from '../../services/auth';
+import { remoteConf } from '../../services/remoteConfig';
+
+import { storeData, retrieveData } from '../../utilities/persistance';
 import {
     HIGHLIGHT_1_CREATE_MATCH
- } from '../../utilities/Constants';
+} from '../../utilities/Constants';
+import { translate } from '../../utilities/i18';
 
-import HighlightModal from '../../components/HighlightModal/HighlightModal'
 
 import { setHg1CreateMatch } from '../../actions/highlightsActions';
 import { connect } from 'react-redux';
-import { translate } from '../../utilities/i18';
-
-import { remoteConfig } from '../../utilities/firebase';
 
 class PublicMatchesFeedScreen extends Component {
     state = {
         matches: [],
         showHg1Modal: false,
-        textObj: {
-            title: 'mu',
-            description: 'mu'
-        }
     };
 
     componentWillMount(){
@@ -156,53 +152,24 @@ class PublicMatchesFeedScreen extends Component {
      * @description
      * Perform a serie of function calls after match creation button is pressed.
      */
-    // onCrearRetaButtonPress = async () => {
-    //     // TODO: This if-code block could be removed I think after HIGHLIGHT_1_CREATE_MATCH
-    //     // introduction
-    //     if(!this.props.navigation.getParam('firstMatchCreated')){
-    //         storeData('first-match-created', 'true');
-    //     }
-
-    //     // If showHg1Modal is enabled then
-    //     if (this.state.showHg1Modal){
-    //         // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
-    //         // and it should not show up again.
-    //         this.markHg1();
-
-    //         // Hide HIGHLIGHT_1_CREATE_MATCH Modal
-    //         this.toggleHg1Modal();
-    //     }
-
-    //     this.props.navigation.navigate(isUserLogged() ? 'MatchWizard' : 'SignIn');
-    // }
-
     onCrearRetaButtonPress = async () => {
-        
-        console.log('fa pudor');
-        remoteConfig.enableDeveloperMode();
-       
-        remoteConfig.setDefaults({
-            TEST: {title: 'empty', description: 'empty'}
-        });
+        // TODO: This if-code block could be removed I think after HIGHLIGHT_1_CREATE_MATCH
+        // introduction
+        if(!this.props.navigation.getParam('firstMatchCreated')){
+            storeData('first-match-created', 'true');
+        }
 
-        console.log('after setting defaults');
+        // If showHg1Modal is enabled then
+        if (this.state.showHg1Modal){
+            // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
+            // and it should not show up again.
+            this.markHg1();
 
-        remoteConfig.fetch(0)
-        .then(() => remoteConfig.activateFetched())
-        .then((activated) => {
-            if (!activated){
-                console.log('Not activated');
-            }
-            
-            return remoteConfig.getValue('TEST');    
-        })
-        .then((data) => {
-            
-            console.log(`this is data`, data.val());
-            console.log(`this is data 2`, JSON.parse(data.val()).title);
-            this.setState({textObj: data.val()})
-        })
-        .catch((error) => console.log(`Error processing config: ${error}`))
+            // Hide HIGHLIGHT_1_CREATE_MATCH Modal
+            this.toggleHg1Modal();
+        }
+
+        this.props.navigation.navigate(isUserLogged() ? 'MatchWizard' : 'SignIn');
     }
 
     /**
@@ -273,9 +240,6 @@ class PublicMatchesFeedScreen extends Component {
     render() {
         return (
             <>
-                <Text style={{color: 'black', fontSize: 20}}>
-                    {this.state.textObj.title} {this.state.textObj.description}
-                </Text>
                 <View style={style.container}>
                     <MatchCardList {...this.state} />
                 </View>

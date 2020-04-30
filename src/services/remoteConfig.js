@@ -1,25 +1,44 @@
 import { remoteConfig } from '../utilities/firebase';
-import { Colors } from '../utilities/Colors';
+import { storeData, retrieveData } from '../utilities/persistance';
+import { Discord } from '../utilities/Constants';
 
-const rcColors = Colors;
+const configKeys = ['Discord'];
 
-export const fetchChangesNowAndActivate = async () => {
-	let result = null;
+export default remoteConf = {
+	async configure() {
+		let confObj = JSON.parse(await retrieveData('remoteConf-configurationObj'));
+		
+		if (!confObj) {
+			confObj = JSON.parse({Discord: Discord});
+		}
 
-	await remoteConfig.fetch(0);
-	const activated = await remoteConfig.activateFetched();
+		remoteConfig.setDefaults(confObj);
+	},
+	async fetchAndActivate() {
+		let result = null;
+		try {
+			// fetch(0) cleans cache and gets data from server,
+			// default time to fetch data again is 12h.
+			await remoteConfig.fetch();
+			const activated = await remoteConfig.activateFetched();
 
-	if (activated){
-        result = remoteConfig.getValue(TEST); 
-    }
+			if (activated){
+			    remoteConfig.getValues(configKeys).then((objects) => {
+				    let data = {};
 
-    return result; 
-}
+				    Object.keys(objects).forEach((key) => {
+				    	data[key] = JSON.parse(objects[key].val());
+				    });
 
-export const getValuesFromKeys = (keyArr) => {
-	return remoteConfig.getValues(keyArr);
-}
-
-export const fetchChangesNowFromRemote = async () => {
-	remoteConfig.fetch(0);
+				    storeData('remoteConf-configurationObj', JSON.stringify(data));
+				})
+			}
+		}
+		catch(error) {
+			console.error(`fetchAndActivate`, error);
+		}
+	},
+	async getDataFromKey(key) {
+		return JSON.parse((await remoteConfig.getValue(key)).val());
+	}
 }

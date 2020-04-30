@@ -21,12 +21,13 @@ import UserProfilePlatformGameList from '../../components/UserProfilePlatformGam
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
 
-import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
+import remoteConf from '../../services/remoteConfig';
+
+import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import { translate } from '../../utilities/i18';
 import { heightPercentageToPx, widthPercentageToPx, isIOSDevice } from '../../utilities/iosAndroidDim';
-import { QAPLA_DISCORD_EXCHANGE_CHANNEL } from '../../utilities/Constants';
 
 const QaploinExchangeIcon = images.svg.qoinFlipIcon;
 const BalanceExchangeIcon = images.svg.balanceFlipIcon;
@@ -76,9 +77,11 @@ export class UserProfileScreen extends Component {
      * Begins the process of redeem qaploins
      * (At this point, only send the user to discord)
      */
-    exchangeQaploins = () => {
+    exchangeQaploins = async () => {
+        const link = (await remoteConf.getDataFromKey('Discord')).QAPLA_DISCORD_EXCHANGE_CHANNEL;
+
         if (isUserLogged()) {
-            Linking.openURL(QAPLA_DISCORD_EXCHANGE_CHANNEL);
+            Linking.openURL(link);
         } else {
             this.props.navigation.navigate('Auth');
         }

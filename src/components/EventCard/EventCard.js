@@ -9,15 +9,18 @@ import { withNavigation } from 'react-navigation';
 import styles from './style';
 import { joinEvent } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
+import remoteConf from '../../services/remoteConfig';
+import { subscribeUserToTopic } from '../../services/messaging';
+
+import { translate, getLocaleLanguage } from '../../utilities/i18';
+import { EVENTS_TOPIC } from '../../utilities/Constants';
+import { getGamerTagKeyWithGameAndPlatform, isValidGame } from '../../utilities/utils';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
-import { translate, getLocaleLanguage } from '../../utilities/i18';
-import { QAPLA_DISCORD_CHANNEL, EVENTS_TOPIC } from '../../utilities/Constants';
-import { subscribeUserToTopic } from '../../services/messaging';
 import AddGamerTagModal from '../AddGamerTagModal/AddGamerTagModal';
 import EventRequirementsModal from '../EventRequirementsModal/EventRequirementsModal';
-import { getGamerTagKeyWithGameAndPlatform, isValidGame } from '../../utilities/utils';
 import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
+
 
 class EventCard extends Component {
     state = {
@@ -73,7 +76,11 @@ class EventCard extends Component {
     /**
      * Sends the user to the event (a discord channel)
      */
-    goToEvent = () => Linking.openURL(this.props.discordLink ? this.props.discordLink : QAPLA_DISCORD_CHANNEL);
+    goToEvent = async () => {
+        Linking.openURL(this.props.discordLink ?
+            this.props.discordLink : 
+            (await remoteConf.getDataFromKey('Discord')).QAPLA_DISCORD_CHANNEL);
+    }
 
     /**
      * Close the gamer tag moddal and opens the event requirements modal

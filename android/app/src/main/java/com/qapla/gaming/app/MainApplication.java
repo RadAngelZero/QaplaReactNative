@@ -19,6 +19,7 @@ import io.invertase.firebase.storage.RNFirebaseStoragePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import io.invertase.firebase.links.RNFirebaseLinksPackage;
+import io.invertase.firebase.config.RNFirebaseRemoteConfigPackage;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;

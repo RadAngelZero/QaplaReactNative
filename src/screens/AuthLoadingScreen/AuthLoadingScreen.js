@@ -24,6 +24,7 @@ import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
 import { translate } from '../../utilities/i18';
 import { checkNotificationPermission } from '../../services/messaging';
+import remoteConf from '../../services/remoteConfig';
 
 import {
     trackOnSegment
@@ -41,6 +42,13 @@ class AuthLoadingScreen extends Component {
 
         // Initialize the segment SDK to collect user statistics
         initializeSegment();
+
+        try {
+            remoteConf.configure();
+            remoteConf.fetchAndActivate();
+        } catch(error){
+            console.error(`Firebase remote configuration`, error);
+        }
 
         auth.onAuthStateChanged(async (user) => {
             this.props.loadListOfGames();

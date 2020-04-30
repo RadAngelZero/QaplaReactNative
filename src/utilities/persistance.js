@@ -1,6 +1,6 @@
 // josep.sanahuja - 08-07-2019 - us83 - + removeDataItem
 
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 // key: string
 // const retrieveData = async (key) => {

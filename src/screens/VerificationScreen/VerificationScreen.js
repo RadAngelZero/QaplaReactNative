@@ -30,6 +30,7 @@ import { sendVerificationSMSToUser, linkUserAccountWithPhone } from '../../servi
 import { createVerificationRequest } from '../../services/database';
 import { PhoneProvider } from '../../utilities/firebase';
 import { translate } from '../../utilities/i18';
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 
 import {
     ACCOUNT_ALREADY_IN_USE,
@@ -37,6 +38,7 @@ import {
     ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT,
     ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS
 } from '../../utilities/Constants';
+
 import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 
 const BackIcon = Images.svg.backIcon;
@@ -73,6 +75,10 @@ class VerificationScreen extends Component {
         errorAlreadyLinkedAccount: false,
         errorMinPhoneDigits: false
     };
+
+    componentDidMount() {
+        recordScreenOnSegment('Verification Screen');
+    }
 
     /**
      * Define a ref for the ScrollView UI element
@@ -154,6 +160,10 @@ class VerificationScreen extends Component {
      * Scroll the ScrollView to the next step of the form
      */
     goToNextStep = async () => {
+        trackOnSegment('Verify User goToNextStep', { 
+            NumScreen: this.state.nextIndex
+        });
+        
         let isValidData = true;
 
         /**
@@ -184,6 +194,12 @@ class VerificationScreen extends Component {
         switch (this.state.nextIndex) {
             case 1:
                 isValidData = !Object.keys(this.state.personData).some((value) => this.state.personData[value] === '' || this.state.personData[value] === 0);
+                
+                trackOnSegment('Verify User Personal Data', { 
+                    IsValidData: isValidData,
+                    Age: this.state.personData.age
+                });
+
                 break;
             case this.state.indexPositions.length - 1:
                 // In some countries like Spain the number of digits in a phone number is
@@ -279,6 +295,13 @@ class VerificationScreen extends Component {
     verifyUserPhone = async (verificationId, verificationCode) => {
         let accountsLinked = true;
 
+        trackOnSegment('Verify User Code', { 
+            VerificationId: verificationId,
+            VerificationCode: verificationCode,
+            PhoneNumber: this.state.phoneData.phoneNumber,
+            PhonePrefix: this.state.phoneData.prefixObj.callingCodes
+        });
+
         /**
          * Build of the credential object (to link current account with phone account)
          */
@@ -303,6 +326,15 @@ class VerificationScreen extends Component {
 
         } catch (error) {
             console.log(error);
+
+            trackOnSegment('Verify User Code Error', { 
+                Error: error.code,
+                VerificationId: verificationId,
+                VerificationCode: verificationCode,
+                PhoneNumber: this.state.phoneData.phoneNumber,
+                PhonePrefix: this.state.phoneData.prefixObj.callingCodes
+            });
+
             switch (error.code) {
                 case ACCOUNT_INVALID_CREDENTIAL:
                     this.setState({ errorSMSCode: true });
@@ -351,6 +383,12 @@ class VerificationScreen extends Component {
      * Sends again the verification code via Firebase
      */
     sendVerificationCode = async () => {
+        trackOnSegment('Send Verification Code', {
+            NumAttempts: this.state.numAttemptsCodeSent,
+            PhoneNumber: this.state.phoneData.phoneNumber,
+            PhonePrefix: this.state.phoneData.prefixObj.callingCodes 
+        });
+
         this.setState({
             numAttemptsCodeSent: this.state.numAttemptsCodeSent + 1
         });
@@ -372,8 +410,15 @@ class VerificationScreen extends Component {
     /**
      * End the verification procces (once the procces is completed)
      */
-    endVerificationProccess = () => this.props.navigation.pop();
+    endVerificationProccess = () => {
+        trackOnSegment('Verification Completed', {
+            PhoneNumber: this.state.phoneData.phoneNumber,
+            PhonePrefix: this.state.phoneData.prefixObj.callingCodes
+        });
 
+        this.props.navigation.pop();
+    }
+     
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -421,7 +466,7 @@ class VerificationScreen extends Component {
                                 codeSent={this.state.codeSent} />
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
-                            <VerificationProccessSuccess endVerificationProccess={this.endVerificationProccess} />
+                            <VerificationProccessSuccess />
                         </View>
                     </ScrollView>
                 </View>

@@ -170,9 +170,6 @@ class EventCard extends Component {
                         <Text style={styles.description}>{descriptionTranslated}</Text>
                     </View>
                     <View style={styles.colBContainer}>
-                        <LogroLifeTimeBadge
-                            limitDate={dateUTC}
-                            startTime={hourUTC} />
                         {(priceQaploins === null || priceQaploins === undefined) &&
                             <TouchableWithoutFeedback onPress={this.requestUserTags}>
                                 <View style={styles.participateButton}>

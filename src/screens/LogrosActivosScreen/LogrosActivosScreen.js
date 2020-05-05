@@ -12,11 +12,22 @@ export class LogrosActivosScreen extends Component {
                 const [day, month, year] = this.props.logros.logrosActivos[logroKey].tiempoLimite.split('-');
                 const date = new Date();
 
-                return parseInt(month) >= date.getMonth() + 1 && parseInt(day) >= date.getDate() && parseInt(year) >= date.getFullYear();
+                return (parseInt(month) === date.getMonth() + 1 && parseInt(day) >= date.getDate()) ||
+                (parseInt(month) > date.getMonth() + 1) &&
+                parseInt(year) >= date.getFullYear();
             }
 
             return false;
-        }).map((logroKey) => this.props.logros.logrosActivos[logroKey]);
+        }).map((logroKey) => this.props.logros.logrosActivos[logroKey])
+        .sort((a, b) => {
+            const [aDay, aMonth, aYear] = a.tiempoLimite.split('-');
+            const [bDay, bMonth, bYear] = b.tiempoLimite.split('-');
+
+            const aValue = parseInt(aDay) + parseInt(aMonth) + parseInt(aYear);
+            const bValue = parseInt(bDay) + parseInt(bMonth) + parseInt(bYear);
+
+            return aValue - bValue;
+        });
 
         return (
             <SafeAreaView style={styles.sfvContainer}>

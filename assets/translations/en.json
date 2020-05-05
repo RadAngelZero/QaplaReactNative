@@ -11,6 +11,17 @@
     "platforms": {
         "mobile": "PC/Mobile"
     },
+    "days": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wedenesday": "Wedenesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday",
+        "today": "Today",
+        "tomorrow": "Tomorrow"
+    },
     "router": {
         "topNavigators": {
             "achievements": {

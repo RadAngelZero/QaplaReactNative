@@ -1,8 +1,3 @@
-// diego          - 11-12-2019 - us164 - case 'verificado' removed
-// diego          - 14-11-2019 - us146 - Support for EventCard added
-// diego          - 04-10-2019 - us113 - Added LogroCompletedCard
-// josep.sanahuja - 19-09-2019 - us114 - File creation
-
 import React, { Component } from 'react';
 import { View } from 'react-native';
 

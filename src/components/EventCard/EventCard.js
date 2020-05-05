@@ -2,7 +2,7 @@
 // diego           - 14-11-2019 - us146 - File creation
 
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableWithoutFeedback, Linking } from 'react-native';
+import { View, ImageBackground, Text, TouchableWithoutFeedback, Linking, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 
@@ -16,7 +16,6 @@ import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { EVENTS_TOPIC } from '../../utilities/Constants';
 import { getGamerTagKeyWithGameAndPlatform, isValidGame } from '../../utilities/utils';
 
-import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
 import AddGamerTagModal from '../AddGamerTagModal/AddGamerTagModal';
 import EventRequirementsModal from '../EventRequirementsModal/EventRequirementsModal';
 import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
@@ -78,7 +77,7 @@ class EventCard extends Component {
      */
     goToEvent = async () => {
         Linking.openURL(this.props.discordLink ?
-            this.props.discordLink : 
+            this.props.discordLink :
             (await remoteConf.getDataFromKey('Discord')).QAPLA_DISCORD_CHANNEL);
     }
 
@@ -112,18 +111,16 @@ class EventCard extends Component {
 
     render() {
         const {
-            photoUrl,
             title,
             titulo,
             descriptions,
-            dateUTC,
             description,
-            tiempoLimite,
             verified,
-            priceQaploins,
             game,
             platform,
-            hourUTC
+            backgroundImage,
+            streamingPlatformImage,
+            streamerName
         } = this.props;
 
         let selectedGame = {
@@ -159,56 +156,29 @@ class EventCard extends Component {
 
         return (
             <View style={verified ? styles.container : styles.disabledContainer}>
-                <View style={styles.contentContainer}>
-                    <View style={styles.colASocialContainer}>
-                        <Image style={styles.picture} source={{ uri: photoUrl }} />
+                <ImageBackground
+                    style={styles.backgroundImageContainer}
+                    imageStyle={styles.backgroundImage}
+                    source={{ uri: backgroundImage }}>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>
+                            {titleTranslated}
+                        </Text>
                     </View>
-                    <View style={styles.colBSocialContainer}>
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{titleTranslated}</Text>
-                        </View>
-                        <Text style={styles.description}>{descriptionTranslated}</Text>
-                    </View>
-                    <View style={styles.colBContainer}>
-                        {(priceQaploins === null || priceQaploins === undefined) &&
-                            <TouchableWithoutFeedback onPress={this.requestUserTags}>
-                                <View style={styles.participateButton}>
-                                    <Text style={styles.participateTextButton}>{translate('activeAchievementsScreen.eventAchievement.participate')}</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                        }
-                    </View>
-                </View>
-                <AddGamerTagModal
-                    open={this.state.showGamerTagModal}
-                    onClose={() => this.setState({ showGamerTagModal: false })}
-                    onSuccess={this.subscribeUserToEvent}
-                    onCancel={this.onRequestTagsFail}
-                    selectedGame={selectedGame}
-                    uid={this.props.uid}
-                    userName={this.props.userName}
-                    newGame={!this.state.userHasGameAdded}
-                    previousGamerTag={this.state.previousGamerTag} />
-                <AddDiscordTagModal
-                    open={this.state.showDiscordTagModal}
-                    onClose={() => this.setState({ showDiscordTagModal: false })}
-                    onSuccess={this.subscribeUserToEvent} />
-                <EventRequirementsModal
-                    open={this.state.showRequirementsModal}
-                    closeModal={this.closeRequirementsModal}
-                    reTry={this.requestUserTags} />
-                {(priceQaploins !== null && priceQaploins !== undefined) &&
-                    <View style={styles.eventInfoContainer}>
-                        <TouchableWithoutFeedback onPress={this.goToEvent}>
-                            <Text style={styles.goToEvent}>
-                                {translate('activeAchievementsScreen.eventAchievement.goToEvent')}
+                    <View style={styles.body}>
+                        <Text style={styles.brandText}>
+                            Tu marca
+                        </Text>
+                        <View style={styles.streamerDetails}>
+                            <Text style={styles.streamPlatformText}>
+                                {streamerName}
                             </Text>
-                        </TouchableWithoutFeedback>
-                        <View style={styles.participatingTextContainer}>
-                            <Text style={styles.participatingText}>{translate('activeAchievementsScreen.eventAchievement.alreadyParticipating')}</Text>
+                            <Image
+                                style={styles.platformImage}
+                                source={{ uri: streamingPlatformImage }} />
                         </View>
                     </View>
-                }
+                </ImageBackground>
             </View>
         );
     }

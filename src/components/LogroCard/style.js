@@ -6,7 +6,6 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 
 export default styles = StyleSheet.create({
     listContainer: {
-        marginTop: heightPercentageToPx(2.83),
         alignSelf: 'center',
         width: widthPercentageToPx(95),
         justifyContent: 'space-between',
@@ -227,6 +226,13 @@ export default styles = StyleSheet.create({
     picture: {
         marginTop: heightPercentageToPx(2.46),
         width: 60,
-        height: 60 
+        height: 60
+    },
+    sectionHeader: {
+        fontSize: 20,
+        lineHeight: 24,
+        color : '#FFF',
+        fontWeight: 'bold',
+        marginTop: 18
     }
-}); 
+});

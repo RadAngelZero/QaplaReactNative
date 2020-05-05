@@ -3,11 +3,11 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 
 export default styles = StyleSheet.create({
     container: {
-        marginTop: heightPercentageToPx(2.83),
+        marginTop: 14,
         backgroundColor: '#141833',
         alignSelf: 'center',
         width: widthPercentageToPx(95),
-        borderRadius: 10,
+        borderRadius: 20,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -15,15 +15,14 @@ export default styles = StyleSheet.create({
         },
         shadowOpacity: .34,
         shadowRadius: 6.27,
-        elevation: 10,
-        justifyContent: 'space-between'
+        elevation: 10
     },
     disabledContainer: {
-        marginTop: heightPercentageToPx(2.83),
+        marginTop: 14,
         backgroundColor: '#0E1222',
         alignSelf: 'center',
         width: widthPercentageToPx(95),
-        borderRadius: 10,
+        borderRadius: 20,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -32,15 +31,15 @@ export default styles = StyleSheet.create({
         shadowOpacity: .34,
         shadowRadius: 6.27,
         elevation: 10,
-        justifyContent: 'space-between',
         opacity: 0.1
     },
-    contentContainer: {
-        marginLeft: widthPercentageToPx(4),
-        marginRight: widthPercentageToPx(4),
-        marginBottom: heightPercentageToPx(2),
-        flexDirection: 'row',
-        justifyContent: 'space-around'
+    backgroundImageContainer: {
+        width: widthPercentageToPx(95),
+        height: heightPercentageToPx(100) / 6,
+        justifyContent: 'space-between'
+    },
+    backgroundImage: {
+        borderRadius: 20
     },
     colASocialContainer: {
         width: widthPercentageToPx(23),
@@ -60,9 +59,8 @@ export default styles = StyleSheet.create({
         height: 60
     },
     titleContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
+        width: widthPercentageToPx(95),
+        alignItems: 'flex-end'
     },
     description: {
         fontSize: 10,
@@ -97,13 +95,43 @@ export default styles = StyleSheet.create({
         marginBottom: heightPercentageToPx(1.48)
     },
     title: {
-        fontSize: 16,
-        fontWeight: '600',
-        letterSpacing: .2,
+        maxWidth: widthPercentageToPx(35),
+        fontSize: 20,
+        fontWeight: 'bold',
+        letterSpacing: .38,
         color: '#FFF',
-        marginTop: heightPercentageToPx(2.28),
-        maxWidth: '85%',
-        alignSelf: 'flex-start'
+        lineHeight: 24,
+        textAlign: 'right',
+        marginTop: 16,
+        marginRight: 28
+    },
+    body: {
+        marginLeft: 14,
+        marginRight: 24,
+        marginBottom: 16,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    brandText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        letterSpacing: .38,
+        color: '#FFF'
+    },
+    streamerDetails: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    streamPlatformText: {
+        fontSize: 12,
+        fontWeight: '600',
+        color: '#FFF'
+    },
+    platformImage: {
+        marginLeft: 12,
+        height: 30,
+        width: 30
     },
     description: {
         fontSize: 10,

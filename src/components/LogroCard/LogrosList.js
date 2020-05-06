@@ -18,12 +18,14 @@ class LogrosList extends React.Component {
 			userId={this.props.userId}
 			verified={true} // Remove if the verification is a requirement again
 			// verified={this.props.isUserVerified} uncomment if the verification is a requirement again
-			lastChild={index === this.props.logros.length - 1} />
+			 />
 	}
 
-	renderSectionHeader = ({ section: { title } }) => (
-		<Text style={styles.sectionHeader}>{title}</Text>
-	);
+	renderSectionHeader = ({ section: { title } }) => {
+
+		console.log(title);
+		return <Text style={styles.sectionHeader}>{title}</Text>;
+	};
 
 	render() {
 		return (

@@ -21,11 +21,7 @@ class LogrosList extends React.Component {
 			 />
 	}
 
-	renderSectionHeader = ({ section: { title } }) => {
-
-		console.log(title);
-		return <Text style={styles.sectionHeader}>{title}</Text>;
-	};
+	renderSectionHeader = ({ section: { title } }) => <Text style={styles.sectionHeader}>{title}</Text>
 
 	render() {
 		return (

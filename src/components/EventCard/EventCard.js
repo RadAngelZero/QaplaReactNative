@@ -12,13 +12,11 @@ import { isUserLogged } from '../../services/auth';
 import remoteConf from '../../services/remoteConfig';
 import { subscribeUserToTopic } from '../../services/messaging';
 
-import { translate, getLocaleLanguage } from '../../utilities/i18';
+import { getLocaleLanguage } from '../../utilities/i18';
 import { EVENTS_TOPIC } from '../../utilities/Constants';
 import { getGamerTagKeyWithGameAndPlatform, isValidGame } from '../../utilities/utils';
 
-import AddGamerTagModal from '../AddGamerTagModal/AddGamerTagModal';
-import EventRequirementsModal from '../EventRequirementsModal/EventRequirementsModal';
-import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
+import EventDetailsModal from '../EventDetailsModal/EventDetailsModal';
 
 
 class EventCard extends Component {
@@ -27,7 +25,8 @@ class EventCard extends Component {
         userHasGameAdded: false,
         showRequirementsModal: false,
         showDiscordTagModal: false,
-        previousGamerTag: ''
+        previousGamerTag: '',
+        showEventDetailsModal: false
     };
 
     /**
@@ -109,6 +108,8 @@ class EventCard extends Component {
         return res;
     }
 
+    toogleEventDetailsModalVisibility = () => this.setState({ showEventDetailsModal: !this.state.showEventDetailsModal });
+
     render() {
         const {
             title,
@@ -120,7 +121,9 @@ class EventCard extends Component {
             platform,
             backgroundImage,
             streamingPlatformImage,
-            streamerName
+            streamerName,
+            sponsorImage,
+            idLogro
         } = this.props;
 
         let selectedGame = {
@@ -155,31 +158,39 @@ class EventCard extends Component {
         }
 
         return (
-            <View style={verified ? styles.container : styles.disabledContainer}>
-                <ImageBackground
-                    style={styles.backgroundImageContainer}
-                    imageStyle={styles.backgroundImage}
-                    source={{ uri: backgroundImage }}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>
-                            {titleTranslated}
-                        </Text>
-                    </View>
-                    <View style={styles.body}>
-                        <Text style={styles.brandText}>
-                            Tu marca
-                        </Text>
-                        <View style={styles.streamerDetails}>
-                            <Text style={styles.streamPlatformText}>
-                                {streamerName}
+            <TouchableWithoutFeedback onPress={this.toogleEventDetailsModalVisibility}>
+                <View style={verified ? styles.container : styles.disabledContainer}>
+                    <ImageBackground
+                        style={styles.backgroundImageContainer}
+                        imageStyle={styles.backgroundImage}
+                        source={{ uri: backgroundImage }}>
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>
+                                {titleTranslated}
                             </Text>
-                            <Image
-                                style={styles.platformImage}
-                                source={{ uri: streamingPlatformImage }} />
                         </View>
-                    </View>
-                </ImageBackground>
-            </View>
+                        <View style={styles.body}>
+                            <View>
+                                <Image
+                                    style={styles.eventSponsorImage}
+                                    source={{ uri: sponsorImage }} />
+                            </View>
+                            <View style={styles.streamerDetails}>
+                                <Text style={styles.streamPlatformText}>
+                                    {streamerName}
+                                </Text>
+                                <Image
+                                    style={styles.platformImage}
+                                    source={{ uri: streamingPlatformImage }} />
+                            </View>
+                        </View>
+                    </ImageBackground>
+                    <EventDetailsModal
+                        open={this.state.showEventDetailsModal}
+                        onClose={this.toogleEventDetailsModalVisibility}
+                        eventId={idLogro} />
+                </View>
+            </TouchableWithoutFeedback>
         );
     }
 }

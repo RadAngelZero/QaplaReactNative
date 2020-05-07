@@ -113,6 +113,13 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row'
     },
+    eventSponsorImage: {
+        height: 46,
+        width: 92,
+        alignSelf: 'flex-end',
+        marginRight: 36,
+        resizeMode: 'contain'
+    },
     brandText: {
         fontSize: 20,
         fontWeight: 'bold',

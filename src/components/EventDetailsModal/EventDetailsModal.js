@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, View, ScrollView, ImageBackground, Text, Image, TouchableOpacity } from 'react-native';
+import { Linking, Modal, View, ScrollView, ImageBackground, Text, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -9,6 +9,15 @@ import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { getDateElementsAsNumber, getHourElementsAsNumber } from '../../utilities/utils';
 
 class EventDetailsModal extends Component {
+
+    goToStreamerChannel = () => {
+        const { streamerChannelLink } = this.props.events[this.props.eventId];
+
+        if (streamerChannelLink) {
+            Linking.openURL(streamerChannelLink);
+        }
+    }
+
     render() {
         const {
             title,
@@ -22,6 +31,7 @@ class EventDetailsModal extends Component {
             streamingPlatformImage,
             streamingPlatform,
             streamerName,
+            streamerChannelLink,
             sponsorImage,
             streamerPhoto,
             hourUTC,
@@ -100,11 +110,15 @@ class EventDetailsModal extends Component {
                                             </View>
                                         </View>
                                     </View>
-                                    <TouchableOpacity style={styles.followButtonContainer}>
-                                        <Text style={styles.followButtonText}>
-                                            {translate('eventDetailsModal.follow')}
-                                        </Text>
-                                    </TouchableOpacity>
+                                    {streamerChannelLink &&
+                                        <TouchableOpacity
+                                            style={styles.followButtonContainer}
+                                            onPress={this.goToStreamerChannel}>
+                                            <Text style={styles.followButtonText}>
+                                                {translate('eventDetailsModal.follow')}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    }
                                 </View>
                             </View>
 

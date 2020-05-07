@@ -10,6 +10,10 @@ import { getDateElementsAsNumber, getHourElementsAsNumber } from '../../utilitie
 
 class EventDetailsModal extends Component {
 
+    /**
+     * Redirect the user to the streamers channel of the given social network
+     * streamerChannelLink field on event node must be a valid URL
+     */
     goToStreamerChannel = () => {
         const { streamerChannelLink } = this.props.events[this.props.eventId];
 

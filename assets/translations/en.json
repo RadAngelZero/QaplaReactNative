@@ -343,6 +343,16 @@
         "dontShowItAgain": "Don't show this message again",
         "okButton": "Got it"
     },
+    "eventDetailsModal": {
+        "hostedBy": "Hosted by",
+        "follow": "Follow",
+        "dateAndTime": "Date & Time",
+        "description": "Description",
+        "prizes": "PRIZES",
+        "instructions": "Instructions",
+        "howToParticipate": "How to participate",
+        "participate": "Participate"
+    },
     "updateApp": {
         "header": "There is a new version of Qapla, please update to the latest version.",
         "updateBttnTxt": "Update"
@@ -355,7 +365,7 @@
         "linkBroken": {
             "title": "Link broken",
             "description": "The content you are trying to access could not be found, try again or update the app to latest version and try again.",
-            "bttnText": "Update" 
+            "bttnText": "Update"
         }
     },
     "zeroQoinsEventModal" : {

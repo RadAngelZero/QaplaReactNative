@@ -351,7 +351,11 @@
         "prizes": "PRIZES",
         "instructions": "Instructions",
         "howToParticipate": "How to participate",
-        "participate": "Participate"
+        "participate": "Participate",
+        "nickName": "%{acronym} Nickname",
+        "enterNickName": "Enter the nickname you use to play on %{gameName}",
+        "errorText": "Verify that the fields are filled correctly",
+        "continue": "Continue"
     },
     "updateApp": {
         "header": "There is a new version of Qapla, please update to the latest version.",

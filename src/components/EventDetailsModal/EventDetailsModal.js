@@ -5,12 +5,14 @@ import {
     ScrollView
 } from 'react-native';
 import { connect } from 'react-redux';
+import { withNavigation } from 'react-navigation';
 
 import styles from './style';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import Images from './../../../assets/images';
 import EventDetails from './EventDetails';
 import EventRegistration from './EventRegistration';
+import { isUserLogged } from '../../services/auth';
 
 class EventDetailsModal extends Component {
     state = {
@@ -21,9 +23,14 @@ class EventDetailsModal extends Component {
      * Send the user to the next component
      */
     goToNextRegistrationStep = () => {
-        if (this.scrollView) {
-            this.scrollView.scrollTo({ y: 0, animated: false });
-            this.setState({ eventRegistrationStep: this.state.eventRegistrationStep + 1 });
+        if (isUserLogged()) {
+            if (this.scrollView) {
+                this.scrollView.scrollTo({ y: 0, animated: false });
+                this.setState({ eventRegistrationStep: this.state.eventRegistrationStep + 1 });
+            }
+        } else {
+            this.props.navigation.navigate('SignIn');
+            this.closeModal();
         }
     }
 
@@ -86,4 +93,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(EventDetailsModal);
+export default connect(mapStateToProps)(withNavigation(EventDetailsModal));

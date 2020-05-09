@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+    Linking,
     View,
     ImageBackground,
     Text,
@@ -12,6 +13,18 @@ import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { getDateElementsAsNumber, getHourElementsAsNumber } from '../../utilities/utils';
 
 class EventDetails extends Component {
+    /**
+     * Redirect the user to the streamers channel of the given social network
+     * streamerChannelLink field on event node must be a valid URL
+     */
+    goToStreamerChannel = () => {
+        const { streamerChannelLink } = this.props;
+
+        if (streamerChannelLink) {
+            Linking.openURL(streamerChannelLink);
+        }
+    }
+
     render() {
         const {
             title,
@@ -25,6 +38,7 @@ class EventDetails extends Component {
             streamingPlatformImage,
             streamingPlatform,
             streamerName,
+            streamerChannelLink,
             sponsorImage,
             streamerPhoto,
             hourUTC,
@@ -91,11 +105,15 @@ class EventDetails extends Component {
                                 </View>
                             </View>
                         </View>
-                        <TouchableOpacity style={styles.followButtonContainer}>
-                            <Text style={styles.followButtonText}>
-                                {translate('eventDetailsModal.follow')}
-                            </Text>
-                        </TouchableOpacity>
+                        {streamerChannelLink &&
+                            <TouchableOpacity
+                                style={styles.followButtonContainer}
+                                onPress={this.goToStreamerChannel}>
+                                <Text style={styles.followButtonText}>
+                                    {translate('eventDetailsModal.follow')}
+                                </Text>
+                            </TouchableOpacity>
+                        }
                     </View>
                 </View>
 

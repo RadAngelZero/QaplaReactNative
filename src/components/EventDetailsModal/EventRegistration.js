@@ -13,11 +13,17 @@ import { sendRequestToJoinEvent } from '../../services/database';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
 
 class EventRegistration extends Component {
-    state = {
-        userData: {},
-        requestError: false,
-        error: false
-    };
+    constructor(props) {
+    	super(props);
+
+        this.textInputRefs = [];
+
+    	this.state = {
+            userData: {},
+            requestError: false,
+            error: false
+        };
+    }
 
     /**
      * Save the given user information on the userData variable state
@@ -53,6 +59,10 @@ class EventRegistration extends Component {
         if (!Object.keys(neededInformation).some((key) => neededInformation[key].required && !this.validateUserField(neededInformation[key].validation, this.state.userData[key]))) {
 
             try {
+                const userDataToRegister = this.state.userData;
+                userDataToRegister.userName = this.props.userName;
+                userDataToRegister.token = this.props.token;
+
                 /**
                  * Save on the database the request of the user
                  */
@@ -76,6 +86,14 @@ class EventRegistration extends Component {
         }
     }
 
+    onSubmitEditing = (index) => {
+        if (index === Object.keys(this.props.game.informationNeededToAdd).length - 1) {
+            this.saveUserRequest();
+        } else {
+            this.textInputRefs[index + 1].focus();
+        }
+    }
+
     render() {
         const neededInformation = this.props.game.informationNeededToAdd;
         const userLanguage = getLocaleLanguage();
@@ -91,12 +109,14 @@ class EventRegistration extends Component {
                             <Text style={styles.nickNameBody}>
                                 {`${translate('eventDetailsModal.enterNickName', { gameName: this.props.game.name })}`}
                             </Text>
-                            {Object.keys(neededInformation).map((fieldKey) => (
+                            {Object.keys(neededInformation).map((fieldKey, index) => (
                                 <TextInput
                                     key={fieldKey}
+                                    ref={(textInput) => this.textInputRefs.push(textInput)}
                                     style={styles.gameIdentifierTextInput}
                                     placeholder={`${neededInformation[fieldKey].hint[userLanguage]}${neededInformation[fieldKey].required ? '*' : ''}`}
                                     placeholderTextColor='rgba(235,235,245,0.6)'
+                                    onSubmitEditing={() => this.onSubmitEditing(index)}
                                     onChangeText={(value) => this.setUserData(fieldKey, value)} />
                             ))}
                             {this.state.error &&
@@ -129,7 +149,9 @@ class EventRegistration extends Component {
 
 function mapStateToProps(state) {
     return {
-        uid: state.userReducer.user.id
+        uid: state.userReducer.user.id,
+        userName: state.userReducer.user.userName,
+        token: state.userReducer.user.token
     }
 }
 

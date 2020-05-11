@@ -3,6 +3,7 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
+    // Event Details Modal
     mainContainer: {
 		flex: 1,
         backgroundColor: 'rgba(0, 0, 0, .7)',
@@ -33,6 +34,7 @@ export default styles = StyleSheet.create({
     eventInfoContainer: {
         alignItems: 'center'
     },
+    // Event Details
     backgroundImageContainer: {
         height: heightPercentageToPx(20),
         width: widthPercentageToPx(100)
@@ -68,7 +70,7 @@ export default styles = StyleSheet.create({
         paddingBottom: 16,
         paddingLeft: 24,
         paddingRight: 24,
-        width: '95%',
+        width: widthPercentageToPx(95),
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -218,5 +220,75 @@ export default styles = StyleSheet.create({
         marginBottom: 20,
         marginRight: 40,
         marginLeft: 40
+    },
+    // Event Registration
+    fullHeightDialog: {
+        minHeight: heightPercentageToPx(86)
+    },
+    nickNameTitle: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        color: '#FFF',
+        marginTop: 36,
+        marginLeft: 40
+    },
+    registrationFieldsContainer: {
+        flex: 1,
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    nickNameCard: {
+        marginTop: 26
+    },
+    cardError: {
+        borderColor: '#FF0000',
+        borderWidth: 1
+    },
+    registerContainer: {
+        width: '100%'
+    },
+    nickNameBody: {
+        fontSize: 18,
+        color: '#FFF',
+        marginTop: 8,
+        lineHeight: 22,
+        maxWidth: widthPercentageToPx(75)
+    },
+    gameIdentifierTextInput: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        backgroundColor: 'rgba(28,32,106,0.6)',
+        borderRadius: 10,
+        marginTop: 16,
+        minHeight: 40,
+        paddingLeft: 10,
+        paddingRight: 8,
+        color: '#FFF',
+        marginBottom: 12
+    },
+    eventSponsorImageLarge: {
+        height: 125,
+        width: 250,
+        resizeMode: 'contain'
+    },
+    continueButtonContainer: {
+        backgroundColor: Colors.pinkQapla,
+        borderRadius: 30,
+        marginBottom: 36
+    },
+    continueButtonText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#FFF',
+        textAlign: 'center',
+        marginTop: 20,
+        marginBottom: 20,
+        marginRight: 40,
+        marginLeft: 40
+    },
+    smallErrorText: {
+        fontSize: 12,
+        lineHeight: 20,
+        color: 'rgba(235,235,245,0.6)'
     }
 });

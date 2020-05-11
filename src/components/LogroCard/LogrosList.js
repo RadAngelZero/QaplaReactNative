@@ -11,7 +11,7 @@ import styles from './style'
 import LogroCardItem from '../../components/LogroCard/LogroCardItem';
 
 class LogrosList extends React.Component {
-	renderEventOnList = ({ item, index }) => {
+	renderEventOnList = ({ item }) => {
 		return <LogroCardItem
 			key={`event-${item.id}`}
 			{...item}

@@ -7,18 +7,35 @@ import {
     Image,
     TouchableOpacity
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import styles from './style';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { getDateElementsAsNumber, getHourElementsAsNumber } from '../../utilities/utils';
+import { userHasRequestToJoinEvent } from '../../services/database';
 
 class EventDetails extends Component {
+    state = {
+        existsRequest: false
+    };
+
+    componentDidMount() {
+        this.checkUserRequest();
+    }
+
+    checkUserRequest = async () => {
+        console.log(await userHasRequestToJoinEvent());
+        if (await userHasRequestToJoinEvent(this.props.uid, this.props.eventId)) {
+            this.setState({ existsRequest: true });
+        }
+    }
+
     /**
      * Redirect the user to the streamers channel of the given social network
      * streamerChannelLink field on event node must be a valid URL
      */
     goToStreamerChannel = () => {
-        const { streamerChannelLink } = this.props;
+        const { streamerChannelLink } = this.props.event;
 
         if (streamerChannelLink) {
             Linking.openURL(streamerChannelLink);
@@ -43,7 +60,7 @@ class EventDetails extends Component {
             streamerPhoto,
             hourUTC,
             dateUTC
-        } = this.props;
+        } = this.props.event;
 
         let [day, month, year] = getDateElementsAsNumber(dateUTC);
 
@@ -80,6 +97,12 @@ class EventDetails extends Component {
                         </View>
                     </ImageBackground>
                 </View>
+
+                {this.state.existsRequest &&
+                    <Text style={styles.waitingAnswerFeedback}>
+                        {translate('eventDetailsModal.waitingApproval')}
+                    </Text>
+                }
 
                 <View style={[styles.eventCard, styles.streamerCard]}>
                     <Text style={styles.eventCardTitle}>
@@ -189,16 +212,26 @@ class EventDetails extends Component {
                     </View>
                 }
 
-                <TouchableOpacity
-                    style={styles.participateButtonContainer}
-                    onPress={this.props.goToNextStep}>
-                    <Text style={styles.participateButtonText}>
-                        {translate('eventDetailsModal.participate')}
-                    </Text>
-                </TouchableOpacity>
+                {!this.state.existsRequest ?
+                    <TouchableOpacity
+                        style={styles.participateButtonContainer}
+                        onPress={this.props.goToNextStep}>
+                        <Text style={styles.participateButtonText}>
+                            {translate('eventDetailsModal.participate')}
+                        </Text>
+                    </TouchableOpacity>
+                    :
+                    <View style={{ marginBottom: 30 }} />
+                }
             </>
         );
     }
 }
 
-export default EventDetails;
+function mapStateToProps(state) {
+    return {
+        uid: state.userReducer.user.id
+    }
+}
+
+export default connect(mapStateToProps)(EventDetails);

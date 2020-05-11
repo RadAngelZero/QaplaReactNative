@@ -37,7 +37,8 @@ export default styles = StyleSheet.create({
     // Event Details
     backgroundImageContainer: {
         height: heightPercentageToPx(20),
-        width: widthPercentageToPx(100)
+        width: widthPercentageToPx(100),
+        justifyContent: 'space-between'
     },
     backgroundImage: {
         borderTopLeftRadius: 20,
@@ -52,9 +53,6 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 20,
         textAlign: 'right'
-    },
-    eventSponsorContainer: {
-        marginTop: 24
     },
     eventSponsorImage: {
         height: 46,
@@ -126,7 +124,7 @@ export default styles = StyleSheet.create({
     },
     streamingPlatformImage: {
         height: 20,
-        width: 20
+        width: 60
     },
     streamerChannelName: {
         fontSize: 8,
@@ -290,5 +288,43 @@ export default styles = StyleSheet.create({
         fontSize: 12,
         lineHeight: 20,
         color: 'rgba(235,235,245,0.6)'
+    },
+    // EventRegistrationSuccessful
+    mainFeedbackContainer: {
+        flex: 1,
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    endProcessFeedbackTitle: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#FFF',
+        marginTop: 48
+    },
+    endProcessFeedbackDescription: {
+        maxWidth: '95%',
+        fontSize: 18,
+        textAlign: 'center',
+        color: '#FFF',
+        marginTop: 16
+    },
+    streamerNameLink: {
+        color: Colors.greenQapla
+    },
+    finishButtonContainer: {
+        backgroundColor: Colors.modals.bttnColor,
+        borderRadius: 30,
+        marginBottom: 36
+    },
+    finishButtonText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#FFF',
+        textAlign: 'center',
+        marginTop: 20,
+        marginBottom: 20,
+        marginRight: 40,
+        marginLeft: 40
     }
 });

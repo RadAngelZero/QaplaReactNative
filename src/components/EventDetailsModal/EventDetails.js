@@ -73,7 +73,7 @@ class EventDetails extends Component {
                         <Text style={styles.eventTitle}>
                             {title && title[userLanguage] ? title[userLanguage] : titulo}
                         </Text>
-                        <View style={styles.eventSponsorContainer}>
+                        <View>
                             <Image
                                 style={styles.eventSponsorImage}
                                 source={{ uri: sponsorImage }} />
@@ -99,9 +99,6 @@ class EventDetails extends Component {
                                     <Image
                                         source={{ uri: streamingPlatformImage }}
                                         style={styles.streamingPlatformImage} />
-                                    <Text style={styles.streamerChannelName}>
-                                        {streamingPlatform}
-                                    </Text>
                                 </View>
                             </View>
                         </View>

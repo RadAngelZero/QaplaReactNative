@@ -13,6 +13,7 @@ import Images from './../../../assets/images';
 import EventDetails from './EventDetails';
 import EventRegistration from './EventRegistration';
 import { isUserLogged } from '../../services/auth';
+import EventRegistrationSuccessful from './EventRegistrationSuccessful';
 
 class EventDetailsModal extends Component {
     state = {
@@ -77,6 +78,11 @@ class EventDetailsModal extends Component {
                                     event={this.props.events[this.props.eventId]}
                                     eventId={this.props.eventId}
                                     goToNextStep={this.goToNextRegistrationStep} />
+                            }
+                            {this.state.eventRegistrationStep === 2 &&
+                                <EventRegistrationSuccessful
+                                    event={this.props.events[this.props.eventId]}
+                                    finishProcess={this.closeModal} />
                             }
                         </View>
                     </ScrollView>

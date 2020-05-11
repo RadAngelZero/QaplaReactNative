@@ -15,6 +15,7 @@ import { getLocaleLanguage, translate } from '../../utilities/i18';
 class EventRegistration extends Component {
     state = {
         userData: {},
+        requestError: false,
         error: false
     };
 
@@ -43,7 +44,7 @@ class EventRegistration extends Component {
     /**
      * Validate and save the request of the user
      */
-    saveUserRequest = () => {
+    saveUserRequest = async () => {
         const neededInformation = this.props.game.informationNeededToAdd;
 
         /**
@@ -51,15 +52,20 @@ class EventRegistration extends Component {
          */
         if (!Object.keys(neededInformation).some((key) => neededInformation[key].required && !this.validateUserField(neededInformation[key].validation, this.state.userData[key]))) {
 
-            /**
-             * Save on the database the request of the user
-             */
-            sendRequestToJoinEvent(this.props.eventId, this.props.uid, this.state.userData);
+            try {
+                /**
+                 * Save on the database the request of the user
+                 */
+                await sendRequestToJoinEvent(this.props.eventId, this.props.uid, this.state.userData);
 
-            /**
-             * Send the user to the next modal
-             */
-            this.props.goToNextStep();
+                /**
+                 * Send the user to the next modal
+                 */
+                this.props.goToNextStep();
+            } catch (error) {
+                console.error(error);
+                this.setState({ requestError: true });
+            }
         } else {
 
             /**
@@ -96,6 +102,11 @@ class EventRegistration extends Component {
                             {this.state.error &&
                                 <Text style={styles.smallErrorText}>
                                     {translate('eventDetailsModal.errorText')}
+                                </Text>
+                            }
+                            {this.state.requestError &&
+                                <Text style={styles.smallErrorText}>
+                                    {translate('eventDetailsModal.errorOnRequest')}
                                 </Text>
                             }
                         </View>

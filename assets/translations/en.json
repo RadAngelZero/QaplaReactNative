@@ -355,7 +355,12 @@
         "nickName": "%{acronym} Nickname",
         "enterNickName": "Enter the nickname you use to play on %{gameName}",
         "errorText": "Verify that the fields are filled correctly",
-        "continue": "Continue"
+        "errorOnRequest": "Registration failed, if this problem persists please write to our technical support channel on discord",
+        "continue": "Continue",
+        "thankYouTitle": "Thank you!",
+        "succedRequest": "Your request has been sent :D Wait for",
+        "nextStepsFeedback": "to accept your registration. We´ll send you a notification when it happens ;)",
+        "finish": "Finish"
     },
     "updateApp": {
         "header": "There is a new version of Qapla, please update to the latest version.",

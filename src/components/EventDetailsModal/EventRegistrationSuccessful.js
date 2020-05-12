@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import styles from './style';
+import Images from './../../../assets/images';
 import { translate } from '../../utilities/i18';
 
 class EventRegistrationSuccessful extends Component {
@@ -17,6 +18,9 @@ class EventRegistrationSuccessful extends Component {
             <View style={styles.fullHeightDialog}>
                 <View style={styles.mainFeedbackContainer}>
                     <View>
+                        <View style={styles.sentIconContainer}>
+                            <Images.svg.sentIcon />
+                        </View>
                         <Text style={styles.endProcessFeedbackTitle}>
                             {translate('eventDetailsModal.thankYouTitle')}
                         </Text>

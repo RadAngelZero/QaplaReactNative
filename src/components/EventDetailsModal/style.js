@@ -295,6 +295,10 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center'
     },
+    sentIconContainer: {
+        alignSelf: 'center',
+        marginTop: 24
+    },
     endProcessFeedbackTitle: {
         fontSize: 28,
         fontWeight: 'bold',

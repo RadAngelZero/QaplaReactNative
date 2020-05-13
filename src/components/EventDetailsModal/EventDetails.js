@@ -11,23 +11,32 @@ import { connect } from 'react-redux';
 
 import styles from './style';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
-import { getDateElementsAsNumber, getHourElementsAsNumber } from '../../utilities/utils';
-import { userHasRequestToJoinEvent } from '../../services/database';
+import { getDateElementsAsNumber, getHourElementsAsNumber, copyDataToClipboard } from '../../utilities/utils';
+import { userHasRequestToJoinEvent, isUserParticipantOnEvent } from '../../services/database';
 
 class EventDetails extends Component {
     state = {
+        isParticipant: false,
         existsRequest: false
     };
 
     componentDidMount() {
+        this.checkIfUserIsParticipant();
         this.checkUserRequest();
     }
 
+    /**
+     * Check if the user has sent a request for this event
+     */
     checkUserRequest = async () => {
-        console.log(await userHasRequestToJoinEvent());
-        if (await userHasRequestToJoinEvent(this.props.uid, this.props.eventId)) {
-            this.setState({ existsRequest: true });
-        }
+        this.setState({ existsRequest: await userHasRequestToJoinEvent(this.props.uid, this.props.eventId) });
+    }
+
+    /**
+     * Check if the user is a participant of this event
+     */
+    checkIfUserIsParticipant = async () => {
+        this.setState({ isParticipant: await isUserParticipantOnEvent(this.props.uid, this.props.eventId) });
     }
 
     /**
@@ -53,13 +62,13 @@ class EventDetails extends Component {
             appStringPrizes,
             instructionsToParticipate,
             streamingPlatformImage,
-            streamingPlatform,
             streamerName,
             streamerChannelLink,
             sponsorImage,
             streamerPhoto,
             hourUTC,
-            dateUTC
+            dateUTC,
+            streamerGameData
         } = this.props.event;
 
         let [day, month, year] = getDateElementsAsNumber(dateUTC);
@@ -102,6 +111,34 @@ class EventDetails extends Component {
                     <Text style={styles.waitingAnswerFeedback}>
                         {translate('eventDetailsModal.waitingApproval')}
                     </Text>
+                }
+
+                {this.state.isParticipant && streamerGameData &&
+                    <View style={[styles.eventCard, styles.streamerGameDataCard]}>
+                        <Text style={styles.eventCardTitle}>
+                            {translate('eventDetailsModal.sendFriendRequestTo')}
+                        </Text>
+                        <View style={styles.divider} />
+                        {Object.keys(streamerGameData).map((streamerInfoKey) => (
+                            <View style={styles.streamerGameInfoContainer}>
+                                <Text style={styles.streamerGameInfoKey}>
+                                    {streamerInfoKey}
+                                </Text>
+                                <View style={styles.streamerGameInfoValueContainer}>
+                                    <Text style={styles.streamerGameInfoValue}>
+                                        {streamerGameData[streamerInfoKey]}
+                                    </Text>
+                                    <TouchableOpacity
+                                        style={styles.copyIconContainer}
+                                        onPress={() => copyDataToClipboard(streamerGameData[streamerInfoKey])}>
+                                        {/**
+                                         * Put copy icon here
+                                         */}
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        ))}
+                    </View>
                 }
 
                 <View style={[styles.eventCard, styles.streamerCard]}>
@@ -157,6 +194,27 @@ class EventDetails extends Component {
                     </View>
                 </View>
 
+                {(this.state.existsRequest || this.state.isParticipant) &&
+                    <View style={[styles.eventCard, styles.eventChatCard]}>
+                        <Text style={styles.eventCardTitle}>
+                            {translate('eventDetailsModal.eventChat')}
+                        </Text>
+                        <View style={styles.divider} />
+                        <View style={styles.chatInfoContainer}>
+                            <Text style={styles.joinDiscordText}>
+                                {translate('eventDetailsModal.joinDiscordChannel')}
+                            </Text>
+                            <View>
+                                <TouchableOpacity style={styles.chatButtonContainer}>
+                                    <Text style={styles.chatButtonText}>
+                                        {translate('eventDetailsModal.chat')}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                }
+
                 <View style={[styles.eventCard, styles.descriptionCard]}>
                     <Text style={styles.eventCardTitle}>
                         {translate('eventDetailsModal.description')}
@@ -209,7 +267,7 @@ class EventDetails extends Component {
                     </View>
                 }
 
-                {!this.state.existsRequest ?
+                {(!this.state.existsRequest && !this.state.isParticipant) ?
                     <TouchableOpacity
                         style={styles.participateButtonContainer}
                         onPress={this.props.goToNextStep}>

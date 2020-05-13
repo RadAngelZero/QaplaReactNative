@@ -78,9 +78,6 @@ export default styles = StyleSheet.create({
         shadowRadius: 13.16,
         elevation: 20
     },
-    streamerCard: {
-        marginTop: 20
-    },
     waitingAnswerFeedback: {
         marginTop: 26,
         fontSize: 18,
@@ -88,6 +85,12 @@ export default styles = StyleSheet.create({
         textAlign: 'center',
         color: Colors.greenQapla,
         maxWidth: '60%'
+    },
+    streamerGameDataCard: {
+        marginTop: 20
+    },
+    streamerCard: {
+        marginTop: 20
     },
     eventCardTitle: {
         fontSize: 15,
@@ -99,6 +102,30 @@ export default styles = StyleSheet.create({
         backgroundColor: '#1B1D49',
         height: 1,
         borderRadius: 30
+    },
+    streamerGameInfoContainer: {
+        justifyContent: 'center',
+        marginTop: 8
+    },
+    streamerGameInfoKey: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: Colors.greenQapla
+    },
+    streamerGameInfoValueContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    streamerGameInfoValue: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#FFF'
+    },
+    copyIconContainer: {
+        borderRadius: 30,
+        height: 30,
+        width: 30,
+        backgroundColor: Colors.modals.bttnColor
     },
     streamerInfoContainer: {
         marginTop: 12,
@@ -140,18 +167,17 @@ export default styles = StyleSheet.create({
         textAlign: 'left'
     },
     followButtonContainer: {
-        borderRadius: 18,
-        backgroundColor: '#6C7AE5'
+        width: widthPercentageToPx(25),
+        borderRadius: 30,
+        backgroundColor: Colors.modals.bttnColor
     },
     followButtonText: {
         fontSize: 16,
         textAlign: 'center',
         color: '#FFF',
         fontWeight: 'bold',
-        marginTop: 7,
-        marginBottom: 7,
-        marginLeft: 20,
-        marginRight: 20
+        marginTop: 12,
+        marginBottom: 12
     },
     dateCard: {
         marginTop: 20
@@ -176,6 +202,32 @@ export default styles = StyleSheet.create({
     dayText: {
         fontSize: 12,
         color: '#FFF'
+    },
+    eventChatCard: {
+        marginTop: 20
+    },
+    chatInfoContainer: {
+        marginTop: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    joinDiscordText: {
+        fontSize: 18,
+        color: '#FFF',
+        maxWidth: '60%'
+    },
+    chatButtonContainer: {
+        width: widthPercentageToPx(25),
+        borderRadius: 30,
+        backgroundColor: Colors.modals.bttnColor
+    },
+    chatButtonText: {
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#FFF',
+        marginTop: 12,
+        marginBottom: 12
     },
     descriptionCard: {
         marginTop: 26

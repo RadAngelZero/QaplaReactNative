@@ -344,6 +344,7 @@
         "okButton": "Entendido"
     },
     "eventDetailsModal": {
+        "waitingApproval": "Aun estas esperando la aprobación del creador ;)",
         "hostedBy": "Relizado por",
         "follow": "Seguir",
         "dateAndTime": "Dia y Hora",

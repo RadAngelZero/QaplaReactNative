@@ -685,6 +685,15 @@ export async function sendRequestToJoinEvent(eventId, uid, userData) {
     await eventsRequestsRef.child(eventId).child(uid).update(userData);
 }
 
+/**
+ * Check if the given user has a request to join to the given event
+ * @param {string} uid User identifier
+ * @param {string} eventId Event identifier
+ */
+export async function userHasRequestToJoinEvent(uid, eventId) {
+    return (await eventsRequestsRef.child(eventId).child(uid).once('value')).exists();
+}
+
 // -----------------------------------------------
 // Verification
 // -----------------------------------------------

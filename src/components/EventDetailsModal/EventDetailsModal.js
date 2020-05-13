@@ -69,7 +69,8 @@ class EventDetailsModal extends Component {
                         <View style={styles.container}>
                             {this.state.eventRegistrationStep === 0 &&
                                 <EventDetails
-                                    {...this.props.events[this.props.eventId]}
+                                    event={this.props.events[this.props.eventId]}
+                                    eventId={this.props.eventId}
                                     goToNextStep={this.goToNextRegistrationStep} />
                             }
                             {this.state.eventRegistrationStep === 1 &&

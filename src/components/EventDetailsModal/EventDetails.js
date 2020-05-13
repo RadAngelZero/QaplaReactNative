@@ -13,6 +13,7 @@ import styles from './style';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { getDateElementsAsNumber, getHourElementsAsNumber, copyDataToClipboard } from '../../utilities/utils';
 import { userHasRequestToJoinEvent, isUserParticipantOnEvent } from '../../services/database';
+import Images from '../../../assets/images';
 
 class EventDetails extends Component {
     state = {
@@ -142,9 +143,7 @@ class EventDetails extends Component {
                                     <TouchableOpacity
                                         style={styles.copyIconContainer}
                                         onPress={() => copyDataToClipboard(streamerGameData[streamerInfoKey])}>
-                                        {/**
-                                         * Put copy icon here
-                                         */}
+                                        <Images.svg.copyIcon />
                                     </TouchableOpacity>
                                 </View>
                             </View>

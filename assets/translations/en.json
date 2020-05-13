@@ -344,6 +344,7 @@
         "okButton": "Got it"
     },
     "eventDetailsModal": {
+        "waitingApproval": "You are still waiting for creator’s aproval ;)",
         "hostedBy": "Hosted by",
         "follow": "Follow",
         "dateAndTime": "Date & Time",

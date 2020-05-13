@@ -81,6 +81,14 @@ export default styles = StyleSheet.create({
     streamerCard: {
         marginTop: 20
     },
+    waitingAnswerFeedback: {
+        marginTop: 26,
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: Colors.greenQapla,
+        maxWidth: '60%'
+    },
     eventCardTitle: {
         fontSize: 15,
         lineHeight: 20,

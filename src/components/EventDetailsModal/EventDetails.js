@@ -51,6 +51,17 @@ class EventDetails extends Component {
         }
     }
 
+    /**
+     * Send the user to the discord channel of the event
+     */
+    goToDiscordLink = () => {
+        const { discordLink } = this.props.event;
+
+        if (discordLink) {
+            Linking.openURL(discordLink);
+        }
+    }
+
     render() {
         const {
             title,
@@ -205,7 +216,9 @@ class EventDetails extends Component {
                                 {translate('eventDetailsModal.joinDiscordChannel')}
                             </Text>
                             <View>
-                                <TouchableOpacity style={styles.chatButtonContainer}>
+                                <TouchableOpacity
+                                    style={styles.chatButtonContainer}
+                                    onPress={this.goToDiscordLink}>
                                     <Text style={styles.chatButtonText}>
                                         {translate('eventDetailsModal.chat')}
                                     </Text>

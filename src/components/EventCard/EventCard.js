@@ -5,12 +5,34 @@ import React, { Component } from 'react';
 import { View, ImageBackground, Text, TouchableWithoutFeedback, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
+import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style';
 
 import { getLocaleLanguage } from '../../utilities/i18';
 
 import EventDetailsModal from '../EventDetailsModal/EventDetailsModal';
+
+function EventCardContainer({ isSponsored, children }) {
+    if (isSponsored) {
+        return (
+            <LinearGradient
+                useAngle={true}
+                angle={150}
+                angleCenter={{ x: .5, y: .5}}
+                colors={['#AA16EE', '#07EAfA']}
+                style={styles.container}>
+                {children}
+            </LinearGradient>
+        );
+    }
+
+    return (
+        <View style={styles.container}>
+            {children}
+        </View>
+    );
+}
 
 class EventCard extends Component {
     state = {
@@ -43,7 +65,6 @@ class EventCard extends Component {
             titulo,
             descriptions,
             description,
-            verified,
             backgroundImage,
             streamingPlatformImage,
             streamerName,
@@ -70,7 +91,8 @@ class EventCard extends Component {
 
         return (
             <TouchableWithoutFeedback onPress={this.toogleEventDetailsModalVisibility}>
-                <View style={verified ? styles.container : styles.disabledContainer}>
+                <EventCardContainer
+                    isSponsored={sponsorImage ? true : false}>
                     <ImageBackground
                         style={styles.backgroundImageContainer}
                         imageStyle={styles.backgroundImage}
@@ -98,7 +120,7 @@ class EventCard extends Component {
                         open={this.state.showEventDetailsModal}
                         onClose={this.toogleEventDetailsModalVisibility}
                         eventId={idLogro} />
-                </View>
+                </EventCardContainer>
             </TouchableWithoutFeedback>
         );
     }

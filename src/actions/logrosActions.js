@@ -8,7 +8,8 @@ import { LOAD_USER_VERIFICATION_STATUS, LOAD_LOGROS_ACTIVOS, REMOVE_LOGRO_ACTIVO
 export const loadQaplaLogros = (uid) => async (dispatch) => {
     /**
      * We load all the data related to the achievements (but no the progress of the user in that achievements)
-     */
+     * Social logro is causing problems, for some reason it overwrite all the events and at this point is not
+     * a priority fix this
     logrosActRef.once('value', (logrosActivos) => {
         logrosActivos.forEach((typeOfLogro) => {
             if (typeOfLogro.key !== 'verifica') {
@@ -25,7 +26,7 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
 
     logrosActRef.on('child_removed', (removedLogro) => {
         dispatch(removeLogroFromActivos(removedLogro.key));
-    });
+    }); */
 
     activeTournamentsRef.on('child_added', (activeTournament) => {
         const activeTournamentObject = {

@@ -23,6 +23,7 @@ export const activeTournamentsRef = tournamentsRef.child('torneosActivos');
 export const pointsTournamentsRef = database.ref('/puntosTorneos');
 export const eventsRef = database.ref('/eventosEspeciales');
 export const activeEventsRef = eventsRef.child('eventsData');
+const eventsRequestsRef = eventsRef.child('JoinRequests');
 export const eventParticipantsRef = database.ref('/EventParticipants');
 export const announcementsActRef = database.ref('/Announcements/Active');
 export const privacyRef = database.ref('/Privacy');
@@ -671,6 +672,35 @@ export async function createLogroIncompletoChild(logroId, userId) {
     }
 
     return res;
+}
+
+/**
+ * Save the request of the user to join to the given event so the streamer can approve or
+ * reject it later
+ * @param {string} eventId Event identifier
+ * @param {string} uid User identifier
+ * @param {object} userData Required data for the event (is different depending the game or the event format)
+ */
+export async function sendRequestToJoinEvent(eventId, uid, userData) {
+    await eventsRequestsRef.child(eventId).child(uid).update(userData);
+}
+
+/**
+ * Check if the given user has a request to join to the given event
+ * @param {string} uid User identifier
+ * @param {string} eventId Event identifier
+ */
+export async function userHasRequestToJoinEvent(uid, eventId) {
+    return (await eventsRequestsRef.child(eventId).child(uid).once('value')).exists();
+}
+
+/**
+ * Check if the given user is a participant of the given event
+ * @param {string} uid User identifier
+ * @param {string} eventId Event identifier
+ */
+export async function isUserParticipantOnEvent(uid, eventId) {
+    return (await eventParticipantsRef.child(eventId).child(uid).once('value')).exists();
 }
 
 // -----------------------------------------------

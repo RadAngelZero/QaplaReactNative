@@ -343,6 +343,30 @@
         "dontShowItAgain": "Entendido, no volver a mostrar este mensaje",
         "okButton": "Entendido"
     },
+    "eventDetailsModal": {
+        "waitingApproval": "Aun estas esperando la aprobación del creador ;)",
+        "sendFriendRequestTo": "Envia solicitud de amistad a",
+        "hostedBy": "Relizado por",
+        "follow": "Seguir",
+        "dateAndTime": "Dia y Hora",
+        "eventChat": "Chat del evento",
+        "joinDiscordChannel": "Unete a nuestro canal de discord para soporte adicional.",
+        "chat": "Chat",
+        "description": "Descripción",
+        "prizes": "PREMIOS",
+        "instructions": "Instrucciones",
+        "howToParticipate": "Como participar",
+        "participate": "Participar",
+        "nickName": "%{acronym} Nickname",
+        "enterNickName": "Ingresa el nombre que tienes en el juego %{gameName}",
+        "errorText": "Verifica que los campos estén llenados correctamente",
+        "errorOnRequest": "Error al registrarte, si este problema persiste porfavor escribenos al canal de soporte tecnico en discord",
+        "continue": "Continuar",
+        "thankYouTitle": "¡Gracias!",
+        "succedRequest": "Tu solicitud ha sido enviada :D, espera a que",
+        "nextStepsFeedback": "acepte tu solicitud. Te enviaremos una notificación cuando esto pase ;)",
+        "finish": "Finalizar"
+    },
     "updateApp": {
         "header": "Hay una nueva versión de Qapla, actualiza a la nueva versión.",
         "updateBttnTxt": "Actualizar"
@@ -355,7 +379,7 @@
         "linkBroken": {
             "title": "Enlace no encontrado",
             "description": "El contenido que estás intentando acceder no se pudo acceder, prueba de nuevo o actualiza a una nueva versión y intenta de nuevo.",
-            "bttnText": "Actualizar" 
+            "bttnText": "Actualizar"
         }
     },
     "zeroQoinsEventModal" : {

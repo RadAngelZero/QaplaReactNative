@@ -2,94 +2,46 @@
 // diego           - 14-11-2019 - us146 - File creation
 
 import React, { Component } from 'react';
-import { View, ImageBackground, Text, TouchableWithoutFeedback, Linking, Image } from 'react-native';
+import { View, ImageBackground, Text, TouchableWithoutFeedback, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
+import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style';
-import { joinEvent } from '../../services/database';
-import { isUserLogged } from '../../services/auth';
-import remoteConf from '../../services/remoteConfig';
-import { subscribeUserToTopic } from '../../services/messaging';
 
-import { translate, getLocaleLanguage } from '../../utilities/i18';
-import { EVENTS_TOPIC } from '../../utilities/Constants';
-import { getGamerTagKeyWithGameAndPlatform, isValidGame } from '../../utilities/utils';
+import { getLocaleLanguage } from '../../utilities/i18';
 
-import AddGamerTagModal from '../AddGamerTagModal/AddGamerTagModal';
-import EventRequirementsModal from '../EventRequirementsModal/EventRequirementsModal';
-import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
+import EventDetailsModal from '../EventDetailsModal/EventDetailsModal';
 
+function EventCardContainer({ isSponsored, children, onPress }) {
+    if (isSponsored) {
+        return (
+            <TouchableWithoutFeedback onPress={onPress}>
+                <LinearGradient
+                    useAngle={true}
+                    angle={150}
+                    angleCenter={{ x: .5, y: .5}}
+                    colors={['#AA16EE', '#07EAfA']}
+                    style={styles.container}>
+                    {children}
+                </LinearGradient>
+            </TouchableWithoutFeedback>
+        );
+    }
+
+    return (
+        <TouchableWithoutFeedback onPress={onPress}>
+            <View style={styles.container}>
+                {children}
+            </View>
+        </TouchableWithoutFeedback>
+    );
+}
 
 class EventCard extends Component {
     state = {
-        showGamerTagModal: false,
-        userHasGameAdded: false,
-        showRequirementsModal: false,
-        showDiscordTagModal: false,
-        previousGamerTag: ''
+        showEventDetailsModal: false
     };
-
-    /**
-     * Check if the user has the necessary data to join to the event
-     */
-    requestUserTags = () => {
-        if (isUserLogged()) {
-            const gamerTagKey = getGamerTagKeyWithGameAndPlatform(this.props.platform, this.props.game);
-            const userHasGameAdded = this.props.gamerTags && this.props.gamerTags.hasOwnProperty(gamerTagKey);
-
-            this.setState({
-                userHasGameAdded,
-                previousGamerTag: userHasGameAdded ? this.props.gamerTags[gamerTagKey] : '',
-            }, () => {
-                if (isValidGame(this.props.platform, this.props.game)) {
-                    this.setState({ showGamerTagModal: true });
-                } else {
-                    if (!this.props.discordTag) {
-                        this.setState({ showDiscordTagModal: true });
-                    } else {
-                        this.subscribeUserToEvent(this.props.discordTag);
-                    }
-                }
-            });
-        } else {
-            this.props.navigation.navigate('SignIn');
-        }
-    }
-
-    /**
-     * If the user cancels the process of adding gamer/discord tag we show a modal
-     * saying that he/she can not join to the event without that data
-     */
-    onRequestTagsFail = () => this.setState({ showRequirementsModal: true });
-
-    /**
-     * Add the user to the list of participants of the selected event and
-     * subscribe him/her to the FCM topic of the event
-     */
-    subscribeUserToEvent = (gamerTag) => {
-        joinEvent(this.props.uid, this.props.id, gamerTag);
-        subscribeUserToTopic(this.props.id, this.props.uid, EVENTS_TOPIC);
-    }
-
-    /**
-     * Sends the user to the event (a discord channel)
-     */
-    goToEvent = async () => {
-        Linking.openURL(this.props.discordLink ?
-            this.props.discordLink :
-            (await remoteConf.getDataFromKey('Discord')).QAPLA_DISCORD_CHANNEL);
-    }
-
-    /**
-     * Close the gamer tag moddal and opens the event requirements modal
-     */
-    closeGamerTagModal = () => this.setState({ showGamerTagModal: false, showRequirementsModal: true });
-
-    /**
-     * Closes the requirements modal
-     */
-    closeRequirementsModal = () => this.setState({ showRequirementsModal: false });
 
     /**
      * Select the correct event text content according to the language used by the user
@@ -109,33 +61,20 @@ class EventCard extends Component {
         return res;
     }
 
+    toogleEventDetailsModalVisibility = () => this.setState({ showEventDetailsModal: !this.state.showEventDetailsModal });
+
     render() {
         const {
             title,
             titulo,
             descriptions,
             description,
-            verified,
-            game,
-            platform,
             backgroundImage,
             streamingPlatformImage,
-            streamerName
+            streamerName,
+            sponsorImage,
+            idLogro
         } = this.props;
-
-        let selectedGame = {
-            gameKey: game,
-            platform: platform,
-            name: ''
-        };
-
-        /**
-         * Before the app load the games (on redux) if we do not add this validation
-         * try to call to this.props.games[platform] can throw an error
-         */
-        if (this.props.games[platform] && this.props.games[platform][game]) {
-            selectedGame.name = this.props.games[platform][game].name;
-        }
 
         let descriptionTranslated = this.getTextBasedOnUserLanguage(descriptions);
         let titleTranslated = this.getTextBasedOnUserLanguage(title);
@@ -155,7 +94,9 @@ class EventCard extends Component {
         }
 
         return (
-            <View style={verified ? styles.container : styles.disabledContainer}>
+            <EventCardContainer
+                isSponsored={sponsorImage ? true : false}
+                onPress={this.toogleEventDetailsModalVisibility}>
                 <ImageBackground
                     style={styles.backgroundImageContainer}
                     imageStyle={styles.backgroundImage}
@@ -166,9 +107,9 @@ class EventCard extends Component {
                         </Text>
                     </View>
                     <View style={styles.body}>
-                        <Text style={styles.brandText}>
-                            Tu marca
-                        </Text>
+                        <Image
+                            style={styles.eventSponsorImage}
+                            source={{ uri: sponsorImage }} />
                         <View style={styles.streamerDetails}>
                             <Text style={styles.streamPlatformText}>
                                 {streamerName}
@@ -179,7 +120,11 @@ class EventCard extends Component {
                         </View>
                     </View>
                 </ImageBackground>
-            </View>
+                <EventDetailsModal
+                    open={this.state.showEventDetailsModal}
+                    onClose={this.toogleEventDetailsModalVisibility}
+                    eventId={idLogro} />
+            </EventCardContainer>
         );
     }
 }

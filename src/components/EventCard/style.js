@@ -35,7 +35,7 @@ export default styles = StyleSheet.create({
     },
     backgroundImageContainer: {
         width: widthPercentageToPx(95),
-        height: heightPercentageToPx(100) / 6,
+        height: heightPercentageToPx(100) / (heightPercentageToPx(100) > 850 ? 6 : 5),
         justifyContent: 'space-between'
     },
     backgroundImage: {
@@ -108,10 +108,16 @@ export default styles = StyleSheet.create({
     body: {
         marginLeft: 14,
         marginRight: 24,
-        marginBottom: 16,
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row'
+    },
+    eventSponsorImage: {
+        height: 46,
+        width: 92,
+        alignSelf: 'flex-end',
+        marginRight: 36,
+        resizeMode: 'contain'
     },
     brandText: {
         fontSize: 20,

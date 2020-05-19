@@ -37,7 +37,8 @@ export default styles = StyleSheet.create({
     // Event Details
     backgroundImageContainer: {
         height: heightPercentageToPx(20),
-        width: widthPercentageToPx(100)
+        width: widthPercentageToPx(100),
+        justifyContent: 'space-between'
     },
     backgroundImage: {
         borderTopLeftRadius: 20,
@@ -52,9 +53,6 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 20,
         textAlign: 'right'
-    },
-    eventSponsorContainer: {
-        marginTop: 24
     },
     eventSponsorImage: {
         height: 46,
@@ -80,6 +78,17 @@ export default styles = StyleSheet.create({
         shadowRadius: 13.16,
         elevation: 20
     },
+    waitingAnswerFeedback: {
+        marginTop: 26,
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: Colors.greenQapla,
+        maxWidth: '60%'
+    },
+    streamerGameDataCard: {
+        marginTop: 20
+    },
     streamerCard: {
         marginTop: 20
     },
@@ -93,6 +102,30 @@ export default styles = StyleSheet.create({
         backgroundColor: '#1B1D49',
         height: 1,
         borderRadius: 30
+    },
+    streamerGameInfoContainer: {
+        justifyContent: 'center',
+        marginTop: 8
+    },
+    streamerGameInfoKey: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: Colors.greenQapla
+    },
+    streamerGameInfoValueContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    streamerGameInfoValue: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#FFF'
+    },
+    copyIconContainer: {
+        borderRadius: 30,
+        height: 30,
+        width: 30,
+        backgroundColor: Colors.modals.bttnColor
     },
     streamerInfoContainer: {
         marginTop: 12,
@@ -126,7 +159,7 @@ export default styles = StyleSheet.create({
     },
     streamingPlatformImage: {
         height: 20,
-        width: 20
+        width: 60
     },
     streamerChannelName: {
         fontSize: 8,
@@ -134,18 +167,17 @@ export default styles = StyleSheet.create({
         textAlign: 'left'
     },
     followButtonContainer: {
-        borderRadius: 18,
-        backgroundColor: '#6C7AE5'
+        width: widthPercentageToPx(25),
+        borderRadius: 30,
+        backgroundColor: Colors.modals.bttnColor
     },
     followButtonText: {
         fontSize: 16,
         textAlign: 'center',
         color: '#FFF',
         fontWeight: 'bold',
-        marginTop: 7,
-        marginBottom: 7,
-        marginLeft: 20,
-        marginRight: 20
+        marginTop: 12,
+        marginBottom: 12
     },
     dateCard: {
         marginTop: 20
@@ -170,6 +202,32 @@ export default styles = StyleSheet.create({
     dayText: {
         fontSize: 12,
         color: '#FFF'
+    },
+    eventChatCard: {
+        marginTop: 20
+    },
+    chatInfoContainer: {
+        marginTop: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    joinDiscordText: {
+        fontSize: 18,
+        color: '#FFF',
+        maxWidth: '60%'
+    },
+    chatButtonContainer: {
+        width: widthPercentageToPx(25),
+        borderRadius: 30,
+        backgroundColor: Colors.modals.bttnColor
+    },
+    chatButtonText: {
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#FFF',
+        marginTop: 12,
+        marginBottom: 12
     },
     descriptionCard: {
         marginTop: 26
@@ -290,5 +348,47 @@ export default styles = StyleSheet.create({
         fontSize: 12,
         lineHeight: 20,
         color: 'rgba(235,235,245,0.6)'
+    },
+    // EventRegistrationSuccessful
+    mainFeedbackContainer: {
+        flex: 1,
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    sentIconContainer: {
+        alignSelf: 'center',
+        marginTop: 24
+    },
+    endProcessFeedbackTitle: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#FFF',
+        marginTop: 48
+    },
+    endProcessFeedbackDescription: {
+        maxWidth: '95%',
+        fontSize: 18,
+        textAlign: 'center',
+        color: '#FFF',
+        marginTop: 16
+    },
+    streamerNameLink: {
+        color: Colors.greenQapla
+    },
+    finishButtonContainer: {
+        backgroundColor: Colors.modals.bttnColor,
+        borderRadius: 30,
+        marginBottom: 36
+    },
+    finishButtonText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#FFF',
+        textAlign: 'center',
+        marginTop: 20,
+        marginBottom: 20,
+        marginRight: 40,
+        marginLeft: 40
     }
 });

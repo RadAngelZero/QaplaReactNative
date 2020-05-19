@@ -694,6 +694,15 @@ export async function userHasRequestToJoinEvent(uid, eventId) {
     return (await eventsRequestsRef.child(eventId).child(uid).once('value')).exists();
 }
 
+/**
+ * Check if the given user is a participant of the given event
+ * @param {string} uid User identifier
+ * @param {string} eventId Event identifier
+ */
+export async function isUserParticipantOnEvent(uid, eventId) {
+    return (await eventParticipantsRef.child(eventId).child(uid).once('value')).exists();
+}
+
 // -----------------------------------------------
 // Verification
 // -----------------------------------------------

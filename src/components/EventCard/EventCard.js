@@ -5,12 +5,38 @@ import React, { Component } from 'react';
 import { View, ImageBackground, Text, TouchableWithoutFeedback, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
+import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style';
 
 import { getLocaleLanguage } from '../../utilities/i18';
 
 import EventDetailsModal from '../EventDetailsModal/EventDetailsModal';
+
+function EventCardContainer({ isSponsored, children, onPress }) {
+    if (isSponsored) {
+        return (
+            <TouchableWithoutFeedback onPress={onPress}>
+                <LinearGradient
+                    useAngle={true}
+                    angle={150}
+                    angleCenter={{ x: .5, y: .5}}
+                    colors={['#AA16EE', '#07EAfA']}
+                    style={styles.container}>
+                    {children}
+                </LinearGradient>
+            </TouchableWithoutFeedback>
+        );
+    }
+
+    return (
+        <TouchableWithoutFeedback onPress={onPress}>
+            <View style={styles.container}>
+                {children}
+            </View>
+        </TouchableWithoutFeedback>
+    );
+}
 
 class EventCard extends Component {
     state = {
@@ -43,7 +69,6 @@ class EventCard extends Component {
             titulo,
             descriptions,
             description,
-            verified,
             backgroundImage,
             streamingPlatformImage,
             streamerName,
@@ -69,37 +94,37 @@ class EventCard extends Component {
         }
 
         return (
-            <TouchableWithoutFeedback onPress={this.toogleEventDetailsModalVisibility}>
-                <View style={verified ? styles.container : styles.disabledContainer}>
-                    <ImageBackground
-                        style={styles.backgroundImageContainer}
-                        imageStyle={styles.backgroundImage}
-                        source={{ uri: backgroundImage }}>
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.title}>
-                                {titleTranslated}
+            <EventCardContainer
+                isSponsored={sponsorImage ? true : false}
+                onPress={this.toogleEventDetailsModalVisibility}>
+                <ImageBackground
+                    style={styles.backgroundImageContainer}
+                    imageStyle={styles.backgroundImage}
+                    source={{ uri: backgroundImage }}>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>
+                            {titleTranslated}
+                        </Text>
+                    </View>
+                    <View style={styles.body}>
+                        <Image
+                            style={styles.eventSponsorImage}
+                            source={{ uri: sponsorImage }} />
+                        <View style={styles.streamerDetails}>
+                            <Text style={styles.streamPlatformText}>
+                                {streamerName}
                             </Text>
-                        </View>
-                        <View style={styles.body}>
                             <Image
-                                style={styles.eventSponsorImage}
-                                source={{ uri: sponsorImage }} />
-                            <View style={styles.streamerDetails}>
-                                <Text style={styles.streamPlatformText}>
-                                    {streamerName}
-                                </Text>
-                                <Image
-                                    style={styles.platformImage}
-                                    source={{ uri: streamingPlatformImage }} />
-                            </View>
+                                style={styles.platformImage}
+                                source={{ uri: streamingPlatformImage }} />
                         </View>
-                    </ImageBackground>
-                    <EventDetailsModal
-                        open={this.state.showEventDetailsModal}
-                        onClose={this.toogleEventDetailsModalVisibility}
-                        eventId={idLogro} />
-                </View>
-            </TouchableWithoutFeedback>
+                    </View>
+                </ImageBackground>
+                <EventDetailsModal
+                    open={this.state.showEventDetailsModal}
+                    onClose={this.toogleEventDetailsModalVisibility}
+                    eventId={idLogro} />
+            </EventCardContainer>
         );
     }
 }

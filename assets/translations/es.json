@@ -345,9 +345,13 @@
     },
     "eventDetailsModal": {
         "waitingApproval": "Aun estas esperando la aprobación del creador ;)",
+        "sendFriendRequestTo": "Envia solicitud de amistad a",
         "hostedBy": "Relizado por",
         "follow": "Seguir",
         "dateAndTime": "Dia y Hora",
+        "eventChat": "Chat del evento",
+        "joinDiscordChannel": "Unete a nuestro canal de discord para soporte adicional.",
+        "chat": "Chat",
         "description": "Descripción",
         "prizes": "PREMIOS",
         "instructions": "Instrucciones",

@@ -8,12 +8,34 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { getDateElementsAsNumber, getHourElementsAsNumber, copyDataToClipboard } from '../../utilities/utils';
 import { userHasRequestToJoinEvent, isUserParticipantOnEvent } from '../../services/database';
 import Images from '../../../assets/images';
+
+function BackgroundImageContainer({ isSponsored, children }) {
+    if (isSponsored) {
+        return (
+            <LinearGradient
+                useAngle={true}
+                angle={150}
+                angleCenter={{ x: .5, y: .5}}
+                style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
+                colors={['#AA16EE', '#07EAfA']}>
+                {children}
+            </LinearGradient>
+        );
+    }
+
+    return (
+        <View>
+            {children}
+        </View>
+    );
+}
 
 class EventDetails extends Component {
     state = {
@@ -103,7 +125,7 @@ class EventDetails extends Component {
 
         return (
             <>
-                <View>
+                <BackgroundImageContainer isSponsored={sponsorImage ? true : false}>
                     <ImageBackground
                         source={{ uri: backgroundImage }}
                         style={styles.backgroundImageContainer}
@@ -117,7 +139,7 @@ class EventDetails extends Component {
                                 source={{ uri: sponsorImage }} />
                         </View>
                     </ImageBackground>
-                </View>
+                </BackgroundImageContainer>
 
                 {this.state.existsRequest &&
                     <Text style={styles.waitingAnswerFeedback}>

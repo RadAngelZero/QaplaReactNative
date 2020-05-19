@@ -13,24 +13,28 @@ import { getLocaleLanguage } from '../../utilities/i18';
 
 import EventDetailsModal from '../EventDetailsModal/EventDetailsModal';
 
-function EventCardContainer({ isSponsored, children }) {
+function EventCardContainer({ isSponsored, children, onPress }) {
     if (isSponsored) {
         return (
-            <LinearGradient
-                useAngle={true}
-                angle={150}
-                angleCenter={{ x: .5, y: .5}}
-                colors={['#AA16EE', '#07EAfA']}
-                style={styles.container}>
-                {children}
-            </LinearGradient>
+            <TouchableWithoutFeedback onPress={onPress}>
+                <LinearGradient
+                    useAngle={true}
+                    angle={150}
+                    angleCenter={{ x: .5, y: .5}}
+                    colors={['#AA16EE', '#07EAfA']}
+                    style={styles.container}>
+                    {children}
+                </LinearGradient>
+            </TouchableWithoutFeedback>
         );
     }
 
     return (
-        <View style={styles.container}>
-            {children}
-        </View>
+        <TouchableWithoutFeedback onPress={onPress}>
+            <View style={styles.container}>
+                {children}
+            </View>
+        </TouchableWithoutFeedback>
     );
 }
 
@@ -90,38 +94,37 @@ class EventCard extends Component {
         }
 
         return (
-            <TouchableWithoutFeedback onPress={this.toogleEventDetailsModalVisibility}>
-                <EventCardContainer
-                    isSponsored={sponsorImage ? true : false}>
-                    <ImageBackground
-                        style={styles.backgroundImageContainer}
-                        imageStyle={styles.backgroundImage}
-                        source={{ uri: backgroundImage }}>
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.title}>
-                                {titleTranslated}
+            <EventCardContainer
+                isSponsored={sponsorImage ? true : false}
+                onPress={this.toogleEventDetailsModalVisibility}>
+                <ImageBackground
+                    style={styles.backgroundImageContainer}
+                    imageStyle={styles.backgroundImage}
+                    source={{ uri: backgroundImage }}>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>
+                            {titleTranslated}
+                        </Text>
+                    </View>
+                    <View style={styles.body}>
+                        <Image
+                            style={styles.eventSponsorImage}
+                            source={{ uri: sponsorImage }} />
+                        <View style={styles.streamerDetails}>
+                            <Text style={styles.streamPlatformText}>
+                                {streamerName}
                             </Text>
-                        </View>
-                        <View style={styles.body}>
                             <Image
-                                style={styles.eventSponsorImage}
-                                source={{ uri: sponsorImage }} />
-                            <View style={styles.streamerDetails}>
-                                <Text style={styles.streamPlatformText}>
-                                    {streamerName}
-                                </Text>
-                                <Image
-                                    style={styles.platformImage}
-                                    source={{ uri: streamingPlatformImage }} />
-                            </View>
+                                style={styles.platformImage}
+                                source={{ uri: streamingPlatformImage }} />
                         </View>
-                    </ImageBackground>
-                    <EventDetailsModal
-                        open={this.state.showEventDetailsModal}
-                        onClose={this.toogleEventDetailsModalVisibility}
-                        eventId={idLogro} />
-                </EventCardContainer>
-            </TouchableWithoutFeedback>
+                    </View>
+                </ImageBackground>
+                <EventDetailsModal
+                    open={this.state.showEventDetailsModal}
+                    onClose={this.toogleEventDetailsModalVisibility}
+                    eventId={idLogro} />
+            </EventCardContainer>
         );
     }
 }

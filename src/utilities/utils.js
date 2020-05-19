@@ -3,7 +3,7 @@
 // diego     - 06-08-2019 - us76 - Function to get the gamer tag key on string created
 // diego     - 16-07-2019 - us30 - File creation
 
-import { Linking } from 'react-native';
+import { Linking, Clipboard } from 'react-native';
 import { translate } from './i18';
 import store from '../store/store';
 
@@ -206,4 +206,13 @@ export function getHourElementsAsNumber(hour) {
     minutes = parseInt(minutes);
 
     return [hours, minutes]
+}
+
+/**
+ * Save the given data on the users clipboard
+ * @param {string} dataToCopy Data to save on the users clipboard
+ */
+export function copyDataToClipboard(dataToCopy) {
+    console.log(dataToCopy.toString())
+    Clipboard.setString(dataToCopy.toString());
 }

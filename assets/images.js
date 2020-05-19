@@ -39,6 +39,7 @@ import FacebookIcon from './icons/facebook_round.svg';
 import GoogleIcon from './icons/google-logo.svg';
 import QoinFlipIcon from './icons/qoins-flip.svg';
 import BalanceFlipIcon from './icons/qapla-balance-flip.svg';
+import CopyIcon from './icons/Copy.svg';
 import SentIcon from './icons/SentIcon.svg';
 
 // Images
@@ -192,6 +193,7 @@ const images = {
 		noVerifiedIcon: NoVerifiedIcon,
 		qoinFlipIcon: QoinFlipIcon,
 		balanceFlipIcon: BalanceFlipIcon,
+		copyIcon: CopyIcon,
 		sentIcon: SentIcon
 	}
 };

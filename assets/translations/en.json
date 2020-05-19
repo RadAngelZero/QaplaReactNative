@@ -344,9 +344,14 @@
         "okButton": "Got it"
     },
     "eventDetailsModal": {
+        "waitingApproval": "You are still waiting for creator’s aproval ;)",
+        "sendFriendRequestTo": "Send friend request to",
         "hostedBy": "Hosted by",
         "follow": "Follow",
         "dateAndTime": "Date & Time",
+        "eventChat": "Event Chat",
+        "joinDiscordChannel": "Join our Discord channel for additional support.",
+        "chat": "Chat",
         "description": "Description",
         "prizes": "PRIZES",
         "instructions": "Instructions",

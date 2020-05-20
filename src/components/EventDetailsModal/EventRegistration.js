@@ -56,7 +56,7 @@ class EventRegistration extends Component {
         /**
          * Check if all the fields are filled correctly
          */
-        if (!Object.keys(neededInformation).some((key) => neededInformation[key].required && !this.validateUserField(neededInformation[key].validation, this.state.userData[key]))) {
+        if (!neededInformation || !Object.keys(neededInformation).some((key) => neededInformation[key].required && !this.validateUserField(neededInformation[key].validation, this.state.userData[key]))) {
 
             try {
                 const userDataToRegister = this.state.userData;
@@ -98,52 +98,62 @@ class EventRegistration extends Component {
         const neededInformation = this.props.game.informationNeededToAdd;
         const userLanguage = getLocaleLanguage();
 
-        return (
-            <View style={styles.fullHeightDialog}>
-                <Text style={styles.nickNameTitle}>
-                    {`${translate('eventDetailsModal.nickName', { acronym: this.props.game.acronym })}`}
-                </Text>
-                <View style={styles.registrationFieldsContainer}>
-                    <View style={[styles.eventCard, styles.nickNameCard, this.state.error && styles.cardError]}>
-                        <View style={styles.registerContainer}>
-                            <Text style={styles.nickNameBody}>
-                                {`${translate('eventDetailsModal.enterNickName', { gameName: this.props.game.name })}`}
-                            </Text>
-                            {Object.keys(neededInformation).map((fieldKey, index) => (
-                                <TextInput
-                                    key={fieldKey}
-                                    ref={(textInput) => this.textInputRefs.push(textInput)}
-                                    style={styles.gameIdentifierTextInput}
-                                    placeholder={`${neededInformation[fieldKey].hint[userLanguage]}${neededInformation[fieldKey].required ? '*' : ''}`}
-                                    placeholderTextColor='rgba(235,235,245,0.6)'
-                                    onSubmitEditing={() => this.onSubmitEditing(index)}
-                                    onChangeText={(value) => this.setUserData(fieldKey, value)} />
-                            ))}
-                            {this.state.error &&
-                                <Text style={styles.smallErrorText}>
-                                    {translate('eventDetailsModal.errorText')}
+        if (neededInformation) {
+            return (
+                <View style={styles.fullHeightDialog}>
+                    <Text style={styles.nickNameTitle}>
+                        {`${translate('eventDetailsModal.nickName', { acronym: this.props.game.acronym })}`}
+                    </Text>
+                    <View style={styles.registrationFieldsContainer}>
+                        <View style={[styles.eventCard, styles.nickNameCard, this.state.error && styles.cardError]}>
+                            <View style={styles.registerContainer}>
+                                <Text style={styles.nickNameBody}>
+                                    {`${translate('eventDetailsModal.enterNickName', { gameName: this.props.game.name })}`}
                                 </Text>
-                            }
-                            {this.state.requestError &&
-                                <Text style={styles.smallErrorText}>
-                                    {translate('eventDetailsModal.errorOnRequest')}
-                                </Text>
-                            }
+                                {Object.keys(neededInformation).map((fieldKey, index) => (
+                                    <TextInput
+                                        key={fieldKey}
+                                        ref={(textInput) => this.textInputRefs.push(textInput)}
+                                        style={styles.gameIdentifierTextInput}
+                                        placeholder={`${neededInformation[fieldKey].hint[userLanguage]}${neededInformation[fieldKey].required ? '*' : ''}`}
+                                        placeholderTextColor='rgba(235,235,245,0.6)'
+                                        onSubmitEditing={() => this.onSubmitEditing(index)}
+                                        onChangeText={(value) => this.setUserData(fieldKey, value)} />
+                                ))}
+                                {this.state.error &&
+                                    <Text style={styles.smallErrorText}>
+                                        {translate('eventDetailsModal.errorText')}
+                                    </Text>
+                                }
+                                {this.state.requestError &&
+                                    <Text style={styles.smallErrorText}>
+                                        {translate('eventDetailsModal.errorOnRequest')}
+                                    </Text>
+                                }
+                            </View>
                         </View>
+                        <Image
+                            source={{ uri: this.props.event.sponsorImage }}
+                            style={styles.eventSponsorImageLarge} />
+                        <TouchableOpacity
+                            style={styles.continueButtonContainer}
+                            onPress={this.saveUserRequest}>
+                            <Text style={styles.continueButtonText}>
+                                {translate('eventDetailsModal.continue')}
+                            </Text>
+                        </TouchableOpacity>
                     </View>
-                    <Image
-                        source={{ uri: this.props.event.sponsorImage }}
-                        style={styles.eventSponsorImageLarge} />
-                    <TouchableOpacity
-                        style={styles.continueButtonContainer}
-                        onPress={this.saveUserRequest}>
-                        <Text style={styles.continueButtonText}>
-                            {translate('eventDetailsModal.continue')}
-                        </Text>
-                    </TouchableOpacity>
                 </View>
-            </View>
-        );
+            );
+        } else {
+            /**
+             * Maybe here we should send to event participants directly.
+             * We do not need to approve participation if we are not requesting
+             * any data?
+             */
+            this.saveUserRequest();
+            return (<></>);
+        }
     }
 }
 

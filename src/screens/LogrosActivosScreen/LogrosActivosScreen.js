@@ -13,14 +13,16 @@ export class LogrosActivosScreen extends Component {
 
         // Remove the events of previous dates
         Object.keys(this.props.logros.logrosActivos).filter((logroKey) => {
-            if (this.props.logros.logrosActivos[logroKey].dateUTC) {
+            if (this.props.logros.logrosActivos[logroKey].dateUTC && this.props.logros.logrosActivos[logroKey].hourUTC) {
                 const [day, month, year] = getDateElementsAsNumber(this.props.logros.logrosActivos[logroKey].dateUTC);
+                const [hour, minute] = getHourElementsAsNumber(this.props.logros.logrosActivos[logroKey].hourUTC);
 
+                const eventDate = new Date(Date.UTC(year, month - 1, day, hour, minute));
                 const date = new Date();
 
-                return (month === date.getUTCMonth() + 1 && day >= date.getUTCDate()) ||
-                (month > date.getUTCMonth() + 1) &&
-                year >= date.getUTCFullYear();
+                return (eventDate.getMonth() === date.getMonth() && eventDate.getDate() >= date.getDate()) ||
+                (eventDate.getMonth() > date.getMonth()) &&
+                eventDate.getFullYear() >= date.getFullYear();
             }
 
             return false;
@@ -44,12 +46,12 @@ export class LogrosActivosScreen extends Component {
             const today = new Date();
 
             if (today.getUTCMonth() === month - 1) {
-                const eventDate = new Date(year, month - 1, day, hour, minute);
-                const days = [ "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" ];
-                const eventSectionTitle = today.getUTCDate() === day ?
+                const eventDate = new Date(Date.UTC(year, month - 1, day, hour, minute));
+                const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+                const eventSectionTitle = today.getDate() === eventDate.getDate() ?
                     translate('days.today')
                     :
-                    today.getUTCDate() + 1 === day ?
+                    today.getDate() + 1 === eventDate.getDate() ?
                         translate('days.tomorrow')
                         :
                         translate(`days.${days[eventDate.getDay()]}`);

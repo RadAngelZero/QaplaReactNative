@@ -41,41 +41,48 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
         dispatch(removeLogroFromActivos(removedTournament.key));
     });
 
+    const listeningEvents = [];
     /**
      * We load the active events
      */
-    activeEventsRef.on('child_added', (activeEvent) => {
-        const activeEventObject = {
-            id: activeEvent.key,
-            userSubscribed: false,
-            ...activeEvent.val()
-        };
+    activeEventsRef.on('value', (activeEvents) => {
+        activeEvents.forEach((activeEvent) => {
+            const activeEventObject = {
+                id: activeEvent.key,
+                userSubscribed: false,
+                ...activeEvent.val()
+            };
 
-        activeEventObject.game = activeEventObject.tipoLogro;
-        activeEventObject.tipoLogro = 'event';
-        dispatch(loadLogrosActivosSuccess(activeEventObject));
+            activeEventObject.game = activeEventObject.tipoLogro;
+            activeEventObject.tipoLogro = 'event';
+            dispatch(loadLogrosActivosSuccess(activeEventObject));
 
-        /**
-         * Only if the uid is valid (different from null) we load the user progress in the achievements
-         */
-        if (uid) {
             /**
-             * Then we load the process of the current user on the given event
+             * Only if the uid is valid (different from null) we load the user progress in the achievements
+             * To ensure that we only have one listener to the same location all the time we save the keys
+             * on the listeningEvents array and we check if the event does not exists on it, if does not
+             * exist then we put a listener on that event
              */
-            eventParticipantsRef.child(activeEvent.key).child(uid).on('value', (eventProgress) => {
-                if (eventProgress.exists()) {
-                    const eventProgressObject = {
-                        id: activeEvent.key,
-                        userSubscribed: true,
-                        ...eventProgress.val()
-                    };
+            if (uid && listeningEvents.indexOf(activeEvent.key) < 0) {
+                /**
+                 * Then we load the process of the current user on the given event
+                 */
+                eventParticipantsRef.child(activeEvent.key).child(uid).on('value', (eventProgress) => {
+                    listeningEvents.push(activeEvent.key);
+                    if (eventProgress.exists()) {
+                        const eventProgressObject = {
+                            id: activeEvent.key,
+                            userSubscribed: true,
+                            ...eventProgress.val()
+                        };
 
-                    dispatch(loadLogrosActivosSuccess(eventProgressObject));
-                }
-            });
-        } else {
-            removeActiveEventUserSubscribedListener(uid, activeEvent.key);
-        }
+                        dispatch(loadLogrosActivosSuccess(eventProgressObject));
+                    }
+                });
+            } else {
+                removeActiveEventUserSubscribedListener(uid, activeEvent.key);
+            }
+        });
     });
 
     /**

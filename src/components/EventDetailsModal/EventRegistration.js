@@ -9,8 +9,10 @@ import {
 import { connect } from 'react-redux';
 
 import styles from './style';
-import { sendRequestToJoinEvent } from '../../services/database';
+import { sendRequestToJoinEvent, joinEvent } from '../../services/database';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
+import { subscribeUserToTopic } from '../../services/messaging';
+import { EVENTS_TOPIC } from '../../utilities/Constants';
 
 class EventRegistration extends Component {
     constructor(props) {
@@ -51,38 +53,58 @@ class EventRegistration extends Component {
      * Validate and save the request of the user
      */
     saveUserRequest = async () => {
-        const neededInformation = this.props.game.informationNeededToAdd;
+        if (this.props.game && this.props.game.informationNeededToAdd) {
+            const neededInformation = this.props.game.informationNeededToAdd;
 
-        /**
-         * Check if all the fields are filled correctly
-         */
-        if (!neededInformation || !Object.keys(neededInformation).some((key) => neededInformation[key].required && !this.validateUserField(neededInformation[key].validation, this.state.userData[key]))) {
+            /**
+             * Check if all the fields are filled correctly
+             */
+            if (!neededInformation || !Object.keys(neededInformation).some((key) => neededInformation[key].required && !this.validateUserField(neededInformation[key].validation, this.state.userData[key]))) {
 
+                try {
+                    const userDataToRegister = this.state.userData;
+                    userDataToRegister.userName = this.props.userName;
+                    userDataToRegister.token = this.props.token;
+
+                    /**
+                     * Save on the database the request of the user
+                     */
+                    await sendRequestToJoinEvent(this.props.eventId, this.props.uid, this.state.userData);
+
+                    /**
+                     * If the user is accepted by the streamer then the cloud function
+                     * executed subscribe the user to the event
+                     */
+
+                    /**
+                     * Send the user to the next modal
+                     */
+                    this.props.goToNextStep();
+                } catch (error) {
+                    console.error(error);
+                    this.setState({ requestError: true });
+                }
+            } else {
+
+                /**
+                 * If some of the fields does not contain valid data then display the
+                 * error to the user
+                 */
+                this.setState({ error: true });
+            }
+        } else {
             try {
-                const userDataToRegister = this.state.userData;
-                userDataToRegister.userName = this.props.userName;
-                userDataToRegister.token = this.props.token;
+                joinEvent(this.props.uid, this.props.eventId, null);
 
                 /**
-                 * Save on the database the request of the user
+                 * Subscribe user to topic of the event
                  */
-                await sendRequestToJoinEvent(this.props.eventId, this.props.uid, this.state.userData);
-
-                /**
-                 * Send the user to the next modal
-                 */
+                subscribeUserToTopic(this.props.eventId, this.props.uid, EVENTS_TOPIC);
                 this.props.goToNextStep();
             } catch (error) {
                 console.error(error);
                 this.setState({ requestError: true });
             }
-        } else {
-
-            /**
-             * If some of the fields does not contain valid data then display the
-             * error to the user
-             */
-            this.setState({ error: true });
         }
     }
 
@@ -95,10 +117,10 @@ class EventRegistration extends Component {
     }
 
     render() {
-        const neededInformation = this.props.game.informationNeededToAdd;
-        const userLanguage = getLocaleLanguage();
+        if (this.props.game && this.props.game.informationNeededToAdd) {
+            const neededInformation = this.props.game.informationNeededToAdd;
+            const userLanguage = getLocaleLanguage();
 
-        if (neededInformation) {
             return (
                 <View style={styles.fullHeightDialog}>
                     <Text style={styles.nickNameTitle}>

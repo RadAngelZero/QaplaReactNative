@@ -123,6 +123,8 @@ class EventDetails extends Component {
 
         const userLanguage = getLocaleLanguage();
 
+        console.log(streamerChannelLink);
+
         return (
             <>
                 <BackgroundImageContainer isSponsored={sponsorImage ? true : false}>
@@ -194,7 +196,7 @@ class EventDetails extends Component {
                                 </View>
                             </View>
                         </View>
-                        {streamerChannelLink &&
+                        {streamerChannelLink !== '' && streamerChannelLink &&
                             <TouchableOpacity
                                 style={styles.followButtonContainer}
                                 onPress={this.goToStreamerChannel}>

@@ -67,16 +67,13 @@ class EventCard extends Component {
         const {
             title,
             titulo,
-            descriptions,
-            description,
             backgroundImage,
-            streamingPlatformImage,
+            streamerPhoto,
             streamerName,
             sponsorImage,
             idLogro
         } = this.props;
 
-        let descriptionTranslated = this.getTextBasedOnUserLanguage(descriptions);
         let titleTranslated = this.getTextBasedOnUserLanguage(title);
 
         // (01-04-2020) Events on 2019 and early 2020 used 'titulos' and 'descripcion' props,
@@ -85,10 +82,6 @@ class EventCard extends Component {
         // and 'titleTranslated' are to check that the props exists in the db event element,
         // otherwise a fallback is used (not ideal situation, but to prevent app crashes to the
         // user)
-        if (descriptionTranslated === '') {
-            descriptionTranslated = description;
-        }
-
         if (titleTranslated === '') {
             titleTranslated = titulo;
         }
@@ -115,8 +108,8 @@ class EventCard extends Component {
                                 {streamerName}
                             </Text>
                             <Image
-                                style={styles.platformImage}
-                                source={{ uri: streamingPlatformImage }} />
+                                style={styles.streamerPhoto}
+                                source={{ uri: streamerPhoto }} />
                         </View>
                     </View>
                 </ImageBackground>

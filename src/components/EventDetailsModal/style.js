@@ -38,7 +38,7 @@ export default styles = StyleSheet.create({
     backgroundImageContainer: {
         height: heightPercentageToPx(20),
         width: widthPercentageToPx(100),
-        justifyContent: 'space-between'
+        justifyContent: 'center'
     },
     backgroundImage: {
         borderTopLeftRadius: 20,
@@ -46,12 +46,12 @@ export default styles = StyleSheet.create({
     },
     eventTitle: {
         alignSelf: 'flex-end',
-        maxWidth: '40%',
-        marginTop: 12,
+        maxWidth: '30%',
+        marginTop: 8,
         marginRight: 36,
         color: '#FFF',
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 18,
         textAlign: 'right'
     },
     eventSponsorImage: {
@@ -159,7 +159,8 @@ export default styles = StyleSheet.create({
     },
     streamingPlatformImage: {
         height: 20,
-        width: 60
+        width: 65,
+        resizeMode: 'contain'
     },
     streamerChannelName: {
         fontSize: 8,
@@ -241,7 +242,6 @@ export default styles = StyleSheet.create({
     descriptionBody: {
         fontSize: 18,
         color: '#FFF',
-        marginTop: 8,
         lineHeight: 22
     },
     descriptionPrize: {

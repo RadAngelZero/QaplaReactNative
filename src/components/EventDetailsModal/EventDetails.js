@@ -194,7 +194,7 @@ class EventDetails extends Component {
                                 </View>
                             </View>
                         </View>
-                        {streamerChannelLink &&
+                        {streamerChannelLink !== '' && streamerChannelLink &&
                             <TouchableOpacity
                                 style={styles.followButtonContainer}
                                 onPress={this.goToStreamerChannel}>
@@ -255,10 +255,12 @@ class EventDetails extends Component {
                     </Text>
                     <View style={styles.divider} />
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.descriptionTitle}>
-                            {descriptionsTitle && descriptionsTitle[userLanguage]}
-                        </Text>
-                        <Text style={styles.descriptionBody}>
+                        {descriptionsTitle && descriptionsTitle[userLanguage] &&
+                            <Text style={styles.descriptionTitle}>
+                                {descriptionsTitle[userLanguage]}
+                            </Text>
+                        }
+                        <Text style={[styles.descriptionBody, { marginTop: descriptionsTitle && descriptionsTitle[userLanguage] ? 8 : 14 }]}>
                             {descriptions && descriptions[userLanguage] ?
                                 descriptions[userLanguage]
                                 :

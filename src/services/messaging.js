@@ -19,28 +19,32 @@ import { saveFCMUserToken } from './database';
  * data. True by default
  */
 export function subscribeUserToTopic(topic, uid = '', type, addLanguageSuffix = true) {
-    let topicName = '';
+    try {
+        let topicName = '';
 
-    if (addLanguageSuffix) {
-        topicName = `${topic}_${getLocaleLanguage()}`;
-    } else {
-        topicName = topic;
-    }
+        if (addLanguageSuffix) {
+            topicName = `${topic}_${getLocaleLanguage()}`;
+        } else {
+            topicName = topic;
+        }
 
-    /**
-     * Only if the user allow to receive push notifications of this type
-     * we subscribe him
-     */
-    if (userAllowsNotificationsFrom(type)) {
-        messaging.subscribeToTopic(topicName);
-    }
+        /**
+         * Only if the user allow to receive push notifications of this type
+         * we subscribe him
+         */
+        if (userAllowsNotificationsFrom(type)) {
+            messaging.subscribeToTopic(topicName);
+        }
 
-    /**
-     * If the user is logged with an account we save their subscription to the topic
-     * (some topics does not require authentication)
-     */
-    if (uid) {
-        saveUserSubscriptionToTopic(uid, topicName, type);
+        /**
+         * If the user is logged with an account we save their subscription to the topic
+         * (some topics does not require authentication)
+         */
+        if (uid) {
+            saveUserSubscriptionToTopic(uid, topicName, type);
+        }
+    } catch (error) {
+        console.error(error);
     }
 }
 

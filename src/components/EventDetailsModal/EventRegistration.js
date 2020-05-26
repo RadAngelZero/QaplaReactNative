@@ -168,11 +168,6 @@ class EventRegistration extends Component {
                 </View>
             );
         } else {
-            /**
-             * Maybe here we should send to event participants directly.
-             * We do not need to approve participation if we are not requesting
-             * any data?
-             */
             this.saveUserRequest();
             return (<></>);
         }

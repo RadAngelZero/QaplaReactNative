@@ -53,7 +53,6 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
                 ...activeEvent.val()
             };
 
-            activeEventObject.game = activeEventObject.tipoLogro;
             activeEventObject.tipoLogro = 'event';
             dispatch(loadLogrosActivosSuccess(activeEventObject));
 

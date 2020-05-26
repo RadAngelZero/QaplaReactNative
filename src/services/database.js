@@ -682,6 +682,7 @@ export async function createLogroIncompletoChild(logroId, userId) {
  * @param {object} userData Required data for the event (is different depending the game or the event format)
  */
 export async function sendRequestToJoinEvent(eventId, uid, userData) {
+    userData.timeStamp = TimeStamp;
     await eventsRequestsRef.child(eventId).child(uid).update(userData);
 }
 

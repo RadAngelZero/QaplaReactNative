@@ -4,7 +4,8 @@ import {
     Text,
     TextInput,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    ActivityIndicator
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -27,7 +28,8 @@ class EventRegistration extends Component {
             requestError: false,
             error: false,
             openEntryDialog: false,
-            openUserDontHaveEnoughQoinsDialog: false
+            openUserDontHaveEnoughQoinsDialog: false,
+            showLoading: false
         };
     }
 
@@ -43,7 +45,9 @@ class EventRegistration extends Component {
                     this.setState({ openUserDontHaveEnoughQoinsDialog: true });
                 }
             } else {
-                this.saveUserRequest();
+                this.setState({ showLoading: true }, () => {
+                    setTimeout(this.saveUserRequest, 1000);
+                });
             }
         }
     }
@@ -282,7 +286,13 @@ class EventRegistration extends Component {
             );
         } else {
             return (
-                <>
+                <View style={[styles.fullHeightDialog, { justifyContent: 'center' }]}>
+                    {this.state.showLoading &&
+                        <>
+                            <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
+                            <Text style={styles.streamerNameLink}>{translate('loadingScreen.activityIndicatorText')}</Text>
+                        </>
+                    }
                     <ConfirmationDialog
                         visible={this.state.openEntryDialog}
                         closeModal={this.toggleEntryDialog}
@@ -295,7 +305,7 @@ class EventRegistration extends Component {
                         cancelButton={false}
                         accept={this.cancelRegistration}
                         body={translate('eventDetailsModal.notEnoughQoinsDialogBody', { eventEntry: this.props.event.eventEntry, qoins: this.props.qoins })} />
-                </>
+                </View>
             );
         }
     }

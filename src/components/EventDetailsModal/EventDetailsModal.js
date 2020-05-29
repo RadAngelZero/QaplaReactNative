@@ -75,7 +75,7 @@ class EventDetailsModal extends Component {
                             }
                             {this.state.eventRegistrationStep === 1 &&
                                 <EventRegistration
-                                    game={this.props.games[platform][game]}
+                                    game={platform && game ? this.props.games[platform][game] : {}}
                                     event={this.props.events[this.props.eventId]}
                                     eventId={this.props.eventId}
                                     goToNextStep={this.goToNextRegistrationStep} />

@@ -363,6 +363,7 @@
         "errorOnRequest": "Error al registrarte, si este problema persiste porfavor escribenos al canal de soporte tecnico en discord",
         "continue": "Continuar",
         "thankYouTitle": "¡Gracias!",
+        "alreadyAccepted": "Tu inscripción ha quedado completada, ¡asegurate de estar listo cuando el evento comience!",
         "succedRequest": "Tu solicitud ha sido enviada :D, espera a que",
         "nextStepsFeedback": "acepte tu solicitud. Te enviaremos una notificación cuando esto pase ;)",
         "finish": "Finalizar"

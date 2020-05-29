@@ -682,6 +682,7 @@ export async function createLogroIncompletoChild(logroId, userId) {
  * @param {object} userData Required data for the event (is different depending the game or the event format)
  */
 export async function sendRequestToJoinEvent(eventId, uid, userData) {
+    userData.timeStamp = TimeStamp;
     await eventsRequestsRef.child(eventId).child(uid).update(userData);
 }
 
@@ -770,6 +771,30 @@ export function joinEvent(uid, eventId, gamerTag) {
         victories: 0,
         userName: user.userName,
         gamerTag,
+
+        /**
+         * If the user won something in the event and we want to notify him/her,
+         * saving the token on this node allows us to accomplish this this with minimal cost
+         */
+        token: user.token
+    });
+}
+
+/**
+ * Allow the user to join the given event
+ * @param {string} uid User identifier on database
+ * @param {string} eventId Event identifier on the database
+ * @param {object} participantData Required data for the event (is different depending the game or the event format)
+ */
+export function joinEventWithCustomData(uid, eventId, participantData) {
+    const user = store.getState().userReducer.user;
+    eventParticipantsRef.child(eventId).child(uid).update({
+        email: user.email,
+        priceQaploins: 0,
+        matchesPlayed: 0,
+        victories: 0,
+        userName: user.userName,
+        ...participantData,
 
         /**
          * If the user won something in the event and we want to notify him/her,

@@ -78,7 +78,8 @@ class EventDetailsModal extends Component {
                                     game={platform && game ? this.props.games[platform][game] : {}}
                                     event={this.props.events[this.props.eventId]}
                                     eventId={this.props.eventId}
-                                    goToNextStep={this.goToNextRegistrationStep} />
+                                    goToNextStep={this.goToNextRegistrationStep}
+                                    closeModal={this.closeModal} />
                             }
                             {this.state.eventRegistrationStep === 2 &&
                                 <EventRegistrationSuccessful

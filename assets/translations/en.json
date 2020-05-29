@@ -362,6 +362,8 @@
         "errorText": "Verify that the fields are filled correctly",
         "errorOnRequest": "Registration failed, if this problem persists please write to our technical support channel on discord",
         "continue": "Continue",
+        "eventEntryDialogBody": "The entry cost for this event is %{eventEntry} Qoins, you have %{qoins} Qoins. Are you sure you want to continue?",
+        "notEnoughQoinsDialogBody": "Your registration could not be completed: the entry cost for this event is %{eventEntry} Qoins, you have %{qoins} Qoins.",
         "thankYouTitle": "Thank you!",
         "alreadyAccepted": "Your registration is complete, make sure you are ready when the event starts!",
         "succedRequest": "Your request has been sent :D Wait for",
@@ -387,5 +389,9 @@
         "header": "Not enough Qoins",
         "body": "Join and play in events to win Qoins !",
         "bttnText": "Check Events"
+    },
+    "confirmationDialog": {
+        "cancelButton": "Cancel",
+        "acceptButton": "Continue"
     }
 }

@@ -159,7 +159,7 @@ export default styles = StyleSheet.create({
     },
     streamingPlatformImage: {
         height: 20,
-        width: 65,
+        width: 60,
         resizeMode: 'contain'
     },
     streamerChannelName: {

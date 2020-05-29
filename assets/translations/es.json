@@ -362,6 +362,8 @@
         "errorText": "Verifica que los campos estén llenados correctamente",
         "errorOnRequest": "Error al registrarte, si este problema persiste porfavor escribenos al canal de soporte tecnico en discord",
         "continue": "Continuar",
+        "eventEntryDialogBody": "El costo de entrada para este evento es de %{eventEntry} Qoins, actualmente cuentas con %{qoins} Qoins. ¿Estas seguro que desas continuar?",
+        "notEnoughQoinsDialogBody": "No se pudo completar tu registro: el costo de entrada para este evento es de %{eventEntry} Qoins, actualmente cuentas con %{qoins} Qoins.",
         "thankYouTitle": "¡Gracias!",
         "alreadyAccepted": "Tu inscripción ha quedado completada, ¡asegurate de estar listo cuando el evento comience!",
         "succedRequest": "Tu solicitud ha sido enviada :D, espera a que",
@@ -387,5 +389,9 @@
         "header": "Qoins insuficientes",
         "body": "Únete y juega en eventos para ganar Qoins !",
         "bttnText": "Ver Eventos"
+    },
+    "confirmationDialog": {
+        "cancelButton": "Cancelar",
+        "acceptButton": "Continuar"
     }
 }

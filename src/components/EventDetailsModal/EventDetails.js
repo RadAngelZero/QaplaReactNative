@@ -123,8 +123,6 @@ class EventDetails extends Component {
 
         const userLanguage = getLocaleLanguage();
 
-        console.log(streamerChannelLink);
-
         return (
             <>
                 <BackgroundImageContainer isSponsored={sponsorImage ? true : false}>

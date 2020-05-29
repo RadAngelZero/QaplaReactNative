@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux';
 
 import styles from './style';
-import { sendRequestToJoinEvent, joinEvent } from '../../services/database';
+import { sendRequestToJoinEvent, joinEvent, joinEventWithCustomData } from '../../services/database';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { subscribeUserToTopic } from '../../services/messaging';
 import { EVENTS_TOPIC } from '../../utilities/Constants';
@@ -66,10 +66,25 @@ class EventRegistration extends Component {
                     userDataToRegister.userName = this.props.userName;
                     userDataToRegister.token = this.props.token;
 
-                    /**
-                     * Save on the database the request of the user
-                     */
-                    await sendRequestToJoinEvent(this.props.eventId, this.props.uid, this.state.userData);
+                    if (this.props.event.acceptAllUsers) {
+                        try {
+                            joinEventWithCustomData(this.props.uid, this.props.eventId, userDataToRegister);
+
+                            /**
+                             * Subscribe user to topic of the event
+                             */
+                            subscribeUserToTopic(this.props.eventId, this.props.uid, EVENTS_TOPIC);
+                            this.props.goToNextStep();
+                        } catch (error) {
+                            console.error(error);
+                            this.setState({ requestError: true });
+                        }
+                    } else {
+                        /**
+                         * Save on the database the request of the user
+                         */
+                        await sendRequestToJoinEvent(this.props.eventId, this.props.uid, this.state.userData);
+                    }
 
                     /**
                      * If the user is accepted by the streamer then the cloud function

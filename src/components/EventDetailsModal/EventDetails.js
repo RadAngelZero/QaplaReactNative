@@ -125,7 +125,7 @@ class EventDetails extends Component {
 
         return (
             <>
-                <BackgroundImageContainer isSponsored={sponsorImage ? true : false}>
+                <BackgroundImageContainer isSponsored={true}>
                     <ImageBackground
                         source={{ uri: backgroundImage }}
                         style={styles.backgroundImageContainer}

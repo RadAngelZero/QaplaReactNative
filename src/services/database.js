@@ -9,7 +9,7 @@ import { checkNotificationPermission } from '../services/messaging';
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
 export const usersRef = database.ref('/Users');
-export const gamesRef = database.ref('/GamesResources');
+const gamesRef = database.ref('/GamesResources');
 export const commissionRef = database.ref('/Commission');
 export const gamersRef = database.ref('/Gamers');
 export const logrosRef = database.ref('/logros');
@@ -997,6 +997,25 @@ export function removeLogrosListeners(uid) {
  */
 export function removeActiveEventUserSubscribedListener(uid, eventKey) {
     eventParticipantsRef.child(eventKey).child(uid).off('value');
+}
+
+/**
+ * Games
+ */
+
+/**
+ * Set a listener on the games resources node
+ * @param {function} callback Handle the returned data
+ */
+export function listenForGamesResourcesChanges(callback) {
+    gamesRef.on('value', callback);
+}
+
+/**
+ * Return the games resources just once
+ */
+export async function getGamesResources() {
+    return await gamesRef.once('value');
 }
 
 /**

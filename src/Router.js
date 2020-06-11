@@ -46,7 +46,6 @@ import RetasNotificationsScreen from './screens/RetasNotificationsScreen/RetasNo
 import UploadMatchResultScreen from './screens/UploadMatchResultScreen/UploadMatchResultScreen';
 import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
 import LogrosActivosScreen from './screens/LogrosActivosScreen/LogrosActivosScreen';
-import LogrosCompletadosScreen from './screens/LogrosCompletadosScreen/LogrosCompletadosScreen';
 import VerificationScreen from './screens/VerificationScreen/VerificationScreen';
 
 import SupportScreen from './screens/SupportScreen/SupportScreen';
@@ -212,45 +211,6 @@ const MatchesTopTabNavigator = createMaterialTopTabNavigator(
     }
 );
 
-const AchievementsTopTabNavigator = createMaterialTopTabNavigator(
-    {
-      LogrosActivos: {
-        screen: LogrosActivosScreen,
-        navigationOptions: () => ({
-          title: translate('router.topNavigators.achievements.active')
-        })
-      },
-      LogrosCompletados: {
-        screen: LogrosCompletadosScreen,
-        navigationOptions: () => ({
-          title: translate('router.topNavigators.achievements.completed')
-        })
-      }
-    },
-    {
-      initialRouteName: 'LogrosActivos',
-      tabBarOptions: {
-        upperCaseLabel: false,
-        style: {
-          backgroundColor: '#0C1021'
-        },
-        tabStyle: {
-          width: widthPercentageToPx(36)
-        },
-        labelStyle: {
-          fontSize: 14
-        },
-        activeTintColor: '#FFF',
-        inactiveTintColor: '#FFF',
-        indicatorStyle: {
-          borderBottomColor: '#36E5CE',
-          borderBottomWidth: 2,
-          width: widthPercentageToPx(36)
-        }
-      }
-    }
-);
-
 const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
     {
       NotificationActividad: {
@@ -302,36 +262,36 @@ const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
 
 const MainBottomTabNavigator = createBottomTabNavigator({
         Achievements: {
-            screen: AchievementsTopTabNavigator,
+            screen: LogrosActivosScreen,
             navigationOptions: {
-                tabBarIcon: ({ tintColor, focused }) => (
-                    <View>
-                    <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
-                    <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.events')}</Text>
-                    </View>
-                )
+              tabBarIcon: ({ tintColor, focused }) => (
+                <View>
+                  <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
+                  <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.events')}</Text>
+                </View>
+              )
             }
         },
         Matches: {
             screen: MatchesTopTabNavigator,
             navigationOptions:{
-                tabBarIcon: ({ tintColor, focused }) => (
-                    <View>
-                    <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
-                        <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.matches')}</Text>
-                    </View>
-                )
+              tabBarIcon: ({ tintColor, focused }) => (
+                <View>
+                  <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
+                  <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.matches')}</Text>
+                </View>
+              )
             }
         },
         Profile: {
             screen: UserProfileScreen,
             navigationOptions:{
-                tabBarIcon: ({ tintColor, focused }) => (
-                    <View>
-                    <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'}/>
-                        <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.profile')}</Text>
-                    </View>
-                )
+              tabBarIcon: ({ tintColor, focused }) => (
+                <View>
+                  <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'}/>
+                  <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.profile')}</Text>
+                </View>
+              )
             }
         }
     }, {
@@ -401,7 +361,7 @@ const MainSwitchNavigator = createSwitchNavigator({
     App: RootStackNavigator,
     onBoarding: WelcomeOnboardingScreen,
     ChooseUserName: ChooseUserNameScreen,
-    LinkBroken: LinkBrokenScreen 
+    LinkBroken: LinkBrokenScreen
 });
 
 //#endregion

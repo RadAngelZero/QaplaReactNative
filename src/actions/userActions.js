@@ -3,7 +3,7 @@
 // diego           - 01-08-2019 - us58 - Change the way to load the user data and the way for listen changes
 
 import { UPDATE_USER_DATA, REMOVE_USER_DATA, SIGN_OUT_USER, USER_BALANCE } from '../utilities/Constants';
-import { usersRef, gamesRef, gamersRef, userQaplaBalanceListener } from '../services/database';
+import { usersRef, gamersRef, userQaplaBalanceListener, getGamesResources } from '../services/database';
 
 export const getUserNode = (uid) => async (dispatch) => {
 
@@ -52,7 +52,7 @@ export const getUserNode = (uid) => async (dispatch) => {
         dispatch(removeUserData({ key: childRemoved.key, value: childRemoved.val() }));
     });
 
-    const platformsWithGames = await gamesRef.once('value');
+    const platformsWithGames = await getGamesResources();
 
     /**
      * Based on the qapla structure we need to get (from database) all the games, that games are in the following form:

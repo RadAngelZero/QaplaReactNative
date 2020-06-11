@@ -37,6 +37,16 @@ export class LogrosActivosScreen extends Component {
             const aValue = aDay + aMonth + aYear;
             const bValue = bDay + bMonth + bYear;
 
+            if (a.featured) {
+                return -1;
+            } else if (b.featured) {
+                return 1;
+            }
+
+            if (aMonth > bMonth) {
+            return 1;
+            }
+
             return aValue - bValue;
         })
         // Fill orderedEvents array for the SectionList of the LogrosList component
@@ -45,7 +55,14 @@ export class LogrosActivosScreen extends Component {
             let [hour, minute] = getHourElementsAsNumber(logro.hourUTC);
             const today = new Date();
 
-            if (today.getUTCMonth() === month - 1) {
+            if (logro.featured) {
+                if (orderedEvents.some((eventsOfTheDay) => eventsOfTheDay.title === translate('LogrosActivosScreen.featuredEvent'))) {
+                    orderedEvents[orderedEvents.length - 1].data.push(logro);
+                } else {
+                    orderedEvents.push({ title: translate('LogrosActivosScreen.featuredEvent'), data: [ logro ], indexDay: orderedEvents.length });
+                }
+            }
+            else {
                 const eventDate = new Date(Date.UTC(year, month - 1, day, hour, minute));
                 const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
                 const eventSectionTitle = today.getDate() === eventDate.getDate() ?
@@ -61,7 +78,6 @@ export class LogrosActivosScreen extends Component {
                 } else {
                     orderedEvents.push({ title: eventSectionTitle, data: [ logro ], indexDay: orderedEvents.length });
                 }
-
             }
         });
 

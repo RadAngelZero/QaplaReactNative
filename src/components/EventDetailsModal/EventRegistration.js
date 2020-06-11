@@ -88,13 +88,10 @@ class EventRegistration extends Component {
             if (!neededInformation || !Object.keys(neededInformation).some((key) => neededInformation[key].required && !this.validateUserField(neededInformation[key].validation, this.state.userData[key]))) {
 
                 try {
-                    const userDataToRegister = this.state.userData;
-                    userDataToRegister.userName = this.props.userName;
-                    userDataToRegister.token = this.props.token;
 
                     if (this.props.event.acceptAllUsers) {
                         try {
-                            joinEventWithCustomData(this.props.uid, this.props.eventId, userDataToRegister);
+                            joinEventWithCustomData(this.props.uid, this.props.eventId, this.props.event.eventEntry, this.state.userData);
 
                             /**
                              * Subscribe user to topic of the event
@@ -109,7 +106,7 @@ class EventRegistration extends Component {
                         /**
                          * Save on the database the request of the user
                          */
-                        await sendRequestToJoinEvent(this.props.eventId, this.props.uid, this.state.userData);
+                        await sendRequestToJoinEvent(this.props.eventId, this.props.uid, this.props.event.eventEntry, this.state.userData);
                     }
 
                     /**
@@ -139,14 +136,21 @@ class EventRegistration extends Component {
             }
         } else {
             try {
-                joinEvent(this.props.uid, this.props.eventId, null);
+                if (this.props.event.acceptAllUsers) {
+                    joinEventWithCustomData(this.props.uid, this.props.eventId, this.props.event.eventEntry);
 
-                /**
-                 * Subscribe user to topic of the event
-                 */
-                subscribeUserToTopic(this.props.eventId, this.props.uid, EVENTS_TOPIC);
+                    /**
+                     * Subscribe user to topic of the event
+                     */
+                    subscribeUserToTopic(this.props.eventId, this.props.uid, EVENTS_TOPIC);
+                } else {
+                    /**
+                     * Save on the database the request of the user
+                     */
+                    await sendRequestToJoinEvent(this.props.eventId, this.props.uid, this.props.event.eventEntry);
+                }
+
                 this.props.goToNextStep();
-
                 return true;
             } catch (error) {
                 console.error(error);

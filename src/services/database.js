@@ -679,10 +679,17 @@ export async function createLogroIncompletoChild(logroId, userId) {
  * reject it later
  * @param {string} eventId Event identifier
  * @param {string} uid User identifier
+ * @param {number} eventEntry Entry paid by the user to join event
  * @param {object} userData Required data for the event (is different depending the game or the event format)
  */
-export async function sendRequestToJoinEvent(eventId, uid, userData) {
+export async function sendRequestToJoinEvent(eventId, uid, eventEntry, userData = {}) {
+    const user = store.getState().userReducer.user;
+    userData.email = user.email;
+    userData.userName = user.userName,
+    userData.token = user.token;
     userData.timeStamp = TimeStamp;
+    userData.eventEntry = eventEntry;
+
     await eventsRequestsRef.child(eventId).child(uid).update(userData);
 }
 
@@ -784,9 +791,10 @@ export function joinEvent(uid, eventId, gamerTag) {
  * Allow the user to join the given event
  * @param {string} uid User identifier on database
  * @param {string} eventId Event identifier on the database
+ * @param {number} eventEntry Entry paid by the user to join event
  * @param {object} participantData Required data for the event (is different depending the game or the event format)
  */
-export function joinEventWithCustomData(uid, eventId, participantData) {
+export function joinEventWithCustomData(uid, eventId, eventEntry, participantData) {
     const user = store.getState().userReducer.user;
     eventParticipantsRef.child(eventId).child(uid).update({
         email: user.email,
@@ -795,6 +803,8 @@ export function joinEventWithCustomData(uid, eventId, participantData) {
         victories: 0,
         userName: user.userName,
         ...participantData,
+        timeStamp: TimeStamp,
+        eventEntry,
 
         /**
          * If the user won something in the event and we want to notify him/her,

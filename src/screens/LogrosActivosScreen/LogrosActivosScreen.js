@@ -44,7 +44,7 @@ export class LogrosActivosScreen extends Component {
             }
 
             if (aMonth > bMonth) {
-            return 1;
+                return 1;
             }
 
             return aValue - bValue;
@@ -61,8 +61,7 @@ export class LogrosActivosScreen extends Component {
                 } else {
                     orderedEvents.push({ title: translate('LogrosActivosScreen.featuredEvent'), data: [ logro ], indexDay: orderedEvents.length });
                 }
-            }
-            else {
+            } else {
                 const eventDate = new Date(Date.UTC(year, month - 1, day, hour, minute));
                 const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
                 const eventSectionTitle = today.getDate() === eventDate.getDate() ?

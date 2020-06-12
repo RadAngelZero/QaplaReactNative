@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 
 import styles from './style';
-import { sendRequestToJoinEvent, joinEvent, substractQaploinsToUser, joinEventWithCustomData } from '../../services/database';
+import { sendRequestToJoinEvent, substractQaploinsToUser, joinEventWithCustomData } from '../../services/database';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { subscribeUserToTopic } from '../../services/messaging';
 import { EVENTS_TOPIC } from '../../utilities/Constants';
@@ -97,7 +97,6 @@ class EventRegistration extends Component {
                              * Subscribe user to topic of the event
                              */
                             subscribeUserToTopic(this.props.eventId, this.props.uid, EVENTS_TOPIC);
-                            this.props.goToNextStep();
                         } catch (error) {
                             console.error(error);
                             this.setState({ requestError: true });

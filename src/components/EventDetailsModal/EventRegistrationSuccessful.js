@@ -19,11 +19,23 @@ class EventRegistrationSuccessful extends Component {
                 <View style={styles.mainFeedbackContainer}>
                     <View>
                         <View style={styles.sentIconContainer}>
-                            <Images.svg.sentIcon />
+                            {acceptAllUsers ?
+                                <Images.svg.highFiveIcon
+                                    height={170}
+                                    width={170} />
+                            :
+                                <Images.svg.sentIcon />
+                            }
                         </View>
-                        <Text style={styles.endProcessFeedbackTitle}>
-                            {translate('eventDetailsModal.thankYouTitle')}
-                        </Text>
+                        {acceptAllUsers ?
+                            <Text style={styles.endProcessFeedbackTitle}>
+                                {translate('eventDetailsModal.awesomeTitle')}
+                            </Text>
+                        :
+                            <Text style={styles.endProcessFeedbackTitle}>
+                                {translate('eventDetailsModal.thankYouTitle')}
+                            </Text>
+                        }
                         {acceptAllUsers ?
                             <Text style={styles.endProcessFeedbackDescription}>
                                 {translate('eventDetailsModal.alreadyAccepted')}

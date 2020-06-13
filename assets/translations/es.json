@@ -299,6 +299,9 @@
         "gamesPermissionDescription": "Recibir notificaciones sobre nuevas partidas de juegos que me interesan",
         "eventsPermissionDescription": "Recibir notificaciones sobre los eventos a los que estoy suscrito"
     },
+    "LogrosActivosScreen": {
+        "featuredEvent": "Destacado"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Ve tus Notificaciones",

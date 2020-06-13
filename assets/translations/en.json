@@ -299,6 +299,9 @@
         "gamesPermissionDescription": "Receive notifications about new matches of games that interest me",
         "eventsPermissionDescription": "Receive notifications about the events to which I am subscribed"
     },
+    "LogrosActivosScreen": {
+        "featuredEvent": "Featured"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Check your notifications",

@@ -41,6 +41,7 @@ import QoinFlipIcon from './icons/qoins-flip.svg';
 import BalanceFlipIcon from './icons/qapla-balance-flip.svg';
 import CopyIcon from './icons/Copy.svg';
 import SentIcon from './icons/SentIcon.svg';
+import HighFiveIcon from './icons/HighFive.svg';
 
 // Images
 
@@ -194,7 +195,8 @@ const images = {
 		qoinFlipIcon: QoinFlipIcon,
 		balanceFlipIcon: BalanceFlipIcon,
 		copyIcon: CopyIcon,
-		sentIcon: SentIcon
+		sentIcon: SentIcon,
+		highFiveIcon: HighFiveIcon
 	}
 };
 

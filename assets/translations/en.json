@@ -367,6 +367,7 @@
         "continue": "Continue",
         "eventEntryDialogBody": "The entry cost for this event is %{eventEntry} Qoins, you have %{qoins} Qoins. Are you sure you want to continue?",
         "notEnoughQoinsDialogBody": "Your registration could not be completed: the entry cost for this event is %{eventEntry} Qoins, you have %{qoins} Qoins.",
+        "awesomeTitle": "Awesome!",
         "thankYouTitle": "Thank you!",
         "alreadyAccepted": "Your registration is complete, make sure you are ready when the event starts!",
         "succedRequest": "Your request has been sent :D Wait for",

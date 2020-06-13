@@ -764,6 +764,7 @@ export async function sendUserFeedback(message, userId) {
 // -----------------------------------------------
 
 /**
+ * @deprecated
  * Allow the user to join the given event
  * @param {string} uid User identifier on database
  * @param {string} eventId Event identifier on the database

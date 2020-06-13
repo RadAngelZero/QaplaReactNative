@@ -16,7 +16,7 @@ import { getDateElementsAsNumber, getHourElementsAsNumber, copyDataToClipboard }
 import { userHasRequestToJoinEvent, isUserParticipantOnEvent } from '../../services/database';
 import Images from '../../../assets/images';
 
-function BackgroundImageContainer({ isSponsored, children }) {
+function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
     if (isSponsored) {
         return (
             <LinearGradient
@@ -24,7 +24,7 @@ function BackgroundImageContainer({ isSponsored, children }) {
                 angle={150}
                 angleCenter={{ x: .5, y: .5}}
                 style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
-                colors={['#AA16EE', '#07EAfA']}>
+                colors={gradientColors ? [gradientColors.primary, gradientColors.secondary] : ['#AA16EE', '#07EAfA']}>
                 {children}
             </LinearGradient>
         );
@@ -102,7 +102,8 @@ class EventDetails extends Component {
             streamerPhoto,
             hourUTC,
             dateUTC,
-            streamerGameData
+            streamerGameData,
+            gradientColors
         } = this.props.event;
 
         let [day, month, year] = getDateElementsAsNumber(dateUTC);
@@ -125,7 +126,9 @@ class EventDetails extends Component {
 
         return (
             <>
-                <BackgroundImageContainer isSponsored={true}>
+                <BackgroundImageContainer
+                    isSponsored={true}
+                    gradientColors={gradientColors}>
                     <ImageBackground
                         source={{ uri: backgroundImage }}
                         style={styles.backgroundImageContainer}

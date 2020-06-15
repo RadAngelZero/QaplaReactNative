@@ -30,6 +30,7 @@ import { sendVerificationSMSToUser, linkUserAccountWithPhone } from '../../servi
 import { createVerificationRequest } from '../../services/database';
 import { PhoneProvider } from '../../utilities/firebase';
 import { translate } from '../../utilities/i18';
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 
 import {
     ACCOUNT_ALREADY_IN_USE,
@@ -37,6 +38,7 @@ import {
     ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT,
     ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS
 } from '../../utilities/Constants';
+
 import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 
 const BackIcon = Images.svg.backIcon;
@@ -73,6 +75,10 @@ class VerificationScreen extends Component {
         errorAlreadyLinkedAccount: false,
         errorMinPhoneDigits: false
     };
+
+    componentDidMount() {
+        recordScreenOnSegment('Verification Screen');
+    }
 
     /**
      * Define a ref for the ScrollView UI element
@@ -132,17 +138,32 @@ class VerificationScreen extends Component {
         const { indexPositions } = this.state;
 
         /**
-         * Save the X position of the slide to know where to scroll to show the right element of
-         * the "carousel"
+         * Save the X position of the slide to know where to scroll
+         * to show the right element of the "carousel"
          */
-        indexPositions.push(position);
-        this.setState({ indexPositions });
+
+        // Bug - App version 2.0.1 - (20-04-2020)
+        // Description: In IOS indexPositions legth grows to 6,
+        // that makes the screens of the verification process to duplicate,
+        // instead of 3, there are 6. This behaviour only happens in IOS.
+        // Theory is that there is a re-render due to a setState or maybe
+        // due to how RN component initializes in IOS. To avoid that problem,
+        // the lenght of indexPositions is limited to < 3, so that no
+        // extra screens positions are added to indexPositions array.
+        if (indexPositions.length < 3) {
+            indexPositions.push(position);
+            this.setState({ indexPositions });
+        }   
     }
 
     /**
      * Scroll the ScrollView to the next step of the form
      */
     goToNextStep = async () => {
+        trackOnSegment('Verify User goToNextStep', { 
+            NumScreen: this.state.nextIndex
+        });
+        
         let isValidData = true;
 
         /**
@@ -167,12 +188,18 @@ class VerificationScreen extends Component {
             this.setState({
                 indexPositions: indexPositions,
                 indexPositionsIsSorted: true
-            });
+            });              
         }
 
         switch (this.state.nextIndex) {
             case 1:
                 isValidData = !Object.keys(this.state.personData).some((value) => this.state.personData[value] === '' || this.state.personData[value] === 0);
+                
+                trackOnSegment('Verify User Personal Data', { 
+                    IsValidData: isValidData,
+                    Age: this.state.personData.age
+                });
+
                 break;
             case this.state.indexPositions.length - 1:
                 // In some countries like Spain the number of digits in a phone number is
@@ -187,13 +214,13 @@ class VerificationScreen extends Component {
                 if (isValidData) {
                     try {
                         isUserOnSendCodeScreen = true;
-
+                        
                         // Mechanism to control in VerificationPhoneNumber component if code was sent
                         this.setState({
                             nextIndex: this.state.nextIndex + 1,
                             codeSent: true
                         });
-
+                        
                         /**
                          * Once we have the verification object (after we await for the SMS) we add it to the state
                          * so we can render new things on the screen, to let the user add their code and procceed
@@ -236,7 +263,8 @@ class VerificationScreen extends Component {
                      */
                     this.scrollViewRef.scrollTo({ x: this.state.indexPositions[this.state.indexPositions.length - 1], y: 0, animated: true });
                 }
-                this.setState({ nextIndex: this.state.nextIndex + 1 });
+                        
+                this.setState({ nextIndex: this.state.nextIndex + 1 });        
             }
         }
     }
@@ -267,6 +295,13 @@ class VerificationScreen extends Component {
     verifyUserPhone = async (verificationId, verificationCode) => {
         let accountsLinked = true;
 
+        trackOnSegment('Verify User Code', { 
+            VerificationId: verificationId,
+            VerificationCode: verificationCode,
+            PhoneNumber: this.state.phoneData.phoneNumber,
+            PhonePrefix: this.state.phoneData.prefixObj.callingCodes
+        });
+
         /**
          * Build of the credential object (to link current account with phone account)
          */
@@ -291,6 +326,15 @@ class VerificationScreen extends Component {
 
         } catch (error) {
             console.log(error);
+
+            trackOnSegment('Verify User Code Error', { 
+                Error: error.code,
+                VerificationId: verificationId,
+                VerificationCode: verificationCode,
+                PhoneNumber: this.state.phoneData.phoneNumber,
+                PhonePrefix: this.state.phoneData.prefixObj.callingCodes
+            });
+
             switch (error.code) {
                 case ACCOUNT_INVALID_CREDENTIAL:
                     this.setState({ errorSMSCode: true });
@@ -339,6 +383,12 @@ class VerificationScreen extends Component {
      * Sends again the verification code via Firebase
      */
     sendVerificationCode = async () => {
+        trackOnSegment('Send Verification Code', {
+            NumAttempts: this.state.numAttemptsCodeSent,
+            PhoneNumber: this.state.phoneData.phoneNumber,
+            PhonePrefix: this.state.phoneData.prefixObj.callingCodes 
+        });
+
         this.setState({
             numAttemptsCodeSent: this.state.numAttemptsCodeSent + 1
         });
@@ -360,8 +410,15 @@ class VerificationScreen extends Component {
     /**
      * End the verification procces (once the procces is completed)
      */
-    endVerificationProccess = () => this.props.navigation.pop();
+    endVerificationProccess = () => {
+        trackOnSegment('Verification Completed', {
+            PhoneNumber: this.state.phoneData.phoneNumber,
+            PhonePrefix: this.state.phoneData.prefixObj.callingCodes
+        });
 
+        this.props.navigation.pop();
+    }
+     
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -409,7 +466,7 @@ class VerificationScreen extends Component {
                                 codeSent={this.state.codeSent} />
                         </View>
                         <View onLayout={(event) => this.setIndexPosition(event.nativeEvent.layout.x)}>
-                            <VerificationProccessSuccess endVerificationProccess={this.endVerificationProccess} />
+                            <VerificationProccessSuccess />
                         </View>
                     </ScrollView>
                 </View>

@@ -8,7 +8,8 @@ import { LOAD_USER_VERIFICATION_STATUS, LOAD_LOGROS_ACTIVOS, REMOVE_LOGRO_ACTIVO
 export const loadQaplaLogros = (uid) => async (dispatch) => {
     /**
      * We load all the data related to the achievements (but no the progress of the user in that achievements)
-     */
+     * Social logro is causing problems, for some reason it overwrite all the events and at this point is not
+     * a priority fix this
     logrosActRef.once('value', (logrosActivos) => {
         logrosActivos.forEach((typeOfLogro) => {
             if (typeOfLogro.key !== 'verifica') {
@@ -25,7 +26,7 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
 
     logrosActRef.on('child_removed', (removedLogro) => {
         dispatch(removeLogroFromActivos(removedLogro.key));
-    });
+    }); */
 
     activeTournamentsRef.on('child_added', (activeTournament) => {
         const activeTournamentObject = {
@@ -40,39 +41,47 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
         dispatch(removeLogroFromActivos(removedTournament.key));
     });
 
+    const listeningEvents = [];
     /**
      * We load the active events
      */
-    activeEventsRef.on('child_added', (activeEvent) => {
-        const activeEventObject = {
-            id: activeEvent.key,
-            ...activeEvent.val()
-        };
+    activeEventsRef.on('value', (activeEvents) => {
+        activeEvents.forEach((activeEvent) => {
+            const activeEventObject = {
+                id: activeEvent.key,
+                userSubscribed: false,
+                ...activeEvent.val()
+            };
 
-        activeEventObject.game = activeEventObject.tipoLogro;
-        activeEventObject.tipoLogro = 'event';
-        dispatch(loadLogrosActivosSuccess(activeEventObject));
+            activeEventObject.tipoLogro = 'event';
+            dispatch(loadLogrosActivosSuccess(activeEventObject));
 
-        /**
-         * Only if the uid is valid (different from null) we load the user progress in the achievements
-         */
-        if (uid) {
             /**
-             * Then we load the process of the current user on the given event
+             * Only if the uid is valid (different from null) we load the user progress in the achievements
+             * To ensure that we only have one listener to the same location all the time we save the keys
+             * on the listeningEvents array and we check if the event does not exists on it, if does not
+             * exist then we put a listener on that event
              */
-            eventParticipantsRef.child(activeEvent.key).child(uid).on('value', (eventProgress) => {
-                if (eventProgress.exists()) {
-                    const eventProgressObject = {
-                        id: activeEvent.key,
-                        ...eventProgress.val()
-                    };
+            if (uid && listeningEvents.indexOf(activeEvent.key) < 0) {
+                /**
+                 * Then we load the process of the current user on the given event
+                 */
+                eventParticipantsRef.child(activeEvent.key).child(uid).on('value', (eventProgress) => {
+                    listeningEvents.push(activeEvent.key);
+                    if (eventProgress.exists()) {
+                        const eventProgressObject = {
+                            id: activeEvent.key,
+                            userSubscribed: true,
+                            ...eventProgress.val()
+                        };
 
-                    dispatch(loadLogrosActivosSuccess(eventProgressObject));
-                }
-            });
-        } else {
-            removeActiveEventUserSubscribedListener(uid, activeEvent.key);
-        }
+                        dispatch(loadLogrosActivosSuccess(eventProgressObject));
+                    }
+                });
+            } else {
+                removeActiveEventUserSubscribedListener(uid, activeEvent.key);
+            }
+        });
     });
 
     /**

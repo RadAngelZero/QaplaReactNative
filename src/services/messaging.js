@@ -6,6 +6,7 @@ import {
     updateNotificationPermission
 } from './database';
 import { getLocaleLanguage } from './../utilities/i18';
+import { saveFCMUserToken } from './database';
 
 /**
  * Subscribe a user to a topic, so the user will receive all the notifications
@@ -18,28 +19,32 @@ import { getLocaleLanguage } from './../utilities/i18';
  * data. True by default
  */
 export function subscribeUserToTopic(topic, uid = '', type, addLanguageSuffix = true) {
-    let topicName = '';
+    try {
+        let topicName = '';
 
-    if (addLanguageSuffix) {
-        topicName = `${topic}_${getLocaleLanguage()}`;
-    } else {
-        topicName = topic;
-    }
+        if (addLanguageSuffix) {
+            topicName = `${topic}_${getLocaleLanguage()}`;
+        } else {
+            topicName = topic;
+        }
 
-    /**
-     * Only if the user allow to receive push notifications of this type
-     * we subscribe him
-     */
-    if (userAllowsNotificationsFrom(type)) {
-        messaging.subscribeToTopic(topicName);
-    }
+        /**
+         * Only if the user allow to receive push notifications of this type
+         * we subscribe him
+         */
+        if (userAllowsNotificationsFrom(type)) {
+            messaging.subscribeToTopic(topicName);
+        }
 
-    /**
-     * If the user is logged with an account we save their subscription to the topic
-     * (some topics does not require authentication)
-     */
-    if (uid) {
-        saveUserSubscriptionToTopic(uid, topicName, type);
+        /**
+         * If the user is logged with an account we save their subscription to the topic
+         * (some topics does not require authentication)
+         */
+        if (uid) {
+            saveUserSubscriptionToTopic(uid, topicName, type);
+        }
+    } catch (error) {
+        console.error(error);
     }
 }
 
@@ -53,12 +58,17 @@ export function subscribeUserToTopic(topic, uid = '', type, addLanguageSuffix = 
 export async function subscribeUserToAllRegistredTopics(uid) {
     const userAllSubscriptions = await getAllUserTopicSubscriptions(uid);
 
-    userAllSubscriptions.forEach((subscriptionType) => {
-        updateNotificationPermission(subscriptionType.key, true);
+    userAllSubscriptions.forEach(async (subscriptionType) => {
+        /**
+         * Check if the user allows us to send push notifications for the subscription type
+         */
+        if (await userAllowsNotificationsFrom(subscriptionType.key, uid)) {
+            updateNotificationPermission(subscriptionType.key, true);
 
-        subscriptionType.forEach((topicName) => {
-            subscribeUserToTopic(topicName.key);
-        });
+            subscriptionType.forEach((topicName) => {
+                subscribeUserToTopic(topicName.key);
+            });
+        }
     });
 }
 
@@ -87,4 +97,58 @@ export async function unsubscribeUserFromAllSubscribedTopics() {
             unsubscribeUserFromTopic(topicName.key);
         });
     });
+}
+
+/**
+ * Check if the user has granted the required permission to receive
+ * our push notifications
+ * @param {string} uid User identifier on the database
+ */
+export async function checkNotificationPermission(uid) {
+    try {
+        const notificationPermissionEnabled = await messaging.hasPermission();
+
+        if (notificationPermissionEnabled) {
+            handleUserToken(uid);
+        } else {
+            requestPermission(uid);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+/**
+ * Ask the user for the required permission to receive our push notifications
+ * @param {string} uid User identifier on the database
+ */
+async function requestPermission(uid) {
+    try {
+
+        /**
+         * If the user don't grant permission we go to the catch block automatically
+         */
+        await messaging.requestPermission();
+
+        /**
+         * If the user grant permission we handle their token
+         */
+        handleUserToken(uid);
+    } catch (error) {
+        // User has rejected permissions
+        console.log('permission rejected');
+    }
+}
+
+/**
+ * Get and save the FCM token of the user on the database
+ * @param {string} uid User identifier on the database
+ */
+async function handleUserToken(uid) {
+    try {
+        const FCMToken = await messaging.getToken();
+        await saveFCMUserToken(uid, FCMToken);
+    } catch (error) {
+        console.error(error);
+    }
 }

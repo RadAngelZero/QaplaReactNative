@@ -1,16 +1,4 @@
-// josep.sanahuja - 13-11-2019 - us182 - +qaplaHeaderIcon
-// diego	      - 11-12-2019 - us164 - Added NoVerifiedIcon
-// diego	      - 20-09-2019 - us133 - Added VerifyIcon
-// diego	      - 18-09-2019 - us109 - Added LogroIcon
-// diego	      - 18-09-2019 - us109 - Added LogrosIcon
-// diego	      - 06-09-2019 - us93 - Added OkIcon for checkbox
-// diego	  	  - 03-09-2019 - us96 - Added close (x) icon (used on close of navigators over the main navigator)
-// diego	  	  - 03-09-2019 - us92 - Added onboarding images
-// diego	  	  - 13-08-2019 - us77 - Added clutch tutorial images
-// diego        - 17-07-2019 - NA   - removed duplicate smash bros image
-
 // Icons
-import InstagramIcon from './icons/Instagram_logo_2016.svgx';
 import FavouritesIcon from './icons/favorite-heart-button.svg';
 import TestIcon from './icons/facebook.svg';
 
@@ -51,28 +39,14 @@ import FacebookIcon from './icons/facebook_round.svg';
 import GoogleIcon from './icons/google-logo.svg';
 import QoinFlipIcon from './icons/qoins-flip.svg';
 import BalanceFlipIcon from './icons/qapla-balance-flip.svg';
+import CopyIcon from './icons/Copy.svg';
+import SentIcon from './icons/SentIcon.svg';
+import HighFiveIcon from './icons/HighFive.svg';
 
 // Images
 
 const images = {
 	png: {
-		prueba: require("./icons/public-feed-match.png"),
-		publicFeedMatchIcon:{
-	    	img: require('./icons/public-feed-match.png'),
-	    	uri: '@assets/icons/public-feed-match.png'
-	    },
-		mock1Icon:{
-			img: require('./icons/instagram.png'),
-			uri: '@assets/icons/instagram.png'
-		},
-		mock1Icon:{
-			img: require('./icons/facebook.png'),
-			uri: '@assets/icons/facebook.png'
-		},
-		instagramIcon:{
-			img: require('./icons/facebook.png'),
-			uri: '@assets/icons/facebook.png'
-		},
 		welcome1Img:{
 			img: require('./images/welcome1.png'),
 			uri: '@assets/icons/welcome1.png'
@@ -181,7 +155,6 @@ const images = {
 		}
 	},
 	svg: {
-		instagramIcon: InstagramIcon,
 		facebookIcon: FacebookIcon,
 		googleIcon: GoogleIcon,
 		favouritesIcon: FavouritesIcon,
@@ -220,7 +193,10 @@ const images = {
 		editIcon: EditIcon,
 		noVerifiedIcon: NoVerifiedIcon,
 		qoinFlipIcon: QoinFlipIcon,
-		balanceFlipIcon: BalanceFlipIcon
+		balanceFlipIcon: BalanceFlipIcon,
+		copyIcon: CopyIcon,
+		sentIcon: SentIcon,
+		highFiveIcon: HighFiveIcon
 	}
 };
 

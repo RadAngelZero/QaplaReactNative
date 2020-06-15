@@ -70,12 +70,14 @@ export const OTHER_RESULT = '7';
 export const TIE_RESULT = '3';
 
 // Discord Qapla Channel link
-export const QAPLA_DISCORD_CHANNEL = 'https://discord.gg/QyV96m';
-export const QAPLA_DISCORD_EXCHANGE_CHANNEL = 'https://discord.gg/G4BuRZD';
-export const FIND_ADVERSARY_DISCORD_CHANNEL = 'https://discordapp.com/channels/373252198773293066/676917105261805590';
-export const QAPLA_DISCORD_WEBHOOK_URL = 'https://discordapp.com/api/webhooks/692814768054206485/o67Lre8VrLIo26suoTZvEJFN199kWB1y_thRwFqFshzddMkgZP1ajyWs9mL4VLjjv8p2';
-export const QAPLA_DISCORD_WEBHOOK_URL_TEST = 'https://discordapp.com/api/webhooks/692800624017801287/E68ViYaO34VMvCdfiRuADcTVSo_B-azRz0RiSo_L6EU39gAofnDTuOuiyWEYHbbMGQZE';
-export const DISCORD_GAME_IMAGE_PLACEHOLDER = 'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/discord_images%2Fplaceholder.png?alt=media&token=83b5e192-6973-4650-9246-bc0afcf117ab';
+export const Discord = {
+	QAPLA_DISCORD_CHANNEL: 'https://discord.gg/6GBHn78',
+	QAPLA_DISCORD_EXCHANGE_CHANNEL : 'https://discord.gg/AUQX2pV',
+	FIND_ADVERSARY_DISCORD_CHANNEL : 'https://discordapp.com/channels/373252198773293066/676917105261805590',
+	QAPLA_DISCORD_WEBHOOK_URL : 'https://discordapp.com/api/webhooks/692814768054206485/o67Lre8VrLIo26suoTZvEJFN199kWB1y_thRwFqFshzddMkgZP1ajyWs9mL4VLjjv8p2',
+	QAPLA_DISCORD_WEBHOOK_URL_TEST : 'https://discordapp.com/api/webhooks/692800624017801287/E68ViYaO34VMvCdfiRuADcTVSo_B-azRz0RiSo_L6EU39gAofnDTuOuiyWEYHbbMGQZE',
+	DISCORD_GAME_IMAGE_PLACEHOLDER : 'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/discord_images%2Fplaceholder.png?alt=media&token=83b5e192-6973-4650-9246-bc0afcf117ab'
+};
 
 // Date constants
 

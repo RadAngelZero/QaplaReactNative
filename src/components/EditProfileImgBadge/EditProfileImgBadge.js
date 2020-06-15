@@ -79,9 +79,9 @@ class EditProfileImgBadge extends Component {
 		            </View>
 		        </TouchableWithoutFeedback>
 		        <ImagePickerModal
-	                      visible={this.state.showImgPckModal}
-	                      saveImage={this.saveImage}
-	                      onClose={this.closeImgPckModal} />
+                    visible={this.state.showImgPckModal}
+                    saveImage={this.saveImage}
+                    onClose={this.closeImgPckModal} />
 	        </>
         );
     }

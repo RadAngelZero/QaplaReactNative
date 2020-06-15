@@ -21,7 +21,8 @@ export default styles = StyleSheet.create({
         },
         shadowOpacity: 0.23,
         shadowRadius: 2.62,
-        elevation: 4
+        elevation: 4,
+        justifyContent: 'space-between'
     },
     imageAndNameContainer: {
         flexDirection: 'column',
@@ -51,7 +52,8 @@ export default styles = StyleSheet.create({
     },
     manageQaploinsContainer: {
         flexDirection: 'column',
-        marginBottom: heightPercentageToPx(3.07)
+        marginBottom: heightPercentageToPx(3.07),
+        marginRight: widthPercentageToPx(5)
     },
     qaploinInfoContainer: {
         flexDirection: 'row',

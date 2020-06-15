@@ -12,25 +12,25 @@ import { View } from 'react-native'
 
 import style from './style';
 import MatchCardList from '../../components/MatchCard/MatchCardList';
-import { matchesRef, getUserNameWithUID, getGamerTagWithUID, getUserDiscordTag } from '../../services/database';
 import CreateRetasButton from '../../components/CreateRetasButton/CreateRetasButton';
+import HighlightModal from '../../components/HighlightModal/HighlightModal'
+
+import { matchesRef, getUserNameWithUID, getGamerTagWithUID, getUserDiscordTag } from '../../services/database';
 import { isUserLogged } from '../../services/auth';
 import { storeData, retrieveData } from '../../utilities/persistance';
-
 import {
     HIGHLIGHT_1_CREATE_MATCH
- } from '../../utilities/Constants';
+} from '../../utilities/Constants';
+import { translate } from '../../utilities/i18';
 
-import HighlightModal from '../../components/HighlightModal/HighlightModal'
 
 import { setHg1CreateMatch } from '../../actions/highlightsActions';
 import { connect } from 'react-redux';
-import { translate } from '../../utilities/i18';
 
 class PublicMatchesFeedScreen extends Component {
     state = {
         matches: [],
-        showHg1Modal: false
+        showHg1Modal: false,
     };
 
     componentWillMount(){

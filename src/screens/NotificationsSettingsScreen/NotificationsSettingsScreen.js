@@ -36,6 +36,20 @@ class NotificationsSettingsScreen extends Component {
         }
     }
 
+    /**
+     * Returns the status of the permission of a type
+     * true = allowed
+     * @param {string} type Name of the notification permission to check
+     */
+    userNotificationPermissionStatus = (type) => {
+        let permissionStatus = true;
+        if (this.props.notificationPermissions && this.props.notificationPermissions.hasOwnProperty(type)) {
+            permissionStatus = this.props.notificationPermissions[type];
+        }
+
+        return permissionStatus;
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -51,7 +65,7 @@ class NotificationsSettingsScreen extends Component {
                         </Text>
                         <Switch
                             style={styles.permissionSwitch}
-                            value={userAllowsNotificationsFrom(GAMES_TOPICS)}
+                            value={this.userNotificationPermissionStatus(GAMES_TOPICS)}
                             onValueChange={(value) => this.updateNotificationPermission(GAMES_TOPICS, value)} />
                     </View>
                     <View style={styles.setting}>
@@ -60,7 +74,7 @@ class NotificationsSettingsScreen extends Component {
                         </Text>
                         <Switch
                             style={styles.permissionSwitch}
-                            value={userAllowsNotificationsFrom(EVENTS_TOPIC)}
+                            value={this.userNotificationPermissionStatus(EVENTS_TOPIC)}
                             onValueChange={(value) => this.updateNotificationPermission(EVENTS_TOPIC, value)} />
                     </View>
                 </View>

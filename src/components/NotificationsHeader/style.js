@@ -21,17 +21,14 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         height: heightPercentageToPx(HEADER_SIZE),
-        alignItems:'flex-start',
-        marginTop: heightPercentageToPx(2.46),
-        marginBottom: heightPercentageToPx(3.69),
-        marginLeft: widthPercentageToPx(4.27),
+        alignItems:'center',
+        marginTop: 12,
+        marginBottom: 30,
+        marginLeft: widthPercentageToPx(4.27)
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#FFF',
-    },
-    closeIcon: {
-        alignSelf: 'baseline'
+        color: '#FFF'
     }
 })

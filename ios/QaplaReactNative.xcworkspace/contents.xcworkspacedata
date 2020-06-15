@@ -2,12 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/barcelona/Desktop/Qapla/Qapla-React-Native/ios/QaplaReactNative.xcodeproj">
+      location = "group:QaplaReactNative.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:QaplaReactNative.xcodeproj">
    </FileRef>
 </Workspace>

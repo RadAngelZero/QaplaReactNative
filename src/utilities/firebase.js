@@ -26,6 +26,7 @@ export const messaging = firebase.messaging();
 export const notifications = firebase.notifications();
 export const links = firebase.links();
 export const firebaseLinks = firebase.links;
+export const remoteConfig = firebase.config();
 
 // Authentication providers
 export const FBProvider = firebase.auth.FacebookAuthProvider;

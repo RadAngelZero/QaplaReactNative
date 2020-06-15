@@ -7,8 +7,7 @@ import {
     notifications,
     links
 } from '../../utilities/firebase';
-
-import { retrieveData } from '../../utilities/persistance';
+import { retrieveData, storeData } from '../../utilities/persistance';
 import styles from './style';
 import { getUserNode } from '../../actions/userActions';
 import {
@@ -24,7 +23,8 @@ import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
 import { translate } from '../../utilities/i18';
-import { checkNotificationPermission } from '../../utilities/notifications';
+import { checkNotificationPermission } from '../../services/messaging';
+import remoteConf from '../../services/remoteConfig';
 
 import {
     trackOnSegment
@@ -32,7 +32,8 @@ import {
 
 class AuthLoadingScreen extends Component {
     state = {
-        firstLoad: true
+        firstLoad: true,
+        linkOnProgress: false
     };
 
     componentDidMount() {
@@ -41,6 +42,13 @@ class AuthLoadingScreen extends Component {
 
         // Initialize the segment SDK to collect user statistics
         initializeSegment();
+
+        try {
+            remoteConf.configure();
+            remoteConf.fetchAndActivate();
+        } catch(error){
+            console.error(`Firebase remote configuration`, error);
+        }
 
         auth.onAuthStateChanged(async (user) => {
             this.props.loadListOfGames();
@@ -54,7 +62,7 @@ class AuthLoadingScreen extends Component {
                 this.props.loadUserData(user.uid);
                 this.props.loadQaplaLogros(user.uid);
 
-                // If username doe snot exist because profile does not exist as well, then
+                // If username does not exist because profile does not exist as well, then
                 // user is redirected to ChooUserName where they will create their profile.
                 const userName = await getUserNameWithUID(user.uid);
 
@@ -67,7 +75,16 @@ class AuthLoadingScreen extends Component {
                      * if the user has a valid userName (because we create the profile after
                      * the userName selection)
                      */
-                    updateUserLanguage(user.uid);
+                    const cleanUpTopics = await retrieveData('clean-up-topics');
+
+                    /**
+                     * Temporary code to update the topics of all the users because of some bugs
+                     * finded about this
+                     */
+                    if (!cleanUpTopics) {
+                        updateUserLanguage(user.uid);
+                        storeData('clean-up-topics', 'true');
+                    }
                 }
 
                 await checkNotificationPermission(user.uid);
@@ -102,11 +119,21 @@ class AuthLoadingScreen extends Component {
              * and this process is executed again we are going to be redirected to the 'Achievements'
              * screen, no to the place that we need
              */
-            if (this.state.firstLoad) {
+            if (!this.state.linkOnProgress && this.state.firstLoad) {
                 const isTutorialDone = await retrieveData('tutorial-done');
                 this.setState({ firstLoad: false });
 
                 if (isTutorialDone) {
+                    const lastDateUserSawEventRememberScreen = await retrieveData('event-remember-date');
+                    const date = new Date();
+                    const todayDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+                    if ((!lastDateUserSawEventRememberScreen || lastDateUserSawEventRememberScreen !== todayDate)) {
+                        storeData('event-remember-date', todayDate);
+
+                        return this.props.navigation.navigate('TodayEvents');
+                    }
+
                     return this.props.navigation.navigate('Achievements');
                 }
                 else {
@@ -124,6 +151,7 @@ class AuthLoadingScreen extends Component {
      */
     manageStartDeepLinks = async () => {
         const url = await links.getInitialLink();
+
         this.processLinkUrl(url);
     }
 
@@ -139,6 +167,8 @@ class AuthLoadingScreen extends Component {
      */
     processLinkUrl = (url) => {
         if (url) {
+            this.setState({linkOnProgress: true});
+
             let screenName = 'LinkBroken';
             const type = this.getParameterFromUrl(url, 'type');
 

@@ -169,9 +169,19 @@ class AddGamerTagModal extends Component {
                                 {this.state.gamerTagError &&
                                     <Text style={styles.smallText}>{translate('addGamerTagModal.invalidGamerTag')}</Text>
                                 }
-                                <Text style={styles.modalText}>
-                                    {translate('addGamerTagModal.body', { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText || this.props.previousGamerTag })}
-                                </Text>
+                                {this.props.newGame ?
+                                    <Text style={styles.modalText}>
+                                        {translate('addGamerTagModal.newGameBody',
+                                            { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText || this.props.previousGamerTag })
+                                        }
+                                    </Text>
+                                    :
+                                    <Text style={styles.modalText}>
+                                        {translate('addGamerTagModal.updateGameBody',
+                                            { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText || this.props.previousGamerTag })
+                                        }
+                                    </Text>
+                                }
                                 <TouchableWithoutFeedback onPress={this.saveGameOnUser}>
                                         <View style={styles.confirmButton}>
                                             <Text style={styles.confirmButtonText}>Aceptar</Text>

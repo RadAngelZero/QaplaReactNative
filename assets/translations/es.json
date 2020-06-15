@@ -11,6 +11,17 @@
     "platforms": {
         "mobile": "PC/Móvil"
     },
+    "days": {
+        "monday": "Lunes",
+        "tuesday": "Martes",
+        "wednesday": "Miercoles",
+        "thursday": "Jueves",
+        "friday": "Viernes",
+        "saturday": "Sabado",
+        "sunday": "Domingo",
+        "today": "Hoy",
+        "tomorrow": "Mañana"
+    },
     "router": {
         "topNavigators": {
             "achievements": {
@@ -106,6 +117,10 @@
         },
         "buyQaploinsModal": {
             "body": "Compra Qoins para desafiar esta partida"
+        },
+        "expired": {
+            "description": "La partida expiró",
+            "bttnText": "Buscar Partidas"
         }
     },
     "userProfileScreen": {
@@ -284,6 +299,9 @@
         "gamesPermissionDescription": "Recibir notificaciones sobre nuevas partidas de juegos que me interesan",
         "eventsPermissionDescription": "Recibir notificaciones sobre los eventos a los que estoy suscrito"
     },
+    "LogrosActivosScreen": {
+        "featuredEvent": "Destacado"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Ve tus Notificaciones",
@@ -311,7 +329,8 @@
         "selectImage": "¡Quiero usar esta foto!"
     },
     "addGamerTagModal": {
-        "body": "Se va a añadir el Juego %{selectedGame} a tu perfil con el gamertag %{gamerTag}. Estás seguro?",
+        "newGameBody": "Se va a añadir el Juego %{selectedGame} a tu perfil con el gamertag %{gamerTag}. Estás seguro?",
+        "updateGameBody": "Se actualizará tu gamertag de %{selectedGame}. Estás seguro?",
         "gamerTagPlaceholder": "Escribe tu Gamertag",
         "invalidGamerTag": "Gamertag inválido",
         "accept": "Aceptar"
@@ -327,6 +346,34 @@
         "dontShowItAgain": "Entendido, no volver a mostrar este mensaje",
         "okButton": "Entendido"
     },
+    "eventDetailsModal": {
+        "waitingApproval": "Aun estas esperando la aprobación del creador ;)",
+        "sendFriendRequestTo": "Envia solicitud de amistad a",
+        "hostedBy": "Relizado por",
+        "follow": "Seguir",
+        "dateAndTime": "Dia y Hora",
+        "eventChat": "Chat del evento",
+        "joinDiscordChannel": "Unete a nuestro canal de discord para soporte adicional.",
+        "chat": "Chat",
+        "description": "Descripción",
+        "prizes": "PREMIOS",
+        "instructions": "Instrucciones",
+        "howToParticipate": "Como participar",
+        "participate": "Participar",
+        "nickName": "%{acronym} Nickname",
+        "enterNickName": "Ingresa el nombre que tienes en el juego %{gameName}",
+        "errorText": "Verifica que los campos estén llenados correctamente",
+        "errorOnRequest": "Error al registrarte, si este problema persiste porfavor escribenos al canal de soporte tecnico en discord",
+        "continue": "Continuar",
+        "eventEntryDialogBody": "El costo de entrada para este evento es de %{eventEntry} Qoins, actualmente cuentas con %{qoins} Qoins. ¿Estas seguro que desas continuar?",
+        "notEnoughQoinsDialogBody": "No se pudo completar tu registro: el costo de entrada para este evento es de %{eventEntry} Qoins, actualmente cuentas con %{qoins} Qoins.",
+        "awesomeTitle": "¡Genial!",
+        "thankYouTitle": "¡Gracias!",
+        "alreadyAccepted": "Tu inscripción ha quedado completada, ¡asegurate de estar listo cuando el evento comience!",
+        "succedRequest": "Tu solicitud ha sido enviada :D, espera a que",
+        "nextStepsFeedback": "acepte tu solicitud. Te enviaremos una notificación cuando esto pase ;)",
+        "finish": "Finalizar"
+    },
     "updateApp": {
         "header": "Hay una nueva versión de Qapla, actualiza a la nueva versión.",
         "updateBttnTxt": "Actualizar"
@@ -339,7 +386,16 @@
         "linkBroken": {
             "title": "Enlace no encontrado",
             "description": "El contenido que estás intentando acceder no se pudo acceder, prueba de nuevo o actualiza a una nueva versión y intenta de nuevo.",
-            "bttnText": "Actualizar" 
+            "bttnText": "Actualizar"
         }
+    },
+    "zeroQoinsEventModal" : {
+        "header": "Qoins insuficientes",
+        "body": "Únete y juega en eventos para ganar Qoins !",
+        "bttnText": "Ver Eventos"
+    },
+    "confirmationDialog": {
+        "cancelButton": "Cancelar",
+        "acceptButton": "Continuar"
     }
 }

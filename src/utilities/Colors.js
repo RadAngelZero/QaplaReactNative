@@ -1,9 +1,12 @@
 export default Colors = {
     greenQapla: '#3DF9DF',
-    backgroundColor: '#0d1021',
+    pinkQapla: '#FA2D79',
+    backgroundColor: '#0D1021',
+    eventCardBackground: '#141735',
     modals: {
         backgroundDarkModal: '#141833',
-        body: '#CFD1DB'
+        body: '#CFD1DB',
+        bttnColor: '#6D7DDE'
     },
     textInputs: {
         error: '#FF0000',

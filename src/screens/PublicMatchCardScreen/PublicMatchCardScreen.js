@@ -31,6 +31,8 @@ import { challengeUser, isMatchAlreadyChallenged, userHasQaploinsToPlayMatch, ge
 import { isUserLogged } from '../../services/auth';
 import { cancelPublicMatch, acceptChallengeRequest } from '../../services/functions';
 import { getGamerTagStringWithGameAndPlatform } from '../../utilities/utils';
+import { isIOSDevice } from '../../utilities/iosAndroidDim';
+
 import { trackOnSegment } from '../../services/statistics';
 
 // Custom Components
@@ -40,6 +42,7 @@ import NotEnoughQaploinsModal from '../../components/NotEnoughQaploinsModal/NotE
 import { ADVERSARY_1_NUMBER, ADVERSARY_2_NUMBER, FIND_ADVERSARY_DISCORD_CHANNEL } from '../../utilities/Constants';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal';
+import ZeroQoinsEventsModal from '../../components/ZeroQoinsEventsModal/ZeroQoinsEventsModal';
 import { translate } from '../../utilities/i18';
 import Colors from '../../utilities/Colors';
 
@@ -320,11 +323,13 @@ class PublicMatchCardScreen extends Component {
             <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
                 {matchCard.expired ?
                     <View style={styles.mExpiredContainer}>
-                        <Text style={styles.mExpiredText}>La partida expiró.</Text>
+                        <Text style={styles.mExpiredText}>
+                            {translate('publicMatchCardScreen.expired.description')}
+                        </Text>
                         <TouchableWithoutFeedback onPress={this.navigateToPublicas}>
                             <View style={styles.mExpiredBttnContainer}>
                                 <Text style={styles.mExpiredBttnText}>
-                                    {'Buscar Partida'}
+                                    {translate('publicMatchCardScreen.expired.bttnText')}
                                 </Text>
                             </View>
                         </TouchableWithoutFeedback>
@@ -496,11 +501,18 @@ class PublicMatchCardScreen extends Component {
                             userName={matchCard.userName}
                             onSuccess={this.tryToChallengeUser}
                             onClose={() => this.setState({ openAddGamerTagModal: false }) } />
-                        <BuyQaploinsModal
-                            open={this.state.openBuyQaploinsModal}
-                            body={translate('publicMatchCardScreen.buyQaploinsModal.body')}
-                            openWhen='User try to challenge a match'
-                            onClose={() => this.setState({ openBuyQaploinsModal: false })} />
+                        {!isIOSDevice() ?
+                            <BuyQaploinsModal
+                                open={this.state.openBuyQaploinsModal}
+                                body={translate('publicMatchCardScreen.buyQaploinsModal.body')}
+                                openWhen='User try to challenge a match'
+                                onClose={() => this.setState({ openBuyQaploinsModal: false })} />
+                            :
+                            <ZeroQoinsEventsModal
+                                open={this.state.openBuyQaploinsModal}
+                                openWhen='User try to challenge a match'
+                                onClose={() => this.setState({ openBuyQaploinsModal: false })} />
+                        }
                     </>
                 }
             </SafeAreaView>

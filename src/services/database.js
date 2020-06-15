@@ -4,11 +4,12 @@ import { DB_NEW_LINE_SEPARATOR, EVENTS_TOPIC } from '../utilities/Constants';
 import store from '../store/store';
 import { getLocaleLanguage } from '../utilities/i18';
 import { unsubscribeUserFromTopic, subscribeUserToTopic } from './messaging';
+import { checkNotificationPermission } from '../services/messaging';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
 export const usersRef = database.ref('/Users');
-export const gamesRef = database.ref('/GamesResources');
+const gamesRef = database.ref('/GamesResources');
 export const commissionRef = database.ref('/Commission');
 export const gamersRef = database.ref('/Gamers');
 export const logrosRef = database.ref('/logros');
@@ -22,6 +23,7 @@ export const activeTournamentsRef = tournamentsRef.child('torneosActivos');
 export const pointsTournamentsRef = database.ref('/puntosTorneos');
 export const eventsRef = database.ref('/eventosEspeciales');
 export const activeEventsRef = eventsRef.child('eventsData');
+const eventsRequestsRef = eventsRef.child('JoinRequests');
 export const eventParticipantsRef = database.ref('/EventParticipants');
 export const announcementsActRef = database.ref('/Announcements/Active');
 export const privacyRef = database.ref('/Privacy');
@@ -146,6 +148,14 @@ export async function createUserProfile(Uid, email, userName ) {
     };
 
     await usersRef.child(Uid).set(profileObj);
+
+    /**
+     * We call this function because we need to save the user token, before do this
+     * we need the users permission (espcially on iOS) this function perform the
+     * permission requirement and if the user allow us to send push notifications
+     * it saves the token
+     */
+    checkNotificationPermission(Uid);
 }
 
 
@@ -664,6 +674,43 @@ export async function createLogroIncompletoChild(logroId, userId) {
     return res;
 }
 
+/**
+ * Save the request of the user to join to the given event so the streamer can approve or
+ * reject it later
+ * @param {string} eventId Event identifier
+ * @param {string} uid User identifier
+ * @param {number} eventEntry Entry paid by the user to join event
+ * @param {object} userData Required data for the event (is different depending the game or the event format)
+ */
+export async function sendRequestToJoinEvent(eventId, uid, eventEntry, userData = {}) {
+    const user = store.getState().userReducer.user;
+    userData.email = user.email;
+    userData.userName = user.userName,
+    userData.token = user.token;
+    userData.timeStamp = TimeStamp;
+    userData.eventEntry = eventEntry;
+
+    await eventsRequestsRef.child(eventId).child(uid).update(userData);
+}
+
+/**
+ * Check if the given user has a request to join to the given event
+ * @param {string} uid User identifier
+ * @param {string} eventId Event identifier
+ */
+export async function userHasRequestToJoinEvent(uid, eventId) {
+    return (await eventsRequestsRef.child(eventId).child(uid).once('value')).exists();
+}
+
+/**
+ * Check if the given user is a participant of the given event
+ * @param {string} uid User identifier
+ * @param {string} eventId Event identifier
+ */
+export async function isUserParticipantOnEvent(uid, eventId) {
+    return (await eventParticipantsRef.child(eventId).child(uid).once('value')).exists();
+}
+
 // -----------------------------------------------
 // Verification
 // -----------------------------------------------
@@ -717,6 +764,7 @@ export async function sendUserFeedback(message, userId) {
 // -----------------------------------------------
 
 /**
+ * @deprecated
  * Allow the user to join the given event
  * @param {string} uid User identifier on database
  * @param {string} eventId Event identifier on the database
@@ -731,6 +779,33 @@ export function joinEvent(uid, eventId, gamerTag) {
         victories: 0,
         userName: user.userName,
         gamerTag,
+
+        /**
+         * If the user won something in the event and we want to notify him/her,
+         * saving the token on this node allows us to accomplish this this with minimal cost
+         */
+        token: user.token
+    });
+}
+
+/**
+ * Allow the user to join the given event
+ * @param {string} uid User identifier on database
+ * @param {string} eventId Event identifier on the database
+ * @param {number} eventEntry Entry paid by the user to join event
+ * @param {object} participantData Required data for the event (is different depending the game or the event format)
+ */
+export function joinEventWithCustomData(uid, eventId, eventEntry, participantData) {
+    const user = store.getState().userReducer.user;
+    eventParticipantsRef.child(eventId).child(uid).update({
+        email: user.email,
+        priceQaploins: 0,
+        matchesPlayed: 0,
+        victories: 0,
+        userName: user.userName,
+        ...participantData,
+        timeStamp: TimeStamp,
+        eventEntry,
 
         /**
          * If the user won something in the event and we want to notify him/her,
@@ -839,7 +914,8 @@ export async function updateUserLanguage(uid) {
         const userProfileLanguage = (await usersRef.child(uid).child('language').once('value')).val();
         const userDeviceLanguage = getLocaleLanguage();
 
-        if (userProfileLanguage !== userDeviceLanguage) {
+        // TODO: Uncomment in the next version of the app
+        // if (userProfileLanguage !== userDeviceLanguage) {
             usersRef.child(uid).update({ language: userDeviceLanguage });
             const userSubscriptions = await getAllUserTopicSubscriptions(uid);
 
@@ -881,7 +957,7 @@ export async function updateUserLanguage(uid) {
                         }
                     });
                 });
-            }
+            // }
         }
     } catch (error) {
         console.error(error);
@@ -932,6 +1008,25 @@ export function removeLogrosListeners(uid) {
  */
 export function removeActiveEventUserSubscribedListener(uid, eventKey) {
     eventParticipantsRef.child(eventKey).child(uid).off('value');
+}
+
+/**
+ * Games
+ */
+
+/**
+ * Set a listener on the games resources node
+ * @param {function} callback Handle the returned data
+ */
+export function listenForGamesResourcesChanges(callback) {
+    gamesRef.on('value', callback);
+}
+
+/**
+ * Return the games resources just once
+ */
+export async function getGamesResources() {
+    return await gamesRef.once('value');
 }
 
 /**
@@ -990,9 +1085,14 @@ export async function getAllUserTopicSubscriptions(uid) {
  * Check if the user allows push notifications on a given topic
  * @param {string} notificationType Key of the notification permission to check
  */
-export function userAllowsNotificationsFrom(notificationType) {
+export async function userAllowsNotificationsFrom(notificationType, uid) {
     let permissionStatus = true;
-    const notificationsPermissions = store.getState().userReducer.user.notificationPermissions;
+
+    /**
+     * Load from database the push notifications permissions, use this instead of redux to check the permissions
+     * correctly if the user is recently logged in
+     */
+    const notificationsPermissions = (await usersRef.child(uid).child('notificationPermissions').once('value')).val();
 
     if (notificationsPermissions && notificationsPermissions.hasOwnProperty(notificationType)) {
         permissionStatus = notificationsPermissions[notificationType];

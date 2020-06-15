@@ -3,7 +3,7 @@
 // diego     - 06-08-2019 - us76 - Function to get the gamer tag key on string created
 // diego     - 16-07-2019 - us30 - File creation
 
-import { Linking } from 'react-native';
+import { Linking, Clipboard } from 'react-native';
 import { translate } from './i18';
 import store from '../store/store';
 
@@ -179,4 +179,40 @@ export function withdrawQaploins() {
  */
 export function isValidGame(platform, game) {
     return platform && store.getState().gamesReducer.games[platform] && store.getState().gamesReducer.games[platform][game];
+}
+
+/**
+ * Return the elements day, month and year of the given date
+ * @param {string} date Date with format DD-MM-YYYY
+ * @returns {Array} [day, month, year]
+ */
+export function getDateElementsAsNumber(date) {
+    let [day, month, year] = date.split('-');
+    day = parseInt(day);
+    month = parseInt(month);
+    year = parseInt(year);
+
+    return [day, month, year];
+}
+
+/**
+ * Return the elements hour and minutes of the given hour
+ * @param {string} hour Hour in format HH:MM
+ * @returns {Array} [hours, minutes]
+ */
+export function getHourElementsAsNumber(hour) {
+    let [hours, minutes] = hour.split(':');
+    hours = parseInt(hours);
+    minutes = parseInt(minutes);
+
+    return [hours, minutes]
+}
+
+/**
+ * Save the given data on the users clipboard
+ * @param {string} dataToCopy Data to save on the users clipboard
+ */
+export function copyDataToClipboard(dataToCopy) {
+    console.log(dataToCopy.toString())
+    Clipboard.setString(dataToCopy.toString());
 }

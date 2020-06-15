@@ -26,7 +26,7 @@ target 'QaplaReactNative' do
   pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
   pod 'React-jsiexecutor', :path => '../node_modules/react-native/ReactCommon/jsiexecutor'
   pod 'React-jsinspector', :path => '../node_modules/react-native/ReactCommon/jsinspector'
-  pod 'ReactCommon/jscallinvoker', :path => "../node_modules/react-native/ReactCommon"
+  pod 'ReactCommon/callinvoker', :path => "../node_modules/react-native/ReactCommon"
   pod 'ReactCommon/turbomodule/core', :path => "../node_modules/react-native/ReactCommon"
   pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
 
@@ -45,23 +45,17 @@ target 'QaplaReactNative' do
   #pod 'RNAnalyticsIntegration-Amplitude', :path => '../node_modules/@segment/analytics-react-native-amplitude'
 
   pod 'Firebase/Core', '~> 6.13.0'
-
   pod 'Segment-Firebase', '~>2.0'
-
   pod 'Analytics', '~> 3.0'
 
   pod 'Firebase/Messaging', '~> 6.13.0'
-
   pod 'Firebase/Functions'
-
   pod 'Firebase/Storage'
-
   pod 'Firebase/Database'
-
   pod 'Firebase/Auth'
-
   pod 'Firebase/DynamicLinks'
-  
+  pod 'Firebase/RemoteConfig', '~> 6.13.0'
+
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios' 
 
   pod 'react-native-camera', path: '../node_modules/react-native-camera'

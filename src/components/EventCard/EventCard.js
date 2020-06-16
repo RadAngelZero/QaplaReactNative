@@ -89,7 +89,7 @@ class EventCard extends Component {
 
         return (
             <EventCardContainer
-                isSponsored={true}
+                isSponsored={sponsorImage ? true : false}
                 onPress={this.toogleEventDetailsModalVisibility}
                 gradientColors={gradientColors}>
                 <ImageBackground

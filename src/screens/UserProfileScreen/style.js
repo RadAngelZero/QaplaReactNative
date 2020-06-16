@@ -3,15 +3,16 @@
 
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
-        backgroundColor: '#0D1021',
+        backgroundColor: Colors.backgroundColor,
         justifyContent: 'center',
         flex: 1
     },
     userInfoContainer: {
-        backgroundColor: '#0E1222',
+        backgroundColor: Colors.backgroundColor,
         flexDirection: 'row',
         alignItems: 'center',
         shadowColor: '#000',

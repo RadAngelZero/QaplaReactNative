@@ -33,6 +33,7 @@ class LogrosList extends React.Component {
 						renderItem={this.renderEventOnList}
 						renderSectionHeader={this.renderSectionHeader}
 						stickySectionHeadersEnabled={false}
+						ListFooterComponent={() => <View style={{ height: 30 }} />}
 						keyExtractor={(item) => item.id} />
 				</View>
 			</SafeAreaView>

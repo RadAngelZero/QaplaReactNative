@@ -9,15 +9,15 @@ import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesW
 import {
     HEADER_SIZE
 } from '../../utilities/Constants';
+import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
         justifyContent: 'center',
-        backgroundColor:'#0e1222',
+        backgroundColor: Colors.backgroundColor,
         paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     container: {
-        backgroundColor: '#0E1222',
         justifyContent: 'space-between',
         flexDirection: 'row',
         height: heightPercentageToPx(HEADER_SIZE),

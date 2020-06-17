@@ -3,11 +3,12 @@
 
 import { StyleSheet } from 'react-native';
 import { paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
+import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
         justifyContent: 'center',
-        backgroundColor: '#0D1021',
+        backgroundColor: Colors.backgroundColor,
         paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     sfvContainerSignInWithEmail: {

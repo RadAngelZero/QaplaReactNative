@@ -13,7 +13,7 @@ import { getLocaleLanguage } from '../../utilities/i18';
 
 import EventDetailsModal from '../EventDetailsModal/EventDetailsModal';
 
-function EventCardContainer({ isSponsored, children, onPress }) {
+function EventCardContainer({ isSponsored, children, onPress, gradientColors }) {
     if (isSponsored) {
         return (
             <TouchableWithoutFeedback onPress={onPress}>
@@ -21,7 +21,7 @@ function EventCardContainer({ isSponsored, children, onPress }) {
                     useAngle={true}
                     angle={150}
                     angleCenter={{ x: .5, y: .5}}
-                    colors={['#AA16EE', '#07EAfA']}
+                    colors={gradientColors ? [gradientColors.primary, gradientColors.secondary] : ['#AA16EE', '#07EAfA']}
                     style={styles.container}>
                     {children}
                 </LinearGradient>
@@ -71,7 +71,8 @@ class EventCard extends Component {
             streamerPhoto,
             streamerName,
             sponsorImage,
-            idLogro
+            idLogro,
+            gradientColors
         } = this.props;
 
         let titleTranslated = this.getTextBasedOnUserLanguage(title);
@@ -89,7 +90,8 @@ class EventCard extends Component {
         return (
             <EventCardContainer
                 isSponsored={sponsorImage ? true : false}
-                onPress={this.toogleEventDetailsModalVisibility}>
+                onPress={this.toogleEventDetailsModalVisibility}
+                gradientColors={gradientColors}>
                 <ImageBackground
                     style={styles.backgroundImageContainer}
                     imageStyle={styles.backgroundImage}

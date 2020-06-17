@@ -87,8 +87,8 @@ export function unsubscribeUserFromTopic(topic) {
  * related to the topics
  * @param {string} uid User identifier
  */
-export async function unsubscribeUserFromAllSubscribedTopics() {
-    const userAllSubscriptions = await getAllUserTopicSubscriptions();
+export async function unsubscribeUserFromAllSubscribedTopics(uid) {
+    const userAllSubscriptions = await getAllUserTopicSubscriptions(uid);
 
     userAllSubscriptions.forEach((subscriptionType) => {
         updateNotificationPermission(subscriptionType.key, false);

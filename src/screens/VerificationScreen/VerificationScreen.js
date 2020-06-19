@@ -1,21 +1,5 @@
-// diego           - 20-12-2019 - us179 - Added phone autoverification, only works for Android
-// diego           - 17-12-2019 - us174 - Age case merged into personal data case
-// diego           - 18-12-2019 - us173 - Removed age case
-// josep.sanahuja  - 18-12-2019 - us178 - Add ResendVerCodeCountdown &
-//                                        ProgressStepsIndicator <= indexPositions.length
-// josep.sanahuja  - 18-12-2019 - us177 - Add resend verification code logic & UI
-// josep.sanahuja  - 18-12-2019 - us176 - Phone Verification in one screen
-// josep.sanahuja  - 17-10-2019 - us134 - Added phone prefix to SMS verification
-// josep.sanahuja  - 17-10-2019 - us141 - Add age to verificationRequest
-// josep.sanahuja  - 08-10-2019 - usXXX - Removed VerificationTakeSelfie && added
-//                                        VerificationAskAge
-// josep.sanahuja  - 08-10-2019 - usXXX - Sort indexPositions array in crescendo order
-// josep.sanahuja  - 08-10-2019 - usXXX - Add selfie.storageUrl
-// josep.sanahuja  - 22-09-2019 - us122 - Add VerificationTakeSelfie
-// diego           - 18-09-2019 - us119 - File creation
-
 import React, { Component } from 'react';
-import { SafeAreaView, ScrollView, View, TouchableWithoutFeedback, Text } from 'react-native';
+import { SafeAreaView, ScrollView, View, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -31,15 +15,14 @@ import { createVerificationRequest } from '../../services/database';
 import { PhoneProvider } from '../../utilities/firebase';
 import { translate } from '../../utilities/i18';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
-
 import {
     ACCOUNT_ALREADY_IN_USE,
     ACCOUNT_INVALID_CREDENTIAL,
     ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT,
     ACCOUNT_ALREADY_LINKED_TO_USER_ACCOUNT_IOS
 } from '../../utilities/Constants';
-
 import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
@@ -475,17 +458,17 @@ class VerificationScreen extends Component {
                         onPress={this.goToNextStep}
                         disabled={this.state.nextIndex === this.state.indexPositions.length && Object.keys(this.state.verificationObject).length <= 0}>
                         <View style={styles.button}>
-                            <Text style={styles.buttonText}>
+                            <QaplaText style={styles.buttonText}>
                                 {this.setButtonText()}
-                            </Text>
+                            </QaplaText>
                         </View>
                     </TouchableWithoutFeedback>
                     :
                     <TouchableWithoutFeedback onPress={this.endVerificationProccess}>
                         <View style={this.state.codeSent ? styles.buttonResendScenario : styles.button}>
-                            <Text style={styles.buttonText}>
+                            <QaplaText style={styles.buttonText}>
                                 {this.setButtonText()}
-                            </Text>
+                            </QaplaText>
                         </View>
                     </TouchableWithoutFeedback>
                 }

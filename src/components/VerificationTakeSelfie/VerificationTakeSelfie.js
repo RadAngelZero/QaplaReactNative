@@ -1,11 +1,12 @@
 // josep.sanahuja  - 22-09-2019 - us122 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 
 import styles from './style';
 import Images from '../../../assets/images';
 import QGCamera from '../../components/QGCamera/QGCamera';
+import QaplaText from '../QaplaText/QaplaText';
 
 const Divider         = Images.png.divider.img;
 const QaplaSmileIcon  = Images.png.qaplaSmile.img;
@@ -39,7 +40,7 @@ export class VerificationTakeSelfie extends Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <View>
-                        <Text style={styles.title}>Tómate una selfie</Text>
+                        <QaplaText style={styles.title}>Tómate una selfie</QaplaText>
                         <View style={styles.divider}>
                             <Image source={Divider} />
                         </View>
@@ -54,7 +55,7 @@ export class VerificationTakeSelfie extends Component {
                             </View>
                         </TouchableWithoutFeedback> 
 
-                        <Text style={styles.smallText}>Subir Selfie</Text>            
+                        <QaplaText style={styles.smallText}>Subir Selfie</QaplaText>            
                     </View>
                     <QGCamera 
                         visible={this.props.cameraVisible} 

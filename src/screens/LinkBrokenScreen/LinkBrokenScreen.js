@@ -1,23 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, TouchableWithoutFeedback, Linking, Platform } from 'react-native';
+import { View, SafeAreaView, TouchableWithoutFeedback, Linking, Platform } from 'react-native';
+
 import styles from './style';
-
 import Images from '../../../assets/images'
-
 import {
  IOS_STORE_LINK,
  ANDROID_STORE_LINK
 } from '../../utilities/Constants';
-
 import { translate } from '../../utilities/i18';
-
-import {
-    recordScreenOnSegment,
-    trackOnSegment
-} from '../../services/statistics';
-
-
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -29,7 +22,7 @@ class LinkBrokenScreen extends Component {
 
  navigateToStore = () => {
     const url = Platform.OS === 'ios' ? IOS_STORE_LINK : ANDROID_STORE_LINK;
-    
+
     trackOnSegment('Link broke update app', {
         Url: url
     });
@@ -49,17 +42,17 @@ class LinkBrokenScreen extends Component {
                 <CloseIcon />
             </QaplaIcon>
             <View style={styles.container}>
-                <Text style={styles.title}>
+                <QaplaText style={styles.title}>
                      {translate("deepLinks.linkBroken.title")}
-                </Text>
-                <Text style={styles.description}>
+                </QaplaText>
+                <QaplaText style={styles.description}>
                     {translate("deepLinks.linkBroken.description")}
-                </Text>
+                </QaplaText>
                 <TouchableWithoutFeedback onPress={this.navigateToStore}>
                     <View style={styles.bttnContainer}>
-                        <Text style={styles.bttnText}>
+                        <QaplaText style={styles.bttnText}>
                             {translate("deepLinks.linkBroken.bttnText")}
-                        </Text>
+                        </QaplaText>
                     </View>
                 </TouchableWithoutFeedback>
             </View>

@@ -1,13 +1,7 @@
-// diego	  	     - 11-09-2019 - us107 - Added flag to AsyncStorage to know when the user has passed
-//                                          the onboarding (removed by error in us92)
-// diego	  	     - 03-09-2019 - us92 - Update Welcome screen according to inVision design
-// josep.sanahuja    - 05-08-2019 - us84 - Changed style from SafeAreaView
-
 import React from 'react';
 
 import {
   View,
-  Text,
   SafeAreaView
 } from 'react-native'
 import { connect } from 'react-redux';
@@ -19,8 +13,9 @@ import { EVENTS_TOPIC, GAMES_TOPICS } from './../../utilities/Constants';
 import CarouselPng from '../../components/CarouselPng/CarouselPng'
 import Images from '@assets/images'
 import { storeData } from '../../utilities/persistance';
-import { translate, getLocaleLanguage } from '../../utilities/i18';
+import { translate } from '../../utilities/i18';
 import { subscribeUserToTopic } from './../../services/messaging';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 class WelcomeOnboardingScreen extends React.Component {
 	constructor(props) {
@@ -89,11 +84,11 @@ class WelcomeOnboardingScreen extends React.Component {
 					))}
 				</View>
 				<View style={styles.progressRow}>
-					<Text onPress={this.finishOnBoarding} style={styles.finishTextButton}>
+					<QaplaText onPress={this.finishOnBoarding} style={styles.finishTextButton}>
 						{this.state.selectedIndex === carrouselData.length - 1 &&
 							translate('onBoardingScreen.finish')
 						}
-					</Text>
+					</QaplaText>
 				</View>
 			</View>
 	    </SafeAreaView>

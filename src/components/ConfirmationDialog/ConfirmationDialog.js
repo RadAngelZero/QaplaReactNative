@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Modal, View, Text, TouchableOpacity } from 'react-native';
+import { Modal, View, TouchableOpacity } from 'react-native';
 
 import styles from './style';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import Images from '../../../assets/images';
 import { isFunction } from '../../utilities/utils';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 class ConfirmationDialog extends Component {
     cancelOption = () => {
@@ -36,33 +37,33 @@ class ConfirmationDialog extends Component {
                         <QaplaIcon onPress={this.cancelOption} touchableStyle={styles.closeIcon}>
                             <Images.svg.closeIcon />
                         </QaplaIcon>
-                        <Text style={styles.modalTitle}>
+                        <QaplaText style={styles.modalTitle}>
                             {this.props.body}
-                        </Text>
+                        </QaplaText>
                         <View style={styles.buttonsContainer}>
                             {this.props.cancelButton &&
                                 <TouchableOpacity
                                     style={styles.cancelTextButton}
                                     onPress={this.cancelOption}>
-                                    <Text style={styles.textOfButtons}>
+                                    <QaplaText style={styles.textOfButtons}>
                                         {this.props.cancelText ?
                                             this.props.cancelText
                                             :
                                             translate('confirmationDialog.cancelButton')
                                         }
-                                    </Text>
+                                    </QaplaText>
                                 </TouchableOpacity>
                             }
                             <TouchableOpacity
                                 style={styles.saveTextButton}
                                 onPress={this.acceptOption}>
-                                <Text style={styles.textOfButtons}>
+                                <QaplaText style={styles.textOfButtons}>
                                     {this.props.acceptText ?
                                         this.props.acceptText
                                         :
                                         translate('confirmationDialog.acceptButton')
                                     }
-                                </Text>
+                                </QaplaText>
                             </TouchableOpacity>
                         </View>
                     </View>

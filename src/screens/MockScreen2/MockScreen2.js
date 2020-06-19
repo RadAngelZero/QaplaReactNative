@@ -8,7 +8,6 @@ import React from 'react';
 
 import {
   View,
-  Text,
   Button,
   TextInput,
   SafeAreaView
@@ -19,6 +18,7 @@ import {functions} from '../../utilities/firebase'
 
 import UploadMatchEvidenceModal from '../../components/UploadMatchEvidenceModal/UploadMatchEvidenceModal'
 import UploadMatchResultsModal from '../../components/UploadMatchResultsModal/UploadMatchResultsModal'
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 export default class MockScreen2 extends React.Component {
   constructor(props) {
@@ -60,8 +60,8 @@ export default class MockScreen2 extends React.Component {
     return (
         <SafeAreaView style={styles.sfvContainer}>
 	        <View style={styles.container}>
-	        	<Text >Miau!</Text>
-	        	<Text >To get started, edit App.js</Text>
+	        	<QaplaText >Miau!</QaplaText>
+	        	<QaplaText >To get started, edit App.js</QaplaText>
 	        	<TextInput
 			    	style={{height: 40, borderColor: 'gray', borderWidth: 1, color: 'white'}}
 			        onChangeText={(text) => this.setState({textIdMatch: text})}

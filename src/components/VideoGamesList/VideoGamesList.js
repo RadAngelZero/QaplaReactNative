@@ -4,13 +4,14 @@
 // diego          - 10-07-2019 - us22 - Update in the way that load the game name
 
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 import styles from './style';
 import PlatformGamesList from '../PlatformGamesList/PlatformGamesList';
 import { connect } from 'react-redux';
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 class VideoGamesList extends Component {
     state = {
@@ -88,7 +89,7 @@ class VideoGamesList extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.scrollViewMargin} showsVerticalScrollIndicator={false}>
-                    <Text style={styles.title}>{translate('loadGamesScreen.title')}</Text>
+                    <QaplaText style={styles.title}>{translate('loadGamesScreen.title')}</QaplaText>
                     {Object.keys(this.state.gamesToLoad).map((platform) => (
                         <PlatformGamesList
                             key={platform}

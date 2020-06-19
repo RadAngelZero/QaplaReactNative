@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
     TextInput,
     Image,
     TouchableOpacity,
@@ -15,6 +14,7 @@ import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { subscribeUserToTopic } from '../../services/messaging';
 import { EVENTS_TOPIC } from '../../utilities/Constants';
 import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
+import QaplaText from '../QaplaText/QaplaText';
 
 class EventRegistration extends Component {
     constructor(props) {
@@ -231,15 +231,15 @@ class EventRegistration extends Component {
 
             return (
                 <View style={styles.fullHeightDialog}>
-                    <Text style={styles.nickNameTitle}>
+                    <QaplaText style={styles.nickNameTitle}>
                         {`${translate('eventDetailsModal.nickName', { acronym: this.props.game.acronym })}`}
-                    </Text>
+                    </QaplaText>
                     <View style={styles.registrationFieldsContainer}>
                         <View style={[styles.eventCard, styles.nickNameCard, this.state.error && styles.cardError]}>
                             <View style={styles.registerContainer}>
-                                <Text style={styles.nickNameBody}>
+                                <QaplaText style={styles.nickNameBody}>
                                     {`${translate('eventDetailsModal.enterNickName', { gameName: this.props.game.name })}`}
-                                </Text>
+                                </QaplaText>
                                 {Object.keys(neededInformation).map((fieldKey, index) => (
                                     <TextInput
                                         key={fieldKey}
@@ -251,14 +251,14 @@ class EventRegistration extends Component {
                                         onChangeText={(value) => this.setUserData(fieldKey, value)} />
                                 ))}
                                 {this.state.error &&
-                                    <Text style={styles.smallErrorText}>
+                                    <QaplaText style={styles.smallErrorText}>
                                         {translate('eventDetailsModal.errorText')}
-                                    </Text>
+                                    </QaplaText>
                                 }
                                 {this.state.requestError &&
-                                    <Text style={styles.smallErrorText}>
+                                    <QaplaText style={styles.smallErrorText}>
                                         {translate('eventDetailsModal.errorOnRequest')}
-                                    </Text>
+                                    </QaplaText>
                                 }
                             </View>
                         </View>
@@ -268,9 +268,9 @@ class EventRegistration extends Component {
                         <TouchableOpacity
                             style={styles.continueButtonContainer}
                             onPress={this.props.event.eventEntry ? this.openRightEntryDialog : this.saveUserRequest}>
-                            <Text style={styles.continueButtonText}>
+                            <QaplaText style={styles.continueButtonText}>
                                 {translate('eventDetailsModal.continue')}
-                            </Text>
+                            </QaplaText>
                         </TouchableOpacity>
                     </View>
                     <ConfirmationDialog
@@ -293,7 +293,7 @@ class EventRegistration extends Component {
                     {this.state.showLoading &&
                         <>
                             <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
-                            <Text style={styles.streamerNameLink}>{translate('loadingScreen.activityIndicatorText')}</Text>
+                            <QaplaText style={styles.streamerNameLink}>{translate('loadingScreen.activityIndicatorText')}</QaplaText>
                         </>
                     }
                     <ConfirmationDialog

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator, Text, SafeAreaView } from 'react-native';
+import { View, ActivityIndicator, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 
 import {
@@ -25,10 +25,8 @@ import { loadQaplaLogros } from '../../actions/logrosActions';
 import { translate } from '../../utilities/i18';
 import { checkNotificationPermission } from '../../services/messaging';
 import remoteConf from '../../services/remoteConfig';
-
-import {
-    trackOnSegment
-} from '../../services/statistics';
+import { trackOnSegment } from '../../services/statistics';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 class AuthLoadingScreen extends Component {
     state = {
@@ -250,7 +248,7 @@ class AuthLoadingScreen extends Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
-                    <Text style={styles.textColor}>{translate('loadingScreen.activityIndicatorText')}</Text>
+                    <QaplaText style={styles.textColor}>{translate('loadingScreen.activityIndicatorText')}</QaplaText>
                 </View>
             </SafeAreaView>
         );

@@ -6,7 +6,7 @@
 // diego          - 21-08-2019 - us89 - File creation
 
 import React, { Component } from 'react';
-import { Modal, View, TextInput, Text, TouchableWithoutFeedback } from 'react-native';
+import { Modal, View, TextInput, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -15,11 +15,12 @@ import { addGameToUser, updateUserGamerTag } from '../../services/database';
 import Images from './../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { subscribeUserToTopic } from '../../services/messaging';
-import { translate, getLocaleLanguage } from '../../utilities/i18';
+import { translate } from '../../utilities/i18';
 import { GAMES_TOPICS } from '../../utilities/Constants';
 import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import { isValidGame } from '../../utilities/utils';
+import QaplaText from '../QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -167,24 +168,24 @@ class AddGamerTagModal extends Component {
                                     onSubmitEditing={this.saveGameOnUser}
                                     defaultValue={this.props.previousGamerTag} />
                                 {this.state.gamerTagError &&
-                                    <Text style={styles.smallText}>{translate('addGamerTagModal.invalidGamerTag')}</Text>
+                                    <QaplaText style={styles.smallText}>{translate('addGamerTagModal.invalidGamerTag')}</QaplaText>
                                 }
                                 {this.props.newGame ?
-                                    <Text style={styles.modalText}>
+                                    <QaplaText style={styles.modalText}>
                                         {translate('addGamerTagModal.newGameBody',
                                             { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText || this.props.previousGamerTag })
                                         }
-                                    </Text>
+                                    </QaplaText>
                                     :
-                                    <Text style={styles.modalText}>
+                                    <QaplaText style={styles.modalText}>
                                         {translate('addGamerTagModal.updateGameBody',
                                             { selectedGame: this.isThereSelectedGame() && this.props.selectedGame.name, gamerTag: this.state.gamerTagText || this.props.previousGamerTag })
                                         }
-                                    </Text>
+                                    </QaplaText>
                                 }
                                 <TouchableWithoutFeedback onPress={this.saveGameOnUser}>
                                         <View style={styles.confirmButton}>
-                                            <Text style={styles.confirmButtonText}>Aceptar</Text>
+                                            <QaplaText style={styles.confirmButtonText}>Aceptar</QaplaText>
                                         </View>
                                 </TouchableWithoutFeedback>
                                 <AddDiscordTagModal

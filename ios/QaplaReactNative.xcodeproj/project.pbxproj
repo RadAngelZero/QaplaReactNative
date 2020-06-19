@@ -34,6 +34,88 @@
 		F9073A872406D29500BB648D /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = F9073A862406D29500BB648D /* main.jsbundle */; };
 		F9073AB024070EA900BB648D /* assets in Resources */ = {isa = PBXBuildFile; fileRef = F9073AAF24070EA900BB648D /* assets */; };
 		F968D5012416CA10007A72DD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F968D5002416CA10007A72DD /* GoogleService-Info.plist */; };
+		2B54B8B211774C3D8E1CC03E /* 1024px-Instagram_logo_2016.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0FE0D0D3092842AF941574D2 /* 1024px-Instagram_logo_2016.svg */; };
+		A6190421F6D84F18AC1EE1D7 /* back.svg in Resources */ = {isa = PBXBuildFile; fileRef = A9E812CE6FA34B0B908A5BCC /* back.svg */; };
+		A98CA84377EE4D08840E3F4A /* Clash.svg in Resources */ = {isa = PBXBuildFile; fileRef = F69BCE96A31F42418B157596 /* Clash.svg */; };
+		F054D3EA47E9453CBB0908DB /* close.svg in Resources */ = {isa = PBXBuildFile; fileRef = B992432FF00048309FA2A6ED /* close.svg */; };
+		706DC7E46847475F839AAA48 /* Copy.svg in Resources */ = {isa = PBXBuildFile; fileRef = E617D503B70A4B17A9A8FC10 /* Copy.svg */; };
+		C45595DED7244C2683010F78 /* discord.svg in Resources */ = {isa = PBXBuildFile; fileRef = 91696B94B0564ADE85668B58 /* discord.svg */; };
+		82BE62CBA0D642A4B6C5B880 /* edit.svg in Resources */ = {isa = PBXBuildFile; fileRef = 60CB0620693A491E9B688547 /* edit.svg */; };
+		00A1E9E24F4E45EBA1BDCF9F /* empatado.svg in Resources */ = {isa = PBXBuildFile; fileRef = D0B8046939284D3E9EB20E78 /* empatado.svg */; };
+		1704531A39C443EEAB0C5C68 /* F_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = DB4A130EA74B4C7AA6860820 /* F_icon.svg */; };
+		877611A7812A4685B2DF8134 /* facebook_round.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1AE37BDE2FB44CEE9A0F3129 /* facebook_round.svg */; };
+		5C84CFD9302C46DAB4B902AE /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A0D773DB81B4A26A91684AF /* facebook.png */; };
+		A313DF95DD1C4FA6B15C6736 /* facebook.svg in Resources */ = {isa = PBXBuildFile; fileRef = 862594D10E51443DAF4B4BE8 /* facebook.svg */; };
+		90CC774A1C4D47318D067EE2 /* favorite-heart-button.svg in Resources */ = {isa = PBXBuildFile; fileRef = C399822E2F93473B96824E4D /* favorite-heart-button.svg */; };
+		5DB953C895944A0892E15A39 /* Fifa.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1EB8C1CD62D54670A6A7CB13 /* Fifa.svg */; };
+		7786B107B9AA4061B8130556 /* ganado.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6E29D28C5C85445F953C8511 /* ganado.svg */; };
+		4398ED381B734476973F35F8 /* google-logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0C7845E4393648F0BD856C4E /* google-logo.svg */; };
+		AAF17DD4290D4A488F9FD3F4 /* Gow.svg in Resources */ = {isa = PBXBuildFile; fileRef = 8BC0916D12224179A72E432C /* Gow.svg */; };
+		ADF2AB9FF2154D999EDC34F7 /* Halo5.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6F8831F2022644C799AE6F9F /* Halo5.svg */; };
+		401382DEB2934FE6AEE2716E /* Heartstone.svg in Resources */ = {isa = PBXBuildFile; fileRef = 3B524062B9ED4482890BCB05 /* Heartstone.svg */; };
+		958EBB9A6ED84A4AA3358C3C /* HighFive.svg in Resources */ = {isa = PBXBuildFile; fileRef = FFDD3DDB7D774B54A4BA7E7F /* HighFive.svg */; };
+		F1E51258208F414AB3F4F5E6 /* LessQaploins.svg in Resources */ = {isa = PBXBuildFile; fileRef = C32BD5EC73DE46578A0E029E /* LessQaploins.svg */; };
+		6FD1CC95507246CFA1F8379C /* Lighting.svg in Resources */ = {isa = PBXBuildFile; fileRef = D023D599AC0641709D6812DB /* Lighting.svg */; };
+		32624EA75A364A5EB0D972FC /* LogrosActive.svg in Resources */ = {isa = PBXBuildFile; fileRef = AB3CBAD1A26A469AB2C5B4A7 /* LogrosActive.svg */; };
+		3FC348040B7247448FBEAE64 /* LOL.svg in Resources */ = {isa = PBXBuildFile; fileRef = 5F7BD8A9648B45B08B9263AF /* LOL.svg */; };
+		DC01A8CC45DD4D6895D617FA /* MoreQaploins.svg in Resources */ = {isa = PBXBuildFile; fileRef = CEC786D87F984D44A05972F4 /* MoreQaploins.svg */; };
+		D0480312D3084EF2B826A133 /* Notifications.svg in Resources */ = {isa = PBXBuildFile; fileRef = C469DE7780574DC3A9BB6BB8 /* Notifications.svg */; };
+		4E202AA87EF048FD89452E3C /* OkIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 9CF37C13B56D492DAA36C15E /* OkIcon.svg */; };
+		4203508E1B664794A6AC251B /* Overwatch.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7C40CF6C4DD14CE8B3EFB49C /* Overwatch.svg */; };
+		2E427030FD6241DEA10F9043 /* Partidas.svg in Resources */ = {isa = PBXBuildFile; fileRef = 2CB1741E12AA4575B2731E2A /* Partidas.svg */; };
+		C20BE7249D414A93B71EAE96 /* perdido.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4B0892F5BDFF4317875D4B72 /* perdido.svg */; };
+		90EFBFD24FD549F7A56AF3F6 /* ProfileActive.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0E2FB2ADFC9F4CF1A18AC8EE /* ProfileActive.svg */; };
+		4251B32387B7497D9F61B96F /* qapla-app-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A463597FFB4B493A93305D4A /* qapla-app-icon.png */; };
+		EC4F50D307154909AB440C29 /* qapla-balance-flip.svg in Resources */ = {isa = PBXBuildFile; fileRef = C9C587F754F94278BCE0A93E /* qapla-balance-flip.svg */; };
+		DB489E3078F84EB0AF5A81BB /* qapla.png in Resources */ = {isa = PBXBuildFile; fileRef = 94BC310F40294A8C85C9C809 /* qapla.png */; };
+		DC3F069A30354317B6939A67 /* qaplaSplash@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 169A91486A824082A5E95A21 /* qaplaSplash@1x.png */; };
+		33B46C3AC091498DAAC2255C /* qaplaSplash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E54AA0FA0C0A4BE68E5D5693 /* qaplaSplash@2x.png */; };
+		4EDACA450BB2401B92D72F06 /* qaplaSplash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C022F205F4040B18540B9B4 /* qaplaSplash@3x.png */; };
+		1253DEC8EBD644E1BE06205D /* qaploins.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0992A26B0E21490EBBC2979E /* qaploins.svg */; };
+		03D2BF4CB3724AA18B2A7BF8 /* QaploinsPrize.svg in Resources */ = {isa = PBXBuildFile; fileRef = DA24F0CF02C44F86A3F6045D /* QaploinsPrize.svg */; };
+		4503852802334E40AA344984 /* qoins-flip.svg in Resources */ = {isa = PBXBuildFile; fileRef = F73E0BBB5DB246F09088BF5F /* qoins-flip.svg */; };
+		E1189A3050684BCC8220C807 /* search.svg in Resources */ = {isa = PBXBuildFile; fileRef = 9C12F71B974F4469AA1218D8 /* search.svg */; };
+		2487C760C03240C89CA6B65B /* SentIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = F8DE89C460AD44E486F637CE /* SentIcon.svg */; };
+		3236D6FADC584B6087D9A2EB /* settings.svg in Resources */ = {isa = PBXBuildFile; fileRef = 14786C0F529A42EFAB3014C5 /* settings.svg */; };
+		AB45BEF322964105A1B4410F /* sin-verificar.svg in Resources */ = {isa = PBXBuildFile; fileRef = A9814D5DD0194008A6EBDF83 /* sin-verificar.svg */; };
+		9E9A84173DDC4315A8377067 /* Smash.svg in Resources */ = {isa = PBXBuildFile; fileRef = FCBFA136870A445FA7B9EDD9 /* Smash.svg */; };
+		9A5A1D0F53D2483E81AFDD4F /* support.svg in Resources */ = {isa = PBXBuildFile; fileRef = 80604B8413754A0081DA067C /* support.svg */; };
+		FF1295834C6549758517F8F3 /* verificado.svg in Resources */ = {isa = PBXBuildFile; fileRef = 5EB434E09BE448E79E555DEA /* verificado.svg */; };
+		D74601DB83BB43EF875FD3A1 /* video-clip-check.svg in Resources */ = {isa = PBXBuildFile; fileRef = D7219D4F3C544E86B63CEE15 /* video-clip-check.svg */; };
+		8DC3F82BC6B74A4FA77A253D /* video-clip.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0915266C8EE54CA5B62E07F3 /* video-clip.svg */; };
+		687BF0D482E149E4B0FE2EC8 /* addButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E3E29429F64C46438D22B3D0 /* addButton.png */; };
+		EF82A2004EC2496A9EAE8D91 /* comparte-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = D993E97029C345FFB3F5DC33 /* comparte-onboarding.png */; };
+		3B96676472EC4AB389E89AED /* compite-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C1F1201ABF243F7B658C8F7 /* compite-onboarding.png */; };
+		E53A0366833B4B03AB7BEF0B /* connect-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = BDEFDC584BC04E58A89CF3E8 /* connect-onboarding.png */; };
+		315B2CF59BD34843BF778306 /* divider-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8FBE263B3247E3804CA2CF /* divider-onboarding.png */; };
+		3E9F429528FC4E43BB2F793E /* FIFAPs.png in Resources */ = {isa = PBXBuildFile; fileRef = EC7B029ED2F441DF8EC89FCB /* FIFAPs.png */; };
+		78DA481A174D4BBD8588311E /* FIFAXbox.png in Resources */ = {isa = PBXBuildFile; fileRef = F48901ED22764B5E87FD6FF1 /* FIFAXbox.png */; };
+		8D19E3030D0043B689167246 /* GOW4Xbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1FDDD40804493B970D62C1 /* GOW4Xbox.png */; };
+		EAE0FE4C3EB74D33910786E7 /* HALO5Xbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C746F99DF4BCBA7ED07E3 /* HALO5Xbox.png */; };
+		FEB80FBEB90A49BFBFAFD2E8 /* HEARTHSTONE.png in Resources */ = {isa = PBXBuildFile; fileRef = 318A5D0E6415463B95F7B174 /* HEARTHSTONE.png */; };
+		EF57E1852FB8481BB86548BE /* LEAGUELEGENDS.png in Resources */ = {isa = PBXBuildFile; fileRef = 574FB9D6045342B28E85DAED /* LEAGUELEGENDS.png */; };
+		3D83F248A9534AA2B2374116 /* OVERWATCHPC.png in Resources */ = {isa = PBXBuildFile; fileRef = 884B97C9284746639296F4F7 /* OVERWATCHPC.png */; };
+		C5E8CD867F7C41319539C5CA /* OverwatchPs.png in Resources */ = {isa = PBXBuildFile; fileRef = E7DC19F3C8B344C98133841F /* OverwatchPs.png */; };
+		1B294B5244474AC3BDA9B01F /* OVERWATCHXbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 27645686ECA649D79A4A816D /* OVERWATCHXbox.png */; };
+		C3C8BDE488674C21A541F215 /* PEKKA.png in Resources */ = {isa = PBXBuildFile; fileRef = FF732AE2C05D49379C3E7346 /* PEKKA.png */; };
+		A95616F20E554518B8689BAC /* qapla-smile.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C4F047F09E4844968F7224 /* qapla-smile.png */; };
+		095C3EA0E1C24CF8854E2F83 /* QaplaSignUpLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = E9A692632AC4403B86A55947 /* QaplaSignUpLogo.png */; };
+		2E00B9C6D3A2475580CB729F /* Rectangle.svg in Resources */ = {isa = PBXBuildFile; fileRef = 274D7B45E3064EC2B9625C4E /* Rectangle.svg */; };
+		BC5DF3F86B5F4749AF09F891 /* Rectangle2.svg in Resources */ = {isa = PBXBuildFile; fileRef = 95D9D214775C4DB885FA1534 /* Rectangle2.svg */; };
+		AC13914B9F7C42CC8DB18FA0 /* Rectangle3.svg in Resources */ = {isa = PBXBuildFile; fileRef = 9BDB7BD3BC1C471FB0DFD9F4 /* Rectangle3.svg */; };
+		49701CB3A183426F92D6C06F /* Rectangle4.svg in Resources */ = {isa = PBXBuildFile; fileRef = AB25E3478FAB4E4D914F52F1 /* Rectangle4.svg */; };
+		BEFC39E029314C5E80918742 /* SAMSHBROS.png in Resources */ = {isa = PBXBuildFile; fileRef = 07E42CAB86154FD6AF8AE524 /* SAMSHBROS.png */; };
+		F5795DEA4AAD41F9BF274663 /* ShareClutchLink.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A06C336177248E4A710176F /* ShareClutchLink.jpg */; };
+		F3F2AF3172AE4BD2AAC9EB2A /* signup.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EE7B35A0704BB6A0F13ADD /* signup.png */; };
+		45DD66072FEC4D62B3F84FF2 /* UploadVideoClutch.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 95AA320D064747A79FEE1346 /* UploadVideoClutch.jpg */; };
+		29B024CD1DFD4A4A88EDB65C /* VerificationProccesSuccess.png in Resources */ = {isa = PBXBuildFile; fileRef = EC9DC1DD0E4B428C915B7BC3 /* VerificationProccesSuccess.png */; };
+		8F7B1964AB664CACBCD613D5 /* wallet-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = 35499F23D26548BD85F1C26B /* wallet-onboarding.png */; };
+		7BCF7E1C856C4BC9968F9F42 /* welcome1.png in Resources */ = {isa = PBXBuildFile; fileRef = A5A0E71F9A81400FA48C8FF5 /* welcome1.png */; };
+		C2416989A75749F3AC232BAD /* welcome2.png in Resources */ = {isa = PBXBuildFile; fileRef = 900348EC21E24D6C8C1A4FA5 /* welcome2.png */; };
+		1B956E5D8F6747569A390AEC /* welcome3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F6D033EFE6041B186226AF3 /* welcome3.png */; };
+		5BAB5FD973D84EBBAC566D45 /* welcome4.png in Resources */ = {isa = PBXBuildFile; fileRef = FB6789E927904BF2A301A3CD /* welcome4.png */; };
+		FD7C6EB2F8FC44B2ABF24442 /* notification-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 09976C835160488493C6BD78 /* notification-icon.png */; };
+		4211A73023D6464BA8F31C18 /* SFRounded-Ultralight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD5993451BA04D1689117212 /* SFRounded-Ultralight.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -372,6 +454,88 @@
 		F9F4B79223885C80003AD8FC /* QaplaReactNativeRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = QaplaReactNativeRelease.entitlements; path = QaplaReactNative/QaplaReactNativeRelease.entitlements; sourceTree = "<group>"; };
 		F9F4B7BE23885FBE003AD8FC /* QaplaReactNative.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = QaplaReactNative.entitlements; path = QaplaReactNative/QaplaReactNative.entitlements; sourceTree = "<group>"; };
 		FBF927A9EB9D21FEB290CB4A /* libPods-QaplaReactNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FE0D0D3092842AF941574D2 /* 1024px-Instagram_logo_2016.svg */ = {isa = PBXFileReference; name = "1024px-Instagram_logo_2016.svg"; path = "../assets/icons/1024px-Instagram_logo_2016.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A9E812CE6FA34B0B908A5BCC /* back.svg */ = {isa = PBXFileReference; name = "back.svg"; path = "../assets/icons/back.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F69BCE96A31F42418B157596 /* Clash.svg */ = {isa = PBXFileReference; name = "Clash.svg"; path = "../assets/icons/Clash.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B992432FF00048309FA2A6ED /* close.svg */ = {isa = PBXFileReference; name = "close.svg"; path = "../assets/icons/close.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E617D503B70A4B17A9A8FC10 /* Copy.svg */ = {isa = PBXFileReference; name = "Copy.svg"; path = "../assets/icons/Copy.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		91696B94B0564ADE85668B58 /* discord.svg */ = {isa = PBXFileReference; name = "discord.svg"; path = "../assets/icons/discord.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		60CB0620693A491E9B688547 /* edit.svg */ = {isa = PBXFileReference; name = "edit.svg"; path = "../assets/icons/edit.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D0B8046939284D3E9EB20E78 /* empatado.svg */ = {isa = PBXFileReference; name = "empatado.svg"; path = "../assets/icons/empatado.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DB4A130EA74B4C7AA6860820 /* F_icon.svg */ = {isa = PBXFileReference; name = "F_icon.svg"; path = "../assets/icons/F_icon.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1AE37BDE2FB44CEE9A0F3129 /* facebook_round.svg */ = {isa = PBXFileReference; name = "facebook_round.svg"; path = "../assets/icons/facebook_round.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4A0D773DB81B4A26A91684AF /* facebook.png */ = {isa = PBXFileReference; name = "facebook.png"; path = "../assets/icons/facebook.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		862594D10E51443DAF4B4BE8 /* facebook.svg */ = {isa = PBXFileReference; name = "facebook.svg"; path = "../assets/icons/facebook.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C399822E2F93473B96824E4D /* favorite-heart-button.svg */ = {isa = PBXFileReference; name = "favorite-heart-button.svg"; path = "../assets/icons/favorite-heart-button.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1EB8C1CD62D54670A6A7CB13 /* Fifa.svg */ = {isa = PBXFileReference; name = "Fifa.svg"; path = "../assets/icons/Fifa.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6E29D28C5C85445F953C8511 /* ganado.svg */ = {isa = PBXFileReference; name = "ganado.svg"; path = "../assets/icons/ganado.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0C7845E4393648F0BD856C4E /* google-logo.svg */ = {isa = PBXFileReference; name = "google-logo.svg"; path = "../assets/icons/google-logo.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8BC0916D12224179A72E432C /* Gow.svg */ = {isa = PBXFileReference; name = "Gow.svg"; path = "../assets/icons/Gow.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6F8831F2022644C799AE6F9F /* Halo5.svg */ = {isa = PBXFileReference; name = "Halo5.svg"; path = "../assets/icons/Halo5.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3B524062B9ED4482890BCB05 /* Heartstone.svg */ = {isa = PBXFileReference; name = "Heartstone.svg"; path = "../assets/icons/Heartstone.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FFDD3DDB7D774B54A4BA7E7F /* HighFive.svg */ = {isa = PBXFileReference; name = "HighFive.svg"; path = "../assets/icons/HighFive.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C32BD5EC73DE46578A0E029E /* LessQaploins.svg */ = {isa = PBXFileReference; name = "LessQaploins.svg"; path = "../assets/icons/LessQaploins.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D023D599AC0641709D6812DB /* Lighting.svg */ = {isa = PBXFileReference; name = "Lighting.svg"; path = "../assets/icons/Lighting.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AB3CBAD1A26A469AB2C5B4A7 /* LogrosActive.svg */ = {isa = PBXFileReference; name = "LogrosActive.svg"; path = "../assets/icons/LogrosActive.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5F7BD8A9648B45B08B9263AF /* LOL.svg */ = {isa = PBXFileReference; name = "LOL.svg"; path = "../assets/icons/LOL.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CEC786D87F984D44A05972F4 /* MoreQaploins.svg */ = {isa = PBXFileReference; name = "MoreQaploins.svg"; path = "../assets/icons/MoreQaploins.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C469DE7780574DC3A9BB6BB8 /* Notifications.svg */ = {isa = PBXFileReference; name = "Notifications.svg"; path = "../assets/icons/Notifications.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9CF37C13B56D492DAA36C15E /* OkIcon.svg */ = {isa = PBXFileReference; name = "OkIcon.svg"; path = "../assets/icons/OkIcon.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7C40CF6C4DD14CE8B3EFB49C /* Overwatch.svg */ = {isa = PBXFileReference; name = "Overwatch.svg"; path = "../assets/icons/Overwatch.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2CB1741E12AA4575B2731E2A /* Partidas.svg */ = {isa = PBXFileReference; name = "Partidas.svg"; path = "../assets/icons/Partidas.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4B0892F5BDFF4317875D4B72 /* perdido.svg */ = {isa = PBXFileReference; name = "perdido.svg"; path = "../assets/icons/perdido.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0E2FB2ADFC9F4CF1A18AC8EE /* ProfileActive.svg */ = {isa = PBXFileReference; name = "ProfileActive.svg"; path = "../assets/icons/ProfileActive.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A463597FFB4B493A93305D4A /* qapla-app-icon.png */ = {isa = PBXFileReference; name = "qapla-app-icon.png"; path = "../assets/icons/qapla-app-icon.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C9C587F754F94278BCE0A93E /* qapla-balance-flip.svg */ = {isa = PBXFileReference; name = "qapla-balance-flip.svg"; path = "../assets/icons/qapla-balance-flip.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		94BC310F40294A8C85C9C809 /* qapla.png */ = {isa = PBXFileReference; name = "qapla.png"; path = "../assets/icons/qapla.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		169A91486A824082A5E95A21 /* qaplaSplash@1x.png */ = {isa = PBXFileReference; name = "qaplaSplash@1x.png"; path = "../assets/icons/qaplaSplash@1x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E54AA0FA0C0A4BE68E5D5693 /* qaplaSplash@2x.png */ = {isa = PBXFileReference; name = "qaplaSplash@2x.png"; path = "../assets/icons/qaplaSplash@2x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3C022F205F4040B18540B9B4 /* qaplaSplash@3x.png */ = {isa = PBXFileReference; name = "qaplaSplash@3x.png"; path = "../assets/icons/qaplaSplash@3x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0992A26B0E21490EBBC2979E /* qaploins.svg */ = {isa = PBXFileReference; name = "qaploins.svg"; path = "../assets/icons/qaploins.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DA24F0CF02C44F86A3F6045D /* QaploinsPrize.svg */ = {isa = PBXFileReference; name = "QaploinsPrize.svg"; path = "../assets/icons/QaploinsPrize.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F73E0BBB5DB246F09088BF5F /* qoins-flip.svg */ = {isa = PBXFileReference; name = "qoins-flip.svg"; path = "../assets/icons/qoins-flip.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9C12F71B974F4469AA1218D8 /* search.svg */ = {isa = PBXFileReference; name = "search.svg"; path = "../assets/icons/search.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F8DE89C460AD44E486F637CE /* SentIcon.svg */ = {isa = PBXFileReference; name = "SentIcon.svg"; path = "../assets/icons/SentIcon.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		14786C0F529A42EFAB3014C5 /* settings.svg */ = {isa = PBXFileReference; name = "settings.svg"; path = "../assets/icons/settings.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A9814D5DD0194008A6EBDF83 /* sin-verificar.svg */ = {isa = PBXFileReference; name = "sin-verificar.svg"; path = "../assets/icons/sin-verificar.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FCBFA136870A445FA7B9EDD9 /* Smash.svg */ = {isa = PBXFileReference; name = "Smash.svg"; path = "../assets/icons/Smash.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		80604B8413754A0081DA067C /* support.svg */ = {isa = PBXFileReference; name = "support.svg"; path = "../assets/icons/support.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5EB434E09BE448E79E555DEA /* verificado.svg */ = {isa = PBXFileReference; name = "verificado.svg"; path = "../assets/icons/verificado.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D7219D4F3C544E86B63CEE15 /* video-clip-check.svg */ = {isa = PBXFileReference; name = "video-clip-check.svg"; path = "../assets/icons/video-clip-check.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0915266C8EE54CA5B62E07F3 /* video-clip.svg */ = {isa = PBXFileReference; name = "video-clip.svg"; path = "../assets/icons/video-clip.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E3E29429F64C46438D22B3D0 /* addButton.png */ = {isa = PBXFileReference; name = "addButton.png"; path = "../assets/images/addButton.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D993E97029C345FFB3F5DC33 /* comparte-onboarding.png */ = {isa = PBXFileReference; name = "comparte-onboarding.png"; path = "../assets/images/comparte-onboarding.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5C1F1201ABF243F7B658C8F7 /* compite-onboarding.png */ = {isa = PBXFileReference; name = "compite-onboarding.png"; path = "../assets/images/compite-onboarding.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BDEFDC584BC04E58A89CF3E8 /* connect-onboarding.png */ = {isa = PBXFileReference; name = "connect-onboarding.png"; path = "../assets/images/connect-onboarding.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BB8FBE263B3247E3804CA2CF /* divider-onboarding.png */ = {isa = PBXFileReference; name = "divider-onboarding.png"; path = "../assets/images/divider-onboarding.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EC7B029ED2F441DF8EC89FCB /* FIFAPs.png */ = {isa = PBXFileReference; name = "FIFAPs.png"; path = "../assets/images/FIFAPs.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F48901ED22764B5E87FD6FF1 /* FIFAXbox.png */ = {isa = PBXFileReference; name = "FIFAXbox.png"; path = "../assets/images/FIFAXbox.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7B1FDDD40804493B970D62C1 /* GOW4Xbox.png */ = {isa = PBXFileReference; name = "GOW4Xbox.png"; path = "../assets/images/GOW4Xbox.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		043C746F99DF4BCBA7ED07E3 /* HALO5Xbox.png */ = {isa = PBXFileReference; name = "HALO5Xbox.png"; path = "../assets/images/HALO5Xbox.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		318A5D0E6415463B95F7B174 /* HEARTHSTONE.png */ = {isa = PBXFileReference; name = "HEARTHSTONE.png"; path = "../assets/images/HEARTHSTONE.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		574FB9D6045342B28E85DAED /* LEAGUELEGENDS.png */ = {isa = PBXFileReference; name = "LEAGUELEGENDS.png"; path = "../assets/images/LEAGUELEGENDS.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		884B97C9284746639296F4F7 /* OVERWATCHPC.png */ = {isa = PBXFileReference; name = "OVERWATCHPC.png"; path = "../assets/images/OVERWATCHPC.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E7DC19F3C8B344C98133841F /* OverwatchPs.png */ = {isa = PBXFileReference; name = "OverwatchPs.png"; path = "../assets/images/OverwatchPs.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		27645686ECA649D79A4A816D /* OVERWATCHXbox.png */ = {isa = PBXFileReference; name = "OVERWATCHXbox.png"; path = "../assets/images/OVERWATCHXbox.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FF732AE2C05D49379C3E7346 /* PEKKA.png */ = {isa = PBXFileReference; name = "PEKKA.png"; path = "../assets/images/PEKKA.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F1C4F047F09E4844968F7224 /* qapla-smile.png */ = {isa = PBXFileReference; name = "qapla-smile.png"; path = "../assets/images/qapla-smile.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E9A692632AC4403B86A55947 /* QaplaSignUpLogo.png */ = {isa = PBXFileReference; name = "QaplaSignUpLogo.png"; path = "../assets/images/QaplaSignUpLogo.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		274D7B45E3064EC2B9625C4E /* Rectangle.svg */ = {isa = PBXFileReference; name = "Rectangle.svg"; path = "../assets/images/Rectangle.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		95D9D214775C4DB885FA1534 /* Rectangle2.svg */ = {isa = PBXFileReference; name = "Rectangle2.svg"; path = "../assets/images/Rectangle2.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9BDB7BD3BC1C471FB0DFD9F4 /* Rectangle3.svg */ = {isa = PBXFileReference; name = "Rectangle3.svg"; path = "../assets/images/Rectangle3.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AB25E3478FAB4E4D914F52F1 /* Rectangle4.svg */ = {isa = PBXFileReference; name = "Rectangle4.svg"; path = "../assets/images/Rectangle4.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		07E42CAB86154FD6AF8AE524 /* SAMSHBROS.png */ = {isa = PBXFileReference; name = "SAMSHBROS.png"; path = "../assets/images/SAMSHBROS.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3A06C336177248E4A710176F /* ShareClutchLink.jpg */ = {isa = PBXFileReference; name = "ShareClutchLink.jpg"; path = "../assets/images/ShareClutchLink.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		64EE7B35A0704BB6A0F13ADD /* signup.png */ = {isa = PBXFileReference; name = "signup.png"; path = "../assets/images/signup.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		95AA320D064747A79FEE1346 /* UploadVideoClutch.jpg */ = {isa = PBXFileReference; name = "UploadVideoClutch.jpg"; path = "../assets/images/UploadVideoClutch.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EC9DC1DD0E4B428C915B7BC3 /* VerificationProccesSuccess.png */ = {isa = PBXFileReference; name = "VerificationProccesSuccess.png"; path = "../assets/images/VerificationProccesSuccess.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		35499F23D26548BD85F1C26B /* wallet-onboarding.png */ = {isa = PBXFileReference; name = "wallet-onboarding.png"; path = "../assets/images/wallet-onboarding.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A5A0E71F9A81400FA48C8FF5 /* welcome1.png */ = {isa = PBXFileReference; name = "welcome1.png"; path = "../assets/images/welcome1.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		900348EC21E24D6C8C1A4FA5 /* welcome2.png */ = {isa = PBXFileReference; name = "welcome2.png"; path = "../assets/images/welcome2.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9F6D033EFE6041B186226AF3 /* welcome3.png */ = {isa = PBXFileReference; name = "welcome3.png"; path = "../assets/images/welcome3.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FB6789E927904BF2A301A3CD /* welcome4.png */ = {isa = PBXFileReference; name = "welcome4.png"; path = "../assets/images/welcome4.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		09976C835160488493C6BD78 /* notification-icon.png */ = {isa = PBXFileReference; name = "notification-icon.png"; path = "../assets/notification-icon.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FD5993451BA04D1689117212 /* SFRounded-Ultralight.ttf */ = {isa = PBXFileReference; name = "SFRounded-Ultralight.ttf"; path = "../assets/fonts/SFRounded-Ultralight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -634,6 +798,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				5379857A42C48E3FD835830A /* Pods */,
 				F951DB4622D518B000801C80 /* Recovered References */,
+				7A5EE30BF78D4FA295E494D8 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -674,6 +839,96 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		7A5EE30BF78D4FA295E494D8 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				0FE0D0D3092842AF941574D2 /* 1024px-Instagram_logo_2016.svg */,
+				A9E812CE6FA34B0B908A5BCC /* back.svg */,
+				F69BCE96A31F42418B157596 /* Clash.svg */,
+				B992432FF00048309FA2A6ED /* close.svg */,
+				E617D503B70A4B17A9A8FC10 /* Copy.svg */,
+				91696B94B0564ADE85668B58 /* discord.svg */,
+				60CB0620693A491E9B688547 /* edit.svg */,
+				D0B8046939284D3E9EB20E78 /* empatado.svg */,
+				DB4A130EA74B4C7AA6860820 /* F_icon.svg */,
+				1AE37BDE2FB44CEE9A0F3129 /* facebook_round.svg */,
+				4A0D773DB81B4A26A91684AF /* facebook.png */,
+				862594D10E51443DAF4B4BE8 /* facebook.svg */,
+				C399822E2F93473B96824E4D /* favorite-heart-button.svg */,
+				1EB8C1CD62D54670A6A7CB13 /* Fifa.svg */,
+				6E29D28C5C85445F953C8511 /* ganado.svg */,
+				0C7845E4393648F0BD856C4E /* google-logo.svg */,
+				8BC0916D12224179A72E432C /* Gow.svg */,
+				6F8831F2022644C799AE6F9F /* Halo5.svg */,
+				3B524062B9ED4482890BCB05 /* Heartstone.svg */,
+				FFDD3DDB7D774B54A4BA7E7F /* HighFive.svg */,
+				C32BD5EC73DE46578A0E029E /* LessQaploins.svg */,
+				D023D599AC0641709D6812DB /* Lighting.svg */,
+				AB3CBAD1A26A469AB2C5B4A7 /* LogrosActive.svg */,
+				5F7BD8A9648B45B08B9263AF /* LOL.svg */,
+				CEC786D87F984D44A05972F4 /* MoreQaploins.svg */,
+				C469DE7780574DC3A9BB6BB8 /* Notifications.svg */,
+				9CF37C13B56D492DAA36C15E /* OkIcon.svg */,
+				7C40CF6C4DD14CE8B3EFB49C /* Overwatch.svg */,
+				2CB1741E12AA4575B2731E2A /* Partidas.svg */,
+				4B0892F5BDFF4317875D4B72 /* perdido.svg */,
+				0E2FB2ADFC9F4CF1A18AC8EE /* ProfileActive.svg */,
+				A463597FFB4B493A93305D4A /* qapla-app-icon.png */,
+				C9C587F754F94278BCE0A93E /* qapla-balance-flip.svg */,
+				94BC310F40294A8C85C9C809 /* qapla.png */,
+				169A91486A824082A5E95A21 /* qaplaSplash@1x.png */,
+				E54AA0FA0C0A4BE68E5D5693 /* qaplaSplash@2x.png */,
+				3C022F205F4040B18540B9B4 /* qaplaSplash@3x.png */,
+				0992A26B0E21490EBBC2979E /* qaploins.svg */,
+				DA24F0CF02C44F86A3F6045D /* QaploinsPrize.svg */,
+				F73E0BBB5DB246F09088BF5F /* qoins-flip.svg */,
+				9C12F71B974F4469AA1218D8 /* search.svg */,
+				F8DE89C460AD44E486F637CE /* SentIcon.svg */,
+				14786C0F529A42EFAB3014C5 /* settings.svg */,
+				A9814D5DD0194008A6EBDF83 /* sin-verificar.svg */,
+				FCBFA136870A445FA7B9EDD9 /* Smash.svg */,
+				80604B8413754A0081DA067C /* support.svg */,
+				5EB434E09BE448E79E555DEA /* verificado.svg */,
+				D7219D4F3C544E86B63CEE15 /* video-clip-check.svg */,
+				0915266C8EE54CA5B62E07F3 /* video-clip.svg */,
+				E3E29429F64C46438D22B3D0 /* addButton.png */,
+				D993E97029C345FFB3F5DC33 /* comparte-onboarding.png */,
+				5C1F1201ABF243F7B658C8F7 /* compite-onboarding.png */,
+				BDEFDC584BC04E58A89CF3E8 /* connect-onboarding.png */,
+				BB8FBE263B3247E3804CA2CF /* divider-onboarding.png */,
+				EC7B029ED2F441DF8EC89FCB /* FIFAPs.png */,
+				F48901ED22764B5E87FD6FF1 /* FIFAXbox.png */,
+				7B1FDDD40804493B970D62C1 /* GOW4Xbox.png */,
+				043C746F99DF4BCBA7ED07E3 /* HALO5Xbox.png */,
+				318A5D0E6415463B95F7B174 /* HEARTHSTONE.png */,
+				574FB9D6045342B28E85DAED /* LEAGUELEGENDS.png */,
+				884B97C9284746639296F4F7 /* OVERWATCHPC.png */,
+				E7DC19F3C8B344C98133841F /* OverwatchPs.png */,
+				27645686ECA649D79A4A816D /* OVERWATCHXbox.png */,
+				FF732AE2C05D49379C3E7346 /* PEKKA.png */,
+				F1C4F047F09E4844968F7224 /* qapla-smile.png */,
+				E9A692632AC4403B86A55947 /* QaplaSignUpLogo.png */,
+				274D7B45E3064EC2B9625C4E /* Rectangle.svg */,
+				95D9D214775C4DB885FA1534 /* Rectangle2.svg */,
+				9BDB7BD3BC1C471FB0DFD9F4 /* Rectangle3.svg */,
+				AB25E3478FAB4E4D914F52F1 /* Rectangle4.svg */,
+				07E42CAB86154FD6AF8AE524 /* SAMSHBROS.png */,
+				3A06C336177248E4A710176F /* ShareClutchLink.jpg */,
+				64EE7B35A0704BB6A0F13ADD /* signup.png */,
+				95AA320D064747A79FEE1346 /* UploadVideoClutch.jpg */,
+				EC9DC1DD0E4B428C915B7BC3 /* VerificationProccesSuccess.png */,
+				35499F23D26548BD85F1C26B /* wallet-onboarding.png */,
+				A5A0E71F9A81400FA48C8FF5 /* welcome1.png */,
+				900348EC21E24D6C8C1A4FA5 /* welcome2.png */,
+				9F6D033EFE6041B186226AF3 /* welcome3.png */,
+				FB6789E927904BF2A301A3CD /* welcome4.png */,
+				09976C835160488493C6BD78 /* notification-icon.png */,
+				FD5993451BA04D1689117212 /* SFRounded-Ultralight.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -1146,6 +1401,88 @@
 				F968D5012416CA10007A72DD /* GoogleService-Info.plist in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				F9073A872406D29500BB648D /* main.jsbundle in Resources */,
+				2B54B8B211774C3D8E1CC03E /* 1024px-Instagram_logo_2016.svg in Resources */,
+				A6190421F6D84F18AC1EE1D7 /* back.svg in Resources */,
+				A98CA84377EE4D08840E3F4A /* Clash.svg in Resources */,
+				F054D3EA47E9453CBB0908DB /* close.svg in Resources */,
+				706DC7E46847475F839AAA48 /* Copy.svg in Resources */,
+				C45595DED7244C2683010F78 /* discord.svg in Resources */,
+				82BE62CBA0D642A4B6C5B880 /* edit.svg in Resources */,
+				00A1E9E24F4E45EBA1BDCF9F /* empatado.svg in Resources */,
+				1704531A39C443EEAB0C5C68 /* F_icon.svg in Resources */,
+				877611A7812A4685B2DF8134 /* facebook_round.svg in Resources */,
+				5C84CFD9302C46DAB4B902AE /* facebook.png in Resources */,
+				A313DF95DD1C4FA6B15C6736 /* facebook.svg in Resources */,
+				90CC774A1C4D47318D067EE2 /* favorite-heart-button.svg in Resources */,
+				5DB953C895944A0892E15A39 /* Fifa.svg in Resources */,
+				7786B107B9AA4061B8130556 /* ganado.svg in Resources */,
+				4398ED381B734476973F35F8 /* google-logo.svg in Resources */,
+				AAF17DD4290D4A488F9FD3F4 /* Gow.svg in Resources */,
+				ADF2AB9FF2154D999EDC34F7 /* Halo5.svg in Resources */,
+				401382DEB2934FE6AEE2716E /* Heartstone.svg in Resources */,
+				958EBB9A6ED84A4AA3358C3C /* HighFive.svg in Resources */,
+				F1E51258208F414AB3F4F5E6 /* LessQaploins.svg in Resources */,
+				6FD1CC95507246CFA1F8379C /* Lighting.svg in Resources */,
+				32624EA75A364A5EB0D972FC /* LogrosActive.svg in Resources */,
+				3FC348040B7247448FBEAE64 /* LOL.svg in Resources */,
+				DC01A8CC45DD4D6895D617FA /* MoreQaploins.svg in Resources */,
+				D0480312D3084EF2B826A133 /* Notifications.svg in Resources */,
+				4E202AA87EF048FD89452E3C /* OkIcon.svg in Resources */,
+				4203508E1B664794A6AC251B /* Overwatch.svg in Resources */,
+				2E427030FD6241DEA10F9043 /* Partidas.svg in Resources */,
+				C20BE7249D414A93B71EAE96 /* perdido.svg in Resources */,
+				90EFBFD24FD549F7A56AF3F6 /* ProfileActive.svg in Resources */,
+				4251B32387B7497D9F61B96F /* qapla-app-icon.png in Resources */,
+				EC4F50D307154909AB440C29 /* qapla-balance-flip.svg in Resources */,
+				DB489E3078F84EB0AF5A81BB /* qapla.png in Resources */,
+				DC3F069A30354317B6939A67 /* qaplaSplash@1x.png in Resources */,
+				33B46C3AC091498DAAC2255C /* qaplaSplash@2x.png in Resources */,
+				4EDACA450BB2401B92D72F06 /* qaplaSplash@3x.png in Resources */,
+				1253DEC8EBD644E1BE06205D /* qaploins.svg in Resources */,
+				03D2BF4CB3724AA18B2A7BF8 /* QaploinsPrize.svg in Resources */,
+				4503852802334E40AA344984 /* qoins-flip.svg in Resources */,
+				E1189A3050684BCC8220C807 /* search.svg in Resources */,
+				2487C760C03240C89CA6B65B /* SentIcon.svg in Resources */,
+				3236D6FADC584B6087D9A2EB /* settings.svg in Resources */,
+				AB45BEF322964105A1B4410F /* sin-verificar.svg in Resources */,
+				9E9A84173DDC4315A8377067 /* Smash.svg in Resources */,
+				9A5A1D0F53D2483E81AFDD4F /* support.svg in Resources */,
+				FF1295834C6549758517F8F3 /* verificado.svg in Resources */,
+				D74601DB83BB43EF875FD3A1 /* video-clip-check.svg in Resources */,
+				8DC3F82BC6B74A4FA77A253D /* video-clip.svg in Resources */,
+				687BF0D482E149E4B0FE2EC8 /* addButton.png in Resources */,
+				EF82A2004EC2496A9EAE8D91 /* comparte-onboarding.png in Resources */,
+				3B96676472EC4AB389E89AED /* compite-onboarding.png in Resources */,
+				E53A0366833B4B03AB7BEF0B /* connect-onboarding.png in Resources */,
+				315B2CF59BD34843BF778306 /* divider-onboarding.png in Resources */,
+				3E9F429528FC4E43BB2F793E /* FIFAPs.png in Resources */,
+				78DA481A174D4BBD8588311E /* FIFAXbox.png in Resources */,
+				8D19E3030D0043B689167246 /* GOW4Xbox.png in Resources */,
+				EAE0FE4C3EB74D33910786E7 /* HALO5Xbox.png in Resources */,
+				FEB80FBEB90A49BFBFAFD2E8 /* HEARTHSTONE.png in Resources */,
+				EF57E1852FB8481BB86548BE /* LEAGUELEGENDS.png in Resources */,
+				3D83F248A9534AA2B2374116 /* OVERWATCHPC.png in Resources */,
+				C5E8CD867F7C41319539C5CA /* OverwatchPs.png in Resources */,
+				1B294B5244474AC3BDA9B01F /* OVERWATCHXbox.png in Resources */,
+				C3C8BDE488674C21A541F215 /* PEKKA.png in Resources */,
+				A95616F20E554518B8689BAC /* qapla-smile.png in Resources */,
+				095C3EA0E1C24CF8854E2F83 /* QaplaSignUpLogo.png in Resources */,
+				2E00B9C6D3A2475580CB729F /* Rectangle.svg in Resources */,
+				BC5DF3F86B5F4749AF09F891 /* Rectangle2.svg in Resources */,
+				AC13914B9F7C42CC8DB18FA0 /* Rectangle3.svg in Resources */,
+				49701CB3A183426F92D6C06F /* Rectangle4.svg in Resources */,
+				BEFC39E029314C5E80918742 /* SAMSHBROS.png in Resources */,
+				F5795DEA4AAD41F9BF274663 /* ShareClutchLink.jpg in Resources */,
+				F3F2AF3172AE4BD2AAC9EB2A /* signup.png in Resources */,
+				45DD66072FEC4D62B3F84FF2 /* UploadVideoClutch.jpg in Resources */,
+				29B024CD1DFD4A4A88EDB65C /* VerificationProccesSuccess.png in Resources */,
+				8F7B1964AB664CACBCD613D5 /* wallet-onboarding.png in Resources */,
+				7BCF7E1C856C4BC9968F9F42 /* welcome1.png in Resources */,
+				C2416989A75749F3AC232BAD /* welcome2.png in Resources */,
+				1B956E5D8F6747569A390AEC /* welcome3.png in Resources */,
+				5BAB5FD973D84EBBAC566D45 /* welcome4.png in Resources */,
+				FD7C6EB2F8FC44B2ABF24442 /* notification-icon.png in Resources */,
+				4211A73023D6464BA8F31C18 /* SFRounded-Ultralight.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

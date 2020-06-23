@@ -153,7 +153,7 @@ class EventDetails extends Component {
                 {this.state.isParticipant && streamerGameData &&
                     <View style={[styles.eventCard, styles.streamerGameDataCard]}>
                         <Text style={styles.eventCardTitle}>
-                            {translate('eventDetailsModal.sendFriendRequestTo')}
+                            {translate('eventDetailsModal.eventInformation')}
                         </Text>
                         <View style={styles.divider} />
                         {Object.keys(streamerGameData).map((streamerInfoKey) => (

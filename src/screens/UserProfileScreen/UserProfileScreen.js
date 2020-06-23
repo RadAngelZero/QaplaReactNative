@@ -1,15 +1,3 @@
-// diego           - 11-12-2019 - us160 - Updated analitycs
-// diego           - 04-12-2019 - us161 - Added body property to BuyQaploinsModal
-// josep.sanahuja  - 22-11-2019 - us153 - Add EditProfileImgBadge
-// diego           - 15-11-2019 - us149 - Check if user data is loaded on mapStateToProps
-// diego           - 03-09-2019 - us96  - Send flag onCloseGoTo when add game, so the header knows
-//                                        where go if the user closes the procces
-// diego           - 02-09-2019 - us91  - Add record screen segment statistic
-// diego           - 21-08-2019 - us89  - Add redirect logic to LoadGamesScreen
-// diego           - 20-08-2019 - us89  - Show user statistics by game
-//                                        Added BuyQaploinsModal
-// diego           - 19-08-2019 - us89  - File creation
-
 import React, { Component } from 'react';
 import { Linking, SafeAreaView, View, Image, Text, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
@@ -145,7 +133,15 @@ export class UserProfileScreen extends Component {
                                 <EditProfileImgBadge />
                             </View>
                         </View>
-                        <Text style={styles.userName}>{this.props.userName}</Text>
+                        {this.props.userName.length < 10 ?
+                            <Text style={styles.userName}>
+                                    {this.props.userName}
+                            </Text>
+                        :
+                            <Text style={styles.userName}>
+                                {`${this.props.userName.substring(0, 10)}...`}
+                            </Text>
+                        }
                     </View>
                     <View style={styles.manageQaploinsContainer}>
                         <TouchableWithoutFeedback onPress={() => this.setState({ showQaploinsToUser: !this.state.showQaploinsToUser })}>

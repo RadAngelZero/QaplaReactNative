@@ -1,5 +1,3 @@
-// diego           - 22-11-2019 - us151 - File creation
-
 import React, { Component } from 'react';
 import { Modal, SafeAreaView, ScrollView, View } from 'react-native';
 
@@ -95,7 +93,7 @@ export class TermsAndConditionsModal extends Component {
                                     5. Vulnerar deliberadamente cualquier ley local, estatal, nacional o internacional o reglamento aplicable al uso de <StrongText>Qapla</StrongText> o del Servicio;
                                 </QaplaText>
                                 <QaplaText style={styles.paragraph}>
-                                    6. No podrá iniciar, cooperar o participar en un ataque contra el servidor de Qapla o tratar de otro modo de interrumpir el funcionamiento de los servidores de <StrongText>Qapla</StrongText>; y
+                                    6. No podrá iniciar, cooperar o participar en un ataque contra el servidor de <StrongText>Qapla</StrongText> o tratar de otro modo de interrumpir el funcionamiento de los servidores de <StrongText>Qapla</StrongText>; y
                                 </QaplaText>
                                 <QaplaText style={styles.paragraph}>
                                     7. No podrá comenzar ataque alguno que suponga un perjuicio para el suministro de servicios de <StrongText>Qapla</StrongText> para otros usuarios.
@@ -145,7 +143,7 @@ export class TermsAndConditionsModal extends Component {
                                 </QaplaText>
                             </View>
                             <QaplaText style={styles.paragraph}>
-                                <StrongText>IV.III. - Qapla</StrongText> podrá, a su entera discreción, adoptar cuantas medidas estime necesarias para preservar la integridad de la empresa. La infracción de cualquiera de las Normas de Conducta podrá derivar en la adopción de medidas por parte de Qapla, con efecto inmediato o en el momento que esta última determine.
+                                <StrongText>IV.III. - Qapla</StrongText> podrá, a su entera discreción, adoptar cuantas medidas estime necesarias para preservar la integridad de la empresa. La infracción de cualquiera de las Normas de Conducta podrá derivar en la adopción de medidas por parte de <StrongText>Qapla</StrongText>, con efecto inmediato o en el momento que esta última determine.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
                                 Dichas medidas podrán consistir, a modo de ejemplo, en:
@@ -172,32 +170,35 @@ export class TermsAndConditionsModal extends Component {
                             </QaplaText>
                             <View style={styles.numericList}>
                                 <QaplaText style={styles.paragraph}>
-                                    1. Sistema de recompensas a través de Qoins.
+                                    1. Ingreso a torneos y/o eventos a través de Qoins.
                                 </QaplaText>
                                 <QaplaText style={styles.paragraph}>
-                                    2. Supervisión y administración del sistema de competencia denominado “Partidas”.
+                                    2. Realizar donaciones o envíos de diversos productos de otras plataformas a terceros (streamers).
                                 </QaplaText>
                                 <QaplaText style={styles.paragraph}>
-                                    3. Organización y planeación de torneos para los usuarios.
+                                    3. Supervisión y administración del sistema de competencia denominado “Partidas”.
                                 </QaplaText>
                                 <QaplaText style={styles.paragraph}>
-                                    4. Servicio de chat en tiempo real.
+                                    4. Organización y planeación de torneos para los usuarios.
                                 </QaplaText>
                                 <QaplaText style={styles.paragraph}>
-                                    5. Elaboración y resguardo de los ficheros o historiales de los usuarios.
+                                    5. Servicio de chat en tiempo real.
                                 </QaplaText>
                                 <QaplaText style={styles.paragraph}>
-                                    6. Protección de los datos personales de los usuarios.
+                                    6. Elaboración y resguardo de los ficheros o historiales de los usuarios.
                                 </QaplaText>
                                 <QaplaText style={styles.paragraph}>
-                                    7. Red social para video jugadores.
+                                    7. Protección de los datos personales de los usuarios.
+                                </QaplaText>
+                                <QaplaText style={styles.paragraph}>
+                                    8. Red social para video jugadores.
                                 </QaplaText>
                             </View>
                             <QaplaText style={styles.subtitle}>
                                 VI.- Sobre los Qoins, las partidas y los torneos.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                <StrongText>VI.I.- Qoin:</StrongText> Es la moneda virtual que utilizamos dentro de la plataforma, el cual sirve para poder participar en partidas o torneos dentro de la plataforma que <StrongText>Qapla</StrongText> pone a su servicio, así como otros servicios que se encuentren dentro la misma.
+                                <StrongText>VI.I.- Qoin:</StrongText> Es la moneda virtual que utilizamos dentro de la plataforma, el cual sirve para poder participar en partidas, torneos y/o eventos dentro de la plataforma de <StrongText>Qapla</StrongText>. Asimismo, con esta moneda virtual, los usuarios de <StrongText>Qapla</StrongText> pueden adquirir diversos productos de otras plataformas, como por ejemplo estrellas de Facebook® o Bits de Twich® para enviarlos a terceros de su elección, en este caso Streamers. Qapla se reserva el derecho para establecer y realizar las dinámicas que considere pertinentes para la adquisición de los Qoins y la forma de ejercer los mismos para la adquisición de productos externos e internos. El usuario acepta que el método para adquirir los productos de otras plataformas como estrellas de Facebook® o Bits de Twich® dependerán del tipo de cambio al momento de ser adquiridas.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
                                 <StrongText>VI.II.- Partida:</StrongText> Es un desafío entre dos o más personas o equipos.
@@ -205,11 +206,14 @@ export class TermsAndConditionsModal extends Component {
                             <QaplaText style={styles.paragraph}>
                                 <StrongText>VI.III. - Torneo:</StrongText> Serie de encuentros deportivos o de juegos en los que compiten entre sí varias personas o equipos que se eliminan unos a otros progresivamente.
                             </QaplaText>
+                            <QaplaText style={styles.paragraph}>
+                                <StrongText>VI.IV. - Evento:</StrongText> Organización de acontecimientos tendientes a la celebración de torneos o actividades que pongan en competencia deportiva entre sí varias personas   dentro de una serie de encuentros deportivos o de juegos. Cada evento tendrá sus propias reglas, por lo que las mismas serán oportunamente publicadas para el análisis y aceptación por parte del usuario. Todo usuario reconoce expresamente que no existe ninguna regla o limitante general para los eventos, y que de acceder a uno o varios se sujetarán a las reglas y requisitos que en su caso se establezcan de manera individual para acceder al evento.
+                            </QaplaText>
                             <QaplaText style={styles.subtitle}>
-                                VII.- Compras.
+                                VII.- Métodos de ingreso y retiro..
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                <StrongText>VII.I.-</StrongText> Las compras serán a través del sistema PayPal, por lo que, al momento de hacer una compra, el usuario deberá tener una cuenta en dicho sistema.
+                                <StrongText>VII.I.-</StrongText> El método de ingreso y retiro será a través del sistema PayPal®, por lo que al momento de ingresar o retirar el usuario deberá tener una cuenta en dicho sistema, así como cubrir el monto por comisión de ingreso-retiro establecido por el mismo.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
                                 <StrongText>VII.II.- Qapla</StrongText> se reserva la facultad de cobro por mantenimiento y uso del servicio de cualquiera de los productos ofertados al usuario por lo que este último acepta íntegramente dicho cobro.
@@ -227,7 +231,7 @@ export class TermsAndConditionsModal extends Component {
                                 <StrongText>VII.VI. -</StrongText> Así como cualquier otro proceso de verificación podemos solicitar a cualquier titular de la cuenta a presentar pruebas adicionales de su identidad para ayudar en la verificación de del <StrongText>Usuario</StrongText> antes de hacer algún retiro, por lo que <StrongText>Qapla se reserva el derecho de solicitar documentación o fotografías de identidad</StrongText> antes de cualquier proceso.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                <StrongText>VII.VII. -</StrongText> El <StrongText>Usuario</StrongText> puede adquirir suscripciones de su cuenta en cualquier momento, siempre y cuando tenga el sado suficiente.
+                                <StrongText>VII.VII. -</StrongText> El <StrongText>Usuario</StrongText> puede adquirir suscripciones de su cuenta en cualquier momento, siempre y cuando tenga el saldo suficiente.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
                                 <StrongText>
@@ -250,7 +254,7 @@ export class TermsAndConditionsModal extends Component {
                                 <StrongText>IX.II.-</StrongText> Si no se opone a los cambios de las presentes Condiciones de Uso tras el paso de 1 mes tras la notificación especial, el uso continuado de <StrongText>Qapla</StrongText> y todos sus productos significará su aceptación de las Condiciones de Uso modificadas.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                <StrongText>IX.III.-</StrongText> Con la notificación especial, <StrongText>Qapla</StrongText> le recuerda al <StrongText>Usuario</StrongText> que su uso continuado tras el paso del período de un 1 mes tras la notificación especial significará que acepta todos los cambios realizados.
+                                <StrongText>IX.III.-</StrongText> Con la notificación especial, <StrongText>Qapla</StrongText> le recuerda al <StrongText>Usuario</StrongText> que su uso continuo tras el paso del período de un 1 mes tras la notificación especial significará que acepta todos los cambios realizados.
                             </QaplaText>
                             <QaplaText style={styles.subtitle}>
                                 X.- Titularidad de los derechos.
@@ -321,7 +325,7 @@ export class TermsAndConditionsModal extends Component {
                                 XIV.- Información de contacto.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                <StrongText>XIV.I.-</StrongText> Si usted tiene alguna pregunta con respecto a la plataforma de Qapla, el Servicio o los Términos por favor contáctenos en: soporte@qapla.gg
+                                <StrongText>XIV.I.-</StrongText> Si usted tiene alguna pregunta con respecto a la plataforma de <StrongText>Qapla</StrongText>, el Servicio o los Términos por favor contáctenos en: soporte@qapla.gg
                             </QaplaText>
                             <QaplaText style={styles.subtitle}>
                                 XV.- Enlaces de Terceros.
@@ -336,25 +340,25 @@ export class TermsAndConditionsModal extends Component {
                                 <StrongText>XV.III. - Qapla</StrongText> no garantiza ni asume responsabilidad alguna por los daños y/o perjuicios de toda clase que puedan causarse por el funcionamiento, disponibilidad, accesibilidad o continuidad de los sitios enlazados ni cualquier otra deficiencia presentada por dichos enlaces.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                El <StrongText>Usuario</StrongText> reconoce y acepta que Qapla queda excluida de cualquier responsabilidad que pudiera ser causada por el uso no autorizado de las marcas u otros derechos de propiedad intelectual, industrial y/o derechos de autor de terceros o contenidos en los Sitios Enlazados.
+                                El <StrongText>Usuario</StrongText> reconoce y acepta que <StrongText>Qapla</StrongText> queda excluida de cualquier responsabilidad que pudiera ser causada por el uso no autorizado de las marcas u otros derechos de propiedad intelectual, industrial y/o derechos de autor de terceros o contenidos en los Sitios Enlazados.
                             </QaplaText>
                             <QaplaText style={styles.subtitle}>
                                 XVI.- Verificación de cuenta
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                El nombre almacenado en su cuenta debe coincidir con su identidad legal y auténtica, y el nombre con el que registró su cuenta debe coincidir con el nombre de la cuenta PayPal que utilizara para realizar ingresos o recibir dinero en su cuenta. Para verificar su identidad, nos reservamos el derecho a pedir en cualquier momento pruebas suficientes de ella (incluyendo, sin carácter limitativo, copias de una identificación oficial o pasaporte válidos) así como un número valido de teléfono celular. No enviar estos documentos puede dar como resultado la suspensión o el cierre de su cuenta hasta que envíe dichos documentos y nuestro proceso de verificación finalice con éxito. No puede tener más de una cuenta vinculada al uso del sistema central de <StrongText>Qapla</StrongText>. Si posee más de una cuenta con nombres distintos, debe ponerse en contacto con nosotros de inmediato para realizar los trámites necesarios con el fin de que solo tenga una cuenta. Si tiene varias cuentas abiertas, nos reservamos el derecho a cerrarlas. Si tenemos motivos suficientes para creer que ha abierto varias cuentas con intención de cometer algún ilícito en perjuicio del sistema competitivo de <StrongText>Qapla</StrongText>, nos reservamos el derecho a cancelar cualquier transacción relacionada con lo anteriormente establecido. Si ha perdido su nombre de usuario o su contraseña, póngase en contacto con nosotros para su restablecimiento.
+                                El nombre almacenado en su cuenta debe coincidir con su identidad legal y auténtica, y el nombre con el que registró su cuenta debe coincidir con el nombre de la cuenta PayPal® que utilizara para realizar ingresos o recibir dinero en su cuenta. Para verificar su identidad, nos reservamos el derecho a pedir en cualquier momento pruebas suficientes de ella (incluyendo, sin carácter limitativo, copias de una identificación oficial o pasaporte válidos) así como un número valido de teléfono celular. No enviar estos documentos puede dar como resultado la suspensión o el cierre de su cuenta hasta que envíe dichos documentos y nuestro proceso de verificación finalice con éxito. No puede tener más de una cuenta vinculada al uso del sistema central de <StrongText>Qapla</StrongText>. Si posee más de una cuenta con nombres distintos, debe ponerse en contacto con nosotros de inmediato para realizar los trámites necesarios con el fin de que solo tenga una cuenta. Si tiene varias cuentas abiertas, nos reservamos el derecho a cerrarlas. Si tenemos motivos suficientes para creer que ha abierto varias cuentas con intención de cometer algún ilícito en perjuicio del sistema competitivo de <StrongText>Qapla</StrongText>, nos reservamos el derecho a cancelar cualquier transacción relacionada con lo anteriormente establecido. Si ha perdido su nombre de usuario o su contraseña, póngase en contacto con nosotros para su restablecimiento.
                             </QaplaText>
                             <QaplaText style={styles.subtitle}>
-                                XVII.- REGLAMENTO
+                                XVII.- Reglamento
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                <StrongText>XVII.I.-</StrongText> El Reglamento General se decidió por parte de los administradores de QAPLA. Los administradores son los que moderan la página y organizan y gestionan las distintas competiciones. Estos se reservan el derecho a modificar estas reglas en cualquier momento y sin previo aviso. Es obligación de todos los usuarios y/o jugadores haber leído y entendido el reglamento, ya que el desconocimiento no exime de culpa al infractor.
+                                <StrongText>XVII.I.-</StrongText> El Reglamento General se decidió por parte de los administradores de <StrongText>Qapla</StrongText>. Los administradores son los que moderan la página y organizan y gestionan las distintas competiciones. Estos se reservan el derecho a modificar estas reglas en cualquier momento y sin previo aviso. Es obligación de todos los usuarios y/o jugadores haber leído y entendido el reglamento, ya que el desconocimiento no exime de culpa al infractor.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
                                 <StrongText>XVII.II.-</StrongText> Los usuarios del sitio, aceptan todas y cada una de las reglas aquí expuestas, así como las condiciones generales de uso, uso de cookies y normas de comportamiento expuestas en otros apartados del sitio.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                Las nuevas normas indicadas en la información de cada torneo/evento prevalecerán sobre las aquí expuestas. Por lo tanto, el usuario, al inscribirse en torneos, acepta todas y cada una de las reglas aquí expuestas, así como también las indicadas en la información de cada evento, por lo que se ven obligados a cumplirlas.
+                                Las nuevas normas indicadas en la información de cada torneo/evento prevalecerán sobre las aquí expuestas. Por lo tanto, el <StrongText>Usuario</StrongText>, al inscribirse en torneos, acepta todas y cada una de las reglas aquí expuestas, así como también las indicadas en la información de cada evento, por lo que se ven obligados a cumplirlas.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
                                 El no cumplimiento de alguno de los puntos aquí o allí expuestos podría suponer la expulsión de la competición.
@@ -366,26 +370,26 @@ export class TermsAndConditionsModal extends Component {
                                 La hora que regirá dentro de Qapla será la hora central de México GMT, es decir la de la zona Centro de los Estados Unidos Mexicanos.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                <StrongText>XVII.III. -</StrongText> El usuario deberá tener una cuenta en la plataforma de QAPLA y de los juegos que estén incorporados a la plataforma.
+                                <StrongText>XVII.III. -</StrongText> El usuario deberá tener una cuenta en la plataforma de <StrongText>Qapla</StrongText> y de los juegos que estén incorporados a la plataforma.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                El gamertag que el usuario proporcione a QAPLA como el utilizado en sus plataformas de origen (Xbox, Play Station, Nintendo o PC) deberá coincidir y ser el mismo con el que se partida al adversario, de caso contrario quedará descalificado de la partida y no podrá hacer efectivo ningún resultado a su favor.
+                                El gamertag que el <StrongText>Usuario</StrongText> proporcione a <StrongText>Qapla</StrongText> como el utilizado en sus plataformas de origen (Xbox, Play Station, Nintendo o PC) deberá coincidir y ser el mismo con el que se reta al adversario, de caso contrario quedará descalificado de la partida y no podrá hacer efectivo ningún resultado a su favor.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                <StrongText>XVII.IV. -</StrongText> Dentro de la plataforma de QAPLA se celebrarán diversos torneos/eventos, en los cuales al momento de lanzar la convocatoria se establecerán las bases para participar y sus reglas, atendiendo que al ingresar a los torneos/eventos el usuario está completamente de acuerdo en la manera en que se llevará a cabo cada uno de ellos y no podrán objetar las decisiones que se tomen.
+                                <StrongText>XVII.IV. -</StrongText> Dentro de la plataforma de <StrongText>Qapla</StrongText> se celebrarán diversos torneos/eventos, en los cuales al momento de lanzar la convocatoria se establecerán las bases para participar y sus reglas, atendiendo que al ingresar a los torneos/eventos el usuario está completamente de acuerdo en la manera en que se llevará a cabo cada uno de ellos y no podrán objetar las decisiones que se tomen.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                <StrongText>XVII.V. -</StrongText> El usuario que desee crear una partida puede agregar un monto de inscripción, el usuario que desee unirse a la partida creada por otro usuario deberá cubrir el total de la inscripción de la partida. Una vez finalizada la partida, Qapla bonificará al usuario vencedor el total del acumulado de las inscripciones menos sus respectivas comisiones.{'\n'}El procedimiento para retar a otros usuarios será el siguiente:
+                                <StrongText>XVII.V. -</StrongText> El usuario que desee crear una partida puede agregar un monto de inscripción, el usuario que desee unirse a la partida creada por otro usuario deberá cubrir el total de la inscripción de la partida. Una vez finalizada la partida, <StrongText>Qapla</StrongText> bonificará al usuario vencedor el total del acumulado de las inscripciones menos sus respectivas comisiones.{'\n'}El procedimiento para retar a otros usuarios será el siguiente:
                             </QaplaText>
                             <View style={styles.numericList}>
                                 <QaplaText style={styles.paragraph}>
-                                    a) El usuario podrá retar a cualquiera que se encuentre registrado dentro de la plataforma QAPLA, para lo que enviará una solicitud de partida o desafío. O bien, crear una partida pública y esperar a que sea aceptada por un oponente o equipo (en caso de que la partida creada no sea aceptada por ningún oponente o equipo, los qoins serán bonificados en un lapso no mayor a 30 minutos).
+                                    a) El <StrongText>Usuario</StrongText> podrá retar a cualquiera que se encuentre registrado dentro de la plataforma de <StrongText>Qapla</StrongText>, para lo que enviará una solicitud de partida o desafío. O bien, crear una partida pública y esperar a que sea aceptada por un oponente o equipo (en caso de que la partida creada no sea aceptada por ningún oponente o equipo, los qoins serán bonificados en un lapso no mayor a 30 minutos).
                                 </QaplaText>
                                 <QaplaText style={styles.paragraph}>
                                     b) El otro jugador aceptará o declinará dicha solicitud, la cual puede ser de manera individual o en equipo.
                                 </QaplaText>
                                 <QaplaText style={styles.paragraph}>
-                                    c) De ser aceptada, ambos jugadores convendrán el juego en el que el desafío o partida se llevará a cabo (de los que se encuentran contemplados en la plataforma QAPLA).
+                                    c) De ser aceptada, ambos jugadores convendrán el juego en el que el desafío o partida se llevará a cabo (de los que se encuentran contemplados en la plataforma QA<StrongText>Qapla</StrongText>PLA).
                                 </QaplaText>
                                 <QaplaText style={styles.paragraph}>
                                     d) Los usuarios serán libres en configurar las partidas en las que se desarrollará el desafío o partidas, por lo que ambas partes al permanecer en el lobby del juego e ingresar a la partida, consentirán en ese momento su acuerdo y conformidad de la configuración y ya no podrán retirarse de ella.
@@ -407,24 +411,10 @@ export class TermsAndConditionsModal extends Component {
                                 </QaplaText>
                             </View>
                             <QaplaText style={styles.paragraph}>
-                                <StrongText>XVII.VI. -</StrongText> Los puntos que se repartirán dentro del sistema de QAPLA, serán los siguientes:
-                            </QaplaText>
-                            <View style={styles.numericList}>
-                                <QaplaText style={styles.paragraph}>
-                                    {'\u2022'} Por partida ganada: +3
-                                </QaplaText>
-                                <QaplaText style={styles.paragraph}>
-                                    {'\u2022'} Por partida perdida: 0
-                                </QaplaText>
-                                <QaplaText style={styles.paragraph}>
-                                    {'\u2022'} Por partida empatada: 0
-                                </QaplaText>
-                            </View>
-                            <QaplaText style={styles.paragraph}>
-                                <StrongText>XVII.VII. -</StrongText> Cualquier problema de desconexión de alguna de las partes de la partida, dará como resultado la victoria a la parte contraria, por lo que QAPLA no se hace responsable de la calidad de conexión de los usuarios.
+                                <StrongText>XVII.VI. -</StrongText> Cualquier problema de desconexión de alguna de las partes de la partida, dará como resultado la victoria a la parte contraria, por lo que QAPLA no se hace responsable de la calidad de conexión de los usuarios.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
-                                <StrongText>XVII.VIII. -</StrongText> Cualquier usuario que sea sorprendido realizando prácticas deshonestas, es decir, intentando alterar los resultados, las evidencias o cualquier conducta que se considere deshonesto, se le penalizará de la siguiente manera:
+                                <StrongText>XVII.VII. -</StrongText> Cualquier usuario que sea sorprendido realizando prácticas deshonestas, es decir, intentando alterar los resultados, las evidencias o cualquier conducta que se considere deshonesto, se le penalizará de la siguiente manera:
                             </QaplaText>
                             <View style={styles.numericList}>
                                 <QaplaText style={styles.paragraph}>
@@ -434,6 +424,14 @@ export class TermsAndConditionsModal extends Component {
                                     {'\u2022'} Por una tercera vez que se realice una práctica deshonesta, Qapla expulsará al usuario de la plataforma y lo vetará de manera indefinida para hacer uso de la misma e ingresar a la aplicación. El usuario vetado podrá canjear los fondos que se encuentren en su cuenta, pero no podrá realizar ingresos.
                                 </QaplaText>
                             </View>
+                            <QaplaText style={styles.subtitle}>
+                                XVIII.- De la comunidad gamer, de los streamers y la interacción por parte de los usuarios de Qapla.
+                            </QaplaText>
+                            <QaplaText style={styles.paragraph}>
+                                La comunidad gamer y de los Streamers representa a toda aquella persona que juega de manera, más o menos, recurrente a videojuegos y que en algunos casos son transmisores en línea de sus propios productos comerciales, por lo que el Usuario acepta y otorga su pleno reconocimiento de que dicha comunidad no son parte de Qapla, por lo que la empresa no se hace responsable de cualquier altercado o problema que el usuario pudiera tener directamente con dicha comunidad.
+                                {'\n'}
+                                El usuario de <StrongText>Qapla</StrongText> podrá por voluntad propia realizar donaciones de productos internos de Qapla o de plataformas externas a favor de un tercero, en este caso, a cualquier Streamer de su preferencia, como son a manera de ejemplo estrellas de Facebook® o Bits de Twich®, por lo que Qapla únicamente se compromete a realizar la adquisición de dichos productos y el envió de los mismos, siendo un mero intermediario entre el usuario y el tercero.
+                            </QaplaText>
                         </View>
                     </ScrollView>
                 </SafeAreaView>

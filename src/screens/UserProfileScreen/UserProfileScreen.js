@@ -134,7 +134,15 @@ export class UserProfileScreen extends Component {
                                 <EditProfileImgBadge />
                             </View>
                         </View>
-                        <QaplaText style={styles.userName}>{this.props.userName}</QaplaText>
+                        {this.props.userName.length < 10 ?
+                            <QaplaText style={styles.userName}>
+                                    {this.props.userName}
+                            </QaplaText>
+                        :
+                            <QaplaText style={styles.userName}>
+                                {`${this.props.userName.substring(0, 10)}...`}
+                            </QaplaText>
+                        }
                     </View>
                     <View style={styles.manageQaploinsContainer}>
                         <TouchableWithoutFeedback onPress={() => this.setState({ showQaploinsToUser: !this.state.showQaploinsToUser })}>

@@ -1,13 +1,14 @@
 // diego          - 06-09-2019 - us93 - File creation
 
 import React, { Component } from 'react';
-import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
+import { Modal, View, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 import styles from './style';
 import CheckBox from '../CheckBox/CheckBox';
 import { storeData } from '../../utilities/persistance';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 export class MatchExpireRememberModal extends Component {
     state = {
@@ -50,10 +51,10 @@ export class MatchExpireRememberModal extends Component {
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
                         <View style={styles.containerMsgModal}>
-                            <Text style={styles.headerText}>{translate('matchExpireRememberModal.header')}</Text>
-                            <Text style={styles.paragraph}>
+                            <QaplaText style={styles.headerText}>{translate('matchExpireRememberModal.header')}</QaplaText>
+                            <QaplaText style={styles.paragraph}>
                                 {translate('matchExpireRememberModal.paragraph')}
-                            </Text>
+                            </QaplaText>
                             <CheckBox
                                 style={styles.checkbox}
                                 label={translate('matchExpireRememberModal.dontShowItAgain')}
@@ -61,7 +62,7 @@ export class MatchExpireRememberModal extends Component {
                                 onPress={this.toogleCheckBox} />
                             <TouchableWithoutFeedback onPress={this.confirmModal}>
                                 <View style={styles.okButton}>
-                                    <Text style={styles.buttonText}>{translate('matchExpireRememberModal.okButton')}</Text>
+                                    <QaplaText style={styles.buttonText}>{translate('matchExpireRememberModal.okButton')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

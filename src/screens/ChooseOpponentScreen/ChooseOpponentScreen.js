@@ -1,10 +1,11 @@
 // josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
 
 import React, { Component } from 'react';
-import { View, Text, TextInput, BackHandler, SafeAreaView } from 'react-native';
+import { View, TextInput, SafeAreaView } from 'react-native';
 
 import styles from './style';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 class ChooseOpponentScreen extends Component {
     render() {
@@ -13,12 +14,12 @@ class ChooseOpponentScreen extends Component {
                 <View style={styles.container}>
                     <View style={styles.headerContainer}>
                         <View style={styles.titleRow}>
-                            <Text style={styles.titleText}>
+                            <QaplaText style={styles.titleText}>
                                 {translate('chooseOpponentScreen.title')}
-                            </Text>
-                            <Text style={styles.titleText} onPress={this.backToMatchTypeScreen}>
+                            </QaplaText>
+                            <QaplaText style={styles.titleText} onPress={this.backToMatchTypeScreen}>
                                 X
-                            </Text>
+                            </QaplaText>
                         </View>
                         <TextInput placeholder={translate('chooseOpponentScreen.searchPlaceholder')}
                             style={styles.inputText} />

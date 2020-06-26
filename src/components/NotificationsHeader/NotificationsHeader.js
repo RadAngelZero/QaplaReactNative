@@ -3,12 +3,13 @@
 // diego 			 - 01-08-2019 - us58 - File creation
 
 import React, { Component } from 'react';
-import { SafeAreaView, View, Text } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
 import styles from './style';
 import Images from './../../../assets/images';
 import { translate } from '../../utilities/i18';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
+import QaplaText from '../QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -25,7 +26,7 @@ class NotificationsHeader extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
     	        <View style={styles.container}>
-    	            <Text style={styles.title}>{translate('notificationsScreen.notificationsHeader')}</Text>
+    	            <QaplaText style={styles.title}>{translate('notificationsScreen.notificationsHeader')}</QaplaText>
                     <QaplaIcon onPress={this.closeNotifications}>
                         <CloseIcon />
                     </QaplaIcon>

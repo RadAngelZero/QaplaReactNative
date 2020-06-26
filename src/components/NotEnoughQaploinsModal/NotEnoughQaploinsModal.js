@@ -4,7 +4,6 @@
 import React, { Component } from 'react';
 import {
 	View,
-	Text,
 	Modal,
 	TouchableWithoutFeedback
 } from 'react-native';
@@ -17,6 +16,8 @@ import {
 	withNavigation
 } from 'react-navigation';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
+QaplaText
 
 /**
  * Risky praxis, always call the components with the same name as the file (NotEnoughQaploinsModal in this case)
@@ -54,13 +55,13 @@ class NotEnoughQaploins extends Component {
 	          	onRequestClose={this.props.onClose}>
 	          		<View style={styles.mainContainer}>
               			<View style={styles.container}>
-			                <Text style={styles.headerText}>{translate('notEnoughQaploinsModal.header')}</Text>
+			                <QaplaText style={styles.headerText}>{translate('notEnoughQaploinsModal.header')}</QaplaText>
 			                <TouchableWithoutFeedback onPress={this.action}>
 			                  <View style={styles.okButton}>
-			                    <Text style={styles.text}>{translate('notEnoughQaploinsModal.accept')}</Text>
+			                    <QaplaText style={styles.text}>{translate('notEnoughQaploinsModal.accept')}</QaplaText>
 			                  </View>
 			                </TouchableWithoutFeedback>
-			                <Text style={styles.smallText}>{translate('notEnoughQaploinsModal.warning')}</Text>
+			                <QaplaText style={styles.smallText}>{translate('notEnoughQaploinsModal.warning')}</QaplaText>
 		                </View>
 		            </View>
 	        </Modal>

@@ -3,7 +3,7 @@
 // diego             - 14-08-2019 - us80 - File creation
 
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import styles from './style';
 import {
@@ -15,6 +15,7 @@ import {
     NOTIFICATION_MATCH_ACCEPTED
 } from '../../utilities/Constants';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 export class ActivityNotificationCard extends Component {
     determineNotificationText = () => {
@@ -52,14 +53,14 @@ export class ActivityNotificationCard extends Component {
                 <View style={styles.readStateContainer}>
                     {this.props.notiChecked ?
                         <View style={styles.readNotification}>
-                            <Text>🍕</Text>
+                            <QaplaText>🍕</QaplaText>
                         </View>
                         :
                         <View style={styles.unreadNotification} />
                     }
                 </View>
                 <View style={styles.infoContainer}>
-                    <Text style={styles.infoText}>{this.determineNotificationText()}</Text>
+                    <QaplaText style={styles.infoText}>{this.determineNotificationText()}</QaplaText>
                 </View>
             </View>
         );

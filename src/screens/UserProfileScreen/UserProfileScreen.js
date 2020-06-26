@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Linking, SafeAreaView, View, Image, Text, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { Linking, SafeAreaView, View, Image, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -16,6 +16,7 @@ import remoteConf from '../../services/remoteConfig';
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import { translate } from '../../utilities/i18';
 import { heightPercentageToPx, widthPercentageToPx, isIOSDevice } from '../../utilities/iosAndroidDim';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 const QaploinExchangeIcon = images.svg.qoinFlipIcon;
 const BalanceExchangeIcon = images.svg.balanceFlipIcon;
@@ -134,13 +135,13 @@ export class UserProfileScreen extends Component {
                             </View>
                         </View>
                         {this.props.userName.length < 10 ?
-                            <Text style={styles.userName}>
+                            <QaplaText style={styles.userName}>
                                     {this.props.userName}
-                            </Text>
+                            </QaplaText>
                         :
-                            <Text style={styles.userName}>
+                            <QaplaText style={styles.userName}>
                                 {`${this.props.userName.substring(0, 10)}...`}
-                            </Text>
+                            </QaplaText>
                         }
                     </View>
                     <View style={styles.manageQaploinsContainer}>
@@ -157,16 +158,16 @@ export class UserProfileScreen extends Component {
                                         width={widthPercentageToPx(10)}
                                         style={styles.qaploinImage} />
                                 }
-                                <Text style={styles.qaploinsAmount}>
+                                <QaplaText style={styles.qaploinsAmount}>
                                     {this.state.showQaploinsToUser ? this.props.userQaploins : this.props.userBalance || 0}
-                                </Text>
+                                </QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <View style={styles.buttonGroup}>
                             {!isIOSDevice() ?
                                 <TouchableWithoutFeedback onPress={this.openBuyQaploinsModal}>
                                     <View style={styles.addQaploinsButton}>
-                                        <Text style={styles.addQaploinsButtonText}>{translate('userProfileScreen.buy')}</Text>
+                                        <QaplaText style={styles.addQaploinsButtonText}>{translate('userProfileScreen.buy')}</QaplaText>
                                     </View>
                                 </TouchableWithoutFeedback>
                                 :
@@ -174,7 +175,7 @@ export class UserProfileScreen extends Component {
                             }
                             <TouchableWithoutFeedback onPress={this.exchangeQaploins}>
                                 <View style={styles.cashoutQaploins}>
-                                    <Text style={styles.addQaploinsButtonText}>{translate('userProfileScreen.exchange')}</Text>
+                                    <QaplaText style={styles.addQaploinsButtonText}>{translate('userProfileScreen.exchange')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

@@ -4,13 +4,14 @@
 // diego           - 19-09-2019 - us126 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput } from 'react-native';
+import { View, Image, TextInput } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';
 
 import PhonePrefixPicker from './PhonePrefixPicker/PhonePrefixPicker';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 const Divider = images.png.divider.img;
 
@@ -47,7 +48,7 @@ export class VerificationPhoneNumber extends Component {
         return (
                 <View style={styles.container}>
                     <View>
-                        <Text style={styles.title}>{translate('verificationScreen.verificationPhoneNumber.title')}</Text>
+                        <QaplaText style={styles.title}>{translate('verificationScreen.verificationPhoneNumber.title')}</QaplaText>
                         <View style={styles.divider}>
                             <Image source={Divider} />
                         </View>
@@ -79,9 +80,9 @@ export class VerificationPhoneNumber extends Component {
                                         onSubmitEditing={this.props.goToNextStep}
                                         onChangeText={this.props.setVerificationCode} />
                                 </View>
-                                <Text style={styles.smallText}>
+                                <QaplaText style={styles.smallText}>
                                     {feedbackForUser}
-                                </Text>
+                                </QaplaText>
                             </>
                         }
                     </View>

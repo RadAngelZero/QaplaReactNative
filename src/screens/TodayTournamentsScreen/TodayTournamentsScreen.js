@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
 import LogrosList from '../../components/LogroCard/LogrosList';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 class TodayTournamentsScreen extends Component {
     render() {
@@ -60,9 +61,9 @@ class TodayTournamentsScreen extends Component {
 
         return (
             <SafeAreaView style={styles.container}>
-                <Text style={styles.title}>
+                <QaplaText style={styles.title}>
                     {logros.length > 0 && 'Bienvenido de nuevo, el día de hoy tienes los siguientes eventos'}
-                </Text>
+                </QaplaText>
                 <LogrosList
                     logros={logros}
                     userId={this.props.uid} />

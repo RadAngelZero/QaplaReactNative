@@ -1,14 +1,5 @@
-// diego          - 30-12-2019 - us189 - Reordered code (functions at the top, render function at the bottom)
-// josep.sanahuja - 12-12-2019 - us160 - Add 'Game Added' event in openModal
-// diego          - 21-08-2019 - us89 - Add game on the user if they don't have it but have a valid gamer tag
-//                                      (e.g.: in all the xbox games you use the xboxLive,
-//                                      so don't need to add a new gamer tag every time)
-// josep.sanahuja - 17-07-2019 - us25 - + openModal
-// diego          - 16-07-2019 - us30 - update navigation when GamerTag is added
-// diego          - 17-07-2019 - NA   - update images styles and remove unnecesary code
-
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Image, TouchableWithoutFeedback } from 'react-native';
 import styles from './style'
 import { SvgUri } from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
@@ -27,7 +18,7 @@ import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAn
 import AddDiscordTagModal from '../AddDiscordTagModal/AddDiscordTagModal';
 import Colors from '../../utilities/Colors';
 import { GAMES_TOPICS } from '../../utilities/Constants';
-import { getLocaleLanguage } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 class GameCard extends Component {
     state = {
@@ -132,9 +123,9 @@ class GameCard extends Component {
                                     uri={game.icon}
                                     fill={Colors.greenQapla} />
                             }
-                            <Text style={styles.gameName}>
+                            <QaplaText style={styles.gameName}>
                                 {game.name}
-                            </Text>
+                            </QaplaText>
                         </View>
                     </LinearGradient>
                 </TouchableWithoutFeedback>

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import styles from './style';
 import { ONE_HOUR_MILISECONDS, HOURS_IN_DAY } from './../../../utilities/Constants';
+import QaplaText from '../../QaplaText/QaplaText';
 
 export class LogroLifeTimeBadge extends Component {
     render() {
@@ -60,14 +61,14 @@ export class LogroLifeTimeBadge extends Component {
                 {(remainingDays > 0 || remainingHours >= 0) && (!remainingMinutes || remainingMinutes >= 0) ?
                     <View style={styles.timeLifeBadge}>
                         {remainingDays > 0 ?
-                            <Text style={styles.timeLife}>
+                            <QaplaText style={styles.timeLife}>
                                 {`${remainingDays}d ${remainingHours > 0 ? `${remainingHours}h` : ''}`}
-                            </Text>
+                            </QaplaText>
                             :
                             remainingDays === 0 &&
-                            <Text style={styles.timeLife}>
+                            <QaplaText style={styles.timeLife}>
                                 {`${remainingHours > 0 ? `${remainingHours}h` : remainingHours === 0 ? `${remainingMinutes}m` : ''}`}
-                            </Text>
+                            </QaplaText>
                         }
                     </View>
                     :

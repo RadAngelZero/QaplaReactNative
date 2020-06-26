@@ -210,7 +210,7 @@ export class TermsAndConditionsModal extends Component {
                                 <StrongText>VI.IV. - Evento:</StrongText> Organización de acontecimientos tendientes a la celebración de torneos o actividades que pongan en competencia deportiva entre sí varias personas   dentro de una serie de encuentros deportivos o de juegos. Cada evento tendrá sus propias reglas, por lo que las mismas serán oportunamente publicadas para el análisis y aceptación por parte del usuario. Todo usuario reconoce expresamente que no existe ninguna regla o limitante general para los eventos, y que de acceder a uno o varios se sujetarán a las reglas y requisitos que en su caso se establezcan de manera individual para acceder al evento.
                             </QaplaText>
                             <QaplaText style={styles.subtitle}>
-                                VII.- Métodos de ingreso y retiro..
+                                VII.- Métodos de ingreso y retiro.
                             </QaplaText>
                             <QaplaText style={styles.paragraph}>
                                 <StrongText>VII.I.-</StrongText> El método de ingreso y retiro será a través del sistema PayPal®, por lo que al momento de ingresar o retirar el usuario deberá tener una cuenta en dicho sistema, así como cubrir el monto por comisión de ingreso-retiro establecido por el mismo.

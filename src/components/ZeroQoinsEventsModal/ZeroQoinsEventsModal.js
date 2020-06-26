@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
+import { Modal, View, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import { connect } from 'react-redux';
 
 import styles from './style';
 import Images from './../../../assets/images';
 import { trackOnSegment } from '../../services/statistics';
 import { translate } from '../../utilities/i18';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
+import QaplaText from '../QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -37,15 +37,15 @@ class ZeroQoinsEventsModal extends Component {
                         <QaplaIcon onPress={this.props.onClose} touchableStyle={styles.closeIcon}>
                             <CloseIcon />
                         </QaplaIcon>
-                        <Text style={styles.headerText}>
+                        <QaplaText style={styles.headerText}>
                             { translate('zeroQoinsEventModal.header') }
-                        </Text>
-                        <Text style={styles.paragraph}>
+                        </QaplaText>
+                        <QaplaText style={styles.paragraph}>
                             { translate('zeroQoinsEventModal.body') }
-                        </Text>
+                        </QaplaText>
                         <TouchableWithoutFeedback onPress={this.goToEvents}>
                             <View style={styles.eventsButton}>
-                                <Text style={styles.bttnText}>{ translate('zeroQoinsEventModal.bttnText') }</Text>
+                                <QaplaText style={styles.bttnText}>{ translate('zeroQoinsEventModal.bttnText') }</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>

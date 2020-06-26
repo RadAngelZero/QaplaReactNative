@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
     Image,
     TouchableOpacity
 } from 'react-native';
@@ -9,6 +8,7 @@ import {
 import styles from './style';
 import Images from './../../../assets/images';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 class EventRegistrationSuccessful extends Component {
     render() {
@@ -28,27 +28,27 @@ class EventRegistrationSuccessful extends Component {
                             }
                         </View>
                         {acceptAllUsers ?
-                            <Text style={styles.endProcessFeedbackTitle}>
+                            <QaplaText style={styles.endProcessFeedbackTitle}>
                                 {translate('eventDetailsModal.awesomeTitle')}
-                            </Text>
+                            </QaplaText>
                         :
-                            <Text style={styles.endProcessFeedbackTitle}>
+                            <QaplaText style={styles.endProcessFeedbackTitle}>
                                 {translate('eventDetailsModal.thankYouTitle')}
-                            </Text>
+                            </QaplaText>
                         }
                         {acceptAllUsers ?
-                            <Text style={styles.endProcessFeedbackDescription}>
+                            <QaplaText style={styles.endProcessFeedbackDescription}>
                                 {translate('eventDetailsModal.alreadyAccepted')}
-                            </Text>
+                            </QaplaText>
                         :
                             <>
-                                <Text style={styles.endProcessFeedbackDescription}>
+                                <QaplaText style={styles.endProcessFeedbackDescription}>
                                     {translate('eventDetailsModal.succedRequest')}
-                                    <Text style={styles.streamerNameLink}>
+                                    <QaplaText style={styles.streamerNameLink}>
                                         {` ${streamerName} `}
-                                    </Text>
+                                    </QaplaText>
                                     {translate('eventDetailsModal.nextStepsFeedback')}
-                                </Text>
+                                </QaplaText>
                             </>
                         }
                     </View>
@@ -58,9 +58,9 @@ class EventRegistrationSuccessful extends Component {
                     <TouchableOpacity
                         style={styles.finishButtonContainer}
                         onPress={this.props.finishProcess}>
-                        <Text style={styles.finishButtonText}>
+                        <QaplaText style={styles.finishButtonText}>
                             {translate('eventDetailsModal.finish')}
-                        </Text>
+                        </QaplaText>
                     </TouchableOpacity>
                 </View>
             </View>

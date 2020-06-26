@@ -5,7 +5,7 @@
 // diego -          29-07-2019 - us55 - Remove unnecessary log from on press event
 
 import React, { PureComponent } from 'react';
-import { View, Text, TouchableWithoutFeedback, Image } from 'react-native';
+import { View, TouchableWithoutFeedback, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { SvgUri } from 'react-native-svg';
@@ -15,6 +15,7 @@ import { getProfileImageWithUID } from '../../services/database';
 import { styles } from './style';
 import Images from '../../../assets/images';
 import Colors from '../../utilities/Colors';
+import QaplaText from '../QaplaText/QaplaText';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
@@ -79,19 +80,19 @@ class MatchCardItem extends PureComponent {
                                         uri={game.icon}
                                         fill={Colors.greenQapla} />
                                 }
-                                <Text style={styles.gameText}>{game.name}</Text>
+                                <QaplaText style={styles.gameText}>{game.name}</QaplaText>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={styles.betText}>
+                                <QaplaText style={styles.betText}>
                                     {this.props.bet}
-                                </Text>
+                                </QaplaText>
                                 <QaploinIcon
                                     width={24}
                                     height={24} />
                             </View>
                         </View>
                         <View>
-                            <Text style={styles.timeText}>{`${formatedHour}:${formatedMinutes}`}</Text>
+                            <QaplaText style={styles.timeText}>{`${formatedHour}:${formatedMinutes}`}</QaplaText>
                             <View style={styles.matchDetailInfoContainer}>
                                 <View style={styles.matchContainerRow}>
                                     {(this.state.avatarUrl !== undefined && this.state.avatarUrl !== '') ?
@@ -101,9 +102,9 @@ class MatchCardItem extends PureComponent {
                                         :
                                         <View style={styles.avatarImage} />
                                     }
-                                    <Text style={styles.usernameText}>{this.props.userName}</Text>
+                                    <QaplaText style={styles.usernameText}>{this.props.userName}</QaplaText>
                                 </View>
-                                <Text style={styles.idRetaText}>ID {this.props.alphaNumericIdMatch}</Text>
+                                <QaplaText style={styles.idRetaText}>ID {this.props.alphaNumericIdMatch}</QaplaText>
                             </View>
                         </View>
                     </View>

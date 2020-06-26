@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Animated, Easing, Text } from 'react-native';
+import { Animated, Easing } from 'react-native';
 import PropTypes from 'prop-types';
 
 import styles from './style';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import QaplaText from '../QaplaText/QaplaText';
 
 /**
  * @augments {Component<Props, State>}
@@ -60,14 +61,14 @@ class Snackbar extends Component {
                     }
                 ]
             }]}>
-                <Text style={haveAction ? styles.messageWithAction : styles.message}>
+                <QaplaText style={haveAction ? styles.messageWithAction : styles.message}>
                     {this.props.message}
-                </Text>
-                <Text style={styles.actionTextButton} onPress={this.props.action}>
+                </QaplaText>
+                <QaplaText style={styles.actionTextButton} onPress={this.props.action}>
                     {haveAction &&
                         this.props.actionMessage
                     }
-                </Text>
+                </QaplaText>
             </Animated.View>
         );
     }

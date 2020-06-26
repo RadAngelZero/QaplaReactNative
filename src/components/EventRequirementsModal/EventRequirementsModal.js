@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Modal, View, TouchableWithoutFeedback, Text } from 'react-native';
+import { Modal, View, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './style';
 import Images from './../../../assets/images';
 import { translate } from '../../utilities/i18';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
+import QaplaText from '../QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -30,25 +31,25 @@ class EventRequirementsModal extends Component {
                         <QaplaIcon onPress={this.props.closeModal} touchableStyle={styles.closeIcon}>
                             <CloseIcon />
                         </QaplaIcon>
-                        <Text style={styles.modalTitle}>
+                        <QaplaText style={styles.modalTitle}>
                             {translate('activeAchievementsScreen.eventAchievement.eventRequirementsModal.title')}
-                        </Text>
-                        <Text style={styles.description}>
+                        </QaplaText>
+                        <QaplaText style={styles.description}>
                             {translate('activeAchievementsScreen.eventAchievement.eventRequirementsModal.body')}
-                        </Text>
+                        </QaplaText>
                         <View style={styles.buttonsContainer}>
                             <TouchableWithoutFeedback onPress={this.props.closeModal}>
                                 <View style={styles.cancelTextButton}>
-                                    <Text style={styles.textOfButtons}>
+                                    <QaplaText style={styles.textOfButtons}>
                                         {translate('activeAchievementsScreen.eventAchievement.eventRequirementsModal.close')}
-                                    </Text>
+                                    </QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={this.reTryEvent}>
                                 <View style={styles.saveTextButton}>
-                                    <Text style={styles.textOfButtons}>
+                                    <QaplaText style={styles.textOfButtons}>
                                         {translate('activeAchievementsScreen.eventAchievement.eventRequirementsModal.addInfo')}
-                                    </Text>
+                                    </QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

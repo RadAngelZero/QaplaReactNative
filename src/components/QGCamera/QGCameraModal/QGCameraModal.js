@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   Modal,
   TouchableWithoutFeedback,
   Image
@@ -14,6 +13,7 @@ import { withNavigation } from 'react-navigation';
 
 import Images from './../../../../assets/images';
 import { translate } from '../../../utilities/i18';
+import QaplaText from '../../QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -59,13 +59,13 @@ class QGCameraModal extends Component {
 							                <CloseIcon />
 						              </View>
 				              </TouchableWithoutFeedback>
-					            <Text style={styles.headerText}>{this.props.header}</Text>
+					            <QaplaText style={styles.headerText}>{this.props.header}</QaplaText>
 					            <Image
 		            	        source={{uri: this.props.pictureUri}}
 		                      style={styles.picture} />
 					            <TouchableWithoutFeedback onPress={this.action}>
 						              <View style={styles.okButton}>
-							                <Text style={styles.text}>{translate('qGCameraModal.selectImage')}</Text>
+							                <QaplaText style={styles.text}>{translate('qGCameraModal.selectImage')}</QaplaText>
 						              </View>
 					            </TouchableWithoutFeedback>
 			            </View>

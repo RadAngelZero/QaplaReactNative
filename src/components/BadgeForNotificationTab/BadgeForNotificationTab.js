@@ -1,12 +1,11 @@
 // diego -          01-08-2019 - us58 - File creation
 
 import React, { Component } from 'react';
-import {
-    View,
-    Text
-} from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
+
 import styles from './style';
+import QaplaText from '../QaplaText/QaplaText';
 
 class BadgeForNotificationTab extends Component {
     render() {
@@ -14,7 +13,7 @@ class BadgeForNotificationTab extends Component {
             <>
                 {this.props.matchesCount > 0 ?
                     <View style={styles.container}>
-                        <Text style={styles.badge}>{this.props.matchesCount}</Text>
+                        <QaplaText style={styles.badge}>{this.props.matchesCount}</QaplaText>
                     </View>
                     :
                     null

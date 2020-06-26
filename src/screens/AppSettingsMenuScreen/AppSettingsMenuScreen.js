@@ -3,7 +3,7 @@
 // josep.sanahuja  - 13-11-2019 - us147 - File creation
 
 import React, { Component } from 'react';
-import { SafeAreaView, View, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { SafeAreaView, View, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -15,6 +15,7 @@ import AddBioModal from '../../components/AddBioModal/AddBioModal';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import { translate } from '../../utilities/i18';
 import TermsAndConditionsModal from './../../components/TermsAndConditionsModal/TermsAndConditionsModal';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 const QaplaAppIcon = Images.png.qaplaSignupLogo.img;
 
@@ -70,48 +71,48 @@ class AppSettingsMenuScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    <Text style={styles.headerText}>{translate('settingsMenuScreen.header')}</Text>
+                    <QaplaText style={styles.headerText}>{translate('settingsMenuScreen.header')}</QaplaText>
                     <Image style={styles.mainImage}
                         source={QaplaAppIcon} />
-                    <Text style={styles.littleText}>{this.props.userName}</Text>
+                    <QaplaText style={styles.littleText}>{this.props.userName}</QaplaText>
 
                     <View style={styles.menuHeader}>
-                        <Text style={styles.menuHeaderText}>{translate('settingsMenuScreen.menuHeader')}</Text>
+                        <QaplaText style={styles.menuHeaderText}>{translate('settingsMenuScreen.menuHeader')}</QaplaText>
                     </View>
                     <ScrollView>
                         <TouchableWithoutFeedback onPress={this.goToSupport}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.support')}</Text>
+                                <QaplaText style={styles.menuItemRowText}>{translate('settingsMenuScreen.support')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.toggleBioModal}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.editBio')}</Text>
+                                <QaplaText style={styles.menuItemRowText}>{translate('settingsMenuScreen.editBio')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.toggleDiscordModal}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.editDiscord')}</Text>
+                                <QaplaText style={styles.menuItemRowText}>{translate('settingsMenuScreen.editDiscord')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.goToNotificationsSettings}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.notifications')}</Text>
+                                <QaplaText style={styles.menuItemRowText}>{translate('settingsMenuScreen.notifications')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.toggleTermsAndConditionsModal}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.termsAndConditions')}</Text>
+                                <QaplaText style={styles.menuItemRowText}>{translate('settingsMenuScreen.termsAndConditions')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.togglePrivacyModal}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.privacyNotice')}</Text>
+                                <QaplaText style={styles.menuItemRowText}>{translate('settingsMenuScreen.privacyNotice')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.closeSession}>
                             <View style={styles.menuItemRow}>
-                                <Text style={styles.menuItemRowText}>{translate('settingsMenuScreen.closeSession')}</Text>
+                                <QaplaText style={styles.menuItemRowText}>{translate('settingsMenuScreen.closeSession')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                     </ScrollView>

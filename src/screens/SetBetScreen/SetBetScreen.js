@@ -1,23 +1,8 @@
-// diego          - 03-01-2020 - us191 - Adjust of UI based on supernova mockup
-// josep.sanahuja - 12-12-2019 - us160 - 'Set Bet' -> 'Select Qaploins Screen' and custom header
-// diego          - 04-12-2019 - us161 - Added body property to BuyQaploinsModal
-// josep.sanahuja - 14-09-2019 - bug5 - Redirect backButton on Android from MatchExpireRememberModal
-// diego          - 06-09-2019 - us93 - Convert modal to remember the time of life of the match on component: MatchExpireRememberModal
-// diego          - 03-09-2019 - us96 - Removed X text icon (now this screen have custom header)
-// diego          - 02-09-2019 - us91 - Add record screen segment statistic
-// josep.sanahuja - 05-08-2019 - us84 - + SafeAreaView
-// josep.sanahuja - 01-08-2019 - us57 - + Modal for 10 minutes msg when creating a match
-// diego          - 24-07-2019 - us31 - Updated createMatch and decreaseBet to accept
-//                                      bets from 0 qaploins
-// diego          - 16-07-2019 - us34 - Substract of qaploins logic implemented
-// diego          - 15-07-2019 - us27 - added increment bet option
-
 import React, { Component } from 'react';
 import {
     SafeAreaView,
     ScrollView,
     View,
-    Text,
     TouchableWithoutFeedback
 } from 'react-native';
 
@@ -25,17 +10,8 @@ import { connect } from 'react-redux';
 
 import styles from './style';
 import images from './../../../assets/images';
-
-import {
-    retrieveData
-} from '@utilities/persistance'
-
-import {
-    getCurrentQaplaCommission,
-    createPublicMatch,
-    substractQaploinsToUser
-} from '../../services/database';
-
+import { retrieveData } from '@utilities/persistance'
+import { getCurrentQaplaCommission, createPublicMatch, substractQaploinsToUser } from '../../services/database';
 import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 import ZeroQoinsEventsModal from '../../components/ZeroQoinsEventsModal/ZeroQoinsEventsModal';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
@@ -44,15 +20,9 @@ import TopNavOptions from '../../components/TopNavOptions/TopNavOptions';
 import { translate } from '../../utilities/i18';
 import { widthPercentageToPx, heightPercentageToPx, isIOSDevice } from '../../utilities/iosAndroidDim';
 import { getPlatformNameWithKey } from '../../utilities/utils';
-
-import {
-    dplCreateLinkMatchCard
-} from '../../services/links';
-
-import {
-    discordPublishMessageToChannel
-} from '../../services/discord';
-
+import { dplCreateLinkMatchCard } from '../../services/links';
+import { discordPublishMessageToChannel } from '../../services/discord';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 const QaploinsPrizeIcon = images.svg.qaploinsPrize;
 const QaploinIcon = images.svg.qaploinsIcon;
@@ -265,24 +235,24 @@ class SetBetScreen extends Component {
                         <MatchExpireRememberModal
                             visible={this.state.timeActionMsgOpen}
                             onClose={this.closeMatchExpireRememberModal} />
-                        <Text style={styles.titleText}>{translate('setBetScreen.title')}</Text>
+                        <QaplaText style={styles.titleText}>{translate('setBetScreen.title')}</QaplaText>
                         <View style={styles.prizeImage}>
                             <QaploinsPrizeIcon
                                 width={widthPercentageToPx(30)}
                                 height={heightPercentageToPx(30)} />
                         </View>
-                        <Text style={styles.winBet}>{this.defineWinBet()}</Text>
+                        <QaplaText style={styles.winBet}>{this.defineWinBet()}</QaplaText>
                         <View style={styles.qaploinIconContainer}>
                             <QaploinIcon height={24} width={24} />
-                            <Text style={styles.qaploinIconText}>Qoins</Text>
+                            <QaplaText style={styles.qaploinIconText}>Qoins</QaplaText>
                         </View>
                         <View style={styles.betContainer}>
                             <TouchableWithoutFeedback onPress={this.decreaseBet.bind(this)}>
                                 <LessQaploinsIcon style={styles.changeBetIcon} />
                             </TouchableWithoutFeedback>
                             <View style={styles.betTextContainer}>
-                                <Text style={styles.betText}>{this.bets[this.state.currentBet]}</Text>
-                                <Text style={styles.betEntrada}>{translate('setBetScreen.entry')}</Text>
+                                <QaplaText style={styles.betText}>{this.bets[this.state.currentBet]}</QaplaText>
+                                <QaplaText style={styles.betEntrada}>{translate('setBetScreen.entry')}</QaplaText>
                             </View>
                             <TouchableWithoutFeedback onPress={this.incrementeBet.bind(this)}>
                                 <MoreQaploinsIcon style={styles.changeBetIcon} />
@@ -292,7 +262,7 @@ class SetBetScreen extends Component {
                             onPress={this.createMatch.bind(this)}
                             disabled={this.state.loading}>
                             <View style={styles.createButton}>
-                                <Text style={styles.createButtonText}>{translate('setBetScreen.createMatch')}</Text>
+                                <QaplaText style={styles.createButtonText}>{translate('setBetScreen.createMatch')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>

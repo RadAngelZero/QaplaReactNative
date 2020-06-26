@@ -7,7 +7,7 @@
 //                                         addQaploinsToUser for iOS beta
 
 import React, { Component } from 'react';
-import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
+import { Modal, View, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -16,6 +16,7 @@ import Images from './../../../assets/images';
 import { QAPLOIN_PACKAGES } from '../../utilities/Constants';
 import { trackOnSegment } from '../../services/statistics';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
+import QaplaText from '../QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 const QaploinIcon = Images.svg.qaploinsIcon;
@@ -49,17 +50,17 @@ class BuyQaploinsModal extends Component {
                         {/**
                             Goingo to the definition of QAPLOIN_PACKAGES to get more info. about this array
                          */}
-                        <Text style={styles.qaploinsToBuyText}>{QAPLOIN_PACKAGES[0].qaploins}</Text>
-                        <Text style={styles.qaploinsText}>Qoins</Text>
-                        <Text style={styles.paragraph}>
+                        <QaplaText style={styles.qaploinsToBuyText}>{QAPLOIN_PACKAGES[0].qaploins}</QaplaText>
+                        <QaplaText style={styles.qaploinsText}>Qoins</QaplaText>
+                        <QaplaText style={styles.paragraph}>
                             {this.props.body}
-                        </Text>
+                        </QaplaText>
                         <TouchableWithoutFeedback onPress={this.addQaploinsToUser}>
                             <View style={styles.buyButton}>
                                 {/**
                                     Goingo to the definition of QAPLOIN_PACKAGES to get more info. about this array
                                 */}
-                                <Text style={styles.priceText}>{QAPLOIN_PACKAGES[0].price }</Text>
+                                <QaplaText style={styles.priceText}>{QAPLOIN_PACKAGES[0].price }</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>

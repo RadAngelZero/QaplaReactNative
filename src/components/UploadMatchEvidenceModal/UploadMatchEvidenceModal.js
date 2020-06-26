@@ -4,7 +4,6 @@
 import React, { Component } from 'react';
 import {
 	View,
-	Text,
 	Modal,
 	TouchableWithoutFeedback
 } from 'react-native';
@@ -12,6 +11,7 @@ import {
 import styles from './style';
 import Images from './../../../assets/images';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -64,11 +64,11 @@ class UploadMatchEvidenceModal extends Component {
 								<CloseIcon />
 							</View>
 						</TouchableWithoutFeedback>
-						<Text style={styles.headerText}>{translate('uploadClutchEvidenceScreen.uploadMatchEvidenceModal.header')}</Text>
-						<Text style={styles.paragraph}>{translate('uploadClutchEvidenceScreen.uploadMatchEvidenceModal.paragraph')}</Text>
+						<QaplaText style={styles.headerText}>{translate('uploadClutchEvidenceScreen.uploadMatchEvidenceModal.header')}</QaplaText>
+						<QaplaText style={styles.paragraph}>{translate('uploadClutchEvidenceScreen.uploadMatchEvidenceModal.paragraph')}</QaplaText>
 						<TouchableWithoutFeedback onPress={this.action}>
 							<View style={styles.okButton}>
-								<Text style={styles.text}>{translate('uploadClutchEvidenceScreen.uploadMatchEvidenceModal.okButton')}</Text>
+								<QaplaText style={styles.text}>{translate('uploadClutchEvidenceScreen.uploadMatchEvidenceModal.okButton')}</QaplaText>
 							</View>
 						</TouchableWithoutFeedback>
 					</View>

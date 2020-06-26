@@ -1,27 +1,5 @@
-// josep.sanahuja - 12-12-2019 - us160 - Add 'User Has Canceled Match' event in tryToCancelMatch
-// diego          - 12-12-2019 - us169 - Add game when challenge behavior added
-// diego          - 04-12-2019 - us161 - Added BuyQaploinsModal when user have not enough qaploins to challenge a match
-// diego          - 14-09-2019 - bug86 - Show correct text when the user has uploaded their results, but the adversary no
-// diego          - 05-09-2019 - us104 - Added logic to allow just one result per user on the displayed match
-// diego          - 05-09-2019 - us101 - Added timer to show user time before match from matches play expire
-//                                       Added timer to show user time for upload result once the adversary was uploaded their result
-// diego          - 05-09-2019 - us100 - Added timer to show user time before public match expire
-// diego          - 04-09-2019 - us106 - Added accept challenge behavior
-// diego          - 03-09-2019 - us96 - Added custom header (TopNavOptions)
-// diego          - 02-09-2019 - us91 - Add track segment statistic
-// diego          - 19-08-2019 - us89 - Updated references to received params from navigation
-// diego          - 14-08-2019 - us77 - Added navigation to upload results on 'Subir Resultado' button
-// josep.sanahuja - 13-08-2019 - us86 - + match challenge already exist logic
-// diego          - 12-08-2019 - bug4 - Update name of adversary1 prop to adversaryUid because the adversary can be also the adversary2
-// josep.sanahuja - 12-08-2019 - us85 - 'Subir Resultado' button navigates to UploadMatchResult
-// diego          - 06-08-2019 - us76 - Show gamerTag key and value of the match and adversary2
-// diego          - 06-08-2019 - us75 - 'Subir Resultado' button added
-// josep.sanahuja - 05-08-2019 - us84 - Changed SafeAreaView style
-// diego          - 05-08-2019 - us58 - Cancel match logic added
-// diego          - 29-07-2019 - us55 - Challenge match logic added
-
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, TouchableWithoutFeedback, Linking } from 'react-native';
+import { View, SafeAreaView, TouchableWithoutFeedback, Linking } from 'react-native';
 import { connect } from 'react-redux';
 import { SvgUri } from 'react-native-svg';
 import styles from './style';
@@ -45,6 +23,7 @@ import AddGamerTagModal from '../../components/AddGamerTagModal/AddGamerTagModal
 import ZeroQoinsEventsModal from '../../components/ZeroQoinsEventsModal/ZeroQoinsEventsModal';
 import { translate } from '../../utilities/i18';
 import Colors from '../../utilities/Colors';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 const QaploinsIcon = Images.svg.qaploinsIcon;
 const ProfileIcon = Images.svg.profileIcon;
@@ -323,14 +302,14 @@ class PublicMatchCardScreen extends Component {
             <SafeAreaView style={styles.sfvContainer} testID='publicmatchcardscreen-1'>
                 {matchCard.expired ?
                     <View style={styles.mExpiredContainer}>
-                        <Text style={styles.mExpiredText}>
+                        <QaplaText style={styles.mExpiredText}>
                             {translate('publicMatchCardScreen.expired.description')}
-                        </Text>
+                        </QaplaText>
                         <TouchableWithoutFeedback onPress={this.navigateToPublicas}>
                             <View style={styles.mExpiredBttnContainer}>
-                                <Text style={styles.mExpiredBttnText}>
+                                <QaplaText style={styles.mExpiredBttnText}>
                                     {translate('publicMatchCardScreen.expired.bttnText')}
-                                </Text>
+                                </QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
@@ -350,50 +329,50 @@ class PublicMatchCardScreen extends Component {
                         <View style={styles.rowContainer}>
                             <View style={styles.headerRow1}>
                                 <QaploinsIcon style={styles.hr1}/>
-                                <Text style={styles.gameName}>{gameData.name}</Text>
+                                <QaplaText style={styles.gameName}>{gameData.name}</QaplaText>
                                 <QaploinsIcon style={styles.hr3}/>
                             </View>
 
-                            <Text style={styles.gamertag}>{matchCard.userName}</Text>
+                            <QaplaText style={styles.gamertag}>{matchCard.userName}</QaplaText>
 
                     <View style={styles.row}>
                         <View style={styles.infoContainer}>
                             <ProfileIcon style={styles.rowIcon}/>
-                            <Text style={[styles.elemR1, styles.activeColor]}>{translate('publicMatchCardScreen.discordTag')}</Text>
+                            <QaplaText style={[styles.elemR1, styles.activeColor]}>{translate('publicMatchCardScreen.discordTag')}</QaplaText>
                         </View>
                         <View style={styles.infoContainer}>
-                            <Text
+                            <QaplaText
                                 style={[styles.rightTextStyle, styles.activeColor, styles.link]}
                                 onPress={() => Linking.openURL(FIND_ADVERSARY_DISCORD_CHANNEL)}>
                                 {matchCard.discordTag}
-                            </Text>
+                            </QaplaText>
                         </View>
                     </View>
 
                             <View style={styles.row}>
                                 <View style={styles.infoContainer}>
                                     <ProfileIcon style={styles.rowIcon}/>
-                                    <Text style={styles.elemR1}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</Text>
+                                    <QaplaText style={styles.elemR1}>{getGamerTagStringWithGameAndPlatform(matchCard.platform, matchCard.game)}</QaplaText>
                                 </View>
                                 <View style={styles.infoContainer}>
-                                    <Text style={styles.rightTextStyle}>{matchCard.gamerTag.gamerTag}</Text>
-                                </View>
-                            </View>
-
-                            <View style={styles.row}>
-                                <View style={styles.infoContainer}>
-                                    <ProfileIcon style={styles.rowIcon}/>
-                                    <Text style={styles.elemR1}>{translate('publicMatchCardScreen.numberOfMembers')}</Text>
-                                </View>
-                                <View style={styles.infoContainer}>
-                                    <Text style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</Text>
+                                    <QaplaText style={styles.rightTextStyle}>{matchCard.gamerTag.gamerTag}</QaplaText>
                                 </View>
                             </View>
 
                             <View style={styles.row}>
                                 <View style={styles.infoContainer}>
                                     <ProfileIcon style={styles.rowIcon}/>
-                                    <Text style={styles.elemR1}>
+                                    <QaplaText style={styles.elemR1}>{translate('publicMatchCardScreen.numberOfMembers')}</QaplaText>
+                                </View>
+                                <View style={styles.infoContainer}>
+                                    <QaplaText style={styles.rightTextStyle}>{matchCard.numMatches == 1 ? '1 vs 1' : '*vs*'}</QaplaText>
+                                </View>
+                            </View>
+
+                            <View style={styles.row}>
+                                <View style={styles.infoContainer}>
+                                    <ProfileIcon style={styles.rowIcon}/>
+                                    <QaplaText style={styles.elemR1}>
                                         {/**
                                          * bug86: When a user has uploaded a result, text has to show different message
                                          * so the user can know that their result is saved and just can wait for theira adversary result
@@ -408,20 +387,20 @@ class PublicMatchCardScreen extends Component {
                                             :
                                             translate('publicMatchCardScreen.expireIn')
                                         }
-                                    </Text>
+                                    </QaplaText>
                                 </View>
                                 <View style={styles.infoContainer}>
-                                    <Text style={styles.rightTextStyle}>{this.state.validTimeLeft}</Text>
+                                    <QaplaText style={styles.rightTextStyle}>{this.state.validTimeLeft}</QaplaText>
                                 </View>
                             </View>
 
                             <View style={styles.row}>
                                 <View style={styles.infoContainer}>
                                     <ProfileIcon style={styles.rowIcon}/>
-                                    <Text style={styles.elemR1}>Qoins</Text>
+                                    <QaplaText style={styles.elemR1}>Qoins</QaplaText>
                                 </View>
                                 <View style={styles.infoContainer}>
-                                    <Text style={styles.rightTextStyle}>{matchCard.bet}</Text>
+                                    <QaplaText style={styles.rightTextStyle}>{matchCard.bet}</QaplaText>
                                 </View>
                             </View>
                         </View>
@@ -433,7 +412,7 @@ class PublicMatchCardScreen extends Component {
                         {(this.props.uid !== matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
                             <TouchableWithoutFeedback onPress={() => this.tryToChallengeUser()} disabled={this.state.expired}>
                                 <View style={styles.bottomButton}>
-                                    <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.challenge')}</Text>
+                                    <QaplaText style={styles.bottomButtonText}>{translate('publicMatchCardScreen.challenge')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                         }
@@ -444,7 +423,7 @@ class PublicMatchCardScreen extends Component {
                         {(this.props.uid === matchCard.adversaryUid && !matchCard.matchesPlay && !matchCard.isChallenge) &&
                             <TouchableWithoutFeedback onPress={() => this.tryToCancelMatch()} disabled={this.state.expired}>
                                 <View style={styles.bottomButton}>
-                                    <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.cancel')}</Text>
+                                    <QaplaText style={styles.bottomButtonText}>{translate('publicMatchCardScreen.cancel')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                         }
@@ -457,14 +436,14 @@ class PublicMatchCardScreen extends Component {
                             ((matchCard.currentUserAdversary === ADVERSARY_1_NUMBER && matchCard.pickResult1 !== '0')
                             ||
                             (matchCard.currentUserAdversary === ADVERSARY_2_NUMBER && matchCard.pickResult2 !== '0'))) ?
-                            <Text style={styles.alreadyHaveResult}>{translate('publicMatchCardScreen.resultUploaded')}</Text>
+                            <QaplaText style={styles.alreadyHaveResult}>{translate('publicMatchCardScreen.resultUploaded')}</QaplaText>
                             :
                             <>
                             {/*TODO: disabled=this.state.expired} */}
                             {matchCard.matchesPlay &&
                                 <TouchableWithoutFeedback onPress={this.sendToUploadMatchResult} disabled={this.state.expired}>
                                     <View style={styles.bottomButton}>
-                                        <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.uploadResult')}</Text>
+                                        <QaplaText style={styles.bottomButtonText}>{translate('publicMatchCardScreen.uploadResult')}</QaplaText>
                                     </View>
                                 </TouchableWithoutFeedback>
                             }
@@ -473,7 +452,7 @@ class PublicMatchCardScreen extends Component {
                         {matchCard.isChallenge &&
                             <TouchableWithoutFeedback onPress={this.tryToAcceptChallengeRequest} disabled={this.state.expired}>
                                 <View style={styles.bottomButton}>
-                                    <Text style={styles.bottomButtonText}>{translate('publicMatchCardScreen.acceptChallenge')}</Text>
+                                    <QaplaText style={styles.bottomButtonText}>{translate('publicMatchCardScreen.acceptChallenge')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                         }

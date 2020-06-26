@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
-import { 
+import {
 	View,
 	Image,
-	Text,
 	TouchableWithoutFeedback,
 	SafeAreaView,
 	Linking,
@@ -19,6 +18,7 @@ import {
 	ANDROID_STORE_LINK,
 	IOS_STORE_LINK
  } from '../../utilities/Constants';
+import QaplaText from '../QaplaText/QaplaText';
 
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
@@ -42,14 +42,14 @@ class UpdateApp extends Component {
                         <Image source={QaplaSignUpLogo} />
                     </View>
                     <View style={styles.updateContainer}>
-                    	<Text style={styles.txtHeader}>
+                    	<QaplaText style={styles.txtHeader}>
                     		{translate('updateApp.header')}
-                    	</Text>
+                    	</QaplaText>
                         <TouchableWithoutFeedback onPress={this.goToStore}>
 			                <View style={styles.bttnContainer}>
-			                    <Text style={styles.txtBttn}>
+			                    <QaplaText style={styles.txtBttn}>
 			                    	{translate('updateApp.updateBttnTxt')}
-			                    </Text>
+			                    </QaplaText>
 			                </View>
 			            </TouchableWithoutFeedback>
                     </View>

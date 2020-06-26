@@ -7,11 +7,12 @@
 // diego          - 17-07-2019 - NA   - remove full image field in gamesResources object
 
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 import styles from './style';
 import GameCard from '../GameCard/GameCard';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 class PlatformGamesList extends Component {
     render() {
@@ -22,9 +23,9 @@ class PlatformGamesList extends Component {
                  */}
                 {Object.keys(this.props.listOfGames).length > 0 &&
                     <View style={styles.titleContainer}>
-                        <Text style={styles.title}>
+                        <QaplaText style={styles.title}>
                           {platformResources[this.props.platform].platformName}
-                        </Text>
+                        </QaplaText>
                         <View style={[styles.circleIcon, { backgroundColor: platformResources[this.props.platform].platformColor }]}></View>
                     </View>
                 }

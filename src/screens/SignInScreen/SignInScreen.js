@@ -1,7 +1,5 @@
-// josep.sanahuja    - 05-08-2019 - us84 - + SafeAreaView
-
 import React, { Component } from 'react';
-import { BackHandler, View, Image, Text, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+import { BackHandler, View, Image, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -10,6 +8,7 @@ import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../s
 import { translate } from '../../utilities/i18';
 import { updateUserLoggedStatus } from '../../services/database';
 import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
@@ -119,20 +118,20 @@ class SignInScreen extends Component {
                         <TouchableWithoutFeedback onPress={this.signInWithFacebook}>
                             <View style={[styles.socialMediaSignInButton, styles.facebookSignInButton]}>
                                 <FacebookIcon style={styles.socialMediaIconStyle} />
-                                <Text style={[styles.textButton, styles.whiteColor]}>{translate('signInScreen.facebookSignin')}</Text>
+                                <QaplaText style={[styles.textButton, styles.whiteColor]}>{translate('signInScreen.facebookSignin')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.signInWithGoogle}>
                             <View style={[styles.socialMediaSignInButton, styles.googleSignInButton]}>
                                 <GoogleIcon style={styles.socialMediaIconStyle} />
-                                <Text style={[styles.textButton, styles.googleButtonText]}>{translate('signInScreen.googleSignin')}</Text>
+                                <QaplaText style={[styles.textButton, styles.googleButtonText]}>{translate('signInScreen.googleSignin')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <View style={styles.alreadyHaveAccountTextContainer}>
-                            <Text style={[styles.whiteColor, styles.alignSelfCenter, styles.fontBold]}>{translate('signInScreen.alreadyHaveAccount')}</Text>
-                            <Text style={[styles.enterWithEmailText, styles.alignSelfCenter, styles.fontBold]} onPress={this.navigateToLoginWithEmail}>
+                            <QaplaText style={[styles.whiteColor, styles.alignSelfCenter, styles.fontBold]}>{translate('signInScreen.alreadyHaveAccount')}</QaplaText>
+                            <QaplaText style={[styles.enterWithEmailText, styles.alignSelfCenter, styles.fontBold]} onPress={this.navigateToLoginWithEmail}>
                                 {translate('signInScreen.emailSignin')}
-                            </Text>
+                            </QaplaText>
                         </View>
                     </View>
                 </View>

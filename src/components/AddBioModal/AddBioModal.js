@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, View, TouchableWithoutFeedback, Text, TextInput } from 'react-native';
+import { Modal, View, TouchableWithoutFeedback, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -7,6 +7,7 @@ import Images from './../../../assets/images';
 import { updateUserBio } from '../../services/database';
 import { translate } from '../../utilities/i18';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
+import QaplaText from '../QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -52,7 +53,7 @@ class AddBioModal extends Component {
                         <QaplaIcon onPress={this.closeModal} touchableStyle={styles.closeIcon}>
                             <CloseIcon />
                         </QaplaIcon>
-                        <Text style={styles.modalTitle}>{translate('settingsMenuScreen.addBioModal.title')}</Text>
+                        <QaplaText style={styles.modalTitle}>{translate('settingsMenuScreen.addBioModal.title')}</QaplaText>
                         <TextInput
                             onFocus={this.toggleInputSelection}
                             onBlur={this.toggleInputSelection}
@@ -67,12 +68,12 @@ class AddBioModal extends Component {
                         <View style={styles.buttonsContainer}>
                             <TouchableWithoutFeedback onPress={this.closeModal}>
                                 <View style={styles.cancelTextButton}>
-                                    <Text style={styles.textOfButtons}>{translate('settingsMenuScreen.addBioModal.cancel')}</Text>
+                                    <QaplaText style={styles.textOfButtons}>{translate('settingsMenuScreen.addBioModal.cancel')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={this.updateBio}>
                                 <View style={styles.saveTextButton}>
-                                    <Text style={styles.textOfButtons}>{translate('settingsMenuScreen.addBioModal.done')}</Text>
+                                    <QaplaText style={styles.textOfButtons}>{translate('settingsMenuScreen.addBioModal.done')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

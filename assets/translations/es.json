@@ -348,7 +348,7 @@
     },
     "eventDetailsModal": {
         "waitingApproval": "Aun estas esperando la aprobación del creador ;)",
-        "sendFriendRequestTo": "Envia solicitud de amistad a",
+        "eventInformation": "Información del evento",
         "hostedBy": "Relizado por",
         "follow": "Seguir",
         "dateAndTime": "Dia y Hora",

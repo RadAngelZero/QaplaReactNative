@@ -3,7 +3,6 @@ import {
     Linking,
     View,
     ImageBackground,
-    Text,
     Image,
     TouchableOpacity
 } from 'react-native';
@@ -15,6 +14,7 @@ import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { getDateElementsAsNumber, getHourElementsAsNumber, copyDataToClipboard } from '../../utilities/utils';
 import { userHasRequestToJoinEvent, isUserParticipantOnEvent } from '../../services/database';
 import Images from '../../../assets/images';
+import QaplaText from '../QaplaText/QaplaText';
 
 function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
     if (isSponsored) {
@@ -133,9 +133,9 @@ class EventDetails extends Component {
                         source={{ uri: backgroundImage }}
                         style={styles.backgroundImageContainer}
                         imageStyle={styles.backgroundImage}>
-                        <Text style={styles.eventTitle}>
+                        <QaplaText style={styles.eventTitle}>
                             {title && title[userLanguage] ? title[userLanguage] : titulo}
-                        </Text>
+                        </QaplaText>
                         <View>
                             <Image
                                 style={styles.eventSponsorImage}
@@ -145,26 +145,26 @@ class EventDetails extends Component {
                 </BackgroundImageContainer>
 
                 {this.state.existsRequest &&
-                    <Text style={styles.waitingAnswerFeedback}>
+                    <QaplaText style={styles.waitingAnswerFeedback}>
                         {translate('eventDetailsModal.waitingApproval')}
-                    </Text>
+                    </QaplaText>
                 }
 
                 {this.state.isParticipant && streamerGameData &&
                     <View style={[styles.eventCard, styles.streamerGameDataCard]}>
-                        <Text style={styles.eventCardTitle}>
-                            {translate('eventDetailsModal.sendFriendRequestTo')}
-                        </Text>
+                        <QaplaText style={styles.eventCardTitle}>
+                            {translate('eventDetailsModal.eventInformation')}
+                        </QaplaText>
                         <View style={styles.divider} />
                         {Object.keys(streamerGameData).map((streamerInfoKey) => (
                             <View style={styles.streamerGameInfoContainer}>
-                                <Text style={styles.streamerGameInfoKey}>
+                                <QaplaText style={styles.streamerGameInfoKey}>
                                     {streamerInfoKey}
-                                </Text>
+                                </QaplaText>
                                 <View style={styles.streamerGameInfoValueContainer}>
-                                    <Text style={styles.streamerGameInfoValue}>
+                                    <QaplaText style={styles.streamerGameInfoValue}>
                                         {streamerGameData[streamerInfoKey]}
-                                    </Text>
+                                    </QaplaText>
                                     <TouchableOpacity
                                         style={styles.copyIconContainer}
                                         onPress={() => copyDataToClipboard(streamerGameData[streamerInfoKey])}>
@@ -177,9 +177,9 @@ class EventDetails extends Component {
                 }
 
                 <View style={[styles.eventCard, styles.streamerCard]}>
-                    <Text style={styles.eventCardTitle}>
+                    <QaplaText style={styles.eventCardTitle}>
                         {translate('eventDetailsModal.hostedBy')}
-                    </Text>
+                    </QaplaText>
                     <View style={styles.divider} />
                     <View style={styles.streamerInfoContainer}>
                         <View style={styles.streamerDataContainer}>
@@ -187,9 +187,9 @@ class EventDetails extends Component {
                                 source={{ uri: streamerPhoto }}
                                 style={styles.streamerPhoto} />
                             <View style={styles.streamerDetails}>
-                                <Text style={styles.streamerName}>
+                                <QaplaText style={styles.streamerName}>
                                     {streamerName}
-                                </Text>
+                                </QaplaText>
                                 <View style={styles.streamerChannelContainer}>
                                     <Image
                                         source={{ uri: streamingPlatformImage }}
@@ -201,51 +201,51 @@ class EventDetails extends Component {
                             <TouchableOpacity
                                 style={styles.followButtonContainer}
                                 onPress={this.goToStreamerChannel}>
-                                <Text style={styles.followButtonText}>
+                                <QaplaText style={styles.followButtonText}>
                                     {translate('eventDetailsModal.follow')}
-                                </Text>
+                                </QaplaText>
                             </TouchableOpacity>
                         }
                     </View>
                 </View>
 
                 <View style={[styles.eventCard, styles.dateCard]}>
-                    <Text style={styles.eventCardTitle}>
+                    <QaplaText style={styles.eventCardTitle}>
                         {translate('eventDetailsModal.dateAndTime')}
-                    </Text>
+                    </QaplaText>
                     <View style={styles.divider} />
                     <View style={styles.dateInfoContainer}>
-                        <Text style={styles.dateText}>
+                        <QaplaText style={styles.dateText}>
                             {`${eventHour} ${hourSuffix}`}
-                        </Text>
+                        </QaplaText>
                         <View style={styles.dayContainer}>
-                            <Text style={styles.dateText}>
+                            <QaplaText style={styles.dateText}>
                                 {day}
-                            </Text>
-                            <Text style={styles.dayText}>
+                            </QaplaText>
+                            <QaplaText style={styles.dayText}>
                                 {eventDay}
-                            </Text>
+                            </QaplaText>
                         </View>
                     </View>
                 </View>
 
                 {(this.state.existsRequest || this.state.isParticipant) &&
                     <View style={[styles.eventCard, styles.eventChatCard]}>
-                        <Text style={styles.eventCardTitle}>
+                        <QaplaText style={styles.eventCardTitle}>
                             {translate('eventDetailsModal.eventChat')}
-                        </Text>
+                        </QaplaText>
                         <View style={styles.divider} />
                         <View style={styles.chatInfoContainer}>
-                            <Text style={styles.joinDiscordText}>
+                            <QaplaText style={styles.joinDiscordText}>
                                 {translate('eventDetailsModal.joinDiscordChannel')}
-                            </Text>
+                            </QaplaText>
                             <View>
                                 <TouchableOpacity
                                     style={styles.chatButtonContainer}
                                     onPress={this.goToDiscordLink}>
-                                    <Text style={styles.chatButtonText}>
+                                    <QaplaText style={styles.chatButtonText}>
                                         {translate('eventDetailsModal.chat')}
-                                    </Text>
+                                    </QaplaText>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -253,33 +253,33 @@ class EventDetails extends Component {
                 }
 
                 <View style={[styles.eventCard, styles.descriptionCard]}>
-                    <Text style={styles.eventCardTitle}>
+                    <QaplaText style={styles.eventCardTitle}>
                         {translate('eventDetailsModal.description')}
-                    </Text>
+                    </QaplaText>
                     <View style={styles.divider} />
                     <View style={styles.descriptionContainer}>
                         {descriptionsTitle && descriptionsTitle[userLanguage] &&
-                            <Text style={styles.descriptionTitle}>
+                            <QaplaText style={styles.descriptionTitle}>
                                 {descriptionsTitle[userLanguage]}
-                            </Text>
+                            </QaplaText>
                         }
-                        <Text style={[styles.descriptionBody, { marginTop: descriptionsTitle && descriptionsTitle[userLanguage] ? 8 : 14 }]}>
+                        <QaplaText style={[styles.descriptionBody, { marginTop: descriptionsTitle && descriptionsTitle[userLanguage] ? 8 : 14 }]}>
                             {descriptions && descriptions[userLanguage] ?
                                 descriptions[userLanguage]
                                 :
                                 description
                             }
-                        </Text>
+                        </QaplaText>
                         {appStringPrizes && appStringPrizes[userLanguage] &&
                             <>
-                                <Text style={styles.descriptionTitle}>
+                                <QaplaText style={styles.descriptionTitle}>
                                     {translate('eventDetailsModal.prizes')}
-                                </Text>
+                                </QaplaText>
                                 <View style={styles.descriptionBody}>
                                     {appStringPrizes[userLanguage].map((prize) => (
-                                        <Text style={styles.descriptionPrize}>
+                                        <QaplaText style={styles.descriptionPrize}>
                                             {`${prize.title} - ${prize.prize}`}
-                                        </Text>
+                                        </QaplaText>
                                     ))}
                                 </View>
                             </>
@@ -289,18 +289,18 @@ class EventDetails extends Component {
 
                 {instructionsToParticipate && instructionsToParticipate[userLanguage] &&
                     <View style={[styles.eventCard, styles.instructionsCard]}>
-                        <Text style={styles.eventCardTitle}>
+                        <QaplaText style={styles.eventCardTitle}>
                             {translate('eventDetailsModal.instructions')}
-                        </Text>
+                        </QaplaText>
                         <View style={styles.divider} />
-                        <Text style={styles.instructionTitle}>
+                        <QaplaText style={styles.instructionTitle}>
                             {translate('eventDetailsModal.howToParticipate')}
-                        </Text>
+                        </QaplaText>
                         <View>
                             {instructionsToParticipate[userLanguage].map((instruction, index) => (
-                                <Text style={styles.instructionBody}>
+                                <QaplaText style={styles.instructionBody}>
                                     {`${index + 1}. ${instruction}`}
-                                </Text>
+                                </QaplaText>
                             ))}
                         </View>
                     </View>
@@ -310,9 +310,9 @@ class EventDetails extends Component {
                     <TouchableOpacity
                         style={styles.participateButtonContainer}
                         onPress={this.props.goToNextStep}>
-                        <Text style={styles.participateButtonText}>
+                        <QaplaText style={styles.participateButtonText}>
                             {translate('eventDetailsModal.participate')}
-                        </Text>
+                        </QaplaText>
                     </TouchableOpacity>
                     :
                     <View style={{ marginBottom: 30 }} />

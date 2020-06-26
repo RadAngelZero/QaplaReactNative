@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, Text, Switch } from 'react-native';
+import { SafeAreaView, View, Switch } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import { userAllowsNotificationsFrom, updateNotificationPermission, getUserTopicSubscriptions } from '../../services/database';
+import { updateNotificationPermission, getUserTopicSubscriptions } from '../../services/database';
 import { subscribeUserToTopic, unsubscribeUserFromTopic } from '../../services/messaging';
 import { trackOnSegment } from '../../services/statistics';
 import { translate } from '../../utilities/i18';
 import { GAMES_TOPICS, EVENTS_TOPIC } from '../../utilities/Constants';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 class NotificationsSettingsScreen extends Component {
 
@@ -54,24 +55,24 @@ class NotificationsSettingsScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.titleText}>
+                    <QaplaText style={styles.titleText}>
                         {translate('notificationsSettingsScreen.title')}
-                    </Text>
+                    </QaplaText>
                 </View>
                 <View style={styles.settingsContainer}>
                     <View style={styles.setting}>
-                        <Text style={styles.settingDescription}>
+                        <QaplaText style={styles.settingDescription}>
                             {translate('notificationsSettingsScreen.gamesPermissionDescription')}
-                        </Text>
+                        </QaplaText>
                         <Switch
                             style={styles.permissionSwitch}
                             value={this.userNotificationPermissionStatus(GAMES_TOPICS)}
                             onValueChange={(value) => this.updateNotificationPermission(GAMES_TOPICS, value)} />
                     </View>
                     <View style={styles.setting}>
-                        <Text style={styles.settingDescription}>
+                        <QaplaText style={styles.settingDescription}>
                             {translate('notificationsSettingsScreen.eventsPermissionDescription')}
-                        </Text>
+                        </QaplaText>
                         <Switch
                             style={styles.permissionSwitch}
                             value={this.userNotificationPermissionStatus(EVENTS_TOPIC)}

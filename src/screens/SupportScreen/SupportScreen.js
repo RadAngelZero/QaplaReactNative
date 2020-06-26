@@ -1,22 +1,21 @@
 // josep.sanahuja    - 13-11-2019 - us147  - goToLogrosScreen -> goToPopScreen
 // josep.sanahuja    - 04-10-2019 - usXXX  - File creation
 
-import React, {Component}from 'react';
+import React from 'react';
 import {
   View,
   SafeAreaView,
   TextInput,
   TouchableWithoutFeedback,
-  Text,
   Keyboard
 } from 'react-native'
-import styles from './style'
 import { connect } from 'react-redux';
 
+import styles from './style'
 import { sendUserFeedback } from '../../services/database';
-
 import OneTxtOneBttnModal from '../../components/OneTxtOneBttnModal/OneTxtOneBttnModal';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 class SupportScreen extends React.Component {
   constructor(props) {
@@ -65,7 +64,7 @@ class SupportScreen extends React.Component {
                                 value={this.state.text} />
                             <TouchableWithoutFeedback onPress={this.sendFeedback}>
                                 <View style={styles.sendButtonContainer}>
-                                    <Text style={styles.textStyle}>{translate('supportScreen.send')}</Text>
+                                    <QaplaText style={styles.textStyle}>{translate('supportScreen.send')}</QaplaText>
                                 </View>
                         </TouchableWithoutFeedback>
                     </View>

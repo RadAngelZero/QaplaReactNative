@@ -2,13 +2,13 @@
 // diego           - 20-08-2019 - us89 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import Images from './../../../assets/images';
 import UserProfileGameCard from '../UserProfileGameCard/UserProfileGameCard';
 import { getPlatformNameWithKey } from '../../utilities/utils';
+import QaplaText from '../QaplaText/QaplaText';
 
 const EXPERIENCE_REQUIRED_TO_LEVEL_UP = 20;
 
@@ -54,7 +54,7 @@ export class UserProfilePlatformGameList extends Component {
     render() {
         return (
             <View style={{ marginBottom: this.props.lastChild ? 20 : 0 }}>
-                <Text style={styles.title}>{getPlatformNameWithKey(this.props.platform)}</Text>
+                <QaplaText style={styles.title}>{getPlatformNameWithKey(this.props.platform)}</QaplaText>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {Object.keys(this.props.userGames).map((gameKey, index) => {
                         let gamerStatistics = null;

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import styles from './style';
 import Images from '../../../assets/images';
+import QaplaText from '../QaplaText/QaplaText';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
@@ -16,10 +17,10 @@ class LogroCompletedCard extends Component {
                             <QaploinIcon height={48} width={48} />
                         </View>
                         <View>
-                            <Text style={styles.prizeNumber}>{this.props.qaploins}</Text>
+                            <QaplaText style={styles.prizeNumber}>{this.props.qaploins}</QaplaText>
                         </View>
                     </View>
-                    <Text style={styles.description}>{this.props.descripcion}</Text>
+                    <QaplaText style={styles.description}>{this.props.descripcion}</QaplaText>
                 </View>
             </View>
         );

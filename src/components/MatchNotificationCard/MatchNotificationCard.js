@@ -10,7 +10,7 @@
 // diego          - 01-08-2019 - us58 - File creation
 
 import React, { Component } from 'react';
-import { View, Image, TouchableWithoutFeedback, Text, ActivityIndicator } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -33,7 +33,7 @@ import { acceptChallengeRequest } from '../../services/functions';
 import AcceptChallengeModal from '../AcceptChallengeModal/AcceptChallengeModal';
 import NotEnoughQaploinsModal from '../NotEnoughQaploinsModal/NotEnoughQaploinsModal';
 import { translate } from '../../utilities/i18';
-
+import QaplaText from '../QaplaText/QaplaText';
 
 class MatchNotificationCard extends Component {
     state = {
@@ -153,16 +153,16 @@ class MatchNotificationCard extends Component {
                                 }
                             </View>
                             <View style={styles.infoContainer}>
-                                <Text style={styles.infoText}>{translate('notificationsScreen.notificationTypes.matchNotification.title', { userName, gameName })}</Text>
+                                <QaplaText style={styles.infoText}>{translate('notificationsScreen.notificationTypes.matchNotification.title', { userName, gameName })}</QaplaText>
                                 <View style={styles.infoButtonsMenu}>
                                     <TouchableWithoutFeedback onPress={() => this.tryToAcceptChallengeRequest()}>
                                         <View style={[styles.infoAcceptButton, styles.infoButton]}>
-                                            <Text style={styles.infoButtonText}>{translate('notificationsScreen.notificationTypes.matchNotification.accept')}</Text>
+                                            <QaplaText style={styles.infoButtonText}>{translate('notificationsScreen.notificationTypes.matchNotification.accept')}</QaplaText>
                                         </View>
                                     </TouchableWithoutFeedback>
                                     <TouchableWithoutFeedback onPress={this.declineMatch}>
                                         <View style={[styles.infoDeclineButton, styles.infoButton]}>
-                                            <Text style={styles.infoButtonText}>{translate('notificationsScreen.notificationTypes.matchNotification.decline')}</Text>
+                                            <QaplaText style={styles.infoButtonText}>{translate('notificationsScreen.notificationTypes.matchNotification.decline')}</QaplaText>
                                         </View>
                                     </TouchableWithoutFeedback>
                                 </View>
@@ -172,10 +172,10 @@ class MatchNotificationCard extends Component {
                                     {this.state.loading ?
                                         <ActivityIndicator size='small' color='rgb(61, 249, 223)' />
                                         :
-                                        <Text style={styles.arrow}>
+                                        <QaplaText style={styles.arrow}>
                                             {/*I know look like an error but we need to render the grater than character here*/}
                                             >
-                                        </Text>
+                                        </QaplaText>
                                     }
                                 </View>
                             </TouchableWithoutFeedback>

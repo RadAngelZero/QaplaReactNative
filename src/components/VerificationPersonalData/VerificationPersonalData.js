@@ -5,11 +5,12 @@
 // diego           - 18-09-2019 - us119 - File creation
 
 import React, { Component } from 'react';
-import { ScrollView, View, Text, Image, KeyboardAvoidingView, TextInput } from 'react-native';
+import { ScrollView, View, Image, KeyboardAvoidingView, TextInput } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 const Divider = images.png.divider.img;
 
@@ -28,7 +29,7 @@ export class VerificationPersonalData extends Component {
     render() {
         return (
             <ScrollView contentContainerStyle={styles.container}>
-                <Text style={styles.title}>{translate('verificationScreen.verificationPersonalData.title')}</Text>
+                <QaplaText style={styles.title}>{translate('verificationScreen.verificationPersonalData.title')}</QaplaText>
                 <View style={styles.divider}>
                     <Image source={Divider} />
                 </View>

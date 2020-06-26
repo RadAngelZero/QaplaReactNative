@@ -2,7 +2,7 @@
 // diego           - 20-08-2019 - us89  - File creation
 
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx, isIOSDevice } from '../../utilities/iosAndroidDim';
 import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
@@ -59,7 +59,7 @@ export default styles = StyleSheet.create({
     qaploinInfoContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        alignSelf: 'flex-end',
+        alignSelf: isIOSDevice() ? 'flex-start' : 'center',
         marginBottom: heightPercentageToPx(2.21)
     },
     qaploinImage: {

@@ -5,13 +5,13 @@ import React from 'react';
 import {
   View,
   SafeAreaView,
-  TouchableWithoutFeedback,
-  Text
+  TouchableWithoutFeedback
 } from 'react-native';
 
 import styles from './style';
 import { withdrawQaploins } from '../../utilities/utils';
 import ImagePickerModal from '../../components/ImagePicker/ImagePicker';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 export default class MockScreen1 extends React.Component {
     constructor(props) {
@@ -48,7 +48,7 @@ export default class MockScreen1 extends React.Component {
             <SafeAreaView style={styles.sfvContainer}>
               <View style={styles.container}>
                   <TouchableWithoutFeedback onPress={withdrawQaploins}>
-                      <Text>Retirar mi dinero</Text>
+                      <QaplaText>Retirar mi dinero</QaplaText>
                   </TouchableWithoutFeedback>
                    <ImagePickerModal
                       visible={true}

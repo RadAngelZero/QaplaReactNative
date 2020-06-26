@@ -1,17 +1,5 @@
-// diego           - 11-12-2019 - us160 - Updated analitycs
-// diego           - 04-12-2019 - us161 - Added body property to BuyQaploinsModal
-// josep.sanahuja  - 22-11-2019 - us153 - Add EditProfileImgBadge
-// diego           - 15-11-2019 - us149 - Check if user data is loaded on mapStateToProps
-// diego           - 03-09-2019 - us96  - Send flag onCloseGoTo when add game, so the header knows
-//                                        where go if the user closes the procces
-// diego           - 02-09-2019 - us91  - Add record screen segment statistic
-// diego           - 21-08-2019 - us89  - Add redirect logic to LoadGamesScreen
-// diego           - 20-08-2019 - us89  - Show user statistics by game
-//                                        Added BuyQaploinsModal
-// diego           - 19-08-2019 - us89  - File creation
-
 import React, { Component } from 'react';
-import { Linking, SafeAreaView, View, Image, Text, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { Linking, SafeAreaView, View, Image, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -28,6 +16,7 @@ import remoteConf from '../../services/remoteConfig';
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import { translate } from '../../utilities/i18';
 import { heightPercentageToPx, widthPercentageToPx, isIOSDevice } from '../../utilities/iosAndroidDim';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 const QaploinExchangeIcon = images.svg.qoinFlipIcon;
 const BalanceExchangeIcon = images.svg.balanceFlipIcon;
@@ -145,7 +134,15 @@ export class UserProfileScreen extends Component {
                                 <EditProfileImgBadge />
                             </View>
                         </View>
-                        <Text style={styles.userName}>{this.props.userName}</Text>
+                        {this.props.userName.length < 10 ?
+                            <QaplaText style={styles.userName}>
+                                    {this.props.userName}
+                            </QaplaText>
+                        :
+                            <QaplaText style={styles.userName}>
+                                {`${this.props.userName.substring(0, 10)}...`}
+                            </QaplaText>
+                        }
                     </View>
                     <View style={styles.manageQaploinsContainer}>
                         <TouchableWithoutFeedback onPress={() => this.setState({ showQaploinsToUser: !this.state.showQaploinsToUser })}>
@@ -161,16 +158,16 @@ export class UserProfileScreen extends Component {
                                         width={widthPercentageToPx(10)}
                                         style={styles.qaploinImage} />
                                 }
-                                <Text style={styles.qaploinsAmount}>
+                                <QaplaText style={styles.qaploinsAmount}>
                                     {this.state.showQaploinsToUser ? this.props.userQaploins : this.props.userBalance || 0}
-                                </Text>
+                                </QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <View style={styles.buttonGroup}>
                             {!isIOSDevice() ?
                                 <TouchableWithoutFeedback onPress={this.openBuyQaploinsModal}>
                                     <View style={styles.addQaploinsButton}>
-                                        <Text style={styles.addQaploinsButtonText}>{translate('userProfileScreen.buy')}</Text>
+                                        <QaplaText style={styles.addQaploinsButtonText}>{translate('userProfileScreen.buy')}</QaplaText>
                                     </View>
                                 </TouchableWithoutFeedback>
                                 :
@@ -178,7 +175,7 @@ export class UserProfileScreen extends Component {
                             }
                             <TouchableWithoutFeedback onPress={this.exchangeQaploins}>
                                 <View style={styles.cashoutQaploins}>
-                                    <Text style={styles.addQaploinsButtonText}>{translate('userProfileScreen.exchange')}</Text>
+                                    <QaplaText style={styles.addQaploinsButtonText}>{translate('userProfileScreen.exchange')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

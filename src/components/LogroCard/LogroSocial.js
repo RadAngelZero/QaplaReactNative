@@ -4,7 +4,7 @@
 // josep.sanahuja - 19-09-2019 - us114 - File creation
 
 import React, { Component } from 'react';
-import { View, Image, TouchableWithoutFeedback, Text, Linking } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Linking } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 import styles from './style';
@@ -19,7 +19,7 @@ import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
 import ImagePickerModal from '../../components/ImagePicker/ImagePickerModal/ImagePickerModal';
 import OneTxtOneBttnModal from '../OneTxtOneBttnModal/OneTxtOneBttnModal'
 import { translate, getLocaleLanguage } from '../../utilities/i18';
-
+import QaplaText from '../QaplaText/QaplaText';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
@@ -183,14 +183,14 @@ class LogroSocial extends Component {
                     </View>
                     <View style={styles.colBSocialContainer}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.titleSocial}>{titleTranslated}</Text>
+                            <QaplaText style={styles.titleSocial}>{titleTranslated}</QaplaText>
                         </View>
-                        <Text style={styles.description}>{descriptionTranslated}</Text>
+                        <QaplaText style={styles.description}>{descriptionTranslated}</QaplaText>
                     </View>
                     <View style={styles.colCSocialContainer}>
                         <View style={styles.qaploinsContainer}>
                             <QaploinIcon height={31} width={31} style={styles.qaploinIcon} />
-                            <Text style={styles.qaploinsText}>{qaploins}</Text>
+                            <QaplaText style={styles.qaploinsText}>{qaploins}</QaplaText>
                         </View>
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />
                         {puntosCompletados >= totalPuntos &&
@@ -199,7 +199,7 @@ class LogroSocial extends Component {
                                 /**Just a double check on disabled property of the button */
                                 disabled={puntosCompletados < totalPuntos}>
                                 <View style={styles.redimirButton}>
-                                    <Text style={styles.redimirTextButton}>{translate('activeAchievementsScreen.socialAchievement.redeem')}</Text>
+                                    <QaplaText style={styles.redimirTextButton}>{translate('activeAchievementsScreen.socialAchievement.redeem')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                         }
@@ -214,12 +214,12 @@ class LogroSocial extends Component {
                     <View style={styles.shareContainer}>
                         <TouchableWithoutFeedback onPress={this.goToSocialLink}>
                             <View>
-                                <Text style={styles.likeText}>{translate('activeAchievementsScreen.socialAchievement.like')}</Text>
+                                <QaplaText style={styles.likeText}>{translate('activeAchievementsScreen.socialAchievement.like')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.openImgPckModal}>
                             <View>
-                                <Text style={styles.uploadText}>{translate('activeAchievementsScreen.socialAchievement.upload')}</Text>
+                                <QaplaText style={styles.uploadText}>{translate('activeAchievementsScreen.socialAchievement.upload')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>

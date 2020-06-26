@@ -2,13 +2,14 @@
 // josep.sanahuja    - 05-08-2019 - us84  - + SafeAreaView
 
 import React, { Component } from 'react';
-import { BackHandler, SafeAreaView, ScrollView, View, Text, TouchableWithoutFeedback } from 'react-native';
+import { BackHandler, SafeAreaView, ScrollView, View, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './style';
 import Images from '../../../assets/images';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { translate } from '../../utilities/i18';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 const LightningIcon = Images.svg.lightningIcon;
 const SearchIcon = Images.svg.searchIcon;
@@ -57,7 +58,7 @@ class ChooseMatchTypeScreen extends Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <ScrollView>
                     <View style={styles.container}>
-                        <Text style={styles.titleText}>{translate('chooseMatchTypeScreen.title')}</Text>
+                        <QaplaText style={styles.titleText}>{translate('chooseMatchTypeScreen.title')}</QaplaText>
                         <View style={styles.lightningImage}>
                             <LightningIcon
                                 width={widthPercentageToPx(30)}
@@ -65,9 +66,9 @@ class ChooseMatchTypeScreen extends Component {
                         </View>
                         <TouchableWithoutFeedback onPress={this.goToLoadGames}>
                             <View style={styles.publicMatchButton}>
-                                <Text style={styles.publicMatchButtonText}>
+                                <QaplaText style={styles.publicMatchButtonText}>
                                     {translate('chooseMatchTypeScreen.publicMatch')}
-                                </Text>
+                                </QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback>
@@ -75,9 +76,9 @@ class ChooseMatchTypeScreen extends Component {
                                 <View style={styles.directMatchButtonSearchIcon}>
                                     <SearchIcon width={18} height={18} />
                                 </View>
-                                <Text style={styles.directMatchButtonText}>
+                                <QaplaText style={styles.directMatchButtonText}>
                                     {translate('chooseMatchTypeScreen.directMatch')}
-                                </Text>
+                                </QaplaText>
                                 <View style={styles.directMatchButtonSearchIcon}></View>
                             </View>
                         </TouchableWithoutFeedback>

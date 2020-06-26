@@ -4,18 +4,19 @@
 // josep.sanahuja - 08-07-2019 - us83 - Added 'goToScreen' logic & 'constructor'
 
 import React, { Component } from 'react';
-import { View, TextInput, Text, TouchableWithoutFeedback, Image, SafeAreaView } from 'react-native';
+import { View, TextInput, TouchableWithoutFeedback, Image, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 
 import Images from './../../../assets/images';
 import styles from './style';
 
-import { validateUserName, createUserName, createUserProfile } from '../../services/database';
+import { validateUserName, createUserProfile } from '../../services/database';
 import { translate } from '../../utilities/i18';
 
 import CheckBox from '../../components/CheckBox/CheckBox';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import TermsAndConditionsModal from '../../components/TermsAndConditionsModal/TermsAndConditionsModal';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 
@@ -111,7 +112,7 @@ class ChooseUserNameScreen extends Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
                     <View style={styles.formContainer}>
-                        <Text style={styles.title}>{translate('chooseUserNameScreen.title')}</Text>
+                        <QaplaText style={styles.title}>{translate('chooseUserNameScreen.title')}</QaplaText>
                         <TextInput
                             style = {styles.inputText}
                             placeholder={translate('chooseUserNameScreen.userNamePlaceholder')}
@@ -122,23 +123,23 @@ class ChooseUserNameScreen extends Component {
                     </View>
                     {this.state.showErrorMessage &&
                     <View>
-                        <Text style={styles.buttonText}>{translate('chooseUserNameScreen.userNameAlreadyTaken')}</Text>
+                        <QaplaText style={styles.buttonText}>{translate('chooseUserNameScreen.userNameAlreadyTaken')}</QaplaText>
                     </View>
                     }
-                    <Text style={styles.modalText}>
+                    <QaplaText style={styles.modalText}>
                         {`${translate('chooseUserNameScreen.bodyFirstPart')} `}
                         <TouchableWithoutFeedback onPress={this.openTermsModal}>
-                            <Text style={styles.hyperlinkText}>
+                            <QaplaText style={styles.hyperlinkText}>
                                 {translate('chooseUserNameScreen.termsAndConditions')}
-                            </Text>
+                            </QaplaText>
                         </TouchableWithoutFeedback>
                         {` ${translate('chooseUserNameScreen.bodySecondPart')} `}
                         <TouchableWithoutFeedback onPress={this.openPrivacyModal}>
-                            <Text style={styles.hyperlinkText}>
+                            <QaplaText style={styles.hyperlinkText}>
                                 {translate('chooseUserNameScreen.privacyPolicy')}
-                            </Text>
+                            </QaplaText>
                         </TouchableWithoutFeedback>
-                    </Text>
+                    </QaplaText>
                     <CheckBox
                         label={translate('chooseUserNameScreen.agreeWithTerms')}
                         onPress={this.toggleAgreementTermsState}
@@ -154,16 +155,16 @@ class ChooseUserNameScreen extends Component {
                         disabled={this.state.userName === '' || this.state.checkingUserName || !(this.state.agreementPrivacyState && this.state.agreementTermsState)}
                         onPress={this.checkTermsConditionsAndUsername}>
                         <View style={styles.confirmButton}>
-                            <Text style={styles.confirmButtonText}>
+                            <QaplaText style={styles.confirmButtonText}>
                                 {translate('chooseUserNameScreen.acceptButton')}
-                            </Text>
+                            </QaplaText>
                         </View>
                     </TouchableWithoutFeedback>
                     {this.state.checkingUserName &&
                         <View>
-                            <Text style={styles.validatingText}>
+                            <QaplaText style={styles.validatingText}>
                                 {translate('chooseUserNameScreen.validatingUserName')}
-                            </Text>
+                            </QaplaText>
                         </View>
                     }
                     <Image style={styles.backgroundImage}

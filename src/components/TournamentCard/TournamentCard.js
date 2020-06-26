@@ -12,6 +12,7 @@ import { isUserLogged } from '../../services/auth';
 
 import LogroLifeTimeBadge from '../LogroCard/LogroLifeTimeBadge/LogroLifeTimeBadge';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 class TournamentCard extends Component {
     state = {
@@ -108,16 +109,16 @@ class TournamentCard extends Component {
                     </View>
                     <View style={styles.colBSocialContainer}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{titleTranslated}</Text>
+                            <QaplaText style={styles.title}>{titleTranslated}</QaplaText>
                         </View>
-                        <Text style={styles.description}>{descriptionTranslated}</Text>
+                        <QaplaText style={styles.description}>{descriptionTranslated}</QaplaText>
                     </View>
                     <View style={styles.colBContainer}>
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />
                         {(puntosCompletados === null || puntosCompletados === undefined) &&
                             <TouchableWithoutFeedback onPress={this.joinInTournament}>
                                 <View style={styles.redimirButton}>
-                                    <Text style={styles.redimirTextButton}>{translate('activeAchievementsScreen.tournamentAchivement.participate')}</Text>
+                                    <QaplaText style={styles.redimirTextButton}>{translate('activeAchievementsScreen.tournamentAchivement.participate')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                         }
@@ -131,7 +132,7 @@ class TournamentCard extends Component {
                                 <View style={styles.progressBarContent} />
                             </Animated.View>
                         </View>
-                        <Text style={styles.progressBarCounter}>{`${puntosCompletados}/${totalPuntos}`}</Text>
+                        <QaplaText style={styles.progressBarCounter}>{`${puntosCompletados}/${totalPuntos}`}</QaplaText>
                     </View>
                 }
             </View>

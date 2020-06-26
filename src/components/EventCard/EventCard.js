@@ -2,16 +2,15 @@
 // diego           - 14-11-2019 - us146 - File creation
 
 import React, { Component } from 'react';
-import { View, ImageBackground, Text, TouchableWithoutFeedback, Image } from 'react-native';
+import { View, ImageBackground, TouchableWithoutFeedback, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style';
-
 import { getLocaleLanguage } from '../../utilities/i18';
-
 import EventDetailsModal from '../EventDetailsModal/EventDetailsModal';
+import QaplaText from '../QaplaText/QaplaText';
 
 function EventCardContainer({ isSponsored, children, onPress, gradientColors }) {
     if (isSponsored) {
@@ -97,18 +96,18 @@ class EventCard extends Component {
                     imageStyle={styles.backgroundImage}
                     source={{ uri: backgroundImage }}>
                     <View style={styles.titleContainer}>
-                        <Text style={styles.title}>
+                        <QaplaText style={styles.title}>
                             {titleTranslated}
-                        </Text>
+                        </QaplaText>
                     </View>
                     <View style={styles.body}>
                         <Image
                             style={styles.eventSponsorImage}
                             source={{ uri: sponsorImage }} />
                         <View style={styles.streamerDetails}>
-                            <Text style={styles.streamPlatformText}>
+                            <QaplaText style={styles.streamPlatformText}>
                                 {streamerName}
-                            </Text>
+                            </QaplaText>
                             <Image
                                 style={styles.streamerPhoto}
                                 source={{ uri: streamerPhoto }} />

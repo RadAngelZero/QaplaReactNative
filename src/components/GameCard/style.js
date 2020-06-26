@@ -21,6 +21,7 @@ export default StyleSheet.create({
 	detailsContainer: {
         backgroundColor: '#141833',
         flexDirection: 'row',
+        alignItems: 'center',
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10
     },
@@ -30,12 +31,9 @@ export default StyleSheet.create({
         marginBottom: 12
     },
     gameName: {
+        textAlignVertical: 'center',
         fontSize: 18,
         color: '#FFF',
-        alignSelf: 'center',
-        marginLeft: 8,
-        position: 'absolute',
-        bottom: 16,
-        left: 32
+        marginLeft: 12
     }
 });

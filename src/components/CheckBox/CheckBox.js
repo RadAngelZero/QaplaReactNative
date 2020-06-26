@@ -1,10 +1,11 @@
 // diego	      - 06-09-2019 - us93 - File creation
 
 import React, { Component } from 'react';
-import { Animated, View, TouchableWithoutFeedback, Text } from 'react-native';
+import { Animated, View, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';
+import QaplaText from '../QaplaText/QaplaText';
 
 const OkIcon = images.svg.okIcon;
 
@@ -48,7 +49,7 @@ export class CheckBox extends Component {
                                 <OkIcon />
                             </Animated.View>
                         </View>
-                        <Text style={styles.label}>{this.props.label}</Text>
+                        <QaplaText style={styles.label}>{this.props.label}</QaplaText>
                     </View>
                 </TouchableWithoutFeedback>
             </View>

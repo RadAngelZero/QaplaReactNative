@@ -5,7 +5,6 @@ import {
     Platform,
     PermissionsAndroid,
     View,
-    Text,
     Image,
     FlatList,
     TouchableWithoutFeedback
@@ -13,8 +12,8 @@ import {
 import CameraRoll from "@react-native-community/cameraroll";
 import styles from './style';
 import { translate } from '../../utilities/i18';
-
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import QaplaText from '../QaplaText/QaplaText';
 
 export default class ImagePicker extends React.Component {
   constructor(props) {
@@ -191,7 +190,7 @@ export default class ImagePicker extends React.Component {
         this.state.morePictures && !this.state.pictureSelected &&
             <TouchableWithoutFeedback onPress={this.loadMorePictures}>
                 <View style={styles.moreButtonContainer}>
-                    <Text style={styles.textStyle}>{translate('imagePicker.showMorePhotos')}</Text>
+                    <QaplaText style={styles.textStyle}>{translate('imagePicker.showMorePhotos')}</QaplaText>
                 </View>
             </TouchableWithoutFeedback>
         }
@@ -199,12 +198,12 @@ export default class ImagePicker extends React.Component {
             <>
                 <TouchableWithoutFeedback onPress={this.saveImage}>
                     <View style={styles.okButtonContainer}>
-                        <Text style={styles.textStyle}>{this.props.selectImgBttnTxt}</Text>
+                        <QaplaText style={styles.textStyle}>{this.props.selectImgBttnTxt}</QaplaText>
                     </View>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={this.unselectPicture}>
                     <View style={styles.cancelButtonContainer}>
-                        <Text style={styles.textStyle}>{this.props.discardImgBttnTxt}</Text>
+                        <QaplaText style={styles.textStyle}>{this.props.discardImgBttnTxt}</QaplaText>
                     </View>
                 </TouchableWithoutFeedback>
             </>

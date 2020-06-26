@@ -3,7 +3,7 @@
 // josep.sanahuja - 18-12-2019 - us178 - File creation
 
 import React, { Component } from 'react';
-import { View, TouchableWithoutFeedback, Text } from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './style';
 
@@ -12,6 +12,7 @@ import {
     ONE_SECOND_IN_MILISECONDS
 } from './../../utilities/Constants';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 export class ResendVerCodeCountdown extends Component {
     constructor(props) {
@@ -64,16 +65,16 @@ export class ResendVerCodeCountdown extends Component {
                 {this.state.countFinished ?
                     <View>
                         <TouchableWithoutFeedback onPress={this.send} >
-                            <Text style={styles.resendText}>{translate('verificationScreen.resendVerCodeCountdown.title')}</Text>
+                            <QaplaText style={styles.resendText}>{translate('verificationScreen.resendVerCodeCountdown.title')}</QaplaText>
                         </TouchableWithoutFeedback>
                         {this.state.codeResent &&
-                            <Text style={styles.textWarning}>{translate('verificationScreen.resendVerCodeCountdown.codeWasResent')}</Text>
+                            <QaplaText style={styles.textWarning}>{translate('verificationScreen.resendVerCodeCountdown.codeWasResent')}</QaplaText>
                         }
                     </View>
                     :
-                    <Text style={styles.textWarning}>
+                    <QaplaText style={styles.textWarning}>
                         {translate('verificationScreen.resendVerCodeCountdown.resendCountdown', { countDownSecs: this.state.countDownSecs / ONE_SECOND_IN_MILISECONDS })}
-                    </Text>
+                    </QaplaText>
                 }
             </View>
         );

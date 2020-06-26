@@ -2,20 +2,19 @@
 // josep.sanahuja  - 17-10-2019 - us134 - File creation
 
 import React, { Component } from 'react';
-import { SafeAreaView, View, Text, Image, TouchableWithoutFeedback, FlatList, Modal } from 'react-native';
-import styles from './style';
+import { SafeAreaView, View, Image, TouchableWithoutFeedback, FlatList, Modal } from 'react-native';
 
+import styles from './style';
 import Images from '../../../../assets/images';
+import QaplaText from '../../QaplaText/QaplaText';
 
 const Divider = Images.png.divider.img;
 const CloseIcon = Images.svg.closeIcon;
 
-const MEXICO_FLAT_LIST_INDEX = 144;
-
 export class PhonePrefixPicker extends Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
             countriesList: [],
             countrySelected: {
@@ -100,8 +99,8 @@ export class PhonePrefixPicker extends Component {
             <>     
                 <TouchableWithoutFeedback onPress={this.openModal}>     
                         <View style={styles.container}>
-                            <Text style={styles.prefixAlphaCode}>{this.state.countrySelected.alpha2Code}</Text>
-                            <Text style={styles.prefixNumCode}>+{this.state.countrySelected.callingCodes}</Text> 
+                            <QaplaText style={styles.prefixAlphaCode}>{this.state.countrySelected.alpha2Code}</QaplaText>
+                            <QaplaText style={styles.prefixNumCode}>+{this.state.countrySelected.callingCodes}</QaplaText> 
                         </View>
                 </TouchableWithoutFeedback>
                 <Modal
@@ -117,7 +116,7 @@ export class PhonePrefixPicker extends Component {
                                     </View>
                                 </TouchableWithoutFeedback>
                                 <View>
-                                    <Text style={styles.title}>Selecciona tu prefijo</Text>
+                                    <QaplaText style={styles.title}>Selecciona tu prefijo</QaplaText>
                                     <View style={styles.divider}>
                                         <Image source={Divider} />
                                     </View>
@@ -129,9 +128,9 @@ export class PhonePrefixPicker extends Component {
                                         renderItem={({item}) =>
                                             <TouchableWithoutFeedback onPress={() => this.itemSelected(item)}>
                                                 <View style={styles.prefixCardItem}>
-                                                    <Text style={styles.prefixCardTxt}>
+                                                    <QaplaText style={styles.prefixCardTxt}>
                                                         +{item.callingCodes[0]}, {item.name}
-                                                    </Text> 
+                                                    </QaplaText> 
                                                 </View>
                                             </TouchableWithoutFeedback>
                                         }

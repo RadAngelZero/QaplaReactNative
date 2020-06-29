@@ -2,19 +2,20 @@
 // diego           - 20-08-2019 - us89 - File creation
 
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 import styles from './style';
+import QaplaText from '../QaplaText/QaplaText';
 
 export class AnimatedCircleIndicator extends Component {
 
     /**
      * Determine the content to show inside the circle
-     * 
+     *
      * @param {number} fill Percentage of the circle who is filled
      */
-    fillCircleText = (fill) => <Text style={styles.fillText}> {Math.floor(fill)}{this.props.percentage ? '%' : ''} </Text>
+    fillCircleText = (fill) => <QaplaText style={styles.fillText}> {Math.floor(fill)}{this.props.percentage ? '%' : ''} </QaplaText>
 
     render() {
         return (
@@ -31,7 +32,7 @@ export class AnimatedCircleIndicator extends Component {
                         {this.fillCircleText}
                 </AnimatedCircularProgress>
                 {this.props.description &&
-                    <Text style={styles.description}>{this.props.description}</Text>
+                    <QaplaText style={styles.description}>{this.props.description}</QaplaText>
                 }
             </View>
         );

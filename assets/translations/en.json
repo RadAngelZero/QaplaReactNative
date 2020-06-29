@@ -348,7 +348,7 @@
     },
     "eventDetailsModal": {
         "waitingApproval": "You are still waiting for creator’s aproval ;)",
-        "sendFriendRequestTo": "Send friend request to",
+        "eventInformation": "Event information",
         "hostedBy": "Hosted by",
         "follow": "Follow",
         "dateAndTime": "Date & Time",

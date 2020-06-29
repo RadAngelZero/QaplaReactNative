@@ -1,14 +1,7 @@
-// diego          - 11-12-2019 - us160 - Updated analitycs
-// diego          - 12-09-2019 - us99 - Added close icon to allow user cancelation on upload result
-// diego          - 19-08-2019 - us89 - Add UploadMatchEvidenceModal and UploadMatchResultsModal
-// diego          - 13-08-2019 - us77 - Added navigation to UploadClutchEvidenceScreen
-// josep.sanahuja - 06-08-2019 - us78 - File creation
-
 import React, { Component } from 'react';
 import {
     View,
     SafeAreaView,
-    Text,
     TouchableWithoutFeedback
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -22,6 +15,7 @@ import UploadMatchResultsModal from '../../components/UploadMatchResultsModal/Up
 import { WON_RESULT, TIE_RESULT, LOST_RESULT, OTHER_RESULT } from '../../utilities/Constants';
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 const WinIcon = Images.svg.winIcon;
 const LostIcon = Images.svg.lostIcon;
@@ -111,7 +105,7 @@ class UploadMatchResultScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    <Text style={styles.title}>{translate('uploadMatchResultScreen.title')}</Text>
+                    <QaplaText style={styles.title}>{translate('uploadMatchResultScreen.title')}</QaplaText>
                     <View style={styles.winLooseContainer}>
                         <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, WON_RESULT)}>
                             <View>
@@ -119,9 +113,9 @@ class UploadMatchResultScreen extends Component {
                                     width={widthPercentageToPx(25)}
                                     height={heightPercentageToPx(20)}
                                     fill={this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3'} />
-                                <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3' }]}>
+                                <QaplaText style={[styles.resultDecription, { color: this.state.matchResultStatus === WON_RESULT ? '#08D597' : '#B3B3B3' }]}>
                                     {translate('uploadMatchResultScreen.results.won')}
-                                </Text>
+                                </QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <View style={styles.winLooseSeparator} />
@@ -131,9 +125,9 @@ class UploadMatchResultScreen extends Component {
                                     width={widthPercentageToPx(18)}
                                     height={heightPercentageToPx(14)}
                                     fill={this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3'} />
-                                <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
+                                <QaplaText style={[styles.resultDecription, { color: this.state.matchResultStatus === TIE_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
                                     {translate('uploadMatchResultScreen.results.draw')}
-                                </Text>
+                                </QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <View style={styles.winLooseSeparator} />
@@ -143,21 +137,21 @@ class UploadMatchResultScreen extends Component {
                                     width={widthPercentageToPx(25)}
                                     height={heightPercentageToPx(20)}
                                     fill={this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3'} />
-                                <Text style={[styles.resultDecription, { color: this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3' }]}>
+                                <QaplaText style={[styles.resultDecription, { color: this.state.matchResultStatus === LOST_RESULT ? '#FF0000' : '#B3B3B3' }]}>
                                     {translate('uploadMatchResultScreen.results.lost')}
-                                </Text>
+                                </QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
                     <TouchableWithoutFeedback onPress={this.toogleResultButton.bind(this, OTHER_RESULT)}>
                         <View style={[styles.otherResultButton, { borderColor: this.state.matchResultStatus === OTHER_RESULT ? '#6D7DDE' : '#B3B3B3' }]}>
-                            <Text style={styles.buttonText}>{translate('uploadMatchResultScreen.results.dontPlayed')}</Text>
+                            <QaplaText style={styles.buttonText}>{translate('uploadMatchResultScreen.results.dontPlayed')}</QaplaText>
                         </View>
                     </TouchableWithoutFeedback>
                     {this.state.matchResultStatus &&
                         <TouchableWithoutFeedback onPress={this.uploadResult}>
                             <View style={styles.uploadResultButton}>
-                                <Text style={styles.buttonText}>{translate('uploadMatchResultScreen.uploadResult')}</Text>
+                                <QaplaText style={styles.buttonText}>{translate('uploadMatchResultScreen.uploadResult')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                     }

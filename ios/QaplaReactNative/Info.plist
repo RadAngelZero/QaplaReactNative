@@ -91,6 +91,10 @@
 	<string>Photo Library Access Warning</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Photo Library Access Warning</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SFRounded-Ultralight.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

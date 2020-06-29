@@ -2,18 +2,17 @@
 // diego           - 14-11-2019 - us146 - File creation
 
 import React, { Component } from 'react';
-import { View, ImageBackground, Text, TouchableWithoutFeedback, Image } from 'react-native';
+import { View, ImageBackground, TouchableWithoutFeedback, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style';
-
 import { getLocaleLanguage } from '../../utilities/i18';
-
 import EventDetailsModal from '../EventDetailsModal/EventDetailsModal';
+import QaplaText from '../QaplaText/QaplaText';
 
-function EventCardContainer({ isSponsored, children, onPress }) {
+function EventCardContainer({ isSponsored, children, onPress, gradientColors }) {
     if (isSponsored) {
         return (
             <TouchableWithoutFeedback onPress={onPress}>
@@ -21,7 +20,7 @@ function EventCardContainer({ isSponsored, children, onPress }) {
                     useAngle={true}
                     angle={150}
                     angleCenter={{ x: .5, y: .5}}
-                    colors={['#AA16EE', '#07EAfA']}
+                    colors={gradientColors ? [gradientColors.primary, gradientColors.secondary] : ['#AA16EE', '#07EAfA']}
                     style={styles.container}>
                     {children}
                 </LinearGradient>
@@ -71,7 +70,8 @@ class EventCard extends Component {
             streamerPhoto,
             streamerName,
             sponsorImage,
-            idLogro
+            idLogro,
+            gradientColors
         } = this.props;
 
         let titleTranslated = this.getTextBasedOnUserLanguage(title);
@@ -89,24 +89,25 @@ class EventCard extends Component {
         return (
             <EventCardContainer
                 isSponsored={sponsorImage ? true : false}
-                onPress={this.toogleEventDetailsModalVisibility}>
+                onPress={this.toogleEventDetailsModalVisibility}
+                gradientColors={gradientColors}>
                 <ImageBackground
                     style={styles.backgroundImageContainer}
                     imageStyle={styles.backgroundImage}
                     source={{ uri: backgroundImage }}>
                     <View style={styles.titleContainer}>
-                        <Text style={styles.title}>
+                        <QaplaText style={styles.title}>
                             {titleTranslated}
-                        </Text>
+                        </QaplaText>
                     </View>
                     <View style={styles.body}>
                         <Image
                             style={styles.eventSponsorImage}
                             source={{ uri: sponsorImage }} />
                         <View style={styles.streamerDetails}>
-                            <Text style={styles.streamPlatformText}>
+                            <QaplaText style={styles.streamPlatformText}>
                                 {streamerName}
-                            </Text>
+                            </QaplaText>
                             <Image
                                 style={styles.streamerPhoto}
                                 source={{ uri: streamerPhoto }} />

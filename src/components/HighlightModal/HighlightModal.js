@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   Modal,
   TouchableWithoutFeedback,
   Dimensions
@@ -12,6 +11,7 @@ import {
 import styles from './style';
 import { withNavigation } from 'react-navigation';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 const TOP_QUADRANT            = 0;
 const BOTTOM_QUADRANT         = 1;
@@ -182,12 +182,12 @@ class HighlightModal extends Component {
 
                         {/* This is the info content from the Component */}
                         <View style={getAbsTextInfoPosOffsetsStyle(this.subQuad)}>
-                          <Text style={styles.infoHeader}>{this.props.header}</Text>
-                          <Text style={styles.infoBody}>{this.props.body}</Text>
+                          <QaplaText style={styles.infoHeader}>{this.props.header}</QaplaText>
+                          <QaplaText style={styles.infoBody}>{this.props.body}</QaplaText>
                           <View style={styles.infoContainer}>
                             <TouchableWithoutFeedback onPress={this.action}>
                                 <View>
-                                    <Text style={styles.okButton}>{translate('highlightModal.acceptButton')}</Text>
+                                    <QaplaText style={styles.okButton}>{translate('highlightModal.acceptButton')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                           </View>

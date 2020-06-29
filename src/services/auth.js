@@ -114,7 +114,7 @@ export async function signOut() {
     try {
         const { uid } = auth.currentUser;
         updateUserLoggedStatus(false);
-        await unsubscribeUserFromAllSubscribedTopics();
+        await unsubscribeUserFromAllSubscribedTopics(uid);
         removeUserListeners(uid);
         removeLogrosListeners(uid);
         await store.dispatch(emptyLogros());

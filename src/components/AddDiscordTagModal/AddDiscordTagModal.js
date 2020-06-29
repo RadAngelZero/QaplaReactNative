@@ -1,7 +1,7 @@
 // diego          - 13-11-2019 - us148 - File creation
 
 import React, { Component } from 'react';
-import { Modal, View, TouchableWithoutFeedback, Text, TextInput } from 'react-native';
+import { Modal, View, TouchableWithoutFeedback, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -10,6 +10,7 @@ import { updateUserDiscordTag } from '../../services/database';
 import { translate } from '../../utilities/i18';
 import Colors from '../../utilities/Colors';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
+import QaplaText from '../QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -65,7 +66,7 @@ class AddDiscordTagModal extends Component {
                         <QaplaIcon onPress={this.closeModal} touchableStyle={styles.closeIcon}>
                             <CloseIcon />
                         </QaplaIcon>
-                        <Text style={styles.modalTitle}>{translate('settingsMenuScreen.addDiscordTagModal.title')}</Text>
+                        <QaplaText style={styles.modalTitle}>{translate('settingsMenuScreen.addDiscordTagModal.title')}</QaplaText>
                         <TextInput
                             onFocus={this.toggleInputSelection}
                             onBlur={this.toggleInputSelection}
@@ -78,12 +79,12 @@ class AddDiscordTagModal extends Component {
                         <View style={styles.buttonsContainer}>
                             <TouchableWithoutFeedback onPress={this.closeModal}>
                                 <View style={styles.cancelTextButton}>
-                                    <Text style={styles.textOfButtons}>{translate('settingsMenuScreen.addDiscordTagModal.cancel')}</Text>
+                                    <QaplaText style={styles.textOfButtons}>{translate('settingsMenuScreen.addDiscordTagModal.cancel')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={this.updateDiscordTag}>
                                 <View style={styles.saveTextButton}>
-                                    <Text style={styles.textOfButtons}>{translate('settingsMenuScreen.addDiscordTagModal.done')}</Text>
+                                    <QaplaText style={styles.textOfButtons}>{translate('settingsMenuScreen.addDiscordTagModal.done')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

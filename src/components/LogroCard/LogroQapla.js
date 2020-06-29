@@ -2,7 +2,7 @@
 // josep.sanahuja - 19-09-2019 - us114 - File creation
 
 import React, { Component } from 'react';
-import { Animated, View, TouchableWithoutFeedback, Text } from 'react-native';
+import { Animated, View, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './style';
 import Images from '../../../assets/images';
@@ -10,6 +10,7 @@ import LogroLifeTimeBadge from './LogroLifeTimeBadge/LogroLifeTimeBadge';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { redeemLogroCloudFunction } from '../../services/functions';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 const QaploinIcon = Images.svg.qaploinsIcon;
 
@@ -98,14 +99,14 @@ class LogroQapla extends Component {
                 <View style={styles.contentContainer}>
                     <View style={styles.colAContainer}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{titleTranslated}</Text>
+                            <QaplaText style={styles.title}>{titleTranslated}</QaplaText>
                         </View>
-                        <Text style={styles.description}>{descriptionTranslated}</Text>
+                        <QaplaText style={styles.description}>{descriptionTranslated}</QaplaText>
                     </View>
                     <View style={styles.colBContainer}>
                         <View style={styles.qaploinsContainer}>
                             <QaploinIcon height={31} width={31} style={styles.qaploinIcon} />
-                            <Text style={styles.qaploinsText}>{qaploins}</Text>
+                            <QaplaText style={styles.qaploinsText}>{qaploins}</QaplaText>
                         </View>
                         <LogroLifeTimeBadge limitDate={tiempoLimite} />
                         {puntosCompletados >= totalPuntos &&
@@ -114,7 +115,7 @@ class LogroQapla extends Component {
                                 /**Just a double check on disabled property of the button */
                                 disabled={puntosCompletados < totalPuntos}>
                                 <View style={styles.redimirButton}>
-                                    <Text style={styles.redimirTextButton}>{translate('activeAchievementsScreen.qaplaAchievement.redeem')}</Text>
+                                    <QaplaText style={styles.redimirTextButton}>{translate('activeAchievementsScreen.qaplaAchievement.redeem')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                         }
@@ -133,7 +134,7 @@ class LogroQapla extends Component {
                                 <View style={styles.progressBarContent} />
                             </Animated.View>
                         </View>
-                        <Text style={styles.progressBarCounter}>{puntosCompletados ? `${puntosCompletados}/${totalPuntos}` : `0/${totalPuntos}`}</Text>
+                        <QaplaText style={styles.progressBarCounter}>{puntosCompletados ? `${puntosCompletados}/${totalPuntos}` : `0/${totalPuntos}`}</QaplaText>
                     </View>
                 }
             </View>

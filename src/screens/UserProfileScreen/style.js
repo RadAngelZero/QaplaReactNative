@@ -2,16 +2,17 @@
 // diego           - 20-08-2019 - us89  - File creation
 
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx, isIOSDevice } from '../../utilities/iosAndroidDim';
+import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
     sfvContainer: {
-        backgroundColor: '#0D1021',
+        backgroundColor: Colors.backgroundColor,
         justifyContent: 'center',
         flex: 1
     },
     userInfoContainer: {
-        backgroundColor: '#0E1222',
+        backgroundColor: Colors.backgroundColor,
         flexDirection: 'row',
         alignItems: 'center',
         shadowColor: '#000',
@@ -58,7 +59,7 @@ export default styles = StyleSheet.create({
     qaploinInfoContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        alignSelf: 'flex-end',
+        alignSelf: isIOSDevice() ? 'flex-start' : 'center',
         marginBottom: heightPercentageToPx(2.21)
     },
     qaploinImage: {

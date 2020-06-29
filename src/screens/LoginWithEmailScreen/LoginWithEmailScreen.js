@@ -4,7 +4,7 @@
 // Diego             - 11-07-2019 - Qapla logo added to the top and Controllers image background created
 
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableWithoutFeedback, TextInput, SafeAreaView } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, TextInput, SafeAreaView } from 'react-native';
 
 import { signInWithEmailAndPassword } from '../../services/auth';
 import Images from './../../../assets/images';
@@ -12,6 +12,7 @@ import styles from './style';
 import { translate } from '../../utilities/i18';
 import { updateUserLoggedStatus } from '../../services/database';
 import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
@@ -65,12 +66,12 @@ class LoginWithEmailScreen extends Component {
                             secureTextEntry
                             ref={(passwordInput) => this.passwordInput = passwordInput}
                             onSubmitEditing={this.logInUser} />
-                        <Text style={styles.forgotPasswordText}>{translate('loginWithEmailScreen.forgotPassword')}</Text>
+                        <QaplaText style={styles.forgotPasswordText}>{translate('loginWithEmailScreen.forgotPassword')}</QaplaText>
                     </View>
                     <View>
                         <TouchableWithoutFeedback onPress={this.logInUser}>
                             <View style={styles.buttonContainer}>
-                                <Text style={styles.buttonText}>{translate('loginWithEmailScreen.login')}</Text>
+                                <QaplaText style={styles.buttonText}>{translate('loginWithEmailScreen.login')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>

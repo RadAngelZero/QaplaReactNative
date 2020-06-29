@@ -3,12 +3,12 @@ import React from 'react';
 import {
   View,
   SafeAreaView,
-  Text,
   SectionList
 } from 'react-native'
 
 import styles from './style'
 import LogroCardItem from '../../components/LogroCard/LogroCardItem';
+import QaplaText from '../QaplaText/QaplaText';
 
 class LogrosList extends React.Component {
 	renderEventOnList = ({ item }) => {
@@ -21,7 +21,7 @@ class LogrosList extends React.Component {
 			 />
 	}
 
-	renderSectionHeader = ({ section: { title } }) => <Text style={styles.sectionHeader}>{title}</Text>
+	renderSectionHeader = ({ section: { title } }) => <QaplaText style={styles.sectionHeader}>{title}</QaplaText>
 
 	render() {
 		return (
@@ -33,6 +33,7 @@ class LogrosList extends React.Component {
 						renderItem={this.renderEventOnList}
 						renderSectionHeader={this.renderSectionHeader}
 						stickySectionHeadersEnabled={false}
+						ListFooterComponent={() => <View style={{ height: 30 }} />}
 						keyExtractor={(item) => item.id} />
 				</View>
 			</SafeAreaView>

@@ -2,11 +2,12 @@
 // diego           - 24-09-2019 - us128 - File creation
 
 import React, { Component } from 'react';
-import { View, Image, Text } from 'react-native';
+import { View, Image } from 'react-native';
 
 import styles from './style';
 import Images from '../../../assets/images';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 const VerificationSuccess = Images.png.verificationProccesSuccess.img;
 
@@ -16,10 +17,10 @@ class VerificationProccessSuccess extends Component {
             <View style={styles.container}>
                 <Image source={VerificationSuccess} />
                 <View style={styles.greetingContainer}>
-                    <Text style={styles.title}>{translate('verificationScreen.verificationProcessSuccess.title')}</Text>
-                    <Text style={styles.body}>
+                    <QaplaText style={styles.title}>{translate('verificationScreen.verificationProcessSuccess.title')}</QaplaText>
+                    <QaplaText style={styles.body}>
                         {translate('verificationScreen.verificationProcessSuccess.body')}
-                    </Text>
+                    </QaplaText>
                 </View>
             </View>
         );

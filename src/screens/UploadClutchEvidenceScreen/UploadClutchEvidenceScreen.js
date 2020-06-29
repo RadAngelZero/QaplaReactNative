@@ -1,15 +1,11 @@
-// diego              - 14-11-2019 - us146 - AutoCapitalize disabled on TextInput
-// diego              - 12-09-2019 - us99 - Added backToUploadMatchResultScreen to handle
-//                                          the back to UploadMatchResultScreen
-// diego              - 13-08-2019 - us77 - File creation
-
 import React, { Component } from 'react';
-import { View, TextInput, Text, TouchableWithoutFeedback, Linking } from 'react-native';
+import { View, TextInput, TouchableWithoutFeedback, Linking } from 'react-native';
 
 import styles from './style';
 import Images from './../../../assets/images';
 import TutorialCarousel from '../../components/TutorialCarousel/TutorialCarousel';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../../components/QaplaText/QaplaText';
 
 const images = [Images.png.uploadVideoClutch.img, Images.png.shareClutchLink.img];
 
@@ -65,19 +61,19 @@ export class UploadClutchEvidenceScreen extends Component {
                     onChangeText={this.setUrlText}
                     style={[styles.urlTextInput, { borderBottomColor: this.state.showUrlError ? '#FF0000' : 'transparent' }]}
                     onSubmitEditing={this.submitData} />
-                <Text style={styles.instructions}>
+                <QaplaText style={styles.instructions}>
                     {translate('uploadClutchEvidenceScreen.instructions.firstPart')}
-                    <Text style={styles.highlightedText}>{translate('uploadClutchEvidenceScreen.instructions.highlightedText1')}</Text>
+                    <QaplaText style={styles.highlightedText}>{translate('uploadClutchEvidenceScreen.instructions.highlightedText1')}</QaplaText>
                     {translate('uploadClutchEvidenceScreen.instructions.connector')}
-                    <Text style={styles.highlightedText}>{translate('uploadClutchEvidenceScreen.instructions.highlightedText2')}</Text>
+                    <QaplaText style={styles.highlightedText}>{translate('uploadClutchEvidenceScreen.instructions.highlightedText2')}</QaplaText>
                     {translate('uploadClutchEvidenceScreen.instructions.secondPart')}
-                </Text>
+                </QaplaText>
                 <TouchableWithoutFeedback onPress={this.submitData}>
                     <View style={styles.readyButton}>
-                        <Text style={styles.readyButtonText}>{translate('uploadClutchEvidenceScreen.done')}</Text>
+                        <QaplaText style={styles.readyButtonText}>{translate('uploadClutchEvidenceScreen.done')}</QaplaText>
                     </View>
                 </TouchableWithoutFeedback>
-                <Text style={styles.goToClutchButtonText} onPress={this.linkToClutchApp}>{translate('uploadClutchEvidenceScreen.goToClutch')}</Text>
+                <QaplaText style={styles.goToClutchButtonText} onPress={this.linkToClutchApp}>{translate('uploadClutchEvidenceScreen.goToClutch')}</QaplaText>
             </View>
         );
     }

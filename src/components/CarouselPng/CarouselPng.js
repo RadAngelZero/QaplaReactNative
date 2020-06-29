@@ -1,11 +1,12 @@
 // diego	  	  - 03-09-2019 - us92 - Update carousel according to inVision design
 
 import React, { Component } from 'react';
-import { View, ScrollView, Image, Text } from 'react-native';
+import { View, ScrollView, Image } from 'react-native';
 
 import Images from './../../../assets/images';
 import { styles } from './style';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import QaplaText from '../QaplaText/QaplaText';
 
 const Divider = Images.png.divider.img;
 
@@ -76,9 +77,9 @@ class CarouselPng extends Component {
                         <View style={styles.imageContainer}>
                             <Image style={styles.image} source={slide.Image}/>
                         </View>
-                        <Text style={styles.title}>{slide.title}</Text>
+                        <QaplaText style={styles.title}>{slide.title}</QaplaText>
                         <Image style={styles.divider} source={Divider} />
-                        <Text style={styles.description}>{slide.description}</Text>
+                        <QaplaText style={styles.description}>{slide.description}</QaplaText>
                     </View>
                 ))}
             </ScrollView>

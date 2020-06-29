@@ -4,7 +4,7 @@
 // diego          - 06-08-2019 - us68 - File creation
 
 import React, { Component } from 'react';
-import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
+import { Modal, View, TouchableWithoutFeedback } from 'react-native';
 
 import styles from './style';
 import { storeData } from '../../utilities/persistance';
@@ -14,6 +14,7 @@ import CheckBox from '../CheckBox/CheckBox';
 import Images from './../../../assets/images';
 import { translate } from '../../utilities/i18';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
+import QaplaText from '../QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -53,9 +54,9 @@ class AcceptChallengeModal extends Component {
                             <QaplaIcon onPress={this.props.onClose} touchableStyle={styles.closeIcon}>
                                 <CloseIcon />
                             </QaplaIcon>
-                            <Text style={styles.paragraph}>
+                            <QaplaText style={styles.paragraph}>
                                 {translate('notificationsScreen.acceptChallengeModal.body')}
-                            </Text>
+                            </QaplaText>
                             <CheckBox
                                 style={styles.checkbox}
                                 label={translate('notificationsScreen.acceptChallengeModal.dontShowItAgain')}
@@ -63,7 +64,7 @@ class AcceptChallengeModal extends Component {
                                 onPress={this.setCheckBoxState} />
                             <TouchableWithoutFeedback onPress={this.acceptDelete}>
                                 <View style={styles.gotItButton}>
-                                    <Text style={styles.gotItButtonText}>{translate('notificationsScreen.acceptChallengeModal.continue')}</Text>
+                                    <QaplaText style={styles.gotItButtonText}>{translate('notificationsScreen.acceptChallengeModal.continue')}</QaplaText>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

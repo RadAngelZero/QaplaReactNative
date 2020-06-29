@@ -4,7 +4,6 @@ import React from 'react';
 
 import {
   View,
-  Text,
   TouchableWithoutFeedback,
   Modal
 } from 'react-native'
@@ -16,6 +15,7 @@ import { RNCamera } from 'react-native-camera';
 
 import QGCameraModal from './QGCameraModal/QGCameraModal';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -142,7 +142,7 @@ class QGCamera extends React.Component {
                           </View>
                           <TouchableWithoutFeedback onPress={this.takePicture}>
                               <View style={styles.buttonContainer}>
-                                  <Text style={styles.textStyle}>{translate('qGCamera.takePhoto')}</Text>
+                                  <QaplaText style={styles.textStyle}>{translate('qGCamera.takePhoto')}</QaplaText>
                               </View>
                           </TouchableWithoutFeedback>
                       </View>

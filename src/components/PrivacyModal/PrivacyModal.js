@@ -1,12 +1,13 @@
 // josep-sanahuja          - 21-12-2019 - us152 - File creation
 
 import React, { Component } from 'react';
-import { Modal, View, SafeAreaView, Text, ScrollView } from 'react-native';
+import { Modal, View, SafeAreaView, ScrollView } from 'react-native';
 
 import styles from './style';
 import Images from './../../../assets/images';
 import { getQaplaAppPrivacy } from '../../services/database';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
+import QaplaText from '../QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -52,11 +53,11 @@ class PrivacyModal extends Component {
                     <QaplaIcon onPress={this.closeModal} touchableStyle={styles.closeIcon}>
                         <CloseIcon />
                     </QaplaIcon>
-                    <Text style={styles.modalTitle}>Aviso Privacidad</Text>
+                    <QaplaText style={styles.modalTitle}>Aviso Privacidad</QaplaText>
                     <ScrollView>
                         <View style={styles.scrollViewContainer}>
                             {this.state.privacyText.map((item, index) => (
-                                <Text key={index} style={styles.lineText}>{item}</Text>)
+                                <QaplaText key={index} style={styles.lineText}>{item}</QaplaText>)
                             )}
                             <View style={styles.separator} />
                         </View>

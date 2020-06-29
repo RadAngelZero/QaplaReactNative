@@ -6,11 +6,12 @@
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
 import { HEADER_SIZE } from '../../utilities/Constants';
+import Colors from '../../utilities/Colors';
 
 export const styles = StyleSheet.create({
     sfvContainer: {
         justifyContent: 'center',
-        backgroundColor:'#0e1222',
+        backgroundColor: Colors.backgroundColor,
         paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     topNavBarView: {

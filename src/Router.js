@@ -1,25 +1,6 @@
-// josep.sanahuja  - 09-01-2020 - bug139 - TabMainNavigator's borderTopColor changed to transparent
-// diego           - 27-12-2019 - us183  - Added styles on label and tabs of every TopTabNavigator
-// diego           - 20-12-2019 - us179  - Verification moved to RootStack
-// diego           - 17-12-2019 - us171  - Remove navigationOptions from LoginWithEmailScreen
-// diego           - 17-12-2019 - us172  - ChooseUserNameScreen moved to RootStack
-// diego           - 12-12-2019 - us166  - Remove header from CheckOutPaymentScreen
-// diego           - 22-11-2019 - us151  - Added TermsAndConditionsScreen
-// josep.sanahuja  - 13-11-2019 - us147  - Add AppSettingsMenuScreen + Redux connect
-// josep.sanahuja  - 04-10-2019 - XXXXX  - Added TabtScreen
-// diego           - 18-09-2019 - us119  - Added VerificationScreen
-// diego           - 18-09-2019 - us110  - Created LogrosTabNavigator
-// diego           - 18-09-2019 - us109  - Added Tab for logros on TabMainNavigator
-// diego           - 03-09-2019 - us96   - Added TopNavOptions to allow users without back button navigate to previous screens
-// diego           - 19-08-2019 - us89   - Added logic to show label only when tab is focused added on TabMainNavigator
-// josep.sanahuja  - 12-08-2019 - us85   - + UploadMatchResult in AppNoHeaderStackNavigator
-// josep.sanahuja  - 06-08-2019 - us78   - + UploadMatchResultScreen
-// diego           - 01-08-2019 - us58   - created NotificationTabNavigator
-// diego           - 25-07-2019 - us31   - added CheckOutPaymentScreen and unnecessary code removed
-
 import React from 'react';
 
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import {createAppContainer, createSwitchNavigator, NavigationActions} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createMaterialTopTabNavigator, createBottomTabNavigator} from 'react-navigation-tabs';
@@ -61,6 +42,7 @@ import { widthPercentageToPx } from './utilities/iosAndroidDim';
 import { translate } from './utilities/i18';
 import NotificationsSettingsScreen from './screens/NotificationsSettingsScreen/NotificationsSettingsScreen';
 import TodayTournamentsScreen from './screens/TodayTournamentsScreen/TodayTournamentsScreen';
+import QaplaText from './components/QaplaText/QaplaText';
 
 // Svg Icons
 const ProfileIcon = Images.svg.profileIcon;
@@ -198,7 +180,9 @@ const MatchesTopTabNavigator = createMaterialTopTabNavigator(
           width: widthPercentageToPx(35)
         },
         labelStyle: {
-          fontSize: 14
+          fontSize: 14,
+          fontFamily: 'SFRounded-Ultralight',
+          fontWeight: 'bold'
         },
         activeTintColor: '#FFF',
         inactiveTintColor: '#FFF',
@@ -230,29 +214,31 @@ const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
       }
     },
     {
-        initialRouteName: 'NotificationActividad',
-        navigationOptions: {
-            header: (props) => <NotificationsHeader {...props} />
-        },
-        tabBarOptions: {
-            upperCaseLabel: false,
-            style: {
+      initialRouteName: 'NotificationActividad',
+      navigationOptions: {
+          header: (props) => <NotificationsHeader {...props} />
+      },
+      tabBarOptions: {
+          upperCaseLabel: false,
+          style: {
             backgroundColor: '#0C1021'
-            },
-            tabStyle: {
+          },
+          tabStyle: {
             width: widthPercentageToPx(35)
-            },
-            labelStyle: {
-            fontSize: 14
-            },
-            activeTintColor: '#FFF',
-            inactiveTintColor: '#FFF',
-            indicatorStyle: {
-            borderBottomColor: '#36E5CE',
-            borderBottomWidth: 2,
-            width: widthPercentageToPx(35)
-            }
-        },
+          },
+          labelStyle: {
+            fontSize: 14,
+            fontFamily: 'SFRounded-Ultralight',
+            fontWeight: 'bold'
+          },
+          activeTintColor: '#FFF',
+          inactiveTintColor: '#FFF',
+          indicatorStyle: {
+          borderBottomColor: '#36E5CE',
+          borderBottomWidth: 2,
+          width: widthPercentageToPx(35)
+          }
+      },
     }
 );
 
@@ -267,7 +253,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
               tabBarIcon: ({ tintColor, focused }) => (
                 <View>
                   <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
-                  <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.events')}</Text>
+                  <QaplaText style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.events')}</QaplaText>
                 </View>
               )
             }
@@ -278,7 +264,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
               tabBarIcon: ({ tintColor, focused }) => (
                 <View>
                   <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
-                  <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.matches')}</Text>
+                  <QaplaText style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.matches')}</QaplaText>
                 </View>
               )
             }
@@ -289,7 +275,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
               tabBarIcon: ({ tintColor, focused }) => (
                 <View>
                   <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'}/>
-                  <Text style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.profile')}</Text>
+                  <QaplaText style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.profile')}</QaplaText>
                 </View>
               )
             }

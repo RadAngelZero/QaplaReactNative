@@ -32,10 +32,9 @@ export class LogrosActivosScreen extends Component {
         // Sort the events by date
         .sort((a, b) => {
             const [aDay, aMonth, aYear] = getDateElementsAsNumber(a.dateUTC);
+            const [aHour, aMinute] = getHourElementsAsNumber(a.hourUTC);
             const [bDay, bMonth, bYear] = getDateElementsAsNumber(b.dateUTC);
-
-            const aValue = aDay + aMonth + aYear;
-            const bValue = bDay + bMonth + bYear;
+            const [bHour, bMinute] = getHourElementsAsNumber(b.hourUTC);
 
             if (a.featured) {
                 return -1;
@@ -47,12 +46,15 @@ export class LogrosActivosScreen extends Component {
                 return 1;
             }
 
-            return aValue - bValue;
+            const aEventDate = new Date(Date.UTC(aYear, aMonth - 1, aDay, aHour, aMinute));
+            const bEventDate = new Date(Date.UTC(bYear, bMonth - 1, bDay, bHour, bMinute));
+
+            return aEventDate.getTime() - bEventDate.getTime();
         })
         // Fill orderedEvents array for the SectionList of the LogrosList component
         .forEach((logro) => {
-            let [day, month, year] = getDateElementsAsNumber(logro.dateUTC);
-            let [hour, minute] = getHourElementsAsNumber(logro.hourUTC);
+            const [day, month, year] = getDateElementsAsNumber(logro.dateUTC);
+            const [hour, minute] = getHourElementsAsNumber(logro.hourUTC);
             const today = new Date();
 
             if (logro.featured) {

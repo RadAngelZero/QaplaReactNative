@@ -1,8 +1,10 @@
 // josep.sanahuja    - 18-10-2019 - us140 - File creation
 
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Image } from 'react-native';
+
 import styles from './style'
+import QaplaText from '../QaplaText/QaplaText';
 
 class AnnouncementCard extends Component {
     render() {
@@ -13,9 +15,9 @@ class AnnouncementCard extends Component {
                             style={styles.imageStyle}
                             source={{uri: this.props.photoUrl}}/>
                     </View>
-                    <Text style={styles.description}>
+                    <QaplaText style={styles.description}>
                         {this.props.description}
-                    </Text>
+                    </QaplaText>
                 </View>
         );
     }

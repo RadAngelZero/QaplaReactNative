@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import {
 	View,
-	Text,
 	Modal,
 	TouchableWithoutFeedback
 } from 'react-native';
@@ -11,6 +10,7 @@ import {
 import styles from './style';
 import { withNavigation } from 'react-navigation';
 import { translate } from '../../utilities/i18';
+import QaplaText from '../QaplaText/QaplaText';
 
 class UploadMatchResultsModal extends Component {
 	/**
@@ -61,11 +61,11 @@ class UploadMatchResultsModal extends Component {
 	          onRequestClose={this.props.onClose}>
 	          <View style={styles.mainContainer}>
 			    <View style={styles.container}>
-					<Text style={styles.headerText}>{translate('uploadClutchEvidenceScreen.uploadMatchResultsModal.header')}</Text>
-					<Text style={styles.paragraph}>{translate('uploadClutchEvidenceScreen.uploadMatchResultsModal.paragraph')}</Text>
+					<QaplaText style={styles.headerText}>{translate('uploadClutchEvidenceScreen.uploadMatchResultsModal.header')}</QaplaText>
+					<QaplaText style={styles.paragraph}>{translate('uploadClutchEvidenceScreen.uploadMatchResultsModal.paragraph')}</QaplaText>
 					<TouchableWithoutFeedback onPress={this.action}>
 						<View style={styles.okButton}>
-							<Text style={styles.text}>{translate('uploadClutchEvidenceScreen.uploadMatchResultsModal.okButton')}</Text>
+							<QaplaText style={styles.text}>{translate('uploadClutchEvidenceScreen.uploadMatchResultsModal.okButton')}</QaplaText>
 						</View>
 					</TouchableWithoutFeedback>
 			    </View>

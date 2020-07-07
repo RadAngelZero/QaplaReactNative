@@ -18,7 +18,7 @@ class LogrosList extends React.Component {
 			userId={this.props.userId}
 			verified={true} // Remove if the verification is a requirement again
 			// verified={this.props.isUserVerified} uncomment if the verification is a requirement again
-			 />
+			eventToDisplay={this.props.eventToDisplay} />
 	}
 
 	renderSectionHeader = ({ section: { title } }) => <QaplaText style={styles.sectionHeader}>{title}</QaplaText>

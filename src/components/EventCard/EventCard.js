@@ -42,6 +42,22 @@ class EventCard extends Component {
         showEventDetailsModal: false
     };
 
+    componentDidMount() {
+        if (this.props.eventToDisplay === this.props.idLogro) {
+            this.setState({ showEventDetailsModal: true });
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.eventToDisplay !== prevProps.eventToDisplay) {
+            if (this.props.eventToDisplay === this.props.idLogro) {
+                this.setState({ showEventDetailsModal: true });
+            } else if (this.state.showEventDetailsModal) {
+                this.setState({ showEventDetailsModal: false });
+            }
+        }
+    }
+
     /**
      * Select the correct event text content according to the language used by the user
      * in the app.

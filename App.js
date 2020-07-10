@@ -1,5 +1,3 @@
-// diego           - 15-11-2019 - us149 - Store moved to an independent file
-
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { Provider } from 'react-redux';

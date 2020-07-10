@@ -9,6 +9,7 @@ import { getDateElementsAsNumber, getHourElementsAsNumber } from '../../utilitie
 
 export class LogrosActivosScreen extends Component {
     render() {
+        const eventToDisplay = this.props.navigation.getParam('eventToDisplay', '');
         let orderedEvents = [];
 
         // Remove the events of previous dates
@@ -87,7 +88,8 @@ export class LogrosActivosScreen extends Component {
                 <LogrosList
                     isUserVerified={this.props.logros.isUserVerified}
                     logros={orderedEvents}
-                    userId={this.props.uid}/>
+                    userId={this.props.uid}
+                    eventToDisplay={eventToDisplay} />
             </SafeAreaView>
         );
     }

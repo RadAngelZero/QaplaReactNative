@@ -180,9 +180,12 @@ class AuthLoadingScreen extends Component {
                         MatchId: matchId
                     });
 
-                    // TODO: cobvert this multiple return approach into
-                    // a single navigate operation inside processLinksUrl
                     return this.redirectUserToPublicMatchCard(url);
+                } else if (type2 === 'eventInvitation') {
+                    const eventId = this.getParameterFromUrl(url, 'eventId');
+                    if (eventId) {
+                        return this.props.navigation.navigate('Achievements', { eventToDisplay: eventId });
+                    }
                 }
             }
 

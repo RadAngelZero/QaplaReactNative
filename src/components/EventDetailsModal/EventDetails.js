@@ -36,7 +36,7 @@ function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
                 angle={150}
                 angleCenter={{ x: .5, y: .5}}
                 style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
-                colors={validColors && gradientColors.primary ? [gradientColors.primary, gradientColors.secondary] : ['#AA16EE', '#07EAfA']}>
+                colors={validColors ? [gradientColors.primary, gradientColors.secondary] : ['#AA16EE', '#07EAfA']}>
                 {children}
             </LinearGradient>
         );

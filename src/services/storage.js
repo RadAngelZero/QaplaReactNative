@@ -96,24 +96,22 @@ export async function saveUserProfileImg(userId, pictureUri) {
 }
 
 /**
- * @description 
- * Get profile picture URL from user profile from Storage
+ * @description Get profile picture URL from user profile from Storage
  *
- * @param {string} userId     User identifier
- *  
+ * @param {string} userId User identifier
  * @returns
- * FAIL    - { Null }    Operation didn't succeed  
+ * FAIL    - { null } Operation didn't succeed
  * SUCCESS - { Promise } Image Downloadable URL
  */
 export async function getUserProfileImgUrl(userId) {
     let res = null;
 
-    try {  
+    try {
         const ref = profileUserImgRef.child('/' + userId +  '.jpg');
         res = await ref.getDownloadURL();
     }
     catch (error) {
-        console.error(error);
+        // console.error(error);
     }
 
     return res;

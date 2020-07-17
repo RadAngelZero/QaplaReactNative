@@ -10,7 +10,7 @@ export default styles = StyleSheet.create({
     },
     userImage: {
 		resizeMode: 'center',
-		borderRadius: 17.5,
+		borderRadius: 100,
 		width: 35,
 		height: 35
     },

@@ -26,6 +26,7 @@ export default styles = StyleSheet.create({
     eventImage: {
         height: 35,
         width: 35,
+        resizeMode: 'contain',
         borderRadius: 100
     },
     eventTitle: {

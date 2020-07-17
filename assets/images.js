@@ -43,6 +43,7 @@ import CopyIcon from './icons/Copy.svg';
 import SentIcon from './icons/SentIcon.svg';
 import HighFiveIcon from './icons/HighFive.svg';
 import SendIcon from './icons/send.svg';
+import ArrowDownIcon from './icons/arrowDown.svg';
 
 // Images
 
@@ -198,7 +199,8 @@ const images = {
 		copyIcon: CopyIcon,
 		sentIcon: SentIcon,
 		highFiveIcon: HighFiveIcon,
-		sendIcon: SendIcon
+		sendIcon: SendIcon,
+		arrowDownIcon: ArrowDownIcon
 	}
 };
 

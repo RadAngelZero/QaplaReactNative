@@ -19,14 +19,26 @@ import QaplaText from '../QaplaText/QaplaText';
 import { getSendBirdOpenChannel } from '../../services/SendBird';
 
 function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
+    const validColorRegExp = new RegExp('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
     if (isSponsored) {
+        let validColors = false;
+        if (gradientColors) {
+            if (gradientColors.primary.charAt(0) !== '#') {
+                gradientColors.primary = `#${gradientColors.primary}`
+            }
+            if (gradientColors.secondary.charAt(0) !== '#') {
+                gradientColors.secondary = `#${gradientColors.secondary}`
+            }
+            validColors = validColorRegExp.test(gradientColors.primary) && validColorRegExp.test(gradientColors.secondary);
+        }
+
         return (
             <LinearGradient
                 useAngle={true}
                 angle={150}
                 angleCenter={{ x: .5, y: .5}}
                 style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
-                colors={gradientColors ? [gradientColors.primary, gradientColors.secondary] : ['#AA16EE', '#07EAfA']}>
+                colors={validColors ? [gradientColors.primary, gradientColors.secondary] : ['#AA16EE', '#07EAfA']}>
                 {children}
             </LinearGradient>
         );

@@ -14,13 +14,25 @@ import QaplaText from '../QaplaText/QaplaText';
 
 function EventCardContainer({ isSponsored, children, onPress, gradientColors }) {
     if (isSponsored) {
+        const validColorRegExp = new RegExp('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
+        let validColors = false;
+        if (gradientColors) {
+            if (gradientColors.primary.charAt(0) !== '#') {
+                gradientColors.primary = `#${gradientColors.primary}`
+            }
+            if (gradientColors.secondary.charAt(0) !== '#') {
+                gradientColors.secondary = `#${gradientColors.secondary}`
+            }
+            validColors = validColorRegExp.test(gradientColors.primary) && validColorRegExp.test(gradientColors.secondary);
+        }
+
         return (
             <TouchableWithoutFeedback onPress={onPress}>
                 <LinearGradient
                     useAngle={true}
                     angle={150}
                     angleCenter={{ x: .5, y: .5}}
-                    colors={gradientColors ? [gradientColors.primary, gradientColors.secondary] : ['#AA16EE', '#07EAfA']}
+                    colors={validColors ? [gradientColors.primary, gradientColors.secondary] : ['#AA16EE', '#07EAfA']}
                     style={styles.container}>
                     {children}
                 </LinearGradient>

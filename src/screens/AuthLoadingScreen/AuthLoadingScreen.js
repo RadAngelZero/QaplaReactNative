@@ -27,6 +27,8 @@ import { checkNotificationPermission } from '../../services/messaging';
 import remoteConf from '../../services/remoteConfig';
 import { trackOnSegment } from '../../services/statistics';
 import QaplaText from '../../components/QaplaText/QaplaText';
+import { connectUserToSendBird } from '../../services/SendBird';
+import { getUserProfileImgUrl } from '../../services/storage';
 
 class AuthLoadingScreen extends Component {
     state = {
@@ -67,6 +69,9 @@ class AuthLoadingScreen extends Component {
                 if (!userName){
                     return this.props.navigation.navigate('ChooseUserName');
                 } else {
+                    const userImg = await getUserProfileImgUrl(user.uid);
+                    connectUserToSendBird(user.uid, userName, userImg);
+
                     /**
                      * Here add functions to write on the user profile, we only can perform
                      * writes on the user profile if it exists, and it only existes

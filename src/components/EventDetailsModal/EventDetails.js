@@ -6,6 +6,7 @@ import {
     Image,
     TouchableOpacity
 } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -15,6 +16,7 @@ import { getDateElementsAsNumber, getHourElementsAsNumber, copyDataToClipboard }
 import { userHasRequestToJoinEvent, isUserParticipantOnEvent } from '../../services/database';
 import Images from '../../../assets/images';
 import QaplaText from '../QaplaText/QaplaText';
+import { getSendBirdOpenChannel } from '../../services/SendBird';
 
 function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
     if (isSponsored) {
@@ -78,9 +80,17 @@ class EventDetails extends Component {
      * Send the user to the discord channel of the event
      */
     goToDiscordLink = () => {
-        const { discordLink } = this.props.event;
+        const { discordLink, eventChatUrl } = this.props.event;
 
-        if (discordLink) {
+        if (eventChatUrl) {
+            getSendBirdOpenChannel(eventChatUrl, (openChannel) => {
+                this.props.navigation.navigate('EventChat', {
+                    eventImage: openChannel.coverUrl,
+                    eventName: openChannel.name
+                });
+                this.props.closeModal();
+            });
+        } else if (discordLink) {
             Linking.openURL(discordLink);
         }
     }
@@ -328,4 +338,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(EventDetails);
+export default withNavigation(connect(mapStateToProps)(EventDetails));

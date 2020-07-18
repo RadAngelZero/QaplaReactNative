@@ -32,7 +32,7 @@ import VerificationScreen from './screens/VerificationScreen/VerificationScreen'
 import SupportScreen from './screens/SupportScreen/SupportScreen';
 import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
 import LinkBrokenScreen from './screens/LinkBrokenScreen/LinkBrokenScreen';
-import GroupChatScreen from './screens/ChatScreen/ChatScreen';
+import ChatScreen from './screens/ChatScreen/ChatScreen';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
@@ -155,7 +155,7 @@ const AuthStackNavigator = createStackNavigator({
 
 const ChatStackNavigator = createStackNavigator({
       EventChat: {
-        screen: GroupChatScreen,
+        screen: ChatScreen,
         navigationOptions: {
           header: (props) => <ChatHeader {...props} />
         }

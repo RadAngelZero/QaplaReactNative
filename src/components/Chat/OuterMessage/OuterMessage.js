@@ -3,19 +3,24 @@ import { View, Image } from 'react-native';
 
 import styles from './style';
 import QaplaText from '../../QaplaText/QaplaText';
-import images from '../../../../assets/images';
 
 class OuterMessage extends Component {
     render() {
         return (
             <View style={styles.outerMessageContainer}>
                 <Image
-                    source={this.props.image}
+                    source={{ uri: this.props.image }}
                     style={styles.userImage}/>
                 <View style={styles.messageDetailsContainer}>
-                    <QaplaText style={styles.userName}>
-                        {this.props.userName}
-                    </QaplaText>
+                    {(this.props.userName.length < 16) ?
+                        <QaplaText style={styles.userName}>
+                            {this.props.userName}
+                        </QaplaText>
+                    :
+                        <QaplaText style={styles.userName}>
+                            {`${this.props.userName.substring(0, 16)}...`}
+                        </QaplaText>
+                    }
                     <View style={styles.messageContainer}>
                         <QaplaText style={styles.message}>
                             {this.props.message}

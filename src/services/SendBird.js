@@ -14,7 +14,7 @@ let channelHandler = new sb.ChannelHandler();
  */
 export function connectUserToSendBird(uid, userName, userImg) {
     sb.connect(uid, function(user, error) {
-        sb.updateCurrentUserInfo(userName, userImg || 'https://lh3.googleusercontent.com/SDf-cdu1zjcFDYM8yyGCxGEKJU8WLy1q34aY8PRMfDUmEW9gbkS3jJ801w86iw5kLBo', (user, error) => {
+        sb.updateCurrentUserInfo(userName, userImg ? userImg : 'https://lh3.googleusercontent.com/SDf-cdu1zjcFDYM8yyGCxGEKJU8WLy1q34aY8PRMfDUmEW9gbkS3jJ801w86iw5kLBo', (user, error) => {
             if (error) {
                 console.error(error);
                 return;
@@ -87,7 +87,7 @@ export function listenForNewMessages(setMessagesList) {
 export function loadCurrentChannelPreviousMessages(setMessagesList, limit = 20) {
     let messageListQuery = currentChannel.createPreviousMessageListQuery();
     messageListQuery.limit = limit;
-    messageListQuery.reverse = true;
+    messageListQuery.reverse = false;
 
     messageListQuery.load((messageList, error) => {
         if (error) {

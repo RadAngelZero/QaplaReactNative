@@ -38,7 +38,7 @@ class ChatScreen extends Component {
 
     componentDidMount(){
         loadCurrentChannelPreviousMessages((chatMessages) => {
-            this.setState({ chatMessages: chatMessages.reverse() }, () => {
+            this.setState({ chatMessages: chatMessages }, () => {
                 setTimeout(() => {
                     if (this.flatList) {
                         this.flatList.scrollToEnd({ animated: true });
@@ -51,6 +51,11 @@ class ChatScreen extends Component {
             messages.unshift(newMessage);
             this.setState((state) => {
                 const chatMessages = [...state.chatMessages, newMessage];
+                setTimeout(() => {
+                    if (this.flatList) {
+                        this.flatList.scrollToEnd({ animated: false });
+                    }
+                }, 300);
 
                 return { chatMessages, unreadMessages: true };
             });
@@ -90,7 +95,7 @@ class ChatScreen extends Component {
     onRefresh = () => {
         this.setState({ refreshing: true });
         loadCurrentChannelPreviousMessages((chatMessages) => {
-            this.setState({ chatMessages: chatMessages.reverse() }, () => {
+            this.setState({ chatMessages: chatMessages }, () => {
                 this.setState({ refreshing: false });
             });
         }, this.state.chatMessages.length + 40);

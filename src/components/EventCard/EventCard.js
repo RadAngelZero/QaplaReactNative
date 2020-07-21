@@ -99,7 +99,8 @@ class EventCard extends Component {
             streamerName,
             sponsorImage,
             idLogro,
-            gradientColors
+            gradientColors,
+            featured
         } = this.props;
 
         let titleTranslated = this.getTextBasedOnUserLanguage(title);
@@ -116,7 +117,7 @@ class EventCard extends Component {
 
         return (
             <EventCardContainer
-                isSponsored={sponsorImage ? true : false}
+                isSponsored={(sponsorImage || featured) ? true : false}
                 onPress={this.toogleEventDetailsModalVisibility}
                 gradientColors={gradientColors}>
                 <ImageBackground

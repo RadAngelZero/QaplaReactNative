@@ -98,6 +98,7 @@ class EventDetails extends Component {
             getSendBirdOpenChannel(eventChatUrl, (openChannel) => {
                 this.props.navigation.navigate('EventChat', {
                     eventImage: openChannel.coverUrl,
+                    sponsorImage: this.props.event.sponsorImage,
                     eventName: openChannel.name
                 });
                 this.props.closeModal();

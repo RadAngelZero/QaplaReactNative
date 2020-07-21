@@ -6,7 +6,9 @@ import { HEADER_SIZE } from '../../../utilities/Constants';
 
 export default styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         backgroundColor: Colors.backgroundColor,
         paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
@@ -14,7 +16,7 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(HEADER_SIZE),
         marginLeft: 16,
         marginTop: 20,
-        marginBottom: 30,
+        marginBottom: 16,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'
@@ -34,5 +36,11 @@ export default styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginLeft: 8
+    },
+    eventSponsorImage: {
+        height: 40,
+        width: 90,
+        marginRight: 16,
+        resizeMode: 'cover'
     }
 });

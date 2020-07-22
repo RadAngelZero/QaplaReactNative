@@ -4,12 +4,13 @@ import { SafeAreaView, View, Image, Text } from 'react-native';
 import styles from './style';
 import Images from '../../../../assets/images';
 import QaplaIcon from '../../QaplaIcon/QaplaIcon';
+import QaplaText from '../../QaplaText/QaplaText';
 
 class ChatHeader extends Component {
     render() {
         const eventImage = this.props.navigation.getParam('eventImage');
         const sponsorImage = this.props.navigation.getParam('sponsorImage');
-        const eventName = this.props.navigation.getParam('eventName');
+        const eventName = this.props.navigation.getParam('eventName', '');
 
         return (
             <SafeAreaView style={styles.container}>
@@ -21,9 +22,15 @@ class ChatHeader extends Component {
                         <Image
                             source={Images.png.betaChatImage.img}
                             style={styles.eventImage} />
-                        <Text style={styles.eventTitle}>
-                            {eventName}
-                        </Text>
+                        {eventName && eventName.length < 16 ?
+                            <QaplaText style={styles.eventTitle}>
+                                    {eventName && eventName}
+                            </QaplaText>
+                        :
+                            <QaplaText style={styles.eventTitle}>
+                                {`${eventName ? eventName.substring(0, 16) : ''}...`}
+                            </QaplaText>
+                        }
                     </View>
                 </View>
                 <View>

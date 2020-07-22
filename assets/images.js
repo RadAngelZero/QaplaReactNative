@@ -44,11 +44,15 @@ import SentIcon from './icons/SentIcon.svg';
 import HighFiveIcon from './icons/HighFive.svg';
 import SendIcon from './icons/send.svg';
 import ArrowDownIcon from './icons/arrowDown.svg';
+import BetaLabelIcon from './icons/BetaLabel.svg';
 
 // Images
 
 const images = {
 	png: {
+		betaChatImage: {
+			img: require('./images/BetaChatImage.jpg'),
+		},
 		welcome1Img:{
 			img: require('./images/welcome1.png'),
 			uri: '@assets/icons/welcome1.png'
@@ -200,7 +204,8 @@ const images = {
 		sentIcon: SentIcon,
 		highFiveIcon: HighFiveIcon,
 		sendIcon: SendIcon,
-		arrowDownIcon: ArrowDownIcon
+		arrowDownIcon: ArrowDownIcon,
+		betaLabelIcon: BetaLabelIcon
 	}
 };
 

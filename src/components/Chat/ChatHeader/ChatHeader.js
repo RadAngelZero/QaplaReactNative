@@ -19,7 +19,7 @@ class ChatHeader extends Component {
                             <Images.svg.backIcon />
                         </QaplaIcon>
                         <Image
-                            source={{ uri: 'https://lh3.googleusercontent.com/SDf-cdu1zjcFDYM8yyGCxGEKJU8WLy1q34aY8PRMfDUmEW9gbkS3jJ801w86iw5kLBo' }}
+                            source={Images.png.betaChatImage.img}
                             style={styles.eventImage} />
                         <Text style={styles.eventTitle}>
                             {eventName}

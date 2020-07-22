@@ -10,7 +10,15 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: Colors.backgroundColor,
-        paddingTop: paddingTopForAndroidDevicesWithNotch()
+        paddingTop: paddingTopForAndroidDevicesWithNotch(),
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8
     },
     topNavBarView: {
         height: heightPercentageToPx(HEADER_SIZE),

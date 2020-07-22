@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="54px" height="16px" viewBox="0 0 39 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>BETA</title>
+    <defs>
+        <linearGradient x1="100%" y1="41.5656888%" x2="0%" y2="58.4343112%" id="linearGradient-1">
+            <stop stop-color="#FFD632" offset="0%"></stop>
+            <stop stop-color="#F75F00" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Event-Card-Expanded-(Waiting-for-Approval)" transform="translate(-288.000000, -704.000000)">
+            <g id="Event-Discord" transform="translate(16.000000, 686.000000)">
+                <g id="BETA" transform="translate(272.000000, 18.000000)">
+                    <rect id="Rectangle" fill="url(#linearGradient-1)" x="0" y="0" width="38.9565217" height="16" rx="8"></rect>
+                    <text id="powered=by-label" font-size="10" font-weight="500" line-spacing="16" fill="#0D1021">
+                        <tspan x="7.20287024" y="10">BETA</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

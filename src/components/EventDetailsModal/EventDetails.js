@@ -126,7 +126,8 @@ class EventDetails extends Component {
             hourUTC,
             dateUTC,
             streamerGameData,
-            gradientColors
+            gradientColors,
+            eventChatUrl
         } = this.props.event;
 
         let [day, month, year] = getDateElementsAsNumber(dateUTC);
@@ -254,9 +255,16 @@ class EventDetails extends Component {
 
                 {(this.state.existsRequest || this.state.isParticipant) &&
                     <View style={[styles.eventCard, styles.eventChatCard]}>
-                        <QaplaText style={styles.eventCardTitle}>
-                            {translate('eventDetailsModal.eventChat')}
-                        </QaplaText>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <QaplaText style={styles.eventCardTitle}>
+                                {translate('eventDetailsModal.eventChat')}
+                            </QaplaText>
+                            {eventChatUrl &&
+                                <Images.svg.betaLabelIcon
+                                    height={24}
+                                    style={{ marginRight: 24 }} />
+                            }
+                        </View>
                         <View style={styles.divider} />
                         <View style={styles.chatInfoContainer}>
                             <QaplaText style={styles.joinDiscordText}>

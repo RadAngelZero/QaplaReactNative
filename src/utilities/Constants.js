@@ -2,7 +2,7 @@
 export const SEGMENT_KEY = 'fCfir8yrQiZRVrpuwLHYRePN68SqW8AS';
 
 // SendBird key
-export const SENDBIRD_KEY = '8117CF1A-FE70-4412-9DEB-FD05AF5CA7F8';
+export const SENDBIRD_KEY = '7E54A9F8-DCE3-420E-8DC8-D3E8B081A2B0';
 
 // User constants
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import {
+    KeyboardAvoidingView,
     TouchableOpacity,
     SafeAreaView,
     FlatList,
     RefreshControl,
-    View
+    View,
+    Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -29,6 +31,22 @@ const UnreadMessages = ({ onPress }) => (
     </TouchableOpacity>
 );
 
+const ChatContainer = ({ children, style }) => {
+    if (Platform.OS === 'android') {
+        return (
+            <View style={style}>
+                {children}
+            </View>
+        );
+    } else {
+        return (
+            <KeyboardAvoidingView behavior='padding' style={style} keyboardVerticalOffset={120}>
+                {children}
+            </KeyboardAvoidingView>
+        );
+    }
+};
+
 class ChatScreen extends Component {
     state = {
         chatMessages: [],
@@ -43,7 +61,7 @@ class ChatScreen extends Component {
                     if (this.flatList) {
                         this.flatList.scrollToEnd({ animated: true });
                     }
-                }, 300);
+                }, 400);
             });
         });
         listenForNewMessages((newMessage) => {
@@ -55,7 +73,7 @@ class ChatScreen extends Component {
                     if (this.flatList) {
                         this.flatList.scrollToEnd({ animated: false });
                     }
-                }, 300);
+                }, 400);
 
                 return { chatMessages, unreadMessages: true };
             });
@@ -112,38 +130,40 @@ class ChatScreen extends Component {
     render() {
         return (
             <SafeAreaView style={styles.GroupChatContainer}>
-                <FlatList
-                    style={styles.chatMessagesContainer}
-                    ref={(flatList) => this.flatList = flatList}
-                    onScroll={this.prueba}
-                    onEndReached={this.endReached}
-                    onEndReachedThreshold={.05}
-                    data={this.state.chatMessages}
-                    refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />}
-                    renderItem={({ item }) => (
-                        <>
-                            {item._sender.userId === this.props.uid ?
-                                <UserMessage
-                                hour={this.getMessageHour(item.createdAt)}
-                                message={item.message} />
-                            :
-                                <OuterMessage
-                                    userName={item._sender.nickname}
-                                    image={item._sender.profileUrl}
-                                    message={item.message}
-                                    hour={this.getMessageHour(item.createdAt)} />
-                            }
-                        </>
-                    )} />
-                {this.state.unreadMessages &&
-                    <UnreadMessages
-                        unreadMessages={this.state.unreadMessages}
-                        onPress={() => this.flatList.scrollToEnd({ animated: true })} />
-                }
-                <View style={{ marginBottom: 16 }}>
-                    <WriteMessage addMessageToList={this.addMessageToList} />
-                </View>
-			</SafeAreaView>
+                <ChatContainer style={styles.GroupChatContainer}>
+                    <FlatList
+                        style={styles.chatMessagesContainer}
+                        ref={(flatList) => this.flatList = flatList}
+                        onScroll={this.prueba}
+                        onEndReached={this.endReached}
+                        onEndReachedThreshold={.05}
+                        data={this.state.chatMessages}
+                        refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />}
+                        renderItem={({ item }) => (
+                            <>
+                                {item._sender.userId === this.props.uid ?
+                                    <UserMessage
+                                    hour={this.getMessageHour(item.createdAt)}
+                                    message={item.message} />
+                                :
+                                    <OuterMessage
+                                        userName={item._sender.nickname}
+                                        image={item._sender.profileUrl}
+                                        message={item.message}
+                                        hour={this.getMessageHour(item.createdAt)} />
+                                }
+                            </>
+                        )} />
+                    {this.state.unreadMessages &&
+                        <UnreadMessages
+                            unreadMessages={this.state.unreadMessages}
+                            onPress={() =>  this.flatList.scrollToEnd({ animated: true })} />
+                    }
+                    <WriteMessage
+                        onFocus={() => setTimeout(() => this.flatList.scrollToEnd({ animated: true }), 150) }
+                        addMessageToList={this.addMessageToList} />
+                </ChatContainer>
+            </SafeAreaView>
         );
     }
 }

@@ -14,7 +14,7 @@ class WriteMessage extends Component {
      * Send the message of the user to the current chat channel
      */
     sendMessage = () => {
-        sendSendBirdMessageToCurrentChannel(this.state.message, this.props.addMessageToList);
+        sendSendBirdMessageToCurrentChannel(this.state.message.trim(), this.props.addMessageToList);
         this.setState({ message: '' });
     }
 
@@ -27,7 +27,8 @@ class WriteMessage extends Component {
                     style={styles.writeMessageTextInput}
                     multiline
                     value={this.state.message}
-                    onChangeText={(message) => this.setState({ message })} />
+                    onChangeText={(message) => this.setState({ message })}
+                    onFocus={this.props.onFocus} />
                 <View
                     style={{
                         flex: 1,

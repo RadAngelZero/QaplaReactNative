@@ -147,7 +147,7 @@ export async function createUserProfile(Uid, email, userName ) {
         language: getLocaleLanguage()
     };
 
-    await usersRef.child(Uid).set(profileObj);
+    await usersRef.child(Uid).update(profileObj);
 
     /**
      * We call this function because we need to save the user token, before do this

@@ -18,6 +18,7 @@ import OuterMessage from '../../components/Chat/OuterMessage/OuterMessage';
 import WriteMessage from '../../components/Chat/WriteMessage/WriteMessage';
 import { loadCurrentChannelPreviousMessages, listenForNewMessages } from '../../services/SendBird';
 import Images from '../../../assets/images';
+import AdminMessage from '../../components/Chat/AdminMessage/AdminMessage';
 
 const UnreadMessages = ({ onPress }) => (
     <TouchableOpacity
@@ -141,16 +142,24 @@ class ChatScreen extends Component {
                         refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />}
                         renderItem={({ item }) => (
                             <>
-                                {item._sender.userId === this.props.uid ?
+                                {(item._sender && item._sender.userId === this.props.uid) ?
                                     <UserMessage
-                                    hour={this.getMessageHour(item.createdAt)}
-                                    message={item.message} />
+                                        hour={this.getMessageHour(item.createdAt)}
+                                        message={item.message} />
                                 :
-                                    <OuterMessage
-                                        userName={item._sender.nickname}
-                                        image={item._sender.profileUrl}
-                                        message={item.message}
-                                        hour={this.getMessageHour(item.createdAt)} />
+                                    <>
+                                        {item.messageType === 'admin' ?
+                                            <AdminMessage
+                                                message={item.message}
+                                                hour={this.getMessageHour(item.createdAt)} />
+                                        :
+                                            <OuterMessage
+                                                userName={item._sender.nickname}
+                                                image={item._sender.profileUrl}
+                                                message={item.message}
+                                                hour={this.getMessageHour(item.createdAt)} />
+                                        }
+                                    </>
                                 }
                             </>
                         )} />

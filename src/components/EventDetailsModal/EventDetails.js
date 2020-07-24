@@ -6,6 +6,7 @@ import {
     Image,
     TouchableOpacity
 } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -15,16 +16,29 @@ import { getDateElementsAsNumber, getHourElementsAsNumber, copyDataToClipboard }
 import { userHasRequestToJoinEvent, isUserParticipantOnEvent } from '../../services/database';
 import Images from '../../../assets/images';
 import QaplaText from '../QaplaText/QaplaText';
+import { getSendBirdOpenChannel } from '../../services/SendBird';
 
 function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
+    const validColorRegExp = new RegExp('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
     if (isSponsored) {
+        let validColors = false;
+        if (gradientColors) {
+            if (gradientColors.primary.charAt(0) !== '#') {
+                gradientColors.primary = `#${gradientColors.primary}`
+            }
+            if (gradientColors.secondary.charAt(0) !== '#') {
+                gradientColors.secondary = `#${gradientColors.secondary}`
+            }
+            validColors = validColorRegExp.test(gradientColors.primary) && validColorRegExp.test(gradientColors.secondary);
+        }
+
         return (
             <LinearGradient
                 useAngle={true}
                 angle={150}
                 angleCenter={{ x: .5, y: .5}}
                 style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
-                colors={gradientColors ? [gradientColors.primary, gradientColors.secondary] : ['#AA16EE', '#07EAfA']}>
+                colors={validColors ? [gradientColors.primary, gradientColors.secondary] : ['#AA16EE', '#07EAfA']}>
                 {children}
             </LinearGradient>
         );
@@ -78,9 +92,18 @@ class EventDetails extends Component {
      * Send the user to the discord channel of the event
      */
     goToDiscordLink = () => {
-        const { discordLink } = this.props.event;
+        const { discordLink, eventChatUrl } = this.props.event;
 
-        if (discordLink) {
+        if (eventChatUrl) {
+            getSendBirdOpenChannel(eventChatUrl, (openChannel) => {
+                this.props.navigation.navigate('EventChat', {
+                    eventImage: openChannel.coverUrl,
+                    sponsorImage: this.props.event.sponsorImage,
+                    eventName: openChannel.name
+                });
+                this.props.closeModal();
+            });
+        } else if (discordLink) {
             Linking.openURL(discordLink);
         }
     }
@@ -103,7 +126,8 @@ class EventDetails extends Component {
             hourUTC,
             dateUTC,
             streamerGameData,
-            gradientColors
+            gradientColors,
+            eventChatUrl
         } = this.props.event;
 
         let [day, month, year] = getDateElementsAsNumber(dateUTC);
@@ -231,9 +255,16 @@ class EventDetails extends Component {
 
                 {(this.state.existsRequest || this.state.isParticipant) &&
                     <View style={[styles.eventCard, styles.eventChatCard]}>
-                        <QaplaText style={styles.eventCardTitle}>
-                            {translate('eventDetailsModal.eventChat')}
-                        </QaplaText>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <QaplaText style={styles.eventCardTitle}>
+                                {translate('eventDetailsModal.eventChat')}
+                            </QaplaText>
+                            {eventChatUrl &&
+                                <Images.svg.betaLabelIcon
+                                    height={24}
+                                    style={{ marginRight: 24 }} />
+                            }
+                        </View>
                         <View style={styles.divider} />
                         <View style={styles.chatInfoContainer}>
                             <QaplaText style={styles.joinDiscordText}>
@@ -328,4 +359,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(EventDetails);
+export default withNavigation(connect(mapStateToProps)(EventDetails));

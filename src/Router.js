@@ -32,6 +32,7 @@ import VerificationScreen from './screens/VerificationScreen/VerificationScreen'
 import SupportScreen from './screens/SupportScreen/SupportScreen';
 import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
 import LinkBrokenScreen from './screens/LinkBrokenScreen/LinkBrokenScreen';
+import ChatScreen from './screens/ChatScreen/ChatScreen';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
@@ -43,6 +44,7 @@ import { translate } from './utilities/i18';
 import NotificationsSettingsScreen from './screens/NotificationsSettingsScreen/NotificationsSettingsScreen';
 import TodayTournamentsScreen from './screens/TodayTournamentsScreen/TodayTournamentsScreen';
 import QaplaText from './components/QaplaText/QaplaText';
+import ChatHeader from './components/Chat/ChatHeader/ChatHeader';
 
 // Svg Icons
 const ProfileIcon = Images.svg.profileIcon;
@@ -149,6 +151,15 @@ const AuthStackNavigator = createStackNavigator({
     navigationOptions: {
         gesturesEnabled: false
     }
+});
+
+const ChatStackNavigator = createStackNavigator({
+      EventChat: {
+        screen: ChatScreen,
+        navigationOptions: {
+          header: (props) => <ChatHeader {...props} />
+        }
+      }
 });
 
 //#endregion
@@ -318,6 +329,7 @@ const RootStackNavigator = createStackNavigator({
         }
     },
     MatchWizard: MatchWizardStackNavigator,
+    ChatStackNavigator: ChatStackNavigator,
     MatchDetails: MatchDetailsStackNavigator,
     SettingsMenu: SettingsMenuStackNavigator,
     AddGame: AddGameStackNavigator,

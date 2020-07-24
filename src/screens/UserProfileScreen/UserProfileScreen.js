@@ -134,13 +134,13 @@ export class UserProfileScreen extends Component {
                                 <EditProfileImgBadge />
                             </View>
                         </View>
-                        {this.props.userName.length < 10 ?
+                        {this.props.userName && this.props.userName.length < 10 ?
                             <QaplaText style={styles.userName}>
-                                    {this.props.userName}
+                                    {this.props.userName && this.props.userName}
                             </QaplaText>
                         :
                             <QaplaText style={styles.userName}>
-                                {`${this.props.userName.substring(0, 10)}...`}
+                                {`${this.props.userName ? this.props.userName.substring(0, 10) : ''}...`}
                             </QaplaText>
                         }
                     </View>

@@ -1,18 +1,8 @@
-// josep.sanahuja - 02-01-2020 - us187 - Add NAV_TOPBAR_ICON_LEFT_MARGIN & NAV_TOPBAR_ICON_RIGHT_MARGIN &
-//										 NAV_TOPBAR_ICON_TOP_MARGIN & HEADER_SIZE
-// josep.sanahuja - 18-12-2019 - us178 - Add VERIFICATION_COUNTDOWN_MILISECONDS & ONE_SECOND_IN_MILISECONDS
-// diego          - 11-12-2019 - us160 - Updated segment key
-// diego          - 11-12-2019 - us165 - EMPTY_LOGROS created
-// josep.sanahuja - 21-12-2019 - us152 - Add DB_NEW_LINE_SEPARATOR
-// diego          - 14-11-2019 - us146 - created SET_SERVER_TIME_OFFSET
-// diego          - 13-11-2019 - us135 - Created SIGN_OUT_USER constant
-// diego          - 21-10-2019 - us135 - Created QAPLOIN_PACKAGES constant
-// josep.sanahuja - 26-08-2019 - us90 - Add Highlights constants
-// diego          - 05-08-2019 - us105 - Added activity notification constants
-// diego          - 01-08-2019 - us58 - Update user constants for the new way to load their data
-
 // Segment key
 export const SEGMENT_KEY = 'fCfir8yrQiZRVrpuwLHYRePN68SqW8AS';
+
+// SendBird key
+export const SENDBIRD_KEY = '7E54A9F8-DCE3-420E-8DC8-D3E8B081A2B0';
 
 // User constants
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';

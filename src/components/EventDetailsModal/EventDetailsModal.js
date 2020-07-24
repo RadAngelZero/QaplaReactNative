@@ -71,7 +71,8 @@ class EventDetailsModal extends Component {
                                 <EventDetails
                                     event={this.props.events[this.props.eventId]}
                                     eventId={this.props.eventId}
-                                    goToNextStep={this.goToNextRegistrationStep} />
+                                    goToNextStep={this.goToNextRegistrationStep}
+                                    closeModal={this.closeModal} />
                             }
                             {this.state.eventRegistrationStep === 1 &&
                                 <EventRegistration

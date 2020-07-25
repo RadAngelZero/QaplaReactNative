@@ -29,6 +29,7 @@ export const announcementsActRef = database.ref('/Announcements/Active');
 export const privacyRef = database.ref('/Privacy');
 export const usersBalance = database.ref('usersQaplaBalance');
 export const userTopicSubscriptions = database.ref('userTopicSubscriptions');
+const qoinsDonationFormUrlRef = database.ref('QoinsDonationFormUrl');
 
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
@@ -1171,4 +1172,15 @@ export async function dbEnableAppVersionValueListener(callback) {
  */
 export async function dbRemoveAppVersionValueListener() {
     versionAppRef.off('value');
+}
+
+/**
+ * Exchange Qoins
+ */
+
+/**
+ * Get the url for the user to donate to streamers
+ */
+export async function getDonationFormUrl() {
+    return (await qoinsDonationFormUrlRef.once('value')).val();
 }

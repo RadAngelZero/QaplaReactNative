@@ -11,12 +11,12 @@ import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfil
 
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
-import remoteConf from '../../services/remoteConfig';
 
 import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import { translate } from '../../utilities/i18';
 import { heightPercentageToPx, widthPercentageToPx, isIOSDevice } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
+import { getDonationFormUrl } from '../../services/database';
 
 const QaploinExchangeIcon = images.svg.qoinFlipIcon;
 const BalanceExchangeIcon = images.svg.balanceFlipIcon;
@@ -64,15 +64,11 @@ export class UserProfileScreen extends Component {
 
     /**
      * Begins the process of redeem qaploins
-     * (At this point, only send the user to discord)
      */
     exchangeQaploins = async () => {
-        const link = (await remoteConf.getDataFromKey('Discord')).QAPLA_DISCORD_EXCHANGE_CHANNEL;
-
-        if (isUserLogged()) {
-            Linking.openURL(link);
-        } else {
-            this.props.navigation.navigate('Auth');
+        const exchangeUrl = await getDonationFormUrl();
+        if (exchangeUrl) {
+            this.props.navigation.navigate('ExchangeQoinsScreen', { exchangeUrl });
         }
     }
 

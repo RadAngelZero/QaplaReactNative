@@ -28,11 +28,11 @@ import UploadMatchResultScreen from './screens/UploadMatchResultScreen/UploadMat
 import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
 import LogrosActivosScreen from './screens/LogrosActivosScreen/LogrosActivosScreen';
 import VerificationScreen from './screens/VerificationScreen/VerificationScreen';
-
 import SupportScreen from './screens/SupportScreen/SupportScreen';
 import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
 import LinkBrokenScreen from './screens/LinkBrokenScreen/LinkBrokenScreen';
 import ChatScreen from './screens/ChatScreen/ChatScreen';
+import ExchangeQoins from './screens/ExchangeQoins/ExchangeQoins';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
@@ -336,6 +336,12 @@ const RootStackNavigator = createStackNavigator({
     Verification: VerificationStackNavigator,
     CheckOut: CheckOutStackNavigator,
     Auth: AuthStackNavigator,
+    ExchangeQoinsScreen: {
+      screen: ExchangeQoins,
+      navigationOptions: {
+        header: (props) => <TopNavOptions close onCloseNavigateTo='Profile' {...props} />
+      }
+    },
     TodayEvents: {
       screen: TodayTournamentsScreen,
       navigationOptions: {

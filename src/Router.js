@@ -25,7 +25,7 @@ import CheckOutPaymentScreen from './screens/CheckOutPaymentScreen/CheckOutPayme
 import ActivityNotificationsScreen from './screens/ActivityNotificationsScreen/ActivityNotificationsScreen';
 import RetasNotificationsScreen from './screens/RetasNotificationsScreen/RetasNotificationsScreen';
 import UploadMatchResultScreen from './screens/UploadMatchResultScreen/UploadMatchResultScreen';
-import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
+import NewUserProfileScreen from './screens/NewUserProfileScreen/NewUserProfileScreen';
 import LogrosActivosScreen from './screens/LogrosActivosScreen/LogrosActivosScreen';
 import VerificationScreen from './screens/VerificationScreen/VerificationScreen';
 import SupportScreen from './screens/SupportScreen/SupportScreen';
@@ -48,7 +48,7 @@ import ChatHeader from './components/Chat/ChatHeader/ChatHeader';
 
 // Svg Icons
 const ProfileIcon = Images.svg.profileIcon;
-const PublicFeedMatchIcon = Images.svg.publicFeedMatchIcon;
+const CommunityIcon = Images.svg.communityIcon;
 const LogrosIcon = Images.svg.logrosIcon;
 
 //#region Stack Navigators
@@ -128,11 +128,14 @@ const AddGameStackNavigator = createStackNavigator({
     }
 });
 
-const VerificationStackNavigator = createStackNavigator({
+/**
+ * @deprecated
+ */
+/* const VerificationStackNavigator = createStackNavigator({
     Verification: VerificationScreen
 },{
     headerMode: 'none'
-});
+}); */
 
 const AuthStackNavigator = createStackNavigator({
     SignIn: {
@@ -253,6 +256,53 @@ const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
     }
 );
 
+const DonationsTopTabNavigator = createMaterialTopTabNavigator(
+  {
+    NotificationActividad: {
+      screen: ActivityNotificationsScreen,
+      navigationOptions: {
+        title: translate('router.topNavigators.notifications.activity')
+      }
+    },
+    NotificationRetas: {
+      screen: RetasNotificationsScreen,
+      navigationOptions: {
+        title: translate('router.topNavigators.notifications.matches'),
+        tabBarIcon: ({ tintColor, focused }) => (
+          <BadgeForNotificationTab />
+        )
+      }
+    }
+  },
+  {
+    initialRouteName: 'NotificationActividad',
+    navigationOptions: {
+        header: (props) => <NotificationsHeader {...props} />
+    },
+    tabBarOptions: {
+        upperCaseLabel: false,
+        style: {
+          backgroundColor: '#0C1021'
+        },
+        tabStyle: {
+          width: widthPercentageToPx(35)
+        },
+        labelStyle: {
+          fontSize: 14,
+          fontFamily: 'SFRounded-Ultralight',
+          fontWeight: 'bold'
+        },
+        activeTintColor: '#FFF',
+        inactiveTintColor: '#FFF',
+        indicatorStyle: {
+        borderBottomColor: '#36E5CE',
+        borderBottomWidth: 2,
+        width: widthPercentageToPx(35)
+        }
+    },
+  }
+);
+
 //#endregion
 
 //#region Bottom Tab Navigator
@@ -274,18 +324,18 @@ const MainBottomTabNavigator = createBottomTabNavigator({
             navigationOptions:{
               tabBarIcon: ({ tintColor, focused }) => (
                 <View>
-                  <PublicFeedMatchIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
+                  <CommunityIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'} />
                   <QaplaText style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.matches')}</QaplaText>
                 </View>
               )
             }
         },
         Profile: {
-            screen: UserProfileScreen,
+            screen: NewUserProfileScreen,
             navigationOptions:{
               tabBarIcon: ({ tintColor, focused }) => (
                 <View>
-                  <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={focused ? '#36E5CE' : '#FFF'}/>
+                  <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} fill={focused ? '#36E5CE' : '#FFF'}/>
                   <QaplaText style={{ color: focused? '#36E5CE' : '#FFF', fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.profile')}</QaplaText>
                 </View>
               )
@@ -333,7 +383,7 @@ const RootStackNavigator = createStackNavigator({
     MatchDetails: MatchDetailsStackNavigator,
     SettingsMenu: SettingsMenuStackNavigator,
     AddGame: AddGameStackNavigator,
-    Verification: VerificationStackNavigator,
+    // Verification: VerificationStackNavigator,
     CheckOut: CheckOutStackNavigator,
     Auth: AuthStackNavigator,
     ExchangeQoinsScreen: {

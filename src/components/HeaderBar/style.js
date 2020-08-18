@@ -1,8 +1,3 @@
-// josep.sanahuja    - 05-01-2020 - us187 - Added HEADER_SIZE import
-// diego             - 23-12-2019 - us182 - Replaced container by topNavBarView
-// diego             - 11-12-2019 - us164 - discordIcon flexDirection changed
-// diego             - 22-11-2019 - us148 - unreadNotificationsIcon added
-
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
 import { HEADER_SIZE } from '../../utilities/Constants';
@@ -27,7 +22,21 @@ export const styles = StyleSheet.create({
         backgroundColor: "transparent",
         resizeMode: 'contain',
         width: 80,
-        height: 32,
+        height: 32
+    },
+    profileImageContainer: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    userImage: {
+        borderRadius: 100,
+        width: 40,
+        height: 40
+    },
+    userName: {
+        color: '#FFF',
+        marginLeft: 8,
+        fontSize: 16
     },
     iconsContainer: {
         flexDirection: 'row'

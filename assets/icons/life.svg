@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="16px" viewBox="0 0 20 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>life 2</title>
+    <g id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Profile" transform="translate(-109.000000, -690.000000)" fill="#FFD632">
+            <g id="Slide-Up-Modal" transform="translate(0.000000, 570.000000)">
+                <g id="1-life" transform="translate(109.000000, 118.000000)">
+                    <g id="Heart" transform="translate(0.833333, 2.500000)">
+                        <path d="M9.16666667,1.507975 C8.19341667,0.574 6.872075,0 5.41666667,0 C2.425125,0 0,2.425125 0,5.41666667 C0,10.7235833 5.80861667,13.6541667 8.17816667,14.6289167 C8.81633333,14.8914167 9.517,14.8914167 10.1551667,14.6289167 C12.52475,13.6541667 18.3333333,10.7235 18.3333333,5.41666667 C18.3333333,2.425125 15.90825,0 12.9166667,0 C11.46125,0 10.1399167,0.574 9.16666667,1.507975 Z" id="Path" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

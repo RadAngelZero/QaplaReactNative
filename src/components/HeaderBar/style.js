@@ -30,12 +30,17 @@ export const styles = StyleSheet.create({
     },
     userImage: {
         borderRadius: 100,
-        width: 40,
-        height: 40
+        width: 48,
+        height: 48
+    },
+    editImg: {
+        position: 'absolute',
+        bottom: -2,
+        right: widthPercentageToPx(-1)
     },
     userName: {
         color: '#FFF',
-        marginLeft: 8,
+        marginLeft: 10,
         fontSize: 16
     },
     iconsContainer: {

@@ -18,6 +18,7 @@ import { HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';
 import { translate } from '../../utilities/i18';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import QaplaText from '../QaplaText/QaplaText';
+import EditProfileImgBadge from '../EditProfileImgBadge/EditProfileImgBadge';
 
 const NotificationIcon = images.svg.notificationIcon;
 const DiscordIcon = images.svg.discordIcon;
@@ -184,9 +185,18 @@ class HeaderBar extends Component {
                         </View>
                         :
                         <View style={styles.profileImageContainer}>
-                            <Image
-                                source={{ uri: this.props.userImage }}
-                                style={styles.userImage}/>
+                            <View>
+                                {this.props.userImage ?
+                                    <Image
+                                        source={{ uri: this.props.userImage }}
+                                        style={styles.userImage}/>
+                                    :
+                                    <View style={styles.userImage} />
+                                }
+                                <View style={styles.editImg}>
+                                    <EditProfileImgBadge />
+                                </View>
+                            </View>
                             {this.props.userName && this.props.userName.length < 14 ?
                             <QaplaText style={styles.userName}>
                                     {this.props.userName && this.props.userName}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, Image } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { connect } from 'react-redux';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
@@ -8,12 +8,10 @@ import styles from './style';
 import images from '../../../assets/images';
 
 import AnimatedCircleIndicator from '../../components/AnimatedCircleIndicator/AnimatedCircleIndicator';
-import BuyQaploinsModal from '../../components/BuyQaploinsModal/BuyQaploinsModal';
 
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
 
-import { getUserGamesOrderedByPlatform } from '../../utilities/utils';
 import { translate } from '../../utilities/i18';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
@@ -92,18 +90,6 @@ export class UserProfileScreen extends Component {
     }
 
     /**
-     * Open the modal of buy qaploins
-     */
-    openBuyQaploinsModal = () => {
-        if (isUserLogged()) {
-            trackOnSegment('User Profile Add Qaploins Button', { UserQaploins: this.props.userQaploins });
-            this.setState({ showBuyQaploinsModal: true });
-        } else {
-            this.props.navigation.navigate('Auth');
-        }
-    }
-
-    /**
      * Begins the process of redeem qaploins
      */
     exchangeQaploins = async () => {
@@ -113,50 +99,7 @@ export class UserProfileScreen extends Component {
         }
     }
 
-    /**
-     * Close the modal of buy qaploins
-     */
-    closeBuyQaploinsModal = () => this.setState({ showBuyQaploinsModal: false });
-
-    /**
-     * Redirect to LoadGames screen
-     */
-    addGame = () => {
-        if (isUserLogged()) {
-            this.props.navigation.navigate('AddGame', { loadGamesUserDontHave: true, onCloseGoTo: 'Perfil' });
-        } else {
-            this.props.navigation.navigate('Auth');
-        }
-    }
-
-    /**
-     * Check if the given index is the last from a list of size quantityOfElements
-     *
-     * @param {number} currentIndex Index to evaluate
-     * @param {number} quantityOfElements Quantity of elements from the list to evaluate
-     */
-    isLastChild = (currentIndex, objectLength) => (currentIndex === objectLength - 1);
-
     render() {
-        /**
-         * userGames must be look like this:
-         * userGames: {
-         *     pc_white: {
-         *         aClash: 'Clash royale'
-         *     },
-         *     ps4_white: {
-         *         psFifa: 'Fifa 19'
-         *     }
-         * }
-         *
-         * Similar to 'Games' node of the database but only with the games of the user
-         */
-        let userGames = {};
-
-        if (this.props.userGames instanceof Array) {
-            userGames = getUserGamesOrderedByPlatform(this.props.userGames, this.props.qaplaGames, true);
-        }
-
         return (
             <SafeAreaView style={styles.profileView}>
 				<View style={styles.qoinsView}>
@@ -164,15 +107,17 @@ export class UserProfileScreen extends Component {
                         height={heightPercentageToPx(4)}
                         width={widthPercentageToPx(10)}
                         style={styles.qoinsImage} />
-					<QaplaText style={styles.textThreeText}>
+					<QaplaText style={styles.qoinsValue}>
                         {this.props.userQoins}
                     </QaplaText>
 				</View>
                 <View style={styles.bitsCardContainer}>
                     <View style={styles.bitsModuleView}>
-                        <InfoIcon style={styles.infoImage} />
-                        <View
-                            style={styles.bitsValueContainer}>
+                        <View>
+                            <InfoIcon style={styles.infoImage} />
+                            <BitsIcon style={styles.bits3dIconImage}/>
+                        </View>
+                        <View style={styles.bitsValueContainer}>
                             <QaplaText style={styles.bitsNumber}>
                                 175
                             </QaplaText>
@@ -180,48 +125,39 @@ export class UserProfileScreen extends Component {
                                 Bits/Estrellas
                             </QaplaText>
                         </View>
-                        <TouchableOpacity style={styles.buttonView}>
+                        <TouchableOpacity
+                            style={styles.buttonView}
+                            onPress={this.exchangeQaploins}>
                             <QaplaText style={styles.supportText}>
                                 Support
                             </QaplaText>
                         </TouchableOpacity>
                     </View>
-                    <BitsIcon style={styles.bits3dIconImage}/>
                     <View style={styles.levelModalView}>
-                        <View
-                            style={{
-                                height: 119,
-                            }}>
-                            <AnimatedCircleIndicator
-                                size={120}
-                                fill={80}
-                                width={7}
-                                duration={750}
-                                fillComponent={() => (
-                                    <>
-                                        <QaplaText style={styles.levelText}>
-                                            Level
-                                        </QaplaText>
-                                        <QaplaText style={styles.levelValueText}>
-                                            5
-                                        </QaplaText>
-                                    </>
-                                )}
-                                backgroundColor='#C4C4C4'
-                                tintColor={Colors.greenQapla}
-                                description='500 exp'
-                                descriptionStyle={styles.expText} />
-                        </View>
+                        <AnimatedCircleIndicator
+                            size={120}
+                            fill={80}
+                            width={7}
+                            duration={750}
+                            fillComponent={() => (
+                                <>
+                                    <QaplaText style={styles.levelText}>
+                                        Level
+                                    </QaplaText>
+                                    <QaplaText style={styles.levelValueText}>
+                                        5
+                                    </QaplaText>
+                                </>
+                            )}
+                            backgroundColor='#1F2750'
+                            tintColor={Colors.greenQapla}
+                            description='500 exp'
+                            descriptionStyle={styles.expText} />
                     </View>
                 </View>
-                <View style={{ flex: 1, marginTop: 48 }}>
+                <View style={styles.donationNavigatorContainer}>
                     <AppContainer />
                 </View>
-                <BuyQaploinsModal
-                    open={this.state.showBuyQaploinsModal}
-                    openWhen='User wants to buy qaploins on profile'
-                    body={translate('userProfileScreen.buyQaploinsModal.body')}
-                    onClose={this.closeBuyQaploinsModal} />
             </SafeAreaView>
         );
     }
@@ -234,13 +170,7 @@ function mapStateToProps(state) {
      */
     if (Object.keys(state.userReducer.user).length > 0) {
         return {
-            userProfilePhoto: state.userReducer.user.photoUrl,
-            userName: state.userReducer.user.userName,
-            uid: state.userReducer.user.id,
-            userQoins: state.userReducer.user.credits,
-            userBalance: state.userReducer.user.userBalance,
-            userGames: state.userReducer.user.gameList,
-            qaplaGames: state.gamesReducer.games
+            userQoins: state.userReducer.user.credits
         }
     }
 

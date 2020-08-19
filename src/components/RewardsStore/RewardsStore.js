@@ -8,34 +8,44 @@ import Images from '../../../assets/images';
 import { getQaplaStoreProducts } from '../../services/database';
 import { getLocaleLanguage } from '../../utilities/i18';
 
-const RewardCard = ({ title, description, blue = false, primaryColor = 'rgb(20, 22, 55)', secondaryColor = 'rgb(20, 22, 55)' }) => (
-    <LinearGradient
-        start={{
-            x: 0,
-            y: 0,
-        }}
-        end={{
-            x: 1.75,
-            y: 1,
-        }}
-        locations={[0, 1]}
-        colors={[primaryColor, secondaryColor]}
-        style={styles.prizeContainer}>
-        <QaplaText style={styles.prizeTitle}>
-            {title}
-        </QaplaText>
-        <QaplaText
-            style={styles.prizeBody}
-            numberOfLines={3}>
-            {description}
-        </QaplaText>
-        <View style={styles.lifeContainer}>
-            <Images.svg.lifeIcon style={styles.lifeIcon} />
-            <Images.svg.lifeIcon style={styles.lifeIcon} />
-            <Images.svg.halfLifeIcon style={styles.lifeIcon} />
-        </View>
-    </LinearGradient>
-);
+const RewardCard = ({ title, description, price, primaryColor = 'rgb(20, 22, 55)', secondaryColor = 'rgb(20, 22, 55)' }) => {
+    let Price = [];
+
+    for (let i = 0; i < Math.floor(price); i++) {
+        Price.push(<Images.svg.lifeIcon />);
+    }
+
+    if (price - Math.floor(price) > 0) {
+        Price.push(<Images.svg.halfLifeIcon />);
+    }
+
+    return (
+        <LinearGradient
+            start={{
+                x: 0,
+                y: 0,
+            }}
+            end={{
+                x: 1.75,
+                y: 1,
+            }}
+            locations={[0, 1]}
+            colors={[primaryColor, secondaryColor]}
+            style={styles.prizeContainer}>
+            <QaplaText style={styles.prizeTitle}>
+                {title}
+            </QaplaText>
+            <QaplaText
+                style={styles.prizeBody}
+                numberOfLines={3}>
+                {description}
+            </QaplaText>
+            <View style={styles.lifeContainer}>
+                {Price}
+            </View>
+        </LinearGradient>
+    );
+};
 
 class RewardsStore extends Component {
     state = {
@@ -64,7 +74,8 @@ class RewardsStore extends Component {
                                 primaryColor={this.state.rewards[rewardKey].primaryColor}
                                 secondaryColor={this.state.rewards[rewardKey].secondaryColor}
                                 title={this.state.rewards[rewardKey].name[userLanguage]}
-                                description={this.state.rewards[rewardKey].description[userLanguage]} />;
+                                description={this.state.rewards[rewardKey].description[userLanguage]}
+                                price={this.state.rewards[rewardKey].price} />;
                         } else {
                             return null;
                         }
@@ -77,7 +88,8 @@ class RewardsStore extends Component {
                                 primaryColor={this.state.rewards[rewardKey].primaryColor}
                                 secondaryColor={this.state.rewards[rewardKey].secondaryColor}
                                 title={this.state.rewards[rewardKey].name[userLanguage]}
-                                description={this.state.rewards[rewardKey].description [userLanguage]} />;
+                                description={this.state.rewards[rewardKey].description [userLanguage]}
+                                price={this.state.rewards[rewardKey].price} />;
                         } else {
                             return null;
                         }

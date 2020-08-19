@@ -45,6 +45,7 @@ import HighFiveIcon from './icons/HighFive.svg';
 import SendIcon from './icons/send.svg';
 import ArrowDownIcon from './icons/arrowDown.svg';
 import BetaLabelIcon from './icons/BetaLabel.svg';
+import QaplaLogo from './icons/QaplaLogo.svg'
 
 // Images
 
@@ -205,7 +206,8 @@ const images = {
 		highFiveIcon: HighFiveIcon,
 		sendIcon: SendIcon,
 		arrowDownIcon: ArrowDownIcon,
-		betaLabelIcon: BetaLabelIcon
+		betaLabelIcon: BetaLabelIcon,
+		qaplalogoIcon: QaplaLogo
 	}
 };
 

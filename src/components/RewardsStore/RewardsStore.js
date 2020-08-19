@@ -19,28 +19,29 @@ const RewardCard = ({ blue = false, primaryColor = 'rgb(20, 22, 55)', secondaryC
         locations={[0, 1]}
         colors={[primaryColor, secondaryColor]}
         style={styles.prizeContainer}>
-        <QaplaText style={styles.prizeTitleTwoText}>
+        <QaplaText style={styles.prizeTitle}>
             {blue ?
             'Twitch Sub'
             :
             '400 CoD Points'
             }
         </QaplaText>
-        <QaplaText style={styles.prizeBodyTwoText} numberOfLines={3}>
+        <QaplaText
+            style={styles.prizeBody}
+            numberOfLines={3}>
             {blue ?
             '1 month subscription to your streamer of choice.'
             :
             'Get CoD points into your CoD Mobile account'
             }
         </QaplaText>
-        <View
-            style={{ flexDirection: 'row', marginTop: 6, marginBottom: 16, marginLeft: 10 }}>
-            <Images.svg.lifeIcon style={{ marginLeft: 6 }} />
-            <Images.svg.lifeIcon style={{ marginLeft: 6 }} />
-            <Images.svg.halfLifeIcon style={{ marginLeft: 6 }} />
+        <View style={styles.lifeContainer}>
+            <Images.svg.lifeIcon style={styles.lifeIcon} />
+            <Images.svg.lifeIcon style={styles.lifeIcon} />
+            <Images.svg.halfLifeIcon style={styles.lifeIcon} />
         </View>
     </LinearGradient>
-)
+);
 
 class RewardsStore extends Component {
     state = {
@@ -54,7 +55,7 @@ class RewardsStore extends Component {
     render() {
         return (
             <ScrollView contentContainerStyle={styles.container}>
-                <View style={{ flexDirection: 'column' }}>
+                <View>
                     {this.state.rewards.map((reward, index) => {
                         if (index % 2 === 0) {
                             return (<RewardCard primaryColor={reward.primaryColor} secondaryColor={reward.secondaryColor} />);
@@ -63,7 +64,7 @@ class RewardsStore extends Component {
                         }
                     })}
                 </View>
-                <View style={{ flexDirection: 'column' }}>
+                <View>
                     {this.state.rewards.map((reward, index) => {
                         if (index % 2 !== 0) {
                             return (<RewardCard blue primaryColor={reward.primaryColor} secondaryColor={reward.secondaryColor} />);

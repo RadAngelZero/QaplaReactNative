@@ -14,7 +14,7 @@ export default styles = StyleSheet.create({
         marginTop: 10,
         width: widthPercentageToPx(42.5)
     },
-    prizeTitleTwoText: {
+    prizeTitle: {
 		color: '#FFF',
 		fontSize: 18,
         letterSpacing: 0.3,
@@ -22,12 +22,21 @@ export default styles = StyleSheet.create({
         marginTop: 16,
         marginLeft: 16
 	},
-    prizeBodyTwoText: {
+    prizeBody: {
         maxWidth: '85%',
         height: heightPercentageToPx(8),
 		color: '#FFF',
 		fontSize: 14,
         marginTop: 24,
         marginLeft: 16
-	}
+    },
+    lifeContainer: {
+        flexDirection: 'row',
+        marginTop: 6,
+        marginBottom: 16,
+        marginLeft: 10
+    },
+    lifeIcon: {
+        marginLeft: 6
+    }
 });

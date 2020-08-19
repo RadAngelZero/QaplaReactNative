@@ -100,6 +100,7 @@ export class NewUserProfileScreen extends Component {
     }
 
     render() {
+        const userLevel = Math.floor(this.props.experience / 100);
         return (
             <SafeAreaView style={styles.profileView}>
 				<View style={styles.qoinsView}>
@@ -136,13 +137,13 @@ export class NewUserProfileScreen extends Component {
                     <View style={styles.levelModalView}>
                         <AnimatedCircleIndicator
                             size={120}
-                            fill={this.props.experience - (100 * Math.floor(this.props.experience / 100))}
+                            fill={this.props.experience - (100 * userLevel)}
                             width={7}
                             duration={750}
                             fillComponent={() => (
                                 <>
                                     <QaplaText style={styles.levelValueText}>
-                                        {Math.floor(this.props.experience / 100)}
+                                        {userLevel}
                                     </QaplaText>
                                     <QaplaText style={styles.levelText}>
                                         {translate('newUserProfileScreen.level')}

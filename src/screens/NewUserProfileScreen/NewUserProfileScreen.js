@@ -141,11 +141,11 @@ export class UserProfileScreen extends Component {
                             duration={750}
                             fillComponent={() => (
                                 <>
-                                    <QaplaText style={styles.levelText}>
-                                        Level
-                                    </QaplaText>
                                     <QaplaText style={styles.levelValueText}>
                                         5
+                                    </QaplaText>
+                                    <QaplaText style={styles.levelText}>
+                                        Level
                                     </QaplaText>
                                 </>
                             )}

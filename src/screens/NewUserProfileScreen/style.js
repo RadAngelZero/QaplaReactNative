@@ -76,43 +76,21 @@ export default styles = StyleSheet.create({
 	},
 	bits3dIconImage: {
 		position: 'absolute',
-		bottom: -heightPercentageToPx(2.5),
-		left: widthPercentageToPx(22)
+		bottom: -heightPercentageToPx(3),
+		left: widthPercentageToPx(20)
 	},
 	levelModalView: {
 		alignSelf: 'center'
 	},
-	levelCircleView: {
-		borderRadius: 59.5,
-		borderWidth: 7,
-		borderColor: 'rgb(31, 39, 80)',
-		borderStyle: 'solid',
-		position: 'absolute',
-		left: 0,
-		right: 0,
-		top: 0,
-		height: 119,
-	},
 	levelText: {
-		color: 'white',
+		color: '#FFF',
 		fontSize: 12,
-		fontStyle: 'normal',
-		fontWeight: 'normal',
-		textAlign: 'left',
-		lineHeight: 16,
-		position: 'absolute',
-		alignSelf: 'center',
-		top: 70,
+		alignSelf: 'center'
 	},
 	levelValueText: {
-		color: 'white',
+		color: '#FFF',
 		fontSize: 48,
-		fontStyle: 'normal',
-		fontWeight: 'normal',
-		textAlign: 'left',
-		lineHeight: 60,
-		alignSelf: 'center',
-		marginBottom: 16
+		alignSelf: 'center'
 	},
 	expText: {
 		color: '#FFF',

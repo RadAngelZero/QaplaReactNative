@@ -312,8 +312,6 @@ const MainBottomTabNavigator = createMaterialTopTabNavigator({
       margin: 0,
       borderTopColor: 'transparent'
     },
-    pressColor: '#0000',
-    pressOpacity: '#0000',
     showLabel: true,
     activeTintColor: '#36E5CE',
     inactiveTintColor: '#fff',

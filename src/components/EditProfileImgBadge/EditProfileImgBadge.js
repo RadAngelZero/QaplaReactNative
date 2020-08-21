@@ -1,7 +1,7 @@
 // josep-sanahuja - 22-11-2019 - us153 - File creation
 
 import React, { Component } from 'react';
-import { View, TouchableWithoutFeedback } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import styles from './style';
 import { connect } from 'react-redux';
 
@@ -73,11 +73,11 @@ class EditProfileImgBadge extends Component {
     render() {
         return (
         	<>
-	        	<TouchableWithoutFeedback onPress={this.openImgPckModal}>
-		            <View style={styles.container}>
-                        <EditIcon style={styles.badge} />
-		            </View>
-		        </TouchableWithoutFeedback>
+	        	<TouchableOpacity
+                    style={styles.container}
+                    onPress={this.openImgPckModal}>
+                    <EditIcon  style={styles.badge} />
+		        </TouchableOpacity>
 		        <ImagePickerModal
                     visible={this.state.showImgPckModal}
                     saveImage={this.saveImage}

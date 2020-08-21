@@ -60,7 +60,7 @@ const DonationsNavigator = createMaterialTopTabNavigator({
 
 const AppContainer = createAppContainer(DonationsNavigator);
 
-export class UserProfileScreen extends Component {
+export class NewUserProfileScreen extends Component {
     state = {
         showBuyQaploinsModal: false,
         showQaploinsToUser: true
@@ -100,6 +100,7 @@ export class UserProfileScreen extends Component {
     }
 
     render() {
+        const userLevel = Math.floor(this.props.experience / 100);
         return (
             <SafeAreaView style={styles.profileView}>
 				<View style={styles.qoinsView}>
@@ -136,22 +137,22 @@ export class UserProfileScreen extends Component {
                     <View style={styles.levelModalView}>
                         <AnimatedCircleIndicator
                             size={120}
-                            fill={80}
+                            fill={this.props.experience - (100 * userLevel)}
                             width={7}
                             duration={750}
                             fillComponent={() => (
                                 <>
                                     <QaplaText style={styles.levelValueText}>
-                                        5
+                                        {userLevel}
                                     </QaplaText>
                                     <QaplaText style={styles.levelText}>
-                                        Level
+                                        {translate('newUserProfileScreen.level')}
                                     </QaplaText>
                                 </>
                             )}
                             backgroundColor='#1F2750'
                             tintColor={Colors.greenQapla}
-                            description='500 exp'
+                            description={`${this.props.experience} exp`}
                             descriptionStyle={styles.expText} />
                     </View>
                 </View>
@@ -170,7 +171,8 @@ function mapStateToProps(state) {
      */
     if (Object.keys(state.userReducer.user).length > 0) {
         return {
-            userQoins: state.userReducer.user.credits
+            userQoins: state.userReducer.user.credits,
+            experience: state.userReducer.user.qaplaExperience || 0
         }
     }
 
@@ -185,4 +187,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(UserProfileScreen);
+export default connect(mapStateToProps)(NewUserProfileScreen);

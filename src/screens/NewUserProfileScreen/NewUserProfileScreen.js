@@ -29,8 +29,7 @@ const DonationsNavigator = createMaterialTopTabNavigator({
         screen: () => <View style={{ backgroundColor: '#FFF', height: 50, width: 50 }} />
     },
     Store: {
-        screen: () =>
-        <RewardsStore />
+        screen: () => <RewardsStore />
     }
 },
 {

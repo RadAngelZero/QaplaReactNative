@@ -32,7 +32,7 @@ export class AnimatedCircleIndicator extends Component {
                         {this.props.fillComponent || this.fillCircleText}
                 </AnimatedCircularProgress>
                 {this.props.description &&
-                    <QaplaText style={styles.description, this.props.descriptionStyle}>
+                    <QaplaText style={[styles.description, this.props.descriptionStyle]}>
                         {this.props.description}
                     </QaplaText>
                 }

@@ -33,8 +33,7 @@ const DonationsNavigator = createMaterialTopTabNavigator({
         screen: () => <View style={{ backgroundColor: '#FFF', height: 50, width: 50 }} />
     },
     Store: {
-        screen: () =>
-        <RewardsStore />
+        screen: () => <RewardsStore />
     }
 },
 {
@@ -64,7 +63,7 @@ const DonationsNavigator = createMaterialTopTabNavigator({
 
 const AppContainer = createAppContainer(DonationsNavigator);
 
-export class UserProfileScreen extends Component {
+export class NewUserProfileScreen extends Component {
     state = {
         showBuyQaploinsModal: false,
         showQaploinsToUser: true
@@ -104,6 +103,7 @@ export class UserProfileScreen extends Component {
     }
 
     render() {
+        const userLevel = Math.floor(this.props.experience / 100);
         return (
             <SafeAreaView style={styles.profileView}>
                 <RewardsBottomSheet>
@@ -174,7 +174,8 @@ function mapStateToProps(state) {
     if (Object.keys(state.userReducer.user).length > 0) {
         return {
             userQoins: state.userReducer.user.credits,
-            userImage: state.userReducer.user.photoUrl
+            userImage: state.userReducer.user.photoUrl,
+            experience: state.userReducer.user.qaplaExperience || 0
         }
     }
 
@@ -189,4 +190,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(UserProfileScreen);
+export default connect(mapStateToProps)(NewUserProfileScreen);

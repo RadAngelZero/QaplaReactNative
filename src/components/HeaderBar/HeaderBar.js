@@ -18,6 +18,7 @@ import { HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';
 import { translate } from '../../utilities/i18';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import QaplaText from '../QaplaText/QaplaText';
+import EditProfileImgBadge from '../EditProfileImgBadge/EditProfileImgBadge';
 
 const NotificationIcon = images.svg.notificationIcon;
 const DiscordIcon = images.svg.discordIcon;

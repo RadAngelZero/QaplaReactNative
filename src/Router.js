@@ -256,53 +256,6 @@ const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
     }
 );
 
-const DonationsTopTabNavigator = createMaterialTopTabNavigator(
-  {
-    NotificationActividad: {
-      screen: ActivityNotificationsScreen,
-      navigationOptions: {
-        title: translate('router.topNavigators.notifications.activity')
-      }
-    },
-    NotificationRetas: {
-      screen: RetasNotificationsScreen,
-      navigationOptions: {
-        title: translate('router.topNavigators.notifications.matches'),
-        tabBarIcon: ({ tintColor, focused }) => (
-          <BadgeForNotificationTab />
-        )
-      }
-    }
-  },
-  {
-    initialRouteName: 'NotificationActividad',
-    navigationOptions: {
-        header: (props) => <NotificationsHeader {...props} />
-    },
-    tabBarOptions: {
-        upperCaseLabel: false,
-        style: {
-          backgroundColor: '#0C1021'
-        },
-        tabStyle: {
-          width: widthPercentageToPx(35)
-        },
-        labelStyle: {
-          fontSize: 14,
-          fontFamily: 'SFRounded-Ultralight',
-          fontWeight: 'bold'
-        },
-        activeTintColor: '#FFF',
-        inactiveTintColor: '#FFF',
-        indicatorStyle: {
-        borderBottomColor: '#36E5CE',
-        borderBottomWidth: 2,
-        width: widthPercentageToPx(35)
-        }
-    },
-  }
-);
-
 //#endregion
 
 //#region Bottom Tab Navigator
@@ -383,7 +336,6 @@ const RootStackNavigator = createStackNavigator({
     MatchDetails: MatchDetailsStackNavigator,
     SettingsMenu: SettingsMenuStackNavigator,
     AddGame: AddGameStackNavigator,
-    // Verification: VerificationStackNavigator,
     CheckOut: CheckOutStackNavigator,
     Auth: AuthStackNavigator,
     ExchangeQoinsScreen: {

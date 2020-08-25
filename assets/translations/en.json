@@ -133,6 +133,9 @@
         "body": ""
         }
     },
+    "newUserProfileScreen": {
+        "level": "Level"
+    },
     "notificationsScreen":{
         "notificationsHeader": "Notifications",
         "notificationTypes": {

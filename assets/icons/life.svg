@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="20px" height="16px" viewBox="0 0 20 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>life 2</title>
-    <g id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Profile" transform="translate(-109.000000, -690.000000)" fill="#FFD632">
+    <g id="UI" stroke="none" stroke-width="1" fill="currentColor" fill-rule="evenodd">
+        <g id="Profile" transform="translate(-109.000000, -690.000000)" fill="currentColor">
             <g id="Slide-Up-Modal" transform="translate(0.000000, 570.000000)">
                 <g id="1-life" transform="translate(109.000000, 118.000000)">
                     <g id="Heart" transform="translate(0.833333, 2.500000)">

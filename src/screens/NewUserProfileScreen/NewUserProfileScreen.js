@@ -20,8 +20,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from '../../utilities/Colors';
 import RewardsStore from '../../components/RewardsStore/RewardsStore';
 
-import Animated from 'react-native-reanimated';
-import BottomSheet from 'reanimated-bottom-sheet';
 import RewardsBottomSheet from '../../components/RewardsBottomSheet/RewardsBottomSheet';
 
 const QaploinExchangeIcon = images.svg.qaploinsIcon;

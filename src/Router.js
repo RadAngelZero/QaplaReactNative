@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { createAppContainer, createSwitchNavigator, NavigationActions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator, createBottomTabNavigator } from 'react-navigation-tabs';
@@ -260,18 +260,19 @@ const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
 
 //#region Bottom Tab Navigator
 
-const MainBottomTabNavigator = createMaterialTopTabNavigator({
+const MainBottomTabNavigator = createBottomTabNavigator({
   Achievements: {
     screen: LogrosActivosScreen,
     navigationOptions: {
+      tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
-          <LogrosIcon width={25} height={25} style={{ alignSelf: 'center' }} color={tintColor} />
+          <LogrosIcon width={24} height={24} style={{ alignSelf: 'center', marginTop: 12 }} color={tintColor} />
         </View>
       ),
       tabBarLabel: ({ tintColor, focused }) => (
         <View>
-          <QaplaText style={{ color: tintColor, fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.events')}</QaplaText>
+          <QaplaText style={{ color: tintColor, fontSize: 12 }}>{translate('router.bottomNavigators.mainNavigator.events')}</QaplaText>
         </View>
       ),
     },
@@ -279,14 +280,15 @@ const MainBottomTabNavigator = createMaterialTopTabNavigator({
   Matches: {
     screen: MatchesTopTabNavigator,
     navigationOptions: {
+      tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
-          <CommunityIcon width={25} height={25} style={{ alignSelf: 'center' }} color={tintColor} />
+          <CommunityIcon width={24} height={24} style={{ alignSelf: 'center', marginTop: 12 }} color={tintColor} />
         </View>
       ),
       tabBarLabel: ({ tintColor, focused }) => (
         <View>
-          <QaplaText style={{ color: tintColor, fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.matches')}</QaplaText>
+          <QaplaText style={{ color: tintColor, fontSize: 12 }}>{translate('router.bottomNavigators.mainNavigator.matches')}</QaplaText>
         </View>
       ),
     }
@@ -294,14 +296,15 @@ const MainBottomTabNavigator = createMaterialTopTabNavigator({
   Profile: {
     screen: NewUserProfileScreen,
     navigationOptions: {
+      tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
         <View>
-          <ProfileIcon width={25} height={25} style={{ alignSelf: 'center' }} color={tintColor} />
+          <ProfileIcon width={24} height={24} style={{ alignSelf: 'center', marginTop: 12 }} color={tintColor} />
         </View>
       ),
       tabBarLabel: ({ tintColor, focused }) => (
         <View>
-          <QaplaText style={{ color: tintColor, fontSize: 12, lineHeight: 14 }}>{translate('router.bottomNavigators.mainNavigator.profile')}</QaplaText>
+          <QaplaText style={{ color: tintColor, fontSize: 12 }}>{translate('router.bottomNavigators.mainNavigator.profile')}</QaplaText>
         </View>
       ),
     }
@@ -323,12 +326,8 @@ const MainBottomTabNavigator = createMaterialTopTabNavigator({
       justifyContent: 'center',
       alignItems: 'center'
     },
-    indicatorStyle: {
-      height: 0
-    },
     showIcon: true
-  },
-  tabBarPosition: 'bottom'
+  }
 }
 );
 

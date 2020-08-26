@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { View, ActivityIndicator, SafeAreaView } from 'react-native';
+import Animated, { Easing } from 'react-native-reanimated';
+import Svg, { G, Circle, Path } from 'react-native-svg'
 import { connect } from 'react-redux';
 
 import {
@@ -9,6 +11,7 @@ import {
 } from '../../utilities/firebase';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import styles from './style';
+import images from '../../../assets/images';
 import { getUserNode } from '../../actions/userActions';
 import {
     getUserNameWithUID,
@@ -30,10 +33,17 @@ import QaplaText from '../../components/QaplaText/QaplaText';
 import { connectUserToSendBird } from '../../services/SendBird';
 import { getUserProfileImgUrl } from '../../services/storage';
 
+import LoadingAnimation from '../../components/LoadingAnimation/LoadingAnimation';
+
+const QaplaLogo = images.svg.qaplalogoIcon;
+
+const AnimatedSvg = Animated.createAnimatedComponent(Svg);
+
 class AuthLoadingScreen extends Component {
     state = {
         firstLoad: true,
-        linkOnProgress: false
+        linkOnProgress: false,
+        loadingText: translate('loadingScreen.activityIndicatorText'),
     };
 
     componentDidMount() {
@@ -46,7 +56,7 @@ class AuthLoadingScreen extends Component {
         try {
             remoteConf.configure();
             remoteConf.fetchAndActivate();
-        } catch(error){
+        } catch (error) {
             console.error(`Firebase remote configuration`, error);
         }
 
@@ -66,7 +76,7 @@ class AuthLoadingScreen extends Component {
                 // user is redirected to ChooUserName where they will create their profile.
                 const userName = await getUserNameWithUID(user.uid);
 
-                if (!userName){
+                if (!userName) {
                     return this.props.navigation.navigate('ChooseUserName');
                 } else {
                     const userImg = await getUserProfileImgUrl(user.uid);
@@ -170,7 +180,7 @@ class AuthLoadingScreen extends Component {
      */
     processLinkUrl = (url) => {
         if (url) {
-            this.setState({linkOnProgress: true});
+            this.setState({ linkOnProgress: true });
 
             let screenName = 'LinkBroken';
             const type = this.getParameterFromUrl(url, 'type');
@@ -179,7 +189,7 @@ class AuthLoadingScreen extends Component {
                 const type2 = this.getParameterFromUrl(url, 'type2');
 
                 if (type2 === 'matchCard') {
-                	const matchId = this.getParameterFromUrl(url, 'matchId');
+                    const matchId = this.getParameterFromUrl(url, 'matchId');
 
                     trackOnSegment('Deep link - matchCard', {
                         MatchId: matchId
@@ -248,15 +258,17 @@ class AuthLoadingScreen extends Component {
             };
         }
 
-        this.props.navigation.navigate('MatchDetails', {matchCard: matchObj});
+        this.props.navigation.navigate('MatchDetails', { matchCard: matchObj });
     }
 
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
-                    <QaplaText style={styles.textColor}>{translate('loadingScreen.activityIndicatorText')}</QaplaText>
+                    {/* <ActivityIndicator size='large' color='rgb(61, 249, 223)' /> */}
+                    {/* <QaplaText style={styles.textColor}>{this.state.loadingText}</QaplaText> */}
+                    <QaplaLogo width={300} height={130} />
+                    <LoadingAnimation />
                 </View>
             </SafeAreaView>
         );

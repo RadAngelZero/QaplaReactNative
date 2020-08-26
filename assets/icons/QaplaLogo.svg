@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 499.96 171.37">
+  <g id="Q-layer">
+    <circle id="QDot" cx="68.25" cy="68.25" r="26.12" style="fill:#2e3192" />
+    <line id="QTail" x1="68.25" y1="126" x2="124.49" y2="126" style="fill:none;stroke:#0affd2;stroke-linecap:round;stroke-miterlimit:10;stroke-width:21px" />
+    <path id="QCircle" d="M132.55,238.83A57.75,57.75,0,1,1,115.63,198,57.58,57.58,0,0,1,132.55,238.83Z" transform="translate(-6.55 -170.58)" style="fill:none;stroke:#0affd2;stroke-miterlimit:10;stroke-width:21px" />
+  </g>
+  <g id="a1-layer">
+    <path id="a1Circle" d="M233.3,260.8a38.05,38.05,0,1,1-11.14-26.9A37.92,37.92,0,0,1,233.3,260.8Z" transform="translate(-6.55 -170.58)" style="fill:none;stroke:#0affd2;stroke-miterlimit:10;stroke-width:17px" />
+    <line id="a1Tail" x1="226.75" y1="126.41" x2="226.75" y2="53.39" style="fill:none;stroke:#0affd2;stroke-linecap:round;stroke-miterlimit:10;stroke-width:17px" />
+  </g>
+  <g id="p-layer">
+    <line id="pTail" x1="256.69" y1="162.87" x2="256.69" y2="52.83" style="fill:none;stroke:#0affd2;stroke-linecap:round;stroke-miterlimit:10;stroke-width:17px" />
+    <path id="pCircle" d="M339.34,261.05a38.07,38.07,0,1,1-11.15-26.9A37.93,37.93,0,0,1,339.34,261.05Z" transform="translate(-6.55 -170.58)" style="fill:none;stroke:#0affd2;stroke-miterlimit:10;stroke-width:17px" />
+  </g>
+  <g id="l-layer">
+    <line id="l" x1="358.45" y1="127.33" x2="358.45" y2="18.92" style="fill:none;stroke:#0affd2;stroke-linecap:round;stroke-miterlimit:10;stroke-width:17px" />
+  </g>
+  <g id="a2-layer">
+    <line id="a2Tail" x1="460.15" y1="126.41" x2="460.15" y2="53.39" style="fill:none;stroke:#0affd2;stroke-linecap:round;stroke-miterlimit:10;stroke-width:17px" />
+    <path id="a2" d="M466.7,260.8a38,38,0,1,1-11.14-26.91A37.92,37.92,0,0,1,466.7,260.8Z" transform="translate(-6.55 -170.58)" style="fill:none;stroke:#0affd2;stroke-miterlimit:10;stroke-width:17px" />
+  </g>
+  <g id="Dot-layer">
+    <circle id="Dot" cx="489.94" cy="126" r="10.02" style="fill:#0affd2" />
+  </g>
+</svg>

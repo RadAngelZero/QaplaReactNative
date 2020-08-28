@@ -21,6 +21,7 @@ import Colors from '../../utilities/Colors';
 import RewardsStore from '../../components/RewardsStore/RewardsStore';
 
 import RewardsBottomSheet from '../../components/RewardsBottomSheet/RewardsBottomSheet';
+import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
 
 const QaploinExchangeIcon = images.svg.qaploinsIcon;
 const BitsIcon = images.svg.bitsIcon;
@@ -104,7 +105,7 @@ export class NewUserProfileScreen extends Component {
         const userLevel = Math.floor(this.props.experience / 100);
         return (
             <SafeAreaView style={styles.profileView}>
-                <RewardsBottomSheet>
+                <RewardsBottomSheet rewards={this.props.rewards}>
                     <View style={styles.qoinsView}>
                         <QaploinExchangeIcon
                             height={heightPercentageToPx(4)}
@@ -139,19 +140,19 @@ export class NewUserProfileScreen extends Component {
                         <View style={styles.levelModalView}>
                             <AnimatedCircleIndicator
                                 size={120}
-                                fill={80}
+                                fill={this.props.experience - (userLevel * 100)}
                                 width={7}
                                 duration={750}
                                 fillComponent={() => (
-                                    <>
+                                    <EditProfileImgBadge style={styles.userImage}>
                                         <Image
-                                            style={{ resizeMode: 'cover', height: 120, width: 120 }}
+                                            style={styles.userImage}
                                             source={{ uri: this.props.userImage }} />
-                                    </>
+                                    </EditProfileImgBadge>
                                 )}
                                 backgroundColor='#1F2750'
                                 tintColor={Colors.greenQapla}
-                                description='500 exp'
+                                description={`${this.props.experience} exp`}
                                 descriptionStyle={styles.expText} />
                         </View>
                     </View>
@@ -173,7 +174,8 @@ function mapStateToProps(state) {
         return {
             userQoins: state.userReducer.user.credits,
             userImage: state.userReducer.user.photoUrl,
-            experience: state.userReducer.user.qaplaExperience || 0
+            experience: state.userReducer.user.qaplaExperience || 0,
+            rewards: state.userReducer.user.UserRewards
         }
     }
 
@@ -184,7 +186,8 @@ function mapStateToProps(state) {
      * from this functions (redux requirements)
      */
     return {
-        user: state.userReducer.user
+        user: state.userReducer.user,
+        experience: 0
     };
 }
 

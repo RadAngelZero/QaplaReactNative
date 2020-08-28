@@ -152,7 +152,7 @@ export class NewUserProfileScreen extends Component {
                                 )}
                                 backgroundColor='#1F2750'
                                 tintColor={Colors.greenQapla}
-                                description={`${this.props.experience} exp`}
+                                description={`Level ${userLevel}`}
                                 descriptionStyle={styles.expText} />
                         </View>
                     </View>

@@ -8,12 +8,10 @@ Example of use
 
 <Bar
   progress={this.state.rewardsProgress}
-  progressGhost={this.state.rewardsProgressGhost}
   animationConfig={{ easing: Easing.inOut(Easing.quad), duration: 500 }}
-  animationType={"timing"}
+  animationType={'timing'}
   width={Dimensions.get('screen').width * 0.8}
   color={'#00ffe2'}
-  ghostColor={'#909090'}
   borderWidth={0}
   unfilledColor={'#202020'}
   height={10}
@@ -39,8 +37,8 @@ export default class ProgressBar extends Component {
     progress: 0,
     width: 150,
     useNativeDriver: false,
-    animationConfig: { bounciness: 0 },
-    animationType: 'spring',
+    animationConfig: { easing: Easing.inOut(Easing.quad), duration: 500 },
+    animationType: 'timing',
   };
 
   constructor(props) {

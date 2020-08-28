@@ -265,8 +265,6 @@ class AuthLoadingScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <View style={styles.container}>
-                    {/* <ActivityIndicator size='large' color='rgb(61, 249, 223)' /> */}
-                    {/* <QaplaText style={styles.textColor}>{this.state.loadingText}</QaplaText> */}
                     <QaplaLogo width={300} height={130} />
                     <LoadingAnimation />
                 </View>

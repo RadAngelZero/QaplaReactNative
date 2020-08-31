@@ -9,6 +9,7 @@ import Images from '../../../assets/images';
 import { SHEET_MAX_HEIGHT, SHEET_MIDDLE_HEIGHT, SHEET_MIN_HEIGHT } from '../../utilities/Constants';
 import Hearts from '../UserProfileRewards/Hearts';
 import ProgressBar from '../UserProfileRewards/Bar';
+import Colors from '../../utilities/Colors';
 
 class RewardsBottomSheet extends Component {
     fall = new Animated.Value(1);
@@ -54,13 +55,17 @@ class RewardsBottomSheet extends Component {
                                     <Images.svg.lifeIcon height={24} width={24} color='rgba(255, 255, 255, .25)' />
                                 </View>
                                 <View style={styles.progress}>
-                                    <ProgressBar unfilledColor='rgba(255, 255, 255, .25)' progress={this.props.rewards.currentPoints - (Math.floor(this.props.rewards.currentPoints/10)*10)} />
+                                    <ProgressBar
+                                        unfilledColor='rgba(255, 255, 255, .25)'
+                                        progress={this.props.rewards.currentPoints/10}
+                                        color={Colors.greenQapla}
+                                        borderWidth={0} />
                                     <View style={styles.rewardsHeaderContainer}>
                                         <View style={styles.lifesContainer}>
-                                            <Hearts heartsContainers={1} hearts={this.props.rewards.lifes} />
+                                            <Hearts hearts={this.props.rewards.lifes} />
                                         </View>
                                         <QaplaText style={styles.currentPoints}>
-                                            {this.props.rewards.currentPoints - (Math.floor(this.props.rewards.currentPoints/10)*10)}/10
+                                            {this.props.rewards.currentPoints}/10
                                         </QaplaText>
                                     </View>
                                 </View>

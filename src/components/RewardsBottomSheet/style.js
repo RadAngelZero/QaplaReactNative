@@ -57,7 +57,7 @@ export default styles = StyleSheet.create({
         marginLeft: 5
     },
     progress: {
-        marginTop: 6
+        marginTop: 12
     },
     lifesContainer: {
         flexDirection: 'row',

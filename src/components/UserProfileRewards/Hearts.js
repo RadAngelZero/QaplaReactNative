@@ -80,32 +80,64 @@ export default class Hearts extends Component {
 
         this.hearts = new Animated.Value(props.hearts);
         this.align = props.align || 'flex-start';
+        this.loadHeartsBar = true;
     };
 
     componentDidMount() {
-        this.displayHearts();
+        this.displayHearts(true);
     }
 
-    displayHearts = () => {
-        const currentHearths = [];
-        for (let i = 0; i < this.props.hearts; i++) {
-            currentHearths.push(<Heart key={`${i}`} id={i} progress={this.props.hearts - i} width={24} height={24} scale={0.035} />)
-        }
+    displayHearts = (animateBar, newHeart, heartsNumber) => {
+        let currentHearths = [];
+        if (animateBar) {
+            for (let i = 0; i < this.props.hearts; i++) {
+                currentHearths.push(<Heart key={`${i}`} id={i} progress={0} width={24} height={24} scale={0.035} />)
+            }
+            this.setState({ heartsToDisplay: currentHearths });
 
-        this.setState({ heartsToDisplay: currentHearths });
+            setTimeout(() => {
+                currentHearths = [];
+                for (let i = 0; i < this.props.hearts; i++) {
+                    currentHearths.push(<Heart key={`${i}`} id={i} progress={this.props.hearts - i} width={24} height={24} scale={0.035} />)
+                }
+                this.setState({ heartsToDisplay: currentHearths });
+            }, 100);
+        } else {
+            currentHearths = [];
+            if (newHeart) {
+                currentHearths = [...this.state.heartsToDisplay];
+                for (let i = currentHearths.length; i < heartsNumber; i++) {
+                    currentHearths.push(<Heart key={`${i}`} id={i} progress={0} width={24} height={24} scale={0.035} />)
+                }
+                this.setState({ heartsToDisplay: currentHearths });
+
+                setTimeout(() => {
+                    for (let i = 0; i < heartsNumber; i++) {
+                        currentHearths[i] = (<Heart key={`${i}`} id={i} progress={this.props.hearts - i} width={24} height={24} scale={0.035} />)
+                    }
+                    this.setState({ heartsToDisplay: currentHearths });
+                }, 250);
+            } else {
+                currentHearths = [];
+                for (let i = 0; i < this.props.hearts; i++) {
+                    currentHearths.push(<Heart key={`${i}`} id={i} progress={this.props.hearts - i} width={24} height={24} scale={0.035} />)
+                }
+                this.setState({ heartsToDisplay: currentHearths });
+            }
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.hearts !== this.props.hearts) {
-        const hearts = this.props.hearts
-        Animated.timing(this.hearts,
-            {
-            toValue: hearts,
-            duration: 250,
-            easing: Easing.cubic,
-            useNativeDriver: false
+            const hearts = this.props.hearts
+            Animated.timing(this.hearts,
+                {
+                toValue: hearts,
+                duration: 250,
+                easing: Easing.cubic,
+                useNativeDriver: false
             }).start()
-            this.displayHearts()
+            this.displayHearts(false, Math.ceil(this.props.hearts) > Math.ceil(prevProps.hearts), this.props.hearts);
         }
     }
 

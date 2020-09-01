@@ -50,6 +50,10 @@ import InfoIcon from './icons/infoIcon.svg';
 import CommunityIcon from './icons/communityIcon.svg';
 import HalfLifeIcon from './icons/halfLife.svg';
 import LifeIcon from './icons/life.svg';
+import RewardIcon from './icons/rewardIcon.svg';
+import DonatedStarIcon from './icons/donatedStarIcon.svg';
+import DonatedBitIcon from './icons/donatedBitIcon.svg';
+import QaplaLogo from './icons/QaplaLogo.svg'
 
 // Images
 
@@ -215,7 +219,11 @@ const images = {
 		infoIcon: InfoIcon,
 		communityIcon: CommunityIcon,
 		halfLifeIcon: HalfLifeIcon,
-		lifeIcon: LifeIcon
+		lifeIcon: LifeIcon,
+		rewardIcon: RewardIcon,
+		donatedStarIcon: DonatedStarIcon,
+		donatedBitIcon: DonatedBitIcon,
+		qaplalogoIcon: QaplaLogo
 	}
 };
 

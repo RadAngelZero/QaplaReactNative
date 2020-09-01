@@ -185,21 +185,9 @@ class HeaderBar extends Component {
                         </View>
                         :
                         <View style={styles.profileImageContainer}>
-                            <View>
-                                {this.props.userImage ?
-                                    <Image
-                                        source={{ uri: this.props.userImage }}
-                                        style={styles.userImage}/>
-                                    :
-                                    <View style={styles.userImage} />
-                                }
-                                <View style={styles.editImg}>
-                                    <EditProfileImgBadge />
-                                </View>
-                            </View>
                             {this.props.userName && this.props.userName.length < 14 ?
                             <QaplaText style={styles.userName}>
-                                    {this.props.userName && this.props.userName}
+                                    Hi! {this.props.userName && this.props.userName}
                             </QaplaText>
                             :
                             <QaplaText style={styles.userName}>
@@ -256,7 +244,6 @@ function mapStateToProps(state) {
         currentScreenId: state.screensReducer.currentScreenId,
         notifications: state.userReducer.user.notification,
         matchNotifications: state.userReducer.user.notificationMatch,
-        userImage: state.userReducer.user.photoUrl,
         userName: state.userReducer.user.userName
     }
 }

@@ -1,8 +1,5 @@
-// josep-sanahuja - 22-11-2019 - us153 - File creation
-
 import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
-import styles from './style';
 import { connect } from 'react-redux';
 
 import Images from '../../../assets/images';
@@ -10,8 +7,6 @@ import { saveUserProfileImg, getUserProfileImgUrl } from '../../services/storage
 import { updateUserProfileImg } from '../../services/database';
 
 import ImagePickerModal from '../ImagePicker/ImagePickerModal/ImagePickerModal';
-
-const EditIcon = Images.svg.editIcon;
 
 class EditProfileImgBadge extends Component {
     constructor(props) {
@@ -74,9 +69,9 @@ class EditProfileImgBadge extends Component {
         return (
         	<>
 	        	<TouchableOpacity
-                    style={styles.container}
+                    style={this.props.style}
                     onPress={this.openImgPckModal}>
-                    <EditIcon  style={styles.badge} />
+                    {this.props.children}
 		        </TouchableOpacity>
 		        <ImagePickerModal
                     visible={this.state.showImgPckModal}

@@ -82,15 +82,10 @@ export default styles = StyleSheet.create({
 	levelModalView: {
 		alignSelf: 'center'
 	},
-	levelText: {
-		color: '#FFF',
-		fontSize: 12,
-		alignSelf: 'center'
-	},
-	levelValueText: {
-		color: '#FFF',
-		fontSize: 48,
-		alignSelf: 'center'
+	userImage: {
+		resizeMode: 'cover',
+		height: 120,
+		width: 120
 	},
 	expText: {
 		color: '#FFF',

@@ -12,7 +12,7 @@ const RewardCard = ({ title, description, price, primaryColor = 'rgb(20, 22, 55)
     let Price = [];
 
     for (let i = 0; i < Math.floor(price); i++) {
-        Price.push(<Images.svg.lifeIcon />);
+        Price.push(<Images.svg.lifeIcon  color='#FFD632' />);
     }
 
     if (price - Math.floor(price) > 0) {

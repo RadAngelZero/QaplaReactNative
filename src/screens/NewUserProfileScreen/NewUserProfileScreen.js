@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, View, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
@@ -19,6 +19,9 @@ import { getDonationFormUrl } from '../../services/database';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from '../../utilities/Colors';
 import RewardsStore from '../../components/RewardsStore/RewardsStore';
+
+import RewardsBottomSheet from '../../components/RewardsBottomSheet/RewardsBottomSheet';
+import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
 
 const QaploinExchangeIcon = images.svg.qaploinsIcon;
 const BitsIcon = images.svg.bitsIcon;
@@ -102,62 +105,61 @@ export class NewUserProfileScreen extends Component {
         const userLevel = Math.floor(this.props.experience / 100);
         return (
             <SafeAreaView style={styles.profileView}>
-				<View style={styles.qoinsView}>
-                    <QaploinExchangeIcon
-                        height={heightPercentageToPx(4)}
-                        width={widthPercentageToPx(10)}
-                        style={styles.qoinsImage} />
-					<QaplaText style={styles.qoinsValue}>
-                        {this.props.userQoins}
-                    </QaplaText>
-				</View>
-                <View style={styles.bitsCardContainer}>
-                    <View style={styles.bitsModuleView}>
-                        <View>
-                            <InfoIcon style={styles.infoImage} />
-                            <BitsIcon style={styles.bits3dIconImage}/>
-                        </View>
-                        <View style={styles.bitsValueContainer}>
-                            <QaplaText style={styles.bitsNumber}>
-                                175
-                            </QaplaText>
-                            <QaplaText style={styles.bitsTitle}>
-                                Bits/Estrellas
-                            </QaplaText>
-                        </View>
-                        <TouchableOpacity
-                            style={styles.buttonView}
-                            onPress={this.exchangeQaploins}>
-                            <QaplaText style={styles.supportText}>
-                                Support
-                            </QaplaText>
-                        </TouchableOpacity>
+                <RewardsBottomSheet rewards={this.props.rewards}>
+                    <View style={styles.qoinsView}>
+                        <QaploinExchangeIcon
+                            height={heightPercentageToPx(4)}
+                            width={widthPercentageToPx(10)}
+                            style={styles.qoinsImage} />
+                        <QaplaText style={styles.qoinsValue}>
+                            {this.props.userQoins}
+                        </QaplaText>
                     </View>
-                    <View style={styles.levelModalView}>
-                        <AnimatedCircleIndicator
-                            size={120}
-                            fill={this.props.experience - (100 * userLevel)}
-                            width={7}
-                            duration={750}
-                            fillComponent={() => (
-                                <>
-                                    <QaplaText style={styles.levelValueText}>
-                                        {userLevel}
-                                    </QaplaText>
-                                    <QaplaText style={styles.levelText}>
-                                        {translate('newUserProfileScreen.level')}
-                                    </QaplaText>
-                                </>
-                            )}
-                            backgroundColor='#1F2750'
-                            tintColor={Colors.greenQapla}
-                            description={`${this.props.experience} exp`}
-                            descriptionStyle={styles.expText} />
+                    <View style={styles.bitsCardContainer}>
+                        <View style={styles.bitsModuleView}>
+                            <View>
+                                <InfoIcon style={styles.infoImage} />
+                                <BitsIcon style={styles.bits3dIconImage}/>
+                            </View>
+                            <View style={styles.bitsValueContainer}>
+                                <QaplaText style={styles.bitsNumber}>
+                                    175
+                                </QaplaText>
+                                <QaplaText style={styles.bitsTitle}>
+                                    Bits/Estrellas
+                                </QaplaText>
+                            </View>
+                            <TouchableOpacity
+                                style={styles.buttonView}
+                                onPress={this.exchangeQaploins}>
+                                <QaplaText style={styles.supportText}>
+                                    Support
+                                </QaplaText>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.levelModalView}>
+                            <AnimatedCircleIndicator
+                                size={120}
+                                fill={this.props.experience - (userLevel * 100)}
+                                width={7}
+                                duration={750}
+                                fillComponent={() => (
+                                    <EditProfileImgBadge style={styles.userImage}>
+                                        <Image
+                                            style={styles.userImage}
+                                            source={{ uri: this.props.userImage }} />
+                                    </EditProfileImgBadge>
+                                )}
+                                backgroundColor='#1F2750'
+                                tintColor={Colors.greenQapla}
+                                description={`Level ${userLevel}`}
+                                descriptionStyle={styles.expText} />
+                        </View>
                     </View>
-                </View>
-                <View style={styles.donationNavigatorContainer}>
-                    <AppContainer />
-                </View>
+                    <View style={styles.donationNavigatorContainer}>
+                        <AppContainer />
+                    </View>
+                </RewardsBottomSheet>
             </SafeAreaView>
         );
     }
@@ -171,7 +173,9 @@ function mapStateToProps(state) {
     if (Object.keys(state.userReducer.user).length > 0) {
         return {
             userQoins: state.userReducer.user.credits,
-            experience: state.userReducer.user.qaplaExperience || 0
+            userImage: state.userReducer.user.photoUrl,
+            experience: state.userReducer.user.qaplaExperience || 0,
+            rewards: state.userReducer.user.UserRewards
         }
     }
 
@@ -182,7 +186,8 @@ function mapStateToProps(state) {
      * from this functions (redux requirements)
      */
     return {
-        user: state.userReducer.user
+        user: state.userReducer.user,
+        experience: 0
     };
 }
 

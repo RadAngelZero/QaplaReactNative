@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import Colors from '../../utilities/Colors';
@@ -17,10 +17,25 @@ export default styles = StyleSheet.create({
         height: 4,
         alignSelf: 'center'
     },
+    openIcon: {
+        backgroundColor: '#858EF3',
+        borderRadius: 20,
+        width: widthPercentageToPx(25),
+        height: 10,
+        alignSelf: 'flex-end',
+        transform: [{ rotate: '180deg'}]
+    },
+    closeIcon: {
+        backgroundColor: '#858EF3',
+        borderRadius: 20,
+        width: widthPercentageToPx(25),
+        height: 10,
+        alignSelf: 'flex-end'
+    },
     rewardsInfoContainer: {
         marginLeft: 25,
         marginRight: 32,
-        marginTop: 24
+        marginTop: Platform.OS === 'ios' ? 24 : 0
     },
     row: {
         flexDirection: 'row'
@@ -42,11 +57,16 @@ export default styles = StyleSheet.create({
         marginLeft: 5
     },
     progress: {
-        marginTop: 6
+        marginTop: 12
     },
     lifesContainer: {
         flexDirection: 'row',
         marginTop: 12
+    },
+    currentPoints: {
+        color: '#FFF',
+        fontSize: 12,
+        alignSelf: 'center'
     },
     transactionsContainer: {
         marginTop: 40

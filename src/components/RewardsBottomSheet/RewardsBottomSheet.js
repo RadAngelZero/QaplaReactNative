@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { TouchableWithoutFeedback, View, TouchableOpacity, Platform } from 'react-native';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 
@@ -7,89 +7,122 @@ import styles from './style';
 import QaplaText from '../QaplaText/QaplaText';
 import Images from '../../../assets/images';
 import { SHEET_MAX_HEIGHT, SHEET_MIDDLE_HEIGHT, SHEET_MIN_HEIGHT } from '../../utilities/Constants';
+import Hearts from '../UserProfileRewards/Hearts';
+import ProgressBar from '../UserProfileRewards/Bar';
+import Colors from '../../utilities/Colors';
 
 class RewardsBottomSheet extends Component {
     fall = new Animated.Value(1);
+    state = {
+        open: false
+    };
 
-    renderContent = () => (
-        <View style={styles.container}>
-            <View style={styles.topBar}/>
-            <View style={styles.rewardsInfoContainer}>
-                <View style={styles.row}>
-                    <Images.svg.rewardIcon />
-                    <View style={styles.rewardsProgressContainer}>
-                        <View style={styles.rewardsHeaderContainer}>
-                            <View style={styles.row}>
-                                <QaplaText style={styles.rewardsTitle}>
-                                    Rewards
-                                </QaplaText>
-                                <Images.svg.infoIcon style={styles.infoIcon} />
+    toggleBottomSheet = () => {
+        if (Platform.OS === 'android') {
+            if (!this.state.open) {
+                this.sheetRef.snapTo(2);
+            } else {
+                this.sheetRef.snapTo(0);
+            }
+
+            this.setState({ open: !this.state.open });
+        }
+    }
+
+    renderContent = () => {
+        return (
+            <TouchableWithoutFeedback onPress={this.toggleBottomSheet}>
+                <View style={styles.container}>
+                    {Platform.OS === 'ios' ?
+                        <View style={styles.topBar}/>
+                        :
+                        !this.state.open ?
+                            <Images.svg.arrowDownIcon style={styles.openIcon} fill='#FFF' />
+                            :
+                            <Images.svg.arrowDownIcon style={styles.closeIcon} fill='#FFF' />
+                    }
+                    <View style={styles.rewardsInfoContainer}>
+                        <View style={styles.row}>
+                            <Images.svg.rewardIcon />
+                            <View style={styles.rewardsProgressContainer}>
+                                <View style={styles.rewardsHeaderContainer}>
+                                    <View style={styles.row}>
+                                        <QaplaText style={styles.rewardsTitle}>
+                                            Reward
+                                        </QaplaText>
+                                        <Images.svg.infoIcon style={styles.infoIcon} />
+                                    </View>
+                                    <Images.svg.lifeIcon height={24} width={24} color='rgba(255, 255, 255, .25)' />
+                                </View>
+                                <View style={styles.progress}>
+                                    <ProgressBar
+                                        unfilledColor='rgba(255, 255, 255, .25)'
+                                        progress={this.props.rewards.currentPoints/10}
+                                        color={Colors.greenQapla}
+                                        borderWidth={0} />
+                                    <View style={styles.rewardsHeaderContainer}>
+                                        <View style={styles.lifesContainer}>
+                                            <Hearts hearts={this.props.rewards.lifes} />
+                                        </View>
+                                        <QaplaText style={styles.currentPoints}>
+                                            {this.props.rewards.currentPoints}/10
+                                        </QaplaText>
+                                    </View>
+                                </View>
                             </View>
-                            <Images.svg.lifeIcon height={24} width={24} color='rgba(150, 150, 150, .5)' />
                         </View>
-                        <View style={styles.progress}>
-                            <View style={{ borderRadius: 20, width: 200, backgroundColor: '#0000FF', height: 10 }} />
-                            <View style={styles.lifesContainer}>
-                                <Images.svg.lifeIcon color='#FFD632' />
-                                <Images.svg.lifeIcon color='#FFD632' />
-                                <Images.svg.halfLifeIcon />
+                        <View style={styles.transactionsContainer}>
+                            <QaplaText style={styles.transactionsTitle}>
+                                Transactions
+                            </QaplaText>
+                            <View style={styles.transactionsSummary}>
+                                <View style={styles.transactionsSummaryDescriptions}>
+                                    <QaplaText style={styles.transactionDescription}>
+                                        Donation
+                                    </QaplaText>
+                                    <QaplaText style={styles.transactionDescription}>
+                                        Donation
+                                    </QaplaText>
+                                    <QaplaText style={styles.transactionDescription}>
+                                        Reward reedemed
+                                    </QaplaText>
+                                </View>
+                                <View style={styles.transactionSummaryValue}>
+                                    <QaplaText style={styles.transactionValue}>
+                                        {this.props.rewards.donations && this.props.rewards.donations.bits ? this.props.rewards.donations.bits : 0}
+                                    </QaplaText>
+                                    <QaplaText style={styles.transactionValue}>
+                                        {this.props.rewards.donations && this.props.rewards.donations.stars ? this.props.rewards.donations.stars : 0}
+                                    </QaplaText>
+                                    <QaplaText style={styles.transactionValue}>
+                                        {this.props.rewards.rewardsReedemed ? this.props.rewards.rewardsReedemed : 0}
+                                    </QaplaText>
+                                </View>
+                                <View style={styles.transactionSummaryValue}>
+                                    <Images.svg.donatedBitIcon
+                                        color='#FFF'
+                                        style={styles.transactionIcon} />
+                                    <Images.svg.donatedStarIcon
+                                        color='#FFF'
+                                        style={styles.transactionIcon} />
+                                    <Images.svg.lifeIcon
+                                        color='#FFF'
+                                        style={styles.transactionIcon}
+                                        height={14}
+                                        width={14} />
+                                </View>
                             </View>
                         </View>
                     </View>
+                    <TouchableOpacity style={styles.redeemButtonContainer}>
+                        <QaplaText style={styles.redeemButtonText}>
+                            Redeem Prize
+                        </QaplaText>
+                    </TouchableOpacity>
                 </View>
-                <View style={styles.transactionsContainer}>
-                    <QaplaText style={styles.transactionsTitle}>
-                        Transactions
-                    </QaplaText>
-                    <View style={styles.transactionsSummary}>
-                        <View style={styles.transactionsSummaryDescriptions}>
-                            <QaplaText style={styles.transactionDescription}>
-                                Donation
-                            </QaplaText>
-                            <QaplaText style={styles.transactionDescription}>
-                                Donation
-                            </QaplaText>
-                            <QaplaText style={styles.transactionDescription}>
-                                Reward reedemed
-                            </QaplaText>
-                        </View>
-                        <View style={styles.transactionSummaryValue}>
-                            <QaplaText style={styles.transactionValue}>
-                                100
-                            </QaplaText>
-                            <QaplaText style={styles.transactionValue}>
-                                100
-                            </QaplaText>
-                            <QaplaText style={styles.transactionValue}>
-                                2.5
-                            </QaplaText>
-                        </View>
-                        <View style={styles.transactionSummaryValue}>
-                            <Images.svg.donatedBitIcon
-                                color='#FFF'
-                                style={styles.transactionIcon} />
-                            <Images.svg.donatedStarIcon
-                                color='#FFF'
-                                style={styles.transactionIcon} />
-                            <Images.svg.lifeIcon
-                                color='#FFF'
-                                style={styles.transactionIcon}
-                                height={14}
-                                width={14} />
-                        </View>
-                    </View>
-                    <QaplaText style={[styles.transactionDescription, { marginLeft: 20 }]}>
-                        Fortnite BR Challenge
-                    </QaplaText>
-                </View>
-            </View>
-            <TouchableOpacity style={styles.redeemButtonContainer}>
-                <QaplaText style={styles.redeemButtonText}>
-                    Redeem Prize
-                </QaplaText>
-            </TouchableOpacity>
-        </View>
-    )
+            </TouchableWithoutFeedback>
+        );
+    }
 
     render() {
         return (
@@ -107,5 +140,17 @@ class RewardsBottomSheet extends Component {
         );
     }
 }
+
+RewardsBottomSheet.defaultProps = {
+    rewards: {
+        currentPoints: 0,
+        lifes: 0,
+        donations: {
+            bits: 0,
+            stars: 0
+        },
+        rewardsReedemed: 0
+    }
+};
 
 export default RewardsBottomSheet;

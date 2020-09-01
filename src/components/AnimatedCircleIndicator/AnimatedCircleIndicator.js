@@ -15,7 +15,7 @@ export class AnimatedCircleIndicator extends Component {
      *
      * @param {number} fill Percentage of the circle who is filled
      */
-    fillCircleText = (fill) => <QaplaText style={styles.fillText}> {Math.floor(fill)}{this.props.percentage ? '%' : ''} </QaplaText>
+    fillCircleText = (fill) => <QaplaText style={styles.fillText}> {this.props.fillText || Math.floor(fill)}{this.props.percentage ? '%' : ''} </QaplaText>
 
     render() {
         return (
@@ -29,10 +29,12 @@ export class AnimatedCircleIndicator extends Component {
                     tintColor={this.props.tintColor}
                     duration={this.props.duration}
                     backgroundColor={this.props.backgroundColor}>
-                        {this.fillCircleText}
+                        {this.props.fillComponent || this.fillCircleText}
                 </AnimatedCircularProgress>
                 {this.props.description &&
-                    <QaplaText style={styles.description}>{this.props.description}</QaplaText>
+                    <QaplaText style={[styles.description, this.props.descriptionStyle]}>
+                        {this.props.description}
+                    </QaplaText>
                 }
             </View>
         );

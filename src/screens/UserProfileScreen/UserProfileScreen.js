@@ -21,6 +21,9 @@ import { getDonationFormUrl } from '../../services/database';
 const QaploinExchangeIcon = images.svg.qoinFlipIcon;
 const BalanceExchangeIcon = images.svg.balanceFlipIcon;
 
+/**
+ * @deprecated
+ */
 export class UserProfileScreen extends Component {
     state = {
         showBuyQaploinsModal: false,

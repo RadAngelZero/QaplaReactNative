@@ -14,10 +14,12 @@ export default styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignContent: 'center',
+        alignItems: 'center',
         backgroundColor:'#131833'
     },
     textColor: {
         color: 'rgba(61,249,223,1)',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        fontSize: 20
     }
 })

@@ -30,6 +30,8 @@ export const privacyRef = database.ref('/Privacy');
 export const usersBalance = database.ref('usersQaplaBalance');
 export const userTopicSubscriptions = database.ref('userTopicSubscriptions');
 const qoinsDonationFormUrlRef = database.ref('QoinsDonationFormUrl');
+const qaplaStoreRef = database.ref('QaplaStore');
+const usersRewardsProgressRef = database.ref('/UsersRewardsProgress');
 
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
@@ -1183,4 +1185,29 @@ export async function dbRemoveAppVersionValueListener() {
  */
 export async function getDonationFormUrl() {
     return (await qoinsDonationFormUrlRef.once('value')).val();
+}
+
+/**
+ * Qapla Store
+ */
+
+ /**
+  * Load the specified amount of products of the Qapla store
+  * @param {number} limit Number of products to load
+  */
+export async function getQaplaStoreProducts(limit = 10) {
+    return await qaplaStoreRef.limitToLast(limit).once('value');
+}
+
+/**
+ * User Rewards Progress
+ */
+
+/**
+ * Put a listener to load all the changes on the UsersRewardsProgress user node
+ * @param {string} uid User identifier
+ * @param {callback} callback Callback to handle the response of the listener
+ */
+export function loadUserRewards(uid, callback) {
+    usersRewardsProgressRef.child(uid).on('value', callback);
 }

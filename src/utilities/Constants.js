@@ -1,3 +1,5 @@
+import { heightPercentageToPx } from './iosAndroidDim';
+
 // Segment key
 export const SEGMENT_KEY = 'fCfir8yrQiZRVrpuwLHYRePN68SqW8AS';
 
@@ -115,3 +117,8 @@ export const APPSTORE_ID = '1485332229';
 //App settings
 export const IOS_BUNDLE_ID = 'org.Qapla.QaplaApp';
 export const ANDROID_PACKAGE_NAME = 'com.qapla.gaming.app';
+
+// Bottom Sheets
+export const SHEET_MAX_HEIGHT = heightPercentageToPx(65);
+export const SHEET_MIDDLE_HEIGHT = heightPercentageToPx(40);
+export const SHEET_MIN_HEIGHT = heightPercentageToPx(16);

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>info-bubble</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="24" height="24"></rect>
+    </defs>
+    <g id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Profile" transform="translate(-36.000000, -200.000000)">
+            <g id="Bits-Module" transform="translate(24.000000, 188.000000)">
+                <g id="info-bubble" transform="translate(12.000000, 12.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Mask"></g>
+                    <g mask="url(#mask-2)" fill="#FFFFFF" id="Info-Circle">
+                        <g transform="translate(2.000000, 2.000000)">
+                            <circle id="Oval" fill-rule="nonzero" opacity="0.25" cx="10" cy="10" r="10"></circle>
+                            <path d="M10,5 C9.4477,5 9,5.44772 9,6 C9,6.55229 9.4477,7 10,7 C10.5523,7 11,6.55229 11,6 C11,5.44772 10.5523,5 10,5 Z M10,9 C9.4477,9 9,9.4477 9,10 L9,14 C9,14.5523 9.4477,15 10,15 C10.5523,15 11,14.5523 11,14 L11,10 C11,9.4477 10.5523,9 10,9 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

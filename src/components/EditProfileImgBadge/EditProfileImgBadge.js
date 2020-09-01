@@ -1,8 +1,5 @@
-// josep-sanahuja - 22-11-2019 - us153 - File creation
-
 import React, { Component } from 'react';
-import { View, TouchableWithoutFeedback } from 'react-native';
-import styles from './style';
+import { TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import Images from '../../../assets/images';
@@ -10,8 +7,6 @@ import { saveUserProfileImg, getUserProfileImgUrl } from '../../services/storage
 import { updateUserProfileImg } from '../../services/database';
 
 import ImagePickerModal from '../ImagePicker/ImagePickerModal/ImagePickerModal';
-
-const EditIcon = Images.svg.editIcon;
 
 class EditProfileImgBadge extends Component {
     constructor(props) {
@@ -73,11 +68,11 @@ class EditProfileImgBadge extends Component {
     render() {
         return (
         	<>
-	        	<TouchableWithoutFeedback onPress={this.openImgPckModal}>
-		            <View style={styles.container}>
-                        <EditIcon style={styles.badge} />
-		            </View>
-		        </TouchableWithoutFeedback>
+	        	<TouchableOpacity
+                    style={this.props.style}
+                    onPress={this.openImgPckModal}>
+                    {this.props.children}
+		        </TouchableOpacity>
 		        <ImagePickerModal
                     visible={this.state.showImgPckModal}
                     saveImage={this.saveImage}

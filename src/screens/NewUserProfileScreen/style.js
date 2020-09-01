@@ -9,13 +9,13 @@ export default styles = StyleSheet.create({
 	},
 	qoinsView: {
 		width: widthPercentageToPx(30),
-		marginLeft: 40,
+		marginLeft: 16,
 		flexDirection: 'row',
 		alignItems: 'center'
 	},
 	qoinsImage: {
-		width: 24,
-		height: 24
+		height: 45,
+		width: 45
 	},
 	qoinsValue: {
 		color: '#FFF',
@@ -43,18 +43,30 @@ export default styles = StyleSheet.create({
 		height: 24,
 		marginLeft: 12,
 		marginTop: 12
-    },
+	},
+	donationValueContainer: {
+		marginTop: 8,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center'
+	},
     bitsValueContainer: {
         marginLeft: 16,
         marginTop: 12
-    },
-	bitsTitle: {
-		color: '#FFF',
-		fontSize: 16
 	},
 	bitsNumber: {
 		color: '#FFF',
 		fontSize: 40
+	},
+	bitsTitle: {
+		color: '#FFF',
+		fontSize: 16
+	},
+	handleDonationContainer: {
+		marginRight: 12
+	},
+	updateDonationIcon: {
+		marginTop: 8
 	},
 	buttonView: {
 		backgroundColor: 'rgb(108, 122, 229)',
@@ -76,7 +88,7 @@ export default styles = StyleSheet.create({
 	},
 	bits3dIconImage: {
 		position: 'absolute',
-		bottom: -heightPercentageToPx(3),
+		bottom: -heightPercentageToPx(2.5),
 		left: widthPercentageToPx(20)
 	},
 	levelModalView: {

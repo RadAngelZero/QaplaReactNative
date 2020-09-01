@@ -13,9 +13,9 @@ import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics
 import { isUserLogged } from '../../services/auth';
 
 import { translate } from '../../utilities/i18';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { getDonationFormUrl } from '../../services/database';
+import { getDonationFormUrl, getDonationsCosts, getDonationQoinsBase } from '../../services/database';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from '../../utilities/Colors';
 import RewardsStore from '../../components/RewardsStore/RewardsStore';
@@ -23,7 +23,6 @@ import RewardsStore from '../../components/RewardsStore/RewardsStore';
 import RewardsBottomSheet from '../../components/RewardsBottomSheet/RewardsBottomSheet';
 import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
 
-const QaploinExchangeIcon = images.svg.qaploinsIcon;
 const BitsIcon = images.svg.bitsIcon;
 const InfoIcon = images.svg.infoIcon;
 
@@ -43,7 +42,7 @@ const DonationsNavigator = createMaterialTopTabNavigator({
         backgroundColor: '#0C1021'
       },
       tabStyle: {
-        width: widthPercentageToPx(35)
+        width: widthPercentageToPx(30)
       },
       labelStyle: {
         fontSize: 14,
@@ -55,7 +54,7 @@ const DonationsNavigator = createMaterialTopTabNavigator({
       indicatorStyle: {
         borderBottomColor: '#36E5CE',
         borderBottomWidth: 2,
-        width: widthPercentageToPx(35)
+        width: widthPercentageToPx(30)
       }
     },
   });
@@ -64,8 +63,9 @@ const AppContainer = createAppContainer(DonationsNavigator);
 
 export class NewUserProfileScreen extends Component {
     state = {
-        showBuyQaploinsModal: false,
-        showQaploinsToUser: true
+        bitsToDonate: 0,
+        donationCost: null,
+        donationQoinBase: null
     };
 
     componentWillMount() {
@@ -86,10 +86,25 @@ export class NewUserProfileScreen extends Component {
         ]
     }
 
+    componentDidMount() {
+        this.setDonationCost();
+    }
+
     componentWillUnmount() {
         //Remove willBlur and willFocus listeners on navigation
         this.list.forEach((item) => item.remove());
     }
+
+    setDonationCost = async () => {
+        const donationCost = await getDonationsCosts();
+        const donationQoinBase = await getDonationQoinsBase();
+        if (donationCost.exists() && donationQoinBase.exists()) {
+            this.setState({
+                donationCost: donationCost.val(),
+                donationQoinBase: donationQoinBase.val()
+            });
+        }
+    };
 
     /**
      * Begins the process of redeem qaploins
@@ -101,15 +116,28 @@ export class NewUserProfileScreen extends Component {
         }
     }
 
+    addECoinToDonation = () => {
+        const bitsToIncrease = this.state.donationCost * this.state.donationQoinBase;
+        if (this.state.donationCost && this.props.userQoins * this.state.donationCost > this.state.bitsToDonate + bitsToIncrease) {
+            this.setState({ bitsToDonate: this.state.bitsToDonate + bitsToIncrease });
+        }
+    }
+
+    substractECoinToDonation = () => {
+        if (this.state.bitsToDonate > 0) {
+            this.setState({ bitsToDonate: this.state.bitsToDonate - (this.state.donationCost * this.state.donationQoinBase) });
+        }
+    }
+
     render() {
         const userLevel = Math.floor(this.props.experience / 100);
+
         return (
             <SafeAreaView style={styles.profileView}>
                 <RewardsBottomSheet rewards={this.props.rewards}>
                     <View style={styles.qoinsView}>
-                        <QaploinExchangeIcon
-                            height={heightPercentageToPx(4)}
-                            width={widthPercentageToPx(10)}
+                        <Image
+                            source={images.png.Qoin3D.img}
                             style={styles.qoinsImage} />
                         <QaplaText style={styles.qoinsValue}>
                             {this.props.userQoins}
@@ -121,13 +149,23 @@ export class NewUserProfileScreen extends Component {
                                 <InfoIcon style={styles.infoImage} />
                                 <BitsIcon style={styles.bits3dIconImage}/>
                             </View>
-                            <View style={styles.bitsValueContainer}>
-                                <QaplaText style={styles.bitsNumber}>
-                                    175
-                                </QaplaText>
-                                <QaplaText style={styles.bitsTitle}>
-                                    Bits/Estrellas
-                                </QaplaText>
+                            <View style={styles.donationValueContainer}>
+                                <View style={styles.bitsValueContainer}>
+                                    <QaplaText style={styles.bitsNumber}>
+                                        {this.state.bitsToDonate}
+                                    </QaplaText>
+                                    <QaplaText style={styles.bitsTitle}>
+                                        Bits/Estrellas
+                                    </QaplaText>
+                                </View>
+                                <View style={styles.handleDonationContainer}>
+                                    <TouchableOpacity style={styles.updateDonationIcon} onPress={this.addECoinToDonation}>
+                                        <images.svg.plusBubble />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.updateDonationIcon} onPress={this.substractECoinToDonation}>
+                                        <images.svg.minusBubble />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                             <TouchableOpacity
                                 style={styles.buttonView}
@@ -171,6 +209,7 @@ function mapStateToProps(state) {
      * or a user make signout their redux object is empty)
      */
     if (Object.keys(state.userReducer.user).length > 0) {
+        console.log(state.userReducer.user.id);
         return {
             userQoins: state.userReducer.user.credits,
             userImage: state.userReducer.user.photoUrl,

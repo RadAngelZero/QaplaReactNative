@@ -32,6 +32,7 @@ export const userTopicSubscriptions = database.ref('userTopicSubscriptions');
 const qoinsDonationFormUrlRef = database.ref('QoinsDonationFormUrl');
 const qaplaStoreRef = database.ref('QaplaStore');
 const usersRewardsProgressRef = database.ref('/UsersRewardsProgress');
+const DonationsCostsRef = database.ref('/DonationsCosts');
 
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
@@ -1210,4 +1211,22 @@ export async function getQaplaStoreProducts(limit = 10) {
  */
 export function loadUserRewards(uid, callback) {
     usersRewardsProgressRef.child(uid).on('value', callback);
+}
+
+/**
+ * Donations costs
+ */
+
+/**
+ * Get the cost (in Qoins) of the eCoins available to donate
+ */
+export async function getDonationsCosts() {
+    return await DonationsCostsRef.child('ECoinToQoinRatio').once('value');
+}
+
+/**
+ * Get the base of Qoins considered in the ECoin To Qoin equation
+ */
+export async function getDonationQoinsBase() {
+    return await DonationsCostsRef.child('QoinsBase').once('value');
 }

@@ -209,7 +209,6 @@ function mapStateToProps(state) {
      * or a user make signout their redux object is empty)
      */
     if (Object.keys(state.userReducer.user).length > 0) {
-        console.log(state.userReducer.user.id);
         return {
             userQoins: state.userReducer.user.credits,
             userImage: state.userReducer.user.photoUrl,

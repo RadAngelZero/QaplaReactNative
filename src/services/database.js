@@ -1192,12 +1192,19 @@ export async function getDonationFormUrl() {
  * Qapla Store
  */
 
- /**
+/**
   * Load the specified amount of products of the Qapla store
   * @param {number} limit Number of products to load
   */
 export async function getQaplaStoreProducts(limit = 10) {
     return await qaplaStoreRef.limitToLast(limit).once('value');
+}
+
+/**
+  * Get the cheaper product of the Qapla Store
+  */
+export async function getQaplaStoreCheaperProduct() {
+    return await qaplaStoreRef.orderByChild('price').limitToFirst(1).once('value');
 }
 
 /**

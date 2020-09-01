@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { ScrollView, View } from 'react-native';
+import { TouchableWithoutFeedback, View, Linking, ScrollView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { connect } from 'react-redux';
 
 import styles from './style';
 import QaplaText from '../QaplaText/QaplaText';
 import Images from '../../../assets/images';
 import { getQaplaStoreProducts } from '../../services/database';
 import { getLocaleLanguage } from '../../utilities/i18';
+import remoteConfig from '../../services/remoteConfig';
+import { SHEET_MIN_HEIGHT } from '../../utilities/Constants';
 
-const RewardCard = ({ title, description, price, primaryColor = 'rgb(20, 22, 55)', secondaryColor = 'rgb(20, 22, 55)' }) => {
+const RewardCard = ({ onPress, title, description, price, primaryColor = 'rgb(20, 22, 55)', secondaryColor = 'rgb(20, 22, 55)' }) => {
     let Price = [];
 
     for (let i = 0; i < Math.floor(price); i++) {
@@ -20,30 +23,32 @@ const RewardCard = ({ title, description, price, primaryColor = 'rgb(20, 22, 55)
     }
 
     return (
-        <LinearGradient
-            start={{
-                x: 0,
-                y: 0,
-            }}
-            end={{
-                x: 1.75,
-                y: 1,
-            }}
-            locations={[0, 1]}
-            colors={[primaryColor, secondaryColor]}
-            style={styles.prizeContainer}>
-            <QaplaText style={styles.prizeTitle}>
-                {title}
-            </QaplaText>
-            <QaplaText
-                style={styles.prizeBody}
-                numberOfLines={3}>
-                {description}
-            </QaplaText>
-            <View style={styles.lifeContainer}>
-                {Price}
-            </View>
-        </LinearGradient>
+        <TouchableWithoutFeedback onPress={() => onPress(price)}>
+            <LinearGradient
+                start={{
+                    x: 0,
+                    y: 0,
+                }}
+                end={{
+                    x: 1.75,
+                    y: 1,
+                }}
+                locations={[0, 1]}
+                colors={[primaryColor, secondaryColor]}
+                style={styles.prizeContainer}>
+                <QaplaText style={styles.prizeTitle}>
+                    {title}
+                </QaplaText>
+                <QaplaText
+                    style={styles.prizeBody}
+                    numberOfLines={3}>
+                    {description}
+                </QaplaText>
+                <View style={styles.lifeContainer}>
+                    {Price}
+                </View>
+            </LinearGradient>
+        </TouchableWithoutFeedback>
     );
 };
 
@@ -63,6 +68,12 @@ class RewardsStore extends Component {
         this.setState({ rewards: (await getQaplaStoreProducts(limit)).val() });
     }
 
+    buyProduct = async (price) => {
+        if (this.props.rewards.lifes >= price) {
+            Linking.openURL((await remoteConfig.getDataFromKey('Discord')).QAPLA_DISCORD_EXCHANGE_CHANNEL);
+        }
+    }
+
     render() {
         const userLanguage = getLocaleLanguage();
         return (
@@ -71,6 +82,7 @@ class RewardsStore extends Component {
                     {Object.keys(this.state.rewards).map((rewardKey, index) => {
                         if (index % 2 === 0) {
                             return <RewardCard
+                                onPress={this.buyProduct}
                                 primaryColor={this.state.rewards[rewardKey].primaryColor}
                                 secondaryColor={this.state.rewards[rewardKey].secondaryColor}
                                 title={this.state.rewards[rewardKey].name[userLanguage]}
@@ -85,6 +97,7 @@ class RewardsStore extends Component {
                     {Object.keys(this.state.rewards).map((rewardKey, index) => {
                         if (index % 2 !== 0) {
                             return <RewardCard
+                                onPress={this.buyProduct}
                                 primaryColor={this.state.rewards[rewardKey].primaryColor}
                                 secondaryColor={this.state.rewards[rewardKey].secondaryColor}
                                 title={this.state.rewards[rewardKey].name[userLanguage]}
@@ -94,10 +107,33 @@ class RewardsStore extends Component {
                             return null;
                         }
                     })}
+                    <View style={{ height: SHEET_MIN_HEIGHT * 2.25, width: '100%' }} />
                 </View>
             </ScrollView>
         );
     }
 }
 
-export default RewardsStore;
+function mapStateToProps(state) {
+    /**
+     * Check if user object (in redux) contains data (when a user is not logged
+     * or a user make signout their redux object is empty)
+     */
+    if (Object.keys(state.userReducer.user).length > 0) {
+        return {
+            rewards: state.userReducer.user.UserRewards
+        }
+    }
+
+    /**
+     * If the user is not logged, then the user will be rejected from this
+     * screen, it doesn't matter this return, is just added because
+     * the screen is showed (some miliseconds) and we must return an object
+     * from this functions (redux requirements)
+     */
+    return {
+        rewards: { lifes: 0 }
+    };
+}
+
+export default connect(mapStateToProps)(RewardsStore);

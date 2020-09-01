@@ -15,7 +15,7 @@ import { isUserLogged } from '../../services/auth';
 import { translate } from '../../utilities/i18';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { getDonationFormUrl, getDonationsCosts, getDonationQoinsBase } from '../../services/database';
+import { getDonationFormUrl, getDonationsCosts, getDonationQoinsBase, getQaplaStoreCheaperProduct } from '../../services/database';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from '../../utilities/Colors';
 import RewardsStore from '../../components/RewardsStore/RewardsStore';

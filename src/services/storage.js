@@ -111,7 +111,7 @@ export async function getUserProfileImgUrl(userId) {
         res = await ref.getDownloadURL();
     }
     catch (error) {
-        console.error(error);
+        console.log('storage.js: getUserProfileImgUrl(userId)', error);
     }
 
     return res;

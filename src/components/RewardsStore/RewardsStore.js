@@ -10,6 +10,7 @@ import { getQaplaStoreProducts } from '../../services/database';
 import { getLocaleLanguage } from '../../utilities/i18';
 import remoteConfig from '../../services/remoteConfig';
 import { SHEET_MIN_HEIGHT } from '../../utilities/Constants';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 const RewardCard = ({ onPress, title, description, price, primaryColor = 'rgb(20, 22, 55)', secondaryColor = 'rgb(20, 22, 55)' }) => {
     let Price = [];
@@ -107,7 +108,7 @@ class RewardsStore extends Component {
                             return null;
                         }
                     })}
-                    <View style={{ height: SHEET_MIN_HEIGHT * 2.25, width: '100%' }} />
+                    <View style={{ height: heightPercentageToPx(38) }} />
                 </View>
             </ScrollView>
         );

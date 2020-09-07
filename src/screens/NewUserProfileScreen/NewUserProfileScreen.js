@@ -22,20 +22,20 @@ import RewardsStore from '../../components/RewardsStore/RewardsStore';
 
 import RewardsBottomSheet from '../../components/RewardsBottomSheet/RewardsBottomSheet';
 import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
+import DonationsLeaderBoard from '../../components/DonationsLeaderBoard/DonationsLeaderBoard';
 
 const BitsIcon = images.svg.bitsIcon;
 const InfoIcon = images.svg.infoIcon;
 
 const DonationsNavigator = createMaterialTopTabNavigator({
     Leaderboard: {
-        screen: () => <View style={{ backgroundColor: '#FFF', height: 50, width: 50 }} />
+        screen: () => <DonationsLeaderBoard />
     },
     Store: {
         screen: () => <RewardsStore />
     }
 },
 {
-    initialRouteName: 'Store',
     tabBarOptions: {
       upperCaseLabel: false,
       style: {

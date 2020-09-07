@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableWithoutFeedback, View, TouchableOpacity, Platform } from 'react-native';
+import { Linking, TouchableWithoutFeedback, View, TouchableOpacity, Platform } from 'react-native';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 
@@ -10,6 +10,8 @@ import { SHEET_MAX_HEIGHT, SHEET_MIDDLE_HEIGHT, SHEET_MIN_HEIGHT } from '../../u
 import Hearts from '../UserProfileRewards/Hearts';
 import ProgressBar from '../UserProfileRewards/Bar';
 import Colors from '../../utilities/Colors';
+import { getQaplaStoreCheaperProduct } from '../../services/database';
+import remoteConfig from '../../services/remoteConfig';
 
 class RewardsBottomSheet extends Component {
     fall = new Animated.Value(1);
@@ -26,6 +28,14 @@ class RewardsBottomSheet extends Component {
             }
 
             this.setState({ open: !this.state.open });
+        }
+    }
+
+    redeemLifes = async () => {
+        const cheaperProduct = await getQaplaStoreCheaperProduct();
+        const productIndex = Object.keys(cheaperProduct.val())[0];
+        if (cheaperProduct.exists() && this.props.rewards.lifes >= cheaperProduct.val()[productIndex].price) {
+            Linking.openURL((await remoteConfig.getDataFromKey('Discord')).QAPLA_DISCORD_EXCHANGE_CHANNEL);
         }
     }
 
@@ -114,7 +124,9 @@ class RewardsBottomSheet extends Component {
                             </View>
                         </View>
                     </View>
-                    <TouchableOpacity style={styles.redeemButtonContainer}>
+                    <TouchableOpacity
+                        style={styles.redeemButtonContainer}
+                        onPress={this.redeemLifes}>
                         <QaplaText style={styles.redeemButtonText}>
                             Redeem Prize
                         </QaplaText>

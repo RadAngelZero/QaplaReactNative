@@ -33,6 +33,7 @@ const qoinsDonationFormUrlRef = database.ref('QoinsDonationFormUrl');
 const qaplaStoreRef = database.ref('QaplaStore');
 const usersRewardsProgressRef = database.ref('/UsersRewardsProgress');
 const DonationsCostsRef = database.ref('/DonationsCosts');
+const DonationsLeaderBoardRef = database.ref('/DonationsLeaderBoard');
 
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
@@ -1192,12 +1193,19 @@ export async function getDonationFormUrl() {
  * Qapla Store
  */
 
- /**
+/**
   * Load the specified amount of products of the Qapla store
   * @param {number} limit Number of products to load
   */
 export async function getQaplaStoreProducts(limit = 10) {
     return await qaplaStoreRef.limitToLast(limit).once('value');
+}
+
+/**
+  * Get the cheaper product of the Qapla Store
+  */
+export async function getQaplaStoreCheaperProduct() {
+    return await qaplaStoreRef.orderByChild('price').limitToFirst(1).once('value');
 }
 
 /**
@@ -1229,4 +1237,15 @@ export async function getDonationsCosts() {
  */
 export async function getDonationQoinsBase() {
     return await DonationsCostsRef.child('QoinsBase').once('value');
+}
+
+/**
+ * Donations Leader Board
+ */
+
+/**
+ * Get the base of Qoins considered in the ECoin To Qoin equation
+ */
+export async function getDonationsLeaderBoard(numberOfUsers = 100) {
+    return await DonationsLeaderBoardRef.orderByChild('totalDonations').limitToLast(numberOfUsers).once('value');
 }

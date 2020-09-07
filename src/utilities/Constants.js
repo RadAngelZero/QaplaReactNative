@@ -121,4 +121,4 @@ export const ANDROID_PACKAGE_NAME = 'com.qapla.gaming.app';
 // Bottom Sheets
 export const SHEET_MAX_HEIGHT = heightPercentageToPx(65);
 export const SHEET_MIDDLE_HEIGHT = heightPercentageToPx(40);
-export const SHEET_MIN_HEIGHT = heightPercentageToPx(16);
+export const SHEET_MIN_HEIGHT = heightPercentageToPx(15.5);

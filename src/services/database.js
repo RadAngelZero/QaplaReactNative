@@ -33,6 +33,7 @@ const qoinsDonationFormUrlRef = database.ref('QoinsDonationFormUrl');
 const qaplaStoreRef = database.ref('QaplaStore');
 const usersRewardsProgressRef = database.ref('/UsersRewardsProgress');
 const DonationsCostsRef = database.ref('/DonationsCosts');
+const DonationsLeaderBoardRef = database.ref('/DonationsLeaderBoard');
 
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
@@ -1236,4 +1237,15 @@ export async function getDonationsCosts() {
  */
 export async function getDonationQoinsBase() {
     return await DonationsCostsRef.child('QoinsBase').once('value');
+}
+
+/**
+ * Donations Leader Board
+ */
+
+/**
+ * Get the base of Qoins considered in the ECoin To Qoin equation
+ */
+export async function getDonationsLeaderBoard(numberOfUsers = 100) {
+    return await DonationsLeaderBoardRef.orderByChild('totalDonations').limitToLast(numberOfUsers).once('value');
 }

@@ -53,7 +53,9 @@ import LifeIcon from './icons/life.svg';
 import RewardIcon from './icons/rewardIcon.svg';
 import DonatedStarIcon from './icons/donatedStarIcon.svg';
 import DonatedBitIcon from './icons/donatedBitIcon.svg';
-import QaplaLogo from './icons/QaplaLogo.svg'
+import QaplaLogo from './icons/QaplaLogo.svg';
+import PlusBubble from './icons/plusBubble.svg';
+import MinusBubble from './icons/minusBubble.svg';
 
 // Images
 
@@ -167,6 +169,10 @@ const images = {
 		smashSW: {
 			img: require('./images/SAMSHBROS.png'),
 			uri: '@assets/images/SAMSHBROS.png'
+		},
+		Qoin3D: {
+			img: require('./images/3DQoin.png'),
+			uri: '@assets/images/SAMSHBROS.png'
 		}
 	},
 	svg: {
@@ -223,7 +229,9 @@ const images = {
 		rewardIcon: RewardIcon,
 		donatedStarIcon: DonatedStarIcon,
 		donatedBitIcon: DonatedBitIcon,
-		qaplalogoIcon: QaplaLogo
+		qaplalogoIcon: QaplaLogo,
+		plusBubble: PlusBubble,
+		minusBubble: MinusBubble
 	}
 };
 

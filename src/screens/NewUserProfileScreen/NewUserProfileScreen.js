@@ -45,9 +45,8 @@ const DonationsNavigator = createMaterialTopTabNavigator({
         width: widthPercentageToPx(30)
       },
       labelStyle: {
-        fontSize: 14,
-        fontFamily: 'SFRounded-Ultralight',
-        fontWeight: 'bold'
+        fontSize: 16,
+        fontFamily: 'SFRounded-Ultralight'
       },
       activeTintColor: '#FFF',
       inactiveTintColor: '#FFF',

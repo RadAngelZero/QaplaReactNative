@@ -26,7 +26,7 @@ export default styles = StyleSheet.create({
         maxWidth: '85%',
         height: heightPercentageToPx(8),
 		color: '#FFF',
-		fontSize: 14,
+		fontSize: 12,
         marginTop: 24,
         marginLeft: 16
     },

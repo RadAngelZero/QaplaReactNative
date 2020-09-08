@@ -5,53 +5,40 @@ import { connect } from 'react-redux';
 
 import styles from './style';
 import QaplaText from '../QaplaText/QaplaText';
-import Images from '../../../assets/images';
 import { getQaplaStoreProducts } from '../../services/database';
 import { getLocaleLanguage } from '../../utilities/i18';
 import remoteConfig from '../../services/remoteConfig';
-import { SHEET_MIN_HEIGHT } from '../../utilities/Constants';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import Hearts from '../UserProfileRewards/Hearts';
 
-const RewardCard = ({ onPress, title, description, price, primaryColor = 'rgb(20, 22, 55)', secondaryColor = 'rgb(20, 22, 55)' }) => {
-    let Price = [];
-
-    for (let i = 0; i < Math.floor(price); i++) {
-        Price.push(<Images.svg.lifeIcon  color='#FFD632' />);
-    }
-
-    if (price - Math.floor(price) > 0) {
-        Price.push(<Images.svg.halfLifeIcon />);
-    }
-
-    return (
-        <TouchableWithoutFeedback onPress={() => onPress(price)}>
-            <LinearGradient
-                start={{
-                    x: 0,
-                    y: 0,
-                }}
-                end={{
-                    x: 1.75,
-                    y: 1,
-                }}
-                locations={[0, 1]}
-                colors={[primaryColor, secondaryColor]}
-                style={styles.prizeContainer}>
-                <QaplaText style={styles.prizeTitle}>
-                    {title}
-                </QaplaText>
-                <QaplaText
-                    style={styles.prizeBody}
-                    numberOfLines={3}>
-                    {description}
-                </QaplaText>
-                <View style={styles.lifeContainer}>
-                    {Price}
-                </View>
-            </LinearGradient>
-        </TouchableWithoutFeedback>
-    );
-};
+const RewardCard = ({ onPress, title, description, price, primaryColor = 'rgb(20, 22, 55)', secondaryColor = 'rgb(20, 22, 55)' }) => (
+    <TouchableWithoutFeedback onPress={() => onPress(price)}>
+        <LinearGradient
+            start={{
+                x: 0,
+                y: 0,
+            }}
+            end={{
+                x: 1.75,
+                y: 1,
+            }}
+            locations={[0, 1]}
+            colors={[primaryColor, secondaryColor]}
+            style={styles.prizeContainer}>
+            <QaplaText style={styles.prizeTitle}>
+                {title}
+            </QaplaText>
+            <QaplaText
+                style={styles.prizeBody}
+                numberOfLines={3}>
+                {description}
+            </QaplaText>
+            <View style={styles.lifeContainer}>
+                <Hearts hearts={price} />
+            </View>
+        </LinearGradient>
+    </TouchableWithoutFeedback>
+);
 
 class RewardsStore extends Component {
     state = {

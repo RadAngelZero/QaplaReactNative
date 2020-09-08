@@ -6,7 +6,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import styles from './style';
 import QaplaText from '../QaplaText/QaplaText';
 import Images from '../../../assets/images';
-import { SHEET_MAX_HEIGHT, SHEET_MIDDLE_HEIGHT, SHEET_MIN_HEIGHT } from '../../utilities/Constants';
+import { SHEET_MAX_HEIGHT, SHEET_MIN_HEIGHT } from '../../utilities/Constants';
 import Hearts from '../UserProfileRewards/Hearts';
 import ProgressBar from '../UserProfileRewards/Bar';
 import Colors from '../../utilities/Colors';
@@ -20,15 +20,15 @@ class RewardsBottomSheet extends Component {
     };
 
     toggleBottomSheet = () => {
-        if (Platform.OS === 'android') {
-            if (!this.state.open) {
-                this.sheetRef.snapTo(2);
-            } else {
-                this.sheetRef.snapTo(0);
-            }
-
-            this.setState({ open: !this.state.open });
+        if (!this.state.open) {
+            this.sheetRef.snapTo(1);
+        } else {
+            this.sheetRef.snapTo(0);
         }
+    }
+
+    toggleOpen = () => {
+        this.setState({ open: !this.state.open });
     }
 
     redeemLifes = async () => {
@@ -143,8 +143,10 @@ class RewardsBottomSheet extends Component {
                     {this.props.children}
                 </Animated.View>
                 <BottomSheet
+                    onOpenEnd={this.toggleOpen}
+                    onCloseEnd={this.toggleOpen}
                     ref={(ref) => this.sheetRef = ref}
-                    snapPoints={[SHEET_MIN_HEIGHT, SHEET_MIDDLE_HEIGHT, SHEET_MAX_HEIGHT]}
+                    snapPoints={[SHEET_MIN_HEIGHT, SHEET_MAX_HEIGHT]}
                     borderRadius={20}
                     callbackNode={this.fall}
                     renderContent={this.renderContent} />

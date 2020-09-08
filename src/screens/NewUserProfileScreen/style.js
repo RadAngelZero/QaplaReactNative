@@ -36,7 +36,7 @@ export default styles = StyleSheet.create({
 		shadowRadius: 10,
         shadowOpacity: 1,
         marginTop: 16,
-		width: widthPercentageToPx(40)
+		width: widthPercentageToPx(45)
 	},
 	infoImage: {
 		width: 24,
@@ -56,11 +56,11 @@ export default styles = StyleSheet.create({
 	},
 	bitsNumber: {
 		color: '#FFF',
-		fontSize: 40
+		fontSize: 48
 	},
 	bitsTitle: {
 		color: '#FFF',
-		fontSize: 16
+		fontSize: 12
 	},
 	handleDonationContainer: {
 		marginRight: 12
@@ -89,7 +89,7 @@ export default styles = StyleSheet.create({
 	bits3dIconImage: {
 		position: 'absolute',
 		bottom: -heightPercentageToPx(2.5),
-		left: widthPercentageToPx(20)
+		left: widthPercentageToPx(25)
 	},
 	levelModalView: {
 		alignSelf: 'center'

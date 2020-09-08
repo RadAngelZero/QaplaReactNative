@@ -4,7 +4,6 @@ import TestIcon from './icons/facebook.svg';
 
 import PublicFeedMatchIcon from './icons/Partidas.svg';
 import QaploinsIcon from './icons/qaploins.svg';
-import ProfileIcon from './icons/ProfileActive.svg';
 import NotificationIcon from './icons/Notifications.svg';
 import QaploinsPrize from './icons/QaploinsPrize.svg';
 import LessQaploins from './icons/LessQaploins.svg';
@@ -28,7 +27,6 @@ import LostIcon from './icons/perdido.svg';
 import TieIcon from './icons/empatado.svg';
 import ChooseClipIcon from './icons/video-clip.svg';
 import AlreadyChoosedClipIcon from './icons/video-clip-check.svg';
-import LogrosIcon from './icons/LogrosActive.svg';
 import VerifyIcon from './icons/verificado.svg';
 import SupportIcon from './icons/support.svg';
 import DiscordIcon from './icons/discord.svg';
@@ -47,8 +45,6 @@ import ArrowDownIcon from './icons/arrowDown.svg';
 import BetaLabelIcon from './icons/BetaLabel.svg';
 import BitsIcon from './icons/bitsIcon.svg';
 import InfoIcon from './icons/infoIcon.svg';
-import CommunityIcon from './icons/communityIcon.svg';
-import HalfLifeIcon from './icons/halfLife.svg';
 import LifeIcon from './icons/life.svg';
 import RewardIcon from './icons/rewardIcon.svg';
 import DonatedStarIcon from './icons/donatedStarIcon.svg';
@@ -182,7 +178,6 @@ const images = {
 		testIcon: TestIcon,
 		publicFeedMatchIcon: PublicFeedMatchIcon,
 		qaploinsIcon: QaploinsIcon,
-		profileIcon: ProfileIcon,
 		cancelIcon: CancelIcon,
 		lightningIcon: LightningIcon,
 		searchIcon: SearchIcon,
@@ -198,7 +193,6 @@ const images = {
 		tieIcon: TieIcon,
 		chooseClipIcon: ChooseClipIcon,
 		alreadyChoosedClipIcon: AlreadyChoosedClipIcon,
-		logrosIcon: LogrosIcon,
 		verifyIcon: VerifyIcon,
 		supportIcon: SupportIcon,
 		gowIcon: GowIcon,
@@ -223,8 +217,6 @@ const images = {
 		betaLabelIcon: BetaLabelIcon,
 		bitsIcon: BitsIcon,
 		infoIcon: InfoIcon,
-		communityIcon: CommunityIcon,
-		halfLifeIcon: HalfLifeIcon,
 		lifeIcon: LifeIcon,
 		rewardIcon: RewardIcon,
 		donatedStarIcon: DonatedStarIcon,

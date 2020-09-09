@@ -1,6 +1,3 @@
-// diego           - 11-09-2019 - us107 - Updated default size and width of AnimatedCircularProgress
-// diego           - 20-08-2019 - us89 - File creation
-
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -31,10 +28,16 @@ export class AnimatedCircleIndicator extends Component {
                     backgroundColor={this.props.backgroundColor}>
                         {this.props.fillComponent || this.fillCircleText}
                 </AnimatedCircularProgress>
-                {this.props.description &&
-                    <QaplaText style={[styles.description, this.props.descriptionStyle]}>
-                        {this.props.description}
-                    </QaplaText>
+                {this.props.descriptionComponent ?
+                        <this.props.descriptionComponent />
+                    :
+                    <>
+                        {this.props.description &&
+                            <QaplaText style={[styles.description, this.props.descriptionStyle]}>
+                                {this.props.description}
+                            </QaplaText>
+                        }
+                    </>
                 }
             </View>
         );

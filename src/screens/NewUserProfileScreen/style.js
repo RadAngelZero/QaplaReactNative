@@ -99,11 +99,21 @@ export default styles = StyleSheet.create({
 		height: 120,
 		width: 120
 	},
+	expTextContainer: {
+        alignSelf: 'center',
+        borderRadius: 100,
+        backgroundColor: '#4040FF',
+        position: 'absolute',
+        bottom: 0
+    },
 	expText: {
 		color: '#FFF',
-		fontSize: 16,
+		fontSize: 12,
 		alignSelf: 'center',
-		marginTop: 12
+		marginTop: 5,
+        marginBottom: 5,
+        marginRight: 14,
+        marginLeft: 14
 	},
 	donationNavigatorContainer: {
 		flex: 1,

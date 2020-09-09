@@ -1,11 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
     leaderBoardContainer: {
         flex: 1,
-        marginHorizontal: 8
+        marginHorizontal: 8,
+        backgroundColor: Colors.backgroundColor
     },
     leaderHeaderComponent: {
         marginTop: 6

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, Image } from 'react-native';
+import { SafeAreaView, View, Image, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import BottomSheet from 'reanimated-bottom-sheet';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -13,7 +14,7 @@ import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics
 import { isUserLogged } from '../../services/auth';
 
 import { translate } from '../../utilities/i18';
-import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import { getDonationFormUrl, getDonationsCosts, getDonationQoinsBase } from '../../services/database';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -23,6 +24,7 @@ import RewardsStore from '../../components/RewardsStore/RewardsStore';
 import RewardsBottomSheet from '../../components/RewardsBottomSheet/RewardsBottomSheet';
 import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
 import DonationsLeaderBoard from '../../components/DonationsLeaderBoard/DonationsLeaderBoard';
+import { SHEET_MIN_HEIGHT, SHEET_MAX_HEIGHT, HEADER_SIZE } from '../../utilities/Constants';
 
 const BitsIcon = images.svg.bitsIcon;
 const InfoIcon = images.svg.infoIcon;
@@ -60,11 +62,15 @@ const DonationsNavigator = createMaterialTopTabNavigator({
 
 const AppContainer = createAppContainer(DonationsNavigator);
 
+const HEADER_EXPANDED_HEIGHT = 300
+const HEADER_COLLAPSED_HEIGHT = 60
+
 export class NewUserProfileScreen extends Component {
     state = {
         bitsToDonate: 0,
         donationCost: null,
-        donationQoinBase: null
+        donationQoinBase: null,
+        collapsableToolBarMaxHeight: heightPercentageToPx(50)
     };
 
     componentWillMount() {
@@ -132,8 +138,9 @@ export class NewUserProfileScreen extends Component {
         const userLevel = Math.floor(this.props.experience / 100);
 
         return (
-            <SafeAreaView style={styles.profileView}>
+            <SafeAreaView style={styles.profileView} onLayout={(e) => this.setState({ collapsableToolBarMaxHeight: e.nativeEvent.layout.height })}>
                 <RewardsBottomSheet rewards={this.props.rewards}>
+                    <Animated.View style={{ flex: 1 }}>
                     <View style={styles.qoinsView}>
                         <Image
                             source={images.png.Qoin3D.img}
@@ -189,13 +196,24 @@ export class NewUserProfileScreen extends Component {
                                 )}
                                 backgroundColor='#1F2750'
                                 tintColor={Colors.greenQapla}
-                                description={`Level ${userLevel}`}
-                                descriptionStyle={styles.expText} />
+                                descriptionComponent={() => (
+                                    <View style={styles.expTextContainer}>
+                                        <QaplaText style={styles.expText}>
+                                            Level {userLevel}
+                                        </QaplaText>
+                                    </View>
+                                )} />
                         </View>
                     </View>
-                    <View style={styles.donationNavigatorContainer}>
-                        <AppContainer />
-                    </View>
+                    </Animated.View>
+                    <BottomSheet
+                        snapPoints={[heightPercentageToPx(20), this.state.collapsableToolBarMaxHeight]}
+                        renderContent={() =>
+                            <View style={styles.donationNavigatorContainer}>
+                                <View style={{ height: this.state.collapsableToolBarMaxHeight }}>
+                                    <AppContainer />
+                                </View>
+                            </View>} />
                 </RewardsBottomSheet>
             </SafeAreaView>
         );

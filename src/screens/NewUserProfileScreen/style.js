@@ -66,7 +66,7 @@ export default styles = StyleSheet.create({
 		marginRight: 12
 	},
 	updateDonationIcon: {
-		marginTop: 8
+		marginTop: 12
 	},
 	buttonView: {
 		backgroundColor: 'rgb(108, 122, 229)',

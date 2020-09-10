@@ -34,6 +34,7 @@ const qaplaStoreRef = database.ref('QaplaStore');
 const usersRewardsProgressRef = database.ref('/UsersRewardsProgress');
 const DonationsCostsRef = database.ref('/DonationsCosts');
 const DonationsLeaderBoardRef = database.ref('/DonationsLeaderBoard');
+const LeaderBoardPrizesRef = database.ref('/LeaderBoardPrizes');
 
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
@@ -1249,3 +1250,14 @@ export async function getDonationQoinsBase() {
 export async function getDonationsLeaderBoard(numberOfUsers = 100) {
     return await DonationsLeaderBoardRef.orderByChild('totalDonations').limitToLast(numberOfUsers).once('value');
 }
+
+/**
+ * Leader Board Prizes
+ */
+
+ /**
+  * Returns the list of the leader board prizes
+  */
+ export async function getLeaderBoardPrizes() {
+    return await LeaderBoardPrizesRef.once('value');
+ }

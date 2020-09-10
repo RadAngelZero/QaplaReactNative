@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View, Image, FlatList } from 'react-native';
+import { View, Image, ScrollView, ImageBackground, FlatList } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
-import { getDonationsLeaderBoard } from '../../services/database';
+import { getDonationsLeaderBoard, getLeaderBoardPrizes } from '../../services/database';
 import QaplaText from '../QaplaText/QaplaText';
 import { getUserProfileImgUrl } from '../../services/storage';
 import styles from './styles';
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class LeaderRow extends Component {
     state = {
@@ -45,11 +47,14 @@ class LeaderRow extends Component {
 
 class DonationsLeaderBoard extends Component {
     state = {
-        leaderBoard: []
+        leaderBoard: [],
+        leaderBoardPrizes: [],
+        activePrizeIndex: 0
     };
 
     componentDidMount() {
         this.loadLeaderBoard();
+        this.getPrizes();
     }
 
     loadLeaderBoard = async () => {
@@ -69,15 +74,64 @@ class DonationsLeaderBoard extends Component {
         }
     }
 
+    getPrizes = async () => {
+        const leaderBoardPrizesSnap = await getLeaderBoardPrizes();
+
+        if (leaderBoardPrizesSnap.exists()) {
+            this.setState({ leaderBoardPrizes: leaderBoardPrizesSnap.val() });
+        }
+    }
+
+    handleScroll = (scrollEvent) => this.setState({ activePrizeIndex: Math.round(scrollEvent.nativeEvent.contentOffset.x / widthPercentageToPx(95)) });
+
     render() {
         return (
-            <FlatList
-                style={styles.leaderBoardContainer}
-                data={this.state.leaderBoard}
-                renderItem={({ item, index }) => <LeaderRow item={item} index={index} />}
-                ListHeaderComponent={() => <View style={styles.headerComponent} />}
-                ItemSeparatorComponent={() => <View style={styles.separatorComponent} />}
-                ListFooterComponent={() => <View style={styles.footerComponent} />} />
+            <>
+                {this.state.leaderBoardPrizes &&
+                    <View style={styles.prizesCard}>
+                        <LinearGradient
+                            useAngle={true}
+                            angle={150}
+                            angleCenter={{ x: .5, y: .5}}
+                            colors={[
+                                this.state.leaderBoardPrizes[this.state.activePrizeIndex] ? this.state.leaderBoardPrizes[this.state.activePrizeIndex].backgroundColors.primaryColor : '#2916EE',
+                                this.state.leaderBoardPrizes[this.state.activePrizeIndex] ? this.state.leaderBoardPrizes[this.state.activePrizeIndex].backgroundColors.secondaryColor : '#2916EE'
+                            ]}
+                            style={styles.prizesContainer}>
+                            <ScrollView
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                pagingEnabled
+                                onScroll={this.handleScroll}>
+                                {this.state.leaderBoardPrizes.map((prize) => (
+                                    <ImageBackground
+                                        source={{ uri: prize.backgroundImage }}
+                                        style={styles.backgroundImage}>
+                                        <QaplaText style={styles.prizeTitle} numberOfLines={2}>
+                                            {prize.title}
+                                        </QaplaText>
+                                        <QaplaText style={styles.prizeDescription} numberOfLines={2}>
+                                            {prize.description}
+                                        </QaplaText>
+                                    </ImageBackground>
+                                ))}
+                            </ScrollView>
+                            <View style={styles.prizesCounterContainer}>
+                                {Object.keys(this.state.leaderBoardPrizes).map((prizeKey, index) => (
+                                    <View style={this.state.activePrizeIndex === index ? styles.prizeIndexActive : styles.prizeIndex} />
+                                ))}
+                            </View>
+                        </LinearGradient>
+                    </View>
+                }
+                <FlatList
+                    style={styles.leaderBoardContainer}
+                    data={this.state.leaderBoard}
+                    renderItem={({ item, index }) => <LeaderRow item={item} index={index} />}
+                    ListHeaderComponent={() => <View style={styles.headerComponent} />}
+                    ItemSeparatorComponent={() => <View style={styles.separatorComponent} />}
+                    ListFooterComponent={() => <View style={styles.footerComponent} />} />
+            </>
         );
     }
 }

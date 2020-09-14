@@ -24,7 +24,6 @@ import RewardsStore from '../../components/RewardsStore/RewardsStore';
 import RewardsBottomSheet from '../../components/RewardsBottomSheet/RewardsBottomSheet';
 import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
 import DonationsLeaderBoard from '../../components/DonationsLeaderBoard/DonationsLeaderBoard';
-import { SHEET_MIN_HEIGHT, SHEET_MAX_HEIGHT, HEADER_SIZE } from '../../utilities/Constants';
 
 const BitsIcon = images.svg.bitsIcon;
 const InfoIcon = images.svg.infoIcon;
@@ -44,7 +43,7 @@ const DonationsNavigator = createMaterialTopTabNavigator({
         backgroundColor: '#0C1021'
       },
       tabStyle: {
-        width: widthPercentageToPx(30)
+        width: widthPercentageToPx(35)
       },
       labelStyle: {
         fontSize: 16,
@@ -55,7 +54,7 @@ const DonationsNavigator = createMaterialTopTabNavigator({
       indicatorStyle: {
         borderBottomColor: '#36E5CE',
         borderBottomWidth: 2,
-        width: widthPercentageToPx(30)
+        width: widthPercentageToPx(35)
       }
     },
   });
@@ -206,14 +205,9 @@ export class NewUserProfileScreen extends Component {
                         </View>
                     </View>
                     </Animated.View>
-                    <BottomSheet
-                        snapPoints={[heightPercentageToPx(20), this.state.collapsableToolBarMaxHeight]}
-                        renderContent={() =>
-                            <View style={styles.donationNavigatorContainer}>
-                                <View style={{ height: this.state.collapsableToolBarMaxHeight }}>
-                                    <AppContainer />
-                                </View>
-                            </View>} />
+                    <View style={styles.donationNavigatorContainer}>
+                        <AppContainer />
+                    </View>
                 </RewardsBottomSheet>
             </SafeAreaView>
         );

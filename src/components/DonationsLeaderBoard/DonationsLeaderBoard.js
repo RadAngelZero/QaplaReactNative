@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image, ScrollView, ImageBackground, FlatList } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { connect } from 'react-redux';
 
 import { getDonationsLeaderBoard, getLeaderBoardPrizes } from '../../services/database';
 import QaplaText from '../QaplaText/QaplaText';
@@ -98,10 +99,12 @@ class DonationsLeaderBoard extends Component {
                                 this.state.leaderBoardPrizes[this.state.activePrizeIndex] ? this.state.leaderBoardPrizes[this.state.activePrizeIndex].backgroundColors.secondaryColor : '#2916EE'
                             ]}
                             style={styles.prizesContainer}>
+                            {!this.props.enableScroll &&
                             <ScrollView
                                 horizontal
                                 showsHorizontalScrollIndicator={false}
                                 pagingEnabled
+                                scrollEventThrottle={10}
                                 onScroll={this.handleScroll}>
                                 {this.state.leaderBoardPrizes.map((prize) => (
                                     <ImageBackground
@@ -116,6 +119,7 @@ class DonationsLeaderBoard extends Component {
                                     </ImageBackground>
                                 ))}
                             </ScrollView>
+                            }
                             <View style={styles.prizesCounterContainer}>
                                 {Object.keys(this.state.leaderBoardPrizes).map((prizeKey, index) => (
                                     <View style={this.state.activePrizeIndex === index ? styles.prizeIndexActive : styles.prizeIndex} />
@@ -125,6 +129,7 @@ class DonationsLeaderBoard extends Component {
                     </View>
                 }
                 <FlatList
+                    scrollEnabled={this.props.enableScroll}
                     style={styles.leaderBoardContainer}
                     data={this.state.leaderBoard}
                     renderItem={({ item, index }) => <LeaderRow item={item} index={index} />}
@@ -136,4 +141,10 @@ class DonationsLeaderBoard extends Component {
     }
 }
 
-export default DonationsLeaderBoard;
+function mapStateToProps(state) {
+    return {
+        enableScroll: state.profileLeaderBoardReducer.enableScroll
+    }
+}
+
+export default connect(mapStateToProps)(DonationsLeaderBoard);

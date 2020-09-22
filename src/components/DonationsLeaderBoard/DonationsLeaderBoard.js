@@ -246,15 +246,10 @@ class DonationsLeaderBoard extends Component {
                                 horizontal
                                 showsHorizontalScrollIndicator={false}
                                 pagingEnabled
-<<<<<<< HEAD
                                 onScroll={this.handleScroll}
                                 onMomentumScrollEnd={this.handleEndMomentum}
                                 scrollEventThrottle={1}
                                 >
-=======
-                                scrollEventThrottle={10}
-                                onScroll={this.handleScroll}>
->>>>>>> f92f77dd24e5590ed41b69922808da6f685df678
                                 {this.state.leaderBoardPrizes.map((prize) => (
                                     <ImageBackground
                                         source={{ uri: prize.backgroundImage }}

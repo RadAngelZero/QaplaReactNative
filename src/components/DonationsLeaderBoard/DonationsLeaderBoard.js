@@ -248,6 +248,7 @@ class DonationsLeaderBoard extends Component {
                                 pagingEnabled
                                 onScroll={this.handleScroll}
                                 onMomentumScrollEnd={this.handleEndMomentum}
+                                onScrollEndDrag={this.handleEndMomentum}
                                 scrollEventThrottle={1}
                                 >
                                 {this.state.leaderBoardPrizes.map((prize) => (

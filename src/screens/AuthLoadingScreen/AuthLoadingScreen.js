@@ -264,7 +264,7 @@ class AuthLoadingScreen extends Component {
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
-                <View style={styles.container}>
+                <View style={[styles.container,{transform:[{scale:0.6}]}]}>
                     <QaplaLogo width={300} height={130} />
                     <LoadingAnimation />
                 </View>

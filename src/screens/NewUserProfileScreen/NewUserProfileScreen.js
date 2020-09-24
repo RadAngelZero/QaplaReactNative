@@ -158,7 +158,9 @@ export class NewUserProfileScreen extends Component {
 
         return (
             <SafeAreaView style={styles.profileView} onLayout={this.saveToolBarMaxHeight}>
-                <RewardsBottomSheet rewards={this.props.rewards}>
+                <RewardsBottomSheet
+                    rewards={this.props.rewards}
+                    hide={this.props.enableScroll}>
                     <ScrollView
                         ref={(scrollView) => this.scrollView = scrollView}
                         onScrollEndDrag={this.scrollCollapsable}>
@@ -248,7 +250,8 @@ function mapStateToProps(state) {
             userQoins: state.userReducer.user.credits,
             userImage: state.userReducer.user.photoUrl,
             experience: state.userReducer.user.qaplaExperience || 0,
-            rewards: state.userReducer.user.UserRewards
+            rewards: state.userReducer.user.UserRewards,
+            enableScroll: state.profileLeaderBoardReducer.enableScroll
         }
     }
 

@@ -61,8 +61,6 @@ export default styles = StyleSheet.create({
         marginLeft: 6
     },
     leaderBoardContainer: {
-        flex: 1,
-        marginHorizontal: 8,
         backgroundColor: Colors.backgroundColor
     },
     leaderHeaderComponent: {
@@ -71,29 +69,126 @@ export default styles = StyleSheet.create({
     separatorComponent: {
         marginTop: 6
     },
-    footerComponent: {
-        height: heightPercentageToPx(16)
+    userLeaderBoardPositionContainer: {
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginTop: 24,
+        marginBottom: 24,
+        marginLeft: 24,
+        marginRight: 24,
+        backgroundColor: '#FECD2E',
+        borderRadius: 9
+    },
+    dataContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 7
+    },
+    userLeaderName: {
+        fontSize: 21,
+        color: '#0D1021',
+        marginLeft: 12,
+        width: widthPercentageToPx(40)
+    },
+    userLeaderDonations: {
+        fontSize: 21,
+        color: '#0D1021',
+        marginLeft: 12
+    },
+    // TopLeaderChip
+    chipContainer: {
+        position: 'absolute',
+        bottom: -10,
+        alignSelf: 'center',
+        width: 40,
+        borderRadius: 12
+    },
+    chipText: {
+        fontSize: 12,
+        textAlign: 'center',
+        marginTop: 5,
+        marginBottom: 5
+    },
+    // TopLeaders
+    topLeadersContainer: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginTop: 12,
+        marginBottom: 12
+    },
+    secondPlaceContainer: {
+        marginTop: 30,
+        marginRight: 20,
+        justifyContent: 'center'
+    },
+    secondAndThirdPlaceImage: {
+        height: 65,
+        width: 65,
+        borderRadius: 100
+    },
+    topLeaderUserName: {
+        fontSize: 14,
+        color: '#FFF',
+        marginTop: 12,
+        textAlign: 'center'
+    },
+    topLeaderExperience: {
+        fontSize: 24,
+        color: Colors.greenQapla,
+        marginTop: 12,
+        textAlign: 'center'
+    },
+    firstPlaceImage: {
+        height: 90,
+        width: 90,
+        borderRadius: 100
+    },
+    firstPlaceContainer: {
+        marginRight: 20,
+        justifyContent: 'center'
+    },
+    thirdPlaceContainer: {
+        marginTop: 30,
+        justifyContent: 'center'
     },
     // LeaderRow
     leaderRowContainer: {
         flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginLeft: 24,
+        marginRight: 24
+    },
+    ledarDataContainer: {
+        flexDirection: 'row',
         alignItems: 'center'
     },
-    leaderProfileImage: {
-        height: 36,
-        width: 36,
-        borderRadius: 100
-    },
     leaderPlace: {
+        fontSize: 21,
         color: '#FFF',
-        marginLeft: 8
+        letterSpacing: .3,
+        textAlignVertical: 'center'
     },
-    totalDonations: {
-        color: '#FFF',
-        marginLeft: 8
+    leaderProfileImage: {
+        marginTop: 4,
+        height: 30,
+        width: 30,
+        borderRadius: 100,
+        marginLeft: 24,
+        marginBottom: 7
     },
     userName: {
+        fontSize: 21,
         color: '#FFF',
-        marginLeft: 8
+        letterSpacing: .3,
+        marginLeft: 12,
+        width: widthPercentageToPx(40)
+    },
+    leaderDonationsContainer: {
+        alignSelf: 'center'
+    },
+    totalDonations: {
+        fontSize: 21,
+        color: '#FFF'
     }
 });

@@ -3,14 +3,123 @@ import { View, Image, ScrollView, ImageBackground, FlatList, Animated } from 're
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
-import { getDonationsLeaderBoard, getLeaderBoardPrizes } from '../../services/database';
+import { getDonationsLeaderBoard, getLeaderBoardPrizes, getUserDonationLeaderBoard } from '../../services/database';
 import QaplaText from '../QaplaText/QaplaText';
 import { getUserProfileImgUrl } from '../../services/storage';
 import styles from './styles';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import { event } from 'react-native-reanimated';
+import Colors from '../../utilities/Colors';
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
+
+class TopLeaderChip extends Component {
+    render() {
+        return (
+            <LinearGradient
+                useAngle
+                angleCenter={{ x: .5, y: .5 }}
+                style={styles.chipContainer}
+                colors={[ this.props.primaryColor, this.props.secondaryColor ]}>
+                <QaplaText style={styles.chipText}>
+                    {this.props.children}
+                </QaplaText>
+            </LinearGradient>
+        );
+    }
+}
+
+class TopLeaders extends Component {
+    state = {
+        topLeadersImages: []
+    };
+
+    componentDidUpdate(prevProps) {
+        if (this.props.topLeaders.length > prevProps.topLeaders.length) {
+            this.getUserImage();
+        }
+    }
+
+    getUserImage = async () => {
+        const topLeadersImages = [];
+        for (let i = 0; i < this.props.topLeaders.length; i++) {
+            if (this.props.topLeaders[i]) {
+                const profileImage = await getUserProfileImgUrl(this.props.topLeaders[i].uid);
+
+                topLeadersImages.push('');
+                if (profileImage) {
+                    topLeadersImages[i] = profileImage;
+                }
+            }
+        }
+
+        this.setState({ topLeadersImages });
+    }
+
+    render() {
+        return (
+            <View style={styles.topLeadersContainer}>
+                {this.props.topLeaders.length > 0 &&
+                <>
+                    {this.props.topLeaders[1] &&
+                        <View style={styles.secondPlaceContainer}>
+                            <View>
+                                <Image
+                                    source={{ uri: this.state.topLeadersImages[1] }}
+                                    style={styles.secondAndThirdPlaceImage} />
+                                <TopLeaderChip primaryColor={'#7D7D7D'} secondaryColor={'#E9E9E9'}>
+                                    2º
+                                </TopLeaderChip>
+                            </View>
+                            <QaplaText style={styles.topLeaderUserName}>
+                                {this.props.topLeaders[1].userName}
+                            </QaplaText>
+                            <QaplaText style={styles.topLeaderExperience}>
+                                {this.props.topLeaders[1].totalDonations}xp
+                            </QaplaText>
+                        </View>
+                    }
+                    {this.props.topLeaders[0] &&
+                        <View style={styles.firstPlaceContainer}>
+                            <View>
+                                <Image
+                                    source={{ uri: this.state.topLeadersImages[0] }}
+                                    style={styles.firstPlaceImage} />
+                                <TopLeaderChip primaryColor={'#FF9A35'} secondaryColor={'#FFD632'}>
+                                    1º
+                                </TopLeaderChip>
+                            </View>
+                            <QaplaText style={styles.topLeaderUserName}>
+                                {this.props.topLeaders[0].userName}
+                            </QaplaText>
+                            <QaplaText style={styles.topLeaderExperience}>
+                                {this.props.topLeaders[0].totalDonations}xp
+                            </QaplaText>
+                        </View>
+                    }
+                    {this.props.topLeaders[2] &&
+                        <View style={styles.thirdPlaceContainer}>
+                            <View>
+                                <Image
+                                    source={{ uri: this.state.topLeadersImages[2] }}
+                                    style={styles.secondAndThirdPlaceImage} />
+                                <TopLeaderChip primaryColor={'#C54D01'} secondaryColor={'#D1A704'}>
+                                    3º
+                                </TopLeaderChip>
+                            </View>
+                            <QaplaText style={styles.topLeaderUserName}>
+                                {this.props.topLeaders[2].userName}
+                            </QaplaText>
+                            <QaplaText style={styles.topLeaderExperience}>
+                                {this.props.topLeaders[2].totalDonations}xp
+                            </QaplaText>
+                        </View>
+                    }
+                    </>
+                }
+            </View>
+        );
+    }
+}
 
 class LeaderRow extends Component {
     state = {
@@ -32,18 +141,22 @@ class LeaderRow extends Component {
     render() {
         return (
             <View style={styles.leaderRowContainer}>
-                <Image
-                    style={styles.leaderProfileImage}
-                    source={{ uri: this.state.profileImage }} />
-                <QaplaText style={styles.leaderPlace}>
-                    {this.props.index + 1}
-                </QaplaText>
-                <QaplaText style={styles.totalDonations}>
-                    {this.props.item.totalDonations}
-                </QaplaText>
-                <QaplaText style={styles.userName}>
-                    {this.props.item.userName}
-                </QaplaText>
+                <View style={styles.ledarDataContainer}>
+                    <QaplaText style={styles.leaderPlace}>
+                        {this.props.index + 4}
+                    </QaplaText>
+                    <Image
+                        style={styles.leaderProfileImage}
+                        source={{ uri: this.state.profileImage }} />
+                    <QaplaText style={styles.userName} multiline numberOfLines={1}>
+                        {this.props.item.userName}
+                    </QaplaText>
+                </View>
+                <View style={styles.leaderDonationsContainer}>
+                    <QaplaText style={styles.totalDonations}>
+                        {this.props.item.totalDonations}xp
+                    </QaplaText>
+                </View>
             </View>
         );
     }
@@ -51,6 +164,8 @@ class LeaderRow extends Component {
 
 class DonationsLeaderBoard extends Component {
     state = {
+        userLeaderBoardData: {},
+        topLeaders: [],
         leaderBoard: [],
         leaderBoardPrizes: [],
         activePrizeIndex: 0,
@@ -64,9 +179,24 @@ class DonationsLeaderBoard extends Component {
     componentDidMount() {
         this.loadLeaderBoard();
         this.getPrizes();
+        this.getUserImage();
+    }
+
+    getUserImage = async () => {
+        const profileImage = await getUserProfileImgUrl(this.props.uid);
+
+        if (profileImage) {
+            this.setState({ userLeaderBoardData: {...this.state.userLeaderBoardData, profileImage} });
+        }
     }
 
     loadLeaderBoard = async () => {
+        const userLeaderBoardData = await getUserDonationLeaderBoard(this.props.uid);
+
+        if (userLeaderBoardData.exists()) {
+            this.setState({ userLeaderBoardData: userLeaderBoardData.val() });
+        }
+
         const leaderBoardSnap = await getDonationsLeaderBoard();
 
         if (leaderBoardSnap.exists()) {
@@ -79,6 +209,18 @@ class DonationsLeaderBoard extends Component {
                 return leader;
             });
 
+            this.setState({
+                topLeaders: [
+                    leaderBoardArray[0] ? leaderBoardArray[0] : null,
+                    leaderBoardArray[1] ? leaderBoardArray[1] : null,
+                    leaderBoardArray[2] ? leaderBoardArray[2] : null,
+                ]
+            });
+
+            leaderBoardArray.shift();
+            leaderBoardArray.shift();
+            leaderBoardArray.shift();
+
             this.setState({ leaderBoard: leaderBoardArray });
         }
     }
@@ -87,7 +229,7 @@ class DonationsLeaderBoard extends Component {
         const leaderBoardPrizesSnap = await getLeaderBoardPrizes();
 
         if (leaderBoardPrizesSnap.exists()) {
-            this.setState({ 
+            this.setState({
                 leaderBoardPrizes: leaderBoardPrizesSnap.val(),
                 primaryColor: leaderBoardPrizesSnap.val()[0].backgroundColors.primaryColor,
                 secondaryColor: leaderBoardPrizesSnap.val()[0].backgroundColors.secondaryColor,
@@ -103,11 +245,8 @@ class DonationsLeaderBoard extends Component {
                 }
             }
         }],
-        {   
+        {
             listener: scrollEvent => {
-
-                console.log(scrollEvent.nativeEvent.contentOffset.x)
-
                 var percentage = (scrollEvent.nativeEvent.contentOffset.x - (widthPercentageToPx(95) * this.state.lastIndex)) / (widthPercentageToPx(95))
 
                 var primaryCurrColor = this.state.leaderBoardPrizes[this.state.lastIndex] != undefined ? this.state.leaderBoardPrizes[this.state.lastIndex].backgroundColors.primaryColor.slice(1) : 'dddddd'
@@ -144,9 +283,6 @@ class DonationsLeaderBoard extends Component {
                 var secondaryColorHex = `#ffffff`
 
                 if (percentage > 0) {
-
-                    console.log('siguiente')
-                    
                     var primaryRDifference = primaryCurrR > primaryNextR ? primaryCurrR - primaryNextR : primaryNextR - primaryCurrR
                     var primaryGDifference = primaryCurrG > primaryNextG ? primaryCurrG - primaryNextG : primaryNextG - primaryCurrG
                     var primaryBDifference = primaryCurrB > primaryNextB ? primaryCurrB - primaryNextB : primaryNextB - primaryCurrB
@@ -174,10 +310,7 @@ class DonationsLeaderBoard extends Component {
                     var secondaryBHex = secondaryB.toString(16).length < 2 ? '0' + secondaryB.toString(16) : secondaryB.toString(16)
 
                     secondaryColorHex = `#${secondaryRHex}${secondaryGHex}${secondaryBHex}`
-                    
                 } else {
-
-                    console.log('anterior')
 
                     var primaryRDifference = primaryCurrR > primaryPrevR ? primaryCurrR - primaryPrevR : primaryPrevR - primaryCurrR
                     var primaryGDifference = primaryCurrG > primaryPrevG ? primaryCurrG - primaryPrevG : primaryPrevG - primaryCurrG
@@ -186,7 +319,7 @@ class DonationsLeaderBoard extends Component {
                     var primaryR = primaryCurrR > primaryPrevR ? Math.round(primaryCurrR - (primaryRDifference * (Math.abs(percentage) > 1 ? 1 : Math.abs(percentage)))) : Math.round(primaryCurrR + (primaryRDifference * (Math.abs(percentage) > 1 ? 1 : Math.abs(percentage))))
                     var primaryG = primaryCurrG > primaryPrevG ? Math.round(primaryCurrG - (primaryGDifference * (Math.abs(percentage) > 1 ? 1 : Math.abs(percentage)))) : Math.round(primaryCurrG + (primaryGDifference * (Math.abs(percentage) > 1 ? 1 : Math.abs(percentage))))
                     var primaryB = primaryCurrB > primaryPrevB ? Math.round(primaryCurrB - (primaryBDifference * (Math.abs(percentage) > 1 ? 1 : Math.abs(percentage)))) : Math.round(primaryCurrB + (primaryBDifference * (Math.abs(percentage) > 1 ? 1 : Math.abs(percentage))))
-                    
+
                     var primaryRHex = primaryR.toString(16).length < 2 ? '0' + primaryR.toString(16) : primaryR.toString(16)
                     var primaryGHex = primaryG.toString(16).length < 2 ? '0' + primaryG.toString(16) : primaryG.toString(16)
                     var primaryBHex = primaryB.toString(16).length < 2 ? '0' + primaryB.toString(16) : primaryB.toString(16)
@@ -200,7 +333,7 @@ class DonationsLeaderBoard extends Component {
                     var secondaryR = secondaryCurrR > secondaryPrevR ? Math.round(secondaryCurrR - (secondaryRDifference * (Math.abs(percentage) > 1 ? 1 : Math.abs(percentage)))) : Math.round(secondaryCurrR + (secondaryRDifference * (Math.abs(percentage) > 1 ? 1 : Math.abs(percentage))))
                     var secondaryG = secondaryCurrG > secondaryPrevG ? Math.round(secondaryCurrG - (secondaryGDifference * (Math.abs(percentage) > 1 ? 1 : Math.abs(percentage)))) : Math.round(secondaryCurrG + (secondaryGDifference * (Math.abs(percentage) > 1 ? 1 : Math.abs(percentage))))
                     var secondaryB = secondaryCurrB > secondaryPrevB ? Math.round(secondaryCurrB - (secondaryBDifference * (Math.abs(percentage) > 1 ? 1 : Math.abs(percentage)))) : Math.round(secondaryCurrB + (secondaryBDifference * (Math.abs(percentage) > 1 ? 1 : Math.abs(percentage))))
-                    
+
                     var secondaryRHex = secondaryR.toString(16).length < 2 ? '0' + secondaryR.toString(16) : secondaryR.toString(16)
                     var secondaryGHex = secondaryG.toString(16).length < 2 ? '0' + secondaryG.toString(16) : secondaryG.toString(16)
                     var secondaryBHex = secondaryB.toString(16).length < 2 ? '0' + secondaryB.toString(16) : secondaryB.toString(16)
@@ -208,24 +341,17 @@ class DonationsLeaderBoard extends Component {
                     secondaryColorHex = `#${secondaryRHex}${secondaryGHex}${secondaryBHex}`
 
                 }
-                console.log(primaryColorHex)
-                console.log(secondaryColorHex)
 
                 this.setState({ primaryColor: primaryColorHex, secondaryColor: secondaryColorHex })
             },
             useNativeDriver: false
         }
-        )(scrollEvent)
-        this.setState({ activePrizeIndex: Math.round(scrollEvent.nativeEvent.contentOffset.x / widthPercentageToPx(95)) })
+        )(scrollEvent);
 
-    };
-
-    handleEndMomentum = (endMomentumEvent) => {
-        console.log('momentum end')
-        this.setState({
-            lastIndex: Math.round(endMomentumEvent.nativeEvent.contentOffset.x / widthPercentageToPx(95)),
-        })
+        this.setState({ activePrizeIndex: Math.round(scrollEvent.nativeEvent.contentOffset.x / widthPercentageToPx(95)) });
     }
+
+    handleEndMomentum = (endMomentumEvent) => this.setState({ lastIndex: Math.round(endMomentumEvent.nativeEvent.contentOffset.x / widthPercentageToPx(95)) })
 
     render() {
         return (
@@ -241,15 +367,13 @@ class DonationsLeaderBoard extends Component {
                                 this.state.secondaryColor
                             ]}
                             style={styles.prizesContainer}>
-                            {!this.props.enableScroll &&
                             <ScrollView
                                 horizontal
                                 showsHorizontalScrollIndicator={false}
                                 pagingEnabled
                                 onScroll={this.handleScroll}
                                 onMomentumScrollEnd={this.handleEndMomentum}
-                                scrollEventThrottle={1}
-                                >
+                                scrollEventThrottle={10}>
                                 {this.state.leaderBoardPrizes.map((prize) => (
                                     <ImageBackground
                                         source={{ uri: prize.backgroundImage }}
@@ -263,7 +387,6 @@ class DonationsLeaderBoard extends Component {
                                     </ImageBackground>
                                 ))}
                             </ScrollView>
-                            }
                             <View style={styles.prizesCounterContainer}>
                                 {Object.keys(this.state.leaderBoardPrizes).map((prizeKey, index) => (
                                     <View style={this.state.activePrizeIndex === index ? styles.prizeIndexActive : styles.prizeIndex} />
@@ -272,14 +395,32 @@ class DonationsLeaderBoard extends Component {
                         </AnimatedLinearGradient>
                     </View>
                 }
-                <FlatList
-                    scrollEnabled={this.props.enableScroll}
-                    style={styles.leaderBoardContainer}
-                    data={this.state.leaderBoard}
-                    renderItem={({ item, index }) => <LeaderRow item={item} index={index} />}
-                    ListHeaderComponent={() => <View style={styles.headerComponent} />}
-                    ItemSeparatorComponent={() => <View style={styles.separatorComponent} />}
-                    ListFooterComponent={() => <View style={styles.footerComponent} />} />
+                {this.state.leaderBoard &&
+                    <TopLeaders topLeaders={this.state.topLeaders} />
+                }
+                <View style={{ flex: 1 }}>
+                    <FlatList
+                        scrollEnabled={this.props.enableScroll}
+                        style={styles.leaderBoardContainer}
+                        data={this.state.leaderBoard}
+                        renderItem={({ item, index }) => <LeaderRow item={item} index={index} />}
+                        ListHeaderComponent={() => <View style={styles.headerComponent} />}
+                        ItemSeparatorComponent={() => <View style={styles.separatorComponent} />}
+                        ListFooterComponent={() => <View style={styles.footerComponent} />} />
+                </View>
+                <View style={styles.userLeaderBoardPositionContainer}>
+                    <View style={styles.dataContainer}>
+                        <Image
+                            source={{ uri: this.state.userLeaderBoardData.profileImage }}
+                            style={styles.leaderProfileImage} />
+                        <QaplaText style={styles.userLeaderName} multiline numberOfLines={1}>
+                            {this.state.userLeaderBoardData.userName}
+                        </QaplaText>
+                    </View>
+                    <QaplaText style={styles.userLeaderDonations}>
+                        {this.state.userLeaderBoardData.totalDonations}xp
+                    </QaplaText>
+                </View>
             </>
         );
     }
@@ -287,6 +428,7 @@ class DonationsLeaderBoard extends Component {
 
 function mapStateToProps(state) {
     return {
+        uid: state.userReducer.user.id,
         enableScroll: state.profileLeaderBoardReducer.enableScroll
     }
 }

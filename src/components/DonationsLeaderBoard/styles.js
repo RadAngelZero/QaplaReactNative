@@ -63,9 +63,6 @@ export default styles = StyleSheet.create({
     leaderBoardContainer: {
         backgroundColor: Colors.backgroundColor
     },
-    leaderHeaderComponent: {
-        marginTop: 6
-    },
     separatorComponent: {
         marginTop: 6
     },

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, ScrollView, ImageBackground, FlatList, Animated } from 'react-native';
+import { View, Image, ScrollView, ImageBackground, FlatList, Animated, Platform } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
@@ -8,7 +8,6 @@ import QaplaText from '../QaplaText/QaplaText';
 import { getUserProfileImgUrl } from '../../services/storage';
 import styles from './styles';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import Colors from '../../utilities/Colors';
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
@@ -64,7 +63,7 @@ class TopLeaders extends Component {
                         <View style={styles.secondPlaceContainer}>
                             <View>
                                 <Image
-                                    source={{ uri: this.state.topLeadersImages[1] }}
+                                    source={this.state.topLeadersImages[1] ? { uri: this.state.topLeadersImages[1] } : null}
                                     style={styles.secondAndThirdPlaceImage} />
                                 <TopLeaderChip primaryColor={'#7D7D7D'} secondaryColor={'#E9E9E9'}>
                                     2º
@@ -82,7 +81,7 @@ class TopLeaders extends Component {
                         <View style={styles.firstPlaceContainer}>
                             <View>
                                 <Image
-                                    source={{ uri: this.state.topLeadersImages[0] }}
+                                    source={this.state.topLeadersImages[0] ? { uri: this.state.topLeadersImages[0] } : null}
                                     style={styles.firstPlaceImage} />
                                 <TopLeaderChip primaryColor={'#FF9A35'} secondaryColor={'#FFD632'}>
                                     1º
@@ -100,7 +99,7 @@ class TopLeaders extends Component {
                         <View style={styles.thirdPlaceContainer}>
                             <View>
                                 <Image
-                                    source={{ uri: this.state.topLeadersImages[2] }}
+                                    source={this.state.topLeadersImages[2] ? { uri: this.state.topLeadersImages[2] } : null}
                                     style={styles.secondAndThirdPlaceImage} />
                                 <TopLeaderChip primaryColor={'#C54D01'} secondaryColor={'#D1A704'}>
                                     3º
@@ -142,12 +141,18 @@ class LeaderRow extends Component {
         return (
             <View style={styles.leaderRowContainer}>
                 <View style={styles.ledarDataContainer}>
-                    <QaplaText style={styles.leaderPlace}>
-                        {this.props.index + 4}
-                    </QaplaText>
+                    {Platform.OS !== 'android' ?
+                        <QaplaText style={styles.leaderPlace}>
+                            {(this.props.length - this.props.index) + 3}
+                        </QaplaText>
+                        :
+                        <QaplaText style={styles.leaderPlace}>
+                            {this.props.index + 4}
+                        </QaplaText>
+                    }
                     <Image
                         style={styles.leaderProfileImage}
-                        source={{ uri: this.state.profileImage }} />
+                        source={this.state.profileImage ? { uri: this.state.profileImage } : null} />
                     <QaplaText style={styles.userName} multiline numberOfLines={1}>
                         {this.props.item.userName}
                     </QaplaText>
@@ -163,6 +168,7 @@ class LeaderRow extends Component {
 };
 
 class DonationsLeaderBoard extends Component {
+    onEndReachedCalledDuringMomentum = true;
     state = {
         userLeaderBoardData: {},
         topLeaders: [],
@@ -195,9 +201,11 @@ class DonationsLeaderBoard extends Component {
 
         if (userLeaderBoardData.exists()) {
             this.setState({ userLeaderBoardData: userLeaderBoardData.val() });
+        } else {
+            this.setState({ userLeaderBoardData: { userName: this.props.userName, totalDonations: 0 } });
         }
 
-        const leaderBoardSnap = await getDonationsLeaderBoard();
+        const leaderBoardSnap = await getDonationsLeaderBoard(10);
 
         if (leaderBoardSnap.exists()) {
             const leaderBoardArray = Object.keys(leaderBoardSnap.val())
@@ -221,7 +229,13 @@ class DonationsLeaderBoard extends Component {
             leaderBoardArray.shift();
             leaderBoardArray.shift();
 
-            this.setState({ leaderBoard: leaderBoardArray });
+            this.setState({ leaderBoard: Platform.OS !== 'android' ? leaderBoardArray.reverse() : leaderBoardArray }, () => {
+                if (Platform.OS !== 'android') {
+                    setTimeout(() => {
+                        this.flatListRef.scrollToEnd();
+                    }, 750);
+                }
+            });
         }
     }
 
@@ -353,6 +367,38 @@ class DonationsLeaderBoard extends Component {
 
     handleEndMomentum = (endMomentumEvent) => this.setState({ lastIndex: Math.round(endMomentumEvent.nativeEvent.contentOffset.x / widthPercentageToPx(95)) })
 
+    loadMoreLeaders = async () => {
+        if (!this.onEndReachedCalledDuringMomentum) {
+            const leaderBoardSnap = await getDonationsLeaderBoard(this.state.leaderBoard.length + 10);
+
+            if (leaderBoardSnap.exists()) {
+                const leaderBoardArray = Object.keys(leaderBoardSnap.val())
+                .sort((a, b) => leaderBoardSnap.val()[b].totalDonations - leaderBoardSnap.val()[a].totalDonations)
+                .map((uid) => {
+                    const leader = leaderBoardSnap.val()[uid];
+                    leader.uid = uid;
+
+                    return leader;
+                });
+
+                this.setState({
+                    topLeaders: [
+                        leaderBoardArray[0] ? leaderBoardArray[0] : null,
+                        leaderBoardArray[1] ? leaderBoardArray[1] : null,
+                        leaderBoardArray[2] ? leaderBoardArray[2] : null,
+                    ]
+                });
+
+                leaderBoardArray.shift();
+                leaderBoardArray.shift();
+                leaderBoardArray.shift();
+
+                this.setState({ leaderBoard: Platform.OS !== 'android' ? leaderBoardArray.reverse() : leaderBoardArray });
+            }
+            this.onEndReachedCalledDuringMomentum = true;
+        }
+    }
+
     render() {
         return (
             <>
@@ -400,18 +446,23 @@ class DonationsLeaderBoard extends Component {
                 }
                 <View style={{ flex: 1 }}>
                     <FlatList
+                        ref={(flatList) => this.flatListRef = flatList}
+                        nestedScrollEnabled
+                        inverted={Platform.OS !== 'android'}
                         scrollEnabled={this.props.enableScroll}
                         style={styles.leaderBoardContainer}
                         data={this.state.leaderBoard}
-                        renderItem={({ item, index }) => <LeaderRow item={item} index={index} />}
-                        ListHeaderComponent={() => <View style={styles.headerComponent} />}
-                        ItemSeparatorComponent={() => <View style={styles.separatorComponent} />}
-                        ListFooterComponent={() => <View style={styles.footerComponent} />} />
+                        keyExtractor={(item) => `leader-${item.uid}`}
+                        onEndReached={this.loadMoreLeaders}
+                        onEndReachedThreshold={.5}
+                        onScroll={() => this.onEndReachedCalledDuringMomentum = false}
+                        renderItem={({ item, index }) => <LeaderRow length={this.state.leaderBoard.length} item={item} index={index} />}
+                        ItemSeparatorComponent={() => <View style={styles.separatorComponent} />} />
                 </View>
                 <View style={styles.userLeaderBoardPositionContainer}>
                     <View style={styles.dataContainer}>
                         <Image
-                            source={{ uri: this.state.userLeaderBoardData.profileImage }}
+                            source={this.state.userLeaderBoardData.profileImage ? { uri: this.state.userLeaderBoardData.profileImage } : null}
                             style={styles.leaderProfileImage} />
                         <QaplaText style={styles.userLeaderName} multiline numberOfLines={1}>
                             {this.state.userLeaderBoardData.userName}
@@ -429,6 +480,7 @@ class DonationsLeaderBoard extends Component {
 function mapStateToProps(state) {
     return {
         uid: state.userReducer.user.id,
+        userName: state.userReducer.user.userName,
         enableScroll: state.profileLeaderBoardReducer.enableScroll
     }
 }

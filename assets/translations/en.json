@@ -134,7 +134,8 @@
         }
     },
     "newUserProfileScreen": {
-        "level": "Level"
+        "level": "Level",
+        "bitsAndStars": "Bits/Stars"
     },
     "notificationsScreen":{
         "notificationsHeader": "Notifications",

@@ -3,14 +3,13 @@ import { SafeAreaView, ScrollView, View, Image, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import BottomSheet from 'reanimated-bottom-sheet';
 
 import styles from './style';
 import images from '../../../assets/images';
 
 import AnimatedCircleIndicator from '../../components/AnimatedCircleIndicator/AnimatedCircleIndicator';
 
-import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
+import { recordScreenOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
 
 import { translate } from '../../utilities/i18';
@@ -114,9 +113,13 @@ export class NewUserProfileScreen extends Component {
      * Begins the process of redeem qaploins
      */
     exchangeQaploins = async () => {
-        const exchangeUrl = await getDonationFormUrl();
-        if (exchangeUrl) {
-            this.props.navigation.navigate('ExchangeQoinsScreen', { exchangeUrl });
+        if (this.state.bitsToDonate >0) {
+            let exchangeUrl = await getDonationFormUrl();
+            if (exchangeUrl) {
+                exchangeUrl += `#uid=${this.props.uid}&qoins=${this.state.bitsToDonate / this.state.donationCost}`;
+
+                this.props.navigation.navigate('ExchangeQoinsScreen', { exchangeUrl });
+            }
         }
     }
 
@@ -158,7 +161,9 @@ export class NewUserProfileScreen extends Component {
 
         return (
             <SafeAreaView style={styles.profileView} onLayout={this.saveToolBarMaxHeight}>
-                <RewardsBottomSheet rewards={this.props.rewards}>
+                <RewardsBottomSheet
+                    rewards={this.props.rewards}
+                    hide={this.props.enableScroll}>
                     <ScrollView
                         ref={(scrollView) => this.scrollView = scrollView}
                         onScrollEndDrag={this.scrollCollapsable}>
@@ -183,7 +188,7 @@ export class NewUserProfileScreen extends Component {
                                             {this.state.bitsToDonate}
                                         </QaplaText>
                                         <QaplaText style={styles.bitsTitle}>
-                                            Bits/Estrellas
+                                            {translate('newUserProfileScreen.bitsAndStars')}
                                         </QaplaText>
                                     </View>
                                     <View style={styles.handleDonationContainer}>
@@ -221,7 +226,7 @@ export class NewUserProfileScreen extends Component {
                                     descriptionComponent={() => (
                                         <View style={styles.expTextContainer}>
                                             <QaplaText style={styles.expText}>
-                                                Level {userLevel}
+                                                {`${translate('newUserProfileScreen.level')} ${userLevel}`}
                                             </QaplaText>
                                         </View>
                                     )} />
@@ -245,10 +250,12 @@ function mapStateToProps(state) {
      */
     if (Object.keys(state.userReducer.user).length > 0) {
         return {
+            uid: state.userReducer.user.id,
             userQoins: state.userReducer.user.credits,
             userImage: state.userReducer.user.photoUrl,
             experience: state.userReducer.user.qaplaExperience || 0,
-            rewards: state.userReducer.user.UserRewards
+            rewards: state.userReducer.user.UserRewards,
+            enableScroll: state.profileLeaderBoardReducer.enableScroll
         }
     }
 

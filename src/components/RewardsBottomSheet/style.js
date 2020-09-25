@@ -20,16 +20,12 @@ export default styles = StyleSheet.create({
     openIcon: {
         backgroundColor: '#858EF3',
         borderRadius: 20,
-        width: widthPercentageToPx(25),
-        height: 10,
         alignSelf: 'flex-end',
         transform: [{ rotate: '180deg'}]
     },
     closeIcon: {
         backgroundColor: '#858EF3',
         borderRadius: 20,
-        width: widthPercentageToPx(25),
-        height: 10,
         alignSelf: 'flex-end'
     },
     rewardsInfoContainer: {
@@ -57,11 +53,11 @@ export default styles = StyleSheet.create({
         marginLeft: 5
     },
     progress: {
-        marginTop: 12
+        marginTop: 10
     },
     lifesContainer: {
         flexDirection: 'row',
-        marginTop: 12
+        marginTop: 8
     },
     currentPoints: {
         color: '#FFF',

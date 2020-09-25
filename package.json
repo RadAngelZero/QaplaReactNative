@@ -18,7 +18,7 @@
     "@react-native-community/netinfo": "^5.3.3",
     "@segment/analytics-react-native": "^1.1.0-beta.2",
     "i18n-js": "^3.5.1",
-    "react": "16.9.0",
+    "react": "^16.9.0",
     "react-lifecycles-compat": "^3.0.4",
     "react-native": "^0.62.2",
     "react-native-camera": "3.5.0",

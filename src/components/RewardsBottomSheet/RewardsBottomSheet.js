@@ -19,6 +19,16 @@ class RewardsBottomSheet extends Component {
         open: false
     };
 
+    componentDidUpdate(prevProps) {
+        if (this.props.hide !== prevProps.hide) {
+            if (this.props.hide) {
+                this.sheetRef.snapTo(2);
+            } else {
+                this.sheetRef.snapTo(0);
+            }
+        }
+    }
+
     toggleBottomSheet = () => {
         if (!this.state.open) {
             this.sheetRef.snapTo(1);
@@ -146,7 +156,7 @@ class RewardsBottomSheet extends Component {
                     onOpenEnd={this.toggleOpen}
                     onCloseEnd={this.toggleOpen}
                     ref={(ref) => this.sheetRef = ref}
-                    snapPoints={[SHEET_MIN_HEIGHT, SHEET_MAX_HEIGHT]}
+                    snapPoints={[SHEET_MIN_HEIGHT, SHEET_MAX_HEIGHT, 0]}
                     borderRadius={20}
                     callbackNode={this.fall}
                     renderContent={this.renderContent} />

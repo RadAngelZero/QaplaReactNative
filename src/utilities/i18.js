@@ -3,7 +3,7 @@ import { NativeModules, Platform } from 'react-native';
 import es from './../../assets/translations/es.json';
 import en from './../../assets/translations/en.json';
 
-i18n.defaultLocale = 'es';
+i18n.defaultLocale = 'en';
 
 /**
  * According to the operative system, we take the local user language, after that we make a substring with the first two characters

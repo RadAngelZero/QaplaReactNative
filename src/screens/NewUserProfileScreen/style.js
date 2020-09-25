@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim'
 import Colors from '../../utilities/Colors'
+import { HEADER_SIZE } from '../../utilities/Constants'
 
 export default styles = StyleSheet.create({
 	profileView: {
@@ -66,7 +67,7 @@ export default styles = StyleSheet.create({
 		marginRight: 12
 	},
 	updateDonationIcon: {
-		marginTop: 8
+		marginTop: 12
 	},
 	buttonView: {
 		backgroundColor: 'rgb(108, 122, 229)',

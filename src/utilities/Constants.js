@@ -29,6 +29,9 @@ export const SET_SERVER_TIME_OFFSET = 'SET_SERVER_TIME_OFFSET';
 export const SET_CURRENT_SCREEN_ID = 'SET_CURRENT_SCREEN_ID';
 export const SET_PREVIOUS_SCREEN_ID = 'SET_PREVIOUS_SCREEN_ID';
 
+// Profile Leader Board REDUX constants
+export const SET_ENABLE_SCROLL = 'SET_ENABLE_SCROLL';
+
 // Crear Reta Button in PublicMatchesFeedScreen.js
 export const HIGHLIGHT_1_CREATE_MATCH = 'HIGHLIGHT_1_CREATE_MATCH';
 // Crear Reta Button in PublicMatchesFeedScreen.js Flag

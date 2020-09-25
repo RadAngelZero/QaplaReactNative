@@ -12,6 +12,7 @@ import ProgressBar from '../UserProfileRewards/Bar';
 import Colors from '../../utilities/Colors';
 import { getQaplaStoreCheaperProduct } from '../../services/database';
 import remoteConfig from '../../services/remoteConfig';
+import { translate } from '../../utilities/i18';
 
 class RewardsBottomSheet extends Component {
     fall = new Animated.Value(1);
@@ -35,6 +36,7 @@ class RewardsBottomSheet extends Component {
         } else {
             this.sheetRef.snapTo(0);
         }
+        this.toggleOpen();
     }
 
     toggleOpen = () => {
@@ -138,7 +140,7 @@ class RewardsBottomSheet extends Component {
                         style={styles.redeemButtonContainer}
                         onPress={this.redeemLifes}>
                         <QaplaText style={styles.redeemButtonText}>
-                            Redeem Prize
+                            {translate('newUserProfileScreen.redeemPrize')}
                         </QaplaText>
                     </TouchableOpacity>
                 </View>

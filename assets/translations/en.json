@@ -135,7 +135,8 @@
     },
     "newUserProfileScreen": {
         "level": "Level",
-        "bitsAndStars": "Bits/Stars"
+        "bitsAndStars": "Bits/Stars",
+        "redeemPrize": "Redeem Prize"
     },
     "notificationsScreen":{
         "notificationsHeader": "Notifications",

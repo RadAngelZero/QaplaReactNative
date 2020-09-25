@@ -369,33 +369,35 @@ class DonationsLeaderBoard extends Component {
 
     loadMoreLeaders = async () => {
         if (!this.onEndReachedCalledDuringMomentum) {
-            const leaderBoardSnap = await getDonationsLeaderBoard(this.state.leaderBoard.length + 10);
+            if (this.state.leaderBoard.length < 97) {
+                    const leaderBoardSnap = await getDonationsLeaderBoard(this.state.leaderBoard.length + 10);
 
-            if (leaderBoardSnap.exists()) {
-                const leaderBoardArray = Object.keys(leaderBoardSnap.val())
-                .sort((a, b) => leaderBoardSnap.val()[b].totalDonations - leaderBoardSnap.val()[a].totalDonations)
-                .map((uid) => {
-                    const leader = leaderBoardSnap.val()[uid];
-                    leader.uid = uid;
+                if (leaderBoardSnap.exists()) {
+                    const leaderBoardArray = Object.keys(leaderBoardSnap.val())
+                    .sort((a, b) => leaderBoardSnap.val()[b].totalDonations - leaderBoardSnap.val()[a].totalDonations)
+                    .map((uid) => {
+                        const leader = leaderBoardSnap.val()[uid];
+                        leader.uid = uid;
 
-                    return leader;
-                });
+                        return leader;
+                    });
 
-                this.setState({
-                    topLeaders: [
-                        leaderBoardArray[0] ? leaderBoardArray[0] : null,
-                        leaderBoardArray[1] ? leaderBoardArray[1] : null,
-                        leaderBoardArray[2] ? leaderBoardArray[2] : null,
-                    ]
-                });
+                    this.setState({
+                        topLeaders: [
+                            leaderBoardArray[0] ? leaderBoardArray[0] : null,
+                            leaderBoardArray[1] ? leaderBoardArray[1] : null,
+                            leaderBoardArray[2] ? leaderBoardArray[2] : null,
+                        ]
+                    });
 
-                leaderBoardArray.shift();
-                leaderBoardArray.shift();
-                leaderBoardArray.shift();
+                    leaderBoardArray.shift();
+                    leaderBoardArray.shift();
+                    leaderBoardArray.shift();
 
-                this.setState({ leaderBoard: Platform.OS !== 'android' ? leaderBoardArray.reverse() : leaderBoardArray });
+                    this.setState({ leaderBoard: Platform.OS !== 'android' ? leaderBoardArray.reverse() : leaderBoardArray });
+                }
+                this.onEndReachedCalledDuringMomentum = true;
             }
-            this.onEndReachedCalledDuringMomentum = true;
         }
     }
 

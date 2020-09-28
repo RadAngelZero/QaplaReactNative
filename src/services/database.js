@@ -1247,7 +1247,7 @@ export async function getDonationQoinsBase() {
 /**
  * Get the first X number of users in the leader board
  */
-export async function getDonationsLeaderBoard(numberOfUsers = 100) {
+export async function getDonationsLeaderBoard(numberOfUsers) {
     return await DonationsLeaderBoardRef.orderByChild('totalDonations').limitToLast(numberOfUsers).once('value');
 }
 

@@ -7,7 +7,7 @@ import { getDonationsLeaderBoard, getLeaderBoardPrizes, getUserDonationLeaderBoa
 import QaplaText from '../QaplaText/QaplaText';
 import { getUserProfileImgUrl } from '../../services/storage';
 import styles from './styles';
-import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
@@ -167,6 +167,8 @@ class LeaderRow extends Component {
     }
 };
 
+const leaderBoardPrizesCardHeight = heightPercentageToPx(100) / (heightPercentageToPx(100) > 850 ? 6 : 5);
+
 class DonationsLeaderBoard extends Component {
     onEndReachedCalledDuringMomentum = true;
     state = {
@@ -180,8 +182,7 @@ class DonationsLeaderBoard extends Component {
         secondaryColor: 0,
         baseWidth: widthPercentageToPx(95),
         lastIndex: 0,
-        leaderBoardPrizesOpacity: new Animated.Value(1),
-        leaderBoardPrizesScale: new Animated.Value(1)
+        leaderBoardPrizesHeight: new Animated.Value(leaderBoardPrizesCardHeight)
     };
 
     componentDidMount() {
@@ -190,19 +191,12 @@ class DonationsLeaderBoard extends Component {
         this.getUserImage();
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        console.log(this.props.enableScroll)
+    componentDidUpdate(prevProps) {
         if(this.props.enableScroll != prevProps.enableScroll) {
-           Animated.parallel([
-            Animated.timing(this.state.leaderBoardPrizesOpacity, {
-                toValue: this.props.enableScroll ? 0 : 1,
-                duration: 500
-            }),
-            Animated.timing(this.state.leaderBoardPrizesScale, {
-                toValue: this.props.enableScroll ? 0 : 100,
-                duration: 500
-            })
-           ]).start()
+            Animated.timing(this.state.leaderBoardPrizesHeight, {
+                toValue: this.props.enableScroll ? 0 : leaderBoardPrizesCardHeight,
+                duration: 375
+            }).start();
         }
     }
 
@@ -253,7 +247,7 @@ class DonationsLeaderBoard extends Component {
                         if (this.flatListRef) {
                             this.flatListRef.scrollToEnd();
                         }
-                    }, 2000);
+                    }, 750);
                 }
             });
         }
@@ -425,7 +419,7 @@ class DonationsLeaderBoard extends Component {
         return (
             <>
                 {this.state.leaderBoardPrizes &&
-                    <Animated.View style={[styles.prizesCard, {opacity: this.state.leaderBoardPrizesOpacity}]}>
+                    <Animated.View style={[styles.prizesCard, { height: this.state.leaderBoardPrizesHeight }]}>
                         <AnimatedLinearGradient
                             useAngle={true}
                             angle={150}

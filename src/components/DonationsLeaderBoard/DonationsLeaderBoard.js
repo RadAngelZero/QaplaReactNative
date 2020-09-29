@@ -179,13 +179,31 @@ class DonationsLeaderBoard extends Component {
         primaryColor: 0,
         secondaryColor: 0,
         baseWidth: widthPercentageToPx(95),
-        lastIndex: 0
+        lastIndex: 0,
+        leaderBoardPrizesOpacity: new Animated.Value(1),
+        leaderBoardPrizesScale: new Animated.Value(1)
     };
 
     componentDidMount() {
         this.loadLeaderBoard();
         this.getPrizes();
         this.getUserImage();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log(this.props.enableScroll)
+        if(this.props.enableScroll != prevProps.enableScroll) {
+           Animated.parallel([
+            Animated.timing(this.state.leaderBoardPrizesOpacity, {
+                toValue: this.props.enableScroll ? 0 : 1,
+                duration: 500
+            }),
+            Animated.timing(this.state.leaderBoardPrizesScale, {
+                toValue: this.props.enableScroll ? 0 : 100,
+                duration: 500
+            })
+           ]).start()
+        }
     }
 
     getUserImage = async () => {
@@ -405,7 +423,7 @@ class DonationsLeaderBoard extends Component {
         return (
             <>
                 {this.state.leaderBoardPrizes &&
-                    <View style={styles.prizesCard}>
+                    <Animated.View style={[styles.prizesCard, {opacity: this.state.leaderBoardPrizesOpacity}]}>
                         <AnimatedLinearGradient
                             useAngle={true}
                             angle={150}
@@ -441,7 +459,7 @@ class DonationsLeaderBoard extends Component {
                                 ))}
                             </View>
                         </AnimatedLinearGradient>
-                    </View>
+                    </Animated.View>
                 }
                 {this.state.leaderBoard &&
                     <TopLeaders topLeaders={this.state.topLeaders} />

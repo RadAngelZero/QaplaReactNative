@@ -250,8 +250,10 @@ class DonationsLeaderBoard extends Component {
             this.setState({ leaderBoard: Platform.OS !== 'android' ? leaderBoardArray.reverse() : leaderBoardArray }, () => {
                 if (Platform.OS !== 'android') {
                     setTimeout(() => {
-                        this.flatListRef.scrollToEnd();
-                    }, 750);
+                        if (this.flatListRef) {
+                            this.flatListRef.scrollToEnd();
+                        }
+                    }, 2000);
                 }
             });
         }

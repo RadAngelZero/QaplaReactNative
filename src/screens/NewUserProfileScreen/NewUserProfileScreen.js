@@ -140,21 +140,23 @@ export class NewUserProfileScreen extends Component {
 
     scrollCollapsable = ({ nativeEvent }) => {
         if (this.state.isLeaderBoardCollapsed) {
-            if (nativeEvent.contentOffset.y > this.state.previousScrollPosition + 50) {
+            if (nativeEvent.contentOffset.y <= 50) {
+                this.scrollView.scrollTo({ y: 0 });
+            } else {
                 this.scrollView.scrollToEnd({ animated: true });
                 this.props.enableLeaderBoardScroll(true);
-            } else {
-                this.scrollView.scrollTo(0);
+                this.setState({ isLeaderBoardCollapsed: false });
             }
         } else {
-            this.scrollView.scrollTo(0);
-            this.props.enableLeaderBoardScroll(false);
-            if (nativeEvent.contentOffset.y < this.state.previousScrollPosition - 50) {
-                this.setState({ previousScrollPosition: nativeEvent.contentOffset.y });
+            if (nativeEvent.contentOffset.y < this.state.previousScrollPosition + 50) {
+                this.scrollView.scrollTo({ y: 0 });
+                this.props.enableLeaderBoardScroll(false);
+                this.setState({ previousScrollPosition: nativeEvent.contentOffset.y, isLeaderBoardCollapsed: true });
             }
         }
-        this.setState({ isLeaderBoardCollapsed: !this.state.isLeaderBoardCollapsed });
     }
+
+    setLastScrollPosition = ({ nativeEvent }) => this.setState({ previousScrollPosition: nativeEvent.contentOffset.y });
 
     render() {
         const userLevel = Math.floor(this.props.experience / 100);
@@ -166,7 +168,8 @@ export class NewUserProfileScreen extends Component {
                     hide={this.props.enableScroll}>
                     <ScrollView
                         ref={(scrollView) => this.scrollView = scrollView}
-                        onScrollEndDrag={this.scrollCollapsable}>
+                        onScrollEndDrag={this.scrollCollapsable}
+                        onScroll={this.setLastScrollPosition}>
                         <Animated.View style={{ flex: 1 }}>
                         <View style={styles.qoinsView}>
                             <Image

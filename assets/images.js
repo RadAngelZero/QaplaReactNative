@@ -52,6 +52,7 @@ import DonatedBitIcon from './icons/donatedBitIcon.svg';
 import QaplaLogo from './icons/QaplaLogo.svg';
 import PlusBubble from './icons/plusBubble.svg';
 import MinusBubble from './icons/minusBubble.svg';
+import Community3DIcon from './icons/Community3DIcon.svg';
 
 // Images
 
@@ -223,7 +224,8 @@ const images = {
 		donatedBitIcon: DonatedBitIcon,
 		qaplalogoIcon: QaplaLogo,
 		plusBubble: PlusBubble,
-		minusBubble: MinusBubble
+		minusBubble: MinusBubble,
+		community3DIcon: Community3DIcon
 	}
 };
 

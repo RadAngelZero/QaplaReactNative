@@ -40,7 +40,7 @@
         "bottomNavigators": {
             "mainNavigator": {
                 "events": "Events",
-                "matches": "Matches",
+                "community": "Community",
                 "profile": "Profile"
             }
         }
@@ -306,6 +306,12 @@
     },
     "LogrosActivosScreen": {
         "featuredEvent": "Featured"
+    },
+    "CommunityScreen": {
+        "comingSoon": "Coming Soon!",
+        "description": "A better way to engage with your community is coming.",
+        "feedbackRequest": "We want your feedback!\nLet us know what you’d like to get from this section :D",
+        "answerSurvery": "Answer Quick Survey"
     },
     "headerBar": {
         "highlightModal": {

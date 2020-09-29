@@ -40,7 +40,7 @@
         "bottomNavigators": {
             "mainNavigator": {
                 "events": "Eventos",
-                "matches": "Partidas",
+                "community": "Comunidad",
                 "profile": "Perfil"
             }
         }
@@ -306,6 +306,12 @@
     },
     "LogrosActivosScreen": {
         "featuredEvent": "Destacado"
+    },
+    "CommunityScreen": {
+        "comingSoon": "¡Proximamente!",
+        "description": "Una mejor manera de interactuar con tu comunidad.",
+        "feedbackRequest": "¡Queremos tus comentarios!\nHaznos saber lo que te gustaría obtener de esta sección :D",
+        "answerSurvery": "Responder encuesta rápida"
     },
     "headerBar": {
         "highlightModal": {

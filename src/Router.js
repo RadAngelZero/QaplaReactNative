@@ -45,6 +45,7 @@ import NotificationsSettingsScreen from './screens/NotificationsSettingsScreen/N
 import TodayTournamentsScreen from './screens/TodayTournamentsScreen/TodayTournamentsScreen';
 import QaplaText from './components/QaplaText/QaplaText';
 import ChatHeader from './components/Chat/ChatHeader/ChatHeader';
+import CommunityScreen from './screens/CommunityScreen/CommunityScreen';
 
 //#region Stack Navigators
 
@@ -288,7 +289,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
     },
   },
   Matches: {
-    screen: MatchesTopTabNavigator,
+    screen: CommunityScreen,
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
@@ -311,7 +312,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
       ),
       tabBarLabel: ({ tintColor, focused }) => (
         <QaplaText style={{ color: tintColor, fontSize: 12, marginBottom: 8 }}>
-          {translate('router.bottomNavigators.mainNavigator.matches')}
+          {translate('router.bottomNavigators.mainNavigator.community')}
         </QaplaText>
       ),
     }

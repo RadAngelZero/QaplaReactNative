@@ -70,7 +70,7 @@ class RewardsBottomSheet extends Component {
                                 <View style={styles.rewardsHeaderContainer}>
                                     <View style={styles.row}>
                                         <QaplaText style={styles.rewardsTitle}>
-                                            Reward
+                                            {translate('rewardsBottomSheet.rewards')}
                                         </QaplaText>
                                         <Images.svg.infoIcon style={styles.infoIcon} />
                                     </View>
@@ -95,18 +95,18 @@ class RewardsBottomSheet extends Component {
                         </View>
                         <View style={styles.transactionsContainer}>
                             <QaplaText style={styles.transactionsTitle}>
-                                Transactions
+                                {translate('rewardsBottomSheet.transactions')}
                             </QaplaText>
                             <View style={styles.transactionsSummary}>
                                 <View style={styles.transactionsSummaryDescriptions}>
                                     <QaplaText style={styles.transactionDescription}>
-                                        Donation
+                                        {translate('rewardsBottomSheet.donation')}
                                     </QaplaText>
                                     <QaplaText style={styles.transactionDescription}>
-                                        Donation
+                                        {translate('rewardsBottomSheet.donation')}
                                     </QaplaText>
                                     <QaplaText style={styles.transactionDescription}>
-                                        Reward reedemed
+                                        {translate('rewardsBottomSheet.rewardRedeemed')}
                                     </QaplaText>
                                 </View>
                                 <View style={styles.transactionSummaryValue}>
@@ -140,7 +140,7 @@ class RewardsBottomSheet extends Component {
                         style={styles.redeemButtonContainer}
                         onPress={this.redeemLifes}>
                         <QaplaText style={styles.redeemButtonText}>
-                            {translate('newUserProfileScreen.redeemPrize')}
+                            {translate('rewardsBottomSheet.redeemPrize')}
                         </QaplaText>
                     </TouchableOpacity>
                 </View>

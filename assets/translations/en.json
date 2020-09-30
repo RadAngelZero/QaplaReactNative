@@ -135,8 +135,7 @@
     },
     "newUserProfileScreen": {
         "level": "Level",
-        "bitsAndStars": "Bits/Stars",
-        "redeemPrize": "Redeem Prize"
+        "bitsAndStars": "Bits/Stars"
     },
     "notificationsScreen":{
         "notificationsHeader": "Notifications",
@@ -408,5 +407,12 @@
     "confirmationDialog": {
         "cancelButton": "Cancel",
         "acceptButton": "Continue"
+    },
+    "rewardsBottomSheet": {
+        "rewards": "Rewards",
+        "transactions": "Transactions",
+        "donation": "Donation",
+        "rewardRedeemed": "Reward redeemed",
+        "redeemPrize":"Redeem Prize"
     }
 }

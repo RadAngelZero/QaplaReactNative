@@ -39,9 +39,11 @@ export default styles = StyleSheet.create({
         marginTop: 16,
 		width: widthPercentageToPx(45)
 	},
+	infoImageContainer: {
+		flexDirection: 'row',
+		alignItems: 'center'
+	},
 	infoImage: {
-		width: 24,
-		height: 24,
 		marginLeft: 12,
 		marginTop: 12
 	},

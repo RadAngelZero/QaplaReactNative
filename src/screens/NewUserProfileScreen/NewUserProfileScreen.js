@@ -25,9 +25,9 @@ import DonationsLeaderBoard from '../../components/DonationsLeaderBoard/Donation
 import { setScroll, setUserImage } from '../../actions/profileLeaderBoardActions';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import { defaultUserImages } from '../../utilities/Constants';
+import QaplaTooltip from '../../components/QaplaTooltip/QaplaTooltip';
 
 const BitsIcon = images.svg.bitsIcon;
-const InfoIcon = images.svg.infoIcon;
 
 const DonationsNavigator = createMaterialTopTabNavigator({
     Leaderboard: {
@@ -70,7 +70,11 @@ export class NewUserProfileScreen extends Component {
         collapsableToolBarMaxHeight: heightPercentageToPx(50),
         previousScrollPosition: 0,
         isLeaderBoardCollapsed: true,
-        userImage: { uri: true, img: this.props.userImage }
+        userImage: { uri: true, img: this.props.userImage },
+        openInfoTooltip: false,
+        openRewardsTooltip: false,
+        openedTooltips: 0,
+        indexOfTooltipOpen: -1
     };
 
     componentWillMount() {
@@ -178,6 +182,38 @@ export class NewUserProfileScreen extends Component {
 
     setLastScrollPosition = ({ nativeEvent }) => this.setState({ previousScrollPosition: nativeEvent.contentOffset.y });
 
+    toggleInfoTooltip = () => {
+        if (!this.state.openInfoTooltip) {
+            this.setState({ openedTooltips: this.state.openedTooltips + 1, indexOfTooltipOpen: 0 });
+        }
+
+        this.setState({ openInfoTooltip: !this.state.openInfoTooltip });
+    }
+
+    toggleRewardTooltip = () => {
+        if (!this.state.openRewardsTooltip) {
+            this.setState({ openedTooltips: this.state.openedTooltips + 1, indexOfTooltipOpen: 1 });
+        }
+
+        this.setState({ openRewardsTooltip: !this.state.openRewardsTooltip });
+    }
+
+    tooltipAction = () => {
+        const toggleFunctions = [this.toggleInfoTooltip, this.toggleRewardTooltip];
+        if (this.state.openedTooltips < 2) {
+            if (this.state.indexOfTooltipOpen == 0) {
+                this.toggleInfoTooltip();
+                this.toggleRewardTooltip();
+            } else {
+                this.toggleRewardTooltip();
+                this.toggleInfoTooltip();
+            }
+        } else {
+            toggleFunctions[this.state.indexOfTooltipOpen]();
+            this.setState({ openedTooltips: 0, indexOfTooltipOpen: -1 });
+        }
+    }
+
     render() {
         const userLevel = Math.floor(this.props.experience / 100);
 
@@ -185,7 +221,11 @@ export class NewUserProfileScreen extends Component {
             <SafeAreaView style={styles.profileView} onLayout={this.saveToolBarMaxHeight}>
                 <RewardsBottomSheet
                     rewards={this.props.rewards}
-                    hide={this.props.enableScroll}>
+                    hide={this.props.enableScroll}
+                    openRewardsTooltip={this.state.openRewardsTooltip}
+                    toggleTooltip={this.toggleRewardTooltip}
+                    openedTooltips={this.state.openedTooltips}
+                    tooltipButtonAction={this.tooltipAction}>
                     <ScrollView
                         ref={(scrollView) => this.scrollView = scrollView}
                         onScrollEndDrag={this.scrollCollapsable}
@@ -202,7 +242,15 @@ export class NewUserProfileScreen extends Component {
                         <View style={styles.bitsCardContainer}>
                             <View style={styles.bitsModuleView}>
                                 <View>
-                                    <InfoIcon style={styles.infoImage} />
+                                    <View style={styles.infoImageContainer}>
+                                        <QaplaTooltip
+                                            style={styles.infoImage}
+                                            toggleTooltip={this.toggleInfoTooltip}
+                                            open={this.state.openInfoTooltip}
+                                            content={translate('newUserProfileScreen.bitsTooltip')}
+                                            buttonText={this.state.openedTooltips >= 2 ? translate('newUserProfileScreen.done') : translate('newUserProfileScreen.next')}
+                                            buttonAction={this.tooltipAction} />
+                                    </View>
                                     <BitsIcon style={styles.bits3dIconImage}/>
                                 </View>
                                 <View style={styles.donationValueContainer}>

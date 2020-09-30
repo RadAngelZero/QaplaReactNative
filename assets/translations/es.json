@@ -135,7 +135,10 @@
     },
     "newUserProfileScreen": {
         "level": "Nivel",
-        "bitsAndStars": "Bits/Estrellas"
+        "bitsAndStars": "Bits/Estrellas",
+        "bitsTooltip": "Gana Qoins en los eventos y úsalos para donar al streamer que desees.",
+        "next": "Siguiente",
+        "done": "Listo"
     },
     "notificationsScreen":{
         "notificationsHeader": "Notificaciones",
@@ -413,6 +416,9 @@
         "transactions": "Transacciones",
         "donation": "Donación",
         "rewardRedeemed": "Recompensa redimida",
-        "redeemPrize":"Redimir Premio"
+        "redeemPrize":"Redimir Premio",
+        "rewardsTooltip": "Cada donación que hagas ayudará a llenar tu barra de vida. ¡Llena la barra y obten recompensas!",
+        "next": "Siguiente",
+        "done": "Listo"
     }
 }

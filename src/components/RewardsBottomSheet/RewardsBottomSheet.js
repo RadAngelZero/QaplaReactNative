@@ -13,6 +13,7 @@ import Colors from '../../utilities/Colors';
 import { getQaplaStoreCheaperProduct } from '../../services/database';
 import remoteConfig from '../../services/remoteConfig';
 import { translate } from '../../utilities/i18';
+import QaplaTooltip from '../QaplaTooltip/QaplaTooltip';
 
 class RewardsBottomSheet extends Component {
     fall = new Animated.Value(1);
@@ -35,8 +36,8 @@ class RewardsBottomSheet extends Component {
             this.sheetRef.snapTo(1);
         } else {
             this.sheetRef.snapTo(0);
+            this.setState({ open: false });
         }
-        this.toggleOpen();
     }
 
     toggleOpen = () => {
@@ -49,6 +50,15 @@ class RewardsBottomSheet extends Component {
         if (cheaperProduct.exists() && this.props.rewards.lifes >= cheaperProduct.val()[productIndex].price) {
             Linking.openURL((await remoteConfig.getDataFromKey('Discord')).QAPLA_DISCORD_EXCHANGE_CHANNEL);
         }
+    }
+
+    buttonAction = () => {
+        if (this.state.open) {
+            this.sheetRef.snapTo(0);
+            this.toggleOpen();
+        }
+
+        this.props.tooltipButtonAction();
     }
 
     renderContent = () => {
@@ -72,9 +82,14 @@ class RewardsBottomSheet extends Component {
                                         <QaplaText style={styles.rewardsTitle}>
                                             {translate('rewardsBottomSheet.rewards')}
                                         </QaplaText>
-                                        <Images.svg.infoIcon style={styles.infoIcon} />
+                                        <QaplaTooltip
+                                            style={{ marginLeft: 6 }}
+                                            toggleTooltip={this.props.toggleTooltip}
+                                            open={this.props.openRewardsTooltip}
+                                            content={translate('rewardsBottomSheet.rewardsTooltip')}
+                                            buttonText={this.props.openedTooltips >= 2 ? translate('rewardsBottomSheet.done') : translate('rewardsBottomSheet.next')}
+                                            buttonAction={this.buttonAction} />
                                     </View>
-                                    <Images.svg.lifeIcon height={24} width={24} color='rgba(255, 255, 255, .25)' />
                                 </View>
                                 <View style={styles.progress}>
                                     <ProgressBar

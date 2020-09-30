@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, ScrollView, View, Image, Animated } from 'react-native';
+import { SafeAreaView, ScrollView, View, Image, Animated, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
@@ -16,14 +16,15 @@ import { translate } from '../../utilities/i18';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import { getDonationFormUrl, getDonationsCosts, getDonationQoinsBase } from '../../services/database';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from '../../utilities/Colors';
 import RewardsStore from '../../components/RewardsStore/RewardsStore';
 
 import RewardsBottomSheet from '../../components/RewardsBottomSheet/RewardsBottomSheet';
 import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
 import DonationsLeaderBoard from '../../components/DonationsLeaderBoard/DonationsLeaderBoard';
-import { setScroll } from '../../actions/profileLeaderBoardActions';
+import { setScroll, setUserImage } from '../../actions/profileLeaderBoardActions';
+import { retrieveData, storeData } from '../../utilities/persistance';
+import { defaultUserImages } from '../../utilities/Constants';
 
 const BitsIcon = images.svg.bitsIcon;
 const InfoIcon = images.svg.infoIcon;
@@ -68,7 +69,8 @@ export class NewUserProfileScreen extends Component {
         donationQoinBase: null,
         collapsableToolBarMaxHeight: heightPercentageToPx(50),
         previousScrollPosition: 0,
-        isLeaderBoardCollapsed: true
+        isLeaderBoardCollapsed: true,
+        userImage: { uri: true, img: this.props.userImage }
     };
 
     componentWillMount() {
@@ -91,11 +93,29 @@ export class NewUserProfileScreen extends Component {
 
     componentDidMount() {
         this.setDonationCost();
+        this.setUserDefaultImage();
     }
 
     componentWillUnmount() {
         //Remove willBlur and willFocus listeners on navigation
         this.list.forEach((item) => item.remove());
+    }
+
+    setUserDefaultImage = async () => {
+        if (!this.props.userImage) {
+            let userImageIndex = await retrieveData('default-user-image');
+
+            if (!userImageIndex) {
+                userImageIndex = Math.floor(Math.random() * defaultUserImages.length);
+
+                storeData('default-user-image', `${userImageIndex}`);
+            }
+
+            this.setState({ userImage: { uri: false, img: defaultUserImages[userImageIndex].img } });
+            this.props.setUserImage({ uri: false, img: defaultUserImages[userImageIndex].img });
+        } else {
+            this.props.setUserImage(this.state.userImage);
+        }
     }
 
     setDonationCost = async () => {
@@ -221,7 +241,7 @@ export class NewUserProfileScreen extends Component {
                                         <EditProfileImgBadge style={styles.userImage}>
                                             <Image
                                                 style={styles.userImage}
-                                                source={{ uri: this.props.userImage }} />
+                                                source={this.state.userImage ? this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img : null} />
                                         </EditProfileImgBadge>
                                     )}
                                     backgroundColor='#1F2750'
@@ -276,7 +296,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        enableLeaderBoardScroll: (enableScroll) => setScroll(enableScroll)(dispatch)
+        enableLeaderBoardScroll: (enableScroll) => setScroll(enableScroll)(dispatch),
+        setUserImage: (userImage) => setUserImage(userImage)(dispatch)
     }
 }
 

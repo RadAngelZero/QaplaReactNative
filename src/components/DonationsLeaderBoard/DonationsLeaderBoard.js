@@ -8,6 +8,7 @@ import QaplaText from '../QaplaText/QaplaText';
 import { getUserProfileImgUrl } from '../../services/storage';
 import styles from './styles';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { defaultUserImages } from '../../utilities/Constants';
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
@@ -46,7 +47,10 @@ class TopLeaders extends Component {
 
                 topLeadersImages.push('');
                 if (profileImage) {
-                    topLeadersImages[i] = profileImage;
+                    topLeadersImages[i] = { uri: true, img: profileImage};
+                } else {
+                    userImageIndex = Math.floor(Math.random() * defaultUserImages.length);
+                    topLeadersImages[i] = { uri: false, img: defaultUserImages[userImageIndex].img };
                 }
             }
         }
@@ -63,7 +67,7 @@ class TopLeaders extends Component {
                         <View style={styles.secondPlaceContainer}>
                             <View>
                                 <Image
-                                    source={this.state.topLeadersImages[1] ? { uri: this.state.topLeadersImages[1] } : null}
+                                    source={this.state.topLeadersImages[1] ? this.state.topLeadersImages[1].uri ? { uri: this.state.topLeadersImages[1].img } : this.state.topLeadersImages[1].img : null}
                                     style={styles.secondAndThirdPlaceImage} />
                                 <TopLeaderChip primaryColor={'#7D7D7D'} secondaryColor={'#E9E9E9'}>
                                     2º
@@ -81,7 +85,7 @@ class TopLeaders extends Component {
                         <View style={styles.firstPlaceContainer}>
                             <View>
                                 <Image
-                                    source={this.state.topLeadersImages[0] ? { uri: this.state.topLeadersImages[0] } : null}
+                                    source={this.state.topLeadersImages[0] ? this.state.topLeadersImages[0].uri ? { uri: this.state.topLeadersImages[0].img } : this.state.topLeadersImages[0].img : null}
                                     style={styles.firstPlaceImage} />
                                 <TopLeaderChip primaryColor={'#FF9A35'} secondaryColor={'#FFD632'}>
                                     1º
@@ -99,7 +103,7 @@ class TopLeaders extends Component {
                         <View style={styles.thirdPlaceContainer}>
                             <View>
                                 <Image
-                                    source={this.state.topLeadersImages[2] ? { uri: this.state.topLeadersImages[2] } : null}
+                                    source={this.state.topLeadersImages[2] ? this.state.topLeadersImages[2].uri ? { uri: this.state.topLeadersImages[2].img } : this.state.topLeadersImages[2].img : null}
                                     style={styles.secondAndThirdPlaceImage} />
                                 <TopLeaderChip primaryColor={'#C54D01'} secondaryColor={'#D1A704'}>
                                     3º
@@ -122,7 +126,7 @@ class TopLeaders extends Component {
 
 class LeaderRow extends Component {
     state = {
-        profileImage: ''
+        profileImage: null
     };
 
     componentDidMount() {
@@ -130,17 +134,23 @@ class LeaderRow extends Component {
     }
 
     getUserImage = async () => {
-        const profileImage = await getUserProfileImgUrl(this.props.item.uid);
+        const img = await getUserProfileImgUrl(this.props.item.uid);
+        let profileImage = {};
 
-        if (profileImage) {
-            this.setState({ profileImage });
+        if (img) {
+            profileImage = { uri: true, img };
+        } else {
+            userImageIndex = Math.floor(Math.random() * defaultUserImages.length);
+            profileImage = { uri: false, img: defaultUserImages[userImageIndex].img };
         }
+
+        this.setState({ profileImage });
     }
 
     render() {
         return (
             <View style={styles.leaderRowContainer}>
-                <View style={styles.ledarDataContainer}>
+                <View style={styles.leaderDataContainer}>
                     {Platform.OS !== 'android' ?
                         <QaplaText style={styles.leaderPlace}>
                             {(this.props.length - this.props.index) + 3}
@@ -152,7 +162,7 @@ class LeaderRow extends Component {
                     }
                     <Image
                         style={styles.leaderProfileImage}
-                        source={this.state.profileImage ? { uri: this.state.profileImage } : null} />
+                        source={this.state.profileImage ? this.state.profileImage.uri ? { uri: this.state.profileImage.img } : this.state.profileImage.img : null} />
                     <QaplaText style={styles.userName} multiline numberOfLines={1}>
                         {this.props.item.userName}
                     </QaplaText>
@@ -188,7 +198,6 @@ class DonationsLeaderBoard extends Component {
     componentDidMount() {
         this.loadLeaderBoard();
         this.getPrizes();
-        this.getUserImage();
     }
 
     componentDidUpdate(prevProps) {
@@ -197,14 +206,6 @@ class DonationsLeaderBoard extends Component {
                 toValue: this.props.enableScroll ? 0 : leaderBoardPrizesCardHeight,
                 duration: 375
             }).start();
-        }
-    }
-
-    getUserImage = async () => {
-        const profileImage = await getUserProfileImgUrl(this.props.uid);
-
-        if (profileImage) {
-            this.setState({ userLeaderBoardData: {...this.state.userLeaderBoardData, profileImage} });
         }
     }
 
@@ -478,8 +479,8 @@ class DonationsLeaderBoard extends Component {
                 <View style={styles.userLeaderBoardPositionContainer}>
                     <View style={styles.dataContainer}>
                         <Image
-                            source={this.state.userLeaderBoardData.profileImage ? { uri: this.state.userLeaderBoardData.profileImage } : null}
-                            style={styles.leaderProfileImage} />
+                            style={styles.userLeaderImage}
+                            source={this.props.userImage ? this.props.userImage.uri ? { uri: this.props.userImage.img } : this.props.userImage.img : null} />
                         <QaplaText style={styles.userLeaderName} multiline numberOfLines={1}>
                             {this.state.userLeaderBoardData.userName}
                         </QaplaText>
@@ -497,7 +498,8 @@ function mapStateToProps(state) {
     return {
         uid: state.userReducer.user.id,
         userName: state.userReducer.user.userName,
-        enableScroll: state.profileLeaderBoardReducer.enableScroll
+        enableScroll: state.profileLeaderBoardReducer.enableScroll,
+        userImage: state.profileLeaderBoardReducer.userImage
     }
 }
 

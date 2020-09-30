@@ -68,19 +68,25 @@ export default styles = StyleSheet.create({
     },
     userLeaderBoardPositionContainer: {
         justifyContent: 'space-around',
-        alignItems: 'center',
+        alignContent: 'center',
         flexDirection: 'row',
         marginTop: 24,
         marginBottom: 24,
         marginLeft: 24,
         marginRight: 24,
         backgroundColor: '#FECD2E',
+        padding: 7,
         borderRadius: 9
     },
     dataContainer: {
         flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 7
+        alignItems: 'center'
+    },
+    userLeaderImage: {
+        height: 30,
+        width: 30,
+        borderRadius: 100,
+        marginLeft: 24
     },
     userLeaderName: {
         fontSize: 21,
@@ -156,7 +162,7 @@ export default styles = StyleSheet.create({
         marginLeft: 24,
         marginRight: 24
     },
-    ledarDataContainer: {
+    leaderDataContainer: {
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -164,7 +170,8 @@ export default styles = StyleSheet.create({
         fontSize: 21,
         color: '#FFF',
         letterSpacing: .3,
-        textAlignVertical: 'center'
+        textAlignVertical: 'center',
+        width: widthPercentageToPx(12)
     },
     leaderProfileImage: {
         marginTop: 4,
@@ -177,7 +184,6 @@ export default styles = StyleSheet.create({
     userName: {
         fontSize: 21,
         color: '#FFF',
-        letterSpacing: .3,
         marginLeft: 12,
         width: widthPercentageToPx(40)
     },

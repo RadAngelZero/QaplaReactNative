@@ -1,4 +1,5 @@
 import { heightPercentageToPx } from './iosAndroidDim';
+import images from '../../assets/images';
 
 // Segment key
 export const SEGMENT_KEY = 'fCfir8yrQiZRVrpuwLHYRePN68SqW8AS';
@@ -31,6 +32,7 @@ export const SET_PREVIOUS_SCREEN_ID = 'SET_PREVIOUS_SCREEN_ID';
 
 // Profile Leader Board REDUX constants
 export const SET_ENABLE_SCROLL = 'SET_ENABLE_SCROLL';
+export const SET_USER_IMAGE = 'SET_USER_IMAGE';
 
 // Crear Reta Button in PublicMatchesFeedScreen.js
 export const HIGHLIGHT_1_CREATE_MATCH = 'HIGHLIGHT_1_CREATE_MATCH';
@@ -124,3 +126,13 @@ export const ANDROID_PACKAGE_NAME = 'com.qapla.gaming.app';
 // Bottom Sheets
 export const SHEET_MAX_HEIGHT = heightPercentageToPx(65);
 export const SHEET_MIN_HEIGHT = heightPercentageToPx(15.5);
+
+// Default user images
+export const defaultUserImages = [
+	images.png.profileImagePlaceholder1,
+	images.png.profileImagePlaceholder2,
+	images.png.profileImagePlaceholder3,
+	images.png.profileImagePlaceholder4,
+	images.png.profileImagePlaceholder5,
+	images.png.profileImagePlaceholder6
+];

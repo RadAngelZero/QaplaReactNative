@@ -169,7 +169,31 @@ const images = {
 		},
 		Qoin3D: {
 			img: require('./images/3DQoin.png'),
-			uri: '@assets/images/SAMSHBROS.png'
+			uri: '@assets/images/3DQoin.png'
+		},
+		profileImagePlaceholder1: {
+			img: require('./images/pic-big-eyes.jpg'),
+			uri: '@assets/images/pic-big-eyes.jpg'
+		},
+		profileImagePlaceholder2: {
+			img: require('./images/pic-big-smile.jpg'),
+			uri: '@assets/images/pic-big-smile.jpg'
+		},
+		profileImagePlaceholder3: {
+			img: require('./images/pic-green-glasses.jpg'),
+			uri: '@assets/images/pic-green-glasses.jpg'
+		},
+		profileImagePlaceholder4: {
+			img: require('./images/pic-one-eye-hat.jpg'),
+			uri: '@assets/images/pic-one-eye-hat.jpg'
+		},
+		profileImagePlaceholder5: {
+			img: require('./images/pic-one-eye.jpg'),
+			uri: '@assets/images/pic-one-eye.jpg'
+		},
+		profileImagePlaceholder6: {
+			img: require('./images/pic-twinkle.jpg'),
+			uri: '@assets/images/pic-twinkle.jpg'
 		}
 	},
 	svg: {

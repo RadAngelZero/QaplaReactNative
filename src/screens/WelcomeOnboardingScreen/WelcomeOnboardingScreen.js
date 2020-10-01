@@ -70,7 +70,12 @@ class WelcomeOnboardingScreen extends React.Component {
 			Image: Images.png.shareOnBoarding.img,
 			description: translate('onBoardingScreen.share.description'),
 			title: translate('onBoardingScreen.share.title')
-		}
+		},
+		{
+		  Image: Images.png.shareOnBoarding.img,
+		  description: translate('onBoardingScreen.acquire.description'),
+		  title: translate('onBoardingScreen.acquire.title')
+	  }
     ];
 
     return (

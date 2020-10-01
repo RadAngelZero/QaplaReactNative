@@ -444,7 +444,7 @@ class DonationsLeaderBoard extends Component {
                                         <QaplaText style={styles.prizeTitle} numberOfLines={2}>
                                             {prize.title}
                                         </QaplaText>
-                                        <QaplaText style={styles.prizeDescription} numberOfLines={2}>
+                                        <QaplaText style={styles.prizeDescription} numberOfLines={3}>
                                             {prize.description}
                                         </QaplaText>
                                     </ImageBackground>

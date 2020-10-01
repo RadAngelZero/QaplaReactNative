@@ -50,16 +50,20 @@
     },
     "onBoardingScreen": {
         "connect": {
-            "description": "Connect with other gamers of your level in individual or multiplayer competitions.",
-            "title": "Connect"
+            "description": "Interact, play and compete with your favorite streamers.",
+            "title": "Interact"
         },
         "compete": {
-            "description": "Compete as an all pro, monetize your scrims and join in events for prize bags.",
-			"title": "Compete"
+            "description": "Follow the events and live streamers on Qapla to win prizes instantly!",
+			"title": "Follow"
         },
         "share": {
-            "description": "Share the clips of your matches, all the community will be able to see the evidence of your victories.",
-            "title": "Share"
+            "description": "Subscribe and donate to the channels of your favorite streamers. Free!",
+            "title": "Subscribe"
+        },
+        "acquire": {
+            "description": "Get digital content from your favorite games just by playing! :O",
+            "title": "Subscribe"
         },
         "finish": "Finish"
     },

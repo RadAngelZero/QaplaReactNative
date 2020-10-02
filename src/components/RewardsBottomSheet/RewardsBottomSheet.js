@@ -90,6 +90,7 @@ class RewardsBottomSheet extends Component {
                                             buttonText={this.props.openedTooltips >= 2 ? translate('rewardsBottomSheet.done') : translate('rewardsBottomSheet.next')}
                                             buttonAction={this.buttonAction} />
                                     </View>
+                                    <Images.svg.lifeIcon height={24} width={24} color='rgba(255, 255, 255, .25)' />
                                 </View>
                                 <View style={styles.progress}>
                                     <ProgressBar
@@ -99,7 +100,9 @@ class RewardsBottomSheet extends Component {
                                         borderWidth={0} />
                                     <View style={styles.rewardsHeaderContainer}>
                                         <View style={styles.lifesContainer}>
-                                            <Hearts hearts={this.props.rewards.lifes} />
+                                            <Hearts
+                                                displayLimit={10}
+                                                hearts={this.props.rewards.lifes} />
                                         </View>
                                         <QaplaText style={styles.currentPoints}>
                                             {this.props.rewards.currentPoints}/10

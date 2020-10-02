@@ -12,9 +12,11 @@ export default styles = StyleSheet.create({
         borderRadius: 20,
         marginLeft: 10,
         marginTop: 10,
-        width: widthPercentageToPx(42.5)
+        width: widthPercentageToPx(42.5),
+        height: heightPercentageToPx(20)
     },
     prizeTitle: {
+        height: heightPercentageToPx(6),
 		color: '#FFF',
 		fontSize: 18,
         letterSpacing: 0.3,
@@ -27,12 +29,10 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(8),
 		color: '#FFF',
 		fontSize: 12,
-        marginTop: 24,
         marginLeft: 16
     },
     lifeContainer: {
         flexDirection: 'row',
-        marginTop: 6,
         marginBottom: 16,
         marginLeft: 10
     },

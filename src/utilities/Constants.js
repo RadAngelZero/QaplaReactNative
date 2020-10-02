@@ -102,7 +102,7 @@ export const NAV_TOPBAR_ICON_RIGHT_MARGIN = 8;
 export const NAV_TOPBAR_ICON_TOP_MARGIN = 2.28;
 
 // APP Header
-export const HEADER_SIZE = 2.9;
+export const HEADER_SIZE = 3.2;
 
 // Firebase Cloud Messaging Topics
 export const EVENTS_TOPIC = 'events';

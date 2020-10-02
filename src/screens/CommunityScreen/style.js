@@ -25,7 +25,7 @@ export default styles = StyleSheet.create({
     },
     bottomSheet: {
         height: SHEET_MAX_HEIGHT,
-        paddingTop: 150,
+        paddingTop: 125,
         borderTopLeftRadius: 35,
         borderTopRightRadius: 35
     },
@@ -53,10 +53,7 @@ export default styles = StyleSheet.create({
         color: Colors.greenQapla
     },
     buttonContainer: {
-        position: 'absolute',
-        bottom: 82,
-        left: 0,
-        right: 0,
+        marginTop: 54,
         backgroundColor: Colors.greenQapla,
         borderRadius: 100
     },

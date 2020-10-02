@@ -25,7 +25,7 @@ const RewardCard = ({ onPress, title, description, price, primaryColor = 'rgb(20
             locations={[0, 1]}
             colors={[primaryColor, secondaryColor]}
             style={styles.prizeContainer}>
-            <QaplaText style={styles.prizeTitle}>
+            <QaplaText style={styles.prizeTitle} multiline numberOfLines={2}>
                 {title}
             </QaplaText>
             <QaplaText
@@ -34,7 +34,9 @@ const RewardCard = ({ onPress, title, description, price, primaryColor = 'rgb(20
                 {description}
             </QaplaText>
             <View style={styles.lifeContainer}>
-                <Hearts hearts={price} />
+                <Hearts
+                    displayLimit={5}
+                    hearts={price} />
             </View>
         </LinearGradient>
     </TouchableWithoutFeedback>

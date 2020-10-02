@@ -11,11 +11,12 @@ import styles from './style'
 import { EVENTS_TOPIC, GAMES_TOPICS } from './../../utilities/Constants';
 
 import CarouselPng from '../../components/CarouselPng/CarouselPng'
-import Images from '@assets/images'
+import Images from './../../../assets/images';
 import { storeData } from '../../utilities/persistance';
 import { translate } from '../../utilities/i18';
 import { subscribeUserToTopic } from './../../services/messaging';
 import QaplaText from '../../components/QaplaText/QaplaText';
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class WelcomeOnboardingScreen extends React.Component {
 	constructor(props) {
@@ -26,7 +27,7 @@ class WelcomeOnboardingScreen extends React.Component {
 	}
 
 	finishOnBoarding = () => {
-		storeData('tutorial-done', 'true');
+		storeData('new-tutorial-done', 'true');
 
 		/**
          * All the users must be subscribed to the event topic at this point, because we want
@@ -57,22 +58,22 @@ class WelcomeOnboardingScreen extends React.Component {
 
     const carrouselData = [
       	{
-			Image: Images.png.connectOnBoarding.img,
+			Image: Images.svg.interact,
 			description: translate('onBoardingScreen.connect.description'),
 			title: translate('onBoardingScreen.connect.title')
 		},
       	{
-			Image: Images.png.compiteOnBoarding.img,
+			Image: Images.svg.follow,
 			description: translate('onBoardingScreen.compete.description'),
 			title: translate('onBoardingScreen.compete.title')
 		},
       	{
-			Image: Images.png.shareOnBoarding.img,
+			Image: Images.svg.subscribe,
 			description: translate('onBoardingScreen.share.description'),
 			title: translate('onBoardingScreen.share.title')
 		},
 		{
-		  Image: Images.png.shareOnBoarding.img,
+		  Image: Images.svg.acquire,
 		  description: translate('onBoardingScreen.acquire.description'),
 		  title: translate('onBoardingScreen.acquire.title')
 	  }
@@ -85,7 +86,13 @@ class WelcomeOnboardingScreen extends React.Component {
 				<View style={styles.progressRow}></View>
 				<View style={[styles.progressRow, styles.indicatorsContainer]}>
 					{carrouselData.map((slide, index) => (
-						<View style={[styles.progressCircleIndicator, { backgroundColor: this.state.selectedIndex === index ? '#3DF9DF' : '#090D29' }]} />
+						<View style={[
+							styles.progressCircleIndicator,
+							{
+								backgroundColor: this.state.selectedIndex === index ? '#3DF9DF' : 'rgba(0, 254, 223, .54)',
+								width: this.state.selectedIndex === index ? widthPercentageToPx(6) : widthPercentageToPx(2.4)
+							}
+						]} />
 					))}
 				</View>
 				<View style={styles.progressRow}>

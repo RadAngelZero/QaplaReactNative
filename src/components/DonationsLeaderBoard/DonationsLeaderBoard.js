@@ -3,9 +3,8 @@ import { View, Image, ScrollView, ImageBackground, FlatList, Animated, Platform 
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
-import { getDonationsLeaderBoard, getLeaderBoardPrizes, getUserDonationLeaderBoard } from '../../services/database';
+import { getDonationsLeaderBoard, getLeaderBoardPrizes, getUserDonationLeaderBoard, getProfileImageWithUID } from '../../services/database';
 import QaplaText from '../QaplaText/QaplaText';
-import { getUserProfileImgUrl } from '../../services/storage';
 import styles from './styles';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { defaultUserImages } from '../../utilities/Constants';
@@ -43,7 +42,7 @@ class TopLeaders extends Component {
         const topLeadersImages = [];
         for (let i = 0; i < this.props.topLeaders.length; i++) {
             if (this.props.topLeaders[i]) {
-                const profileImage = await getUserProfileImgUrl(this.props.topLeaders[i].uid);
+                const profileImage = await getProfileImageWithUID(this.props.topLeaders[i].uid);
 
                 topLeadersImages.push('');
                 if (profileImage) {
@@ -134,7 +133,7 @@ class LeaderRow extends Component {
     }
 
     getUserImage = async () => {
-        const img = await getUserProfileImgUrl(this.props.item.uid);
+        const img = await getProfileImageWithUID(this.props.item.uid);
         let profileImage = {};
 
         if (img) {

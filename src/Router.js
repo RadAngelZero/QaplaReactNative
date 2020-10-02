@@ -262,7 +262,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
-        <Svg width="30px" height="21px" viewBox="0 0 26 26">
+        <Svg width="30px" height="26px" viewBox="2 0 26 26">
           <G id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
             <G id="Profile" transform="translate(-48.000000, -744.000000)">
               <G id="Bottom-Nav-Bar" transform="translate(0.000000, 731.000000)">

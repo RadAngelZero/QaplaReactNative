@@ -1268,3 +1268,7 @@ export async function getUserDonationLeaderBoard(uid) {
  export async function getLeaderBoardPrizes() {
     return await LeaderBoardPrizesRef.once('value');
  }
+
+ export async function getCommunitySurvey() {
+    return await database.ref('/CommunitySurvey').once('value');
+ }

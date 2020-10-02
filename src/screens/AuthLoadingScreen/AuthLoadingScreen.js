@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator, SafeAreaView } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
-import Svg, { G, Circle, Path } from 'react-native-svg'
+import { View, SafeAreaView } from 'react-native';
+import Animated from 'react-native-reanimated';
+import Svg from 'react-native-svg';
 import { connect } from 'react-redux';
 
 import {
@@ -9,7 +9,7 @@ import {
     notifications,
     links
 } from '../../utilities/firebase';
-import { retrieveData, storeData } from '../../utilities/persistance';
+import { retrieveData, storeData, removeDataItem } from '../../utilities/persistance';
 import styles from './style';
 import images from '../../../assets/images';
 import { getUserNode } from '../../actions/userActions';
@@ -29,7 +29,6 @@ import { translate } from '../../utilities/i18';
 import { checkNotificationPermission } from '../../services/messaging';
 import remoteConf from '../../services/remoteConfig';
 import { trackOnSegment } from '../../services/statistics';
-import QaplaText from '../../components/QaplaText/QaplaText';
 import { connectUserToSendBird } from '../../services/SendBird';
 import { getUserProfileImgUrl } from '../../services/storage';
 
@@ -134,9 +133,15 @@ class AuthLoadingScreen extends Component {
              */
             if (!this.state.linkOnProgress && this.state.firstLoad) {
                 const isTutorialDone = await retrieveData('tutorial-done');
+                if (isTutorialDone) {
+                    removeDataItem('tutorial-done');
+                }
+
                 this.setState({ firstLoad: false });
 
-                if (isTutorialDone) {
+                const isNewTutorialDone = await retrieveData('new-tutorial-done');
+
+                if (isNewTutorialDone) {
                     const lastDateUserSawEventRememberScreen = await retrieveData('event-remember-date');
                     const date = new Date();
                     const todayDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;

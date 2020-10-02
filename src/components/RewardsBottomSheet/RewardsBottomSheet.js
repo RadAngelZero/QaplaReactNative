@@ -6,12 +6,14 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import styles from './style';
 import QaplaText from '../QaplaText/QaplaText';
 import Images from '../../../assets/images';
-import { SHEET_MAX_HEIGHT, SHEET_MIDDLE_HEIGHT, SHEET_MIN_HEIGHT } from '../../utilities/Constants';
+import { SHEET_MAX_HEIGHT, SHEET_MIN_HEIGHT } from '../../utilities/Constants';
 import Hearts from '../UserProfileRewards/Hearts';
 import ProgressBar from '../UserProfileRewards/Bar';
 import Colors from '../../utilities/Colors';
 import { getQaplaStoreCheaperProduct } from '../../services/database';
 import remoteConfig from '../../services/remoteConfig';
+import { translate } from '../../utilities/i18';
+import QaplaTooltip from '../QaplaTooltip/QaplaTooltip';
 
 class RewardsBottomSheet extends Component {
     fall = new Animated.Value(1);
@@ -19,16 +21,27 @@ class RewardsBottomSheet extends Component {
         open: false
     };
 
-    toggleBottomSheet = () => {
-        if (Platform.OS === 'android') {
-            if (!this.state.open) {
+    componentDidUpdate(prevProps) {
+        if (this.props.hide !== prevProps.hide) {
+            if (this.props.hide) {
                 this.sheetRef.snapTo(2);
             } else {
                 this.sheetRef.snapTo(0);
             }
-
-            this.setState({ open: !this.state.open });
         }
+    }
+
+    toggleBottomSheet = () => {
+        if (!this.state.open) {
+            this.sheetRef.snapTo(1);
+        } else {
+            this.sheetRef.snapTo(0);
+            this.setState({ open: false });
+        }
+    }
+
+    toggleOpen = () => {
+        this.setState({ open: !this.state.open });
     }
 
     redeemLifes = async () => {
@@ -37,6 +50,15 @@ class RewardsBottomSheet extends Component {
         if (cheaperProduct.exists() && this.props.rewards.lifes >= cheaperProduct.val()[productIndex].price) {
             Linking.openURL((await remoteConfig.getDataFromKey('Discord')).QAPLA_DISCORD_EXCHANGE_CHANNEL);
         }
+    }
+
+    buttonAction = () => {
+        if (this.state.open) {
+            this.sheetRef.snapTo(0);
+            this.toggleOpen();
+        }
+
+        this.props.tooltipButtonAction();
     }
 
     renderContent = () => {
@@ -58,9 +80,15 @@ class RewardsBottomSheet extends Component {
                                 <View style={styles.rewardsHeaderContainer}>
                                     <View style={styles.row}>
                                         <QaplaText style={styles.rewardsTitle}>
-                                            Reward
+                                            {translate('rewardsBottomSheet.rewards')}
                                         </QaplaText>
-                                        <Images.svg.infoIcon style={styles.infoIcon} />
+                                        <QaplaTooltip
+                                            style={{ marginLeft: 6 }}
+                                            toggleTooltip={this.props.toggleTooltip}
+                                            open={this.props.openRewardsTooltip}
+                                            content={translate('rewardsBottomSheet.rewardsTooltip')}
+                                            buttonText={this.props.openedTooltips >= 2 ? translate('rewardsBottomSheet.done') : translate('rewardsBottomSheet.next')}
+                                            buttonAction={this.buttonAction} />
                                     </View>
                                     <Images.svg.lifeIcon height={24} width={24} color='rgba(255, 255, 255, .25)' />
                                 </View>
@@ -72,7 +100,9 @@ class RewardsBottomSheet extends Component {
                                         borderWidth={0} />
                                     <View style={styles.rewardsHeaderContainer}>
                                         <View style={styles.lifesContainer}>
-                                            <Hearts hearts={this.props.rewards.lifes} />
+                                            <Hearts
+                                                displayLimit={10}
+                                                hearts={this.props.rewards.lifes} />
                                         </View>
                                         <QaplaText style={styles.currentPoints}>
                                             {this.props.rewards.currentPoints}/10
@@ -83,18 +113,18 @@ class RewardsBottomSheet extends Component {
                         </View>
                         <View style={styles.transactionsContainer}>
                             <QaplaText style={styles.transactionsTitle}>
-                                Transactions
+                                {translate('rewardsBottomSheet.transactions')}
                             </QaplaText>
                             <View style={styles.transactionsSummary}>
                                 <View style={styles.transactionsSummaryDescriptions}>
                                     <QaplaText style={styles.transactionDescription}>
-                                        Donation
+                                        {translate('rewardsBottomSheet.donation')}
                                     </QaplaText>
                                     <QaplaText style={styles.transactionDescription}>
-                                        Donation
+                                        {translate('rewardsBottomSheet.donation')}
                                     </QaplaText>
                                     <QaplaText style={styles.transactionDescription}>
-                                        Reward reedemed
+                                        {translate('rewardsBottomSheet.rewardRedeemed')}
                                     </QaplaText>
                                 </View>
                                 <View style={styles.transactionSummaryValue}>
@@ -128,7 +158,7 @@ class RewardsBottomSheet extends Component {
                         style={styles.redeemButtonContainer}
                         onPress={this.redeemLifes}>
                         <QaplaText style={styles.redeemButtonText}>
-                            Redeem Prize
+                            {translate('rewardsBottomSheet.redeemPrize')}
                         </QaplaText>
                     </TouchableOpacity>
                 </View>
@@ -143,8 +173,10 @@ class RewardsBottomSheet extends Component {
                     {this.props.children}
                 </Animated.View>
                 <BottomSheet
+                    onOpenEnd={this.toggleOpen}
+                    onCloseEnd={this.toggleOpen}
                     ref={(ref) => this.sheetRef = ref}
-                    snapPoints={[SHEET_MIN_HEIGHT, SHEET_MIDDLE_HEIGHT, SHEET_MAX_HEIGHT]}
+                    snapPoints={[SHEET_MIN_HEIGHT, SHEET_MAX_HEIGHT, 0]}
                     borderRadius={20}
                     callbackNode={this.fall}
                     renderContent={this.renderContent} />

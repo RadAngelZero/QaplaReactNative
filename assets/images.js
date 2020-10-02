@@ -4,7 +4,6 @@ import TestIcon from './icons/facebook.svg';
 
 import PublicFeedMatchIcon from './icons/Partidas.svg';
 import QaploinsIcon from './icons/qaploins.svg';
-import ProfileIcon from './icons/ProfileActive.svg';
 import NotificationIcon from './icons/Notifications.svg';
 import QaploinsPrize from './icons/QaploinsPrize.svg';
 import LessQaploins from './icons/LessQaploins.svg';
@@ -28,7 +27,6 @@ import LostIcon from './icons/perdido.svg';
 import TieIcon from './icons/empatado.svg';
 import ChooseClipIcon from './icons/video-clip.svg';
 import AlreadyChoosedClipIcon from './icons/video-clip-check.svg';
-import LogrosIcon from './icons/LogrosActive.svg';
 import VerifyIcon from './icons/verificado.svg';
 import SupportIcon from './icons/support.svg';
 import DiscordIcon from './icons/discord.svg';
@@ -47,8 +45,6 @@ import ArrowDownIcon from './icons/arrowDown.svg';
 import BetaLabelIcon from './icons/BetaLabel.svg';
 import BitsIcon from './icons/bitsIcon.svg';
 import InfoIcon from './icons/infoIcon.svg';
-import CommunityIcon from './icons/communityIcon.svg';
-import HalfLifeIcon from './icons/halfLife.svg';
 import LifeIcon from './icons/life.svg';
 import RewardIcon from './icons/rewardIcon.svg';
 import DonatedStarIcon from './icons/donatedStarIcon.svg';
@@ -56,6 +52,11 @@ import DonatedBitIcon from './icons/donatedBitIcon.svg';
 import QaplaLogo from './icons/QaplaLogo.svg';
 import PlusBubble from './icons/plusBubble.svg';
 import MinusBubble from './icons/minusBubble.svg';
+import Community3DIcon from './icons/Community3DIcon.svg';
+import Interact from './icons/Interact.svg';
+import Follow from './icons/Follow.svg';
+import Subscribe from './icons/Subscribe.svg';
+import Acquire from './icons/Acquire.svg';
 
 // Images
 
@@ -172,7 +173,31 @@ const images = {
 		},
 		Qoin3D: {
 			img: require('./images/3DQoin.png'),
-			uri: '@assets/images/SAMSHBROS.png'
+			uri: '@assets/images/3DQoin.png'
+		},
+		profileImagePlaceholder1: {
+			img: require('./images/pic-big-eyes.jpg'),
+			uri: '@assets/images/pic-big-eyes.jpg'
+		},
+		profileImagePlaceholder2: {
+			img: require('./images/pic-big-smile.jpg'),
+			uri: '@assets/images/pic-big-smile.jpg'
+		},
+		profileImagePlaceholder3: {
+			img: require('./images/pic-green-glasses.jpg'),
+			uri: '@assets/images/pic-green-glasses.jpg'
+		},
+		profileImagePlaceholder4: {
+			img: require('./images/pic-one-eye-hat.jpg'),
+			uri: '@assets/images/pic-one-eye-hat.jpg'
+		},
+		profileImagePlaceholder5: {
+			img: require('./images/pic-one-eye.jpg'),
+			uri: '@assets/images/pic-one-eye.jpg'
+		},
+		profileImagePlaceholder6: {
+			img: require('./images/pic-twinkle.jpg'),
+			uri: '@assets/images/pic-twinkle.jpg'
 		}
 	},
 	svg: {
@@ -182,7 +207,6 @@ const images = {
 		testIcon: TestIcon,
 		publicFeedMatchIcon: PublicFeedMatchIcon,
 		qaploinsIcon: QaploinsIcon,
-		profileIcon: ProfileIcon,
 		cancelIcon: CancelIcon,
 		lightningIcon: LightningIcon,
 		searchIcon: SearchIcon,
@@ -198,7 +222,6 @@ const images = {
 		tieIcon: TieIcon,
 		chooseClipIcon: ChooseClipIcon,
 		alreadyChoosedClipIcon: AlreadyChoosedClipIcon,
-		logrosIcon: LogrosIcon,
 		verifyIcon: VerifyIcon,
 		supportIcon: SupportIcon,
 		gowIcon: GowIcon,
@@ -223,15 +246,18 @@ const images = {
 		betaLabelIcon: BetaLabelIcon,
 		bitsIcon: BitsIcon,
 		infoIcon: InfoIcon,
-		communityIcon: CommunityIcon,
-		halfLifeIcon: HalfLifeIcon,
 		lifeIcon: LifeIcon,
 		rewardIcon: RewardIcon,
 		donatedStarIcon: DonatedStarIcon,
 		donatedBitIcon: DonatedBitIcon,
 		qaplalogoIcon: QaplaLogo,
 		plusBubble: PlusBubble,
-		minusBubble: MinusBubble
+		minusBubble: MinusBubble,
+		community3DIcon: Community3DIcon,
+		interact: Interact,
+		follow: Follow,
+		subscribe: Subscribe,
+		acquire: Acquire
 	}
 };
 

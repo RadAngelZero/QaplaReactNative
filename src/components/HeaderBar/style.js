@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     userName: {
         color: '#FFF',
         marginLeft: 10,
-        fontSize: 16
+        fontSize: 24
     },
     iconsContainer: {
         flexDirection: 'row'

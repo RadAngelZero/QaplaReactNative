@@ -40,7 +40,7 @@
         "bottomNavigators": {
             "mainNavigator": {
                 "events": "Eventos",
-                "matches": "Partidas",
+                "community": "Comunidad",
                 "profile": "Perfil"
             }
         }
@@ -50,16 +50,20 @@
     },
     "onBoardingScreen": {
         "connect": {
-            "description": "Conecta con otros gamers de tu nivel en competencias individuales o multijugador.",
-            "title": "Conecta"
+            "description": "Interactua, juega y compite con tus streamers favoritos.",
+            "title": "Interactua"
         },
         "compete": {
-            "description": "Compite como todo un pro, monetiza tus scrims y participa en eventos por bolsas de premios.",
-			"title": "Compite"
+            "description": "Sigue los eventos y directos de los streamers en Qapla ¡y gana premios al instante!",
+			"title": "Sigue"
         },
         "share": {
-            "description": "Comparte los clips de tus partidas, toda la comunidad podrá ver la evidencia de tus victorias.",
-            "title": "Comparte"
+            "description": "Suscríbete y dona a los canales de tus streamers favoritos. ¡Gratis!",
+            "title": "Suscríbete"
+        },
+        "acquire": {
+            "description": "Adquiere contenido digital de tus juegos favoritos ¡sólo jugando! :O",
+            "title": "Adquiere"
         },
         "finish": "Terminar"
     },
@@ -134,7 +138,11 @@
         }
     },
     "newUserProfileScreen": {
-        "level": "Nivel"
+        "level": "Nivel",
+        "bitsAndStars": "Bits/Estrellas",
+        "bitsTooltip": "Gana Qoins en los eventos y úsalos para donar al streamer que desees.",
+        "next": "Siguiente",
+        "done": "Listo"
     },
     "notificationsScreen":{
         "notificationsHeader": "Notificaciones",
@@ -305,6 +313,12 @@
     "LogrosActivosScreen": {
         "featuredEvent": "Destacado"
     },
+    "CommunityScreen": {
+        "comingSoon": "¡Proximamente!",
+        "description": "Una mejor manera de interactuar con tu comunidad.",
+        "feedbackRequest": "¡Queremos tus comentarios!\nHaznos saber lo que te gustaría obtener de esta sección :D",
+        "answerSurvery": "Responder encuesta rápida"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Ve tus Notificaciones",
@@ -400,5 +414,15 @@
     "confirmationDialog": {
         "cancelButton": "Cancelar",
         "acceptButton": "Continuar"
+    },
+    "rewardsBottomSheet": {
+        "rewards": "Recompensas",
+        "transactions": "Transacciones",
+        "donation": "Donación",
+        "rewardRedeemed": "Recompensa redimida",
+        "redeemPrize":"Redimir Premio",
+        "rewardsTooltip": "Cada donación que hagas ayudará a llenar tu barra de vida. ¡Llena la barra y obten recompensas!",
+        "next": "Siguiente",
+        "done": "Listo"
     }
 }

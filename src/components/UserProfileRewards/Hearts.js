@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Animated, Easing } from 'react-native';
+import { View, Animated, Easing } from 'react-native';
 import Svg, { LinearGradient, Defs, Stop, Path, } from 'react-native-svg';
+import QaplaText from '../QaplaText/QaplaText';
 
 const AnimatedStop = Animated.createAnimatedComponent(Stop);
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
-class Heart extends Component {
+export class Heart extends Component {
     constructor(props) {
         super(props);
         this.progress = new Animated.Value(props.progress);
@@ -144,7 +145,18 @@ export default class Hearts extends Component {
     render() {
         return (
             <Animated.View style={{ alignSelf: this.align, flexDirection: 'row', flexWrap: 'wrap' }}>
-                {this.state.heartsToDisplay}
+                {this.state.heartsToDisplay.length > this.props.displayLimit ?
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Heart progress={1} width={24} height={24} scale={0.035} />
+                        <QaplaText style={{ marginLeft: 4, color: '#FFF' }}>
+                            {`x${this.props.hearts}`}
+                        </QaplaText>
+                    </View>
+                    :
+                    <>
+                        {this.state.heartsToDisplay}
+                    </>
+                }
             </Animated.View>
         );
     }

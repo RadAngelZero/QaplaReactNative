@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim'
 import Colors from '../../utilities/Colors'
+import { HEADER_SIZE } from '../../utilities/Constants'
 
 export default styles = StyleSheet.create({
 	profileView: {
@@ -36,11 +37,13 @@ export default styles = StyleSheet.create({
 		shadowRadius: 10,
         shadowOpacity: 1,
         marginTop: 16,
-		width: widthPercentageToPx(40)
+		width: widthPercentageToPx(45)
+	},
+	infoImageContainer: {
+		flexDirection: 'row',
+		alignItems: 'center'
 	},
 	infoImage: {
-		width: 24,
-		height: 24,
 		marginLeft: 12,
 		marginTop: 12
 	},
@@ -56,17 +59,17 @@ export default styles = StyleSheet.create({
 	},
 	bitsNumber: {
 		color: '#FFF',
-		fontSize: 40
+		fontSize: 48
 	},
 	bitsTitle: {
 		color: '#FFF',
-		fontSize: 16
+		fontSize: 12
 	},
 	handleDonationContainer: {
 		marginRight: 12
 	},
 	updateDonationIcon: {
-		marginTop: 8
+		marginTop: 12
 	},
 	buttonView: {
 		backgroundColor: 'rgb(108, 122, 229)',
@@ -89,7 +92,7 @@ export default styles = StyleSheet.create({
 	bits3dIconImage: {
 		position: 'absolute',
 		bottom: -heightPercentageToPx(2.5),
-		left: widthPercentageToPx(20)
+		left: widthPercentageToPx(25)
 	},
 	levelModalView: {
 		alignSelf: 'center'
@@ -99,11 +102,21 @@ export default styles = StyleSheet.create({
 		height: 120,
 		width: 120
 	},
+	expTextContainer: {
+        alignSelf: 'center',
+        borderRadius: 100,
+        backgroundColor: '#4040FF',
+        position: 'absolute',
+        bottom: 0
+    },
 	expText: {
 		color: '#FFF',
-		fontSize: 16,
+		fontSize: 12,
 		alignSelf: 'center',
-		marginTop: 12
+		marginTop: 5,
+        marginBottom: 5,
+        marginRight: 14,
+        marginLeft: 14
 	},
 	donationNavigatorContainer: {
 		flex: 1,

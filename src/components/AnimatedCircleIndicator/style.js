@@ -1,5 +1,3 @@
-// diego           - 20-08-2019 - us89 - File creation
-
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim'
 

@@ -1,6 +1,3 @@
-// diego           - 11-09-2019 - us107 - Updated default size and width of AnimatedCircularProgress
-// diego           - 20-08-2019 - us89 - File creation
-
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -15,7 +12,7 @@ export class AnimatedCircleIndicator extends Component {
      *
      * @param {number} fill Percentage of the circle who is filled
      */
-    fillCircleText = (fill) => <QaplaText style={styles.fillText}> {Math.floor(fill)}{this.props.percentage ? '%' : ''} </QaplaText>
+    fillCircleText = (fill) => <QaplaText style={styles.fillText}> {this.props.fillText || Math.floor(fill)}{this.props.percentage ? '%' : ''} </QaplaText>
 
     render() {
         return (
@@ -29,10 +26,18 @@ export class AnimatedCircleIndicator extends Component {
                     tintColor={this.props.tintColor}
                     duration={this.props.duration}
                     backgroundColor={this.props.backgroundColor}>
-                        {this.fillCircleText}
+                        {this.props.fillComponent || this.fillCircleText}
                 </AnimatedCircularProgress>
-                {this.props.description &&
-                    <QaplaText style={styles.description}>{this.props.description}</QaplaText>
+                {this.props.descriptionComponent ?
+                        <this.props.descriptionComponent />
+                    :
+                    <>
+                        {this.props.description &&
+                            <QaplaText style={[styles.description, this.props.descriptionStyle]}>
+                                {this.props.description}
+                            </QaplaText>
+                        }
+                    </>
                 }
             </View>
         );

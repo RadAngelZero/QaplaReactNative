@@ -27,6 +27,9 @@ import QaplaText from '../../components/QaplaText/QaplaText';
 const BackIcon = Images.svg.backIcon;
 const CloseIcon = Images.svg.closeIcon;
 
+/**
+ * @deprecated
+ */
 class VerificationScreen extends Component {
     state = {
         personData:{

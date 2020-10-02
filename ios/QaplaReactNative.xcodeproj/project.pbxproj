@@ -39,7 +39,6 @@
 		2E427030FD6241DEA10F9043 /* Partidas.svg in Resources */ = {isa = PBXBuildFile; fileRef = 2CB1741E12AA4575B2731E2A /* Partidas.svg */; };
 		315B2CF59BD34843BF778306 /* divider-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = BB8FBE263B3247E3804CA2CF /* divider-onboarding.png */; };
 		3236D6FADC584B6087D9A2EB /* settings.svg in Resources */ = {isa = PBXBuildFile; fileRef = 14786C0F529A42EFAB3014C5 /* settings.svg */; };
-		32624EA75A364A5EB0D972FC /* LogrosActive.svg in Resources */ = {isa = PBXBuildFile; fileRef = AB3CBAD1A26A469AB2C5B4A7 /* LogrosActive.svg */; };
 		33B46C3AC091498DAAC2255C /* qaplaSplash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E54AA0FA0C0A4BE68E5D5693 /* qaplaSplash@2x.png */; };
 		3B96676472EC4AB389E89AED /* compite-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C1F1201ABF243F7B658C8F7 /* compite-onboarding.png */; };
 		3CEE516DF49C3EAF2A8D24EF /* libPods-QaplaReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBF927A9EB9D21FEB290CB4A /* libPods-QaplaReactNative.a */; };
@@ -72,7 +71,6 @@
 		8DC3F82BC6B74A4FA77A253D /* video-clip.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0915266C8EE54CA5B62E07F3 /* video-clip.svg */; };
 		8F7B1964AB664CACBCD613D5 /* wallet-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = 35499F23D26548BD85F1C26B /* wallet-onboarding.png */; };
 		90CC774A1C4D47318D067EE2 /* favorite-heart-button.svg in Resources */ = {isa = PBXBuildFile; fileRef = C399822E2F93473B96824E4D /* favorite-heart-button.svg */; };
-		90EFBFD24FD549F7A56AF3F6 /* ProfileActive.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0E2FB2ADFC9F4CF1A18AC8EE /* ProfileActive.svg */; };
 		958EBB9A6ED84A4AA3358C3C /* HighFive.svg in Resources */ = {isa = PBXBuildFile; fileRef = FFDD3DDB7D774B54A4BA7E7F /* HighFive.svg */; };
 		9A5A1D0F53D2483E81AFDD4F /* support.svg in Resources */ = {isa = PBXBuildFile; fileRef = 80604B8413754A0081DA067C /* support.svg */; };
 		9E9A84173DDC4315A8377067 /* Smash.svg in Resources */ = {isa = PBXBuildFile; fileRef = FCBFA136870A445FA7B9EDD9 /* Smash.svg */; };
@@ -418,7 +416,6 @@
 		0992A26B0E21490EBBC2979E /* qaploins.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = qaploins.svg; path = ../assets/icons/qaploins.svg; sourceTree = "<group>"; };
 		09976C835160488493C6BD78 /* notification-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "notification-icon.png"; path = "../assets/notification-icon.png"; sourceTree = "<group>"; };
 		0C7845E4393648F0BD856C4E /* google-logo.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "google-logo.svg"; path = "../assets/icons/google-logo.svg"; sourceTree = "<group>"; };
-		0E2FB2ADFC9F4CF1A18AC8EE /* ProfileActive.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ProfileActive.svg; path = ../assets/icons/ProfileActive.svg; sourceTree = "<group>"; };
 		0FE0D0D3092842AF941574D2 /* 1024px-Instagram_logo_2016.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "1024px-Instagram_logo_2016.svg"; path = "../assets/icons/1024px-Instagram_logo_2016.svg"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -489,7 +486,6 @@
 		A9814D5DD0194008A6EBDF83 /* sin-verificar.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "sin-verificar.svg"; path = "../assets/icons/sin-verificar.svg"; sourceTree = "<group>"; };
 		A9E812CE6FA34B0B908A5BCC /* back.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = back.svg; path = ../assets/icons/back.svg; sourceTree = "<group>"; };
 		AB25E3478FAB4E4D914F52F1 /* Rectangle4.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Rectangle4.svg; path = ../assets/images/Rectangle4.svg; sourceTree = "<group>"; };
-		AB3CBAD1A26A469AB2C5B4A7 /* LogrosActive.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = LogrosActive.svg; path = ../assets/icons/LogrosActive.svg; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B6B8741564C6E040BCA7B6F8 /* Pods-QaplaReactNative-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaReactNative-tvOS.release.xcconfig"; path = "Target Support Files/Pods-QaplaReactNative-tvOS/Pods-QaplaReactNative-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		B992432FF00048309FA2A6ED /* close.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = close.svg; path = ../assets/icons/close.svg; sourceTree = "<group>"; };
@@ -782,7 +778,6 @@
 				FFDD3DDB7D774B54A4BA7E7F /* HighFive.svg */,
 				C32BD5EC73DE46578A0E029E /* LessQaploins.svg */,
 				D023D599AC0641709D6812DB /* Lighting.svg */,
-				AB3CBAD1A26A469AB2C5B4A7 /* LogrosActive.svg */,
 				5F7BD8A9648B45B08B9263AF /* LOL.svg */,
 				CEC786D87F984D44A05972F4 /* MoreQaploins.svg */,
 				C469DE7780574DC3A9BB6BB8 /* Notifications.svg */,
@@ -790,7 +785,6 @@
 				7C40CF6C4DD14CE8B3EFB49C /* Overwatch.svg */,
 				2CB1741E12AA4575B2731E2A /* Partidas.svg */,
 				4B0892F5BDFF4317875D4B72 /* perdido.svg */,
-				0E2FB2ADFC9F4CF1A18AC8EE /* ProfileActive.svg */,
 				A463597FFB4B493A93305D4A /* qapla-app-icon.png */,
 				C9C587F754F94278BCE0A93E /* qapla-balance-flip.svg */,
 				94BC310F40294A8C85C9C809 /* qapla.png */,
@@ -1422,7 +1416,6 @@
 				958EBB9A6ED84A4AA3358C3C /* HighFive.svg in Resources */,
 				F1E51258208F414AB3F4F5E6 /* LessQaploins.svg in Resources */,
 				6FD1CC95507246CFA1F8379C /* Lighting.svg in Resources */,
-				32624EA75A364A5EB0D972FC /* LogrosActive.svg in Resources */,
 				3FC348040B7247448FBEAE64 /* LOL.svg in Resources */,
 				DC01A8CC45DD4D6895D617FA /* MoreQaploins.svg in Resources */,
 				D0480312D3084EF2B826A133 /* Notifications.svg in Resources */,
@@ -1430,7 +1423,6 @@
 				4203508E1B664794A6AC251B /* Overwatch.svg in Resources */,
 				2E427030FD6241DEA10F9043 /* Partidas.svg in Resources */,
 				C20BE7249D414A93B71EAE96 /* perdido.svg in Resources */,
-				90EFBFD24FD549F7A56AF3F6 /* ProfileActive.svg in Resources */,
 				4251B32387B7497D9F61B96F /* qapla-app-icon.png in Resources */,
 				EC4F50D307154909AB440C29 /* qapla-balance-flip.svg in Resources */,
 				DB489E3078F84EB0AF5A81BB /* qapla.png in Resources */,
@@ -1780,7 +1772,7 @@
 				CODE_SIGN_ENTITLEMENTS = "QaplaReactNative/Qapla Gaming.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 48;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
@@ -1793,7 +1785,7 @@
 				INFOPLIST_FILE = QaplaReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.2.5;
+				MARKETING_VERSION = 2.3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1815,7 +1807,7 @@
 				CODE_SIGN_ENTITLEMENTS = "QaplaReactNative/Qapla Gaming.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 48;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
@@ -1828,7 +1820,7 @@
 				INFOPLIST_FILE = QaplaReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.2.5;
+				MARKETING_VERSION = 2.3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

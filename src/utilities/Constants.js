@@ -1,3 +1,6 @@
+import { heightPercentageToPx } from './iosAndroidDim';
+import images from '../../assets/images';
+
 // Segment key
 export const SEGMENT_KEY = 'fCfir8yrQiZRVrpuwLHYRePN68SqW8AS';
 
@@ -26,6 +29,10 @@ export const SET_SERVER_TIME_OFFSET = 'SET_SERVER_TIME_OFFSET';
 // Screens REDUX constants
 export const SET_CURRENT_SCREEN_ID = 'SET_CURRENT_SCREEN_ID';
 export const SET_PREVIOUS_SCREEN_ID = 'SET_PREVIOUS_SCREEN_ID';
+
+// Profile Leader Board REDUX constants
+export const SET_ENABLE_SCROLL = 'SET_ENABLE_SCROLL';
+export const SET_USER_IMAGE = 'SET_USER_IMAGE';
 
 // Crear Reta Button in PublicMatchesFeedScreen.js
 export const HIGHLIGHT_1_CREATE_MATCH = 'HIGHLIGHT_1_CREATE_MATCH';
@@ -95,7 +102,7 @@ export const NAV_TOPBAR_ICON_RIGHT_MARGIN = 8;
 export const NAV_TOPBAR_ICON_TOP_MARGIN = 2.28;
 
 // APP Header
-export const HEADER_SIZE = 2.9;
+export const HEADER_SIZE = 3.2;
 
 // Firebase Cloud Messaging Topics
 export const EVENTS_TOPIC = 'events';
@@ -115,3 +122,17 @@ export const APPSTORE_ID = '1485332229';
 //App settings
 export const IOS_BUNDLE_ID = 'org.Qapla.QaplaApp';
 export const ANDROID_PACKAGE_NAME = 'com.qapla.gaming.app';
+
+// Bottom Sheets
+export const SHEET_MAX_HEIGHT = heightPercentageToPx(65);
+export const SHEET_MIN_HEIGHT = heightPercentageToPx(15.5);
+
+// Default user images
+export const defaultUserImages = [
+	images.png.profileImagePlaceholder1,
+	images.png.profileImagePlaceholder2,
+	images.png.profileImagePlaceholder3,
+	images.png.profileImagePlaceholder4,
+	images.png.profileImagePlaceholder5,
+	images.png.profileImagePlaceholder6
+];

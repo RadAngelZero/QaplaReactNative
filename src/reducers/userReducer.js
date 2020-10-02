@@ -1,6 +1,3 @@
-// diego           - 13-11-2019 - us89 - Sign out user case added
-// diego           - 01-08-2019 - us58 - Put new constants to detect the different ways to update the user data
-
 import { UPDATE_USER_DATA, REMOVE_USER_DATA, SIGN_OUT_USER } from '../utilities/Constants';
 
 const initialState = {

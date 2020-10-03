@@ -3,16 +3,14 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 
 export default styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        marginLeft: 10,
-        marginRight: 10,
-        justifyContent: 'center'
+        alignItems: 'center',
     },
     prizeContainer: {
         borderRadius: 20,
-        marginLeft: 10,
+        marginLeft: 8,
+        marginRight: 8,
         marginTop: 10,
-        width: widthPercentageToPx(42.5),
+        width: widthPercentageToPx(45),
         height: heightPercentageToPx(20)
     },
     prizeTitle: {

@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 import Colors from '../../utilities/Colors';
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { SHEET_MAX_HEIGHT } from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({

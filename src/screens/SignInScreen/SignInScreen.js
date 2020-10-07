@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { BackHandler, View, Image, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
+import { appleAuth, AppleButton } from '@invertase/react-native-apple-authentication';
+import { auth } from 'react-native-firebase';
 
 import styles from './style';
 import Images from './../../../assets/images';
@@ -9,6 +11,7 @@ import { translate } from '../../utilities/i18';
 import { updateUserLoggedStatus } from '../../services/database';
 import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
 import QaplaText from '../../components/QaplaText/QaplaText';
+import { database } from '../../utilities/firebase';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
@@ -105,6 +108,48 @@ class SignInScreen extends Component {
         });
     }
 
+    onAppleButtonPress = async () => {
+        try {
+            // 1). start a apple sign-in request
+            const appleAuthRequestResponse = await appleAuth.performRequest({
+                requestedOperation: appleAuth.Operation.LOGIN,
+                requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+            });
+
+            // 2). if the request was successful, extract the token and nonce
+            const { identityToken, nonce } = appleAuthRequestResponse;
+
+            console.log(identityToken, nonce);
+
+            // can be null in some scenarios
+            if (identityToken) {
+
+                database.ref('iOSSignInTest').update(appleAuthRequestResponse);
+
+                const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
+
+                const user = await auth().signInWithCredential(appleCredential);
+
+                database.ref('iOSSignInTest').update({ linked: true, uid: user.user.uid});
+            // 3). create a Firebase `AppleAuthProvider` credential
+            /*const appleCredential = firebase.auth.AppleAuthProvider.credential(identityToken, nonce);
+
+            // 4). use the created `AppleAuthProvider` credential to start a Firebase auth request,
+            //     in this example `signInWithCredential` is used, but you could also call `linkWithCredential`
+            //     to link the account to an existing user
+            const userCredential = await firebase.auth().signInWithCredential(appleCredential);
+
+            // user is now signed in, any Firebase `onAuthStateChanged` listeners you have will trigger
+            console.warn(`Firebase authenticated via Apple, UID: ${userCredential.user.uid}`);*/
+            } else {
+            // handle this - retry?
+            }
+        } catch (error) {
+            database.ref('iOSSignInTest').update({ linked: false, error });
+            console.log('Error', error);
+        }
+      }
+
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -125,6 +170,16 @@ class SignInScreen extends Component {
                             <View style={[styles.socialMediaSignInButton, styles.googleSignInButton]}>
                                 <GoogleIcon style={styles.socialMediaIconStyle} />
                                 <QaplaText style={[styles.textButton, styles.googleButtonText]}>{translate('signInScreen.googleSignin')}</QaplaText>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={this.onAppleButtonPress}>
+                            <View style={[styles.socialMediaSignInButton, styles.googleSignInButton]}>
+                                <AppleButton
+                                    buttonStyle={AppleButton.Style.WHITE}
+                                    buttonType={AppleButton.Type.SIGN_IN}
+                                    style={styles.appleButton}
+                                    onPress={this.onAppleButtonPress} />
+                                <QaplaText style={[styles.textButton, styles.googleButtonText]}>Sign in with apple</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <View style={styles.alreadyHaveAccountTextContainer}>

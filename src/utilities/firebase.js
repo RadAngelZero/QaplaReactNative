@@ -32,6 +32,7 @@ export const remoteConfig = firebase.config();
 export const FBProvider = firebase.auth.FacebookAuthProvider;
 export const GoogleProvider = firebase.auth.GoogleAuthProvider;
 export const PhoneProvider = firebase.auth.PhoneAuthProvider;
+export const AppleProvider = firebase.auth.AppleAuthProvider;
 
 // Phone authentication states
 export const phoneAuthErrorState = firebase.auth.PhoneAuthState.ERROR;

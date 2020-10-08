@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
-import { BackHandler, View, Image, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+import { BackHandler, View, Image, TouchableWithoutFeedback, SafeAreaView, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { appleAuth, AppleButton } from '@invertase/react-native-apple-authentication';
-import { auth } from 'react-native-firebase';
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 
 import styles from './style';
 import Images from './../../../assets/images';
-import { signInWithFacebook, setupGoogleSignin, signInWithGoogle } from '../../services/auth';
+import { signInWithFacebook, setupGoogleSignin, signInWithGoogle, signInWithApple } from '../../services/auth';
 import { translate } from '../../utilities/i18';
 import { updateUserLoggedStatus } from '../../services/database';
 import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { database } from '../../utilities/firebase';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
 const FacebookIcon = Images.svg.facebookIcon;
 const GoogleIcon = Images.svg.googleIcon;
+const AppleIcon = Images.svg.appleIcon;
 
 class SignInScreen extends Component {
     state = {
@@ -89,7 +88,7 @@ class SignInScreen extends Component {
         if (user.additionalUserInfo.isNewUser) {
             this.props.navigation.navigate('ChooseUserName', {
                 originScreen: this.state.originScreenWhenComponentMounted,
-                email: user.user.email 
+                email: user.user.email
             });
         } else {
             updateUserLoggedStatus(true, user.user.uid);
@@ -110,42 +109,9 @@ class SignInScreen extends Component {
 
     onAppleButtonPress = async () => {
         try {
-            // 1). start a apple sign-in request
-            const appleAuthRequestResponse = await appleAuth.performRequest({
-                requestedOperation: appleAuth.Operation.LOGIN,
-                requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-            });
-
-            // 2). if the request was successful, extract the token and nonce
-            const { identityToken, nonce } = appleAuthRequestResponse;
-
-            console.log(identityToken, nonce);
-
-            // can be null in some scenarios
-            if (identityToken) {
-
-                database.ref('iOSSignInTest').update(appleAuthRequestResponse);
-
-                const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
-
-                const user = await auth().signInWithCredential(appleCredential);
-
-                database.ref('iOSSignInTest').update({ linked: true, uid: user.user.uid});
-            // 3). create a Firebase `AppleAuthProvider` credential
-            /*const appleCredential = firebase.auth.AppleAuthProvider.credential(identityToken, nonce);
-
-            // 4). use the created `AppleAuthProvider` credential to start a Firebase auth request,
-            //     in this example `signInWithCredential` is used, but you could also call `linkWithCredential`
-            //     to link the account to an existing user
-            const userCredential = await firebase.auth().signInWithCredential(appleCredential);
-
-            // user is now signed in, any Firebase `onAuthStateChanged` listeners you have will trigger
-            console.warn(`Firebase authenticated via Apple, UID: ${userCredential.user.uid}`);*/
-            } else {
-            // handle this - retry?
-            }
+            const user = await signInWithApple();
+            this.succesfullSignIn(user);
         } catch (error) {
-            database.ref('iOSSignInTest').update({ linked: false, error });
             console.log('Error', error);
         }
       }
@@ -154,7 +120,7 @@ class SignInScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <Image style={styles.backgroundImage}
-                        source={SignUpControllersBackgroundImage} />
+                    source={SignUpControllersBackgroundImage} />
                 <View style={styles.container}>
                     <View>
                         <Image source={QaplaSignUpLogo} />
@@ -162,26 +128,30 @@ class SignInScreen extends Component {
                     <View>
                         <TouchableWithoutFeedback onPress={this.signInWithFacebook}>
                             <View style={[styles.socialMediaSignInButton, styles.facebookSignInButton]}>
-                                <FacebookIcon style={styles.socialMediaIconStyle} />
+                                <View style={{ marginTop: 16 }}>
+                                    <FacebookIcon style={styles.socialMediaIconStyle} />
+                                </View>
                                 <QaplaText style={[styles.textButton, styles.whiteColor]}>{translate('signInScreen.facebookSignin')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.signInWithGoogle}>
                             <View style={[styles.socialMediaSignInButton, styles.googleSignInButton]}>
-                                <GoogleIcon style={styles.socialMediaIconStyle} />
+                                <View style={{ marginTop: 16 }}>
+                                    <GoogleIcon style={styles.socialMediaIconStyle} />
+                                </View>
                                 <QaplaText style={[styles.textButton, styles.googleButtonText]}>{translate('signInScreen.googleSignin')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={this.onAppleButtonPress}>
-                            <View style={[styles.socialMediaSignInButton, styles.googleSignInButton]}>
-                                <AppleButton
-                                    buttonStyle={AppleButton.Style.WHITE}
-                                    buttonType={AppleButton.Type.SIGN_IN}
-                                    style={styles.appleButton}
-                                    onPress={this.onAppleButtonPress} />
-                                <QaplaText style={[styles.textButton, styles.googleButtonText]}>Sign in with apple</QaplaText>
-                            </View>
-                        </TouchableWithoutFeedback>
+                        {Platform.OS === 'ios' && appleAuth.isSupported &&
+                            <TouchableWithoutFeedback onPress={this.onAppleButtonPress}>
+                                <View style={[styles.socialMediaSignInButton, styles.appleSignInButton]}>
+                                    <View style={{ marginTop: 16 }}>
+                                        <AppleIcon style={styles.socialMediaIconStyle} />
+                                    </View>
+                                    <QaplaText style={[styles.textButton, styles.appleButtonText]}>{translate('signInScreen.appleSignin')}</QaplaText>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        }
                         <View style={styles.alreadyHaveAccountTextContainer}>
                             <QaplaText style={[styles.whiteColor, styles.alignSelfCenter, styles.fontBold]}>{translate('signInScreen.alreadyHaveAccount')}</QaplaText>
                             <QaplaText style={[styles.enterWithEmailText, styles.alignSelfCenter, styles.fontBold]} onPress={this.navigateToLoginWithEmail}>

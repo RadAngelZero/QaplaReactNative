@@ -278,6 +278,7 @@
     "signInScreen": {
         "facebookSignin": "Continue with Facebook",
         "googleSignin": "Continue with Google",
+        "appleSignin": "Continue with Apple",
         "alreadyHaveAccount": "Already have an account?",
         "emailSignin": "Sign in with email"
     },

@@ -22,7 +22,6 @@ export default styles = StyleSheet.create({
         justifyContent: 'center'
     },
     socialMediaIconStyle: {
-        marginLeft: 12,
         alignSelf: 'center'
     },
     facebookSignInButton: {
@@ -36,10 +35,7 @@ export default styles = StyleSheet.create({
         alignSelf: 'center'
     },
     textButton: {
-        textAlign: 'center',
-        textAlignVertical: 'center',
-        marginLeft: 8,
-        marginRight: 16,
+        marginLeft: 16,
         marginTop: 18,
         marginBottom: 18
     },
@@ -49,6 +45,13 @@ export default styles = StyleSheet.create({
     },
     googleButtonText: {
         color: 'rgba(0, 0, 0, .541)'
+    },
+    appleSignInButton: {
+        backgroundColor: '#000',
+        marginTop: heightPercentageToPx(2.96)
+    },
+    appleButtonText: {
+        color: '#FFF'
     },
     alreadyHaveAccountTextContainer: {
         flexDirection: 'row',

@@ -35,6 +35,7 @@ import EditIcon from './icons/edit.svg';
 import NoVerifiedIcon from './icons/sin-verificar.svg';
 import FacebookIcon from './icons/facebook_round.svg';
 import GoogleIcon from './icons/google-logo.svg';
+import AppleIcon from './icons/AppleLogo.svg';
 import QoinFlipIcon from './icons/qoins-flip.svg';
 import BalanceFlipIcon from './icons/qapla-balance-flip.svg';
 import CopyIcon from './icons/Copy.svg';
@@ -257,7 +258,8 @@ const images = {
 		interact: Interact,
 		follow: Follow,
 		subscribe: Subscribe,
-		acquire: Acquire
+		acquire: Acquire,
+		appleIcon: AppleIcon
 	}
 };
 

@@ -1,8 +1,3 @@
-// josep.sanahuja    - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
-// diego             - 12-09-2019 - us99 - Updated closeIcon styles to make it consistent with new
-//                                         closeIcon implementation (changed text icon for SVG icon)
-// diego             - 20-08-2019 - us89 - +getDimensions & closeIcon
-
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import Colors from '../../utilities/Colors';
@@ -18,9 +13,7 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(100),
     },
     closeIcon: {
-        alignSelf: 'flex-end',
-        marginTop: 16,
-        marginRight: 16
+        alignSelf: 'flex-end'
     },
     container: {
         width: widthPercentageToPx(80),
@@ -39,6 +32,8 @@ export default styles = StyleSheet.create({
         alignItems: 'center'
     },
     headerText: {
+        marginTop: heightPercentageToPx(0.67) + 15,
+        marginBottom: 30,
         color: '#FFF',
         fontSize: 30
     },
@@ -47,7 +42,8 @@ export default styles = StyleSheet.create({
         fontSize: 16
     },
     paragraph: {
-        marginTop: 16,
+        marginTop: heightPercentageToPx(0.62),
+        marginBottom: 10,
         marginLeft: widthPercentageToPx(3.13),
         marginRight: widthPercentageToPx(3.13),
         color: Colors.modals.body,
@@ -55,10 +51,10 @@ export default styles = StyleSheet.create({
         textAlign: 'center'
     },
     eventsButton: {
-        marginTop: 24,
+        marginTop: heightPercentageToPx(1.31),
         borderRadius: 100,
         backgroundColor: Colors.modals.bttnColor,
-        marginBottom: 16
+        marginBottom: heightPercentageToPx(2.96)
     },
     bttnText: {
         color: '#FFF',
@@ -66,9 +62,9 @@ export default styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         letterSpacing: 2.65,
-        marginTop: 18,
-        marginBottom: 18,
-        marginLeft: 26,
-        marginRight: 26
+        marginTop: heightPercentageToPx(2.46),
+        marginBottom: heightPercentageToPx(2.46),
+        marginLeft: widthPercentageToPx(8.53),
+        marginRight: widthPercentageToPx(8.53)
     }
 });

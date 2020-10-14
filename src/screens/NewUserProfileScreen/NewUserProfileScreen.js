@@ -26,6 +26,7 @@ import { setScroll, setUserImage } from '../../actions/profileLeaderBoardActions
 import { retrieveData, storeData } from '../../utilities/persistance';
 import { defaultUserImages } from '../../utilities/Constants';
 import QaplaTooltip from '../../components/QaplaTooltip/QaplaTooltip';
+import ZeroQoinsEventsModal from '../../components/ZeroQoinsEventsModal/ZeroQoinsEventsModal';
 
 const BitsIcon = images.svg.bitsIcon;
 
@@ -74,7 +75,8 @@ export class NewUserProfileScreen extends Component {
         openInfoTooltip: false,
         openRewardsTooltip: false,
         openedTooltips: 0,
-        indexOfTooltipOpen: -1
+        indexOfTooltipOpen: -1,
+        openDonationFeedbackModal: false
     };
 
     componentWillMount() {
@@ -137,13 +139,16 @@ export class NewUserProfileScreen extends Component {
      * Begins the process of redeem qaploins
      */
     exchangeQaploins = async () => {
-        if (this.state.bitsToDonate >0) {
+        if (this.state.bitsToDonate > 0 && this.state.donationCost && this.props.userQoins * this.state.donationCost >= this.state.bitsToDonate) {
             let exchangeUrl = await getDonationFormUrl();
             if (exchangeUrl) {
                 exchangeUrl += `#uid=${this.props.uid}&qoins=${this.state.bitsToDonate / this.state.donationCost}`;
 
                 this.props.navigation.navigate('ExchangeQoinsScreen', { exchangeUrl });
+                this.setState({ bitsToDonate: 0 });
             }
+        } else {
+            this.setState({ openDonationFeedbackModal: true });
         }
     }
 
@@ -151,6 +156,8 @@ export class NewUserProfileScreen extends Component {
         const bitsToIncrease = this.state.donationCost * this.state.donationQoinBase;
         if (this.state.donationCost && this.props.userQoins * this.state.donationCost > this.state.bitsToDonate + bitsToIncrease) {
             this.setState({ bitsToDonate: this.state.bitsToDonate + bitsToIncrease });
+        } else {
+            this.setState({ openDonationFeedbackModal: true });
         }
     }
 
@@ -215,6 +222,7 @@ export class NewUserProfileScreen extends Component {
     }
 
     render() {
+        console.log(this.state.openDonationFeedbackModal);
         const userLevel = Math.floor(this.props.experience / 100);
 
         return (
@@ -305,10 +313,16 @@ export class NewUserProfileScreen extends Component {
                         </View>
                         </Animated.View>
                         <View style={[styles.donationNavigatorContainer, { height: this.state.collapsableToolBarMaxHeight }]}>
-                            <AppContainer />
+                            <QaplaText style={styles.storeTitle}>
+                                {translate('newUserProfileScreen.store')}
+                            </QaplaText>
+                            <RewardsStore />
                         </View>
                     </ScrollView>
                 </RewardsBottomSheet>
+                <ZeroQoinsEventsModal
+                    open={this.state.openDonationFeedbackModal}
+                    onClose={() => this.setState({ openDonationFeedbackModal: false })} />
             </SafeAreaView>
         );
     }

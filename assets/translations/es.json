@@ -142,7 +142,8 @@
         "bitsAndStars": "Bits/Estrellas",
         "bitsTooltip": "Gana Qoins en los eventos y úsalos para donar al streamer que desees.",
         "next": "Siguiente",
-        "done": "Listo"
+        "done": "Listo",
+        "store": "Tienda"
     },
     "notificationsScreen":{
         "notificationsHeader": "Notificaciones",
@@ -424,6 +425,10 @@
         "redeemPrize":"Redimir Premio",
         "rewardsTooltip": "Cada donación que hagas ayudará a llenar tu barra de vida. ¡Llena la barra y obten recompensas!",
         "next": "Siguiente",
+        "done": "Listo"
+    },
+    "donationsLeaderBoard": {
+        "tooltip": "Gana puntos xq viendo eventos marcados con el icono xq en nuestra pantalla principal",
         "done": "Listo"
     }
 }

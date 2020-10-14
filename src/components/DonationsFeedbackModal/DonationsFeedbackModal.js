@@ -1,30 +1,15 @@
 import React, { Component } from 'react';
-import { Modal, View, TouchableWithoutFeedback } from 'react-native';
-import { withNavigation } from 'react-navigation';
+import { Modal, View, TouchableOpacity, TextInput } from 'react-native';
 
 import styles from './style';
 import Images from './../../../assets/images';
-import { trackOnSegment } from '../../services/statistics';
 import { translate } from '../../utilities/i18';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import QaplaText from '../QaplaText/QaplaText';
 
 const CloseIcon = Images.svg.closeIcon;
 
-class ZeroQoinsEventsModal extends Component {
-    /**
-     * Redirect to LogrosActivos screen
-     */
-    goToEvents = () => {
-        trackOnSegment('Zero Qoins Events Modal', {
-            Bet: this.props.bet,
-            Origin: this.props.openWhen
-        });
-
-        this.props.navigation.navigate('Achievements');
-        this.props.onClose();
-    }
-
+class DonationsFeedbackModal extends Component {
     render() {
         return (
             <Modal
@@ -43,13 +28,11 @@ class ZeroQoinsEventsModal extends Component {
                         <QaplaText style={styles.paragraph}>
                             { translate('zeroQoinsEventModal.body') }
                         </QaplaText>
-                        <TouchableWithoutFeedback onPress={this.goToEvents}>
+                        <TouchableOpacity onPress={this.props.onClose}>
                             <View style={styles.eventsButton}>
-                                <QaplaText style={styles.bttnText}>
-                                    {translate('zeroQoinsEventModal.bttnText')}
-                                </QaplaText>
+                                <QaplaText style={styles.bttnText}>{ translate('zeroQoinsEventModal.bttnText') }</QaplaText>
                             </View>
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
@@ -57,4 +40,4 @@ class ZeroQoinsEventsModal extends Component {
     }
 }
 
-export default withNavigation(ZeroQoinsEventsModal);
+export default DonationsFeedbackModal;

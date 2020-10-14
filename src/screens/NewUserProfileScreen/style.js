@@ -120,6 +120,12 @@ export default styles = StyleSheet.create({
 	},
 	donationNavigatorContainer: {
 		flex: 1,
-		marginTop: 12
+		marginTop: 36
+	},
+	storeTitle: {
+		fontSize: 22,
+		color: '#FFF',
+		marginLeft: 24,
+		marginBottom: 16
 	}
 })

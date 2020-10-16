@@ -8,6 +8,9 @@ import QaplaText from '../QaplaText/QaplaText';
 import styles from './styles';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { defaultUserImages } from '../../utilities/Constants';
+import Colors from '../../utilities/Colors';
+import QaplaTooltip from '../QaplaTooltip/QaplaTooltip';
+import { translate } from '../../utilities/i18';
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
@@ -176,8 +179,6 @@ class LeaderRow extends Component {
     }
 };
 
-const leaderBoardPrizesCardHeight = heightPercentageToPx(100) / (heightPercentageToPx(100) > 850 ? 6 : 5);
-
 class DonationsLeaderBoard extends Component {
     onEndReachedCalledDuringMomentum = true;
     state = {
@@ -191,21 +192,12 @@ class DonationsLeaderBoard extends Component {
         secondaryColor: 0,
         baseWidth: widthPercentageToPx(95),
         lastIndex: 0,
-        leaderBoardPrizesHeight: new Animated.Value(leaderBoardPrizesCardHeight)
+        openLeaderboardTooltip: false
     };
 
     componentDidMount() {
         this.loadLeaderBoard();
         this.getPrizes();
-    }
-
-    componentDidUpdate(prevProps) {
-        if(this.props.enableScroll != prevProps.enableScroll) {
-            Animated.timing(this.state.leaderBoardPrizesHeight, {
-                toValue: this.props.enableScroll ? 0 : leaderBoardPrizesCardHeight,
-                duration: 375
-            }).start();
-        }
     }
 
     loadLeaderBoard = async () => {
@@ -415,11 +407,13 @@ class DonationsLeaderBoard extends Component {
         }
     }
 
+    toggleTooltip = () => this.setState({ openLeaderboardTooltip: !this.state.openLeaderboardTooltip });
+
     render() {
         return (
-            <>
+            <View style={{ flex: 1, backgroundColor: Colors.backgroundColor }}>
                 {this.state.leaderBoardPrizes &&
-                    <Animated.View style={[styles.prizesCard, { height: this.state.leaderBoardPrizesHeight }]}>
+                    <Animated.View style={styles.prizesCard}>
                         <AnimatedLinearGradient
                             useAngle={true}
                             angle={150}
@@ -457,15 +451,25 @@ class DonationsLeaderBoard extends Component {
                         </AnimatedLinearGradient>
                     </Animated.View>
                 }
+                <View style={styles.leaderBoardTitleContainer}>
+                    <QaplaText style={styles.title}>
+                        Leaderboard
+                    </QaplaText>
+                    <QaplaTooltip
+                        style={styles.tooltip}
+                        open={this.state.openLeaderboardTooltip}
+                        toggleTooltip={this.toggleTooltip}
+                        content={translate('donationsLeaderBoard.tooltip')}
+                        buttonText={translate('donationsLeaderBoard.done')}
+                        buttonAction={this.toggleTooltip} />
+                </View>
                 {this.state.leaderBoard &&
                     <TopLeaders topLeaders={this.state.topLeaders} />
                 }
-                <View style={{ flex: 1 }}>
+                <View style={{ height: heightPercentageToPx(23), backgroundColor: Colors.backgroundColor }}>
                     <FlatList
                         ref={(flatList) => this.flatListRef = flatList}
-                        nestedScrollEnabled
                         inverted={Platform.OS !== 'android'}
-                        scrollEnabled={this.props.enableScroll}
                         style={styles.leaderBoardContainer}
                         data={this.state.leaderBoard}
                         keyExtractor={(item) => `leader-${item.uid}`}
@@ -479,7 +483,7 @@ class DonationsLeaderBoard extends Component {
                     <View style={styles.dataContainer}>
                         <Image
                             style={styles.userLeaderImage}
-                            source={this.props.userImage ? this.props.userImage.uri ? { uri: this.props.userImage.img } : this.props.userImage.img : null} />
+                            source={{ uri: this.props.userImage }} />
                         <QaplaText style={styles.userLeaderName} multiline numberOfLines={1}>
                             {this.state.userLeaderBoardData.userName}
                         </QaplaText>
@@ -488,7 +492,7 @@ class DonationsLeaderBoard extends Component {
                         {this.state.userLeaderBoardData.totalDonations}xp
                     </QaplaText>
                 </View>
-            </>
+            </View>
         );
     }
 }
@@ -497,8 +501,8 @@ function mapStateToProps(state) {
     return {
         uid: state.userReducer.user.id,
         userName: state.userReducer.user.userName,
-        enableScroll: state.profileLeaderBoardReducer.enableScroll,
-        userImage: state.profileLeaderBoardReducer.userImage
+        userImage: state.userReducer.user.photoUrl,
+        enableScroll: state.profileLeaderBoardReducer.enableScroll
     }
 }
 

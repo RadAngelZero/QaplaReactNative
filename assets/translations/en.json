@@ -142,7 +142,8 @@
         "bitsAndStars": "Bits/Stars",
         "bitsTooltip": "Win Qoins in the events and use them to donate to your streamer of choice.",
         "next": "Next",
-        "done": "Done"
+        "done": "Done",
+        "store": "Store"
     },
     "notificationsScreen":{
         "notificationsHeader": "Notifications",
@@ -424,6 +425,10 @@
         "redeemPrize":"Redeem Prize",
         "rewardsTooltip": "Every donation you make fills your Reward life-bar. Fill the bar to get rewards!",
         "next": "Next",
+        "done": "Done"
+    },
+    "donationsLeaderBoard": {
+        "tooltip": "Earn xq points watching events marked with the xq icon on our main screen",
         "done": "Done"
     }
 }

@@ -5,8 +5,7 @@ import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
     prizesCard: {
-        marginTop: 14,
-        backgroundColor: '#141833',
+        backgroundColor: Colors.backgroundColor,
         alignSelf: 'center',
         borderRadius: 20,
         width: widthPercentageToPx(95),
@@ -59,6 +58,19 @@ export default styles = StyleSheet.create({
         height: 6,
         width: 6,
         marginLeft: 6
+    },
+    leaderBoardTitleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 8
+    },
+    title: {
+        fontSize: 22,
+        color: '#FFF',
+        marginLeft: 24
+    },
+    tooltip: {
+        marginLeft: 12
     },
     leaderBoardContainer: {
         backgroundColor: Colors.backgroundColor
@@ -115,13 +127,14 @@ export default styles = StyleSheet.create({
     },
     // TopLeaders
     topLeadersContainer: {
+        backgroundColor: Colors.backgroundColor,
         justifyContent: 'center',
         flexDirection: 'row',
-        marginTop: 12,
-        marginBottom: 12
+        marginTop: 16,
+        marginBottom: 8
     },
     secondPlaceContainer: {
-        marginTop: 30,
+        marginTop: 28,
         marginRight: 20,
         justifyContent: 'center'
     },
@@ -152,7 +165,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'center'
     },
     thirdPlaceContainer: {
-        marginTop: 30,
+        marginTop: 28,
         justifyContent: 'center'
     },
     // LeaderRow

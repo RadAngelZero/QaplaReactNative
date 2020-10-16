@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, ScrollView, View, Image, Animated, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { createAppContainer } from 'react-navigation';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -13,7 +11,7 @@ import { recordScreenOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
 
 import { translate } from '../../utilities/i18';
-import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import { getDonationFormUrl, getDonationsCosts, getDonationQoinsBase } from '../../services/database';
 import Colors from '../../utilities/Colors';
@@ -21,46 +19,13 @@ import RewardsStore from '../../components/RewardsStore/RewardsStore';
 
 import RewardsBottomSheet from '../../components/RewardsBottomSheet/RewardsBottomSheet';
 import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
-import DonationsLeaderBoard from '../../components/DonationsLeaderBoard/DonationsLeaderBoard';
 import { setScroll, setUserImage } from '../../actions/profileLeaderBoardActions';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import { defaultUserImages } from '../../utilities/Constants';
 import QaplaTooltip from '../../components/QaplaTooltip/QaplaTooltip';
+import ZeroQoinsEventsModal from '../../components/ZeroQoinsEventsModal/ZeroQoinsEventsModal';
 
 const BitsIcon = images.svg.bitsIcon;
-
-const DonationsNavigator = createMaterialTopTabNavigator({
-    Leaderboard: {
-        screen: () => <DonationsLeaderBoard />
-    },
-    Store: {
-        screen: () => <RewardsStore />
-    }
-},
-{
-    tabBarOptions: {
-      upperCaseLabel: false,
-      style: {
-        backgroundColor: '#0C1021'
-      },
-      tabStyle: {
-        width: widthPercentageToPx(35)
-      },
-      labelStyle: {
-        fontSize: 16,
-        fontFamily: 'SFRounded-Ultralight'
-      },
-      activeTintColor: '#FFF',
-      inactiveTintColor: '#FFF',
-      indicatorStyle: {
-        borderBottomColor: '#36E5CE',
-        borderBottomWidth: 2,
-        width: widthPercentageToPx(35)
-      }
-    },
-  });
-
-const AppContainer = createAppContainer(DonationsNavigator);
 
 export class NewUserProfileScreen extends Component {
     state = {
@@ -74,7 +39,8 @@ export class NewUserProfileScreen extends Component {
         openInfoTooltip: false,
         openRewardsTooltip: false,
         openedTooltips: 0,
-        indexOfTooltipOpen: -1
+        indexOfTooltipOpen: -1,
+        openDonationFeedbackModal: false
     };
 
     componentWillMount() {
@@ -137,20 +103,25 @@ export class NewUserProfileScreen extends Component {
      * Begins the process of redeem qaploins
      */
     exchangeQaploins = async () => {
-        if (this.state.bitsToDonate >0) {
+        if (this.state.bitsToDonate > 0 && this.state.donationCost && this.props.userQoins * this.state.donationCost >= this.state.bitsToDonate) {
             let exchangeUrl = await getDonationFormUrl();
             if (exchangeUrl) {
                 exchangeUrl += `#uid=${this.props.uid}&qoins=${this.state.bitsToDonate / this.state.donationCost}`;
 
                 this.props.navigation.navigate('ExchangeQoinsScreen', { exchangeUrl });
+                this.setState({ bitsToDonate: 0 });
             }
+        } else {
+            this.setState({ openDonationFeedbackModal: true });
         }
     }
 
     addECoinToDonation = () => {
         const bitsToIncrease = this.state.donationCost * this.state.donationQoinBase;
-        if (this.state.donationCost && this.props.userQoins * this.state.donationCost > this.state.bitsToDonate + bitsToIncrease) {
+        if (this.state.donationCost && this.props.userQoins * this.state.donationCost >= this.state.bitsToDonate + bitsToIncrease) {
             this.setState({ bitsToDonate: this.state.bitsToDonate + bitsToIncrease });
+        } else {
+            this.setState({ openDonationFeedbackModal: true });
         }
     }
 
@@ -305,10 +276,16 @@ export class NewUserProfileScreen extends Component {
                         </View>
                         </Animated.View>
                         <View style={[styles.donationNavigatorContainer, { height: this.state.collapsableToolBarMaxHeight }]}>
-                            <AppContainer />
+                            <QaplaText style={styles.storeTitle}>
+                                {translate('newUserProfileScreen.store')}
+                            </QaplaText>
+                            <RewardsStore />
                         </View>
                     </ScrollView>
                 </RewardsBottomSheet>
+                <ZeroQoinsEventsModal
+                    open={this.state.openDonationFeedbackModal}
+                    onClose={() => this.setState({ openDonationFeedbackModal: false })} />
             </SafeAreaView>
         );
     }

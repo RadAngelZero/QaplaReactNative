@@ -407,6 +407,8 @@ class DonationsLeaderBoard extends Component {
         }
     }
 
+    toggleTooltip = () => this.setState({ openLeaderboardTooltip: !this.state.openLeaderboardTooltip });
+
     render() {
         return (
             <View style={{ flex: 1, backgroundColor: Colors.backgroundColor }}>
@@ -456,10 +458,10 @@ class DonationsLeaderBoard extends Component {
                     <QaplaTooltip
                         style={styles.tooltip}
                         open={this.state.openLeaderboardTooltip}
-                        toggleTooltip={() => this.setState({ openLeaderboardTooltip: !this.state.openLeaderboardTooltip })}
+                        toggleTooltip={this.toggleTooltip}
                         content={translate('donationsLeaderBoard.tooltip')}
                         buttonText={translate('donationsLeaderBoard.done')}
-                        buttonAction={() => this.setState({ openLeaderboardTooltip: !this.state.openLeaderboardTooltip })} />
+                        buttonAction={this.toggleTooltip} />
                 </View>
                 {this.state.leaderBoard &&
                     <TopLeaders topLeaders={this.state.topLeaders} />
@@ -481,7 +483,7 @@ class DonationsLeaderBoard extends Component {
                     <View style={styles.dataContainer}>
                         <Image
                             style={styles.userLeaderImage}
-                            source={this.props.userImage ? this.props.userImage.uri ? { uri: this.props.userImage.img } : this.props.userImage.img : null} />
+                            source={{ uri: this.props.userImage }} />
                         <QaplaText style={styles.userLeaderName} multiline numberOfLines={1}>
                             {this.state.userLeaderBoardData.userName}
                         </QaplaText>
@@ -499,8 +501,8 @@ function mapStateToProps(state) {
     return {
         uid: state.userReducer.user.id,
         userName: state.userReducer.user.userName,
-        enableScroll: state.profileLeaderBoardReducer.enableScroll,
-        userImage: state.profileLeaderBoardReducer.userImage
+        userImage: state.userReducer.user.photoUrl,
+        enableScroll: state.profileLeaderBoardReducer.enableScroll
     }
 }
 

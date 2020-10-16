@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, ScrollView, View, Image, Animated, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { createAppContainer } from 'react-navigation';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -13,7 +11,7 @@ import { recordScreenOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
 
 import { translate } from '../../utilities/i18';
-import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import { getDonationFormUrl, getDonationsCosts, getDonationQoinsBase } from '../../services/database';
 import Colors from '../../utilities/Colors';
@@ -21,7 +19,6 @@ import RewardsStore from '../../components/RewardsStore/RewardsStore';
 
 import RewardsBottomSheet from '../../components/RewardsBottomSheet/RewardsBottomSheet';
 import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
-import DonationsLeaderBoard from '../../components/DonationsLeaderBoard/DonationsLeaderBoard';
 import { setScroll, setUserImage } from '../../actions/profileLeaderBoardActions';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import { defaultUserImages } from '../../utilities/Constants';
@@ -29,39 +26,6 @@ import QaplaTooltip from '../../components/QaplaTooltip/QaplaTooltip';
 import ZeroQoinsEventsModal from '../../components/ZeroQoinsEventsModal/ZeroQoinsEventsModal';
 
 const BitsIcon = images.svg.bitsIcon;
-
-const DonationsNavigator = createMaterialTopTabNavigator({
-    Leaderboard: {
-        screen: () => <DonationsLeaderBoard />
-    },
-    Store: {
-        screen: () => <RewardsStore />
-    }
-},
-{
-    tabBarOptions: {
-      upperCaseLabel: false,
-      style: {
-        backgroundColor: '#0C1021'
-      },
-      tabStyle: {
-        width: widthPercentageToPx(35)
-      },
-      labelStyle: {
-        fontSize: 16,
-        fontFamily: 'SFRounded-Ultralight'
-      },
-      activeTintColor: '#FFF',
-      inactiveTintColor: '#FFF',
-      indicatorStyle: {
-        borderBottomColor: '#36E5CE',
-        borderBottomWidth: 2,
-        width: widthPercentageToPx(35)
-      }
-    },
-  });
-
-const AppContainer = createAppContainer(DonationsNavigator);
 
 export class NewUserProfileScreen extends Component {
     state = {
@@ -154,7 +118,7 @@ export class NewUserProfileScreen extends Component {
 
     addECoinToDonation = () => {
         const bitsToIncrease = this.state.donationCost * this.state.donationQoinBase;
-        if (this.state.donationCost && this.props.userQoins * this.state.donationCost > this.state.bitsToDonate + bitsToIncrease) {
+        if (this.state.donationCost && this.props.userQoins * this.state.donationCost >= this.state.bitsToDonate + bitsToIncrease) {
             this.setState({ bitsToDonate: this.state.bitsToDonate + bitsToIncrease });
         } else {
             this.setState({ openDonationFeedbackModal: true });
@@ -222,7 +186,6 @@ export class NewUserProfileScreen extends Component {
     }
 
     render() {
-        console.log(this.state.openDonationFeedbackModal);
         const userLevel = Math.floor(this.props.experience / 100);
 
         return (

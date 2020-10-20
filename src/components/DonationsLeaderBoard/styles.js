@@ -4,6 +4,10 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: Colors.backgroundColor
+    },
     prizesCard: {
         backgroundColor: Colors.backgroundColor,
         alignSelf: 'center',
@@ -73,6 +77,7 @@ export default styles = StyleSheet.create({
         marginLeft: 12
     },
     leaderBoardContainer: {
+        height: heightPercentageToPx(23),
         backgroundColor: Colors.backgroundColor
     },
     separatorComponent: {

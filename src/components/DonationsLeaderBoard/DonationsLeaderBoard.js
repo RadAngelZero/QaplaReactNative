@@ -6,11 +6,11 @@ import { connect } from 'react-redux';
 import { getDonationsLeaderBoard, getLeaderBoardPrizes, getUserDonationLeaderBoard, getProfileImageWithUID } from '../../services/database';
 import QaplaText from '../QaplaText/QaplaText';
 import styles from './styles';
-import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { defaultUserImages } from '../../utilities/Constants';
-import Colors from '../../utilities/Colors';
 import QaplaTooltip from '../QaplaTooltip/QaplaTooltip';
 import { translate } from '../../utilities/i18';
+import { retrieveData, storeData } from '../../utilities/persistance';
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
@@ -77,6 +77,7 @@ class TopLeaders extends Component {
                             </View>
                             <QaplaText style={styles.topLeaderUserName}>
                                 {this.props.topLeaders[1].userName}
+                                {/**Tito_Mx.Never Dia Army */}
                             </QaplaText>
                             <QaplaText style={styles.topLeaderExperience}>
                                 {this.props.topLeaders[1].totalDonations}xp
@@ -192,12 +193,14 @@ class DonationsLeaderBoard extends Component {
         secondaryColor: 0,
         baseWidth: widthPercentageToPx(95),
         lastIndex: 0,
-        openLeaderboardTooltip: false
+        openLeaderboardTooltip: false,
+        userImage: { uri: true, img: this.props.userImage },
     };
 
     componentDidMount() {
         this.loadLeaderBoard();
         this.getPrizes();
+        this.setUserDefaultImage();
     }
 
     loadLeaderBoard = async () => {
@@ -407,91 +410,110 @@ class DonationsLeaderBoard extends Component {
         }
     }
 
+    setUserDefaultImage = async () => {
+        if (!this.props.userImage) {
+            let userImageIndex = await retrieveData('default-user-image');
+
+            if (!userImageIndex) {
+                userImageIndex = Math.floor(Math.random() * defaultUserImages.length);
+
+                storeData('default-user-image', `${userImageIndex}`);
+            }
+
+            this.setState({ userImage: { uri: false, img: defaultUserImages[userImageIndex].img } });
+            this.props.setUserImage({ uri: false, img: defaultUserImages[userImageIndex].img });
+        } else {
+            this.props.setUserImage(this.state.userImage);
+        }
+    }
+
     toggleTooltip = () => this.setState({ openLeaderboardTooltip: !this.state.openLeaderboardTooltip });
 
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: Colors.backgroundColor }}>
-                {this.state.leaderBoardPrizes &&
-                    <Animated.View style={styles.prizesCard}>
-                        <AnimatedLinearGradient
-                            useAngle={true}
-                            angle={150}
-                            angleCenter={{ x: .5, y: .5}}
-                            colors={[
-                                this.state.primaryColor,
-                                this.state.secondaryColor
-                            ]}
-                            style={styles.prizesContainer}>
-                            <ScrollView
-                                horizontal
-                                showsHorizontalScrollIndicator={false}
-                                pagingEnabled
-                                onScroll={this.handleScroll}
-                                onScrollEndDrag={this.handleEndMomentum}
-                                scrollEventThrottle={10}>
-                                {this.state.leaderBoardPrizes.map((prize) => (
-                                    <ImageBackground
-                                        source={{ uri: prize.backgroundImage }}
-                                        style={styles.backgroundImage}>
-                                        <QaplaText style={styles.prizeTitle} numberOfLines={2}>
-                                            {prize.title}
-                                        </QaplaText>
-                                        <QaplaText style={styles.prizeDescription} numberOfLines={3}>
-                                            {prize.description}
-                                        </QaplaText>
-                                    </ImageBackground>
-                                ))}
-                            </ScrollView>
-                            <View style={styles.prizesCounterContainer}>
-                                {Object.keys(this.state.leaderBoardPrizes).map((prizeKey, index) => (
-                                    <View style={this.state.activePrizeIndex === index ? styles.prizeIndexActive : styles.prizeIndex} />
-                                ))}
-                            </View>
-                        </AnimatedLinearGradient>
-                    </Animated.View>
-                }
-                <View style={styles.leaderBoardTitleContainer}>
-                    <QaplaText style={styles.title}>
-                        Leaderboard
-                    </QaplaText>
-                    <QaplaTooltip
-                        style={styles.tooltip}
-                        open={this.state.openLeaderboardTooltip}
-                        toggleTooltip={this.toggleTooltip}
-                        content={translate('donationsLeaderBoard.tooltip')}
-                        buttonText={translate('donationsLeaderBoard.done')}
-                        buttonAction={this.toggleTooltip} />
-                </View>
-                {this.state.leaderBoard &&
-                    <TopLeaders topLeaders={this.state.topLeaders} />
-                }
-                <View style={{ height: heightPercentageToPx(23), backgroundColor: Colors.backgroundColor }}>
-                    <FlatList
-                        ref={(flatList) => this.flatListRef = flatList}
-                        inverted={Platform.OS !== 'android'}
-                        style={styles.leaderBoardContainer}
-                        data={this.state.leaderBoard}
-                        keyExtractor={(item) => `leader-${item.uid}`}
-                        onEndReached={this.loadMoreLeaders}
-                        onEndReachedThreshold={.5}
-                        onScroll={() => this.onEndReachedCalledDuringMomentum = false}
-                        renderItem={({ item, index }) => <LeaderRow length={this.state.leaderBoard.length} item={item} index={index} />}
-                        ItemSeparatorComponent={() => <View style={styles.separatorComponent} />} />
-                </View>
-                <View style={styles.userLeaderBoardPositionContainer}>
-                    <View style={styles.dataContainer}>
-                        <Image
-                            style={styles.userLeaderImage}
-                            source={{ uri: this.props.userImage }} />
-                        <QaplaText style={styles.userLeaderName} multiline numberOfLines={1}>
-                            {this.state.userLeaderBoardData.userName}
+            <View style={styles.container}>
+                <ScrollView >
+                    {this.state.leaderBoardPrizes &&
+                        <Animated.View style={styles.prizesCard}>
+                            <AnimatedLinearGradient
+                                useAngle={true}
+                                angle={150}
+                                angleCenter={{ x: .5, y: .5}}
+                                colors={[
+                                    this.state.primaryColor,
+                                    this.state.secondaryColor
+                                ]}
+                                style={styles.prizesContainer}>
+                                <ScrollView
+                                    horizontal
+                                    showsHorizontalScrollIndicator={false}
+                                    pagingEnabled
+                                    onScroll={this.handleScroll}
+                                    onScrollEndDrag={this.handleEndMomentum}
+                                    scrollEventThrottle={10}>
+                                    {this.state.leaderBoardPrizes.map((prize) => (
+                                        <ImageBackground
+                                            source={{ uri: prize.backgroundImage }}
+                                            style={styles.backgroundImage}>
+                                            <QaplaText style={styles.prizeTitle} numberOfLines={2}>
+                                                {prize.title}
+                                            </QaplaText>
+                                            <QaplaText style={styles.prizeDescription} numberOfLines={3}>
+                                                {prize.description}
+                                            </QaplaText>
+                                        </ImageBackground>
+                                    ))}
+                                </ScrollView>
+                                <View style={styles.prizesCounterContainer}>
+                                    {Object.keys(this.state.leaderBoardPrizes).map((prizeKey, index) => (
+                                        <View style={this.state.activePrizeIndex === index ? styles.prizeIndexActive : styles.prizeIndex} />
+                                    ))}
+                                </View>
+                            </AnimatedLinearGradient>
+                        </Animated.View>
+                    }
+                    <View style={styles.leaderBoardTitleContainer}>
+                        <QaplaText style={styles.title}>
+                            Leaderboard
+                        </QaplaText>
+                        <QaplaTooltip
+                            style={styles.tooltip}
+                            open={this.state.openLeaderboardTooltip}
+                            toggleTooltip={this.toggleTooltip}
+                            content={translate('donationsLeaderBoard.tooltip')}
+                            buttonText={translate('donationsLeaderBoard.done')}
+                            buttonAction={this.toggleTooltip} />
+                    </View>
+                    {this.state.leaderBoard &&
+                        <TopLeaders topLeaders={this.state.topLeaders} />
+                    }
+                    <View style={styles.leaderBoardContainer}>
+                        <FlatList
+                            ref={(flatList) => this.flatListRef = flatList}
+                            nestedScrollEnabled
+                            inverted={Platform.OS !== 'android'}
+                            data={this.state.leaderBoard}
+                            keyExtractor={(item) => `leader-${item.uid}`}
+                            onEndReached={this.loadMoreLeaders}
+                            onEndReachedThreshold={.5}
+                            onScroll={() => this.onEndReachedCalledDuringMomentum = false}
+                            renderItem={({ item, index }) => <LeaderRow length={this.state.leaderBoard.length} item={item} index={index} />}
+                            ItemSeparatorComponent={() => <View style={styles.separatorComponent} />} />
+                    </View>
+                    <View style={styles.userLeaderBoardPositionContainer}>
+                        <View style={styles.dataContainer}>
+                            <Image
+                                style={styles.userLeaderImage}
+                                source={this.state.userImage ? this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img : null} />
+                            <QaplaText style={styles.userLeaderName} multiline numberOfLines={1}>
+                                {this.state.userLeaderBoardData.userName}
+                            </QaplaText>
+                        </View>
+                        <QaplaText style={styles.userLeaderDonations}>
+                            {this.state.userLeaderBoardData.totalDonations}xp
                         </QaplaText>
                     </View>
-                    <QaplaText style={styles.userLeaderDonations}>
-                        {this.state.userLeaderBoardData.totalDonations}xp
-                    </QaplaText>
-                </View>
+                </ScrollView>
             </View>
         );
     }

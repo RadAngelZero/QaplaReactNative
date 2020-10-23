@@ -60,6 +60,8 @@ class TopLeaders extends Component {
         this.setState({ topLeadersImages });
     }
 
+    adjustUserName = (userName) => userName.length < 10 ? userName : `${userName.substring(0, 7)}...`;
+
     render() {
         return (
             <View style={styles.topLeadersContainer}>
@@ -76,8 +78,7 @@ class TopLeaders extends Component {
                                 </TopLeaderChip>
                             </View>
                             <QaplaText style={styles.topLeaderUserName}>
-                                {this.props.topLeaders[1].userName}
-                                {/**Tito_Mx.Never Dia Army */}
+                                {this.adjustUserName(this.props.topLeaders[1].userName)}
                             </QaplaText>
                             <QaplaText style={styles.topLeaderExperience}>
                                 {this.props.topLeaders[1].totalDonations}xp
@@ -95,7 +96,7 @@ class TopLeaders extends Component {
                                 </TopLeaderChip>
                             </View>
                             <QaplaText style={styles.topLeaderUserName}>
-                                {this.props.topLeaders[0].userName}
+                                {this.adjustUserName(this.props.topLeaders[0].userName)}
                             </QaplaText>
                             <QaplaText style={styles.topLeaderExperience}>
                                 {this.props.topLeaders[0].totalDonations}xp
@@ -113,7 +114,7 @@ class TopLeaders extends Component {
                                 </TopLeaderChip>
                             </View>
                             <QaplaText style={styles.topLeaderUserName}>
-                                {this.props.topLeaders[2].userName}
+                                {this.adjustUserName(this.props.topLeaders[2].userName)}
                             </QaplaText>
                             <QaplaText style={styles.topLeaderExperience}>
                                 {this.props.topLeaders[2].totalDonations}xp
@@ -181,7 +182,6 @@ class LeaderRow extends Component {
 };
 
 class DonationsLeaderBoard extends Component {
-    onEndReachedCalledDuringMomentum = true;
     state = {
         userLeaderBoardData: {},
         topLeaders: [],
@@ -212,7 +212,7 @@ class DonationsLeaderBoard extends Component {
             this.setState({ userLeaderBoardData: { userName: this.props.userName, totalDonations: 0 } });
         }
 
-        const leaderBoardSnap = await getDonationsLeaderBoard(10);
+        const leaderBoardSnap = await getDonationsLeaderBoard(100);
 
         if (leaderBoardSnap.exists()) {
             const leaderBoardArray = Object.keys(leaderBoardSnap.val())
@@ -374,41 +374,7 @@ class DonationsLeaderBoard extends Component {
         this.setState({ activePrizeIndex: Math.round(scrollEvent.nativeEvent.contentOffset.x / widthPercentageToPx(95)) });
     }
 
-    handleEndMomentum = (endMomentumEvent) => this.setState({ lastIndex: Math.round(endMomentumEvent.nativeEvent.contentOffset.x / widthPercentageToPx(95)) })
-
-    loadMoreLeaders = async () => {
-        if (!this.onEndReachedCalledDuringMomentum) {
-            if (this.state.leaderBoard.length < 97) {
-                    const leaderBoardSnap = await getDonationsLeaderBoard(this.state.leaderBoard.length + 10);
-
-                if (leaderBoardSnap.exists()) {
-                    const leaderBoardArray = Object.keys(leaderBoardSnap.val())
-                    .sort((a, b) => leaderBoardSnap.val()[b].totalDonations - leaderBoardSnap.val()[a].totalDonations)
-                    .map((uid) => {
-                        const leader = leaderBoardSnap.val()[uid];
-                        leader.uid = uid;
-
-                        return leader;
-                    });
-
-                    this.setState({
-                        topLeaders: [
-                            leaderBoardArray[0] ? leaderBoardArray[0] : null,
-                            leaderBoardArray[1] ? leaderBoardArray[1] : null,
-                            leaderBoardArray[2] ? leaderBoardArray[2] : null,
-                        ]
-                    });
-
-                    leaderBoardArray.shift();
-                    leaderBoardArray.shift();
-                    leaderBoardArray.shift();
-
-                    this.setState({ leaderBoard: Platform.OS !== 'android' ? leaderBoardArray.reverse() : leaderBoardArray });
-                }
-                this.onEndReachedCalledDuringMomentum = true;
-            }
-        }
-    }
+    handleEndMomentum = (endMomentumEvent) => this.setState({ lastIndex: Math.round(endMomentumEvent.nativeEvent.contentOffset.x / widthPercentageToPx(95)) });
 
     setUserDefaultImage = async () => {
         if (!this.props.userImage) {
@@ -494,9 +460,6 @@ class DonationsLeaderBoard extends Component {
                             inverted={Platform.OS !== 'android'}
                             data={this.state.leaderBoard}
                             keyExtractor={(item) => `leader-${item.uid}`}
-                            onEndReached={this.loadMoreLeaders}
-                            onEndReachedThreshold={.5}
-                            onScroll={() => this.onEndReachedCalledDuringMomentum = false}
                             renderItem={({ item, index }) => <LeaderRow length={this.state.leaderBoard.length} item={item} index={index} />}
                             ItemSeparatorComponent={() => <View style={styles.separatorComponent} />} />
                     </View>

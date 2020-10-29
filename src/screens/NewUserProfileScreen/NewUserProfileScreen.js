@@ -186,7 +186,7 @@ export class NewUserProfileScreen extends Component {
     }
 
     render() {
-        const userLevel = Math.floor(this.props.experience / 100);
+        const userLevel = Math.floor(this.props.qaplaLevel / 100);
         const userQoins = isNaN(this.props.userQoins - (this.state.bitsToDonate / this.state.donationCost)) ? 0 : this.props.userQoins - (this.state.bitsToDonate / this.state.donationCost);
 
         return (
@@ -254,7 +254,7 @@ export class NewUserProfileScreen extends Component {
                             <View style={styles.levelModalView}>
                                 <AnimatedCircleIndicator
                                     size={120}
-                                    fill={this.props.experience - (userLevel * 100)}
+                                    fill={this.props.qaplaLevel - (userLevel * 100)}
                                     width={7}
                                     duration={750}
                                     fillComponent={() => (
@@ -302,7 +302,7 @@ function mapStateToProps(state) {
             uid: state.userReducer.user.id,
             userQoins: state.userReducer.user.credits,
             userImage: state.userReducer.user.photoUrl,
-            experience: state.userReducer.user.qaplaExperience || 0,
+            qaplaLevel: state.userReducer.user.qaplaLevel || 0,
             rewards: state.userReducer.user.UserRewards,
             enableScroll: state.profileLeaderBoardReducer.enableScroll
         }
@@ -316,7 +316,7 @@ function mapStateToProps(state) {
      */
     return {
         user: state.userReducer.user,
-        experience: 0
+        qaplaLevel: 0
     };
 }
 

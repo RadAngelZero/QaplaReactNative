@@ -187,6 +187,7 @@ export class NewUserProfileScreen extends Component {
 
     render() {
         const userLevel = Math.floor(this.props.experience / 100);
+        const userQoins = isNaN(this.props.userQoins - (this.state.bitsToDonate / this.state.donationCost)) ? 0 : this.props.userQoins - (this.state.bitsToDonate / this.state.donationCost);
 
         return (
             <SafeAreaView style={styles.profileView} onLayout={this.saveToolBarMaxHeight}>
@@ -207,7 +208,7 @@ export class NewUserProfileScreen extends Component {
                                 source={images.png.Qoin3D.img}
                                 style={styles.qoinsImage} />
                             <QaplaText style={styles.qoinsValue}>
-                                {this.props.userQoins}
+                                {userQoins}
                             </QaplaText>
                         </View>
                         <View style={styles.bitsCardContainer}>

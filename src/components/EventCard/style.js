@@ -81,5 +81,3 @@ function defineCardHeight() {
         return heightPercentageToPx(100) / 4.5;
     }
 }
-
-defineCardHeight();

@@ -71,6 +71,10 @@ export class NewUserProfileScreen extends Component {
         this.list.forEach((item) => item.remove());
     }
 
+    /**
+     * Check if the user has a profile image on the database
+     * otherwise assign a random image and save it on the local storage
+     */
     setUserDefaultImage = async () => {
         if (!this.props.userImage) {
             let userImageIndex = await retrieveData('default-user-image');
@@ -88,6 +92,9 @@ export class NewUserProfileScreen extends Component {
         }
     }
 
+    /**
+     * Load the donation cost and the donation qoin base for the user donations
+     */
     setDonationCost = async () => {
         const donationCost = await getDonationsCosts();
         const donationQoinBase = await getDonationQoinsBase();
@@ -116,6 +123,9 @@ export class NewUserProfileScreen extends Component {
         }
     }
 
+    /**
+     * Increase the amount of the user donation
+     */
     addECoinToDonation = () => {
         const bitsToIncrease = this.state.donationCost * this.state.donationQoinBase;
         if (this.state.donationCost && this.props.userQoins * this.state.donationCost >= this.state.bitsToDonate + bitsToIncrease) {
@@ -125,14 +135,25 @@ export class NewUserProfileScreen extends Component {
         }
     }
 
+    /**
+     * Decrease the amount of the user donation
+     */
     substractECoinToDonation = () => {
         if (this.state.bitsToDonate > 0) {
             this.setState({ bitsToDonate: this.state.bitsToDonate - (this.state.donationCost * this.state.donationQoinBase) });
         }
     }
 
+    /**
+     * Set the collapsableToolBarMaxHeight variable state based on the
+     * height of the component
+     */
     saveToolBarMaxHeight = ({ nativeEvent }) => this.setState({ collapsableToolBarMaxHeight: nativeEvent.layout.height });
 
+    /**
+     * Event called at the end of the scroll on scroll view
+     * Handle the collapsable effect on the profile
+     */
     scrollCollapsable = ({ nativeEvent }) => {
         if (this.state.isLeaderBoardCollapsed) {
             if (nativeEvent.contentOffset.y <= 50) {
@@ -151,8 +172,14 @@ export class NewUserProfileScreen extends Component {
         }
     }
 
+    /**
+     * Save the last position in the Y axis on previousScrollPosition variable state
+     */
     setLastScrollPosition = ({ nativeEvent }) => this.setState({ previousScrollPosition: nativeEvent.contentOffset.y });
 
+    /**
+     * Toggle the tooltip for donations
+     */
     toggleInfoTooltip = () => {
         if (!this.state.openInfoTooltip) {
             this.setState({ openedTooltips: this.state.openedTooltips + 1, indexOfTooltipOpen: 0 });
@@ -161,6 +188,9 @@ export class NewUserProfileScreen extends Component {
         this.setState({ openInfoTooltip: !this.state.openInfoTooltip });
     }
 
+    /**
+     * Toggle the tooltip for rewards
+     */
     toggleRewardTooltip = () => {
         if (!this.state.openRewardsTooltip) {
             this.setState({ openedTooltips: this.state.openedTooltips + 1, indexOfTooltipOpen: 1 });
@@ -169,6 +199,10 @@ export class NewUserProfileScreen extends Component {
         this.setState({ openRewardsTooltip: !this.state.openRewardsTooltip });
     }
 
+    /**
+     * Handle the logic to open the tooltips in a sequence
+     * open all the tooltips always
+     */
     tooltipAction = () => {
         const toggleFunctions = [this.toggleInfoTooltip, this.toggleRewardTooltip];
         if (this.state.openedTooltips < 2) {
@@ -203,78 +237,78 @@ export class NewUserProfileScreen extends Component {
                         onScrollEndDrag={this.scrollCollapsable}
                         onScroll={this.setLastScrollPosition}>
                         <Animated.View style={{ flex: 1 }}>
-                        <View style={styles.qoinsView}>
-                            <Image
-                                source={images.png.Qoin3D.img}
-                                style={styles.qoinsImage} />
-                            <QaplaText style={styles.qoinsValue}>
-                                {userQoins}
-                            </QaplaText>
-                        </View>
-                        <View style={styles.bitsCardContainer}>
-                            <View style={styles.bitsModuleView}>
-                                <View>
-                                    <View style={styles.infoImageContainer}>
-                                        <QaplaTooltip
-                                            style={styles.infoImage}
-                                            toggleTooltip={this.toggleInfoTooltip}
-                                            open={this.state.openInfoTooltip}
-                                            content={translate('newUserProfileScreen.bitsTooltip')}
-                                            buttonText={this.state.openedTooltips >= 2 ? translate('newUserProfileScreen.done') : translate('newUserProfileScreen.next')}
-                                            buttonAction={this.tooltipAction} />
-                                    </View>
-                                    <BitsIcon style={styles.bits3dIconImage}/>
-                                </View>
-                                <View style={styles.donationValueContainer}>
-                                    <View style={styles.bitsValueContainer}>
-                                        <QaplaText style={styles.bitsNumber}>
-                                            {this.state.bitsToDonate}
-                                        </QaplaText>
-                                        <QaplaText style={styles.bitsTitle}>
-                                            {translate('newUserProfileScreen.bitsAndStars')}
-                                        </QaplaText>
-                                    </View>
-                                    <View style={styles.handleDonationContainer}>
-                                        <TouchableOpacity style={styles.updateDonationIcon} onPress={this.addECoinToDonation}>
-                                            <images.svg.plusBubble />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={styles.updateDonationIcon} onPress={this.substractECoinToDonation}>
-                                            <images.svg.minusBubble />
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                                <TouchableOpacity
-                                    style={styles.buttonView}
-                                    onPress={this.exchangeQaploins}>
-                                    <QaplaText style={styles.supportText}>
-                                        Support
-                                    </QaplaText>
-                                </TouchableOpacity>
+                            <View style={styles.qoinsView}>
+                                <Image
+                                    source={images.png.Qoin3D.img}
+                                    style={styles.qoinsImage} />
+                                <QaplaText style={styles.qoinsValue}>
+                                    {userQoins}
+                                </QaplaText>
                             </View>
-                            <View style={styles.levelModalView}>
-                                <AnimatedCircleIndicator
-                                    size={120}
-                                    fill={this.props.qaplaLevel - (userLevel * 100)}
-                                    width={7}
-                                    duration={750}
-                                    fillComponent={() => (
-                                        <EditProfileImgBadge style={styles.userImage}>
-                                            <Image
-                                                style={styles.userImage}
-                                                source={this.state.userImage ? this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img : null} />
-                                        </EditProfileImgBadge>
-                                    )}
-                                    backgroundColor='#1F2750'
-                                    tintColor={Colors.greenQapla}
-                                    descriptionComponent={() => (
-                                        <View style={styles.expTextContainer}>
-                                            <QaplaText style={styles.expText}>
-                                                {`${translate('newUserProfileScreen.level')} ${userLevel}`}
+                            <View style={styles.bitsCardContainer}>
+                                <View style={styles.bitsModuleView}>
+                                    <View>
+                                        <View style={styles.infoImageContainer}>
+                                            <QaplaTooltip
+                                                style={styles.infoImage}
+                                                toggleTooltip={this.toggleInfoTooltip}
+                                                open={this.state.openInfoTooltip}
+                                                content={translate('newUserProfileScreen.bitsTooltip')}
+                                                buttonText={this.state.openedTooltips >= 2 ? translate('newUserProfileScreen.done') : translate('newUserProfileScreen.next')}
+                                                buttonAction={this.tooltipAction} />
+                                        </View>
+                                        <BitsIcon style={styles.bits3dIconImage}/>
+                                    </View>
+                                    <View style={styles.donationValueContainer}>
+                                        <View style={styles.bitsValueContainer}>
+                                            <QaplaText style={styles.bitsNumber}>
+                                                {this.state.bitsToDonate}
+                                            </QaplaText>
+                                            <QaplaText style={styles.bitsTitle}>
+                                                {translate('newUserProfileScreen.bitsAndStars')}
                                             </QaplaText>
                                         </View>
-                                    )} />
+                                        <View style={styles.handleDonationContainer}>
+                                            <TouchableOpacity style={styles.updateDonationIcon} onPress={this.addECoinToDonation}>
+                                                <images.svg.plusBubble />
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={styles.updateDonationIcon} onPress={this.substractECoinToDonation}>
+                                                <images.svg.minusBubble />
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                    <TouchableOpacity
+                                        style={styles.buttonView}
+                                        onPress={this.exchangeQaploins}>
+                                        <QaplaText style={styles.supportText}>
+                                            Support
+                                        </QaplaText>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.levelModalView}>
+                                    <AnimatedCircleIndicator
+                                        size={120}
+                                        fill={this.props.qaplaLevel - (userLevel * 100)}
+                                        width={7}
+                                        duration={750}
+                                        fillComponent={() => (
+                                            <EditProfileImgBadge style={styles.userImage}>
+                                                <Image
+                                                    style={styles.userImage}
+                                                    source={this.state.userImage ? this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img : null} />
+                                            </EditProfileImgBadge>
+                                        )}
+                                        backgroundColor='#1F2750'
+                                        tintColor={Colors.greenQapla}
+                                        descriptionComponent={() => (
+                                            <View style={styles.expTextContainer}>
+                                                <QaplaText style={styles.expText}>
+                                                    {`${translate('newUserProfileScreen.level')} ${userLevel}`}
+                                                </QaplaText>
+                                            </View>
+                                        )} />
+                                </View>
                             </View>
-                        </View>
                         </Animated.View>
                         <View style={[styles.donationNavigatorContainer, { height: this.state.collapsableToolBarMaxHeight }]}>
                             <QaplaText style={styles.storeTitle}>

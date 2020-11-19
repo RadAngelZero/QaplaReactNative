@@ -73,11 +73,9 @@ export default styles = StyleSheet.create({
 });
 
 function defineCardHeight() {
-    if (heightPercentageToPx(100) >= 800) {
+    if (heightPercentageToPx(100) >= 700) {
         return heightPercentageToPx(100) / 6;
-    } else if (heightPercentageToPx(100) < 800 && heightPercentageToPx(100) > 700) {
-        return heightPercentageToPx(100) / 5;
-    } else if (heightPercentageToPx(100) <= 700) {
+    } else if (heightPercentageToPx(100) < 700) {
         return heightPercentageToPx(100) / 4.5;
     }
 }

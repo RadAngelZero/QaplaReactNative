@@ -14,6 +14,7 @@ import { getQaplaStoreCheaperProduct } from '../../services/database';
 import remoteConfig from '../../services/remoteConfig';
 import { translate } from '../../utilities/i18';
 import QaplaTooltip from '../QaplaTooltip/QaplaTooltip';
+import { trackOnSegment } from '../../services/statistics';
 
 class RewardsBottomSheet extends Component {
     fall = new Animated.Value(1);
@@ -48,6 +49,7 @@ class RewardsBottomSheet extends Component {
         const cheaperProduct = await getQaplaStoreCheaperProduct();
         const productIndex = Object.keys(cheaperProduct.val())[0];
         if (cheaperProduct.exists() && this.props.rewards.lifes >= cheaperProduct.val()[productIndex].price) {
+            trackOnSegment('User redeem prize from dialog');
             Linking.openURL((await remoteConfig.getDataFromKey('Discord')).QAPLA_DISCORD_EXCHANGE_CHANNEL);
         }
     }

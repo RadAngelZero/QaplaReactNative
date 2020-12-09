@@ -32,6 +32,9 @@ class RewardsBottomSheet extends Component {
         }
     }
 
+    /**
+     * Toggle the visible size of the bottom sheet
+     */
     toggleBottomSheet = () => {
         if (!this.state.open) {
             this.sheetRef.snapTo(1);
@@ -41,10 +44,17 @@ class RewardsBottomSheet extends Component {
         }
     }
 
+    /**
+     * Toggle the open variable in the state
+     */
     toggleOpen = () => {
         this.setState({ open: !this.state.open });
     }
 
+    /**
+     * Check the cheaper product in the store, if the user lifes are equal or greater
+     * than the product price then we send the user to discord
+     */
     redeemLifes = async () => {
         const cheaperProduct = await getQaplaStoreCheaperProduct();
         const productIndex = Object.keys(cheaperProduct.val())[0];
@@ -54,6 +64,10 @@ class RewardsBottomSheet extends Component {
         }
     }
 
+    /**
+     * Open the tooltip of rewards, if the bottom sheet is open we close it
+     * after this tooltip, so the next tooltip can be open correctly
+     */
     buttonAction = () => {
         if (this.state.open) {
             this.sheetRef.snapTo(0);
@@ -63,6 +77,9 @@ class RewardsBottomSheet extends Component {
         this.props.tooltipButtonAction();
     }
 
+    /**
+     * Render the content of the bottom sheet
+     */
     renderContent = () => {
         return (
             <TouchableWithoutFeedback onPress={this.toggleBottomSheet}>

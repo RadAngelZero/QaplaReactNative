@@ -7,7 +7,7 @@ import images from '../../../assets/images';
 
 import AnimatedCircleIndicator from '../../components/AnimatedCircleIndicator/AnimatedCircleIndicator';
 
-import { recordScreenOnSegment } from '../../services/statistics';
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
 
 import { translate } from '../../utilities/i18';
@@ -109,6 +109,11 @@ export class NewUserProfileScreen extends Component {
                 exchangeUrl += `#uid=${this.props.uid}&qoins=${this.state.bitsToDonate / this.state.donationCost}`;
 
                 this.props.navigation.navigate('ExchangeQoinsScreen', { exchangeUrl });
+                trackOnSegment('User support streamer',
+                    {
+                        SupportAmount: this.state.bitsToDonate / this.state.donationCost
+                    }
+                );
                 this.setState({ bitsToDonate: 0 });
             }
         } else {

@@ -17,6 +17,7 @@ import { userHasRequestToJoinEvent, isUserParticipantOnEvent } from '../../servi
 import Images from '../../../assets/images';
 import QaplaText from '../QaplaText/QaplaText';
 import { getSendBirdOpenChannel } from '../../services/SendBird';
+import { trackOnSegment } from '../../services/statistics';
 
 function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
     const validColorRegExp = new RegExp('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
@@ -85,6 +86,7 @@ class EventDetails extends Component {
 
         if (streamerChannelLink) {
             Linking.openURL(streamerChannelLink);
+            trackOnSegment('User follow streamer', { EventStreamer: this.props.event.streamerName });
         }
     }
 

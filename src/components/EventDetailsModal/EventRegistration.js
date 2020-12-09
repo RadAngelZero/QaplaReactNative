@@ -15,6 +15,7 @@ import { subscribeUserToTopic } from '../../services/messaging';
 import { EVENTS_TOPIC } from '../../utilities/Constants';
 import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
 import QaplaText from '../QaplaText/QaplaText';
+import { trackOnSegment } from '../../services/statistics';
 
 class EventRegistration extends Component {
     constructor(props) {
@@ -117,6 +118,14 @@ class EventRegistration extends Component {
                      * Send the user to the next modal
                      */
                     this.props.goToNextStep();
+
+                    trackOnSegment('User enter data to participate in event', {
+                        EventId: this.props.eventId,
+                        EventIsSponsored: this.props.event.sponsorImage ? true : false,
+                        featuredEvent: this.props.event.featured,
+                        EventStreamer: this.props.event.streamerName,
+                        EventGame: this.props.event.game
+                    });
 
                     return true;
                 } catch (error) {

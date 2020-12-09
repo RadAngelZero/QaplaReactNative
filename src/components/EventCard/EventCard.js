@@ -11,6 +11,7 @@ import styles from './style';
 import { getLocaleLanguage } from '../../utilities/i18';
 import EventDetailsModal from '../EventDetailsModal/EventDetailsModal';
 import QaplaText from '../QaplaText/QaplaText';
+import { trackOnSegment } from '../../services/statistics';
 
 function EventCardContainer({ isSponsored, children, onPress, gradientColors }) {
     if (isSponsored) {
@@ -88,7 +89,17 @@ class EventCard extends Component {
         return res;
     }
 
-    toogleEventDetailsModalVisibility = () => this.setState({ showEventDetailsModal: !this.state.showEventDetailsModal });
+    toogleEventDetailsModalVisibility = () => {
+        trackOnSegment('User open event', {
+            EventId: this.props.eventId,
+            EventIsSponsored: this.props.sponsorImage ? true : false,
+            featuredEvent: this.props.featured,
+            EventStreamer: this.props.streamerName,
+            EventGame: this.props.game
+        });
+
+        this.setState({ showEventDetailsModal: !this.state.showEventDetailsModal });
+    }
 
     render() {
         const {

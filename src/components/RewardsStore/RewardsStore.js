@@ -10,11 +10,12 @@ import { getLocaleLanguage } from '../../utilities/i18';
 import remoteConfig from '../../services/remoteConfig';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import Hearts from '../UserProfileRewards/Hearts';
+import { trackOnSegment } from '../../services/statistics';
 
 const RewardCard = ({ id, onPress, title, description, price, primaryColor = 'rgb(20, 22, 55)', secondaryColor = 'rgb(20, 22, 55)', empty = false }) => {
     if (!empty) {
         return (
-            <TouchableWithoutFeedback key={`Store-Product-${id}`} onPress={() => onPress(price)}>
+            <TouchableWithoutFeedback key={`Store-Product-${id}`} onPress={() => onPress(price, title)}>
                 <LinearGradient
                     start={{
                         x: 0,
@@ -86,8 +87,12 @@ class RewardsStore extends Component {
         this.setState({ rewards });
     }
 
-    buyProduct = async (price) => {
+    buyProduct = async (price, title) => {
         if (this.props.rewards.lifes >= price) {
+            trackOnSegment('User redeem prize', {
+                StoreProductName: title,
+                HeartsNumber: price
+            });
             Linking.openURL((await remoteConfig.getDataFromKey('Discord')).QAPLA_DISCORD_EXCHANGE_CHANNEL);
         }
     }

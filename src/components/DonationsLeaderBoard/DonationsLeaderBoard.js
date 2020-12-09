@@ -11,6 +11,7 @@ import { defaultUserImages } from '../../utilities/Constants';
 import QaplaTooltip from '../QaplaTooltip/QaplaTooltip';
 import { translate } from '../../utilities/i18';
 import { retrieveData, storeData } from '../../utilities/persistance';
+import { recordScreenOnSegment } from '../../services/statistics';
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
@@ -198,6 +199,7 @@ class DonationsLeaderBoard extends Component {
     };
 
     componentDidMount() {
+        recordScreenOnSegment('Leaderboard Screen');
         this.loadLeaderBoard();
         this.getPrizes();
         this.setUserDefaultImage();

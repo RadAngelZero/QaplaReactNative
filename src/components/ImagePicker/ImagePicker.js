@@ -102,6 +102,7 @@ export default class ImagePicker extends React.Component {
   * @param {Object} picture   Picture object
   */
   selectPicture = (pictIndex, picture) => {
+    this.unselectPicture();
       if (!this.state.pictureSelected) {
           this.setState({
               pictureSelected: true,
@@ -156,9 +157,8 @@ export default class ImagePicker extends React.Component {
                     { height: widthImg, width: widthImg }
                 ]}>
                     <Image
-                        key={item.node.image.uri}
                         style={[{
-                            opacity: this.isImageSelected(index, this.state.pictureSelected) ? 0.4 : 1.0
+                                opacity: this.isImageSelected(index, this.state.pictureSelected) ? 0.4 : 1.0
                             },
                             styles.picture
                         ]}
@@ -184,7 +184,7 @@ export default class ImagePicker extends React.Component {
                     onEndReached={this.reachEndOfFlatList}
                     onEndReachedThreshold={0.1}
                     data={this.state.photos}
-                    renderItem={this.renderItem} />
+                    renderItem={(obj) => this.renderItem(obj)} />
                 {this.state.endFlatList && this.state.photos.length > 0 &&
                 this.state.morePictures && !this.state.pictureSelected &&
                     <TouchableWithoutFeedback onPress={this.loadMorePictures}>

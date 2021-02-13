@@ -139,8 +139,8 @@
     },
     "newUserProfileScreen": {
         "level": "Nivel",
-        "bitsAndStars": "Bits/Estrellas",
-        "bitsTooltip": "Gana Qoins en los eventos y úsalos para donar al streamer que desees.",
+        "qoins": "Qoins",
+        "bitsTooltip": "Usa tus Qoins para donarle a tus streamers favoritos. Puedes donar desde 200 Qoins",
         "next": "Siguiente",
         "done": "Listo",
         "store": "Tienda"
@@ -423,7 +423,7 @@
         "donation": "Donación",
         "rewardRedeemed": "Recompensa redimida",
         "redeemPrize":"Redimir Premio",
-        "rewardsTooltip": "Cada donación que hagas ayudará a llenar tu barra de vida. ¡Llena la barra y obten recompensas!",
+        "rewardsTooltip": "Cada donación que hagas se acumula para llenar tu barra de vida. Usa tus vidas para canjearlos en la tienda :D",
         "next": "Siguiente",
         "done": "Listo"
     },

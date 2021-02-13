@@ -1227,13 +1227,6 @@ export function loadUserRewards(uid, callback) {
  */
 
 /**
- * Get the cost (in Qoins) of the eCoins available to donate
- */
-export async function getDonationsCosts() {
-    return await DonationsCostsRef.child('ECoinToQoinRatio').once('value');
-}
-
-/**
  * Get the base of Qoins considered in the ECoin To Qoin equation
  */
 export async function getDonationQoinsBase() {

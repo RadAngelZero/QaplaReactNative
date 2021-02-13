@@ -13,7 +13,7 @@ import { isUserLogged } from '../../services/auth';
 import { translate } from '../../utilities/i18';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { getDonationFormUrl, getDonationsCosts, getDonationQoinsBase } from '../../services/database';
+import { getDonationFormUrl, getDonationQoinsBase } from '../../services/database';
 import Colors from '../../utilities/Colors';
 import RewardsStore from '../../components/RewardsStore/RewardsStore';
 
@@ -29,7 +29,7 @@ const BitsIcon = images.svg.bitsIcon;
 
 export class NewUserProfileScreen extends Component {
     state = {
-        bitsToDonate: 0,
+        qoinsToDonate: 0,
         donationCost: null,
         donationQoinBase: null,
         collapsableToolBarMaxHeight: heightPercentageToPx(50),
@@ -96,11 +96,9 @@ export class NewUserProfileScreen extends Component {
      * Load the donation cost and the donation qoin base for the user donations
      */
     setDonationCost = async () => {
-        const donationCost = await getDonationsCosts();
         const donationQoinBase = await getDonationQoinsBase();
-        if (donationCost.exists() && donationQoinBase.exists()) {
+        if (donationQoinBase.exists()) {
             this.setState({
-                donationCost: donationCost.val(),
                 donationQoinBase: donationQoinBase.val()
             });
         }
@@ -110,18 +108,18 @@ export class NewUserProfileScreen extends Component {
      * Begins the process of redeem qaploins
      */
     exchangeQaploins = async () => {
-        if (this.state.bitsToDonate > 0 && this.state.donationCost && this.props.userQoins * this.state.donationCost >= this.state.bitsToDonate) {
+        if (this.state.qoinsToDonate > 0 && this.props.userQoins >= this.state.qoinsToDonate) {
             let exchangeUrl = await getDonationFormUrl();
             if (exchangeUrl) {
-                exchangeUrl += `#uid=${this.props.uid}&qoins=${this.state.bitsToDonate / this.state.donationCost}`;
+                exchangeUrl += `#uid=${this.props.uid}&qoins=${this.state.qoinsToDonate}`;
 
                 this.props.navigation.navigate('ExchangeQoinsScreen', { exchangeUrl });
                 trackOnSegment('User support streamer',
                     {
-                        SupportAmount: this.state.bitsToDonate / this.state.donationCost
+                        SupportAmount: this.state.qoinsToDonate
                     }
                 );
-                this.setState({ bitsToDonate: 0 });
+                this.setState({ qoinsToDonate: 0 });
             }
         } else {
             this.setState({ openDonationFeedbackModal: true });
@@ -132,9 +130,9 @@ export class NewUserProfileScreen extends Component {
      * Increase the amount of the user donation
      */
     addECoinToDonation = () => {
-        const bitsToIncrease = this.state.donationCost * this.state.donationQoinBase;
-        if (this.state.donationCost && this.props.userQoins * this.state.donationCost >= this.state.bitsToDonate + bitsToIncrease) {
-            this.setState({ bitsToDonate: this.state.bitsToDonate + bitsToIncrease });
+        const bitsToIncrease = this.state.donationQoinBase;
+        if (this.props.userQoins >= this.state.qoinsToDonate + bitsToIncrease) {
+            this.setState({ qoinsToDonate: this.state.qoinsToDonate + bitsToIncrease });
         } else {
             this.setState({ openDonationFeedbackModal: true });
         }
@@ -144,8 +142,8 @@ export class NewUserProfileScreen extends Component {
      * Decrease the amount of the user donation
      */
     substractECoinToDonation = () => {
-        if (this.state.bitsToDonate > 0) {
-            this.setState({ bitsToDonate: this.state.bitsToDonate - (this.state.donationCost * this.state.donationQoinBase) });
+        if (this.state.qoinsToDonate > 0) {
+            this.setState({ qoinsToDonate: this.state.qoinsToDonate - this.state.donationQoinBase });
         }
     }
 
@@ -226,7 +224,7 @@ export class NewUserProfileScreen extends Component {
 
     render() {
         const userLevel = Math.floor(this.props.qaplaLevel / 100);
-        const userQoins = isNaN(this.props.userQoins - (this.state.bitsToDonate / this.state.donationCost)) ? 0 : this.props.userQoins - (this.state.bitsToDonate / this.state.donationCost);
+        const userQoins = isNaN(this.props.userQoins - this.state.qoinsToDonate) ? 0 : this.props.userQoins - this.state.qoinsToDonate;
 
         return (
             <SafeAreaView style={styles.profileView} onLayout={this.saveToolBarMaxHeight}>
@@ -267,10 +265,10 @@ export class NewUserProfileScreen extends Component {
                                     <View style={styles.donationValueContainer}>
                                         <View style={styles.bitsValueContainer}>
                                             <QaplaText style={styles.bitsNumber}>
-                                                {this.state.bitsToDonate}
+                                                {this.state.qoinsToDonate}
                                             </QaplaText>
                                             <QaplaText style={styles.bitsTitle}>
-                                                {translate('newUserProfileScreen.bitsAndStars')}
+                                                {translate('newUserProfileScreen.qoins')}
                                             </QaplaText>
                                         </View>
                                         <View style={styles.handleDonationContainer}>

@@ -62,17 +62,36 @@ export function redeemLogroCloudFunction(idLogro, qaploins) {
 }
 
 /**
- * Description: 
- * Performs the call to the callable cloud function 
+ * Get the user token for auth with custom provider (Twitch)
+ * @param {string} displayName User display name
+ * @param {string} photoUrl User photoUrl
+ * @param {string} email User email
+ * @param {string} uid User identifier
+ */
+export function getTwitchAuthUser(displayName, photoUrl, email, uid) {
+	return callCloudFunction({
+		cfName: 'appTwitchSignin',
+		params: {
+			displayName,
+			photoUrl,
+			email,
+			uid
+		}
+	});
+}
+
+/**
+ * Description:
+ * Performs the call to the callable cloud function
  *
  * @param {object} ctx Context object that has cloud function name and parameter object.
  */
-function callCloudFunction(ctx) {
+async function callCloudFunction(ctx) {
 	let res = null;
 	let cloudFunc = functions.httpsCallable(ctx.cfName);
 
 	try {
-        res = cloudFunc(ctx.params);
+		res = await cloudFunc(ctx.params);
 	}
 	catch (err) {
 		console.log('[callCloudFunction] - ' + ctx.cfName + ' - Error - ' + err);

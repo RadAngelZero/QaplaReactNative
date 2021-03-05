@@ -280,6 +280,7 @@
         "facebookSignin": "Continue with Facebook",
         "googleSignin": "Continue with Google",
         "appleSignin": "Continue with Apple",
+        "twitchSignin": "Continue with Twitch",
         "alreadyHaveAccount": "Already have an account?",
         "emailSignin": "Sign in with email"
     },

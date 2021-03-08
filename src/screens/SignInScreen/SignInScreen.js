@@ -16,6 +16,7 @@ const QaplaSignUpLogo = Images.png.qaplaSignupLogo.img;
 const FacebookIcon = Images.svg.facebookIcon;
 const GoogleIcon = Images.svg.googleIcon;
 const AppleIcon = Images.svg.appleIcon;
+const TwitchIcon = Images.svg.twitchIcon;
 
 class SignInScreen extends Component {
     state = {
@@ -114,7 +115,11 @@ class SignInScreen extends Component {
         } catch (error) {
             console.log('Error', error);
         }
-      }
+    }
+
+    onTwitchButtonPress = () => {
+        this.props.navigation.navigate('TwitchLogIn', { succesfullSignIn: this.succesfullSignIn });
+    }
 
     render() {
         return (
@@ -152,6 +157,14 @@ class SignInScreen extends Component {
                                 </View>
                             </TouchableWithoutFeedback>
                         }
+                        <TouchableWithoutFeedback onPress={this.onTwitchButtonPress}>
+                            <View style={[styles.socialMediaSignInButton, styles.twitchSignInButton]}>
+                                <View style={{ marginTop: 16 }}>
+                                    <TwitchIcon style={styles.socialMediaIconStyle} />
+                                </View>
+                                <QaplaText style={[styles.textButton, styles.twitchButtonText]}>{translate('signInScreen.twitchSignin')}</QaplaText>
+                            </View>
+                        </TouchableWithoutFeedback>
                         <View style={styles.alreadyHaveAccountTextContainer}>
                             <QaplaText style={[styles.whiteColor, styles.alignSelfCenter, styles.fontBold]}>{translate('signInScreen.alreadyHaveAccount')}</QaplaText>
                             <QaplaText style={[styles.enterWithEmailText, styles.alignSelfCenter, styles.fontBold]} onPress={this.navigateToLoginWithEmail}>

@@ -47,6 +47,7 @@ import QaplaText from './components/QaplaText/QaplaText';
 import ChatHeader from './components/Chat/ChatHeader/ChatHeader';
 import CommunityScreen from './screens/CommunityScreen/CommunityScreen';
 import DonationsLeaderBoard from './components/DonationsLeaderBoard/DonationsLeaderBoard';
+import TwitchAuthScreen from './screens/TwitchAuthScreen/TwitchAuthScreen';
 
 //#region Stack Navigators
 
@@ -145,6 +146,12 @@ const AuthStackNavigator = createStackNavigator({
     screen: LoginWithEmailScreen,
     navigationOptions: {
       header: (props) => <TopNavOptions back close {...props} />
+    }
+  },
+  TwitchLogIn: {
+    screen: TwitchAuthScreen,
+    navigationOptions: {
+      header: (props) => <TopNavOptions close {...props} />
     }
   }
 }, {

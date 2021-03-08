@@ -53,6 +53,13 @@ export default styles = StyleSheet.create({
     appleButtonText: {
         color: '#FFF'
     },
+    twitchSignInButton: {
+        backgroundColor: '#8B46FF',
+        marginTop: heightPercentageToPx(2.96)
+    },
+    twitchButtonText: {
+        color: '#FFF'
+    },
     alreadyHaveAccountTextContainer: {
         flexDirection: 'row',
         marginTop: heightPercentageToPx(3.08)

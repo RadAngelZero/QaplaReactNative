@@ -36,6 +36,7 @@ const DonationsCostsRef = database.ref('/DonationsCosts');
 const DonationsLeaderBoardRef = database.ref('/DonationsLeaderBoard');
 const LeaderBoardPrizesRef = database.ref('/LeaderBoardPrizes');
 const twitchUsersRef = database.ref('/TwitchUsers');
+const leaderboardWinnersRef = database.ref('/LeaderboardWinners');
 
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
@@ -1262,6 +1263,13 @@ export async function getDonationQoinsBase() {
 /**
  * Donations Leader Board
  */
+
+/**
+ * Get the number of winners in the current leaderboard season
+ */
+export async function getLeaderboardWinnersNumber() {
+    return await leaderboardWinnersRef.once('value');
+}
 
 /**
  * Get the first X number of users in the leader board

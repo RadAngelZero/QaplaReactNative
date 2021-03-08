@@ -3,7 +3,7 @@ import { View, Image, ScrollView, ImageBackground, FlatList, Animated, Platform 
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
-import { getDonationsLeaderBoard, getLeaderBoardPrizes, getUserDonationLeaderBoard, getProfileImageWithUID } from '../../services/database';
+import { getDonationsLeaderBoard, getLeaderBoardPrizes, getUserDonationLeaderBoard, getProfileImageWithUID, getLeaderboardWinnersNumber } from '../../services/database';
 import QaplaText from '../QaplaText/QaplaText';
 import styles from './styles';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
@@ -214,7 +214,9 @@ class DonationsLeaderBoard extends Component {
             this.setState({ userLeaderBoardData: { userName: this.props.userName, totalDonations: 0 } });
         }
 
-        const leaderBoardSnap = await getDonationsLeaderBoard(100);
+        const numberOfWinners = await getLeaderboardWinnersNumber();
+
+        const leaderBoardSnap = await getDonationsLeaderBoard(numberOfWinners.exists() ? numberOfWinners.val() : 100);
 
         if (leaderBoardSnap.exists()) {
             const leaderBoardArray = Object.keys(leaderBoardSnap.val())

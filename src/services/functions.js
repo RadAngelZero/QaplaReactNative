@@ -62,25 +62,6 @@ export function redeemLogroCloudFunction(idLogro, qaploins) {
 }
 
 /**
- * Get the user token for auth with custom provider (Twitch)
- * @param {string} displayName User display name
- * @param {string} photoUrl User photoUrl
- * @param {string} email User email
- * @param {string} uid User identifier
- */
-export function getTwitchAuthUser(displayName, photoUrl, email, uid) {
-	return callCloudFunction({
-		cfName: 'appTwitchSignin',
-		params: {
-			displayName,
-			photoUrl,
-			email,
-			uid
-		}
-	});
-}
-
-/**
  * Description:
  * Performs the call to the callable cloud function
  *

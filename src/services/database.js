@@ -167,29 +167,12 @@ export async function createUserProfile(Uid, email, userName ) {
 }
 
 /**
- * Save the user uid on the TwitchUsers for future auth reference
- * @param {string} uid User identifier
- * @param {string} twitchId Twitch user id
- */
-export async function saveUidForTwitchUsers(uid, twitchId) {
-    return await twitchUsersRef.child(twitchId).set(uid);
-}
-
-/**
- * Get the uid of the user from the TwitchUsers node with their twitchId
- * @param {string} twitchId Twitch user id
- */
-export async function getUidWithTwitchId(twitchId) {
-    return await twitchUsersRef.child(twitchId).once('value');
-}
-
-/**
  * Save the twitch acces token on the user profile
  * @param {string} uid User identifier
  * @param {string} accesToken Twitch access token
  */
-export async function saveTwitchAccessToken(uid, accesToken) {
-    await usersRef.child(uid).update({ twitchAccessToken: accesToken });
+export async function saveTwitchData(uid, twitchData) {
+    await usersRef.child(uid).update(twitchData);
 }
 
 /**

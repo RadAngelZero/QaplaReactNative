@@ -143,12 +143,3 @@ export async function signOut() {
         console.error(error);
     }
 }
-
-/**
- * Signin a user with a custom firebase auth token
- * @param {string} token Firebase valid custom auth token
- */
-export async function authWithCustomToken(token) {
-    const user = await auth.signInWithCustomToken(token);
-    return user;
-}

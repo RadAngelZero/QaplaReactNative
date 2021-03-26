@@ -167,6 +167,14 @@ export async function createUserProfile(Uid, email, userName ) {
 }
 
 /**
+ * Check if the given twitchId is already used by any user
+ * @param {string} twitchId Twitch identifier
+ */
+export async function isNewTwitchId(twitchId) {
+    return !(await usersRef.orderByChild('twitchId').equalTo(twitchId).once('value')).exists();
+}
+
+/**
  * Save the twitch acces token on the user profile
  * @param {string} uid User identifier
  * @param {string} accesToken Twitch access token

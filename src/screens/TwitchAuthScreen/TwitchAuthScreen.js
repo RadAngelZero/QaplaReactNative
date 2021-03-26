@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import {
     View,
-    SafeAreaView
+    SafeAreaView,
+    Alert
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 import styles from './style';
 import { TWITCH_CLIENT_ID, TWITCH_REDIRECT_URI } from '../../utilities/Constants';
 import { getTwitchUserData } from '../../services/twitch';
-import { saveTwitchData } from '../../services/database';
+import { saveTwitchData, isNewTwitchId } from '../../services/database';
 import { connect } from 'react-redux';
 
 class TwitchAuthScreen extends Component {
@@ -28,16 +29,21 @@ class TwitchAuthScreen extends Component {
             this.alreadyLoaded = true;
             const data = await getTwitchUserData(access_token);
 
-            if (this.props.uid) {
-                saveTwitchData(this.props.uid, {
+            if (this.props.uid && await isNewTwitchId(data.id)) {
+                await saveTwitchData(this.props.uid, {
                     photoUrl: data.profile_image_url,
                     twitchAccessToken: access_token,
                     twitchId: data.id,
                     twitchUsername: data.display_name
                 });
-
-                this.props.navigation.navigate('Profile');
+            } else {
+                Alert.alert('Error', 'Twitch user already linked with other account',
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]);
             }
+
+            this.props.navigation.navigate('Profile');
         }
     }
 

@@ -14,16 +14,16 @@ export class LogrosActivosScreen extends Component {
 
         // Remove the events of previous dates
         Object.keys(this.props.logros.logrosActivos).filter((logroKey) => {
-            if (this.props.logros.logrosActivos[logroKey].dateUTC && this.props.logros.logrosActivos[logroKey].hourUTC) {
+            if (this.props.logros.logrosActivos[logroKey].timestamp) {
                 const [day, month, year] = getDateElementsAsNumber(this.props.logros.logrosActivos[logroKey].dateUTC);
                 const [hour, minute] = getHourElementsAsNumber(this.props.logros.logrosActivos[logroKey].hourUTC);
 
                 const eventDate = new Date(Date.UTC(year, month - 1, day, hour, minute));
                 const date = new Date();
+                date.setHours(0);
+                date.setMinutes(0, 0, 0);
 
-                return (eventDate.getMonth() === date.getMonth() && eventDate.getDate() >= date.getDate()) ||
-                (eventDate.getMonth() > date.getMonth()) &&
-                eventDate.getFullYear() >= date.getFullYear();
+                return this.props.logros.logrosActivos[logroKey].timestamp > date.getTime();
             }
 
             return false;

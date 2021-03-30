@@ -42,10 +42,13 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
     });
 
     const listeningEvents = [];
+    const date = new Date();
+    date.setHours(0);
+    date.setMinutes(0, 0, 0);
     /**
      * We load the active events
      */
-    activeEventsRef.on('value', (activeEvents) => {
+    activeEventsRef.orderByChild('timestamp').startAt(date.getTime()).on('value', (activeEvents) => {
         activeEvents.forEach((activeEvent) => {
             const activeEventObject = {
                 id: activeEvent.key,

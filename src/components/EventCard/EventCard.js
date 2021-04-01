@@ -136,7 +136,7 @@ class EventCard extends Component {
                     imageStyle={styles.backgroundImage}
                     source={{ uri: backgroundImage }}>
                     <View style={styles.titleContainer}>
-                        <QaplaText style={styles.title}>
+                        <QaplaText numberOfLines={3} style={styles.title}>
                             {titleTranslated}
                         </QaplaText>
                     </View>

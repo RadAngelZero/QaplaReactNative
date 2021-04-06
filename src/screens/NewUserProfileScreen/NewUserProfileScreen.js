@@ -222,6 +222,8 @@ export class NewUserProfileScreen extends Component {
         }
     }
 
+    linkTwitchAccount = () => this.props.navigation.navigate('TwitchLogIn');
+
     render() {
         const userLevel = Math.floor(this.props.qaplaLevel / 100);
         const userQoins = isNaN(this.props.userQoins - this.state.qoinsToDonate) ? 0 : this.props.userQoins - this.state.qoinsToDonate;
@@ -247,6 +249,9 @@ export class NewUserProfileScreen extends Component {
                                 <QaplaText style={styles.qoinsValue}>
                                     {userQoins}
                                 </QaplaText>
+                                <TouchableOpacity style={styles.updateDonationIcon} onPress={this.linkTwitchAccount}>
+                                    <images.svg.plusBubble />
+                                </TouchableOpacity>
                             </View>
                             <View style={styles.bitsCardContainer}>
                                 <View style={styles.bitsModuleView}>

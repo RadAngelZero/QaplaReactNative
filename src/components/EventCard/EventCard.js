@@ -134,7 +134,7 @@ class EventCard extends Component {
                 <ImageBackground
                     style={styles.backgroundImageContainer}
                     imageStyle={styles.backgroundImage}
-                    source={{ uri: backgroundImage }}>
+                    source={backgroundImage ? { uri: backgroundImage } : null}>
                     <View style={styles.titleContainer}>
                         <QaplaText style={styles.title}>
                             {titleTranslated}
@@ -143,14 +143,14 @@ class EventCard extends Component {
                     <View style={styles.body}>
                         <Image
                             style={styles.eventSponsorImage}
-                            source={{ uri: sponsorImage }} />
+                            source={sponsorImage ? { uri: sponsorImage } : null} />
                         <View style={styles.streamerDetails}>
                             <QaplaText style={styles.streamPlatformText}>
                                 {streamerName}
                             </QaplaText>
                             <Image
                                 style={styles.streamerPhoto}
-                                source={{ uri: streamerPhoto }} />
+                                source={streamerPhoto ? { uri: streamerPhoto } : null} />
                         </View>
                     </View>
                 </ImageBackground>

@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim'
 import Colors from '../../utilities/Colors'
-import { HEADER_SIZE } from '../../utilities/Constants'
 
 export default styles = StyleSheet.create({
 	profileView: {
@@ -9,7 +8,6 @@ export default styles = StyleSheet.create({
 		backgroundColor: Colors.backgroundColor
 	},
 	qoinsView: {
-		width: widthPercentageToPx(30),
 		marginLeft: 16,
 		flexDirection: 'row',
 		alignItems: 'center'

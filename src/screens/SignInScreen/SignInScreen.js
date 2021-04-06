@@ -117,10 +117,6 @@ class SignInScreen extends Component {
         }
     }
 
-    onTwitchButtonPress = () => {
-        this.props.navigation.navigate('TwitchLogIn', { succesfullSignIn: this.succesfullSignIn });
-    }
-
     render() {
         return (
             <SafeAreaView style={styles.sfvContainer}>
@@ -157,14 +153,6 @@ class SignInScreen extends Component {
                                 </View>
                             </TouchableWithoutFeedback>
                         }
-                        <TouchableWithoutFeedback onPress={this.onTwitchButtonPress}>
-                            <View style={[styles.socialMediaSignInButton, styles.twitchSignInButton]}>
-                                <View style={{ marginTop: 16 }}>
-                                    <TwitchIcon style={styles.socialMediaIconStyle} />
-                                </View>
-                                <QaplaText style={[styles.textButton, styles.twitchButtonText]}>{translate('signInScreen.twitchSignin')}</QaplaText>
-                            </View>
-                        </TouchableWithoutFeedback>
                         <View style={styles.alreadyHaveAccountTextContainer}>
                             <QaplaText style={[styles.whiteColor, styles.alignSelfCenter, styles.fontBold]}>{translate('signInScreen.alreadyHaveAccount')}</QaplaText>
                             <QaplaText style={[styles.enterWithEmailText, styles.alignSelfCenter, styles.fontBold]} onPress={this.navigateToLoginWithEmail}>

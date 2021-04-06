@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import {
     View,
-    SafeAreaView
+    SafeAreaView,
+    Alert
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 import styles from './style';
 import { TWITCH_CLIENT_ID, TWITCH_REDIRECT_URI } from '../../utilities/Constants';
 import { getTwitchUserData } from '../../services/twitch';
-import { getTwitchAuthUser } from '../../services/functions';
-import { authWithCustomToken } from '../../services/auth';
-import { getUidWithTwitchId, saveUidForTwitchUsers, saveTwitchAccessToken } from '../../services/database';
+import { saveTwitchData, isNewTwitchId } from '../../services/database';
+import { connect } from 'react-redux';
 
 class TwitchAuthScreen extends Component {
     alreadyLoaded = false;
@@ -28,26 +28,22 @@ class TwitchAuthScreen extends Component {
         if (!this.alreadyLoaded && access_token) {
             this.alreadyLoaded = true;
             const data = await getTwitchUserData(access_token);
-            const uid = await getUidWithTwitchId(data.id);
-            let user = {};
 
-            // If the user already exists
-            if (uid.exists()) {
-                const authData = await getTwitchAuthUser(data.display_name, data.profile_image_url, data.email, uid.val());
-                user = await authWithCustomToken(authData.data.token);
-                saveTwitchAccessToken(uid.val(), access_token);
+            if (this.props.uid && await isNewTwitchId(data.id)) {
+                await saveTwitchData(this.props.uid, {
+                    photoUrl: data.profile_image_url,
+                    twitchAccessToken: access_token,
+                    twitchId: data.id,
+                    twitchUsername: data.display_name
+                });
             } else {
-                // New user
-                const authData = await getTwitchAuthUser(data.display_name, data.profile_image_url, data.email);
-                user = await authWithCustomToken(authData.data.token);
-                saveUidForTwitchUsers(user.user.uid, data.id);
-                user.additionalUserInfo.isNewUser = true;
-                saveTwitchAccessToken(user.user.uid, access_token);
+                Alert.alert('Error', 'Twitch user already linked with other account',
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]);
             }
 
-
-            const succesfullSignIn = this.props.navigation.getParam('succesfullSignIn');
-            succesfullSignIn(user);
+            this.props.navigation.navigate('Profile');
         }
     }
 
@@ -73,4 +69,10 @@ class TwitchAuthScreen extends Component {
     }
 }
 
-export default TwitchAuthScreen;
+function mapStateToProps(state) {
+    return {
+        uid: state.userReducer.user.id
+    }
+}
+
+export default connect(mapStateToProps)(TwitchAuthScreen);

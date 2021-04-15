@@ -90,10 +90,9 @@ class EventDetailsModal extends Component {
                 toValue: 12,
                 duration: 250,
                 easing: Easing.cubic,
+                useNativeDriver: false,
             }),
         ]).start();
-
-        console.log('modal opened');
     }
 
     render() {
@@ -157,8 +156,7 @@ class EventDetailsModal extends Component {
                         </Animated.View>
                     </>
                     :
-                        <>
-                        </>
+                        <></>
                     }
                 </View>
             </Modal>

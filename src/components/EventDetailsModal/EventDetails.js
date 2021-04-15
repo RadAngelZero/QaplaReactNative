@@ -13,7 +13,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import styles from './style';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { getDateElementsAsNumber, getHourElementsAsNumber, copyDataToClipboard } from '../../utilities/utils';
-import { userHasRequestToJoinEvent, isUserParticipantOnEvent } from '../../services/database';
 import Images from '../../../assets/images';
 import QaplaText from '../QaplaText/QaplaText';
 import { getSendBirdOpenChannel } from '../../services/SendBird';
@@ -67,14 +66,14 @@ class EventDetails extends Component {
      * Check if the user has sent a request for this event
      */
     checkUserRequest = async () => {
-        this.setState({ existsRequest: await userHasRequestToJoinEvent(this.props.uid, this.props.eventId) });
+        this.setState({ existsRequest: this.props.existsRequest });
     }
 
     /**
      * Check if the user is a participant of this event
      */
     checkIfUserIsParticipant = async () => {
-        this.setState({ isParticipant: await isUserParticipantOnEvent(this.props.uid, this.props.eventId) });
+        this.setState({ isParticipant: this.props.isParticipant });
     }
 
     /**
@@ -338,18 +337,7 @@ class EventDetails extends Component {
                         </View>
                     </View>
                 }
-
-                {(!this.state.existsRequest && !this.state.isParticipant) ?
-                    <TouchableOpacity
-                        style={styles.participateButtonContainer}
-                        onPress={this.props.goToNextStep}>
-                        <QaplaText style={styles.participateButtonText}>
-                            {translate('eventDetailsModal.participate')}
-                        </QaplaText>
-                    </TouchableOpacity>
-                    :
-                    <View style={{ marginBottom: 30 }} />
-                }
+                <View style={{ marginBottom: 30 }}></View>
             </>
         );
     }

@@ -379,7 +379,7 @@
         "prizes": "PRIZES",
         "instructions": "Instructions",
         "howToParticipate": "How to participate",
-        "participate": "Participate",
+        "participate": "Join stream",
         "nickName": "%{acronym} Nickname",
         "enterNickName": "Enter the nickname you use to play on %{gameName}",
         "errorText": "Verify that the fields are filled correctly",

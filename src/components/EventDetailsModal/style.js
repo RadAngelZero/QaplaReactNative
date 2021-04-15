@@ -265,6 +265,9 @@ export default styles = StyleSheet.create({
         marginTop: 8
     },
     participateButtonContainer: {
+        position:'absolute',
+        bottom:'-12%',
+        width: '100%',
         backgroundColor: Colors.greenQapla,
         height: '12%',
     },

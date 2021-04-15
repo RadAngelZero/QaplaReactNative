@@ -4,6 +4,9 @@ import {
     View,
     ScrollView,
     TouchableHighlight,
+    Dimensions,
+    Animated,
+    Easing
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
@@ -19,18 +22,15 @@ import EventRegistration from './EventRegistration';
 import { isUserLogged } from '../../services/auth';
 import EventRegistrationSuccessful from './EventRegistrationSuccessful';
 
+const screen = Dimensions.get('screen');
 
 class EventDetailsModal extends Component {
     state = {
         eventRegistrationStep: 0,
         isParticipant: false,
-        existsRequest: false
+        existsRequest: false,
+        registerButtonAnimation: new Animated.Value(0),
     };
-
-    componentDidMount() {
-        this.checkIfUserIsParticipant();
-        this.checkUserRequest();
-    }
 
     /**
      * Check if the user has sent a request for this event
@@ -72,16 +72,35 @@ class EventDetailsModal extends Component {
          */
         this.setState({ eventRegistrationStep: 0 });
 
-        this.checkIfUserIsParticipant();
-        this.checkUserRequest();
+        if (this.state.eventRegistrationStep === 2) {
+            this.setState({ isParticipant: true });
+        }
+
+        this.state.registerButtonAnimation.setValue(0);
 
         this.props.onClose();
+    }
+
+    onOpenModal = () => {
+        this.checkIfUserIsParticipant();
+        this.checkUserRequest();
+        Animated.sequence([
+            Animated.delay(300),
+            Animated.timing(this.state.registerButtonAnimation, {
+                toValue: 12,
+                duration: 250,
+                easing: Easing.cubic,
+            }),
+        ]).start();
+
+        console.log('modal opened');
     }
 
     render() {
         const { platform, game } = this.props.events[this.props.eventId];
         return (
             <Modal
+                onShow={this.onOpenModal}
                 animationType='slide'
                 transparent={true}
                 visible={this.props.open}
@@ -121,17 +140,22 @@ class EventDetailsModal extends Component {
                         </View>
                     </ScrollView>
                     {(!this.state.existsRequest && !this.state.isParticipant && this.state.eventRegistrationStep===0) ?
-                    <TouchableHighlight
-                    underlayColor='#2aa897'
-                    style={styles.participateButtonContainer}
-                    onPress={this.goToNextRegistrationStep}>
-                        <QaplaText style={styles.participateButtonText}>
-                            {translate('eventDetailsModal.participate')}
-                        </QaplaText>
-                    </TouchableHighlight>
-                        // <View style={{height: '12%', backgroundColor: '#3DF9DF'}}>
-                        //     <QaplaText style={{flex:1, textAlign:'center', textAlignVertical:'center', fontSize: 18}}> Unirme al stream </QaplaText>
-                        // </View>
+                    <>
+                        <Animated.View style={{height: this.state.registerButtonAnimation.interpolate({inputRange:[0,12], outputRange: [0, + screen.height * 0.115]})}}/>
+                        <Animated.View
+                            style={[styles.participateButtonContainer, { transform:
+                                [{translateY: this.state.registerButtonAnimation.interpolate({inputRange:[0,12], outputRange: [0, - screen.height * 0.115]})}] } ]}
+                        >
+                            <TouchableHighlight
+                            style={{flex:1}}
+                            underlayColor='#2aa897'
+                            onPress={this.goToNextRegistrationStep}>
+                                <QaplaText style={styles.participateButtonText}>
+                                    {translate('eventDetailsModal.participate')}
+                                </QaplaText>
+                            </TouchableHighlight>
+                        </Animated.View>
+                    </>
                     :
                         <>
                         </>

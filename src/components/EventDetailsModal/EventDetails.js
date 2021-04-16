@@ -52,10 +52,6 @@ function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
 }
 
 class EventDetails extends Component {
-    state = {
-        isParticipant: this.props.isParticipant,
-        existsRequest: this.props.existsRequest
-    };
 
     goToStreamerChannel = () => {
         const { streamerChannelLink } = this.props.event;
@@ -146,13 +142,13 @@ class EventDetails extends Component {
                     </ImageBackground>
                 </BackgroundImageContainer>
 
-                {this.state.existsRequest &&
+                {this.props.existsRequest &&
                     <QaplaText style={styles.waitingAnswerFeedback}>
                         {translate('eventDetailsModal.waitingApproval')}
                     </QaplaText>
                 }
 
-                {this.state.isParticipant && streamerGameData &&
+                {this.props.isParticipant && streamerGameData &&
                     <View style={[styles.eventCard, styles.streamerGameDataCard]}>
                         <QaplaText style={styles.eventCardTitle}>
                             {translate('eventDetailsModal.eventInformation')}
@@ -231,7 +227,7 @@ class EventDetails extends Component {
                     </View>
                 </View>
 
-                {(this.state.existsRequest || this.state.isParticipant) &&
+                {(this.props.existsRequest || this.props.isParticipant) &&
                     <View style={[styles.eventCard, styles.eventChatCard]}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <QaplaText style={styles.eventCardTitle}>

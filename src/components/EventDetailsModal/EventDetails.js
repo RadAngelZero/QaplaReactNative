@@ -53,33 +53,10 @@ function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
 
 class EventDetails extends Component {
     state = {
-        isParticipant: false,
-        existsRequest: false
+        isParticipant: this.props.isParticipant,
+        existsRequest: this.props.existsRequest
     };
 
-    componentDidMount() {
-        this.checkIfUserIsParticipant();
-        this.checkUserRequest();
-    }
-
-    /**
-     * Check if the user has sent a request for this event
-     */
-    checkUserRequest = async () => {
-        this.setState({ existsRequest: this.props.existsRequest });
-    }
-
-    /**
-     * Check if the user is a participant of this event
-     */
-    checkIfUserIsParticipant = async () => {
-        this.setState({ isParticipant: this.props.isParticipant });
-    }
-
-    /**
-     * Redirect the user to the streamers channel of the given social network
-     * streamerChannelLink field on event node must be a valid URL
-     */
     goToStreamerChannel = () => {
         const { streamerChannelLink } = this.props.event;
 

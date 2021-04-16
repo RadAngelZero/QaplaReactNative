@@ -140,7 +140,7 @@ class EventDetailsModal extends Component {
                     </ScrollView>
                     {(!this.state.existsRequest && !this.state.isParticipant && this.state.eventRegistrationStep===0) ?
                     <>
-                        <Animated.View style={{height: this.state.registerButtonAnimation.interpolate({inputRange:[0,12], outputRange: [0, + screen.height * 0.115]})}}/>
+                        <Animated.View style={{height: this.state.registerButtonAnimation.interpolate({inputRange:[0,12], outputRange: [0, + screen.height * 0.11]})}}/>
                         <Animated.View
                             style={[styles.participateButtonContainer, { transform:
                                 [{translateY: this.state.registerButtonAnimation.interpolate({inputRange:[0,12], outputRange: [0, - screen.height * 0.115]})}] } ]}

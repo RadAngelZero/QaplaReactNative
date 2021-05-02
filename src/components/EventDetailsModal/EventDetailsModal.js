@@ -30,7 +30,7 @@ class EventDetailsModal extends Component {
                 this.setState({ eventRegistrationStep: this.state.eventRegistrationStep + 1 });
             }
         } else {
-            this.props.navigation.navigate('SignIn');
+            this.props.navigation.navigate('SignIn', { streamer: this.props.events[this.props.eventId].streamerName });
             this.closeModal();
         }
     }

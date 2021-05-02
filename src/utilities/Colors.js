@@ -13,10 +13,13 @@ export default Colors = {
     modals: {
         backgroundDarkModal: '#141833',
         body: '#CFD1DB',
-        bttnColor: '#6D7DDE'
+        bttnColor: '#6D7DDE',
     },
     textInputs: {
         error: '#FF0000',
-        unselected: '#B5B5B5'
-    }
+        unselected: '#B5B5B5',
+    },
+    signInLogIn: {
+        loginButtonColor: '#3b4bf9',
+    },
 };

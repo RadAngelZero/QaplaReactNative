@@ -24,6 +24,13 @@ export default styles = StyleSheet.create({
         alignSelf: 'flex-end'
     },
     closeIconContainer: {
-        alignSelf: 'flex-end'
+        margin: 20,
+        backgroundColor: '#202050',
+        borderRadius: 50,
+        padding: 10,
+        alignSelf: 'flex-start',
+        alignContent: 'center',
+        width:'auto',
+        height: 'auto'
     }
 });

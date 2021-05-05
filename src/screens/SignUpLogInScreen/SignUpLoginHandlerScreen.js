@@ -122,7 +122,9 @@ class SignUpLoginHandlerScreen extends Component {
     keyboardDidHide = () => {
         this.setState({ keyboardIsActive: false });
         console.log('hide');
-        this.usernameInput.blur();
+        if (this.usernameInput) {
+            this.usernameInput.blur();
+        }
     }
 
     /**
@@ -429,7 +431,6 @@ class SignUpLoginHandlerScreen extends Component {
                         this.state.screen === 'twitchLink' ?
                             <Text style={{
                                 color: 'rgba(255, 255, 255, 0.65)',
-                                fontFamily: 'SFProRounded-Semibold',
                                 fontSize: getScreenSizeMultiplier() * 17,
                                 fontStyle: 'normal',
                                 fontWeight: 'bold',
@@ -489,7 +490,6 @@ class SignUpLoginHandlerScreen extends Component {
                                             {this.state.screen === 'twitchWarning' && <View style={{ marginRight: '2%' }}><AlertIcon /></View>}
                                             <Text style={{
                                                 color: 'white',
-                                                fontFamily: 'SFProRounded-Bold',
                                                 fontSize: getScreenSizeMultiplier() * 30,
                                                 fontStyle: 'normal',
                                                 fontWeight: 'bold',
@@ -500,7 +500,6 @@ class SignUpLoginHandlerScreen extends Component {
 
                                         <Text style={{
                                             color: 'white',
-                                            fontFamily: 'SFProRounded-Semibold',
                                             fontSize: getScreenSizeMultiplier() * 22,
                                             fontStyle: 'normal',
                                             fontWeight: 'normal',
@@ -509,7 +508,6 @@ class SignUpLoginHandlerScreen extends Component {
                                         }}>{this.subtitles[this.state.screen]}</Text>
                                         <Text style={{
                                             color: 'white',
-                                            fontFamily: 'SFProRounded-Regular',
                                             fontSize: getScreenSizeMultiplier() * (this.state.screen === 'twitchWarning' ? 18 : 22),
                                             fontStyle: 'normal',
                                             fontWeight: 'normal',
@@ -585,7 +583,6 @@ class SignUpLoginHandlerScreen extends Component {
                                                     <TextInput
                                                         style={{
                                                             color: 'rgb(0, 255, 220)',
-                                                            fontFamily: 'SFProRounded-Regular',
                                                             fontSize: getScreenSizeMultiplier() * 16,
                                                             fontStyle: 'normal',
                                                             fontWeight: 'normal',
@@ -705,7 +702,6 @@ class SignUpLoginHandlerScreen extends Component {
                         }}>
                             <Text style={{
                                 color: 'rgba(37, 172, 255, 0.65)',
-                                fontFamily: 'SFProRounded-Medium',
                                 fontSize: 14,
                                 fontStyle: 'normal',
                                 fontWeight: 'normal',

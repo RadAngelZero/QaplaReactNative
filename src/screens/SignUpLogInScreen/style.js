@@ -99,7 +99,6 @@ export default styles = StyleSheet.create({
     },
     titleText: {
         color: 'white',
-        fontFamily: 'SFProRounded-Bold',
         fontSize: getScreenSizeMultiplier() * 30,
         fontStyle: 'normal',
         fontWeight: 'bold',
@@ -109,7 +108,6 @@ export default styles = StyleSheet.create({
     },
     bodyText: {
         color: 'white',
-        fontFamily: 'SFProRounded-Regular',
         fontSize: getScreenSizeMultiplier() * 22,
         fontStyle: 'normal',
         fontWeight: 'normal',
@@ -121,7 +119,6 @@ export default styles = StyleSheet.create({
         marginTop: '4.6%',
     },
     loginRegisterButtonsText: {
-        fontFamily: 'SFProRounded-Semibold',
         fontSize: getScreenSizeMultiplier() * 17,
         fontStyle: 'normal',
         fontWeight: 'bold',

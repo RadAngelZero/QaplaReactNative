@@ -12,12 +12,18 @@ import styles from './style';
 import Images from '../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle, signInWithApple } from '../../services/auth';
 import { translate } from '../../utilities/i18';
-import { updateUserLoggedStatus } from '../../services/database';
+import { updateUserLoggedStatus, userHaveTwitchId } from '../../services/database';
 import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 import ProgressDotsIndicator from '../../components/ProgressDotsIndicator/ProgressDotsIndicator';
 import { render } from 'enzyme';
+import { log } from 'react-native-reanimated';
+import { database } from '../../utilities/firebase';
+import {
+    getUserDiscordTag, userHaveTwitchId2
+    
+} from '../../services/database';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -51,6 +57,10 @@ class SignUpLoginHandlerScreen extends Component {
         keyboardIsActive: false,
         username: '',
         streamer: '',
+        checkingUserName: false,
+        showErrorMessage: false,
+        agreementTermsState: false,
+        agreementPrivacyState: false
     };
 
     titles = {
@@ -168,27 +178,110 @@ class SignUpLoginHandlerScreen extends Component {
         }
     }
 
+
+
     /**
      * Check if the user is new, if it's new create the profile and send the user
      * to ChooseUserNameScreen
      * If isn't just close and back to the previous flow
      */
-    succesfullSignIn = (user) => {
+    succesfullSignIn = async (user) => {
         if (user.additionalUserInfo.isNewUser) {
-            this.props.navigation.navigate('ChooseUserName', {
+
+            return this.setState({ screen: 'createUsername' });
+
+           /* this.props.navigation.navigate('ChooseUserName', {
                 originScreen: this.state.originScreenWhenComponentMounted,
                 email: user.user.email,
-            });
+            });*/
         } else {
-            updateUserLoggedStatus(true, user.user.uid);
-            subscribeUserToAllRegistredTopics(user.user.uid);
-            if (this.props.originScreen !== 'Public') {
-                this.props.navigation.dismiss();
-            } else {
-                this.props.navigation.navigate('MatchWizard');
+
+            //updateUserLoggedStatus(true, user.user.uid);
+            //subscribeUserToAllRegistredTopics(user.user.uid);
+
+            console.log("id de usuario", user.user.uid)
+            
+
+            if (await userHaveTwitchId2(user.user.uid)){
+                console.log("Si tiene Twitch ID", user.user.uid)
+
+                if (this.props.originScreen !== 'Public') {
+                    this.props.navigation.dismiss();
+                  } else {
+                    this.props.navigation.navigate('MatchWizard');
+                  }
+
+            }else {
+                console.log("No tiene Twitch ID", user.user.uid)
+                this.setState({ screen: 'twitchLink' });
             }
+
+            /*var twitchIsLinked
+            userHaveTwitchId(user.user.uid).then(function(snapshot){
+               twitchIsLinked = snapshot.exists();  // true
+                if (twitchIsLinked){
+                    //console.log("Si tiene Twitch ID", user.user.uid)
+                   // console.log("muestra el log de aca abajo", user.user.uid)
+
+
+                    if (this.props.originScreen !== 'Public') {
+                        this.props.navigation.dismiss();
+                      } else {
+                        this.props.navigation.navigate('MatchWizard');
+                      }
+
+                }else {
+
+                   // console.log("No tiene Twitch ID", user.user.uid)
+
+                    this.setState({ screen: 'twitchLink' });
+                    
+                    
+                }
+            })
+
+            this.setState({ screen: 'twitchLink' });*/
         }
     }
+
+     /**
+     * Validate the agreements (terms and privacy), also validate the userName
+     * if everything is right add the userName and returns the user to the previous flow
+     */
+      checkTermsConditionsAndUsername = async () => {
+        try {
+            if (this.state.username !== '' && !this.state.checkingUserName && this.state.agreementPrivacyState && this.state.agreementTermsState) {
+                this.setState({
+                    checkingUserName: true,
+                    showErrorMessage: false }, async () => {
+                    if(this.state.username !== '' && await validateUserName(this.state.username)) {
+                        //Agregar revision de email del usuario y sustituir este codigo
+                        const email = this.props.navigation.getParam('email', '');
+
+                        await createUserProfile(this.props.uid, email, this.state.username);
+
+                        //connectUserToSendBird(this.props.uid, this.state.username);
+
+                    
+                        this.setState({ screen: 'twitchLink' });
+                        
+                    } else {
+                    this.setState({
+                        showErrorMessage: true,
+                        checkingUserName: false
+                    });
+                    }
+                });
+            }
+        }
+        catch(error) {
+            console.error(`[checkTermsConditionsAndUsername]`, error);
+        }
+    }
+
+
+    
+
 
     navigateToLoginWithEmail = () => {
         this.props.navigation.navigate('LogIn', {
@@ -252,7 +345,8 @@ class SignUpLoginHandlerScreen extends Component {
     twitchLink = () => {
         //add code to auth with Twitch
         //add conditional if authenticated
-        if (true) return this.setState({ screen: 'signUpLogInComplete' });
+        //if (true) return this.setState({ screen: 'signUpLogInComplete' });
+        this.props.navigation.navigate('TwitchLogIn');
     }
 
     submitUsername = () => {
@@ -528,7 +622,7 @@ class SignUpLoginHandlerScreen extends Component {
                                                 <Text style={styles.bodyText}>{this.bodies[this.state.screen]}</Text>
                                                 <TouchableOpacity
                                                     style={[styles.buttonsShape, this.state.screen === 'init' ? styles.buttonSignUpBGColor : styles.blackGBColor, { marginTop: this.state.screen === 'init' ? '22%' : '21.8%' }]}
-                                                    onPress={this.state.screen === 'init' ? this.createAccount : this.appleButton}>
+                                                    onPress={this.state.screen === 'init' ? this.createAccount : this.onAppleButtonPress}>
                                                     {this.state.screen === 'init' ?
                                                         <Text style={[styles.loginRegisterButtonsText, styles.darkQaplaTextColor]}>Crear mi cuenta</Text>
                                                         :
@@ -549,7 +643,7 @@ class SignUpLoginHandlerScreen extends Component {
                                                     }} />
                                                 <TouchableOpacity
                                                     style={[styles.buttonsShape, this.state.screen === 'init' ? styles.buttonLogInBGColor : styles.whiteBGColor, { marginBottom: '16.4%' }]}
-                                                    onPress={this.state.screen === 'init' ? this.login : this.googleButton}>
+                                                    onPress={this.state.screen === 'init' ? this.login : this.signInWithGoogle}>
                                                     {this.state.screen === 'init' ?
                                                         <Text style={[styles.loginRegisterButtonsText, styles.whiteTextColor]}>Ya tengo cuenta</Text>
                                                         :

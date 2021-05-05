@@ -43,7 +43,9 @@ class TwitchAuthScreen extends Component {
                 ]);
             }
 
+            
             this.props.navigation.navigate('Profile');
+          //  this.setState({ screen: 'signUpLogInComplete' });
         }
     }
 

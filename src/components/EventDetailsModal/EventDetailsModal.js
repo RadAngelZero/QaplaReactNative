@@ -23,15 +23,22 @@ class EventDetailsModal extends Component {
     /**
      * Send the user to the next component
      */
-    goToNextRegistrationStep = () => {
+    goToNextRegistrationStep = async () => {
         if (isUserLogged()) {
-            if (this.scrollView) {
-                this.scrollView.scrollTo({ y: 0, animated: false });
-                this.setState({ eventRegistrationStep: this.state.eventRegistrationStep + 1 });
+            //Check if the user have linked the Twitch account
+            if (await userHaveTwitchId2(user.user.uid)){
+
+                if (this.scrollView) {
+                    this.scrollView.scrollTo({ y: 0, animated: false });
+                    this.setState({ eventRegistrationStep: this.state.eventRegistrationStep + 1 });
+                } else {
+                    this.props.navigation.navigate('SignIn', { streamer: this.props.events[this.props.eventId].streamerName });
+                    this.closeModal();
+                }
+                
+            }else {
+               //Create component to send the User to the Link Twitch account 
             }
-        } else {
-            this.props.navigation.navigate('SignIn', { streamer: this.props.events[this.props.eventId].streamerName });
-            this.closeModal();
         }
     }
 

@@ -166,11 +166,33 @@ export async function createUserProfile(Uid, email, userName ) {
     checkNotificationPermission(Uid);
 }
 
+
 /**
  * Check if the given twitchId is already used by any user
  * @param {string} twitchId Twitch identifier
  */
-export async function isNewTwitchId(twitchId) {
+ export async function userHaveTwitchId2(uid) {
+
+    return (await usersRef.child(uid).child('twitchId').once('value')).exists();
+    //return (await usersRef.child(uid).child('twitchId').once('value')).val(); 
+}
+/**
+ * Check if the given twitchId is already used by any user
+ * @param {string} twitchId Twitch identifier
+ */
+export async function userHaveTwitchId(uid) {
+    //const userTwitchID = usersRef.child(uid).child('twitchId').once('value');
+    
+    const userTwitchLink = (await usersRef.child(uid).child('twitchId').once('value'));
+
+    return userTwitchLink
+}
+
+/**
+ * Check if the given twitchId is already used by any user
+ * @param {string} twitchId Twitch identifier
+ */
+ export async function isNewTwitchId(twitchId) {
     return !(await usersRef.orderByChild('twitchId').equalTo(twitchId).once('value')).exists();
 }
 

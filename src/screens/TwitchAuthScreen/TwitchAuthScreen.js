@@ -36,6 +36,10 @@ class TwitchAuthScreen extends Component {
                     twitchId: data.id,
                     twitchUsername: data.display_name
                 });
+
+                if (this.props.onSuccess) {
+                    this.props.onSuccess();
+                }
             } else {
                 Alert.alert('Error', 'Twitch user already linked with other account',
                 [
@@ -43,9 +47,7 @@ class TwitchAuthScreen extends Component {
                 ]);
             }
 
-            
             this.props.navigation.navigate('Profile');
-          //  this.setState({ screen: 'signUpLogInComplete' });
         }
     }
 

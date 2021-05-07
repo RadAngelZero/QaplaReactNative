@@ -67,7 +67,7 @@ class EventDetailsModal extends Component {
 
     registerUserToEvent = async () => {
         const twitchUserName = await getTwitchUserName(this.props.uid);
-        joinEventWithCustomData(this.props.uid, this.props.eventId, this.props.events[this.props.eventId].eventEntry, { twitchUserName });
+        joinEventWithCustomData(this.props.uid, this.props.eventId, this.props.events[this.props.eventId].eventEntry, { "Twitch Username": twitchUserName });
 
         /**
          * Subscribe user to topic of the event

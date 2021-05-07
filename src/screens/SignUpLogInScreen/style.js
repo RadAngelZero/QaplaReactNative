@@ -113,8 +113,6 @@ export default styles = StyleSheet.create({
         lineHeight: getScreenSizeMultiplier() * 26,
         letterSpacing: getScreenSizeMultiplier() * 0.35,
         paddingTop: '0.3%',
-        width: '75%',
-        marginTop: '4.6%',
     },
     loginRegisterButtonsText: {
         fontSize: getScreenSizeMultiplier() * 17,

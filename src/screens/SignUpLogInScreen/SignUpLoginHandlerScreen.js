@@ -597,6 +597,104 @@ class SignUpLoginHandlerScreen extends Component {
         //add code to auth with Apple
         //add conditional if authenticated
         if (true) {
+            if (this.state.actualScreen === 'logIn') {
+                this.setState({ nextScreen: '' });
+                Animated.timing(this.state.closeBackButtonIconOpacity, {
+                    toValue: 0,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }).start();
+                Animated.timing(this.state.topButtonXPosition, {
+                    toValue: 1,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }).start();
+                Animated.timing(this.state.bottomButtonXPosition, {
+                    toValue: 1,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }).start();
+                Animated.timing(this.state.signUpLogInButtonsHexColorController, {
+                    toValue: 2,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }).start();
+                Animated.timing(this.state.signUpLogInButtonsContentXPositionController, {
+                    toValue: 2,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }).start();
+                Animated.timing(this.state.titleXPositionController, {
+                    toValue: 1,
+                    duration: this.state.closeBackButtonIconPositionAnimationDuration,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }).start(() => {
+                    setTimeout(() => {
+                        this.setState({ actualScreen: 'signUpLogInComplete' });
+                        Animated.sequence([
+                            Animated.parallel([
+                                Animated.timing(this.state.linearGradientContrainerYPositionController, {
+                                    toValue: 1,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                                Animated.timing(this.state.qaplaLogoYPositionController, {
+                                    toValue: 1,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                            ]),
+                            Animated.timing(this.state.linearGradientPositionController, {
+                                toValue: 1,
+                                duration: 400,
+                                easing: Easing.cubic,
+                                useNativeDriver: false,
+                            }),
+                            Animated.parallel([
+                                Animated.timing(this.state.closeBackButtonIconOpacity, {
+                                    toValue: 0,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                                Animated.timing(this.state.awesomeHandYPositionController, {
+                                    toValue: 1,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                                Animated.timing(this.state.succesfulRegisterTitleYPositionController, {
+                                    toValue: 1,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                                Animated.timing(this.state.succesfulRegisterBodyYPositionController, {
+                                    toValue: 1,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                                Animated.timing(this.state.succesfulRegisterButtonYPositionController, {
+                                    toValue: 1,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                            ])
+                        ]).start();
+                    }, 100);
+                });
+                return;
+            }
             Animated.timing(this.state.closeBackButtonIconOpacity, {
                 toValue: 0,
                 duration: 400,
@@ -654,6 +752,104 @@ class SignUpLoginHandlerScreen extends Component {
         //add code to auth with Google
         //add conditional if authenticated
         if (true) {
+            if (this.state.actualScreen === 'logIn') {
+                this.setState({ nextScreen: '' });
+                Animated.timing(this.state.closeBackButtonIconOpacity, {
+                    toValue: 0,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }).start();
+                Animated.timing(this.state.topButtonXPosition, {
+                    toValue: 1,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }).start();
+                Animated.timing(this.state.bottomButtonXPosition, {
+                    toValue: 1,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }).start();
+                Animated.timing(this.state.signUpLogInButtonsHexColorController, {
+                    toValue: 2,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }).start();
+                Animated.timing(this.state.signUpLogInButtonsContentXPositionController, {
+                    toValue: 2,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }).start();
+                Animated.timing(this.state.titleXPositionController, {
+                    toValue: 1,
+                    duration: this.state.closeBackButtonIconPositionAnimationDuration,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }).start(() => {
+                    setTimeout(() => {
+                        this.setState({ actualScreen: 'signUpLogInComplete' });
+                        Animated.sequence([
+                            Animated.parallel([
+                                Animated.timing(this.state.linearGradientContrainerYPositionController, {
+                                    toValue: 1,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                                Animated.timing(this.state.qaplaLogoYPositionController, {
+                                    toValue: 1,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                            ]),
+                            Animated.timing(this.state.linearGradientPositionController, {
+                                toValue: 1,
+                                duration: 400,
+                                easing: Easing.cubic,
+                                useNativeDriver: false,
+                            }),
+                            Animated.parallel([
+                                Animated.timing(this.state.closeBackButtonIconOpacity, {
+                                    toValue: 0,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                                Animated.timing(this.state.awesomeHandYPositionController, {
+                                    toValue: 1,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                                Animated.timing(this.state.succesfulRegisterTitleYPositionController, {
+                                    toValue: 1,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                                Animated.timing(this.state.succesfulRegisterBodyYPositionController, {
+                                    toValue: 1,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                                Animated.timing(this.state.succesfulRegisterButtonYPositionController, {
+                                    toValue: 1,
+                                    duration: 400,
+                                    easing: Easing.cubic,
+                                    useNativeDriver: false,
+                                }),
+                            ])
+                        ]).start();
+                    }, 100);
+                });
+                return;
+            }
             Animated.timing(this.state.closeBackButtonIconOpacity, {
                 toValue: 0,
                 duration: 400,

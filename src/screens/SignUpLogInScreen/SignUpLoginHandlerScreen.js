@@ -11,15 +11,11 @@ import styles from './style';
 import Images from '../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle, signInWithApple } from '../../services/auth';
 import { translate } from '../../utilities/i18';
-import { updateUserLoggedStatus } from '../../services/database';
+import { updateUserLoggedStatus, userHaveTwitchId } from '../../services/database';
 import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 import ProgressDotsIndicator from '../../components/ProgressDotsIndicator/ProgressDotsIndicator';
-import { render } from 'enzyme';
-import { back } from 'react-native/Libraries/Animated/src/Easing';
-import { get } from 'react-native/Libraries/Utilities/PixelRatio';
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 const QaplaSignUpLogo2021 = Images.png.qaplaSignupLogo2021.img;
 const AwesomeHand = Images.png.awesomeHand.img;
@@ -54,6 +50,10 @@ class SignUpLoginHandlerScreen extends Component {
         keyboardIsActive: false,
         username: '',
         streamer: '',
+        checkingUserName: false,
+        showErrorMessage: false,
+        agreementTermsState: false,
+        agreementPrivacyState: false,
         gradientTo: 0,
         disableCornerButton: false,
 
@@ -164,7 +164,9 @@ class SignUpLoginHandlerScreen extends Component {
     keyboardDidHide = () => {
         this.setState({ keyboardIsActive: false });
         console.log('hide');
-        this.usernameInput.blur();
+        if (this.usernameInput) {
+            this.usernameInput.blur();
+        }
     }
 
     /**
@@ -334,27 +336,102 @@ class SignUpLoginHandlerScreen extends Component {
         }
     }
 
+
+
     /**
      * Check if the user is new, if it's new create the profile and send the user
      * to ChooseUserNameScreen
      * If isn't just close and back to the previous flow
      */
-    succesfullSignIn = (user) => {
+    succesfullSignIn = async (user) => {
         if (user.additionalUserInfo.isNewUser) {
-            this.props.navigation.navigate('ChooseUserName', {
+
+            return this.setState({ screen: 'createUsername' });
+
+           /* this.props.navigation.navigate('ChooseUserName', {
                 originScreen: this.state.originScreenWhenComponentMounted,
                 email: user.user.email,
-            });
+            });*/
         } else {
-            updateUserLoggedStatus(true, user.user.uid);
-            subscribeUserToAllRegistredTopics(user.user.uid);
-            if (this.props.originScreen !== 'Public') {
-                this.props.navigation.dismiss();
-            } else {
-                this.props.navigation.navigate('MatchWizard');
+
+            //updateUserLoggedStatus(true, user.user.uid);
+            //subscribeUserToAllRegistredTopics(user.user.uid);
+
+            console.log("id de usuario", user.user.uid)
+
+            if (await userHaveTwitchId(user.user.uid)){
+                console.log("Si tiene Twitch ID", user.user.uid)
+
+                if (this.props.originScreen !== 'Public') {
+                    this.props.navigation.dismiss();
+                  } else {
+                    this.props.navigation.navigate('MatchWizard');
+                  }
+
+            }else {
+                console.log("No tiene Twitch ID", user.user.uid)
+                this.setState({ screen: 'twitchLink' });
             }
+
+            /*var twitchIsLinked
+            userHaveTwitchId(user.user.uid).then(function(snapshot){
+               twitchIsLinked = snapshot.exists();  // true
+                if (twitchIsLinked){
+                    //console.log("Si tiene Twitch ID", user.user.uid)
+                   // console.log("muestra el log de aca abajo", user.user.uid)
+
+
+                    if (this.props.originScreen !== 'Public') {
+                        this.props.navigation.dismiss();
+                      } else {
+                        this.props.navigation.navigate('MatchWizard');
+                      }
+
+                }else {
+
+                   // console.log("No tiene Twitch ID", user.user.uid)
+
+                    this.setState({ screen: 'twitchLink' });
+                }
+            })
+
+            this.setState({ screen: 'twitchLink' });*/
         }
     }
+
+     /**
+     * Validate the agreements (terms and privacy), also validate the userName
+     * if everything is right add the userName and returns the user to the previous flow
+     */
+      checkTermsConditionsAndUsername = async () => {
+        try {
+            if (this.state.username !== '' && !this.state.checkingUserName && this.state.agreementPrivacyState && this.state.agreementTermsState) {
+                this.setState({
+                    checkingUserName: true,
+                    showErrorMessage: false }, async () => {
+                    if(this.state.username !== '' && await validateUserName(this.state.username)) {
+                        //Agregar revision de email del usuario y sustituir este codigo
+                        const email = this.props.navigation.getParam('email', '');
+
+                        await createUserProfile(this.props.uid, email, this.state.username);
+
+                        //connectUserToSendBird(this.props.uid, this.state.username);
+
+                        this.setState({ screen: 'twitchLink' });
+                    } else {
+                    this.setState({
+                        showErrorMessage: true,
+                        checkingUserName: false
+                    });
+                    }
+                });
+            }
+        }
+        catch(error) {
+            console.error(`[checkTermsConditionsAndUsername]`, error);
+        }
+    }
+
 
     navigateToLoginWithEmail = () => {
         this.props.navigation.navigate('LogIn', {
@@ -905,6 +982,13 @@ class SignUpLoginHandlerScreen extends Component {
     twitchLink = () => {
         //add code to auth with Twitch
         //add conditional if authenticated
+        //if (true) return this.setState({ screen: 'signUpLogInComplete' });
+
+        /**
+         * TODO: Ensure if link was succesful before animation
+         */
+        this.props.navigation.navigate('TwitchLogIn');
+
         if (true) {
             this.setState({ gradientTo: 0 });
             Animated.parallel([
@@ -1664,6 +1748,29 @@ class SignUpLoginHandlerScreen extends Component {
                                                     width: '100%',
                                                     height: '100%',
                                                 }}>
+                                                    <TextInput
+                                                        style={{
+                                                            color: 'rgb(0, 255, 220)',
+                                                            fontSize: getScreenSizeMultiplier() * 16,
+                                                            fontStyle: 'normal',
+                                                            fontWeight: 'normal',
+                                                            textAlign: 'left',
+                                                            lineHeight: getScreenSizeMultiplier() * 26,
+                                                            letterSpacing: getScreenSizeMultiplier() * 0.25,
+                                                            marginHorizontal: '7.2%',
+                                                            width: '86%',
+                                                            textAlignVertical: 'center',
+                                                            height: '100%',
+                                                        }}
+                                                        // onFocus={() => { Keyboard.scheduleLayoutAnimation({ duration: 1000, easing: 'linear' }); }}
+                                                        onFocus={() => { LayoutAnimation.configureNext(LayoutAnimation.Presets.linear); }}
+                                                        onBlur={() => { console.log('blur') }}
+                                                        onChange={(text) => { this.setState({ username: text }); }}
+                                                        value={this.state.username}
+                                                        placeholder={'Nombre de usuario'}
+                                                        placeholderTextColor={'#009682'}
+                                                        ref={(ref) => { this.usernameInput = ref; }}
+                                                    />
                                                     <Text style={[styles.titleText, { height: '100%', textAlignVertical: 'center' }]}>{this.titles[this.state.prevScreen]}</Text>
                                                 </View>
                                                 <View style={{

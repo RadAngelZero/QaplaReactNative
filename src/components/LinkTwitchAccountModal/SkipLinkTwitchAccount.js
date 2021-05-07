@@ -39,7 +39,8 @@ class SkipLinkTwitchAccount extends Component {
                                 {translate('skipLinkTwitchAccount.description')}
                             </Text>
                         </View>
-                        <TouchableOpacity style={styles.skipLinkButtonContainer}>
+                        <TouchableOpacity style={styles.skipLinkButtonContainer}
+                            onPress={this.props.onSkipTwitchLink}>
                             <Text style={styles.skipLinkButtonText}>
                                 {translate('skipLinkTwitchAccount.continue')}
                             </Text>

@@ -25,6 +25,14 @@ class LinkTwitchAccountModal extends Component {
         this.props.onClose();
     }
 
+    onSkipTwitchLink = () => {
+        if (this.props.onSkipTwitchLink) {
+            this.props.onSkipTwitchLink();
+        }
+
+        this.props.onClose();
+    }
+
     render() {
         return (
             <Modal
@@ -58,7 +66,7 @@ class LinkTwitchAccountModal extends Component {
                             onPress={() => this.setState({ showDontLinkWarning: false })}>
                                 <images.svg.leftArrowThiccIcon />
                             </QaplaIcon>
-                            <SkipLinkTwitchAccount />
+                            <SkipLinkTwitchAccount onSkipTwitchLink={this.onSkipTwitchLink} />
                         </>
                     }
                 </View>

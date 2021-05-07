@@ -33,17 +33,21 @@ class EventDetailsModal extends Component {
      * Send the user to the next component
      */
     goToNextRegistrationStep = async () => {
-        console.log(this.props.uid);
-        if (isUserLogged()) {
-            //Check if the user have linked their Twitch account
-            if (await userHaveTwitchId(this.props.uid)){
-                this.registerTwitchUser();
+        if (this.state.eventRegistrationStep === 0) {
+            if (isUserLogged()) {
+                //Check if the user have linked their Twitch account
+                if (await userHaveTwitchId(this.props.uid)){
+                    this.registerTwitchUser();
+                } else {
+                   this.setState({ showLinkWitTwitchModal: true });
+                }
             } else {
-               this.setState({ showLinkWitTwitchModal: true });
+                this.props.navigation.navigate('SignIn', { streamer: this.props.events[this.props.eventId].streamerName });
+                this.closeModal();
             }
-        } else {
-            this.props.navigation.navigate('SignIn', { streamer: this.props.events[this.props.eventId].streamerName });
-            this.closeModal();
+        } else if (this.scrollView) {
+            this.scrollView.scrollTo({ y: 0, animated: false });
+            this.setState({ eventRegistrationStep: 2 });
         }
     }
 
@@ -130,6 +134,13 @@ class EventDetailsModal extends Component {
         }
     }
 
+    skipTwitchLogin = () => {
+        if (this.scrollView) {
+            this.scrollView.scrollTo({ y: 0, animated: false });
+            this.setState({ eventRegistrationStep: 1 });
+        }
+    }
+
     render() {
         const { platform, game } = this.props.events[this.props.eventId];
         return (
@@ -174,7 +185,8 @@ class EventDetailsModal extends Component {
                 <LinkTwitchAccountModal
                     open={this.state.showLinkWitTwitchModal}
                     onClose={() => this.setState({ showLinkWitTwitchModal: false })}
-                    onLinkSuccessful={this.registerTwitchUser} />
+                    onLinkSuccessful={this.registerTwitchUser}
+                    onSkipTwitchLink={this.skipTwitchLogin} />
                 <ConfirmationDialog
                     visible={this.state.openEntryDialog}
                     closeModal={this.toggleEntryDialog}

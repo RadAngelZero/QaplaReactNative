@@ -14,7 +14,7 @@ import EventDetails from './EventDetails';
 import EventRegistration from './EventRegistration';
 import { isUserLogged } from '../../services/auth';
 import EventRegistrationSuccessful from './EventRegistrationSuccessful';
-import { userHaveTwitchId, joinEventWithCustomData, getTwitchUserName, substractQaploinsToUser } from '../../services/database';
+import { userHaveTwitchId, joinEventWithCustomData, getTwitchUserName, substractQaploinsToUser, sendRequestToJoinEvent } from '../../services/database';
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { subscribeUserToTopic } from '../../services/messaging';
 import { EVENTS_TOPIC } from '../../utilities/Constants';
@@ -67,12 +67,19 @@ class EventDetailsModal extends Component {
 
     registerUserToEvent = async () => {
         const twitchUserName = await getTwitchUserName(this.props.uid);
-        joinEventWithCustomData(this.props.uid, this.props.eventId, this.props.events[this.props.eventId].eventEntry, { "Twitch Username": twitchUserName });
+        if (this.props.events[this.props.eventId].acceptAllUsers) {
+            joinEventWithCustomData(this.props.uid, this.props.eventId, this.props.events[this.props.eventId].eventEntry, { "Twitch Username": twitchUserName });
 
-        /**
-         * Subscribe user to topic of the event
-         */
-        subscribeUserToTopic(this.props.eventId, this.props.uid, EVENTS_TOPIC);
+            /**
+             * Subscribe user to topic of the event
+             */
+            subscribeUserToTopic(this.props.eventId, this.props.uid, EVENTS_TOPIC);
+        } else {
+            /**
+             * Save on the database the request of the user
+             */
+            await sendRequestToJoinEvent(this.props.eventId, this.props.uid, this.props.events[this.props.eventId].eventEntry, { "Twitch Username": twitchUserName });
+        }
 
         if (this.scrollView) {
             this.scrollView.scrollTo({ y: 0, animated: false });

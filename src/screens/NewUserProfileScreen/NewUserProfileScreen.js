@@ -261,11 +261,16 @@ export class NewUserProfileScreen extends Component {
                                         </View>
                                     </TouchableOpacity>
                                 :
-                                    <TouchableOpacity style={styles.linkWithTwitchButtonContainer} onPress={this.linkTwitchAccount}>
-                                        <images.svg.twitchExtrudedLogo height={24}
-                                            width={72}
-                                            style={styles.twitchIconButton} />
-                                    </TouchableOpacity>
+                                    <View style={styles.linkWithTwitchContainer}>
+                                        <TouchableOpacity style={styles.linkWithTwitchButtonContainer} onPress={this.linkTwitchAccount}>
+                                            <images.svg.twitchExtrudedLogo height={24}
+                                                width={72}
+                                                style={styles.twitchIconButton} />
+                                        </TouchableOpacity>
+                                        <Text style={styles.linkAccountText}>
+                                            {translate('newUserProfileScreen.linkAccount')}
+                                        </Text>
+                                    </View>
                                 }
                             </View>
                             <View style={styles.bitsCardContainer}>

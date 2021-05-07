@@ -138,6 +138,7 @@
         }
     },
     "newUserProfileScreen": {
+        "linkAccount": "Link account",
         "level": "Level",
         "qoins": "Qoins",
         "bitsTooltip": "Use your Qoins to support your favorite streamers. You need 200 Qoins for a donation",
@@ -431,5 +432,17 @@
     "donationsLeaderBoard": {
         "tooltip": "Earn xq points watching events marked with the xq icon on our main screen",
         "done": "Done"
+    },
+    "linkTwitchAccount": {
+        "linkAccount": "Link your account",
+        "realTimeProgress": "Your progress in real time!",
+        "description": "Receive your Qoins and XQ automatically when you redeem points from your streamer's channel.",
+        "linkButton": "Link with Twitch"
+    },
+    "skipLinkTwitchAccount": {
+        "important": "Important",
+        "reminder": "We remind you that accounts not linked to Twitch will not be able to receive their channel exchanges 😭",
+        "description": "But don't worry, you can always link your account from your profile 😉",
+        "continue": "I wish to continue"
     }
 }

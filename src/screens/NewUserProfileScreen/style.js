@@ -32,11 +32,15 @@ export default styles = StyleSheet.create({
 		justifyContent: 'center',
 		width: widthPercentageToPx(30)
 	},
+	linkWithTwitchContainer: {
+		flexDirection: 'column'
+	},
 	linkWithTwitchButtonContainer: {
 		borderColor: '#8B46FF',
 		borderWidth: 2,
 		borderRadius: 20,
-		justifyContent: 'center'
+		justifyContent: 'center',
+		marginBottom: 6
 	},
 	twitchButtonContentContainer: {
 		flexDirection: 'row',
@@ -59,6 +63,12 @@ export default styles = StyleSheet.create({
 		marginRight: 24,
 		marginTop: 10,
 		marginBottom: 10
+	},
+	linkAccountText: {
+		fontSize: 12,
+		fontWeight: '600',
+		color: '#FFF',
+		textAlign: 'center'
 	},
     bitsCardContainer: {
 		marginTop: 12,

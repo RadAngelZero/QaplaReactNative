@@ -5,6 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import styles from './style';
 import images from '../../../assets/images';
 import QaplaText from '../QaplaText/QaplaText';
+import { translate } from '../../utilities/i18';
 
 class SkipLinkTwitchAccount extends Component {
     render() {
@@ -28,19 +29,19 @@ class SkipLinkTwitchAccount extends Component {
                             <View style={styles.alertContainer}>
                                 <images.svg.alertIcon />
                                 <QaplaText style={styles.important}>
-                                    Importante
+                                    {translate('skipLinkTwitchAccount.important')}
                                 </QaplaText>
                             </View>
                             <Text style={styles.reminder}>
-                                Te recordamos que las cuentas no vinculadas con Twitch no podrán recibir sus canjes del canal 😭 
+                                {translate('skipLinkTwitchAccount.reminder')}
                             </Text>
                             <Text style={styles.linkDescription}>
-                                Pero no te preocupes, siempre puedes vincular tu cuenta desde tu perfil 😉
+                                {translate('skipLinkTwitchAccount.description')}
                             </Text>
                         </View>
                         <TouchableOpacity style={styles.skipLinkButtonContainer}>
                             <Text style={styles.skipLinkButtonText}>
-                                Deseo continuar
+                                {translate('skipLinkTwitchAccount.continue')}
                             </Text>
                         </TouchableOpacity>
                     </View>

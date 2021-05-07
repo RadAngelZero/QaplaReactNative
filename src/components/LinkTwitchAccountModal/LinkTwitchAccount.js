@@ -6,6 +6,7 @@ import styles from './style';
 import images from '../../../assets/images';
 import QaplaText from '../QaplaText/QaplaText';
 import TwitchAuthScreen from '../../screens/TwitchAuthScreen/TwitchAuthScreen';
+import { translate } from '../../utilities/i18';
 
 class LinkTwitchAccount extends Component {
     state = {
@@ -44,19 +45,19 @@ class LinkTwitchAccount extends Component {
                             <View>
                                 <images.svg.twitchExtrudedLogo />
                                 <QaplaText style={styles.linkYouAccount}>
-                                    Vincula tu cuenta
+                                    {translate('linkTwitchAccount.linkAccount')}
                                 </QaplaText>
                                 <Text style={styles.realTimeProgress}>
-                                    ¡Tu progreso en tiempo real!
+                                    {translate('linkTwitchAccount.realTimeProgress')}
                                 </Text>
                                 <Text style={styles.linkDescription}>
-                                    Recibe tus Qoins y XQ automáticamente al canjear puntos del canal de tu streamer.
+                                    {translate('linkTwitchAccount.description')}
                                 </Text>
                             </View>
                             <TouchableOpacity style={styles.linkButtonContainer}
                                 onPress={this.goToTwitchLink}>
                                 <Text style={styles.linkButtonText}>
-                                    Vincular con Twitch
+                                    {translate('linkTwitchAccount.linkButton')}
                                 </Text>
                             </TouchableOpacity>
                         </View>

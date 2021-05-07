@@ -13,8 +13,6 @@ import { signInWithFacebook, setupGoogleSignin, signInWithGoogle, signInWithAppl
 import { translate } from '../../utilities/i18';
 import { updateUserLoggedStatus, userHaveTwitchId } from '../../services/database';
 import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
-import QaplaText from '../../components/QaplaText/QaplaText';
-import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 import ProgressDotsIndicator from '../../components/ProgressDotsIndicator/ProgressDotsIndicator';
 
 const QaplaSignUpLogo2021 = Images.png.qaplaSignupLogo2021.img;
@@ -1919,11 +1917,12 @@ class SignUpLoginHandlerScreen extends Component {
                                                                 alignItems: 'center',
                                                             },
                                                             { marginTop: '0%' }]}
-                                                        onPress={this.state.actualScreen === 'init' ? this.signUp : this.appleButton}>
+                                                        onPress={this.state.actualScreen === 'init' ? this.signUp : this.appleButton}
+                                                        disabled={this.state.actualScreen !== 'init' && !(Platform.OS === 'ios' && appleAuth.isSignUpButtonSupported)}>
                                                         <Animated.View
                                                             style={{
                                                                 backgroundColor: this.state.signUpLogInButtonsHexColorController.interpolate({
-                                                                    inputRange: [0, 1], outputRange: [this.buttonsColors.signUp, this.buttonsColors.apple]
+                                                                    inputRange: [0, 1], outputRange: [this.buttonsColors.signUp, Platform.OS === 'ios' && appleAuth.isSignUpButtonSupported ? this.buttonsColors.apple : 'transparent']
                                                                 }),
                                                                 height: '100%',
                                                                 width: '100%',
@@ -1945,15 +1944,17 @@ class SignUpLoginHandlerScreen extends Component {
                                                                 <View style={{ width: '100%' }}>
                                                                     <Text style={[styles.loginRegisterButtonsText, styles.darkQaplaTextColor]}>Crear mi cuenta</Text>
                                                                 </View>
-                                                                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                                                                    <View style={{ height: '100%', width: '10%', marginLeft: '-5%', transform: [{ scale: 1.7 }] }}>
-                                                                        <AppleIcon />
+                                                                {Platform.OS === 'ios' && appleAuth.isSignUpButtonSupported &&
+                                                                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                                                                        <View style={{ height: '100%', width: '10%', marginLeft: '-5%', transform: [{ scale: 1.7 }] }}>
+                                                                            <AppleIcon />
+                                                                        </View>
+                                                                        <View style={{ marginLeft: '4%' }}>
+                                                                            <Text
+                                                                                style={[styles.loginRegisterButtonsText, styles.whiteTextColor, { fontSize: getScreenSizeMultiplier() * 14 }]}>Continuar con Apple</Text>
+                                                                        </View>
                                                                     </View>
-                                                                    <View style={{ marginLeft: '4%' }}>
-                                                                        <Text
-                                                                            style={[styles.loginRegisterButtonsText, styles.whiteTextColor, { fontSize: getScreenSizeMultiplier() * 14 }]}>Continuar con Apple</Text>
-                                                                    </View>
-                                                                </View>
+                                                                }
                                                             </Animated.View>
                                                         </Animated.View>
                                                     </TouchableOpacity>

@@ -40,14 +40,25 @@ class TwitchAuthScreen extends Component {
                 if (this.props.onSuccess) {
                     this.props.onSuccess();
                 }
+
+                if (this.props.navigation) {
+                    const successLinkCallback = this.props.navigation.getParam('onSuccess', () => {});
+
+                    successLinkCallback();
+
+                    const back = this.props.navigation.getParam('back', false);
+                    if (back) {
+                        this.props.navigation.goBack();
+                    } else {
+                        this.props.navigation.dismiss();
+                    }
+                }
             } else {
                 Alert.alert('Error', 'Twitch user already linked with other account',
                 [
                     { text: "OK", onPress: () => console.log("OK Pressed") }
                 ]);
             }
-
-            this.props.navigation.navigate('Profile');
         }
     }
 

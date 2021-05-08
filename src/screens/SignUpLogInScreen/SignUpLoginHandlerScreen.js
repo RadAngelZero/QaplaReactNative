@@ -344,8 +344,8 @@ class SignUpLoginHandlerScreen extends Component {
             return this.setState({ screen: 'createUsername' });
         } else {
 
-            //updateUserLoggedStatus(true, user.user.uid);
-            //subscribeUserToAllRegistredTopics(user.user.uid);
+            updateUserLoggedStatus(true, user.user.uid);
+            subscribeUserToAllRegistredTopics(user.user.uid);
 
             if (await userHaveTwitchId(user.user.uid)){
                 if (this.props.originScreen !== 'Public') {

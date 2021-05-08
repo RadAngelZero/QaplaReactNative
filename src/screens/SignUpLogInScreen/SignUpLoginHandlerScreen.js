@@ -51,8 +51,8 @@ class SignUpLoginHandlerScreen extends Component {
         streamer: '',
         checkingUserName: false,
         showErrorMessage: false,
-        agreementTermsState: true,
-        agreementPrivacyState: true,
+        agreementTermsState: false,
+        agreementPrivacyState: false,
         gradientTo: 0,
         disableCornerButton: false,
 
@@ -380,10 +380,10 @@ class SignUpLoginHandlerScreen extends Component {
 
                     onSuccess();
                 } else {
-                this.setState({
-                    showErrorMessage: true,
-                    checkingUserName: false
-                });
+                    this.setState({
+                        showErrorMessage: true,
+                        checkingUserName: false
+                    });
                 }
             });
         }

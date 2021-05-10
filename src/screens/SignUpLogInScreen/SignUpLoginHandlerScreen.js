@@ -11,10 +11,8 @@ import styles from './style';
 import Images from '../../../assets/images';
 import { signInWithFacebook, setupGoogleSignin, signInWithGoogle, signInWithApple } from '../../services/auth';
 import { translate } from '../../utilities/i18';
-import { updateUserLoggedStatus, userHaveTwitchId } from '../../services/database';
+import { updateUserLoggedStatus, userHaveTwitchId, validateUserName, createUserProfile } from '../../services/database';
 import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
-import QaplaText from '../../components/QaplaText/QaplaText';
-import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 import ProgressDotsIndicator from '../../components/ProgressDotsIndicator/ProgressDotsIndicator';
 
 const QaplaSignUpLogo2021 = Images.png.qaplaSignupLogo2021.img;
@@ -49,6 +47,7 @@ class SignUpLoginHandlerScreen extends Component {
         nextScreen: '',
         keyboardIsActive: false,
         username: '',
+        email: '',
         streamer: '',
         checkingUserName: false,
         showErrorMessage: false,
@@ -158,12 +157,10 @@ class SignUpLoginHandlerScreen extends Component {
 
     keyboardDidShow = () => {
         this.setState({ keyboardIsActive: true });
-        console.log('show');
     }
 
     keyboardDidHide = () => {
         this.setState({ keyboardIsActive: false });
-        console.log('hide');
         if (this.usernameInput) {
             this.usernameInput.blur();
         }
@@ -336,66 +333,33 @@ class SignUpLoginHandlerScreen extends Component {
         }
     }
 
-
-
     /**
      * Check if the user is new, if it's new create the profile and send the user
      * to ChooseUserNameScreen
      * If isn't just close and back to the previous flow
      */
     succesfullSignIn = async (user) => {
+        this.animationAfterLogin();
         if (user.additionalUserInfo.isNewUser) {
 
+            this.setState({ email: user.user.email });
             return this.setState({ screen: 'createUsername' });
-
-           /* this.props.navigation.navigate('ChooseUserName', {
-                originScreen: this.state.originScreenWhenComponentMounted,
-                email: user.user.email,
-            });*/
         } else {
 
-            //updateUserLoggedStatus(true, user.user.uid);
-            //subscribeUserToAllRegistredTopics(user.user.uid);
-
-            console.log("id de usuario", user.user.uid)
+            updateUserLoggedStatus(true, user.user.uid);
+            subscribeUserToAllRegistredTopics(user.user.uid);
 
             if (await userHaveTwitchId(user.user.uid)){
-                console.log("Si tiene Twitch ID", user.user.uid)
-
                 if (this.props.originScreen !== 'Public') {
                     this.props.navigation.dismiss();
                   } else {
                     this.props.navigation.navigate('MatchWizard');
                   }
 
-            }else {
-                console.log("No tiene Twitch ID", user.user.uid)
+            } else {
                 this.setState({ screen: 'twitchLink' });
+                this.twitchLinkAnimation();
             }
-
-            /*var twitchIsLinked
-            userHaveTwitchId(user.user.uid).then(function(snapshot){
-               twitchIsLinked = snapshot.exists();  // true
-                if (twitchIsLinked){
-                    //console.log("Si tiene Twitch ID", user.user.uid)
-                   // console.log("muestra el log de aca abajo", user.user.uid)
-
-
-                    if (this.props.originScreen !== 'Public') {
-                        this.props.navigation.dismiss();
-                      } else {
-                        this.props.navigation.navigate('MatchWizard');
-                      }
-
-                }else {
-
-                   // console.log("No tiene Twitch ID", user.user.uid)
-
-                    this.setState({ screen: 'twitchLink' });
-                }
-            })
-
-            this.setState({ screen: 'twitchLink' });*/
         }
     }
 
@@ -403,32 +367,25 @@ class SignUpLoginHandlerScreen extends Component {
      * Validate the agreements (terms and privacy), also validate the userName
      * if everything is right add the userName and returns the user to the previous flow
      */
-      checkTermsConditionsAndUsername = async () => {
-        try {
-            if (this.state.username !== '' && !this.state.checkingUserName && this.state.agreementPrivacyState && this.state.agreementTermsState) {
-                this.setState({
-                    checkingUserName: true,
-                    showErrorMessage: false }, async () => {
-                    if(this.state.username !== '' && await validateUserName(this.state.username)) {
-                        //Agregar revision de email del usuario y sustituir este codigo
-                        const email = this.props.navigation.getParam('email', '');
+      checkTermsConditionsAndUsername = async (onSuccess) => {
+        if (this.state.username !== '' && !this.state.checkingUserName && this.state.agreementPrivacyState && this.state.agreementTermsState) {
+            this.setState({
+                checkingUserName: true,
+                showErrorMessage: false }, async () => {
+                if (await validateUserName(this.state.username)) {
 
-                        await createUserProfile(this.props.uid, email, this.state.username);
+                    await createUserProfile(this.props.uid, this.state.email, this.state.username);
 
-                        //connectUserToSendBird(this.props.uid, this.state.username);
+                    //connectUserToSendBird(this.props.uid, this.state.username);
 
-                        this.setState({ screen: 'twitchLink' });
-                    } else {
+                    onSuccess();
+                } else {
                     this.setState({
                         showErrorMessage: true,
                         checkingUserName: false
                     });
-                    }
-                });
-            }
-        }
-        catch(error) {
-            console.error(`[checkTermsConditionsAndUsername]`, error);
+                }
+            });
         }
     }
 
@@ -592,47 +549,15 @@ class SignUpLoginHandlerScreen extends Component {
     }
 
     logIn = () => {
-        // this.changeColorToAuth();
-        this.setState({ nextScreen: 'logIn', steps: 1 });
-        Animated.timing(this.state.closeBackButtonIconPosition, {
-            toValue: 1,
-            duration: this.state.closeBackButtonIconPositionAnimationDuration,
-            easing: Easing.cubic,
-            useNativeDriver: false,
-        }).start();
-        Animated.timing(this.state.signUpLogInButtonsHexColorController, {
-            toValue: 1,
-            duration: 400,
-            easing: Easing.cubic,
-            useNativeDriver: false,
-        }).start();
-        Animated.timing(this.state.signUpLogInButtonsContentXPositionController, {
-            toValue: 1,
-            duration: 400,
-            easing: Easing.cubic,
-            useNativeDriver: false,
-        }).start();
-        Animated.timing(this.state.titleXPositionController, {
-            toValue: 1,
-            duration: this.state.closeBackButtonIconPositionAnimationDuration,
-            easing: Easing.cubic,
-            useNativeDriver: false,
-        }).start(() => {
-            setTimeout(() => {
-                this.setState({
-                    prevScreen: 'init',
-                    actualScreen: 'logIn',
-                });
-                this.state.titleXPositionController.setValue(0);
-                this.setState({
-                    nextScreen: 'createUsername',
-                });
-            }, 100);
-        });
+        this.secondStepAnimation('logIn', 1);
     }
 
     signUp = () => {
-        this.setState({ nextScreen: 'signUp', steps: 3 });
+        this.secondStepAnimation('signUp', 3);
+    }
+
+    secondStepAnimation = (nextScreen, steps) => {
+        this.setState({ nextScreen, steps });
         Animated.timing(this.state.closeBackButtonIconPosition, {
             toValue: 1,
             duration: this.state.closeBackButtonIconPositionAnimationDuration,
@@ -660,7 +585,7 @@ class SignUpLoginHandlerScreen extends Component {
             setTimeout(() => {
                 this.setState({
                     prevScreen: 'init',
-                    actualScreen: 'signUp',
+                    actualScreen: nextScreen,
                 });
                 this.state.titleXPositionController.setValue(0);
                 this.setState({
@@ -670,514 +595,257 @@ class SignUpLoginHandlerScreen extends Component {
         });
     }
 
-    appleButton = () => {
-        //add code to auth with Apple
-        //add conditional if authenticated
-        if (true) {
-            if (this.state.actualScreen === 'logIn') {
-                this.setState({ nextScreen: '' });
-                Animated.timing(this.state.closeBackButtonIconOpacity, {
-                    toValue: 0,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }).start();
-                Animated.timing(this.state.topButtonXPosition, {
-                    toValue: 1,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }).start();
-                Animated.timing(this.state.bottomButtonXPosition, {
-                    toValue: 1,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }).start();
-                Animated.timing(this.state.signUpLogInButtonsHexColorController, {
-                    toValue: 2,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }).start();
-                Animated.timing(this.state.signUpLogInButtonsContentXPositionController, {
-                    toValue: 2,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }).start();
-                Animated.timing(this.state.titleXPositionController, {
-                    toValue: 1,
-                    duration: this.state.closeBackButtonIconPositionAnimationDuration,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }).start(() => {
-                    setTimeout(() => {
-                        this.setState({ actualScreen: 'signUpLogInComplete' });
-                        Animated.sequence([
-                            Animated.parallel([
-                                Animated.timing(this.state.linearGradientContrainerYPositionController, {
-                                    toValue: 1,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                                Animated.timing(this.state.qaplaLogoYPositionController, {
-                                    toValue: 1,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                            ]),
-                            Animated.timing(this.state.linearGradientPositionController, {
-                                toValue: 1,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                            Animated.parallel([
-                                Animated.timing(this.state.closeBackButtonIconOpacity, {
-                                    toValue: 0,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                                Animated.timing(this.state.awesomeHandYPositionController, {
-                                    toValue: 1,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                                Animated.timing(this.state.succesfulRegisterTitleYPositionController, {
-                                    toValue: 1,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                                Animated.timing(this.state.succesfulRegisterBodyYPositionController, {
-                                    toValue: 1,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                                Animated.timing(this.state.succesfulRegisterButtonYPositionController, {
-                                    toValue: 1,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                            ])
-                        ]).start();
-                    }, 100);
+    animationAfterLogin = () => {
+        Animated.timing(this.state.closeBackButtonIconOpacity, {
+            toValue: 0,
+            duration: 400,
+            easing: Easing.cubic,
+            useNativeDriver: false,
+        }).start();
+        Animated.timing(this.state.bodyTextUsernameInputXPositionController, {
+            toValue: 1,
+            duration: 400,
+            easing: Easing.cubic,
+            useNativeDriver: false,
+        }).start();
+        Animated.timing(this.state.topButtonXPosition, {
+            toValue: 1,
+            duration: 400,
+            easing: Easing.cubic,
+            useNativeDriver: false,
+        }).start();
+        Animated.timing(this.state.signUpLogInButtonsHexColorController, {
+            toValue: 2,
+            duration: 400,
+            easing: Easing.cubic,
+            useNativeDriver: false,
+        }).start();
+        Animated.timing(this.state.signUpLogInButtonsContentXPositionController, {
+            toValue: 2,
+            duration: 400,
+            easing: Easing.cubic,
+            useNativeDriver: false,
+        }).start();
+        Animated.timing(this.state.titleXPositionController, {
+            toValue: 1,
+            duration: this.state.closeBackButtonIconPositionAnimationDuration,
+            easing: Easing.cubic,
+            useNativeDriver: false,
+        }).start(() => {
+            setTimeout(() => {
+                this.setState({
+                    steps: this.state.actualScreen === 'signUp' ? 3 : 1,
+                    step: 1,
+                    prevScreen: '',
+                    actualScreen: 'createUsername',
                 });
-                return;
-            }
-            Animated.timing(this.state.closeBackButtonIconOpacity, {
-                toValue: 0,
-                duration: 400,
-                easing: Easing.cubic,
-                useNativeDriver: false,
-            }).start();
-            Animated.timing(this.state.bodyTextUsernameInputXPositionController, {
-                toValue: 1,
-                duration: 400,
-                easing: Easing.cubic,
-                useNativeDriver: false,
-            }).start();
-            Animated.timing(this.state.topButtonXPosition, {
-                toValue: 1,
-                duration: 400,
-                easing: Easing.cubic,
-                useNativeDriver: false,
-            }).start();
-            Animated.timing(this.state.signUpLogInButtonsHexColorController, {
-                toValue: 2,
-                duration: 400,
-                easing: Easing.cubic,
-                useNativeDriver: false,
-            }).start();
-            Animated.timing(this.state.signUpLogInButtonsContentXPositionController, {
-                toValue: 2,
-                duration: 400,
-                easing: Easing.cubic,
-                useNativeDriver: false,
-            }).start();
-            Animated.timing(this.state.titleXPositionController, {
-                toValue: 1,
-                duration: this.state.closeBackButtonIconPositionAnimationDuration,
-                easing: Easing.cubic,
-                useNativeDriver: false,
-            }).start(() => {
-                setTimeout(() => {
-                    this.setState({
-                        steps: this.state.actualScreen === 'signUp' ? 3 : 1,
-                        step: 1,
-                        prevScreen: '',
-                        actualScreen: 'createUsername',
-                    });
-                    this.state.titleXPositionController.setValue(0);
-                    this.setState({
-                        nextScreen: '',
-                    });
-                }, 100);
-            });
-            // return this.setState({ actualScreen: 'createUsername' });
-        }
-    }
-
-    googleButton = () => {
-        //add code to auth with Google
-        //add conditional if authenticated
-        if (true) {
-            if (this.state.actualScreen === 'logIn') {
-                this.setState({ nextScreen: '' });
-                Animated.timing(this.state.closeBackButtonIconOpacity, {
-                    toValue: 0,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }).start();
-                Animated.timing(this.state.topButtonXPosition, {
-                    toValue: 1,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }).start();
-                Animated.timing(this.state.bottomButtonXPosition, {
-                    toValue: 1,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }).start();
-                Animated.timing(this.state.signUpLogInButtonsHexColorController, {
-                    toValue: 2,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }).start();
-                Animated.timing(this.state.signUpLogInButtonsContentXPositionController, {
-                    toValue: 2,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }).start();
-                Animated.timing(this.state.titleXPositionController, {
-                    toValue: 1,
-                    duration: this.state.closeBackButtonIconPositionAnimationDuration,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }).start(() => {
-                    setTimeout(() => {
-                        this.setState({ actualScreen: 'signUpLogInComplete' });
-                        Animated.sequence([
-                            Animated.parallel([
-                                Animated.timing(this.state.linearGradientContrainerYPositionController, {
-                                    toValue: 1,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                                Animated.timing(this.state.qaplaLogoYPositionController, {
-                                    toValue: 1,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                            ]),
-                            Animated.timing(this.state.linearGradientPositionController, {
-                                toValue: 1,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                            Animated.parallel([
-                                Animated.timing(this.state.closeBackButtonIconOpacity, {
-                                    toValue: 0,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                                Animated.timing(this.state.awesomeHandYPositionController, {
-                                    toValue: 1,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                                Animated.timing(this.state.succesfulRegisterTitleYPositionController, {
-                                    toValue: 1,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                                Animated.timing(this.state.succesfulRegisterBodyYPositionController, {
-                                    toValue: 1,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                                Animated.timing(this.state.succesfulRegisterButtonYPositionController, {
-                                    toValue: 1,
-                                    duration: 400,
-                                    easing: Easing.cubic,
-                                    useNativeDriver: false,
-                                }),
-                            ])
-                        ]).start();
-                    }, 100);
+                this.state.titleXPositionController.setValue(0);
+                this.setState({
+                    nextScreen: '',
                 });
-                return;
-            }
-            Animated.timing(this.state.closeBackButtonIconOpacity, {
-                toValue: 0,
-                duration: 400,
-                easing: Easing.cubic,
-                useNativeDriver: false,
-            }).start();
-            Animated.timing(this.state.bodyTextUsernameInputXPositionController, {
-                toValue: 1,
-                duration: 400,
-                easing: Easing.cubic,
-                useNativeDriver: false,
-            }).start();
-            Animated.timing(this.state.topButtonXPosition, {
-                toValue: 1,
-                duration: 400,
-                easing: Easing.cubic,
-                useNativeDriver: false,
-            }).start();
-            Animated.timing(this.state.signUpLogInButtonsHexColorController, {
-                toValue: 2,
-                duration: 400,
-                easing: Easing.cubic,
-                useNativeDriver: false,
-            }).start();
-            Animated.timing(this.state.signUpLogInButtonsContentXPositionController, {
-                toValue: 2,
-                duration: 400,
-                easing: Easing.cubic,
-                useNativeDriver: false,
-            }).start();
-            Animated.timing(this.state.titleXPositionController, {
-                toValue: 1,
-                duration: this.state.closeBackButtonIconPositionAnimationDuration,
-                easing: Easing.cubic,
-                useNativeDriver: false,
-            }).start(() => {
-                setTimeout(() => {
-                    this.setState({
-                        steps: this.state.actualScreen === 'signUp' ? 3 : 1,
-                        step: 1,
-                        prevScreen: '',
-                        actualScreen: 'createUsername',
-                    });
-                    this.state.titleXPositionController.setValue(0);
-                    this.setState({
-                        nextScreen: '',
-                    });
-                }, 100);
-            });
-        }
+            }, 100);
+        });
     }
 
     twitchLink = () => {
-        //add code to auth with Twitch
-        //add conditional if authenticated
-        //if (true) return this.setState({ screen: 'signUpLogInComplete' });
+        this.props.navigation.navigate('TwitchLogIn', {
+            onSuccess: this.onSuccesfulLinkWithTwitch,
+            back: true
+        });
+    }
 
-        /**
-         * TODO: Ensure if link was succesful before animation
-         */
-        this.props.navigation.navigate('TwitchLogIn');
-
-        if (true) {
-            this.setState({ gradientTo: 0 });
-            Animated.parallel([
-                Animated.timing(this.state.twitchLogoXPositionController, {
-                    toValue: 0,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }),
-                Animated.timing(this.state.twitchLinkTitleXPositionController, {
-                    toValue: 0,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }),
-                Animated.timing(this.state.twitchLinkSubtitleXPositionController, {
-                    toValue: 0,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }),
-                Animated.timing(this.state.twitchLinkBodyXPositionController, {
-                    toValue: 0,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }),
-                Animated.timing(this.state.twitchLinkButtonXPositionController, {
-                    toValue: 0,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }),
-            ]).start(() => {
-                setTimeout(() => {
-                    this.setState({ actualScreen: 'signUpLogInComplete' });
-                    Animated.sequence([
-                        Animated.timing(this.state.linearGradientPositionController, {
+    onSuccesfulLinkWithTwitch = () => {
+        this.setState({ gradientTo: 0 });
+        Animated.parallel([
+            Animated.timing(this.state.twitchLogoXPositionController, {
+                toValue: 0,
+                duration: 400,
+                easing: Easing.cubic,
+                useNativeDriver: false,
+            }),
+            Animated.timing(this.state.twitchLinkTitleXPositionController, {
+                toValue: 0,
+                duration: 400,
+                easing: Easing.cubic,
+                useNativeDriver: false,
+            }),
+            Animated.timing(this.state.twitchLinkSubtitleXPositionController, {
+                toValue: 0,
+                duration: 400,
+                easing: Easing.cubic,
+                useNativeDriver: false,
+            }),
+            Animated.timing(this.state.twitchLinkBodyXPositionController, {
+                toValue: 0,
+                duration: 400,
+                easing: Easing.cubic,
+                useNativeDriver: false,
+            }),
+            Animated.timing(this.state.twitchLinkButtonXPositionController, {
+                toValue: 0,
+                duration: 400,
+                easing: Easing.cubic,
+                useNativeDriver: false,
+            }),
+        ]).start(() => {
+            setTimeout(() => {
+                this.setState({ actualScreen: 'signUpLogInComplete' });
+                Animated.sequence([
+                    Animated.timing(this.state.linearGradientPositionController, {
+                        toValue: 1,
+                        duration: 400,
+                        easing: Easing.cubic,
+                        useNativeDriver: false,
+                    }),
+                    Animated.parallel([
+                        Animated.timing(this.state.closeBackButtonIconOpacity, {
+                            toValue: 0,
+                            duration: 400,
+                            easing: Easing.cubic,
+                            useNativeDriver: false,
+                        }),
+                        Animated.timing(this.state.awesomeHandYPositionController, {
                             toValue: 1,
                             duration: 400,
                             easing: Easing.cubic,
                             useNativeDriver: false,
                         }),
-                        Animated.parallel([
-                            Animated.timing(this.state.closeBackButtonIconOpacity, {
-                                toValue: 0,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                            Animated.timing(this.state.awesomeHandYPositionController, {
-                                toValue: 1,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                            Animated.timing(this.state.succesfulRegisterTitleYPositionController, {
-                                toValue: 1,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                            Animated.timing(this.state.succesfulRegisterBodyYPositionController, {
-                                toValue: 1,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                            Animated.timing(this.state.succesfulRegisterButtonYPositionController, {
-                                toValue: 1,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                        ])
-                    ]).start();
-                }, 100);
-            });
-        }
+                        Animated.timing(this.state.succesfulRegisterTitleYPositionController, {
+                            toValue: 1,
+                            duration: 400,
+                            easing: Easing.cubic,
+                            useNativeDriver: false,
+                        }),
+                        Animated.timing(this.state.succesfulRegisterBodyYPositionController, {
+                            toValue: 1,
+                            duration: 400,
+                            easing: Easing.cubic,
+                            useNativeDriver: false,
+                        }),
+                        Animated.timing(this.state.succesfulRegisterButtonYPositionController, {
+                            toValue: 1,
+                            duration: 400,
+                            easing: Easing.cubic,
+                            useNativeDriver: false,
+                        }),
+                    ])
+                ]).start();
+            }, 100);
+        });
     }
 
     submitUsername = () => {
-        //add code to register username
-        if (true) {
-            Animated.sequence([
-                Animated.timing(this.state.closeBackButtonIconOpacity, {
+        this.checkTermsConditionsAndUsername(() => {
+            this.setState({ screen: 'twitchLink' });
+            this.twitchLinkAnimation();
+        });
+    }
+
+    twitchLinkAnimation = () => {
+        Animated.sequence([
+            Animated.timing(this.state.closeBackButtonIconOpacity, {
+                toValue: 1,
+                duration: 400,
+                easing: Easing.cubic,
+                useNativeDriver: false,
+            }),
+            Animated.parallel([
+                Animated.timing(this.state.bottomButtonXPosition, {
                     toValue: 1,
                     duration: 400,
                     easing: Easing.cubic,
                     useNativeDriver: false,
                 }),
-                Animated.parallel([
-                    Animated.timing(this.state.bottomButtonXPosition, {
-                        toValue: 1,
-                        duration: 400,
-                        easing: Easing.cubic,
-                        useNativeDriver: false,
-                    }),
-                    Animated.timing(this.state.bodyTextUsernameInputXPositionController, {
-                        toValue: 2,
-                        duration: 400,
-                        easing: Easing.cubic,
-                        useNativeDriver: false,
-                    }),
-                    Animated.timing(this.state.titleXPositionController, {
-                        toValue: 1,
-                        duration: 400,
-                        easing: Easing.cubic,
-                        useNativeDriver: false,
-                    }),
-                ]),
-                Animated.parallel([
-                    Animated.timing(this.state.qaplaLogoYPositionController, {
-                        toValue: 1,
-                        duration: 400,
-                        easing: Easing.cubic,
-                        useNativeDriver: false,
-                    }),
-                    Animated.timing(this.state.linearGradientContrainerYPositionController, {
-                        toValue: 1,
-                        duration: 400,
-                        easing: Easing.cubic,
-                        useNativeDriver: false,
-                    }),
-                ]),
-            ]).start(() => {
+                Animated.timing(this.state.bodyTextUsernameInputXPositionController, {
+                    toValue: 2,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }),
+                Animated.timing(this.state.titleXPositionController, {
+                    toValue: 1,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }),
+            ]),
+            Animated.parallel([
+                Animated.timing(this.state.qaplaLogoYPositionController, {
+                    toValue: 1,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }),
+                Animated.timing(this.state.linearGradientContrainerYPositionController, {
+                    toValue: 1,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }),
+            ]),
+        ]).start(() => {
+            setTimeout(() => {
+                this.setState({
+                    prevScreen: '',
+                    actualScreen: 'twitchLink',
+                });
+                this.setState({
+                    nextScreen: '',
+                });
                 setTimeout(() => {
-                    this.setState({
-                        prevScreen: '',
-                        actualScreen: 'twitchLink',
-                    });
-                    this.setState({
-                        nextScreen: '',
-                    });
-                    setTimeout(() => {
-                        Animated.parallel([
-                            Animated.timing(this.state.closeBackButtonIconWidth, {
-                                toValue: 88,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                            Animated.timing(this.state.closeBackButtonIconPosition, {
-                                toValue: 2,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                            Animated.timing(this.state.closeBackButtonIconMarginLeft, {
-                                toValue: 1,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                            Animated.timing(this.state.twitchLogoXPositionController, {
-                                toValue: 1,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                            Animated.timing(this.state.twitchLinkTitleXPositionController, {
-                                toValue: 1,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                            Animated.timing(this.state.twitchLinkSubtitleXPositionController, {
-                                toValue: 1,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                            Animated.timing(this.state.twitchLinkBodyXPositionController, {
-                                toValue: 1,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                            Animated.timing(this.state.twitchLinkButtonXPositionController, {
-                                toValue: 1,
-                                duration: 400,
-                                easing: Easing.cubic,
-                                useNativeDriver: false,
-                            }),
-                        ]).start();
-                    }, 100)
-                }, 100);
-            });
-        }
+                    Animated.parallel([
+                        Animated.timing(this.state.closeBackButtonIconWidth, {
+                            toValue: 88,
+                            duration: 400,
+                            easing: Easing.cubic,
+                            useNativeDriver: false,
+                        }),
+                        Animated.timing(this.state.closeBackButtonIconPosition, {
+                            toValue: 2,
+                            duration: 400,
+                            easing: Easing.cubic,
+                            useNativeDriver: false,
+                        }),
+                        Animated.timing(this.state.closeBackButtonIconMarginLeft, {
+                            toValue: 1,
+                            duration: 400,
+                            easing: Easing.cubic,
+                            useNativeDriver: false,
+                        }),
+                        Animated.timing(this.state.twitchLogoXPositionController, {
+                            toValue: 1,
+                            duration: 400,
+                            easing: Easing.cubic,
+                            useNativeDriver: false,
+                        }),
+                        Animated.timing(this.state.twitchLinkTitleXPositionController, {
+                            toValue: 1,
+                            duration: 400,
+                            easing: Easing.cubic,
+                            useNativeDriver: false,
+                        }),
+                        Animated.timing(this.state.twitchLinkSubtitleXPositionController, {
+                            toValue: 1,
+                            duration: 400,
+                            easing: Easing.cubic,
+                            useNativeDriver: false,
+                        }),
+                        Animated.timing(this.state.twitchLinkBodyXPositionController, {
+                            toValue: 1,
+                            duration: 400,
+                            easing: Easing.cubic,
+                            useNativeDriver: false,
+                        }),
+                        Animated.timing(this.state.twitchLinkButtonXPositionController, {
+                            toValue: 1,
+                            duration: 400,
+                            easing: Easing.cubic,
+                            useNativeDriver: false,
+                        }),
+                    ]).start();
+                }, 100)
+            }, 100);
+        });
     }
 
     skipTwitchLink = () => {
@@ -1354,7 +1022,6 @@ class SignUpLoginHandlerScreen extends Component {
     }
 
     dismissKeyboardHandler = () => {
-        console.log('dismiss keyboar');
         Keyboard.dismiss();
     }
 
@@ -1765,7 +1432,7 @@ class SignUpLoginHandlerScreen extends Component {
                                                         // onFocus={() => { Keyboard.scheduleLayoutAnimation({ duration: 1000, easing: 'linear' }); }}
                                                         onFocus={() => { LayoutAnimation.configureNext(LayoutAnimation.Presets.linear); }}
                                                         onBlur={() => { console.log('blur') }}
-                                                        onChange={(text) => { this.setState({ username: text }); }}
+                                                        onChangeText={(text) => { this.setState({ username: text }); }}
                                                         value={this.state.username}
                                                         placeholder={'Nombre de usuario'}
                                                         placeholderTextColor={'#009682'}
@@ -1867,7 +1534,7 @@ class SignUpLoginHandlerScreen extends Component {
                                                                     }}
                                                                     onFocus={() => { LayoutAnimation.configureNext(LayoutAnimation.Presets.linear); }}
                                                                     onBlur={() => { console.log('blur'); }}
-                                                                    onChange={(text) => { this.setState({ username: text }); }}
+                                                                    onChangeText={(text) => { this.setState({ username: text }); }}
                                                                     value={this.state.username}
                                                                     placeholder={'Nombre de usuario'}
                                                                     placeholderTextColor={'#009682'}
@@ -1875,15 +1542,6 @@ class SignUpLoginHandlerScreen extends Component {
                                                                 />
                                                             </Animated.View>
                                                         </View>
-
-                                                        {/* {!this.state.keyboardIsActive &&
-                                                            <TouchableOpacity
-                                                                style={[styles.buttonsShape, styles.buttonSignUpBGColor, { height: '16.4%', marginBottom: '34.4%' }]}
-                                                                onPress={this.submitUsername}
-                                                            >
-                                                                <Text style={[styles.loginRegisterButtonsText, styles.darkQaplaTextColor]}>Estoy listo</Text>
-                                                            </TouchableOpacity>
-                                                        } */}
                                                     </View>
                                                 </Animated.View>
                                             </View>
@@ -1919,11 +1577,12 @@ class SignUpLoginHandlerScreen extends Component {
                                                                 alignItems: 'center',
                                                             },
                                                             { marginTop: '0%' }]}
-                                                        onPress={this.state.actualScreen === 'init' ? this.signUp : this.appleButton}>
+                                                        onPress={this.state.actualScreen === 'init' ? this.signUp : this.onAppleButtonPress}
+                                                        disabled={this.state.actualScreen !== 'init' && !(Platform.OS === 'ios' && appleAuth.isSignUpButtonSupported)}>
                                                         <Animated.View
                                                             style={{
                                                                 backgroundColor: this.state.signUpLogInButtonsHexColorController.interpolate({
-                                                                    inputRange: [0, 1], outputRange: [this.buttonsColors.signUp, this.buttonsColors.apple]
+                                                                    inputRange: [0, 1], outputRange: [this.buttonsColors.signUp, Platform.OS === 'ios' && appleAuth.isSignUpButtonSupported ? this.buttonsColors.apple : 'transparent']
                                                                 }),
                                                                 height: '100%',
                                                                 width: '100%',
@@ -1945,15 +1604,17 @@ class SignUpLoginHandlerScreen extends Component {
                                                                 <View style={{ width: '100%' }}>
                                                                     <Text style={[styles.loginRegisterButtonsText, styles.darkQaplaTextColor]}>Crear mi cuenta</Text>
                                                                 </View>
-                                                                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                                                                    <View style={{ height: '100%', width: '10%', marginLeft: '-5%', transform: [{ scale: 1.7 }] }}>
-                                                                        <AppleIcon />
+                                                                {Platform.OS === 'ios' && appleAuth.isSignUpButtonSupported &&
+                                                                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                                                                        <View style={{ height: '100%', width: '10%', marginLeft: '-5%', transform: [{ scale: 1.7 }] }}>
+                                                                            <AppleIcon />
+                                                                        </View>
+                                                                        <View style={{ marginLeft: '4%' }}>
+                                                                            <Text
+                                                                                style={[styles.loginRegisterButtonsText, styles.whiteTextColor, { fontSize: getScreenSizeMultiplier() * 14 }]}>Continuar con Apple</Text>
+                                                                        </View>
                                                                     </View>
-                                                                    <View style={{ marginLeft: '4%' }}>
-                                                                        <Text
-                                                                            style={[styles.loginRegisterButtonsText, styles.whiteTextColor, { fontSize: getScreenSizeMultiplier() * 14 }]}>Continuar con Apple</Text>
-                                                                    </View>
-                                                                </View>
+                                                                }
                                                             </Animated.View>
                                                         </Animated.View>
                                                     </TouchableOpacity>
@@ -1985,7 +1646,7 @@ class SignUpLoginHandlerScreen extends Component {
                                                             justifyContent: 'center',
                                                             alignItems: 'center',
                                                         }]}
-                                                        onPress={this.state.actualScreen === 'init' ? this.logIn : this.state.actualScreen === 'createUsername' ? this.submitUsername : this.googleButton}>
+                                                        onPress={this.state.actualScreen === 'init' ? this.logIn : this.state.actualScreen === 'createUsername' ? this.submitUsername : this.signInWithGoogle}>
                                                         <Animated.View
                                                             style={{
                                                                 backgroundColor: this.state.signUpLogInButtonsHexColorController.interpolate({
@@ -2139,6 +1800,7 @@ function mapDispatchToProps(state) {
     return {
         originScreen: state.screensReducer.previousScreenId,
         currentScreen: state.screensReducer.currentScreenId,
+        uid: state.userReducer.user.id
     };
 }
 

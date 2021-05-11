@@ -1,3 +1,5 @@
+// Facebook button on line 1966
+
 import React, { Component } from 'react';
 import { BackHandler, View, Image, SafeAreaView, Platform, Modal, Text, TouchableOpacity, Dimensions, TextInput, Keyboard, Animated, Easing, LayoutAnimation } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch, getScreenSizeMultiplier, getScreenWidth, getScreenHeight } from '../../utilities/iosAndroidDim';
@@ -14,6 +16,9 @@ import { translate } from '../../utilities/i18';
 import { updateUserLoggedStatus, userHaveTwitchId, validateUserName, createUserProfile } from '../../services/database';
 import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
 import ProgressDotsIndicator from '../../components/ProgressDotsIndicator/ProgressDotsIndicator';
+import CheckBox from '../../components/CheckBox/CheckBox';
+import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
+import TermsAndConditionsModal from '../../components/TermsAndConditionsModal/TermsAndConditionsModal';
 
 const QaplaSignUpLogo2021 = Images.png.qaplaSignupLogo2021.img;
 const AwesomeHand = Images.png.awesomeHand.img;
@@ -55,6 +60,8 @@ class SignUpLoginHandlerScreen extends Component {
         agreementPrivacyState: false,
         gradientTo: 0,
         disableCornerButton: false,
+        openTermsModal: false,
+        openPrivacyModal: false,
 
         closeBackButtonIconPosition: new Animated.Value(0),
         closeBackButtonIconWidth: new Animated.Value(40),
@@ -94,6 +101,10 @@ class SignUpLoginHandlerScreen extends Component {
         succesfulRegisterBodyYPositionController: new Animated.Value(0),
         succesfulRegisterButtonYPositionController: new Animated.Value(0),
         succesfulRegisterTutorialYPositionController: new Animated.Value(0),
+
+        agreementsController: new Animated.Value(0),
+
+        facebookButtonXPosition: new Animated.Value(0),
     };
 
     titles = {
@@ -189,6 +200,18 @@ class SignUpLoginHandlerScreen extends Component {
                 easing: Easing.cubic,
                 useNativeDriver: false,
             }).start();
+            Animated.timing(this.state.topButtonXPosition, {
+                toValue: 0,
+                duration: 400,
+                easing: Easing.cubic,
+                useNativeDriver: false,
+            }).start();
+            Animated.timing(this.state.facebookButtonXPosition, {
+                toValue: 0,
+                duration: 400,
+                easing: Easing.cubic,
+                useNativeDriver: false,
+            }).start();
             Animated.timing(this.state.titleXPositionController, {
                 toValue: -1,
                 duration: this.state.closeBackButtonIconPositionAnimationDuration,
@@ -206,6 +229,7 @@ class SignUpLoginHandlerScreen extends Component {
                     });
                 }, 100);
             });
+            return true;
         }
         if (this.state.actualScreen === 'createUsername') return true;
         if (this.state.actualScreen === 'twitchLink') return true;
@@ -349,12 +373,12 @@ class SignUpLoginHandlerScreen extends Component {
             updateUserLoggedStatus(true, user.user.uid);
             subscribeUserToAllRegistredTopics(user.user.uid);
 
-            if (await userHaveTwitchId(user.user.uid)){
+            if (await userHaveTwitchId(user.user.uid)) {
                 if (this.props.originScreen !== 'Public') {
                     this.props.navigation.dismiss();
-                  } else {
+                } else {
                     this.props.navigation.navigate('MatchWizard');
-                  }
+                }
 
             } else {
                 this.setState({ screen: 'twitchLink' });
@@ -363,15 +387,16 @@ class SignUpLoginHandlerScreen extends Component {
         }
     }
 
-     /**
-     * Validate the agreements (terms and privacy), also validate the userName
-     * if everything is right add the userName and returns the user to the previous flow
-     */
-      checkTermsConditionsAndUsername = async (onSuccess) => {
+    /**
+    * Validate the agreements (terms and privacy), also validate the userName
+    * if everything is right add the userName and returns the user to the previous flow
+    */
+    checkTermsConditionsAndUsername = async (onSuccess) => {
         if (this.state.username !== '' && !this.state.checkingUserName && this.state.agreementPrivacyState && this.state.agreementTermsState) {
             this.setState({
                 checkingUserName: true,
-                showErrorMessage: false }, async () => {
+                showErrorMessage: false
+            }, async () => {
                 if (await validateUserName(this.state.username)) {
 
                     await createUserProfile(this.props.uid, this.state.email, this.state.username);
@@ -421,6 +446,18 @@ class SignUpLoginHandlerScreen extends Component {
                 useNativeDriver: false,
             }).start();
             Animated.timing(this.state.signUpLogInButtonsContentXPositionController, {
+                toValue: 0,
+                duration: 400,
+                easing: Easing.cubic,
+                useNativeDriver: false,
+            }).start();
+            Animated.timing(this.state.topButtonXPosition, {
+                toValue: 0,
+                duration: 400,
+                easing: Easing.cubic,
+                useNativeDriver: false,
+            }).start();
+            Animated.timing(this.state.facebookButtonXPosition, {
                 toValue: 0,
                 duration: 400,
                 easing: Easing.cubic,
@@ -548,6 +585,14 @@ class SignUpLoginHandlerScreen extends Component {
         return 'Ya tienes una cuenta en Qapla, que te parece si vamos a ver los streams disponibles';
     }
 
+    toggleAgreementTermsState = () => this.setState({ agreementTermsState: !this.state.agreementTermsState });
+
+    toggleAgreementPrivacyState = () => this.setState({ agreementPrivacyState: !this.state.agreementPrivacyState });
+
+    toggleTermsModal = () => this.setState({ openTermsModal: !this.state.openTermsModal });
+
+    togglePrivacyModal = () => this.setState({ openPrivacyModal: !this.state.openPrivacyModal });
+
     logIn = () => {
         this.secondStepAnimation('logIn', 1);
     }
@@ -558,6 +603,23 @@ class SignUpLoginHandlerScreen extends Component {
 
     secondStepAnimation = (nextScreen, steps) => {
         this.setState({ nextScreen, steps });
+        console.log(Platform.OS !== 'ios' && !appleAuth.isSignUpButtonSupported)
+        if (Platform.OS !== 'ios' && !appleAuth.isSignUpButtonSupported) {
+            Animated.timing(this.state.topButtonXPosition, {
+                toValue: 1,
+                duration: 400,
+                easing: Easing.cubic,
+                useNativeDriver: false,
+            }).start();
+        }
+        if (nextScreen === 'logIn') {
+            Animated.timing(this.state.facebookButtonXPosition, {
+                toValue: 1,
+                duration: 400,
+                easing: Easing.cubic,
+                useNativeDriver: false,
+            }).start();
+        }
         Animated.timing(this.state.closeBackButtonIconPosition, {
             toValue: 1,
             duration: this.state.closeBackButtonIconPositionAnimationDuration,
@@ -596,6 +658,18 @@ class SignUpLoginHandlerScreen extends Component {
     }
 
     animationAfterLogin = () => {
+        Animated.timing(this.state.facebookButtonXPosition, {
+            toValue: 2,
+            duration: 400,
+            easing: Easing.cubic,
+            useNativeDriver: false,
+        }).start();
+        Animated.timing(this.state.agreementsController, {
+            toValue: 1,
+            duration: 400,
+            easing: Easing.cubic,
+            useNativeDriver: false,
+        }).start();
         Animated.timing(this.state.closeBackButtonIconOpacity, {
             toValue: 0,
             duration: 400,
@@ -764,6 +838,12 @@ class SignUpLoginHandlerScreen extends Component {
                 }),
                 Animated.timing(this.state.titleXPositionController, {
                     toValue: 1,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }),
+                Animated.timing(this.state.agreementsController, {
+                    toValue: 2,
                     duration: 400,
                     easing: Easing.cubic,
                     useNativeDriver: false,
@@ -938,6 +1018,7 @@ class SignUpLoginHandlerScreen extends Component {
     noLinkTwitch = () => {
         if (true) {
             this.setState({ gradientTo: 2 });
+            this.state.linearGradientContrainerYPositionController.setValue(0);
             Animated.parallel([
                 Animated.timing(this.state.twitchLogoXPositionController, {
                     toValue: 0,
@@ -1415,29 +1496,6 @@ class SignUpLoginHandlerScreen extends Component {
                                                     width: '100%',
                                                     height: '100%',
                                                 }}>
-                                                    <TextInput
-                                                        style={{
-                                                            color: 'rgb(0, 255, 220)',
-                                                            fontSize: getScreenSizeMultiplier() * 16,
-                                                            fontStyle: 'normal',
-                                                            fontWeight: 'normal',
-                                                            textAlign: 'left',
-                                                            lineHeight: getScreenSizeMultiplier() * 26,
-                                                            letterSpacing: getScreenSizeMultiplier() * 0.25,
-                                                            marginHorizontal: '7.2%',
-                                                            width: '86%',
-                                                            textAlignVertical: 'center',
-                                                            height: '100%',
-                                                        }}
-                                                        // onFocus={() => { Keyboard.scheduleLayoutAnimation({ duration: 1000, easing: 'linear' }); }}
-                                                        onFocus={() => { LayoutAnimation.configureNext(LayoutAnimation.Presets.linear); }}
-                                                        onBlur={() => { console.log('blur') }}
-                                                        onChangeText={(text) => { this.setState({ username: text }); }}
-                                                        value={this.state.username}
-                                                        placeholder={'Nombre de usuario'}
-                                                        placeholderTextColor={'#009682'}
-                                                        ref={(ref) => { this.usernameInput = ref; }}
-                                                    />
                                                     <Text style={[styles.titleText, { height: '100%', textAlignVertical: 'center' }]}>{this.titles[this.state.prevScreen]}</Text>
                                                 </View>
                                                 <View style={{
@@ -1582,7 +1640,7 @@ class SignUpLoginHandlerScreen extends Component {
                                                         <Animated.View
                                                             style={{
                                                                 backgroundColor: this.state.signUpLogInButtonsHexColorController.interpolate({
-                                                                    inputRange: [0, 1], outputRange: [this.buttonsColors.signUp, Platform.OS === 'ios' && appleAuth.isSignUpButtonSupported ? this.buttonsColors.apple : 'transparent']
+                                                                    inputRange: [0, 1], outputRange: [this.buttonsColors.signUp, this.buttonsColors.apple]
                                                                 }),
                                                                 height: '100%',
                                                                 width: '100%',
@@ -1696,6 +1754,102 @@ class SignUpLoginHandlerScreen extends Component {
                         </View>
                     </Animated.View>
                 </Animated.View >
+                {/* Start of Facebook Button */}
+                {(this.state.nextScreen === 'logIn' || this.state.actualScreen === 'logIn') &&
+                    <View style={{
+                        height: getScreenHeight() * 0.09,
+                        width: '70%',
+                        position: 'absolute',
+                        bottom: (Platform.OS === 'ios' && appleAuth.isSignUpButtonSupported) ? getScreenHeight() * 0.37 : getScreenHeight() * 0.2511,
+                        left: '15%',
+                        overflow: 'hidden',
+                    }} >
+                        <Animated.View style={{
+                            width: '100%',
+                            height: getScreenHeight() * 0.09,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            transform: [
+                                {
+                                    translateX: this.state.facebookButtonXPosition.interpolate({
+                                        inputRange: [0, 1, 2],
+                                        outputRange: [getScreenWidth() * 0.7, 0, getScreenWidth() * -0.7],
+                                    }),
+                                },
+                            ],
+                        }}>
+                            <TouchableOpacity
+                                style={[
+                                    {
+                                        borderRadius: getScreenSizeMultiplier() * 50,
+                                        width: '100%',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    },
+                                    { marginTop: '0%' }]}
+                                onPress={() => console.log('facebook')}>
+                                <Animated.View
+                                    style={{
+                                        backgroundColor: '#3b5998',
+                                        height: '100%',
+                                        width: '100%',
+                                        justifyContent: 'center',
+                                        borderRadius: 100,
+                                        overflow: 'hidden',
+                                    }}>
+                                    <Animated.View style={{
+                                        flexDirection: 'row',
+                                    }}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                                            <View style={{ height: '100%', width: '10%', marginLeft: '1%', transform: [{ scale: 1.5 }] }}>
+                                                <FacebookIcon />
+                                            </View>
+                                            <View style={{ marginLeft: '4%' }}>
+                                                <Text
+                                                    style={[styles.loginRegisterButtonsText, styles.whiteTextColor, { fontSize: getScreenSizeMultiplier() * 14 }]}>Continuar con Facebook</Text>
+                                            </View>
+                                        </View>
+                                    </Animated.View>
+                                </Animated.View>
+                            </TouchableOpacity>
+                        </Animated.View>
+                    </View>
+                }
+                {/* End of Facebook Button */}
+                <Animated.View style={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: getScreenHeight() * 0.07,
+                    top: getScreenHeight() * 0.6,
+                    opacity: this.state.agreementsController,
+                    transform: [{
+                        translateX: this.state.agreementsController.interpolate({
+                            inputRange: [0, 1, 2],
+                            outputRange: [getScreenWidth() * 1, 0, getScreenWidth() * -1]
+                        }),
+                    }],
+                }}>
+                    <View>
+                        <CheckBox
+                            label={translate('chooseUserNameScreen.agreeWithTerms')}
+                            onPress={this.toggleAgreementTermsState}
+                            onTextPress={this.toggleTermsModal}
+                            textStyle={{ textDecorationLine: 'underline', color: Colors.greenQapla }}
+                            selected={this.state.agreementTermsState}
+                            disabled={this.state.checkingUserName} />
+                    </View>
+                    <View style={{ flex: 1 }} />
+                    <View>
+                        <CheckBox
+                            label={translate('chooseUserNameScreen.agreeWithPrivacy')}
+                            onPress={this.toggleAgreementPrivacyState}
+                            onTextPress={this.togglePrivacyModal}
+                            textStyle={{ textDecorationLine: 'underline', color: Colors.greenQapla }}
+                            selected={this.state.agreementPrivacyState}
+                            disabled={this.state.checkingUserName} />
+                    </View>
+
+                </Animated.View>
                 <View style={{
                     flex: 1,
                     position: 'absolute',
@@ -1740,8 +1894,7 @@ class SignUpLoginHandlerScreen extends Component {
                         />
                     </Animated.View>
                 </View>
-                {
-                    this.state.actualScreen === 'signUpLogInComplete' &&
+                {this.state.actualScreen === 'signUpLogInComplete' &&
                     <Animated.View style={{
                         backgroundColor: 'rgba(13, 16, 34, 0.36)',
                         alignSelf: 'stretch',
@@ -1791,6 +1944,13 @@ class SignUpLoginHandlerScreen extends Component {
                         </TouchableOpacity>
                     </Animated.View>
                 }
+                <TermsAndConditionsModal
+                    open={this.state.openTermsModal}
+                    onClose={this.toggleTermsModal} />
+                <PrivacyModal
+                    open={this.state.openPrivacyModal}
+                    onClose={this.togglePrivacyModal} />
+
             </SafeAreaView >
         );
     }

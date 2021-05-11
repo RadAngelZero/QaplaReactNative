@@ -1,7 +1,7 @@
 // Facebook button on line 1966
 
 import React, { Component } from 'react';
-import { BackHandler, View, Image, SafeAreaView, Platform, Modal, Text, TouchableOpacity, Dimensions, TextInput, Keyboard, Animated, Easing, LayoutAnimation } from 'react-native';
+import { BackHandler, View, Image, SafeAreaView, Platform, Modal, Text, TouchableOpacity, Dimensions, TextInput, Keyboard, Animated, Easing, LayoutAnimation, Alert } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch, getScreenSizeMultiplier, getScreenWidth, getScreenHeight } from '../../utilities/iosAndroidDim';
 import { connect } from 'react-redux';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
@@ -11,7 +11,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Colors from '../../utilities/Colors';
 import styles from './style';
 import Images from '../../../assets/images';
-import { signInWithFacebook, setupGoogleSignin, signInWithGoogle, signInWithApple } from '../../services/auth';
+import { signInWithFacebook, setupGoogleSignin, signInWithGoogle, signInWithApple, signOut } from '../../services/auth';
 import { translate } from '../../utilities/i18';
 import { updateUserLoggedStatus, userHaveTwitchId, validateUserName, createUserProfile } from '../../services/database';
 import { subscribeUserToAllRegistredTopics } from '../../services/messaging';
@@ -19,6 +19,7 @@ import ProgressDotsIndicator from '../../components/ProgressDotsIndicator/Progre
 import CheckBox from '../../components/CheckBox/CheckBox';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import TermsAndConditionsModal from '../../components/TermsAndConditionsModal/TermsAndConditionsModal';
+import { FBProvider } from '../../utilities/firebase';
 
 const QaplaSignUpLogo2021 = Images.png.qaplaSignupLogo2021.img;
 const AwesomeHand = Images.png.awesomeHand.img;
@@ -363,26 +364,25 @@ class SignUpLoginHandlerScreen extends Component {
      * If isn't just close and back to the previous flow
      */
     succesfullSignIn = async (user) => {
-        this.animationAfterLogin();
         if (user.additionalUserInfo.isNewUser) {
-
-            this.setState({ email: user.user.email });
-            return this.setState({ screen: 'createUsername' });
+            if (user.additionalUserInfo.providerId === FBProvider.PROVIDER_ID) {
+                user.user.delete();
+                Alert.alert('Error', 'No se permite la creación de cuentas nuevas con Facebook');
+            } else {
+                this.setState({ email: user.user.email });
+                this.setState({ screen: 'createUsername' });
+                this.animationAfterLogin();
+            }
         } else {
 
             updateUserLoggedStatus(true, user.user.uid);
             subscribeUserToAllRegistredTopics(user.user.uid);
 
-            if (await userHaveTwitchId(user.user.uid)) {
-                if (this.props.originScreen !== 'Public') {
-                    this.props.navigation.dismiss();
-                } else {
-                    this.props.navigation.navigate('MatchWizard');
-                }
-
-            } else {
+            if (!await userHaveTwitchId(user.user.uid)) {
                 this.setState({ screen: 'twitchLink' });
                 this.twitchLinkAnimation();
+            } else {
+                this.onSuccesfulLinkWithTwitch();
             }
         }
     }
@@ -603,7 +603,6 @@ class SignUpLoginHandlerScreen extends Component {
 
     secondStepAnimation = (nextScreen, steps) => {
         this.setState({ nextScreen, steps });
-        console.log(Platform.OS !== 'ios' && !appleAuth.isSignUpButtonSupported)
         if (Platform.OS !== 'ios' && !appleAuth.isSignUpButtonSupported) {
             Animated.timing(this.state.topButtonXPosition, {
                 toValue: 1,
@@ -1787,7 +1786,7 @@ class SignUpLoginHandlerScreen extends Component {
                                         alignItems: 'center',
                                     },
                                     { marginTop: '0%' }]}
-                                onPress={() => console.log('facebook')}>
+                                onPress={this.signInWithFacebook}>
                                 <Animated.View
                                     style={{
                                         backgroundColor: '#3b5998',

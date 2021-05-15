@@ -10,7 +10,7 @@ import Images from './../../../assets/images';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 
 const BackIcon = Images.svg.backIcon;
-const CloseIcon = Images.svg.closeIcon;
+const CloseIcon = Images.svg.closeThiccIcon;
 
 class TopNavOptions extends Component {
     /**
@@ -46,23 +46,20 @@ class TopNavOptions extends Component {
             <SafeAreaView style={(this.props.currentScreen !== 'LogIn' && this.props.currentScreen !== 'SignIn') ?
                 styles.sfvContainer : styles.sfvContainerSignInWithEmail}>
                 <View style={styles.optionsContainer}>
-                    {/* <View style={styles.backIconContainer}>
+                    <View style={styles.backIconContainer}>
                         {this.props.back &&
                             <QaplaIcon onPress={() => this.props.navigation.pop()}>
                                 <BackIcon />
                             </QaplaIcon>
                         }
-                    </View> */}
-                    {/* <View style={styles.closeIconContainer}> */}
-                        {/* {this.props.close &&
-                            <QaplaIcon onPress={this.close}
-                                touchableStyle={ [styles.closeIconContainer] }>
-                                <View style={{left:'-4%', top:'-4%'}}>
-                                    <CloseIcon />
-                                </View>
+                    </View>
+                    <View style={styles.closeIconContainer}>
+                        {this.props.close &&
+                            <QaplaIcon onPress={this.close}>
+                                <CloseIcon />
                             </QaplaIcon>
-                        } */}
-                    {/* </View> */}
+                        }
+                    </View>
                 </View>
             </SafeAreaView>
         );

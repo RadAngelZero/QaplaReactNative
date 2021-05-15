@@ -77,7 +77,7 @@ const MatchWizardStackNavigator = createStackNavigator({
 },
   {
     navigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   });
 
@@ -139,7 +139,7 @@ const AuthStackNavigator = createStackNavigator({
   SignIn: {
     screen: SignUpLoginHandlerScreen,
     navigationOptions: {
-      header: (props) => <TopNavOptions close {...props} />
+      headerShown: false
     }
   },
   LogIn: {
@@ -156,7 +156,7 @@ const AuthStackNavigator = createStackNavigator({
   }
 }, {
   navigationOptions: {
-    gesturesEnabled: false
+    gestureEnabled: false
   }
 });
 

@@ -5,9 +5,6 @@ import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesW
 import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
-    darkQaplaBGColor: {
-        backgroundColor: '#131833',
-    },
     buttonSignUpBGColor: {
         backgroundColor: Colors.greenQapla,
     },
@@ -40,6 +37,7 @@ export default styles = StyleSheet.create({
     },
     sfvContainer: {
         flex: 1,
+        backgroundColor: '#131833',
         justifyContent: 'center',
         paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
@@ -70,9 +68,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
     },
     qaplaLogoView: {
-        position: 'absolute',
-        width: '100%',
-        marginTop: '5%',
+        alignSelf: 'center'
     },
     qaplaLogoSpaceHandler: {
         width: '100%',
@@ -115,7 +111,7 @@ export default styles = StyleSheet.create({
         paddingTop: '0.3%',
     },
     loginRegisterButtonsText: {
-        fontSize: getScreenSizeMultiplier() * 17,
+        fontSize: 17,
         fontStyle: 'normal',
         fontWeight: 'bold',
         textAlign: 'center',
@@ -129,4 +125,12 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    succesfulLoginButtonText: {
+        fontSize: 17,
+        marginTop: 24,
+        marginBottom: 24,
+        marginLeft: 24,
+        marginRight: 24,
+        fontWeight: 'bold'
+    }
 });

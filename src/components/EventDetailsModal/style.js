@@ -266,10 +266,10 @@ export default styles = StyleSheet.create({
     },
     participateButtonContainer: {
         position:'absolute',
-        bottom:'-12%',
+        bottom: 0,
         width: '100%',
         backgroundColor: Colors.greenQapla,
-        height: '12%',
+
     },
     participateButtonText: {
         flex: 1,
@@ -277,11 +277,13 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         color: Colors.backgroundDarkModal,
         textAlign: 'center',
-        textAlignVertical:'center'
+        textAlignVertical:'center',
+        marginTop: 34,
+        marginBottom: 34
     },
     // Event Registration
     fullHeightDialog: {
-        minHeight: heightPercentageToPx(92),
+        minHeight: heightPercentageToPx(86),
     },
     nickNameTitle: {
         fontSize: 28,

@@ -434,6 +434,7 @@
         "done": "Done"
     },
     "linkTwitchAccount": {
+        "skip": "Skip",
         "linkAccount": "Link your account",
         "realTimeProgress": "Your progress in real time!",
         "description": "Receive your Qoins and XQ automatically when you redeem points from your streamer's channel.",

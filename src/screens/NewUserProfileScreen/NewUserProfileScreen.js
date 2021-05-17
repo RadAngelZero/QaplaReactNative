@@ -24,6 +24,7 @@ import { retrieveData, storeData } from '../../utilities/persistance';
 import { defaultUserImages } from '../../utilities/Constants';
 import QaplaTooltip from '../../components/QaplaTooltip/QaplaTooltip';
 import ZeroQoinsEventsModal from '../../components/ZeroQoinsEventsModal/ZeroQoinsEventsModal';
+import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 
 const BitsIcon = images.svg.bitsIcon;
 
@@ -40,7 +41,8 @@ export class NewUserProfileScreen extends Component {
         openRewardsTooltip: false,
         openedTooltips: 0,
         indexOfTooltipOpen: -1,
-        openDonationFeedbackModal: false
+        openDonationFeedbackModal: false,
+        openLinkWitTwitchModal: false
     };
 
     componentWillMount() {
@@ -222,7 +224,7 @@ export class NewUserProfileScreen extends Component {
         }
     }
 
-    linkTwitchAccount = () => this.props.navigation.navigate('TwitchLogIn');
+    linkTwitchAccount = () => this.setState({ openLinkWitTwitchModal: true });
 
     render() {
         const userLevel = Math.floor(this.props.qaplaLevel / 100);
@@ -349,6 +351,9 @@ export class NewUserProfileScreen extends Component {
                 <ZeroQoinsEventsModal
                     open={this.state.openDonationFeedbackModal}
                     onClose={() => this.setState({ openDonationFeedbackModal: false })} />
+                <LinkTwitchAccountModal
+                    open={this.state.openLinkWitTwitchModal}
+                    onClose={() => this.setState({ openLinkWitTwitchModal: false })} />
             </SafeAreaView>
         );
     }

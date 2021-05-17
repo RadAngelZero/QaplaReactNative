@@ -434,6 +434,7 @@
         "done": "Listo"
     },
     "linkTwitchAccount": {
+        "skip": "Omitir",
         "linkAccount": "Vincula tu cuenta",
         "realTimeProgress": "¡Tu progreso en tiempo real!",
         "description": "Recibe tus Qoins y XQ automáticamente al canjear puntos del canal de tu streamer.",

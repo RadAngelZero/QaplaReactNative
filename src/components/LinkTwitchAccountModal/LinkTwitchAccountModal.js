@@ -11,6 +11,7 @@ import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import images from '../../../assets/images';
 import LinkTwitchAccount from './LinkTwitchAccount';
 import SkipLinkTwitchAccount from './SkipLinkTwitchAccount';
+import { translate } from '../../utilities/i18';
 
 class LinkTwitchAccountModal extends Component {
     state = {
@@ -29,6 +30,8 @@ class LinkTwitchAccountModal extends Component {
         if (this.props.onSkipTwitchLink) {
             this.props.onSkipTwitchLink();
         }
+
+        this.setState({ showDontLinkWarning: false });
 
         this.props.onClose();
     }
@@ -52,7 +55,7 @@ class LinkTwitchAccountModal extends Component {
                                 <TouchableOpacity style={styles.skipButtonContainer}
                                     onPress={() => this.setState({ showDontLinkWarning: true })}>
                                     <Text style={styles.skipButtonText}>
-                                        Omitir
+                                        {translate('linkTwitchAccount.skip')}
                                     </Text>
                                 </TouchableOpacity>
                             </View>

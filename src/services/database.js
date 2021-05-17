@@ -35,9 +35,8 @@ const usersRewardsProgressRef = database.ref('/UsersRewardsProgress');
 const DonationsCostsRef = database.ref('/DonationsCosts');
 const DonationsLeaderBoardRef = database.ref('/DonationsLeaderBoard');
 const LeaderBoardPrizesRef = database.ref('/LeaderBoardPrizes');
-const twitchUsersRef = database.ref('/TwitchUsers');
 const leaderboardWinnersRef = database.ref('/LeaderboardWinners');
-
+const userStreamsRewardsRef = database.ref('/UserStreamsRewards');
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
 /**
@@ -1305,4 +1304,14 @@ export async function getUserDonationLeaderBoard(uid) {
 
  export async function getCommunitySurvey() {
     return await database.ref('/CommunitySurvey').once('value');
+ }
+
+/**
+ * Get the records of the user activity (on UserStreamsRewards) from the last 7 days
+ * @param {string} uid User identifier
+ */
+ export async function getUserActivityFromLast7Days(uid) {
+    const date = new Date();
+    const sevenDaysInMilliseconds = 604800000;
+    return await userStreamsRewardsRef.child(uid).orderByChild('timestamp').startAt(date.getTime() - sevenDaysInMilliseconds).once('value');
  }

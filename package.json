@@ -1,9 +1,10 @@
 {
   "name": "Qapla-React-Native",
-  "version": "3.0.2",
+  "version": "3.1.1",
   "private": true,
   "scripts": {
     "android": "cd android && gradlew clean && cd .. && react-native run-android",
+    "androidOnIOS": "source ~/.bash_profile && react-native run-android",
     "buildAndroid": "cd android && gradlew assembleRelease",
     "ios": "react-native run-ios",
     "start": "react-native start",

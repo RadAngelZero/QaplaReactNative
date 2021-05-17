@@ -10,7 +10,7 @@ import Images from './../../../assets/images';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 
 const BackIcon = Images.svg.backIcon;
-const CloseIcon = Images.svg.closeIcon;
+const CloseIcon = Images.svg.closeThiccIcon;
 
 class TopNavOptions extends Component {
     /**

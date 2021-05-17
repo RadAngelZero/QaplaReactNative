@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, ScrollView, View, Image, Animated, TouchableOpacity } from 'react-native';
+import { SafeAreaView, ScrollView, View, Image, Animated, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -242,16 +242,36 @@ export class NewUserProfileScreen extends Component {
                         onScrollEndDrag={this.scrollCollapsable}
                         onScroll={this.setLastScrollPosition}>
                         <Animated.View style={{ flex: 1 }}>
-                            <View style={styles.qoinsView}>
-                                <Image
-                                    source={images.png.Qoin3D.img}
-                                    style={styles.qoinsImage} />
-                                <QaplaText style={styles.qoinsValue}>
-                                    {userQoins}
-                                </QaplaText>
-                                <TouchableOpacity style={styles.updateDonationIcon} onPress={this.linkTwitchAccount}>
-                                    <images.svg.plusBubble />
-                                </TouchableOpacity>
+                            <View style={styles.profileDetailsContainer}>
+                                <View style={styles.qoinsView}>
+                                    <Image
+                                        source={images.png.Qoin3D.img}
+                                        style={styles.qoinsImage} />
+                                    <QaplaText style={styles.qoinsValue}>
+                                        {userQoins}
+                                    </QaplaText>
+                                </View>
+                                {this.props.twitchId && this.props.twitchUsername ?
+                                    <TouchableOpacity style={styles.twitchButtonContainer} disabled>
+                                        <View style={styles.twitchButtonContentContainer}>
+                                            <images.svg.twitchIcon />
+                                            <Text style={styles.twitchButtonText} numberOfLines={1}>
+                                                {this.props.twitchUsername}
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                :
+                                    <View style={styles.linkWithTwitchContainer}>
+                                        <TouchableOpacity style={styles.linkWithTwitchButtonContainer} onPress={this.linkTwitchAccount}>
+                                            <images.svg.twitchExtrudedLogo height={24}
+                                                width={72}
+                                                style={styles.twitchIconButton} />
+                                        </TouchableOpacity>
+                                        <Text style={styles.linkAccountText}>
+                                            {translate('newUserProfileScreen.linkAccount')}
+                                        </Text>
+                                    </View>
+                                }
                             </View>
                             <View style={styles.bitsCardContainer}>
                                 <View style={styles.bitsModuleView}>
@@ -346,7 +366,9 @@ function mapStateToProps(state) {
             userImage: state.userReducer.user.photoUrl,
             qaplaLevel: state.userReducer.user.qaplaLevel || 0,
             rewards: state.userReducer.user.UserRewards,
-            enableScroll: state.profileLeaderBoardReducer.enableScroll
+            enableScroll: state.profileLeaderBoardReducer.enableScroll,
+            twitchId: state.userReducer.user.twitchId,
+            twitchUsername: state.userReducer.user.twitchUsername
         }
     }
 

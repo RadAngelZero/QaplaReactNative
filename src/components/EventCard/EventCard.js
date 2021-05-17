@@ -51,6 +51,10 @@ function EventCardContainer({ isSponsored, children, onPress, gradientColors }) 
 }
 
 class EventCard extends Component {
+    currentTime = new Date().getTime();
+    // 86,400,000 = 24 hours on milliseconds
+    limitToShowEventAsNew = this.currentTime - 86400000;
+
     state = {
         showEventDetailsModal: false
     };
@@ -111,7 +115,8 @@ class EventCard extends Component {
             sponsorImage,
             idLogro,
             gradientColors,
-            featured
+            featured,
+            createdAt
         } = this.props;
 
         let titleTranslated = this.getTextBasedOnUserLanguage(title);
@@ -124,6 +129,10 @@ class EventCard extends Component {
         // user)
         if (titleTranslated === '') {
             titleTranslated = titulo;
+        }
+
+        if (createdAt >= this.limitToShowEventAsNew) {
+            console.log('Mostrar como nuevo', idLogro);
         }
 
         return (

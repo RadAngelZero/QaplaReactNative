@@ -21,8 +21,8 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
 
     const listeningEvents = [];
     const date = new Date();
-    date.setHours(0);
-    date.setMinutes(0, 0, 0);
+    date.setHours(date.getHours() - 2);
+
     /**
      * We load the active events
      */

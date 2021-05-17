@@ -12,9 +12,26 @@ function getPercentWidth(value) {
   return (value/375) * 100;
 }
 
+function getScreenSizeMultiplier() {
+  return Dimensions.get('screen').height / 812;
+}
+
 function getDimensions() {
 	return Dimensions.get('window');
 }
+
+function getScreenDimensions() {
+  return Dimensions.get('screen');
+}
+
+function getScreenHeight() {
+  return Dimensions.get('screen').height;
+}
+
+function getScreenWidth() {
+  return Dimensions.get('screen').width;
+}
+
 
 function isIphoneX() {
   const dim = Dimensions.get('window');
@@ -73,17 +90,20 @@ function isIOSDevice() {
   return Platform.OS === 'ios';
 }
 
-
 export {
   getPercentHeight,
   getPercentWidth,
-  isIphoneX, 
-  isIPhoneXSize, 
-  isIPhoneXrSize, 
-  getDimensions, 
-  hasSafeAreaView, 
-  widthPercentageToPx, 
-  heightPercentageToPx, 
+  isIphoneX,
+  isIPhoneXSize,
+  isIPhoneXrSize,
+  getDimensions,
+  hasSafeAreaView,
+  widthPercentageToPx,
+  heightPercentageToPx,
   getPixelSizeForLayoutSize,
-  isIOSDevice 
+  isIOSDevice,
+  getScreenSizeMultiplier,
+  getScreenHeight,
+  getScreenWidth,
+  getScreenDimensions,
 };

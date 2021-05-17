@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import {
     Modal,
     View,
-    ScrollView
+    ScrollView,
+    TouchableHighlight,
+    Dimensions,
+    Animated,
+    Easing
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 
 import styles from './style';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
+import QaplaText from '../../components/QaplaText/QaplaText';
 import Images from './../../../assets/images';
+import { userHasRequestToJoinEvent, isUserParticipantOnEvent } from '../../services/database';
 import EventDetails from './EventDetails';
 import EventRegistration from './EventRegistration';
 import { isUserLogged } from '../../services/auth';
@@ -20,14 +26,34 @@ import { subscribeUserToTopic } from '../../services/messaging';
 import { EVENTS_TOPIC } from '../../utilities/Constants';
 import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
 import { translate } from '../../utilities/i18';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+
+const screen = Dimensions.get('screen');
 
 class EventDetailsModal extends Component {
     state = {
         eventRegistrationStep: 0,
+        isParticipant: false,
+        existsRequest: false,
+        registerButtonAnimation: new Animated.Value(0),
         showLinkWitTwitchModal: false,
         openEntryDialog: false,
         openUserDontHaveEnoughQoinsDialog: false
     };
+
+    /**
+     * Check if the user has sent a request for this event
+     */
+    checkUserRequest = async () => {
+        this.setState({ existsRequest: await userHasRequestToJoinEvent(this.props.uid, this.props.eventId) });
+    }
+
+    /**
+     * Check if the user is a participant of this event
+     */
+    checkIfUserIsParticipant = async () => {
+        this.setState({ isParticipant: await isUserParticipantOnEvent(this.props.uid, this.props.eventId) });
+    }
 
     /**
      * Send the user to the next component
@@ -62,7 +88,27 @@ class EventDetailsModal extends Component {
          */
         this.setState({ eventRegistrationStep: 0 });
 
+        if (this.state.eventRegistrationStep === 2) {
+            this.setState({ isParticipant: true });
+        }
+
+        this.state.registerButtonAnimation.setValue(0);
+
         this.props.onClose();
+    }
+
+    onOpenModal = () => {
+        this.checkIfUserIsParticipant();
+        this.checkUserRequest();
+        Animated.sequence([
+            Animated.delay(300),
+            Animated.timing(this.state.registerButtonAnimation, {
+                toValue: 12,
+                duration: 250,
+                easing: Easing.cubic,
+                useNativeDriver: false,
+            }),
+        ]).start();
     }
 
     registerUserToEvent = async () => {
@@ -152,6 +198,7 @@ class EventDetailsModal extends Component {
         const { platform, game } = this.props.events[this.props.eventId];
         return (
             <Modal
+                onShow={this.onOpenModal}
                 animationType='slide'
                 transparent={true}
                 visible={this.props.open}
@@ -165,13 +212,15 @@ class EventDetailsModal extends Component {
                             onPress={this.closeModal}>
                             <Images.svg.closeIcon />
                         </QaplaIcon>
-                        <View style={styles.container}>
+                        <View style={[styles.container]}>
                             {this.state.eventRegistrationStep === 0 &&
                                 <EventDetails
                                     event={this.props.events[this.props.eventId]}
                                     eventId={this.props.eventId}
                                     goToNextStep={this.goToNextRegistrationStep}
-                                    closeModal={this.closeModal} />
+                                    closeModal={this.closeModal}
+                                    existsRequest={this.state.existsRequest}
+                                    isParticipant={this.state.isParticipant} />
                             }
                             {this.state.eventRegistrationStep === 1 &&
                                 <EventRegistration
@@ -188,6 +237,25 @@ class EventDetailsModal extends Component {
                             }
                         </View>
                     </ScrollView>
+                    {(!this.state.existsRequest && !this.state.isParticipant && this.state.eventRegistrationStep===0) ?
+                    <>
+                        <Animated.View
+                            style={[styles.participateButtonContainer, { transform:
+                                [{translateY: this.state.registerButtonAnimation.interpolate({inputRange:[0,12], outputRange: [heightPercentageToPx(15), 0]})}] } ]}
+                        >
+                            <TouchableHighlight
+                                style={{flex:1}}
+                                underlayColor='#2aa897'
+                                onPress={this.goToNextRegistrationStep}>
+                                <QaplaText style={styles.participateButtonText}>
+                                    {translate('eventDetailsModal.participate')}
+                                </QaplaText>
+                            </TouchableHighlight>
+                        </Animated.View>
+                    </>
+                    :
+                        <></>
+                    }
                 </View>
                 <LinkTwitchAccountModal
                     open={this.state.showLinkWitTwitchModal}

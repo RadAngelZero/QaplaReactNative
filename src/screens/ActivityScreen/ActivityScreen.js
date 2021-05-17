@@ -6,7 +6,6 @@ import images from '../../../assets/images';
 import styles from './style';
 import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { getUserActivityFromLast7Days } from '../../services/database';
 import { translate } from '../../utilities/i18';
 import { XQ, QOINS } from '../../utilities/Constants';
 
@@ -19,12 +18,19 @@ class ActivityScreen extends Component {
         this.loadActivity();
     }
 
+    componentDidUpdate(prevProps) {
+        if (Object.keys(this.props.activity).length !== Object.keys(prevProps.activity).length) {
+            this.loadActivity();
+        }
+    }
+
     loadActivity = async () => {
-        const activity = await getUserActivityFromLast7Days(this.props.uid);
         const activityArray = [];
-        if (activity.exists()) {
-            activity.forEach((activityRecord) => {
-                const date = new Date(activityRecord.val().timestamp);
+        if (this.props.activity) {
+            Object.keys(this.props.activity)
+            .sort((a, b) => this.props.activity[b].timestamp - this.props.activity[a].timestamp)
+            .forEach((activityRecord) => {
+                const date = new Date(this.props.activity[activityRecord].timestamp);
                 const today = new Date();
                 const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
                 const title = today.getDate() === date.getDate() ?
@@ -35,9 +41,9 @@ class ActivityScreen extends Component {
                         :
                         translate(`days.${days[date.getDay()]}`);
                 if (activityArray.some((activityOfTheDay) => activityOfTheDay.title === title)) {
-                    activityArray[activityArray.length - 1].data.push(activityRecord.val());
+                    activityArray[activityArray.length - 1].data.push(this.props.activity[activityRecord]);
                 } else {
-                    activityArray.push({ title, data: [activityRecord.val()], indexDay: activityArray.length });
+                    activityArray.push({ title, data: [this.props.activity[activityRecord]] });
                 }
             });
 
@@ -45,7 +51,7 @@ class ActivityScreen extends Component {
                 recordsOfTheDay.data.sort((a, b) => b.timestamp - a.timestamp);
             });
 
-            this.setState({ activity: activityArray.reverse() });
+            this.setState({ activity: activityArray });
         }
     }
 
@@ -108,7 +114,7 @@ class ActivityScreen extends Component {
 
 function mapStateToProps(state) {
     return {
-        uid: state.userReducer.user.id
+        activity: state.userReducer.user.activity
     }
 }
 

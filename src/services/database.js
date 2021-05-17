@@ -1310,8 +1310,8 @@ export async function getUserDonationLeaderBoard(uid) {
  * Get the records of the user activity (on UserStreamsRewards) from the last 7 days
  * @param {string} uid User identifier
  */
- export async function getUserActivityFromLast7Days(uid) {
+ export async function listenUserActivityFromLast7Days(uid, callback) {
     const date = new Date();
     const sevenDaysInMilliseconds = 604800000;
-    return await userStreamsRewardsRef.child(uid).orderByChild('timestamp').startAt(date.getTime() - sevenDaysInMilliseconds).once('value');
+    userStreamsRewardsRef.child(uid).orderByChild('timestamp').startAt(date.getTime() - sevenDaysInMilliseconds).on('value', callback);
  }

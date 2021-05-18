@@ -8,7 +8,7 @@ export default StyleSheet.create({
     sfvContainer: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor:'#131833',
+        backgroundColor: '#131833',
         paddingTop: paddingTopForAndroidDevicesWithNotch()
     },
     text: {
@@ -20,7 +20,9 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'center',
         position: 'absolute',
-        bottom: heightPercentageToPx(5)
+        height: heightPercentageToPx(1.2),
+        width: '60%',
+        bottom: heightPercentageToPx(25.8),
     },
     progressRow: {
         width: widthPercentageToPx(100) / 3
@@ -36,7 +38,7 @@ export default StyleSheet.create({
         borderRadius: 100,
         marginRight: 16,
         width: widthPercentageToPx(2.4),
-        height:  widthPercentageToPx(2.4)
+        height: widthPercentageToPx(2.4)
     },
     finishTextButton: {
         fontSize: 14,
@@ -44,5 +46,48 @@ export default StyleSheet.create({
         color: '#3DF9DF',
         textAlign: 'right',
         marginRight: widthPercentageToPx(4.27)
+    },
+    bottomButtons: {
+        flexDirection: 'row',
+        alignSelf: 'center',
+        position: 'absolute',
+        height: heightPercentageToPx(9.8),
+        width: '80%',
+        bottom: heightPercentageToPx(4.2),
+    },
+    skipButton: {
+        width: widthPercentageToPx(24),
+        height: widthPercentageToPx(10),
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(50,50,99,0.5)',
+    },
+    skipText: {
+        color: 'rgba(255, 255, 255, 0.65)',
+        fontSize: 17,
+        fontStyle: 'normal',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        lineHeight: 22,
+        letterSpacing: 0.49,
+        opacity: 0.65,
+    },
+    nextButton: {
+        width: widthPercentageToPx(19.2),
+        height: widthPercentageToPx(19.2),
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#3B4BF9',
+    },
+    startNowText: {
+        color: 'white',
+        fontSize: 17,
+        fontStyle: 'normal',
+        fontWeight: 'bold',
+        textAlign: 'left',
+        lineHeight: 22,
+        letterSpacing: 0.49,
     }
 });

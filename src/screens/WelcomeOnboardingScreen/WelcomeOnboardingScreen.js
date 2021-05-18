@@ -1,40 +1,45 @@
 import React from 'react';
 
 import {
-  View,
-  SafeAreaView
-} from 'react-native'
+	View,
+	SafeAreaView,
+	Text,
+	TouchableOpacity,
+} from 'react-native';
 import { connect } from 'react-redux';
 
-import styles from './style'
+import styles from './style';
 
 import { EVENTS_TOPIC, GAMES_TOPICS } from './../../utilities/Constants';
 
-import CarouselPng from '../../components/CarouselPng/CarouselPng'
+import CarouselPng from '../../components/CarouselPng/CarouselPng';
+import ProgressDotsIndicator from '../../components/ProgressDotsIndicator/ProgressDotsIndicator';
 import Images from './../../../assets/images';
 import { storeData } from '../../utilities/persistance';
 import { translate } from '../../utilities/i18';
 import { subscribeUserToTopic } from './../../services/messaging';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+
+const BackIcon = Images.svg.backIcon;
 
 class WelcomeOnboardingScreen extends React.Component {
 	constructor(props) {
-	    super(props);
-	    this.state = {
-	    	selectedIndex: 0
-	    };
+		super(props);
+		this.state = {
+			selectedIndex: 0,
+		};
 	}
 
 	finishOnBoarding = () => {
 		storeData('new-tutorial-done', 'true');
 
 		/**
-         * All the users must be subscribed to the event topic at this point, because we want
-         * all the users to receive notifications when a new event is created, we use the language suffix
-         * because we want to send the notifications in different languages (based on the user cellphone
-         * language)
-         */
+		 * All the users must be subscribed to the event topic at this point, because we want
+		 * all the users to receive notifications when a new event is created, we use the language suffix
+		 * because we want to send the notifications in different languages (based on the user cellphone
+		 * language)
+		 */
 		subscribeUserToTopic(EVENTS_TOPIC, this.props.uid, EVENTS_TOPIC);
 
 		/**
@@ -54,58 +59,75 @@ class WelcomeOnboardingScreen extends React.Component {
 		this.setState({ selectedIndex: index });
 	}
 
-  render() {
+	nextButton = () => {
+		this.carrouselPng.nextImage();
+	}
 
-    const carrouselData = [
-      	{
-			Image: Images.svg.interact,
-			description: translate('onBoardingScreen.connect.description'),
-			title: translate('onBoardingScreen.connect.title')
-		},
-      	{
-			Image: Images.svg.follow,
-			description: translate('onBoardingScreen.compete.description'),
-			title: translate('onBoardingScreen.compete.title')
-		},
-      	{
-			Image: Images.svg.subscribe,
-			description: translate('onBoardingScreen.share.description'),
-			title: translate('onBoardingScreen.share.title')
-		},
-		{
-		  Image: Images.svg.acquire,
-		  description: translate('onBoardingScreen.acquire.description'),
-		  title: translate('onBoardingScreen.acquire.title')
-	  }
-    ];
+	render() {
 
-    return (
-       <SafeAreaView style={styles.sfvContainer} testID='welcomeonboarding-1'>
-			<CarouselPng carrouselData={carrouselData} setCurrentIndex={this.setCurrentIndex} />
-			<View style={styles.progressContainer}>
-				<View style={styles.progressRow}></View>
-				<View style={[styles.progressRow, styles.indicatorsContainer]}>
-					{carrouselData.map((slide, index) => (
-						<View style={[
-							styles.progressCircleIndicator,
-							{
-								backgroundColor: this.state.selectedIndex === index ? '#3DF9DF' : 'rgba(0, 254, 223, .54)',
-								width: this.state.selectedIndex === index ? widthPercentageToPx(6) : widthPercentageToPx(2.4)
-							}
-						]} />
-					))}
+		const carrouselData = [
+			{
+				Image: Images.png.onboardingIllustration1.img,
+				description: translate('onBoardingScreen.discover.description'),
+			},
+			{
+				Image: Images.png.onboardingIllustration2.img,
+				description: translate('onBoardingScreen.follow.description'),
+			},
+			{
+				Image: Images.png.onboardingIllustration3.img,
+				description: translate('onBoardingScreen.get.description'),
+			},
+			{
+				Image: Images.png.onboardingIllustration4.img,
+				description: translate('onBoardingScreen.support.description'),
+			},
+			{
+				Image: Images.png.onboardingIllustration5.img,
+				description: translate('onBoardingScreen.highlight.description'),
+			},
+		];
+
+		return (
+			<SafeAreaView style={styles.sfvContainer} testID='welcomeonboarding-1'>
+				<CarouselPng ref={(carrouselPng) => this.carrouselPng = carrouselPng} carrouselData={carrouselData} setCurrentIndex={this.setCurrentIndex}/>
+				<View style={[styles.progressContainer, { alignContent: 'center' }]}>
+					<ProgressDotsIndicator
+						steps={5}
+						selected={this.state.selectedIndex}
+						color={'rgba(0, 254, 223, .54)'}
+						activeColor={'#3DF9DF'}
+						width={heightPercentageToPx(1.2)}
+						activeWidth={heightPercentageToPx(4)}
+						marginHorizontal={heightPercentageToPx(1)}
+					/>
 				</View>
-				<View style={styles.progressRow}>
-					<QaplaText onPress={this.finishOnBoarding} style={styles.finishTextButton}>
-						{this.state.selectedIndex === carrouselData.length - 1 &&
-							translate('onBoardingScreen.finish')
-						}
-					</QaplaText>
-				</View>
-			</View>
-	    </SafeAreaView>
-    );
-  }
+				{this.state.selectedIndex !== carrouselData.length - 1 ?
+					<View style={[styles.bottomButtons, { justifyContent: 'space-between', alignItems: 'flex-end' }]}>
+						<TouchableOpacity style={styles.skipButton}
+							onPress={this.finishOnBoarding}>
+							<Text style={styles.skipText}>{translate('onBoardingScreen.skip')}</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.nextButton}
+							onPress={this.nextButton}>
+							<View style={{ transform: [{ scaleX: -1 }] }}>
+								<BackIcon />
+							</View>
+						</TouchableOpacity>
+					</View>
+					:
+					<View style={[styles.bottomButtons, { justifyContent: 'center', alignItems: 'flex-end' }]}>
+						<TouchableOpacity style={[styles.nextButton, { width: widthPercentageToPx(50), }]}
+							onPress={this.finishOnBoarding}>
+							<View>
+								<Text style={styles.startNowText}>{translate('onBoardingScreen.startNow')}</Text>
+							</View>
+						</TouchableOpacity>
+					</View>
+				}
+			</SafeAreaView>
+		);
+	}
 }
 
 function mapStateToProps(state) {

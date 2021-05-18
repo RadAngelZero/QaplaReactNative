@@ -35,9 +35,8 @@ const usersRewardsProgressRef = database.ref('/UsersRewardsProgress');
 const DonationsCostsRef = database.ref('/DonationsCosts');
 const DonationsLeaderBoardRef = database.ref('/DonationsLeaderBoard');
 const LeaderBoardPrizesRef = database.ref('/LeaderBoardPrizes');
-const twitchUsersRef = database.ref('/TwitchUsers');
 const leaderboardWinnersRef = database.ref('/LeaderboardWinners');
-
+const userStreamsRewardsRef = database.ref('/UserStreamsRewards');
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
 /**
@@ -1305,4 +1304,29 @@ export async function getUserDonationLeaderBoard(uid) {
 
  export async function getCommunitySurvey() {
     return await database.ref('/CommunitySurvey').once('value');
+ }
+
+/**
+ * Get the records of the user activity (on UserStreamsRewards) from the last 7 days
+ * @param {string} uid User identifier
+ */
+ export async function listenUserActivityFromLast7Days(uid, callback) {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    const sevenDaysInMilliseconds = 604800000;
+    userStreamsRewardsRef.child(uid).orderByChild('timestamp').startAt(date.getTime() - sevenDaysInMilliseconds).on('value', callback);
+ }
+
+/**
+ * Mark the given records as read on the database
+ * @param {string} uid User identifier
+ * @param {array} recordsArray Array of id´s of unread activity records
+ */
+ export async function setActivityRecordsAsRead(uid, recordsArray = []) {
+    const recordsUpdate = {};
+    recordsArray.forEach((record) => {
+        recordsUpdate[`/${uid}/${record}/read`] = true;
+    });
+
+    userStreamsRewardsRef.update(recordsUpdate);
  }

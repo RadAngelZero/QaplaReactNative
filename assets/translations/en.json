@@ -20,7 +20,8 @@
         "saturday": "Saturday",
         "sunday": "Sunday",
         "today": "Today",
-        "tomorrow": "Tomorrow"
+        "tomorrow": "Tomorrow",
+        "yesterday": "Yesterday"
     },
     "router": {
         "topNavigators": {
@@ -322,6 +323,11 @@
         "description": "A better way to engage with your community is coming.",
         "feedbackRequest": "We want your feedback!\nLet us know what you’d like to get from this section :D",
         "answerSurvery": "Answer Quick Survey"
+    },
+    "activityScreen": {
+        "activity": "Activity",
+        "qoins": "Qoins from %{streamerName}",
+        "xq": "Experience from %{streamerName}"
     },
     "headerBar": {
         "highlightModal": {

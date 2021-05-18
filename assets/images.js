@@ -63,6 +63,10 @@ import ArrowLeftThiccIcon from './icons/Arrow-Left-Thicc.svg';
 import CloseThiccIcon from './icons/Close-Thicc.svg';
 import AlertIcon from './icons/AlertIcon.svg';
 import TwitchExtrudedLogo from './icons/TwitchExtrudedLogo.svg';
+import ActivityQoin from './icons/ActivityQoin.svg';
+import ActivityXQ from './icons/ActivityXQ.svg';
+import DuotoneDefault from './icons/DuotoneDefault.svg';
+import DuotoneActive from './icons/DuotoneActive.svg';
 
 // Images
 
@@ -298,6 +302,10 @@ const images = {
 		closeThiccIcon: CloseThiccIcon,
 		alertIcon: AlertIcon,
 		twitchExtrudedLogo: TwitchExtrudedLogo,
+		activityQoin: ActivityQoin,
+		activityXQ: ActivityXQ,
+		duotoneDefault: DuotoneDefault,
+		duotoneActive: DuotoneActive
 	}
 };
 

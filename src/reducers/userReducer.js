@@ -1,7 +1,9 @@
 import { UPDATE_USER_DATA, REMOVE_USER_DATA, SIGN_OUT_USER } from '../utilities/Constants';
 
 const initialState = {
-    user: {}
+    user: {
+        activity: {}
+    }
 };
 
 function userReducer(state = initialState, action) {

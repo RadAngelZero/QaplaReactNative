@@ -3,14 +3,22 @@ import React from 'react';
 import {
   View,
   SafeAreaView,
-  SectionList
+  SectionList,
+  RefreshControl
 } from 'react-native'
 
 import styles from './style'
 import LogroCardItem from '../../components/LogroCard/LogroCardItem';
 import QaplaText from '../QaplaText/QaplaText';
+import { emptyLogros, loadQaplaLogros } from './../../actions/logrosActions';
+import store from './../../store/store';
+import Colors from '../../utilities/Colors';
 
 class LogrosList extends React.Component {
+	state = {
+		refreshing: false
+	};
+
 	renderEventOnList = ({ item }) => {
 		return <LogroCardItem
 			key={`event-${item.id}`}
@@ -23,12 +31,25 @@ class LogrosList extends React.Component {
 
 	renderSectionHeader = ({ section: { title } }) => <QaplaText style={styles.sectionHeader}>{title}</QaplaText>
 
+	refreshEvents = async () => {
+		this.setState({ refreshing: true });
+		await store.dispatch(emptyLogros());
+		await store.dispatch(loadQaplaLogros());
+		this.setState({ refreshing: false });
+	}
+
 	render() {
 		return (
 			<SafeAreaView style={styles.sfvContainer}>
 				<View style={styles.listContainer}>
 					<SectionList
 						sections={this.props.logros}
+						refreshControl={<RefreshControl
+							progressBackgroundColor={Colors.eventCardBackground}
+							colors={[Colors.greenQapla]}
+							tintColor={Colors.greenQapla}
+							onRefresh={this.refreshEvents}
+							refreshing={this.state.refreshing} />}
 						initialNumToRender={5}
 						renderItem={this.renderEventOnList}
 						renderSectionHeader={this.renderSectionHeader}

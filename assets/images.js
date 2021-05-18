@@ -200,7 +200,27 @@ const images = {
 		profileImagePlaceholder6: {
 			img: require('./images/pic-twinkle.jpg'),
 			uri: '@assets/images/pic-twinkle.jpg'
-		}
+		},
+		onboardingIllustration1: {
+			img: require('./images/Onboarding_Illustration.png'),
+			uri: '@assets/images/Onboarding_Illustration.png'
+		},
+		onboardingIllustration2: {
+			img: require('./images/Onboarding_Illustration-2.png'),
+			uri: '@assets/images/Onboarding_Illustration-2.png'
+		},
+		onboardingIllustration3: {
+			img: require('./images/Onboarding_Illustration-3.png'),
+			uri: '@assets/images/Onboarding_Illustration-3.png'
+		},
+		onboardingIllustration4: {
+			img: require('./images/Onboarding_Illustration-4.png'),
+			uri: '@assets/images/Onboarding_Illustration-4.png'
+		},
+		onboardingIllustration5: {
+			img: require('./images/Onboarding_Illustration-5.png'),
+			uri: '@assets/images/Onboarding_Illustration-5.png'
+		},
 	},
 	svg: {
 		facebookIcon: FacebookIcon,

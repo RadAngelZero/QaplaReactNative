@@ -65,6 +65,8 @@ import AlertIcon from './icons/AlertIcon.svg';
 import TwitchExtrudedLogo from './icons/TwitchExtrudedLogo.svg';
 import ActivityQoin from './icons/ActivityQoin.svg';
 import ActivityXQ from './icons/ActivityXQ.svg';
+import DuotoneDefault from './icons/DuotoneDefault.svg';
+import DuotoneActive from './icons/DuotoneActive.svg';
 
 // Images
 
@@ -281,7 +283,9 @@ const images = {
 		alertIcon: AlertIcon,
 		twitchExtrudedLogo: TwitchExtrudedLogo,
 		activityQoin: ActivityQoin,
-		activityXQ: ActivityXQ
+		activityXQ: ActivityXQ,
+		duotoneDefault: DuotoneDefault,
+		duotoneActive: DuotoneActive
 	}
 };
 

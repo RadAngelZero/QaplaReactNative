@@ -8,6 +8,7 @@ import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import { translate } from '../../utilities/i18';
 import { XQ, QOINS } from '../../utilities/Constants';
+import { setActivityRecordsAsRead } from '../../services/database';
 
 class ActivityScreen extends Component {
     state = {
@@ -26,10 +27,14 @@ class ActivityScreen extends Component {
 
     loadActivity = async () => {
         const activityArray = [];
+        const unreadRecordsArray = [];
         if (this.props.activity) {
             Object.keys(this.props.activity)
             .sort((a, b) => this.props.activity[b].timestamp - this.props.activity[a].timestamp)
             .forEach((activityRecord) => {
+                if (!this.props.activity[activityRecord].hasOwnProperty('read')) {
+                    unreadRecordsArray.push(activityRecord);
+                }
                 const date = new Date(this.props.activity[activityRecord].timestamp);
                 const today = new Date();
                 const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
@@ -51,6 +56,7 @@ class ActivityScreen extends Component {
                 recordsOfTheDay.data.sort((a, b) => b.timestamp - a.timestamp);
             });
 
+            setActivityRecordsAsRead(this.props.uid, unreadRecordsArray);
             this.setState({ activity: activityArray });
         }
     }
@@ -114,6 +120,7 @@ class ActivityScreen extends Component {
 
 function mapStateToProps(state) {
     return {
+        uid: state.userReducer.user.id,
         activity: state.userReducer.user.activity
     }
 }

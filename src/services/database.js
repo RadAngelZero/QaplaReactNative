@@ -1315,3 +1315,17 @@ export async function getUserDonationLeaderBoard(uid) {
     const sevenDaysInMilliseconds = 604800000;
     userStreamsRewardsRef.child(uid).orderByChild('timestamp').startAt(date.getTime() - sevenDaysInMilliseconds).on('value', callback);
  }
+
+/**
+ * Mark the given records as read on the database
+ * @param {string} uid User identifier
+ * @param {array} recordsArray Array of id´s of unread activity records
+ */
+ export async function setActivityRecordsAsRead(uid, recordsArray = []) {
+    const recordsUpdate = {};
+    recordsArray.forEach((record) => {
+        recordsUpdate[`/${uid}/${record}/read`] = true;
+    });
+
+    userStreamsRewardsRef.update(recordsUpdate);
+ }

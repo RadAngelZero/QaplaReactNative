@@ -23,6 +23,8 @@ import EditProfileImgBadge from '../EditProfileImgBadge/EditProfileImgBadge';
 const NotificationIcon = images.svg.notificationIcon;
 const DiscordIcon = images.svg.discordIcon;
 const SettingsIcon = images.svg.settingsIcon;
+const DuotoneDefaultIcon = images.svg.duotoneDefault;
+const DuotoneActiveIcon = images.svg.duotoneActive;
 
 class HeaderBar extends Component {
     constructor(props) {
@@ -52,7 +54,7 @@ class HeaderBar extends Component {
      * @description
      * Perform a serie of function calls after match creation button is pressed.
      */
-    onNotiPressBttn = () => {
+    onActivityPressBttn = () => {
 
         // If showHg1Modal is enabled then
         if (this.state.showHg2Modal){
@@ -65,7 +67,7 @@ class HeaderBar extends Component {
             this.toggleHg2Modal();
         }
 
-        this.props.navigation.navigate('Notifications');
+        this.props.navigation.navigate('Activity');
     }
 
     /**
@@ -146,17 +148,8 @@ class HeaderBar extends Component {
     /**
      * Check if the user have unread notifications or match notifications
      */
-    userHaveUnreadNotifications = () => {
-
-        /**
-         * notifications = Activity notifications
-         * matchNotifications = Match notifications
-         */
-        if (this.props.notifications && this.checkUnreadNotifications(this.props.notifications)) {
-            return true;
-        }
-
-        if (this.props.matchNotifications && this.checkUnreadNotifications(this.props.matchNotifications)) {
+    userHaveUnreadActivity = () => {
+        if (this.props.activity && this.checkUnreadActivity(this.props.activity)) {
             return true;
         }
 
@@ -164,12 +157,12 @@ class HeaderBar extends Component {
     }
 
     /**
-     * Return true if the given object contains unreaded notifications
-     * @param {object} notifications Set of notifications to check
+     * Return true if the given object contains unreaded activity
+     * @param {object} activity Set of activity to check
      */
-    checkUnreadNotifications = (notifications) => {
-        return Object.keys(notifications).some((notification) => {
-            return !notifications[notification].hasOwnProperty('notiChecked') || !notifications[notification].notiChecked;
+    checkUnreadActivity = (activity) => {
+        return Object.keys(activity).some((record) => {
+            return !activity[record].hasOwnProperty('read');
         });
     }
 
@@ -204,15 +197,12 @@ class HeaderBar extends Component {
                             cb1={this.markHg2}
                             header={translate('headerBar.highlightModal.header')}
                             body={translate('headerBar.highlightModal.body')}>
-                            <QaplaIcon onPress={this.onNotiPressBttn}>
-                                <View>
-                                    <NotificationIcon height={25} width={25} />
-                                    {this.userHaveUnreadNotifications() &&
-                                        <Svg height={12} width={12} style={styles.unreadNotificationsIcon}>
-                                            <Circle cx={5} cy={5} r={5} fill='#FF0000' />
-                                        </Svg>
-                                    }
-                                </View>
+                            <QaplaIcon onPress={this.onActivityPressBttn}>
+                                {this.userHaveUnreadActivity() ?
+                                    <DuotoneActiveIcon height={25} width={25} />
+                                :
+                                    <DuotoneDefaultIcon height={25} width={25} />
+                                }
                             </QaplaIcon>
                         </HighlightModal>
                         {this.props.currentScreenId !== 'Profile' &&
@@ -242,7 +232,7 @@ function mapStateToProps(state) {
     return {
         hg1CreateMatch: state.highlightsReducer.hg1CreateMatch,
         currentScreenId: state.screensReducer.currentScreenId,
-        notifications: state.userReducer.user.notification,
+        activity: state.userReducer.user.activity,
         matchNotifications: state.userReducer.user.notificationMatch,
         userName: state.userReducer.user.userName
     }

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Image } from 'react-native';
 
 import { styles } from './style';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../QaplaText/QaplaText';
+import { getDimensions } from '../../utilities/iosAndroidDim';
 
 class CarouselPng extends Component {
     state = {
@@ -13,7 +14,7 @@ class CarouselPng extends Component {
 
     componentDidMount() {
         this.makeAutomaticScroll();
-	}
+    }
 
     /**
      * Performs an automatic scroll every 5 seconds, so the user don't need to scroll
@@ -34,6 +35,10 @@ class CarouselPng extends Component {
                 });
             }, 5000);
         }
+    }
+
+    nextImage = () => {
+        this.scrollView.scrollTo({ x: getDimensions().width * (this.state.currentIndex + 1) });
     }
 
     onScrollEnd = (e) => {
@@ -69,7 +74,7 @@ class CarouselPng extends Component {
                 showsHorizontalScrollIndicator={false}>
                 {this.props.carrouselData.map((slide, index) => (
                     <View key={`OnBoardingImages${index}`} style={styles.flatListContainer}>
-                        <slide.Image style={styles.image} />
+                        <Image source={slide.Image} style={styles.image} />
                         <QaplaText style={styles.description}>{slide.description}</QaplaText>
                     </View>
                 ))}

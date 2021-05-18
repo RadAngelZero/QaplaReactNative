@@ -13,7 +13,7 @@ import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOn
 import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen';
 import MyMatchesScreen from './screens/MyMatchesScreen/MyMatchesScreen';
 import PublicMatchCardScreen from './screens/PublicMatchCardScreen/PublicMatchCardScreen';
-import SignInScreen from './screens/SignInScreen/SignInScreen';
+import SignUpLoginHandlerScreen from './screens/SignUpLogInScreen/SignUpLoginHandlerScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
 import LoginWithEmailScreen from './screens/LoginWithEmailScreen/LoginWithEmailScreen';
 import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameScreen';
@@ -48,6 +48,7 @@ import ChatHeader from './components/Chat/ChatHeader/ChatHeader';
 import CommunityScreen from './screens/CommunityScreen/CommunityScreen';
 import DonationsLeaderBoard from './components/DonationsLeaderBoard/DonationsLeaderBoard';
 import TwitchAuthScreen from './screens/TwitchAuthScreen/TwitchAuthScreen';
+import ActivityScreen from './screens/ActivityScreen/ActivityScreen';
 
 //#region Stack Navigators
 
@@ -77,7 +78,7 @@ const MatchWizardStackNavigator = createStackNavigator({
 },
   {
     navigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   });
 
@@ -137,9 +138,9 @@ const AddGameStackNavigator = createStackNavigator({
 
 const AuthStackNavigator = createStackNavigator({
   SignIn: {
-    screen: SignInScreen,
+    screen: SignUpLoginHandlerScreen,
     navigationOptions: {
-      header: (props) => <TopNavOptions close {...props} />
+      headerShown: false
     }
   },
   LogIn: {
@@ -156,7 +157,7 @@ const AuthStackNavigator = createStackNavigator({
   }
 }, {
   navigationOptions: {
-    gesturesEnabled: false
+    gestureEnabled: false
   }
 });
 
@@ -214,6 +215,9 @@ const MatchesTopTabNavigator = createMaterialTopTabNavigator(
   }
 );*/
 
+/**
+ * @deprecated
+
 const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
   {
     NotificationActividad: {
@@ -259,7 +263,7 @@ const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
       }
     },
   }
-);
+); */
 
 //#endregion
 
@@ -418,10 +422,10 @@ const RootStackNavigator = createStackNavigator({
       header: (props) => <HeaderBar {...props} />
     }
   },
-  Notifications: {
-    screen: NotificationsTopTabNavigator,
+  Activity: {
+    screen: ActivityScreen,
     navigationOptions: {
-      header: (props) => <NotificationsHeader {...props} />
+      header: null
     }
   },
   MatchWizard: MatchWizardStackNavigator,

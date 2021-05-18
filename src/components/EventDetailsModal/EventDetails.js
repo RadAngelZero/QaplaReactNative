@@ -13,7 +13,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import styles from './style';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { getDateElementsAsNumber, getHourElementsAsNumber, copyDataToClipboard } from '../../utilities/utils';
-import { userHasRequestToJoinEvent, isUserParticipantOnEvent } from '../../services/database';
 import Images from '../../../assets/images';
 import QaplaText from '../QaplaText/QaplaText';
 import { getSendBirdOpenChannel } from '../../services/SendBird';
@@ -53,34 +52,7 @@ function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
 }
 
 class EventDetails extends Component {
-    state = {
-        isParticipant: false,
-        existsRequest: false
-    };
 
-    componentDidMount() {
-        this.checkIfUserIsParticipant();
-        this.checkUserRequest();
-    }
-
-    /**
-     * Check if the user has sent a request for this event
-     */
-    checkUserRequest = async () => {
-        this.setState({ existsRequest: await userHasRequestToJoinEvent(this.props.uid, this.props.eventId) });
-    }
-
-    /**
-     * Check if the user is a participant of this event
-     */
-    checkIfUserIsParticipant = async () => {
-        this.setState({ isParticipant: await isUserParticipantOnEvent(this.props.uid, this.props.eventId) });
-    }
-
-    /**
-     * Redirect the user to the streamers channel of the given social network
-     * streamerChannelLink field on event node must be a valid URL
-     */
     goToStreamerChannel = () => {
         const { streamerChannelLink } = this.props.event;
 
@@ -170,13 +142,13 @@ class EventDetails extends Component {
                     </ImageBackground>
                 </BackgroundImageContainer>
 
-                {this.state.existsRequest &&
+                {this.props.existsRequest &&
                     <QaplaText style={styles.waitingAnswerFeedback}>
                         {translate('eventDetailsModal.waitingApproval')}
                     </QaplaText>
                 }
 
-                {this.state.isParticipant && streamerGameData &&
+                {this.props.isParticipant && streamerGameData &&
                     <View style={[styles.eventCard, styles.streamerGameDataCard]}>
                         <QaplaText style={styles.eventCardTitle}>
                             {translate('eventDetailsModal.eventInformation')}
@@ -255,7 +227,7 @@ class EventDetails extends Component {
                     </View>
                 </View>
 
-                {(this.state.existsRequest || this.state.isParticipant) &&
+                {(this.props.existsRequest || this.props.isParticipant) &&
                     <View style={[styles.eventCard, styles.eventChatCard]}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <QaplaText style={styles.eventCardTitle}>
@@ -338,18 +310,7 @@ class EventDetails extends Component {
                         </View>
                     </View>
                 }
-
-                {(!this.state.existsRequest && !this.state.isParticipant) ?
-                    <TouchableOpacity
-                        style={styles.participateButtonContainer}
-                        onPress={this.props.goToNextStep}>
-                        <QaplaText style={styles.participateButtonText}>
-                            {translate('eventDetailsModal.participate')}
-                        </QaplaText>
-                    </TouchableOpacity>
-                    :
-                    <View style={{ marginBottom: 30 }} />
-                }
+                <View style={{ marginBottom: 30 }}></View>
             </>
         );
     }

@@ -59,6 +59,14 @@ import Interact from './icons/Interact.svg';
 import Follow from './icons/Follow.svg';
 import Subscribe from './icons/Subscribe.svg';
 import Acquire from './icons/Acquire.svg';
+import ArrowLeftThiccIcon from './icons/Arrow-Left-Thicc.svg';
+import CloseThiccIcon from './icons/Close-Thicc.svg';
+import AlertIcon from './icons/AlertIcon.svg';
+import TwitchExtrudedLogo from './icons/TwitchExtrudedLogo.svg';
+import ActivityQoin from './icons/ActivityQoin.svg';
+import ActivityXQ from './icons/ActivityXQ.svg';
+import DuotoneDefault from './icons/DuotoneDefault.svg';
+import DuotoneActive from './icons/DuotoneActive.svg';
 
 // Images
 
@@ -67,19 +75,19 @@ const images = {
 		betaChatImage: {
 			img: require('./images/BetaChatImage.jpg'),
 		},
-		welcome1Img:{
+		welcome1Img: {
 			img: require('./images/welcome1.png'),
 			uri: '@assets/icons/welcome1.png'
 		},
-		welcome2Img:{
+		welcome2Img: {
 			img: require('./images/welcome2.png'),
 			uri: '@assets/icons/welcome2.png'
 		},
-		welcome3Img:{
+		welcome3Img: {
 			img: require('./images/welcome3.png'),
 			uri: '@assets/icons/welcome3.png'
 		},
-		welcome4Img:{
+		welcome4Img: {
 			img: require('./images/welcome4.png'),
 			uri: '@assets/icons/welcome4.png'
 		},
@@ -90,6 +98,14 @@ const images = {
 		qaplaSignupLogo: {
 			img: require('./images/QaplaSignUpLogo.png'),
 			uri: '@assets/images/QaplaSignUpLogo.png'
+		},
+		qaplaSignupLogo2021: {
+			img: require('./images/QaplaSignUpLogo2021.png'),
+			uri: '@assets/images/QaplaSingUpLogo2021.png'
+		},
+		awesomeHand: {
+			img: require('./images/AwesomeHand.png'),
+			uri: '@assets/images/AwesomeHand.png'
 		},
 		uploadVideoClutch: {
 			img: require('./images/UploadVideoClutch.jpg'),
@@ -200,7 +216,27 @@ const images = {
 		profileImagePlaceholder6: {
 			img: require('./images/pic-twinkle.jpg'),
 			uri: '@assets/images/pic-twinkle.jpg'
-		}
+		},
+		onboardingIllustration1: {
+			img: require('./images/Onboarding_Illustration.png'),
+			uri: '@assets/images/Onboarding_Illustration.png'
+		},
+		onboardingIllustration2: {
+			img: require('./images/Onboarding_Illustration-2.png'),
+			uri: '@assets/images/Onboarding_Illustration-2.png'
+		},
+		onboardingIllustration3: {
+			img: require('./images/Onboarding_Illustration-3.png'),
+			uri: '@assets/images/Onboarding_Illustration-3.png'
+		},
+		onboardingIllustration4: {
+			img: require('./images/Onboarding_Illustration-4.png'),
+			uri: '@assets/images/Onboarding_Illustration-4.png'
+		},
+		onboardingIllustration5: {
+			img: require('./images/Onboarding_Illustration-5.png'),
+			uri: '@assets/images/Onboarding_Illustration-5.png'
+		},
 	},
 	svg: {
 		facebookIcon: FacebookIcon,
@@ -261,7 +297,15 @@ const images = {
 		subscribe: Subscribe,
 		acquire: Acquire,
 		appleIcon: AppleIcon,
-		twitchIcon: TwitchIcon
+		twitchIcon: TwitchIcon,
+		leftArrowThiccIcon: ArrowLeftThiccIcon,
+		closeThiccIcon: CloseThiccIcon,
+		alertIcon: AlertIcon,
+		twitchExtrudedLogo: TwitchExtrudedLogo,
+		activityQoin: ActivityQoin,
+		activityXQ: ActivityXQ,
+		duotoneDefault: DuotoneDefault,
+		duotoneActive: DuotoneActive
 	}
 };
 

@@ -4,6 +4,7 @@ import Animated from 'react-native-reanimated';
 import Svg from 'react-native-svg';
 import { connect } from 'react-redux';
 
+import store from '../..//store/store';
 import {
     auth,
     notifications,
@@ -75,7 +76,13 @@ class AuthLoadingScreen extends Component {
                 // user is redirected to ChooUserName where they will create their profile.
                 const userName = await getUserNameWithUID(user.uid);
 
-                if (!userName) {
+                /**
+                 * Get the name of the current screen directly from redux store in order to get
+                 * the real last screenId
+                 */
+                const currentScreen = store.getState().screensReducer.currentScreenId;
+
+                if (!userName && currentScreen !== 'SignIn') {
                     return this.props.navigation.navigate('ChooseUserName');
                 } else {
                     const userImg = await getUserProfileImgUrl(user.uid);
@@ -132,14 +139,14 @@ class AuthLoadingScreen extends Component {
              * screen, no to the place that we need
              */
             if (!this.state.linkOnProgress && this.state.firstLoad) {
-                const isTutorialDone = await retrieveData('tutorial-done');
+                const isTutorialDone = await retrieveData('new-tutorial-done');
                 if (isTutorialDone) {
-                    removeDataItem('tutorial-done');
+                    removeDataItem('new-tutorial-done');
                 }
 
                 this.setState({ firstLoad: false });
 
-                const isNewTutorialDone = await retrieveData('new-tutorial-done');
+                const isNewTutorialDone = await retrieveData('2021-tutorial-done');
 
                 if (isNewTutorialDone) {
                     const lastDateUserSawEventRememberScreen = await retrieveData('event-remember-date');

@@ -138,3 +138,7 @@ export const defaultUserImages = [
 	images.png.profileImagePlaceholder5,
 	images.png.profileImagePlaceholder6
 ];
+
+// Activity types
+export const XQ = 'xq';
+export const QOINS = 'qoins';

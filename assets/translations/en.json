@@ -20,7 +20,8 @@
         "saturday": "Saturday",
         "sunday": "Sunday",
         "today": "Today",
-        "tomorrow": "Tomorrow"
+        "tomorrow": "Tomorrow",
+        "yesterday": "Yesterday"
     },
     "router": {
         "topNavigators": {
@@ -49,23 +50,23 @@
         "activityIndicatorText": "Loading..."
     },
     "onBoardingScreen": {
-        "connect": {
-            "description": "Interact, play and compete with your favorite streamers.",
-            "title": "Interact"
+        "discover": {
+            "description": "Discover new streamers and\nconnect with new communities"
         },
-        "compete": {
-            "description": "Follow the events and live streamers on Qapla to win prizes instantly!",
-			"title": "Follow"
+        "follow": {
+            "description": "Follow the streams published\nin Qapla and collect points from the channel"
         },
-        "share": {
-            "description": "Subscribe and donate to the channels of your favorite streamers. Free!",
-            "title": "Subscribe"
+        "get": {
+            "description": "Receive Qoins and XQ in Qapla\nfor your channel points 😮"
         },
-        "acquire": {
-            "description": "Get digital content from your favorite games just by playing! :O",
-            "title": "Subscribe"
+        "support": {
+            "description": "Support your streamers with your\nQoins and be rewarded!"
         },
-        "finish": "Finish"
+        "highlight": {
+            "description": "Stand out for your effort and\nsupport to the community"
+        },
+        "startNow": "Start Now!",
+        "skip": "Skip"
     },
     "activeAchievementsScreen": {
         "qaplaAchievement": {
@@ -138,6 +139,7 @@
         }
     },
     "newUserProfileScreen": {
+        "linkAccount": "Link account",
         "level": "Level",
         "qoins": "Qoins",
         "bitsTooltip": "Use your Qoins to support your favorite streamers. You need 200 Qoins for a donation",
@@ -322,6 +324,11 @@
         "feedbackRequest": "We want your feedback!\nLet us know what you’d like to get from this section :D",
         "answerSurvery": "Answer Quick Survey"
     },
+    "activityScreen": {
+        "activity": "Activity",
+        "qoins": "Qoins from %{streamerName}",
+        "xq": "Experience from %{streamerName}"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Check your notifications",
@@ -379,7 +386,7 @@
         "prizes": "PRIZES",
         "instructions": "Instructions",
         "howToParticipate": "How to participate",
-        "participate": "Participate",
+        "participate": "Join stream",
         "nickName": "%{acronym} Nickname",
         "enterNickName": "Enter the nickname you use to play on %{gameName}",
         "errorText": "Verify that the fields are filled correctly",
@@ -431,5 +438,18 @@
     "donationsLeaderBoard": {
         "tooltip": "Earn xq points watching events marked with the xq icon on our main screen",
         "done": "Done"
+    },
+    "linkTwitchAccount": {
+        "skip": "Skip",
+        "linkAccount": "Link your account",
+        "realTimeProgress": "Your progress in real time!",
+        "description": "Receive your Qoins and XQ automatically when you redeem points from your streamer's channel.",
+        "linkButton": "Link with Twitch"
+    },
+    "skipLinkTwitchAccount": {
+        "important": "Important",
+        "reminder": "We remind you that accounts not linked to Twitch will not be able to receive their channel exchanges 😭",
+        "description": "But don't worry, you can always link your account from your profile 😉",
+        "continue": "I wish to continue"
     }
 }

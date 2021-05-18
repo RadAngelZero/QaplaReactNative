@@ -138,6 +138,7 @@
         }
     },
     "newUserProfileScreen": {
+        "linkAccount": "Vincular cuenta",
         "level": "Nivel",
         "qoins": "Qoins",
         "bitsTooltip": "Usa tus Qoins para donarle a tus streamers favoritos. Puedes donar desde 200 Qoins",
@@ -379,7 +380,7 @@
         "prizes": "PREMIOS",
         "instructions": "Instrucciones",
         "howToParticipate": "Como participar",
-        "participate": "Participar",
+        "participate": "Unirme al stream",
         "nickName": "%{acronym} Nickname",
         "enterNickName": "Ingresa el nombre que tienes en el juego %{gameName}",
         "errorText": "Verifica que los campos estén llenados correctamente",
@@ -431,5 +432,18 @@
     "donationsLeaderBoard": {
         "tooltip": "Gana puntos xq viendo eventos marcados con el icono xq en nuestra pantalla principal",
         "done": "Listo"
+    },
+    "linkTwitchAccount": {
+        "skip": "Omitir",
+        "linkAccount": "Vincula tu cuenta",
+        "realTimeProgress": "¡Tu progreso en tiempo real!",
+        "description": "Recibe tus Qoins y XQ automáticamente al canjear puntos del canal de tu streamer.",
+        "linkButton": "Vincular con Twitch"
+    },
+    "skipLinkTwitchAccount": {
+        "important": "Importante",
+        "reminder": "Te recordamos que las cuentas no vinculadas con Twitch no podrán recibir sus canjes del canal 😭",
+        "description": "Pero no te preocupes, siempre puedes vincular tu cuenta desde tu perfil 😉",
+        "continue": "Deseo continuar"
     }
 }

@@ -167,10 +167,26 @@ export async function createUserProfile(Uid, email, userName ) {
 }
 
 /**
+ * Returns the string value of the Twitch userName of the given user
+ * @param {string} uid User identifier
+ */
+export async function getTwitchUserName(uid) {
+    return (await usersRef.child(uid).child('twitchUsername').once('value')).val();
+}
+
+/**
+ * Check if the user has their twitchId on their profile (if we have their twitch account linked)
+ * @param {string} uid User identifier
+ */
+ export async function userHaveTwitchId(uid) {
+    return (await usersRef.child(uid).child('twitchId').once('value')).exists();
+}
+
+/**
  * Check if the given twitchId is already used by any user
  * @param {string} twitchId Twitch identifier
  */
-export async function isNewTwitchId(twitchId) {
+ export async function isNewTwitchId(twitchId) {
     return !(await usersRef.orderByChild('twitchId').equalTo(twitchId).once('value')).exists();
 }
 

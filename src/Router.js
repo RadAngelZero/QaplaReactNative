@@ -13,7 +13,7 @@ import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOn
 import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen';
 import MyMatchesScreen from './screens/MyMatchesScreen/MyMatchesScreen';
 import PublicMatchCardScreen from './screens/PublicMatchCardScreen/PublicMatchCardScreen';
-import SignInScreen from './screens/SignInScreen/SignInScreen';
+import SignUpLoginHandlerScreen from './screens/SignUpLogInScreen/SignUpLoginHandlerScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
 import LoginWithEmailScreen from './screens/LoginWithEmailScreen/LoginWithEmailScreen';
 import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameScreen';
@@ -77,7 +77,7 @@ const MatchWizardStackNavigator = createStackNavigator({
 },
   {
     navigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   });
 
@@ -137,9 +137,9 @@ const AddGameStackNavigator = createStackNavigator({
 
 const AuthStackNavigator = createStackNavigator({
   SignIn: {
-    screen: SignInScreen,
+    screen: SignUpLoginHandlerScreen,
     navigationOptions: {
-      header: (props) => <TopNavOptions close {...props} />
+      headerShown: false
     }
   },
   LogIn: {
@@ -156,7 +156,7 @@ const AuthStackNavigator = createStackNavigator({
   }
 }, {
   navigationOptions: {
-    gesturesEnabled: false
+    gestureEnabled: false
   }
 });
 

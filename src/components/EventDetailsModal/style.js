@@ -17,10 +17,11 @@ export default styles = StyleSheet.create({
         borderRadius: 100
     },
     container: {
+        borderTopRightRadius:30,
+        borderTopLeftRadius:30,
         marginTop: heightPercentageToPx(14),
         width: widthPercentageToPx(100),
         backgroundColor: Colors.modals.backgroundDarkModal,
-        borderRadius: 30,
         shadowColor: '#000',
         shadowOffset: {
             width: widthPercentageToPx(0),
@@ -264,24 +265,25 @@ export default styles = StyleSheet.create({
         marginTop: 8
     },
     participateButtonContainer: {
-        backgroundColor: Colors.pinkQapla,
-        borderRadius: 30,
-        marginTop: 40,
-        marginBottom: 36
+        position:'absolute',
+        bottom: 0,
+        width: '100%',
+        backgroundColor: Colors.greenQapla,
+
     },
     participateButtonText: {
+        flex: 1,
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#FFF',
+        color: Colors.backgroundDarkModal,
         textAlign: 'center',
-        marginTop: 20,
-        marginBottom: 20,
-        marginRight: 40,
-        marginLeft: 40
+        textAlignVertical:'center',
+        marginTop: 34,
+        marginBottom: 34
     },
     // Event Registration
     fullHeightDialog: {
-        minHeight: heightPercentageToPx(86)
+        minHeight: heightPercentageToPx(86),
     },
     nickNameTitle: {
         fontSize: 28,

@@ -21,12 +21,16 @@ export const loadQaplaLogros = (uid) => async (dispatch) => {
 
     const listeningEvents = [];
     const date = new Date();
-    date.setHours(0);
-    date.setMinutes(0, 0, 0);
+    date.setHours(date.getHours() - 2);
+
     /**
      * We load the active events
      */
     activeEventsRef.orderByChild('timestamp').startAt(date.getTime()).on('value', (activeEvents) => {
+        /**
+         * Clean the list so if a new event is added the sort algorithm can do it their job
+         */
+        dispatch(emptyLogros());
         activeEvents.forEach((activeEvent) => {
             const activeEventObject = {
                 id: activeEvent.key,

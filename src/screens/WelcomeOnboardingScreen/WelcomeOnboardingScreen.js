@@ -18,7 +18,6 @@ import Images from './../../../assets/images';
 import { storeData } from '../../utilities/persistance';
 import { translate } from '../../utilities/i18';
 import { subscribeUserToTopic } from './../../services/messaging';
-import QaplaText from '../../components/QaplaText/QaplaText';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 const BackIcon = Images.svg.backIcon;
@@ -32,7 +31,7 @@ class WelcomeOnboardingScreen extends React.Component {
 	}
 
 	finishOnBoarding = () => {
-		storeData('new-tutorial-done', 'true');
+		storeData('2021-tutorial-done', 'true');
 
 		/**
 		 * All the users must be subscribed to the event topic at this point, because we want
@@ -93,7 +92,7 @@ class WelcomeOnboardingScreen extends React.Component {
 				<CarouselPng ref={(carrouselPng) => this.carrouselPng = carrouselPng} carrouselData={carrouselData} setCurrentIndex={this.setCurrentIndex}/>
 				<View style={[styles.progressContainer, { alignContent: 'center' }]}>
 					<ProgressDotsIndicator
-						steps={5}
+						steps={carrouselData.length}
 						selected={this.state.selectedIndex}
 						color={'rgba(0, 254, 223, .54)'}
 						activeColor={'#3DF9DF'}

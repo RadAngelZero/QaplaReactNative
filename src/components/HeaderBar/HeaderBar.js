@@ -54,7 +54,7 @@ class HeaderBar extends Component {
      * @description
      * Perform a serie of function calls after match creation button is pressed.
      */
-    onNotiPressBttn = () => {
+    onActivityPressBttn = () => {
 
         // If showHg1Modal is enabled then
         if (this.state.showHg2Modal){
@@ -67,7 +67,7 @@ class HeaderBar extends Component {
             this.toggleHg2Modal();
         }
 
-        this.props.navigation.navigate('Notifications');
+        this.props.navigation.navigate('Activity');
     }
 
     /**
@@ -197,7 +197,7 @@ class HeaderBar extends Component {
                             cb1={this.markHg2}
                             header={translate('headerBar.highlightModal.header')}
                             body={translate('headerBar.highlightModal.body')}>
-                            <QaplaIcon onPress={this.onNotiPressBttn}>
+                            <QaplaIcon onPress={this.onActivityPressBttn}>
                                 {this.userHaveUnreadActivity() ?
                                     <DuotoneActiveIcon height={25} width={25} />
                                 :

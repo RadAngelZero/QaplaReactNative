@@ -48,6 +48,7 @@ import ChatHeader from './components/Chat/ChatHeader/ChatHeader';
 import CommunityScreen from './screens/CommunityScreen/CommunityScreen';
 import DonationsLeaderBoard from './components/DonationsLeaderBoard/DonationsLeaderBoard';
 import TwitchAuthScreen from './screens/TwitchAuthScreen/TwitchAuthScreen';
+import ActivityScreen from './screens/ActivityScreen/ActivityScreen';
 
 //#region Stack Navigators
 
@@ -214,6 +215,9 @@ const MatchesTopTabNavigator = createMaterialTopTabNavigator(
   }
 );*/
 
+/**
+ * @deprecated
+
 const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
   {
     NotificationActividad: {
@@ -259,7 +263,7 @@ const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
       }
     },
   }
-);
+); */
 
 //#endregion
 
@@ -418,10 +422,10 @@ const RootStackNavigator = createStackNavigator({
       header: (props) => <HeaderBar {...props} />
     }
   },
-  Notifications: {
-    screen: NotificationsTopTabNavigator,
+  Activity: {
+    screen: ActivityScreen,
     navigationOptions: {
-      header: (props) => <NotificationsHeader {...props} />
+      header: null
     }
   },
   MatchWizard: MatchWizardStackNavigator,

@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
@@ -7,10 +6,8 @@ export default styles = StyleSheet.create({
         height: '100%',
         flexDirection: 'row',
         alignSelf: 'center',
-        alignItems:'center',
-        alignContent:'center',
+        justifyContent: 'center',
     },
     indicator: {
-        height: '100%',
         borderRadius: 100,
     }});

@@ -50,23 +50,23 @@
         "activityIndicatorText": "Cargando..."
     },
     "onBoardingScreen": {
-        "connect": {
-            "description": "Interactua, juega y compite con tus streamers favoritos.",
-            "title": "Interactua"
+        "discover": {
+            "description": "Descubre nuevos streamers y\nconecta con nuevas comunidades"
         },
-        "compete": {
-            "description": "Sigue los eventos y directos de los streamers en Qapla ¡y gana premios al instante!",
-			"title": "Sigue"
+        "follow": {
+            "description": "Sigue los streams publicados\nen Qapla y junta puntos del canal"
         },
-        "share": {
-            "description": "Suscríbete y dona a los canales de tus streamers favoritos. ¡Gratis!",
-            "title": "Suscríbete"
+        "get": {
+            "description": "Recibe Qoins y XQ en Qapla\npor tus puntos del canal 😮"
         },
-        "acquire": {
-            "description": "Adquiere contenido digital de tus juegos favoritos ¡sólo jugando! :O",
-            "title": "Adquiere"
+        "support": {
+            "description": "Apoya a tus streamers con tus\nQoins ¡y se recompensado!"
         },
-        "finish": "Terminar"
+        "highlight": {
+            "description": "Destaca por tu esfuerzo y\napoyo a la comunidad"
+        },
+        "startNow": "¡Comienza ya!",
+        "skip": "Omitir"
     },
     "activeAchievementsScreen": {
         "qaplaAchievement": {
@@ -147,7 +147,7 @@
         "done": "Listo",
         "store": "Tienda"
     },
-    "notificationsScreen":{
+    "notificationsScreen": {
         "notificationsHeader": "Notificaciones",
         "notificationTypes": {
             "notificationWinner": "Has sido declarado ganador de la partida",
@@ -238,7 +238,7 @@
             "codeSent": "Te enviamos un código de verificación",
             "smsCodeError": "El código de verificación es incorrecto",
             "alreadyLinkedAccountError": "Este número de teléfono ya está vinculado con una cuenta.",
-            "noMinDigitsPhoneNum":  "El número de teléfono debe de tener mínimo 5 dígitos."
+            "noMinDigitsPhoneNum": "El número de teléfono debe de tener mínimo 5 dígitos."
         },
         "verificationProcessSuccess": {
             "title": "¡Gracias!",
@@ -416,7 +416,7 @@
             "bttnText": "Actualizar"
         }
     },
-    "zeroQoinsEventModal" : {
+    "zeroQoinsEventModal": {
         "header": "Qoins insuficientes",
         "body": "Únete y juega en eventos para ganar Qoins !",
         "bttnText": "Ver Eventos"
@@ -430,7 +430,7 @@
         "transactions": "Transacciones",
         "donation": "Donación",
         "rewardRedeemed": "Recompensa redimida",
-        "redeemPrize":"Redimir Premio",
+        "redeemPrize": "Redimir Premio",
         "rewardsTooltip": "Cada donación que hagas se acumula para llenar tu barra de vida. Usa tus vidas para canjearlos en la tienda :D",
         "next": "Siguiente",
         "done": "Listo"

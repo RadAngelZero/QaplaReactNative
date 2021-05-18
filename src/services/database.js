@@ -1312,6 +1312,7 @@ export async function getUserDonationLeaderBoard(uid) {
  */
  export async function listenUserActivityFromLast7Days(uid, callback) {
     const date = new Date();
+    date.setHours(0, 0, 0, 0);
     const sevenDaysInMilliseconds = 604800000;
     userStreamsRewardsRef.child(uid).orderByChild('timestamp').startAt(date.getTime() - sevenDaysInMilliseconds).on('value', callback);
  }

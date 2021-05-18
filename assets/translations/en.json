@@ -49,23 +49,23 @@
         "activityIndicatorText": "Loading..."
     },
     "onBoardingScreen": {
-        "connect": {
-            "description": "Interact, play and compete with your favorite streamers.",
-            "title": "Interact"
+        "discover": {
+            "description": "Discover new streamers and\nconnect with new communities"
         },
-        "compete": {
-            "description": "Follow the events and live streamers on Qapla to win prizes instantly!",
-			"title": "Follow"
+        "follow": {
+            "description": "Follow the streams published\nin Qapla and collect points from the channel"
         },
-        "share": {
-            "description": "Subscribe and donate to the channels of your favorite streamers. Free!",
-            "title": "Subscribe"
+        "get": {
+            "description": "Receive Qoins and XQ in Qapla\nfor your channel points 😮"
         },
-        "acquire": {
-            "description": "Get digital content from your favorite games just by playing! :O",
-            "title": "Subscribe"
+        "support": {
+            "description": "Support your streamers with your\nQoins and be rewarded!"
         },
-        "finish": "Finish"
+        "highlight": {
+            "description": "Stand out for your effort and\nsupport to the community"
+        },
+        "startNow": "Start Now!",
+        "skip": "Skip"
     },
     "activeAchievementsScreen": {
         "qaplaAchievement": {

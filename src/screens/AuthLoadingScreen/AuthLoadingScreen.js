@@ -139,14 +139,14 @@ class AuthLoadingScreen extends Component {
              * screen, no to the place that we need
              */
             if (!this.state.linkOnProgress && this.state.firstLoad) {
-                const isTutorialDone = await retrieveData('tutorial-done');
+                const isTutorialDone = await retrieveData('new-tutorial-done');
                 if (isTutorialDone) {
-                    removeDataItem('tutorial-done');
+                    removeDataItem('new-tutorial-done');
                 }
 
                 this.setState({ firstLoad: false });
 
-                const isNewTutorialDone = await retrieveData('new-tutorial-done');
+                const isNewTutorialDone = await retrieveData('2021-tutorial-done');
 
                 if (isNewTutorialDone) {
                     const lastDateUserSawEventRememberScreen = await retrieveData('event-remember-date');

@@ -18,7 +18,7 @@ export class ProgressDotsIndicator extends Component {
             );
         }
         return (
-            <View style={[styles.container, {}]}>
+            <View style={styles.container}>
                 {steps}
             </View>
         );

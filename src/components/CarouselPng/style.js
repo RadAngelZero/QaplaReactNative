@@ -36,14 +36,6 @@ export const styles = StyleSheet.create({
     marginTop: heightPercentageToPx(3.59)
   },
   description: {
-    marginTop: heightPercentageToPx(1.64),
-    // fontSize: 18,
-    // fontWeight: '500',
-    // lineHeight: 21,
-    // color: '#FFF',
-    // textAlign: 'center',
-    // marginBottom: heightPercentageToPx(5),
-    // maxWidth: widthPercentageToPx(83)
     color: 'white',
     fontSize: 21,
     fontStyle: 'normal',

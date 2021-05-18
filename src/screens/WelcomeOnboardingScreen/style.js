@@ -19,10 +19,9 @@ export default StyleSheet.create({
     progressContainer: {
         flexDirection: 'row',
         alignSelf: 'center',
-        position: 'absolute',
         height: heightPercentageToPx(1.2),
         width: '60%',
-        bottom: heightPercentageToPx(25.8),
+        marginBottom: 42
     },
     progressRow: {
         width: widthPercentageToPx(100) / 3
@@ -50,10 +49,9 @@ export default StyleSheet.create({
     bottomButtons: {
         flexDirection: 'row',
         alignSelf: 'center',
-        position: 'absolute',
         height: heightPercentageToPx(9.8),
         width: '80%',
-        bottom: heightPercentageToPx(4.2),
+        marginBottom: 16
     },
     skipButton: {
         width: widthPercentageToPx(24),

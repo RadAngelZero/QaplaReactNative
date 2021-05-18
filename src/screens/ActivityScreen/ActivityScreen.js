@@ -15,17 +15,7 @@ class ActivityScreen extends Component {
         activity: []
     };
 
-    componentDidMount() {
-        this.loadActivity();
-    }
-
-    componentDidUpdate(prevProps) {
-        if (Object.keys(this.props.activity).length !== Object.keys(prevProps.activity).length) {
-            this.loadActivity();
-        }
-    }
-
-    loadActivity = async () => {
+    loadActivity = () => {
         const activityArray = [];
         const unreadRecordsArray = [];
         if (this.props.activity) {
@@ -57,7 +47,8 @@ class ActivityScreen extends Component {
             });
 
             setActivityRecordsAsRead(this.props.uid, unreadRecordsArray);
-            this.setState({ activity: activityArray });
+
+            return activityArray;
         }
     }
 
@@ -80,7 +71,7 @@ class ActivityScreen extends Component {
                             {translate(`activityScreen.${item.type === XQ ? XQ : QOINS}`, { streamerName: item.streamerName })}
                         </QaplaText>
                         <QaplaText style={styles.recordHours}>
-                            {`${date.getHours()}:${date.getMinutes()}`} hrs
+                            {`${this.addZeroToNumberLowerThan10(date.getHours())}:${this.addZeroToNumberLowerThan10(date.getMinutes())}`} hrs
                         </QaplaText>
                     </View>
                 </View>
@@ -91,9 +82,12 @@ class ActivityScreen extends Component {
         );
     };
 
+    addZeroToNumberLowerThan10 = (number) => number < 10 ? `0${number}`: number;
+
     closeActivityScreen = () => this.props.navigation.pop();
 
     render() {
+        const activity = this.loadActivity();
         return (
             <SafeAreaView style={styles.container}>
                 <QaplaIcon
@@ -105,14 +99,14 @@ class ActivityScreen extends Component {
                     {translate('activityScreen.activity')}
                 </QaplaText>
                 <SectionList
-                    sections={this.state.activity}
+                    sections={activity}
                     contentContainerStyle={styles.listContentContainer}
                     initialNumToRender={5}
                     renderItem={this.renderEventOnList}
                     renderSectionHeader={this.renderSectionHeader}
                     stickySectionHeadersEnabled={false}
                     ListFooterComponent={() => <View style={{ height: 30 }} />}
-                    keyExtractor={(item) => item.id} />
+                    keyExtractor={(item) => item.timestamp + item.streamerName + item.type} />
             </SafeAreaView>
         );
     }

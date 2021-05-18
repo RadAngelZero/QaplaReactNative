@@ -19,6 +19,8 @@ import { storeData } from '../../utilities/persistance';
 import { translate } from '../../utilities/i18';
 import { subscribeUserToTopic } from './../../services/messaging';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
+import { userHaveTwitchId } from '../../services/database';
 
 const BackIcon = Images.svg.backIcon;
 
@@ -27,10 +29,19 @@ class WelcomeOnboardingScreen extends React.Component {
 		super(props);
 		this.state = {
 			selectedIndex: 0,
+			openLinkWitTwitchModal: false
 		};
 	}
 
-	finishOnBoarding = () => {
+	finishOnBoarding = async () => {
+		if (this.props.uid && !(await userHaveTwitchId(this.props.uid))) {
+			this.setState({ openLinkWitTwitchModal: true });
+		} else {
+			this.setValuesToStart();
+		}
+	}
+
+	setValuesToStart = () => {
 		storeData('2021-tutorial-done', 'true');
 
 		/**
@@ -124,6 +135,11 @@ class WelcomeOnboardingScreen extends React.Component {
 						</TouchableOpacity>
 					</View>
 				}
+				<LinkTwitchAccountModal
+					open={this.state.openLinkWitTwitchModal}
+					onClose={() => this.setState({ openLinkWitTwitchModal: false })}
+					onLinkSuccessful={this.setValuesToStart}
+					onSkipTwitchLink={this.setValuesToStart} />
 			</SafeAreaView>
 		);
 	}

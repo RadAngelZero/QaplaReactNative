@@ -1,16 +1,19 @@
 import { StyleSheet } from 'react-native'
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim'
 import Colors from '../../utilities/Colors'
-import { HEADER_SIZE } from '../../utilities/Constants'
 
 export default styles = StyleSheet.create({
 	profileView: {
 		flex: 1,
 		backgroundColor: Colors.backgroundColor
 	},
-	qoinsView: {
-		width: widthPercentageToPx(30),
+	profileDetailsContainer: {
 		marginLeft: 16,
+		marginRight: 16,
+		flexDirection: 'row',
+		justifyContent: 'space-between'
+	},
+	qoinsView: {
 		flexDirection: 'row',
 		alignItems: 'center'
 	},
@@ -22,7 +25,51 @@ export default styles = StyleSheet.create({
 		color: '#FFF',
 		fontSize: 36,
 		marginLeft: 8
-    },
+	},
+	twitchButtonContainer: {
+		backgroundColor: '#8B46FF',
+		borderRadius: 20,
+		justifyContent: 'center',
+		width: widthPercentageToPx(30)
+	},
+	linkWithTwitchContainer: {
+		flexDirection: 'column'
+	},
+	linkWithTwitchButtonContainer: {
+		borderColor: '#8B46FF',
+		borderWidth: 2,
+		borderRadius: 20,
+		justifyContent: 'center',
+		marginBottom: 6
+	},
+	twitchButtonContentContainer: {
+		flexDirection: 'row',
+		marginLeft: 16,
+		marginRight: 16,
+		marginTop: 10,
+		marginBottom: 10,
+		justifyContent: 'space-around',
+		alignItems: 'center'
+	},
+	twitchButtonText: {
+		fontSize: 12,
+		fontWeight: '600',
+		color: '#FFF',
+		marginLeft: 12,
+		textAlign: 'center'
+	},
+	twitchIconButton: {
+		marginLeft: 24,
+		marginRight: 24,
+		marginTop: 10,
+		marginBottom: 10
+	},
+	linkAccountText: {
+		fontSize: 12,
+		fontWeight: '600',
+		color: '#FFF',
+		textAlign: 'center'
+	},
     bitsCardContainer: {
 		marginTop: 12,
         marginLeft: 24,
@@ -120,6 +167,12 @@ export default styles = StyleSheet.create({
 	},
 	donationNavigatorContainer: {
 		flex: 1,
-		marginTop: 12
+		marginTop: 36
+	},
+	storeTitle: {
+		fontSize: 22,
+		color: '#FFF',
+		marginLeft: 24,
+		marginBottom: 16
 	}
 })

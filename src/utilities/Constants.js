@@ -7,6 +7,10 @@ export const SEGMENT_KEY = 'fCfir8yrQiZRVrpuwLHYRePN68SqW8AS';
 // SendBird key
 export const SENDBIRD_KEY = '7E54A9F8-DCE3-420E-8DC8-D3E8B081A2B0';
 
+// Twitch Client Id
+export const TWITCH_CLIENT_ID = '3cwpzmazn716nmz6g1087kh4ciu4sp';
+export const TWITCH_REDIRECT_URI = 'https://dashboard.qapla.gg/';
+
 // User constants
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 export const REMOVE_USER_DATA = 'REMOVE_USER_DATA';
@@ -42,10 +46,8 @@ export const HIGHLIGHT_1_CREATE_MATCH_FLAG = 'HIGHLIGHT_1_CREATE_MATCH_FLAG';
 export const HIGHLIGHT_2_NOTIFICATIONS = 'HIGHLIGHT_2_NOTIFICATIONS';
 
 // Logros constants
-export const LOAD_USER_VERIFICATION_STATUS = 'LOAD_USER_VERIFICATION_STATUS';
 export const LOAD_LOGROS_ACTIVOS = 'LOAD_LOGROS_ACTIVOS';
 export const REMOVE_LOGRO_ACTIVO = 'REMOVE_LOGRO_ACTIVO';
-export const LOAD_LOGROS_COMPLETOS = 'LOAD_LOGROS_COMPLETOS';
 export const EMPTY_LOGROS = 'EMPTY_LOGROS';
 
 // Adversary numbers
@@ -136,3 +138,7 @@ export const defaultUserImages = [
 	images.png.profileImagePlaceholder5,
 	images.png.profileImagePlaceholder6
 ];
+
+// Activity types
+export const XQ = 'xq';
+export const QOINS = 'qoins';

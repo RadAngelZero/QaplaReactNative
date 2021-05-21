@@ -42,16 +42,20 @@ export class CheckBox extends Component {
     render() {
         return (
             <View style={[styles.container, this.props.style]}>
-                <TouchableWithoutFeedback disabled={this.props.disabled} onPress={this.props.onPress}>
-                    <View style={styles.selectionArea}>
+                <View style={styles.selectionArea}>
+                    <TouchableWithoutFeedback disabled={this.props.disabled} onPress={this.props.onPress}>
+
                         <View style={styles.checkboxContainer}>
                             <Animated.View style={[styles.selectedContainer, { opacity: this.state.backgroundOpacity }]}>
                                 <OkIcon />
                             </Animated.View>
                         </View>
-                        <QaplaText style={styles.label}>{this.props.label}</QaplaText>
-                    </View>
-                </TouchableWithoutFeedback>
+                    </TouchableWithoutFeedback>
+
+                    <TouchableWithoutFeedback disabled={this.props.disabled} onPress={this.props.onTextPress} style={{ height: '100%' }}>
+                        <QaplaText style={[styles.label, this.props.textStyle]}>{this.props.label}</QaplaText>
+                    </TouchableWithoutFeedback>
+                </View>
             </View>
         );
     }

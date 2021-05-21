@@ -1,70 +1,36 @@
 import React, { Component } from 'react';
-import { SafeAreaView, ScrollView, View, Image, Animated, TouchableOpacity } from 'react-native';
+import { SafeAreaView, ScrollView, View, Image, Animated, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { createAppContainer } from 'react-navigation';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
 import styles from './style';
 import images from '../../../assets/images';
 
 import AnimatedCircleIndicator from '../../components/AnimatedCircleIndicator/AnimatedCircleIndicator';
 
-import { recordScreenOnSegment } from '../../services/statistics';
+import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
 
 import { translate } from '../../utilities/i18';
-import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { getDonationFormUrl, getDonationsCosts, getDonationQoinsBase } from '../../services/database';
+import { getDonationFormUrl, getDonationQoinsBase } from '../../services/database';
 import Colors from '../../utilities/Colors';
 import RewardsStore from '../../components/RewardsStore/RewardsStore';
 
 import RewardsBottomSheet from '../../components/RewardsBottomSheet/RewardsBottomSheet';
 import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
-import DonationsLeaderBoard from '../../components/DonationsLeaderBoard/DonationsLeaderBoard';
 import { setScroll, setUserImage } from '../../actions/profileLeaderBoardActions';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import { defaultUserImages } from '../../utilities/Constants';
 import QaplaTooltip from '../../components/QaplaTooltip/QaplaTooltip';
+import ZeroQoinsEventsModal from '../../components/ZeroQoinsEventsModal/ZeroQoinsEventsModal';
+import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 
 const BitsIcon = images.svg.bitsIcon;
 
-const DonationsNavigator = createMaterialTopTabNavigator({
-    Leaderboard: {
-        screen: () => <DonationsLeaderBoard />
-    },
-    Store: {
-        screen: () => <RewardsStore />
-    }
-},
-{
-    tabBarOptions: {
-      upperCaseLabel: false,
-      style: {
-        backgroundColor: '#0C1021'
-      },
-      tabStyle: {
-        width: widthPercentageToPx(35)
-      },
-      labelStyle: {
-        fontSize: 16,
-        fontFamily: 'SFRounded-Ultralight'
-      },
-      activeTintColor: '#FFF',
-      inactiveTintColor: '#FFF',
-      indicatorStyle: {
-        borderBottomColor: '#36E5CE',
-        borderBottomWidth: 2,
-        width: widthPercentageToPx(35)
-      }
-    },
-  });
-
-const AppContainer = createAppContainer(DonationsNavigator);
-
 export class NewUserProfileScreen extends Component {
     state = {
-        bitsToDonate: 0,
+        qoinsToDonate: 0,
         donationCost: null,
         donationQoinBase: null,
         collapsableToolBarMaxHeight: heightPercentageToPx(50),
@@ -74,7 +40,9 @@ export class NewUserProfileScreen extends Component {
         openInfoTooltip: false,
         openRewardsTooltip: false,
         openedTooltips: 0,
-        indexOfTooltipOpen: -1
+        indexOfTooltipOpen: -1,
+        openDonationFeedbackModal: false,
+        openLinkWitTwitchModal: false
     };
 
     componentWillMount() {
@@ -105,6 +73,10 @@ export class NewUserProfileScreen extends Component {
         this.list.forEach((item) => item.remove());
     }
 
+    /**
+     * Check if the user has a profile image on the database
+     * otherwise assign a random image and save it on the local storage
+     */
     setUserDefaultImage = async () => {
         if (!this.props.userImage) {
             let userImageIndex = await retrieveData('default-user-image');
@@ -122,12 +94,13 @@ export class NewUserProfileScreen extends Component {
         }
     }
 
+    /**
+     * Load the donation cost and the donation qoin base for the user donations
+     */
     setDonationCost = async () => {
-        const donationCost = await getDonationsCosts();
         const donationQoinBase = await getDonationQoinsBase();
-        if (donationCost.exists() && donationQoinBase.exists()) {
+        if (donationQoinBase.exists()) {
             this.setState({
-                donationCost: donationCost.val(),
                 donationQoinBase: donationQoinBase.val()
             });
         }
@@ -137,31 +110,55 @@ export class NewUserProfileScreen extends Component {
      * Begins the process of redeem qaploins
      */
     exchangeQaploins = async () => {
-        if (this.state.bitsToDonate >0) {
+        if (this.state.qoinsToDonate > 0 && this.props.userQoins >= this.state.qoinsToDonate) {
             let exchangeUrl = await getDonationFormUrl();
             if (exchangeUrl) {
-                exchangeUrl += `#uid=${this.props.uid}&qoins=${this.state.bitsToDonate / this.state.donationCost}`;
+                exchangeUrl += `#uid=${this.props.uid}&qoins=${this.state.qoinsToDonate}`;
 
                 this.props.navigation.navigate('ExchangeQoinsScreen', { exchangeUrl });
+                trackOnSegment('User support streamer',
+                    {
+                        SupportAmount: this.state.qoinsToDonate
+                    }
+                );
+                this.setState({ qoinsToDonate: 0 });
             }
+        } else {
+            this.setState({ openDonationFeedbackModal: true });
         }
     }
 
+    /**
+     * Increase the amount of the user donation
+     */
     addECoinToDonation = () => {
-        const bitsToIncrease = this.state.donationCost * this.state.donationQoinBase;
-        if (this.state.donationCost && this.props.userQoins * this.state.donationCost > this.state.bitsToDonate + bitsToIncrease) {
-            this.setState({ bitsToDonate: this.state.bitsToDonate + bitsToIncrease });
+        const bitsToIncrease = this.state.donationQoinBase;
+        if (this.props.userQoins >= this.state.qoinsToDonate + bitsToIncrease) {
+            this.setState({ qoinsToDonate: this.state.qoinsToDonate + bitsToIncrease });
+        } else {
+            this.setState({ openDonationFeedbackModal: true });
         }
     }
 
+    /**
+     * Decrease the amount of the user donation
+     */
     substractECoinToDonation = () => {
-        if (this.state.bitsToDonate > 0) {
-            this.setState({ bitsToDonate: this.state.bitsToDonate - (this.state.donationCost * this.state.donationQoinBase) });
+        if (this.state.qoinsToDonate > 0) {
+            this.setState({ qoinsToDonate: this.state.qoinsToDonate - this.state.donationQoinBase });
         }
     }
 
+    /**
+     * Set the collapsableToolBarMaxHeight variable state based on the
+     * height of the component
+     */
     saveToolBarMaxHeight = ({ nativeEvent }) => this.setState({ collapsableToolBarMaxHeight: nativeEvent.layout.height });
 
+    /**
+     * Event called at the end of the scroll on scroll view
+     * Handle the collapsable effect on the profile
+     */
     scrollCollapsable = ({ nativeEvent }) => {
         if (this.state.isLeaderBoardCollapsed) {
             if (nativeEvent.contentOffset.y <= 50) {
@@ -180,8 +177,14 @@ export class NewUserProfileScreen extends Component {
         }
     }
 
+    /**
+     * Save the last position in the Y axis on previousScrollPosition variable state
+     */
     setLastScrollPosition = ({ nativeEvent }) => this.setState({ previousScrollPosition: nativeEvent.contentOffset.y });
 
+    /**
+     * Toggle the tooltip for donations
+     */
     toggleInfoTooltip = () => {
         if (!this.state.openInfoTooltip) {
             this.setState({ openedTooltips: this.state.openedTooltips + 1, indexOfTooltipOpen: 0 });
@@ -190,6 +193,9 @@ export class NewUserProfileScreen extends Component {
         this.setState({ openInfoTooltip: !this.state.openInfoTooltip });
     }
 
+    /**
+     * Toggle the tooltip for rewards
+     */
     toggleRewardTooltip = () => {
         if (!this.state.openRewardsTooltip) {
             this.setState({ openedTooltips: this.state.openedTooltips + 1, indexOfTooltipOpen: 1 });
@@ -198,6 +204,10 @@ export class NewUserProfileScreen extends Component {
         this.setState({ openRewardsTooltip: !this.state.openRewardsTooltip });
     }
 
+    /**
+     * Handle the logic to open the tooltips in a sequence
+     * open all the tooltips always
+     */
     tooltipAction = () => {
         const toggleFunctions = [this.toggleInfoTooltip, this.toggleRewardTooltip];
         if (this.state.openedTooltips < 2) {
@@ -214,8 +224,11 @@ export class NewUserProfileScreen extends Component {
         }
     }
 
+    linkTwitchAccount = () => this.setState({ openLinkWitTwitchModal: true });
+
     render() {
-        const userLevel = Math.floor(this.props.experience / 100);
+        const userLevel = Math.floor(this.props.qaplaLevel / 100);
+        const userQoins = isNaN(this.props.userQoins - this.state.qoinsToDonate) ? 0 : this.props.userQoins - this.state.qoinsToDonate;
 
         return (
             <SafeAreaView style={styles.profileView} onLayout={this.saveToolBarMaxHeight}>
@@ -231,84 +244,116 @@ export class NewUserProfileScreen extends Component {
                         onScrollEndDrag={this.scrollCollapsable}
                         onScroll={this.setLastScrollPosition}>
                         <Animated.View style={{ flex: 1 }}>
-                        <View style={styles.qoinsView}>
-                            <Image
-                                source={images.png.Qoin3D.img}
-                                style={styles.qoinsImage} />
-                            <QaplaText style={styles.qoinsValue}>
-                                {this.props.userQoins}
-                            </QaplaText>
-                        </View>
-                        <View style={styles.bitsCardContainer}>
-                            <View style={styles.bitsModuleView}>
-                                <View>
-                                    <View style={styles.infoImageContainer}>
-                                        <QaplaTooltip
-                                            style={styles.infoImage}
-                                            toggleTooltip={this.toggleInfoTooltip}
-                                            open={this.state.openInfoTooltip}
-                                            content={translate('newUserProfileScreen.bitsTooltip')}
-                                            buttonText={this.state.openedTooltips >= 2 ? translate('newUserProfileScreen.done') : translate('newUserProfileScreen.next')}
-                                            buttonAction={this.tooltipAction} />
-                                    </View>
-                                    <BitsIcon style={styles.bits3dIconImage}/>
-                                </View>
-                                <View style={styles.donationValueContainer}>
-                                    <View style={styles.bitsValueContainer}>
-                                        <QaplaText style={styles.bitsNumber}>
-                                            {this.state.bitsToDonate}
-                                        </QaplaText>
-                                        <QaplaText style={styles.bitsTitle}>
-                                            {translate('newUserProfileScreen.bitsAndStars')}
-                                        </QaplaText>
-                                    </View>
-                                    <View style={styles.handleDonationContainer}>
-                                        <TouchableOpacity style={styles.updateDonationIcon} onPress={this.addECoinToDonation}>
-                                            <images.svg.plusBubble />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={styles.updateDonationIcon} onPress={this.substractECoinToDonation}>
-                                            <images.svg.minusBubble />
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                                <TouchableOpacity
-                                    style={styles.buttonView}
-                                    onPress={this.exchangeQaploins}>
-                                    <QaplaText style={styles.supportText}>
-                                        Support
+                            <View style={styles.profileDetailsContainer}>
+                                <View style={styles.qoinsView}>
+                                    <Image
+                                        source={images.png.Qoin3D.img}
+                                        style={styles.qoinsImage} />
+                                    <QaplaText style={styles.qoinsValue}>
+                                        {userQoins}
                                     </QaplaText>
-                                </TouchableOpacity>
+                                </View>
+                                {this.props.twitchId && this.props.twitchUsername ?
+                                    <TouchableOpacity style={styles.twitchButtonContainer} disabled>
+                                        <View style={styles.twitchButtonContentContainer}>
+                                            <images.svg.twitchIcon />
+                                            <Text style={styles.twitchButtonText} numberOfLines={1}>
+                                                {this.props.twitchUsername}
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                :
+                                    <View style={styles.linkWithTwitchContainer}>
+                                        <TouchableOpacity style={styles.linkWithTwitchButtonContainer} onPress={this.linkTwitchAccount}>
+                                            <images.svg.twitchExtrudedLogo height={24}
+                                                width={72}
+                                                style={styles.twitchIconButton} />
+                                        </TouchableOpacity>
+                                        <Text style={styles.linkAccountText}>
+                                            {translate('newUserProfileScreen.linkAccount')}
+                                        </Text>
+                                    </View>
+                                }
                             </View>
-                            <View style={styles.levelModalView}>
-                                <AnimatedCircleIndicator
-                                    size={120}
-                                    fill={this.props.experience - (userLevel * 100)}
-                                    width={7}
-                                    duration={750}
-                                    fillComponent={() => (
-                                        <EditProfileImgBadge style={styles.userImage}>
-                                            <Image
-                                                style={styles.userImage}
-                                                source={this.state.userImage ? this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img : null} />
-                                        </EditProfileImgBadge>
-                                    )}
-                                    backgroundColor='#1F2750'
-                                    tintColor={Colors.greenQapla}
-                                    descriptionComponent={() => (
-                                        <View style={styles.expTextContainer}>
-                                            <QaplaText style={styles.expText}>
-                                                {`${translate('newUserProfileScreen.level')} ${userLevel}`}
+                            <View style={styles.bitsCardContainer}>
+                                <View style={styles.bitsModuleView}>
+                                    <View>
+                                        <View style={styles.infoImageContainer}>
+                                            <QaplaTooltip
+                                                style={styles.infoImage}
+                                                toggleTooltip={this.toggleInfoTooltip}
+                                                open={this.state.openInfoTooltip}
+                                                content={translate('newUserProfileScreen.bitsTooltip')}
+                                                buttonText={this.state.openedTooltips >= 2 ? translate('newUserProfileScreen.done') : translate('newUserProfileScreen.next')}
+                                                buttonAction={this.tooltipAction} />
+                                        </View>
+                                        <BitsIcon style={styles.bits3dIconImage}/>
+                                    </View>
+                                    <View style={styles.donationValueContainer}>
+                                        <View style={styles.bitsValueContainer}>
+                                            <QaplaText style={styles.bitsNumber}>
+                                                {this.state.qoinsToDonate}
+                                            </QaplaText>
+                                            <QaplaText style={styles.bitsTitle}>
+                                                {translate('newUserProfileScreen.qoins')}
                                             </QaplaText>
                                         </View>
-                                    )} />
+                                        <View style={styles.handleDonationContainer}>
+                                            <TouchableOpacity style={styles.updateDonationIcon} onPress={this.addECoinToDonation}>
+                                                <images.svg.plusBubble />
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={styles.updateDonationIcon} onPress={this.substractECoinToDonation}>
+                                                <images.svg.minusBubble />
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                    <TouchableOpacity
+                                        style={styles.buttonView}
+                                        onPress={this.exchangeQaploins}>
+                                        <QaplaText style={styles.supportText}>
+                                            Support
+                                        </QaplaText>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.levelModalView}>
+                                    <AnimatedCircleIndicator
+                                        size={120}
+                                        fill={this.props.qaplaLevel - (userLevel * 100)}
+                                        width={7}
+                                        duration={750}
+                                        fillComponent={() => (
+                                            <EditProfileImgBadge style={styles.userImage}>
+                                                <Image
+                                                    style={styles.userImage}
+                                                    source={this.state.userImage ? this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img : null} />
+                                            </EditProfileImgBadge>
+                                        )}
+                                        backgroundColor='#1F2750'
+                                        tintColor={Colors.greenQapla}
+                                        descriptionComponent={() => (
+                                            <View style={styles.expTextContainer}>
+                                                <QaplaText style={styles.expText}>
+                                                    {`${translate('newUserProfileScreen.level')} ${userLevel}`}
+                                                </QaplaText>
+                                            </View>
+                                        )} />
+                                </View>
                             </View>
-                        </View>
                         </Animated.View>
                         <View style={[styles.donationNavigatorContainer, { height: this.state.collapsableToolBarMaxHeight }]}>
-                            <AppContainer />
+                            <QaplaText style={styles.storeTitle}>
+                                {translate('newUserProfileScreen.store')}
+                            </QaplaText>
+                            <RewardsStore />
                         </View>
                     </ScrollView>
                 </RewardsBottomSheet>
+                <ZeroQoinsEventsModal
+                    open={this.state.openDonationFeedbackModal}
+                    onClose={() => this.setState({ openDonationFeedbackModal: false })} />
+                <LinkTwitchAccountModal
+                    open={this.state.openLinkWitTwitchModal}
+                    onClose={() => this.setState({ openLinkWitTwitchModal: false })} />
             </SafeAreaView>
         );
     }
@@ -324,9 +369,11 @@ function mapStateToProps(state) {
             uid: state.userReducer.user.id,
             userQoins: state.userReducer.user.credits,
             userImage: state.userReducer.user.photoUrl,
-            experience: state.userReducer.user.qaplaExperience || 0,
+            qaplaLevel: state.userReducer.user.qaplaLevel || 0,
             rewards: state.userReducer.user.UserRewards,
-            enableScroll: state.profileLeaderBoardReducer.enableScroll
+            enableScroll: state.profileLeaderBoardReducer.enableScroll,
+            twitchId: state.userReducer.user.twitchId,
+            twitchUsername: state.userReducer.user.twitchUsername
         }
     }
 
@@ -338,7 +385,7 @@ function mapStateToProps(state) {
      */
     return {
         user: state.userReducer.user,
-        experience: 0
+        qaplaLevel: 0
     };
 }
 

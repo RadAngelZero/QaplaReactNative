@@ -4,7 +4,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { createAppContainer, createSwitchNavigator, NavigationActions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator, createBottomTabNavigator } from 'react-navigation-tabs';
-import Svg, { G, Path, } from 'react-native-svg';
+import Svg, { G, Path, Rect } from 'react-native-svg';
 
 import { setCurrentScreenId, setPreviousScreenId } from './actions/screensActions';
 import { connect } from 'react-redux';
@@ -13,7 +13,7 @@ import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOn
 import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen';
 import MyMatchesScreen from './screens/MyMatchesScreen/MyMatchesScreen';
 import PublicMatchCardScreen from './screens/PublicMatchCardScreen/PublicMatchCardScreen';
-import SignInScreen from './screens/SignInScreen/SignInScreen';
+import SignUpLoginHandlerScreen from './screens/SignUpLogInScreen/SignUpLoginHandlerScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
 import LoginWithEmailScreen from './screens/LoginWithEmailScreen/LoginWithEmailScreen';
 import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameScreen';
@@ -46,6 +46,9 @@ import TodayTournamentsScreen from './screens/TodayTournamentsScreen/TodayTourna
 import QaplaText from './components/QaplaText/QaplaText';
 import ChatHeader from './components/Chat/ChatHeader/ChatHeader';
 import CommunityScreen from './screens/CommunityScreen/CommunityScreen';
+import DonationsLeaderBoard from './components/DonationsLeaderBoard/DonationsLeaderBoard';
+import TwitchAuthScreen from './screens/TwitchAuthScreen/TwitchAuthScreen';
+import ActivityScreen from './screens/ActivityScreen/ActivityScreen';
 
 //#region Stack Navigators
 
@@ -75,7 +78,7 @@ const MatchWizardStackNavigator = createStackNavigator({
 },
   {
     navigationOptions: {
-      gesturesEnabled: false
+      gestureEnabled: false
     }
   });
 
@@ -135,9 +138,9 @@ const AddGameStackNavigator = createStackNavigator({
 
 const AuthStackNavigator = createStackNavigator({
   SignIn: {
-    screen: SignInScreen,
+    screen: SignUpLoginHandlerScreen,
     navigationOptions: {
-      header: (props) => <TopNavOptions close {...props} />
+      headerShown: false
     }
   },
   LogIn: {
@@ -145,10 +148,16 @@ const AuthStackNavigator = createStackNavigator({
     navigationOptions: {
       header: (props) => <TopNavOptions back close {...props} />
     }
+  },
+  TwitchLogIn: {
+    screen: TwitchAuthScreen,
+    navigationOptions: {
+      header: (props) => <TopNavOptions close {...props} />
+    }
   }
 }, {
   navigationOptions: {
-    gesturesEnabled: false
+    gestureEnabled: false
   }
 });
 
@@ -165,6 +174,7 @@ const ChatStackNavigator = createStackNavigator({
 
 //#region Top Tab Navigators
 
+/** @deprecated
 const MatchesTopTabNavigator = createMaterialTopTabNavigator(
   {
     Public: {
@@ -203,7 +213,10 @@ const MatchesTopTabNavigator = createMaterialTopTabNavigator(
       }
     },
   }
-);
+);*/
+
+/**
+ * @deprecated
 
 const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
   {
@@ -250,7 +263,7 @@ const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
       }
     },
   }
-);
+); */
 
 //#endregion
 
@@ -288,7 +301,37 @@ const MainBottomTabNavigator = createBottomTabNavigator({
       ),
     },
   },
-  Matches: {
+  Ranking: {
+    screen: DonationsLeaderBoard,
+    navigationOptions: {
+      tabBarButtonComponent: TouchableOpacity,
+      tabBarIcon: ({ tintColor, focused }) => (
+        <Svg width="30px" height="26px" viewBox="0 0 30 26">
+          <G id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <G id="Community" transform="translate(-127.000000, -746.000000)">
+                  <G id="Bottom-Nav-Bar" transform="translate(0.000000, 727.000000)">
+                      <G id="Community" transform="translate(94.000000, 17.000000)">
+                          <G id="Ranking" transform="translate(32.000000, 0.000000)">
+                              <G id="Column-01-Up" transform="translate(1.250000, 2.500000)">
+                                  <Rect fill={focused ? tintColor: '#FFF'}  x="10" y="0" width="7.5" height="25" rx="2.5"></Rect>
+                                  <Rect fill={focused ? '#4040FF' : '#4E5166'} x="0" y="5" width="7.5" height="20" rx="2.5"></Rect>
+                                  <Rect fill={focused ? '#4040FF' : '#4E5166'} x="20" y="10" width="7.5" height="15" rx="2.5"></Rect>
+                              </G>
+                          </G>
+                      </G>
+                  </G>
+              </G>
+          </G>
+        </Svg>
+      ),
+      tabBarLabel: ({ tintColor, focused }) => (
+        <QaplaText style={{ color: tintColor, fontSize: 12, marginBottom: 8 }}>
+          Ranking
+        </QaplaText>
+      )
+    }
+  },
+  Community: {
     screen: CommunityScreen,
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,
@@ -379,10 +422,10 @@ const RootStackNavigator = createStackNavigator({
       header: (props) => <HeaderBar {...props} />
     }
   },
-  Notifications: {
-    screen: NotificationsTopTabNavigator,
+  Activity: {
+    screen: ActivityScreen,
     navigationOptions: {
-      header: (props) => <NotificationsHeader {...props} />
+      header: null
     }
   },
   MatchWizard: MatchWizardStackNavigator,

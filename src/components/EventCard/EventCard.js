@@ -11,6 +11,7 @@ import styles from './style';
 import { getLocaleLanguage } from '../../utilities/i18';
 import EventDetailsModal from '../EventDetailsModal/EventDetailsModal';
 import QaplaText from '../QaplaText/QaplaText';
+import { trackOnSegment } from '../../services/statistics';
 
 function EventCardContainer({ isSponsored, children, onPress, gradientColors }) {
     if (isSponsored) {
@@ -50,6 +51,10 @@ function EventCardContainer({ isSponsored, children, onPress, gradientColors }) 
 }
 
 class EventCard extends Component {
+    currentTime = new Date().getTime();
+    // 86,400,000 = 24 hours on milliseconds
+    limitToShowEventAsNew = this.currentTime - 86400000;
+
     state = {
         showEventDetailsModal: false
     };
@@ -88,7 +93,17 @@ class EventCard extends Component {
         return res;
     }
 
-    toogleEventDetailsModalVisibility = () => this.setState({ showEventDetailsModal: !this.state.showEventDetailsModal });
+    toogleEventDetailsModalVisibility = () => {
+        trackOnSegment('User open event', {
+            EventId: this.props.eventId,
+            EventIsSponsored: this.props.sponsorImage ? true : false,
+            featuredEvent: this.props.featured,
+            EventStreamer: this.props.streamerName,
+            EventGame: this.props.game
+        });
+
+        this.setState({ showEventDetailsModal: !this.state.showEventDetailsModal });
+    }
 
     render() {
         const {
@@ -100,7 +115,8 @@ class EventCard extends Component {
             sponsorImage,
             idLogro,
             gradientColors,
-            featured
+            featured,
+            createdAt
         } = this.props;
 
         let titleTranslated = this.getTextBasedOnUserLanguage(title);
@@ -115,6 +131,10 @@ class EventCard extends Component {
             titleTranslated = titulo;
         }
 
+        if (createdAt >= this.limitToShowEventAsNew) {
+            console.log('Mostrar como nuevo', idLogro);
+        }
+
         return (
             <EventCardContainer
                 isSponsored={(sponsorImage || featured) ? true : false}
@@ -123,23 +143,23 @@ class EventCard extends Component {
                 <ImageBackground
                     style={styles.backgroundImageContainer}
                     imageStyle={styles.backgroundImage}
-                    source={{ uri: backgroundImage }}>
+                    source={backgroundImage ? { uri: backgroundImage } : null}>
                     <View style={styles.titleContainer}>
-                        <QaplaText style={styles.title}>
+                        <QaplaText numberOfLines={3} style={styles.title}>
                             {titleTranslated}
                         </QaplaText>
                     </View>
                     <View style={styles.body}>
                         <Image
                             style={styles.eventSponsorImage}
-                            source={{ uri: sponsorImage }} />
+                            source={sponsorImage ? { uri: sponsorImage } : null} />
                         <View style={styles.streamerDetails}>
                             <QaplaText style={styles.streamPlatformText}>
                                 {streamerName}
                             </QaplaText>
                             <Image
                                 style={styles.streamerPhoto}
-                                source={{ uri: streamerPhoto }} />
+                                source={streamerPhoto ? { uri: streamerPhoto } : null} />
                         </View>
                     </View>
                 </ImageBackground>

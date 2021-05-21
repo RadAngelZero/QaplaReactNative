@@ -35,7 +35,8 @@ const usersRewardsProgressRef = database.ref('/UsersRewardsProgress');
 const DonationsCostsRef = database.ref('/DonationsCosts');
 const DonationsLeaderBoardRef = database.ref('/DonationsLeaderBoard');
 const LeaderBoardPrizesRef = database.ref('/LeaderBoardPrizes');
-
+const leaderboardWinnersRef = database.ref('/LeaderboardWinners');
+const userStreamsRewardsRef = database.ref('/UserStreamsRewards');
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
 /**
@@ -164,6 +165,38 @@ export async function createUserProfile(Uid, email, userName ) {
     checkNotificationPermission(Uid);
 }
 
+/**
+ * Returns the string value of the Twitch userName of the given user
+ * @param {string} uid User identifier
+ */
+export async function getTwitchUserName(uid) {
+    return (await usersRef.child(uid).child('twitchUsername').once('value')).val();
+}
+
+/**
+ * Check if the user has their twitchId on their profile (if we have their twitch account linked)
+ * @param {string} uid User identifier
+ */
+ export async function userHaveTwitchId(uid) {
+    return (await usersRef.child(uid).child('twitchId').once('value')).exists();
+}
+
+/**
+ * Check if the given twitchId is already used by any user
+ * @param {string} twitchId Twitch identifier
+ */
+ export async function isNewTwitchId(twitchId) {
+    return !(await usersRef.orderByChild('twitchId').equalTo(twitchId).once('value')).exists();
+}
+
+/**
+ * Save the twitch acces token on the user profile
+ * @param {string} uid User identifier
+ * @param {string} accesToken Twitch access token
+ */
+export async function saveTwitchData(uid, twitchData) {
+    await usersRef.child(uid).update(twitchData);
+}
 
 /**
  * Update the userName of specific user only if that username is not already in use
@@ -1198,8 +1231,8 @@ export async function getDonationFormUrl() {
   * Load the specified amount of products of the Qapla store
   * @param {number} limit Number of products to load
   */
-export async function getQaplaStoreProducts(limit = 10) {
-    return await qaplaStoreRef.limitToLast(limit).once('value');
+export async function getQaplaStoreProducts() {
+    return await qaplaStoreRef.once('value');
 }
 
 /**
@@ -1227,13 +1260,6 @@ export function loadUserRewards(uid, callback) {
  */
 
 /**
- * Get the cost (in Qoins) of the eCoins available to donate
- */
-export async function getDonationsCosts() {
-    return await DonationsCostsRef.child('ECoinToQoinRatio').once('value');
-}
-
-/**
  * Get the base of Qoins considered in the ECoin To Qoin equation
  */
 export async function getDonationQoinsBase() {
@@ -1243,6 +1269,13 @@ export async function getDonationQoinsBase() {
 /**
  * Donations Leader Board
  */
+
+/**
+ * Get the number of winners in the current leaderboard season
+ */
+export async function getLeaderboardWinnersNumber() {
+    return await leaderboardWinnersRef.once('value');
+}
 
 /**
  * Get the first X number of users in the leader board
@@ -1271,4 +1304,29 @@ export async function getUserDonationLeaderBoard(uid) {
 
  export async function getCommunitySurvey() {
     return await database.ref('/CommunitySurvey').once('value');
+ }
+
+/**
+ * Get the records of the user activity (on UserStreamsRewards) from the last 7 days
+ * @param {string} uid User identifier
+ */
+ export async function listenUserActivityFromLast7Days(uid, callback) {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    const sevenDaysInMilliseconds = 604800000;
+    userStreamsRewardsRef.child(uid).orderByChild('timestamp').startAt(date.getTime() - sevenDaysInMilliseconds).on('value', callback);
+ }
+
+/**
+ * Mark the given records as read on the database
+ * @param {string} uid User identifier
+ * @param {array} recordsArray Array of id´s of unread activity records
+ */
+ export async function setActivityRecordsAsRead(uid, recordsArray = []) {
+    const recordsUpdate = {};
+    recordsArray.forEach((record) => {
+        recordsUpdate[`/${uid}/${record}/read`] = true;
+    });
+
+    userStreamsRewardsRef.update(recordsUpdate);
  }

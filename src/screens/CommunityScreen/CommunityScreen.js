@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Linking, View, TouchableOpacity } from 'react-native';
+import { Linking, ScrollView, View, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style';
@@ -28,24 +28,26 @@ class CommunityScreen extends Component {
                         angle={136}
                         style={styles.bottomSheet}
                         colors={['#A716EE', '#2C07FA']}>
-                        <View style={styles.bottomSheetBody}>
-                            <QaplaText style={styles.comingSoon}>
-                                {translate('CommunityScreen.comingSoon')}
-                            </QaplaText>
-                            <QaplaText style={styles.description}>
-                                {translate('CommunityScreen.description')}
-                            </QaplaText>
-                            <QaplaText style={styles.feedbackRequest}>
-                                {translate('CommunityScreen.feedbackRequest')}
-                            </QaplaText>
-                            <TouchableOpacity
-                                onPress={this.answerSurvey}
-                                style={styles.buttonContainer}>
-                                <QaplaText style={styles.buttonText}>
-                                    {translate('CommunityScreen.answerSurvery')}
+                        <ScrollView>
+                            <View style={styles.bottomSheetBody}>
+                                <QaplaText style={styles.comingSoon}>
+                                    {translate('CommunityScreen.comingSoon')}
                                 </QaplaText>
-                            </TouchableOpacity>
-                        </View>
+                                <QaplaText style={styles.description}>
+                                    {translate('CommunityScreen.description')}
+                                </QaplaText>
+                                <QaplaText style={styles.feedbackRequest}>
+                                    {translate('CommunityScreen.feedbackRequest')}
+                                </QaplaText>
+                                <TouchableOpacity
+                                    onPress={this.answerSurvey}
+                                    style={styles.buttonContainer}>
+                                    <QaplaText style={styles.buttonText}>
+                                        {translate('CommunityScreen.answerSurvery')}
+                                    </QaplaText>
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView>
                     </LinearGradient>
                 </View>
             </View>

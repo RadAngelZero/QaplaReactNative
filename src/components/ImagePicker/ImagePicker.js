@@ -102,6 +102,7 @@ export default class ImagePicker extends React.Component {
   * @param {Object} picture   Picture object
   */
   selectPicture = (pictIndex, picture) => {
+    this.unselectPicture();
       if (!this.state.pictureSelected) {
           this.setState({
               pictureSelected: true,
@@ -150,15 +151,14 @@ export default class ImagePicker extends React.Component {
         const widthImg = widthPercentageToPx(100) / this.state.numColumns;
 
         return (
-            <TouchableWithoutFeedback onPress={() => this.selectPicture(index, item)}>
+            <TouchableWithoutFeedback onPress={() => this.selectPicture(index, item)} key={`Image-${index}`}>
                 <View style={[
                     styles.imageContainer,
                     { height: widthImg, width: widthImg }
                 ]}>
                     <Image
-                        key={item.node.image.uri}
                         style={[{
-                            opacity: this.isImageSelected(index, this.state.pictureSelected) ? 0.4 : 1.0
+                                opacity: this.isImageSelected(index, this.state.pictureSelected) ? 0.4 : 1.0
                             },
                             styles.picture
                         ]}
@@ -175,42 +175,41 @@ export default class ImagePicker extends React.Component {
         this.setState({ endFlatList: true });
     }
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <FlatList
-            style={styles.imageList}
-            numColumns={this.state.numColumns}
-            onEndReached={this.reachEndOfFlatList}
-            onEndReachedThreshold={0.1}
-            data={this.state.photos}
-            renderItem={this.renderItem}>
-        </FlatList>
-        {this.state.endFlatList && this.state.photos.length > 0 &&
-        this.state.morePictures && !this.state.pictureSelected &&
-            <TouchableWithoutFeedback onPress={this.loadMorePictures}>
-                <View style={styles.moreButtonContainer}>
-                    <QaplaText style={styles.textStyle}>{translate('imagePicker.showMorePhotos')}</QaplaText>
-                </View>
-            </TouchableWithoutFeedback>
-        }
-        {this.state.pictureSelected &&
-            <>
-                <TouchableWithoutFeedback onPress={this.saveImage}>
-                    <View style={styles.okButtonContainer}>
-                        <QaplaText style={styles.textStyle}>{this.props.selectImgBttnTxt}</QaplaText>
-                    </View>
-                </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback onPress={this.unselectPicture}>
-                    <View style={styles.cancelButtonContainer}>
-                        <QaplaText style={styles.textStyle}>{this.props.discardImgBttnTxt}</QaplaText>
-                    </View>
-                </TouchableWithoutFeedback>
-            </>
-        }
-      </View>
-    );
-  }
+    render() {
+        return (
+            <View style={styles.container}>
+                <FlatList
+                    style={styles.imageList}
+                    numColumns={this.state.numColumns}
+                    onEndReached={this.reachEndOfFlatList}
+                    onEndReachedThreshold={0.1}
+                    data={this.state.photos}
+                    renderItem={(obj) => this.renderItem(obj)} />
+                {this.state.endFlatList && this.state.photos.length > 0 &&
+                this.state.morePictures && !this.state.pictureSelected &&
+                    <TouchableWithoutFeedback onPress={this.loadMorePictures}>
+                        <View style={styles.moreButtonContainer}>
+                            <QaplaText style={styles.textStyle}>{translate('imagePicker.showMorePhotos')}</QaplaText>
+                        </View>
+                    </TouchableWithoutFeedback>
+                }
+                {this.state.pictureSelected &&
+                    <>
+                        <TouchableWithoutFeedback onPress={this.saveImage}>
+                            <View style={styles.okButtonContainer}>
+                                <QaplaText style={styles.textStyle}>{this.props.selectImgBttnTxt}</QaplaText>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={this.unselectPicture}>
+                            <View style={styles.cancelButtonContainer}>
+                                <QaplaText style={styles.textStyle}>{this.props.discardImgBttnTxt}</QaplaText>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </>
+                }
+            </View>
+        );
+    }
 }
 
 ImagePicker.defaultProps = {

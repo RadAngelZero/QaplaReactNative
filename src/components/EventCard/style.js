@@ -19,7 +19,7 @@ export default styles = StyleSheet.create({
     },
     backgroundImageContainer: {
         width: widthPercentageToPx(95),
-        height: heightPercentageToPx(100) / (heightPercentageToPx(100) > 850 ? 6 : 5),
+        height: defineCardHeight(),
         justifyContent: 'space-between'
     },
     backgroundImage: {
@@ -71,3 +71,11 @@ export default styles = StyleSheet.create({
         width: 32
     }
 });
+
+function defineCardHeight() {
+    if (heightPercentageToPx(100) >= 700) {
+        return heightPercentageToPx(100) / 5;
+    } else if (heightPercentageToPx(100) < 700) {
+        return heightPercentageToPx(100) / 4;
+    }
+}

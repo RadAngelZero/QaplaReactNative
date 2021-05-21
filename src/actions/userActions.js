@@ -1,5 +1,5 @@
 import { UPDATE_USER_DATA, REMOVE_USER_DATA, SIGN_OUT_USER, USER_BALANCE } from '../utilities/Constants';
-import { usersRef, gamersRef, userQaplaBalanceListener, getGamesResources, loadUserRewards } from '../services/database';
+import { usersRef, gamersRef, userQaplaBalanceListener, getGamesResources, loadUserRewards, listenUserActivityFromLast7Days } from '../services/database';
 
 export const getUserNode = (uid) => async (dispatch) => {
 
@@ -78,6 +78,12 @@ export const getUserNode = (uid) => async (dispatch) => {
                 }
             });
         });
+    });
+
+    listenUserActivityFromLast7Days(uid, (activity) => {
+        if (activity.exists()) {
+            dispatch(updateUserDataSuccess({ key: 'activity', value: activity.val() }));
+        }
     });
 
     loadUserRewards(uid, (userRewards) => {

@@ -62,17 +62,17 @@ export function redeemLogroCloudFunction(idLogro, qaploins) {
 }
 
 /**
- * Description: 
- * Performs the call to the callable cloud function 
+ * Description:
+ * Performs the call to the callable cloud function
  *
  * @param {object} ctx Context object that has cloud function name and parameter object.
  */
-function callCloudFunction(ctx) {
+async function callCloudFunction(ctx) {
 	let res = null;
 	let cloudFunc = functions.httpsCallable(ctx.cfName);
 
 	try {
-        res = cloudFunc(ctx.params);
+		res = await cloudFunc(ctx.params);
 	}
 	catch (err) {
 		console.log('[callCloudFunction] - ' + ctx.cfName + ' - Error - ' + err);

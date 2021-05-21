@@ -21,7 +21,7 @@ class ZeroQoinsEventsModal extends Component {
             Origin: this.props.openWhen
         });
 
-        this.props.navigation.navigate('LogrosActivos');
+        this.props.navigation.navigate('Achievements');
         this.props.onClose();
     }
 
@@ -45,7 +45,9 @@ class ZeroQoinsEventsModal extends Component {
                         </QaplaText>
                         <TouchableWithoutFeedback onPress={this.goToEvents}>
                             <View style={styles.eventsButton}>
-                                <QaplaText style={styles.bttnText}>{ translate('zeroQoinsEventModal.bttnText') }</QaplaText>
+                                <QaplaText style={styles.bttnText}>
+                                    {translate('zeroQoinsEventModal.bttnText')}
+                                </QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>

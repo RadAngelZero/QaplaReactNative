@@ -20,7 +20,8 @@
         "saturday": "Sábado",
         "sunday": "Domingo",
         "today": "Hoy",
-        "tomorrow": "Mañana"
+        "tomorrow": "Mañana",
+        "yesterday": "Ayer"
     },
     "router": {
         "topNavigators": {
@@ -49,23 +50,23 @@
         "activityIndicatorText": "Cargando..."
     },
     "onBoardingScreen": {
-        "connect": {
-            "description": "Interactua, juega y compite con tus streamers favoritos.",
-            "title": "Interactua"
+        "discover": {
+            "description": "Descubre nuevos streamers y\nconecta con nuevas comunidades"
         },
-        "compete": {
-            "description": "Sigue los eventos y directos de los streamers en Qapla ¡y gana premios al instante!",
-			"title": "Sigue"
+        "follow": {
+            "description": "Sigue los streams publicados\nen Qapla y junta puntos del canal"
         },
-        "share": {
-            "description": "Suscríbete y dona a los canales de tus streamers favoritos. ¡Gratis!",
-            "title": "Suscríbete"
+        "get": {
+            "description": "Recibe Qoins y XQ en Qapla\npor tus puntos del canal 😮"
         },
-        "acquire": {
-            "description": "Adquiere contenido digital de tus juegos favoritos ¡sólo jugando! :O",
-            "title": "Adquiere"
+        "support": {
+            "description": "Apoya a tus streamers con tus\nQoins ¡y se recompensado!"
         },
-        "finish": "Terminar"
+        "highlight": {
+            "description": "Destaca por tu esfuerzo y\napoyo a la comunidad"
+        },
+        "startNow": "¡Comienza ya!",
+        "skip": "Omitir"
     },
     "activeAchievementsScreen": {
         "qaplaAchievement": {
@@ -138,13 +139,15 @@
         }
     },
     "newUserProfileScreen": {
+        "linkAccount": "Vincular cuenta",
         "level": "Nivel",
-        "bitsAndStars": "Bits/Estrellas",
-        "bitsTooltip": "Gana Qoins en los eventos y úsalos para donar al streamer que desees.",
+        "qoins": "Qoins",
+        "bitsTooltip": "Usa tus Qoins para donarle a tus streamers favoritos. Puedes donar desde 200 Qoins",
         "next": "Siguiente",
-        "done": "Listo"
+        "done": "Listo",
+        "store": "Tienda"
     },
-    "notificationsScreen":{
+    "notificationsScreen": {
         "notificationsHeader": "Notificaciones",
         "notificationTypes": {
             "notificationWinner": "Has sido declarado ganador de la partida",
@@ -235,7 +238,7 @@
             "codeSent": "Te enviamos un código de verificación",
             "smsCodeError": "El código de verificación es incorrecto",
             "alreadyLinkedAccountError": "Este número de teléfono ya está vinculado con una cuenta.",
-            "noMinDigitsPhoneNum":  "El número de teléfono debe de tener mínimo 5 dígitos."
+            "noMinDigitsPhoneNum": "El número de teléfono debe de tener mínimo 5 dígitos."
         },
         "verificationProcessSuccess": {
             "title": "¡Gracias!",
@@ -278,6 +281,8 @@
     "signInScreen": {
         "facebookSignin": "Continuar con Facebook",
         "googleSignin": "Continuar con Google",
+        "appleSignin": "Continuar con Apple",
+        "twitchSignin": "Continuar con Twitch",
         "alreadyHaveAccount": "¿Ya tienes cuenta?",
         "emailSignin": "Ingresa con correo"
     },
@@ -318,6 +323,11 @@
         "description": "Una mejor manera de interactuar con tu comunidad.",
         "feedbackRequest": "¡Queremos tus comentarios!\nHaznos saber lo que te gustaría obtener de esta sección :D",
         "answerSurvery": "Responder encuesta rápida"
+    },
+    "activityScreen": {
+        "activity": "Actividad",
+        "qoins": "Qoins de %{streamerName}",
+        "xq": "Experiencia de %{streamerName}"
     },
     "headerBar": {
         "highlightModal": {
@@ -376,7 +386,7 @@
         "prizes": "PREMIOS",
         "instructions": "Instrucciones",
         "howToParticipate": "Como participar",
-        "participate": "Participar",
+        "participate": "Unirme al stream",
         "nickName": "%{acronym} Nickname",
         "enterNickName": "Ingresa el nombre que tienes en el juego %{gameName}",
         "errorText": "Verifica que los campos estén llenados correctamente",
@@ -406,7 +416,7 @@
             "bttnText": "Actualizar"
         }
     },
-    "zeroQoinsEventModal" : {
+    "zeroQoinsEventModal": {
         "header": "Qoins insuficientes",
         "body": "Únete y juega en eventos para ganar Qoins !",
         "bttnText": "Ver Eventos"
@@ -420,9 +430,26 @@
         "transactions": "Transacciones",
         "donation": "Donación",
         "rewardRedeemed": "Recompensa redimida",
-        "redeemPrize":"Redimir Premio",
-        "rewardsTooltip": "Cada donación que hagas ayudará a llenar tu barra de vida. ¡Llena la barra y obten recompensas!",
+        "redeemPrize": "Redimir Premio",
+        "rewardsTooltip": "Cada donación que hagas se acumula para llenar tu barra de vida. Usa tus vidas para canjearlos en la tienda :D",
         "next": "Siguiente",
         "done": "Listo"
+    },
+    "donationsLeaderBoard": {
+        "tooltip": "Gana puntos xq viendo eventos marcados con el icono xq en nuestra pantalla principal",
+        "done": "Listo"
+    },
+    "linkTwitchAccount": {
+        "skip": "Omitir",
+        "linkAccount": "Vincula tu cuenta",
+        "realTimeProgress": "¡Tu progreso en tiempo real!",
+        "description": "Recibe tus Qoins y XQ automáticamente al canjear puntos del canal de tu streamer.",
+        "linkButton": "Vincular con Twitch"
+    },
+    "skipLinkTwitchAccount": {
+        "important": "Importante",
+        "reminder": "Te recordamos que las cuentas no vinculadas con Twitch no podrán recibir sus canjes del canal 😭",
+        "description": "Pero no te preocupes, siempre puedes vincular tu cuenta desde tu perfil 😉",
+        "continue": "Deseo continuar"
     }
 }

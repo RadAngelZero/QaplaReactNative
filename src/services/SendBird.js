@@ -13,7 +13,7 @@ let channelHandler = new sb.ChannelHandler();
  * @param {string} userImg Url of the user image profile photo
  */
 export function connectUserToSendBird(uid, userName, userImg) {
-    sb.connect(uid, function(user, error) {
+    /* sb.connect(uid, function(user, error) {
         sb.updateCurrentUserInfo(userName, userImg ? userImg : 'https://lh3.googleusercontent.com/SDf-cdu1zjcFDYM8yyGCxGEKJU8WLy1q34aY8PRMfDUmEW9gbkS3jJ801w86iw5kLBo', (user, error) => {
             if (error) {
                 console.error(error);
@@ -24,7 +24,7 @@ export function connectUserToSendBird(uid, userName, userImg) {
             console.error(error);
             return;
         }
-    });
+    }); */
 }
 
 /**

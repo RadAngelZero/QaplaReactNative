@@ -14,6 +14,7 @@ import { getQaplaStoreCheaperProduct } from '../../services/database';
 import remoteConfig from '../../services/remoteConfig';
 import { translate } from '../../utilities/i18';
 import QaplaTooltip from '../QaplaTooltip/QaplaTooltip';
+import { trackOnSegment } from '../../services/statistics';
 
 class RewardsBottomSheet extends Component {
     fall = new Animated.Value(1);
@@ -31,6 +32,9 @@ class RewardsBottomSheet extends Component {
         }
     }
 
+    /**
+     * Toggle the visible size of the bottom sheet
+     */
     toggleBottomSheet = () => {
         if (!this.state.open) {
             this.sheetRef.snapTo(1);
@@ -40,18 +44,30 @@ class RewardsBottomSheet extends Component {
         }
     }
 
+    /**
+     * Toggle the open variable in the state
+     */
     toggleOpen = () => {
         this.setState({ open: !this.state.open });
     }
 
+    /**
+     * Check the cheaper product in the store, if the user lifes are equal or greater
+     * than the product price then we send the user to discord
+     */
     redeemLifes = async () => {
         const cheaperProduct = await getQaplaStoreCheaperProduct();
         const productIndex = Object.keys(cheaperProduct.val())[0];
         if (cheaperProduct.exists() && this.props.rewards.lifes >= cheaperProduct.val()[productIndex].price) {
+            trackOnSegment('User redeem prize from dialog');
             Linking.openURL((await remoteConfig.getDataFromKey('Discord')).QAPLA_DISCORD_EXCHANGE_CHANNEL);
         }
     }
 
+    /**
+     * Open the tooltip of rewards, if the bottom sheet is open we close it
+     * after this tooltip, so the next tooltip can be open correctly
+     */
     buttonAction = () => {
         if (this.state.open) {
             this.sheetRef.snapTo(0);
@@ -61,6 +77,9 @@ class RewardsBottomSheet extends Component {
         this.props.tooltipButtonAction();
     }
 
+    /**
+     * Render the content of the bottom sheet
+     */
     renderContent = () => {
         return (
             <TouchableWithoutFeedback onPress={this.toggleBottomSheet}>

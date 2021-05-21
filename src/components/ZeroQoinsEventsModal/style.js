@@ -18,7 +18,9 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(100),
     },
     closeIcon: {
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
+        marginTop: 16,
+        marginRight: 16
     },
     container: {
         width: widthPercentageToPx(80),
@@ -37,8 +39,6 @@ export default styles = StyleSheet.create({
         alignItems: 'center'
     },
     headerText: {
-        marginTop: heightPercentageToPx(0.67) + 15,
-        marginBottom: 30,
         color: '#FFF',
         fontSize: 30
     },
@@ -47,8 +47,7 @@ export default styles = StyleSheet.create({
         fontSize: 16
     },
     paragraph: {
-        marginTop: heightPercentageToPx(0.62),
-        marginBottom: 10,
+        marginTop: 16,
         marginLeft: widthPercentageToPx(3.13),
         marginRight: widthPercentageToPx(3.13),
         color: Colors.modals.body,
@@ -56,10 +55,10 @@ export default styles = StyleSheet.create({
         textAlign: 'center'
     },
     eventsButton: {
-        marginTop: heightPercentageToPx(1.31),
+        marginTop: 24,
         borderRadius: 100,
         backgroundColor: Colors.modals.bttnColor,
-        marginBottom: heightPercentageToPx(2.96)
+        marginBottom: 16
     },
     bttnText: {
         color: '#FFF',
@@ -67,9 +66,9 @@ export default styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         letterSpacing: 2.65,
-        marginTop: heightPercentageToPx(2.46),
-        marginBottom: heightPercentageToPx(2.46),
-        marginLeft: widthPercentageToPx(8.53),
-        marginRight: widthPercentageToPx(8.53)
+        marginTop: 18,
+        marginBottom: 18,
+        marginLeft: 26,
+        marginRight: 26
     }
 });

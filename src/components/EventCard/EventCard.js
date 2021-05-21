@@ -50,7 +50,7 @@ function EventCardContainer({ isSponsored, children, onPress, gradientColors }) 
     );
 }
 
-class EventCard extends Component {
+class EventCard extends React.PureComponent {
     currentTime = new Date().getTime();
     // 86,400,000 = 24 hours on milliseconds
     limitToShowEventAsNew = this.currentTime - 86400000;

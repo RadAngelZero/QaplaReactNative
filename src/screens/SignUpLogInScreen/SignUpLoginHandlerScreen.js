@@ -1664,7 +1664,11 @@ class SignUpLoginHandlerScreen extends Component {
                             inputRange: [0, 1],
                             outputRange: [heightPercentageToPx(40), 0],
                         }),
-                    }],
+                    },
+                    {
+                        translateX: this.state.actualScreen === 'signUpLogInComplete' ? 0 : getScreenWidth() * -1
+                    },
+                    ],
                     opacity: this.state.actualScreen === 'signUpLogInComplete' ? 1 : 0
                 }}>
                     <Image
@@ -1715,7 +1719,7 @@ class SignUpLoginHandlerScreen extends Component {
                                     height: heightPercentageToPx(8.27),
                                 }} />
                         </Animated.View>
-                   }
+                    }
 
                     <Animated.View
                         style={
@@ -1793,7 +1797,7 @@ class SignUpLoginHandlerScreen extends Component {
                                             height: '205%',
                                             width: '205%',
                                         }}>
-                                            <View style={styles.modalBgView} />
+                                        <View style={styles.modalBgView} />
                                     </LinearGradient>
                                 </Animated.View>
                                 <this.screens />

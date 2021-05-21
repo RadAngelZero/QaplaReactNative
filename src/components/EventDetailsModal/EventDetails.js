@@ -137,7 +137,7 @@ class EventDetails extends Component {
                         <View>
                             <Image
                                 style={styles.eventSponsorImage}
-                                source={{ uri: sponsorImage }} />
+                                source={sponsorImage ? { uri: sponsorImage } : null} />
                         </View>
                     </ImageBackground>
                 </BackgroundImageContainer>
@@ -281,8 +281,8 @@ class EventDetails extends Component {
                                     {translate('eventDetailsModal.prizes')}
                                 </QaplaText>
                                 <View style={styles.descriptionBody}>
-                                    {appStringPrizes[userLanguage].map((prize) => (
-                                        <QaplaText style={styles.descriptionPrize}>
+                                    {appStringPrizes[userLanguage].map((prize, index) => (
+                                        <QaplaText key={`Prize-${index}`} style={styles.descriptionPrize}>
                                             {`${prize.title} - ${prize.prize}`}
                                         </QaplaText>
                                     ))}
@@ -303,7 +303,7 @@ class EventDetails extends Component {
                         </QaplaText>
                         <View>
                             {instructionsToParticipate[userLanguage].map((instruction, index) => (
-                                <QaplaText style={styles.instructionBody}>
+                                <QaplaText key={`Instruction-${index}`} style={styles.instructionBody}>
                                     {`${index + 1}. ${instruction}`}
                                 </QaplaText>
                             ))}

@@ -25,6 +25,7 @@ import { defaultUserImages } from '../../utilities/Constants';
 import QaplaTooltip from '../../components/QaplaTooltip/QaplaTooltip';
 import ZeroQoinsEventsModal from '../../components/ZeroQoinsEventsModal/ZeroQoinsEventsModal';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
+import SendCheersModal from '../../components/SendCheersModal/SendCheersModal';
 
 const BitsIcon = images.svg.bitsIcon;
 
@@ -42,7 +43,8 @@ export class NewUserProfileScreen extends Component {
         openedTooltips: 0,
         indexOfTooltipOpen: -1,
         openDonationFeedbackModal: false,
-        openLinkWitTwitchModal: false
+        openLinkWitTwitchModal: false,
+        openSendCheersModal: false
     };
 
     componentWillMount() {
@@ -55,7 +57,7 @@ export class NewUserProfileScreen extends Component {
                 'willFocus',
                 (payload) => {
                     recordScreenOnSegment('User Profile Screen');
-                    if(!isUserLogged()){
+                    if (!isUserLogged()) {
                         this.props.navigation.navigate('Auth');
                     }
                 }
@@ -115,7 +117,8 @@ export class NewUserProfileScreen extends Component {
             if (exchangeUrl) {
                 exchangeUrl += `#uid=${this.props.uid}&qoins=${this.state.qoinsToDonate}`;
 
-                this.props.navigation.navigate('ExchangeQoinsScreen', { exchangeUrl });
+                // this.props.navigation.navigate('ExchangeQoinsScreen', { exchangeUrl });
+                this.setState({ openSendCheersModal: true });
                 trackOnSegment('User support streamer',
                     {
                         SupportAmount: this.state.qoinsToDonate
@@ -262,7 +265,7 @@ export class NewUserProfileScreen extends Component {
                                             </Text>
                                         </View>
                                     </TouchableOpacity>
-                                :
+                                    :
                                     <View style={styles.linkWithTwitchContainer}>
                                         <TouchableOpacity style={styles.linkWithTwitchButtonContainer} onPress={this.linkTwitchAccount}>
                                             <images.svg.twitchExtrudedLogo height={24}
@@ -287,7 +290,7 @@ export class NewUserProfileScreen extends Component {
                                                 buttonText={this.state.openedTooltips >= 2 ? translate('newUserProfileScreen.done') : translate('newUserProfileScreen.next')}
                                                 buttonAction={this.tooltipAction} />
                                         </View>
-                                        <BitsIcon style={styles.bits3dIconImage}/>
+                                        <BitsIcon style={styles.bits3dIconImage} />
                                     </View>
                                     <View style={styles.donationValueContainer}>
                                         <View style={styles.bitsValueContainer}>
@@ -354,6 +357,9 @@ export class NewUserProfileScreen extends Component {
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}
                     onClose={() => this.setState({ openLinkWitTwitchModal: false })} />
+                <SendCheersModal
+                    open={this.state.openSendCheersModal}
+                    onClose={() => this.setState({ openSendCheersModal: false })} />
             </SafeAreaView>
         );
     }

@@ -107,6 +107,10 @@ const images = {
 			img: require('./images/AwesomeHand.png'),
 			uri: '@assets/images/AwesomeHand.png'
 		},
+		heartHands: {
+			img: require('./images/HeartHands.png'),
+			uri: '@assets/images/HeartHands.png'
+		},
 		uploadVideoClutch: {
 			img: require('./images/UploadVideoClutch.jpg'),
 			uri: '@assets/images/UploadVideoClutch.jpg'

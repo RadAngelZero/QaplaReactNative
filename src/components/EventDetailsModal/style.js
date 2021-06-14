@@ -269,7 +269,6 @@ export default styles = StyleSheet.create({
         bottom: 0,
         width: '100%',
         backgroundColor: Colors.greenQapla,
-
     },
     participateButtonText: {
         flex: 1,

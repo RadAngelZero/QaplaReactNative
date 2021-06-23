@@ -124,7 +124,7 @@ export class NewUserProfileScreen extends Component {
                         SupportAmount: this.state.qoinsToDonate
                     }
                 );
-                this.setState({ qoinsToDonate: 0 });
+                // this.setState({ qoinsToDonate: 0 });
             }
         } else {
             this.setState({ openDonationFeedbackModal: true });
@@ -359,7 +359,9 @@ export class NewUserProfileScreen extends Component {
                     onClose={() => this.setState({ openLinkWitTwitchModal: false })} />
                 <SendCheersModal
                     open={this.state.openSendCheersModal}
-                    onClose={() => this.setState({ openSendCheersModal: false })} />
+                    onClose={() => this.setState({ openSendCheersModal: false, qoinsToDonate: 0 })}
+                    qoinsToDonate={this.state.qoinsToDonate}
+                    uid={this.props.uid} />
             </SafeAreaView>
         );
     }

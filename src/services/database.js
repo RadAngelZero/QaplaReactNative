@@ -37,6 +37,7 @@ const DonationsLeaderBoardRef = database.ref('/DonationsLeaderBoard');
 const LeaderBoardPrizesRef = database.ref('/LeaderBoardPrizes');
 const leaderboardWinnersRef = database.ref('/LeaderboardWinners');
 export const userStreamerRef = database.ref('/UserStreamer');
+export const streamersDonationsRef = database.ref('/StreamersDonations');
 const userStreamsRewardsRef = database.ref('/UserStreamsRewards');
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
@@ -1330,4 +1331,28 @@ export async function getUserDonationLeaderBoard(uid) {
     });
 
     userStreamsRewardsRef.update(recordsUpdate);
+ }
+
+// -----------------------------------------------
+// Support Streamer
+// -----------------------------------------------
+
+/**
+ * Store cheers on the database at StreamersDonations node
+ * @param {int} amountQoins 
+ * @param {string} message 
+ * @param {timestamp} timeStamp 
+ * @param {string} uid 
+ * @param {string} twitchUserName
+ * @param {string} streamerID
+ */
+ export async function sendCheers(amountQoins, message, timeStamp, uid, twitchUserName, streamerID) {
+    await streamersDonationsRef.child(streamerID).push({
+        amountQoins: amountQoins,
+        message: message,
+        timeStamp: timeStamp,
+        userID: uid,
+        userName: twitchUserName
+    })
+    console.log('cheers')
  }

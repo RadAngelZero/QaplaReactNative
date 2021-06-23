@@ -9,7 +9,7 @@ import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } fr
 import Colors from '../../utilities/Colors';
 import Hearts from '../UserProfileRewards/Hearts';
 import ProgressBar from '../UserProfileRewards/Bar';
-import { userStreamerRef } from '../../services/database';
+import { userStreamerRef, getTwitchUserName, sendCheers } from '../../services/database';
 
 const LeftArrowThiccIcon = Images.svg.leftArrowThiccIcon;
 
@@ -32,7 +32,10 @@ export default class FormularioCheers extends React.Component {
 	}
 
 	state = {
+		userID: '',
+		twitchUsername: '',
 		selectedStreamer: '',
+		selectedStreamerID: '',
 		screen: 'selection',
 		sendCheersButtonAnimation: new Animated.Value(0),
 	};
@@ -42,21 +45,33 @@ export default class FormularioCheers extends React.Component {
 	]
 
 	componentDidMount() {
+		getTwitchUserName(this.props.uid).then(u => this.setState({ twitchUsername: u }))
 		this.getStreamers()
-		console.log('mounted')
+		this.setState({ userID: this.props.uid })
 	}
 
 	getStreamers = async () => {
-		console.log('getting streamers')
 		await userStreamerRef.once('value').then((data) => {
 			if (data.exists()) {
 				data['_childKeys'].forEach(element => {
-					this.DATA.push({ streamer: data['_value'][element].displayName, imgUrl: data['_value'][element].photoUrl })
+					this.DATA.push({ streamer: data['_value'][element].displayName, imgUrl: data['_value'][element].photoUrl, streamerID: element })
 				});
 				return
 			}
-			console.log('no existe data')
 		})
+	}
+
+	sendCheersButton = () => {
+		let now = new Date();
+		this.setState({ screen: 'complete' });
+		Animated.timing(this.state.sendCheersButtonAnimation, {
+			toValue: 0,
+			duration: 300,
+			easing: Easing.cubic,
+			useNativeDriver: false,
+		}).start();
+		console.log('cheers button')
+		sendCheers(this.props.qoinsToDonate, "", now.getTime(), this.state.userID, this.state.twitchUsername, this.state.selectedStreamerID);
 	}
 
 	onBackToProfile = () => {
@@ -74,7 +89,7 @@ export default class FormularioCheers extends React.Component {
 			<TouchableOpacity
 				style={styles.streamerSelectCardView}
 				onPress={() => {
-					this.setState({ selectedStreamer: item.streamer });
+					this.setState({ selectedStreamer: item.streamer, selectedStreamerID: item.streamerID });
 					Animated.timing(this.state.sendCheersButtonAnimation, {
 						toValue: 1,
 						duration: 300,
@@ -312,16 +327,7 @@ export default class FormularioCheers extends React.Component {
 						<TouchableHighlight
 							style={{ flex: 1 }}
 							underlayColor="#2aa897"
-							onPress={() => {
-								this.setState({ screen: 'complete' });
-								Animated.timing(this.state.sendCheersButtonAnimation, {
-									toValue: 0,
-									duration: 300,
-									easing: Easing.cubic,
-									useNativeDriver: false,
-								}).start();
-							}
-							}>
+							onPress={this.sendCheersButton}>
 							<QaplaText style={{
 								flex: 1,
 								fontSize: 18,

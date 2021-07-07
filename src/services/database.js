@@ -37,7 +37,7 @@ const DonationsLeaderBoardRef = database.ref('/DonationsLeaderBoard');
 const LeaderBoardPrizesRef = database.ref('/LeaderBoardPrizes');
 const leaderboardWinnersRef = database.ref('/LeaderboardWinners');
 export const userStreamerRef = database.ref('/UserStreamer');
-export const streamersDonationsRef = database.ref('/StreamersDonations');
+export const streamersDonationsRef = database.ref('StreamersDonations');
 const userStreamsRewardsRef = database.ref('/UserStreamsRewards');
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
@@ -1354,5 +1354,4 @@ export async function getUserDonationLeaderBoard(uid) {
         userID: uid,
         userName: twitchUserName
     })
-    console.log('cheers')
  }

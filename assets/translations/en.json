@@ -135,7 +135,7 @@
             "level": "Level"
         },
         "buyQaploinsModal": {
-        "body": ""
+            "body": ""
         }
     },
     "newUserProfileScreen": {
@@ -147,7 +147,7 @@
         "done": "Done",
         "store": "Store"
     },
-    "notificationsScreen":{
+    "notificationsScreen": {
         "notificationsHeader": "Notifications",
         "notificationTypes": {
             "notificationWinner": "You have been declared the winner of the match.",
@@ -238,7 +238,7 @@
             "codeSent": "We have sent you a verification code",
             "smsCodeError": "The verification code is incorrect",
             "alreadyLinkedAccountError": "This phone number is already linked to an account.",
-            "noMinDigitsPhoneNum":  "Phone number should have minimum of 5 digits."
+            "noMinDigitsPhoneNum": "Phone number should have minimum of 5 digits."
         },
         "verificationProcessSuccess": {
             "title": "Thank you!",
@@ -416,7 +416,7 @@
             "bttnText": "Update"
         }
     },
-    "zeroQoinsEventModal" : {
+    "zeroQoinsEventModal": {
         "header": "Not enough Qoins",
         "body": "Join and play in events to win Qoins !",
         "bttnText": "Check Events"
@@ -430,7 +430,7 @@
         "transactions": "Transactions",
         "donation": "Donation",
         "rewardRedeemed": "Reward redeemed",
-        "redeemPrize":"Redeem Prize",
+        "redeemPrize": "Redeem Prize",
         "rewardsTooltip": "Every donation you make fills your reward life-bar. Use your life hearts to buy from the store :D",
         "next": "Next",
         "done": "Done"
@@ -451,5 +451,14 @@
         "reminder": "We remind you that accounts not linked to Twitch will not be able to receive their channel exchanges 😭",
         "description": "But don't worry, you can always link your account from your profile 😉",
         "continue": "I wish to continue"
+    },
+    "sendCheers": {
+        "sentCheersTo": "We have sent your\ncheers to",
+        "lifesBarUpdated": "Your life bar has been\nupdated :D",
+        "backToProfile": "Back to my profile",
+        "wantToSaySomething": "Do you want to say something special?",
+        "youCanTypeAnything": "You can write what you want to the streamer ❤, we will send your cheers at the end of this step",
+        "sendYourCheers": "Send your cheers",
+        "selectYourStreamer": "Select the streamer you want to support"
     }
 }

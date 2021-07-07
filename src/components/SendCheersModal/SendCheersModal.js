@@ -84,7 +84,7 @@ export default class FormularioCheers extends React.Component {
 		await userStreamerRef.once('value').then((data) => {
 			if (data.exists()) {
 				data['_childKeys'].forEach(element => {
-					if(!data['_value'][element].lastStreamTs) return
+					if (!data['_value'][element].lastStreamTs) return
 					if (parseInt(data['_value'][element].lastStreamTs) < twoWeeksAgo / 1000) return
 					this.DATA.push({ streamer: data['_value'][element].displayName, imgUrl: data['_value'][element].photoUrl, streamerID: element })
 				});
@@ -230,9 +230,9 @@ export default class FormularioCheers extends React.Component {
 							}}
 						/>
 						<Text
-							style={styles.graciasText}>¡Gracias!</Text>
+							style={styles.graciasText}>{translate('eventDetailsModal.thankYouTitle')}</Text>
 						<Text
-							style={styles.prizeTitleText}>Hemos enviado tus {'\n'}cheers a <Text style={{ color: '#00FFDD' }}>{this.state.selectedStreamer}</Text></Text>
+							style={styles.prizeTitleText}>{translate('sendCheers.sentCheersTo')}<Text style={{ color: '#00FFDD' }}>{this.state.selectedStreamer}</Text></Text>
 						<View
 							style={{
 								backgroundColor: 'rgb(21, 20, 59)',
@@ -284,7 +284,7 @@ export default class FormularioCheers extends React.Component {
 								fontSize: getScreenSizeMultiplier() * 14,
 								color: '#00FFDD',
 								textAlign: 'center'
-							}}>Tu barra de vidas ha sido{'\n'}actualizada :D</Text>
+							}}>{translate('sendCheers.lifesBarUpdated')}</Text>
 						</View>
 						<TouchableOpacity style={{
 							backgroundColor: Colors.greenQapla,
@@ -303,7 +303,7 @@ export default class FormularioCheers extends React.Component {
 									fontSize: getScreenSizeMultiplier() * 16,
 									fontWeight: 'bold',
 									textAlign: 'center',
-								}}>Regresar a mi perfil</Text>
+								}}>{translate('sendCheers.backToProfile')}</Text>
 
 							</View>
 						</TouchableOpacity>
@@ -312,9 +312,9 @@ export default class FormularioCheers extends React.Component {
 					this.state.screen === 'message' ?
 						<>
 							<Text
-								style={styles.titleText}>¿Quieres decirle algo especial?{'\n'}💬</Text>
+								style={styles.titleText}>{translate('sendCheers.wantToSaySomething')}{'\n'}💬</Text>
 							<Text
-								style={styles.bodyText}>Puedes escribirle lo que quieras al streamer ❤, enviaremos tus cheers al terminar este paso</Text>
+								style={styles.bodyText}>{translate('sendCheers.youCanTypeAnything')}</Text>
 							<View style={{
 								marginTop: '3%',
 								width: '95%',
@@ -348,9 +348,9 @@ export default class FormularioCheers extends React.Component {
 						:
 						<>
 							<Text
-								style={styles.titleText}>Envía tus cheers{'\n'}🔥😍🔥</Text>
+								style={styles.titleText}>{translate('sendCheers.sendYourCheers')}{'\n'}🔥😍🔥</Text>
 							<Text
-								style={styles.bodyText}>Selecciona al streamer que quieras apoyar</Text>
+								style={styles.bodyText}>{translate('sendCheers.selectYourStreamer')}</Text>
 							<View
 								pointerEvents="box-none"
 								style={{
@@ -381,7 +381,6 @@ export default class FormularioCheers extends React.Component {
 								bottom: 0,
 								width: '100%',
 								backgroundColor: Colors.greenQapla,
-								// height: '20%',
 							},
 							{
 								transform:
@@ -405,64 +404,16 @@ export default class FormularioCheers extends React.Component {
 									marginBottom: 34,
 								}}>
 									{this.state.screen === 'message' && this.state.messageLengthString === '0' ?
-									'Omitir'
-									:
-									'Siguiente'
+										translate('onBoardingScreen.skip')
+										:
+										translate('newUserProfileScreen.next')
 									}
-									
-									{/* {translate('eventDetailsModal.participate')} */}
 								</QaplaText>
 							</TouchableHighlight>
 						</Animated.View>
 					</>
 					:
 					<></>
-			}
-			{
-				this.state.screen === 'complete' &&
-				<TouchableHighlight style={{
-					position: 'absolute',
-					bottom: 0,
-					left: 0,
-					width: '100%',
-					height: heightPercentageToPx(10),
-					backgroundColor: 'rgba(216,216,216,0.18)',
-					justifyContent: 'center',
-				}}
-					underlayColor={'#ccc'}
-					onPress={this.onCustomMessage}>
-					<View style={{
-						width: widthPercentageToPx(92),
-						flexDirection: 'row',
-						justifyContent: 'space-between',
-						alignItems: 'center'
-					}}>
-						<View style={{
-							marginLeft: widthPercentageToPx(9)
-						}}>
-							<Text style={{
-								color: '#fff',
-								fontSize: getScreenSizeMultiplier() * 13,
-							}}>¿Quieres enviar un mensaje personalizado{'\n'}con tus cheers? Continua aquí </Text>
-						</View>
-						<View style={{
-							backgroundColor: 'rgba(255,255,255,0.21)',
-							width: widthPercentageToPx(8),
-							height: widthPercentageToPx(8),
-							borderRadius: 100,
-						}}>
-							<View style={{
-								transform: [{ scaleX: -1 }],
-								justifyContent: 'center',
-								alignItems: 'center',
-								marginTop: heightPercentageToPx(-0.3),
-								marginLeft: widthPercentageToPx(0.3)
-							}}>
-								<LeftArrowThiccIcon />
-							</View>
-						</View>
-					</View>
-				</TouchableHighlight>
 			}
 		</Modal >;
 	}

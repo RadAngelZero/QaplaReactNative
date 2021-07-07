@@ -451,5 +451,14 @@
         "reminder": "Te recordamos que las cuentas no vinculadas con Twitch no podrán recibir sus canjes del canal 😭",
         "description": "Pero no te preocupes, siempre puedes vincular tu cuenta desde tu perfil 😉",
         "continue": "Deseo continuar"
+    },
+    "sendCheers": {
+        "sentCheersTo": "Hemos enviado tus\ncheers a ",
+        "lifesBarUpdated": "Tu barra de vidas ha sido\nactualizada :D",
+        "backToProfile": "Regresar a mi perfil",
+        "wantToSaySomething": "¿Quieres decirle algo especial?",
+        "youCanTypeAnything": "Puedes escribirle lo que quieras al streamer ❤, enviaremos tus cheers al terminar este paso",
+        "sendYourCheers": "Envía tus cheers",
+        "selectYourStreamer": "Selecciona al streamer que quieras apoyar"
     }
 }

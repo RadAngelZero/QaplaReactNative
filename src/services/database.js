@@ -1354,4 +1354,7 @@ export async function getUserDonationLeaderBoard(uid) {
         userID: uid,
         userName: twitchUserName
     })
+    await usersRef.child(uid).child('credits').once('value').then(async (data) => {
+        await usersRef.child(uid).update({credits: data['_value'] - amountQoins})
+    })
  }

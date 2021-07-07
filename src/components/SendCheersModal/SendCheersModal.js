@@ -85,7 +85,7 @@ export default class FormularioCheers extends React.Component {
 			if (data.exists()) {
 				data['_childKeys'].forEach(element => {
 					if (!data['_value'][element].lastStreamTs) return
-					if (parseInt(data['_value'][element].lastStreamTs) < twoWeeksAgo / 1000) return
+					if (parseInt(data['_value'][element].lastStreamTs) < parseInt(twoWeeksAgo / 1000)) return
 					this.DATA.push({ streamer: data['_value'][element].displayName, imgUrl: data['_value'][element].photoUrl, streamerID: element })
 				});
 				return
@@ -102,7 +102,7 @@ export default class FormularioCheers extends React.Component {
 			easing: Easing.cubic,
 			useNativeDriver: false,
 		}).start();
-		sendCheers(this.props.qoinsToDonate, this.state.message, now / 1000, this.state.userID, this.state.twitchUsername, this.state.selectedStreamerID);
+		sendCheers(this.props.qoinsToDonate, this.state.message, parseInt(now / 1000), this.state.userID, this.state.twitchUsername, this.state.selectedStreamerID);
 	}
 
 	onBackToProfile = () => {

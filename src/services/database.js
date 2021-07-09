@@ -1352,6 +1352,7 @@ export async function sendCheers(amountQoins, message, timestamp, uid, twitchUse
         message,
         timestamp,
         uid,
+        read: false,
         userName: twitchUserName
     })
 

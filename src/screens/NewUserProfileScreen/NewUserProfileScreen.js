@@ -117,14 +117,12 @@ export class NewUserProfileScreen extends Component {
             if (exchangeUrl) {
                 exchangeUrl += `#uid=${this.props.uid}&qoins=${this.state.qoinsToDonate}`;
 
-                // this.props.navigation.navigate('ExchangeQoinsScreen', { exchangeUrl });
                 this.setState({ openSendCheersModal: true });
                 trackOnSegment('User support streamer',
                     {
                         SupportAmount: this.state.qoinsToDonate
                     }
                 );
-                // this.setState({ qoinsToDonate: 0 });
             }
         } else {
             this.setState({ openDonationFeedbackModal: true });

@@ -47,7 +47,7 @@ export default class FormularioCheers extends React.Component {
 	]
 
 	componentDidMount() {
-		getTwitchUserName(this.props.uid).then(u => this.setState({ twitchUsername: u }))
+		this.fetchTwitchUsername();
 		this.getStreamers()
 		this.setState({ userID: this.props.uid })
 		this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -81,16 +81,20 @@ export default class FormularioCheers extends React.Component {
 		let now = new Date()
 		let twoWeeksAgoCalc = now.getDate() - 14
 		let twoWeeksAgo = new Date().setDate(twoWeeksAgoCalc)
-		await userStreamerRef.once('value').then((data) => {
-			if (data.exists()) {
-				data['_childKeys'].forEach(element => {
-					if (!data['_value'][element].lastStreamTs) return
-					if (parseInt(data['_value'][element].lastStreamTs) < parseInt(twoWeeksAgo / 1000)) return
-					this.DATA.push({ streamer: data['_value'][element].displayName, imgUrl: data['_value'][element].photoUrl, streamerID: element })
-				});
-				return
-			}
-		})
+
+		const streamers = await userStreamerRef.once('value')
+		if (streamers.exists()) {
+			streamers.forEach(element => {
+				if (!element.val().lastStreamTs) return
+				if (parseInt(element.val().lastStreamTs) < parseInt(twoWeeksAgo / 1000)) return
+				this.DATA.push({ streamer: element.val().displayName, imgUrl: element.val().photoUrl, streamerID: element.key })
+			});
+			return
+		}
+	}
+
+	fetchTwitchUsername = async () => {
+		setState({ twitchUsername: await getTwitchUserName(this.props.uid) });
 	}
 
 	sendCheersButton = () => {

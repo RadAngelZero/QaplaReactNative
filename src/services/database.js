@@ -1346,15 +1346,15 @@ export async function getUserDonationLeaderBoard(uid) {
  * @param {string} twitchUserName
  * @param {string} streamerID
  */
- export async function sendCheers(amountQoins, message, timeStamp, uid, twitchUserName, streamerID) {
+export async function sendCheers(amountQoins, message, timestamp, uid, twitchUserName, streamerID) {
     await streamersDonationsRef.child(streamerID).push({
-        amountQoins: amountQoins,
-        message: message,
-        timeStamp: timeStamp,
-        userID: uid,
+        amountQoins,
+        message,
+        timestamp,
+        uid,
         userName: twitchUserName
     })
-    await usersRef.child(uid).child('credits').once('value').then(async (data) => {
-        await usersRef.child(uid).update({credits: data['_value'] - amountQoins})
-    })
- }
+
+    const userCredits = await usersRef.child(uid).child('credits').once('value')
+    await usersRef.child(uid).update({ credits: userCredits.val() - amountQoins })
+}

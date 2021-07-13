@@ -62,6 +62,19 @@ export function redeemLogroCloudFunction(idLogro, qaploins) {
 }
 
 /**
+ * Gets the Twitch user information from the Qapla user with their TwitchId
+ * @param {string} userTwitchId Twitch Id of the user
+ */
+export async function getTwitchDataCloudFunction(userTwitchId) {
+	return await callCloudFunction({
+		cfName: 'getTwitchUserData',
+		params: {
+			userTwitchId
+		}
+	});
+}
+
+/**
  * Description:
  * Performs the call to the callable cloud function
  *

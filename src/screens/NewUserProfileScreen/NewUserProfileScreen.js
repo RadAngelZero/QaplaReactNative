@@ -13,7 +13,7 @@ import { isUserLogged } from '../../services/auth';
 import { translate } from '../../utilities/i18';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { getDonationFormUrl, getDonationQoinsBase } from '../../services/database';
+import { getDonationQoinsBase } from '../../services/database';
 import Colors from '../../utilities/Colors';
 import RewardsStore from '../../components/RewardsStore/RewardsStore';
 
@@ -25,6 +25,7 @@ import { defaultUserImages } from '../../utilities/Constants';
 import QaplaTooltip from '../../components/QaplaTooltip/QaplaTooltip';
 import ZeroQoinsEventsModal from '../../components/ZeroQoinsEventsModal/ZeroQoinsEventsModal';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
+import SendCheersModal from '../../components/SendCheersModal/SendCheersModal';
 
 const BitsIcon = images.svg.bitsIcon;
 
@@ -42,7 +43,9 @@ export class NewUserProfileScreen extends Component {
         openedTooltips: 0,
         indexOfTooltipOpen: -1,
         openDonationFeedbackModal: false,
-        openLinkWitTwitchModal: false
+        openLinkWitTwitchModal: false,
+        openSendCheersModal: false,
+        userWantsToSendCheers: false
     };
 
     componentWillMount() {
@@ -55,7 +58,7 @@ export class NewUserProfileScreen extends Component {
                 'willFocus',
                 (payload) => {
                     recordScreenOnSegment('User Profile Screen');
-                    if(!isUserLogged()){
+                    if (!isUserLogged()) {
                         this.props.navigation.navigate('Auth');
                     }
                 }
@@ -111,17 +114,17 @@ export class NewUserProfileScreen extends Component {
      */
     exchangeQaploins = async () => {
         if (this.state.qoinsToDonate > 0 && this.props.userQoins >= this.state.qoinsToDonate) {
-            let exchangeUrl = await getDonationFormUrl();
-            if (exchangeUrl) {
-                exchangeUrl += `#uid=${this.props.uid}&qoins=${this.state.qoinsToDonate}`;
+            if (this.props.twitchId && this.props.twitchUsername) {
 
-                this.props.navigation.navigate('ExchangeQoinsScreen', { exchangeUrl });
+                this.setState({ openSendCheersModal: true });
                 trackOnSegment('User support streamer',
                     {
                         SupportAmount: this.state.qoinsToDonate
                     }
                 );
-                this.setState({ qoinsToDonate: 0 });
+            } else {
+                this.setState({ userWantsToSendCheers: true });
+                this.linkTwitchAccount();
             }
         } else {
             this.setState({ openDonationFeedbackModal: true });
@@ -262,7 +265,7 @@ export class NewUserProfileScreen extends Component {
                                             </Text>
                                         </View>
                                     </TouchableOpacity>
-                                :
+                                    :
                                     <View style={styles.linkWithTwitchContainer}>
                                         <TouchableOpacity style={styles.linkWithTwitchButtonContainer} onPress={this.linkTwitchAccount}>
                                             <images.svg.twitchExtrudedLogo height={24}
@@ -287,7 +290,7 @@ export class NewUserProfileScreen extends Component {
                                                 buttonText={this.state.openedTooltips >= 2 ? translate('newUserProfileScreen.done') : translate('newUserProfileScreen.next')}
                                                 buttonAction={this.tooltipAction} />
                                         </View>
-                                        <BitsIcon style={styles.bits3dIconImage}/>
+                                        <BitsIcon style={styles.bits3dIconImage} />
                                     </View>
                                     <View style={styles.donationValueContainer}>
                                         <View style={styles.bitsValueContainer}>
@@ -353,7 +356,15 @@ export class NewUserProfileScreen extends Component {
                     onClose={() => this.setState({ openDonationFeedbackModal: false })} />
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}
-                    onClose={() => this.setState({ openLinkWitTwitchModal: false })} />
+                    onClose={() => this.setState({ openLinkWitTwitchModal: false })}
+                    onLinkSuccessful={this.state.userWantsToSendCheers ? this.exchangeQaploins : null} />
+                <SendCheersModal
+                    open={this.state.openSendCheersModal}
+                    onClose={() => this.setState({ openSendCheersModal: false, qoinsToDonate: 0 })}
+                    qoinsToDonate={this.state.qoinsToDonate}
+                    uid={this.props.uid}
+                    twitchId={this.props.twitchId}
+                    userName={this.props.userName} />
             </SafeAreaView>
         );
     }
@@ -373,7 +384,8 @@ function mapStateToProps(state) {
             rewards: state.userReducer.user.UserRewards,
             enableScroll: state.profileLeaderBoardReducer.enableScroll,
             twitchId: state.userReducer.user.twitchId,
-            twitchUsername: state.userReducer.user.twitchUsername
+            twitchUsername: state.userReducer.user.twitchUsername,
+            userName: state.userReducer.user.userName
         }
     }
 

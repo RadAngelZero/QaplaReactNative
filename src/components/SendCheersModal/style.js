@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
+import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
 import Colors from '../../utilities/Colors';
 
 export default styles = StyleSheet.create({
@@ -113,4 +113,14 @@ export default styles = StyleSheet.create({
         letterSpacing: getScreenSizeMultiplier() * 0.35,
         marginTop: getScreenSizeMultiplier() * 17,
     },
+    continueButtonText: {
+        flex: 1,
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: Colors.backgroundDarkModal,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        marginTop: 34,
+        marginBottom: 34
+    }
 });

@@ -452,13 +452,17 @@
         "description": "But don't worry, you can always link your account from your profile 😉",
         "continue": "I wish to continue"
     },
-    "sendCheers": {
+    "sendCheersModal": {
+        "thankYouTitle": "Thank you!",
         "sentCheersTo": "We have sent your\ncheers to",
         "lifesBarUpdated": "Your life bar has been\nupdated :D",
         "backToProfile": "Back to my profile",
         "wantToSaySomething": "Do you want to say something special?",
         "youCanTypeAnything": "You can write what you want to the streamer ❤, we will send your cheers at the end of this step",
         "sendYourCheers": "Send your cheers",
-        "selectYourStreamer": "Select the streamer you want to support"
+        "selectYourStreamer": "Select the streamer you want to support",
+        "sending": "Sending...",
+        "skip": "Skip",
+        "next": "Next"
     }
 }

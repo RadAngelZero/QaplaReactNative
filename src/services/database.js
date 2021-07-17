@@ -1351,13 +1351,14 @@ export async function getUserDonationLeaderBoard(uid) {
  * @param {number} amountQoins Amount of donated Qoins
  * @param {string} message Message from the user
  * @param {number} timeStamp Timestamp of the moment when the donation is sent
+ * @param {string} streamerName Name of the streamer
  * @param {string} uid User identifier
  * @param {string} userName Qapla username
  * @param {string} twitchUserName Username of Twitch
  * @param {string} streamerID Streamer uid
  */
-export async function sendCheers(amountQoins, message, timestamp, uid, userName, twitchUserName, streamerID) {
-    await streamersDonationsRef.child(streamerID).push({
+export async function sendCheers(amountQoins, message, timestamp, streamerName, uid, userName, twitchUserName, streamerID) {
+    const donationRef = streamersDonationsRef.child(streamerID).push({
         amountQoins,
         message,
         timestamp,
@@ -1369,4 +1370,15 @@ export async function sendCheers(amountQoins, message, timestamp, uid, userName,
 
     const userCredits = await usersRef.child(uid).child('credits').once('value');
     await usersRef.child(uid).update({ credits: userCredits.val() - amountQoins });
+
+    database.ref('/StreamersDonationAdministrative').child(donationRef.key).set({
+        amountQoins,
+        message,
+        timestamp,
+        uid,
+        sent: false,
+        twitchUserName,
+        userName,
+        streamerName
+    });
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, Modal, FlatList, TouchableOpacity, TouchableHighlight, TextInput, Keyboard, Animated, Easing } from 'react-native';
+import { Image, Text, View, Modal, FlatList, TouchableOpacity, TouchableHighlight, TextInput, Keyboard, Animated, Easing, ScrollView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import Images from '../../../assets/images';
@@ -297,7 +297,7 @@ export default class FormularioCheers extends React.Component {
 						</View>
 						:
 						this.state.screen === 'message' ?
-							<>
+							<ScrollView>
 								<Text
 									style={styles.titleText}>{translate('sendCheersModal.wantToSaySomething')}{'\n'}💬</Text>
 								<Text
@@ -329,7 +329,7 @@ export default class FormularioCheers extends React.Component {
 										</Text>
 									</View>
 								</View>
-							</>
+							</ScrollView>
 							:
 							<>
 								<Text

@@ -36,6 +36,8 @@ const DonationsCostsRef = database.ref('/DonationsCosts');
 const DonationsLeaderBoardRef = database.ref('/DonationsLeaderBoard');
 const LeaderBoardPrizesRef = database.ref('/LeaderBoardPrizes');
 const leaderboardWinnersRef = database.ref('/LeaderboardWinners');
+export const userStreamerRef = database.ref('/UserStreamer');
+export const streamersDonationsRef = database.ref('StreamersDonations');
 const userStreamsRewardsRef = database.ref('/UserStreamsRewards');
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
@@ -904,6 +906,15 @@ export async function getAnnouncements() {
 // -----------------------------------------------
 
 /**
+ * Update the username of Twitch in their profile
+ * @param {string} uid User identifier
+ * @param {string} twitchUsername New Twitch username
+ */
+export async function updateTwitchUsername(uid, twitchUsername) {
+    return await usersRef.child(uid).update({ twitchUsername });
+}
+
+/**
  * Update the discord tag of the given user
  * @param {string} uid User identifier on the database
  * @param {string} discordTag The value of the tag (data to update on the database)
@@ -1330,3 +1341,57 @@ export async function getUserDonationLeaderBoard(uid) {
 
     userStreamsRewardsRef.update(recordsUpdate);
  }
+
+// -----------------------------------------------
+// Support Streamer
+// -----------------------------------------------
+
+/**
+ * Store cheers on the database at StreamersDonations node
+ * @param {number} amountQoins Amount of donated Qoins
+ * @param {string} message Message from the user
+ * @param {number} timeStamp Timestamp of the moment when the donation is sent
+ * @param {string} streamerName Name of the streamer
+ * @param {string} uid User identifier
+ * @param {string} userName Qapla username
+ * @param {string} twitchUserName Username of Twitch
+ * @param {string} streamerID Streamer uid
+ */
+export async function sendCheers(amountQoins, message, timestamp, streamerName, uid, userName, twitchUserName, streamerID) {
+    const donationRef = streamersDonationsRef.child(streamerID).push({
+        amountQoins,
+        message,
+        timestamp,
+        uid,
+        read: false,
+        twitchUserName,
+        userName
+    });
+
+    usersRef.child(uid).child('credits').transaction((credits) => {
+        if (credits) {
+            credits -= amountQoins;
+        }
+
+        return credits >= 0 ? credits : 0;
+    });
+
+    userStreamerRef.child(streamerID).child('qoinsBalance').transaction((streamerQoins) => {
+        if (streamerQoins) {
+            streamerQoins += amountQoins;
+        }
+
+        return streamerQoins ? streamerQoins : amountQoins;
+    });
+
+    database.ref('/StreamersDonationAdministrative').child(donationRef.key).set({
+        amountQoins,
+        message,
+        timestamp,
+        uid,
+        sent: false,
+        twitchUserName,
+        userName,
+        streamerName
+    });
+}

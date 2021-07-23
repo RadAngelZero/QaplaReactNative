@@ -114,7 +114,7 @@ class EventDetails extends Component {
         const eventDay = translate(`days.${days[eventDate.getDay()]}`);
 
         day = eventDate.getDate();
-        const hourSuffix = eventDate.getHours() > 12 ? 'p.m.' : 'a.m.';
+        const hourSuffix = eventDate.getHours() >= 12 ? 'p.m.' : 'a.m.';
         hour = eventDate.getHours() % 12;
         hour = hour ? hour : 12;
         minute = eventDate.getMinutes() > 9 ? eventDate.getMinutes() : `0${eventDate.getMinutes()}`;

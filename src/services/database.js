@@ -1368,8 +1368,21 @@ export async function sendCheers(amountQoins, message, timestamp, streamerName, 
         userName
     });
 
-    const userCredits = await usersRef.child(uid).child('credits').once('value');
-    await usersRef.child(uid).update({ credits: userCredits.val() - amountQoins });
+    usersRef.child(uid).child('credits').transaction((credits) => {
+        if (credits) {
+            credits -= amountQoins;
+        }
+
+        return credits >= 0 ? credits : 0;
+    });
+
+    userStreamerRef.child(streamerID).child('qoinsBalance').transaction((streamerQoins) => {
+        if (streamerQoins) {
+            streamerQoins += amountQoins;
+        }
+
+        return streamerQoins ? streamerQoins : amountQoins;
+    });
 
     database.ref('/StreamersDonationAdministrative').child(donationRef.key).set({
         amountQoins,

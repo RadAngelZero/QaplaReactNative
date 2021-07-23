@@ -454,7 +454,7 @@
     },
     "sendCheersModal": {
         "thankYouTitle": "Thank you!",
-        "sentCheersTo": "We have sent your\ncheers to",
+        "sentCheersTo": "We have sent your\ncheers to ",
         "lifesBarUpdated": "Your life bar has been\nupdated :D",
         "backToProfile": "Back to my profile",
         "wantToSaySomething": "Do you want to say something special?",

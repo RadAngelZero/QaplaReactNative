@@ -36,8 +36,8 @@ const DonationsCostsRef = database.ref('/DonationsCosts');
 const DonationsLeaderBoardRef = database.ref('/DonationsLeaderBoard');
 const LeaderBoardPrizesRef = database.ref('/LeaderBoardPrizes');
 const leaderboardWinnersRef = database.ref('/LeaderboardWinners');
-export const userStreamerRef = database.ref('/UserStreamer');
-export const streamersDonationsRef = database.ref('StreamersDonations');
+const userStreamerRef = database.ref('/UserStreamer');
+const streamersDonationsRef = database.ref('StreamersDonations');
 const userStreamsRewardsRef = database.ref('/UserStreamsRewards');
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 
@@ -1341,6 +1341,18 @@ export async function getUserDonationLeaderBoard(uid) {
 
     userStreamsRewardsRef.update(recordsUpdate);
  }
+
+// -----------------------------------------------
+// User Streamer
+// -----------------------------------------------
+
+/**
+ * Return all the streamers with premium status
+ * @returns {Object} Object of streamers
+ */
+export async function getPremiumStreamers() {
+    return await userStreamerRef.orderByChild('premium').equalTo(true).once('value');
+}
 
 // -----------------------------------------------
 // Support Streamer

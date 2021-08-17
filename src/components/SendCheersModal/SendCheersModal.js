@@ -10,7 +10,7 @@ import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } fr
 import Colors from '../../utilities/Colors';
 import Hearts from '../UserProfileRewards/Hearts';
 import ProgressBar from '../UserProfileRewards/Bar';
-import { userStreamerRef, sendCheers, updateTwitchUsername } from '../../services/database';
+import { getPremiumStreamers, sendCheers, updateTwitchUsername } from '../../services/database';
 import { getTwitchDataCloudFunction } from '../../services/functions';
 
 const LeftArrowThiccIcon = Images.svg.leftArrowThiccIcon;
@@ -23,9 +23,8 @@ export default class FormularioCheers extends React.Component {
 		screen: 'selection',
 		sendingCheers: false,
 		sendCheersButtonAnimation: new Animated.Value(0),
+		streamersData: []
 	};
-
-	DATA = [];
 
 	componentDidMount() {
 		this.getStreamers();
@@ -57,19 +56,27 @@ export default class FormularioCheers extends React.Component {
 	}
 
 	getStreamers = async () => {
-		let now = new Date();
-		let twoWeeksAgoCalc = now.getDate() - 14;
-		let twoWeeksAgo = new Date().setDate(twoWeeksAgoCalc);
-
-		const streamers = await userStreamerRef.once('value');
+		const streamersBlackList = ['141617732', '683167758', '613408163', '180517858', '448926957', '140436068', '528477359'];
+		const streamers = await getPremiumStreamers();
 		if (streamers.exists()) {
-			streamers.forEach((element) => {
-				if (!element.val().lastStreamTs || parseInt(element.val().lastStreamTs) < parseInt(twoWeeksAgo / 1000)) return;
-
-				this.DATA.push({ streamer: element.val().displayName, imgUrl: element.val().photoUrl, streamerID: element.key });
+			const streamersData = [];
+			streamers.forEach((streamer) => {
+				if (!streamersBlackList.includes(streamer.val().id)) {
+					streamersData.push({
+						streamer: streamer.val().displayName,
+						/**
+						 * If the streamer change their profile image on Twitch the link on the database
+						 * will not contain any photo to show until the streamer update their information
+						 * on the dashboard (this is automatically done every time the streamer SignIn on the
+						 * dashboard or any time a token is refreshed)
+						 */
+						imgUrl: streamer.val().photoUrl,
+						streamerID: streamer.key
+					});
+				}
 			});
 
-			return;
+			this.setState({ streamersData });
 		}
 	}
 
@@ -345,7 +352,7 @@ export default class FormularioCheers extends React.Component {
 										alignItems: 'flex-start',
 									}}>
 									<FlatList
-										data={this.DATA}
+										data={this.state.streamersData}
 										renderItem={this.renderItem}
 										keyExtractor={item => item.streamer}
 										extraData={this.state.selectedStreamer}

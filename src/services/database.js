@@ -1396,6 +1396,8 @@ export async function sendCheers(amountQoins, message, timestamp, streamerName, 
         return streamerQoins ? streamerQoins : amountQoins;
     });
 
+    await completeUserDonation(uid, amountQoins);
+
     database.ref('/StreamersDonationAdministrative').child(donationRef.key).set({
         amountQoins,
         message,
@@ -1406,4 +1408,50 @@ export async function sendCheers(amountQoins, message, timestamp, streamerName, 
         userName,
         streamerName
     });
+}
+
+/**
+ * Add the user the bits, lifes, points and qoins information on the UserRewardsProgress node
+ * (Information visible on the bottom sheet of the profile)
+ * @param {string} uid User identifier
+ * @param {number} qoinsDonated Number of qoins donated
+ */
+ export async function completeUserDonation(uid, qoinsDonated) {
+    const qoinsBase = (await getDonationQoinsBase()).val();
+    const pointsToAdd = qoinsDonated / qoinsBase;
+    const bitsToAddPerPoint = (await DonationsCostsRef.child('bitsBase').once('value')).val();
+
+    const rewardProgress = await usersRewardsProgressRef.child(uid).once('value');
+    let tensInPoints = Math.floor(pointsToAdd / 10);
+    const bitsToAdd = bitsToAddPerPoint * pointsToAdd;
+
+    if (!rewardProgress.exists()) {
+        const currentPoints = pointsToAdd - tensInPoints * 10;
+        const donations = {
+            bits:  bitsToAdd,
+            qoins: qoinsDonated
+        };
+
+        await usersRewardsProgressRef.child(uid).update({
+            currentPoints,
+            donations,
+            lifes: tensInPoints,
+            rewardsReedemed: 0
+        });
+    } else {
+        let currentPoints = rewardProgress.val().currentPoints + pointsToAdd;
+        tensInPoints = Math.floor(currentPoints / 10);
+        currentPoints -= tensInPoints * 10;
+        const donations = {
+            ...rewardProgress.val().donations,
+            bits: (rewardProgress.val().donations.bits ? rewardProgress.val().donations.bits : 0) + (bitsToAdd),
+            qoins: (rewardProgress.val().donations.qoins ? rewardProgress.val().donations.qoins : 0) + qoinsDonated
+        };
+
+        await usersRewardsProgressRef.child(uid).update({
+            currentPoints,
+            lifes: rewardProgress.val().lifes + tensInPoints,
+            donations
+        });
+    }
 }

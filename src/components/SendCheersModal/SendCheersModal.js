@@ -324,15 +324,15 @@ export default class FormularioCheers extends React.Component {
 										onChangeText={(message) => this.setState({ message })}
 										value={this.state.message}
 										multiline={true}
-										maxLength={256}
+										maxLength={160}
 									/>
 									<View>
 										<Text style={{
-											color: this.state.message.length === 256 ? '#c00' : this.state.message.length > 173 ? '#cc0' : '#ccc',
+											color: this.state.message.length === 160 ? '#c00' : this.state.message.length > 125 ? '#cc0' : '#ccc',
 											alignSelf: 'flex-end',
 											marginRight: '2%'
 										}}>
-											{this.state.message.length}/256
+											{this.state.message.length}/160
 										</Text>
 									</View>
 								</View>

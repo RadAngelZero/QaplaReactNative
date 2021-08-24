@@ -428,7 +428,7 @@
     "rewardsBottomSheet": {
         "rewards": "Rewards",
         "transactions": "Transactions",
-        "donation": "Donation",
+        "donation": "Qoins donated",
         "rewardRedeemed": "Reward redeemed",
         "redeemPrize": "Redeem Prize",
         "rewardsTooltip": "Every donation you make fills your reward life-bar. Use your life hearts to buy from the store :D",

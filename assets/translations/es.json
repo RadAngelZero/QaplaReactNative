@@ -428,7 +428,7 @@
     "rewardsBottomSheet": {
         "rewards": "Recompensas",
         "transactions": "Transacciones",
-        "donation": "Donación",
+        "donation": "Qoins donados",
         "rewardRedeemed": "Recompensa redimida",
         "redeemPrize": "Redimir Premio",
         "rewardsTooltip": "Cada donación que hagas se acumula para llenar tu barra de vida. Usa tus vidas para canjearlos en la tienda :D",

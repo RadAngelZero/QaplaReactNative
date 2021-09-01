@@ -345,7 +345,7 @@ export class NewUserProfileScreen extends Component {
                         </Animated.View>
                         <View style={[styles.donationNavigatorContainer, { height: this.state.collapsableToolBarMaxHeight }]}>
                             <QaplaText style={styles.storeTitle}>
-                                {translate('newUserProfileScreen.store')}
+                                {translate('newUserProfileScreen.loots')}
                             </QaplaText>
                             <RewardsStore />
                         </View>

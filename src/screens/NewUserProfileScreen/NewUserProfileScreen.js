@@ -10,7 +10,7 @@ import AnimatedCircleIndicator from '../../components/AnimatedCircleIndicator/An
 import { recordScreenOnSegment, trackOnSegment } from '../../services/statistics';
 import { isUserLogged } from '../../services/auth';
 
-import { translate } from '../../utilities/i18';
+import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import { getDonationQoinsBase } from '../../services/database';
@@ -26,8 +26,22 @@ import QaplaTooltip from '../../components/QaplaTooltip/QaplaTooltip';
 import ZeroQoinsEventsModal from '../../components/ZeroQoinsEventsModal/ZeroQoinsEventsModal';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import SendCheersModal from '../../components/SendCheersModal/SendCheersModal';
+import LevelInformationModal from '../../components/LevelInformationModal/LevelInformationModal';
 
 const BitsIcon = images.svg.bitsIcon;
+
+const SeasonLevelIcons = {
+    en: [
+        images.svg.seasonLevelEs1,
+        images.svg.seasonLevelEs2,
+        images.svg.seasonLevelEs3
+    ],
+    es: [
+        images.svg.seasonLevelEs1,
+        images.svg.seasonLevelEs2,
+        images.svg.seasonLevelEs3
+    ]
+}
 
 export class NewUserProfileScreen extends Component {
     state = {
@@ -45,7 +59,8 @@ export class NewUserProfileScreen extends Component {
         openDonationFeedbackModal: false,
         openLinkWitTwitchModal: false,
         openSendCheersModal: false,
-        userWantsToSendCheers: false
+        userWantsToSendCheers: false,
+        openLevelInformationModal: false
     };
 
     componentWillMount() {
@@ -232,6 +247,9 @@ export class NewUserProfileScreen extends Component {
     render() {
         const userLevel = Math.floor(this.props.qaplaLevel / 100);
         const userQoins = isNaN(this.props.userQoins - this.state.qoinsToDonate) ? 0 : this.props.userQoins - this.state.qoinsToDonate;
+        const userLanguage = getLocaleLanguage();
+
+        const LastSeasonLevelIcon = SeasonLevelIcons[userLanguage] ? SeasonLevelIcons[userLanguage][this.props.seasonLevel - 1] : null;
 
         return (
             <SafeAreaView style={styles.profileView} onLayout={this.saveToolBarMaxHeight}>
@@ -340,6 +358,19 @@ export class NewUserProfileScreen extends Component {
                                                 </QaplaText>
                                             </View>
                                         )} />
+                                    <TouchableOpacity style={styles.lastSeasonLevelContainer} onPress={() => this.setState({ openLevelInformationModal: true })}>
+                                        <QaplaText style={styles.lastSeasonCopie}>
+                                            {translate('newUserProfileScreen.lastSeason')}
+                                        </QaplaText>
+                                        <View style={styles.seasonLevelContainer}>
+                                            {this.props.seasonLevel ?
+                                                LastSeasonLevelIcon &&
+                                                    <LastSeasonLevelIcon />
+                                            :
+                                                <images.svg.seasonLevelNoLevel />
+                                            }
+                                        </View>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </Animated.View>
@@ -365,6 +396,8 @@ export class NewUserProfileScreen extends Component {
                     uid={this.props.uid}
                     twitchId={this.props.twitchId}
                     userName={this.props.userName} />
+                <LevelInformationModal open={this.state.openLevelInformationModal}
+                    onClose={() => this.setState({ openLevelInformationModal: false })} />
             </SafeAreaView>
         );
     }
@@ -381,6 +414,7 @@ function mapStateToProps(state) {
             userQoins: state.userReducer.user.credits,
             userImage: state.userReducer.user.photoUrl,
             qaplaLevel: state.userReducer.user.qaplaLevel || 0,
+            seasonLevel: state.userReducer.user.seasonLevel,
             rewards: state.userReducer.user.UserRewards,
             enableScroll: state.profileLeaderBoardReducer.enableScroll,
             twitchId: state.userReducer.user.twitchId,

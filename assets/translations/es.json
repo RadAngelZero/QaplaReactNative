@@ -141,6 +141,7 @@
     "newUserProfileScreen": {
         "linkAccount": "Vincular cuenta",
         "level": "Nivel",
+        "lastSeason": "Última temporada",
         "qoins": "Qoins",
         "bitsTooltip": "Usa tus Qoins para donarle a tus streamers favoritos. Puedes donar desde 200 Qoins",
         "next": "Siguiente",
@@ -464,5 +465,11 @@
         "sending": "Enviando...",
         "skip": "Omitir",
         "next": "Siguiente"
+    },
+    "LevelInformationModal": {
+        "getMoreQoins": "¡Recibe más Qoins!",
+        "bodyTextOne": "Sube tu nivel cada temporada acumulando XQ y mina más Qoins en los streams que participes.",
+        "bodyTextTwo": "Tu nivel de la última temporada determina la cantidad de Qoins que minas por stream.",
+        "gotIt": "¡Entendido!"
     }
 }

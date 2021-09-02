@@ -141,6 +141,7 @@
     "newUserProfileScreen": {
         "linkAccount": "Link account",
         "level": "Level",
+        "lastSeason": "Last season level",
         "qoins": "Qoins",
         "bitsTooltip": "Use your Qoins to support your favorite streamers. You need 200 Qoins for a donation",
         "next": "Next",
@@ -464,5 +465,11 @@
         "sending": "Sending...",
         "skip": "Skip",
         "next": "Next"
+    },
+    "LevelInformationModal": {
+        "getMoreQoins": "Get more Qoins!",
+        "bodyTextOne": "Raise your level each season by accumulating XQ and mine more Qoins in the streams you participate in.",
+        "bodyTextTwo": "Your level from the last season determines the amount of Qoins you mine per stream.",
+        "gotIt": "Got It!"
     }
 }

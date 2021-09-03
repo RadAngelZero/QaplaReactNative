@@ -6,7 +6,7 @@ import styles from './style';
 import LogrosList from '../../components/LogroCard/LogrosList';
 import { translate } from '../../utilities/i18';
 import LevelInformationModal from '../../components/LevelInformationModal/LevelInformationModal';
-import { removeDataItem, retrieveData, storeData } from '../../utilities/persistance';
+import { retrieveData, storeData } from '../../utilities/persistance';
 
 export class LogrosActivosScreen extends Component {
     state= {

@@ -32,14 +32,16 @@ const BitsIcon = images.svg.bitsIcon;
 
 const SeasonLevelIcons = {
     en: [
-        images.svg.seasonLevelEs1,
-        images.svg.seasonLevelEs2,
-        images.svg.seasonLevelEs3
+        images.svg.seasonLevelEn1,
+        images.svg.seasonLevelEn2,
+        images.svg.seasonLevelEn3,
+        images.svg.seasonLevelEn4
     ],
     es: [
         images.svg.seasonLevelEs1,
         images.svg.seasonLevelEs2,
-        images.svg.seasonLevelEs3
+        images.svg.seasonLevelEs3,
+        images.svg.seasonLevelEs4
     ]
 }
 
@@ -250,6 +252,7 @@ export class NewUserProfileScreen extends Component {
         const userLanguage = getLocaleLanguage();
 
         const LastSeasonLevelIcon = SeasonLevelIcons[userLanguage] ? SeasonLevelIcons[userLanguage][this.props.seasonLevel - 1] : null;
+        const DefaultSeasonLevelIcon = SeasonLevelIcons[userLanguage] ? SeasonLevelIcons[userLanguage][0] : null;
 
         return (
             <SafeAreaView style={styles.profileView} onLayout={this.saveToolBarMaxHeight}>
@@ -367,7 +370,7 @@ export class NewUserProfileScreen extends Component {
                                                 LastSeasonLevelIcon &&
                                                     <LastSeasonLevelIcon />
                                             :
-                                                <images.svg.seasonLevelNoLevel />
+                                                <DefaultSeasonLevelIcon />
                                             }
                                         </View>
                                     </TouchableOpacity>

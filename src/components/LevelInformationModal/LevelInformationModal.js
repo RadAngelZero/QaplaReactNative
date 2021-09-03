@@ -79,7 +79,7 @@ class LevelInformationModal extends Component {
                                             </QaplaText>
                                             <View style={[ styles.levelValueContainer, { borderTopRightRadius: 50, borderBottomRightRadius: 50 }]}>
                                                 <QaplaText style={styles.levelValue}>
-                                                    3
+                                                    3+
                                                 </QaplaText>
                                             </View>
                                         </View>

@@ -9,7 +9,7 @@ import LevelInformationModal from '../../components/LevelInformationModal/LevelI
 import { retrieveData, storeData } from '../../utilities/persistance';
 
 export class LogrosActivosScreen extends Component {
-    state= {
+    state = {
         openLevelInformationModal: false
     };
 

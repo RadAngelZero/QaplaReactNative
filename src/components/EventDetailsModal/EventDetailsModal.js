@@ -212,7 +212,7 @@ class EventDetailsModal extends Component {
                             onPress={this.closeModal}>
                             <Images.svg.closeIcon />
                         </QaplaIcon>
-                        <View style={[styles.container]}>
+                        <View style={[styles.container, { marginBottom: (!this.state.existsRequest && !this.state.isParticipant && this.state.eventRegistrationStep === 0) ? heightPercentageToPx(7.5) : 0 }]}>
                             {this.state.eventRegistrationStep === 0 &&
                                 <EventDetails
                                     event={this.props.events[this.props.eventId]}

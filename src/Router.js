@@ -440,12 +440,6 @@ const RootStackNavigator = createStackNavigator({
     navigationOptions: {
       header: (props) => <TopNavOptions close onCloseNavigateTo='Profile' {...props} />
     }
-  },
-  TodayEvents: {
-    screen: TodayTournamentsScreen,
-    navigationOptions: {
-      header: (props) => <TopNavOptions close onCloseNavigateTo='Achievements' {...props} />
-    }
   }
 }, {
   headerMode: 'screen',

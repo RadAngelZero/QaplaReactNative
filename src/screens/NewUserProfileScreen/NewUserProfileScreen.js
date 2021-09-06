@@ -27,6 +27,7 @@ import ZeroQoinsEventsModal from '../../components/ZeroQoinsEventsModal/ZeroQoin
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import SendCheersModal from '../../components/SendCheersModal/SendCheersModal';
 import LevelInformationModal from '../../components/LevelInformationModal/LevelInformationModal';
+import { getLevels } from '../../actions/QaplaLevelActions';
 
 const BitsIcon = images.svg.bitsIcon;
 
@@ -86,6 +87,7 @@ export class NewUserProfileScreen extends Component {
     componentDidMount() {
         this.setDonationCost();
         this.setUserDefaultImage();
+        this.props.loadQaplaLevels();
     }
 
     componentWillUnmount() {
@@ -246,13 +248,49 @@ export class NewUserProfileScreen extends Component {
 
     linkTwitchAccount = () => this.setState({ openLinkWitTwitchModal: true });
 
+    getUserSeasonLevel = () => {
+        let currentLevel = 0;
+        this.props.qaplaLevels.forEach((level, index) => {
+            if (this.props.seasonXQ >= level.requiredXQ) {
+                currentLevel = index + 1;
+            }
+        });
+
+        return currentLevel;
+    }
+
+    getNextLevelRequiredXQ = () => {
+        for (let i = 0; i < this.props.qaplaLevels.length; i++) {
+            const qaplaLevel = this.props.qaplaLevels[i];
+            if (this.props.seasonXQ < qaplaLevel.requiredXQ) {
+                return qaplaLevel.requiredXQ;
+            }
+        }
+
+        return 0;
+    }
+
+    getCurrentLevelRequiredXQ = () => {
+        for (let i = 0; i < this.props.qaplaLevels.length; i++) {
+            const qaplaLevel = this.props.qaplaLevels[i];
+            if (this.props.seasonXQ < qaplaLevel.requiredXQ) {
+                return i > 0 ? this.props.qaplaLevels[i - 1].requiredXQ : 0;
+            }
+        }
+
+        return 0;
+    }
+
     render() {
-        const userLevel = Math.floor(this.props.qaplaLevel / 100);
+        const userLevel = this.props.qaplaLevels ? this.getUserSeasonLevel() : 0;
         const userQoins = isNaN(this.props.userQoins - this.state.qoinsToDonate) ? 0 : this.props.userQoins - this.state.qoinsToDonate;
         const userLanguage = getLocaleLanguage();
 
-        const LastSeasonLevelIcon = SeasonLevelIcons[userLanguage] ? SeasonLevelIcons[userLanguage][this.props.seasonLevel - 1] : null;
-        const DefaultSeasonLevelIcon = SeasonLevelIcons[userLanguage] ? SeasonLevelIcons[userLanguage][0] : null;
+        const LastSeasonLevelIcon = SeasonLevelIcons[userLanguage] ? SeasonLevelIcons[userLanguage][this.props.lastSeasonLevel - 1] : null;
+
+        const DefaultSeasonLevelIcon = SeasonLevelIcons[userLanguage][0];
+
+        const circleIndicatorFill = 100 / (this.getNextLevelRequiredXQ() - this.getCurrentLevelRequiredXQ()) * (this.props.seasonXQ - this.getCurrentLevelRequiredXQ());
 
         return (
             <SafeAreaView style={styles.profileView} onLayout={this.saveToolBarMaxHeight}>
@@ -342,7 +380,7 @@ export class NewUserProfileScreen extends Component {
                                 <View style={styles.levelModalView}>
                                     <AnimatedCircleIndicator
                                         size={120}
-                                        fill={this.props.qaplaLevel - (userLevel * 100)}
+                                        fill={isFinite(circleIndicatorFill) ? circleIndicatorFill : 100}
                                         width={7}
                                         duration={750}
                                         fillComponent={() => (
@@ -366,9 +404,11 @@ export class NewUserProfileScreen extends Component {
                                             {translate('newUserProfileScreen.lastSeason')}
                                         </QaplaText>
                                         <View style={styles.seasonLevelContainer}>
-                                            {this.props.seasonLevel ?
-                                                LastSeasonLevelIcon &&
+                                            {this.props.lastSeasonLevel ?
+                                                LastSeasonLevelIcon ?
                                                     <LastSeasonLevelIcon />
+                                                :
+                                                    <DefaultSeasonLevelIcon />
                                             :
                                                 <DefaultSeasonLevelIcon />
                                             }
@@ -398,7 +438,8 @@ export class NewUserProfileScreen extends Component {
                     qoinsToDonate={this.state.qoinsToDonate}
                     uid={this.props.uid}
                     twitchId={this.props.twitchId}
-                    userName={this.props.userName} />
+                    userName={this.props.userName}
+                    userPhotoURL={this.props.userImage} />
                 <LevelInformationModal open={this.state.openLevelInformationModal}
                     onClose={() => this.setState({ openLevelInformationModal: false })} />
             </SafeAreaView>
@@ -416,13 +457,14 @@ function mapStateToProps(state) {
             uid: state.userReducer.user.id,
             userQoins: state.userReducer.user.credits,
             userImage: state.userReducer.user.photoUrl,
-            qaplaLevel: state.userReducer.user.qaplaLevel || 0,
-            seasonLevel: state.userReducer.user.seasonLevel,
+            lastSeasonLevel: state.userReducer.user.lastSeasonLevel || 0,
+            seasonXQ: state.userReducer.user.seasonXQ || 0,
             rewards: state.userReducer.user.UserRewards,
             enableScroll: state.profileLeaderBoardReducer.enableScroll,
             twitchId: state.userReducer.user.twitchId,
             twitchUsername: state.userReducer.user.twitchUsername,
-            userName: state.userReducer.user.userName
+            userName: state.userReducer.user.userName,
+            qaplaLevels: state.qaplaLevelReducer.levels
         }
     }
 
@@ -434,14 +476,16 @@ function mapStateToProps(state) {
      */
     return {
         user: state.userReducer.user,
-        qaplaLevel: 0
+        seasonXQ: 0,
+        lastSeasonLevel: 0
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         enableLeaderBoardScroll: (enableScroll) => setScroll(enableScroll)(dispatch),
-        setUserImage: (userImage) => setUserImage(userImage)(dispatch)
+        setUserImage: (userImage) => setUserImage(userImage)(dispatch),
+        loadQaplaLevels: () => getLevels()(dispatch)
     }
 }
 

@@ -23,6 +23,11 @@ export default styles = StyleSheet.create({
         shadowRadius: 16.00,
         elevation: 24
     },
+    gradientContainer: {
+        height: heightPercentageToPx(20),
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40
+    },
     levelBenefitsContainer: {
         flex: 1,
         flexDirection: 'row',

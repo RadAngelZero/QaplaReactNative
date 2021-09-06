@@ -149,15 +149,7 @@ class AuthLoadingScreen extends Component {
                 const isNewTutorialDone = await retrieveData('2021-tutorial-done');
 
                 if (isNewTutorialDone) {
-                    const lastDateUserSawEventRememberScreen = await retrieveData('event-remember-date');
-                    const date = new Date();
-                    const todayDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-
-                    if ((!lastDateUserSawEventRememberScreen || lastDateUserSawEventRememberScreen !== todayDate)) {
-                        storeData('event-remember-date', todayDate);
-
-                        return this.props.navigation.navigate('TodayEvents');
-                    }
+                    removeDataItem('event-remember-date');
 
                     return this.props.navigation.navigate('Achievements');
                 }

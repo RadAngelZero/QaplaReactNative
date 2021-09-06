@@ -3,7 +3,6 @@ import { Modal, View, Image, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style';
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { translate } from '../../utilities/i18';
 import AnimatedCircleIndicator from '../AnimatedCircleIndicator/AnimatedCircleIndicator';
 import { defaultUserImages } from '../../utilities/Constants';
@@ -12,7 +11,6 @@ import images from '../../../assets/images';
 
 class LevelInformationModal extends Component {
     render() {
-
         return (
             <Modal animationType='fade'
                 transparent={true}
@@ -25,7 +23,7 @@ class LevelInformationModal extends Component {
                             angleCenter={{ x: 0.5, y: 0.5 }}
                             angle={90}
                             colors={['#8216EE', '#FA07B6']}
-                            style={{ height: heightPercentageToPx(20), borderTopLeftRadius: 40, borderTopRightRadius: 40 }}>
+                            style={styles.gradientContainer}>
                             <View style={styles.levelBenefitsContainer}>
                                 <View style={styles.levelContainer}>
                                     <AnimatedCircleIndicator

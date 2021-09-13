@@ -86,7 +86,7 @@ export default class FormularioCheers extends React.Component {
 		const twitchData = await getTwitchDataCloudFunction(this.props.twitchId);
 		await updateTwitchUsername(this.props.uid, twitchData.data.display_name);
 		if (this.props.qoinsToDonate > 0) {
-			await sendCheers(this.props.qoinsToDonate, this.state.message, parseInt(now / 1000), this.state.selectedStreamer, this.props.uid, this.props.userName, twitchData.data.display_name, this.state.selectedStreamerID);
+			await sendCheers(this.props.qoinsToDonate, this.state.message, now.getTime(), this.state.selectedStreamer, this.props.uid, this.props.userName, twitchData.data.display_name, this.props.userPhotoURL, this.state.selectedStreamerID);
 		}
 
 		this.setState({ screen: 'complete' });

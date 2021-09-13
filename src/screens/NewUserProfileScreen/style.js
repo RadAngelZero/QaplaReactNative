@@ -142,7 +142,8 @@ export default styles = StyleSheet.create({
 		left: widthPercentageToPx(25)
 	},
 	levelModalView: {
-		alignSelf: 'center'
+		alignSelf: 'center',
+		justifyContent: 'space-between'
 	},
 	userImage: {
 		resizeMode: 'cover',
@@ -164,6 +165,32 @@ export default styles = StyleSheet.create({
         marginBottom: 5,
         marginRight: 14,
         marginLeft: 14
+	},
+	lastSeasonLevelContainer: {
+		marginTop: 24,
+		borderRadius: 12,
+		backgroundColor: '#141539',
+		height: heightPercentageToPx(7),
+		width: widthPercentageToPx(32),
+		paddingTop: 10,
+		paddingBottom: 10,
+		paddingRight: 14,
+		paddingLeft: 14,
+		justifyContent: 'center',
+		alignSelf: 'flex-end'
+	},
+	lastSeasonCopie: {
+		fontSize: 12,
+		fontWeight: '500',
+		color: '#FFF',
+		textAlign: 'center'
+	},
+	seasonLevelContainer: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 8
 	},
 	donationNavigatorContainer: {
 		flex: 1,

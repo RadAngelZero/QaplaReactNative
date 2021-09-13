@@ -5,8 +5,26 @@ import { connect } from 'react-redux';
 import styles from './style';
 import LogrosList from '../../components/LogroCard/LogrosList';
 import { translate } from '../../utilities/i18';
+import LevelInformationModal from '../../components/LevelInformationModal/LevelInformationModal';
+import { retrieveData, storeData } from '../../utilities/persistance';
 
 export class LogrosActivosScreen extends Component {
+    state = {
+        openLevelInformationModal: false
+    };
+
+    componentDidMount() {
+        this.checkLevelModalStatus();
+    }
+
+    checkLevelModalStatus = async () => {
+        const isLevelModalViewed = await retrieveData('level-modal-viewed');
+        if (!isLevelModalViewed) {
+            this.setState({ openLevelInformationModal: true });
+            storeData('level-modal-viewed', 'true');
+        }
+    }
+
     render() {
         const eventToDisplay = this.props.navigation.getParam('eventToDisplay', '');
         let orderedEvents = [];
@@ -52,6 +70,8 @@ export class LogrosActivosScreen extends Component {
                     logros={orderedEvents}
                     userId={this.props.uid}
                     eventToDisplay={eventToDisplay} />
+                <LevelInformationModal open={this.state.openLevelInformationModal}
+                    onClose={() => this.setState({ openLevelInformationModal: false })} />
             </SafeAreaView>
         );
     }

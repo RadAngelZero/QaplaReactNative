@@ -40,7 +40,6 @@ class CommunityScreen extends Component {
                                     {translate('CommunityScreen.feedbackRequest')}
                                 </QaplaText>
                                 <TouchableOpacity
-                                    onPress={this.answerSurvey}
                                     style={styles.buttonContainer}>
                                     <QaplaText style={styles.buttonText}>
                                         {translate('CommunityScreen.answerSurvery')}

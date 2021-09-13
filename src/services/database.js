@@ -40,6 +40,7 @@ const userStreamerRef = database.ref('/UserStreamer');
 const streamersDonationsRef = database.ref('StreamersDonations');
 const userStreamsRewardsRef = database.ref('/UserStreamsRewards');
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
+const qaplaLevelsRequirementsRef = database.ref('QaplaLevelsRequirements');
 
 /**
  * Returns the userName of the specified user
@@ -1367,9 +1368,10 @@ export async function getPremiumStreamers() {
  * @param {string} uid User identifier
  * @param {string} userName Qapla username
  * @param {string} twitchUserName Username of Twitch
+ * @param {string} userPhotoURL URL of the user profile photo
  * @param {string} streamerID Streamer uid
  */
-export async function sendCheers(amountQoins, message, timestamp, streamerName, uid, userName, twitchUserName, streamerID) {
+export async function sendCheers(amountQoins, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID) {
     const donationRef = streamersDonationsRef.child(streamerID).push({
         amountQoins,
         message,
@@ -1377,7 +1379,8 @@ export async function sendCheers(amountQoins, message, timestamp, streamerName, 
         uid,
         read: false,
         twitchUserName,
-        userName
+        userName,
+        photoURL: userPhotoURL
     });
 
     usersRef.child(uid).child('credits').transaction((credits) => {
@@ -1454,4 +1457,15 @@ export async function sendCheers(amountQoins, message, timestamp, streamerName, 
             donations
         });
     }
+}
+
+// -----------------------------------------------
+// Qapla Levels
+// -----------------------------------------------
+
+/**
+ * Return an array with the requirements and details of every qapla season level
+ */
+export async function getQaplaLevels() {
+    return await qaplaLevelsRequirementsRef.once('value');
 }

@@ -50,6 +50,9 @@ export const LOAD_LOGROS_ACTIVOS = 'LOAD_LOGROS_ACTIVOS';
 export const REMOVE_LOGRO_ACTIVO = 'REMOVE_LOGRO_ACTIVO';
 export const EMPTY_LOGROS = 'EMPTY_LOGROS';
 
+// QaplaLevel constants
+export const GET_QAPLA_LEVELS = 'GET_QAPLA_LEVELS';
+
 // Adversary numbers
 export const ADVERSARY_1_NUMBER = 1;
 export const ADVERSARY_2_NUMBER = 2;

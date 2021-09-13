@@ -67,6 +67,15 @@ import ActivityQoin from './icons/ActivityQoin.svg';
 import ActivityXQ from './icons/ActivityXQ.svg';
 import DuotoneDefault from './icons/DuotoneDefault.svg';
 import DuotoneActive from './icons/DuotoneActive.svg';
+import SeasonLevelEs1 from './icons/seasonLevelEs1.svg';
+import SeasonLevelEs2 from './icons/seasonLevelEs2.svg';
+import SeasonLevelEs3 from './icons/seasonLevelEs3.svg';
+import SeasonLevelEs4 from './icons/seasonLevelEs4.svg';
+import SeasonLevelEn1 from './icons/seasonLevelEn1.svg';
+import SeasonLevelEn2 from './icons/seasonLevelEn2.svg';
+import SeasonLevelEn3 from './icons/seasonLevelEn3.svg';
+import SeasonLevelEn4 from './icons/seasonLevelEn4.svg';
+import SeasonLevelNoLevel from './icons/SeasonLevelNoLevel.svg';
 
 // Images
 
@@ -309,7 +318,16 @@ const images = {
 		activityQoin: ActivityQoin,
 		activityXQ: ActivityXQ,
 		duotoneDefault: DuotoneDefault,
-		duotoneActive: DuotoneActive
+		duotoneActive: DuotoneActive,
+		seasonLevelEs1: SeasonLevelEs1,
+		seasonLevelEs2: SeasonLevelEs2,
+		seasonLevelEs3: SeasonLevelEs3,
+		seasonLevelEs4: SeasonLevelEs4,
+		seasonLevelEn1: SeasonLevelEn1,
+		seasonLevelEn2: SeasonLevelEn2,
+		seasonLevelEn3: SeasonLevelEn3,
+		seasonLevelEn4: SeasonLevelEn4,
+		seasonLevelNoLevel: SeasonLevelNoLevel
 	}
 };
 

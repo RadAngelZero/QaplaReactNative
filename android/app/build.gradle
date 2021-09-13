@@ -125,13 +125,13 @@ android {
 
     dexOptions {
         incremental true
-        javaMaxHeapSize "6g"
+        javaMaxHeapSize "8g"
     }
     defaultConfig {
         applicationId "com.qapla.gaming.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 97
+        versionCode 98
         versionName "3.2.4"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'

@@ -249,7 +249,7 @@ export class NewUserProfileScreen extends Component {
     linkTwitchAccount = () => this.setState({ openLinkWitTwitchModal: true });
 
     getUserSeasonLevel = () => {
-        let currentLevel = 0;
+        let currentLevel = 1;
         this.props.qaplaLevels.forEach((level, index) => {
             if (this.props.seasonXQ >= level.requiredXQ) {
                 currentLevel = index + 1;

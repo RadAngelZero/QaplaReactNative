@@ -67,14 +67,14 @@ import ActivityQoin from './icons/ActivityQoin.svg';
 import ActivityXQ from './icons/ActivityXQ.svg';
 import DuotoneDefault from './icons/DuotoneDefault.svg';
 import DuotoneActive from './icons/DuotoneActive.svg';
-import SeasonLevelEs1 from './icons/seasonLevelEs1.svg';
-import SeasonLevelEs2 from './icons/seasonLevelEs2.svg';
-import SeasonLevelEs3 from './icons/seasonLevelEs3.svg';
-import SeasonLevelEs4 from './icons/seasonLevelEs4.svg';
-import SeasonLevelEn1 from './icons/seasonLevelEn1.svg';
-import SeasonLevelEn2 from './icons/seasonLevelEn2.svg';
-import SeasonLevelEn3 from './icons/seasonLevelEn3.svg';
-import SeasonLevelEn4 from './icons/seasonLevelEn4.svg';
+import SeasonLevelEs1 from './icons/SeasonLevelEs1.svg';
+import SeasonLevelEs2 from './icons/SeasonLevelEs2.svg';
+import SeasonLevelEs3 from './icons/SeasonLevelEs3.svg';
+import SeasonLevelEs4 from './icons/SeasonLevelEs4.svg';
+import SeasonLevelEn1 from './icons/SeasonLevelEn1.svg';
+import SeasonLevelEn2 from './icons/SeasonLevelEn2.svg';
+import SeasonLevelEn3 from './icons/SeasonLevelEn3.svg';
+import SeasonLevelEn4 from './icons/SeasonLevelEn4.svg';
 import SeasonLevelNoLevel from './icons/SeasonLevelNoLevel.svg';
 
 // Images

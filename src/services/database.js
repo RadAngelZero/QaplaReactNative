@@ -36,10 +36,11 @@ const DonationsCostsRef = database.ref('/DonationsCosts');
 const DonationsLeaderBoardRef = database.ref('/DonationsLeaderBoard');
 const LeaderBoardPrizesRef = database.ref('/LeaderBoardPrizes');
 const leaderboardWinnersRef = database.ref('/LeaderboardWinners');
-export const userStreamerRef = database.ref('/UserStreamer');
-export const streamersDonationsRef = database.ref('StreamersDonations');
+const userStreamerRef = database.ref('/UserStreamer');
+const streamersDonationsRef = database.ref('StreamersDonations');
 const userStreamsRewardsRef = database.ref('/UserStreamsRewards');
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
+const qaplaLevelsRequirementsRef = database.ref('QaplaLevelsRequirements');
 
 /**
  * Returns the userName of the specified user
@@ -1343,6 +1344,18 @@ export async function getUserDonationLeaderBoard(uid) {
  }
 
 // -----------------------------------------------
+// User Streamer
+// -----------------------------------------------
+
+/**
+ * Return all the streamers with premium status
+ * @returns {Object} Object of streamers
+ */
+export async function getPremiumStreamers() {
+    return await userStreamerRef.orderByChild('premium').equalTo(true).once('value');
+}
+
+// -----------------------------------------------
 // Support Streamer
 // -----------------------------------------------
 
@@ -1355,9 +1368,10 @@ export async function getUserDonationLeaderBoard(uid) {
  * @param {string} uid User identifier
  * @param {string} userName Qapla username
  * @param {string} twitchUserName Username of Twitch
+ * @param {string} userPhotoURL URL of the user profile photo
  * @param {string} streamerID Streamer uid
  */
-export async function sendCheers(amountQoins, message, timestamp, streamerName, uid, userName, twitchUserName, streamerID) {
+export async function sendCheers(amountQoins, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID) {
     const donationRef = streamersDonationsRef.child(streamerID).push({
         amountQoins,
         message,
@@ -1365,7 +1379,8 @@ export async function sendCheers(amountQoins, message, timestamp, streamerName, 
         uid,
         read: false,
         twitchUserName,
-        userName
+        userName,
+        photoURL: userPhotoURL
     });
 
     usersRef.child(uid).child('credits').transaction((credits) => {
@@ -1384,6 +1399,8 @@ export async function sendCheers(amountQoins, message, timestamp, streamerName, 
         return streamerQoins ? streamerQoins : amountQoins;
     });
 
+    await completeUserDonation(uid, amountQoins);
+
     database.ref('/StreamersDonationAdministrative').child(donationRef.key).set({
         amountQoins,
         message,
@@ -1394,4 +1411,61 @@ export async function sendCheers(amountQoins, message, timestamp, streamerName, 
         userName,
         streamerName
     });
+}
+
+/**
+ * Add the user the bits, lifes, points and qoins information on the UserRewardsProgress node
+ * (Information visible on the bottom sheet of the profile)
+ * @param {string} uid User identifier
+ * @param {number} qoinsDonated Number of qoins donated
+ */
+ export async function completeUserDonation(uid, qoinsDonated) {
+    const qoinsBase = (await getDonationQoinsBase()).val();
+    const pointsToAdd = qoinsDonated / qoinsBase;
+    const bitsToAddPerPoint = (await DonationsCostsRef.child('bitsBase').once('value')).val();
+
+    const rewardProgress = await usersRewardsProgressRef.child(uid).once('value');
+    let tensInPoints = Math.floor(pointsToAdd / 10);
+    const bitsToAdd = bitsToAddPerPoint * pointsToAdd;
+
+    if (!rewardProgress.exists()) {
+        const currentPoints = pointsToAdd - tensInPoints * 10;
+        const donations = {
+            bits:  bitsToAdd,
+            qoins: qoinsDonated
+        };
+
+        await usersRewardsProgressRef.child(uid).update({
+            currentPoints,
+            donations,
+            lifes: tensInPoints,
+            rewardsReedemed: 0
+        });
+    } else {
+        let currentPoints = rewardProgress.val().currentPoints + pointsToAdd;
+        tensInPoints = Math.floor(currentPoints / 10);
+        currentPoints -= tensInPoints * 10;
+        const donations = {
+            ...rewardProgress.val().donations,
+            bits: (rewardProgress.val().donations.bits ? rewardProgress.val().donations.bits : 0) + (bitsToAdd),
+            qoins: (rewardProgress.val().donations.qoins ? rewardProgress.val().donations.qoins : 0) + qoinsDonated
+        };
+
+        await usersRewardsProgressRef.child(uid).update({
+            currentPoints,
+            lifes: rewardProgress.val().lifes + tensInPoints,
+            donations
+        });
+    }
+}
+
+// -----------------------------------------------
+// Qapla Levels
+// -----------------------------------------------
+
+/**
+ * Return an array with the requirements and details of every qapla season level
+ */
+export async function getQaplaLevels() {
+    return await qaplaLevelsRequirementsRef.once('value');
 }

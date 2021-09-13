@@ -141,11 +141,12 @@
     "newUserProfileScreen": {
         "linkAccount": "Link account",
         "level": "Level",
+        "lastSeason": "Last season level",
         "qoins": "Qoins",
         "bitsTooltip": "Use your Qoins to support your favorite streamers. You need 200 Qoins for a donation",
         "next": "Next",
         "done": "Done",
-        "store": "Store"
+        "loots": "Loots"
     },
     "notificationsScreen": {
         "notificationsHeader": "Notifications",
@@ -428,10 +429,10 @@
     "rewardsBottomSheet": {
         "rewards": "Rewards",
         "transactions": "Transactions",
-        "donation": "Donation",
+        "donation": "Qoins donated",
         "rewardRedeemed": "Reward redeemed",
         "redeemPrize": "Redeem Prize",
-        "rewardsTooltip": "Every donation you make fills your reward life-bar. Use your life hearts to buy from the store :D",
+        "rewardsTooltip": "Every donation you make fills your reward life-bar. Use your life hearts to buy from the loots :D",
         "next": "Next",
         "done": "Done"
     },
@@ -464,5 +465,11 @@
         "sending": "Sending...",
         "skip": "Skip",
         "next": "Next"
+    },
+    "LevelInformationModal": {
+        "getMoreQoins": "Get more Qoins!",
+        "bodyTextOne": "Raise your level each season by accumulating XQ and mine more Qoins in the streams you participate in.",
+        "bodyTextTwo": "Your level from the last season determines the amount of Qoins you mine per stream.",
+        "gotIt": "Got It!"
     }
 }

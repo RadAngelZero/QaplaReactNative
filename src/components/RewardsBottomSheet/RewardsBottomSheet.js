@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Linking, TouchableWithoutFeedback, View, TouchableOpacity, Platform } from 'react-native';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
+import Svg from 'react-native-svg';
 
 import styles from './style';
 import QaplaText from '../QaplaText/QaplaText';
@@ -140,30 +141,19 @@ class RewardsBottomSheet extends Component {
                                         {translate('rewardsBottomSheet.donation')}
                                     </QaplaText>
                                     <QaplaText style={styles.transactionDescription}>
-                                        {translate('rewardsBottomSheet.donation')}
-                                    </QaplaText>
-                                    <QaplaText style={styles.transactionDescription}>
                                         {translate('rewardsBottomSheet.rewardRedeemed')}
                                     </QaplaText>
                                 </View>
                                 <View style={styles.transactionSummaryValue}>
                                     <QaplaText style={styles.transactionValue}>
-                                        {this.props.rewards.donations && this.props.rewards.donations.bits ? this.props.rewards.donations.bits : 0}
-                                    </QaplaText>
-                                    <QaplaText style={styles.transactionValue}>
-                                        {this.props.rewards.donations && this.props.rewards.donations.stars ? this.props.rewards.donations.stars : 0}
+                                        {this.props.rewards.donations && this.props.rewards.donations.qoins ? this.props.rewards.donations.qoins : 0}
                                     </QaplaText>
                                     <QaplaText style={styles.transactionValue}>
                                         {this.props.rewards.rewardsReedemed ? this.props.rewards.rewardsReedemed : 0}
                                     </QaplaText>
                                 </View>
                                 <View style={styles.transactionSummaryValue}>
-                                    <Images.svg.donatedBitIcon
-                                        color='#FFF'
-                                        style={styles.transactionIcon} />
-                                    <Images.svg.donatedStarIcon
-                                        color='#FFF'
-                                        style={styles.transactionIcon} />
+                                    <Svg width="11px" height="14px" viewBox="0 0 11 14" />
                                     <Images.svg.lifeIcon
                                         color='#FFF'
                                         style={styles.transactionIcon}

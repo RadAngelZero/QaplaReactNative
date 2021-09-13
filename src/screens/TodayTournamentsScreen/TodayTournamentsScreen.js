@@ -6,6 +6,9 @@ import styles from './style';
 import LogrosList from '../../components/LogroCard/LogrosList';
 import QaplaText from '../../components/QaplaText/QaplaText';
 
+/**
+ * @deprecated
+ */
 class TodayTournamentsScreen extends Component {
     render() {
         let logros = this.props.events.filter((event) => {

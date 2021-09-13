@@ -10,7 +10,7 @@ import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } fr
 import Colors from '../../utilities/Colors';
 import Hearts from '../UserProfileRewards/Hearts';
 import ProgressBar from '../UserProfileRewards/Bar';
-import { userStreamerRef, sendCheers, updateTwitchUsername } from '../../services/database';
+import { getPremiumStreamers, sendCheers, updateTwitchUsername } from '../../services/database';
 import { getTwitchDataCloudFunction } from '../../services/functions';
 
 const LeftArrowThiccIcon = Images.svg.leftArrowThiccIcon;
@@ -23,9 +23,8 @@ export default class FormularioCheers extends React.Component {
 		screen: 'selection',
 		sendingCheers: false,
 		sendCheersButtonAnimation: new Animated.Value(0),
+		streamersData: []
 	};
-
-	DATA = [];
 
 	componentDidMount() {
 		this.getStreamers();
@@ -57,19 +56,27 @@ export default class FormularioCheers extends React.Component {
 	}
 
 	getStreamers = async () => {
-		let now = new Date();
-		let twoWeeksAgoCalc = now.getDate() - 14;
-		let twoWeeksAgo = new Date().setDate(twoWeeksAgoCalc);
-
-		const streamers = await userStreamerRef.once('value');
+		const streamersBlackList = ['141617732', '683167758', '613408163', '180517858', '448926957', '140436068', '528477359'];
+		const streamers = await getPremiumStreamers();
 		if (streamers.exists()) {
-			streamers.forEach((element) => {
-				if (!element.val().lastStreamTs || parseInt(element.val().lastStreamTs) < parseInt(twoWeeksAgo / 1000)) return;
-
-				this.DATA.push({ streamer: element.val().displayName, imgUrl: element.val().photoUrl, streamerID: element.key });
+			const streamersData = [];
+			streamers.forEach((streamer) => {
+				if (!streamersBlackList.includes(streamer.val().id)) {
+					streamersData.push({
+						streamer: streamer.val().displayName,
+						/**
+						 * If the streamer change their profile image on Twitch the link on the database
+						 * will not contain any photo to show until the streamer update their information
+						 * on the dashboard (this is automatically done every time the streamer SignIn on the
+						 * dashboard or any time a token is refreshed)
+						 */
+						imgUrl: streamer.val().photoUrl,
+						streamerID: streamer.key
+					});
+				}
 			});
 
-			return;
+			this.setState({ streamersData });
 		}
 	}
 
@@ -79,7 +86,7 @@ export default class FormularioCheers extends React.Component {
 		const twitchData = await getTwitchDataCloudFunction(this.props.twitchId);
 		await updateTwitchUsername(this.props.uid, twitchData.data.display_name);
 		if (this.props.qoinsToDonate > 0) {
-			await sendCheers(this.props.qoinsToDonate, this.state.message, parseInt(now / 1000), this.state.selectedStreamer, this.props.uid, this.props.userName, twitchData.data.display_name, this.state.selectedStreamerID);
+			await sendCheers(this.props.qoinsToDonate, this.state.message, now.getTime(), this.state.selectedStreamer, this.props.uid, this.props.userName, twitchData.data.display_name, this.props.userPhotoURL, this.state.selectedStreamerID);
 		}
 
 		this.setState({ screen: 'complete' });
@@ -317,15 +324,15 @@ export default class FormularioCheers extends React.Component {
 										onChangeText={(message) => this.setState({ message })}
 										value={this.state.message}
 										multiline={true}
-										maxLength={256}
+										maxLength={160}
 									/>
 									<View>
 										<Text style={{
-											color: this.state.message.length === 256 ? '#c00' : this.state.message.length > 173 ? '#cc0' : '#ccc',
+											color: this.state.message.length === 160 ? '#c00' : this.state.message.length > 125 ? '#cc0' : '#ccc',
 											alignSelf: 'flex-end',
 											marginRight: '2%'
 										}}>
-											{this.state.message.length}/256
+											{this.state.message.length}/160
 										</Text>
 									</View>
 								</View>
@@ -345,7 +352,7 @@ export default class FormularioCheers extends React.Component {
 										alignItems: 'flex-start',
 									}}>
 									<FlatList
-										data={this.DATA}
+										data={this.state.streamersData}
 										renderItem={this.renderItem}
 										keyExtractor={item => item.streamer}
 										extraData={this.state.selectedStreamer}

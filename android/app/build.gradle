@@ -199,6 +199,8 @@ dependencies {
     implementation "com.google.firebase:firebase-dynamic-links:19.0.0"
     implementation "com.google.firebase:firebase-invites:17.0.0"
     implementation "com.google.firebase:firebase-config:17.0.0"
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+    implementation project(":react-native-fbsdk")
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

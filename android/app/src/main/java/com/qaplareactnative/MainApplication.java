@@ -3,6 +3,7 @@ package com.qaplareactnative;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.facebook.reactnative.androidsdk.BuildConfig;
 import com.segment.analytics.reactnative.core.RNAnalyticsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
   private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
+
   protected static CallbackManager getCallbackManager() {
     return mCallbackManager;
   }

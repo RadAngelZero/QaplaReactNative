@@ -132,7 +132,6 @@ export default class FormularioCheers extends React.Component {
 			this.setState({ chatResponse: true })
 		}, Math.floor(Math.random() * (2500 - 1200 + 1) + 1200))
 		let now = new Date();
-		this.setState({ sendingCheers: true });
 		const twitchData = await getTwitchDataCloudFunction(this.props.twitchId);
 		await updateTwitchUsername(this.props.uid, twitchData.data.display_name);
 		if (this.props.qoinsToDonate > 0) {

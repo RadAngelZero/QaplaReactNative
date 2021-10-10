@@ -25,7 +25,6 @@ export default class FormularioCheers extends React.Component {
 		selectedStreamerID: '',
 		message: '',
 		screen: 'selection',
-		sendingCheers: false,
 		sendCheersButtonAnimation: new Animated.Value(0),
 		streamersData: [],
 		profilePlaceholderImages: [],
@@ -150,7 +149,7 @@ export default class FormularioCheers extends React.Component {
 	onBackToProfile = () => {
 		if (this.state.messageSent && !this.state.chatResponse) return true
 		if (this.state.screen === 'message' && !this.state.messageSent) return this.setState({ screen: 'selection', message: '' })
-		this.setState({ screen: 'selection', selectedStreamer: '', selectedStreamerID: '', message: '', sendingCheers: false, messageSent: false, chatResponse: false });
+		this.setState({ screen: 'selection', selectedStreamer: '', selectedStreamerID: '', message: '', messageSent: false, chatResponse: false });
 		this.state.sendCheersButtonAnimation.setValue(0);
 		this.props.onClose();
 	}
@@ -471,7 +470,6 @@ export default class FormularioCheers extends React.Component {
 							<TouchableHighlight
 								style={{ flex: 1 }}
 								underlayColor="#2aa897"
-								disabled={this.state.sendingCheers}
 								onPress={this.state.screen === 'selection' ?
 									() => {
 										this.setState({ screen: 'message' })
@@ -481,13 +479,10 @@ export default class FormularioCheers extends React.Component {
 									} : this.state.chatResponse ? this.onBackToProfile : this.sendCheersButton}
 							>
 								<QaplaText style={styles.continueButtonText}>
-									{this.state.sendingCheers ?
-										translate('sendCheersModal.sending')
+									{this.state.screen === 'message' && this.state.messageSent ?
+										translate('sendCheersModal.backToProfile')
 										:
-										this.state.screen === 'message' && this.state.messageSent ?
-											translate('sendCheersModal.backToProfile')
-											:
-											translate('sendCheersModal.next')
+										translate('sendCheersModal.next')
 									}
 								</QaplaText>
 							</TouchableHighlight>

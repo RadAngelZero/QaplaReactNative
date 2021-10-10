@@ -8,7 +8,7 @@ export default styles = StyleSheet.create({
         flex: 1,
     },
     bgView: {
-        backgroundColor: 'rgb(4, 6, 22)',
+        backgroundColor: '#0D1021',
         position: 'absolute',
         left: 0,
         right: 0,

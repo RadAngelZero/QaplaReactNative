@@ -96,6 +96,11 @@ export default class FormularioCheers extends React.Component {
 
 	selectChatResponse = async () => {
 		let messageLenght = this.state.message.length
+		if (this.state.message.length == 1) {
+			if (this.state.message == ' ') {
+				messageLenght = 0
+			}
+		}
 		let typeOfResponse = 'none'
 		let chatResponsePharaseP1 = ''
 		let chatResponsePharaseP2 = ''
@@ -110,7 +115,7 @@ export default class FormularioCheers extends React.Component {
 		let randomNum = Math.floor(Math.random() * firsPartArr.length)
 		if (typeof firsPartArr[0] == 'object') {
 			firsPartArr.forEach(element => {
-				arr = Object.values(element)
+				let arr = Object.values(element)
 				randomNum = Math.floor(Math.random() * arr.length)
 				chatResponsePharaseP1 += arr[randomNum]
 			});
@@ -125,6 +130,14 @@ export default class FormularioCheers extends React.Component {
 	}
 
 	sendCheersButton = async () => {
+		if (this.state.message.includes('\n')) {
+			let message = this.state.message.replaceAll('\n', '')
+			this.setState({ message })
+		}
+		if (this.state.message.includes('  ')) {
+			let message = this.state.message.replaceAll('  ', ' ')
+			this.setState({ message })
+		}
 		this.setState({ messageSent: true })
 		this.selectChatResponse()
 		setTimeout(() => {
@@ -134,7 +147,7 @@ export default class FormularioCheers extends React.Component {
 		const twitchData = await getTwitchDataCloudFunction(this.props.twitchId);
 		await updateTwitchUsername(this.props.uid, twitchData.data.display_name);
 		if (this.props.qoinsToDonate > 0) {
-			await sendCheers(this.props.qoinsToDonate, this.state.message, now.getTime(), this.state.selectedStreamer, this.props.uid, this.props.userName, twitchData.data.display_name, this.props.userPhotoURL, this.state.selectedStreamerID);
+			await sendCheers(this.props.qoinsToDonate, this.state.message === ' ' ? '' : this.state.message, now.getTime(), this.state.selectedStreamer, this.props.uid, this.props.userName, twitchData.data.display_name, this.props.userPhotoURL, this.state.selectedStreamerID);
 		}
 	}
 
@@ -415,6 +428,9 @@ export default class FormularioCheers extends React.Component {
 										let toSet = message
 										if (message.includes('\n')) {
 											toSet = message.replace('\n', '')
+										}
+										if (message.includes('  ')) {
+											toSet = message.replace('  ', ' ')
 										}
 										this.setState({ message: toSet })
 									}}

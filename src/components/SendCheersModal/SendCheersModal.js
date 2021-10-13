@@ -8,8 +8,6 @@ import QaplaText from '../../components/QaplaText/QaplaText';
 import { translate } from '../../utilities/i18';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import Colors from '../../utilities/Colors';
-import Hearts from '../UserProfileRewards/Hearts';
-import ProgressBar from '../UserProfileRewards/Bar';
 import ChatAnimatedDots from '../ChatAnimatedDots/ChatAnimatedDots';
 import { getPremiumStreamers, sendCheers, updateTwitchUsername } from '../../services/database';
 import { getTwitchDataCloudFunction } from '../../services/functions';

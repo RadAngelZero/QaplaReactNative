@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Animated, Easing } from 'react-native';
-import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 import style from './style';
 
@@ -72,7 +72,7 @@ export default class ChatAnimatedDots extends Component {
                     opacity: this.state.dot1Transparency
                 }]} />
                 <Animated.View style={[style.dot, {
-                    marginHorizontal: getScreenSizeMultiplier() * 7,
+                    marginHorizontal: widthPercentageToPx(2),
                     opacity: this.state.dot2Transparency
                 }]} />
                 <Animated.View style={[style.dot, {

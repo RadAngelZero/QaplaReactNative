@@ -6,7 +6,7 @@ import Images from '../../../assets/images';
 import styles from './style';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import { translate } from '../../utilities/i18';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import Colors from '../../utilities/Colors';
 import Hearts from '../UserProfileRewards/Hearts';
 import ProgressBar from '../UserProfileRewards/Bar';
@@ -140,6 +140,7 @@ export default class FormularioCheers extends React.Component {
 		}
 		this.setState({ messageSent: true })
 		this.selectChatResponse()
+		// Random timeout to show chatbot animation response after sending Qoins message
 		setTimeout(() => {
 			this.setState({ chatResponse: true })
 		}, Math.floor(Math.random() * (2500 - 1200 + 1) + 1200))
@@ -242,21 +243,6 @@ export default class FormularioCheers extends React.Component {
 							<LeftArrowThiccIcon />
 						</View>
 					</TouchableOpacity>
-					<LinearGradient
-						start={{
-							x: this.state.screen === 'complete' ? -0.03 : 0.44,
-							y: this.state.screen === 'complete' ? -0.08 : -0.04,
-						}}
-						end={{
-							x: this.state.screen === 'complete' ? 1.00 : 0.6,
-							y: this.state.screen === 'complete' ? 0.84 : 1.06,
-						}}
-						locations={[0, 1]}
-						colors={this.state.screen === 'complete' ? ['rgb(167, 22, 238)', 'rgb(44, 7, 250)'] : ['rgb(13, 16, 34)', 'rgb(13, 16, 34)']}
-						style={[styles.modalBgViewLinearGradient, { marginTop: this.state.screen === 'complete' ? getScreenSizeMultiplier() * -10 : getScreenSizeMultiplier() * 12, }]}>
-						<View
-							style={styles.modalBgView} />
-					</LinearGradient>
 				</View>
 				<Animated.View
 					pointerEvents="box-none"
@@ -264,12 +250,14 @@ export default class FormularioCheers extends React.Component {
 						position: 'absolute',
 						width: '90%',
 						alignSelf: 'center',
-						top: getScreenSizeMultiplier() * 120,
-						bottom: this.state.sendCheersButtonAnimation.interpolate({ inputRange: [0, 1], outputRange: [getScreenSizeMultiplier() * -120, getScreenSizeMultiplier() * 28] }),
+						top: heightPercentageToPx(16),
+						bottom: this.state.sendCheersButtonAnimation.interpolate({ inputRange: [0, 1], outputRange: [heightPercentageToPx(-14), heightPercentageToPx(6.2)] }),
 					}}>
 					{this.state.screen === 'message' ?
 						<ScrollView>
-							<Text style={styles.titleText}>{translate('sendCheersModal.wantToSaySomething')}{'\n'}💬</Text>
+							{!this.state.messageSent &&
+								<Text style={styles.titleText}>{translate('sendCheersModal.wantToSaySomething')}{'\n'}💬</Text>
+							}
 						</ScrollView>
 						:
 						<>
@@ -304,19 +292,20 @@ export default class FormularioCheers extends React.Component {
 						bottom: '2%',
 						width: '90%',
 						alignSelf: 'center',
-						marginHorizontal: '1%'
+						marginHorizontal: '1%',
+						overflow: 'scroll'
 					}}>
 						<View style={{
 							flex: 1,
 							flexDirection: 'row',
-							height: getScreenSizeMultiplier() * 32,
-							marginBottom: getScreenSizeMultiplier() * 10
+							height: heightPercentageToPx(4.2),
+							marginBottom: heightPercentageToPx(1.2),
 						}}>
 							<LinearGradient
 								style={{
 									flex: 1,
-									height: getScreenSizeMultiplier() * 32,
-									maxWidth: getScreenSizeMultiplier() * 32,
+									height: heightPercentageToPx(4.2),
+									maxWidth: heightPercentageToPx(4.2),
 									borderRadius: 100,
 									overflow: 'hidden'
 								}}
@@ -327,34 +316,35 @@ export default class FormularioCheers extends React.Component {
 								<Image
 									style={{
 										flex: 1,
-										height: getScreenSizeMultiplier() * 32,
-										width: getScreenSizeMultiplier() * 32,
+										height: heightPercentageToPx(4.2),
+										width: heightPercentageToPx(4.2),
 									}}
 									source={this.state.tempChatProfileImage} />
 							</LinearGradient>
 							<View style={{
 								flex: 1,
 								justifyContent: 'center',
-								marginLeft: getScreenSizeMultiplier() * 8,
+								marginLeft: widthPercentageToPx(2),
 							}}>
 								<Text style={{
 									color: 'white',
-									fontSize: getScreenSizeMultiplier() * 14
+									fontSize: widthPercentageToPx(4)
 								}}>Qaplita</Text>
 							</View>
 						</View>
 						<View style={{
-							marginBottom: getScreenSizeMultiplier() * 20,
-							borderRadius: getScreenSizeMultiplier() * 18,
-							borderTopLeftRadius: getScreenSizeMultiplier() * 4,
-							paddingVertical: getScreenSizeMultiplier() * 16,
-							paddingHorizontal: getScreenSizeMultiplier() * 24,
-							width: '80%',
+							marginBottom: heightPercentageToPx(3),
+							borderRadius: heightPercentageToPx(2.2),
+							borderTopLeftRadius: heightPercentageToPx(0.4),
+							paddingVertical: heightPercentageToPx(2),
+							paddingHorizontal: widthPercentageToPx(5.6),
+							maxWidth: widthPercentageToPx(75),
+							alignSelf:'flex-start',
 							backgroundColor: '#141539'
 						}}>
 							<Text style={{
 								color: 'white',
-								fontSize: getScreenSizeMultiplier() * 14
+								fontSize: widthPercentageToPx(4)
 							}}>
 								{translate('sendCheersModal.tellUs')} <Text style={{ color: '#00FFDD' }}>{this.state.selectedStreamer}</Text>?
 							</Text>
@@ -364,29 +354,30 @@ export default class FormularioCheers extends React.Component {
 								<>
 									<View style={{
 										alignSelf: 'flex-end',
-										marginBottom: getScreenSizeMultiplier() * 20,
-										borderRadius: getScreenSizeMultiplier() * 18,
-										borderBottomRightRadius: getScreenSizeMultiplier() * 4,
-										paddingVertical: getScreenSizeMultiplier() * 16,
-										paddingHorizontal: getScreenSizeMultiplier() * 24,
-										width: '80%',
+										marginBottom: heightPercentageToPx(3),
+										borderRadius: heightPercentageToPx(2.2),
+										borderBottomRightRadius: heightPercentageToPx(0.4),
+										paddingVertical: heightPercentageToPx(2),
+										paddingHorizontal: widthPercentageToPx(5.6),
+										maxWidth: widthPercentageToPx(75),
 										backgroundColor: '#3D42DF'
 									}}>
 										<Text style={{
 											color: 'white',
-											fontSize: getScreenSizeMultiplier() * 14
+											fontSize: widthPercentageToPx(4)
 										}}>
 											{this.state.message}
 										</Text>
 									</View>
 									<View style={{
 										flexDirection: 'row',
-										marginBottom: getScreenSizeMultiplier() * this.state.chatResponse ? 64 : 20,
-										borderRadius: getScreenSizeMultiplier() * 18,
-										borderTopLeftRadius: getScreenSizeMultiplier() * 4,
-										paddingVertical: getScreenSizeMultiplier() * 16,
-										paddingHorizontal: getScreenSizeMultiplier() * 23,
-										width: this.state.chatResponse ? '80%' : getScreenSizeMultiplier() * 96,
+										marginBottom: this.state.chatResponse ? heightPercentageToPx(6) : heightPercentageToPx(3),
+										borderRadius: heightPercentageToPx(2.2),
+										borderTopLeftRadius: heightPercentageToPx(0.4),
+										paddingVertical: heightPercentageToPx(2),
+										paddingHorizontal: widthPercentageToPx(4.4),
+										maxWidth: widthPercentageToPx(75),
+										alignSelf: 'flex-start',
 										backgroundColor: '#141539'
 									}}>
 										{
@@ -411,18 +402,18 @@ export default class FormularioCheers extends React.Component {
 						}}>
 							<View style={{
 								flex: 8,
-								maxHeight: getScreenSizeMultiplier() * 165,
+								maxHeight: heightPercentageToPx(15),
 								width: '95%',
 								backgroundColor: '#141539',
 								alignSelf: 'center',
-								borderRadius: getScreenSizeMultiplier() * 18,
+								borderRadius: heightPercentageToPx(2.2),
 							}}>
 								<TextInput
 									style={{
 										color: '#fff',
 										paddingHorizontal: '6%',
-										paddingVertical: this.state.message !== '' && !this.state.messageSent ? '6%' : '2%',
-										maxHeight: getScreenSizeMultiplier() * 130,
+										paddingVertical: this.state.message !== '' && !this.state.messageSent ? heightPercentageToPx(2) : heightPercentageToPx(1),
+										maxHeight: heightPercentageToPx(15),
 									}}
 									onChangeText={(message) => {
 										let toSet = message
@@ -437,7 +428,7 @@ export default class FormularioCheers extends React.Component {
 									value={this.state.messageSent ? '' : this.state.message}
 									multiline={true}
 									maxLength={160}
-									placeholder={'Opcional, pulsa enviar para saltar'}
+									placeholder={translate('sendCheersModal.optionalMessage')}
 									placeholderTextColor={'#fff4'}
 									editable={!this.state.messageSent}
 								/>
@@ -446,18 +437,20 @@ export default class FormularioCheers extends React.Component {
 								flex: 1,
 								alignSelf: 'flex-end',
 								justifyContent: 'flex-end',
-								height: getScreenSizeMultiplier() * 40,
-								paddingLeft: '4%',
+								alignContent: 'center',
+								height: heightPercentageToPx(8),
+								// paddingLeft: '4%',
 								opacity: this.state.messageSent ? 0.4 : 1
 							}}
 								onPress={this.sendCheersButton}
 								disabled={this.state.messageSent}>
 								<View style={{
-									width: getScreenSizeMultiplier() * 30,
-									height: getScreenSizeMultiplier() * 30,
+									width: heightPercentageToPx(6),
+									height: heightPercentageToPx(6),
 									flex: 1,
 									justifyContent: 'center',
 									alignContent: 'center',
+									alignItems:'center',
 								}}>
 									<SendChat />
 								</View>
@@ -473,8 +466,8 @@ export default class FormularioCheers extends React.Component {
 								bottom: 0,
 								width: '100%',
 								backgroundColor: Colors.greenQapla,
-								borderTopLeftRadius: getScreenSizeMultiplier() * 15,
-								borderTopRightRadius: getScreenSizeMultiplier() * 15,
+								borderTopLeftRadius: heightPercentageToPx(2),
+								borderTopRightRadius: heightPercentageToPx(2),
 								overflow: 'hidden'
 							},
 							{

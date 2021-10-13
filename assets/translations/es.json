@@ -466,6 +466,7 @@
         "skip": "Omitir",
         "next": "Siguiente",
         "tellUs": "🗣 ¡Dinos!, ¿Qué le quieres decir a",
+        "optionalMessage": "Opcional, pulsa enviar para saltar",
         "chatResponsePharases": {
             "none": {
                 "part1": {

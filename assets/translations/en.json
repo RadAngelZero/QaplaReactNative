@@ -466,6 +466,7 @@
         "skip": "Skip",
         "next": "Next",
         "tellUs": "🗣 Tell us!, what do you want to say to",
+        "optionalMessage": "Optional, press send to skip",
         "chatResponsePharases": {
             "none": {
                 "part1": {

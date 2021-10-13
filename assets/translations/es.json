@@ -464,7 +464,54 @@
         "selectYourStreamer": "Selecciona al streamer que quieras apoyar",
         "sending": "Enviando...",
         "skip": "Omitir",
-        "next": "Siguiente"
+        "next": "Siguiente",
+        "tellUs": "🗣 ¡Dinos!, ¿Qué le quieres decir a",
+        "optionalMessage": "Opcional, pulsa enviar para saltar",
+        "chatResponsePharases": {
+            "none": {
+                "part1": {
+                    "nonep1s1": "¿Sin palabras?, ",
+                    "nonep1s2": "¿Nada que decir?, "
+                },
+                "part2": {
+                    "nonep2s1": "no te sientas mal, ",
+                    "nonep2s2": "no te preocupes, "
+                }
+            },
+            "short": {
+                "short1": "Un mensaje breve, ",
+                "short2": "Un mensaje corto, ",
+                "short3": "Una persona de pocas palabras, "
+            },
+            "medium": {
+                "medium1": "Buena elección de palabras, ",
+                "medium2": "Gran elección de palabras, ",
+                "medium3": "Bonitas palabras, "
+            },
+            "long": {
+                "long1": "Eso es mucho texto, ",
+                "long2": "Es un gran párrafo, ",
+                "long3": "Esas son muchas palabras, ",
+                "long4": "WOW, eso es mucho texto, ",
+                "long5": "WOW, es un gran párrafo, ",
+                "long6": "WOW, esas son muchas palabras, "
+            },
+            "secondPart": {
+                "secondPart1": " apreciará mucho tu apoyo.",
+                "secondPart2": " amará mucho tu apoyo.",
+                "secondPart3": " estará muy fascinado por tu apoyo.",
+                "secondPart4": " estará muy encantado por tu apoyo.",
+                "secondPart5": " estará muy feliz por tu apoyo"
+            },
+            "willBeSent": {
+                "willBeSent1": "Le haremos llegar tus Qoins de inmediato",
+                "willBeSent2": "Le haremos llegar tus Qoins en este instante",
+                "willBeSent3": "Le haremos llegar tus Qoins ahora mismo",
+                "willBeSent4": "De inmediato le haremos llegar tus Qoins",
+                "willBeSent5": "En este instante le haremos llegar tus Qoins",
+                "willBeSent6": "Ahora mismo le haremos llegar tus Qoins"
+            }
+        }
     },
     "LevelInformationModal": {
         "getMoreQoins": "¡Recibe más Qoins!",

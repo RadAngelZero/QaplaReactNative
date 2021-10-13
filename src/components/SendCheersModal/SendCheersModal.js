@@ -1,33 +1,43 @@
 import React from 'react';
-import { Image, Text, View, Modal, FlatList, TouchableOpacity, TouchableHighlight, TextInput, Keyboard, Animated, Easing, ScrollView } from 'react-native';
+import { Image, Text, View, Modal, FlatList, TouchableOpacity, TouchableHighlight, TextInput, Keyboard, Animated, Easing, ScrollView, BackHandler } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import Images from '../../../assets/images';
 import styles from './style';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import { translate } from '../../utilities/i18';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import Colors from '../../utilities/Colors';
 import Hearts from '../UserProfileRewards/Hearts';
 import ProgressBar from '../UserProfileRewards/Bar';
+import ChatAnimatedDots from '../ChatAnimatedDots/ChatAnimatedDots';
 import { getPremiumStreamers, sendCheers, updateTwitchUsername } from '../../services/database';
 import { getTwitchDataCloudFunction } from '../../services/functions';
+import images from '../../../assets/images';
 
 const LeftArrowThiccIcon = Images.svg.leftArrowThiccIcon;
+const SendChat = Images.svg.sendChat;
 
 export default class FormularioCheers extends React.Component {
+
 	state = {
 		selectedStreamer: '',
 		selectedStreamerID: '',
 		message: '',
 		screen: 'selection',
-		sendingCheers: false,
 		sendCheersButtonAnimation: new Animated.Value(0),
-		streamersData: []
+		streamersData: [],
+		profilePlaceholderImages: [],
+		tempChatProfileImage: '',
+		chatResponsePharaseP1: '',
+		chatResponsePharaseP2: '',
+		messageSent: false,
+		chatResponse: false,
 	};
 
 	componentDidMount() {
 		this.getStreamers();
+		this.fetchProfilePlaceholderImages();
 		this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', () => {
 			Animated.timing(this.state.sendCheersButtonAnimation, {
 				toValue: 0,
@@ -44,11 +54,15 @@ export default class FormularioCheers extends React.Component {
 				useNativeDriver: false,
 			}).start();
 		})
+		this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+			return this.onBackToProfile
+		})
 	}
 
 	componentWillUnmount() {
 		this.keyboardWillHideListener.remove();
 		this.keyboardWillShowListener.remove();
+		this.backHandler.remove();
 	}
 
 	hideKeyboard = () => {
@@ -80,26 +94,76 @@ export default class FormularioCheers extends React.Component {
 		}
 	}
 
+	selectChatResponse = async () => {
+		let messageLenght = this.state.message.length
+		if (this.state.message.length == 1) {
+			if (this.state.message == ' ') {
+				messageLenght = 0
+			}
+		}
+		let typeOfResponse = 'none'
+		let chatResponsePharaseP1 = ''
+		let chatResponsePharaseP2 = ''
+		let emojis = ['🥰', '😉', '❤', '💞', '💓', '💗', '💖']
+		let randomEmoji = emojis[Math.floor(Math.random() * emojis.length)]
+		if (messageLenght > 0 && messageLenght <= 54) typeOfResponse = 'short'
+		if (messageLenght > 54 && messageLenght <= 108) typeOfResponse = 'medium'
+		if (messageLenght > 108) typeOfResponse = 'long'
+		let firsPartArr = Object.values(translate('sendCheersModal.chatResponsePharases.' + typeOfResponse))
+		let secondPartArr = Object.values(translate('sendCheersModal.chatResponsePharases.secondPart'))
+		let willBeSentArr = Object.values(translate('sendCheersModal.chatResponsePharases.willBeSent'))
+		let randomNum = Math.floor(Math.random() * firsPartArr.length)
+		if (typeof firsPartArr[0] == 'object') {
+			firsPartArr.forEach(element => {
+				let arr = Object.values(element)
+				randomNum = Math.floor(Math.random() * arr.length)
+				chatResponsePharaseP1 += arr[randomNum]
+			});
+		} else {
+			chatResponsePharaseP1 += firsPartArr[randomNum]
+		}
+		randomNum = Math.floor(Math.random() * secondPartArr.length)
+		chatResponsePharaseP2 += secondPartArr[randomNum] + '\n'
+		randomNum = Math.floor(Math.random() * willBeSentArr.length)
+		chatResponsePharaseP2 += willBeSentArr[randomNum] + ' ' + randomEmoji
+		this.setState({ chatResponsePharaseP1, chatResponsePharaseP2 })
+	}
+
 	sendCheersButton = async () => {
+		if (this.state.message.includes('\n')) {
+			let message = this.state.message.replaceAll('\n', '')
+			this.setState({ message })
+		}
+		if (this.state.message.includes('  ')) {
+			let message = this.state.message.replaceAll('  ', ' ')
+			this.setState({ message })
+		}
+		this.setState({ messageSent: true })
+		this.selectChatResponse()
+		// Random timeout to show chatbot animation response after sending Qoins message
+		setTimeout(() => {
+			this.setState({ chatResponse: true })
+		}, Math.floor(Math.random() * (2500 - 1200 + 1) + 1200))
 		let now = new Date();
-		this.setState({ sendingCheers: true });
 		const twitchData = await getTwitchDataCloudFunction(this.props.twitchId);
 		await updateTwitchUsername(this.props.uid, twitchData.data.display_name);
 		if (this.props.qoinsToDonate > 0) {
-			await sendCheers(this.props.qoinsToDonate, this.state.message, now.getTime(), this.state.selectedStreamer, this.props.uid, this.props.userName, twitchData.data.display_name, this.props.userPhotoURL, this.state.selectedStreamerID);
+			await sendCheers(this.props.qoinsToDonate, this.state.message === ' ' ? '' : this.state.message, now.getTime(), this.state.selectedStreamer, this.props.uid, this.props.userName, twitchData.data.display_name, this.props.userPhotoURL, this.state.selectedStreamerID);
 		}
+	}
 
-		this.setState({ screen: 'complete' });
-		Animated.timing(this.state.sendCheersButtonAnimation, {
-			toValue: 0,
-			duration: 300,
-			easing: Easing.cubic,
-			useNativeDriver: false,
-		}).start();
+	fetchProfilePlaceholderImages = async () => {
+		let profilePlaceholderImages = []
+		for (let counter = 1; images.png['profileImagePlaceholder' + counter] !== undefined; counter++) {
+			profilePlaceholderImages.push(images.png['profileImagePlaceholder' + counter].img)
+		}
+		this.setState({ profilePlaceholderImages })
 	}
 
 	onBackToProfile = () => {
-		this.setState({ screen: 'selection', selectedStreamer: '', selectedStreamerID: '', message: '', sendingCheers: false });
+		if (this.state.messageSent && !this.state.chatResponse) return true
+		if (this.state.screen === 'message' && !this.state.messageSent) return this.setState({ screen: 'selection', message: '' })
+		this.setState({ screen: 'selection', selectedStreamer: '', selectedStreamerID: '', message: '', messageSent: false, chatResponse: false });
 		this.state.sendCheersButtonAnimation.setValue(0);
 		this.props.onClose();
 	}
@@ -165,11 +229,7 @@ export default class FormularioCheers extends React.Component {
 						alignItems: 'flex-start',
 					}}>
 					<TouchableOpacity
-						onPress={() => {
-							this.setState({ selectedStreamer: '', screen: 'selection' });
-							this.state.sendCheersButtonAnimation.setValue(0);
-							this.props.onClose();
-						}}
+						onPress={this.onBackToProfile}
 						style={[styles.arrowLeftCircleCopyImage, {
 							opacity: this.state.screen === 'complete' ? 0 : 1,
 						}]}
@@ -183,21 +243,6 @@ export default class FormularioCheers extends React.Component {
 							<LeftArrowThiccIcon />
 						</View>
 					</TouchableOpacity>
-					<LinearGradient
-						start={{
-							x: this.state.screen === 'complete' ? -0.03 : 0.44,
-							y: this.state.screen === 'complete' ? -0.08 : -0.04,
-						}}
-						end={{
-							x: this.state.screen === 'complete' ? 1.00 : 0.6,
-							y: this.state.screen === 'complete' ? 0.84 : 1.06,
-						}}
-						locations={[0, 1]}
-						colors={this.state.screen === 'complete' ? ['rgb(167, 22, 238)', 'rgb(44, 7, 250)'] : ['rgb(13, 16, 34)', 'rgb(13, 16, 34)']}
-						style={[styles.modalBgViewLinearGradient, { marginTop: this.state.screen === 'complete' ? getScreenSizeMultiplier() * -10 : getScreenSizeMultiplier() * 12, }]}>
-						<View
-							style={styles.modalBgView} />
-					</LinearGradient>
 				</View>
 				<Animated.View
 					pointerEvents="box-none"
@@ -205,202 +250,255 @@ export default class FormularioCheers extends React.Component {
 						position: 'absolute',
 						width: '90%',
 						alignSelf: 'center',
-						top: getScreenSizeMultiplier() * 155,
-						bottom: this.state.sendCheersButtonAnimation.interpolate({ inputRange: [0, 1], outputRange: [getScreenSizeMultiplier() * -120, getScreenSizeMultiplier() * 28] }),
+						top: heightPercentageToPx(16),
+						bottom: this.state.sendCheersButtonAnimation.interpolate({ inputRange: [0, 1], outputRange: [heightPercentageToPx(-14), heightPercentageToPx(6.2)] }),
 					}}>
-					{this.state.screen === 'complete' ?
-						<View
-							pointerEvents="box-none"
-							style={{
-								marginTop: heightPercentageToPx(-26.2),
-								alignItems: 'center',
-							}}>
-							<Image
-								source={Images.png.heartHands.img}
-								style={{
-									height: widthPercentageToPx(68),
-									width: widthPercentageToPx(68),
-									resizeMode: 'contain',
-								}}
-							/>
-							<Text
-								style={styles.graciasText}>{translate('sendCheersModal.thankYouTitle')}</Text>
-							<Text
-								style={styles.prizeTitleText}>{translate('sendCheersModal.sentCheersTo')}<Text style={{ color: '#00FFDD' }}>{this.state.selectedStreamer}</Text></Text>
-							<View
-								style={{
-									backgroundColor: 'rgb(21, 20, 59)',
-									borderRadius: 20,
-									width: widthPercentageToPx(60),
-									height: heightPercentageToPx(15),
-									marginTop: getScreenSizeMultiplier() * 48,
-								}}>
-								<View style={{ alignSelf: 'center', width: widthPercentageToPx(50) }}>
-									<View style={{
-										alignSelf: 'flex-end',
-										marginTop: heightPercentageToPx(2.8),
-										transform: [{ scale: 0.8 }]
-									}}>
-										<Images.svg.lifeIcon height={24} width={24} color='rgba(255, 255, 255, .25)' />
-									</View>
-									<View style={{
-										alignSelf: 'center',
-										width: widthPercentageToPx(50),
-										marginTop: heightPercentageToPx(1.2)
-									}}>
-										<ProgressBar
-											unfilledColor="rgba(255, 255, 255, .25)"
-											progress={0.2}
-											color={Colors.greenQapla}
-											borderWidth={0}
-											height={heightPercentageToPx(0.8)} />
-									</View>
-									<View style={{
-										flexDirection: 'row',
-										justifyContent: 'space-between',
-										marginLeft: widthPercentageToPx(-1.5),
-										marginTop: heightPercentageToPx(2)
-									}}>
-										<Hearts
-											hearts={2.5}
-										/>
-										<Text style={{
-											color: '#fff',
-											fontWeight: 'bold'
-										}}>6/10</Text>
-									</View>
-								</View>
-							</View>
-							<View style={{
-								marginTop: heightPercentageToPx(1.2)
-							}}>
-								<Text style={{
-									fontSize: getScreenSizeMultiplier() * 14,
-									color: '#00FFDD',
-									textAlign: 'center'
-								}}>{translate('sendCheersModal.lifesBarUpdated')}</Text>
-							</View>
-							<TouchableOpacity style={{
-								backgroundColor: Colors.greenQapla,
-								width: widthPercentageToPx(60),
-								height: heightPercentageToPx(9),
-								borderRadius: getScreenSizeMultiplier() * 40,
-								marginTop: heightPercentageToPx(9)
-							}}
-								onPress={this.onBackToProfile}>
-								<View style={{
-									flex: 1,
-									justifyContent: 'center'
-								}}>
-									<Text style={{
-										color: Colors.backgroundColor,
-										fontSize: getScreenSizeMultiplier() * 16,
-										fontWeight: 'bold',
-										textAlign: 'center',
-									}}>{translate('sendCheersModal.backToProfile')}</Text>
-
-								</View>
-							</TouchableOpacity>
-						</View>
+					{this.state.screen === 'message' ?
+						<ScrollView>
+							{!this.state.messageSent &&
+								<Text style={styles.titleText}>{translate('sendCheersModal.wantToSaySomething')}{'\n'}💬</Text>
+							}
+						</ScrollView>
 						:
-						this.state.screen === 'message' ?
-							<ScrollView>
-								<Text
-									style={styles.titleText}>{translate('sendCheersModal.wantToSaySomething')}{'\n'}💬</Text>
-								<Text
-									style={styles.bodyText}>{translate('sendCheersModal.youCanTypeAnything')}</Text>
-								<View style={{
-									marginTop: '3%',
-									width: '95%',
-									backgroundColor: '#362191',
-									alignSelf: 'center',
-									borderRadius: getScreenSizeMultiplier() * 20,
-									padding: '2%'
+						<>
+							<Text style={styles.titleText}>{translate('sendCheersModal.sendYourCheers')}{'\n'}🔥😍🔥</Text>
+							<Text style={styles.bodyText}>{translate('sendCheersModal.selectYourStreamer')}</Text>
+							<View
+								pointerEvents="box-none"
+								style={{
+									height: '60%',
+									marginTop: 30,
+									flexDirection: 'row',
+									alignItems: 'flex-start',
 								}}>
-									<TextInput
-										style={{
-											color: '#fff'
-										}}
-										onChangeText={(message) => this.setState({ message })}
-										value={this.state.message}
-										multiline={true}
-										maxLength={160}
-									/>
-									<View>
-										<Text style={{
-											color: this.state.message.length === 160 ? '#c00' : this.state.message.length > 125 ? '#cc0' : '#ccc',
-											alignSelf: 'flex-end',
-											marginRight: '2%'
-										}}>
-											{this.state.message.length}/160
-										</Text>
-									</View>
-								</View>
-							</ScrollView>
-							:
-							<>
-								<Text
-									style={styles.titleText}>{translate('sendCheersModal.sendYourCheers')}{'\n'}🔥😍🔥</Text>
-								<Text
-									style={styles.bodyText}>{translate('sendCheersModal.selectYourStreamer')}</Text>
-								<View
-									pointerEvents="box-none"
-									style={{
-										height: '60%',
-										marginTop: 30,
-										flexDirection: 'row',
-										alignItems: 'flex-start',
-									}}>
-									<FlatList
-										data={this.state.streamersData}
-										renderItem={this.renderItem}
-										keyExtractor={item => item.streamer}
-										extraData={this.state.selectedStreamer}
-										numColumns={2}
-										columnWrapperStyle={{ justifyContent: 'space-between', }}
-										showsVerticalScrollIndicator={false}
-									/>
-								</View>
-							</>
+								<FlatList
+									data={this.state.streamersData}
+									renderItem={this.renderItem}
+									keyExtractor={item => item.streamer}
+									extraData={this.state.selectedStreamer}
+									numColumns={2}
+									columnWrapperStyle={{ justifyContent: 'space-between', }}
+									showsVerticalScrollIndicator={false}
+								/>
+							</View>
+						</>
 					}
 				</Animated.View>
 				{
-					this.state.selectedStreamer !== '' ?
-						<>
-							<Animated.View
-								style={[{
-									position: 'absolute',
-									bottom: 0,
-									width: '100%',
-									backgroundColor: Colors.greenQapla,
-								},
-								{
-									transform:
-										[{ translateY: this.state.sendCheersButtonAnimation.interpolate({ inputRange: [0, 1], outputRange: [heightPercentageToPx(15), 0] }) }],
-								},
-								]}
-							>
-								<TouchableHighlight
-									style={{ flex: 1 }}
-									underlayColor="#2aa897"
-									disabled={this.state.sendingCheers}
-									onPress={this.state.screen === 'selection' ? () => { this.setState({ screen: 'message' }) } : this.sendCheersButton}
-								>
-									<QaplaText style={styles.continueButtonText}>
-										{this.state.sendingCheers ?
-											translate('sendCheersModal.sending')
-										:
-										this.state.screen === 'message' && this.state.message.length === 0 ?
-											translate('sendCheersModal.skip')
-											:
-											translate('sendCheersModal.next')
+					this.state.screen === 'message' &&
+					<View style={{
+						flex: 1,
+						position: 'absolute',
+						bottom: '2%',
+						width: '90%',
+						alignSelf: 'center',
+						marginHorizontal: '1%',
+						overflow: 'scroll'
+					}}>
+						<View style={{
+							flex: 1,
+							flexDirection: 'row',
+							height: heightPercentageToPx(4.2),
+							marginBottom: heightPercentageToPx(1.2),
+						}}>
+							<LinearGradient
+								style={{
+									flex: 1,
+									height: heightPercentageToPx(4.2),
+									maxWidth: heightPercentageToPx(4.2),
+									borderRadius: 100,
+									overflow: 'hidden'
+								}}
+								colors={['#691FB3', '#2F2FF9']}
+								locations={[0.17, .93]}
+								useAngle
+								angle={135}>
+								<Image
+									style={{
+										flex: 1,
+										height: heightPercentageToPx(4.2),
+										width: heightPercentageToPx(4.2),
+									}}
+									source={this.state.tempChatProfileImage} />
+							</LinearGradient>
+							<View style={{
+								flex: 1,
+								justifyContent: 'center',
+								marginLeft: widthPercentageToPx(2),
+							}}>
+								<Text style={{
+									color: 'white',
+									fontSize: widthPercentageToPx(4)
+								}}>Qaplita</Text>
+							</View>
+						</View>
+						<View style={{
+							marginBottom: heightPercentageToPx(3),
+							borderRadius: heightPercentageToPx(2.2),
+							borderTopLeftRadius: heightPercentageToPx(0.4),
+							paddingVertical: heightPercentageToPx(2),
+							paddingHorizontal: widthPercentageToPx(5.6),
+							maxWidth: widthPercentageToPx(75),
+							alignSelf:'flex-start',
+							backgroundColor: '#141539'
+						}}>
+							<Text style={{
+								color: 'white',
+								fontSize: widthPercentageToPx(4)
+							}}>
+								{translate('sendCheersModal.tellUs')} <Text style={{ color: '#00FFDD' }}>{this.state.selectedStreamer}</Text>?
+							</Text>
+						</View>
+						{
+							this.state.messageSent ?
+								<>
+									<View style={{
+										alignSelf: 'flex-end',
+										marginBottom: heightPercentageToPx(3),
+										borderRadius: heightPercentageToPx(2.2),
+										borderBottomRightRadius: heightPercentageToPx(0.4),
+										paddingVertical: heightPercentageToPx(2),
+										paddingHorizontal: widthPercentageToPx(5.6),
+										maxWidth: widthPercentageToPx(75),
+										backgroundColor: '#3D42DF'
+									}}>
+										<Text style={{
+											color: 'white',
+											fontSize: widthPercentageToPx(4)
+										}}>
+											{this.state.message}
+										</Text>
+									</View>
+									<View style={{
+										flexDirection: 'row',
+										marginBottom: this.state.chatResponse ? heightPercentageToPx(6) : heightPercentageToPx(3),
+										borderRadius: heightPercentageToPx(2.2),
+										borderTopLeftRadius: heightPercentageToPx(0.4),
+										paddingVertical: heightPercentageToPx(2),
+										paddingHorizontal: widthPercentageToPx(4.4),
+										maxWidth: widthPercentageToPx(75),
+										alignSelf: 'flex-start',
+										backgroundColor: '#141539'
+									}}>
+										{
+											this.state.chatResponse ?
+												<Text style={{
+													color: 'white'
+												}}>
+													{this.state.chatResponsePharaseP1}<Text style={{ color: '#00FFDD' }}>{this.state.selectedStreamer}</Text>{this.state.chatResponsePharaseP2}
+												</Text>
+												:
+												<ChatAnimatedDots />
 										}
-									</QaplaText>
-								</TouchableHighlight>
-							</Animated.View>
-						</>
-						:
-						<></>
+									</View>
+								</>
+								:
+								<>
+								</>
+						}
+						<View style={{
+							flex: 1,
+							flexDirection: 'row',
+						}}>
+							<View style={{
+								flex: 8,
+								maxHeight: heightPercentageToPx(15),
+								width: '95%',
+								backgroundColor: '#141539',
+								alignSelf: 'center',
+								borderRadius: heightPercentageToPx(2.2),
+							}}>
+								<TextInput
+									style={{
+										color: '#fff',
+										paddingHorizontal: '6%',
+										paddingVertical: this.state.message !== '' && !this.state.messageSent ? heightPercentageToPx(2) : heightPercentageToPx(1),
+										maxHeight: heightPercentageToPx(15),
+									}}
+									onChangeText={(message) => {
+										let toSet = message
+										if (message.includes('\n')) {
+											toSet = message.replace('\n', '')
+										}
+										if (message.includes('  ')) {
+											toSet = message.replace('  ', ' ')
+										}
+										this.setState({ message: toSet })
+									}}
+									value={this.state.messageSent ? '' : this.state.message}
+									multiline={true}
+									maxLength={160}
+									placeholder={translate('sendCheersModal.optionalMessage')}
+									placeholderTextColor={'#fff4'}
+									editable={!this.state.messageSent}
+								/>
+							</View>
+							<TouchableOpacity style={{
+								flex: 1,
+								alignSelf: 'flex-end',
+								justifyContent: 'flex-end',
+								alignContent: 'center',
+								height: heightPercentageToPx(8),
+								// paddingLeft: '4%',
+								opacity: this.state.messageSent ? 0.4 : 1
+							}}
+								onPress={this.sendCheersButton}
+								disabled={this.state.messageSent}>
+								<View style={{
+									width: heightPercentageToPx(6),
+									height: heightPercentageToPx(6),
+									flex: 1,
+									justifyContent: 'center',
+									alignContent: 'center',
+									alignItems:'center',
+								}}>
+									<SendChat />
+								</View>
+							</TouchableOpacity >
+						</View>
+					</View>
+				}
+				{(this.state.selectedStreamer !== '' && this.state.screen === 'selection') || (this.state.screen === 'message' && this.state.chatResponse) ?
+					<>
+						<Animated.View
+							style={[{
+								position: 'absolute',
+								bottom: 0,
+								width: '100%',
+								backgroundColor: Colors.greenQapla,
+								borderTopLeftRadius: heightPercentageToPx(2),
+								borderTopRightRadius: heightPercentageToPx(2),
+								overflow: 'hidden'
+							},
+							{
+								transform:
+									[{ translateY: this.state.sendCheersButtonAnimation.interpolate({ inputRange: [0, 1], outputRange: [heightPercentageToPx(15), 0] }) }],
+							},
+							]}
+						>
+							<TouchableHighlight
+								style={{ flex: 1 }}
+								underlayColor="#2aa897"
+								onPress={this.state.screen === 'selection' ?
+									() => {
+										this.setState({ screen: 'message' })
+										let randomNum = Math.floor((Math.random() * this.state.profilePlaceholderImages.length))
+										let tempChatProfileImage = this.state.profilePlaceholderImages[randomNum]
+										return this.setState({ tempChatProfileImage })
+									} : this.state.chatResponse ? this.onBackToProfile : this.sendCheersButton}
+							>
+								<QaplaText style={styles.continueButtonText}>
+									{this.state.screen === 'message' && this.state.messageSent ?
+										translate('sendCheersModal.backToProfile')
+										:
+										translate('sendCheersModal.next')
+									}
+								</QaplaText>
+							</TouchableHighlight>
+						</Animated.View>
+					</>
+					:
+					<></>
 				}
 			</Modal >
 		);

@@ -76,6 +76,7 @@ import SeasonLevelEn2 from './icons/SeasonLevelEn2.svg';
 import SeasonLevelEn3 from './icons/SeasonLevelEn3.svg';
 import SeasonLevelEn4 from './icons/SeasonLevelEn4.svg';
 import SeasonLevelNoLevel from './icons/SeasonLevelNoLevel.svg';
+import SendChat from './icons/SendChat.svg';
 
 // Images
 
@@ -327,7 +328,8 @@ const images = {
 		seasonLevelEn2: SeasonLevelEn2,
 		seasonLevelEn3: SeasonLevelEn3,
 		seasonLevelEn4: SeasonLevelEn4,
-		seasonLevelNoLevel: SeasonLevelNoLevel
+		seasonLevelNoLevel: SeasonLevelNoLevel,
+		sendChat: SendChat
 	}
 };
 

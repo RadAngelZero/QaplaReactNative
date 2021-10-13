@@ -464,7 +464,50 @@
         "selectYourStreamer": "Select the streamer you want to support",
         "sending": "Sending...",
         "skip": "Skip",
-        "next": "Next"
+        "next": "Next",
+        "tellUs": "🗣 Tell us!, what do you want to say to",
+        "optionalMessage": "Optional, press send to skip",
+        "chatResponsePharases": {
+            "none": {
+                "part1": {
+                    "nonep1s1": "Speechless?, ",
+                    "nonep1s2": "Nothing to say?, "
+                },
+                "part2": {
+                    "nonep2s1": "don't be sad, ",
+                    "nonep2s2": "don't worry, "
+                }
+            },
+            "short": {
+                "short1": "A short message, ",
+                "short2": "A person of few words, "
+            },
+            "medium": {
+                "medium1": "Good choice of words, ",
+                "medium2": "Great choice of words, ",
+                "medium3": "Pretty words, "
+            },
+            "long": {
+                "long1": "That's a lot of text, ",
+                "long2": "It's a great paragraph, ",
+                "long3": "Those are a lot of words, ",
+                "long4": "WOW, that's a lot of text, ",
+                "long5": "WOW, It's a great paragraph, ",
+                "long6": "WOW, Those are a lot of words, "
+            },
+            "secondPart": {
+                "secondPart1": " will greatly appreciate your support.",
+                "secondPart2": " will love your support very much.",
+                "secondPart3": " will be very fascinated by your support.",
+                "secondPart5": " will be very happy for your support."
+            },
+            "willBeSent": {
+                "willBeSent1": "We will send your Qoins immediately",
+                "willBeSent2": "We will send your Qoins right now",
+                "willBeSent4": "We will send your Qoins immediately",
+                "willBeSent5": "At this moment we will send your Qoins",
+            }
+        }
     },
     "LevelInformationModal": {
         "getMoreQoins": "Get more Qoins!",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, Modal, FlatList, TouchableOpacity, TouchableHighlight, TextInput, Keyboard, Animated, Easing, ScrollView, BackHandler } from 'react-native';
+import { Platform, Image, Text, View, Modal, FlatList, TouchableOpacity, TouchableHighlight, TextInput, Keyboard, Animated, Easing, ScrollView, BackHandler } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import Images from '../../../assets/images';
@@ -31,12 +31,24 @@ export default class FormularioCheers extends React.Component {
 		chatResponsePharaseP2: '',
 		messageSent: false,
 		chatResponse: false,
+		isKeyboardOpen: new Animated.Value(1),
+		keyboardHeight: 0
 	};
 
 	componentDidMount() {
 		this.getStreamers();
 		this.fetchProfilePlaceholderImages();
-		this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', () => {
+		this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+			this.setState({ keyboardHeight: parseInt(e.endCoordinates.height) }, () => {
+				Animated.timing(this.state.isKeyboardOpen, {
+					toValue: 0,
+					duration: 300,
+					easing: Easing.cubic,
+					useNativeDriver: false,
+				}).start();
+			});
+
+
 			Animated.timing(this.state.sendCheersButtonAnimation, {
 				toValue: 0,
 				duration: 300,
@@ -45,6 +57,13 @@ export default class FormularioCheers extends React.Component {
 			}).start();
 		})
 		this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', () => {
+			Animated.timing(this.state.isKeyboardOpen, {
+				toValue: 1,
+				duration: 300,
+				easing: Easing.cubic,
+				useNativeDriver: false,
+			}).start();
+
 			Animated.timing(this.state.sendCheersButtonAnimation, {
 				toValue: 1,
 				duration: 300,
@@ -282,16 +301,12 @@ export default class FormularioCheers extends React.Component {
 						</>
 					}
 				</Animated.View>
-				{
-					this.state.screen === 'message' &&
-					<View style={{
-						flex: 1,
+				{this.state.screen === 'message' &&
+					<Animated.View style={{
 						position: 'absolute',
-						bottom: '2%',
 						width: '90%',
 						alignSelf: 'center',
-						marginHorizontal: '1%',
-						overflow: 'scroll'
+						bottom: Platform.OS === 'ios' ? this.state.isKeyboardOpen.interpolate({ inputRange: [0, 1], outputRange: [this.state.keyboardHeight, heightPercentageToPx(2)] }) : heightPercentageToPx(2),
 					}}>
 						<View style={{
 							flex: 1,
@@ -454,7 +469,7 @@ export default class FormularioCheers extends React.Component {
 								</View>
 							</TouchableOpacity >
 						</View>
-					</View>
+					</Animated.View>
 				}
 				{(this.state.selectedStreamer !== '' && this.state.screen === 'selection') || (this.state.screen === 'message' && this.state.chatResponse) ?
 					<>

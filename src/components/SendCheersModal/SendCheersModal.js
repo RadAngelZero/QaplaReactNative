@@ -156,17 +156,19 @@ export default class FormularioCheers extends React.Component {
 			this.setState({ message })
 		}
 		this.setState({ messageSent: true })
-		this.selectChatResponse()
-		// Random timeout to show chatbot animation response after sending Qoins message
-		setTimeout(() => {
-			this.setState({ chatResponse: true })
-		}, Math.floor(Math.random() * (2500 - 1200 + 1) + 1200))
+		this.selectChatResponse();
+
 		let now = new Date();
 		const twitchData = await getTwitchDataCloudFunction(this.props.twitchId);
 		await updateTwitchUsername(this.props.uid, twitchData.data.display_name);
 		if (this.props.qoinsToDonate > 0) {
 			await sendCheers(this.props.qoinsToDonate, this.state.message === ' ' ? '' : this.state.message, now.getTime(), this.state.selectedStreamer, this.props.uid, this.props.userName, twitchData.data.display_name, this.props.userPhotoURL, this.state.selectedStreamerID);
 		}
+
+		// Random timeout to show chatbot animation response after sending Qoins message
+		setTimeout(() => {
+			this.setState({ chatResponse: true })
+		}, Math.floor(Math.random() * (2500 - 1200 + 1) + 1200))
 	}
 
 	fetchProfilePlaceholderImages = async () => {

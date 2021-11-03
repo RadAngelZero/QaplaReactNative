@@ -10,7 +10,6 @@ import { SEGMENT_KEY } from '../utilities/Constants';
 export async function initializeSegment() {
     try {
         await analytics.setup(SEGMENT_KEY, {
-            
             recordScreenViews: true,
             trackAttributionData: true,
 
@@ -27,7 +26,7 @@ export async function initializeSegment() {
 
 /**
  * @description Send an event related to screens with custom properties on the event
- * 
+ *
  * @param {string} screen Name of the recorded screen on the event
  * @param {object} properties Optional data to record on the event
  */
@@ -42,7 +41,7 @@ export async function recordScreenOnSegment(screen, properties = {}) {
 
 /**
  * @description Send a event related to track (click buttons, select an option, etc.) with custom properties on the event
- * 
+ *
  * @param {string} event Event identifier on segment
  * @param {object} properties Optional data to record on the event
  */
@@ -58,12 +57,19 @@ export async function trackOnSegment(event, properties = {}) {
 /**
  * @description Link the uid with the sended statistics to segment, so we can identify and filter data
  * based on specific user when we make querys on segment
- * 
+ *
  * @param {string} uid User identifier on firebase
+ * @param {string|null} email Email of the user
+ * @param {string|null} username UserName of the user
+ * @param {string|null} twitchUsername Username of twitch of the user
  */
-export async function setUserIdOnSegment(uid) {
+export async function setUserIdOnSegment(uid, email, username, twitchUsername) {
     try {
-        analytics.identify(uid);
+        analytics.identify(uid, {
+            email,
+            username,
+            twitchUsername
+        });
     } catch (error) {
         console.error(error);
     }

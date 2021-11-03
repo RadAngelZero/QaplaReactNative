@@ -28,7 +28,7 @@ export async function signInWithFacebook() {
         const facebookToken = await AccessToken.getCurrentAccessToken();
         const credential = FBProvider.credential(facebookToken.accessToken);
         const finalUser = await auth.signInWithCredential(credential);
-        setUserIdOnSegment(finalUser.user.uid);
+        setUserIdOnSegment(finalUser.user.uid, finalUser.user.email);
 
         return finalUser;
     }
@@ -42,7 +42,7 @@ export async function signInWithGoogle() {
         const googleResult = await GoogleSignin.signIn();
         const credential = GoogleProvider.credential(googleResult.idToken, googleResult.accessToken);
         const finalUser = await auth.signInWithCredential(credential);
-        setUserIdOnSegment(finalUser.user.uid);
+        setUserIdOnSegment(finalUser.user.uid, finalUser.user.email);
 
         return finalUser;
     } catch (error) {
@@ -65,7 +65,7 @@ export async function signInWithApple() {
         if (identityToken) {
             const appleCredential = AppleProvider.credential(identityToken, nonce);
             const user = await auth.signInWithCredential(appleCredential);
-            setUserIdOnSegment(user.user.uid);
+            setUserIdOnSegment(user.user.uid, finalUser.user.email);
 
             return user;
         }

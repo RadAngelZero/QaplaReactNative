@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { View, SafeAreaView } from 'react-native';
-import Animated from 'react-native-reanimated';
-import Svg from 'react-native-svg';
 import { connect } from 'react-redux';
 
 import store from '../..//store/store';
@@ -37,8 +35,6 @@ import { getUserProfileImgUrl } from '../../services/storage';
 import LoadingAnimation from '../../components/LoadingAnimation/LoadingAnimation';
 
 const QaplaLogo = images.svg.qaplalogoIcon;
-
-const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
 class AuthLoadingScreen extends Component {
     state = {

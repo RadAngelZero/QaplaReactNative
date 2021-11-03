@@ -19,10 +19,11 @@ import {
     getMatchWitMatchId,
     getGamerTagWithUID,
     getUserDiscordTag,
-    updateUserLanguage
+    updateUserLanguage,
+    getTwitchUserName
 } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
-import { initializeSegment } from '../../services/statistics';
+import { initializeSegment, setUserIdOnSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadQaplaLogros } from '../../actions/logrosActions';
@@ -44,6 +45,7 @@ class AuthLoadingScreen extends Component {
         firstLoad: true,
         linkOnProgress: false,
         loadingText: translate('loadingScreen.activityIndicatorText'),
+        isSegmentDataUpdated: false
     };
 
     componentDidMount() {
@@ -87,6 +89,13 @@ class AuthLoadingScreen extends Component {
                 } else {
                     const userImg = await getUserProfileImgUrl(user.uid);
                     connectUserToSendBird(user.uid, userName, userImg);
+
+                    const twitchUsername = await getTwitchUserName(user.uid);
+
+                    if (!this.state.isSegmentDataUpdated) {
+                        setUserIdOnSegment(user.uid, user.email, userName, twitchUsername);
+                        this.setState({ isSegmentDataUpdated: true });
+                    }
 
                     /**
                      * Here add functions to write on the user profile, we only can perform

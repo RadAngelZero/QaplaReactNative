@@ -65,7 +65,7 @@ export async function signInWithApple() {
         if (identityToken) {
             const appleCredential = AppleProvider.credential(identityToken, nonce);
             const user = await auth.signInWithCredential(appleCredential);
-            setUserIdOnSegment(user.user.uid, finalUser.user.email);
+            setUserIdOnSegment(user.user.uid, user.user.email);
 
             return user;
         }

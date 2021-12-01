@@ -194,6 +194,14 @@ class AuthLoadingScreen extends Component {
             let screenName = 'LinkBroken';
             const type = this.getParameterFromUrl(url, 'type');
 
+            if (type === 'streamerProfile') {
+                const streamerId = this.getParameterFromUrl(url, 'streamerId');
+                if (streamerId) {
+                    console.log(streamerId);
+                    return this.redirectUserToStreamerProfile(streamerId);
+                }
+            }
+
             if (type === 'appDeepLink') {
                 const type2 = this.getParameterFromUrl(url, 'type2');
 
@@ -225,6 +233,14 @@ class AuthLoadingScreen extends Component {
         var re = new RegExp(".*[?&]" + parm + "=([^&]+)(&|$)");
         var match = url.match(re);
         return (match ? match[1] : "");
+    }
+
+    /**
+     * Redirect to StreamerProfile screen with streamerId
+     * @param {string} streamerId StreamerId on the processed deeplink
+     */
+    redirectUserToStreamerProfile(streamerId) {
+        this.props.navigation.navigate('StreamerProfile', { streamerId });
     }
 
     /**

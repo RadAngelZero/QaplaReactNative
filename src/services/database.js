@@ -41,6 +41,7 @@ const streamersDonationsRef = database.ref('StreamersDonations');
 const userStreamsRewardsRef = database.ref('/UserStreamsRewards');
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 const qaplaLevelsRequirementsRef = database.ref('QaplaLevelsRequirements');
+const streamersPublicProfilesRef = database.ref('/StreamersPublicProfiles');
 
 /**
  * Returns the userName of the specified user
@@ -1353,6 +1354,13 @@ export async function getUserDonationLeaderBoard(uid) {
  */
 export async function getPremiumStreamers() {
     return await userStreamerRef.orderByChild('premium').equalTo(true).once('value');
+}
+
+/**
+ * Return all the public profiles of streamers
+ */
+export async function getStreamersPublicProfiles() {
+    return await streamersPublicProfilesRef.once('value');
 }
 
 // -----------------------------------------------

@@ -25,6 +25,12 @@
     },
     "router": {
         "topNavigators": {
+            /**
+             * QaplaTabBar component use this translations so we need it to be predictable
+             * that is why is all in lowercase and not so nested
+            **/
+            "timeline": "Timeline",
+            "mystreams": "My streams",
             "achievements": {
                 "active": "Active",
                 "completed": "Completed"
@@ -40,7 +46,7 @@
         },
         "bottomNavigators": {
             "mainNavigator": {
-                "events": "Events",
+                "streams": "Streams",
                 "community": "Community",
                 "profile": "Profile"
             }
@@ -316,7 +322,7 @@
         "gamesPermissionDescription": "Receive notifications about new matches of games that interest me",
         "eventsPermissionDescription": "Receive notifications about the events to which I am subscribed"
     },
-    "LogrosActivosScreen": {
+    "TimelineStreams": {
         "featuredEvent": "Featured"
     },
     "CommunityScreen": {

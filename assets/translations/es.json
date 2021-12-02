@@ -25,6 +25,12 @@
     },
     "router": {
         "topNavigators": {
+            /**
+             * QaplaTabBar component use this translations so we need it to be predictable
+             * that is why is all in lowercase and not so nested
+            **/
+            "timeline": "Timeline",
+            "mystreams": "Mis streams",
             "achievements": {
                 "active": "Activos",
                 "completed": "Completados"
@@ -40,7 +46,7 @@
         },
         "bottomNavigators": {
             "mainNavigator": {
-                "events": "Eventos",
+                "streams": "Streams",
                 "community": "Comunidad",
                 "profile": "Perfil"
             }
@@ -316,7 +322,7 @@
         "gamesPermissionDescription": "Recibir notificaciones sobre nuevas partidas de juegos que me interesan",
         "eventsPermissionDescription": "Recibir notificaciones sobre los eventos a los que estoy suscrito"
     },
-    "LogrosActivosScreen": {
+    "TimelineStreams": {
         "featuredEvent": "Destacado"
     },
     "CommunityScreen": {

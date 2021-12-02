@@ -130,11 +130,11 @@ const AddGameStackNavigator = createStackNavigator({
 /**
  * @deprecated
  */
-/* const VerificationStackNavigator = createStackNavigator({
-    Verification: VerificationScreen
+const VerificationStackNavigator = createStackNavigator({
+    Verification: () => <View />
 },{
     headerMode: 'none'
-}); */
+});
 
 const AuthStackNavigator = createStackNavigator({
   SignIn: {
@@ -168,6 +168,15 @@ const ChatStackNavigator = createStackNavigator({
       header: (props) => <ChatHeader {...props} />
     }
   }
+});
+
+const CommunityStackNavigator = createStackNavigator({
+  Community: {
+    screen: CommunityScreen,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
 });
 
 //#endregion
@@ -217,7 +226,7 @@ const MatchesTopTabNavigator = createMaterialTopTabNavigator(
 
 /**
  * @deprecated
-
+**/
 const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
   {
     NotificationActividad: {
@@ -263,7 +272,7 @@ const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
       }
     },
   }
-); */
+);
 
 //#endregion
 
@@ -332,7 +341,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
     }
   },
   Community: {
-    screen: CommunityScreen,
+    screen: CommunityStackNavigator,
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (

@@ -240,7 +240,7 @@ class AuthLoadingScreen extends Component {
      * @param {string} streamerId StreamerId on the processed deeplink
      */
     redirectUserToStreamerProfile(streamerId) {
-        this.props.navigation.navigate('StreamerProfile', { streamerId });
+        this.props.navigation.navigate('Community', { streamerId });
     }
 
     /**

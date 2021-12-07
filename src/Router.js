@@ -293,7 +293,7 @@ const StreamsTopTabNavigator = createMaterialTopTabNavigator(
 
 const MainBottomTabNavigator = createBottomTabNavigator({
   Achievements: {
-    screen: StreamsTopTabNavigator,
+    screen: TimelineStreams,
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (

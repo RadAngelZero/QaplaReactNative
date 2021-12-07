@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { createAppContainer, createSwitchNavigator, NavigationActions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator, createBottomTabNavigator } from 'react-navigation-tabs';
@@ -26,7 +26,7 @@ import ActivityNotificationsScreen from './screens/ActivityNotificationsScreen/A
 import RetasNotificationsScreen from './screens/RetasNotificationsScreen/RetasNotificationsScreen';
 import UploadMatchResultScreen from './screens/UploadMatchResultScreen/UploadMatchResultScreen';
 import NewUserProfileScreen from './screens/NewUserProfileScreen/NewUserProfileScreen';
-import LogrosActivosScreen from './screens/LogrosActivosScreen/LogrosActivosScreen';
+import TimelineStreams from './screens/TimelineStreams/TimelineStreams';
 // import VerificationScreen from './screens/VerificationScreen/VerificationScreen';
 import SupportScreen from './screens/SupportScreen/SupportScreen';
 import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
@@ -49,6 +49,7 @@ import CommunityScreen from './screens/CommunityScreen/CommunityScreen';
 import DonationsLeaderBoard from './components/DonationsLeaderBoard/DonationsLeaderBoard';
 import TwitchAuthScreen from './screens/TwitchAuthScreen/TwitchAuthScreen';
 import ActivityScreen from './screens/ActivityScreen/ActivityScreen';
+import QaplaTabBar from './components/QaplaTabBar/QaplaTabBar';
 
 //#region Stack Navigators
 
@@ -274,13 +275,34 @@ const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
   }
 );
 
+const StreamsTopTabNavigator = createMaterialTopTabNavigator(
+  {
+    Timeline: {
+      screen: TimelineStreams,
+      navigationOptions: {
+        title: translate('router.topNavigators.streams.timeline')
+      }
+    },
+    MyStreams: {
+      screen: RetasNotificationsScreen,
+      navigationOptions: {
+        title: translate('router.topNavigators.streams.myStreams')
+      }
+    }
+  },
+  {
+    initialRouteName: 'Timeline',
+    tabBarComponent: (props) =>  <QaplaTabBar {...props} />
+  }
+);
+
 //#endregion
 
 //#region Bottom Tab Navigator
 
 const MainBottomTabNavigator = createBottomTabNavigator({
   Achievements: {
-    screen: LogrosActivosScreen,
+    screen: TimelineStreams,
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
@@ -305,7 +327,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
       ),
       tabBarLabel: ({ tintColor, focused }) => (
         <QaplaText style={{ color: tintColor, fontSize: 12, marginBottom: 8 }}>
-          {translate('router.bottomNavigators.mainNavigator.events')}
+          {translate('router.bottomNavigators.mainNavigator.streams')}
         </QaplaText>
       ),
     },

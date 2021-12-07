@@ -8,7 +8,7 @@ import { translate } from '../../utilities/i18';
 import LevelInformationModal from '../../components/LevelInformationModal/LevelInformationModal';
 import { retrieveData, storeData } from '../../utilities/persistance';
 
-export class LogrosActivosScreen extends Component {
+export class TimelineStreams extends Component {
     state = {
         openLevelInformationModal: false
     };
@@ -38,10 +38,10 @@ export class LogrosActivosScreen extends Component {
                 const today = new Date();
 
                 if (logro.featured) {
-                    if (orderedEvents.some((eventsOfTheDay) => eventsOfTheDay.title === translate('LogrosActivosScreen.featuredEvent'))) {
+                    if (orderedEvents.some((eventsOfTheDay) => eventsOfTheDay.title === translate('TimelineStreams.featuredEvent'))) {
                         orderedEvents[orderedEvents.length - 1].data.push(logro);
                     } else {
-                        orderedEvents.push({ title: translate('LogrosActivosScreen.featuredEvent'), data: [ logro ], indexDay: orderedEvents.length });
+                        orderedEvents.push({ title: translate('TimelineStreams.featuredEvent'), data: [ logro ], indexDay: orderedEvents.length });
                     }
                 } else {
                     const eventDate = new Date(logro.timestamp);
@@ -84,4 +84,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(LogrosActivosScreen);
+export default connect(mapStateToProps)(TimelineStreams);

@@ -77,6 +77,7 @@ import SeasonLevelEn3 from './icons/SeasonLevelEn3.svg';
 import SeasonLevelEn4 from './icons/SeasonLevelEn4.svg';
 import SeasonLevelNoLevel from './icons/SeasonLevelNoLevel.svg';
 import SendChat from './icons/SendChat.svg';
+import FounderBadge from './icons/FounderBadge.svg'
 
 // Images
 
@@ -329,7 +330,8 @@ const images = {
 		seasonLevelEn3: SeasonLevelEn3,
 		seasonLevelEn4: SeasonLevelEn4,
 		seasonLevelNoLevel: SeasonLevelNoLevel,
-		sendChat: SendChat
+		sendChat: SendChat,
+		founderBadge: FounderBadge
 	}
 };
 

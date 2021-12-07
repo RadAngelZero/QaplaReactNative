@@ -240,6 +240,14 @@ class AuthLoadingScreen extends Component {
     }
 
     /**
+     * Redirect to StreamerProfile screen with streamerId
+     * @param {string} streamerId StreamerId on the processed deeplink
+     */
+    redirectUserToStreamerProfile(streamerId) {
+        this.props.navigation.navigate('Community', { streamerId });
+    }
+
+    /**
      * Redirect to MatchCard screen with 'matchId'
      * @param {string} url Url of deeplink pressed by the user
      */

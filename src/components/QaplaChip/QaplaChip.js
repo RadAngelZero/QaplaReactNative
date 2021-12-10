@@ -1,0 +1,19 @@
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import QaplaText from '../QaplaText/QaplaText';
+
+import styles from './style';
+
+class QaplaChip extends Component {
+    render() {
+        return (
+            <View style={[styles.container, this.props.style]}>
+                <QaplaText style={styles.text}>
+                    {this.props.children}
+                </QaplaText>
+            </View>
+        );
+    }
+}
+
+export default QaplaChip;

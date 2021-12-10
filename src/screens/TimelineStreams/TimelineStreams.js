@@ -34,6 +34,7 @@ export class TimelineStreams extends Component {
         .sort((a, b) => b.featured - a.featured)
         // Fill orderedEvents array for the SectionList of the LogrosList component
         .forEach((logro) => {
+            console.log(logro.idLogro, logro.userSubscribed)
             if (logro.idLogro !== undefined) {
                 const today = new Date();
 

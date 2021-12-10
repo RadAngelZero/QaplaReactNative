@@ -42,6 +42,7 @@ const userStreamsRewardsRef = database.ref('/UserStreamsRewards');
 const versionAppRef = database.ref('VersionApp/QaplaVersion');
 const qaplaLevelsRequirementsRef = database.ref('QaplaLevelsRequirements');
 const streamersPublicProfilesRef = database.ref('/StreamersPublicProfiles');
+const streamerLinksRef = database.ref('/StreamerLinks');
 
 /**
  * Returns the userName of the specified user
@@ -1356,13 +1357,6 @@ export async function getPremiumStreamers() {
     return await userStreamerRef.orderByChild('premium').equalTo(true).once('value');
 }
 
-/**
- * Return all the public profiles of streamers
- */
-export async function getStreamersPublicProfiles() {
-    return await streamersPublicProfilesRef.once('value');
-}
-
 // -----------------------------------------------
 // Support Streamer
 // -----------------------------------------------
@@ -1476,4 +1470,35 @@ export async function sendCheers(amountQoins, message, timestamp, streamerName, 
  */
 export async function getQaplaLevels() {
     return await qaplaLevelsRequirementsRef.once('value');
+}
+
+// -----------------------------------------------
+// Streamers Public Profiles
+// -----------------------------------------------
+
+/**
+ * Return all the public profiles of streamers
+ */
+ export async function getStreamersPublicProfiles() {
+    return await streamersPublicProfilesRef.once('value');
+}
+
+/**
+ * Return the public profile of the given streamer
+ * @param {string} streamerId Streamer identifier on database
+ */
+export async function getStreamerPublicProfile(streamerId) {
+    return await streamersPublicProfilesRef.child(streamerId).once('value');
+}
+
+// -----------------------------------------------
+// Streamers Links
+// -----------------------------------------------
+
+/**
+ * Return the social links of the given streamer
+ * @param {string} streamerId Streamer identifier on database
+ */
+export async function getStreamerSocialLinks(streamerId) {
+    return await streamerLinksRef.child(streamerId).once('value');
 }

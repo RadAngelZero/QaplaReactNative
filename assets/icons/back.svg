@@ -1,13 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="22px" height="19px" viewBox="0 0 22 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
-    <title>back</title>
-    <desc>Created with Sketch.</desc>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Elegir-Juego" transform="translate(-24.000000, -24.000000)" fill="#FFFFFF" fill-rule="nonzero">
-            <g id="back" transform="translate(24.000000, 24.000000)">
-                <path d="M20.7202522,8.20486967 L4.36899819,8.20486967 L10.0751688,2.42957049 C10.5750657,1.92394946 10.5750657,1.1037364 10.0751688,0.598190163 C9.5752719,0.0922699456 8.76482407,0.0922699456 8.26566625,0.598190163 L0.374922657,8.58416024 C-0.124974219,9.08978128 -0.124974219,9.91006913 0.374922657,10.4155406 L8.26566625,18.4018846 C8.51554078,18.6549195 8.8430161,18.78125 9.17041751,18.78125 C9.49781893,18.78125 9.82529425,18.6549195 10.0751688,18.4018846 C10.5750657,17.8962636 10.5750657,17.0760505 10.0751688,16.5705791 L4.36899819,10.7949807 L20.7202522,10.7949807 C21.4269367,10.7949807 22,10.2150873 22,9.49988781 C22,8.78468835 21.4270106,8.20486967 20.7202522,8.20486967 Z" id="Path"></path>
-            </g>
-        </g>
-    </g>
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_866_10757)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4 22C4 10.96 12.98 2 24 2L24.5596 2.00768C35.3412 2.30432 44 11.1471 44 22C44 33.02 35.04 42 24 42C12.98 42 4 33.02 4 22Z" fill="#141539"/>
+</g>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M28.4142 13.5858C29.1953 14.3668 29.1953 15.6332 28.4142 16.4142L22.8284 22L28.4142 27.5859C29.1953 28.3669 29.1953 29.6333 28.4142 30.4143C27.6332 31.1953 26.3668 31.1953 25.5858 30.4143L18.5858 23.4142C17.8047 22.6332 17.8047 21.3668 18.5858 20.5858L25.5858 13.5858C26.3668 12.8047 27.6332 12.8047 28.4142 13.5858Z" fill="white"/>
+<defs>
+<filter id="filter0_d_866_10757" x="0" y="0" width="48" height="48" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="2"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.253621 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_866_10757"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_866_10757" result="shape"/>
+</filter>
+</defs>
 </svg>

@@ -15,9 +15,6 @@ class StreamerCard extends React.Component {
         viewMore: false
     }
 
-    componentDidMount() {
-    }
-
     render() {
         return (
             <TouchableOpacity style={{
@@ -29,14 +26,15 @@ class StreamerCard extends React.Component {
                 overflow: 'hidden',
                 paddingBottom: heightPercentageToPx(4),
                 marginBottom: heightPercentageToPx(6)
-            }}>
+            }}
+            onPress={this.props.onPress}>
                 <View />
                 <Image
                     style={{
                         display: 'flex',
                         height: heightPercentageToPx(12),
                     }}
-                    source={this.props.coverUrl ? { uri: this.props.coverUrl } : null}
+                    source={this.props.backgroundUrl ? { uri: this.props.backgroundUrl } : null}
                 />
                 <Image
                     style={{
@@ -57,7 +55,7 @@ class StreamerCard extends React.Component {
                         color: 'white',
                         fontSize: heightPercentageToPx(2.5)
                     }}>
-                        {this.props.streamerName}
+                        {this.props.displayName}
                     </Text>
                     <View style={{ width: widthPercentageToPx(2.6) }} />
                     <View style={{ justifyContent: 'center' }}>
@@ -124,10 +122,10 @@ class CommunityScreen extends Component {
     }
 
     componentDidMount() {
-        this.props.navigation.addListener('didFocus', () => {
-            console.log(this.props.navigation.getParam('streamerId', ''));
-        });
         this.getStreamers();
+        this.props.navigation.addListener('didFocus', () => {
+            this.getStreamers();
+        });
     }
 
     getStreamers = async () => {
@@ -138,7 +136,7 @@ class CommunityScreen extends Component {
             streamers.forEach((streamer) => {
                 if (!streamersBlackList.includes(streamer.val().id)) {
                     streamersData.push({
-                        streamerName: streamer.val().displayName,
+                        displayName: streamer.val().displayName,
                         /**
                          * If the streamer change their profile image on Twitch the link on the database
                          * will not contain any photo to show until the streamer update their information
@@ -148,7 +146,7 @@ class CommunityScreen extends Component {
                         photoUrl: streamer.val().photoUrl,
                         streamerId: streamer.key,
                         bio: streamer.val().bio,
-                        coverUrl: streamer.val().backgroundUrl,
+                        backgroundUrl: streamer.val().backgroundUrl,
                         badge: streamer.val().badge,
                         tags: streamer.val().tags
                     });
@@ -158,8 +156,13 @@ class CommunityScreen extends Component {
         }
     }
 
+    goToStreamerProfile = (streamerData) => {
+        this.props.navigation.navigate('StreamerProfile', { streamerData });
+    }
+
     renderCard = ({ item }) => (
-        <StreamerCard {...item} />
+        <StreamerCard {...item}
+            onPress={() => this.goToStreamerProfile(item)} />
     );
 
     render() {

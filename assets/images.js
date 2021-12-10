@@ -42,7 +42,7 @@ import BalanceFlipIcon from './icons/qapla-balance-flip.svg';
 import CopyIcon from './icons/Copy.svg';
 import SentIcon from './icons/SentIcon.svg';
 import HighFiveIcon from './icons/HighFive.svg';
-import SendIcon from './icons/send.svg';
+import SendIcon from './icons/Send.svg';
 import ArrowDownIcon from './icons/arrowDown.svg';
 import BetaLabelIcon from './icons/BetaLabel.svg';
 import BitsIcon from './icons/bitsIcon.svg';
@@ -77,7 +77,17 @@ import SeasonLevelEn3 from './icons/SeasonLevelEn3.svg';
 import SeasonLevelEn4 from './icons/SeasonLevelEn4.svg';
 import SeasonLevelNoLevel from './icons/SeasonLevelNoLevel.svg';
 import SendChat from './icons/SendChat.svg';
-import FounderBadge from './icons/FounderBadge.svg'
+import FounderBadge from './icons/FounderBadge.svg';
+import Share from './icons/Share.svg';
+import MoreCircle from './icons/MoreCircle.svg';
+import LessCircle from './icons/LessCircle.svg';
+import Calendar from './icons/Calendar.svg';
+import Clock from './icons/Clock.svg';
+import TwitchLight from './icons/twitchLight.svg';
+import Instagram from './icons/Instagram.svg';
+import Twitter from './icons/Twitter.svg';
+import DiscordSocial from './icons/DiscordSocial.svg';
+import TikTok from './icons/TikTok.svg';
 
 // Images
 
@@ -331,7 +341,17 @@ const images = {
 		seasonLevelEn4: SeasonLevelEn4,
 		seasonLevelNoLevel: SeasonLevelNoLevel,
 		sendChat: SendChat,
-		founderBadge: FounderBadge
+		founderBadge: FounderBadge,
+		share: Share,
+		moreCircle: MoreCircle,
+		lessCircle: LessCircle,
+		calendar: Calendar,
+		clock: Clock,
+		twitchLight: TwitchLight,
+		instagram: Instagram,
+		twitter: Twitter,
+		discordSocial: DiscordSocial,
+		tikTok: TikTok
 	}
 };
 

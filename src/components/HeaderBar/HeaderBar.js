@@ -167,6 +167,7 @@ class HeaderBar extends Component {
     }
 
     render() {
+        if (this.props.currentScreenId !== 'StreamerProfile') {
         return (
             <SafeAreaView style={styles.sfvContainer} testID='container'>
                 <View style={styles.topNavBarView}>
@@ -225,6 +226,9 @@ class HeaderBar extends Component {
                 </View>
             </SafeAreaView>
         );
+        }
+
+        return null;
     }
 }
 

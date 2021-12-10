@@ -50,6 +50,7 @@ import DonationsLeaderBoard from './components/DonationsLeaderBoard/DonationsLea
 import TwitchAuthScreen from './screens/TwitchAuthScreen/TwitchAuthScreen';
 import ActivityScreen from './screens/ActivityScreen/ActivityScreen';
 import QaplaTabBar from './components/QaplaTabBar/QaplaTabBar';
+import StreamerProfileScreen from './screens/StreamerProfileScreen/StreamerProfileScreen';
 
 //#region Stack Navigators
 
@@ -178,6 +179,13 @@ const CommunityStackNavigator = createStackNavigator({
       headerShown: false
     }
   },
+  StreamerProfile: {
+    screen: StreamerProfileScreen,
+    navigationOptions: {
+      headerShown: false,
+      animationEnabled: false
+    }
+  }
 });
 
 //#endregion

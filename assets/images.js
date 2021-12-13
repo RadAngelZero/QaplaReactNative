@@ -88,6 +88,7 @@ import Instagram from './icons/Instagram.svg';
 import Twitter from './icons/Twitter.svg';
 import DiscordSocial from './icons/DiscordSocial.svg';
 import TikTok from './icons/TikTok.svg';
+import YouTube from './icons/YouTube.svg';
 
 // Images
 
@@ -351,7 +352,8 @@ const images = {
 		instagram: Instagram,
 		twitter: Twitter,
 		discordSocial: DiscordSocial,
-		tikTok: TikTok
+		tikTok: TikTok,
+		youTube: YouTube
 	}
 };
 

@@ -16,7 +16,8 @@ const socialMediaIcons = {
     Instagram: images.svg.instagram,
     Twitter: images.svg.twitter,
     Discord: images.svg.discordSocial,
-    TikTok: images.svg.tikTok
+    TikTok: images.svg.tikTok,
+    Youtube: images.svg.youTube
 }
 
 class StreamerProfileScreen extends Component {
@@ -70,8 +71,8 @@ class StreamerProfileScreen extends Component {
         .filter((eventId) => this.props.logros.logrosActivos[eventId].idStreamer && this.props.logros.logrosActivos[eventId].idStreamer === streamerId)
         .map((eventId) => this.props.logros.logrosActivos[eventId]).sort((a, b) => a.timestamp - b.timestamp);
 
-        // Only show the 3 most upcoming streams
-        this.setState({ nextStreams: streamerEvents.slice(0, 3) });
+        // Only show the 2 most upcoming streams
+        this.setState({ nextStreams: streamerEvents.slice(0, 2) });
     }
 
     formatStreamDate = (timestamp) => {
@@ -141,12 +142,16 @@ class StreamerProfileScreen extends Component {
                                     </QaplaText>
                                 </View>
                             </TouchableOpacity>
-                            <View style={styles.iconContainer}>
-                                <images.svg.share />
-                            </View>
-                            <View style={styles.iconContainer}>
-                                <images.svg.sendIcon />
-                            </View>
+                            <TouchableOpacity onPress={() => console.log('Share Icon Press')}>
+                                <View style={styles.iconContainer}>
+                                    <images.svg.share />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => console.log('Send Icon Press')}>
+                                <View style={styles.iconContainer}>
+                                    <images.svg.sendIcon />
+                                </View>
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.nameContainer}>
                             <QaplaText style={styles.streamerName}>
@@ -198,8 +203,7 @@ class StreamerProfileScreen extends Component {
                                         <LinearGradient useAngle={true}
                                             angle={133.34}
                                             style={styles.upcomingStreamImageLinearGradientBackground}
-                                            colors={['#2C07FA', '#A716EE']}
-                                            >
+                                            colors={['#2C07FA', '#A716EE']}>
                                             <Image style={styles.upcomingStreamImage}
                                                 source={{ uri: nextStream.backgroundImage }} />
                                         </LinearGradient>

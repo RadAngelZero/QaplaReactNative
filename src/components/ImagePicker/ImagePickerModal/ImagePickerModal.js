@@ -4,7 +4,8 @@
 import React, { Component } from 'react';
 import {
 	Modal,
-	SafeAreaView
+	SafeAreaView,
+	Platform
 } from 'react-native';
 
 import styles from './style';
@@ -12,10 +13,20 @@ import Images from './../../../../assets/images';
 
 import ImagePicker from '../ImagePicker';
 import QaplaIcon from '../../QaplaIcon/QaplaIcon';
+import { retrieveData, storeData } from '../../../utilities/persistance';
+import GalleryPermissionsModaliOS from '../../GalleryPermissionsModaliOS/GalleryPermissionsModaliOS';
 
 const CloseIcon = Images.svg.closeIcon;
 
 class ImagePickerModal extends Component {
+	state = {
+		showIOSPermissionsModal: Platform.OS === 'ios' ? true : false
+	};
+
+	componentDidMount() {
+		this.checkPermissions();
+	}
+
     /**
 	 * Closes Modal and Cameraroll hiddes
 	 */
@@ -32,6 +43,20 @@ class ImagePickerModal extends Component {
     	this.props.onClose();
   	}
 
+	checkPermissions = async () => {
+		const granted = await retrieveData('iOS-gallery-permission');
+		if (Platform.OS !== 'ios' || granted) {
+			this.setState({ showIOSPermissionsModal: false });
+		} else {
+			this.setState({ showIOSPermissionsModal: true });
+		}
+	}
+
+	markGalleryPermissionAsGranted = async () => {
+		await storeData('iOS-gallery-permission', 'true');
+		this.setState({ showIOSPermissionsModal: false });
+	}
+
     render() {
         return (
 	        	<Modal
@@ -39,12 +64,17 @@ class ImagePickerModal extends Component {
 					transparent={false}
 					visible={this.props.visible}
 					onRequestClose={this.props.onClose}>
-					<SafeAreaView style={styles.sfvContainer}>
-						<QaplaIcon onPress={this.closeModal} touchableStyle={styles.closeIcon}>
-							<CloseIcon />
-                        </QaplaIcon>
-						<ImagePicker saveImage={this.saveImage} />
-					</SafeAreaView>
+					{this.state.showIOSPermissionsModal ?
+						<GalleryPermissionsModaliOS onClose={() => this.props.onClose()}
+							onPress={this.markGalleryPermissionAsGranted} />
+						:
+						<SafeAreaView style={styles.sfvContainer}>
+							<QaplaIcon onPress={this.closeModal} touchableStyle={styles.closeIcon}>
+								<CloseIcon />
+							</QaplaIcon>
+							<ImagePicker saveImage={this.saveImage} />
+						</SafeAreaView>
+					}
 		        </Modal>
         );
     }

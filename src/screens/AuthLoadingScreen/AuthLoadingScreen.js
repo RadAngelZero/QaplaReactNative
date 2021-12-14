@@ -197,7 +197,6 @@ class AuthLoadingScreen extends Component {
             if (type === 'streamerProfile') {
                 const streamerId = this.getParameterFromUrl(url, 'streamerId');
                 if (streamerId) {
-                    console.log(streamerId);
                     return this.redirectUserToStreamerProfile(streamerId);
                 }
             }

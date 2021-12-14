@@ -90,6 +90,7 @@ import DiscordSocial from './icons/DiscordSocial.svg';
 import TikTok from './icons/TikTok.svg';
 import YouTube from './icons/YouTube.svg';
 import CopyCreatorCode from './icons/CopyCreatorCode.svg';
+import CameraPermissions from './icons/CameraPermissions.svg';
 
 // Images
 
@@ -355,7 +356,8 @@ const images = {
 		discordSocial: DiscordSocial,
 		tikTok: TikTok,
 		youTube: YouTube,
-		copyCreatorCode: CopyCreatorCode
+		copyCreatorCode: CopyCreatorCode,
+		cameraPermissions: CameraPermissions
 	}
 };
 

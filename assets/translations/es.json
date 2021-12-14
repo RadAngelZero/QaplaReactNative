@@ -530,5 +530,9 @@
         "bodyTextOne": "Sube tu nivel cada temporada acumulando XQ y mina más Qoins en los streams que participes.",
         "bodyTextTwo": "Tu nivel de la última temporada determina la cantidad de Qoins que minas por stream.",
         "gotIt": "¡Entendido!"
+    },
+    "GalleryPermissionsModaliOS": {
+        "allowAccess": "Permite acceso a tu galería para editar tu foto de perfil 🙏",
+        "allow": "Permitir"
     }
 }

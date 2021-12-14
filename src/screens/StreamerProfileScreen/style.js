@@ -89,7 +89,7 @@ export default styles = StyleSheet.create({
     upcomingStreamsContainer: {
         marginTop: 52
     },
-    upcomingStreamsTitle: {
+    sectionTitle: {
         fontSize: 22,
         color: '#FFF'
     },
@@ -126,14 +126,60 @@ export default styles = StyleSheet.create({
     streamerCommunityContainer: {
         marginTop: 60
     },
-    streamerCommunityTitle: {
-        color: '#FFF',
-        fontSize: 22
-    },
     socialButtonsContainer: {
         marginTop: 20
     },
     socialButton: {
         marginTop: 16
+    },
+    creatorCodesContainer: {
+        marginTop: 60
+    },
+    creatorCodeImage: {
+        width: widthPercentageToPx(91.5),
+        height: heightPercentageToPx(23.5),
+        borderRadius: 20,
+        marginTop: 16
+    },
+    createrCodeButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    creatorCodeButton: {
+        position: 'absolute',
+        bottom: 16
+    },
+    codeButton: {
+        width: widthPercentageToPx(50),
+        height: heightPercentageToPx(7.14),
+        borderRadius: 20,
+        backgroundColor: '#141539',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.35,
+        shadowRadius: 2.62,
+        elevation: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingRight: 24,
+        paddingLeft: 24
+    },
+    codeText: {
+        color: '#FFF',
+        fontSize: 18,
+        textAlign: 'center',
+        marginRight: 8
+    },
+    copyCode: {
+        width: 30,
+        height: 30,
+        borderRadius: 50,
+        backgroundColor: 'rgba(64, 64, 255, 0.3)',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });

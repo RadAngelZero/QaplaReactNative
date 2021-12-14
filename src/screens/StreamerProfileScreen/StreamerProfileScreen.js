@@ -8,6 +8,7 @@ import QaplaChip from '../../components/QaplaChip/QaplaChip';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
 import { getStreamerPublicProfile, getStreamerSocialLinks } from '../../services/database';
+import { copyDataToClipboard } from '../../utilities/utils';
 import { getLocaleLanguage, translate } from './../../utilities/i18';
 import styles from './style';
 
@@ -32,6 +33,7 @@ class StreamerProfileScreen extends Component {
             bio: '',
             backgroundUrl: '',
             badge: false,
+            creatorCodes: {},
             tags: []
         }
     };
@@ -111,7 +113,6 @@ class StreamerProfileScreen extends Component {
         const {
             displayName,
             photoUrl,
-            streamerId,
             bio,
             backgroundUrl,
             badge,
@@ -135,10 +136,10 @@ class StreamerProfileScreen extends Component {
                     </View>
                     <View style={styles.profileContainer}>
                         <View style={styles.buttonsContainer}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => console.log('Follow Button Press')}>
                                 <View style={styles.followButton}>
                                     <QaplaText style={styles.followButtonText}>
-                                        Seguir
+                                        {translate('streamerProfileScreen.follow')}
                                     </QaplaText>
                                 </View>
                             </TouchableOpacity>
@@ -164,7 +165,7 @@ class StreamerProfileScreen extends Component {
                         <QaplaText style={styles.bio}>
                             {bio}
                         </QaplaText>
-                        {tags &&
+                        {tags && tags.length > 0 &&
                             <View style={styles.tagsContainer}>
                                 {!this.state.showAllTags ?
                                 <>
@@ -193,10 +194,10 @@ class StreamerProfileScreen extends Component {
                                 }
                             </View>
                         }
-                        {this.state.nextStreams.length > 0 &&
+                        {this.state.nextStreams && this.state.nextStreams.length > 0 &&
                             <View style={styles.upcomingStreamsContainer}>
-                                <QaplaText style={styles.upcomingStreamsTitle}>
-                                    Próximos streams
+                                <QaplaText style={styles.sectionTitle}>
+                                    {translate('streamerProfileScreen.upcomingStreams')}
                                 </QaplaText>
                                 {this.state.nextStreams.map((nextStream) => (
                                     <>
@@ -228,21 +229,52 @@ class StreamerProfileScreen extends Component {
                                 ))}
                             </View>
                         }
-                        <View style={styles.streamerCommunityContainer}>
-                            <QaplaText style={styles.streamerCommunityTitle}>
-                                Mi comunidad
-                            </QaplaText>
-                            <View style={styles.socialButtonsContainer}>
-                                {this.state.socialLinks.map((socialLink) => (
-                                    <SocialLinkContainedButton onPress={() => this.onSocialButtonPress(socialLink.value)}
-                                        Icon={socialMediaIcons[socialLink.socialPage]}
-                                        style={styles.socialButton}>
-                                        {socialLink.socialPage}
-                                    </SocialLinkContainedButton>
+                        {this.state.socialLinks && this.state.socialLinks.length > 0 &&
+                            <View style={styles.streamerCommunityContainer}>
+                                <QaplaText style={styles.sectionTitle}>
+                                    {translate('streamerProfileScreen.myCommunity')}
+                                </QaplaText>
+                                <View style={styles.socialButtonsContainer}>
+                                    {this.state.socialLinks.map((socialLink) => (
+                                        <SocialLinkContainedButton onPress={() => this.onSocialButtonPress(socialLink.value)}
+                                            Icon={socialMediaIcons[socialLink.socialPage]}
+                                            style={styles.socialButton}
+                                            key={`social-${socialLink.socialPage}`}>
+                                            {socialLink.socialPage}
+                                        </SocialLinkContainedButton>
+                                    ))}
+                                </View>
+                            </View>
+                        }
+                        {this.state.streamerData.creatorCodes && Object.keys(this.state.streamerData.creatorCodes).length > 0 &&
+                            <View style={styles.creatorCodesContainer}>
+                                <QaplaText style={styles.sectionTitle}>
+                                    {translate('streamerProfileScreen.creatorCodes')}
+                                </QaplaText>
+                                {Object.values(this.state.streamerData.creatorCodes).map((code) => (
+                                    <View style={styles.creatorCodeImage}>
+                                        <Image style={styles.creatorCodeImage}
+                                            source={{ uri: code.imageUrl }} />
+                                            <View style={styles.createrCodeButtonContainer}>
+                                                <View style={styles.creatorCodeButton}>
+                                                    <TouchableOpacity onPress={() => copyDataToClipboard(code.code)}>
+                                                        <View style={styles.codeButton}>
+                                                            <QaplaText style={styles.codeText} numberOfLines={1}>
+                                                                {code.code}
+                                                            </QaplaText>
+                                                            <View style={styles.copyCode}>
+                                                                <images.svg.copyCreatorCode />
+                                                            </View>
+                                                        </View>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </View>
+                                    </View>
                                 ))}
                             </View>
-                        </View>
+                        }
                     </View>
+                    <View style={{ height: 40 }} />
                 </ScrollView>
             </SafeAreaView>
         );

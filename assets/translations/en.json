@@ -336,6 +336,12 @@
         "qoins": "Qoins from %{streamerName}",
         "xq": "Experience from %{streamerName}"
     },
+    "streamerProfileScreen": {
+        "follow": "Follow",
+        "upcomingStreams": "Upcoming streams",
+        "myCommunity": "My community",
+        "creatorCodes": "Codes"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Check your notifications",

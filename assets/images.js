@@ -89,6 +89,7 @@ import Twitter from './icons/Twitter.svg';
 import DiscordSocial from './icons/DiscordSocial.svg';
 import TikTok from './icons/TikTok.svg';
 import YouTube from './icons/YouTube.svg';
+import CopyCreatorCode from './icons/CopyCreatorCode.svg';
 
 // Images
 
@@ -353,7 +354,8 @@ const images = {
 		twitter: Twitter,
 		discordSocial: DiscordSocial,
 		tikTok: TikTok,
-		youTube: YouTube
+		youTube: YouTube,
+		copyCreatorCode: CopyCreatorCode
 	}
 };
 

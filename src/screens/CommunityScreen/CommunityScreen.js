@@ -3,7 +3,6 @@ import { View, TouchableOpacity, Image, Text, FlatList } from 'react-native';
 
 import styles from './style';
 import Images from '../../../assets/images';
-import { translate } from '../../utilities/i18';
 import { getStreamersPublicProfiles } from '../../services/database';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
@@ -18,14 +17,15 @@ class StreamerCard extends React.Component {
     render() {
         return (
             <TouchableOpacity style={{
-                width: '90%',
+                width: widthPercentageToPx(91.46),
                 alignSelf: 'center',
                 borderRadius: widthPercentageToPx(6),
                 backgroundColor: '#141833',
                 justifyContent: 'flex-start',
                 overflow: 'hidden',
                 paddingBottom: heightPercentageToPx(4),
-                marginBottom: heightPercentageToPx(6)
+                marginBottom: heightPercentageToPx(6),
+                height: heightPercentageToPx(48)
             }}
             onPress={this.props.onPress}>
                 <View />
@@ -73,7 +73,7 @@ class StreamerCard extends React.Component {
                     marginTop: heightPercentageToPx(2.4)
                 }}
                 >
-                    {this.props.bio.length > 90 && !this.state.viewMore ?
+                    {this.props.bio && this.props.bio.length > 90 && !this.state.viewMore ?
                         <>
                             {this.props.bio.slice(0, -this.props.bio.length + 90) + '...'}
                             <Text style={{
@@ -92,8 +92,7 @@ class StreamerCard extends React.Component {
                     width: widthPercentageToPx(84),
                     marginTop: heightPercentageToPx(2)
                 }}>
-                    {
-                        this.props.tags.map(tag => (
+                    {this.props.tags && this.props.tags.slice(0, 5).map(tag => (
                             <View style={{
                                 backgroundColor: '#4040FF4D',
                                 padding: widthPercentageToPx(1.8),
@@ -148,10 +147,12 @@ class CommunityScreen extends Component {
                         bio: streamer.val().bio,
                         backgroundUrl: streamer.val().backgroundUrl,
                         badge: streamer.val().badge,
-                        tags: streamer.val().tags
+                        tags: streamer.val().tags,
+                        creatorCodes: streamer.val().creatorCodes
                     });
                 }
             });
+
             this.setState({ streamersData });
         }
     }

@@ -250,20 +250,24 @@ export class NewUserProfileScreen extends Component {
 
     getUserSeasonLevel = () => {
         let currentLevel = 1;
-        this.props.qaplaLevels.forEach((level, index) => {
-            if (this.props.seasonXQ >= level.requiredXQ) {
-                currentLevel = index + 1;
-            }
-        });
+        if (this.props.qaplaLevels) {
+            this.props.qaplaLevels.forEach((level, index) => {
+                if (this.props.seasonXQ >= level.requiredXQ) {
+                    currentLevel = index + 1;
+                }
+            });
+        }
 
         return currentLevel;
     }
 
     getNextLevelRequiredXQ = () => {
-        for (let i = 0; i < this.props.qaplaLevels.length; i++) {
-            const qaplaLevel = this.props.qaplaLevels[i];
-            if (this.props.seasonXQ < qaplaLevel.requiredXQ) {
-                return qaplaLevel.requiredXQ;
+        if (this.props.qaplaLevels) {
+            for (let i = 0; i < this.props.qaplaLevels.length; i++) {
+                const qaplaLevel = this.props.qaplaLevels[i];
+                if (this.props.seasonXQ < qaplaLevel.requiredXQ) {
+                    return qaplaLevel.requiredXQ;
+                }
             }
         }
 
@@ -271,10 +275,12 @@ export class NewUserProfileScreen extends Component {
     }
 
     getCurrentLevelRequiredXQ = () => {
-        for (let i = 0; i < this.props.qaplaLevels.length; i++) {
-            const qaplaLevel = this.props.qaplaLevels[i];
-            if (this.props.seasonXQ < qaplaLevel.requiredXQ) {
-                return i > 0 ? this.props.qaplaLevels[i - 1].requiredXQ : 0;
+        if (this.props.qaplaLevels) {
+            for (let i = 0; i < this.props.qaplaLevels.length; i++) {
+                const qaplaLevel = this.props.qaplaLevels[i];
+                if (this.props.seasonXQ < qaplaLevel.requiredXQ) {
+                    return i > 0 ? this.props.qaplaLevels[i - 1].requiredXQ : 0;
+                }
             }
         }
 

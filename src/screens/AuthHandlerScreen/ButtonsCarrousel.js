@@ -8,7 +8,7 @@ import AnimatedMultipurposeButton from './AnimatedMultipurposeButton';
 
 class ButtonsCarrousel extends Component {
     render() {
-        let showFirstButton = (this.props.currentStep === 0 || this.props.showFirstButtonAsSignOption) && this.props.currentStep <= 0;
+        let showFirstButton = (this.props.currentStep <= -1 || this.props.showFirstButtonAsSignOption);
         return (
             <View>
                 <AnimatedMultipurposeButton onPress={this.props.onFirstButtonPress}
@@ -22,7 +22,7 @@ class ButtonsCarrousel extends Component {
                         </QaplaText>
                     </View>
                     <View style={styles.buttonWithIconContainer}>
-                        {showFirstButton &&
+                        {this.props.showFirstButtonAsSignOption &&
                         <>
                             <images.svg.appleIcon height={32} width={32} style={{ marginRight: 8 }} />
                             <QaplaText style={[styles.buttonText, { color: '#FFF' }]}>

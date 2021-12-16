@@ -32,10 +32,11 @@ export default styles = StyleSheet.create({
         alignItems: 'center'
     },
     titleAndDescriptionContainer: {
-        height: heightPercentageToPx(32),
         width: widthPercentageToPx(100),
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderColor: '#FFF000',
+        borderWidth: 1
     },
     title: {
         fontSize: 30,
@@ -51,20 +52,12 @@ export default styles = StyleSheet.create({
         textAlign: 'center',
         alignSelf: 'center'
     },
-    descriptionSpecial: {
-        marginTop: 24,
-        maxWidth: widthPercentageToPx(100),
-        fontSize: 22,
-        color: '#FFF',
-        textAlign: 'center',
-
-    },
     emailButtonContainer: {
         width: widthPercentageToPx(100),
         flexDirection: 'row',
         alignContent: 'center',
         justifyContent: 'center',
-        marginBottom: 32
+        marginBottom: 24
     },
     emailButton: {
         marginRight: 12,

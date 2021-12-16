@@ -12,7 +12,7 @@ import TranslateXContainer from './TranslateXContainer';
 import TextsCarrousel from './TextsCarrousel';
 import ButtonsCarrousel from './ButtonsCarrousel';
 import appleAuth from '@invertase/react-native-apple-authentication';
-import { createAccountWitEmailAndPassword, signInWithApple, signInWithEmailAndPassword, signInWithGoogle } from '../../services/auth';
+import { createAccountWitEmailAndPassword, setupGoogleSignin, signInWithApple, signInWithEmailAndPassword, signInWithGoogle } from '../../services/auth';
 import { createUserProfile, getUserNameWithUID, updateUserLoggedStatus, userHaveTwitchId, validateUserName } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 
@@ -40,6 +40,9 @@ class AuthHandlerScreen extends Component {
         showUsernameErrorMessage: false,
         checkingUserName: false
     };
+    componentDidMount() {
+        setupGoogleSignin();
+    }
 
     /**
      * Check if the user is new, if it's new create the profile and send the user
@@ -268,20 +271,18 @@ class AuthHandlerScreen extends Component {
                             </TouchableOpacity>
                             <View style={styles.emailButtonContainer} />
                         </TranslateXContainer>
-                        <View>
-                            <ButtonsCarrousel onFirstButtonPress={this.handleFirstButtonPress}
-                                onSecondButtonPress={this.handleSecondButtonPress}
-                                onFirstButtonBackgroundRef={(ref) => this.firstButtonBackgroundColor = ref}
-                                onFirstTextRef={(ref) => this.firstButton = ref}
-                                onSecondButtonBackgroundRef={(ref) => this.secondButtonBackgroundColor = ref}
-                                onSecondTextRef={(ref) => this.secondButton = ref}
-                                firstButtonBackgroundColors={['#00FFDD', showIOSButton ? '#000000' : 'transparent', 'transparent', 'transparent', 'transparent']}
-                                secondButtonBackgroundColors={['#3B4BF9', '#FFF', '#00FFDD', '#00FFDD', '#00FFDD']}
-                                currentStep={this.state.currentStep}
-                                showFirstButtonAsSignOption={showIOSButton}
-                                hideEmailUI={this.state.hideEmailUI}
-                                checkingUserName={this.state.checkingUserName} />
-                        </View>
+                        <ButtonsCarrousel onFirstButtonPress={this.handleFirstButtonPress}
+                            onSecondButtonPress={this.handleSecondButtonPress}
+                            onFirstButtonBackgroundRef={(ref) => this.firstButtonBackgroundColor = ref}
+                            onFirstTextRef={(ref) => this.firstButton = ref}
+                            onSecondButtonBackgroundRef={(ref) => this.secondButtonBackgroundColor = ref}
+                            onSecondTextRef={(ref) => this.secondButton = ref}
+                            firstButtonBackgroundColors={['#00FFDD', showIOSButton ? '#000000' : 'transparent', 'transparent', 'transparent', 'transparent']}
+                            secondButtonBackgroundColors={['#3B4BF9', '#FFF', '#00FFDD', '#00FFDD', '#00FFDD']}
+                            currentStep={this.state.currentStep}
+                            showFirstButtonAsSignOption={showIOSButton}
+                            hideEmailUI={this.state.hideEmailUI}
+                            checkingUserName={this.state.checkingUserName} />
                         <View style={styles.dotStepsContainer}>
                             {this.state.steps > 0 &&
                                 <ProgressDotsIndicator

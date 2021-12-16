@@ -90,7 +90,7 @@ class TextsCarrousel extends Component {
                     }
                 </View>
                 <View style={styles.titleAndDescriptionContainer}>
-                    <QaplaText style={[styles.title, { marginTop: 72 }]}>
+                    <QaplaText style={[styles.title]}>
                         Crea tu nombre de usuario
                     </QaplaText>
                     <View style={styles.usernameContainer}>

@@ -15,7 +15,7 @@ import LightningIcon from './icons/Lighting.svg';
 import SearchIcon from './icons/search.svg';
 import BackIcon from './icons/back.svg';
 import OkIcon from './icons/OkIcon.svg';
-import CloseIcon from './icons/close.svg';
+import CloseIcon from './icons/CloseIcon.svg';
 import ClashIcon from './icons/Clash.svg';
 import HeartstoneIcon from './icons/Heartstone.svg';
 import LOLIcon from './icons/LOL.svg';
@@ -91,6 +91,7 @@ import TikTok from './icons/TikTok.svg';
 import YouTube from './icons/YouTube.svg';
 import CopyCreatorCode from './icons/CopyCreatorCode.svg';
 import CameraPermissions from './icons/CameraPermissions.svg';
+import RightArrow from './icons/RightArrow.svg';
 
 // Images
 
@@ -357,7 +358,8 @@ const images = {
 		tikTok: TikTok,
 		youTube: YouTube,
 		copyCreatorCode: CopyCreatorCode,
-		cameraPermissions: CameraPermissions
+		cameraPermissions: CameraPermissions,
+		rightArrow: RightArrow
 	}
 };
 

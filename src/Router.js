@@ -51,6 +51,7 @@ import TwitchAuthScreen from './screens/TwitchAuthScreen/TwitchAuthScreen';
 import ActivityScreen from './screens/ActivityScreen/ActivityScreen';
 import QaplaTabBar from './components/QaplaTabBar/QaplaTabBar';
 import StreamerProfileScreen from './screens/StreamerProfileScreen/StreamerProfileScreen';
+import AuthHandlerScreen from './screens/AuthHandlerScreen/AuthHandlerScreen';
 
 //#region Stack Navigators
 
@@ -138,9 +139,10 @@ const VerificationStackNavigator = createStackNavigator({
     headerMode: 'none'
 });
 
+
 const AuthStackNavigator = createStackNavigator({
   SignIn: {
-    screen: SignUpLoginHandlerScreen,
+    screen: AuthHandlerScreen,
     navigationOptions: {
       headerShown: false
     }

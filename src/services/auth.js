@@ -94,6 +94,13 @@ export async function signInWithEmailAndPassword(email, password) {
     return user;
 }
 
+export async function createAccountWitEmailAndPassword(email, password) {
+    const user = await auth.createUserWithEmailAndPassword(email, password);
+    setUserIdOnSegment(user.user.uid);
+
+    return user;
+}
+
 /**
  * Send a SMS to the given number of the user to verify their phone number
  * @param {string} phoneNumber Phone number of the user

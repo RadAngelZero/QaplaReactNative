@@ -34,9 +34,7 @@ export default styles = StyleSheet.create({
     titleAndDescriptionContainer: {
         width: widthPercentageToPx(100),
         alignItems: 'center',
-        justifyContent: 'center',
-        borderColor: '#FFF000',
-        borderWidth: 1
+        justifyContent: 'center'
     },
     title: {
         fontSize: 30,

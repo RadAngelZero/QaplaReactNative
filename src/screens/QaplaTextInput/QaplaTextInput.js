@@ -13,9 +13,13 @@ class QaplaTextInput extends Component {
                 value={this.props.value}
                 placeholder={this.props.placeholder}
                 secureTextEntry={this.props.secureTextEntry}
-                placeholderTextColor='rgba(0, 255, 220, 0.35)' />
+                placeholderTextColor={this.props.placeholderTextColor} />
         );
     }
+}
+
+QaplaTextInput.defaultProps = {
+    placeholderTextColor: 'rgba(0, 255, 220, 0.35)'
 }
 
 export default QaplaTextInput;

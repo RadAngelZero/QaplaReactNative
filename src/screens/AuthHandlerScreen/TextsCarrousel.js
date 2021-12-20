@@ -66,9 +66,7 @@ class TextsCarrousel extends Component {
                     </QaplaText>
                 </View>
                 <View style={styles.titleAndDescriptionContainer}>
-                    {!this.props.hideEmailUI &&
-                        <>
-                        <QaplaText style={[styles.title, { marginTop: 72 }]}>
+                        <QaplaText style={[styles.title, { marginTop: 72, color: this.props.hideEmailUI ? 'transparent' : '#FFF' }]}>
                             {this.props.showCreateAccountScreen ?
                                 'Crea tu cuenta con correo'
                                 :
@@ -76,18 +74,21 @@ class TextsCarrousel extends Component {
                             }
                         </QaplaText>
                         <View style={styles.emailFormContainer}>
+                            <>
                             <QaplaTextInput onChangeText={this.props.onEmailChange}
+                                style={{ backgroundColor: this.props.hideEmailUI ? 'transparent' : '#0D1022', color: this.props.hideEmailUI ? 'transparent' : '#00FFDC' }}
+                                placeholderTextColor={this.props.hideEmailUI ? 'transparent' : 'rgba(0, 255, 220, 0.35)'}
                                 value={this.props.email}
                                 keyboardType='email-address'
                                 placeholder='Correo' />
                             <QaplaTextInput onChangeText={this.props.onPasswordChange}
-                                style={{ marginTop: 24 }}
+                                style={{ marginTop: 24, backgroundColor: this.props.hideEmailUI ? 'transparent' : '#0D1022' }}
+                                placeholderTextColor={this.props.hideEmailUI ? 'transparent' : 'rgba(0, 255, 220, 0.35)'}
                                 secureTextEntry
                                 value={this.props.password}
                                 placeholder='Password' />
+                            </>
                         </View>
-                        </>
-                    }
                 </View>
                 <View style={styles.titleAndDescriptionContainer}>
                     <QaplaText style={[styles.title]}>

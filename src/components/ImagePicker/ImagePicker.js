@@ -138,8 +138,8 @@ export default class ImagePicker extends React.Component {
   * Calls a method provided via props, to save the selected image,
   * what save means, is up to the parent of the ImagePicker component.
   */
-  saveImage = () => {
-      this.props.saveImage(this.state.picture);
+  saveImage = async () => {
+    await this.props.saveImage(this.state.picture);
   }
 
     /**
@@ -176,6 +176,7 @@ export default class ImagePicker extends React.Component {
     }
 
     render() {
+        console.log(this.props.isSavingImage);
         return (
             <View style={styles.container}>
                 <FlatList
@@ -185,26 +186,36 @@ export default class ImagePicker extends React.Component {
                     onEndReachedThreshold={0.1}
                     data={this.state.photos}
                     renderItem={(obj) => this.renderItem(obj)} />
-                {this.state.endFlatList && this.state.photos.length > 0 &&
-                this.state.morePictures && !this.state.pictureSelected &&
-                    <TouchableWithoutFeedback onPress={this.loadMorePictures}>
-                        <View style={styles.moreButtonContainer}>
-                            <QaplaText style={styles.textStyle}>{translate('imagePicker.showMorePhotos')}</QaplaText>
+                {this.props.isSavingImage ?
+                    <TouchableWithoutFeedback disabled>
+                        <View style={styles.okButtonContainer}>
+                            <QaplaText style={styles.textStyle}>{this.props.savingImgBttnTxt}</QaplaText>
                         </View>
                     </TouchableWithoutFeedback>
-                }
-                {this.state.pictureSelected &&
+                    :
                     <>
-                        <TouchableWithoutFeedback onPress={this.saveImage}>
-                            <View style={styles.okButtonContainer}>
-                                <QaplaText style={styles.textStyle}>{this.props.selectImgBttnTxt}</QaplaText>
-                            </View>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={this.unselectPicture}>
-                            <View style={styles.cancelButtonContainer}>
-                                <QaplaText style={styles.textStyle}>{this.props.discardImgBttnTxt}</QaplaText>
-                            </View>
-                        </TouchableWithoutFeedback>
+                        {this.state.endFlatList && this.state.photos.length > 0 &&
+                        this.state.morePictures && !this.state.pictureSelected &&
+                            <TouchableWithoutFeedback onPress={this.loadMorePictures}>
+                                <View style={styles.moreButtonContainer}>
+                                    <QaplaText style={styles.textStyle}>{translate('imagePicker.showMorePhotos')}</QaplaText>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        }
+                        {this.state.pictureSelected &&
+                            <>
+                                <TouchableWithoutFeedback onPress={this.saveImage}>
+                                    <View style={styles.okButtonContainer}>
+                                        <QaplaText style={styles.textStyle}>{this.props.selectImgBttnTxt}</QaplaText>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                <TouchableWithoutFeedback onPress={this.unselectPicture}>
+                                    <View style={styles.cancelButtonContainer}>
+                                        <QaplaText style={styles.textStyle}>{this.props.discardImgBttnTxt}</QaplaText>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                            </>
+                        }
                     </>
                 }
             </View>
@@ -214,5 +225,6 @@ export default class ImagePicker extends React.Component {
 
 ImagePicker.defaultProps = {
     selectImgBttnTxt: translate('imagePicker.selectImage'),
-    discardImgBttnTxt: translate('imagePicker.discardImage')
+    discardImgBttnTxt: translate('imagePicker.discardImage'),
+    savingImgBttnTxt: translate('imagePicker.savingImage')
 }

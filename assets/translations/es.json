@@ -354,7 +354,8 @@
     "imagePicker": {
         "showMorePhotos": "Mostrar más fotografías",
         "selectImage": "¡Quiero esta foto!",
-        "discardImage": "No quiero esta foto"
+        "discardImage": "No quiero esta foto",
+        "savingImage": "Guardando foto..."
     },
     "qGCamera": {
         "androidPermissions": {

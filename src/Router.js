@@ -5,9 +5,10 @@ import { createAppContainer, createSwitchNavigator, NavigationActions } from 're
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator, createBottomTabNavigator } from 'react-navigation-tabs';
 import Svg, { G, Path, Rect } from 'react-native-svg';
+import { connect } from 'react-redux';
 
 import { setCurrentScreenId, setPreviousScreenId } from './actions/screensActions';
-import { connect } from 'react-redux';
+import { isUserLogged } from './services/auth';
 
 import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen';
 import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen';

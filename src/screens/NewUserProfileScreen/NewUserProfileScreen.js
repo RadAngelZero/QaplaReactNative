@@ -75,9 +75,10 @@ export class NewUserProfileScreen extends Component {
             this.props.navigation.addListener(
                 'willFocus',
                 (payload) => {
-                    recordScreenOnSegment('User Profile Screen');
                     if (!isUserLogged()) {
                         this.props.navigation.navigate('Auth');
+                    } else {
+                        recordScreenOnSegment('User Profile Screen');
                     }
                 }
             )
@@ -393,7 +394,7 @@ export class NewUserProfileScreen extends Component {
                                             <EditProfileImgBadge style={styles.userImage}>
                                                 <Image
                                                     style={styles.userImage}
-                                                    source={this.state.userImage ? this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img : null} />
+                                                    source={this.props.userImage ? { uri: this.props.userImage } : this.state.userImage ? this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img : null} />
                                             </EditProfileImgBadge>
                                         )}
                                         backgroundColor='#1F2750'

@@ -65,7 +65,7 @@ class AuthHandlerScreen extends Component {
                 if (!userName) {
                     this.goToCreateUsernameStep();
                 } else if (userHaveTwitchLinked) {
-                    this.props.navigation.navigate(this.props.originScreen);
+                    return this.props.navigation.navigate(this.props.originScreen);
                 }
             }
         });
@@ -75,17 +75,14 @@ class AuthHandlerScreen extends Component {
         if (this.state.currentStep === -1) {
             this.goToCreateAccount();
         } else if (this.state.currentStep === 0) {
-                this.setState({ hideEmailUI: true }, async () => {
+            this.setState({ hideEmailUI: true }, async () => {
+                try {
                     const user = await signInWithApple();
-                    this.succesfullSignIn(user);
-                    const userName = await getUserNameWithUID(user.user.uid);
-
-                    if (!userName) {
-                        this.goToCreateUsernameStep();
-                    } else {
-                        this.props.navigation.navigate(this.props.originScreen);
-                    }
-                });
+                    await this.succesfullSignIn(user);
+                } catch (error) {
+                    this.setState({ hideEmailUI: false });
+                }
+            });
         }
     }
 
@@ -94,14 +91,11 @@ class AuthHandlerScreen extends Component {
             this.goToHaveAccount();
         } else if (this.state.currentStep === 0) {
             this.setState({ hideEmailUI: true }, async () => {
-                const user = await signInWithGoogle();
-                this.succesfullSignIn(user);
-                const userName = await getUserNameWithUID(user.user.uid);
-
-                if (!userName) {
-                    this.goToCreateUsernameStep();
-                } else {
-                    this.props.navigation.navigate(this.props.originScreen);
+                try {
+                    const user = await signInWithGoogle();
+                    await this.succesfullSignIn(user);
+                } catch (error) {
+                    this.setState({ hideEmailUI: false });
                 }
             });
         } else if (this.state.currentStep === 1) {
@@ -147,7 +141,7 @@ class AuthHandlerScreen extends Component {
 
     closeAndBackButton = () => {
         if (this.state.currentStep === -1) {
-            this.props.navigation.navigate('Achievements')
+            return this.props.navigation.navigate('Achievements');
         } else if (this.state.screenIndex !== -1) {
             this.backToPreviousScreen();
         }
@@ -159,7 +153,7 @@ class AuthHandlerScreen extends Component {
         if (!userName) {
             this.goToCreateUsernameStep();
         } else {
-            this.props.navigation.navigate(this.props.originScreen);
+            return this.props.navigation.navigate(this.props.originScreen);
         }
     }
 
@@ -203,7 +197,7 @@ class AuthHandlerScreen extends Component {
                     if (this.state.username !== '' && await validateUserName(this.state.username)) {
                         await createUserProfile(this.state.uid, this.state.email, this.state.username);
 
-                        this.props.navigation.navigate(this.props.originScreen);
+                        return this.props.navigation.navigate(this.props.originScreen);
                     } else {
                         this.setState({
                             showUsernameErrorMessage: true,

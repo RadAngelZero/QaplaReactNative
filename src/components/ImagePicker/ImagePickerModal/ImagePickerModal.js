@@ -20,7 +20,8 @@ const CloseIcon = Images.svg.closeIcon;
 
 class ImagePickerModal extends Component {
 	state = {
-		showIOSPermissionsModal: Platform.OS === 'ios' ? true : false
+		showIOSPermissionsModal: Platform.OS === 'ios' ? true : false,
+		isSavingImage: false
 	};
 
 	componentDidMount() {
@@ -35,12 +36,16 @@ class ImagePickerModal extends Component {
     }
 
     /**
-	 * Saves the picture and closes the Modal.
+	 * Saves the picture.
 	 * Saving behaviour is determined by ImagePickerModal's parent
 	 */
-    saveImage = (picture) => {
-    	this.props.saveImage(picture);
-    	this.props.onClose();
+    saveImage = async (picture) => {
+		console.log('Savin');
+		this.setState({ isSavingImage: true }, async () => {
+			await this.props.saveImage(picture, () => {
+				this.setState({ isSavingImage: false });
+			});
+		});
   	}
 
 	checkPermissions = async () => {
@@ -72,7 +77,7 @@ class ImagePickerModal extends Component {
 							<QaplaIcon onPress={this.closeModal} touchableStyle={styles.closeIcon}>
 								<CloseIcon />
 							</QaplaIcon>
-							<ImagePicker saveImage={this.saveImage} />
+							<ImagePicker isSavingImage={this.state.isSavingImage} saveImage={this.saveImage} />
 						</SafeAreaView>
 					}
 		        </Modal>

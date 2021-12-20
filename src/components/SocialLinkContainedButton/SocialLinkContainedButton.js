@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import QaplaText from '../QaplaText/QaplaText';
 import styles from './style';
 
 class SocialLinkContainedButton extends Component {
@@ -14,9 +13,9 @@ class SocialLinkContainedButton extends Component {
                             <this.props.Icon />
                         </View>
                     }
-                    <QaplaText style={styles.text}>
+                    <Text style={styles.text}>
                         {this.props.children}
-                    </QaplaText>
+                    </Text>
                 </View>
             </TouchableOpacity>
         );

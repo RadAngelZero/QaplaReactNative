@@ -1,119 +1,9 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Text, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 
 import styles from './style';
-import Images from '../../../assets/images';
 import { getStreamersPublicProfiles } from '../../services/database';
-import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
-
-const FounderBadge = Images.svg.founderBadge;
-
-class StreamerCard extends React.Component {
-
-    state = {
-        viewMore: false
-    }
-
-    render() {
-        return (
-            <TouchableOpacity style={{
-                width: widthPercentageToPx(91.46),
-                alignSelf: 'center',
-                borderRadius: widthPercentageToPx(6),
-                backgroundColor: '#141833',
-                justifyContent: 'flex-start',
-                overflow: 'hidden',
-                paddingBottom: heightPercentageToPx(4),
-                marginBottom: heightPercentageToPx(6),
-                height: heightPercentageToPx(48)
-            }}
-            onPress={this.props.onPress}>
-                <View />
-                <Image
-                    style={{
-                        display: 'flex',
-                        height: heightPercentageToPx(12),
-                    }}
-                    source={this.props.backgroundUrl ? { uri: this.props.backgroundUrl } : null}
-                />
-                <Image
-                    style={{
-                        height: heightPercentageToPx(12),
-                        width: heightPercentageToPx(12),
-                        borderRadius: 100,
-                        alignSelf: 'center',
-                        marginTop: heightPercentageToPx(-6)
-                    }}
-                    source={ this.props.photoUrl ? { uri: this.props.photoUrl } : null}
-                />
-                <View style={{
-                    flexDirection: 'row',
-                    alignSelf: 'center',
-                    marginTop: heightPercentageToPx(2)
-                }}>
-                    <Text style={{
-                        color: 'white',
-                        fontSize: heightPercentageToPx(2.5)
-                    }}>
-                        {this.props.displayName}
-                    </Text>
-                    <View style={{ width: widthPercentageToPx(2.6) }} />
-                    <View style={{ justifyContent: 'center' }}>
-                        {this.props.badge &&
-                            <FounderBadge />
-                        }
-                    </View>
-                </View>
-                <Text style={{
-                    color: 'white',
-                    fontSize: heightPercentageToPx(1.8),
-                    lineHeight: heightPercentageToPx(2.6),
-                    width: widthPercentageToPx(82),
-                    alignSelf: 'center',
-                    marginTop: heightPercentageToPx(2.4)
-                }}
-                >
-                    {this.props.bio && this.props.bio.length > 90 && !this.state.viewMore ?
-                        <>
-                            {this.props.bio.slice(0, -this.props.bio.length + 90) + '...'}
-                            <Text style={{
-                                color: '#3366BB'
-                            }}>Ver más</Text>
-                        </>
-
-                        :
-                        this.props.bio
-                    }
-                </Text>
-                <View style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    alignSelf: 'center',
-                    width: widthPercentageToPx(84),
-                    marginTop: heightPercentageToPx(2)
-                }}>
-                    {this.props.tags && this.props.tags.slice(0, 5).map(tag => (
-                            <View style={{
-                                backgroundColor: '#4040FF4D',
-                                padding: widthPercentageToPx(1.8),
-                                paddingHorizontal: widthPercentageToPx(3),
-                                paddingBottom: widthPercentageToPx(1.2),
-                                borderRadius: 100,
-                                margin: widthPercentageToPx(0.6),
-                                marginVertical: heightPercentageToPx(0.6)
-                            }}>
-                                <Text style={{
-                                    color: 'white',
-                                    fontSize: heightPercentageToPx(1.4)
-                                }}>{tag}</Text>
-                            </View>
-                        ))
-                    }
-                </View>
-            </TouchableOpacity>
-        )
-    }
-}
+import StreamerCard from '../../components/StreamerCard/StreamerCard';
 
 class CommunityScreen extends Component {
     state = {
@@ -170,7 +60,7 @@ class CommunityScreen extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
-                    data={this.state.streamersData}
+                    data={this.state.streamersData.reverse()}
                     renderItem={this.renderCard}
                     keyExtractor={item => item.streamerId}
                     numColumns={1}

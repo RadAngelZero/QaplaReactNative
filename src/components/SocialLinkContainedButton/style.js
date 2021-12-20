@@ -18,11 +18,14 @@ export default styles = StyleSheet.create({
         top: 0,
         bottom: 0,
         left: 26,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     text: {
+        height: heightPercentageToPx(11.45),
         color: '#FFF',
         fontSize: 21,
+        lineHeight: 25,
+        fontWeight: '600',
         textAlign: 'center',
         flex: 1
     }

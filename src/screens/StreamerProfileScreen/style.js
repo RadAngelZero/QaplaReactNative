@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
@@ -9,9 +8,9 @@ export default styles = StyleSheet.create({
     },
     topNav: {
         position: 'absolute',
-        top: 24,
+        top: 36,
         left: 16,
-        zIndex: 9999
+        zIndex: 9999,
     },
     backgroundImage: {
         height: heightPercentageToPx(20),
@@ -56,7 +55,8 @@ export default styles = StyleSheet.create({
     },
     iconContainer: {
         marginRight: 24,
-        marginBottom: 16
+        height: heightPercentageToPx(5),
+        justifyContent: 'center'
     },
     nameContainer: {
         flexDirection: 'row',
@@ -66,12 +66,16 @@ export default styles = StyleSheet.create({
         marginTop: 8,
         color: '#FFF',
         fontSize: 21,
-        marginRight: 8
+        marginRight: 8,
+        fontWeight: '600',
+        lineHeight: 22
     },
     bio: {
         marginTop: 20,
         color: '#FFF',
-        fontSize: 16
+        fontSize: 16,
+        fontWeight: '500',
+        lineHeight: 22
     },
     tagsContainer: {
         marginTop: 30,
@@ -91,7 +95,9 @@ export default styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 22,
-        color: '#FFF'
+        color: '#FFF',
+        fontWeight: '700',
+        lineHeight: 28
     },
     upcomingStreamImageLinearGradientBackground: {
         borderRadius: 24,
@@ -105,7 +111,9 @@ export default styles = StyleSheet.create({
     upcomingStreamTitle: {
         marginTop: 16,
         fontSize: 18,
-        color: '#FFF'
+        color: '#FFF',
+        fontWeight: '500',
+        lineHeight: 22
     },
     nextStreamTimeContainer: {
         flexDirection: 'row',
@@ -120,6 +128,7 @@ export default styles = StyleSheet.create({
     timeText: {
         fontSize: 14,
         color: '#FFF',
+        fontWeight: '500',
         marginTop: 2,
         marginLeft: 8
     },
@@ -162,16 +171,19 @@ export default styles = StyleSheet.create({
         shadowOpacity: 0.35,
         shadowRadius: 2.62,
         elevation: 4,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
-        paddingRight: 24,
-        paddingLeft: 24
+        paddingRight: 16,
+        paddingLeft: 16
     },
     codeText: {
+        flex: 1,
         color: '#FFF',
         fontSize: 18,
-        textAlign: 'center',
+        fontWeight: '600',
+        lineHeight: 22,
+        textAlign: 'left',
         marginRight: 8
     },
     copyCode: {

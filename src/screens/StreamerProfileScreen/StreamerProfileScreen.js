@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { SafeAreaView, TouchableOpacity, Image, View, ScrollView, Linking } from 'react-native';
+import { TouchableOpacity, Image, View, ScrollView, Linking, Text } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
 import images from '../../../assets/images';
 import QaplaChip from '../../components/QaplaChip/QaplaChip';
-import QaplaText from '../../components/QaplaText/QaplaText';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
 import { getStreamerPublicProfile, getStreamerSocialLinks } from '../../services/database';
 import { copyDataToClipboard } from '../../utilities/utils';
@@ -121,7 +120,8 @@ class StreamerProfileScreen extends Component {
         const userLanguage = getLocaleLanguage();
 
         return (
-            <SafeAreaView style={styles.container}>
+            // We don´t use SafeAreaView intentionally here, we want the cover image and TopNav to appear at the top of the screen
+            <View style={styles.container}>
                 <ScrollView>
                     <View style={styles.topNav}>
                         <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
@@ -138,9 +138,9 @@ class StreamerProfileScreen extends Component {
                         <View style={styles.buttonsContainer}>
                             <TouchableOpacity onPress={() => console.log('Follow Button Press')}>
                                 <View style={styles.followButton}>
-                                    <QaplaText style={styles.followButtonText}>
+                                    <Text style={styles.followButtonText}>
                                         {translate('streamerProfileScreen.follow')}
-                                    </QaplaText>
+                                    </Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => console.log('Share Icon Press')}>
@@ -155,16 +155,16 @@ class StreamerProfileScreen extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.nameContainer}>
-                            <QaplaText style={styles.streamerName}>
+                            <Text style={styles.streamerName}>
                                 {displayName}
-                            </QaplaText>
+                            </Text>
                             {badge &&
                                 <images.svg.founderBadge style={{ marginTop: 8 }} />
                             }
                         </View>
-                        <QaplaText style={styles.bio}>
+                        <Text style={styles.bio}>
                             {bio}
-                        </QaplaText>
+                        </Text>
                         {tags && tags.length > 0 &&
                             <View style={styles.tagsContainer}>
                                 {!this.state.showAllTags ?
@@ -196,9 +196,9 @@ class StreamerProfileScreen extends Component {
                         }
                         {this.state.nextStreams && this.state.nextStreams.length > 0 &&
                             <View style={styles.upcomingStreamsContainer}>
-                                <QaplaText style={styles.sectionTitle}>
+                                <Text style={styles.sectionTitle}>
                                     {translate('streamerProfileScreen.upcomingStreams')}
-                                </QaplaText>
+                                </Text>
                                 {this.state.nextStreams.map((nextStream) => (
                                     <>
                                         <LinearGradient useAngle={true}
@@ -208,21 +208,21 @@ class StreamerProfileScreen extends Component {
                                             <Image style={styles.upcomingStreamImage}
                                                 source={{ uri: nextStream.backgroundImage }} />
                                         </LinearGradient>
-                                        <QaplaText style={styles.upcomingStreamTitle}>
+                                        <Text style={styles.upcomingStreamTitle}>
                                             {nextStream.title[userLanguage]}
-                                        </QaplaText>
+                                        </Text>
                                         <View style={styles.nextStreamTimeContainer}>
                                             <View style={styles.timeContainer}>
                                                 <images.svg.calendar style={{ alignSelf: 'center' }} />
-                                                <QaplaText style={styles.timeText}>
+                                                <Text style={styles.timeText}>
                                                     {this.formatStreamDate(nextStream.timestamp)}
-                                                </QaplaText>
+                                                </Text>
                                             </View>
                                             <View style={styles.timeContainer}>
                                                 <images.svg.clock />
-                                                <QaplaText style={styles.timeText}>
+                                                <Text style={styles.timeText}>
                                                     {this.formatStreamHour(nextStream.timestamp)}
-                                                </QaplaText>
+                                                </Text>
                                             </View>
                                         </View>
                                     </>
@@ -231,9 +231,9 @@ class StreamerProfileScreen extends Component {
                         }
                         {this.state.socialLinks && this.state.socialLinks.length > 0 &&
                             <View style={styles.streamerCommunityContainer}>
-                                <QaplaText style={styles.sectionTitle}>
+                                <Text style={styles.sectionTitle}>
                                     {translate('streamerProfileScreen.myCommunity')}
-                                </QaplaText>
+                                </Text>
                                 <View style={styles.socialButtonsContainer}>
                                     {this.state.socialLinks.map((socialLink) => (
                                         <SocialLinkContainedButton onPress={() => this.onSocialButtonPress(socialLink.value)}
@@ -248,9 +248,9 @@ class StreamerProfileScreen extends Component {
                         }
                         {this.state.streamerData.creatorCodes && Object.keys(this.state.streamerData.creatorCodes).length > 0 &&
                             <View style={styles.creatorCodesContainer}>
-                                <QaplaText style={styles.sectionTitle}>
+                                <Text style={styles.sectionTitle}>
                                     {translate('streamerProfileScreen.creatorCodes')}
-                                </QaplaText>
+                                </Text>
                                 {Object.values(this.state.streamerData.creatorCodes).map((code) => (
                                     <View style={styles.creatorCodeImage}>
                                         <Image style={styles.creatorCodeImage}
@@ -259,9 +259,9 @@ class StreamerProfileScreen extends Component {
                                                 <View style={styles.creatorCodeButton}>
                                                     <TouchableOpacity onPress={() => copyDataToClipboard(code.code)}>
                                                         <View style={styles.codeButton}>
-                                                            <QaplaText style={styles.codeText} numberOfLines={1}>
+                                                            <Text style={styles.codeText} numberOfLines={1}>
                                                                 {code.code}
-                                                            </QaplaText>
+                                                            </Text>
                                                             <View style={styles.copyCode}>
                                                                 <images.svg.copyCreatorCode />
                                                             </View>
@@ -276,7 +276,7 @@ class StreamerProfileScreen extends Component {
                     </View>
                     <View style={{ height: 40 }} />
                 </ScrollView>
-            </SafeAreaView>
+            </View>
         );
     }
 }

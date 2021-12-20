@@ -8,7 +8,7 @@ class QaplaChip extends Component {
     render() {
         return (
             <View style={[styles.container, this.props.style]}>
-                <QaplaText style={styles.text}>
+                <QaplaText style={[styles.text, this.props.textStyle]}>
                     {this.props.children}
                 </QaplaText>
             </View>

@@ -12,6 +12,7 @@ export default styles = StyleSheet.create({
     text: {
         color: 'rgba(255, 255, 255, .6529)',
         fontSize: 17,
+        fontWeight: '600',
         marginRight: 10,
         marginLeft: 12
     }

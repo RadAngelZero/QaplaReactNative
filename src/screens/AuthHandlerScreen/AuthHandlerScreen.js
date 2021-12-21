@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, Image, Platform, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { Animated, Easing, Image, Keyboard, Platform, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
@@ -38,10 +38,31 @@ class AuthHandlerScreen extends Component {
         username: '',
         uid: '',
         showUsernameErrorMessage: false,
-        checkingUserName: false
+        checkingUserName: false,
+        keyboardHeight: 0
     };
     componentDidMount() {
         setupGoogleSignin();
+        Keyboard.addListener('keyboardDidShow', (e) => {
+            // - 96 because we want the back button to still visible and with a margin of 16
+            this.setState({ keyboardHeight: e.endCoordinates.height - 96 }, () => {
+                Animated.timing(this.state.gradientContainerHeight, {
+                    toValue: 1,
+                    duration: 400,
+                    easing: Easing.cubic,
+                    useNativeDriver: false
+                }).start();
+            });
+        });
+
+        Keyboard.addListener('keyboardDidHide', (e) => {
+            Animated.timing(this.state.gradientContainerHeight, {
+                toValue: 0,
+                duration: 400,
+                easing: Easing.cubic,
+                useNativeDriver: false
+            }).start();
+        });
     }
 
     /**
@@ -210,92 +231,100 @@ class AuthHandlerScreen extends Component {
 
     render() {
         let showIOSButton = Platform.OS === 'ios' && appleAuth.isSignUpButtonSupported;
+        const translateYGradientContainer = this.state.gradientContainerHeight.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, -this.state.keyboardHeight],
+        });
 
         return (
-            <SafeAreaView style={styles.sfvContainer}>
-                <TouchableOpacity onPress={this.closeAndBackButton}>
-                        <View style={styles.closeBackIcon}>
-                            {this.state.currentStep !== 3 &&
-                            <>
-                                {this.state.screenIndex !== 0 ?
-                                    <images.svg.backIcon />
-                                    :
-                                    <images.svg.closeIcon />
+            <ScrollView keyboardShouldPersistTaps='handled' style={styles.sfvContainer} scrollEnabled={false}>
+                <SafeAreaView>
+                    <TouchableOpacity onPress={this.closeAndBackButton}>
+                            <View style={styles.closeBackIcon}>
+                                {this.state.currentStep !== 3 &&
+                                <>
+                                    {this.state.screenIndex !== 0 ?
+                                        <images.svg.backIcon />
+                                        :
+                                        <images.svg.closeIcon />
+                                    }
+                                </>
                                 }
-                            </>
-                            }
-                        </View>
-                </TouchableOpacity>
-                <View style={styles.mainContainer}>
-                    <Image source={images.png.qaplaSignupLogo2021.img}
-                        style={styles.qaplaLogo} />
-                    <LinearGradient useAngle={true}
-                        angle={136}
-                        style={styles.card}
-                        colors={['#A716EE', '#2C07FA']}>
-                        <TextsCarrousel textOnRef={(ref) => this.texts = ref}
-                            showCreateAccountScreen={this.state.createAccountIsSelected}
-                            onEmailChange={(email) => this.setState({ email: email.toLowerCase() })}
-                            email={this.state.email}
-                            onPasswordChange={(password) => this.setState({ password })}
-                            password={this.state.password}
-                            onUsernameChange={(username) => this.setState({ username })}
-                            username={this.state.username}
-                            hideEmailUI={this.state.hideEmailUI}
-                            showUsernameErrorMessage={this.state.showUsernameErrorMessage}
-                            toggleAgreementTermsState={this.toggleAgreementTermsState}
-                            agreementTermsState={this.state.agreementTermsState}
-                            toggleAgreementPrivacyState={this.toggleAgreementPrivacyState}
-                            agreementPrivacyState={this.state.agreementPrivacyState}
-                            checkingUserName={this.state.checkingUserName} />
-                        <TranslateXContainer onRef={(ref) => this.emailButton = ref}
-                            individualComponentWidth={widthPercentageToPx(100)}>
-                            <View style={styles.emailButtonContainer} />
-                            <TouchableOpacity onPress={this.goToEmailAuthenticationScreen}>
-                                <View style={styles.emailButtonContainer}>
-                                    <QaplaText style={styles.emailButton}>
-                                        {this.state.createAccountIsSelected ?
-                                            'Registrate con correo'
-                                            :
-                                            'Inicia sesión con correo'
-                                        }
-                                    </QaplaText>
-                                    <images.svg.rightArrow />
-                                </View>
-                            </TouchableOpacity>
-                            <View style={styles.emailButtonContainer} />
-                        </TranslateXContainer>
-                        <ButtonsCarrousel onFirstButtonPress={this.handleFirstButtonPress}
-                            onSecondButtonPress={this.handleSecondButtonPress}
-                            onFirstButtonBackgroundRef={(ref) => this.firstButtonBackgroundColor = ref}
-                            onFirstTextRef={(ref) => this.firstButton = ref}
-                            onSecondButtonBackgroundRef={(ref) => this.secondButtonBackgroundColor = ref}
-                            onSecondTextRef={(ref) => this.secondButton = ref}
-                            firstButtonBackgroundColors={['#00FFDD', showIOSButton ? '#000000' : 'transparent', 'transparent', 'transparent', 'transparent']}
-                            secondButtonBackgroundColors={['#3B4BF9', '#FFF', '#00FFDD', '#00FFDD', '#00FFDD']}
-                            currentStep={this.state.currentStep}
-                            showFirstButtonAsSignOption={showIOSButton}
-                            hideEmailUI={this.state.hideEmailUI}
-                            checkingUserName={this.state.checkingUserName} />
-                        <View style={styles.dotStepsContainer}>
-                            {this.state.steps > 0 &&
-                                <ProgressDotsIndicator
-                                    steps={this.state.steps}
-                                    selected={this.state.currentStep}
-                                    color={'rgba(0,254,223,0.54)'}
-                                    activeColor={'#00FEDF'}
-                                    /* We use heightPercentageToPx to achieve circular Views */
-                                    width={heightPercentageToPx(1.2)}
-                                    activeWidth={heightPercentageToPx(4)}
-                                    marginHorizontal={heightPercentageToPx(1)} />
-                            }
                             </View>
-                    </LinearGradient>
-                </View>
-                <LinkTwitchAccountModal
-                    open={this.state.showLinkWitTwitchModal}
-                    onClose={this.closeTwitchLinkModal} />
-            </SafeAreaView>
+                    </TouchableOpacity>
+                    <View style={styles.mainContainer}>
+                        <Image source={images.png.qaplaSignupLogo2021.img}
+                            style={styles.qaplaLogo} />
+                        <Animated.View style={{ transform: [{ translateY: translateYGradientContainer }] }}>
+                            <LinearGradient useAngle={true}
+                                angle={136}
+                                style={styles.card}
+                                colors={['#A716EE', '#2C07FA']}>
+                                <TextsCarrousel textOnRef={(ref) => this.texts = ref}
+                                    showCreateAccountScreen={this.state.createAccountIsSelected}
+                                    onEmailChange={(email) => this.setState({ email: email.toLowerCase() })}
+                                    email={this.state.email}
+                                    onPasswordChange={(password) => this.setState({ password })}
+                                    password={this.state.password}
+                                    onUsernameChange={(username) => this.setState({ username })}
+                                    username={this.state.username}
+                                    hideEmailUI={this.state.hideEmailUI}
+                                    showUsernameErrorMessage={this.state.showUsernameErrorMessage}
+                                    toggleAgreementTermsState={this.toggleAgreementTermsState}
+                                    agreementTermsState={this.state.agreementTermsState}
+                                    toggleAgreementPrivacyState={this.toggleAgreementPrivacyState}
+                                    agreementPrivacyState={this.state.agreementPrivacyState}
+                                    checkingUserName={this.state.checkingUserName} />
+                                <TranslateXContainer onRef={(ref) => this.emailButton = ref}
+                                    individualComponentWidth={widthPercentageToPx(100)}>
+                                    <View style={styles.emailButtonContainer} />
+                                    <TouchableOpacity onPress={this.goToEmailAuthenticationScreen}>
+                                        <View style={styles.emailButtonContainer}>
+                                            <QaplaText style={styles.emailButton}>
+                                                {this.state.createAccountIsSelected ?
+                                                    'Registrate con correo'
+                                                    :
+                                                    'Inicia sesión con correo'
+                                                }
+                                            </QaplaText>
+                                            <images.svg.rightArrow />
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={styles.emailButtonContainer} />
+                                </TranslateXContainer>
+                                <ButtonsCarrousel onFirstButtonPress={this.handleFirstButtonPress}
+                                    onSecondButtonPress={this.handleSecondButtonPress}
+                                    onFirstButtonBackgroundRef={(ref) => this.firstButtonBackgroundColor = ref}
+                                    onFirstTextRef={(ref) => this.firstButton = ref}
+                                    onSecondButtonBackgroundRef={(ref) => this.secondButtonBackgroundColor = ref}
+                                    onSecondTextRef={(ref) => this.secondButton = ref}
+                                    firstButtonBackgroundColors={['#00FFDD', showIOSButton ? '#000000' : 'transparent', 'transparent', 'transparent', 'transparent']}
+                                    secondButtonBackgroundColors={['#3B4BF9', '#FFF', '#00FFDD', '#00FFDD', '#00FFDD']}
+                                    currentStep={this.state.currentStep}
+                                    showFirstButtonAsSignOption={showIOSButton}
+                                    hideEmailUI={this.state.hideEmailUI}
+                                    checkingUserName={this.state.checkingUserName} />
+                                <View style={styles.dotStepsContainer}>
+                                    {this.state.steps > 0 &&
+                                        <ProgressDotsIndicator
+                                            steps={this.state.steps}
+                                            selected={this.state.currentStep}
+                                            color={'rgba(0,254,223,0.54)'}
+                                            activeColor={'#00FEDF'}
+                                            /* We use heightPercentageToPx to achieve circular Views */
+                                            width={heightPercentageToPx(1.2)}
+                                            activeWidth={heightPercentageToPx(4)}
+                                            marginHorizontal={heightPercentageToPx(1)} />
+                                    }
+                                    </View>
+                            </LinearGradient>
+                        </Animated.View>
+                    </View>
+                    <LinkTwitchAccountModal
+                        open={this.state.showLinkWitTwitchModal}
+                        onClose={this.closeTwitchLinkModal} />
+                </SafeAreaView>
+            </ScrollView>
         );
     }
 }

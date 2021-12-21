@@ -5,7 +5,6 @@ import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAn
 export default styles = StyleSheet.create({
     card: {
         width: widthPercentageToPx(91.46),
-        height: heightPercentageToPx(48.76),
         alignSelf: 'center',
         borderRadius: 25,
         backgroundColor: '#141833',
@@ -30,6 +29,7 @@ export default styles = StyleSheet.create({
         marginTop: heightPercentageToPx(-6) // Margin with (negative) half of height/width to center the streamerImage with coverImage
     },
     streamerNameContainer: {
+        height: heightPercentageToPx(3),
         flexDirection: 'row',
         alignSelf: 'center',
         marginTop: 15
@@ -42,6 +42,7 @@ export default styles = StyleSheet.create({
         marginRight: 6
     },
     bio: {
+        height: heightPercentageToPx(8),
         marginTop: 24,
         color: '#FFF',
         fontSize: 16,
@@ -55,10 +56,12 @@ export default styles = StyleSheet.create({
         fontWeight: '500'
     },
     tagsContainer: {
+        height: heightPercentageToPx(3.7) * 2 + 10, // Double the size of the tag + the marginBottom
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignSelf: 'center',
-        marginTop: 24
+        marginTop: 24,
+        overflow: 'hidden'
     },
     tags: {
         height: heightPercentageToPx(3.7),

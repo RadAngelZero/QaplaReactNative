@@ -51,6 +51,8 @@ export default styles = StyleSheet.create({
     },
     followButtonText: {
         color: '#FFF',
+        fontSize: 16,
+        fontWeight: '600',
         textAlign: 'center'
     },
     iconContainer: {

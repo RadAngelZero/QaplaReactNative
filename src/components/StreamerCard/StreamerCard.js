@@ -15,12 +15,11 @@ class StreamerCard extends Component {
     render() {
         return (
             <TouchableOpacity style={styles.card}
-            onPress={this.props.onPress}>
+                onPress={this.props.onPress}>
                 <Image style={styles.coverImage}
                     source={this.props.backgroundUrl ? { uri: this.props.backgroundUrl } : null} />
                 <Image style={styles.streamerImage}
-                    source={ this.props.photoUrl ? { uri: this.props.photoUrl } : null}
-                />
+                    source={ this.props.photoUrl ? { uri: this.props.photoUrl } : null} />
                 <View style={styles.streamerNameContainer}>
                     <Text style={styles.streamerName}>
                         {this.props.displayName}
@@ -31,7 +30,7 @@ class StreamerCard extends Component {
                         }
                     </View>
                 </View>
-                <Text style={styles.bio}>
+                <Text style={styles.bio} numberOfLines={3} ellipsizeMode='tail'>
                     {this.props.bio && this.props.bio.length > 90 && !this.state.viewMore ?
                         <>
                             {this.props.bio.slice(0, -this.props.bio.length + 90) + '...'}
@@ -44,7 +43,7 @@ class StreamerCard extends Component {
                     }
                 </Text>
                 <View style={styles.tagsContainer}>
-                    {this.props.tags && this.props.tags.slice(0, 5).map(tag => (
+                    {this.props.tags && this.props.tags.map(tag => (
                             <QaplaChip style={styles.tags} textStyle={styles.tagText}>
                                 {tag}
                             </QaplaChip>

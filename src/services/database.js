@@ -1484,6 +1484,11 @@ export async function getQaplaLevels() {
     return await streamersPublicProfilesRef.once('value');
 }
 
+/**
+ * Return the given number of profiles after the profile indicated (with the cursor)
+ * @param {number} limit Number of profiles to load (100 by default)
+ * @param {string} cursor Start point to load (optional)
+ */
 export async function getStreamersPublicProfileWithLimit(limit = 100, cursor) {
     if (cursor) {
         return await streamersPublicProfilesRef.endAt(cursor).limitToFirst(limit).once('value');
@@ -1516,15 +1521,29 @@ export async function getStreamerSocialLinks(streamerId) {
 // User To Streamer Subscriptions
 // -----------------------------------------------
 
-
+/**
+ * Subscribe a user to a streamer profile (User follow streamer)
+ * @param {string} uid User identifier
+ * @param {string} streamerId Streamer identifier
+ */
 export async function subscribeUserToStreamerProfile(uid, streamerId) {
     return await userToStreamerSubscriptionsRef.child(uid).child(streamerId).set(true);
 }
 
+/**
+ * unubscribe a user to a streamer profile (user unfollow streamer)
+ * @param {string} uid User identifier
+ * @param {string} streamerId Streamer identifier
+ */
 export async function unsubscribeUserToStreamerProfile(uid, streamerId) {
     return await userToStreamerSubscriptionsRef.child(uid).child(streamerId).remove();
 }
 
+/**
+ * Listen to the user subscriptions to streamers
+ * @param {string} uid User identifier
+ * @param {function} callback Handler function for the results
+ */
 export async function listenToUserToStreamersSubscriptions(uid, callback) {
     return userToStreamerSubscriptionsRef.child(uid).on('value', callback);
 }

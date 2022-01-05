@@ -31,6 +31,8 @@
             **/
             "timeline": "Timeline",
             "mystreams": "My streams",
+            "discover": "Discover",
+            "following": "Following",
             "achievements": {
                 "active": "Active",
                 "completed": "Completed"
@@ -338,6 +340,7 @@
     },
     "streamerProfileScreen": {
         "follow": "Follow",
+        "following": "Following",
         "upcomingStreams": "Upcoming streams",
         "myCommunity": "My community",
         "creatorCodes": "Codes"

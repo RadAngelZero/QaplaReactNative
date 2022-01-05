@@ -46,13 +46,14 @@ import NotificationsSettingsScreen from './screens/NotificationsSettingsScreen/N
 import TodayTournamentsScreen from './screens/TodayTournamentsScreen/TodayTournamentsScreen';
 import QaplaText from './components/QaplaText/QaplaText';
 import ChatHeader from './components/Chat/ChatHeader/ChatHeader';
-import CommunityScreen from './screens/CommunityScreen/CommunityScreen';
+import DiscoverStreamersScreen from './screens/DiscoverStreamersScreen/DiscoverStreamersScreen';
 import DonationsLeaderBoard from './components/DonationsLeaderBoard/DonationsLeaderBoard';
 import TwitchAuthScreen from './screens/TwitchAuthScreen/TwitchAuthScreen';
 import ActivityScreen from './screens/ActivityScreen/ActivityScreen';
 import QaplaTabBar from './components/QaplaTabBar/QaplaTabBar';
 import StreamerProfileScreen from './screens/StreamerProfileScreen/StreamerProfileScreen';
 import AuthHandlerScreen from './screens/AuthHandlerScreen/AuthHandlerScreen';
+import FollowingStreamersScreen from './screens/FollowingStreamersScreen/FollowingStreamersScreen';
 
 //#region Stack Navigators
 
@@ -175,13 +176,7 @@ const ChatStackNavigator = createStackNavigator({
   }
 });
 
-const CommunityStackNavigator = createStackNavigator({
-  Community: {
-    screen: CommunityScreen,
-    navigationOptions: {
-      headerShown: false
-    }
-  },
+const StreamerProfileStackNavigator = createStackNavigator({
   StreamerProfile: {
     screen: StreamerProfileScreen,
     navigationOptions: {
@@ -289,20 +284,29 @@ const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
 const StreamsTopTabNavigator = createMaterialTopTabNavigator(
   {
     Timeline: {
-      screen: TimelineStreams,
-      navigationOptions: {
-        title: translate('router.topNavigators.streams.timeline')
-      }
+      screen: TimelineStreams
     },
     MyStreams: {
-      screen: RetasNotificationsScreen,
-      navigationOptions: {
-        title: translate('router.topNavigators.streams.myStreams')
-      }
+      screen: RetasNotificationsScreen
     }
   },
   {
     initialRouteName: 'Timeline',
+    tabBarComponent: (props) =>  <QaplaTabBar {...props} />
+  }
+);
+
+const CommunityTopTabNavigator = createMaterialTopTabNavigator(
+  {
+    Discover: {
+      screen: DiscoverStreamersScreen
+    },
+    Following: {
+      screen: FollowingStreamersScreen
+    }
+  },
+  {
+    initialRouteName: 'Discover',
     tabBarComponent: (props) =>  <QaplaTabBar {...props} />
   }
 );
@@ -374,7 +378,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
     }
   },
   Community: {
-    screen: CommunityStackNavigator,
+    screen: CommunityTopTabNavigator,
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
@@ -467,7 +471,13 @@ const RootStackNavigator = createStackNavigator({
   Activity: {
     screen: ActivityScreen,
     navigationOptions: {
-      header: null
+      headerShown: false
+    }
+  },
+  StreamerProfile: {
+    screen: StreamerProfileStackNavigator,
+    navigationOptions: {
+      animationEnabled: false
     }
   },
   MatchWizard: MatchWizardStackNavigator,

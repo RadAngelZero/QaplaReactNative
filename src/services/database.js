@@ -43,6 +43,7 @@ const versionAppRef = database.ref('VersionApp/QaplaVersion');
 const qaplaLevelsRequirementsRef = database.ref('QaplaLevelsRequirements');
 const streamersPublicProfilesRef = database.ref('/StreamersPublicProfiles');
 const streamerLinksRef = database.ref('/StreamerLinks');
+const userToStreamerSubscriptionsRef = database.ref('/UserToStreamerSubscriptions');
 
 /**
  * Returns the userName of the specified user
@@ -1483,6 +1484,14 @@ export async function getQaplaLevels() {
     return await streamersPublicProfilesRef.once('value');
 }
 
+export async function getStreamersPublicProfileWithLimit(limit = 100, cursor) {
+    if (cursor) {
+        return await streamersPublicProfilesRef.endAt(cursor).limitToFirst(limit).once('value');
+    } else {
+        return await streamersPublicProfilesRef.limitToFirst(limit).once('value');
+    }
+}
+
 /**
  * Return the public profile of the given streamer
  * @param {string} streamerId Streamer identifier on database
@@ -1501,4 +1510,21 @@ export async function getStreamerPublicProfile(streamerId) {
  */
 export async function getStreamerSocialLinks(streamerId) {
     return await streamerLinksRef.child(streamerId).once('value');
+}
+
+// -----------------------------------------------
+// User To Streamer Subscriptions
+// -----------------------------------------------
+
+
+export async function subscribeUserToStreamerProfile(uid, streamerId) {
+    return await userToStreamerSubscriptionsRef.child(uid).child(streamerId).set(true);
+}
+
+export async function unsubscribeUserToStreamerProfile(uid, streamerId) {
+    return await userToStreamerSubscriptionsRef.child(uid).child(streamerId).remove();
+}
+
+export async function listenToUserToStreamersSubscriptions(uid, callback) {
+    return userToStreamerSubscriptionsRef.child(uid).on('value', callback);
 }

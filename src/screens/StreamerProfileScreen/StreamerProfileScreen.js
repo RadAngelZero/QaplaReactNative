@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import images from '../../../assets/images';
 import QaplaChip from '../../components/QaplaChip/QaplaChip';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
-import { getStreamerPublicProfile, getStreamerSocialLinks } from '../../services/database';
+import { getStreamerPublicProfile, getStreamerSocialLinks, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile } from '../../services/database';
 import { copyDataToClipboard } from '../../utilities/utils';
 import { getLocaleLanguage, translate } from './../../utilities/i18';
 import styles from './style';
@@ -33,17 +33,19 @@ class StreamerProfileScreen extends Component {
             backgroundUrl: '',
             badge: false,
             creatorCodes: {},
-            tags: []
+            tags: [],
+            streamerId: '',
+            isUserFollowingStreamer: false
         }
     };
 
     componentDidMount() {
-        this.props.navigation.addListener('didFocus', this.loadStreamerData);
+        this.props.navigation.addListener('didFocus', this.fetchStreamerData);
 
-        this.loadStreamerData();
+        this.fetchStreamerData();
     }
 
-    loadStreamerData = async () => {
+    fetchStreamerData = async () => {
         let streamerData = this.props.navigation.getParam('streamerData', null);
         let streamerId = '';
 
@@ -54,11 +56,16 @@ class StreamerProfileScreen extends Component {
             // So we get the streamer public profile data directly from the database
             const streamerData = await getStreamerPublicProfile(streamerId);
 
-            this.setState({ streamerData: streamerData.val() });
+            this.setState({ streamerData: { ...streamerData.val(), streamerId} });
         } else {
             streamerId = streamerData.streamerId;
 
             this.setState({ streamerData });
+        }
+
+        const userComesFromFollowingList = this.props.navigation.getParam('comesFromFollowingList', false);
+        if (userComesFromFollowingList) {
+            this.setState({ isUserFollowingStreamer: true });
         }
 
         const streamerLinks = await getStreamerSocialLinks(streamerId);
@@ -108,6 +115,29 @@ class StreamerProfileScreen extends Component {
 
     onSocialButtonPress = (url) => Linking.openURL(url);
 
+    followStreamer = async () => {
+        if (this.props.uid) {
+            this.subscribeUserToStreamer(this.props.uid);
+        } else {
+            this.props.navigation.navigate('SignIn', {
+                    onSuccessSignIn: async (uid) => this.subscribeUserToStreamer(uid)
+                }
+            );
+        }
+    }
+
+    subscribeUserToStreamer = async (uid) => {
+        await subscribeUserToStreamerProfile(uid, this.state.streamerData.streamerId);
+        this.setState({ isUserFollowingStreamer: true });
+    }
+
+    unfollowStreamer = async () => {
+        if (this.props.uid) {
+            await unsubscribeUserToStreamerProfile(this.props.uid, this.state.streamerData.streamerId);
+            this.setState({ isUserFollowingStreamer: false });
+        }
+    }
+
     render() {
         const {
             displayName,
@@ -124,7 +154,7 @@ class StreamerProfileScreen extends Component {
             <View style={styles.container}>
                 <ScrollView>
                     <View style={styles.topNav}>
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('MainBottomNavigator')}>
                             <images.svg.backIcon />
                         </TouchableOpacity>
                     </View>
@@ -136,10 +166,10 @@ class StreamerProfileScreen extends Component {
                     </View>
                     <View style={styles.profileContainer}>
                         <View style={styles.buttonsContainer}>
-                            <TouchableOpacity onPress={() => console.log('Follow Button Press')}>
-                                <View style={styles.followButton}>
-                                    <Text style={styles.followButtonText}>
-                                        {translate('streamerProfileScreen.follow')}
+                            <TouchableOpacity onPress={!this.state.isUserFollowingStreamer ? this.followStreamer : this.unfollowStreamer}>
+                                <View style={!this.state.isUserFollowingStreamer ? styles.followButton : styles.unfollowButton}>
+                                    <Text style={!this.state.isUserFollowingStreamer ? styles.followButtonText : styles.unfollowButtonText}>
+                                        {!this.state.isUserFollowingStreamer ? translate('streamerProfileScreen.follow') : translate('streamerProfileScreen.following')}
                                     </Text>
                                 </View>
                             </TouchableOpacity>
@@ -283,7 +313,9 @@ class StreamerProfileScreen extends Component {
 
 function mapStateToProps(state) {
     return {
-        logros: state.logrosReducer
+        logros: state.logrosReducer,
+        uid: state.userReducer.user.id,
+        userSubscriptions: state.userReducer.user.userToStreamersSubscriptions
     };
 }
 

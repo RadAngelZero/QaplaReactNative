@@ -1,5 +1,5 @@
 import { UPDATE_USER_DATA, REMOVE_USER_DATA, SIGN_OUT_USER, USER_BALANCE } from '../utilities/Constants';
-import { usersRef, gamersRef, userQaplaBalanceListener, getGamesResources, loadUserRewards, listenUserActivityFromLast7Days } from '../services/database';
+import { usersRef, gamersRef, userQaplaBalanceListener, getGamesResources, loadUserRewards, listenUserActivityFromLast7Days, listenToUserToStreamersSubscriptions } from '../services/database';
 
 export const getUserNode = (uid) => async (dispatch) => {
 
@@ -84,6 +84,10 @@ export const getUserNode = (uid) => async (dispatch) => {
         if (activity.exists()) {
             dispatch(updateUserDataSuccess({ key: 'activity', value: activity.val() }));
         }
+    });
+
+    listenToUserToStreamersSubscriptions(uid, (subscriptions) => {
+        dispatch(updateUserDataSuccess({ key: 'userToStreamersSubscriptions', value: subscriptions.val() || {} }))
     });
 
     loadUserRewards(uid, (userRewards) => {

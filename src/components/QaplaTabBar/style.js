@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         width: '100%',
-        backgroundColor: '#0C1021'
+        backgroundColor: '#0C1021',
+        paddingBottom: 30
     },
     tabStyle: {
         borderRadius: 6,

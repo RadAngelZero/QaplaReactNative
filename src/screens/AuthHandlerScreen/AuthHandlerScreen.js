@@ -86,6 +86,9 @@ class AuthHandlerScreen extends Component {
                 if (!userName) {
                     this.goToCreateUsernameStep();
                 } else if (userHaveTwitchLinked) {
+                    const onSuccessCallback = this.props.navigation.getParam('onSuccessSignIn', () => {});
+
+                    onSuccessCallback(user.user.uid);
                     return this.props.navigation.navigate(this.props.originScreen);
                 }
             }

@@ -19,6 +19,9 @@ export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 /* User redux object fields */
 export const USER_BALANCE = 'userBalance';
 
+// Streamers constants
+export const LOAD_STREAMERS = 'LOAD_STREAMERS';
+
 // Games constants
 export const GET_LIST_OF_GAMES = 'GET_LIST_OF_GAMES';
 export const SET_SELECTED_GAME = 'SET_SELECTED_GAME';

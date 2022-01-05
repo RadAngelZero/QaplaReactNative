@@ -42,7 +42,7 @@ import BalanceFlipIcon from './icons/qapla-balance-flip.svg';
 import CopyIcon from './icons/Copy.svg';
 import SentIcon from './icons/SentIcon.svg';
 import HighFiveIcon from './icons/HighFive.svg';
-import SendIcon from './icons/Send.svg';
+import SendIcon from './icons/send.svg';
 import ArrowDownIcon from './icons/arrowDown.svg';
 import BetaLabelIcon from './icons/BetaLabel.svg';
 import BitsIcon from './icons/bitsIcon.svg';

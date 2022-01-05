@@ -336,6 +336,12 @@
         "qoins": "Qoins de %{streamerName}",
         "xq": "Experiencia de %{streamerName}"
     },
+    "streamerProfileScreen": {
+        "follow": "Seguir",
+        "upcomingStreams": "Próximos streams",
+        "myCommunity": "Mi comunidad",
+        "creatorCodes": "Códigos"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Ve tus Notificaciones",
@@ -348,7 +354,8 @@
     "imagePicker": {
         "showMorePhotos": "Mostrar más fotografías",
         "selectImage": "¡Quiero esta foto!",
-        "discardImage": "No quiero esta foto"
+        "discardImage": "No quiero esta foto",
+        "savingImage": "Guardando foto..."
     },
     "qGCamera": {
         "androidPermissions": {
@@ -524,5 +531,9 @@
         "bodyTextOne": "Sube tu nivel cada temporada acumulando XQ y mina más Qoins en los streams que participes.",
         "bodyTextTwo": "Tu nivel de la última temporada determina la cantidad de Qoins que minas por stream.",
         "gotIt": "¡Entendido!"
+    },
+    "GalleryPermissionsModaliOS": {
+        "allowAccess": "Permite acceso a tu galería para editar tu foto de perfil 🙏",
+        "allow": "Permitir"
     }
 }

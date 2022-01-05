@@ -197,7 +197,6 @@ class AuthLoadingScreen extends Component {
             if (type === 'streamerProfile') {
                 const streamerId = this.getParameterFromUrl(url, 'streamerId');
                 if (streamerId) {
-                    console.log(streamerId);
                     return this.redirectUserToStreamerProfile(streamerId);
                 }
             }
@@ -235,16 +234,12 @@ class AuthLoadingScreen extends Component {
         return (match ? match[1] : "");
     }
 
-    redirectUserToStreamerProfile(streamerId) {
-        this.props.navigation.navigate('StreamerProfile', { streamerId });
-    }
-
     /**
      * Redirect to StreamerProfile screen with streamerId
      * @param {string} streamerId StreamerId on the processed deeplink
      */
     redirectUserToStreamerProfile(streamerId) {
-        this.props.navigation.navigate('Community', { streamerId });
+        this.props.navigation.navigate('StreamerProfile', { streamerId });
     }
 
     /**

@@ -5,9 +5,10 @@ import { createAppContainer, createSwitchNavigator, NavigationActions } from 're
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator, createBottomTabNavigator } from 'react-navigation-tabs';
 import Svg, { G, Path, Rect } from 'react-native-svg';
+import { connect } from 'react-redux';
 
 import { setCurrentScreenId, setPreviousScreenId } from './actions/screensActions';
-import { connect } from 'react-redux';
+import { isUserLogged } from './services/auth';
 
 import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen';
 import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen';
@@ -50,6 +51,8 @@ import DonationsLeaderBoard from './components/DonationsLeaderBoard/DonationsLea
 import TwitchAuthScreen from './screens/TwitchAuthScreen/TwitchAuthScreen';
 import ActivityScreen from './screens/ActivityScreen/ActivityScreen';
 import QaplaTabBar from './components/QaplaTabBar/QaplaTabBar';
+import StreamerProfileScreen from './screens/StreamerProfileScreen/StreamerProfileScreen';
+import AuthHandlerScreen from './screens/AuthHandlerScreen/AuthHandlerScreen';
 
 //#region Stack Navigators
 
@@ -137,9 +140,10 @@ const VerificationStackNavigator = createStackNavigator({
     headerMode: 'none'
 });
 
+
 const AuthStackNavigator = createStackNavigator({
   SignIn: {
-    screen: SignUpLoginHandlerScreen,
+    screen: AuthHandlerScreen,
     navigationOptions: {
       headerShown: false
     }
@@ -178,6 +182,13 @@ const CommunityStackNavigator = createStackNavigator({
       headerShown: false
     }
   },
+  StreamerProfile: {
+    screen: StreamerProfileScreen,
+    navigationOptions: {
+      headerShown: false,
+      animationEnabled: false
+    }
+  }
 });
 
 //#endregion

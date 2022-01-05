@@ -75,9 +75,10 @@ export class NewUserProfileScreen extends Component {
             this.props.navigation.addListener(
                 'willFocus',
                 (payload) => {
-                    recordScreenOnSegment('User Profile Screen');
                     if (!isUserLogged()) {
                         this.props.navigation.navigate('Auth');
+                    } else {
+                        recordScreenOnSegment('User Profile Screen');
                     }
                 }
             )
@@ -250,20 +251,24 @@ export class NewUserProfileScreen extends Component {
 
     getUserSeasonLevel = () => {
         let currentLevel = 1;
-        this.props.qaplaLevels.forEach((level, index) => {
-            if (this.props.seasonXQ >= level.requiredXQ) {
-                currentLevel = index + 1;
-            }
-        });
+        if (this.props.qaplaLevels) {
+            this.props.qaplaLevels.forEach((level, index) => {
+                if (this.props.seasonXQ >= level.requiredXQ) {
+                    currentLevel = index + 1;
+                }
+            });
+        }
 
         return currentLevel;
     }
 
     getNextLevelRequiredXQ = () => {
-        for (let i = 0; i < this.props.qaplaLevels.length; i++) {
-            const qaplaLevel = this.props.qaplaLevels[i];
-            if (this.props.seasonXQ < qaplaLevel.requiredXQ) {
-                return qaplaLevel.requiredXQ;
+        if (this.props.qaplaLevels) {
+            for (let i = 0; i < this.props.qaplaLevels.length; i++) {
+                const qaplaLevel = this.props.qaplaLevels[i];
+                if (this.props.seasonXQ < qaplaLevel.requiredXQ) {
+                    return qaplaLevel.requiredXQ;
+                }
             }
         }
 
@@ -271,10 +276,12 @@ export class NewUserProfileScreen extends Component {
     }
 
     getCurrentLevelRequiredXQ = () => {
-        for (let i = 0; i < this.props.qaplaLevels.length; i++) {
-            const qaplaLevel = this.props.qaplaLevels[i];
-            if (this.props.seasonXQ < qaplaLevel.requiredXQ) {
-                return i > 0 ? this.props.qaplaLevels[i - 1].requiredXQ : 0;
+        if (this.props.qaplaLevels) {
+            for (let i = 0; i < this.props.qaplaLevels.length; i++) {
+                const qaplaLevel = this.props.qaplaLevels[i];
+                if (this.props.seasonXQ < qaplaLevel.requiredXQ) {
+                    return i > 0 ? this.props.qaplaLevels[i - 1].requiredXQ : 0;
+                }
             }
         }
 
@@ -387,7 +394,7 @@ export class NewUserProfileScreen extends Component {
                                             <EditProfileImgBadge style={styles.userImage}>
                                                 <Image
                                                     style={styles.userImage}
-                                                    source={this.state.userImage ? this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img : null} />
+                                                    source={this.props.userImage ? { uri: this.props.userImage } : this.state.userImage ? this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img : null} />
                                             </EditProfileImgBadge>
                                         )}
                                         backgroundColor='#1F2750'

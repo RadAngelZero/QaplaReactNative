@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
-import Images from '../../../assets/images';
 import { saveUserProfileImg, getUserProfileImgUrl } from '../../services/storage';
 import { updateUserProfileImg } from '../../services/database';
 
@@ -23,7 +22,7 @@ class EditProfileImgBadge extends Component {
      *
      * @params {Object} picture Picture selected in ImagePickerModal
      */
-    saveImage = async (picture) => {
+    saveImage = async (picture, onSuccesfulSave) => {
         this.setState({ picture });
 
         let task = saveUserProfileImg(this.props.uid, picture.node.image.uri);
@@ -36,7 +35,8 @@ class EditProfileImgBadge extends Component {
                     const imgUrl = await getUserProfileImgUrl(this.props.uid);
 
                     if (imgUrl !== null && imgUrl !== undefined){
-                        updateUserProfileImg(this.props.uid, imgUrl);
+                        await updateUserProfileImg(this.props.uid, imgUrl);
+                        this.closeImgPckModal();
                     }
                 }
                 catch(err) {

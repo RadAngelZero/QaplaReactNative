@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import StreamerCardsList from '../../components/StreamerCardsList/StreamerCardsList';
 import { getStreamersData } from '../../actions/streamersActions';
+import { STREAMERS_BLACKLIST } from '../../utilities/Constants';
 
 class FollowingStreamersScreen extends Component {
     state = {
@@ -20,12 +21,11 @@ class FollowingStreamersScreen extends Component {
     }
 
     formatStreamers = () => {
-        const streamersBlackList = ['141617732-catskullgamer', '683167758-catskullgg', '613408163-dhvsl', '180517858-QaplaGG', '448926957-qaplita', '140436068-RadAngelZer', '528477359-mariyolo1bot'];
         const streamersData = [];
         Object.keys(this.props.streamers)
             .sort((a, b) => parseInt(a.split('-')[0]) - parseInt(b.split('-')[0]))
             .forEach((streamerKey) => {
-                if (!streamersBlackList.includes(streamerKey) && this.props.userSubscriptions[streamerKey]) {
+                if (!STREAMERS_BLACKLIST.includes(streamerKey) && this.props.userSubscriptions[streamerKey]) {
                     const streamer = this.props.streamers[streamerKey];
                     streamersData.push({
                         displayName: streamer.displayName,

@@ -7,6 +7,12 @@ import StreamerCardsList from '../../components/StreamerCardsList/StreamerCardsL
 import { getStreamersData } from '../../actions/streamersActions';
 import { STREAMERS_BLACKLIST } from '../../utilities/Constants';
 
+/**
+ * This component and FollowingStreamersScreen are esentially the same at this point, however we have created
+ * independent components in case of future changes (for example in UI or logic).
+ * At this day the only difference is that in DiscoverStreamersScreen we don´t show the streamers the
+ * user is following and in FollowingStreamersScreen we don´t show streamers the user is not following
+ */
 class DiscoverStreamersScreen extends Component {
     state = {
         streamersData: []

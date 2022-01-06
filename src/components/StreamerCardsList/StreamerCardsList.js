@@ -14,6 +14,7 @@ class StreamerCardsList extends Component {
             <FlatList
                 onEndReached={this.props.onEndReached}
                 onEndReachedThreshold={.25}
+                initialNumToRender={4}
                 data={this.props.streamersData}
                 renderItem={this.renderCard}
                 keyExtractor={item => item.streamerId}

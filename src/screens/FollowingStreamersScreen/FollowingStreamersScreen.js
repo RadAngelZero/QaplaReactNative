@@ -4,31 +4,38 @@ import { connect } from 'react-redux';
 
 import styles from './style';
 import StreamerCardsList from '../../components/StreamerCardsList/StreamerCardsList';
-import { getStreamersData } from '../../actions/streamersActions';
+import { getSingleStreamerData } from '../../actions/streamersActions';
 import { STREAMERS_BLACKLIST } from '../../utilities/Constants';
 
-/**
- * This component and DiscoverStreamersScreen are esentially the same at this point, however we have created
- * independent components in case of future changes (for example in UI or logic).
- * At this day the only difference is that in DiscoverStreamersScreen we don´t show the streamers the
- * user is following and in FollowingStreamersScreen we don´t show streamers the user is not following
- */
 class FollowingStreamersScreen extends Component {
-    state = {
-        streamersData: []
-    }
-
-    componentDidMount() {
-        this.props.getStreamersProfiles(40);
-    }
-
     loadMoreStreamers = () => {
-        this.props.getStreamersProfiles(20, Object.keys(this.props.streamers)[Object.keys(this.props.streamers).length - 1]);
+        const streamersData = this.formatStreamers();
+        const streamersAlreadyLoaded = [];
+        streamersData.forEach((streamer) => {
+            if (Object.keys(this.props.userSubscriptions).includes(streamer.streamerId)) {
+                streamersAlreadyLoaded.push(streamer.streamerId);
+            }
+        });
+
+        Object.keys(this.props.userSubscriptions).forEach((streamerId) => {
+            if (!streamersAlreadyLoaded.includes(streamerId)) {
+                /**
+                 * We load the streamers one by one excluding the ones already loaded, this could be very
+                 * expensive for user following a big number of streamers, consider paginate this queries
+                 * if the screen starts showing a bad performance for the average user
+                 */
+                this.props.getSingleStreamerProfile(streamerId);
+            }
+        });
     }
 
     formatStreamers = () => {
         const streamersData = [];
         Object.keys(this.props.streamers)
+            /**
+             * Streamers uid´s are created following the pattern twitchId-TwitchUsername, so to sort the array
+             * we split the id and the name and sort with the id (Twitch Id´s are integer numbers)
+             */
             .sort((a, b) => parseInt(a.split('-')[0]) - parseInt(b.split('-')[0]))
             .forEach((streamerKey) => {
                 if (!STREAMERS_BLACKLIST.includes(streamerKey) && this.props.userSubscriptions[streamerKey]) {
@@ -80,7 +87,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getStreamersProfiles: (limit, cursor) => getStreamersData(limit, cursor)(dispatch)
+        getStreamersProfiles: (limit, cursor) => getStreamersData(limit, cursor)(dispatch),
+        getSingleStreamerProfile: (streamerId) => getSingleStreamerData(streamerId)(dispatch)
     }
 }
 

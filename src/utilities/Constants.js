@@ -21,6 +21,7 @@ export const USER_BALANCE = 'userBalance';
 
 // Streamers constants
 export const LOAD_STREAMERS = 'LOAD_STREAMERS';
+export const LOAD_SINGLE_STREAMER = 'LOAD_SINGLE_STREAMER';
 
 // Games constants
 export const GET_LIST_OF_GAMES = 'GET_LIST_OF_GAMES';

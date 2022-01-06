@@ -7,17 +7,7 @@ import StreamerCardsList from '../../components/StreamerCardsList/StreamerCardsL
 import { getStreamersData } from '../../actions/streamersActions';
 import { STREAMERS_BLACKLIST } from '../../utilities/Constants';
 
-/**
- * This component and FollowingStreamersScreen are esentially the same at this point, however we have created
- * independent components in case of future changes (for example in UI or logic).
- * At this day the only difference is that in DiscoverStreamersScreen we don´t show the streamers the
- * user is following and in FollowingStreamersScreen we don´t show streamers the user is not following
- */
 class DiscoverStreamersScreen extends Component {
-    state = {
-        streamersData: []
-    }
-
     componentDidMount() {
         this.props.getStreamersProfiles(40);
     }
@@ -29,6 +19,10 @@ class DiscoverStreamersScreen extends Component {
     formatStreamers = () => {
         const streamersData = [];
         Object.keys(this.props.streamers)
+            /**
+             * Streamers uid´s are created following the pattern twitchId-TwitchUsername, so to sort the array
+             * we split the id and the name and sort with the id (Twitch Id´s are integer numbers)
+             */
             .sort((a, b) => parseInt(a.split('-')[0]) - parseInt(b.split('-')[0]))
             .forEach((streamerKey) => {
                 if (!STREAMERS_BLACKLIST.includes(streamerKey) && !this.props.userSubscriptions[streamerKey]) {

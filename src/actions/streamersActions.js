@@ -1,13 +1,21 @@
 import {
+    LOAD_SINGLE_STREAMER,
     LOAD_STREAMERS
 } from '../utilities/Constants';
 
-import { getStreamersPublicProfileWithLimit } from '../services/database';
+import { getStreamerPublicProfile, getStreamersPublicProfileWithLimit } from '../services/database';
 
 export const getStreamersData = (limit, cursor) => async (dispatch) => {
     const streamersData = await getStreamersPublicProfileWithLimit(limit, cursor);
     if (streamersData.exists()) {
         dispatch(getStreamersDataSuccess(streamersData.val()));
+    }
+}
+
+export const getSingleStreamerData = (streamerId) => async (dispatch) => {
+    const streamerData = await getStreamerPublicProfile(streamerId);
+    if (streamerData.exists()) {
+        dispatch(getSingleStreamerDataSuccess({ key: streamerData.key, ...streamerData.val() }));
     }
 }
 
@@ -18,6 +26,9 @@ export const getStreamersDataSuccess = (payload) => {
     };
 }
 
-export const setSelectedGame = (value) => async (dispatch) => {
-    dispatch(setGame(value));
+export const getSingleStreamerDataSuccess = (payload) => {
+    return {
+        type: LOAD_SINGLE_STREAMER,
+        payload
+    };
 }

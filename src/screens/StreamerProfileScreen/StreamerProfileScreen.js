@@ -145,7 +145,7 @@ class StreamerProfileScreen extends Component {
             }
         } else {
             this.setState({ showUnfollowConfirmation: true });
-            unfollowTimer = setTimeout(() => {
+            this.unfollowTimer = setTimeout(() => {
                 this.setState({ showUnfollowConfirmation: false });
             }, 3000);
         }
@@ -160,8 +160,8 @@ class StreamerProfileScreen extends Component {
     }
 
     onOutsidePress = () => {
-        if (unfollowTimer) {
-            clearTimeout(unfollowTimer);
+        if (this.unfollowTimer) {
+            clearTimeout(this.unfollowTimer);
         }
 
         this.setState({ showUnfollowConfirmation: false });

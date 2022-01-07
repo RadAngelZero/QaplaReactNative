@@ -4,10 +4,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
 import images from '../../../assets/images';
+import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import QaplaChip from '../../components/QaplaChip/QaplaChip';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
 import SupportStreamerModal from '../../components/SupportStreamerModal/SupportStreamerModal';
-import { getStreamerPublicProfile, getStreamerSocialLinks, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile } from '../../services/database';
+import { getStreamerPublicProfile, getStreamerSocialLinks, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile, userHaveTwitchId } from '../../services/database';
 import { copyDataToClipboard } from '../../utilities/utils';
 import { getLocaleLanguage, translate } from './../../utilities/i18';
 import styles from './style';
@@ -38,7 +39,8 @@ class StreamerProfileScreen extends Component {
             streamerId: '',
             isUserFollowingStreamer: false
         },
-        openSupportStreamerModal: false
+        openSupportStreamerModal: false,
+        openLinkTwitchAccountModal: false
     };
 
     componentDidMount() {
@@ -137,6 +139,14 @@ class StreamerProfileScreen extends Component {
         if (this.props.uid) {
             await unsubscribeUserToStreamerProfile(this.props.uid, this.state.streamerData.streamerId);
             this.setState({ isUserFollowingStreamer: false });
+        }
+    }
+
+    goToSendCheersScreen = async () => {
+        if (await userHaveTwitchId(this.props.uid)) {
+            this.props.navigation.navigate('WriteCheerMessage', { streamerData: this.state.streamerData, qoinsToDonate: 200 });
+        } else {
+            this.setState({ openSupportStreamerModal: false, openLinkTwitchAccountModal: true });
         }
     }
 
@@ -311,7 +321,10 @@ class StreamerProfileScreen extends Component {
                 <SupportStreamerModal open={this.state.openSupportStreamerModal}
                     onClose={() => this.setState({ openSupportStreamerModal: false })}
                     streamerData={this.state.streamerData}
-                    sendCheers={() => this.props.navigation.navigate('WriteCheerMessage', { streamerData: this.state.streamerData, qoinsToDonate: 200 })} />
+                    sendCheers={this.goToSendCheersScreen} />
+                <LinkTwitchAccountModal open={this.state.openLinkTwitchAccountModal}
+                    onClose={() => this.setState({ openLinkTwitchAccountModal: false })}
+                    onLinkSuccessful={this.goToSendCheersScreen} />
             </View>
         );
     }

@@ -351,6 +351,30 @@
         "sendCheerError": "Hubo un error al enviar el cheer, intentelo mas tarde, si el problema persiste contacta con soporte tecnico en nuestro Discord",
         "backToProfile": "Volver al perfil de %{streamerName}"
     },
+    "authHandlerScreen": {
+        "signUpWithEmail": "Registrate con correo",
+        "signInWithEmail": "Inicia sesión con correo",
+        "textsCarrousel": {
+            "welcome": "¡Bienvenido!",
+            "authOptions": "Crea una cuenta o inicia sesión para unirte a los streams",
+            "createAccount": "Crea tu cuenta",
+            "signIn": "Inicia sesión",
+            "firstTimeMessage": "Descubre a tu primer streamer ¡ahora!",
+            "welcomeBackMessage": "¡Bienvenido de vuelta! Te extrañamos :v",
+            "createAccountWithEmail": "Crea tu cuenta con correo",
+            "signInWithEmail": "Inicia sesión con correo",
+            "createUsername": "Crea tu nombre de usuario"
+        },
+        "buttonsCarrousel":{
+            "createAccount": "Crear mi cuenta",
+            "continueWithApple": "Continuar con Apple",
+            "alreadyHaveAccount": "Ya tengo cuenta",
+            "continueWithGoogle": "Continuar con Google",
+            "continue": "Continuar",
+            "validatingUsername": "Validando username...",
+            "iamReady": "¡Estoy listo!"
+        }
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Ve tus Notificaciones",

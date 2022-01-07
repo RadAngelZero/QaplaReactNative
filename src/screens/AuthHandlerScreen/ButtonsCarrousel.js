@@ -5,6 +5,7 @@ import styles from './style';
 import images from '../../../assets/images';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import AnimatedMultipurposeButton from './AnimatedMultipurposeButton';
+import { translate } from '../../utilities/i18';
 
 class ButtonsCarrousel extends Component {
     render() {
@@ -18,7 +19,7 @@ class ButtonsCarrousel extends Component {
                     disabled={!showFirstButton}>
                     <View style={styles.buttonTextContainer}>
                         <QaplaText style={[styles.buttonText, { color: '#0D1021' }]}>
-                            Crear mi cuenta
+                            {translate('authHandlerScreen.buttonsCarrousel.createAccount')}
                         </QaplaText>
                     </View>
                     <View style={styles.buttonWithIconContainer}>
@@ -26,7 +27,7 @@ class ButtonsCarrousel extends Component {
                         <>
                             <images.svg.appleIcon height={32} width={32} style={{ marginRight: 8 }} />
                             <QaplaText style={[styles.buttonText, { color: '#FFF' }]}>
-                                Continuar con Apple
+                                {translate('authHandlerScreen.buttonsCarrousel.continueWithApple')}
                             </QaplaText>
                         </>
                         }
@@ -42,28 +43,28 @@ class ButtonsCarrousel extends Component {
                     disabled={this.props.checkingUserName}>
                     <View style={styles.buttonTextContainer}>
                         <QaplaText style={[styles.buttonText, { color: '#FFF' }]}>
-                            Ya tengo cuenta
+                            {translate('authHandlerScreen.buttonsCarrousel.alreadyHaveAccount')}
                         </QaplaText>
                     </View>
                     <View style={styles.buttonWithIconContainer}>
                         <images.svg.googleIcon height={32} width={32} style={{ marginRight: 8 }} />
                         <QaplaText style={[styles.buttonText, { color: '#585858' }]}>
-                            Continuar con Google
+                            {translate('authHandlerScreen.buttonsCarrousel.continueWithGoogle')}
                         </QaplaText>
                     </View>
                     <View style={styles.buttonTextContainer}>
                         {!this.props.hideEmailUI &&
                             <QaplaText style={[styles.buttonText, { color: '#0D1021' }]}>
-                                Continuar
+                                {translate('authHandlerScreen.buttonsCarrousel.continue')}
                             </QaplaText>
                         }
                     </View>
                     <View style={styles.buttonWithIconContainer}>
                         <QaplaText style={[styles.buttonText, { color: '#0D1021' }]}>
                             {this.props.checkingUserName ?
-                                'Validando Username...'
+                                translate('authHandlerScreen.buttonsCarrousel.validatingUsername')
                                 :
-                                '¡Estoy listo!'
+                                translate('authHandlerScreen.buttonsCarrousel.iamReady')
                             }
                         </QaplaText>
                     </View>

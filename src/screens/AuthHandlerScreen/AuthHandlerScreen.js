@@ -15,6 +15,7 @@ import appleAuth from '@invertase/react-native-apple-authentication';
 import { createAccountWitEmailAndPassword, setupGoogleSignin, signInWithApple, signInWithEmailAndPassword, signInWithGoogle } from '../../services/auth';
 import { createUserProfile, getUserNameWithUID, updateUserLoggedStatus, userHaveTwitchId, validateUserName } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
+import { translate } from '../../utilities/i18';
 
 class AuthHandlerScreen extends Component {
     texts = null;
@@ -285,9 +286,9 @@ class AuthHandlerScreen extends Component {
                                         <View style={styles.emailButtonContainer}>
                                             <QaplaText style={styles.emailButton}>
                                                 {this.state.createAccountIsSelected ?
-                                                    'Registrate con correo'
+                                                    translate('authHandlerScreen.signUpWithEmail')
                                                     :
-                                                    'Inicia sesión con correo'
+                                                    translate('authHandlerScreen.signInWithEmail')
                                                 }
                                             </QaplaText>
                                             <images.svg.rightArrow />

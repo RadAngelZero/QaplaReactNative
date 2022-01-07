@@ -179,7 +179,7 @@ class HeaderBar extends Component {
                         </View>
                         :
                         <View style={styles.profileImageContainer}>
-                            {this.props.userName && this.props.userName.length < 14 ?
+                            {this.props.userName && this.props.userName.length <= 14 ?
                             <QaplaText style={styles.userName}>
                                     Hi! {this.props.userName && this.props.userName}
                             </QaplaText>

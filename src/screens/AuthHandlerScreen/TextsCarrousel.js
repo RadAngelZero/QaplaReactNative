@@ -11,7 +11,7 @@ import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import TermsAndConditionsModal from '../../components/TermsAndConditionsModal/TermsAndConditionsModal';
 
 class TextsCarrousel extends Component {
-    state= {
+    state = {
         openTermsModal: false,
         openPrivacyModal: false
     };
@@ -43,34 +43,34 @@ class TextsCarrousel extends Component {
                 <View style={styles.titleAndDescriptionContainer} />
                 <View style={styles.titleAndDescriptionContainer}>
                     <QaplaText style={styles.title}>
-                        ¡Bienvenido!
+                        {translate('authHandlerScreen.textsCarrousel.welcome')}
                     </QaplaText>
                     <QaplaText style={styles.description}>
-                        Crea una cuenta o inicia sesión para unirte a los streams
+                        {translate('authHandlerScreen.textsCarrousel.authOptions')}
                     </QaplaText>
                 </View>
                 <View style={styles.titleAndDescriptionContainer}>
                     <QaplaText style={styles.title}>
                         {this.props.showCreateAccountScreen ?
-                            'Crea tu cuenta'
+                            translate('authHandlerScreen.textsCarrousel.createAccount')
                             :
-                            'Inicia sesión'
+                            translate('authHandlerScreen.textsCarrousel.signIn')
                         }
                     </QaplaText>
                     <QaplaText style={styles.description}>
                         {this.props.showCreateAccountScreen ?
-                            'Descubre a tu primer streamer ¡ahora!'
+                            translate('authHandlerScreen.textsCarrousel.firstTimeMessage')
                             :
-                            '¡Bienvenido de vuelta! Te extrañamos :v'
+                            translate('authHandlerScreen.textsCarrousel.welcomeBackMessage')
                         }
                     </QaplaText>
                 </View>
                 <View style={styles.titleAndDescriptionContainer}>
                         <QaplaText style={[styles.title, { marginTop: 72, color: this.props.hideEmailUI ? 'transparent' : '#FFF' }]}>
                             {this.props.showCreateAccountScreen ?
-                                'Crea tu cuenta con correo'
+                                translate('authHandlerScreen.textsCarrousel.createAccountWithEmail')
                                 :
-                                'Inicia sesión con correo'
+                                translate('authHandlerScreen.textsCarrousel.signInWithEmail')
                             }
                         </QaplaText>
                         <View style={styles.emailFormContainer}>
@@ -80,7 +80,7 @@ class TextsCarrousel extends Component {
                                 placeholderTextColor={this.props.hideEmailUI ? 'transparent' : 'rgba(0, 255, 220, 0.35)'}
                                 value={this.props.email}
                                 keyboardType='email-address'
-                                placeholder='Correo' />
+                                placeholder='Email' />
                             <QaplaTextInput onChangeText={this.props.onPasswordChange}
                                 style={{ marginTop: 24, backgroundColor: this.props.hideEmailUI ? 'transparent' : '#0D1022' }}
                                 placeholderTextColor={this.props.hideEmailUI ? 'transparent' : 'rgba(0, 255, 220, 0.35)'}
@@ -92,7 +92,7 @@ class TextsCarrousel extends Component {
                 </View>
                 <View style={styles.titleAndDescriptionContainer}>
                     <QaplaText style={[styles.title]}>
-                        Crea tu nombre de usuario
+                        {translate('authHandlerScreen.textsCarrousel.createUsername')}
                     </QaplaText>
                     <View style={styles.usernameContainer}>
                         <QaplaTextInput onChangeText={this.props.onUsernameChange}

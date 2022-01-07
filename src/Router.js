@@ -54,6 +54,7 @@ import QaplaTabBar from './components/QaplaTabBar/QaplaTabBar';
 import StreamerProfileScreen from './screens/StreamerProfileScreen/StreamerProfileScreen';
 import AuthHandlerScreen from './screens/AuthHandlerScreen/AuthHandlerScreen';
 import FollowingStreamersScreen from './screens/FollowingStreamersScreen/FollowingStreamersScreen';
+import WriteCheerMessageScreen from './screens/WriteCheerMessageScreen/WriteCheerMessageScreen';
 
 //#region Stack Navigators
 
@@ -179,6 +180,13 @@ const ChatStackNavigator = createStackNavigator({
 const StreamerProfileStackNavigator = createStackNavigator({
   StreamerProfile: {
     screen: StreamerProfileScreen,
+    navigationOptions: {
+      headerShown: false,
+      animationEnabled: false
+    }
+  },
+  WriteCheerMessage: {
+    screen: WriteCheerMessageScreen,
     navigationOptions: {
       headerShown: false,
       animationEnabled: false

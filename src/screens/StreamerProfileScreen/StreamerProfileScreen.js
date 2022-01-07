@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import images from '../../../assets/images';
 import QaplaChip from '../../components/QaplaChip/QaplaChip';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
+import SupportStreamerModal from '../../components/SupportStreamerModal/SupportStreamerModal';
 import { getStreamerPublicProfile, getStreamerSocialLinks, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile } from '../../services/database';
 import { copyDataToClipboard } from '../../utilities/utils';
 import { getLocaleLanguage, translate } from './../../utilities/i18';
@@ -36,7 +37,8 @@ class StreamerProfileScreen extends Component {
             tags: [],
             streamerId: '',
             isUserFollowingStreamer: false
-        }
+        },
+        openSupportStreamerModal: false
     };
 
     componentDidMount() {
@@ -178,7 +180,7 @@ class StreamerProfileScreen extends Component {
                                     <images.svg.share />
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => console.log('Send Icon Press')}>
+                            <TouchableOpacity onPress={() => this.setState({ openSupportStreamerModal: true })}>
                                 <View style={styles.iconContainer}>
                                     <images.svg.sendIcon />
                                 </View>
@@ -306,6 +308,10 @@ class StreamerProfileScreen extends Component {
                     </View>
                     <View style={{ height: 40 }} />
                 </ScrollView>
+                <SupportStreamerModal open={this.state.openSupportStreamerModal}
+                    onClose={() => this.setState({ openSupportStreamerModal: false })}
+                    streamerData={this.state.streamerData}
+                    sendCheers={() => this.props.navigation.navigate('WriteCheerMessage', { streamerData: this.state.streamerData, qoinsToDonate: 200 })} />
             </View>
         );
     }

@@ -345,6 +345,9 @@
         "myCommunity": "Mi comunidad",
         "creatorCodes": "Códigos"
     },
+    "writeCheerMessageScreen": {
+        "tellUs": "🗣 ¡Dinos!, ¿Qué le quieres decir a %{streamerName}"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Ve tus Notificaciones",
@@ -434,9 +437,9 @@
         }
     },
     "zeroQoinsEventModal": {
-        "header": "Qoins insuficientes",
-        "body": "Únete y juega en eventos para ganar Qoins !",
-        "bttnText": "Ver Eventos"
+        "header": "🔎 ¡Ups! Parece que no tienes suficientes Qoins",
+        "body": "Mina Qoins en los streams publicados en el feed principal para poder apoyar a tus streamers 🌱",
+        "bttnText": "Ver Streams"
     },
     "confirmationDialog": {
         "cancelButton": "Cancelar",

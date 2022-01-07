@@ -42,7 +42,7 @@ export default styles = StyleSheet.create({
         marginRight: 6
     },
     bio: {
-        height: heightPercentageToPx(8),
+        height: heightPercentageToPx(10),
         marginTop: 24,
         color: '#FFF',
         fontSize: 16,

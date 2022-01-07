@@ -266,6 +266,10 @@ const images = {
 			img: require('./images/Onboarding_Illustration-5.png'),
 			uri: '@assets/images/Onboarding_Illustration-5.png'
 		},
+		notEnoughQoins: {
+			img: require('./images/NotEnoughQoins.png'),
+			uri: '@assets/images/NotEnoughQoins.png'
+		}
 	},
 	svg: {
 		facebookIcon: FacebookIcon,

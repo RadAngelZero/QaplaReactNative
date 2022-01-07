@@ -1,8 +1,3 @@
-// josep.sanahuja    - 05-01-2020 - us187 - Standarized marginRight & marginTop for CloseIcon
-// diego             - 12-09-2019 - us99 - Updated closeIcon styles to make it consistent with new
-//                                         closeIcon implementation (changed text icon for SVG icon)
-// diego             - 20-08-2019 - us89 - +getDimensions & closeIcon
-
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import Colors from '../../utilities/Colors';
@@ -17,16 +12,11 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(100),
         height: heightPercentageToPx(100),
     },
-    closeIcon: {
-        alignSelf: 'flex-end',
-        marginTop: 16,
-        marginRight: 16
-    },
     container: {
-        width: widthPercentageToPx(80),
+        width: widthPercentageToPx(92),
         alignSelf: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.modals.backgroundDarkModal,
+        backgroundColor: '#0D1022',
         borderRadius: 20,
         shadowColor: "#000",
         shadowOffset: {
@@ -38,37 +28,49 @@ export default styles = StyleSheet.create({
         elevation: 24,
         alignItems: 'center'
     },
+    closeIcon: {
+        position: 'absolute',
+        top: 24,
+        right: 16
+    },
+    dogAssImage: {
+        marginTop: 24
+    },
     headerText: {
         color: '#FFF',
-        fontSize: 30
-    },
-    qaploinsText: {
-        color: '#6D7DDE',
-        fontSize: 16
+        fontSize: 24,
+        fontWeight: '700',
+        lineHeight: 30,
+        letterSpacing: -.72,
+        textAlign: 'center',
+        width: widthPercentageToPx(75)
     },
     paragraph: {
-        marginTop: 16,
-        marginLeft: widthPercentageToPx(3.13),
-        marginRight: widthPercentageToPx(3.13),
-        color: Colors.modals.body,
+        marginTop: 32,
         fontSize: 16,
-        textAlign: 'center'
+        fontWeight: '400',
+        lineHeight: 22,
+        letterSpacing: .25,
+        color: '#FFF',
+        textAlign: 'center',
+        width: widthPercentageToPx(80)
     },
     eventsButton: {
-        marginTop: 24,
+        marginTop: 34,
         borderRadius: 100,
-        backgroundColor: Colors.modals.bttnColor,
-        marginBottom: 16
+        backgroundColor: '#3B4BF9',
+        marginBottom: 40
     },
     bttnText: {
         color: '#FFF',
         textAlign: 'center',
-        fontSize: 16,
-        fontWeight: 'bold',
-        letterSpacing: 2.65,
-        marginTop: 18,
-        marginBottom: 18,
-        marginLeft: 26,
-        marginRight: 26
+        fontSize: 17,
+        fontWeight: '600',
+        letterSpacing: .49,
+        lineHeight: 22,
+        marginTop: 26,
+        marginBottom: 26,
+        marginLeft: 70,
+        marginRight: 70
     }
 });

@@ -341,6 +341,7 @@
     "streamerProfileScreen": {
         "follow": "Seguir",
         "following": "Siguiendo",
+        "unfollow": "Dejar de seguir",
         "upcomingStreams": "Próximos streams",
         "myCommunity": "Mi comunidad",
         "creatorCodes": "Códigos"

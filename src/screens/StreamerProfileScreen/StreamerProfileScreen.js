@@ -199,7 +199,7 @@ class StreamerProfileScreen extends Component {
                             <TouchableOpacity onPress={!this.state.isUserFollowingStreamer ? this.followStreamer : this.unfollowStreamer}>
                                 <View style={!this.state.isUserFollowingStreamer ? styles.followButton : !this.state.showUnfollowConfirmation ? styles.followingButton : styles.unfollowButton}>
                                     <Text style={!this.state.isUserFollowingStreamer ? styles.followButtonText : !this.state.showUnfollowConfirmation ? styles.followingButtonText : styles.unfollowButtonText}>
-                                        {!this.state.isUserFollowingStreamer ? translate('streamerProfileScreen.follow') : !this.state.showUnfollowConfirmation ? translate('streamerProfileScreen.following') : 'Dejar de seguir'}
+                                        {!this.state.isUserFollowingStreamer ? translate('streamerProfileScreen.follow') : !this.state.showUnfollowConfirmation ? translate('streamerProfileScreen.following') : translate('streamerProfileScreen.unfollow')}
                                     </Text>
                                     {this.state.showUnfollowConfirmation && <images.svg.unfollow style={{ marginLeft: 6 }} />}
                                 </View>

@@ -349,7 +349,14 @@
         "sendPersonalizedMessage": "Envía un mensaje personalizado",
         "tellUs": "🗣 ¡Dinos!, ¿Qué le quieres decir a %{streamerName}",
         "sendCheerError": "Hubo un error al enviar el cheer, intentelo mas tarde, si el problema persiste contacta con soporte tecnico en nuestro Discord",
-        "backToProfile": "Volver al perfil de %{streamerName}"
+        "backToProfile": "Volver al perfil de %{streamerName}",
+        "skip": "Omitir"
+    },
+    "cheersSentScreen": {
+        "thankYouTitle": "¡Gracias!",
+        "sentCheersTo": "Hemos enviado tus\ncheers a ",
+        "cheersBarUpdated": "Tu barra de cheers ha sido actualizada :D",
+        "backToProfile": "Volver al perfil de %{streamerName}",
     },
     "authHandlerScreen": {
         "signUpWithEmail": "Registrate con correo",

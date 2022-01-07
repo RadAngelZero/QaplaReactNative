@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Image, View, ScrollView, Linking, Text } from 'react-native';
+import { TouchableOpacity, Image, View, ScrollView, Linking, Text, TouchableWithoutFeedback } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
@@ -20,9 +20,10 @@ const socialMediaIcons = {
     Discord: images.svg.discordSocial,
     TikTok: images.svg.tikTok,
     Youtube: images.svg.youTube
-}
+};
 
 class StreamerProfileScreen extends Component {
+    unfollowTimer = null;
     state = {
         showAllTags: false,
         nextStreams: [],
@@ -40,7 +41,8 @@ class StreamerProfileScreen extends Component {
             isUserFollowingStreamer: false
         },
         openSupportStreamerModal: false,
-        openLinkTwitchAccountModal: false
+        openLinkTwitchAccountModal: false,
+        showUnfollowConfirmation: false
     };
 
     componentDidMount() {
@@ -136,9 +138,16 @@ class StreamerProfileScreen extends Component {
     }
 
     unfollowStreamer = async () => {
-        if (this.props.uid) {
-            await unsubscribeUserToStreamerProfile(this.props.uid, this.state.streamerData.streamerId);
-            this.setState({ isUserFollowingStreamer: false });
+        if (this.state.showUnfollowConfirmation) {
+            if (this.props.uid) {
+                await unsubscribeUserToStreamerProfile(this.props.uid, this.state.streamerData.streamerId);
+                this.setState({ isUserFollowingStreamer: false, showUnfollowConfirmation: false });
+            }
+        } else {
+            this.setState({ showUnfollowConfirmation: true });
+            unfollowTimer = setTimeout(() => {
+                this.setState({ showUnfollowConfirmation: false });
+            }, 3000);
         }
     }
 
@@ -148,6 +157,14 @@ class StreamerProfileScreen extends Component {
         } else {
             this.setState({ openSupportStreamerModal: false, openLinkTwitchAccountModal: true });
         }
+    }
+
+    onOutsidePress = () => {
+        if (unfollowTimer) {
+            clearTimeout(unfollowTimer);
+        }
+
+        this.setState({ showUnfollowConfirmation: false });
     }
 
     render() {
@@ -164,6 +181,7 @@ class StreamerProfileScreen extends Component {
         return (
             // We don´t use SafeAreaView intentionally here, we want the cover image and TopNav to appear at the top of the screen
             <View style={styles.container}>
+                <TouchableWithoutFeedback style={{ flex: 1 }} onPress={this.onOutsidePress}>
                 <ScrollView>
                     <View style={styles.topNav}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('MainBottomNavigator')}>
@@ -179,22 +197,27 @@ class StreamerProfileScreen extends Component {
                     <View style={styles.profileContainer}>
                         <View style={styles.buttonsContainer}>
                             <TouchableOpacity onPress={!this.state.isUserFollowingStreamer ? this.followStreamer : this.unfollowStreamer}>
-                                <View style={!this.state.isUserFollowingStreamer ? styles.followButton : styles.unfollowButton}>
-                                    <Text style={!this.state.isUserFollowingStreamer ? styles.followButtonText : styles.unfollowButtonText}>
-                                        {!this.state.isUserFollowingStreamer ? translate('streamerProfileScreen.follow') : translate('streamerProfileScreen.following')}
+                                <View style={!this.state.isUserFollowingStreamer ? styles.followButton : !this.state.showUnfollowConfirmation ? styles.followingButton : styles.unfollowButton}>
+                                    <Text style={!this.state.isUserFollowingStreamer ? styles.followButtonText : !this.state.showUnfollowConfirmation ? styles.followingButtonText : styles.unfollowButtonText}>
+                                        {!this.state.isUserFollowingStreamer ? translate('streamerProfileScreen.follow') : !this.state.showUnfollowConfirmation ? translate('streamerProfileScreen.following') : 'Dejar de seguir'}
                                     </Text>
+                                    {this.state.showUnfollowConfirmation && <images.svg.unfollow style={{ marginLeft: 6 }} />}
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => console.log('Share Icon Press')}>
-                                <View style={styles.iconContainer}>
-                                    <images.svg.share />
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.setState({ openSupportStreamerModal: true })}>
-                                <View style={styles.iconContainer}>
-                                    <images.svg.sendIcon />
-                                </View>
-                            </TouchableOpacity>
+                            {!this.state.showUnfollowConfirmation &&
+                                <>
+                                <TouchableOpacity onPress={() => console.log('Share Icon Press')}>
+                                    <View style={styles.iconContainer}>
+                                        <images.svg.share />
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.setState({ openSupportStreamerModal: true })}>
+                                    <View style={styles.iconContainer}>
+                                        <images.svg.sendIcon />
+                                    </View>
+                                </TouchableOpacity>
+                                </>
+                            }
                         </View>
                         <View style={styles.nameContainer}>
                             <Text style={styles.streamerName}>
@@ -318,6 +341,7 @@ class StreamerProfileScreen extends Component {
                     </View>
                     <View style={{ height: 40 }} />
                 </ScrollView>
+                </TouchableWithoutFeedback>
                 <SupportStreamerModal open={this.state.openSupportStreamerModal}
                     onClose={() => this.setState({ openSupportStreamerModal: false })}
                     streamerData={this.state.streamerData}

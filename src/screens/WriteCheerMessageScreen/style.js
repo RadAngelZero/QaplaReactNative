@@ -6,6 +6,9 @@ export default styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#0D1021'
     },
+    header: {
+        flexDirection: 'row'
+    },
     sendAMessageText: {
         marginTop: 48,
         marginLeft: 24,
@@ -14,6 +17,22 @@ export default styles = StyleSheet.create({
         lineHeight: 32,
         color: '#FFF',
         width: widthPercentageToPx(50)
+    },
+    skipButton: {
+        marginTop: 48,
+        marginRight: 24,
+        borderRadius: 100,
+        backgroundColor: 'rgba(64, 64, 255, 0.3)',
+        width: widthPercentageToPx(23.5),
+        height: heightPercentageToPx(5.05),
+        justifyContent: 'center',
+        marginLeft: 'auto'
+    },
+    skipButtonText: {
+        fontSize: 17,
+        fontWeight: '600',
+        textAlign: 'center',
+        color: 'rgba(255, 255, 255, 0.65);'
     },
     scrollViewContainer: {
         paddingRight: 16,

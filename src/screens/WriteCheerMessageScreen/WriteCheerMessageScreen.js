@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, KeyboardAvoidingView, Linking, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, KeyboardAvoidingView, Linking, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -18,7 +18,8 @@ class WriteCheerMessageScreen extends Component {
         userResponse: '',
         chatResponsePhraseP1: '',
         chatResponsePhraseP2: '',
-        cheerStatus: 0
+        cheerStatus: 0,
+        skipMessage: false
     };
 
     updateMessage = (message) => {
@@ -29,7 +30,7 @@ class WriteCheerMessageScreen extends Component {
         }
     }
 
-    sendCheers = async () => {
+    sendCheersWithMessage = async () => {
         let finalMessage = this.state.message.trim();
         this.setState({ showUserMessage: true, userResponse: this.state.message, message: '', cheerStatus: 1 }, async () => {
             this.textInput.clear();
@@ -37,31 +38,36 @@ class WriteCheerMessageScreen extends Component {
                 finalMessage = finalMessage.replaceAll('\n', '');
             }
 
-            try {
-                let twitchUsername = this.props.twitchUsername;
-
-                try {
-                    const twitchData = await getTwitchDataCloudFunction(this.props.twitchId);
-                    await updateTwitchUsername(this.props.uid, twitchData.data.display_name);
-                    twitchUsername = twitchData.data.display_name;
-                } catch (error) {
-                    console.log(error);
-                }
-                const qoinsToDonate = this.props.navigation.getParam('qoinsToDonate', 200);
-                const streamerData = this.props.navigation.getParam('streamerData', { displayName: '', streamerId: '' });
-
-                let now = new Date();
-                await sendCheers(qoinsToDonate, finalMessage, now.getTime(), streamerData.displayName, this.props.uid, this.props.userName, twitchUsername, this.props.userImage, streamerData.streamerId);
-
-                this.selectChatResponse();
-            } catch (error) {
-                this.setState({ cheerStatus: 3, chatResponsePhraseP1: translate('writeCheerMessageScreen.sendCheerError') });
-                console.log(error);
-            }
+            await this.updateTwitchDataAndSaveCheer(finalMessage, this.selectChatResponse);
         });
     }
 
-    selectChatResponse = async () => {
+    updateTwitchDataAndSaveCheer = async (finalMessage, callback) => {
+        try {
+            let twitchUsername = this.props.twitchUsername;
+
+            try {
+                const twitchData = await getTwitchDataCloudFunction(this.props.twitchId);
+                await updateTwitchUsername(this.props.uid, twitchData.data.display_name);
+                twitchUsername = twitchData.data.display_name;
+            } catch (error) {
+                console.log(error);
+            }
+
+            const qoinsToDonate = this.props.navigation.getParam('qoinsToDonate', 200);
+            const streamerData = this.props.navigation.getParam('streamerData', { displayName: '', streamerId: '' });
+
+            let now = new Date();
+            await sendCheers(qoinsToDonate, finalMessage, now.getTime(), streamerData.displayName, this.props.uid, this.props.userName, twitchUsername, this.props.userImage, streamerData.streamerId);
+
+            callback();
+        } catch (error) {
+            this.setState({ cheerStatus: 3, chatResponsePhraseP1: translate('writeCheerMessageScreen.sendCheerError') });
+            console.log(error);
+        }
+    }
+
+    selectChatResponse =  () => {
 		let messageLenght = this.state.userResponse.trim().length;
 
 		let typeOfResponse = 'none';
@@ -106,6 +112,19 @@ class WriteCheerMessageScreen extends Component {
         Linking.openURL(link);
     }
 
+    sendCheersWithoutMessage = () => {
+        this.setState({ skipMessage: true }, async () => {
+            try {
+                await this.updateTwitchDataAndSaveCheer('', () => {
+                    const streamerData = this.props.navigation.getParam('streamerData', { displayName: '', streamerId: '' });
+                    this.props.navigation.navigate('CheersSent', { streamerName: streamerData.displayName });
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    }
+
     render() {
         const streamerData = this.props.navigation.getParam('streamerData', { displayName: '' });
 
@@ -113,9 +132,23 @@ class WriteCheerMessageScreen extends Component {
             <SafeAreaView style={styles.container}>
                 <KeyboardAvoidingView style={styles.container}
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-                    <Text style={styles.sendAMessageText}>
-                        {translate('writeCheerMessageScreen.sendPersonalizedMessage')}
-                    </Text>
+                    <View style={styles.header}>
+                        <Text style={styles.sendAMessageText}>
+                            {translate('writeCheerMessageScreen.sendPersonalizedMessage')}
+                        </Text>
+                        {this.state.cheerStatus === 0 &&
+                            <TouchableOpacity style={styles.skipButton}
+                                onPress={this.sendCheersWithoutMessage}>
+                                {!this.state.skipMessage ?
+                                    <Text style={styles.skipButtonText}>
+                                        {translate('linkTwitchAccount.skip')}
+                                    </Text>
+                                    :
+                                    <ActivityIndicator color='#00FFDC' />
+                                }
+                            </TouchableOpacity>
+                        }
+                    </View>
                     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
                         <View style={{ flex: 1 }} />
                         <View>
@@ -167,18 +200,22 @@ class WriteCheerMessageScreen extends Component {
                     </ScrollView>
                     {this.state.chatResponsePhraseP1 === '' ?
                         <View style={styles.messageContainer}>
-                            <TextInput
-                                ref={input => this.textInput = input}
-                                editable={this.state.userResponse === ''}
-                                multiline={true}
-                                onContentSizeChange={(event) => this.setState({ height: event.nativeEvent.contentSize.height })}
-                                onChangeText={this.updateMessage}
-                                style={[styles.messageInput]}
-                                maxLength={280}
-                                value={this.state.message} />
-                            <QaplaIcon onPress={this.sendCheers}>
-                                <images.svg.sendChat />
-                            </QaplaIcon>
+                            {!this.state.skipMessage &&
+                                <>
+                                <TextInput
+                                    ref={input => this.textInput = input}
+                                    editable={this.state.userResponse === ''}
+                                    multiline={true}
+                                    onContentSizeChange={(event) => this.setState({ height: event.nativeEvent.contentSize.height })}
+                                    onChangeText={this.updateMessage}
+                                    style={[styles.messageInput]}
+                                    maxLength={280}
+                                    value={this.state.message} />
+                                <QaplaIcon onPress={this.sendCheersWithMessage}>
+                                    <images.svg.sendChat />
+                                </QaplaIcon>
+                                </>
+                            }
                         </View>
                         :
                         <TouchableOpacity onPress={this.finishCheer} style={styles.sendCheersButton}>

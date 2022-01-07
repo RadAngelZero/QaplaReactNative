@@ -49,8 +49,8 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(5),
         justifyContent: 'center'
     },
-    unfollowButton: {
-        borderRadius: 20,
+    followingButton: {
+        borderRadius: 100,
         backgroundColor: 'transparent',
         width: widthPercentageToPx(28),
         height: heightPercentageToPx(5),
@@ -58,14 +58,29 @@ export default styles = StyleSheet.create({
         borderColor: '#3B4BF9',
         borderWidth: 2
     },
+    unfollowButton: {
+        borderRadius: 100,
+        backgroundColor: '#000000',
+        width: widthPercentageToPx(54.6),
+        height: heightPercentageToPx(5),
+        justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
     followButtonText: {
         color: '#FFF',
         fontSize: 16,
         fontWeight: '600',
         textAlign: 'center'
     },
-    unfollowButtonText: {
+    followingButtonText: {
         color: 'rgba(255, 255, 255, .6)',
+        fontSize: 16,
+        fontWeight: '600',
+        textAlign: 'center'
+    },
+    unfollowButtonText: {
+        color: '#FF5151',
         fontSize: 16,
         fontWeight: '600',
         textAlign: 'center'

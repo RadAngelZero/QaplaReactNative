@@ -92,6 +92,7 @@ import YouTube from './icons/YouTube.svg';
 import CopyCreatorCode from './icons/CopyCreatorCode.svg';
 import CameraPermissions from './icons/CameraPermissions.svg';
 import RightArrow from './icons/RightArrow.svg';
+import Unfollow from './icons/Unfollow.svg';
 
 // Images
 
@@ -363,7 +364,8 @@ const images = {
 		youTube: YouTube,
 		copyCreatorCode: CopyCreatorCode,
 		cameraPermissions: CameraPermissions,
-		rightArrow: RightArrow
+		rightArrow: RightArrow,
+		unfollow: Unfollow
 	}
 };
 

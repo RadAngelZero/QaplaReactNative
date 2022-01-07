@@ -55,6 +55,7 @@ import StreamerProfileScreen from './screens/StreamerProfileScreen/StreamerProfi
 import AuthHandlerScreen from './screens/AuthHandlerScreen/AuthHandlerScreen';
 import FollowingStreamersScreen from './screens/FollowingStreamersScreen/FollowingStreamersScreen';
 import WriteCheerMessageScreen from './screens/WriteCheerMessageScreen/WriteCheerMessageScreen';
+import CheersSentScreen from './screens/CheersSentScreen/CheersSentScreen';
 
 //#region Stack Navigators
 
@@ -187,6 +188,13 @@ const StreamerProfileStackNavigator = createStackNavigator({
   },
   WriteCheerMessage: {
     screen: WriteCheerMessageScreen,
+    navigationOptions: {
+      headerShown: false,
+      animationEnabled: false
+    }
+  },
+  CheersSent: {
+    screen: CheersSentScreen,
     navigationOptions: {
       headerShown: false,
       animationEnabled: false

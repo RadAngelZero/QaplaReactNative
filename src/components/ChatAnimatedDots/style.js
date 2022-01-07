@@ -1,12 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
-import Colors from '../../utilities/Colors';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     dot: {
         backgroundColor: '#3D42DF',
-        height: getScreenSizeMultiplier() * 12,
-        width: getScreenSizeMultiplier() * 12,
-        borderRadius: 100,
+        height: heightPercentageToPx(1.2),
+        width: heightPercentageToPx(1.2),
+        borderRadius: 100
     }
 })

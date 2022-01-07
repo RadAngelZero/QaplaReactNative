@@ -41,14 +41,34 @@ export default styles = StyleSheet.create({
         paddingRight: 24,
         paddingLeft: 24,
         paddingBottom: 10,
-        width: widthPercentageToPx(75),
+        maxWidth: widthPercentageToPx(75),
         marginBottom: 12
     },
-    messageText: {
+    botMessageText: {
         fontSize: 16,
         fontWeight: '400',
         lineHeight: 24,
         color: '#FFF'
+    },
+    userMessageText: {
+        fontSize: 16,
+        fontWeight: '400',
+        lineHeight: 24,
+        color: '#FFF',
+        textAlign: 'right'
+    },
+    botWrittingBubble: {
+        flexDirection: 'row',
+        marginTop: 10,
+        borderRadius: 20,
+        borderTopLeftRadius: 4,
+        backgroundColor: '#141539',
+        paddingTop: 16,
+        paddingRight: 24,
+        paddingLeft: 24,
+        paddingBottom: 15,
+        width: widthPercentageToPx(25.6),
+        marginBottom: 12
     },
     userMessageBubble: {
         alignSelf: 'flex-end',
@@ -59,7 +79,7 @@ export default styles = StyleSheet.create({
         paddingRight: 24,
         paddingLeft: 24,
         paddingBottom: 10,
-        width: widthPercentageToPx(75),
+        maxWidth: widthPercentageToPx(75),
         marginBottom: 12
     },
     messageContainer: {

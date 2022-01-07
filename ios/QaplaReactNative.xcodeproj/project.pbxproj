@@ -184,6 +184,7 @@
 		4A356FC00341406C9BF080DC /* Onboarding_Illustration-5.png in Resources */ = {isa = PBXBuildFile; fileRef = 752ACB1977FC40039A953067 /* Onboarding_Illustration-5.png */; };
 		53F42FFCFE5A4960A020FC1E /* Onboarding_Illustration.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B80EF29440C4A748B887F21 /* Onboarding_Illustration.png */; };
 		203259F797504BA3B6878770 /* QaplaSignUpLogo2021.png in Resources */ = {isa = PBXBuildFile; fileRef = 509C313C5D7D414790E9FE41 /* QaplaSignUpLogo2021.png */; };
+		55CE3C26C0A34B6B86D4EA69 /* NotEnoughQoins.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9E626FC1B1435B9D7E2344 /* NotEnoughQoins.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -667,6 +668,7 @@
 		752ACB1977FC40039A953067 /* Onboarding_Illustration-5.png */ = {isa = PBXFileReference; name = "Onboarding_Illustration-5.png"; path = "../assets/images/Onboarding_Illustration-5.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		1B80EF29440C4A748B887F21 /* Onboarding_Illustration.png */ = {isa = PBXFileReference; name = "Onboarding_Illustration.png"; path = "../assets/images/Onboarding_Illustration.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		509C313C5D7D414790E9FE41 /* QaplaSignUpLogo2021.png */ = {isa = PBXFileReference; name = "QaplaSignUpLogo2021.png"; path = "../assets/images/QaplaSignUpLogo2021.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AC9E626FC1B1435B9D7E2344 /* NotEnoughQoins.png */ = {isa = PBXFileReference; name = "NotEnoughQoins.png"; path = "../assets/images/NotEnoughQoins.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1036,6 +1038,7 @@
 				752ACB1977FC40039A953067 /* Onboarding_Illustration-5.png */,
 				1B80EF29440C4A748B887F21 /* Onboarding_Illustration.png */,
 				509C313C5D7D414790E9FE41 /* QaplaSignUpLogo2021.png */,
+				AC9E626FC1B1435B9D7E2344 /* NotEnoughQoins.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1744,6 +1747,7 @@
 				4A356FC00341406C9BF080DC /* Onboarding_Illustration-5.png in Resources */,
 				53F42FFCFE5A4960A020FC1E /* Onboarding_Illustration.png in Resources */,
 				203259F797504BA3B6878770 /* QaplaSignUpLogo2021.png in Resources */,
+				55CE3C26C0A34B6B86D4EA69 /* NotEnoughQoins.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

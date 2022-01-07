@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, KeyboardAvoidingView, Linking, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -8,6 +8,7 @@ import { getTwitchDataCloudFunction } from '../../services/functions';
 import { sendCheers, updateTwitchUsername } from '../../services/database';
 import { connect } from 'react-redux';
 import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
+import ChatAnimatedDots from '../../components/ChatAnimatedDots/ChatAnimatedDots';
 
 class WriteCheerMessageScreen extends Component {
     textInput = null;
@@ -29,24 +30,34 @@ class WriteCheerMessageScreen extends Component {
     }
 
     sendCheers = async () => {
+        let finalMessage = this.state.message.trim();
         this.setState({ showUserMessage: true, userResponse: this.state.message, message: '', cheerStatus: 1 }, async () => {
             this.textInput.clear();
-            let finalMessage = this.state.message;
-            if (this.state.message.includes('\n')) {
-                finalMessage = this.state.message.replaceAll('\n', '');
+            if (finalMessage.includes('\n')) {
+                finalMessage = finalMessage.replaceAll('\n', '');
             }
 
-            const twitchData = await getTwitchDataCloudFunction(this.props.twitchId);
-            await updateTwitchUsername(this.props.uid, twitchData.data.display_name);
+            try {
+                let twitchUsername = this.props.twitchUsername;
 
+                try {
+                    const twitchData = await getTwitchDataCloudFunction(this.props.twitchId);
+                    await updateTwitchUsername(this.props.uid, twitchData.data.display_name);
+                    twitchUsername = twitchData.data.display_name;
+                } catch (error) {
+                    console.log(error);
+                }
+                const qoinsToDonate = this.props.navigation.getParam('qoinsToDonate', 200);
+                const streamerData = this.props.navigation.getParam('streamerData', { displayName: '', streamerId: '' });
 
-            const qoinsToDonate = this.props.navigation.getParam('qoinsToDonate', 200);
-            const streamerData = this.props.navigation.getParam('streamerData', { displayName: '', streamerId: '' });
+                let now = new Date();
+                await sendCheers(qoinsToDonate, finalMessage, now.getTime(), streamerData.displayName, this.props.uid, this.props.userName, twitchUsername, this.props.userImage, streamerData.streamerId);
 
-            let now = new Date();
-            await sendCheers(qoinsToDonate, finalMessage, now.getTime(), streamerData.displayName, this.props.uid, this.props.userName, twitchData.data.display_name, this.props.userImage, streamerData.streamerId);
-
-            this.selectChatResponse();
+                this.selectChatResponse();
+            } catch (error) {
+                this.setState({ cheerStatus: 3, chatResponsePhraseP1: translate('writeCheerMessageScreen.sendCheerError') });
+                console.log(error);
+            }
         });
     }
 
@@ -90,6 +101,11 @@ class WriteCheerMessageScreen extends Component {
         this.props.navigation.goBack();
     }
 
+     sendToDiscord = async () => {
+        const link = (await remoteConf.getDataFromKey('Discord')).QAPLA_DISCORD_CHANNEL;
+        Linking.openURL(link);
+    }
+
     render() {
         const streamerData = this.props.navigation.getParam('streamerData', { displayName: '' });
 
@@ -98,7 +114,7 @@ class WriteCheerMessageScreen extends Component {
                 <KeyboardAvoidingView style={styles.container}
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
                     <Text style={styles.sendAMessageText}>
-                        Envía un mensaje personalizado
+                        {translate('writeCheerMessageScreen.sendPersonalizedMessage')}
                     </Text>
                     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
                         <View style={{ flex: 1 }} />
@@ -110,24 +126,41 @@ class WriteCheerMessageScreen extends Component {
                                 </Text>
                             </View>
                             <View style={styles.botMessageBubble}>
-                                <Text style={styles.messageText}>
+                                <Text style={styles.botMessageText}>
                                     {translate('writeCheerMessageScreen.tellUs', { streamerName: streamerData.displayName })}
                                 </Text>
                             </View>
                             {this.state.userResponse !== ''  ?
                                 <View style={styles.userMessageBubble}>
-                                    <Text style={styles.messageText}>
+                                    <Text style={styles.userMessageText}>
                                         {this.state.userResponse}
                                     </Text>
                                 </View>
                                 :
                                 null
                             }
+                            {this.state.cheerStatus === 1 &&
+                                <View style={styles.botWrittingBubble}>
+                                    <ChatAnimatedDots />
+                                </View>
+                            }
                             {this.state.cheerStatus === 2 &&
                                 <View style={styles.botMessageBubble}>
-                                    <Text style={styles.messageText}>
-                                        {this.state.chatResponsePhraseP1}<Text style={{ color: '#00FFDD' }}>{streamerData.displayName}</Text>{this.state.chatResponsePhraseP2}
+                                    <Text style={styles.botMessageText}>
+                                        {this.state.chatResponsePhraseP1}
+                                        <Text style={{ color: '#00FFDD' }}>{streamerData.displayName}</Text>
+                                        {this.state.chatResponsePhraseP2}
                                     </Text>
+                                </View>
+                            }
+                            {this.state.cheerStatus === 3 &&
+                                <View style={styles.botMessageBubble}>
+                                    <Text style={styles.botMessageText}>
+                                        {this.state.chatResponsePhraseP1}
+                                    </Text>
+                                    <QaplaIcon onPress={this.sendToDiscord}>
+                                        <images.svg.discordSocial  />
+                                    </QaplaIcon>
                                 </View>
                             }
                         </View>
@@ -150,7 +183,7 @@ class WriteCheerMessageScreen extends Component {
                         :
                         <TouchableOpacity onPress={this.finishCheer} style={styles.sendCheersButton}>
                             <Text style={styles.sendCheersText}>
-                                {`Volver al perfil de ${streamerData.displayName}`}
+                                {translate('writeCheerMessageScreen.backToProfile', { streamerName: streamerData.displayName })}
                             </Text>
                         </TouchableOpacity>
                     }
@@ -165,6 +198,7 @@ function mapStateToProps(state) {
         uid: state.userReducer.user.id,
         userName: state.userReducer.user.userName,
         userImage: state.userReducer.user.photoUrl,
+        twitchUsername: state.userReducer.user.twitchUsername
     };
 }
 

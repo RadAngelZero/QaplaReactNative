@@ -346,7 +346,10 @@
         "creatorCodes": "Codes"
     },
     "writeCheerMessageScreen": {
-        "tellUs": "🗣 Tell us!, what do you want to say to %{streamerName}"
+        "sendPersonalizedMessage": "Send a personalized message",
+        "tellUs": "🗣 Tell us!, what do you want to say to %{streamerName}",
+        "sendCheerError": "There was an error sending the cheer, try again later, if the problem persists contact technical support on our Discord",
+        "backToProfile": "Back to %{streamerName} profile"
     },
     "headerBar": {
         "highlightModal": {
@@ -524,7 +527,7 @@
                 "willBeSent1": "We will send your Qoins immediately",
                 "willBeSent2": "We will send your Qoins right now",
                 "willBeSent4": "We will send your Qoins immediately",
-                "willBeSent5": "At this moment we will send your Qoins",
+                "willBeSent5": "At this moment we will send your Qoins"
             }
         }
     },

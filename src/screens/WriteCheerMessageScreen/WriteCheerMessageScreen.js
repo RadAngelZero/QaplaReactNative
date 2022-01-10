@@ -129,6 +129,7 @@ class WriteCheerMessageScreen extends Component {
         const streamerData = this.props.navigation.getParam('streamerData', { displayName: '' });
 
         return (
+            <>
             <SafeAreaView style={styles.container}>
                 <KeyboardAvoidingView style={styles.container}
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -198,7 +199,7 @@ class WriteCheerMessageScreen extends Component {
                             }
                         </View>
                     </ScrollView>
-                    {this.state.chatResponsePhraseP1 === '' ?
+                    {this.state.chatResponsePhraseP1 === '' &&
                         <View style={styles.messageContainer}>
                             {!this.state.skipMessage &&
                                 <>
@@ -217,15 +218,19 @@ class WriteCheerMessageScreen extends Component {
                                 </>
                             }
                         </View>
-                        :
-                        <TouchableOpacity onPress={this.finishCheer} style={styles.sendCheersButton}>
-                            <Text style={styles.sendCheersText}>
-                                {translate('writeCheerMessageScreen.backToProfile', { streamerName: streamerData.displayName })}
-                            </Text>
-                        </TouchableOpacity>
                     }
                 </KeyboardAvoidingView>
             </SafeAreaView>
+            {this.state.chatResponsePhraseP1 !== '' &&
+                <View style={styles.backButtonContainer}>
+                    <TouchableOpacity onPress={this.finishCheer} style={styles.sendCheersButton}>
+                        <Text style={styles.sendCheersText}>
+                            {translate('writeCheerMessageScreen.backToProfile', { streamerName: streamerData.displayName })}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            }
+        </>
         );
     }
 }

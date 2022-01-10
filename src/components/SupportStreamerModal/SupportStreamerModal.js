@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import images from '../../../assets/images';
 import ZeroQoinsEventsModal from '../ZeroQoinsEventsModal/ZeroQoinsEventsModal';
+import { translate } from '../../utilities/i18';
 
 class SupportStreamerModal extends Component {
     state = {
@@ -55,23 +56,22 @@ class SupportStreamerModal extends Component {
                                 </LinearGradient>
                                 <View style={styles.titleContainer}>
                                     <Text style={styles.title}>
-                                        🌱Apoya a{' '}
+                                        {translate('supportStreamerModal.supportToFirstPart')}
                                         <Text style={styles.greenText}>
                                             {this.props.streamerData.displayName}
                                         </Text>
-                                        {'\n'}
-                                        con 200 Qoins
+                                        {translate('supportStreamerModal.supportToSecondPart')}
                                     </Text>
                                 </View>
                                 <View style={styles.descriptionContainer}>
                                     <Text style={styles.description}>
-                                        Tus cheers son enviados al instante y tus mensajes aparacen en vivo durante sus directos en Twitch. 
+                                        {translate('supportStreamerModal.description')}
                                     </Text>
                                 </View>
                             </View>
                             <TouchableOpacity onPress={this.sendCheers} style={styles.sendCheersButton}>
                                 <Text style={styles.sendCheersText}>
-                                    Enviar Cheers
+                                    {translate('supportStreamerModal.sendCheers')}
                                 </Text>
                             </TouchableOpacity>
                         </View>

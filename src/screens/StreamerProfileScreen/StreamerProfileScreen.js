@@ -206,11 +206,12 @@ class StreamerProfileScreen extends Component {
                             </TouchableOpacity>
                             {!this.state.showUnfollowConfirmation &&
                                 <>
-                                <TouchableOpacity onPress={() => console.log('Share Icon Press')}>
+                                {/* Button hidden temporarily */}
+                                {/* <TouchableOpacity onPress={() => console.log('Share Icon Press')}>
                                     <View style={styles.iconContainer}>
                                         <images.svg.share />
                                     </View>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                                 <TouchableOpacity onPress={() => this.setState({ openSupportStreamerModal: true })}>
                                     <View style={styles.iconContainer}>
                                         <images.svg.sendIcon />

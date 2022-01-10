@@ -7,10 +7,10 @@ export default styles = StyleSheet.create({
         backgroundColor: '#0D1021'
     },
     header: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginTop: 48
     },
     sendAMessageText: {
-        marginTop: 48,
         marginLeft: 24,
         fontSize: 22,
         fontWeight: '500',
@@ -19,7 +19,6 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(50)
     },
     skipButton: {
-        marginTop: 48,
         marginRight: 24,
         borderRadius: 100,
         backgroundColor: 'rgba(64, 64, 255, 0.3)',
@@ -137,5 +136,8 @@ export default styles = StyleSheet.create({
         color: '#0D1022',
         letterSpacing: .5,
         textAlign: 'center'
+    },
+    backButtonContainer: {
+        backgroundColor: '#0D1021'
     }
 });

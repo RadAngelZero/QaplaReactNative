@@ -350,14 +350,14 @@
         "sendPersonalizedMessage": "Send a personalized message",
         "tellUs": "🗣 Tell us!, what do you want to say to %{streamerName}",
         "sendCheerError": "There was an error sending the cheer, try again later, if the problem persists contact technical support on our Discord",
-        "backToProfile": "Back to %{streamerName} profile",
+        "backToProfile": "Back",
         "skip": "Skip"
     },
     "cheersSentScreen": {
         "thankYouTitle": "Thank you!",
         "sentCheersTo": "We have sent your\ncheers to ",
         "cheersBarUpdated": "Your cheers bar has been updated :D",
-        "backToProfile": "Back to %{streamerName} profile",
+        "backToProfile": "Back"
     },
     "authHandlerScreen": {
         "signUpWithEmail": "Sign up with email",
@@ -572,5 +572,11 @@
     "GalleryPermissionsModaliOS": {
         "allowAccess": "Allow access to your gallery to edit your profile photo 🙏",
         "allow": "Allow"
+    },
+    "supportStreamerModal": {
+        "supportToFirstPart": "🌱Support ",
+        "supportToSecondPart": "\nwith 200 Qoins",
+        "description": "Your cheers are sent instantly and your messages appear during their live streams on Twitch.",
+        "sendCheers": "Send Cheers"
     }
 }

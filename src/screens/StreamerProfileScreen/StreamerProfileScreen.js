@@ -23,7 +23,6 @@ const socialMediaIcons = {
 };
 
 class StreamerProfileScreen extends Component {
-    unfollowTimer = null;
     state = {
         showAllTags: false,
         nextStreams: [],
@@ -145,9 +144,6 @@ class StreamerProfileScreen extends Component {
             }
         } else {
             this.setState({ showUnfollowConfirmation: true });
-            this.unfollowTimer = setTimeout(() => {
-                this.setState({ showUnfollowConfirmation: false });
-            }, 3000);
         }
     }
 
@@ -160,10 +156,6 @@ class StreamerProfileScreen extends Component {
     }
 
     onOutsidePress = () => {
-        if (this.unfollowTimer) {
-            clearTimeout(this.unfollowTimer);
-        }
-
         this.setState({ showUnfollowConfirmation: false });
     }
 

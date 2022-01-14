@@ -33,6 +33,7 @@ export default styles = StyleSheet.create({
         color: '#FFF'
     },
     cheersSentMessage: {
+        textAlign: 'center',
         marginTop: 24,
         fontSize: 22,
         fontWeight: '500',

@@ -6,11 +6,12 @@ export default styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#0D1021'
     },
-    header: {
+    headerBar: {
         flexDirection: 'row',
-        marginTop: 48
+        marginLeft: 24,
     },
     sendAMessageText: {
+        marginTop: 12,
         marginLeft: 24,
         fontSize: 22,
         fontWeight: '500',

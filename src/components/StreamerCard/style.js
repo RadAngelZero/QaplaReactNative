@@ -42,7 +42,6 @@ export default styles = StyleSheet.create({
         marginRight: 6
     },
     bio: {
-        height: heightPercentageToPx(10),
         marginTop: 24,
         color: '#FFF',
         fontSize: 16,
@@ -59,7 +58,7 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(3.7) * 2 + 10, // Double the size of the tag + the marginBottom
         flexDirection: 'row',
         flexWrap: 'wrap',
-        alignSelf: 'center',
+        alignSelf: 'flex-start',
         marginTop: 24,
         overflow: 'hidden'
     },

@@ -347,7 +347,7 @@
         "creatorCodes": "Codes"
     },
     "writeCheerMessageScreen": {
-        "sendPersonalizedMessage": "Send a personalized message",
+        "sendPersonalizedMessage": "Do you want to say something special?\n💬",
         "tellUs": "🗣 Tell us!, what do you want to say to %{streamerName}",
         "sendCheerError": "There was an error sending the cheer, try again later, if the problem persists contact technical support on our Discord",
         "backToProfile": "Back",
@@ -578,5 +578,8 @@
         "supportToSecondPart": "\nwith 200 Qoins",
         "description": "Your cheers are sent instantly and your messages appear during their live streams on Twitch.",
         "sendCheers": "Send Cheers"
+    },
+    "streamerCard": {
+        "viewMore": "View more"
     }
 }

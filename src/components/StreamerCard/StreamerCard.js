@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style';
 import Images from '../../../assets/images';
@@ -63,10 +64,17 @@ class StreamerCard extends Component {
         return (
             <TouchableOpacity style={styles.card}
                 onPress={this.props.onPress}>
-                <Image style={styles.coverImage}
-                    source={this.props.backgroundUrl ? { uri: this.props.backgroundUrl } : null} />
+                {this.props.backgroundUrl ?
+                    <Image style={styles.coverImage}
+                        source={{ uri: this.props.backgroundUrl }} />
+                    :
+                    <LinearGradient style={styles.coverImage}
+                        useAngle
+                        angle={this.props.backgroundGradient.angle}
+                        colors={this.props.backgroundGradient.colors} />
+                }
                 <Image style={styles.streamerImage}
-                    source={ this.props.photoUrl ? { uri: this.props.photoUrl } : null} />
+                    source={this.props.photoUrl ? { uri: this.props.photoUrl } : null} />
                 <View style={styles.streamerNameContainer}>
                     <Text style={styles.streamerName}>
                         {this.props.displayName}

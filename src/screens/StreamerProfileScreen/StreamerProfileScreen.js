@@ -36,7 +36,7 @@ class StreamerProfileScreen extends Component {
             badge: false,
             creatorCodes: {},
             tags: [],
-            streamerId: '',
+            backgroundGradient: { angle: 0, colors: [] },
             isUserFollowingStreamer: false
         },
         openSupportStreamerModal: false,
@@ -180,8 +180,15 @@ class StreamerProfileScreen extends Component {
                             <images.svg.backIcon />
                         </TouchableOpacity>
                     </View>
-                    <Image source={backgroundUrl ? { uri: backgroundUrl } : null}
-                        style={styles.backgroundImage} />
+                    {backgroundUrl ?
+                        <Image source={{ uri: backgroundUrl }}
+                            style={styles.backgroundImage} />
+                        :
+                        <LinearGradient style={styles.backgroundImage}
+                            useAngle
+                            angle={this.state.streamerData.backgroundGradient.angle}
+                            colors={this.state.streamerData.backgroundGradient.colors} />
+                    }
                     <View style={styles.photoContainer}>
                         <Image source={photoUrl ? { uri: photoUrl } : null}
                             style={styles.photo} />

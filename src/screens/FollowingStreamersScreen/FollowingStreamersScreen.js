@@ -40,22 +40,25 @@ class FollowingStreamersScreen extends Component {
             .forEach((streamerKey) => {
                 if (!STREAMERS_BLACKLIST.includes(streamerKey) && this.props.userSubscriptions[streamerKey]) {
                     const streamer = this.props.streamers[streamerKey];
-                    streamersData.push({
-                        displayName: streamer.displayName,
-                        /**
-                         * If the streamer change their profile image on Twitch the link on the database
-                         * will not contain any photo to show until the streamer update their information
-                         * on the dashboard (this is automatically done every time the streamer SignIn on the
-                         * dashboard or any time a token is refreshed)
-                         */
-                        photoUrl: streamer.photoUrl,
-                        streamerId: streamerKey,
-                        bio: streamer.bio,
-                        backgroundUrl: streamer.backgroundUrl,
-                        badge: streamer.badge,
-                        tags: streamer.tags,
-                        creatorCodes: streamer.creatorCodes
-                    });
+                    if ((streamer.backgroundGradient || streamer.backgroundUrl) && streamer.displayName && streamer.photoUrl && streamer.bio && streamer.tags) {
+                        streamersData.push({
+                            displayName: streamer.displayName,
+                            /**
+                             * If the streamer change their profile image on Twitch the link on the database
+                             * will not contain any photo to show until the streamer update their information
+                             * on the dashboard (this is automatically done every time the streamer SignIn on the
+                             * dashboard or any time a token is refreshed)
+                             */
+                            photoUrl: streamer.photoUrl,
+                            streamerId: streamerKey,
+                            bio: streamer.bio,
+                            backgroundUrl: streamer.backgroundUrl,
+                            badge: streamer.badge,
+                            tags: streamer.tags,
+                            creatorCodes: streamer.creatorCodes,
+                            backgroundGradient: streamer.backgroundGradient
+                        });
+                    }
                 }
         });
 

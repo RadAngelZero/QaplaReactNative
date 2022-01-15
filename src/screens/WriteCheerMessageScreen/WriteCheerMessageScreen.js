@@ -133,13 +133,14 @@ class WriteCheerMessageScreen extends Component {
             <SafeAreaView style={styles.container}>
                 <KeyboardAvoidingView style={styles.container}
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-                    <View style={styles.header}>
-                        <Text style={styles.sendAMessageText}>
-                            {translate('writeCheerMessageScreen.sendPersonalizedMessage')}
-                        </Text>
-                        {this.state.cheerStatus === 0 &&
+                    {this.state.cheerStatus === 0 &&
+                        <View style={styles.headerBar}>
+                            <QaplaIcon onPress={() => this.props.navigation.goBack()}>
+                                <images.svg.backIcon />
+                            </QaplaIcon>
                             <TouchableOpacity style={styles.skipButton}
-                                onPress={this.sendCheersWithoutMessage}>
+                                onPress={this.sendCheersWithoutMessage}
+                                disabled={this.state.skipMessage}>
                                 {!this.state.skipMessage ?
                                     <Text style={styles.skipButtonText}>
                                         {translate('linkTwitchAccount.skip')}
@@ -148,8 +149,11 @@ class WriteCheerMessageScreen extends Component {
                                     <ActivityIndicator color='#00FFDC' />
                                 }
                             </TouchableOpacity>
-                        }
-                    </View>
+                        </View>
+                    }
+                    <Text style={styles.sendAMessageText}>
+                        {translate('writeCheerMessageScreen.sendPersonalizedMessage')}
+                    </Text>
                     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
                         <View style={{ flex: 1 }} />
                         <View>
@@ -212,7 +216,7 @@ class WriteCheerMessageScreen extends Component {
                                     style={[styles.messageInput]}
                                     maxLength={280}
                                     value={this.state.message} />
-                                <QaplaIcon onPress={this.sendCheersWithMessage}>
+                                <QaplaIcon disabled={this.state.cheerStatus !== 0} onPress={this.sendCheersWithMessage}>
                                     <images.svg.sendChat />
                                 </QaplaIcon>
                                 </>

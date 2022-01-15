@@ -47,9 +47,11 @@ class StreamerCard extends Component {
 
                     let shortBio = [];
                     shortBio.push(bioString);
-                    shortBio.push(<Text style={styles.viewMore}>
-                        {translate('streamerCard.viewMore')}
-                    </Text>);
+                    shortBio.push(
+                        <Text style={styles.viewMore}>
+                            {translate('streamerCard.viewMore')}
+                        </Text>
+                    );
 
                     this.setState({ bio: shortBio });
                 }
@@ -75,7 +77,7 @@ class StreamerCard extends Component {
                         }
                     </View>
                 </View>
-                <Text style={styles.bio} onLayout={(e) => console.log(e.nativeEvent)} onTextLayout={this.onBioLayout} ellipsizeMode='tail'>
+                <Text style={styles.bio} onTextLayout={this.onBioLayout}>
                     {this.state.bio}
                 </Text>
                 <View style={styles.tagsContainer}>

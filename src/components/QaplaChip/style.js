@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
         height: heightPercentageToPx(5),
+        maxWidth: widthPercentageToPx(50),
         backgroundColor: 'rgba(64, 64, 255, .30859)',
         borderRadius: 20.5,
         justifyContent: 'center'

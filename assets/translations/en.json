@@ -344,18 +344,18 @@
         "unfollow": "Unfollow",
         "upcomingStreams": "Upcoming streams",
         "myCommunity": "My community",
-        "creatorCodes": "Codes"
+        "creatorCodes": "Creator Codes"
     },
     "writeCheerMessageScreen": {
         "sendPersonalizedMessage": "Do you want to say something special?\n💬",
         "tellUs": "🗣 Tell us!, what do you want to say to %{streamerName}",
-        "sendCheerError": "There was an error sending the cheer, try again later, if the problem persists contact technical support on our Discord",
+        "sendCheerError": "Whoa!😨 We are sorry couldn't send your cheers at this moment, please try again later. If the problem persist contact technical support on our Discord.",
         "backToProfile": "Back",
         "skip": "Skip"
     },
     "cheersSentScreen": {
         "thankYouTitle": "Thank you!",
-        "sentCheersTo": "We have sent your\ncheers to ",
+        "sentCheersTo": "Your cheers have been\nsent to ",
         "cheersBarUpdated": "Your cheers bar has been updated :D",
         "backToProfile": "Back"
     },
@@ -364,11 +364,11 @@
         "signInWithEmail": "Sign in with email",
         "textsCarrousel": {
             "welcome": "Welcome!",
-            "authOptions": "Create an account or sign in to join the streams",
+            "authOptions": "Let's log you in to join a stream",
             "createAccount": "Create your account",
             "signIn": "Sign in",
-            "firstTimeMessage": "Discover your first streamer now!",
-            "welcomeBackMessage": "Welcome back! We miss you :v",
+            "firstTimeMessage": "Let's discover your first streamer!",
+            "welcomeBackMessage": "Welcome back! We missed you :v",
             "createAccountWithEmail": "Create account with email",
             "signInWithEmail": "Sign in with your email",
             "createUsername": "Create your username"
@@ -472,9 +472,9 @@
         }
     },
     "zeroQoinsEventModal": {
-        "header": "🔎 Ups! Looks like you dont have enough Qoins",
-        "body": "Mine Qoins in the published streams on the main feed to support your streamers 🌱",
-        "bttnText": "Check Streams"
+        "header": "🔎 Oops! Looks like you dont have enough Qoins",
+        "body": "Mine Qoins during the streams posted on the main feed to support your fave streamers 🌱",
+        "bttnText": "Join a stream"
     },
     "confirmationDialog": {
         "cancelButton": "Cancel",
@@ -570,13 +570,13 @@
         "gotIt": "Got It!"
     },
     "GalleryPermissionsModaliOS": {
-        "allowAccess": "Allow access to your gallery to edit your profile photo 🙏",
+        "allowAccess": "Allow access to your gallery to edit your your profile pic 🙏",
         "allow": "Allow"
     },
     "supportStreamerModal": {
         "supportToFirstPart": "🌱Support ",
         "supportToSecondPart": "\nwith 200 Qoins",
-        "description": "Your cheers are sent instantly and your messages appear during their live streams on Twitch.",
+        "description": "Your cheers are sent in real-time, and your messages appear live on their Twitch channel",
         "sendCheers": "Send Cheers"
     },
     "streamerCard": {

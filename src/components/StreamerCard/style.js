@@ -56,7 +56,7 @@ export default styles = StyleSheet.create({
         fontWeight: '500'
     },
     tagsContainer: {
-        height: heightPercentageToPx(3.7) * 2 + 10, // Double the size of the tag + the marginBottom
+        maxHeight: heightPercentageToPx(3.7) * 2 + 10, // Double the size of the tag + the marginBottom
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignSelf: 'flex-start',

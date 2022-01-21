@@ -301,12 +301,15 @@ class StreamerProfileScreen extends Component {
                                 </Text>
                                 <View style={styles.socialButtonsContainer}>
                                     {this.state.socialLinks.map((socialLink) => (
-                                        <SocialLinkContainedButton onPress={() => this.onSocialButtonPress(socialLink.value)}
-                                            Icon={socialMediaIcons[socialLink.socialPage]}
-                                            style={styles.socialButton}
-                                            key={`social-${socialLink.socialPage}`}>
-                                            {socialLink.socialPage}
-                                        </SocialLinkContainedButton>
+                                        socialLink.value !== '' ?
+                                            <SocialLinkContainedButton onPress={() => this.onSocialButtonPress(socialLink.value)}
+                                                Icon={socialMediaIcons[socialLink.socialPage]}
+                                                style={styles.socialButton}
+                                                key={`social-${socialLink.socialPage}`}>
+                                                {socialLink.socialPage}
+                                            </SocialLinkContainedButton>
+                                            :
+                                            null
                                     ))}
                                 </View>
                             </View>

@@ -84,7 +84,7 @@ class FollowingStreamersScreen extends Component {
 function mapStateToProps(state) {
     return {
         streamers: state.streamersReducer.streamers,
-        userSubscriptions: state.userReducer.user.userToStreamersSubscriptions
+        userSubscriptions: state.userReducer.user.userToStreamersSubscriptions || {}
     }
 }
 

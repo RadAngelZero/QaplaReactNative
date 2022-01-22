@@ -166,7 +166,11 @@ class AuthHandlerScreen extends Component {
 
     closeAndBackButton = () => {
         if (this.state.currentStep === -1) {
-            return this.props.navigation.navigate(this.props.originScreen);
+            if (this.props.originScreen !== 'Profile') {
+                return this.props.navigation.navigate(this.props.originScreen);
+            } else {
+                return this.props.navigation.navigate('Achievements');
+            }
         } else if (this.state.screenIndex !== -1) {
             this.backToPreviousScreen();
         }

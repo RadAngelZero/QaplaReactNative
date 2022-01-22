@@ -474,7 +474,7 @@
     "zeroQoinsEventModal": {
         "header": "🔎 ¡Ups! Parece que no tienes suficientes Qoins",
         "body": "Mina Qoins en los streams publicados en el feed principal para poder apoyar a tus streamers 🌱",
-        "bttnText": "Ver Streams"
+        "bttnText": "Explorar streams"
     },
     "confirmationDialog": {
         "cancelButton": "Cancelar",

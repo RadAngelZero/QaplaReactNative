@@ -559,7 +559,7 @@
                 "willBeSent1": "We will send your Qoins immediately",
                 "willBeSent2": "We will send your Qoins right now",
                 "willBeSent4": "We will send your Qoins immediately",
-                "willBeSent5": "At this moment we will send your Qoins"
+                "willBeSent5": "Sending your Qoins in 3, 2, 1.. Sent!"
             }
         }
     },
@@ -570,7 +570,7 @@
         "gotIt": "Got It!"
     },
     "GalleryPermissionsModaliOS": {
-        "allowAccess": "Allow access to your gallery to edit your your profile pic 🙏",
+        "allowAccess": "Allow access to your gallery to edit your profile pic 🙏",
         "allow": "Allow"
     },
     "supportStreamerModal": {

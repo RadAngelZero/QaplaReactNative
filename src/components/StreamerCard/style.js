@@ -32,6 +32,7 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(3),
         flexDirection: 'row',
         alignSelf: 'center',
+        alignItems: 'center',
         marginTop: 15
     },
     streamerName: {

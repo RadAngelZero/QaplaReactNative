@@ -224,7 +224,7 @@ class StreamerProfileScreen extends Component {
                                 {displayName}
                             </Text>
                             {badge &&
-                                <images.svg.founderBadge style={{ marginTop: 8 }} />
+                                <images.svg.founderBadge />
                             }
                         </View>
                         <Text style={styles.bio}>

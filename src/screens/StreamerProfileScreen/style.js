@@ -91,6 +91,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'center'
     },
     nameContainer: {
+        marginTop: 8,
         flexDirection: 'row',
         alignItems: 'center'
     },

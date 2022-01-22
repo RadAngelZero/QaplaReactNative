@@ -36,7 +36,7 @@ class StreamerProfileScreen extends Component {
             badge: false,
             creatorCodes: {},
             tags: [],
-            backgroundGradient: { angle: 0, colors: [] },
+            backgroundGradient: { angle: 0, colors: [ '#000', '#000' ] },
             isUserFollowingStreamer: false
         },
         openSupportStreamerModal: false,
@@ -111,9 +111,9 @@ class StreamerProfileScreen extends Component {
     formatStreamHour = (timestamp) => {
         const streamDate = new Date(timestamp);
         const hourSuffix = streamDate.getHours() >= 12 ? 'p.m.' : 'a.m.';
-        hour = streamDate.getHours() % 12;
+        let hour = streamDate.getHours() % 12;
         hour = hour ? hour : 12;
-        minute = streamDate.getMinutes() > 9 ? streamDate.getMinutes() : `0${streamDate.getMinutes()}`;
+        let minute = streamDate.getMinutes() > 9 ? streamDate.getMinutes() : `0${streamDate.getMinutes()}`;
 
         return `${hour}:${minute} ${hourSuffix}`;
     }

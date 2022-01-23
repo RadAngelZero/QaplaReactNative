@@ -91,6 +91,7 @@ import TikTok from './icons/TikTok.svg';
 import YouTube from './icons/YouTube.svg';
 import CopyCreatorCode from './icons/CopyCreatorCode.svg';
 import CameraPermissions from './icons/CameraPermissions.svg';
+import CameraPermissionsES from './icons/CameraPermissionsES.svg';
 import RightArrow from './icons/RightArrow.svg';
 import Unfollow from './icons/Unfollow.svg';
 
@@ -364,6 +365,7 @@ const images = {
 		youTube: YouTube,
 		copyCreatorCode: CopyCreatorCode,
 		cameraPermissions: CameraPermissions,
+		CameraPermissionsES: CameraPermissionsES,
 		rightArrow: RightArrow,
 		unfollow: Unfollow
 	}

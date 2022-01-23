@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { SHEET_MAX_HEIGHT } from '../../utilities/Constants';
 
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 

@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { Modal, TouchableOpacity, View } from 'react-native';
 
 import images from '../../../assets/images';
 import styles from './style';
 import QaplaText from '../QaplaText/QaplaText';
 import LinearGradient from 'react-native-linear-gradient';
-import { translate } from '../../utilities/i18';
+import { getLocaleLanguage, translate } from '../../utilities/i18';
 
 class GalleryPermissionsModaliOS extends Component {
     render() {
+        const userLanguage = getLocaleLanguage();
+
         return (
             <Modal
                 animationType='fade'
@@ -28,7 +30,7 @@ class GalleryPermissionsModaliOS extends Component {
                         angle={136}
                         style={styles.body}
                         colors={['#A716EE', '#2C07FA']}>
-                        <images.svg.cameraPermissions />
+                        {userLanguage === 'en' ? <images.svg.cameraPermissions /> : <images.svg.CameraPermissionsES />}
                         <TouchableOpacity onPress={this.props.onPress}>
                             <View style={styles.allowButton}>
                                 <QaplaText style={styles.allowButtonText}>

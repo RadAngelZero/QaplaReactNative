@@ -90,7 +90,7 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Photo Library Access Warning</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo Library Access Warning</string>
+	<string>Allow access to photos to edit your profile picture. Your picture will show in your profile and ranking standings</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SFRounded-Ultralight.ttf</string>

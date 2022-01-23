@@ -23,7 +23,7 @@ export default styles = StyleSheet.create({
         textAlign: 'center'
     },
     body: {
-        height: SHEET_MAX_HEIGHT,
+        flex: 1,
         width: widthPercentageToPx(100),
         marginTop: 48,
         borderTopLeftRadius: 40,

@@ -214,7 +214,7 @@ class WriteCheerMessageScreen extends Component {
                                     onContentSizeChange={(event) => this.setState({ height: event.nativeEvent.contentSize.height })}
                                     onChangeText={this.updateMessage}
                                     style={[styles.messageInput]}
-                                    maxLength={280}
+                                    maxLength={160}
                                     value={this.state.message} />
                                 <QaplaIcon disabled={this.state.cheerStatus !== 0} onPress={this.sendCheersWithMessage}>
                                     <images.svg.sendChat />

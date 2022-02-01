@@ -323,6 +323,7 @@ const CommunityTopTabNavigator = createMaterialTopTabNavigator(
   },
   {
     initialRouteName: 'Discover',
+    lazy: true,
     tabBarComponent: (props) =>  <QaplaTabBar {...props} />
   }
 );

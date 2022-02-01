@@ -13,40 +13,33 @@ class DiscoverStreamersScreen extends Component {
     }
 
     loadMoreStreamers = () => {
-        this.props.getStreamersProfiles(20, Object.keys(this.props.streamers)[Object.keys(this.props.streamers).length - 1]);
+        this.props.getStreamersProfiles(20, this.props.streamers[this.props.streamers.length - 1].key);
     }
 
     formatStreamers = () => {
         const streamersData = [];
-        Object.keys(this.props.streamers)
-            /**
-             * Streamers uid´s are created following the pattern twitchId-TwitchUsername, so to sort the array
-             * we split the id and the name and sort with the id (Twitch Id´s are integer numbers)
-             */
-            .sort((a, b) => parseInt(a.split('-')[0]) - parseInt(b.split('-')[0]))
-            .forEach((streamerKey) => {
-                if (!STREAMERS_BLACKLIST.includes(streamerKey) && !this.props.userSubscriptions[streamerKey]) {
-                    const streamer = this.props.streamers[streamerKey];
-                    if ((streamer.backgroundGradient || streamer.backgroundUrl) && streamer.displayName && streamer.photoUrl && streamer.bio && streamer.tags) {
-                        streamersData.push({
-                            displayName: streamer.displayName,
-                            /**
-                             * If the streamer change their profile image on Twitch the link on the database
-                             * will not contain any photo to show until the streamer update their information
-                             * on the dashboard (this is automatically done every time the streamer SignIn on the
-                             * dashboard or any time a token is refreshed)
-                             */
-                            photoUrl: streamer.photoUrl,
-                            streamerId: streamerKey,
-                            bio: streamer.bio,
-                            backgroundUrl: streamer.backgroundUrl,
-                            badge: streamer.badge,
-                            tags: streamer.tags,
-                            creatorCodes: streamer.creatorCodes,
-                            backgroundGradient: streamer.backgroundGradient
-                        });
-                    }
+        this.props.streamers.forEach((streamer) => {
+            if (!STREAMERS_BLACKLIST.includes(streamer.key) && !this.props.userSubscriptions[streamer.key]) {
+                if ((streamer.backgroundGradient || streamer.backgroundUrl) && streamer.displayName && streamer.photoUrl && streamer.bio && streamer.tags) {
+                    streamersData.push({
+                        displayName: streamer.displayName,
+                        /**
+                         * If the streamer change their profile image on Twitch the link on the database
+                         * will not contain any photo to show until the streamer update their information
+                         * on the dashboard (this is automatically done every time the streamer SignIn on the
+                         * dashboard or any time a token is refreshed)
+                         */
+                        photoUrl: streamer.photoUrl,
+                        streamerId: streamer.key,
+                        bio: streamer.bio,
+                        backgroundUrl: streamer.backgroundUrl,
+                        badge: streamer.badge,
+                        tags: streamer.tags,
+                        creatorCodes: streamer.creatorCodes,
+                        backgroundGradient: streamer.backgroundGradient
+                    });
                 }
+            }
         });
 
         return streamersData;
@@ -70,8 +63,8 @@ class DiscoverStreamersScreen extends Component {
 
 function mapStateToProps(state) {
     return {
-        streamers: state.streamersReducer.streamers,
-        userSubscriptions: state.userReducer.user.userToStreamersSubscriptions || {}
+        streamers: state.streamersReducer.streamers || [],
+        userSubscriptions: state.userReducer.user.userToStreamersSubscriptions || {}
     }
 }
 

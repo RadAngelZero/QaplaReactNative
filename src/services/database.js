@@ -1491,9 +1491,9 @@ export async function getQaplaLevels() {
  */
 export async function getStreamersPublicProfileWithLimit(limit = 100, cursor) {
     if (cursor) {
-        return await streamersPublicProfilesRef.endAt(cursor).limitToFirst(limit).once('value');
+        return await streamersPublicProfilesRef.orderByKey().startAt(cursor).limitToFirst(limit).once('value');
     } else {
-        return await streamersPublicProfilesRef.limitToFirst(limit).once('value');
+        return await streamersPublicProfilesRef.orderByKey().limitToFirst(limit).once('value');
     }
 }
 

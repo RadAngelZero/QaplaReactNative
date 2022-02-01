@@ -8,7 +8,18 @@ import { getStreamerPublicProfile, getStreamersPublicProfileWithLimit } from '..
 export const getStreamersData = (limit, cursor) => async (dispatch) => {
     const streamersData = await getStreamersPublicProfileWithLimit(limit, cursor);
     if (streamersData.exists()) {
-        dispatch(getStreamersDataSuccess(streamersData.val()));
+        if (cursor) {
+            const streamersToAdd = {};
+            streamersData.forEach((streamer) => {
+                if (streamer.key !== cursor) {
+                    streamersToAdd[streamer.key] = streamer.val();
+                }
+            });
+
+            dispatch(getStreamersDataSuccess(streamersToAdd));
+        } else {
+            dispatch(getStreamersDataSuccess(streamersData.val()));
+        }
     }
 }
 

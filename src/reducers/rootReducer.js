@@ -7,6 +7,7 @@ import serverTimeOffsetReducer from './serverTimeOffsetReducer';
 import screensReducer from './screensReducer';
 import profileLeaderBoardReducer from './profileLeaderBoardReducer';
 import qaplaLevelReducer from './QaplaLevelReducer';
+import streamersReducer from './streamersReducer';
 
 export default combineReducers({
     userReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
     serverTimeOffsetReducer,
     screensReducer,
     profileLeaderBoardReducer,
-    qaplaLevelReducer
+    qaplaLevelReducer,
+    streamersReducer
 });

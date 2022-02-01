@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, View, TouchableWithoutFeedback } from 'react-native';
+import { Modal, View, Image, Text, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 import styles from './style';
@@ -8,6 +8,7 @@ import { trackOnSegment } from '../../services/statistics';
 import { translate } from '../../utilities/i18';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import QaplaText from '../QaplaText/QaplaText';
+import images from './../../../assets/images';
 
 const CloseIcon = Images.svg.closeIcon;
 
@@ -34,22 +35,23 @@ class ZeroQoinsEventsModal extends Component {
                 onRequestClose={this.props.onClose}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
+                        <Image source={images.png.notEnoughQoins.img} style={styles.dogAssImage} />
                         <QaplaIcon onPress={this.props.onClose} touchableStyle={styles.closeIcon}>
                             <CloseIcon />
                         </QaplaIcon>
-                        <QaplaText style={styles.headerText}>
+                        <Text style={styles.headerText}>
                             { translate('zeroQoinsEventModal.header') }
-                        </QaplaText>
-                        <QaplaText style={styles.paragraph}>
+                        </Text>
+                        <Text style={styles.paragraph}>
                             { translate('zeroQoinsEventModal.body') }
-                        </QaplaText>
-                        <TouchableWithoutFeedback onPress={this.goToEvents}>
+                        </Text>
+                        <TouchableOpacity onPress={this.goToEvents}>
                             <View style={styles.eventsButton}>
-                                <QaplaText style={styles.bttnText}>
+                                <Text style={styles.bttnText}>
                                     {translate('zeroQoinsEventModal.bttnText')}
-                                </QaplaText>
+                                </Text>
                             </View>
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </Modal>

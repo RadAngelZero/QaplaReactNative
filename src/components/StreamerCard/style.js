@@ -32,6 +32,7 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(3),
         flexDirection: 'row',
         alignSelf: 'center',
+        alignItems: 'center',
         marginTop: 15
     },
     streamerName: {
@@ -42,7 +43,7 @@ export default styles = StyleSheet.create({
         marginRight: 6
     },
     bio: {
-        height: heightPercentageToPx(8),
+        height: heightPercentageToPx(10),
         marginTop: 24,
         color: '#FFF',
         fontSize: 16,
@@ -56,10 +57,10 @@ export default styles = StyleSheet.create({
         fontWeight: '500'
     },
     tagsContainer: {
-        height: heightPercentageToPx(3.7) * 2 + 10, // Double the size of the tag + the marginBottom
+        maxHeight: heightPercentageToPx(3.7) * 2 + 10, // Double the size of the tag + the marginBottom
         flexDirection: 'row',
         flexWrap: 'wrap',
-        alignSelf: 'center',
+        alignSelf: 'flex-start',
         marginTop: 24,
         overflow: 'hidden'
     },

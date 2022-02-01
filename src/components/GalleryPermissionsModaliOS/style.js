@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { SHEET_MAX_HEIGHT } from '../../utilities/Constants';
 
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
@@ -23,7 +22,7 @@ export default styles = StyleSheet.create({
         textAlign: 'center'
     },
     body: {
-        height: SHEET_MAX_HEIGHT,
+        flex: 1,
         width: widthPercentageToPx(100),
         marginTop: 48,
         borderTopLeftRadius: 40,

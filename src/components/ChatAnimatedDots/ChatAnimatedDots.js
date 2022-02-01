@@ -61,7 +61,7 @@ export default class ChatAnimatedDots extends Component {
                     isInteraction: false,
                     useNativeDriver: false
                 })
-            ]), { iterations: 10, resetBeforeIteration: true }
+            ])
         ).start()
     }
 
@@ -72,10 +72,11 @@ export default class ChatAnimatedDots extends Component {
                     opacity: this.state.dot1Transparency
                 }]} />
                 <Animated.View style={[style.dot, {
-                    marginHorizontal: widthPercentageToPx(2),
+                    marginLeft: widthPercentageToPx(2),
                     opacity: this.state.dot2Transparency
                 }]} />
                 <Animated.View style={[style.dot, {
+                    marginLeft: widthPercentageToPx(2),
                     opacity: this.state.dot3Transparency
                 }]} />
             </>

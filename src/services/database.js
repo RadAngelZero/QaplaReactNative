@@ -43,6 +43,7 @@ const versionAppRef = database.ref('VersionApp/QaplaVersion');
 const qaplaLevelsRequirementsRef = database.ref('QaplaLevelsRequirements');
 const streamersPublicProfilesRef = database.ref('/StreamersPublicProfiles');
 const streamerLinksRef = database.ref('/StreamerLinks');
+const userToStreamerSubscriptionsRef = database.ref('/UserToStreamerSubscriptions');
 
 /**
  * Returns the userName of the specified user
@@ -1484,6 +1485,19 @@ export async function getQaplaLevels() {
 }
 
 /**
+ * Return the given number of profiles after the profile indicated (with the cursor)
+ * @param {number} limit Number of profiles to load (100 by default)
+ * @param {string} cursor Start point to load (optional)
+ */
+export async function getStreamersPublicProfileWithLimit(limit = 100, cursor) {
+    if (cursor) {
+        return await streamersPublicProfilesRef.orderByKey().startAt(cursor).limitToFirst(limit).once('value');
+    } else {
+        return await streamersPublicProfilesRef.orderByKey().limitToFirst(limit).once('value');
+    }
+}
+
+/**
  * Return the public profile of the given streamer
  * @param {string} streamerId Streamer identifier on database
  */
@@ -1501,4 +1515,35 @@ export async function getStreamerPublicProfile(streamerId) {
  */
 export async function getStreamerSocialLinks(streamerId) {
     return await streamerLinksRef.child(streamerId).once('value');
+}
+
+// -----------------------------------------------
+// User To Streamer Subscriptions
+// -----------------------------------------------
+
+/**
+ * Subscribe a user to a streamer profile (User follow streamer)
+ * @param {string} uid User identifier
+ * @param {string} streamerId Streamer identifier
+ */
+export async function subscribeUserToStreamerProfile(uid, streamerId) {
+    return await userToStreamerSubscriptionsRef.child(uid).child(streamerId).set(true);
+}
+
+/**
+ * unubscribe a user to a streamer profile (user unfollow streamer)
+ * @param {string} uid User identifier
+ * @param {string} streamerId Streamer identifier
+ */
+export async function unsubscribeUserToStreamerProfile(uid, streamerId) {
+    return await userToStreamerSubscriptionsRef.child(uid).child(streamerId).remove();
+}
+
+/**
+ * Listen to the user subscriptions to streamers
+ * @param {string} uid User identifier
+ * @param {function} callback Handler function for the results
+ */
+export async function listenToUserToStreamersSubscriptions(uid, callback) {
+    return userToStreamerSubscriptionsRef.child(uid).on('value', callback);
 }

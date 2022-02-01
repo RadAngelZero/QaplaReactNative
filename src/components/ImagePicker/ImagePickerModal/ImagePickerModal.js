@@ -40,7 +40,6 @@ class ImagePickerModal extends Component {
 	 * Saving behaviour is determined by ImagePickerModal's parent
 	 */
     saveImage = async (picture) => {
-		console.log('Savin');
 		this.setState({ isSavingImage: true }, async () => {
 			await this.props.saveImage(picture, () => {
 				this.setState({ isSavingImage: false });
@@ -64,23 +63,23 @@ class ImagePickerModal extends Component {
 
     render() {
         return (
-	        	<Modal
-					animationType='fade'
-					transparent={false}
-					visible={this.props.visible}
-					onRequestClose={this.props.onClose}>
-					{this.state.showIOSPermissionsModal ?
-						<GalleryPermissionsModaliOS onClose={() => this.props.onClose()}
-							onPress={this.markGalleryPermissionAsGranted} />
-						:
-						<SafeAreaView style={styles.sfvContainer}>
-							<QaplaIcon onPress={this.closeModal} touchableStyle={styles.closeIcon}>
-								<CloseIcon />
-							</QaplaIcon>
-							<ImagePicker isSavingImage={this.state.isSavingImage} saveImage={this.saveImage} />
-						</SafeAreaView>
-					}
-		        </Modal>
+			<Modal
+				animationType='fade'
+				transparent={false}
+				visible={this.props.visible}
+				onRequestClose={this.props.onClose}>
+				{this.state.showIOSPermissionsModal ?
+					<GalleryPermissionsModaliOS onClose={() => this.props.onClose()}
+						onPress={this.markGalleryPermissionAsGranted} />
+					:
+					<SafeAreaView style={styles.sfvContainer}>
+						<QaplaIcon onPress={this.closeModal} touchableStyle={styles.closeIcon}>
+							<CloseIcon />
+						</QaplaIcon>
+						<ImagePicker isSavingImage={this.state.isSavingImage} saveImage={this.saveImage} />
+					</SafeAreaView>
+				}
+			</Modal>
         );
     }
 }

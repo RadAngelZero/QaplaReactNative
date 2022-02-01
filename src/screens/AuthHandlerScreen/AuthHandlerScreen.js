@@ -15,6 +15,7 @@ import appleAuth from '@invertase/react-native-apple-authentication';
 import { createAccountWitEmailAndPassword, setupGoogleSignin, signInWithApple, signInWithEmailAndPassword, signInWithGoogle } from '../../services/auth';
 import { createUserProfile, getUserNameWithUID, updateUserLoggedStatus, userHaveTwitchId, validateUserName } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
+import { translate } from '../../utilities/i18';
 
 class AuthHandlerScreen extends Component {
     texts = null;
@@ -86,6 +87,9 @@ class AuthHandlerScreen extends Component {
                 if (!userName) {
                     this.goToCreateUsernameStep();
                 } else if (userHaveTwitchLinked) {
+                    const onSuccessCallback = this.props.navigation.getParam('onSuccessSignIn', () => {});
+
+                    onSuccessCallback(user.user.uid);
                     return this.props.navigation.navigate(this.props.originScreen);
                 }
             }
@@ -162,7 +166,11 @@ class AuthHandlerScreen extends Component {
 
     closeAndBackButton = () => {
         if (this.state.currentStep === -1) {
-            return this.props.navigation.navigate('Achievements');
+            if (this.props.originScreen !== 'Profile') {
+                return this.props.navigation.navigate(this.props.originScreen);
+            } else {
+                return this.props.navigation.navigate('Achievements');
+            }
         } else if (this.state.screenIndex !== -1) {
             this.backToPreviousScreen();
         }
@@ -282,9 +290,9 @@ class AuthHandlerScreen extends Component {
                                         <View style={styles.emailButtonContainer}>
                                             <QaplaText style={styles.emailButton}>
                                                 {this.state.createAccountIsSelected ?
-                                                    'Registrate con correo'
+                                                    translate('authHandlerScreen.signUpWithEmail')
                                                     :
-                                                    'Inicia sesión con correo'
+                                                    translate('authHandlerScreen.signInWithEmail')
                                                 }
                                             </QaplaText>
                                             <images.svg.rightArrow />

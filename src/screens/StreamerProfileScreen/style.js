@@ -18,9 +18,9 @@ export default styles = StyleSheet.create({
         zIndex: -1
     },
     photoContainer: {
-        width: widthPercentageToPx(28),
+        width: heightPercentageToPx(12.93),
         height: heightPercentageToPx(12.93),
-        borderRadius: (widthPercentageToPx(28) + heightPercentageToPx(12.93)) / 2,
+        borderRadius: (heightPercentageToPx(12.93) * 2) / 2,
         position: 'absolute',
         left: 16,
         top: heightPercentageToPx(15),
@@ -29,9 +29,9 @@ export default styles = StyleSheet.create({
         alignItems: 'center'
     },
     photo: {
-        width: widthPercentageToPx(24),
+        width: heightPercentageToPx(11),
         height: heightPercentageToPx(11),
-        borderRadius: (widthPercentageToPx(24) + heightPercentageToPx(11)) / 2
+        borderRadius: (heightPercentageToPx(11) * 2) / 2
     },
     profileContainer: {
         marginRight: 16,
@@ -43,14 +43,44 @@ export default styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     followButton: {
-        borderRadius: 20,
+        borderRadius: 100,
         backgroundColor: '#3B4BF9',
         width: widthPercentageToPx(28),
         height: heightPercentageToPx(5),
         justifyContent: 'center'
     },
+    followingButton: {
+        borderRadius: 100,
+        backgroundColor: 'transparent',
+        width: widthPercentageToPx(28),
+        height: heightPercentageToPx(5),
+        justifyContent: 'center',
+        borderColor: '#3B4BF9',
+        borderWidth: 2
+    },
+    unfollowButton: {
+        borderRadius: 100,
+        backgroundColor: '#000000',
+        width: widthPercentageToPx(54.6),
+        height: heightPercentageToPx(5),
+        justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
     followButtonText: {
         color: '#FFF',
+        fontSize: 16,
+        fontWeight: '600',
+        textAlign: 'center'
+    },
+    followingButtonText: {
+        color: 'rgba(255, 255, 255, .6)',
+        fontSize: 16,
+        fontWeight: '600',
+        textAlign: 'center'
+    },
+    unfollowButtonText: {
+        color: '#FF5151',
         fontSize: 16,
         fontWeight: '600',
         textAlign: 'center'
@@ -61,6 +91,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'center'
     },
     nameContainer: {
+        marginTop: 8,
         flexDirection: 'row',
         alignItems: 'center'
     },

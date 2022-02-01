@@ -42,7 +42,7 @@ import BalanceFlipIcon from './icons/qapla-balance-flip.svg';
 import CopyIcon from './icons/Copy.svg';
 import SentIcon from './icons/SentIcon.svg';
 import HighFiveIcon from './icons/HighFive.svg';
-import SendIcon from './icons/Send.svg';
+import SendIcon from './icons/send.svg';
 import ArrowDownIcon from './icons/arrowDown.svg';
 import BetaLabelIcon from './icons/BetaLabel.svg';
 import BitsIcon from './icons/bitsIcon.svg';
@@ -91,7 +91,9 @@ import TikTok from './icons/TikTok.svg';
 import YouTube from './icons/YouTube.svg';
 import CopyCreatorCode from './icons/CopyCreatorCode.svg';
 import CameraPermissions from './icons/CameraPermissions.svg';
+import CameraPermissionsES from './icons/CameraPermissionsES.svg';
 import RightArrow from './icons/RightArrow.svg';
+import Unfollow from './icons/Unfollow.svg';
 
 // Images
 
@@ -266,6 +268,10 @@ const images = {
 			img: require('./images/Onboarding_Illustration-5.png'),
 			uri: '@assets/images/Onboarding_Illustration-5.png'
 		},
+		notEnoughQoins: {
+			img: require('./images/NotEnoughQoins.png'),
+			uri: '@assets/images/NotEnoughQoins.png'
+		}
 	},
 	svg: {
 		facebookIcon: FacebookIcon,
@@ -359,7 +365,9 @@ const images = {
 		youTube: YouTube,
 		copyCreatorCode: CopyCreatorCode,
 		cameraPermissions: CameraPermissions,
-		rightArrow: RightArrow
+		CameraPermissionsES: CameraPermissionsES,
+		rightArrow: RightArrow,
+		unfollow: Unfollow
 	}
 };
 

@@ -19,6 +19,10 @@ export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 /* User redux object fields */
 export const USER_BALANCE = 'userBalance';
 
+// Streamers constants
+export const LOAD_STREAMERS = 'LOAD_STREAMERS';
+export const LOAD_SINGLE_STREAMER = 'LOAD_SINGLE_STREAMER';
+
 // Games constants
 export const GET_LIST_OF_GAMES = 'GET_LIST_OF_GAMES';
 export const SET_SELECTED_GAME = 'SET_SELECTED_GAME';
@@ -145,3 +149,5 @@ export const defaultUserImages = [
 // Activity types
 export const XQ = 'xq';
 export const QOINS = 'qoins';
+
+export const STREAMERS_BLACKLIST = ['141617732-catskullgamer', '683167758-catskullgg', '613408163-dhvsll', '180517858-QaplaGG', '448926957-qaplita', '140436068-RadAngelZero', '528477359-mariyolo1bot'];

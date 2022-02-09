@@ -6,6 +6,7 @@ import styles from './style';
 import Images from '../../../assets/images';
 import QaplaChip from '../QaplaChip/QaplaChip';
 import { translate } from '../../utilities/i18';
+import { getStreamerProfilePhotoUrl } from '../../services/storage';
 
 const FounderBadge = Images.svg.founderBadge;
 const MAX_BIO_LINES = 3;
@@ -13,7 +14,8 @@ const MAX_BIO_LINES = 3;
 class StreamerCard extends Component {
     state = {
         viewMore: false,
-        bio: this.props.bio
+        bio: this.props.bio,
+        imageUrl: this.props.photoUrl
     };
 
     onBioLayout = (e) => {
@@ -60,6 +62,14 @@ class StreamerCard extends Component {
         }
     }
 
+    getFallbackImage = async () => {
+        try {
+            this.setState({ imageUrl: await getStreamerProfilePhotoUrl(this.props.streamerId) });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     render() {
         return (
             <TouchableOpacity style={styles.card}
@@ -74,7 +84,8 @@ class StreamerCard extends Component {
                         colors={this.props.backgroundGradient.colors} />
                 }
                 <Image style={styles.streamerImage}
-                    source={this.props.photoUrl ? { uri: this.props.photoUrl } : null} />
+                    source={this.state.imageUrl ? { uri: this.state.imageUrl } : null}
+                    onError={this.getFallbackImage} />
                 <View style={styles.streamerNameContainer}>
                     <Text style={styles.streamerName}>
                         {this.props.displayName}

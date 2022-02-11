@@ -9,6 +9,7 @@ import QaplaChip from '../../components/QaplaChip/QaplaChip';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
 import SupportStreamerModal from '../../components/SupportStreamerModal/SupportStreamerModal';
 import { getStreamerPublicProfile, getStreamerSocialLinks, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile, userHaveTwitchId } from '../../services/database';
+import { getStreamerProfilePhotoUrl } from '../../services/storage';
 import { copyDataToClipboard } from '../../utilities/utils';
 import { getLocaleLanguage, translate } from './../../utilities/i18';
 import styles from './style';
@@ -159,6 +160,14 @@ class StreamerProfileScreen extends Component {
         this.setState({ showUnfollowConfirmation: false });
     }
 
+    getFallbackImage = async () => {
+        try {
+            this.setState({ streamerData: { ...this.state.streamerData, photoUrl: await getStreamerProfilePhotoUrl(this.state.streamerData.streamerId) } });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     render() {
         const {
             displayName,
@@ -191,7 +200,8 @@ class StreamerProfileScreen extends Component {
                     }
                     <View style={styles.photoContainer}>
                         <Image source={photoUrl ? { uri: photoUrl } : null}
-                            style={styles.photo} />
+                            style={styles.photo}
+                            onError={this.getFallbackImage} />
                     </View>
                     <View style={styles.profileContainer}>
                         <View style={styles.buttonsContainer}>

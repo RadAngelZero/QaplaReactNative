@@ -1,10 +1,4 @@
-// josep.sanahuja - 22-11-2019 - us153 - Add getUserProfileImgUrl && saveUserProfileImg
-// josep.sanahuja - 08-10-2019 - usXXX - + writeUserVerificationSelfie
-// josep.sanahuja - 03-10-2019 - XXXXX - Use Filepath in .put on savePictureEvidenceLogroSocial
-//                                       instead of Blob because of react-native-firebase 
-// josep.sanahuja - 26-09-2019 - us118 - File creation
-
-import { storage } from "../utilities/firebase";
+import { storage } from '../utilities/firebase';
 
 // storage
 export const storageLogrosImgRef = storage.ref('/facebook_likes');
@@ -117,5 +111,14 @@ export async function getUserProfileImgUrl(userId) {
     return res;
 }
 
+/**
+ * Gets the download URL of our copy of the streamer profile image (it´s a copy of the last image we
+ * detected in their Twitch the last time the streamer update their info on their dashboard)
+ * @param {string} streamerId Streamer identifier
+ */
+export async function getStreamerProfilePhotoUrl(streamerId) {
+    const ref = storage.ref('/StreamersProfilesPhotos').child(streamerId);
+    const profilePhotoUrl = await ref.getDownloadURL();
 
-
+    return profilePhotoUrl;
+}

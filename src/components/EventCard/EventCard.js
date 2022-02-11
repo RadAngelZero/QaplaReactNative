@@ -1,7 +1,4 @@
-// diego           - 11-12-2019 - us165 - Validate if the user is logged before execute joinEvent
-// diego           - 14-11-2019 - us146 - File creation
-
-import React, { Component } from 'react';
+import React from 'react';
 import { View, ImageBackground, TouchableWithoutFeedback, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
@@ -14,38 +11,28 @@ import QaplaText from '../QaplaText/QaplaText';
 import { trackOnSegment } from '../../services/statistics';
 
 function EventCardContainer({ isSponsored, children, onPress, gradientColors }) {
-    if (isSponsored) {
-        const validColorRegExp = new RegExp('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
-        let validColors = false;
-        if (gradientColors) {
-            if (gradientColors.primary.charAt(0) !== '#') {
-                gradientColors.primary = `#${gradientColors.primary}`
-            }
-            if (gradientColors.secondary.charAt(0) !== '#') {
-                gradientColors.secondary = `#${gradientColors.secondary}`
-            }
-            validColors = validColorRegExp.test(gradientColors.primary) && validColorRegExp.test(gradientColors.secondary);
+    const validColorRegExp = new RegExp('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
+    let validColors = false;
+    if (gradientColors) {
+        if (gradientColors.primary.charAt(0) !== '#') {
+            gradientColors.primary = `#${gradientColors.primary}`
         }
-
-        return (
-            <TouchableWithoutFeedback onPress={onPress}>
-                <LinearGradient
-                    useAngle={true}
-                    angle={150}
-                    angleCenter={{ x: .5, y: .5}}
-                    colors={validColors ? [gradientColors.primary, gradientColors.secondary] : ['#AA16EE', '#07EAfA']}
-                    style={styles.container}>
-                    {children}
-                </LinearGradient>
-            </TouchableWithoutFeedback>
-        );
+        if (gradientColors.secondary.charAt(0) !== '#') {
+            gradientColors.secondary = `#${gradientColors.secondary}`
+        }
+        validColors = validColorRegExp.test(gradientColors.primary) && validColorRegExp.test(gradientColors.secondary);
     }
 
     return (
         <TouchableWithoutFeedback onPress={onPress}>
-            <View style={styles.container}>
+            <LinearGradient
+                useAngle={true}
+                angle={150}
+                angleCenter={{ x: .5, y: .5}}
+                colors={validColors ? [gradientColors.primary, gradientColors.secondary] : [isSponsored ?  '#AA16EE' : 'transparent', isSponsored ? '#07EAFA' : 'transparent']}
+                style={styles.container}>
                 {children}
-            </View>
+            </LinearGradient>
         </TouchableWithoutFeedback>
     );
 }

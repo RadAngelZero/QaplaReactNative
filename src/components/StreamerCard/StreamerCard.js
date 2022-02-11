@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -11,7 +11,7 @@ import { getStreamerProfilePhotoUrl } from '../../services/storage';
 const FounderBadge = Images.svg.founderBadge;
 const MAX_BIO_LINES = 3;
 
-class StreamerCard extends Component {
+class StreamerCard extends React.PureComponent {
     state = {
         viewMore: false,
         bio: this.props.bio,

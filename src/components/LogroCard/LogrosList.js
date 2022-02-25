@@ -1,10 +1,10 @@
 import React from 'react';
 
 import {
-  View,
-  SafeAreaView,
-  SectionList,
-  RefreshControl
+	View,
+	SafeAreaView,
+	SectionList,
+	RefreshControl
 } from 'react-native'
 
 import styles from './style'
@@ -43,6 +43,7 @@ class LogrosList extends React.Component {
 			<SafeAreaView style={styles.sfvContainer}>
 				<View style={styles.listContainer}>
 					<SectionList
+						horizontal
 						sections={this.props.logros}
 						refreshControl={<RefreshControl
 							progressBackgroundColor={Colors.eventCardBackground}
@@ -59,7 +60,7 @@ class LogrosList extends React.Component {
 				</View>
 			</SafeAreaView>
 		);
-  }
+	}
 }
 
 export default LogrosList;

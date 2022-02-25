@@ -229,6 +229,8 @@ export default styles = StyleSheet.create({
         height: 60
     },
     sectionHeader: {
+        display: 'flex',
+        position: 'absolute',
         fontSize: 20,
         lineHeight: 24,
         color : '#FFF',

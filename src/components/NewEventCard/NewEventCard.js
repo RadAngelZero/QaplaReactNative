@@ -30,7 +30,7 @@ function EventCardContainer({ isSponsored, children, onPress, gradientColors }) 
 
     return (
         <TouchableWithoutFeedback onPress={onPress}
-        style={styles.container}>
+            style={styles.container}>
             {/* <LinearGradient
                 useAngle={true}
                 angle={150}
@@ -51,7 +51,10 @@ class NewEventCard extends React.PureComponent {
     limitToShowEventAsNew = this.currentTime - 86400000;
 
     state = {
-        showEventDetailsModal: false
+        showEventDetailsModal: false,
+        boost: [false, false, false, true],
+        qoins: true,
+        xq: true,
     };
 
     componentDidMount() {
@@ -168,7 +171,40 @@ class NewEventCard extends React.PureComponent {
                         // source={backgroundImage ? { uri: backgroundImage } : null}
                         source={{ uri: 'https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/nintendo_switch_4/H2x1_NSwitch_Minecraft_image1600w.jpg' }}
                     >
-                        <></>
+                        <View style={{ display: 'flex', width: '100%', height: '100%' }}>
+                            <View style={{ display: 'flex', flexDirection: 'row', backgroundColor: '#f0f0', marginTop: 24, marginRight: 24, justifyContent: 'flex-end', alignItems: 'flex-start' }}>
+                                {this.state.boost[0] &&
+                                    <View style={{ display: 'flex', transform: [{ scale: 1.1 }], marginHorizontal: '-1.4%', backgroundColor: '#ff00' }}>
+                                        <Images.svg.boostX2 />
+                                    </View>
+                                }
+                                {this.state.boost[1] &&
+                                    <View style={{ display: 'flex', transform: [{ scale: 1.1 }], marginHorizontal: '-1.4%', backgroundColor: '#ff00' }}>
+                                        <Images.svg.boostX3 />
+                                    </View>
+                                }
+                                {this.state.boost[2] &&
+                                    <View style={{ display: 'flex', transform: [{ scale: 1.1 }], marginHorizontal: '-1.4%', backgroundColor: '#ff00' }}>
+                                        <Images.svg.boostX5 />
+                                    </View>
+                                }
+                                {this.state.boost[3] &&
+                                    <View style={{ display: 'flex', transform: [{ scale: 1.1 }], marginHorizontal: '-1.4%', backgroundColor: '#ff00' }}>
+                                        <Images.svg.boostX10 />
+                                    </View>
+                                }
+                                {this.state.qoins &&
+                                    <View style={{ display: 'flex', transform: [{ scale: 0.8 }], marginHorizontal: '-2%', backgroundColor: '#ff00' }}>
+                                        <Images.svg.activityQoin />
+                                    </View>
+                                }
+                                {this.state.xq &&
+                                    <View style={{ display: 'flex', transform: [{ scale: 0.8 }], marginHorizontal: '-2%', backgroundColor: '#ff00' }}>
+                                        <Images.svg.activityXQ />
+                                    </View>
+                                }
+                            </View>
+                        </View>
                     </ImageBackground>
                 </LinearGradient>
                 <View style={styles.body}>

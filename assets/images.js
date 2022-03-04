@@ -94,6 +94,11 @@ import CameraPermissions from './icons/CameraPermissions.svg';
 import CameraPermissionsES from './icons/CameraPermissionsES.svg';
 import RightArrow from './icons/RightArrow.svg';
 import Unfollow from './icons/Unfollow.svg';
+import Boostx2 from './icons/Boostx2.svg';
+import Boostx3 from './icons/Boostx3.svg';
+import Boostx5 from './icons/Boostx5.svg';
+import Boostx10 from './icons/Boostx10.svg';
+
 
 // Images
 
@@ -367,8 +372,12 @@ const images = {
 		cameraPermissions: CameraPermissions,
 		CameraPermissionsES: CameraPermissionsES,
 		rightArrow: RightArrow,
-		unfollow: Unfollow
-	}
+		unfollow: Unfollow,
+		boostX2: Boostx2,
+		boostX3: Boostx3,
+		boostX5: Boostx5,
+		boostX10: Boostx10,
+	},
 };
 
 export default images;

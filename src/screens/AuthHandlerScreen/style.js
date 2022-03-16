@@ -5,7 +5,8 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 export default styles = StyleSheet.create({
     sfvContainer: {
         flex: 1,
-        backgroundColor: '#0D1021'
+        backgroundColor: '#0D1021',
+        paddingBottom: 0
     },
     closeBackIcon: {
         marginLeft: 16,
@@ -14,6 +15,7 @@ export default styles = StyleSheet.create({
         width: 48
     },
     mainContainer: {
+        flex: 1,
         alignItems: 'center'
     },
     qaplaLogo: {
@@ -23,15 +25,16 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(8.27),
     },
     card: {
-        height: heightPercentageToPx(100),
+        flex: 1,
+        justifyContent: 'space-around',
         width: widthPercentageToPx(100),
-        marginTop: 48,
-        paddingBottom: heightPercentageToPx(35),
+        marginTop: 32,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         alignItems: 'center'
     },
     titleAndDescriptionContainer: {
+        marginTop: 32,
         width: widthPercentageToPx(100),
         alignItems: 'center',
         justifyContent: 'center'
@@ -55,7 +58,7 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         alignContent: 'center',
         justifyContent: 'center',
-        marginBottom: 24
+        marginBottom: 32
     },
     emailButton: {
         marginRight: 12,
@@ -118,8 +121,7 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     dotStepsContainer: {
-        position: 'absolute',
-        top: heightPercentageToPx(65),
+        marginBottom: 24,
         flexDirection: 'row',
         alignSelf: 'center',
         height: heightPercentageToPx(1.2)

@@ -373,7 +373,7 @@
             "signInWithEmail": "Inicia sesión con correo",
             "createUsername": "Crea tu nombre de usuario"
         },
-        "buttonsCarrousel":{
+        "buttonsCarrousel": {
             "createAccount": "Crear mi cuenta",
             "continueWithApple": "Continuar con Apple",
             "alreadyHaveAccount": "Ya tengo cuenta",
@@ -585,5 +585,17 @@
     },
     "streamerCard": {
         "viewMore": "Ver más"
+    },
+    "qlan": {
+        "myQlan": "Mi Qlan",
+        "joinQlan": "¡Únete a un Qlan!",
+        "useCode": "Usa el Código de Qreador de tu streamer fav",
+        "typeQreatorCode": "Ingresa un Código de Qreador",
+        "joinQlanButton": "Unirme al Qlan",
+        "youJoinedP1": "Te has unido al Qlan de",
+        "youJoinedP2": "",
+        "youWillReceive": "Recibirás 200 Qoins en tus siguientes 3 directos de Qapla 🌱 ",
+        "backToProfile": "Volver a mi perfil",
+        "update": "Actualizar"
     }
 }

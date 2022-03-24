@@ -94,6 +94,7 @@ import CameraPermissions from './icons/CameraPermissions.svg';
 import CameraPermissionsES from './icons/CameraPermissionsES.svg';
 import RightArrow from './icons/RightArrow.svg';
 import Unfollow from './icons/Unfollow.svg';
+import EditQlan from './icons/EditQlan.svg';
 
 // Images
 
@@ -271,7 +272,19 @@ const images = {
 		notEnoughQoins: {
 			img: require('./images/NotEnoughQoins.png'),
 			uri: '@assets/images/NotEnoughQoins.png'
-		}
+		},
+		qlanProfile: {
+			img: require('./images/qlanProfile.png'),
+			uri: '@assets/images/qlanProfile.png'
+		},
+		checkCircleGlow: {
+			img: require('./icons/CheckCircleGlow.png'),
+			uri: '@assets/icons/CheckCircleGlow.png'
+		},
+		joinQlanGlow: {
+			img: require('./icons/JoinQlanGlow.png'),
+			uri: '@assets/icons/JoinQlanGlow.png'
+		},
 	},
 	svg: {
 		facebookIcon: FacebookIcon,
@@ -367,8 +380,9 @@ const images = {
 		cameraPermissions: CameraPermissions,
 		CameraPermissionsES: CameraPermissionsES,
 		rightArrow: RightArrow,
-		unfollow: Unfollow
-	}
+		unfollow: Unfollow,
+		editQlan: EditQlan,
+	},
 };
 
 export default images;

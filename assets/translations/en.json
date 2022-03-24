@@ -373,7 +373,7 @@
             "signInWithEmail": "Sign in with your email",
             "createUsername": "Create your username"
         },
-        "buttonsCarrousel":{
+        "buttonsCarrousel": {
             "createAccount": "Create my account",
             "continueWithApple": "Continue with Apple",
             "alreadyHaveAccount": "I already have an account",
@@ -581,5 +581,17 @@
     },
     "streamerCard": {
         "viewMore": "View more"
+    },
+    "qlan": {
+        "myQlan": "My Qlan",
+        "joinQlan": "Join a Qlan!",
+        "useCode": "Use the Qreator Code of your fav streamer",
+        "typeQreatorCode": "Ingresa un Código de Qreator",
+        "joinQlanButton": "Enter a Qreator Code",
+        "youJoinedP1": "You have joined",
+        "youJoinedP2": "'s Qlan",
+        "backToProfile": "Go back to my profile",
+        "youWillReceive": "You will receive 200 Qoins in your next 3 Qapla streams 🌱",
+        "update": "Update"
     }
 }

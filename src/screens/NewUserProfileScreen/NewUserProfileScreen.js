@@ -67,9 +67,7 @@ export class NewUserProfileScreen extends Component {
         openSendCheersModal: false,
         userWantsToSendCheers: false,
         openLevelInformationModal: false,
-        openQlanJoinModal: false,
-        // qlan: 'feryfer',
-        // qlanImage: 'https://static-cdn.jtvnw.net/jtv_user_pictures/61a9ef93-445e-4e16-8758-63f4d949301f-profile_image-70x70.png',
+        openQlanJoinModal: false
     };
 
     componentWillMount() {
@@ -298,6 +296,14 @@ export class NewUserProfileScreen extends Component {
         console.log('update Qlan');
     }
 
+    openJoinQlanModal = () => {
+        if (this.props.twitchId && this.props.twitchUsername) {
+            this.setState({ openQlanJoinModal: true });
+        } else {
+            this.linkTwitchAccount();
+        }
+    }
+
     render() {
         const userLevel = this.props.qaplaLevels ? this.getUserSeasonLevel() : 0;
         const userQoins = isNaN(this.props.userQoins - this.state.qoinsToDonate) ? 0 : this.props.userQoins - this.state.qoinsToDonate;
@@ -318,10 +324,7 @@ export class NewUserProfileScreen extends Component {
                     toggleTooltip={this.toggleRewardTooltip}
                     openedTooltips={this.state.openedTooltips}
                     tooltipButtonAction={this.tooltipAction}>
-                    <ScrollView
-                        ref={(scrollView) => this.scrollView = scrollView}
-                        onScrollEndDrag={this.scrollCollapsable}
-                        onScroll={this.setLastScrollPosition}>
+                    <ScrollView>
                         <Animated.View style={{ flex: 1 }}>
                             <View style={styles.profileDetailsContainer}>
                                 <View style={styles.qoinsView}>
@@ -438,8 +441,8 @@ export class NewUserProfileScreen extends Component {
                             <QaplaText style={[styles.storeTitle, styles.myQlanTitle]}>
                                 {translate('qlan.myQlan')}
                             </QaplaText>
-                            {!this.state.qlan &&
-                                <TouchableWithoutFeedback onPress={() => this.setState({ openQlanJoinModal: true })}>
+                            {!this.props.qlanId &&
+                                <TouchableWithoutFeedback onPress={this.openJoinQlanModal}>
                                     <View style={styles.myQlanContainer}>
                                         <Image source={images.png.joinQlanGlow.img} style={styles.joinQlanIcon} />
                                         <Text style={styles.joinQlanTitle}>{translate('qlan.joinQlan')}</Text>
@@ -447,29 +450,29 @@ export class NewUserProfileScreen extends Component {
                                     </View>
                                 </TouchableWithoutFeedback>
                             }
-                            {this.state.qlan && this.state.qlanImage &&
+                            {this.props.qlanId && this.state.qlanImage &&
                                 <>
                                     <View style={styles.myQlanJoinedContainer}>
-                                        <ImageBackground source={images.png.qlanProfile.img} style={styles.myQlanImageContainer} >
+                                        <ImageBackground source={images.png.qlanProfile.img} style={styles.myQlanImageContainer}>
                                             <Image source={{ uri: this.state.qlanImage }} style={styles.myQlanImage} />
-                                            <Text style={styles.myQlanText}>{this.state.qlan}</Text>
+                                            <Text style={styles.myQlanText}>
+                                                {this.props.qlanId}
+                                            </Text>
                                         </ImageBackground>
                                     </View>
                                     <View style={styles.updateContainer}>
-                                        <TouchableOpacity style={{
-                                        }} onPress={() => console.log('edit')}>
+                                        <TouchableOpacity onPress={() => console.log('edit')}>
                                             <View style={styles.updateInnerContainer}>
-                                                <View style={styles.updateIconContainer} >
+                                                <View style={styles.updateIconContainer}>
                                                     <images.svg.editQlan />
                                                 </View>
-                                                <MaskedView maskElement={<Text style={styles.updateText}>{translate('qlan.update')}</Text>} style={{ alignContent: 'center' }} >
+                                                <MaskedView maskElement={<Text style={styles.updateText}>{translate('qlan.update')}</Text>} style={{ alignContent: 'center' }}>
                                                     <LinearGradient
                                                         colors={['#FFCAFA', '#A1FFFF', '#AFFFE2']}
                                                         start={{ x: 0, y: 0 }}
                                                         end={{ x: 1, y: 1 }}
                                                         useAngle
-                                                        angle={90}
-                                                    >
+                                                        angle={90}>
                                                         <Text style={[styles.updateText, styles.invisible]}>{translate('qlan.update')}</Text>
                                                     </LinearGradient>
                                                 </MaskedView>
@@ -477,7 +480,6 @@ export class NewUserProfileScreen extends Component {
                                         </TouchableOpacity>
                                     </View>
                                 </>
-
                             }
                         </View>
                         <View style={[styles.donationNavigatorContainer, { height: this.state.collapsableToolBarMaxHeight }]}>
@@ -487,8 +489,10 @@ export class NewUserProfileScreen extends Component {
                             <RewardsStore />
                         </View>
                     </ScrollView>
-                </RewardsBottomSheet >
-                <JoinQlanModal
+                </RewardsBottomSheet>
+                <JoinQlanModal uid={this.props.uid}
+                    userName={this.props.userName}
+                    twitchUsername={this.props.twitchUsername}
                     open={this.state.openQlanJoinModal}
                     onClose={() => this.setState({ openQlanJoinModal: false })}
                 />
@@ -531,6 +535,7 @@ function mapStateToProps(state) {
             twitchId: state.userReducer.user.twitchId,
             twitchUsername: state.userReducer.user.twitchUsername,
             userName: state.userReducer.user.userName,
+            qlanId: state.userReducer.user.qlanId,
             qaplaLevels: state.qaplaLevelReducer.levels
         }
     }

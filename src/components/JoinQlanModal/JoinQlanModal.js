@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { View, Modal, Image, TouchableWithoutFeedback, Text, TextInput, TouchableHighlight } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
-import { getLocaleLanguage, translate } from '../../utilities/i18';
+import { translate } from '../../utilities/i18';
 
 import images from '../../../assets/images';
 
 import styles from './style';
+import { getQlanIdWithQreatorCode, subscribeUserToQlan } from '../../services/database';
 
 class JoinQlanModal extends Component {
-
     state = {
         code: '',
         joinedQlan: false,
@@ -17,10 +17,13 @@ class JoinQlanModal extends Component {
         qlanImage: '',
     }
 
-    joinQlanHandler = () => {
-        console.log(this.state.code);
-        // this.setState({ joinedQlan: true, streamerUsername: 'feryfer', qlan: 'feryfer', qlanImage: 'https://static-cdn.jtvnw.net/jtv_user_pictures/61a9ef93-445e-4e16-8758-63f4d949301f-profile_image-70x70.png' });
-        this.setState({ joinedQlan: true, streamerUsername: 'feryfer' });
+    joinQlanHandler = async () => {
+        const qlanId = await getQlanIdWithQreatorCode(this.state.code);
+
+        if (qlanId) {
+            await subscribeUserToQlan(this.props.uid, qlanId, this.props.userName, this.props.twitchUsername);
+            this.setState({ joinedQlan: true });
+        }
     }
 
     render() {
@@ -29,8 +32,7 @@ class JoinQlanModal extends Component {
                 visible={this.props.open}
                 animationType="slide"
                 transparent={true}
-                onRequestClose={this.props.onClose}
-            >
+                onRequestClose={this.props.onClose}>
                 <TouchableWithoutFeedback onPress={this.props.onClose}>
                     <View style={styles.mainContainer}>
                         <BlurView
@@ -74,8 +76,7 @@ class JoinQlanModal extends Component {
                                 <TouchableHighlight
                                     style={styles.button}
                                     onPress={this.state.joinedQlan ? this.props.onClose : this.joinQlanHandler}
-                                    underlayColor="#2934ae"
-                                >
+                                    underlayColor="#2934ae">
                                     <Text style={styles.textButton}>{this.state.joinedQlan ? translate('qlan.backToProfile') : translate('qlan.joinQlanButton')}</Text>
                                 </TouchableHighlight>
                             </View>

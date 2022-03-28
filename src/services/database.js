@@ -44,6 +44,8 @@ const qaplaLevelsRequirementsRef = database.ref('QaplaLevelsRequirements');
 const streamersPublicProfilesRef = database.ref('/StreamersPublicProfiles');
 const streamerLinksRef = database.ref('/StreamerLinks');
 const userToStreamerSubscriptionsRef = database.ref('/UserToStreamerSubscriptions');
+const qreatorsCodesRef = database.ref('/QreatorsCodes');
+const qlanesRef = database.ref('/Qlanes');
 
 /**
  * Returns the userName of the specified user
@@ -1546,4 +1548,47 @@ export async function unsubscribeUserToStreamerProfile(uid, streamerId) {
  */
 export async function listenToUserToStreamersSubscriptions(uid, callback) {
     return userToStreamerSubscriptionsRef.child(uid).on('value', callback);
+}
+
+// -----------------------------------------------
+// Qreators codes
+// -----------------------------------------------
+
+/**
+ * Returns the id of the Qlan based on the Qreator code
+ * @param {string} qreatorCode Unique code to join a Qlan
+ */
+export async function getQlanIdWithQreatorCode(qreatorCode) {
+    let id = '';
+
+    const codes = await qreatorsCodesRef.orderByChild('code').equalTo(qreatorCode).once('value');
+
+    /**
+     * We know this query will return a maximum of one code, however firebase returns an object of objects
+     * so we need to go through it to get the code
+     */
+    codes.forEach((code) => id = code.key);
+
+    return id;
+}
+
+// -----------------------------------------------
+// Qlanes
+// -----------------------------------------------
+
+/**
+ * Subscribes a user to the specified qlan
+ * @param {string} uid User identifier
+ * @param {string} qlanId Qlan identifier
+ * @param {string} username Qapla username
+ * @param {string} twitchUsername Twitch username
+ */
+export async function subscribeUserToQlan(uid, qlanId, username, twitchUsername) {
+    await usersRef.child(uid).update({ qlanId });
+    await qlanesRef.child(qlanId).child(uid).update({
+        active: true,
+        memberSince: (new Date()).getTime(),
+        username,
+        twitchUsername
+    });
 }

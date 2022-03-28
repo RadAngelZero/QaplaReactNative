@@ -199,12 +199,6 @@ class AuthHandlerScreen extends Component {
     }
 
     goToCreateUsernameStep = () => {
-        this.texts.goToStep(3);
-        this.firstButtonBackgroundColor.goToStep(4);
-        this.secondButtonBackgroundColor.goToStep(4);
-        this.firstButton.goToStep(4);
-        this.secondButton.goToStep(4);
-        this.emailButton.stepForward();
         this.setState({ currentStep: 2 });
     }
 

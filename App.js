@@ -2,6 +2,7 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import NetInfo from '@react-native-community/netinfo';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import Router from './src/Router';
 import { notifications } from './src/utilities/firebase';
@@ -167,7 +168,7 @@ class App extends React.Component {
                 {this.state.updateRequired ?
                     <UpdateApp />
                 :
-                <>
+                <SafeAreaProvider>
                 	<Router forceNavigation={this.state.navigateTo} />
 	                <Snackbar
 	                    forceClose={this.state.closeSnackBar}
@@ -176,7 +177,7 @@ class App extends React.Component {
 	                    openAndCollapse={this.state.timerOnSnackBar}
 	                    action={this.state.snackbarAction}
 	                    actionMessage={this.state.snackbarActionMessage} />
-                </>
+                </SafeAreaProvider>
               }
           </>
         )

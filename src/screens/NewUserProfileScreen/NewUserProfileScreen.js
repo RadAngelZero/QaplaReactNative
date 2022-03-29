@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, ScrollView, View, Image, Animated, TouchableOpacity, TouchableWithoutFeedback, Text, ImageBackground } from 'react-native';
+import { ActivityIndicator, SafeAreaView, ScrollView, View, Image, Animated, TouchableOpacity, TouchableWithoutFeedback, Text, ImageBackground } from 'react-native';
 import MaskedView from '@react-native-community/masked-view'
 import { connect } from 'react-redux';
 
@@ -14,7 +14,7 @@ import { isUserLogged } from '../../services/auth';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { getDonationQoinsBase } from '../../services/database';
+import { getDonationQoinsBase, getQlanData } from '../../services/database';
 import Colors from '../../utilities/Colors';
 import RewardsStore from '../../components/RewardsStore/RewardsStore';
 
@@ -67,21 +67,23 @@ export class NewUserProfileScreen extends Component {
         openSendCheersModal: false,
         userWantsToSendCheers: false,
         openLevelInformationModal: false,
-        openQlanJoinModal: false
+        openQlanJoinModal: false,
+        qlanData: {
+            image: null,
+            name: '',
+            fetching: false
+        }
     };
 
     componentWillMount() {
         this.list = [
-
-            /**
-             * This event is triggered when the user goes to other screen
-             */
             this.props.navigation.addListener(
                 'willFocus',
                 (payload) => {
                     if (!isUserLogged()) {
                         this.props.navigation.navigate('Auth');
                     } else {
+                        this.getUserQlanData();
                         recordScreenOnSegment('User Profile Screen');
                     }
                 }
@@ -96,8 +98,18 @@ export class NewUserProfileScreen extends Component {
     }
 
     componentWillUnmount() {
-        //Remove willBlur and willFocus listeners on navigation
+        //Remove navigation listeners
         this.list.forEach((item) => item.remove());
+    }
+
+    getUserQlanData = async () => {
+        if (this.props.qlanId) {
+            this.setState({ qlanData: { ...qlanData, fetching: true } });
+            const qlanData = await getQlanData(this.props.qlanId);
+            if (qlanData.exists()) {
+                this.setState({ qlanData: { ...qlanData.val(), fetching: false } });
+            }
+        }
     }
 
     /**
@@ -450,36 +462,40 @@ export class NewUserProfileScreen extends Component {
                                     </View>
                                 </TouchableWithoutFeedback>
                             }
-                            {this.props.qlanId && this.state.qlanImage &&
-                                <>
-                                    <View style={styles.myQlanJoinedContainer}>
-                                        <ImageBackground source={images.png.qlanProfile.img} style={styles.myQlanImageContainer}>
-                                            <Image source={{ uri: this.state.qlanImage }} style={styles.myQlanImage} />
-                                            <Text style={styles.myQlanText}>
-                                                {this.props.qlanId}
-                                            </Text>
-                                        </ImageBackground>
-                                    </View>
-                                    <View style={styles.updateContainer}>
-                                        <TouchableOpacity onPress={() => console.log('edit')}>
-                                            <View style={styles.updateInnerContainer}>
-                                                <View style={styles.updateIconContainer}>
-                                                    <images.svg.editQlan />
+                            {this.props.qlanId &&
+                                (this.state.qlanData.fetching ?
+                                    <ActivityIndicator size='large' color={Colors.greenQapla} />
+                                    :
+                                    <>
+                                        <View style={styles.myQlanJoinedContainer}>
+                                            <ImageBackground source={images.png.qlanProfile.img} style={styles.myQlanImageContainer}>
+                                                <Image source={this.state.qlanData.image ? { uri: this.state.qlanData.image } : null} style={styles.myQlanImage} />
+                                                <Text style={styles.myQlanText}>
+                                                    {this.state.qlanData.name}
+                                                </Text>
+                                            </ImageBackground>
+                                        </View>
+                                        <View style={styles.updateContainer}>
+                                            <TouchableOpacity onPress={() => console.log('edit')}>
+                                                <View style={styles.updateInnerContainer}>
+                                                    <View style={styles.updateIconContainer}>
+                                                        <images.svg.editQlan />
+                                                    </View>
+                                                    <MaskedView maskElement={<Text style={styles.updateText}>{translate('qlan.update')}</Text>} style={{ alignContent: 'center' }}>
+                                                        <LinearGradient
+                                                            colors={['#FFCAFA', '#A1FFFF', '#AFFFE2']}
+                                                            start={{ x: 0, y: 0 }}
+                                                            end={{ x: 1, y: 1 }}
+                                                            useAngle
+                                                            angle={90}>
+                                                            <Text style={[styles.updateText, styles.invisible]}>{translate('qlan.update')}</Text>
+                                                        </LinearGradient>
+                                                    </MaskedView>
                                                 </View>
-                                                <MaskedView maskElement={<Text style={styles.updateText}>{translate('qlan.update')}</Text>} style={{ alignContent: 'center' }}>
-                                                    <LinearGradient
-                                                        colors={['#FFCAFA', '#A1FFFF', '#AFFFE2']}
-                                                        start={{ x: 0, y: 0 }}
-                                                        end={{ x: 1, y: 1 }}
-                                                        useAngle
-                                                        angle={90}>
-                                                        <Text style={[styles.updateText, styles.invisible]}>{translate('qlan.update')}</Text>
-                                                    </LinearGradient>
-                                                </MaskedView>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </View>
-                                </>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </>
+                                    )
                             }
                         </View>
                         <View style={[styles.donationNavigatorContainer, { height: this.state.collapsableToolBarMaxHeight }]}>

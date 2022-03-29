@@ -45,6 +45,7 @@ const streamersPublicProfilesRef = database.ref('/StreamersPublicProfiles');
 const streamerLinksRef = database.ref('/StreamerLinks');
 const userToStreamerSubscriptionsRef = database.ref('/UserToStreamerSubscriptions');
 const qreatorsCodesRef = database.ref('/QreatorsCodes');
+const qlanesMembersRef = database.ref('/QlanesMembers');
 const qlanesRef = database.ref('/Qlanes');
 
 /**
@@ -1577,6 +1578,14 @@ export async function getQlanIdWithQreatorCode(qreatorCode) {
 // -----------------------------------------------
 
 /**
+ * Gets the public information (i.e: image, name) of the given Qlan
+ * @param {string} qlanId Qlan identifier
+ */
+export async function getQlanData(qlanId) {
+    return await qlanesRef.child(qlanId).once('value');
+}
+
+/**
  * Subscribes a user to the specified qlan
  * @param {string} uid User identifier
  * @param {string} qlanId Qlan identifier
@@ -1585,7 +1594,7 @@ export async function getQlanIdWithQreatorCode(qreatorCode) {
  */
 export async function subscribeUserToQlan(uid, qlanId, username, twitchUsername) {
     await usersRef.child(uid).update({ qlanId });
-    await qlanesRef.child(qlanId).child(uid).update({
+    await qlanesMembersRef.child(qlanId).child(uid).update({
         active: true,
         memberSince: (new Date()).getTime(),
         username,

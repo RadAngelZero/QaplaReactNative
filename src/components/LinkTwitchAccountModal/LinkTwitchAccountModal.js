@@ -47,11 +47,6 @@ class LinkTwitchAccountModal extends Component {
                     {!this.state.showDontLinkWarning &&
                         <>
                             <View style={styles.linkOptions}>
-                                <QaplaIcon
-                                    touchableStyle={styles.closeIcon}
-                                    onPress={this.props.onClose}>
-                                    <images.svg.closeThiccIcon />
-                                </QaplaIcon>
                                 <TouchableOpacity style={styles.skipButtonContainer}
                                     onPress={() => this.setState({ showDontLinkWarning: true })}>
                                     <Text style={styles.skipButtonText}>
@@ -64,16 +59,18 @@ class LinkTwitchAccountModal extends Component {
                     }
                     {this.state.showDontLinkWarning &&
                         <>
-                            <QaplaIcon
-                            touchableStyle={styles.closeIcon}
-                            onPress={() => this.setState({ showDontLinkWarning: false })}>
-                                <images.svg.leftArrowThiccIcon />
-                            </QaplaIcon>
+                            <View style={styles.backButtonContainer}>
+                                <QaplaIcon
+                                    touchableStyle={styles.closeIcon}
+                                    onPress={() => this.setState({ showDontLinkWarning: false })}>
+                                    <images.svg.leftArrowThiccIcon />
+                                </QaplaIcon>
+                            </View>
                             <SkipLinkTwitchAccount onSkipTwitchLink={this.onSkipTwitchLink} />
                         </>
                     }
                 </View>
-            </Modal>
+            </Modal >
         );
     }
 }

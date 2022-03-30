@@ -371,7 +371,9 @@
             "welcomeBackMessage": "¡Bienvenido de vuelta! Te extrañamos :v",
             "createAccountWithEmail": "Crea tu cuenta con correo",
             "signInWithEmail": "Inicia sesión con correo",
-            "createUsername": "Crea tu nombre de usuario"
+            "createUsername": "Crea tu nombre de usuario",
+            "haveQreatorQode": "¿Tienes un Código de Qreador?",
+            "getCustomAlerts": "Recibe 3 alertas personalizadas en tus primeros 3 directos Qapla 🌱 con tu código de Qreador"
         },
         "buttonsCarrousel": {
             "createAccount": "Crear mi cuenta",
@@ -380,7 +382,10 @@
             "continueWithGoogle": "Continuar con Google",
             "continue": "Continuar",
             "validatingUsername": "Validando username...",
-            "iamReady": "¡Estoy listo!"
+            "iamReady": "¡Estoy listo!",
+            "joinQlan": "Unirme al Qlan",
+            "joiningQlan": "Uniendose al Qlan",
+            "goToFirstStream": "Ir a mi primer stream"
         }
     },
     "headerBar": {

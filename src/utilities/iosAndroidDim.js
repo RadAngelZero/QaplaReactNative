@@ -24,15 +24,6 @@ function getScreenDimensions() {
   return Dimensions.get('screen');
 }
 
-function getScreenHeight() {
-  return Dimensions.get('screen').height;
-}
-
-function getScreenWidth() {
-  return Dimensions.get('screen').width;
-}
-
-
 function isIphoneX() {
   const dim = Dimensions.get('window');
   
@@ -103,7 +94,5 @@ export {
   getPixelSizeForLayoutSize,
   isIOSDevice,
   getScreenSizeMultiplier,
-  getScreenHeight,
-  getScreenWidth,
   getScreenDimensions,
 };

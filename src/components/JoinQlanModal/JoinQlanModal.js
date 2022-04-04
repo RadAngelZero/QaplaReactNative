@@ -59,7 +59,7 @@ class JoinQlanModal extends Component {
                                                 style={styles.textInputText}
                                                 placeholder="Q-APLITA"
                                                 placeholderTextColor="#6C5DD3"
-                                            />
+                                                onSubmitEditing={this.joinQlanHandler} />
                                         </View>
                                     </>
                                 }

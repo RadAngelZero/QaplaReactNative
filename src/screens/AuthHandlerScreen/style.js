@@ -11,7 +11,7 @@ export default styles = StyleSheet.create({
     },
     closeBackIcon: {
         marginHorizontal: widthPercentageToPx(getPercentWidth(16)),
-        marginTop: heightPercentageToPx(getPercentHeight(28)),
+        marginTop: heightPercentageToPx(getPercentHeight(28))
     },
     mainContainer: {
         flex: 1,
@@ -128,9 +128,9 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(getPercentHeight(8)),
     },
     skipButtonContainer: {
-        position: 'absolute',
-        top: heightPercentageToPx(getPercentHeight(55)),
-        right: widthPercentageToPx(getPercentWidth(24)),
+        marginTop: heightPercentageToPx(getPercentHeight(28)),
+        marginHorizontal: widthPercentageToPx(getPercentWidth(16)),
+        alignSelf: 'flex-end',
         borderRadius: 100,
         backgroundColor: 'rgba(64, 64, 255, 0.3)',
         height: heightPercentageToPx(getPercentHeight(40)),

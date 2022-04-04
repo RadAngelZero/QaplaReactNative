@@ -66,6 +66,7 @@ export class NewUserProfileScreen extends Component {
         openLinkWitTwitchModal: false,
         openSendCheersModal: false,
         userWantsToSendCheers: false,
+        userWantsToJoinAQlan: false,
         openLevelInformationModal: false,
         openQlanJoinModal: false,
         qlanData: {
@@ -309,6 +310,7 @@ export class NewUserProfileScreen extends Component {
     }
 
     openJoinQlanModal = () => {
+        this.setState({ userWantsToJoinAQlan: true });
         if (this.props.twitchId && this.props.twitchUsername) {
             this.setState({ openQlanJoinModal: true });
         } else {
@@ -511,14 +513,14 @@ export class NewUserProfileScreen extends Component {
                     twitchUsername={this.props.twitchUsername}
                     open={this.state.openQlanJoinModal}
                     onClose={() => this.setState({ openQlanJoinModal: false })}
-                />
+                    onSuccess={this.getUserQlanData} />
                 <ZeroQoinsEventsModal
                     open={this.state.openDonationFeedbackModal}
                     onClose={() => this.setState({ openDonationFeedbackModal: false })} />
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}
                     onClose={() => this.setState({ openLinkWitTwitchModal: false })}
-                    onLinkSuccessful={this.state.userWantsToSendCheers ? this.exchangeQaploins : null} />
+                    onLinkSuccessful={this.state.userWantsToSendCheers ? this.exchangeQaploins : (this.state.userWantsToJoinAQlan ? this.openJoinQlanModal : null)} />
                 <SendCheersModal
                     open={this.state.openSendCheersModal}
                     onClose={() => this.setState({ openSendCheersModal: false, qoinsToDonate: 0 })}

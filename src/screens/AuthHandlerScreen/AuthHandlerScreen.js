@@ -45,6 +45,7 @@ class AuthHandlerScreen extends Component {
         keyboard: false,
         qlanCode: '',
         streamerUsername: '',
+        joiningQlan: false
     };
 
     componentDidMount() {
@@ -173,6 +174,8 @@ class AuthHandlerScreen extends Component {
         const userName = await getUserNameWithUID(this.state.uid);
         if (!userName) {
             this.goToCreateUsernameStep();
+        }  else if (this.state.currentStep === 3) {
+            this.setState({ joiningQlan: false, disabled: false });
         } else {
             return this.props.navigation.navigate(this.props.originScreen);
         }
@@ -229,15 +232,21 @@ class AuthHandlerScreen extends Component {
 
         const qlanId = await getQlanIdWithQreatorCode(this.state.qlanCode);
         if (qlanId) {
-            await subscribeUserToQlan(this.state.uid, qlanId, this.state.username, this.props.twitchUsername);
-            const qlanData = await getQlanData(qlanId);
+            if (this.props.twitchId) {
+                await subscribeUserToQlan(this.state.uid, qlanId, this.state.username, this.props.twitchUsername);
+                const qlanData = await getQlanData(qlanId);
 
-            this.setState({ currentStep: 4, streamerUsername: qlanData.val().name });
+                this.setState({ currentStep: 4, streamerUsername: qlanData.val().name, joiningQlan: false, disabled: false });
+            } else {
+                this.setState({ showLinkWitTwitchModal: true });
+            }
         } else {
-            this.setState({ joiningQlan: true, disabled: false });
+            this.setState({ joiningQlan: false, disabled: false });
             console.log('Invalid Qlan code');
         }
     }
+
+    finishProcess = () => { console.log('press'); this.props.navigation.navigate(this.props.originScreen);}
 
     openTermsModal = () => this.setState({ openTermsModal: true });
 
@@ -253,23 +262,24 @@ class AuthHandlerScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.sfvContainer}>
-                    <TouchableOpacity onPress={this.closeAndBackButton}>
-                        <View style={styles.closeBackIcon}>
-                            {!(this.state.currentStep === 3 || this.state.currentStep === 4) &&
-                                <>
+                    <View style={{ flexDirection: 'column' }}>
+                        {this.state.currentStep !== 3 && this.state.currentStep !== 4 &&
+                            <TouchableOpacity onPress={this.closeAndBackButton}>
+                                <View style={styles.closeBackIcon}>
                                     {this.state.screenIndex !== 0 ?
                                         <images.svg.backIcon />
                                         :
                                         <images.svg.closeIcon />
                                     }
-                                </>
-                            }
-                        </View>
-                    </TouchableOpacity>
-                    {this.state.currentStep === 3 &&
-                        <TouchableOpacity style={styles.skipButtonContainer}>
-                            <Text style={styles.skipButtonText}>{translate('linkTwitchAccount.skip')}</Text>
-                        </TouchableOpacity>}
+                                </View>
+                            </TouchableOpacity>
+                        }
+                        {this.state.currentStep === 3 &&
+                            <TouchableOpacity style={styles.skipButtonContainer} onPress={this.finishProcess}>
+                                <Text style={styles.skipButtonText}>{translate('linkTwitchAccount.skip')}</Text>
+                            </TouchableOpacity>
+                        }
+                    </View>
                     <View style={styles.mainContainer}>
                         {!(this.state.currentStep === 3 || this.state.currentStep === 4) &&
                             <Image source={images.png.qaplaSignupLogo2021.img}
@@ -366,7 +376,7 @@ class AuthHandlerScreen extends Component {
                                         <View style={styles.usernameContainer}>
                                             <QaplaTextInput onChangeText={(username) => this.setState({ username })}
                                                 value={this.state.username}
-                                                placeholder={this.state.currentStep === 3 ? 'Q-APLITA' : 'Username'}
+                                                placeholder='Username'
                                                 style={{ textAlign: 'center' }} />
                                         </View>
                                         {this.state.showUsernameErrorMessage &&
@@ -398,7 +408,7 @@ class AuthHandlerScreen extends Component {
                                             {/* translation pending */}
                                             {translate('authHandlerScreen.textsCarrousel.getCustomAlerts')}
                                         </Text>
-                                            <View style={styles.usernameContainer}>
+                                        <View style={styles.usernameContainer}>
                                             <QaplaTextInput onChangeText={(qlanCode) => this.setState({ qlanCode })}
                                                 value={this.state.qlanCode}
                                                 placeholder={'Q-APLITA'}
@@ -447,7 +457,8 @@ class AuthHandlerScreen extends Component {
                                                 </View>
                                             </TouchableOpacity>
                                         </>}
-                                    <TouchableOpacity onPress={this.handleSecondButtonPress} disabled={this.props.disabled}>
+                                    <TouchableOpacity onPress={this.handleSecondButtonPress}
+                                        disabled={this.state.disabled}>
                                         <View style={[styles.button, {
                                             backgroundColor: this.state.currentStep === -1 ? '#3B4BF9' : (this.state.currentStep === 0 ? '#FFF' : '#00FFDD'),
                                             marginTop: this.state.currentStep === 3
@@ -537,7 +548,8 @@ class AuthHandlerScreen extends Component {
                     </View>
                     <LinkTwitchAccountModal
                         open={this.state.showLinkWitTwitchModal}
-                        onClose={this.closeTwitchLinkModal} />
+                        onClose={this.closeTwitchLinkModal}
+                        onLinkSuccessful={this.handleQlan} />
                 </ScrollView>
             </SafeAreaView>
         );
@@ -546,7 +558,9 @@ class AuthHandlerScreen extends Component {
 
 function mapDispatchToProps(state) {
     return {
-        originScreen: state.screensReducer.previousScreenId
+        originScreen: state.screensReducer.previousScreenId,
+        twitchId: state.userReducer.user.twitchId,
+        twitchUsername: state.userReducer.user.twitchUsername,
     };
 }
 

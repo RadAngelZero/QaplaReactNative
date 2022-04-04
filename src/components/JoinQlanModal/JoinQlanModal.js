@@ -6,7 +6,7 @@ import { translate } from '../../utilities/i18';
 import images from '../../../assets/images';
 
 import styles from './style';
-import { getQlanIdWithQreatorCode, subscribeUserToQlan } from '../../services/database';
+import { getQlanData, getQlanIdWithQreatorCode, subscribeUserToQlan } from '../../services/database';
 
 class JoinQlanModal extends Component {
     state = {
@@ -22,7 +22,10 @@ class JoinQlanModal extends Component {
 
         if (qlanId) {
             await subscribeUserToQlan(this.props.uid, qlanId, this.props.userName, this.props.twitchUsername);
-            this.setState({ joinedQlan: true });
+            const qlanData = await getQlanData(qlanId);
+
+            this.setState({ joinedQlan: true, streamerUsername: qlanData.val().name });
+            this.props.onSuccess();
         }
     }
 

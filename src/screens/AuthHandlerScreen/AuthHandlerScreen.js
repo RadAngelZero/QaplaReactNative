@@ -1,6 +1,5 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
-import { Animated, Easing, Image, ImageBackground, Keyboard, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, Keyboard, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
@@ -12,7 +11,7 @@ import { getPercentHeight, getPercentWidth, heightPercentageToPx, widthPercentag
 import styles from './style';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import { createAccountWitEmailAndPassword, setupGoogleSignin, signInWithApple, signInWithEmailAndPassword, signInWithGoogle } from '../../services/auth';
-import { createUserProfile, getUserNameWithUID, updateUserLoggedStatus, userHaveTwitchId, validateUserName } from '../../services/database';
+import { createUserProfile, getQlanData, getQlanIdWithQreatorCode, getUserNameWithUID, subscribeUserToQlan, updateUserLoggedStatus, userHaveTwitchId, validateUserName } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { translate } from '../../utilities/i18';
 import QaplaTextInput from '../QaplaTextInput/QaplaTextInput';
@@ -44,8 +43,11 @@ class AuthHandlerScreen extends Component {
         openTermsModal: false,
         openPrivacyModal: false,
         keyboard: false,
+        qlanCode: '',
         streamerUsername: '',
+        joiningQlan: false
     };
+
     componentDidMount() {
         setupGoogleSignin();
         Keyboard.addListener('keyboardDidShow', (e) => {
@@ -104,28 +106,38 @@ class AuthHandlerScreen extends Component {
     }
 
     handleSecondButtonPress = async () => {
-        if (this.state.currentStep === -1) {
-            this.goToHaveAccount();
-        } else if (this.state.currentStep === 0) {
-            this.setState({ hideEmailUI: true }, async () => {
-                try {
-                    const user = await signInWithGoogle();
-                    await this.succesfullSignIn(user);
-                } catch (error) {
-                    this.setState({ hideEmailUI: false });
-                }
-            });
-        } else if (this.state.currentStep === 1) {
-            this.authenticateWithEmail();
-        } else if (this.state.currentStep === 2) {
-            this.handleUsername();
-        } else if (this.state.currentStep === 3) {
-            this.handleQlan();
+        switch (this.state.currentStep) {
+            case -1:
+                this.goToHaveAccount();
+                break;
+            case 0:
+                this.setState({ hideEmailUI: true }, async () => {
+                    try {
+                        const user = await signInWithGoogle();
+                        await this.succesfullSignIn(user);
+                    } catch (error) {
+                        this.setState({ hideEmailUI: false });
+                    }
+                });
+                break;
+            case 1:
+                this.authenticateWithEmail();
+                break;
+            case 2:
+                this.handleUsername();
+                break;
+            case 3:
+                this.handleQlan();
+                break;
+            case 4:
+                return this.props.navigation.navigate(this.props.originScreen);
+            default:
+                break;
         }
     }
 
     goToCreateAccount = () => {
-        this.setState({ createAccountIsSelected: true, steps: 3 }, () => this.goToNextScreen());
+        this.setState({ createAccountIsSelected: true, steps: 5 }, () => this.goToNextScreen());
     }
 
     goToHaveAccount = () => {
@@ -162,6 +174,8 @@ class AuthHandlerScreen extends Component {
         const userName = await getUserNameWithUID(this.state.uid);
         if (!userName) {
             this.goToCreateUsernameStep();
+        }  else if (this.state.currentStep === 3) {
+            this.setState({ joiningQlan: false, disabled: false });
         } else {
             return this.props.navigation.navigate(this.props.originScreen);
         }
@@ -202,7 +216,7 @@ class AuthHandlerScreen extends Component {
                 if (this.state.username !== '' && await validateUserName(this.state.username)) {
                     await createUserProfile(this.state.uid, this.state.email, this.state.username);
 
-                    return this.props.navigation.navigate(this.props.originScreen);
+                    this.setState({ currentStep: 3 });
                 } else {
                     this.setState({
                         showUsernameErrorMessage: true,
@@ -213,14 +227,26 @@ class AuthHandlerScreen extends Component {
         }
     }
 
-    handleQlan = () => {
-        //handle qlan join
-        this.setState({ joiningQlan: true });
-        setTimeout(() => {
-            this.setState({ currentStep: 4, streamerUsername: 'feryfer' });
-        }, 2000);
-        console.log('qlan');
+    handleQlan = async () => {
+        this.setState({ joiningQlan: true, disabled: true });
+
+        const qlanId = await getQlanIdWithQreatorCode(this.state.qlanCode);
+        if (qlanId) {
+            if (this.props.twitchId) {
+                await subscribeUserToQlan(this.state.uid, qlanId, this.state.username, this.props.twitchUsername);
+                const qlanData = await getQlanData(qlanId);
+
+                this.setState({ currentStep: 4, streamerUsername: qlanData.val().name, joiningQlan: false, disabled: false });
+            } else {
+                this.setState({ showLinkWitTwitchModal: true });
+            }
+        } else {
+            this.setState({ joiningQlan: false, disabled: false });
+            console.log('Invalid Qlan code');
+        }
     }
+
+    finishProcess = () => { console.log('press'); this.props.navigation.navigate(this.props.originScreen);}
 
     openTermsModal = () => this.setState({ openTermsModal: true });
 
@@ -236,23 +262,24 @@ class AuthHandlerScreen extends Component {
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.sfvContainer}>
-                    <TouchableOpacity onPress={this.closeAndBackButton}>
-                        <View style={styles.closeBackIcon}>
-                            {!(this.state.currentStep === 3 || this.state.currentStep === 4) &&
-                                <>
+                    <View style={{ flexDirection: 'column' }}>
+                        {this.state.currentStep !== 3 && this.state.currentStep !== 4 &&
+                            <TouchableOpacity onPress={this.closeAndBackButton}>
+                                <View style={styles.closeBackIcon}>
                                     {this.state.screenIndex !== 0 ?
                                         <images.svg.backIcon />
                                         :
                                         <images.svg.closeIcon />
                                     }
-                                </>
-                            }
-                        </View>
-                    </TouchableOpacity>
-                    {this.state.currentStep === 3 &&
-                        <TouchableOpacity style={styles.skipButtonContainer}>
-                            <Text style={styles.skipButtonText}>{translate('linkTwitchAccount.skip')}</Text>
-                        </TouchableOpacity>}
+                                </View>
+                            </TouchableOpacity>
+                        }
+                        {this.state.currentStep === 3 &&
+                            <TouchableOpacity style={styles.skipButtonContainer} onPress={this.finishProcess}>
+                                <Text style={styles.skipButtonText}>{translate('linkTwitchAccount.skip')}</Text>
+                            </TouchableOpacity>
+                        }
+                    </View>
                     <View style={styles.mainContainer}>
                         {!(this.state.currentStep === 3 || this.state.currentStep === 4) &&
                             <Image source={images.png.qaplaSignupLogo2021.img}
@@ -344,45 +371,49 @@ class AuthHandlerScreen extends Component {
                                                 placeholder='Password' />
                                         </View>
                                     }
-                                    {(this.state.currentStep === 2 || this.state.currentStep === 3) &&
+                                    {this.state.currentStep === 2 &&
                                         <>
-                                            {this.state.currentStep === 3 &&
-                                                <Text style={styles.qlanSubtitle}>
-                                                    {/* translation pending */}
-                                                    {translate('authHandlerScreen.textsCarrousel.getCustomAlerts')}
-                                                </Text>
-                                            }
-                                            <View style={styles.usernameContainer}>
-                                                <QaplaTextInput onChangeText={(username) => this.setState({ username })}
-                                                    value={this.state.username}
-                                                    placeholder={this.state.currentStep === 3 ? 'Q-APLITA' : 'Username'}
-                                                    style={{ textAlign: 'center' }} />
+                                        <View style={styles.usernameContainer}>
+                                            <QaplaTextInput onChangeText={(username) => this.setState({ username })}
+                                                value={this.state.username}
+                                                placeholder='Username'
+                                                style={{ textAlign: 'center' }} />
+                                        </View>
+                                        {this.state.showUsernameErrorMessage &&
+                                            <View>
+                                                <QaplaText style={styles.errorMessage}>{translate('chooseUserNameScreen.userNameAlreadyTaken')}</QaplaText>
                                             </View>
-                                            {this.state.showUsernameErrorMessage &&
-                                                <View>
-                                                    <QaplaText style={styles.errorMessage}>{translate('chooseUserNameScreen.userNameAlreadyTaken')}</QaplaText>
-                                                </View>
-                                            }
-                                            {this.state.currentStep !== 3 &&
-                                                <>
-                                                    <QaplaText style={styles.termsAndConditionsText}>
-                                                        {`${translate('chooseUserNameScreen.bodyFirstPart')} `}
-                                                        <QaplaText style={styles.hyperlinkText} onPress={this.openTermsModal}>
-                                                            {translate('chooseUserNameScreen.termsAndConditions')}
-                                                        </QaplaText>
-                                                        {` ${translate('chooseUserNameScreen.bodySecondPart')} `}
-                                                        <QaplaText style={styles.hyperlinkText} onPress={this.openPrivacyModal}>
-                                                            {translate('chooseUserNameScreen.privacyPolicy')}
-                                                        </QaplaText>
-                                                    </QaplaText>
-                                                    <PrivacyModal
-                                                        open={this.state.openPrivacyModal}
-                                                        onClose={this.closePrivacyModal} />
-                                                    <TermsAndConditionsModal
-                                                        open={this.state.openTermsModal}
-                                                        onClose={this.closeTermsAndConditionsModal} />
-                                                </>
-                                            }
+                                        }
+                                        <QaplaText style={styles.termsAndConditionsText}>
+                                            {`${translate('chooseUserNameScreen.bodyFirstPart')} `}
+                                            <QaplaText style={styles.hyperlinkText} onPress={this.openTermsModal}>
+                                                {translate('chooseUserNameScreen.termsAndConditions')}
+                                            </QaplaText>
+                                            {` ${translate('chooseUserNameScreen.bodySecondPart')} `}
+                                            <QaplaText style={styles.hyperlinkText} onPress={this.openPrivacyModal}>
+                                                {translate('chooseUserNameScreen.privacyPolicy')}
+                                            </QaplaText>
+                                        </QaplaText>
+                                        <PrivacyModal
+                                            open={this.state.openPrivacyModal}
+                                            onClose={this.closePrivacyModal} />
+                                        <TermsAndConditionsModal
+                                            open={this.state.openTermsModal}
+                                            onClose={this.closeTermsAndConditionsModal} />
+                                        </>
+                                    }
+                                    {this.state.currentStep === 3 &&
+                                        <>
+                                        <Text style={styles.qlanSubtitle}>
+                                            {/* translation pending */}
+                                            {translate('authHandlerScreen.textsCarrousel.getCustomAlerts')}
+                                        </Text>
+                                        <View style={styles.usernameContainer}>
+                                            <QaplaTextInput onChangeText={(qlanCode) => this.setState({ qlanCode })}
+                                                value={this.state.qlanCode}
+                                                placeholder={'Q-APLITA'}
+                                                style={{ textAlign: 'center' }} />
+                                        </View>
                                         </>
                                     }
                                 </View>
@@ -426,7 +457,8 @@ class AuthHandlerScreen extends Component {
                                                 </View>
                                             </TouchableOpacity>
                                         </>}
-                                    <TouchableOpacity onPress={this.handleSecondButtonPress} disabled={this.props.disabled}>
+                                    <TouchableOpacity onPress={this.handleSecondButtonPress}
+                                        disabled={this.state.disabled}>
                                         <View style={[styles.button, {
                                             backgroundColor: this.state.currentStep === -1 ? '#3B4BF9' : (this.state.currentStep === 0 ? '#FFF' : '#00FFDD'),
                                             marginTop: this.state.currentStep === 3
@@ -516,7 +548,8 @@ class AuthHandlerScreen extends Component {
                     </View>
                     <LinkTwitchAccountModal
                         open={this.state.showLinkWitTwitchModal}
-                        onClose={this.closeTwitchLinkModal} />
+                        onClose={this.closeTwitchLinkModal}
+                        onLinkSuccessful={this.handleQlan} />
                 </ScrollView>
             </SafeAreaView>
         );
@@ -525,7 +558,9 @@ class AuthHandlerScreen extends Component {
 
 function mapDispatchToProps(state) {
     return {
-        originScreen: state.screensReducer.previousScreenId
+        originScreen: state.screensReducer.previousScreenId,
+        twitchId: state.userReducer.user.twitchId,
+        twitchUsername: state.userReducer.user.twitchUsername,
     };
 }
 

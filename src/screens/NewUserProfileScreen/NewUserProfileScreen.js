@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { SafeAreaView, ScrollView, View, Image, Animated, TouchableOpacity, Text } from 'react-native';
+import { ActivityIndicator, SafeAreaView, ScrollView, View, Image, Animated, TouchableOpacity, TouchableWithoutFeedback, Text, ImageBackground } from 'react-native';
+import MaskedView from '@react-native-community/masked-view'
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -13,7 +14,7 @@ import { isUserLogged } from '../../services/auth';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { getDonationQoinsBase } from '../../services/database';
+import { getDonationQoinsBase, getQlanData } from '../../services/database';
 import Colors from '../../utilities/Colors';
 import RewardsStore from '../../components/RewardsStore/RewardsStore';
 
@@ -28,6 +29,8 @@ import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/Link
 import SendCheersModal from '../../components/SendCheersModal/SendCheersModal';
 import LevelInformationModal from '../../components/LevelInformationModal/LevelInformationModal';
 import { getLevels } from '../../actions/QaplaLevelActions';
+import JoinQlanModal from '../../components/JoinQlanModal/JoinQlanModal';
+import LinearGradient from 'react-native-linear-gradient';
 
 const BitsIcon = images.svg.bitsIcon;
 
@@ -63,21 +66,25 @@ export class NewUserProfileScreen extends Component {
         openLinkWitTwitchModal: false,
         openSendCheersModal: false,
         userWantsToSendCheers: false,
-        openLevelInformationModal: false
+        userWantsToJoinAQlan: false,
+        openLevelInformationModal: false,
+        openQlanJoinModal: false,
+        qlanData: {
+            image: null,
+            name: '',
+            fetching: false
+        }
     };
 
     componentWillMount() {
         this.list = [
-
-            /**
-             * This event is triggered when the user goes to other screen
-             */
             this.props.navigation.addListener(
                 'willFocus',
                 (payload) => {
                     if (!isUserLogged()) {
                         this.props.navigation.navigate('Auth');
                     } else {
+                        this.getUserQlanData();
                         recordScreenOnSegment('User Profile Screen');
                     }
                 }
@@ -92,8 +99,18 @@ export class NewUserProfileScreen extends Component {
     }
 
     componentWillUnmount() {
-        //Remove willBlur and willFocus listeners on navigation
+        //Remove navigation listeners
         this.list.forEach((item) => item.remove());
+    }
+
+    getUserQlanData = async () => {
+        if (this.props.qlanId) {
+            this.setState({ qlanData: { ...qlanData, fetching: true } });
+            const qlanData = await getQlanData(this.props.qlanId);
+            if (qlanData.exists()) {
+                this.setState({ qlanData: { ...qlanData.val(), fetching: false } });
+            }
+        }
     }
 
     /**
@@ -288,6 +305,19 @@ export class NewUserProfileScreen extends Component {
         return 0;
     }
 
+    updateQlanHandler = () => {
+        console.log('update Qlan');
+    }
+
+    openJoinQlanModal = () => {
+        this.setState({ userWantsToJoinAQlan: true });
+        if (this.props.twitchId && this.props.twitchUsername) {
+            this.setState({ openQlanJoinModal: true });
+        } else {
+            this.linkTwitchAccount();
+        }
+    }
+
     render() {
         const userLevel = this.props.qaplaLevels ? this.getUserSeasonLevel() : 0;
         const userQoins = isNaN(this.props.userQoins - this.state.qoinsToDonate) ? 0 : this.props.userQoins - this.state.qoinsToDonate;
@@ -308,10 +338,7 @@ export class NewUserProfileScreen extends Component {
                     toggleTooltip={this.toggleRewardTooltip}
                     openedTooltips={this.state.openedTooltips}
                     tooltipButtonAction={this.tooltipAction}>
-                    <ScrollView
-                        ref={(scrollView) => this.scrollView = scrollView}
-                        onScrollEndDrag={this.scrollCollapsable}
-                        onScroll={this.setLastScrollPosition}>
+                    <ScrollView>
                         <Animated.View style={{ flex: 1 }}>
                             <View style={styles.profileDetailsContainer}>
                                 <View style={styles.qoinsView}>
@@ -414,9 +441,9 @@ export class NewUserProfileScreen extends Component {
                                             {this.props.lastSeasonLevel ?
                                                 LastSeasonLevelIcon ?
                                                     <LastSeasonLevelIcon />
-                                                :
+                                                    :
                                                     <DefaultSeasonLevelIcon />
-                                            :
+                                                :
                                                 <DefaultSeasonLevelIcon />
                                             }
                                         </View>
@@ -424,6 +451,55 @@ export class NewUserProfileScreen extends Component {
                                 </View>
                             </View>
                         </Animated.View>
+                        <View>
+                            <QaplaText style={[styles.storeTitle, styles.myQlanTitle]}>
+                                {translate('qlan.myQlan')}
+                            </QaplaText>
+                            {!this.props.qlanId &&
+                                <TouchableWithoutFeedback onPress={this.openJoinQlanModal}>
+                                    <View style={styles.myQlanContainer}>
+                                        <Image source={images.png.joinQlanGlow.img} style={styles.joinQlanIcon} />
+                                        <Text style={styles.joinQlanTitle}>{translate('qlan.joinQlan')}</Text>
+                                        <Text style={styles.joinQlanSubtitle}>{translate('qlan.useCode')}</Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                            }
+                            {this.props.qlanId &&
+                                (this.state.qlanData.fetching ?
+                                    <ActivityIndicator size='large' color={Colors.greenQapla} />
+                                    :
+                                    <>
+                                        <View style={styles.myQlanJoinedContainer}>
+                                            <ImageBackground source={images.png.qlanProfile.img} style={styles.myQlanImageContainer}>
+                                                <Image source={this.state.qlanData.image ? { uri: this.state.qlanData.image } : null} style={styles.myQlanImage} />
+                                                <Text style={styles.myQlanText}>
+                                                    {this.state.qlanData.name}
+                                                </Text>
+                                            </ImageBackground>
+                                        </View>
+                                        <View style={styles.updateContainer}>
+                                            <TouchableOpacity onPress={() => console.log('edit')}>
+                                                <View style={styles.updateInnerContainer}>
+                                                    <View style={styles.updateIconContainer}>
+                                                        <images.svg.editQlan />
+                                                    </View>
+                                                    <MaskedView maskElement={<Text style={styles.updateText}>{translate('qlan.update')}</Text>} style={{ alignContent: 'center' }}>
+                                                        <LinearGradient
+                                                            colors={['#FFCAFA', '#A1FFFF', '#AFFFE2']}
+                                                            start={{ x: 0, y: 0 }}
+                                                            end={{ x: 1, y: 1 }}
+                                                            useAngle
+                                                            angle={90}>
+                                                            <Text style={[styles.updateText, styles.invisible]}>{translate('qlan.update')}</Text>
+                                                        </LinearGradient>
+                                                    </MaskedView>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </>
+                                    )
+                            }
+                        </View>
                         <View style={[styles.donationNavigatorContainer, { height: this.state.collapsableToolBarMaxHeight }]}>
                             <QaplaText style={styles.storeTitle}>
                                 {translate('newUserProfileScreen.loots')}
@@ -432,13 +508,19 @@ export class NewUserProfileScreen extends Component {
                         </View>
                     </ScrollView>
                 </RewardsBottomSheet>
+                <JoinQlanModal uid={this.props.uid}
+                    userName={this.props.userName}
+                    twitchUsername={this.props.twitchUsername}
+                    open={this.state.openQlanJoinModal}
+                    onClose={() => this.setState({ openQlanJoinModal: false })}
+                    onSuccess={this.getUserQlanData} />
                 <ZeroQoinsEventsModal
                     open={this.state.openDonationFeedbackModal}
                     onClose={() => this.setState({ openDonationFeedbackModal: false })} />
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}
                     onClose={() => this.setState({ openLinkWitTwitchModal: false })}
-                    onLinkSuccessful={this.state.userWantsToSendCheers ? this.exchangeQaploins : null} />
+                    onLinkSuccessful={this.state.userWantsToSendCheers ? this.exchangeQaploins : (this.state.userWantsToJoinAQlan ? this.openJoinQlanModal : null)} />
                 <SendCheersModal
                     open={this.state.openSendCheersModal}
                     onClose={() => this.setState({ openSendCheersModal: false, qoinsToDonate: 0 })}
@@ -449,7 +531,7 @@ export class NewUserProfileScreen extends Component {
                     userPhotoURL={this.props.userImage} />
                 <LevelInformationModal open={this.state.openLevelInformationModal}
                     onClose={() => this.setState({ openLevelInformationModal: false })} />
-            </SafeAreaView>
+            </SafeAreaView >
         );
     }
 }
@@ -471,6 +553,7 @@ function mapStateToProps(state) {
             twitchId: state.userReducer.user.twitchId,
             twitchUsername: state.userReducer.user.twitchUsername,
             userName: state.userReducer.user.userName,
+            qlanId: state.userReducer.user.qlanId,
             qaplaLevels: state.qaplaLevelReducer.levels
         }
     }

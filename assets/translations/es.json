@@ -371,16 +371,21 @@
             "welcomeBackMessage": "¡Bienvenido de vuelta! Te extrañamos :v",
             "createAccountWithEmail": "Crea tu cuenta con correo",
             "signInWithEmail": "Inicia sesión con correo",
-            "createUsername": "Crea tu nombre de usuario"
+            "createUsername": "Crea tu nombre de usuario",
+            "haveQreatorQode": "¿Tienes un Código de Qreador?",
+            "getCustomAlerts": "Recibe 3 alertas personalizadas en tus primeros 3 directos Qapla 🌱 con tu código de Qreador"
         },
-        "buttonsCarrousel":{
+        "buttonsCarrousel": {
             "createAccount": "Crear mi cuenta",
             "continueWithApple": "Continuar con Apple",
             "alreadyHaveAccount": "Ya tengo cuenta",
             "continueWithGoogle": "Continuar con Google",
             "continue": "Continuar",
             "validatingUsername": "Validando username...",
-            "iamReady": "¡Estoy listo!"
+            "iamReady": "¡Estoy listo!",
+            "joinQlan": "Unirme al Qlan",
+            "joiningQlan": "Uniendose al Qlan",
+            "goToFirstStream": "Ir a mi primer stream"
         }
     },
     "headerBar": {
@@ -585,5 +590,17 @@
     },
     "streamerCard": {
         "viewMore": "Ver más"
+    },
+    "qlan": {
+        "myQlan": "Mi Qlan",
+        "joinQlan": "¡Únete a un Qlan!",
+        "useCode": "Usa el Código de Qreador de tu streamer fav",
+        "typeQreatorCode": "Ingresa un Código de Qreador",
+        "joinQlanButton": "Unirme al Qlan",
+        "youJoinedP1": "Te has unido al Qlan de",
+        "youJoinedP2": "",
+        "youWillReceive": "Recibirás 200 Qoins en tus siguientes 3 directos de Qapla 🌱 ",
+        "backToProfile": "Volver a mi perfil",
+        "update": "Actualizar"
     }
 }

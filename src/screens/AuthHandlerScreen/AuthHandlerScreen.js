@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import { Animated, Easing, Image, Keyboard, Platform, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, Keyboard, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
 import images from '../../../assets/images';
 import ProgressDotsIndicator from '../../components/ProgressDotsIndicator/ProgressDotsIndicator';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { getPercentHeight, getPercentWidth, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import styles from './style';
-import TranslateXContainer from './TranslateXContainer';
-import TextsCarrousel from './TextsCarrousel';
-import ButtonsCarrousel from './ButtonsCarrousel';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import { createAccountWitEmailAndPassword, setupGoogleSignin, signInWithApple, signInWithEmailAndPassword, signInWithGoogle } from '../../services/auth';
-import { createUserProfile, getUserNameWithUID, updateUserLoggedStatus, userHaveTwitchId, validateUserName } from '../../services/database';
+import { createUserProfile, getQlanData, getQlanIdWithQreatorCode, getUserNameWithUID, subscribeUserToQlan, updateUserLoggedStatus, userHaveTwitchId, validateUserName } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { translate } from '../../utilities/i18';
+import QaplaTextInput from '../QaplaTextInput/QaplaTextInput';
+import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
+import TermsAndConditionsModal from '../../components/TermsAndConditionsModal/TermsAndConditionsModal';
 
 class AuthHandlerScreen extends Component {
     texts = null;
@@ -27,7 +28,6 @@ class AuthHandlerScreen extends Component {
     emailButton = null;
 
     state = {
-        gradientContainerHeight: new Animated.Value(0),
         steps: 0,
         currentStep: -1,
         createAccountIsSelected: true,
@@ -40,29 +40,23 @@ class AuthHandlerScreen extends Component {
         uid: '',
         showUsernameErrorMessage: false,
         checkingUserName: false,
-        keyboardHeight: 0
+        openTermsModal: false,
+        openPrivacyModal: false,
+        keyboard: false,
+        qlanCode: '',
+        streamerUsername: '',
+        joiningQlan: false
     };
+
     componentDidMount() {
         setupGoogleSignin();
         Keyboard.addListener('keyboardDidShow', (e) => {
             // - 96 because we want the back button to still visible and with a margin of 16
-            this.setState({ keyboardHeight: e.endCoordinates.height - 96 }, () => {
-                Animated.timing(this.state.gradientContainerHeight, {
-                    toValue: 1,
-                    duration: 400,
-                    easing: Easing.cubic,
-                    useNativeDriver: false
-                }).start();
-            });
+            this.setState({ keyboard: true });
         });
 
         Keyboard.addListener('keyboardDidHide', (e) => {
-            Animated.timing(this.state.gradientContainerHeight, {
-                toValue: 0,
-                duration: 400,
-                easing: Easing.cubic,
-                useNativeDriver: false
-            }).start();
+            this.setState({ keyboard: false });
         });
     }
 
@@ -71,7 +65,7 @@ class AuthHandlerScreen extends Component {
      * to ChooseUserNameScreen
      * If isn't just close and back to the previous flow
      */
-     succesfullSignIn = async (user) => {
+    succesfullSignIn = async (user) => {
         this.setState({ uid: user.user.uid, email: user.user.email }, async () => {
             if (user.additionalUserInfo.isNewUser) {
                 this.setState({ showLinkWitTwitchModal: true });
@@ -87,7 +81,7 @@ class AuthHandlerScreen extends Component {
                 if (!userName) {
                     this.goToCreateUsernameStep();
                 } else if (userHaveTwitchLinked) {
-                    const onSuccessCallback = this.props.navigation.getParam('onSuccessSignIn', () => {});
+                    const onSuccessCallback = this.props.navigation.getParam('onSuccessSignIn', () => { });
 
                     onSuccessCallback(user.user.uid);
                     return this.props.navigation.navigate(this.props.originScreen);
@@ -112,26 +106,38 @@ class AuthHandlerScreen extends Component {
     }
 
     handleSecondButtonPress = async () => {
-        if (this.state.currentStep === -1) {
-            this.goToHaveAccount();
-        } else if (this.state.currentStep === 0) {
-            this.setState({ hideEmailUI: true }, async () => {
-                try {
-                    const user = await signInWithGoogle();
-                    await this.succesfullSignIn(user);
-                } catch (error) {
-                    this.setState({ hideEmailUI: false });
-                }
-            });
-        } else if (this.state.currentStep === 1) {
-            this.authenticateWithEmail();
-        } else if (this.state.currentStep === 2) {
-            this.handleUsername();
+        switch (this.state.currentStep) {
+            case -1:
+                this.goToHaveAccount();
+                break;
+            case 0:
+                this.setState({ hideEmailUI: true }, async () => {
+                    try {
+                        const user = await signInWithGoogle();
+                        await this.succesfullSignIn(user);
+                    } catch (error) {
+                        this.setState({ hideEmailUI: false });
+                    }
+                });
+                break;
+            case 1:
+                this.authenticateWithEmail();
+                break;
+            case 2:
+                this.handleUsername();
+                break;
+            case 3:
+                this.handleQlan();
+                break;
+            case 4:
+                return this.props.navigation.navigate(this.props.originScreen);
+            default:
+                break;
         }
     }
 
     goToCreateAccount = () => {
-        this.setState({ createAccountIsSelected: true, steps: 3 }, () => this.goToNextScreen());
+        this.setState({ createAccountIsSelected: true, steps: 5 }, () => this.goToNextScreen());
     }
 
     goToHaveAccount = () => {
@@ -141,23 +147,10 @@ class AuthHandlerScreen extends Component {
     }
 
     goToNextScreen = () => {
-        this.firstButtonBackgroundColor.stepForward();
-        this.secondButtonBackgroundColor.stepForward();
-        this.firstButton.stepForward(() => {
-            this.setState({ screenIndex: this.state.screenIndex + 1, currentStep: this.state.currentStep + 1 });
-        });
-        this.secondButton.stepForward();
-        this.texts.stepForward();
-        this.emailButton.stepForward();
+        this.setState({ screenIndex: this.state.screenIndex + 1, currentStep: this.state.currentStep + 1 });
     }
 
     backToPreviousScreen = () => {
-        this.firstButtonBackgroundColor.stepBack();
-        this.secondButtonBackgroundColor.stepBack();
-        this.firstButton.stepBack();
-        this.secondButton.stepBack();
-        this.texts.stepBack();
-        this.emailButton.stepBack();
         if (this.state.currentStep === 0) {
             this.setState({ steps: 0 });
         }
@@ -181,6 +174,8 @@ class AuthHandlerScreen extends Component {
         const userName = await getUserNameWithUID(this.state.uid);
         if (!userName) {
             this.goToCreateUsernameStep();
+        }  else if (this.state.currentStep === 3) {
+            this.setState({ joiningQlan: false, disabled: false });
         } else {
             return this.props.navigation.navigate(this.props.originScreen);
         }
@@ -209,12 +204,6 @@ class AuthHandlerScreen extends Component {
     }
 
     goToCreateUsernameStep = () => {
-        this.texts.goToStep(3);
-        this.firstButtonBackgroundColor.goToStep(4);
-        this.secondButtonBackgroundColor.goToStep(4);
-        this.firstButton.goToStep(4);
-        this.secondButton.goToStep(4);
-        this.emailButton.stepForward();
         this.setState({ currentStep: 2 });
     }
 
@@ -222,124 +211,356 @@ class AuthHandlerScreen extends Component {
         if (this.state.username !== '' && !this.state.checkingUserName) {
             this.setState({
                 checkingUserName: true,
-                showUsernameErrorMessage: false }, async () => {
-                    if (this.state.username !== '' && await validateUserName(this.state.username)) {
-                        await createUserProfile(this.state.uid, this.state.email, this.state.username);
+                showUsernameErrorMessage: false
+            }, async () => {
+                if (this.state.username !== '' && await validateUserName(this.state.username)) {
+                    await createUserProfile(this.state.uid, this.state.email, this.state.username);
 
-                        return this.props.navigation.navigate(this.props.originScreen);
-                    } else {
-                        this.setState({
-                            showUsernameErrorMessage: true,
-                            checkingUserName: false
-                        });
-                    }
-                });
+                    this.setState({ currentStep: 3 });
+                } else {
+                    this.setState({
+                        showUsernameErrorMessage: true,
+                        checkingUserName: false
+                    });
+                }
+            });
         }
     }
 
+    handleQlan = async () => {
+        this.setState({ joiningQlan: true, disabled: true });
+
+        const qlanId = await getQlanIdWithQreatorCode(this.state.qlanCode);
+        if (qlanId) {
+            if (this.props.twitchId) {
+                await subscribeUserToQlan(this.state.uid, qlanId, this.state.username, this.props.twitchUsername);
+                const qlanData = await getQlanData(qlanId);
+
+                this.setState({ currentStep: 4, streamerUsername: qlanData.val().name, joiningQlan: false, disabled: false });
+            } else {
+                this.setState({ showLinkWitTwitchModal: true });
+            }
+        } else {
+            this.setState({ joiningQlan: false, disabled: false });
+            console.log('Invalid Qlan code');
+        }
+    }
+
+    finishProcess = () => { console.log('press'); this.props.navigation.navigate(this.props.originScreen);}
+
+    openTermsModal = () => this.setState({ openTermsModal: true });
+
+    openPrivacyModal = () => this.setState({ openPrivacyModal: true });
+
+    closeTermsAndConditionsModal = () => this.setState({ openTermsModal: false });
+
+    closePrivacyModal = () => this.setState({ openPrivacyModal: false });
+
     render() {
         let showIOSButton = Platform.OS === 'ios' && appleAuth.isSignUpButtonSupported;
-        const translateYGradientContainer = this.state.gradientContainerHeight.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, -this.state.keyboardHeight],
-        });
 
         return (
-            <ScrollView keyboardShouldPersistTaps='handled' style={styles.sfvContainer} scrollEnabled={false}>
-                <SafeAreaView>
-                    <TouchableOpacity onPress={this.closeAndBackButton}>
-                            <View style={styles.closeBackIcon}>
-                                {this.state.currentStep !== 3 &&
-                                <>
+            <SafeAreaView style={styles.sfvContainer}>
+                <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.sfvContainer}>
+                    <View style={{ flexDirection: 'column' }}>
+                        {this.state.currentStep !== 3 && this.state.currentStep !== 4 &&
+                            <TouchableOpacity onPress={this.closeAndBackButton}>
+                                <View style={styles.closeBackIcon}>
                                     {this.state.screenIndex !== 0 ?
                                         <images.svg.backIcon />
                                         :
                                         <images.svg.closeIcon />
                                     }
-                                </>
-                                }
-                            </View>
-                    </TouchableOpacity>
+                                </View>
+                            </TouchableOpacity>
+                        }
+                        {this.state.currentStep === 3 &&
+                            <TouchableOpacity style={styles.skipButtonContainer} onPress={this.finishProcess}>
+                                <Text style={styles.skipButtonText}>{translate('linkTwitchAccount.skip')}</Text>
+                            </TouchableOpacity>
+                        }
+                    </View>
                     <View style={styles.mainContainer}>
-                        <Image source={images.png.qaplaSignupLogo2021.img}
-                            style={styles.qaplaLogo} />
-                        <Animated.View style={{ transform: [{ translateY: translateYGradientContainer }] }}>
+                        {!(this.state.currentStep === 3 || this.state.currentStep === 4) &&
+                            <Image source={images.png.qaplaSignupLogo2021.img}
+                                style={styles.qaplaLogo} />
+                        }
+                        {(this.state.currentStep === 3 || this.state.currentStep === 4) && !this.state.keyboard &&
+                            <ImageBackground source={images.png.qlanProfile.img}
+                                style={styles.qlanImage} >
+                                <Text style={styles.qlanImageText}>Qlan</Text>
+                            </ImageBackground>
+                        }
+                        <View style={[styles.card, this.state.keyboard ? { position: 'absolute', top: heightPercentageToPx(getPercentHeight(-150)) } : {}]}>
                             <LinearGradient useAngle={true}
                                 angle={136}
                                 style={styles.card}
                                 colors={['#A716EE', '#2C07FA']}>
-                                <TextsCarrousel textOnRef={(ref) => this.texts = ref}
-                                    showCreateAccountScreen={this.state.createAccountIsSelected}
-                                    onEmailChange={(email) => this.setState({ email: email.toLowerCase() })}
-                                    email={this.state.email}
-                                    onPasswordChange={(password) => this.setState({ password })}
-                                    password={this.state.password}
-                                    onUsernameChange={(username) => this.setState({ username })}
-                                    username={this.state.username}
-                                    hideEmailUI={this.state.hideEmailUI}
-                                    showUsernameErrorMessage={this.state.showUsernameErrorMessage}
-                                    toggleAgreementTermsState={this.toggleAgreementTermsState}
-                                    agreementTermsState={this.state.agreementTermsState}
-                                    toggleAgreementPrivacyState={this.toggleAgreementPrivacyState}
-                                    agreementPrivacyState={this.state.agreementPrivacyState}
-                                    checkingUserName={this.state.checkingUserName} />
-                                <TranslateXContainer onRef={(ref) => this.emailButton = ref}
-                                    individualComponentWidth={widthPercentageToPx(100)}>
-                                    <View style={styles.emailButtonContainer} />
-                                    <TouchableOpacity onPress={this.goToEmailAuthenticationScreen}>
-                                        <View style={styles.emailButtonContainer}>
-                                            <QaplaText style={styles.emailButton}>
-                                                {this.state.createAccountIsSelected ?
-                                                    translate('authHandlerScreen.signUpWithEmail')
-                                                    :
-                                                    translate('authHandlerScreen.signInWithEmail')
-                                                }
+                                <View style={styles.titleAndDescriptionContainer}>
+                                    {this.state.currentStep === 4 &&
+                                        <>
+                                            <Image source={images.png.checkCircleGlow.img}
+                                                style={styles.tickCircleGlow} />
+                                            <Text style={styles.modalText}>
+                                                {translate('qlan.youJoinedP1')} <Text style={styles.qaplaColor}>{this.state.streamerUsername}</Text>{translate('qlan.youJoinedP2')}
+                                            </Text>
+                                            <Text style={styles.confirmModalSubtitle}>{translate('qlan.youWillReceive')}</Text>
+                                        </>
+                                    }
+                                    <QaplaText style={[styles.title,
+                                    {
+                                        marginTop: this.state.currentStep === 3 ?
+                                            this.state.keyboard ?
+                                                heightPercentageToPx(getPercentHeight(118))
+                                                :
+                                                heightPercentageToPx(getPercentHeight(42))
+                                            :
+                                            this.state.keyboard ?
+                                                heightPercentageToPx(getPercentHeight(72))
+                                                :
+                                                0,
+                                        marginBottom: this.state.currentStep === 3 ? heightPercentageToPx(getPercentHeight(-28)) : 0,
+                                    }]}>
+                                        {this.state.currentStep === -1 && translate('authHandlerScreen.textsCarrousel.welcome')}
+                                        {this.state.currentStep === 0 &&
+                                            (this.state.createAccountIsSelected ?
+                                                translate('authHandlerScreen.textsCarrousel.createAccount')
+                                                :
+                                                translate('authHandlerScreen.textsCarrousel.signIn')
+                                            )
+                                        }
+                                        {this.state.currentStep === 1 &&
+                                            (this.state.createAccountIsSelected ?
+                                                translate('authHandlerScreen.textsCarrousel.createAccountWithEmail')
+                                                :
+                                                translate('authHandlerScreen.textsCarrousel.signInWithEmail')
+                                            )
+                                        }
+                                        {this.state.currentStep === 2 &&
+                                            translate('authHandlerScreen.textsCarrousel.createUsername')
+                                        }
+                                        {this.state.currentStep === 3 &&
+                                            //translation pending
+                                            // translate('authHandlerScreen.textsCarrousel.createUsername')
+                                            translate('authHandlerScreen.textsCarrousel.haveQreatorQode')
+                                        }
+                                    </QaplaText>
+                                    <QaplaText style={styles.description}>
+                                        {this.state.currentStep === -1 && translate('authHandlerScreen.textsCarrousel.authOptions')}
+                                        {this.state.currentStep === 0 &&
+                                            (this.state.createAccountIsSelected ?
+                                                translate('authHandlerScreen.textsCarrousel.firstTimeMessage')
+                                                :
+                                                translate('authHandlerScreen.textsCarrousel.welcomeBackMessage')
+                                            )
+                                        }
+                                    </QaplaText>
+                                    {this.state.currentStep === 1 && !this.state.hideEmailUI &&
+                                        <View style={styles.emailFormContainer}>
+                                            <QaplaTextInput onChangeText={(email) => this.setState({ email: email.toLowerCase() })}
+                                                style={{ backgroundColor: '#0D1022', color: '#00FFDC' }}
+                                                placeholderTextColor={'rgba(0, 255, 220, 0.35)'}
+                                                value={this.state.email}
+                                                keyboardType='email-address'
+                                                placeholder='Email' />
+                                            <QaplaTextInput onChangeText={(password) => this.setState({ password })}
+                                                style={{ marginTop: 24, backgroundColor: '#0D1022' }}
+                                                placeholderTextColor={'rgba(0, 255, 220, 0.35)'}
+                                                secureTextEntry
+                                                value={this.state.password}
+                                                placeholder='Password' />
+                                        </View>
+                                    }
+                                    {this.state.currentStep === 2 &&
+                                        <>
+                                        <View style={styles.usernameContainer}>
+                                            <QaplaTextInput onChangeText={(username) => this.setState({ username })}
+                                                value={this.state.username}
+                                                placeholder='Username'
+                                                style={{ textAlign: 'center' }} />
+                                        </View>
+                                        {this.state.showUsernameErrorMessage &&
+                                            <View>
+                                                <QaplaText style={styles.errorMessage}>{translate('chooseUserNameScreen.userNameAlreadyTaken')}</QaplaText>
+                                            </View>
+                                        }
+                                        <QaplaText style={styles.termsAndConditionsText}>
+                                            {`${translate('chooseUserNameScreen.bodyFirstPart')} `}
+                                            <QaplaText style={styles.hyperlinkText} onPress={this.openTermsModal}>
+                                                {translate('chooseUserNameScreen.termsAndConditions')}
                                             </QaplaText>
-                                            <images.svg.rightArrow />
+                                            {` ${translate('chooseUserNameScreen.bodySecondPart')} `}
+                                            <QaplaText style={styles.hyperlinkText} onPress={this.openPrivacyModal}>
+                                                {translate('chooseUserNameScreen.privacyPolicy')}
+                                            </QaplaText>
+                                        </QaplaText>
+                                        <PrivacyModal
+                                            open={this.state.openPrivacyModal}
+                                            onClose={this.closePrivacyModal} />
+                                        <TermsAndConditionsModal
+                                            open={this.state.openTermsModal}
+                                            onClose={this.closeTermsAndConditionsModal} />
+                                        </>
+                                    }
+                                    {this.state.currentStep === 3 &&
+                                        <>
+                                        <Text style={styles.qlanSubtitle}>
+                                            {/* translation pending */}
+                                            {translate('authHandlerScreen.textsCarrousel.getCustomAlerts')}
+                                        </Text>
+                                        <View style={styles.usernameContainer}>
+                                            <QaplaTextInput onChangeText={(qlanCode) => this.setState({ qlanCode })}
+                                                value={this.state.qlanCode}
+                                                placeholder={'Q-APLITA'}
+                                                style={{ textAlign: 'center' }} />
+                                        </View>
+                                        </>
+                                    }
+                                </View>
+                                <View style={{ alignItems: 'center' }}>
+                                    {(this.state.currentStep === 0 || this.state.currentStep === -1) &&
+                                        <>
+                                            <TouchableOpacity onPress={this.goToEmailAuthenticationScreen} disabled={this.state.currentStep !== 0}>
+                                                <View style={[styles.emailButtonContainer, { opacity: this.state.currentStep === 0 ? 1 : 0 }]}>
+                                                    <QaplaText style={styles.emailButton}>
+                                                        {this.state.createAccountIsSelected ?
+                                                            translate('authHandlerScreen.signUpWithEmail')
+                                                            :
+                                                            translate('authHandlerScreen.signInWithEmail')
+                                                        }
+                                                    </QaplaText>
+                                                    <images.svg.rightArrow />
+                                                </View>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={{ marginBottom: 24 }} onPress={this.handleFirstButtonPress} disabled={this.state.currentStep === 0 && !showIOSButton}>
+                                                <View style={[styles.button, { backgroundColor: this.state.currentStep === -1 ? '#00FFDD' : ((showIOSButton && this.state.currentStep < 1) ? '#000000' : 'transparent') }]}
+                                                    onRef={this.props.onBackgroundRef}>
+                                                    {this.state.currentStep === -1 &&
+                                                        <View style={styles.buttonTextContainer}>
+                                                            <QaplaText style={[styles.buttonText, { color: '#0D1021' }]}>
+                                                                {translate('authHandlerScreen.buttonsCarrousel.createAccount')}
+                                                            </QaplaText>
+                                                        </View>
+                                                    }
+                                                    {this.state.currentStep === 0 &&
+                                                        <View style={styles.buttonWithIconContainer}>
+                                                            {showIOSButton &&
+                                                                <>
+                                                                    <images.svg.appleIcon height={32} width={32} style={{ marginRight: 8 }} />
+                                                                    <QaplaText style={[styles.buttonText, { color: '#FFF' }]}>
+                                                                        {translate('authHandlerScreen.buttonsCarrousel.continueWithApple')}
+                                                                    </QaplaText>
+                                                                </>
+                                                            }
+                                                        </View>
+                                                    }
+                                                </View>
+                                            </TouchableOpacity>
+                                        </>}
+                                    <TouchableOpacity onPress={this.handleSecondButtonPress}
+                                        disabled={this.state.disabled}>
+                                        <View style={[styles.button, {
+                                            backgroundColor: this.state.currentStep === -1 ? '#3B4BF9' : (this.state.currentStep === 0 ? '#FFF' : '#00FFDD'),
+                                            marginTop: this.state.currentStep === 3
+                                                ?
+                                                this.state.keyboard
+                                                    ?
+                                                    heightPercentageToPx(getPercentHeight(45))
+                                                    :
+                                                    heightPercentageToPx(getPercentHeight(-14))
+                                                :
+                                                this.state.currentStep === 4 ?
+                                                    heightPercentageToPx(getPercentHeight(-90))
+                                                    :
+                                                    this.state.currentStep === 2 ?
+                                                        heightPercentageToPx(getPercentHeight(5))
+                                                        :
+                                                        0,
+                                        }]}
+                                            onRef={this.props.onBackgroundRef}>
+                                            {this.state.currentStep === -1 &&
+                                                <QaplaText style={[styles.buttonText, { color: '#FFF' }]}>
+                                                    {translate('authHandlerScreen.buttonsCarrousel.alreadyHaveAccount')}
+                                                </QaplaText>
+                                            }
+                                            {this.state.currentStep === 0 &&
+                                                <View style={styles.buttonWithIconContainer}>
+                                                    <images.svg.googleIcon height={32} width={32} style={{ marginRight: 8 }} />
+                                                    <QaplaText style={[styles.buttonText, { color: '#585858' }]}>
+                                                        {translate('authHandlerScreen.buttonsCarrousel.continueWithGoogle')}
+                                                    </QaplaText>
+                                                </View>
+                                            }
+                                            {this.state.currentStep === 1 &&
+                                                <View style={styles.buttonTextContainer}>
+                                                    {!this.state.hideEmailUI &&
+                                                        <QaplaText style={[styles.buttonText, { color: '#0D1021' }]}>
+                                                            {translate('authHandlerScreen.buttonsCarrousel.continue')}
+                                                        </QaplaText>
+                                                    }
+                                                </View>
+                                            }
+                                            {this.state.currentStep === 2 &&
+                                                <View style={styles.buttonWithIconContainer}>
+                                                    <QaplaText style={[styles.buttonText, { color: '#0D1021' }]}>
+                                                        {this.props.checkingUserName ?
+                                                            translate('authHandlerScreen.buttonsCarrousel.validatingUsername')
+                                                            :
+                                                            translate('authHandlerScreen.buttonsCarrousel.iamReady')
+                                                        }
+                                                    </QaplaText>
+                                                </View>
+                                            }
+                                            {this.state.currentStep === 3 &&
+                                                <View style={styles.buttonWithIconContainer}>
+                                                    <QaplaText style={[styles.buttonText, { color: '#0D1021' }]}>
+                                                        {this.state.joiningQlan ?
+                                                            translate('authHandlerScreen.buttonsCarrousel.joiningQlan')
+                                                            :
+                                                            translate('authHandlerScreen.buttonsCarrousel.joinQlan')
+                                                        }
+                                                    </QaplaText>
+                                                </View>
+                                            }
+                                            {this.state.currentStep === 4 &&
+                                                <View style={styles.buttonWithIconContainer}>
+                                                    <QaplaText style={[styles.buttonText, { color: '#0D1021' }]}>
+                                                        {translate('authHandlerScreen.buttonsCarrousel.goToFirstStream')}
+                                                    </QaplaText>
+                                                </View>
+                                            }
                                         </View>
                                     </TouchableOpacity>
-                                    <View style={styles.emailButtonContainer} />
-                                </TranslateXContainer>
-                                <ButtonsCarrousel onFirstButtonPress={this.handleFirstButtonPress}
-                                    onSecondButtonPress={this.handleSecondButtonPress}
-                                    onFirstButtonBackgroundRef={(ref) => this.firstButtonBackgroundColor = ref}
-                                    onFirstTextRef={(ref) => this.firstButton = ref}
-                                    onSecondButtonBackgroundRef={(ref) => this.secondButtonBackgroundColor = ref}
-                                    onSecondTextRef={(ref) => this.secondButton = ref}
-                                    firstButtonBackgroundColors={['#00FFDD', showIOSButton ? '#000000' : 'transparent', 'transparent', 'transparent', 'transparent']}
-                                    secondButtonBackgroundColors={['#3B4BF9', '#FFF', '#00FFDD', '#00FFDD', '#00FFDD']}
-                                    currentStep={this.state.currentStep}
-                                    showFirstButtonAsSignOption={showIOSButton}
-                                    hideEmailUI={this.state.hideEmailUI}
-                                    checkingUserName={this.state.checkingUserName} />
+                                </View>
                                 <View style={styles.dotStepsContainer}>
-                                    {this.state.steps > 0 &&
-                                        <ProgressDotsIndicator
-                                            steps={this.state.steps}
-                                            selected={this.state.currentStep}
-                                            color={'rgba(0,254,223,0.54)'}
-                                            activeColor={'#00FEDF'}
-                                            /* We use heightPercentageToPx to achieve circular Views */
-                                            width={heightPercentageToPx(1.2)}
-                                            activeWidth={heightPercentageToPx(4)}
-                                            marginHorizontal={heightPercentageToPx(1)} />
-                                    }
-                                    </View>
+                                    <ProgressDotsIndicator
+                                        steps={this.state.steps}
+                                        selected={this.state.currentStep}
+                                        color={'rgba(0,254,223,0.54)'}
+                                        activeColor={'#00FEDF'}
+                                        /* We use heightPercentageToPx to achieve circular Views */
+                                        width={heightPercentageToPx(getPercentHeight(8))}
+                                        activeWidth={widthPercentageToPx(getPercentWidth(30))}
+                                        marginHorizontal={heightPercentageToPx(1)} />
+                                </View>
                             </LinearGradient>
-                        </Animated.View>
+                        </View>
                     </View>
                     <LinkTwitchAccountModal
                         open={this.state.showLinkWitTwitchModal}
-                        onClose={this.closeTwitchLinkModal} />
-                </SafeAreaView>
-            </ScrollView>
+                        onClose={this.closeTwitchLinkModal}
+                        onLinkSuccessful={this.handleQlan} />
+                </ScrollView>
+            </SafeAreaView>
         );
     }
 }
 
 function mapDispatchToProps(state) {
     return {
-        originScreen: state.screensReducer.previousScreenId
+        originScreen: state.screensReducer.previousScreenId,
+        twitchId: state.userReducer.user.twitchId,
+        twitchUsername: state.userReducer.user.twitchUsername,
     };
 }
 

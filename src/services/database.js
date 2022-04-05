@@ -1601,3 +1601,16 @@ export async function subscribeUserToQlan(uid, qlanId, username, twitchUsername)
         twitchUsername
     });
 }
+
+/**
+ * Unubscribes a user from the specified qlan
+ * @param {string} uid User identifier
+ * @param {string} qlanId Qlan identifier
+ *
+ */
+export async function unsubscribeUserFromQlan(uid, qlanId) {
+    await qlanesMembersRef.child(qlanId).child(uid).update({
+        active: false,
+        inactiveSince: (new Date()).getTime()
+    });
+}

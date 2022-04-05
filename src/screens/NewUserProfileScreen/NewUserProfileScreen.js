@@ -305,17 +305,14 @@ export class NewUserProfileScreen extends Component {
         return 0;
     }
 
-    updateQlanHandler = () => {
-        console.log('update Qlan');
-    }
-
     openJoinQlanModal = () => {
-        this.setState({ userWantsToJoinAQlan: true });
-        if (this.props.twitchId && this.props.twitchUsername) {
-            this.setState({ openQlanJoinModal: true });
-        } else {
-            this.linkTwitchAccount();
-        }
+        this.setState({ userWantsToJoinAQlan: true }, () => {
+            if (this.props.twitchId && this.props.twitchUsername) {
+                this.setState({ openQlanJoinModal: true });
+            } else {
+                this.linkTwitchAccount();
+            }
+        });
     }
 
     render() {
@@ -478,7 +475,7 @@ export class NewUserProfileScreen extends Component {
                                             </ImageBackground>
                                         </View>
                                         <View style={styles.updateContainer}>
-                                            <TouchableOpacity onPress={() => console.log('edit')}>
+                                            <TouchableOpacity onPress={this.openJoinQlanModal}>
                                                 <View style={styles.updateInnerContainer}>
                                                     <View style={styles.updateIconContainer}>
                                                         <images.svg.editQlan />
@@ -512,15 +509,17 @@ export class NewUserProfileScreen extends Component {
                     userName={this.props.userName}
                     twitchUsername={this.props.twitchUsername}
                     open={this.state.openQlanJoinModal}
-                    onClose={() => this.setState({ openQlanJoinModal: false })}
-                    onSuccess={this.getUserQlanData} />
+                    onClose={() => this.setState({ openQlanJoinModal: false, userWantsToJoinAQlan: false })}
+                    onSuccess={this.getUserQlanData}
+                    qlanId={this.props.qlanId} />
                 <ZeroQoinsEventsModal
                     open={this.state.openDonationFeedbackModal}
                     onClose={() => this.setState({ openDonationFeedbackModal: false })} />
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}
-                    onClose={() => this.setState({ openLinkWitTwitchModal: false })}
-                    onLinkSuccessful={this.state.userWantsToSendCheers ? this.exchangeQaploins : (this.state.userWantsToJoinAQlan ? this.openJoinQlanModal : null)} />
+                    onClose={() => this.setState({ openLinkWitTwitchModal: false, userWantsToSendCheers: false, userWantsToJoinAQlan: false })}
+                    onLinkSuccessful={this.state.userWantsToSendCheers ? this.exchangeQaploins : (this.state.userWantsToJoinAQlan ? this.openJoinQlanModal : null)}
+                    linkingWithQreatorCode={this.state.userWantsToJoinAQlan} />
                 <SendCheersModal
                     open={this.state.openSendCheersModal}
                     onClose={() => this.setState({ openSendCheersModal: false, qoinsToDonate: 0 })}

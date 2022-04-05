@@ -54,7 +54,7 @@ class LinkTwitchAccountModal extends Component {
                                     </Text>
                                 </TouchableOpacity>
                             </View>
-                            <LinkTwitchAccount onLinkSuccessful={this.onLinkSuccessful} />
+                            <LinkTwitchAccount onLinkSuccessful={this.onLinkSuccessful} linkingWithQreatorCode={this.props.linkingWithQreatorCode} />
                         </>
                     }
                     {this.state.showDontLinkWarning &&
@@ -66,7 +66,7 @@ class LinkTwitchAccountModal extends Component {
                                     <images.svg.leftArrowThiccIcon />
                                 </QaplaIcon>
                             </View>
-                            <SkipLinkTwitchAccount onSkipTwitchLink={this.onSkipTwitchLink} />
+                            <SkipLinkTwitchAccount onSkipTwitchLink={this.onSkipTwitchLink} linkingWithQreatorCode={this.props.linkingWithQreatorCode} />
                         </>
                     }
                 </View>
@@ -74,5 +74,9 @@ class LinkTwitchAccountModal extends Component {
         );
     }
 }
+
+LinkTwitchAccountModal.defaultProps = {
+    linkingWithQreatorCode: false
+};
 
 export default LinkTwitchAccountModal;

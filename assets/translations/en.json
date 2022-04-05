@@ -364,16 +364,16 @@
         "signInWithEmail": "Sign in with email",
         "textsCarrousel": {
             "welcome": "Welcome!",
-            "authOptions": "Let's log you in to join a stream",
+            "authOptions": "Let’s log you in! Create an account or sign in.",
             "createAccount": "Create your account",
             "signIn": "Sign in",
-            "firstTimeMessage": "Let's discover your first streamer!",
+            "firstTimeMessage": "Discover your next community now!!",
             "welcomeBackMessage": "Welcome back! We missed you :v",
             "createAccountWithEmail": "Create account with email",
             "signInWithEmail": "Sign in with your email",
             "createUsername": "Create your username",
             "haveQreatorQode": "Do you have a Qreator Code?",
-            "getCustomAlerts": "Receive 3 personalized alerts in your first 3 direct Qapla 🌱 with your Qreator code"
+            "getCustomAlerts": "Get ⚡️ 3 live interactions⚡️ when mining Qoins during your first 3 streams "
         },
         "buttonsCarrousel": {
             "createAccount": "Create my account",
@@ -502,14 +502,15 @@
     "linkTwitchAccount": {
         "skip": "Skip",
         "linkAccount": "Link your account",
-        "realTimeProgress": "Your progress in real time!",
-        "description": "Receive your Qoins and XQ automatically when you redeem points from your streamer's channel.",
-        "linkButton": "Link with Twitch"
+        "descriptionQreatorCode": "to use your Qreator Code and get your referral tokens 🙌",
+        "description": "🌱 Mine tokens in real-time using your channel points on  Twitch.",
+        "linkButton": "Link account"
     },
     "skipLinkTwitchAccount": {
         "important": "Important",
-        "reminder": "We remind you that accounts not linked to Twitch will not be able to receive their channel exchanges 😭",
-        "description": "But don't worry, you can always link your account from your profile 😉",
+        "reminder": "Friendly reminder: You won´t get any tokens in Qapla if your accounts aren’t linked.",
+        "reminderQreatorCode": "Friendly reminder: To unlock full-benefits on Qapla, you must have a linked Twitch account.",
+        "description": "No worries. You can link your account later from your profile 😉",
         "continue": "I wish to continue"
     },
     "sendCheersModal": {
@@ -591,8 +592,10 @@
         "myQlan": "My Qlan",
         "joinQlan": "Join a Qlan!",
         "useCode": "Use the Qreator Code of your fav streamer",
-        "typeQreatorCode": "Ingresa un Código de Qreator",
-        "joinQlanButton": "Enter a Qreator Code",
+        "typeQreatorCode": "Enter a Qreator code",
+        "changingQlan": "Are you changing of Qlan?",
+        "enterNewCode": "Enter the new Qreator code",
+        "joinQlanButton": "Join Qlan",
         "youJoinedP1": "You have joined",
         "youJoinedP2": "'s Qlan",
         "backToProfile": "Go back to my profile",

@@ -580,7 +580,7 @@
         "allow": "Allow"
     },
     "supportStreamerModal": {
-        "supportToFirstPart": "🌱Support ",
+        "supportTo": "⚡️ Send a live interaction to ",
         "supportToSecondPart": "\nwith 200 Qoins",
         "description": "Your cheers are sent in real-time, and your messages appear live on their Twitch channel",
         "sendCheers": "Send Cheers"

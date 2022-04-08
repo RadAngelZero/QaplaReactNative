@@ -148,9 +148,9 @@ class StreamerProfileScreen extends Component {
         }
     }
 
-    goToSendCheersScreen = async () => {
+    goToSendCheersScreen = async (qoinsToDonate) => {
         if (await userHaveTwitchId(this.props.uid)) {
-            this.props.navigation.navigate('WriteCheerMessage', { streamerData: this.state.streamerData, qoinsToDonate: 200 });
+            this.props.navigation.navigate('WriteCheerMessage', { streamerData: this.state.streamerData, qoinsToDonate });
         } else {
             this.setState({ openSupportStreamerModal: false, openLinkTwitchAccountModal: true });
         }

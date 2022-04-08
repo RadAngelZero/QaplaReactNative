@@ -1285,6 +1285,13 @@ export async function getDonationQoinsBase() {
 }
 
 /**
+ * Get the minimum donation allowed to send in a cheer
+ */
+export async function getMinimumDonationValue() {
+    return await DonationsCostsRef.child('minimumDonation').once('value');
+}
+
+/**
  * Donations Leader Board
  */
 
@@ -1430,39 +1437,41 @@ export async function sendCheers(amountQoins, message, timestamp, streamerName, 
     const pointsToAdd = qoinsDonated / qoinsBase;
     const bitsToAddPerPoint = (await DonationsCostsRef.child('bitsBase').once('value')).val();
 
-    const rewardProgress = await usersRewardsProgressRef.child(uid).once('value');
     let tensInPoints = Math.floor(pointsToAdd / 10);
     const bitsToAdd = bitsToAddPerPoint * pointsToAdd;
 
-    if (!rewardProgress.exists()) {
-        const currentPoints = pointsToAdd - tensInPoints * 10;
-        const donations = {
-            bits:  bitsToAdd,
-            qoins: qoinsDonated
-        };
+    await usersRewardsProgressRef.child(uid).transaction((rewardsProgress) => {
+        if (rewardsProgress) {
+            let currentPoints = rewardsProgress.currentPoints + pointsToAdd;
+            tensInPoints = Math.floor(currentPoints / 10);
+            currentPoints -= tensInPoints * 10;
+            const donations = {
+                ...rewardsProgress.donations,
+                bits: (rewardsProgress.donations.bits ? rewardsProgress.donations.bits : 0) + (bitsToAdd),
+                qoins: (rewardsProgress.donations.qoins ? rewardsProgress.donations.qoins : 0) + qoinsDonated
+            };
 
-        await usersRewardsProgressRef.child(uid).update({
-            currentPoints,
-            donations,
-            lifes: tensInPoints,
-            rewardsReedemed: 0
-        });
-    } else {
-        let currentPoints = rewardProgress.val().currentPoints + pointsToAdd;
-        tensInPoints = Math.floor(currentPoints / 10);
-        currentPoints -= tensInPoints * 10;
-        const donations = {
-            ...rewardProgress.val().donations,
-            bits: (rewardProgress.val().donations.bits ? rewardProgress.val().donations.bits : 0) + (bitsToAdd),
-            qoins: (rewardProgress.val().donations.qoins ? rewardProgress.val().donations.qoins : 0) + qoinsDonated
-        };
+            return {
+                ...rewardsProgress,
+                currentPoints,
+                lifes: rewardsProgress.lifes + tensInPoints,
+                donations
+            };
+        } else {
+            const currentPoints = pointsToAdd - tensInPoints * 10;
+            const donations = {
+                bits:  bitsToAdd,
+                qoins: qoinsDonated
+            };
 
-        await usersRewardsProgressRef.child(uid).update({
-            currentPoints,
-            lifes: rewardProgress.val().lifes + tensInPoints,
-            donations
-        });
-    }
+            return {
+                currentPoints,
+                donations,
+                lifes: tensInPoints,
+                rewardsReedemed: 0
+            };
+        }
+    });
 }
 
 // -----------------------------------------------

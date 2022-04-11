@@ -16,11 +16,14 @@ import Colors from '../../utilities/Colors';
 
 class LogrosList extends React.Component {
 	state = {
-		refreshing: false
+		refreshing: false,
+		scrolled: false,
 	};
 
 	renderEventOnList = ({ item }) => {
 		return <LogroCardItem
+			dynamicSeparationWidth={this.props.dynamicSeparationWidth}
+			scrolled={this.state.scrolled}
 			key={`event-${item.id}`}
 			{...item}
 			userId={this.props.userId}
@@ -43,7 +46,9 @@ class LogrosList extends React.Component {
 			<SafeAreaView style={styles.sfvContainer}>
 				<View style={styles.listContainer}>
 					<SectionList
-						horizontal
+						onScrollBeginDrag={() => { if (this.props.dynamicSeparation) {this.setState({ scrolled: true });}}}
+						onMomentumScrollEnd={(e) => { if (this.props.dynamicSeparation) {this.setState({scrolled: e.nativeEvent.contentOffset.x >= 20});}}}
+						horizontal={this.props.horizontal}
 						sections={this.props.logros}
 						refreshControl={<RefreshControl
 							progressBackgroundColor={Colors.eventCardBackground}

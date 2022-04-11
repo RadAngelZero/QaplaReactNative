@@ -72,7 +72,7 @@ class StreamerCard extends React.PureComponent {
 
     render() {
         return (
-            <TouchableOpacity style={styles.card}
+            <TouchableOpacity style={[styles.card, { height: this.props.horizontal ? '93.4%' : 'auto' }]}
                 onPress={this.props.onPress}>
                 {this.props.backgroundUrl ?
                     <Image style={styles.coverImage}
@@ -101,10 +101,10 @@ class StreamerCard extends React.PureComponent {
                 </Text>
                 <View style={styles.tagsContainer}>
                     {this.props.tags && this.props.tags.map(tag => (
-                            <QaplaChip style={styles.tags} textStyle={styles.tagText}>
-                                {tag}
-                            </QaplaChip>
-                        ))
+                        <QaplaChip style={styles.tags} textStyle={styles.tagText}>
+                            {tag}
+                        </QaplaChip>
+                    ))
                     }
                 </View>
             </TouchableOpacity>

@@ -14,21 +14,22 @@ import NewEventCard from '../NewEventCard/NewEventCard';
  * @param {element} children Card to render into the container
  * @param {boolean} lastChild Flag to know if we need to add the margin bottom
  */
-const CardContainer = ({ children, lastChild }) => (
-    <View style={{ marginBottom: lastChild ? 30 : 0 }}>
+const CardContainer = ({ children, lastChild, scrolled, dynamicSeparationWidth }) => (
+    <View
+    style={{ marginBottom: lastChild ? (dynamicSeparationWidth || 40) * 0.75 : 0, marginRight: lastChild ? 0 : scrolled ? (dynamicSeparationWidth || 40) : ((dynamicSeparationWidth || 0)  / 2) }}
+    > 
         {children}
     </View>
 );
 
 class LogroCardItem extends Component {
     render() {
-
         /**
          * TODO: Change all the received props from the database (in spanish) to english, then send it to the different logro
          * Also change the reference inside every logro
          */
         let res = null;
-        const { tipoLogro, lastChild } = this.props;
+        const { tipoLogro, lastChild, scrolled, dynamicSeparationWidth } = this.props;
 
         switch (tipoLogro) {
             case 'Qaploins':
@@ -47,7 +48,7 @@ class LogroCardItem extends Component {
                 res = <CardContainer lastChild={lastChild}><TournamentCard {...this.props} /></CardContainer>;
                 break;
             case 'event':
-                res = <CardContainer lastChild={lastChild}><NewEventCard {...this.props} /></CardContainer>;
+                res = <CardContainer lastChild={lastChild} scrolled={scrolled} dynamicSeparationWidth={dynamicSeparationWidth}><NewEventCard {...this.props} /></CardContainer>;
                 break;
             default:
                 break;

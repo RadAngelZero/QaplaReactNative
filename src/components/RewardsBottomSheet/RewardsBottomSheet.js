@@ -134,7 +134,7 @@ class RewardsBottomSheet extends Component {
                                 <View style={styles.progress}>
                                     <ProgressBar
                                         unfilledColor='rgba(255, 255, 255, .25)'
-                                        progress={(qoinsInBar) / 2000}
+                                        progress={(qoinsInBar) / (this.state.qoinsBase * 10)}
                                         color={Colors.greenQapla}
                                         borderWidth={0} />
                                     <View style={styles.rewardsHeaderContainer}>
@@ -144,7 +144,7 @@ class RewardsBottomSheet extends Component {
                                                 hearts={this.props.rewards.lifes} />
                                         </View>
                                         <QaplaText style={styles.currentPoints}>
-                                            {(qoinsInBar)}/2000
+                                            {(qoinsInBar)}/{(this.state.qoinsBase)*10}
                                         </QaplaText>
                                     </View>
                                 </View>

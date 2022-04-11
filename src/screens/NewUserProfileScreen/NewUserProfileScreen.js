@@ -14,7 +14,7 @@ import { isUserLogged } from '../../services/auth';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { getDonationQoinsBase, getQlanData } from '../../services/database';
+import { getMinimumDonationValue, getQlanData } from '../../services/database';
 import Colors from '../../utilities/Colors';
 import RewardsStore from '../../components/RewardsStore/RewardsStore';
 
@@ -53,7 +53,7 @@ export class NewUserProfileScreen extends Component {
     state = {
         qoinsToDonate: 0,
         donationCost: null,
-        donationQoinBase: null,
+        minimumDonation: null,
         collapsableToolBarMaxHeight: heightPercentageToPx(50),
         previousScrollPosition: 0,
         isLeaderBoardCollapsed: true,
@@ -138,10 +138,10 @@ export class NewUserProfileScreen extends Component {
      * Load the donation cost and the donation qoin base for the user donations
      */
     setDonationCost = async () => {
-        const donationQoinBase = await getDonationQoinsBase();
-        if (donationQoinBase.exists()) {
+        const minimumDonation = await getMinimumDonationValue();
+        if (minimumDonation.exists()) {
             this.setState({
-                donationQoinBase: donationQoinBase.val()
+                minimumDonation: minimumDonation.val()
             });
         }
     };
@@ -172,7 +172,7 @@ export class NewUserProfileScreen extends Component {
      * Increase the amount of the user donation
      */
     addECoinToDonation = () => {
-        const bitsToIncrease = this.state.donationQoinBase;
+        const bitsToIncrease = this.state.minimumDonation;
         if (this.props.userQoins >= this.state.qoinsToDonate + bitsToIncrease) {
             this.setState({ qoinsToDonate: this.state.qoinsToDonate + bitsToIncrease });
         } else {
@@ -185,7 +185,7 @@ export class NewUserProfileScreen extends Component {
      */
     substractECoinToDonation = () => {
         if (this.state.qoinsToDonate > 0) {
-            this.setState({ qoinsToDonate: this.state.qoinsToDonate - this.state.donationQoinBase });
+            this.setState({ qoinsToDonate: this.state.qoinsToDonate - this.state.minimumDonation });
         }
     }
 
@@ -305,17 +305,14 @@ export class NewUserProfileScreen extends Component {
         return 0;
     }
 
-    updateQlanHandler = () => {
-        console.log('update Qlan');
-    }
-
     openJoinQlanModal = () => {
-        this.setState({ userWantsToJoinAQlan: true });
-        if (this.props.twitchId && this.props.twitchUsername) {
-            this.setState({ openQlanJoinModal: true });
-        } else {
-            this.linkTwitchAccount();
-        }
+        this.setState({ userWantsToJoinAQlan: true }, () => {
+            if (this.props.twitchId && this.props.twitchUsername) {
+                this.setState({ openQlanJoinModal: true });
+            } else {
+                this.linkTwitchAccount();
+            }
+        });
     }
 
     render() {
@@ -478,7 +475,7 @@ export class NewUserProfileScreen extends Component {
                                             </ImageBackground>
                                         </View>
                                         <View style={styles.updateContainer}>
-                                            <TouchableOpacity onPress={() => console.log('edit')}>
+                                            <TouchableOpacity onPress={this.openJoinQlanModal}>
                                                 <View style={styles.updateInnerContainer}>
                                                     <View style={styles.updateIconContainer}>
                                                         <images.svg.editQlan />
@@ -512,15 +509,17 @@ export class NewUserProfileScreen extends Component {
                     userName={this.props.userName}
                     twitchUsername={this.props.twitchUsername}
                     open={this.state.openQlanJoinModal}
-                    onClose={() => this.setState({ openQlanJoinModal: false })}
-                    onSuccess={this.getUserQlanData} />
+                    onClose={() => this.setState({ openQlanJoinModal: false, userWantsToJoinAQlan: false })}
+                    onSuccess={this.getUserQlanData}
+                    qlanId={this.props.qlanId} />
                 <ZeroQoinsEventsModal
                     open={this.state.openDonationFeedbackModal}
                     onClose={() => this.setState({ openDonationFeedbackModal: false })} />
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}
-                    onClose={() => this.setState({ openLinkWitTwitchModal: false })}
-                    onLinkSuccessful={this.state.userWantsToSendCheers ? this.exchangeQaploins : (this.state.userWantsToJoinAQlan ? this.openJoinQlanModal : null)} />
+                    onClose={() => this.setState({ openLinkWitTwitchModal: false, userWantsToSendCheers: false, userWantsToJoinAQlan: false })}
+                    onLinkSuccessful={this.state.userWantsToSendCheers ? this.exchangeQaploins : (this.state.userWantsToJoinAQlan ? this.openJoinQlanModal : null)}
+                    linkingWithQreatorCode={this.state.userWantsToJoinAQlan} />
                 <SendCheersModal
                     open={this.state.openSendCheersModal}
                     onClose={() => this.setState({ openSendCheersModal: false, qoinsToDonate: 0 })}

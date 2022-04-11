@@ -549,7 +549,8 @@ class AuthHandlerScreen extends Component {
                     <LinkTwitchAccountModal
                         open={this.state.showLinkWitTwitchModal}
                         onClose={this.closeTwitchLinkModal}
-                        onLinkSuccessful={this.handleQlan} />
+                        onLinkSuccessful={this.handleQlan}
+                        linkingWithQreatorCode={Boolean(this.state.qlanCode)} />
                 </ScrollView>
             </SafeAreaView>
         );

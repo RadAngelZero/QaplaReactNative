@@ -11,7 +11,7 @@ import { SHEET_MAX_HEIGHT, SHEET_MIN_HEIGHT } from '../../utilities/Constants';
 import Hearts from '../UserProfileRewards/Hearts';
 import ProgressBar from '../UserProfileRewards/Bar';
 import Colors from '../../utilities/Colors';
-import { getQaplaStoreCheaperProduct } from '../../services/database';
+import { getDonationQoinsBase, getQaplaStoreCheaperProduct } from '../../services/database';
 import remoteConfig from '../../services/remoteConfig';
 import { translate } from '../../utilities/i18';
 import QaplaTooltip from '../QaplaTooltip/QaplaTooltip';
@@ -20,8 +20,13 @@ import { trackOnSegment } from '../../services/statistics';
 class RewardsBottomSheet extends Component {
     fall = new Animated.Value(1);
     state = {
-        open: false
+        open: false,
+        qoinsBase: 200 // Default value, but always check on database
     };
+
+    componentDidMount() {
+        this.getQoinsBase();
+    }
 
     componentDidUpdate(prevProps) {
         if (this.props.hide !== prevProps.hide) {
@@ -30,6 +35,13 @@ class RewardsBottomSheet extends Component {
             } else {
                 this.sheetRef.snapTo(0);
             }
+        }
+    }
+
+    getQoinsBase = async () => {
+        const qoinsBase = await getDonationQoinsBase();
+        if (qoinsBase.exists()) {
+            this.setState({ qoinsBase: qoinsBase.val() });
         }
     }
 
@@ -82,6 +94,13 @@ class RewardsBottomSheet extends Component {
      * Render the content of the bottom sheet
      */
     renderContent = () => {
+        /**
+         * The best option would be to store only the Qoins donated, but this change was introduced after the points
+         * system was implemented and a lot of users already had points, so it was decided to calculate the number of Qoins
+         * instead of update thousands of records on the database
+         */
+        const qoinsInBar = this.props.rewards.currentPoints * this.state.qoinsBase;
+
         return (
             <TouchableWithoutFeedback onPress={this.toggleBottomSheet}>
                 <View style={styles.container}>
@@ -115,7 +134,7 @@ class RewardsBottomSheet extends Component {
                                 <View style={styles.progress}>
                                     <ProgressBar
                                         unfilledColor='rgba(255, 255, 255, .25)'
-                                        progress={this.props.rewards.currentPoints/10}
+                                        progress={(qoinsInBar) / (this.state.qoinsBase * 10)}
                                         color={Colors.greenQapla}
                                         borderWidth={0} />
                                     <View style={styles.rewardsHeaderContainer}>
@@ -125,7 +144,7 @@ class RewardsBottomSheet extends Component {
                                                 hearts={this.props.rewards.lifes} />
                                         </View>
                                         <QaplaText style={styles.currentPoints}>
-                                            {this.props.rewards.currentPoints}/10
+                                            {(qoinsInBar)}/{(this.state.qoinsBase)*10}
                                         </QaplaText>
                                     </View>
                                 </View>

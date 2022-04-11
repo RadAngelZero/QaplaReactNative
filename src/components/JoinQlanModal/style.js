@@ -54,8 +54,15 @@ export default styles = StyleSheet.create({
         lineHeight: heightPercentageToPx(getPercentHeight(30)),
         textAlign: 'center',
         color: '#fff',
-        maxWidth: widthPercentageToPx(getPercentWidth(210)),
-        marginBottom: heightPercentageToPx(getPercentHeight(36)),
+        maxWidth: widthPercentageToPx(getPercentWidth(210))
+    },
+    newCodeText: {
+        lineHeight: 30,
+        color: '#FFF',
+        fontSize: 16,
+        fontWeight: '500',
+        textAlign: 'center',
+        marginBottom: 30
     },
     textInput: {
         backgroundColor: '#202750',
@@ -108,8 +115,6 @@ export default styles = StyleSheet.create({
         letterSpacing: widthPercentageToPx(getPercentWidth(0.2545454502105713)),
         textAlign: 'center',
         color: '#fff',
-        marginTop: heightPercentageToPx(getPercentHeight(8)),
-
-        marginBottom: heightPercentageToPx(getPercentHeight(45)),
+        marginBottom: heightPercentageToPx(5.5)
     },
 });

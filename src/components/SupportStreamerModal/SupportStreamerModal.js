@@ -9,9 +9,25 @@ import images from '../../../assets/images';
 import ZeroQoinsEventsModal from '../ZeroQoinsEventsModal/ZeroQoinsEventsModal';
 import { translate } from '../../utilities/i18';
 
+const DonationValueOption = ({ value, currentSelection, onPress }) => (
+    <TouchableOpacity onPress={() => onPress(value)}>
+        <LinearGradient useAngle={true}
+            angle={118.67}
+            angleCenter={{ x: .5, y: .5}}
+            colors={value === currentSelection ? ['#2D07FA', '#A716EE'] : ['#141637', '#141637']}
+            style={styles.supportAmountContainer}>
+            <Text style={[styles.supportAmount, { textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 20, textShadowColor: value === currentSelection ? 'rgba(0, 255, 220, 0.85)' : 'rgba(194, 255, 255, 0.55)', color: value === currentSelection ? '#00FFDC' : '#FFF' }]}>
+                {value}
+            </Text>
+            <images.svg.activityQoin height={30} width={30} />
+        </LinearGradient>
+    </TouchableOpacity>
+);
+
 class SupportStreamerModal extends Component {
     state = {
-        openNoQoinsEnoughModal: false
+        openNoQoinsEnoughModal: false,
+        qoinsToDonate: null
     };
 
     closeModal = () => {
@@ -19,12 +35,16 @@ class SupportStreamerModal extends Component {
     }
 
     sendCheers = () => {
-        if (this.props.userQoins >= 200) {
-            this.props.sendCheers();
+        if (this.props.userQoins >= this.state.qoinsToDonate) {
+            this.props.sendCheers(this.state.qoinsToDonate);
             this.props.onClose();
         } else {
             this.setState({ openNoQoinsEnoughModal: true });
         }
+    }
+
+    updateQoinsToDonate = (qoinsToDonate) => {
+        this.setState({ qoinsToDonate });
     }
 
     render() {
@@ -44,24 +64,24 @@ class SupportStreamerModal extends Component {
                     <View style={styles.cardContainer}>
                         <View style={styles.card}>
                             <View style={styles.cardBody}>
-                                <LinearGradient useAngle={true}
-                                    angle={118.67}
-                                    angleCenter={{ x: .5, y: .5}}
-                                    colors={['#2D07FA', '#A716EE']}
-                                    style={styles.supportAmountContainer}>
-                                    <Text style={styles.supportAmount}>
-                                        200
-                                    </Text>
-                                    <images.svg.activityQoin height={30} width={30} />
-                                </LinearGradient>
-                                <View style={styles.titleContainer}>
+                                <View>
                                     <Text style={styles.title}>
-                                        {translate('supportStreamerModal.supportToFirstPart')}
+                                        {translate('supportStreamerModal.supportTo')}
                                         <Text style={styles.greenText}>
                                             {this.props.streamerData.displayName}
                                         </Text>
-                                        {translate('supportStreamerModal.supportToSecondPart')}
                                     </Text>
+                                </View>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    <DonationValueOption value={50}
+                                        currentSelection={this.state.qoinsToDonate}
+                                        onPress={this.updateQoinsToDonate} />
+                                    <DonationValueOption value={100}
+                                        currentSelection={this.state.qoinsToDonate}
+                                        onPress={this.updateQoinsToDonate} />
+                                    <DonationValueOption value={200}
+                                        currentSelection={this.state.qoinsToDonate}
+                                        onPress={this.updateQoinsToDonate} />
                                 </View>
                                 <View style={styles.descriptionContainer}>
                                     <Text style={styles.description}>

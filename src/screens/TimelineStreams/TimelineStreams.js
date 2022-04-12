@@ -3,16 +3,19 @@ import { SafeAreaView, View, ScrollView, Text, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import LogrosList from '../../components/LogroCard/LogrosList';
-import { translate } from '../../utilities/i18';
 import LevelInformationModal from '../../components/LevelInformationModal/LevelInformationModal';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import DiscoverStreamersScreen from '../DiscoverStreamersScreen/DiscoverStreamersScreen';
+import FeaturedStreamsList from '../../components/FeaturedStreamsList/FeaturedStreamsList';
+import StreamsList from '../../components/StreamsList/StreamsList';
+import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 
 export class TimelineStreams extends Component {
+    listsToRender = [0, 1, 2, 3, 4, 5, 6];
     state = {
         openLevelInformationModal: false,
-        dias: [{ dia: 'manana' }, { dia: 'domingo' }, { dia: 'lunes' }],
+        openEventDetailsModal: false,
+        selectedStream: null
     };
 
     componentDidMount() {
@@ -27,56 +30,15 @@ export class TimelineStreams extends Component {
         }
     }
 
+    onStreamPress = (stream) => {
+        this.setState({ selectedStream: stream }, () => this.setState({ openEventDetailsModal: true }));
+    }
+
     render() {
-        const eventToDisplay = this.props.navigation.getParam('eventToDisplay', '');
-        let orderedEvents = [];
-
-        Object.keys(this.props.logros.logrosActivos).map((logroKey) => this.props.logros.logrosActivos[logroKey])
-            // Put the featured events at the top of the array
-            .sort((a, b) => b.featured - a.featured)
-            // Fill orderedEvents array for the SectionList of the LogrosList component
-            .forEach((logro) => {
-                if (logro.idLogro !== undefined) {
-                    const today = new Date();
-
-                    if (logro.featured) {
-                        if (orderedEvents.some((eventsOfTheDay) => eventsOfTheDay.title === translate('TimelineStreams.featuredEvent'))) {
-                            orderedEvents[orderedEvents.length - 1].data.push(logro);
-                        } else {
-                            orderedEvents.push({ title: translate('TimelineStreams.featuredEvent'), data: [logro], indexDay: orderedEvents.length });
-                        }
-                    } else {
-                        const eventDate = new Date(logro.timestamp);
-                        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-                        const eventSectionTitle = today.getDate() === eventDate.getDate() ?
-                            translate('days.today')
-                            :
-                            today.getDate() + 1 === eventDate.getDate() ?
-                                translate('days.tomorrow')
-                                :
-                                translate(`days.${days[eventDate.getDay()]}`);
-
-                        if (orderedEvents.some((eventsOfTheDay) => eventsOfTheDay.title === eventSectionTitle)) {
-                            orderedEvents[orderedEvents.length - 1].data.push(logro);
-                        } else {
-                            orderedEvents.push({ title: eventSectionTitle, data: [logro], indexDay: orderedEvents.length });
-                        }
-                    }
-                }
-            });
-
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <ScrollView>
-                    <LogrosList
-                        isUserVerified={this.props.logros.isUserVerified}
-                        logros={orderedEvents}
-                        userId={this.props.uid}
-                        eventToDisplay={eventToDisplay}
-                        horizontal
-                    // dynamicSeparation
-                    // dynamicSeparationWidth={40}
-                    />
+                    <FeaturedStreamsList uid={this.props.uid} onCardPress={this.onStreamPress} />
                     <View style={{ height: 40 }} />
                     <Text style={{
                         fontSize: 22,
@@ -93,26 +55,19 @@ export class TimelineStreams extends Component {
                     <DiscoverStreamersScreen
                         horizontal
                         dynamicSeparation
-                        navigation={this.props.navigation}
-                    />
-                    <FlatList
-                        data={this.state.dias}
+                        navigation={this.props.navigation} />
+                    <FlatList initialNumToRender={2}
+                        data={this.listsToRender}
                         keyExtractor={(item) => item.dia}
-                        renderItem={() => {
-                            return (
-                                <LogrosList
-                                    isUserVerified={this.props.logros.isUserVerified}
-                                    logros={orderedEvents}
-                                    userId={this.props.uid}
-                                    eventToDisplay={eventToDisplay}
-                                    horizontal
-                                // dynamicSeparation
-                                // dynamicSeparationWidth={40}
-                                />
-                            )
-                        }}
-                    />
+                        renderItem={({item, index}) => (
+                            <StreamsList index={index}
+                                onCardPress={this.onStreamPress}
+                                uid={this.props.uid} />
+                        )} />
                 </ScrollView>
+                <EventDetailsModal open={this.state.openEventDetailsModal}
+                    onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
+                    stream={this.state.selectedStream} />
                 <LevelInformationModal open={this.state.openLevelInformationModal}
                     onClose={() => this.setState({ openLevelInformationModal: false })} />
             </SafeAreaView>
@@ -122,8 +77,7 @@ export class TimelineStreams extends Component {
 
 function mapStateToProps(state) {
     return {
-        uid: state.userReducer.user.id,
-        logros: state.logrosReducer
+        uid: state.userReducer.user.id
     };
 }
 

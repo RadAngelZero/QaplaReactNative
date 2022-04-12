@@ -46,32 +46,12 @@ function EventCardContainer({ isSponsored, children, onPress, gradientColors }) 
 }
 
 class NewEventCard extends React.PureComponent {
-    currentTime = new Date().getTime();
-    // 86,400,000 = 24 hours on milliseconds
-    limitToShowEventAsNew = this.currentTime - 86400000;
-
     state = {
         showEventDetailsModal: false,
         boost: [false, false, false, true],
         qoins: true,
         xq: true,
     };
-
-    componentDidMount() {
-        if (this.props.eventToDisplay === this.props.idLogro) {
-            this.setState({ showEventDetailsModal: true });
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.eventToDisplay !== prevProps.eventToDisplay) {
-            if (this.props.eventToDisplay === this.props.idLogro) {
-                this.setState({ showEventDetailsModal: true });
-            } else if (this.state.showEventDetailsModal) {
-                this.setState({ showEventDetailsModal: false });
-            }
-        }
-    }
 
     /**
      * Select the correct event text content according to the language used by the user
@@ -92,7 +72,8 @@ class NewEventCard extends React.PureComponent {
     }
 
     toogleEventDetailsModalVisibility = () => {
-        trackOnSegment('User open event', {
+        this.props.onPress(this.props.stream);
+        /* trackOnSegment('User open event', {
             EventId: this.props.eventId,
             EventIsSponsored: this.props.sponsorImage ? true : false,
             featuredEvent: this.props.featured,
@@ -100,7 +81,7 @@ class NewEventCard extends React.PureComponent {
             EventGame: this.props.game
         });
 
-        this.setState({ showEventDetailsModal: !this.state.showEventDetailsModal });
+        this.setState({ showEventDetailsModal: !this.state.showEventDetailsModal }); */
     }
 
     render() {
@@ -111,28 +92,21 @@ class NewEventCard extends React.PureComponent {
             streamerPhoto,
             streamerName,
             sponsorImage,
-            idLogro,
             gradientColors,
             featured,
-            createdAt,
-            hourUTC,
-            dateUTC,
-        } = this.props;
+            timestamp
+        } = this.props.stream;
 
-        let [day, month, year] = getDateElementsAsNumber(dateUTC);
+        const eventDate = new Date(timestamp);
 
-        let [hour, minute] = getHourElementsAsNumber(hourUTC);
-
-        const eventDate = new Date(Date.UTC(year, month - 1, day, hour, minute));
-
-        const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         const eventDay = translate(`days.${days[eventDate.getDay()]}`);
 
-        day = eventDate.getDate();
+        let day = eventDate.getDate();
         const hourSuffix = eventDate.getHours() >= 12 ? 'p.m.' : 'a.m.';
-        hour = eventDate.getHours() % 12;
+        let hour = eventDate.getHours() % 12;
         hour = hour ? hour : 12;
-        minute = eventDate.getMinutes() > 9 ? eventDate.getMinutes() : `0${eventDate.getMinutes()}`;
+        let minute = eventDate.getMinutes() > 9 ? eventDate.getMinutes() : `0${eventDate.getMinutes()}`;
         const eventHour = `${hour}:${minute}`;
 
         let titleTranslated = this.getTextBasedOnUserLanguage(title);
@@ -145,10 +119,6 @@ class NewEventCard extends React.PureComponent {
         // user)
         if (titleTranslated === '') {
             titleTranslated = titulo;
-        }
-
-        if (createdAt >= this.limitToShowEventAsNew) {
-            console.log('Mostrar como nuevo', idLogro);
         }
 
         return (
@@ -245,10 +215,6 @@ class NewEventCard extends React.PureComponent {
                         </QaplaText>
                     </LinearGradient>
                 </View>
-                <EventDetailsModal
-                    open={this.state.showEventDetailsModal}
-                    onClose={this.toogleEventDetailsModalVisibility}
-                    eventId={idLogro} />
             </EventCardContainer >
         );
     }

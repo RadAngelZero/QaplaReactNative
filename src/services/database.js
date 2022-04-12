@@ -18,11 +18,8 @@ export const cuentasVerificadasRef = database.ref('/CuentasVerificadas');
 export const verificationOnProccessRef = database.ref('/VerificacionEnProceso');
 export const veriLogroSocialRef = database.ref('/verificarLogroSocial');
 export const feedbackUsersRef = database.ref('/FeedbackUsers');
-export const tournamentsRef = database.ref('/torneos');
-export const activeTournamentsRef = tournamentsRef.child('torneosActivos');
-export const pointsTournamentsRef = database.ref('/puntosTorneos');
 export const eventsRef = database.ref('/eventosEspeciales');
-export const activeEventsRef = eventsRef.child('eventsData');
+export const eventsDataRef = eventsRef.child('eventsData');
 const eventsRequestsRef = eventsRef.child('JoinRequests');
 export const eventParticipantsRef = database.ref('/EventParticipants');
 export const announcementsActRef = database.ref('/Announcements/Active');
@@ -860,20 +857,6 @@ export function joinEventWithCustomData(uid, eventId, eventEntry, participantDat
     });
 }
 
-/**
- * Allow the user to join in the given tournament
- * @param {string} uid User identifier on database
- * @param {string} tournamentId Tournament identifier on the database
- * @param {number} totalPuntos The total of points of the tournament
- */
-export async function joinInTournament(uid, tournamentId, totalPuntos) {
-    pointsTournamentsRef.child(uid).child(tournamentId).update({
-        puntosCompletados: 0,
-        redimido: false,
-        totalPuntos
-    });
-}
-
 // -----------------------------------------------
 // Announcements
 // -----------------------------------------------
@@ -1042,17 +1025,6 @@ export function removeUserListeners(uid) {
     usersRef.child(uid).off('child_added');
     usersRef.child(uid).off('child_changed');
     usersRef.child(uid).off('child_removed');
-}
-
-/**
- * Remove all the database listeners related to the logrosReducer
- * @param {string} uid User identifier
- */
-export function removeLogrosListeners(uid) {
-    cuentasVerificadasRef.child(uid).off('value');
-    logrosRef.child(uid).child('logroCompleto').off('child_added');
-    logrosRef.child(uid).child('logroIncompleto').off('value');
-    pointsTournamentsRef.child(uid).off('value');
 }
 
 /**

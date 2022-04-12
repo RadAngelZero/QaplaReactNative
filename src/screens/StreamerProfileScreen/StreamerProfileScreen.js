@@ -369,7 +369,7 @@ class StreamerProfileScreen extends Component {
 
 function mapStateToProps(state) {
     return {
-        logros: state.logrosReducer,
+        logros: state.streamsReducer,
         uid: state.userReducer.user.id,
         userSubscriptions: state.userReducer.user.userToStreamersSubscriptions
     };

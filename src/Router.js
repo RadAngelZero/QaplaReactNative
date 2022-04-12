@@ -43,7 +43,6 @@ import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 import { widthPercentageToPx } from './utilities/iosAndroidDim';
 import { translate } from './utilities/i18';
 import NotificationsSettingsScreen from './screens/NotificationsSettingsScreen/NotificationsSettingsScreen';
-import TodayTournamentsScreen from './screens/TodayTournamentsScreen/TodayTournamentsScreen';
 import QaplaText from './components/QaplaText/QaplaText';
 import ChatHeader from './components/Chat/ChatHeader/ChatHeader';
 import DiscoverStreamersScreen from './screens/DiscoverStreamersScreen/DiscoverStreamersScreen';

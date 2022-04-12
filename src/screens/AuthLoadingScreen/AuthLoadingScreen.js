@@ -24,7 +24,7 @@ import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment, setUserIdOnSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
-import { loadQaplaLogros } from '../../actions/logrosActions';
+import { loadFeaturedStreams } from '../../actions/streamsActions';
 import { translate } from '../../utilities/i18';
 import { checkNotificationPermission } from '../../services/messaging';
 import remoteConf from '../../services/remoteConfig';
@@ -68,7 +68,7 @@ class AuthLoadingScreen extends Component {
 
             if (user) {
                 this.props.loadUserData(user.uid);
-                this.props.loadQaplaLogros(user.uid);
+                this.props.loadFeaturedStreams(user.uid);
 
                 // If username does not exist because profile does not exist as well, then
                 // user is redirected to ChooUserName where they will create their profile.
@@ -134,7 +134,7 @@ class AuthLoadingScreen extends Component {
                     }
                 }
             } else {
-                this.props.loadQaplaLogros(null);
+                this.props.loadFeaturedStreams(null);
             }
 
             /**
@@ -309,7 +309,7 @@ function mapDispatchToProps(dispatch) {
         loadListOfGames: () => getListOfGames()(dispatch),
         loadShowHg1Modal: () => getHg1CreateMatch()(dispatch),
         getServerTimeOffset: () => getServerTimeOffset()(dispatch),
-        loadQaplaLogros: (uid) => loadQaplaLogros(uid)(dispatch)
+        loadFeaturedStreams: (uid) => loadFeaturedStreams(uid)(dispatch)
     };
 }
 

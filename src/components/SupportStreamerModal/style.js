@@ -42,6 +42,8 @@ export default styles = StyleSheet.create({
     supportAmountContainer: {
         width: widthPercentageToPx(26.7),
         height: heightPercentageToPx(11),
+        paddingRight: 24,
+        paddingLeft: 24,
         marginRight: 14,
         borderRadius: 20,
         flexDirection: 'row',

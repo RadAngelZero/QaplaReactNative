@@ -47,11 +47,12 @@ class LinkTwitchAccount extends Component {
                                 <QaplaText style={styles.linkYouAccount}>
                                     {translate('linkTwitchAccount.linkAccount')}
                                 </QaplaText>
-                                <Text style={styles.realTimeProgress}>
-                                    {translate('linkTwitchAccount.realTimeProgress')}
-                                </Text>
                                 <Text style={styles.linkDescription}>
-                                    {translate('linkTwitchAccount.description')}
+                                    {this.props.linkingWithQreatorCode ?
+                                        translate('linkTwitchAccount.descriptionQreatorCode')
+                                        :
+                                        translate('linkTwitchAccount.description')
+                                    }
                                 </Text>
                             </View>
                             <TouchableOpacity style={styles.linkButtonContainer}

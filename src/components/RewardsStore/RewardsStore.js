@@ -8,9 +8,9 @@ import QaplaText from '../QaplaText/QaplaText';
 import { getQaplaStoreProducts } from '../../services/database';
 import { getLocaleLanguage } from '../../utilities/i18';
 import remoteConfig from '../../services/remoteConfig';
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import Hearts from '../UserProfileRewards/Hearts';
 import { trackOnSegment } from '../../services/statistics';
+import { SHEET_MIN_HEIGHT } from '../../utilities/Constants';
 
 const RewardCard = ({ id, onPress, title, description, price, primaryColor = 'rgb(20, 22, 55)', secondaryColor = 'rgb(20, 22, 55)', empty = false }) => {
     if (!empty) {
@@ -118,7 +118,7 @@ class RewardsStore extends Component {
                 renderItem={this.renderRewardCard}
                 numColumns={numberOfColumns}
                 keyExtractor={(item, index) => `Store-Product-${index}`}
-                ListFooterComponent={() => <View style={{ height: heightPercentageToPx(4) }}/>} />
+                ListFooterComponent={() => <View style={{ height: SHEET_MIN_HEIGHT * 1.25 }} />} />
         );
     }
 }

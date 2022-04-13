@@ -42,6 +42,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'center'
     },
     rewardsHeaderContainer: {
+        marginTop: 8,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
@@ -56,13 +57,12 @@ export default styles = StyleSheet.create({
         marginTop: 10
     },
     lifesContainer: {
-        flexDirection: 'row',
-        marginTop: 8
+        flexDirection: 'row'
     },
     currentPoints: {
         color: '#FFF',
         fontSize: 12,
-        alignSelf: 'center'
+        alignSelf: 'flex-start'
     },
     transactionsContainer: {
         marginTop: 40

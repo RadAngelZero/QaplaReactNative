@@ -98,7 +98,7 @@ import Boostx2 from './icons/Boostx2.svg';
 import Boostx3 from './icons/Boostx3.svg';
 import Boostx5 from './icons/Boostx5.svg';
 import Boostx10 from './icons/Boostx10.svg';
-
+import EditQlan from './icons/EditQlan.svg';
 
 // Images
 
@@ -276,7 +276,19 @@ const images = {
 		notEnoughQoins: {
 			img: require('./images/NotEnoughQoins.png'),
 			uri: '@assets/images/NotEnoughQoins.png'
-		}
+		},
+		qlanProfile: {
+			img: require('./images/qlanProfile.png'),
+			uri: '@assets/images/qlanProfile.png'
+		},
+		checkCircleGlow: {
+			img: require('./icons/CheckCircleGlow.png'),
+			uri: '@assets/icons/CheckCircleGlow.png'
+		},
+		joinQlanGlow: {
+			img: require('./icons/JoinQlanGlow.png'),
+			uri: '@assets/icons/JoinQlanGlow.png'
+		},
 	},
 	svg: {
 		facebookIcon: FacebookIcon,
@@ -377,6 +389,7 @@ const images = {
 		boostX3: Boostx3,
 		boostX5: Boostx5,
 		boostX10: Boostx10,
+		editQlan: EditQlan,
 	},
 };
 

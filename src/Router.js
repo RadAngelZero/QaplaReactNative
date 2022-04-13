@@ -301,7 +301,7 @@ const StreamsTopTabNavigator = createMaterialTopTabNavigator(
       screen: TimelineStreams
     },
     MyStreams: {
-      screen: RetasNotificationsScreen
+      screen: RetasNotificationsScreen // Replace this shit with a new cool screen for MyStreams
     }
   },
   {
@@ -332,7 +332,7 @@ const CommunityTopTabNavigator = createMaterialTopTabNavigator(
 
 const MainBottomTabNavigator = createBottomTabNavigator({
   Achievements: {
-    screen: TimelineStreams,
+    screen: StreamsTopTabNavigator,
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (

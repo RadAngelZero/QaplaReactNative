@@ -5,7 +5,7 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         backgroundColor: '#0C1021',
-        paddingBottom: 30
+        paddingBottom: 28
     },
     tabStyle: {
         borderRadius: 6,

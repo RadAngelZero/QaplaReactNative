@@ -36,41 +36,39 @@ export class TimelineStreams extends Component {
 
     render() {
         return (
-            <SafeAreaView style={styles.sfvContainer}>
-                <ScrollView>
-                    <FeaturedStreamsList uid={this.props.uid} onCardPress={this.onStreamPress} />
-                    <View style={{ height: 40 }} />
-                    <Text style={{
-                        fontSize: 22,
-                        fontWeight: '700',
-                        lineHeight: 28,
-                        letterSpacing: 1,
-                        textAlign: 'left',
-                        color: '#fff',
-                        marginBottom: 30,
-                        marginLeft: 16
-                    }}>
-                        Qreadores
-                    </Text>
-                    <DiscoverStreamersScreen
-                        horizontal
-                        dynamicSeparation
-                        navigation={this.props.navigation} />
-                    <FlatList initialNumToRender={2}
-                        data={this.listsToRender}
-                        keyExtractor={(item) => item.dia}
-                        renderItem={({item, index}) => (
-                            <StreamsList index={index}
-                                onCardPress={this.onStreamPress}
-                                uid={this.props.uid} />
-                        )} />
-                </ScrollView>
+            <ScrollView style={styles.container}>
+                <FeaturedStreamsList uid={this.props.uid} onCardPress={this.onStreamPress} />
+                <View style={{ height: 40 }} />
+                <Text style={{
+                    fontSize: 22,
+                    fontWeight: '700',
+                    lineHeight: 28,
+                    letterSpacing: 1,
+                    textAlign: 'left',
+                    color: '#fff',
+                    marginBottom: 30,
+                    marginLeft: 16
+                }}>
+                    Qreadores
+                </Text>
+                <DiscoverStreamersScreen
+                    horizontal
+                    dynamicSeparation
+                    navigation={this.props.navigation} />
+                <FlatList initialNumToRender={2}
+                    data={this.listsToRender}
+                    keyExtractor={(item) => item.dia}
+                    renderItem={({item, index}) => (
+                        <StreamsList index={index}
+                            onCardPress={this.onStreamPress}
+                            uid={this.props.uid} />
+                    )} />
                 <EventDetailsModal open={this.state.openEventDetailsModal}
-                    onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
-                    stream={this.state.selectedStream} />
+                onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
+                stream={this.state.selectedStream} />
                 <LevelInformationModal open={this.state.openLevelInformationModal}
                     onClose={() => this.setState({ openLevelInformationModal: false })} />
-            </SafeAreaView>
+            </ScrollView>
         );
     }
 }

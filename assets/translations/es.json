@@ -29,7 +29,7 @@
              * QaplaTabBar component use this translations so we need it to be predictable
              * that is why is all in lowercase and not so nested
             **/
-            "timeline": "Timeline",
+            "timeline": "Descubrir",
             "mystreams": "Mis streams",
             "discover": "Descubre",
             "following": "Siguiendo",

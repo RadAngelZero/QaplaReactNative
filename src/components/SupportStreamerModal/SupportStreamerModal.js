@@ -9,17 +9,17 @@ import images from '../../../assets/images';
 import ZeroQoinsEventsModal from '../ZeroQoinsEventsModal/ZeroQoinsEventsModal';
 import { translate } from '../../utilities/i18';
 
-const DonationValueOption = ({ value, currentSelection, onPress }) => (
+const DonationValueOption = ({ value, currentSelection, onPress, style }) => (
     <TouchableOpacity onPress={() => onPress(value)}>
         <LinearGradient useAngle={true}
             angle={118.67}
             angleCenter={{ x: .5, y: .5}}
             colors={value === currentSelection ? ['#2D07FA', '#A716EE'] : ['#141637', '#141637']}
-            style={styles.supportAmountContainer}>
-            <Text style={[styles.supportAmount, { textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 20, textShadowColor: value === currentSelection ? 'rgba(0, 255, 220, 0.85)' : 'rgba(194, 255, 255, 0.55)', color: value === currentSelection ? '#00FFDC' : '#FFF' }]}>
+            style={[styles.supportAmountContainer, style]}>
+            <Text style={[styles.supportAmount, { color: value === currentSelection ? '#00FFDC' : '#FFF' }]}>
                 {value}
             </Text>
-            <images.svg.activityQoin height={30} width={30} />
+            <images.svg.activityQoin height={21} width={21} />
         </LinearGradient>
     </TouchableOpacity>
 );
@@ -27,7 +27,7 @@ const DonationValueOption = ({ value, currentSelection, onPress }) => (
 class SupportStreamerModal extends Component {
     state = {
         openNoQoinsEnoughModal: false,
-        qoinsToDonate: null
+        qoinsToDonate: 50
     };
 
     closeModal = () => {
@@ -81,7 +81,8 @@ class SupportStreamerModal extends Component {
                                         onPress={this.updateQoinsToDonate} />
                                     <DonationValueOption value={200}
                                         currentSelection={this.state.qoinsToDonate}
-                                        onPress={this.updateQoinsToDonate} />
+                                        onPress={this.updateQoinsToDonate}
+                                        style={{ marginRight: 0 }} />
                                 </View>
                                 <View style={styles.descriptionContainer}>
                                     <Text style={styles.description}>

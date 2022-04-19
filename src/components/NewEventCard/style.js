@@ -7,7 +7,7 @@ export default styles = StyleSheet.create({
         backgroundColor: '#14183300',
         marginRight: 30,
         // alignSelf: 'center',
-        width: widthPercentageToPx(getPercentWidth(270)),
+        width: widthPercentageToPx(getPercentWidth(260)),
         // height: heightPercentageToPx(getPercentHeight(360)),
         borderRadius: 20,
         // shadowColor: '#000',
@@ -22,7 +22,7 @@ export default styles = StyleSheet.create({
     backgroundImageContainer: {
         // width: '100%',
         // width: widthPercentageToPx(getPercentWidth(260)),
-        height: widthPercentageToPx(getPercentWidth(200)),
+        height: widthPercentageToPx(getPercentWidth(195)),
         justifyContent: 'center',
         borderRadius: 20,
     },

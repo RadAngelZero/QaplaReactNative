@@ -2,21 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
 	View,
-	FlatList,
-	RefreshControl
+	FlatList
 } from 'react-native';
 
 import styles from './style';
 import { loadStreamsByListIndex } from '../../actions/streamsActions';
-import Colors from '../../utilities/Colors';
-import NewEventCard from '../NewEventCard/NewEventCard';
+import StreamCard from '../StreamCard/StreamCard';
 import QaplaText from '../QaplaText/QaplaText';
 import { translate } from '../../utilities/i18';
 import { HOURS_IN_DAY, ONE_HOUR_MILISECONDS } from '../../utilities/Constants';
 
 class StreamsList extends React.Component {
 	state = {
-		refreshing: false,
 		scrolled: false,
         title: ''
 	};
@@ -32,21 +29,27 @@ class StreamsList extends React.Component {
         return index === 0 ?  translate('days.today') : (index === 1 ? translate('days.tomorrow') : translate(`days.${days[listDay.getDay()]}`));
     }
 
-	renderEventOnList = ({ item }) => (
-		<NewEventCard onPress={this.props.onCardPress}
-			dynamicSeparationWidth={this.props.dynamicSeparationWidth}
-			scrolled={this.state.scrolled}
-			key={`event-${item.id}`}
-			stream={item}
-			uid={this.props.uid}
-			eventToDisplay={this.props.eventToDisplay} />
-    );
+	renderEventOnList = ({ item }) => {
+        if (item.isUserAParticipant) {
+            return null;
+        }
+
+        return (
+            <StreamCard onPress={this.props.onCardPress}
+                dynamicSeparationWidth={this.props.dynamicSeparationWidth}
+                scrolled={this.state.scrolled}
+                key={`stream-${item.id}`}
+                stream={item}
+                uid={this.props.uid}
+                eventToDisplay={this.props.eventToDisplay} />
+        );
+    }
 
 	render() {
         const streamsToRender = this.props.streamsLists.streams[this.props.index];
 
-        // No streams this day, do not render nothing
-        if (Object.keys(streamsToRender).length) {
+        // If there are no streams or the user is already participating in all the featured streams render null
+        if (Object.keys(streamsToRender).length && Object.keys(streamsToRender).some((streamId) => !streamsToRender[streamId].isUserAParticipant)) {
             return (
                 <View style={styles.listContainer}>
                     <QaplaText style={styles.sectionHeader}>{this.state.title}</QaplaText>
@@ -54,12 +57,6 @@ class StreamsList extends React.Component {
                         onScrollBeginDrag={() => { if (this.props.dynamicSeparation) {this.setState({ scrolled: true });}}}
                         onMomentumScrollEnd={(e) => { if (this.props.dynamicSeparation) {this.setState({scrolled: e.nativeEvent.contentOffset.x >= 20});}}}
                         horizontal
-                        refreshControl={<RefreshControl
-                            progressBackgroundColor={Colors.eventCardBackground}
-                            colors={[Colors.greenQapla]}
-                            tintColor={Colors.greenQapla}
-                            onRefresh={this.refreshEvents}
-                            refreshing={this.state.refreshing} />}
                         initialNumToRender={5}
                         renderItem={this.renderEventOnList}
                         ListFooterComponent={() => <View style={{ height: 30 }} />}
@@ -79,7 +76,8 @@ function mapStateToProps(state) {
      * state.streamsReducer.streamsLists when the streams array is updated we inmediately receive the update
      */
     return {
-        streamsLists: state.streamsReducer.streamsLists
+        streamsLists: state.streamsReducer.streamsLists,
+        userStreams: state.streamsReducer.userStreams
     };
 }
 

@@ -4,7 +4,6 @@ import {
     View,
     ScrollView,
     TouchableHighlight,
-    Dimensions,
     Animated,
     Easing
 } from 'react-native';
@@ -15,15 +14,13 @@ import styles from './style';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import Images from './../../../assets/images';
-import { userHasRequestToJoinEvent, isUserParticipantOnEvent } from '../../services/database';
+import { userHasRequestToJoinEvent } from '../../services/database';
 import EventDetails from './EventDetails';
 import EventRegistration from './EventRegistration';
 import { isUserLogged } from '../../services/auth';
 import EventRegistrationSuccessful from './EventRegistrationSuccessful';
 import { userHaveTwitchId, joinEventWithCustomData, getTwitchUserName, substractQaploinsToUser, sendRequestToJoinEvent } from '../../services/database';
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
-import { subscribeUserToTopic } from '../../services/messaging';
-import { EVENTS_TOPIC } from '../../utilities/Constants';
 import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
 import { translate } from '../../utilities/i18';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
@@ -43,7 +40,7 @@ class EventDetailsModal extends Component {
      * Check if the user has sent a request for this event
      */
     checkUserRequest = async () => {
-        this.setState({ existsRequest: await userHasRequestToJoinEvent(this.props.uid, this.props.eventId) });
+        this.setState({ existsRequest: await userHasRequestToJoinEvent(this.props.uid, this.props.stream.id) });
     }
 
     /**
@@ -51,7 +48,7 @@ class EventDetailsModal extends Component {
      */
     checkIfUserIsParticipant = async () => {
         if (this.props.stream) {
-            this.setState({ isParticipant: this.props.userStreams.indexOf(this.props.stream.id) >= 0 });
+            this.setState({ isParticipant: this.props.stream.isUserAParticipant });
         }
     }
 
@@ -114,17 +111,12 @@ class EventDetailsModal extends Component {
     registerUserToEvent = async () => {
         const twitchUserName = await getTwitchUserName(this.props.uid);
         if (this.props.stream.acceptAllUsers) {
-            joinEventWithCustomData(this.props.uid, this.props.eventId, this.props.stream.eventEntry, { "Twitch Username": twitchUserName });
-
-            /**
-             * Subscribe user to topic of the event
-             */
-            subscribeUserToTopic(this.props.eventId, this.props.uid, EVENTS_TOPIC);
+            joinEventWithCustomData(this.props.uid, this.props.stream.id, this.props.stream.eventEntry, { "Twitch Username": twitchUserName });
         } else {
             /**
              * Save on the database the request of the user
              */
-            await sendRequestToJoinEvent(this.props.eventId, this.props.uid, this.props.stream.eventEntry, { "Twitch Username": twitchUserName });
+            await sendRequestToJoinEvent(this.props.stream.id, this.props.uid, this.props.stream.eventEntry, { "Twitch Username": twitchUserName });
         }
 
         if (this.scrollView) {
@@ -218,7 +210,7 @@ class EventDetailsModal extends Component {
                                 {this.state.eventRegistrationStep === 0 &&
                                     <EventDetails
                                         event={this.props.stream}
-                                        eventId={this.props.eventId}
+                                        eventId={this.props.stream.id}
                                         goToNextStep={this.goToNextRegistrationStep}
                                         closeModal={this.closeModal}
                                         existsRequest={this.state.existsRequest}
@@ -228,7 +220,7 @@ class EventDetailsModal extends Component {
                                     <EventRegistration
                                         game={platform && game ? this.props.games[platform][game] : {}}
                                         event={this.props.stream}
-                                        eventId={this.props.eventId}
+                                        eventId={this.props.stream.id}
                                         goToNextStep={this.goToNextRegistrationStep}
                                         closeModal={this.closeModal} />
                                 }
@@ -289,7 +281,6 @@ function mapStateToProps(state) {
         games: state.gamesReducer.games,
         uid: state.userReducer.user.id,
         qoins: state.userReducer.user.credits,
-        userStreams: state.streamsReducer.userStreams
     }
 }
 

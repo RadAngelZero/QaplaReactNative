@@ -1,4 +1,4 @@
-import { ADD_STREAM_TO_USER_STREAMS, LOAD_FEATURED_STREAM, LOAD_STREAMS_BY_DATE_RANGE } from '../utilities/Constants';
+import { ADD_STREAM_TO_USER_STREAMS, LOAD_FEATURED_STREAM, LOAD_STREAMS_BY_DATE_RANGE, UPDATE_FEATURED_STREAM, UPDATE_STREAM } from '../utilities/Constants';
 
 const initialState = {
     streamsLists: {
@@ -15,7 +15,13 @@ function streamsReducer(state = initialState, action) {
 
     switch (action.type) {
         case LOAD_FEATURED_STREAM:
-            featured[action.payload.id] = { ...action.payload };
+            featured[action.payload.id] = { ...featured[action.payload.id], ...action.payload };
+
+            return { ...state, streamsLists: { ...streamsLists, featured }, fetched: true };
+        case UPDATE_FEATURED_STREAM:
+            Object.keys(action.payload).forEach((keyToUpdate) => {
+                featured[action.id][keyToUpdate] = action.payload[keyToUpdate];
+            });
 
             return { ...state, streamsLists: { ...streamsLists, featured }, fetched: true };
         case ADD_STREAM_TO_USER_STREAMS:
@@ -25,9 +31,15 @@ function streamsReducer(state = initialState, action) {
 
             return { ...state, ...userStreams, fetched: true };
         case LOAD_STREAMS_BY_DATE_RANGE:
-            streams[action.index][action.payload.id] = { ...action.payload };
+            streams[action.index][action.payload.id] = { ...streams[action.index][action.payload.id], ...action.payload };
 
             return { ...state, streamsLists: { ...streamsLists, streams }, fetched: true };
+        case UPDATE_STREAM:
+            Object.keys(action.payload).forEach((keyToUpdate) => {
+                streams[action.index][action.id][keyToUpdate] = action.payload[keyToUpdate];
+            });
+
+        return { ...state, streamsLists: { ...streamsLists, streams }, fetched: true };
         default:
             return state;
     }

@@ -2,56 +2,71 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
 	View,
-	FlatList,
-	RefreshControl
+	FlatList
 } from 'react-native';
 
 import styles from './style';
-import Colors from '../../utilities/Colors';
-import NewEventCard from '../NewEventCard/NewEventCard';
+import StreamCard from '../StreamCard/StreamCard';
 import { translate } from '../../utilities/i18';
 import QaplaText from '../QaplaText/QaplaText';
 
 class FeaturedStreamsList extends React.Component {
+	cardCount = 0;
 	state = {
 		scrolled: false,
 	};
 
-	renderEventOnList = ({ item }) => (
-		<NewEventCard onPress={this.props.onCardPress}
-			dynamicSeparationWidth={this.props.dynamicSeparationWidth}
-			scrolled={this.state.scrolled}
-			key={`event-${item.id}`}
-			stream={item}
-			uid={this.props.uid} />
-	);
+	renderEventOnList = ({ item, index }) => {
+		if (item.isUserAParticipant) {
+            return null;
+        }
+
+		return (
+			<StreamCard onPress={this.props.onCardPress}
+				index={index % 7}
+				dynamicSeparationWidth={this.props.dynamicSeparationWidth}
+				scrolled={this.state.scrolled}
+				key={`event-${item.id}`}
+				stream={item}
+				uid={this.props.uid} />
+		);
+	}
 
 	render() {
-		return (
-            <View style={styles.listContainer}>
-				<QaplaText style={styles.sectionHeader}>{translate('TimelineStreams.featuredEvent')}</QaplaText>
-                <FlatList data={Object.keys(this.props.featuredStreams).sort((a, b) => this.props.featuredStreams[a].timestamp - this.props.featuredStreams[b].timestamp) .map((eventId) => this.props.featuredStreams[eventId])}
-                    onScrollBeginDrag={() => { if (this.props.dynamicSeparation) {this.setState({ scrolled: true });}}}
-                    onMomentumScrollEnd={(e) => { if (this.props.dynamicSeparation) {this.setState({scrolled: e.nativeEvent.contentOffset.x >= 20});}}}
-                    horizontal
-                    refreshControl={<RefreshControl
-                        progressBackgroundColor={Colors.eventCardBackground}
-                        colors={[Colors.greenQapla]}
-                        tintColor={Colors.greenQapla}
-                        onRefresh={this.refreshEvents}
-                        refreshing={this.state.refreshing} />}
-                    initialNumToRender={5}
-                    renderItem={this.renderEventOnList}
-                    ListFooterComponent={() => <View style={{ height: 30 }} />}
-                    keyExtractor={(item) => item.id} />
-            </View>
-		);
+		const featuredStreams = this.props.streamsLists.featured;
+
+		// If there are no streams or the user is already participating in all the featured streams render null
+		if (Object.keys(featuredStreams).length && Object.keys(featuredStreams).some((streamId) => !featuredStreams[streamId].isUserAParticipant)) {
+			return (
+				<>
+				<View style={styles.listContainer}>
+					<QaplaText style={styles.sectionHeader}>{translate('TimelineStreams.featuredEvent')}</QaplaText>
+					<FlatList data={Object.keys(featuredStreams).sort((a, b) => featuredStreams[a].timestamp - featuredStreams[b].timestamp).map((streamId) => featuredStreams[streamId])}
+						onScrollBeginDrag={() => { if (this.props.dynamicSeparation) {this.setState({ scrolled: true });}}}
+						onMomentumScrollEnd={(e) => { if (this.props.dynamicSeparation) {this.setState({scrolled: e.nativeEvent.contentOffset.x >= 20});}}}
+						horizontal
+						initialNumToRender={5}
+						renderItem={this.renderEventOnList}
+						ListFooterComponent={() => <View style={{ height: 30 }} />}
+						keyExtractor={(item) => item.id} />
+				</View>
+				<View style={{ height: 40 }} />
+				</>
+			);
+		}
+
+		return null;
 	}
 }
 
 function mapStateToProps(state) {
+	/**
+     * For some reason if we map the state.streamsReducer.streamsLists.featured directly to our props when it is updated
+     * (on streamsReducer) the update does not reach the component (it does not trigger a re render) but if we map
+     * state.streamsReducer.streamsLists when the featured array is updated we inmediately receive the update
+     */
     return {
-        featuredStreams: state.streamsReducer.streamsLists.featured
+        streamsLists: state.streamsReducer.streamsLists
     };
 }
 

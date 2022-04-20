@@ -76,8 +76,7 @@ function mapStateToProps(state) {
      * state.streamsReducer.streamsLists when the streams array is updated we inmediately receive the update
      */
     return {
-        streamsLists: state.streamsReducer.streamsLists,
-        userStreams: state.streamsReducer.userStreams
+        streamsLists: state.streamsReducer.streamsLists
     };
 }
 

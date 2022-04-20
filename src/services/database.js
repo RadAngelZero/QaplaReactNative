@@ -44,6 +44,7 @@ const userToStreamerSubscriptionsRef = database.ref('/UserToStreamerSubscription
 const qreatorsCodesRef = database.ref('/QreatorsCodes');
 const qlanesMembersRef = database.ref('/QlanesMembers');
 const qlanesRef = database.ref('/Qlanes');
+const activeCustomRewardsRef = database.ref('/ActiveCustomRewards');
 
 /**
  * Returns the userName of the specified user
@@ -1594,4 +1595,34 @@ export async function unsubscribeUserFromQlan(uid, qlanId) {
         active: false,
         inactiveSince: (new Date()).getTime()
     });
+}
+
+// -----------------------------------------------
+// Live streams
+// -----------------------------------------------
+
+/**
+ * Listen to an specific active custom reward
+ * @param {string} streamId Stream identifier
+ * @param {function} callback Function called every time the active rewards are updated
+ */
+export function listenStreamCustomRewards(streamId, callback) {
+    return activeCustomRewardsRef.child(streamId).on('value', callback);
+}
+
+/**
+ * Returns the value of the isStreaming flag of the specified streamer
+ * (this flag is updated only by cloud functions, is true when the streamer is live on Twitch)
+ * @param {string} streamerUid Streamer uid
+ */
+export async function getStreamerStreamingStatus(streamerUid) {
+    return (await userStreamerRef.child(streamerUid).child('isStreaming').once('value')).val();
+}
+
+/**
+ * Gets the thumbnail URL of the live stream of the specified streamer
+ * @param {string} streamerUid Streamer uid
+ */
+export async function getStreamerThumbnailUrl(streamerUid) {
+    return await userStreamerRef.child(streamerUid).child('thumbnailUrl').once('value');
 }

@@ -1,5 +1,5 @@
-import { eventsDataRef, eventParticipantsRef } from '../services/database';
-import { HOURS_IN_DAY, LOAD_FEATURED_STREAM, LOAD_STREAMS_BY_DATE_RANGE, ONE_HOUR_MILISECONDS, UPDATE_FEATURED_STREAM, UPDATE_STREAM } from '../utilities/Constants';
+import { eventsDataRef, eventParticipantsRef, listenStreamCustomRewards, getStreamerStreamingStatus, getStreamerThumbnailUrl } from '../services/database';
+import { HOURS_IN_DAY, LOAD_FEATURED_STREAM, LOAD_LIVE_STREAM, LOAD_STREAMS_BY_DATE_RANGE, ONE_HOUR_MILISECONDS, REMOVE_STREAM, UPDATE_FEATURED_STREAM, UPDATE_STREAM } from '../utilities/Constants';
 
 const listeningStreams = [];
 
@@ -55,13 +55,39 @@ export const loadStreamsByListIndex = (uid, index) => async (dispatch) => {
 
     eventsDataRef.orderByChild('timestamp').startAt(startAt.getTime()).endAt(endAt.getTime()).on('child_added', (stream) => {
         if (!stream.val().featured) {
-            const streamObject = {
+            let streamObject = {
                 id: stream.key,
                 ...stream.val(),
                 isUserAParticipant: false
             };
 
             dispatch(loadStreamByDateRange(streamObject, index));
+
+            /**
+             * If the stream is scheduled for today (index === 0) then listen for custom rewards (as the stream can
+             * suddenly start while the user is in the app)
+             */
+            if (index === 0) {
+                listenStreamCustomRewards(stream.key, (streamRewards) => {
+                    if (streamRewards.exists()) {
+                        async function checkIfStreamerIsStreaming() {
+                            const isStreaming = await getStreamerStreamingStatus(streamRewards.val().streamerUid);
+                            if (isStreaming) {
+                                const streamerThumbnailUrl = await getStreamerThumbnailUrl(streamRewards.val().streamerUid);
+
+                                streamObject = {
+                                    ...streamObject,
+                                    thumbnailUrl: streamerThumbnailUrl.val()
+                                }
+                                dispatch(removeStream(stream.key, index));
+                                dispatch(loadLiveStream(stream.key, streamObject));
+                            }
+                        }
+
+                        checkIfStreamerIsStreaming();
+                    }
+                });
+            }
 
             if (uid && listeningStreams.indexOf(stream.key) < 0) {
                 eventParticipantsRef.child(stream.key).child(uid).on('value', (userParticipant) => {
@@ -96,6 +122,12 @@ const updateFeaturedStream = (id, payload) => ({
     payload
 });
 
+const removeStream = (id, index) => ({
+    type: REMOVE_STREAM,
+    id,
+    index
+});
+
 const loadStreamByDateRange = (payload, index) => ({
     type: LOAD_STREAMS_BY_DATE_RANGE,
     payload,
@@ -107,4 +139,10 @@ const updateStream = (id, payload, index) => ({
     id,
     payload,
     index
+});
+
+const loadLiveStream = (id, payload) => ({
+    type: LOAD_LIVE_STREAM,
+    id,
+    payload
 });

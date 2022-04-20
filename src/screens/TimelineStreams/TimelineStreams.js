@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, ScrollView, Text, FlatList } from 'react-native';
+import { ScrollView, Text, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -9,6 +9,7 @@ import DiscoverStreamersScreen from '../DiscoverStreamersScreen/DiscoverStreamer
 import FeaturedStreamsList from '../../components/FeaturedStreamsList/FeaturedStreamsList';
 import StreamsList from '../../components/StreamsList/StreamsList';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
+import { trackOnSegment } from '../../services/statistics';
 
 export class TimelineStreams extends Component {
     listsToRender = [0, 1, 2, 3, 4, 5, 6];
@@ -32,13 +33,19 @@ export class TimelineStreams extends Component {
 
     onStreamPress = (stream) => {
         this.setState({ selectedStream: stream }, () => this.setState({ openEventDetailsModal: true }));
+        trackOnSegment('User open event', {
+            EventId: this.props.eventId,
+            EventIsSponsored: this.props.sponsorImage ? true : false,
+            featuredEvent: this.props.featured,
+            EventStreamer: this.props.streamerName,
+            EventGame: this.props.game
+        });
     }
 
     render() {
         return (
             <ScrollView style={styles.container}>
                 <FeaturedStreamsList uid={this.props.uid} onCardPress={this.onStreamPress} />
-                <View style={{ height: 40 }} />
                 <Text style={{
                     fontSize: 22,
                     fontWeight: '700',
@@ -58,14 +65,14 @@ export class TimelineStreams extends Component {
                 <FlatList initialNumToRender={2}
                     data={this.listsToRender}
                     keyExtractor={(item) => item.dia}
-                    renderItem={({item, index}) => (
+                    renderItem={({ item, index }) => (
                         <StreamsList index={index}
                             onCardPress={this.onStreamPress}
                             uid={this.props.uid} />
                     )} />
                 <EventDetailsModal open={this.state.openEventDetailsModal}
-                onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
-                stream={this.state.selectedStream} />
+                    onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
+                    stream={this.state.selectedStream} />
                 <LevelInformationModal open={this.state.openLevelInformationModal}
                     onClose={() => this.setState({ openLevelInformationModal: false })} />
             </ScrollView>

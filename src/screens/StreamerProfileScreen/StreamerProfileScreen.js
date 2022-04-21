@@ -81,9 +81,18 @@ class StreamerProfileScreen extends Component {
         }
 
         // Determine upcoming events and sort it by time
-        const streamerEvents = Object.keys(this.props.logros.logrosActivos)
-        .filter((eventId) => this.props.logros.logrosActivos[eventId].idStreamer && this.props.logros.logrosActivos[eventId].idStreamer === streamerId)
-        .map((eventId) => this.props.logros.logrosActivos[eventId]).sort((a, b) => a.timestamp - b.timestamp);
+        let streamerEvents = Object.keys(this.props.streamsLists.featured)
+        .filter((streamId) => this.props.streamsLists.featured[streamId].idStreamer && this.props.streamsLists.featured[streamId].idStreamer === streamerId)
+        .map((streamId) => this.props.streamsLists.featured[streamId]);
+
+        for (let i = 0; i < this.props.streamsLists.streams.length; i++) {
+            const streamsList = this.props.streamsLists.streams[i];
+            streamerEvents = streamerEvents.concat(Object.keys(streamsList)
+            .filter((streamId) => streamsList[streamId].idStreamer && streamsList[streamId].idStreamer === streamerId)
+            .map((streamId) => streamsList[streamId]));
+        }
+
+        streamerEvents.sort((a, b) => a.timestamp - b.timestamp);
 
         // Only show the 2 most upcoming streams
         this.setState({ nextStreams: streamerEvents.slice(0, 2) });
@@ -369,7 +378,7 @@ class StreamerProfileScreen extends Component {
 
 function mapStateToProps(state) {
     return {
-        logros: state.streamsReducer,
+        streamsLists: state.streamsReducer.streamsLists,
         uid: state.userReducer.user.id,
         userSubscriptions: state.userReducer.user.userToStreamersSubscriptions
     };

@@ -1463,13 +1463,6 @@ export async function getQaplaLevels() {
 // -----------------------------------------------
 
 /**
- * Return all the public profiles of streamers
- */
- export async function getStreamersPublicProfiles() {
-    return await streamersPublicProfilesRef.once('value');
-}
-
-/**
  * Return the given number of profiles after the profile indicated (with the cursor)
  * @param {number} limit Number of profiles to load (100 by default)
  * @param {string} cursor Start point to load (optional)

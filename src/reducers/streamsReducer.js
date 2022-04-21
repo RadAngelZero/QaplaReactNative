@@ -32,7 +32,7 @@ function streamsReducer(state = initialState, action) {
 
             return { ...state, streamsLists: { ...streamsLists, featured } };
         case REMOVE_FEATURED_STREAM:
-            delete featured[action.payload.id]
+            delete featured[action.id]
 
             return { ...state, streamsLists: { ...streamsLists, featured } };
         case LOAD_STREAMS_BY_DATE_RANGE:

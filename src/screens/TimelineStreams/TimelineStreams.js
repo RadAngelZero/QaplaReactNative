@@ -8,6 +8,7 @@ import { translate } from '../../utilities/i18';
 import LevelInformationModal from '../../components/LevelInformationModal/LevelInformationModal';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import DiscoverStreamersScreen from '../DiscoverStreamersScreen/DiscoverStreamersScreen';
+import StreamLiveList from '../../components/StreamLiveList/StreamLiveList';
 
 export class TimelineStreams extends Component {
     state = {
@@ -69,6 +70,47 @@ export class TimelineStreams extends Component {
             <SafeAreaView style={styles.sfvContainer}>
                 <ScrollView>
                     <LogrosList
+                        isUserVerified={this.props.logros.isUserVerified}
+                        logros={orderedEvents}
+                        userId={this.props.uid}
+                        eventToDisplay={eventToDisplay}
+                        horizontal
+                    // dynamicSeparation
+                    // dynamicSeparationWidth={40}
+                    />
+                    <View style={{ height: 25 }} />
+                    <View style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        heigh: 28,
+                        marginBottom: 30,
+                        alignItems: 'center'
+                    }}>
+                        <Text style={{
+                            display: 'flex',
+                            fontSize: 22,
+                            fontWeight: '700',
+                            lineHeight: 28,
+                            letterSpacing: 1,
+                            textAlign: 'left',
+                            color: '#fff',
+                            marginLeft: 16
+                        }}>
+                            En vivo
+                        </Text>
+                        <View
+                            style={{
+                                display: 'flex',
+                                width: 12,
+                                height: 12,
+                                borderRadius: 6,
+                                backgroundColor: '#FF006B',
+                                marginLeft: 8,
+                            }}
+                        />
+                    </View>
+
+                    <StreamLiveList
                         isUserVerified={this.props.logros.isUserVerified}
                         logros={orderedEvents}
                         userId={this.props.uid}

@@ -13,6 +13,7 @@ import { translate } from '../../utilities/i18';
 import { HOURS_IN_DAY, ONE_HOUR_MILISECONDS } from '../../utilities/Constants';
 
 class StreamsList extends React.Component {
+    streamsRendered = 0;
 	state = {
 		scrolled: false,
         title: ''
@@ -30,9 +31,17 @@ class StreamsList extends React.Component {
     }
 
 	renderEventOnList = ({ item }) => {
-        if (item.isUserAParticipant) {
-            return null;
+        if (!this.props.loadOnlyUserStreams && item.isUserAParticipant) {
+			return null;
+		} else if (this.props.loadOnlyUserStreams && !item.isUserAParticipant) {
+			return null;
+		}
+
+        if (this.props.index === 1) {
+            console.log(item.id)
         }
+
+        this.streamsRendered++;
 
         return (
             <StreamCard onPress={this.props.onCardPress}
@@ -49,10 +58,12 @@ class StreamsList extends React.Component {
         const streamsToRender = this.props.streamsLists.streams[this.props.index];
 
         // If there are no streams or the user is already participating in all the featured streams render null
-        if (Object.keys(streamsToRender).length && Object.keys(streamsToRender).some((streamId) => !streamsToRender[streamId].isUserAParticipant)) {
+        if (Object.keys(streamsToRender).length && Object.keys(streamsToRender).some((streamId) => this.props.loadOnlyUserStreams ? streamsToRender[streamId].isUserAParticipant :  !streamsToRender[streamId].isUserAParticipant)) {
             return (
                 <View style={styles.listContainer}>
-                    <QaplaText style={styles.sectionHeader}>{this.state.title}</QaplaText>
+                    {this.streamsRendered > 0 &&
+						<QaplaText style={styles.sectionHeader}>{this.state.title}</QaplaText>
+					}
                     <FlatList data={Object.keys(streamsToRender).map((key) => (streamsToRender[key]))}
                         onScrollBeginDrag={() => { if (this.props.dynamicSeparation) {this.setState({ scrolled: true });}}}
                         onMomentumScrollEnd={(e) => { if (this.props.dynamicSeparation) {this.setState({scrolled: e.nativeEvent.contentOffset.x >= 20});}}}
@@ -85,5 +96,9 @@ function mapDispatchToProps(dispatch) {
         loadStreamsByListIndex: (uid, index) => loadStreamsByListIndex(uid, index)(dispatch)
     };
 }
+
+StreamsList.defaultProps = {
+	loadOnlyUserStreams: false
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(StreamsList);

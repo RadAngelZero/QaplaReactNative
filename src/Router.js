@@ -54,6 +54,7 @@ import AuthHandlerScreen from './screens/AuthHandlerScreen/AuthHandlerScreen';
 import FollowingStreamersScreen from './screens/FollowingStreamersScreen/FollowingStreamersScreen';
 import WriteCheerMessageScreen from './screens/WriteCheerMessageScreen/WriteCheerMessageScreen';
 import CheersSentScreen from './screens/CheersSentScreen/CheersSentScreen';
+import MyStreamsScreen from './screens/MyStreamsScreen/MyStreamsScreen';
 
 //#region Stack Navigators
 
@@ -301,7 +302,7 @@ const StreamsTopTabNavigator = createMaterialTopTabNavigator(
       screen: TimelineStreams
     },
     MyStreams: {
-      screen: RetasNotificationsScreen // Replace this shit with a new cool screen for MyStreams
+      screen: MyStreamsScreen
     }
   },
   {

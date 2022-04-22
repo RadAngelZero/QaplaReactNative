@@ -64,7 +64,7 @@ import CloseThiccIcon from './icons/Close-Thicc.svg';
 import AlertIcon from './icons/AlertIcon.svg';
 import TwitchExtrudedLogo from './icons/TwitchExtrudedLogo.svg';
 import ActivityQoin from './icons/ActivityQoin.svg';
-import ActivityXQ from './icons/ActivityXQ.svg';
+import ActivityXQ from './icons/XQ.svg';
 import DuotoneDefault from './icons/DuotoneDefault.svg';
 import DuotoneActive from './icons/DuotoneActive.svg';
 import SeasonLevelEs1 from './icons/SeasonLevelEs1.svg';
@@ -99,6 +99,8 @@ import Boostx3 from './icons/Boostx3.svg';
 import Boostx5 from './icons/Boostx5.svg';
 import Boostx10 from './icons/Boostx10.svg';
 import EditQlan from './icons/EditQlan.svg';
+import Qoin from './icons/Qoin.svg';
+
 
 // Images
 
@@ -390,6 +392,7 @@ const images = {
 		boostX5: Boostx5,
 		boostX10: Boostx10,
 		editQlan: EditQlan,
+		qoin: Qoin
 	},
 };
 

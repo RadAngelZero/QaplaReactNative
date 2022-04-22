@@ -10,6 +10,7 @@ import FeaturedStreamsList from '../../components/FeaturedStreamsList/FeaturedSt
 import StreamsList from '../../components/StreamsList/StreamsList';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 import { trackOnSegment } from '../../services/statistics';
+import StreamLiveList from '../../components/StreamLiveList/StreamLiveList';
 
 export class TimelineStreams extends Component {
     listsToRender = [0, 1, 2, 3, 4, 5, 6];
@@ -46,6 +47,13 @@ export class TimelineStreams extends Component {
         return (
             <ScrollView style={styles.container}>
                 <FeaturedStreamsList uid={this.props.uid} onCardPress={this.onStreamPress} />
+                
+                <StreamLiveList
+                    isUserVerified={this.props.logros.isUserVerified}
+                    logros={orderedEvents}
+                    userId={this.props.uid}
+                    eventToDisplay={eventToDisplay}
+                    horizontal />
                 <Text style={{
                     fontSize: 22,
                     fontWeight: '700',

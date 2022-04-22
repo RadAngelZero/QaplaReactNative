@@ -12,7 +12,6 @@ import QaplaText from '../QaplaText/QaplaText';
 import Colors from '../../utilities/Colors';
 
 class FeaturedStreamsList extends React.Component {
-	streamsRendered = 0;
 	state = {
 		scrolled: false,
 	};
@@ -23,8 +22,6 @@ class FeaturedStreamsList extends React.Component {
 		} else if (this.props.loadOnlyUserStreams && !item.isUserAParticipant) {
 			return null;
 		}
-
-		this.streamsRendered++;
 
 		return (
 			<StreamCard onPress={this.props.onCardPress}
@@ -45,9 +42,7 @@ class FeaturedStreamsList extends React.Component {
 			return (
 				<>
 				<View style={styles.listContainer}>
-					{this.streamsRendered > 0 &&
-						<QaplaText style={styles.sectionHeader}>{translate('TimelineStreams.featuredEvent')}</QaplaText>
-					}
+					<QaplaText style={styles.sectionHeader}>{translate('TimelineStreams.featuredEvent')}</QaplaText>
 					<FlatList data={Object.keys(featuredStreams).sort((a, b) => featuredStreams[a].timestamp - featuredStreams[b].timestamp).map((streamId) => featuredStreams[streamId])}
 						onScrollBeginDrag={() => { if (this.props.dynamicSeparation) {this.setState({ scrolled: true });}}}
 						onMomentumScrollEnd={(e) => { if (this.props.dynamicSeparation) {this.setState({scrolled: e.nativeEvent.contentOffset.x >= 20});}}}

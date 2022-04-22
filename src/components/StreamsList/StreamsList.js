@@ -13,7 +13,6 @@ import { translate } from '../../utilities/i18';
 import { HOURS_IN_DAY, ONE_HOUR_MILISECONDS } from '../../utilities/Constants';
 
 class StreamsList extends React.Component {
-    streamsRendered = 0;
 	state = {
 		scrolled: false,
         title: ''
@@ -37,12 +36,6 @@ class StreamsList extends React.Component {
 			return null;
 		}
 
-        if (this.props.index === 1) {
-            console.log(item.id)
-        }
-
-        this.streamsRendered++;
-
         return (
             <StreamCard onPress={this.props.onCardPress}
                 dynamicSeparationWidth={this.props.dynamicSeparationWidth}
@@ -61,9 +54,7 @@ class StreamsList extends React.Component {
         if (Object.keys(streamsToRender).length && Object.keys(streamsToRender).some((streamId) => this.props.loadOnlyUserStreams ? streamsToRender[streamId].isUserAParticipant :  !streamsToRender[streamId].isUserAParticipant)) {
             return (
                 <View style={styles.listContainer}>
-                    {this.streamsRendered > 0 &&
-						<QaplaText style={styles.sectionHeader}>{this.state.title}</QaplaText>
-					}
+                    <QaplaText style={styles.sectionHeader}>{this.state.title}</QaplaText>
                     <FlatList data={Object.keys(streamsToRender).map((key) => (streamsToRender[key]))}
                         onScrollBeginDrag={() => { if (this.props.dynamicSeparation) {this.setState({ scrolled: true });}}}
                         onMomentumScrollEnd={(e) => { if (this.props.dynamicSeparation) {this.setState({scrolled: e.nativeEvent.contentOffset.x >= 20});}}}

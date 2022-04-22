@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View, Platform } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style';
@@ -96,7 +96,7 @@ class StreamerCard extends React.PureComponent {
                         }
                     </View>
                 </View>
-                <Text style={styles.bio} onTextLayout={this.onBioLayout}>
+                <Text style={styles.bio} onTextLayout={this.onBioLayout} numberOfLines={Platform.OS === 'android' ? 3 : 100} ellipsizeMode='tail'>
                     {this.state.bio}
                 </Text>
                 <View style={styles.tagsContainer}>

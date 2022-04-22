@@ -106,6 +106,7 @@ export class TimelineStreams extends Component {
                                 borderRadius: 6,
                                 backgroundColor: '#FF006B',
                                 marginLeft: 8,
+                                marginTop: 5
                             }}
                         />
                     </View>

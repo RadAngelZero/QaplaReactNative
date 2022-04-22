@@ -170,10 +170,10 @@ class NewEventCard extends React.PureComponent {
                         blurRadius={5}
                         //change this later
                         // source={backgroundImage ? { uri: backgroundImage } : null}
-                        source={{ uri: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_rubius-480x270.jpg' }}
+                        source={{ uri: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_zilverk-480x270.jpg' }}
                     >
                         <View style={{ display: 'flex', width: '100%', height: '100%' }}>
-                            <Image source={{uri: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_rubius-480x270.jpg'}}
+                            <Image source={{ uri: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_zilverk-480x270.jpg' }}
                                 style={{
                                     position: 'absolute',
                                     top: 28,
@@ -205,12 +205,12 @@ class NewEventCard extends React.PureComponent {
                                     </View>
                                 }
                                 {this.state.qoins &&
-                                    <View style={{ display: 'flex', transform: [{ scale: 0.8 }], marginHorizontal: '-2%', backgroundColor: '#ff00' }}>
-                                        <Images.svg.activityQoin />
+                                    <View style={{ display: 'flex', transform: [{ scale: 1.3 }], marginHorizontal: '-1%', backgroundColor: '#ff00', marginTop: 10 }}>
+                                        <Images.svg.qoin />
                                     </View>
                                 }
                                 {this.state.xq &&
-                                    <View style={{ display: 'flex', transform: [{ scale: 0.8 }], marginHorizontal: '-2%', backgroundColor: '#ff00' }}>
+                                    <View style={{ display: 'flex', transform: [{ scale: 1.3 }], marginLeft: '2%', marginRight: '-2%', backgroundColor: '#ff00', marginTop: 10 }}>
                                         <Images.svg.activityXQ />
                                     </View>
                                 }
@@ -227,7 +227,7 @@ class NewEventCard extends React.PureComponent {
                     {/* <Image
                         style={styles.eventSponsorImage}
                         source={sponsorImage ? { uri: sponsorImage } : null} /> */}
-                    <View style={{height: 16}}/>
+                    <View style={{ height: 16 }} />
                     <LinearGradient
                         style={styles.streamerDetails}
                         useAngle={true}

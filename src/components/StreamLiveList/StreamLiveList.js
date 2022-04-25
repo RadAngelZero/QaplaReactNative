@@ -13,7 +13,7 @@ import { translate } from '../../utilities/i18';
 
 class StreamLiveList extends React.Component {
 	renderEventOnList = ({ item }) => {
-		return <StreamLiveCard
+		return <StreamLiveCard onStreamerProfileButtonPress={this.props.onStreamerProfileButtonPress}
 			key={`liveStream-${item.id}`}
 			{...item}
 			uid={this.props.uid}

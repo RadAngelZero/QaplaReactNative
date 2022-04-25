@@ -7,6 +7,7 @@ import FeaturedStreamsList from '../../components/FeaturedStreamsList/FeaturedSt
 import StreamsList from '../../components/StreamsList/StreamsList';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 import { trackOnSegment } from '../../services/statistics';
+import StreamLiveList from '../../components/StreamLiveList/StreamLiveList';
 
 class Mystreamsscreen extends Component {
     listsToRender = [0, 1, 2, 3, 4, 5, 6];
@@ -39,6 +40,10 @@ class Mystreamsscreen extends Component {
                 <FeaturedStreamsList uid={this.props.uid}
                     loadOnlyUserStreams
                     onCardPress={this.onStreamPress} />
+                <StreamLiveList
+                    uid={this.props.uid}
+                    onStreamerProfileButtonPress={this.onStreamerProfileButtonPress}
+                    horizontal />
                 {/*
                     For some reason if initialNumToRender is set to a value lower than this.listsToRender.length
                     the loadOnlyUserStreams flag is not setted correctly on the StreamsList components that are

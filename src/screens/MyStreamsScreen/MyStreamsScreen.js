@@ -8,6 +8,7 @@ import StreamsList from '../../components/StreamsList/StreamsList';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 import { trackOnSegment } from '../../services/statistics';
 import StreamLiveList from '../../components/StreamLiveList/StreamLiveList';
+import { getStreamerPublicProfile } from '../../services/database';
 
 class Mystreamsscreen extends Component {
     listsToRender = [0, 1, 2, 3, 4, 5, 6];
@@ -27,11 +28,14 @@ class Mystreamsscreen extends Component {
         });
     }
 
-    onStreamerProfileButtonPress = (streamerId) => {
-        this.props.navigation.navigate('StreamerProfile', { streamerId });
-        trackOnSegment('User open streamr profile from card', {
-            StreamerId: streamerId
-        });
+    onStreamerProfileButtonPress = async (streamerId) => {
+        const streamerProfile = await getStreamerPublicProfile(streamerId);
+        if (streamerProfile.exists()) {
+            this.props.navigation.navigate('StreamerProfile', { streamerData: { ...streamerProfile.val(), streamerId } });
+            trackOnSegment('User open streamr profile from card', {
+                StreamerId: streamerId
+            });
+        }
     }
 
     render() {

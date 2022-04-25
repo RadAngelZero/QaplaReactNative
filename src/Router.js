@@ -307,6 +307,7 @@ const StreamsTopTabNavigator = createMaterialTopTabNavigator(
   },
   {
     initialRouteName: 'Timeline',
+    lazy: true,
     tabBarComponent: (props) =>  <QaplaTabBar {...props} />
   }
 );
@@ -332,7 +333,7 @@ const CommunityTopTabNavigator = createMaterialTopTabNavigator(
 //#region Bottom Tab Navigator
 
 const MainBottomTabNavigator = createBottomTabNavigator({
-  Achievements: {
+  Explore: {
     screen: StreamsTopTabNavigator,
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,

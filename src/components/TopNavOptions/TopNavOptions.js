@@ -35,7 +35,7 @@ class TopNavOptions extends Component {
          */
         if ((this.props.currentScreen === 'SignIn' && this.props.previousScreen === 'Profile') || this.props.currentScreen === 'LogIn' || this.props.previousScreen === 'LogIn') {
 
-            return this.props.navigation.navigate('Achievements');
+            return this.props.navigation.navigate('Explore');
         }
 
         return this.props.navigation.dismiss();

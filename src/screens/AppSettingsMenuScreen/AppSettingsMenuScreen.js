@@ -57,7 +57,7 @@ class AppSettingsMenuScreen extends Component {
 
     closeSession = () => {
         signOut();
-        this.props.navigation.navigate('Achievements');
+        this.props.navigation.navigate('Explore');
     }
 
     toggleBioModal = () => this.setState({ bioModalOpen: !this.state.bioModalOpen });

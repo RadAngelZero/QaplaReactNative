@@ -140,7 +140,7 @@ class AuthLoadingScreen extends Component {
             /**
              * We only make this process the first time the app loads (when it's opened) because
              * may can cause problems with the signin/login of a user, if the status changes
-             * and this process is executed again we are going to be redirected to the 'Achievements'
+             * and this process is executed again we are going to be redirected to the 'Explore'
              * screen, no to the place that we need
              */
             if (!this.state.linkOnProgress && this.state.firstLoad) {
@@ -156,7 +156,7 @@ class AuthLoadingScreen extends Component {
                 if (isNewTutorialDone) {
                     removeDataItem('event-remember-date');
 
-                    return this.props.navigation.navigate('Achievements');
+                    return this.props.navigation.navigate('Explore');
                 }
                 else {
                     return this.props.navigation.navigate('onBoarding');
@@ -215,7 +215,7 @@ class AuthLoadingScreen extends Component {
                 } else if (type2 === 'eventInvitation') {
                     const eventId = this.getParameterFromUrl(url, 'eventId');
                     if (eventId) {
-                        return this.props.navigation.navigate('Achievements', { eventToDisplay: eventId });
+                        return this.props.navigation.navigate('Explore', { eventToDisplay: eventId });
                     }
                 }
             }

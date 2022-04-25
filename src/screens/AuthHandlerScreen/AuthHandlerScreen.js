@@ -162,7 +162,7 @@ class AuthHandlerScreen extends Component {
             if (this.props.originScreen !== 'Profile') {
                 return this.props.navigation.navigate(this.props.originScreen);
             } else {
-                return this.props.navigation.navigate('Achievements');
+                return this.props.navigation.navigate('Explore');
             }
         } else if (this.state.screenIndex !== -1) {
             this.backToPreviousScreen();

@@ -53,8 +53,7 @@ export default styles = StyleSheet.create({
     },
     dateSubContainer: {
         display: 'flex',
-        flexDirection: 'row',
-        width: '50%',
+        flexDirection: 'row'
     },
     dateText: {
         color: '#FFF',

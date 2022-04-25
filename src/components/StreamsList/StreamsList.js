@@ -40,7 +40,8 @@ class StreamsList extends React.Component {
             <StreamCard onPress={this.props.onCardPress}
                 dynamicSeparationWidth={this.props.dynamicSeparationWidth}
                 scrolled={this.state.scrolled}
-                key={`stream-${item.id}`}
+                key={`streamListItem-${item.id}`}
+                onStreamerProfileButtonPress={this.props.onStreamerProfileButtonPress}
                 stream={item}
                 uid={this.props.uid}
                 eventToDisplay={this.props.eventToDisplay} />

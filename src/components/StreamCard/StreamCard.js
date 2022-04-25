@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ImageBackground, TouchableWithoutFeedback, Image } from 'react-native';
+import { View, ImageBackground, TouchableOpacity, TouchableWithoutFeedback, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import LinearGradient from 'react-native-linear-gradient';
@@ -57,7 +57,8 @@ class StreamCard extends React.PureComponent {
             backgroundImage,
             streamerPhoto,
             streamerName,
-            timestamp
+            timestamp,
+            idStreamer
         } = this.props.stream;
 
         const streamDate = new Date(timestamp);
@@ -147,19 +148,21 @@ class StreamCard extends React.PureComponent {
                             </QaplaText>
                         </View>
                     </View>
-                    <LinearGradient
-                        style={styles.streamerDetails}
-                        useAngle={true}
-                        angle={95}
-                        angleCenter={{ x: 0.5, y: 0.5 }}
-                        colors={Colors.featuredStreamsGradients[this.props.index] || ['#141539', '#141539']}>
-                        <Image
-                            style={styles.streamerPhoto}
-                            source={streamerPhoto ? { uri: streamerPhoto } : null} />
-                        <QaplaText style={styles.streamPlatformText}>
-                            {streamerName}
-                        </QaplaText>
-                    </LinearGradient>
+                    <TouchableOpacity onPress={() => this.props.onStreamerProfileButtonPress(idStreamer)}>
+                        <LinearGradient
+                            style={styles.streamerDetails}
+                            useAngle={true}
+                            angle={95}
+                            angleCenter={{ x: 0.5, y: 0.5 }}
+                            colors={Colors.featuredStreamsGradients[this.props.index] || ['#141539', '#141539']}>
+                            <Image
+                                style={styles.streamerPhoto}
+                                source={streamerPhoto ? { uri: streamerPhoto } : null} />
+                            <QaplaText style={styles.streamPlatformText}>
+                                {streamerName}
+                            </QaplaText>
+                        </LinearGradient>
+                    </TouchableOpacity>
                 </View>
             </StreamCardContainer>
         );

@@ -26,9 +26,8 @@ class FeaturedStreamsList extends React.Component {
 		return (
 			<StreamCard onPress={this.props.onCardPress}
 				index={index % Colors.featuredStreamsGradients.length}
-				dynamicSeparationWidth={this.props.dynamicSeparationWidth}
-				scrolled={this.state.scrolled}
-				key={`event-${item.id}`}
+				key={`streamFeatured-${item.id}`}
+				onStreamerProfileButtonPress={this.props.onStreamerProfileButtonPress}
 				stream={item}
 				uid={this.props.uid} />
 		);
@@ -52,7 +51,7 @@ class FeaturedStreamsList extends React.Component {
 						ListFooterComponent={() => <View style={{ height: 30 }} />}
 						keyExtractor={(item) => item.id} />
 				</View>
-				<View style={{ height: 40 }} />
+				<View style={{ height: 25 }} />
 				</>
 			);
 		}

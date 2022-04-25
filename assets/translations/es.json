@@ -325,7 +325,8 @@
         "eventsPermissionDescription": "Recibir notificaciones sobre los eventos a los que estoy suscrito"
     },
     "TimelineStreams": {
-        "featuredEvent": "Destacado"
+        "featuredEvent": "Destacado",
+        "live": "En vivo"
     },
     "CommunityScreen": {
         "comingSoon": "¡Proximamente!",

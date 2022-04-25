@@ -43,16 +43,19 @@ export class TimelineStreams extends Component {
         });
     }
 
+    onStreamerProfileButtonPress = (streamerId) => {
+        this.props.navigation.navigate('StreamerProfile', { streamerId });
+    }
+
     render() {
         return (
             <ScrollView style={styles.container}>
-                <FeaturedStreamsList uid={this.props.uid} onCardPress={this.onStreamPress} />
-                
+                <FeaturedStreamsList uid={this.props.uid}
+                    onCardPress={this.onStreamPress}
+                    onStreamerProfileButtonPress={this.onStreamerProfileButtonPress} />
                 <StreamLiveList
-                    isUserVerified={this.props.logros.isUserVerified}
-                    logros={orderedEvents}
-                    userId={this.props.uid}
-                    eventToDisplay={eventToDisplay}
+                    uid={this.props.uid}
+                    onStreamerProfileButtonPress={this.onStreamerProfileButtonPress}
                     horizontal />
                 <Text style={{
                     fontSize: 22,
@@ -76,6 +79,7 @@ export class TimelineStreams extends Component {
                     renderItem={({ item, index }) => (
                         <StreamsList index={index}
                             onCardPress={this.onStreamPress}
+                            onStreamerProfileButtonPress={this.onStreamerProfileButtonPress}
                             uid={this.props.uid} />
                     )} />
                 <EventDetailsModal open={this.state.openEventDetailsModal}

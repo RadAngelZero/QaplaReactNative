@@ -59,7 +59,8 @@ class StreamCard extends React.PureComponent {
             streamerName,
             timestamp,
             idStreamer,
-            streamerChannelLink
+            streamerChannelLink,
+            customRewardsMultipliers
         } = this.props.stream;
 
         const streamDate = new Date(timestamp);
@@ -90,32 +91,32 @@ class StreamCard extends React.PureComponent {
                         source={backgroundImage ? { uri: backgroundImage } : null}>
                         <View style={{ display: 'flex', width: '100%', height: '100%' }}>
                             <View style={{ display: 'flex', flexDirection: 'row', backgroundColor: '#f0f0', marginTop: 24, marginRight: 24, justifyContent: 'flex-end', alignItems: 'flex-start' }}>
-                                {this.state.boost[0] &&
+                            {customRewardsMultipliers && (customRewardsMultipliers.xq === 2 || customRewardsMultipliers.qoins === 2) &&
                                     <View style={{ display: 'flex', transform: [{ scale: 1.1 }], marginHorizontal: '-1.4%', backgroundColor: '#ff00' }}>
                                         <Images.svg.boostX2 />
                                     </View>
                                 }
-                                {this.state.boost[1] &&
+                                {customRewardsMultipliers && (customRewardsMultipliers.xq === 3 || customRewardsMultipliers.qoins === 3) &&
                                     <View style={{ display: 'flex', transform: [{ scale: 1.1 }], marginHorizontal: '-1.4%', backgroundColor: '#ff00' }}>
                                         <Images.svg.boostX3 />
                                     </View>
                                 }
-                                {this.state.boost[2] &&
+                                {customRewardsMultipliers && (customRewardsMultipliers.xq === 5 || customRewardsMultipliers.qoins === 5) &&
                                     <View style={{ display: 'flex', transform: [{ scale: 1.1 }], marginHorizontal: '-1.4%', backgroundColor: '#ff00' }}>
                                         <Images.svg.boostX5 />
                                     </View>
                                 }
-                                {this.state.boost[3] &&
+                                {customRewardsMultipliers && (customRewardsMultipliers.xq === 10 || customRewardsMultipliers.qoins === 10) &&
                                     <View style={{ display: 'flex', transform: [{ scale: 1.1 }], marginHorizontal: '-1.4%', backgroundColor: '#ff00' }}>
                                         <Images.svg.boostX10 />
                                     </View>
                                 }
-                                {this.state.qoins &&
+                                {customRewardsMultipliers && customRewardsMultipliers.qoins > 1 &&
                                     <View style={{ display: 'flex', transform: [{ scale: 1.3 }], marginHorizontal: '-1%', backgroundColor: '#ff00', marginTop: 10 }}>
                                         <Images.svg.qoin />
                                     </View>
                                 }
-                                {this.state.xq &&
+                                {customRewardsMultipliers && customRewardsMultipliers.xq > 1 &&
                                     <View style={{ display: 'flex', transform: [{ scale: 1.3 }], marginLeft: '2%', marginRight: '-2%', backgroundColor: '#ff00', marginTop: 10 }}>
                                         <Images.svg.activityXQ />
                                     </View>

@@ -31,7 +31,7 @@ class LoginWithEmailScreen extends Component {
             const user = await signInWithEmailAndPassword(this.state.email, this.state.password);
             updateUserLoggedStatus(true, user.user.uid);
             subscribeUserToAllRegistredTopics(user.user.uid);
-            const originScreen = this.props.navigation.getParam('originScreen', 'Achievements');
+            const originScreen = this.props.navigation.getParam('originScreen', 'Explore');
             if (originScreen !== 'Public') {
                 this.props.navigation.dismiss();
             } else {

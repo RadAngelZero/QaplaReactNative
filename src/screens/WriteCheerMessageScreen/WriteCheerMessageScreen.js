@@ -5,7 +5,7 @@ import styles from './style';
 import images from '../../../assets/images';
 import { translate } from '../../utilities/i18';
 import { getTwitchDataCloudFunction } from '../../services/functions';
-import { sendCheers, updateTwitchUsername } from '../../services/database';
+import { getStreamerPublicProfile, sendCheers, updateTwitchUsername } from '../../services/database';
 import { connect } from 'react-redux';
 import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 import ChatAnimatedDots from '../../components/ChatAnimatedDots/ChatAnimatedDots';
@@ -19,8 +19,33 @@ class WriteCheerMessageScreen extends Component {
         chatResponsePhraseP1: '',
         chatResponsePhraseP2: '',
         cheerStatus: 0,
-        skipMessage: false
+        skipMessage: false,
+        streamerData: {
+            displayName: ''
+        }
     };
+
+    componentDidMount() {
+        this.props.navigation.addListener('didFocus', this.fetchStreamerData);
+
+        this.fetchStreamerData();
+    }
+
+    fetchStreamerData = async () => {
+        let streamerData = this.props.navigation.getParam('streamerData', null);
+
+        if (!streamerData) {
+            // If the data does not exist then the user comes from a deep link or push notification and we only have the streamerId
+            const streamerId = this.props.navigation.getParam('streamerId', '');
+
+            // So we get the streamer public profile data directly from the database
+            const streamerData = await getStreamerPublicProfile(streamerId);
+
+            this.setState({ streamerData: { ...streamerData.val(), streamerId } });
+        } else {
+            this.setState({ streamerData });
+        }
+    }
 
     updateMessage = (message) => {
         if (this.state.message[this.state.message.length - 1] === '\n' && message[message.length - 1] === '\n') {
@@ -55,10 +80,9 @@ class WriteCheerMessageScreen extends Component {
             }
 
             const qoinsToDonate = this.props.navigation.getParam('qoinsToDonate', 200);
-            const streamerData = this.props.navigation.getParam('streamerData', { displayName: '', streamerId: '' });
 
             let now = new Date();
-            await sendCheers(qoinsToDonate, finalMessage, now.getTime(), streamerData.displayName, this.props.uid, this.props.userName, twitchUsername, this.props.userImage, streamerData.streamerId);
+            await sendCheers(qoinsToDonate, finalMessage, now.getTime(), this.state.streamerData.displayName, this.props.uid, this.props.userName, twitchUsername, this.props.userImage, this.state.streamerData.streamerId);
 
             callback();
         } catch (error) {
@@ -116,8 +140,7 @@ class WriteCheerMessageScreen extends Component {
         this.setState({ skipMessage: true }, async () => {
             try {
                 await this.updateTwitchDataAndSaveCheer('', () => {
-                    const streamerData = this.props.navigation.getParam('streamerData', { displayName: '', streamerId: '' });
-                    this.props.navigation.navigate('CheersSent', { streamerName: streamerData.displayName });
+                    this.props.navigation.navigate('CheersSent', { streamerName: this.state.streamerData.displayName });
                 });
             } catch (error) {
                 console.log(error);
@@ -126,8 +149,6 @@ class WriteCheerMessageScreen extends Component {
     }
 
     render() {
-        const streamerData = this.props.navigation.getParam('streamerData', { displayName: '' });
-
         return (
             <>
             <SafeAreaView style={styles.container}>
@@ -165,7 +186,7 @@ class WriteCheerMessageScreen extends Component {
                             </View>
                             <View style={styles.botMessageBubble}>
                                 <Text style={styles.botMessageText}>
-                                    {translate('writeCheerMessageScreen.tellUs', { streamerName: streamerData.displayName })}
+                                    {translate('writeCheerMessageScreen.tellUs', { streamerName: this.state.streamerData.displayName })}
                                 </Text>
                             </View>
                             {this.state.userResponse !== ''  ?
@@ -186,7 +207,7 @@ class WriteCheerMessageScreen extends Component {
                                 <View style={styles.botMessageBubble}>
                                     <Text style={styles.botMessageText}>
                                         {this.state.chatResponsePhraseP1}
-                                        <Text style={{ color: '#00FFDD' }}>{streamerData.displayName}</Text>
+                                        <Text style={{ color: '#00FFDD' }}>{this.state.streamerData.displayName}</Text>
                                         {this.state.chatResponsePhraseP2}
                                     </Text>
                                 </View>
@@ -229,7 +250,7 @@ class WriteCheerMessageScreen extends Component {
                 <View style={styles.backButtonContainer}>
                     <TouchableOpacity onPress={this.finishCheer} style={styles.sendCheersButton}>
                         <Text style={styles.sendCheersText}>
-                            {translate('writeCheerMessageScreen.backToProfile', { streamerName: streamerData.displayName })}
+                            {translate('writeCheerMessageScreen.backToProfile', { streamerName: this.state.streamerData.displayName })}
                         </Text>
                     </TouchableOpacity>
                 </View>

@@ -22,7 +22,7 @@ class ZeroQoinsEventsModal extends Component {
             Origin: this.props.openWhen
         });
 
-        this.props.navigation.navigate('Achievements');
+        this.props.navigation.navigate('Explore');
         this.props.onClose();
     }
 

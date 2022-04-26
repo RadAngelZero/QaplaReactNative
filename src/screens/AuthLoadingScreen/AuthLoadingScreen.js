@@ -24,7 +24,7 @@ import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment, setUserIdOnSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
-import { loadQaplaLogros } from '../../actions/logrosActions';
+import { loadFeaturedStreams } from '../../actions/streamsActions';
 import { translate } from '../../utilities/i18';
 import { checkNotificationPermission } from '../../services/messaging';
 import remoteConf from '../../services/remoteConfig';
@@ -68,7 +68,7 @@ class AuthLoadingScreen extends Component {
 
             if (user) {
                 this.props.loadUserData(user.uid);
-                this.props.loadQaplaLogros(user.uid);
+                this.props.loadFeaturedStreams(user.uid);
 
                 // If username does not exist because profile does not exist as well, then
                 // user is redirected to ChooUserName where they will create their profile.
@@ -134,13 +134,13 @@ class AuthLoadingScreen extends Component {
                     }
                 }
             } else {
-                this.props.loadQaplaLogros(null);
+                this.props.loadFeaturedStreams(null);
             }
 
             /**
              * We only make this process the first time the app loads (when it's opened) because
              * may can cause problems with the signin/login of a user, if the status changes
-             * and this process is executed again we are going to be redirected to the 'Achievements'
+             * and this process is executed again we are going to be redirected to the 'Explore'
              * screen, no to the place that we need
              */
             if (!this.state.linkOnProgress && this.state.firstLoad) {
@@ -156,7 +156,7 @@ class AuthLoadingScreen extends Component {
                 if (isNewTutorialDone) {
                     removeDataItem('event-remember-date');
 
-                    return this.props.navigation.navigate('Achievements');
+                    return this.props.navigation.navigate('Explore');
                 }
                 else {
                     return this.props.navigation.navigate('onBoarding');
@@ -215,7 +215,7 @@ class AuthLoadingScreen extends Component {
                 } else if (type2 === 'eventInvitation') {
                     const eventId = this.getParameterFromUrl(url, 'eventId');
                     if (eventId) {
-                        return this.props.navigation.navigate('Achievements', { eventToDisplay: eventId });
+                        return this.props.navigation.navigate('Explore', { eventToDisplay: eventId });
                     }
                 }
             }
@@ -309,7 +309,7 @@ function mapDispatchToProps(dispatch) {
         loadListOfGames: () => getListOfGames()(dispatch),
         loadShowHg1Modal: () => getHg1CreateMatch()(dispatch),
         getServerTimeOffset: () => getServerTimeOffset()(dispatch),
-        loadQaplaLogros: (uid) => loadQaplaLogros(uid)(dispatch)
+        loadFeaturedStreams: (uid) => loadFeaturedStreams(uid)(dispatch)
     };
 }
 

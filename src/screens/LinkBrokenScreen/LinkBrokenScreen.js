@@ -32,7 +32,7 @@ class LinkBrokenScreen extends Component {
 
  navigateToEvents = () => {
  	trackOnSegment('Link broken public matches');
-    this.props.navigation.navigate('Achievements');
+    this.props.navigation.navigate('Explore');
  }
 
  render() {

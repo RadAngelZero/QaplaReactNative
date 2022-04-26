@@ -14,7 +14,6 @@ import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOn
 import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen';
 import MyMatchesScreen from './screens/MyMatchesScreen/MyMatchesScreen';
 import PublicMatchCardScreen from './screens/PublicMatchCardScreen/PublicMatchCardScreen';
-import SignUpLoginHandlerScreen from './screens/SignUpLogInScreen/SignUpLoginHandlerScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
 import LoginWithEmailScreen from './screens/LoginWithEmailScreen/LoginWithEmailScreen';
 import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameScreen';
@@ -43,7 +42,6 @@ import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 import { widthPercentageToPx } from './utilities/iosAndroidDim';
 import { translate } from './utilities/i18';
 import NotificationsSettingsScreen from './screens/NotificationsSettingsScreen/NotificationsSettingsScreen';
-import TodayTournamentsScreen from './screens/TodayTournamentsScreen/TodayTournamentsScreen';
 import QaplaText from './components/QaplaText/QaplaText';
 import ChatHeader from './components/Chat/ChatHeader/ChatHeader';
 import DiscoverStreamersScreen from './screens/DiscoverStreamersScreen/DiscoverStreamersScreen';
@@ -56,6 +54,7 @@ import AuthHandlerScreen from './screens/AuthHandlerScreen/AuthHandlerScreen';
 import FollowingStreamersScreen from './screens/FollowingStreamersScreen/FollowingStreamersScreen';
 import WriteCheerMessageScreen from './screens/WriteCheerMessageScreen/WriteCheerMessageScreen';
 import CheersSentScreen from './screens/CheersSentScreen/CheersSentScreen';
+import MyStreamsScreen from './screens/MyStreamsScreen/MyStreamsScreen';
 
 //#region Stack Navigators
 
@@ -303,11 +302,12 @@ const StreamsTopTabNavigator = createMaterialTopTabNavigator(
       screen: TimelineStreams
     },
     MyStreams: {
-      screen: RetasNotificationsScreen
+      screen: MyStreamsScreen
     }
   },
   {
     initialRouteName: 'Timeline',
+    lazy: true,
     tabBarComponent: (props) =>  <QaplaTabBar {...props} />
   }
 );
@@ -333,8 +333,8 @@ const CommunityTopTabNavigator = createMaterialTopTabNavigator(
 //#region Bottom Tab Navigator
 
 const MainBottomTabNavigator = createBottomTabNavigator({
-  Achievements: {
-    screen: TimelineStreams,
+  Explore: {
+    screen: StreamsTopTabNavigator,
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (

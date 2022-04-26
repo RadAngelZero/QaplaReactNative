@@ -29,7 +29,7 @@
              * QaplaTabBar component use this translations so we need it to be predictable
              * that is why is all in lowercase and not so nested
             **/
-            "timeline": "Timeline",
+            "timeline": "Discover",
             "mystreams": "My streams",
             "discover": "Discover",
             "following": "Following",
@@ -325,7 +325,12 @@
         "eventsPermissionDescription": "Receive notifications about the events to which I am subscribed"
     },
     "TimelineStreams": {
-        "featuredEvent": "Featured"
+        "featuredEvent": "Featured",
+        "live": "Live",
+        "streamerHasNoProfileTitle": "Oh no! We could not find their Qapla profile",
+        "streamerHasNoProfileDescription": "%{streamerName} has not created a profile on Qapla, but you can visit their channel on Twitch",
+        "cancel": "Cancel",
+        "goToTwitch": "Go to Twitch"
     },
     "CommunityScreen": {
         "comingSoon": "Coming Soon!",
@@ -364,23 +369,28 @@
         "signInWithEmail": "Sign in with email",
         "textsCarrousel": {
             "welcome": "Welcome!",
-            "authOptions": "Let's log you in to join a stream",
+            "authOptions": "Let’s log you in! Create an account or sign in.",
             "createAccount": "Create your account",
             "signIn": "Sign in",
-            "firstTimeMessage": "Let's discover your first streamer!",
+            "firstTimeMessage": "Discover your next community now!!",
             "welcomeBackMessage": "Welcome back! We missed you :v",
             "createAccountWithEmail": "Create account with email",
             "signInWithEmail": "Sign in with your email",
-            "createUsername": "Create your username"
+            "createUsername": "Create your username",
+            "haveQreatorQode": "Do you have a Qreator Code?",
+            "getCustomAlerts": "Get ⚡️ 3 live interactions⚡️ when mining Qoins during your first 3 streams "
         },
-        "buttonsCarrousel":{
+        "buttonsCarrousel": {
             "createAccount": "Create my account",
             "continueWithApple": "Continue with Apple",
             "alreadyHaveAccount": "I already have an account",
             "continueWithGoogle": "Continue with Google",
             "continue": "Continue",
             "validatingUsername": "Validating username...",
-            "iamReady": "I am ready!"
+            "iamReady": "I am ready!",
+            "joinQlan": "Join Qlan",
+            "joiningQlan": "Joining Qlan",
+            "goToFirstStream": "Go to my first stream"
         }
     },
     "headerBar": {
@@ -497,14 +507,15 @@
     "linkTwitchAccount": {
         "skip": "Skip",
         "linkAccount": "Link your account",
-        "realTimeProgress": "Your progress in real time!",
-        "description": "Receive your Qoins and XQ automatically when you redeem points from your streamer's channel.",
-        "linkButton": "Link with Twitch"
+        "descriptionQreatorCode": "to use your Qreator Code and get your referral tokens 🙌",
+        "description": "🌱 Mine tokens in real-time using your channel points on  Twitch.",
+        "linkButton": "Link account"
     },
     "skipLinkTwitchAccount": {
         "important": "Important",
-        "reminder": "We remind you that accounts not linked to Twitch will not be able to receive their channel exchanges 😭",
-        "description": "But don't worry, you can always link your account from your profile 😉",
+        "reminder": "Friendly reminder: You won´t get any tokens in Qapla if your accounts aren’t linked.",
+        "reminderQreatorCode": "Friendly reminder: To unlock full-benefits on Qapla, you must have a linked Twitch account.",
+        "description": "No worries. You can link your account later from your profile 😉",
         "continue": "I wish to continue"
     },
     "sendCheersModal": {
@@ -574,12 +585,26 @@
         "allow": "Allow"
     },
     "supportStreamerModal": {
-        "supportToFirstPart": "🌱Support ",
+        "supportTo": "⚡️ Send a live interaction to ",
         "supportToSecondPart": "\nwith 200 Qoins",
         "description": "Your cheers are sent in real-time, and your messages appear live on their Twitch channel",
         "sendCheers": "Send Cheers"
     },
     "streamerCard": {
         "viewMore": "View more"
+    },
+    "qlan": {
+        "myQlan": "My Qlan",
+        "joinQlan": "Join a Qlan!",
+        "useCode": "Use the Qreator Code of your fav streamer",
+        "typeQreatorCode": "Enter a Qreator code",
+        "changingQlan": "Are you changing of Qlan?",
+        "enterNewCode": "Enter the new Qreator code",
+        "joinQlanButton": "Join Qlan",
+        "youJoinedP1": "You have joined",
+        "youJoinedP2": "'s Qlan",
+        "backToProfile": "Go back to my profile",
+        "youWillReceive": "You will receive 200 Qoins in your next 3 Qapla streams 🌱",
+        "update": "Update"
     }
 }

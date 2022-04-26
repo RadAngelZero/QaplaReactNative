@@ -35,17 +35,17 @@ export default styles = StyleSheet.create({
         alignItems: 'center'
     },
     cardBody: {
-        paddingTop: 42,
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
     },
     supportAmountContainer: {
-        borderRadius: 20,
-        paddingTop: 28,
-        paddingBottom: 28,
+        width: widthPercentageToPx(26.7),
+        height: heightPercentageToPx(11),
         paddingRight: 24,
         paddingLeft: 24,
+        marginRight: 14,
+        borderRadius: 20,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -59,21 +59,18 @@ export default styles = StyleSheet.create({
         elevation: 8
     },
     supportAmount: {
-        fontSize: 36,
+        fontSize: 26,
         fontWeight: '800',
-        color: '#00FFDC',
-        textShadowColor: 'rgba(0, 255, 220, 0.85)',
         textShadowRadius: 20,
         marginRight: 8
     },
-    titleContainer: {
-        marginTop: 48
-    },
     title: {
+        maxWidth: '80%',
         fontWeight: 'bold',
         fontSize: 24,
         lineHeight: 30,
         letterSpacing: -.72,
+        marginBottom: 48,
         color: '#FFF',
         textAlign: 'center'
     },

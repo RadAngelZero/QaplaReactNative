@@ -33,7 +33,11 @@ class SkipLinkTwitchAccount extends Component {
                                 </QaplaText>
                             </View>
                             <Text style={styles.reminder}>
-                                {translate('skipLinkTwitchAccount.reminder')}
+                                {this.props.linkingWithQreatorCode ?
+                                    translate('skipLinkTwitchAccount.reminderQreatorCode')
+                                    :
+                                    translate('skipLinkTwitchAccount.reminder')
+                                }
                             </Text>
                             <Text style={styles.linkDescription}>
                                 {translate('skipLinkTwitchAccount.description')}

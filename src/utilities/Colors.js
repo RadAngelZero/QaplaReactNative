@@ -22,4 +22,13 @@ export default Colors = {
     signInLogIn: {
         loginButtonColor: '#3b4bf9',
     },
+    featuredStreamsGradients: [
+        ['#FF005C', '#6D00F8'],
+        ['#FF006B', '#FFEA79'],
+        ['#F00AFF', '#00EAF8'],
+        ['#6B10FF', '#FF4BA2', '#FFE483'],
+        ['#3C00FF', '#AA00F8'],
+        ['#9847FF', '#42FFC7'],
+        ['#1400FF', '#00EAF8']
+    ]
 };

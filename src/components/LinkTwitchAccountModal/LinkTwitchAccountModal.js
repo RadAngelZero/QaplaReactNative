@@ -47,11 +47,6 @@ class LinkTwitchAccountModal extends Component {
                     {!this.state.showDontLinkWarning &&
                         <>
                             <View style={styles.linkOptions}>
-                                <QaplaIcon
-                                    touchableStyle={styles.closeIcon}
-                                    onPress={this.props.onClose}>
-                                    <images.svg.closeThiccIcon />
-                                </QaplaIcon>
                                 <TouchableOpacity style={styles.skipButtonContainer}
                                     onPress={() => this.setState({ showDontLinkWarning: true })}>
                                     <Text style={styles.skipButtonText}>
@@ -59,23 +54,29 @@ class LinkTwitchAccountModal extends Component {
                                     </Text>
                                 </TouchableOpacity>
                             </View>
-                            <LinkTwitchAccount onLinkSuccessful={this.onLinkSuccessful} />
+                            <LinkTwitchAccount onLinkSuccessful={this.onLinkSuccessful} linkingWithQreatorCode={this.props.linkingWithQreatorCode} />
                         </>
                     }
                     {this.state.showDontLinkWarning &&
                         <>
-                            <QaplaIcon
-                            touchableStyle={styles.closeIcon}
-                            onPress={() => this.setState({ showDontLinkWarning: false })}>
-                                <images.svg.leftArrowThiccIcon />
-                            </QaplaIcon>
-                            <SkipLinkTwitchAccount onSkipTwitchLink={this.onSkipTwitchLink} />
+                            <View style={styles.backButtonContainer}>
+                                <QaplaIcon
+                                    touchableStyle={styles.closeIcon}
+                                    onPress={() => this.setState({ showDontLinkWarning: false })}>
+                                    <images.svg.leftArrowThiccIcon />
+                                </QaplaIcon>
+                            </View>
+                            <SkipLinkTwitchAccount onSkipTwitchLink={this.onSkipTwitchLink} linkingWithQreatorCode={this.props.linkingWithQreatorCode} />
                         </>
                     }
                 </View>
-            </Modal>
+            </Modal >
         );
     }
 }
+
+LinkTwitchAccountModal.defaultProps = {
+    linkingWithQreatorCode: false
+};
 
 export default LinkTwitchAccountModal;

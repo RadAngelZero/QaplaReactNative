@@ -18,11 +18,8 @@ export const cuentasVerificadasRef = database.ref('/CuentasVerificadas');
 export const verificationOnProccessRef = database.ref('/VerificacionEnProceso');
 export const veriLogroSocialRef = database.ref('/verificarLogroSocial');
 export const feedbackUsersRef = database.ref('/FeedbackUsers');
-export const tournamentsRef = database.ref('/torneos');
-export const activeTournamentsRef = tournamentsRef.child('torneosActivos');
-export const pointsTournamentsRef = database.ref('/puntosTorneos');
 export const eventsRef = database.ref('/eventosEspeciales');
-export const activeEventsRef = eventsRef.child('eventsData');
+export const eventsDataRef = eventsRef.child('eventsData');
 const eventsRequestsRef = eventsRef.child('JoinRequests');
 export const eventParticipantsRef = database.ref('/EventParticipants');
 export const announcementsActRef = database.ref('/Announcements/Active');
@@ -44,6 +41,10 @@ const qaplaLevelsRequirementsRef = database.ref('QaplaLevelsRequirements');
 const streamersPublicProfilesRef = database.ref('/StreamersPublicProfiles');
 const streamerLinksRef = database.ref('/StreamerLinks');
 const userToStreamerSubscriptionsRef = database.ref('/UserToStreamerSubscriptions');
+const qreatorsCodesRef = database.ref('/QreatorsCodes');
+const qlanesMembersRef = database.ref('/QlanesMembers');
+const qlanesRef = database.ref('/Qlanes');
+const activeCustomRewardsRef = database.ref('/ActiveCustomRewards');
 
 /**
  * Returns the userName of the specified user
@@ -860,20 +861,6 @@ export function joinEventWithCustomData(uid, eventId, eventEntry, participantDat
     });
 }
 
-/**
- * Allow the user to join in the given tournament
- * @param {string} uid User identifier on database
- * @param {string} tournamentId Tournament identifier on the database
- * @param {number} totalPuntos The total of points of the tournament
- */
-export async function joinInTournament(uid, tournamentId, totalPuntos) {
-    pointsTournamentsRef.child(uid).child(tournamentId).update({
-        puntosCompletados: 0,
-        redimido: false,
-        totalPuntos
-    });
-}
-
 // -----------------------------------------------
 // Announcements
 // -----------------------------------------------
@@ -1042,17 +1029,6 @@ export function removeUserListeners(uid) {
     usersRef.child(uid).off('child_added');
     usersRef.child(uid).off('child_changed');
     usersRef.child(uid).off('child_removed');
-}
-
-/**
- * Remove all the database listeners related to the logrosReducer
- * @param {string} uid User identifier
- */
-export function removeLogrosListeners(uid) {
-    cuentasVerificadasRef.child(uid).off('value');
-    logrosRef.child(uid).child('logroCompleto').off('child_added');
-    logrosRef.child(uid).child('logroIncompleto').off('value');
-    pointsTournamentsRef.child(uid).off('value');
 }
 
 /**
@@ -1282,6 +1258,13 @@ export async function getDonationQoinsBase() {
 }
 
 /**
+ * Get the minimum donation allowed to send in a cheer
+ */
+export async function getMinimumDonationValue() {
+    return await DonationsCostsRef.child('minimumDonation').once('value');
+}
+
+/**
  * Donations Leader Board
  */
 
@@ -1427,39 +1410,41 @@ export async function sendCheers(amountQoins, message, timestamp, streamerName, 
     const pointsToAdd = qoinsDonated / qoinsBase;
     const bitsToAddPerPoint = (await DonationsCostsRef.child('bitsBase').once('value')).val();
 
-    const rewardProgress = await usersRewardsProgressRef.child(uid).once('value');
     let tensInPoints = Math.floor(pointsToAdd / 10);
     const bitsToAdd = bitsToAddPerPoint * pointsToAdd;
 
-    if (!rewardProgress.exists()) {
-        const currentPoints = pointsToAdd - tensInPoints * 10;
-        const donations = {
-            bits:  bitsToAdd,
-            qoins: qoinsDonated
-        };
+    await usersRewardsProgressRef.child(uid).transaction((rewardsProgress) => {
+        if (rewardsProgress) {
+            let currentPoints = rewardsProgress.currentPoints + pointsToAdd;
+            tensInPoints = Math.floor(currentPoints / 10);
+            currentPoints -= tensInPoints * 10;
+            const donations = {
+                ...rewardsProgress.donations,
+                bits: (rewardsProgress.donations.bits ? rewardsProgress.donations.bits : 0) + (bitsToAdd),
+                qoins: (rewardsProgress.donations.qoins ? rewardsProgress.donations.qoins : 0) + qoinsDonated
+            };
 
-        await usersRewardsProgressRef.child(uid).update({
-            currentPoints,
-            donations,
-            lifes: tensInPoints,
-            rewardsReedemed: 0
-        });
-    } else {
-        let currentPoints = rewardProgress.val().currentPoints + pointsToAdd;
-        tensInPoints = Math.floor(currentPoints / 10);
-        currentPoints -= tensInPoints * 10;
-        const donations = {
-            ...rewardProgress.val().donations,
-            bits: (rewardProgress.val().donations.bits ? rewardProgress.val().donations.bits : 0) + (bitsToAdd),
-            qoins: (rewardProgress.val().donations.qoins ? rewardProgress.val().donations.qoins : 0) + qoinsDonated
-        };
+            return {
+                ...rewardsProgress,
+                currentPoints,
+                lifes: rewardsProgress.lifes + tensInPoints,
+                donations
+            };
+        } else {
+            const currentPoints = pointsToAdd - tensInPoints * 10;
+            const donations = {
+                bits:  bitsToAdd,
+                qoins: qoinsDonated
+            };
 
-        await usersRewardsProgressRef.child(uid).update({
-            currentPoints,
-            lifes: rewardProgress.val().lifes + tensInPoints,
-            donations
-        });
-    }
+            return {
+                currentPoints,
+                donations,
+                lifes: tensInPoints,
+                rewardsReedemed: 0
+            };
+        }
+    });
 }
 
 // -----------------------------------------------
@@ -1476,13 +1461,6 @@ export async function getQaplaLevels() {
 // -----------------------------------------------
 // Streamers Public Profiles
 // -----------------------------------------------
-
-/**
- * Return all the public profiles of streamers
- */
- export async function getStreamersPublicProfiles() {
-    return await streamersPublicProfilesRef.once('value');
-}
 
 /**
  * Return the given number of profiles after the profile indicated (with the cursor)
@@ -1546,4 +1524,106 @@ export async function unsubscribeUserToStreamerProfile(uid, streamerId) {
  */
 export async function listenToUserToStreamersSubscriptions(uid, callback) {
     return userToStreamerSubscriptionsRef.child(uid).on('value', callback);
+}
+
+// -----------------------------------------------
+// Qreators codes
+// -----------------------------------------------
+
+/**
+ * Returns the id of the Qlan based on the Qreator code
+ * @param {string} qreatorCode Unique code to join a Qlan
+ */
+export async function getQlanIdWithQreatorCode(qreatorCode) {
+    let id = '';
+
+    const codes = await qreatorsCodesRef.orderByChild('code').equalTo(qreatorCode).once('value');
+
+    /**
+     * We know this query will return a maximum of one code, however firebase returns an object of objects
+     * so we need to go through it to get the code
+     */
+    codes.forEach((code) => id = code.key);
+
+    return id;
+}
+
+// -----------------------------------------------
+// Qlanes
+// -----------------------------------------------
+
+/**
+ * Gets the public information (i.e: image, name) of the given Qlan
+ * @param {string} qlanId Qlan identifier
+ */
+export async function getQlanData(qlanId) {
+    return await qlanesRef.child(qlanId).once('value');
+}
+
+/**
+ * Subscribes a user to the specified qlan
+ * @param {string} uid User identifier
+ * @param {string} qlanId Qlan identifier
+ * @param {string} username Qapla username
+ * @param {string} twitchUsername Twitch username
+ */
+export async function subscribeUserToQlan(uid, qlanId, username, twitchUsername) {
+    await usersRef.child(uid).update({ qlanId });
+    await qlanesMembersRef.child(qlanId).child(uid).update({
+        active: true,
+        memberSince: (new Date()).getTime(),
+        username,
+        twitchUsername
+    });
+}
+
+/**
+ * Unubscribes a user from the specified qlan
+ * @param {string} uid User identifier
+ * @param {string} qlanId Qlan identifier
+ *
+ */
+export async function unsubscribeUserFromQlan(uid, qlanId) {
+    await qlanesMembersRef.child(qlanId).child(uid).update({
+        active: false,
+        inactiveSince: (new Date()).getTime()
+    });
+}
+
+// -----------------------------------------------
+// Live streams
+// -----------------------------------------------
+
+/**
+ * Listen to an specific active custom reward
+ * @param {string} streamId Stream identifier
+ * @param {function} callback Function called every time the active rewards are updated
+ */
+export function listenStreamCustomRewards(streamId, callback) {
+    return activeCustomRewardsRef.child(streamId).on('value', callback);
+}
+
+/**
+ * Returns the value of the isStreaming flag of the specified streamer
+ * (this flag is updated only by cloud functions, is true when the streamer is live on Twitch)
+ * @param {string} streamerUid Streamer uid
+ */
+export async function getStreamerStreamingStatus(streamerUid) {
+    return (await userStreamerRef.child(streamerUid).child('isStreaming').once('value')).val();
+}
+
+/**
+ * Gets the thumbnail URL of the live stream of the specified streamer
+ * @param {string} streamerUid Streamer uid
+ */
+export async function getStreamerThumbnailUrl(streamerUid) {
+    return await userStreamerRef.child(streamerUid).child('thumbnailUrl').once('value');
+}
+
+/**
+ * Gets the displayName from the given streamer
+ * @param {string} streamerUid Streamer uid
+ */
+export async function getStreamerName(streamerUid) {
+    return await userStreamerRef.child(streamerUid).child('displayName').once('value');
 }

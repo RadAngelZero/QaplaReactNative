@@ -42,7 +42,7 @@ import BalanceFlipIcon from './icons/qapla-balance-flip.svg';
 import CopyIcon from './icons/Copy.svg';
 import SentIcon from './icons/SentIcon.svg';
 import HighFiveIcon from './icons/HighFive.svg';
-import SendIcon from './icons/Send.svg';
+import SendIcon from './icons/send.svg';
 import ArrowDownIcon from './icons/arrowDown.svg';
 import BetaLabelIcon from './icons/BetaLabel.svg';
 import BitsIcon from './icons/bitsIcon.svg';
@@ -98,6 +98,7 @@ import Boostx2 from './icons/Boostx2.svg';
 import Boostx3 from './icons/Boostx3.svg';
 import Boostx5 from './icons/Boostx5.svg';
 import Boostx10 from './icons/Boostx10.svg';
+import EditQlan from './icons/EditQlan.svg';
 import Qoin from './icons/Qoin.svg';
 
 
@@ -277,7 +278,19 @@ const images = {
 		notEnoughQoins: {
 			img: require('./images/NotEnoughQoins.png'),
 			uri: '@assets/images/NotEnoughQoins.png'
-		}
+		},
+		qlanProfile: {
+			img: require('./images/qlanProfile.png'),
+			uri: '@assets/images/qlanProfile.png'
+		},
+		checkCircleGlow: {
+			img: require('./icons/CheckCircleGlow.png'),
+			uri: '@assets/icons/CheckCircleGlow.png'
+		},
+		joinQlanGlow: {
+			img: require('./icons/JoinQlanGlow.png'),
+			uri: '@assets/icons/JoinQlanGlow.png'
+		},
 	},
 	svg: {
 		facebookIcon: FacebookIcon,
@@ -378,7 +391,8 @@ const images = {
 		boostX3: Boostx3,
 		boostX5: Boostx5,
 		boostX10: Boostx10,
-		qoin: Qoin,
+		editQlan: EditQlan,
+		qoin: Qoin
 	},
 };
 

@@ -328,7 +328,9 @@
         "featuredEvent": "Destacado",
         "live": "En vivo",
         "streamerHasNoProfileTitle": "¡Oh no! No encontramos su perfil Qapla",
-        "streamerHasNoProfileDescription": "%{streamerName} no ha creado un perfil en Qapla, pero puedes visitar su canal en Twitch"
+        "streamerHasNoProfileDescription": "%{streamerName} no ha creado un perfil en Qapla, pero puedes visitar su canal en Twitch",
+        "cancel": "Cancelar",
+        "goToTwitch": "Ir a Twitch"
     },
     "CommunityScreen": {
         "comingSoon": "¡Proximamente!",

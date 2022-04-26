@@ -43,14 +43,14 @@ class Mystreamsscreen extends Component {
                 translate('TimelineStreams.streamerHasNoProfileDescription', { streamerName: streamerName.val() }),
                 [
                     {
-                        text: 'Cancel',
+                        text: translate('TimelineStreams.cancel'),
                         onPress: () => trackOnSegment('User did not want to go to streamer´s Twitch', {
                             StreamerId: streamerId,
                             StreamerName: streamerName.val()
                         })
                     },
                     {
-                        text: 'Ir a Twitch',
+                        text: translate('TimelineStreams.goToTwitch'),
                         onPress: () => {
                             trackOnSegment('User goes to streamer´s Twitch', {
                                 StreamerId: streamerId,

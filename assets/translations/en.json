@@ -328,7 +328,9 @@
         "featuredEvent": "Featured",
         "live": "Live",
         "streamerHasNoProfileTitle": "Oh no! We could not find their Qapla profile",
-        "streamerHasNoProfileDescription": "%{streamerName} has not created a profile on Qapla, but you can visit their channel on Twitch"
+        "streamerHasNoProfileDescription": "%{streamerName} has not created a profile on Qapla, but you can visit their channel on Twitch",
+        "cancel": "Cancel",
+        "goToTwitch": "Go to Twitch"
     },
     "CommunityScreen": {
         "comingSoon": "Coming Soon!",

@@ -1619,3 +1619,11 @@ export async function getStreamerStreamingStatus(streamerUid) {
 export async function getStreamerThumbnailUrl(streamerUid) {
     return await userStreamerRef.child(streamerUid).child('thumbnailUrl').once('value');
 }
+
+/**
+ * Gets the displayName from the given streamer
+ * @param {string} streamerUid Streamer uid
+ */
+export async function getStreamerName(streamerUid) {
+    return await userStreamerRef.child(streamerUid).child('displayName').once('value');
+}

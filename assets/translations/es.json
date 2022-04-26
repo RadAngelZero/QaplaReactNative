@@ -326,7 +326,9 @@
     },
     "TimelineStreams": {
         "featuredEvent": "Destacado",
-        "live": "En vivo"
+        "live": "En vivo",
+        "streamerHasNoProfileTitle": "¡Oh no! No encontramos su perfil Qapla",
+        "streamerHasNoProfileDescription": "%{streamerName} no ha creado un perfil en Qapla, pero puedes visitar su canal en Twitch"
     },
     "CommunityScreen": {
         "comingSoon": "¡Proximamente!",

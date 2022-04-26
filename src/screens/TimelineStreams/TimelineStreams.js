@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, FlatList } from 'react-native';
+import { Alert, Linking, ScrollView, Text, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -11,7 +11,8 @@ import StreamsList from '../../components/StreamsList/StreamsList';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 import { trackOnSegment } from '../../services/statistics';
 import StreamLiveList from '../../components/StreamLiveList/StreamLiveList';
-import { getStreamerPublicProfile } from '../../services/database';
+import { getStreamerName, getStreamerPublicProfile } from '../../services/database';
+import { translate } from '../../utilities/i18';
 
 export class TimelineStreams extends Component {
     listsToRender = [0, 1, 2, 3, 4, 5, 6];
@@ -44,13 +45,38 @@ export class TimelineStreams extends Component {
         });
     }
 
-    onStreamerProfileButtonPress = async (streamerId) => {
+    onStreamerProfileButtonPress = async (streamerId, streamerChannelLink) => {
         const streamerProfile = await getStreamerPublicProfile(streamerId);
         if (streamerProfile.exists()) {
             this.props.navigation.navigate('StreamerProfile', { streamerData: { ...streamerProfile.val(), streamerId } });
             trackOnSegment('User open streamr profile from card', {
                 StreamerId: streamerId
             });
+        } else {
+            const streamerName = await getStreamerName(streamerId);
+            Alert.alert(
+                translate('TimelineStreams.streamerHasNoProfileTitle'),
+                translate('TimelineStreams.streamerHasNoProfileDescription', { streamerName: streamerName.val() }),
+                [
+                    {
+                        text: 'Cancel',
+                        onPress: () => trackOnSegment('User did not want to go to streamer´s Twitch', {
+                            StreamerId: streamerId,
+                            StreamerName: streamerName.val()
+                        })
+                    },
+                    {
+                        text: 'Ir a Twitch',
+                        onPress: () => {
+                            trackOnSegment('User goes to streamer´s Twitch', {
+                                StreamerId: streamerId,
+                                StreamerName: streamerName.val()
+                            });
+                            Linking.openURL(streamerChannelLink);
+                        }
+                    }
+                ]
+            );
         }
     }
 

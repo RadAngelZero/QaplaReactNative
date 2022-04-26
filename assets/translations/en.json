@@ -326,7 +326,9 @@
     },
     "TimelineStreams": {
         "featuredEvent": "Featured",
-        "live": "Live"
+        "live": "Live",
+        "streamerHasNoProfileTitle": "Oh no! We could not find their Qapla profile",
+        "streamerHasNoProfileDescription": "%{streamerName} has not created a profile on Qapla, but you can visit their channel on Twitch"
     },
     "CommunityScreen": {
         "comingSoon": "Coming Soon!",

@@ -58,7 +58,8 @@ class StreamCard extends React.PureComponent {
             streamerPhoto,
             streamerName,
             timestamp,
-            idStreamer
+            idStreamer,
+            streamerChannelLink
         } = this.props.stream;
 
         const streamDate = new Date(timestamp);
@@ -148,7 +149,7 @@ class StreamCard extends React.PureComponent {
                             </QaplaText>
                         </View>
                     </View>
-                    <TouchableOpacity onPress={() => this.props.onStreamerProfileButtonPress(idStreamer)}>
+                    <TouchableOpacity onPress={() => this.props.onStreamerProfileButtonPress(idStreamer, streamerChannelLink)}>
                         <LinearGradient
                             style={styles.streamerDetails}
                             useAngle={true}

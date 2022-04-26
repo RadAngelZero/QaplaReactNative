@@ -58,12 +58,21 @@ class StreamLiveCard extends React.PureComponent {
             thumbnailUrl,
             streamerPhoto,
             streamerName,
-            idStreamer
+            idStreamer,
+            streamerChannelLink
         } = this.props.stream;
 
         let titleTranslated = this.getTextBasedOnUserLanguage(title);
 
-        let thumbnail = thumbnailUrl.replace('{width}', '480').replace('{height}', '270');
+        /**
+         * 404 Twitch image for default (if the user does not have thumbnailUrl for any reason this prevent
+         * the app from crashing)
+         */
+        let thumbnail = 'https://static-cdn.jtvnw.net/ttv-static/404_preview-480x270.jpg';
+
+        if (thumbnailUrl) {
+            thumbnail = thumbnailUrl.replace('{width}', '480').replace('{height}', '270');
+        }
 
         return (
             <StreamCardContainer onPress={this.goToStreamerChannel}>
@@ -130,7 +139,7 @@ class StreamLiveCard extends React.PureComponent {
                         </QaplaText>
                     </View>
                     <View style={{ height: 16 }} />
-                    <TouchableOpacity onPress={() => this.props.onStreamerProfileButtonPress(idStreamer)}>
+                    <TouchableOpacity onPress={() => this.props.onStreamerProfileButtonPress(idStreamer, streamerChannelLink)}>
                         <LinearGradient
                             style={styles.streamerDetails}
                             useAngle={true}

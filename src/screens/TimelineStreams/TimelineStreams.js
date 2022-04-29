@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import styles from './style';
 import LevelInformationModal from '../../components/LevelInformationModal/LevelInformationModal';
 import { retrieveData, storeData } from '../../utilities/persistance';
-import DiscoverStreamersScreen from '../DiscoverStreamersScreen/DiscoverStreamersScreen';
 import FeaturedStreamsList from '../../components/FeaturedStreamsList/FeaturedStreamsList';
 import StreamsList from '../../components/StreamsList/StreamsList';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
@@ -13,6 +12,7 @@ import { trackOnSegment } from '../../services/statistics';
 import StreamLiveList from '../../components/StreamLiveList/StreamLiveList';
 import { getStreamerName, getStreamerPublicProfile } from '../../services/database';
 import { translate } from '../../utilities/i18';
+import Randomstreamerslist from '../../components/RandomStreamersList/RandomStreamersList';
 
 export class TimelineStreams extends Component {
     listsToRender = [0, 1, 2, 3, 4, 5, 6];
@@ -102,10 +102,7 @@ export class TimelineStreams extends Component {
                 }}>
                     Qreadores
                 </Text>
-                <DiscoverStreamersScreen
-                    horizontal
-                    dynamicSeparation
-                    navigation={this.props.navigation} />
+                <Randomstreamerslist uid={this.props.uid} navigate={this.props.navigation.navigate} />
                 <FlatList initialNumToRender={2}
                     data={this.listsToRender}
                     keyExtractor={(item) => item.dia}

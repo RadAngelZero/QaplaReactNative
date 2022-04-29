@@ -5,12 +5,8 @@ import { getPercentWidth, widthPercentageToPx } from '../../utilities/iosAndroid
 import StreamerCard from '../StreamerCard/StreamerCard';
 
 class StreamerCardsList extends Component {
-
     state = {
         scrolled: false,
-    }
-    componentDidMount() {
-        console.log(this.props.dynamicSeparation)
     }
 
     renderCard = ({ item }) => (

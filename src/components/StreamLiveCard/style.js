@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx, getPercentHeight, getPercentWidth } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
         marginTop: 10,
         backgroundColor: '#14183300',
-        marginRight: 30,
+        marginHorizontal: 13,
         width: widthPercentageToPx(69.33),
         borderRadius: 20,
     },
@@ -63,8 +63,8 @@ export default styles = StyleSheet.create({
     streamerDetails: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: widthPercentageToPx(50.66),
-        height: heightPercentageToPx(7.88),
+        width: widthPercentageToPx(getPercentWidth(193)),
+        height: heightPercentageToPx(getPercentHeight(59)),
         padding: 12,
         borderRadius: 20,
         backgroundColor: '#f0f'

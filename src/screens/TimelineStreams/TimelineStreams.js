@@ -100,7 +100,7 @@ export class TimelineStreams extends Component {
                     marginBottom: 30,
                     marginLeft: 16
                 }}>
-                    Qreadores
+                    {translate('TimelineStreams.qreators')}
                 </Text>
                 <DiscoverStreamersScreen
                     horizontal

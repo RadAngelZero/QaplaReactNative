@@ -3,15 +3,12 @@ import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     listContainer: {
-        alignSelf: 'center',
-        width: widthPercentageToPx(95),
-        justifyContent: 'space-between',
     },
     sectionHeaderContainer: {
         display: 'flex',
         flexDirection: 'row',
-        marginBottom: 30,
-        alignItems: 'center'
+        marginBottom: 10,
+        alignItems: 'center',
     },
     sectoinHeaderText: {
         display: 'flex',
@@ -30,6 +27,6 @@ export default styles = StyleSheet.create({
         borderRadius: 6,
         backgroundColor: '#FF006B',
         marginLeft: 8,
-        marginTop: 5
+        marginTop: 2
     }
 });

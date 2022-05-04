@@ -200,17 +200,17 @@ class HeaderBar extends Component {
                             body={translate('headerBar.highlightModal.body')}>
                             <QaplaIcon onPress={this.onActivityPressBttn}>
                                 {this.userHaveUnreadActivity() ?
-                                    <DuotoneActiveIcon height={25} width={25} />
+                                    <DuotoneActiveIcon height={35} width={35} />
                                 :
-                                    <DuotoneDefaultIcon height={25} width={25} />
+                                    <DuotoneDefaultIcon height={35} width={35} />
                                 }
                             </QaplaIcon>
                         </HighlightModal>
                         {this.props.currentScreenId !== 'Profile' &&
                                 <QaplaIcon onPress={this.sendToDiscord}>
                                     <DiscordIcon
-                                        height={25}
-                                        width={25}
+                                        height={35}
+                                        width={35}
                                         fill='#FFF' />
                                 </QaplaIcon>
                         }

@@ -598,6 +598,9 @@
     "streamerCard": {
         "viewMore": "Ver más"
     },
+    "loadingStreamerCard": {
+        "loading": "Curando..."
+    },
     "qlan": {
         "myQlan": "Mi Qlan",
         "joinQlan": "¡Únete a un Qlan!",

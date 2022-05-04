@@ -57,7 +57,7 @@ export default styles = StyleSheet.create({
         fontWeight: '500'
     },
     tagsContainer: {
-        maxHeight: heightPercentageToPx(3.7) * 2 + 10, // Double the size of the tag + the marginBottom
+        height: heightPercentageToPx(3.7) * 2 + 10, // Double the size of the tag + the marginBottom
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignSelf: 'flex-start',
@@ -74,5 +74,27 @@ export default styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '500',
         lineHeight: 14
+    },
+    loadingCard: {
+        width: widthPercentageToPx(91.46),
+        /**
+         * Sum of all the heights, margin tops and margin bottoms from the elements inside the card, so the
+         * loadingCard has the same height than a normal card
+         */
+        height: heightPercentageToPx(13) + heightPercentageToPx(12) + heightPercentageToPx(3) + heightPercentageToPx(10) + (heightPercentageToPx(3.7) * 2 + 10) + heightPercentageToPx(3.7) + 24 + 24 + 15 + heightPercentageToPx(-6) + 10,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 25,
+        backgroundColor: '#141833',
+        overflow: 'hidden',
+        marginBottom: 30,
+    },
+    loadingText: {
+        fontSize: 18,
+        lineHeight: 22,
+        color: 'rgba(255, 255, 255, .7)',
+        fontWeight: '600',
+        textAlign: 'center'
     }
 });

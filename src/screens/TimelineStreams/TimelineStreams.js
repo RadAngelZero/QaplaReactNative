@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Linking, ScrollView, Text, FlatList } from 'react-native';
+import { Alert, Linking, ScrollView, Text, FlatList, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -13,6 +13,7 @@ import StreamLiveList from '../../components/StreamLiveList/StreamLiveList';
 import { getStreamerName, getStreamerPublicProfile } from '../../services/database';
 import { translate } from '../../utilities/i18';
 import Randomstreamerslist from '../../components/RandomStreamersList/RandomStreamersList';
+import { BOTTOM_NAVIGATION_BAR_HEIGHT } from '../../utilities/Constants';
 
 export class TimelineStreams extends Component {
     listsToRender = [0, 1, 2, 3, 4, 5, 6];
@@ -112,6 +113,10 @@ export class TimelineStreams extends Component {
                             onStreamerProfileButtonPress={this.onStreamerProfileButtonPress}
                             uid={this.props.uid} />
                     )} />
+                {/**
+                 * View with height is to avoid Bottom bar on content
+                 */}
+                <View style={{ marginBottom: BOTTOM_NAVIGATION_BAR_HEIGHT * 1.5 }} />
                 <EventDetailsModal open={this.state.openEventDetailsModal}
                     onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
                     stream={this.state.selectedStream} />

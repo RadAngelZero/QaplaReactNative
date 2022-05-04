@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getStreamerPublicProfile, getStreamerPublicProfileKeyAtIndex, getStreamersPublicProfilesLength } from '../../services/database';
 import { STREAMERS_BLACKLIST } from '../../utilities/Constants';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import LoadingStreamerCard from '../StreamerCard/LoadingStreamerCard';
 import StreamerCard from '../StreamerCard/StreamerCard';
 
 class Randomstreamerslist extends Component {
@@ -63,7 +64,7 @@ class Randomstreamerslist extends Component {
     render() {
         return (
             <View style={styles.container}>
-                {this.state.fetched &&
+                {this.state.fetched ?
                     <FlatList
                         onScrollBeginDrag={() => this.setState({ scrolled: true })}
                         onMomentumScrollEnd={(e) => this.setState({ scrolled: e.nativeEvent.contentOffset.x >= 20 })}
@@ -75,6 +76,8 @@ class Randomstreamerslist extends Component {
                         keyExtractor={item => item.streamerId}
                         numColumns={1}
                         showsVerticalScrollIndicator={false} />
+                    :
+                    <LoadingStreamerCard />
                 }
             </View>
         );

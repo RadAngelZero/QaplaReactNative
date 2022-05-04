@@ -39,7 +39,6 @@ export const SET_CURRENT_SCREEN_ID = 'SET_CURRENT_SCREEN_ID';
 export const SET_PREVIOUS_SCREEN_ID = 'SET_PREVIOUS_SCREEN_ID';
 
 // Profile Leader Board REDUX constants
-export const SET_ENABLE_SCROLL = 'SET_ENABLE_SCROLL';
 export const SET_USER_IMAGE = 'SET_USER_IMAGE';
 
 // Crear Reta Button in PublicMatchesFeedScreen.js
@@ -139,6 +138,9 @@ export const ANDROID_PACKAGE_NAME = 'com.qapla.gaming.app';
 // Bottom Sheets
 export const SHEET_MAX_HEIGHT = heightPercentageToPx(65);
 export const SHEET_MIN_HEIGHT = heightPercentageToPx(26.5);
+
+// Bottom bar
+export const BOTTOM_NAVIGATION_BAR_HEIGHT = 85;
 
 // Default user images
 export const defaultUserImages = [

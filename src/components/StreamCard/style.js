@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx, getPercentHeight, getPercentWidth } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
         marginTop: 60,
         backgroundColor: '#14183300',
-        marginRight: 30,
+        marginHorizontal: 13,
         width: widthPercentageToPx(72),
         borderRadius: 20,
     },
@@ -16,7 +16,7 @@ export default styles = StyleSheet.create({
     },
     backgroundImage: {
         borderRadius: 20,
-        justifyContent:'center',
+        justifyContent: 'center',
         alignItems: 'center',
         resizeMode: 'cover',
     },
@@ -31,7 +31,7 @@ export default styles = StyleSheet.create({
         letterSpacing: 1,
         color: '#FFF',
         lineHeight: 22,
-        minHeight: heightPercentageToPx(5.91),
+        minHeight: heightPercentageToPx(getPercentHeight(44)),
     },
     body: {
         display: 'flex',
@@ -53,20 +53,27 @@ export default styles = StyleSheet.create({
     },
     dateSubContainer: {
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     dateText: {
         color: '#FFF',
-        marginLeft: widthPercentageToPx(2.1),
+        marginLeft: widthPercentageToPx(getPercentWidth(8)),
+        fontSize: 11,
+        fontWeight: '500',
+        lineHeight: 26,
+        letterSpacing: 0.5,
+        // textAlign: left;
+
     },
     streamerDetails: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: widthPercentageToPx(50.66),
-        height: heightPercentageToPx(7.88),
+        width: widthPercentageToPx(getPercentWidth(193)),
+        height: heightPercentageToPx(getPercentHeight(59)),
         padding: 12,
         borderRadius: 20,
-        backgroundColor: '#f0f'
+        // backgroundColor: '#f0f'
 
     },
     streamPlatformText: {

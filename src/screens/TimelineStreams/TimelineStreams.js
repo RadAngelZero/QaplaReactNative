@@ -100,7 +100,7 @@ export class TimelineStreams extends Component {
                     marginBottom: 30,
                     marginLeft: 16
                 }}>
-                    Qreadores
+                    {translate('TimelineStreams.qreators')}
                 </Text>
                 <Randomstreamerslist uid={this.props.uid} navigate={this.props.navigation.navigate} />
                 <FlatList initialNumToRender={2}

@@ -49,6 +49,7 @@
         "bottomNavigators": {
             "mainNavigator": {
                 "streams": "Streams",
+                "explore": "Explore",
                 "community": "Community",
                 "profile": "Profile"
             }
@@ -327,6 +328,7 @@
     "TimelineStreams": {
         "featuredEvent": "Featured",
         "live": "Live",
+        "qreators": "Qreators",
         "streamerHasNoProfileTitle": "Oh no! We could not find their Qapla profile",
         "streamerHasNoProfileDescription": "%{streamerName} has not created a profile on Qapla, but you can visit their channel on Twitch",
         "cancel": "Cancel",

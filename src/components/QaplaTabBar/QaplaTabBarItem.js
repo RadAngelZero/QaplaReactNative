@@ -8,7 +8,7 @@ class QaplaTabBarItem extends PureComponent {
     render() {
         return (
             <TouchableOpacity style={[styles.tabStyle, this.props.focused ? styles.activeTab : styles.inactiveTab]} onPress={this.props.onPress}>
-                <QaplaText style={styles.tabLabelStyle}>
+                <QaplaText style={[styles.tabLabelStyle, this.props.focused ? {} : styles.inactiveTabText]}>
                     {this.props.children}
                 </QaplaText>
             </TouchableOpacity>

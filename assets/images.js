@@ -109,22 +109,6 @@ const images = {
 		betaChatImage: {
 			img: require('./images/BetaChatImage.jpg'),
 		},
-		welcome1Img: {
-			img: require('./images/welcome1.png'),
-			uri: '@assets/icons/welcome1.png'
-		},
-		welcome2Img: {
-			img: require('./images/welcome2.png'),
-			uri: '@assets/icons/welcome2.png'
-		},
-		welcome3Img: {
-			img: require('./images/welcome3.png'),
-			uri: '@assets/icons/welcome3.png'
-		},
-		welcome4Img: {
-			img: require('./images/welcome4.png'),
-			uri: '@assets/icons/welcome4.png'
-		},
 		signUpControllers: {
 			img: require('./images/signup.png'),
 			uri: '@assets/images/signup.svg'
@@ -394,6 +378,12 @@ const images = {
 		editQlan: EditQlan,
 		qoin: Qoin
 	},
+	gif: {
+		loadingStreamers: {
+			img: require('./images/LoadingStreamers.gif'),
+			uri: '@assets/images/LoadingStreamers.gif'
+		},
+	}
 };
 
 export default images;

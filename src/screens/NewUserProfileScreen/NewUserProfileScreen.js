@@ -20,7 +20,7 @@ import RewardsStore from '../../components/RewardsStore/RewardsStore';
 
 import RewardsBottomSheet from '../../components/RewardsBottomSheet/RewardsBottomSheet';
 import EditProfileImgBadge from '../../components/EditProfileImgBadge/EditProfileImgBadge';
-import { setScroll, setUserImage } from '../../actions/profileLeaderBoardActions';
+import { setUserImage } from '../../actions/profileLeaderBoardActions';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import { defaultUserImages } from '../../utilities/Constants';
 import QaplaTooltip from '../../components/QaplaTooltip/QaplaTooltip';
@@ -196,33 +196,6 @@ export class NewUserProfileScreen extends Component {
     saveToolBarMaxHeight = ({ nativeEvent }) => this.setState({ collapsableToolBarMaxHeight: nativeEvent.layout.height });
 
     /**
-     * Event called at the end of the scroll on scroll view
-     * Handle the collapsable effect on the profile
-     */
-    scrollCollapsable = ({ nativeEvent }) => {
-        if (this.state.isLeaderBoardCollapsed) {
-            if (nativeEvent.contentOffset.y <= 50) {
-                this.scrollView.scrollTo({ y: 0 });
-            } else {
-                this.scrollView.scrollToEnd({ animated: true });
-                this.props.enableLeaderBoardScroll(true);
-                this.setState({ isLeaderBoardCollapsed: false });
-            }
-        } else {
-            if (nativeEvent.contentOffset.y < this.state.previousScrollPosition + 50) {
-                this.scrollView.scrollTo({ y: 0 });
-                this.props.enableLeaderBoardScroll(false);
-                this.setState({ previousScrollPosition: nativeEvent.contentOffset.y, isLeaderBoardCollapsed: true });
-            }
-        }
-    }
-
-    /**
-     * Save the last position in the Y axis on previousScrollPosition variable state
-     */
-    setLastScrollPosition = ({ nativeEvent }) => this.setState({ previousScrollPosition: nativeEvent.contentOffset.y });
-
-    /**
      * Toggle the tooltip for donations
      */
     toggleInfoTooltip = () => {
@@ -335,7 +308,7 @@ export class NewUserProfileScreen extends Component {
                     toggleTooltip={this.toggleRewardTooltip}
                     openedTooltips={this.state.openedTooltips}
                     tooltipButtonAction={this.tooltipAction}>
-                    <ScrollView>
+                    <ScrollView nestedScrollEnabled>
                         <Animated.View style={{ flex: 1 }}>
                             <View style={styles.profileDetailsContainer}>
                                 <View style={styles.qoinsView}>
@@ -572,7 +545,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        enableLeaderBoardScroll: (enableScroll) => setScroll(enableScroll)(dispatch),
         setUserImage: (userImage) => setUserImage(userImage)(dispatch),
         loadQaplaLevels: () => getLevels()(dispatch)
     }

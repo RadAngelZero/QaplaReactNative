@@ -45,6 +45,8 @@ const qreatorsCodesRef = database.ref('/QreatorsCodes');
 const qlanesMembersRef = database.ref('/QlanesMembers');
 const qlanesRef = database.ref('/Qlanes');
 const activeCustomRewardsRef = database.ref('/ActiveCustomRewards');
+const listOfStreamersPublicProfileKeysRef = database.ref('/ListOfStreamersPublicProfileKeys');
+const streamersFollowersRef = database.ref('/StreamersFollowers');
 
 /**
  * Returns the userName of the specified user
@@ -1626,4 +1628,19 @@ export async function getStreamerThumbnailUrl(streamerUid) {
  */
 export async function getStreamerName(streamerUid) {
     return await userStreamerRef.child(streamerUid).child('displayName').once('value');
+}
+
+/**
+ * Get the length of profile keys
+ */
+export async function getStreamersPublicProfilesLength() {
+    return await listOfStreamersPublicProfileKeysRef.child('length').once('value');
+}
+
+/**
+ * Get the specified key from the streamer profile
+ * @param {number} index Index to load from keys object
+ */
+export async function getStreamerPublicProfileKeyAtIndex(index) {
+    return await listOfStreamersPublicProfileKeysRef.child('keys').child(index).once('value');
 }

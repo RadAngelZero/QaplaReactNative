@@ -217,8 +217,8 @@ class HeaderBar extends Component {
                         {this.props.currentScreenId === 'Profile' &&
                             <QaplaIcon onPress={this.goToUserProfile}>
                                 <SettingsIcon
-                                    height={23}
-                                    width={23}
+                                    height={33}
+                                    width={33}
                                     fill='#FFF' />
                             </QaplaIcon>
                         }

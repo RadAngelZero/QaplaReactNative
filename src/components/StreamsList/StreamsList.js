@@ -19,7 +19,9 @@ class StreamsList extends React.Component {
 	};
 
     componentDidMount() {
-        this.props.loadStreamsByListIndex(this.props.uid, this.props.index);
+        if (Object.keys(this.props.streamsLists.streams[this.props.index]).length === 0) {
+            this.props.loadStreamsByListIndex(this.props.uid, this.props.index);
+        }
         this.setState({ title: this.getDayNameByIndex(this.props.index) });
     }
 

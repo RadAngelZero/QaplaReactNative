@@ -52,6 +52,85 @@ class StreamLiveCard extends React.PureComponent {
         });
     }
 
+    renderBadges = (customRewardsMultipliers) => {
+        let FirstBoostIcon = null;
+        let SecondBoostIcon = null;
+
+        const streamHasBoost = customRewardsMultipliers && (customRewardsMultipliers.xq > 1 || customRewardsMultipliers.qoins > 1);
+
+        if (streamHasBoost) {
+            if (customRewardsMultipliers.xq === customRewardsMultipliers.qoins) {
+                switch (customRewardsMultipliers.xq) {
+                    case 2:
+                        FirstBoostIcon = () => <Images.svg.boostX2 />;
+                        break;
+                    case 3:
+                        FirstBoostIcon = () => <Images.svg.boostX3 />;
+                        break;
+                    case 5:
+                        FirstBoostIcon = () => <Images.svg.boostX5 />;
+                        break;
+                    case 10:
+                        FirstBoostIcon = () => <Images.svg.boostX10 />;
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                switch (customRewardsMultipliers.qoins) {
+                    case 2:
+                        FirstBoostIcon = () => <Images.svg.boostX2 />;
+                        break;
+                    case 3:
+                        FirstBoostIcon = () => <Images.svg.boostX3 />;
+                        break;
+                    case 5:
+                        FirstBoostIcon = () => <Images.svg.boostX5 />;
+                        break;
+                    case 10:
+                        FirstBoostIcon = () => <Images.svg.boostX10 />;
+                        break;
+                    default:
+                        break;
+                }
+
+                switch (customRewardsMultipliers.xq) {
+                    case 2:
+                        SecondBoostIcon = () => <Images.svg.boostX2 />;
+                        break;
+                    case 3:
+                        SecondBoostIcon = () => <Images.svg.boostX3 />;
+                        break;
+                    case 5:
+                        SecondBoostIcon = () => <Images.svg.boostX5 />;
+                        break;
+                    case 10:
+                        SecondBoostIcon = () => <Images.svg.boostX10 />;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return (
+            <>
+                {FirstBoostIcon &&
+                    <FirstBoostIcon />
+                }
+                {customRewardsMultipliers.qoins > 1 &&
+                    <Images.svg.qoin />
+                }
+                {SecondBoostIcon &&
+                    <SecondBoostIcon />
+                }
+                {customRewardsMultipliers.xq > 1 &&
+                    <Images.svg.xq />
+                }
+            </>
+        );
+    }
+
     render() {
         const {
             title,
@@ -74,6 +153,8 @@ class StreamLiveCard extends React.PureComponent {
         if (thumbnailUrl) {
             thumbnail = thumbnailUrl.replace('{width}', '480').replace('{height}', '270');
         }
+
+        const badges = this.renderBadges(customRewardsMultipliers);
 
         return (
             <StreamCardContainer onPress={this.goToStreamerChannel}>
@@ -98,37 +179,8 @@ class StreamLiveCard extends React.PureComponent {
                                     height: 160
                                 }}
                             />
-                            <View style={{ display: 'flex', flexDirection: 'row', backgroundColor: '#f0f0', marginTop: 24, marginRight: 24, justifyContent: 'flex-end', alignItems: 'flex-start' }}>
-                                {customRewardsMultipliers && (customRewardsMultipliers.xq === 2 || customRewardsMultipliers.qoins === 2) &&
-                                    <View style={{ display: 'flex', transform: [{ scale: 1.2 }], marginRight: '-2.4%', marginTop: 3, backgroundColor: '#ff00' }}>
-                                        <Images.svg.boostX2 />
-                                    </View>
-                                }
-                                {customRewardsMultipliers && (customRewardsMultipliers.xq === 3 || customRewardsMultipliers.qoins === 3) &&
-                                    <View style={{ display: 'flex', transform: [{ scale: 1.2 }], marginRight: '-2.4%', marginTop: 3, backgroundColor: '#ff00' }}>
-                                        <Images.svg.boostX3 />
-                                    </View>
-                                }
-                                {customRewardsMultipliers && (customRewardsMultipliers.xq === 5 || customRewardsMultipliers.qoins === 5) &&
-                                    <View style={{ display: 'flex', transform: [{ scale: 1.2 }], marginRight: '-2.4%', marginTop: -1, backgroundColor: '#ff00' }}>
-                                        <Images.svg.boostX5 />
-                                    </View>
-                                }
-                                {customRewardsMultipliers && (customRewardsMultipliers.xq === 10 || customRewardsMultipliers.qoins === 10) &&
-                                    <View style={{ display: 'flex', transform: [{ scale: 1.25 }], marginRight: '-2.4%', marginTop: -1, backgroundColor: '#ff00' }}>
-                                        <Images.svg.boostX10 />
-                                    </View>
-                                }
-                                {customRewardsMultipliers && customRewardsMultipliers.qoins > 1 &&
-                                    <View style={{ display: 'flex', transform: [{ scale: 1.3 }], marginLeft: '1.6%', backgroundColor: '#ff00', marginTop: 10 }}>
-                                        <Images.svg.qoin />
-                                    </View>
-                                }
-                                {customRewardsMultipliers && customRewardsMultipliers.xq > 1 &&
-                                    <View style={{ display: 'flex', transform: [{ scale: 1.3 }], marginLeft: '1.4%', backgroundColor: '#ff00', marginTop: 10 }}>
-                                        <Images.svg.activityXQ />
-                                    </View>
-                                }
+                            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'absolute', right: 24, top: 24 }}>
+                                {badges}
                             </View>
                         </View>
                     </ImageBackground>

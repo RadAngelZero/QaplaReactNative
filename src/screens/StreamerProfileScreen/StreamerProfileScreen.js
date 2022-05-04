@@ -177,6 +177,85 @@ class StreamerProfileScreen extends Component {
         }
     }
 
+    renderBadges = (customRewardsMultipliers) => {
+        let FirstBoostIcon = null;
+        let SecondBoostIcon = null;
+
+        const streamHasBoost = customRewardsMultipliers && (customRewardsMultipliers.xq > 1 || customRewardsMultipliers.qoins > 1);
+
+        if (streamHasBoost) {
+            if (customRewardsMultipliers.xq === customRewardsMultipliers.qoins) {
+                switch (customRewardsMultipliers.xq) {
+                    case 2:
+                        FirstBoostIcon = () => <images.svg.boostX2 />;
+                        break;
+                    case 3:
+                        FirstBoostIcon = () => <images.svg.boostX3 />;
+                        break;
+                    case 5:
+                        FirstBoostIcon = () => <images.svg.boostX5 />;
+                        break;
+                    case 10:
+                        FirstBoostIcon = () => <images.svg.boostX10 />;
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                switch (customRewardsMultipliers.qoins) {
+                    case 2:
+                        FirstBoostIcon = () => <images.svg.boostX2 />;
+                        break;
+                    case 3:
+                        FirstBoostIcon = () => <images.svg.boostX3 />;
+                        break;
+                    case 5:
+                        FirstBoostIcon = () => <images.svg.boostX5 />;
+                        break;
+                    case 10:
+                        FirstBoostIcon = () => <images.svg.boostX10 />;
+                        break;
+                    default:
+                        break;
+                }
+
+                switch (customRewardsMultipliers.xq) {
+                    case 2:
+                        SecondBoostIcon = () => <images.svg.boostX2 />;
+                        break;
+                    case 3:
+                        SecondBoostIcon = () => <images.svg.boostX3 />;
+                        break;
+                    case 5:
+                        SecondBoostIcon = () => <images.svg.boostX5 />;
+                        break;
+                    case 10:
+                        SecondBoostIcon = () => <images.svg.boostX10 />;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return (
+            <>
+                {FirstBoostIcon &&
+                    <FirstBoostIcon />
+                }
+                {customRewardsMultipliers.qoins > 1 &&
+                    <images.svg.qoin />
+                }
+                {SecondBoostIcon &&
+                    <SecondBoostIcon />
+                }
+                {customRewardsMultipliers.xq > 1 &&
+                    <images.svg.xq />
+                }
+            </>
+        );
+    }
+
     render() {
         const {
             displayName,
@@ -289,6 +368,9 @@ class StreamerProfileScreen extends Component {
                                             angle={133.34}
                                             style={styles.upcomingStreamImageLinearGradientBackground}
                                             colors={['#2C07FA', '#A716EE']}>
+                                            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'absolute', right: 24, top: 24 }}>
+                                                {this.renderBadges(nextStream.customRewardsMultipliers)}
+                                            </View>
                                             <Image style={styles.upcomingStreamImage}
                                                 source={{ uri: nextStream.backgroundImage }} />
                                         </LinearGradient>

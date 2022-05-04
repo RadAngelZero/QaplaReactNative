@@ -71,16 +71,6 @@ export const loadFeaturedStreams = (uid) => async (dispatch) => {
                     listeningStreams.push(featuredStream.key);
                     if (userParticipant.exists()) {
                         dispatch(updateFeaturedStream(featuredStream.key, { isUserAParticipant: true }));
-                        /**
-                         * The only purpose of this listener is to know if the user is participating in the
-                         * stream so if this is the case (and due that the user can not remove their participation)
-                         * we remove the listener
-                         */
-                        eventParticipantsRef.child(featuredStream.key).child(uid).off('value');
-                        const indexToRemove = listeningStreams.indexOf(featuredStream.key);
-                        if (indexToRemove >= 0) {
-                            listeningStreams.splice(indexToRemove, 1);
-                        }
                     }
                 });
             }
@@ -154,16 +144,6 @@ export const loadStreamsByListIndex = (uid, index) => async (dispatch) => {
                     listeningStreams.push(stream.key);
                     if (userParticipant.exists()) {
                         dispatch(updateStream(stream.key, { isUserAParticipant: true }, index));
-                        /**
-                         * The only purpose of this listener is to know if the user is participating in the
-                         * stream so if this is the case (and due that the user can not remove their participation)
-                         * we remove the listener
-                         */
-                        eventParticipantsRef.child(stream.key).child(uid).off('value');
-                        const indexToRemove = listeningStreams.indexOf(stream.key);
-                        if (indexToRemove >= 0) {
-                            listeningStreams.splice(indexToRemove, 1);
-                        }
                     }
                 });
             }

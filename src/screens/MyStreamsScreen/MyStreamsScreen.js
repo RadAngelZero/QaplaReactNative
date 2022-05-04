@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Linking, ScrollView, FlatList } from 'react-native';
+import { Alert, Linking, ScrollView, FlatList, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -10,6 +10,7 @@ import { trackOnSegment } from '../../services/statistics';
 import StreamLiveList from '../../components/StreamLiveList/StreamLiveList';
 import { getStreamerName, getStreamerPublicProfile } from '../../services/database';
 import { translate } from '../../utilities/i18';
+import { BOTTOM_NAVIGATION_BAR_HEIGHT } from '../../utilities/Constants';
 
 class Mystreamsscreen extends Component {
     listsToRender = [0, 1, 2, 3, 4, 5, 6];
@@ -71,6 +72,7 @@ class Mystreamsscreen extends Component {
                     loadOnlyUserStreams
                     onStreamerProfileButtonPress={this.onStreamerProfileButtonPress}
                     onCardPress={this.onStreamPress} />
+                <View style={{ height: 25 }} />
                 <StreamLiveList
                     uid={this.props.uid}
                     onStreamerProfileButtonPress={this.onStreamerProfileButtonPress}
@@ -82,7 +84,7 @@ class Mystreamsscreen extends Component {
                 */}
                 <FlatList initialNumToRender={this.listsToRender.length}
                     data={this.listsToRender}
-                    keyExtractor={(item) => item.dia}
+                    keyExtractor={(item) => item}
                     renderItem={({ item, index }) => (
                         <StreamsList index={index}
                             loadOnlyUserStreams
@@ -90,6 +92,10 @@ class Mystreamsscreen extends Component {
                             onCardPress={this.onStreamPress}
                             uid={this.props.uid} />
                     )} />
+                {/**
+                 * View with height is to avoid Bottom bar on content
+                 */}
+                <View style={{ marginBottom: BOTTOM_NAVIGATION_BAR_HEIGHT * 1.5 }} />
                 <EventDetailsModal open={this.state.openEventDetailsModal}
                     onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
                     stream={this.state.selectedStream} />

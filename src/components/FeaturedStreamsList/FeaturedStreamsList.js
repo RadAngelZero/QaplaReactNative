@@ -39,7 +39,6 @@ class FeaturedStreamsList extends React.Component {
 		// If there are no streams or the user is already participating in all the featured streams render null
 		if (Object.keys(featuredStreams).length && Object.keys(featuredStreams).some((streamId) => this.props.loadOnlyUserStreams ? featuredStreams[streamId].isUserAParticipant : !featuredStreams[streamId].isUserAParticipant)) {
 			return (
-				<>
 				<View style={styles.listContainer}>
 					<QaplaText style={styles.sectionHeader}>{translate('TimelineStreams.featuredEvent')}</QaplaText>
 					<FlatList data={Object.keys(featuredStreams).sort((a, b) => featuredStreams[a].timestamp - featuredStreams[b].timestamp).map((streamId) => featuredStreams[streamId])}
@@ -51,8 +50,6 @@ class FeaturedStreamsList extends React.Component {
 						ListFooterComponent={() => <View style={{ height: 30 }} />}
 						keyExtractor={(item) => item.id} />
 				</View>
-				<View style={{ height: 25 }} />
-				</>
 			);
 		}
 

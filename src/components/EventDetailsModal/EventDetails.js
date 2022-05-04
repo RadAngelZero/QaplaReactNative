@@ -12,11 +12,11 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
-import { getDateElementsAsNumber, getHourElementsAsNumber, copyDataToClipboard } from '../../utilities/utils';
+import { copyDataToClipboard } from '../../utilities/utils';
 import Images from '../../../assets/images';
 import QaplaText from '../QaplaText/QaplaText';
-import { getSendBirdOpenChannel } from '../../services/SendBird';
 import { trackOnSegment } from '../../services/statistics';
+
 
 function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
     const validColorRegExp = new RegExp('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
@@ -65,21 +65,9 @@ class EventDetails extends Component {
     /**
      * Send the user to the discord channel of the event
      */
-    goToDiscordLink = () => {
-        const { discordLink, eventChatUrl } = this.props.event;
-
-        if (eventChatUrl) {
-            getSendBirdOpenChannel(eventChatUrl, (openChannel) => {
-                this.props.navigation.navigate('EventChat', {
-                    eventImage: openChannel.coverUrl,
-                    sponsorImage: this.props.event.sponsorImage,
-                    eventName: openChannel.name
-                });
-                this.props.closeModal();
-            });
-        } else if (discordLink) {
-            Linking.openURL(discordLink);
-        }
+    goToDiscordLink = async () => {
+        const link = (await remoteConf.getDataFromKey('Discord')).QAPLA_DISCORD_CHANNEL;
+        Linking.openURL(link);
     }
 
     render() {
@@ -97,18 +85,17 @@ class EventDetails extends Component {
             streamerChannelLink,
             sponsorImage,
             streamerPhoto,
-            hourUTC,
-            dateUTC,
             streamerGameData,
             gradientColors,
-            eventChatUrl
+            eventChatUrl,
+            timestamp
         } = this.props.event;
 
-        let [day, month, year] = getDateElementsAsNumber(dateUTC);
+        let day = '';
 
-        let [hour, minute] = getHourElementsAsNumber(hourUTC);
+        let hour, minute;
 
-        const eventDate = new Date(Date.UTC(year, month - 1, day, hour, minute));
+        const eventDate = new Date(timestamp);
 
         const days = [ "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" ];
         const eventDay = translate(`days.${days[eventDate.getDay()]}`);

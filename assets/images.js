@@ -64,7 +64,8 @@ import CloseThiccIcon from './icons/Close-Thicc.svg';
 import AlertIcon from './icons/AlertIcon.svg';
 import TwitchExtrudedLogo from './icons/TwitchExtrudedLogo.svg';
 import ActivityQoin from './icons/ActivityQoin.svg';
-import ActivityXQ from './icons/XQ.svg';
+import xq from './icons/XQ.svg';
+import ActivityXQ from './icons/ActivityXQ.svg';
 import DuotoneDefault from './icons/DuotoneDefault.svg';
 import DuotoneActive from './icons/DuotoneActive.svg';
 import SeasonLevelEs1 from './icons/SeasonLevelEs1.svg';
@@ -342,6 +343,7 @@ const images = {
 		twitchExtrudedLogo: TwitchExtrudedLogo,
 		activityQoin: ActivityQoin,
 		activityXQ: ActivityXQ,
+		xq: xq,
 		duotoneDefault: DuotoneDefault,
 		duotoneActive: DuotoneActive,
 		seasonLevelEs1: SeasonLevelEs1,

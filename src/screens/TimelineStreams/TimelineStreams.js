@@ -87,6 +87,7 @@ export class TimelineStreams extends Component {
                 <FeaturedStreamsList uid={this.props.uid}
                     onCardPress={this.onStreamPress}
                     onStreamerProfileButtonPress={this.onStreamerProfileButtonPress} />
+                <View style={{ height: 25 }} />
                 <StreamLiveList
                     uid={this.props.uid}
                     onStreamerProfileButtonPress={this.onStreamerProfileButtonPress}
@@ -106,7 +107,7 @@ export class TimelineStreams extends Component {
                 <Randomstreamerslist uid={this.props.uid} navigate={this.props.navigation.navigate} />
                 <FlatList initialNumToRender={2}
                     data={this.listsToRender}
-                    keyExtractor={(item) => item.dia}
+                    keyExtractor={(item) => item}
                     renderItem={({ item, index }) => (
                         <StreamsList index={index}
                             onCardPress={this.onStreamPress}

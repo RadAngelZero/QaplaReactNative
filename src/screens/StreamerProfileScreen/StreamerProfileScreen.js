@@ -81,9 +81,18 @@ class StreamerProfileScreen extends Component {
         }
 
         // Determine upcoming events and sort it by time
-        const streamerEvents = Object.keys(this.props.logros.logrosActivos)
-        .filter((eventId) => this.props.logros.logrosActivos[eventId].idStreamer && this.props.logros.logrosActivos[eventId].idStreamer === streamerId)
-        .map((eventId) => this.props.logros.logrosActivos[eventId]).sort((a, b) => a.timestamp - b.timestamp);
+        let streamerEvents = Object.keys(this.props.streamsLists.featured)
+        .filter((streamId) => this.props.streamsLists.featured[streamId].idStreamer && this.props.streamsLists.featured[streamId].idStreamer === streamerId)
+        .map((streamId) => this.props.streamsLists.featured[streamId]);
+
+        for (let i = 0; i < this.props.streamsLists.streams.length; i++) {
+            const streamsList = this.props.streamsLists.streams[i];
+            streamerEvents = streamerEvents.concat(Object.keys(streamsList)
+            .filter((streamId) => streamsList[streamId].idStreamer && streamsList[streamId].idStreamer === streamerId)
+            .map((streamId) => streamsList[streamId]));
+        }
+
+        streamerEvents.sort((a, b) => a.timestamp - b.timestamp);
 
         // Only show the 2 most upcoming streams
         this.setState({ nextStreams: streamerEvents.slice(0, 2) });
@@ -166,6 +175,85 @@ class StreamerProfileScreen extends Component {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    renderBadges = (customRewardsMultipliers) => {
+        let FirstBoostIcon = null;
+        let SecondBoostIcon = null;
+
+        const streamHasBoost = customRewardsMultipliers && (customRewardsMultipliers.xq > 1 || customRewardsMultipliers.qoins > 1);
+
+        if (streamHasBoost) {
+            if (customRewardsMultipliers.xq === customRewardsMultipliers.qoins) {
+                switch (customRewardsMultipliers.xq) {
+                    case 2:
+                        FirstBoostIcon = () => <images.svg.boostX2 />;
+                        break;
+                    case 3:
+                        FirstBoostIcon = () => <images.svg.boostX3 />;
+                        break;
+                    case 5:
+                        FirstBoostIcon = () => <images.svg.boostX5 />;
+                        break;
+                    case 10:
+                        FirstBoostIcon = () => <images.svg.boostX10 />;
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                switch (customRewardsMultipliers.qoins) {
+                    case 2:
+                        FirstBoostIcon = () => <images.svg.boostX2 />;
+                        break;
+                    case 3:
+                        FirstBoostIcon = () => <images.svg.boostX3 />;
+                        break;
+                    case 5:
+                        FirstBoostIcon = () => <images.svg.boostX5 />;
+                        break;
+                    case 10:
+                        FirstBoostIcon = () => <images.svg.boostX10 />;
+                        break;
+                    default:
+                        break;
+                }
+
+                switch (customRewardsMultipliers.xq) {
+                    case 2:
+                        SecondBoostIcon = () => <images.svg.boostX2 />;
+                        break;
+                    case 3:
+                        SecondBoostIcon = () => <images.svg.boostX3 />;
+                        break;
+                    case 5:
+                        SecondBoostIcon = () => <images.svg.boostX5 />;
+                        break;
+                    case 10:
+                        SecondBoostIcon = () => <images.svg.boostX10 />;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return (
+            <>
+                {FirstBoostIcon &&
+                    <FirstBoostIcon />
+                }
+                {customRewardsMultipliers.qoins > 1 &&
+                    <images.svg.qoin />
+                }
+                {SecondBoostIcon &&
+                    <SecondBoostIcon />
+                }
+                {customRewardsMultipliers.xq > 1 &&
+                    <images.svg.xq />
+                }
+            </>
+        );
     }
 
     render() {
@@ -280,6 +368,9 @@ class StreamerProfileScreen extends Component {
                                             angle={133.34}
                                             style={styles.upcomingStreamImageLinearGradientBackground}
                                             colors={['#2C07FA', '#A716EE']}>
+                                            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'absolute', right: 24, top: 24 }}>
+                                                {this.renderBadges(nextStream.customRewardsMultipliers)}
+                                            </View>
                                             <Image style={styles.upcomingStreamImage}
                                                 source={{ uri: nextStream.backgroundImage }} />
                                         </LinearGradient>
@@ -369,7 +460,7 @@ class StreamerProfileScreen extends Component {
 
 function mapStateToProps(state) {
     return {
-        logros: state.logrosReducer,
+        streamsLists: state.streamsReducer.streamsLists,
         uid: state.userReducer.user.id,
         userSubscriptions: state.userReducer.user.userToStreamersSubscriptions
     };

@@ -53,13 +53,9 @@ class ChooseUserNameScreen extends Component {
 
                         connectUserToSendBird(this.props.uid, this.state.userName);
 
-                        const originScreen = this.props.navigation.getParam('originScreen', 'Achievements');
+                        const originScreen = this.props.navigation.getParam('originScreen', 'Explore');
 
-                        if (originScreen !== 'Public') {
-                            this.props.navigation.navigate(originScreen);
-                        } else {
-                            this.props.navigation.navigate('MatchWizard');
-                        }
+                        this.props.navigation.navigate(originScreen);
                     } else {
                     this.setState({
                         showErrorMessage: true,

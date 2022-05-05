@@ -62,7 +62,7 @@ class WelcomeOnboardingScreen extends React.Component {
 			}
 		});
 
-		this.props.navigation.navigate('Achievements');
+		this.props.navigation.navigate('Explore');
 	}
 
 	setCurrentIndex = (index) => {

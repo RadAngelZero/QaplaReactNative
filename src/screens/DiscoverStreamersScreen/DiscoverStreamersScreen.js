@@ -55,7 +55,9 @@ class DiscoverStreamersScreen extends Component {
             <View style={styles.container}>
                 <StreamerCardsList streamersData={streamersData}
                     onEndReached={this.loadMoreStreamers}
-                    onCardPress={this.goToStreamerProfile} />
+                    onCardPress={this.goToStreamerProfile}
+                    horizontal={this.props.horizontal}
+                    dynamicSeparation={this.props.dynamicSeparation}/>
             </View>
         );
     }

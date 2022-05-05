@@ -197,7 +197,7 @@ class RewardsBottomSheet extends Component {
     render() {
         return (
             <>
-                <Animated.View style={{ flex: 1, opacity: Animated.add(0.1, Animated.multiply(this.fall, 1)) }}>
+                <Animated.View style={{ flex: 1, opacity: Animated.add(0.4, Animated.multiply(this.fall, 1)) }}>
                     {this.props.children}
                 </Animated.View>
                 <BottomSheet

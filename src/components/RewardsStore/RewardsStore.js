@@ -111,14 +111,14 @@ class RewardsStore extends Component {
     render() {
         return (
             <FlatList
-                scrollEnabled={this.props.enableScroll}
+                scrollEnabled
                 contentContainerStyle={styles.container}
                 nestedScrollEnabled
                 data={this.state.rewards}
                 renderItem={this.renderRewardCard}
                 numColumns={numberOfColumns}
                 keyExtractor={(item, index) => `Store-Product-${index}`}
-                ListFooterComponent={() => <View style={{ height: SHEET_MIN_HEIGHT * 1.25 }} />} />
+                ListFooterComponent={() => <View style={{ height: SHEET_MIN_HEIGHT + 16 }} />} />
         );
     }
 }

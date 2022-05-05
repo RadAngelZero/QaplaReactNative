@@ -7,7 +7,8 @@ export const styles = StyleSheet.create({
     sfvContainer: {
         justifyContent: 'center',
         backgroundColor: Colors.backgroundColor,
-        paddingTop: paddingTopForAndroidDevicesWithNotch()
+        paddingTop: paddingTopForAndroidDevicesWithNotch(),
+        paddingRight: 6,
     },
     topNavBarView: {
         height: heightPercentageToPx(HEADER_SIZE),

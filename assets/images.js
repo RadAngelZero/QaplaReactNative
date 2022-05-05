@@ -1,27 +1,15 @@
 // Icons
-import FavouritesIcon from './icons/favorite-heart-button.svg';
-import TestIcon from './icons/facebook.svg';
-
-import PublicFeedMatchIcon from './icons/Partidas.svg';
 import QaploinsIcon from './icons/qaploins.svg';
 import NotificationIcon from './icons/Notifications.svg';
 import QaploinsPrize from './icons/QaploinsPrize.svg';
 import LessQaploins from './icons/LessQaploins.svg';
 import MoreQaploins from './icons/MoreQaploins.svg';
-import FifaIcon from './icons/Fifa.svg';
-import GowIcon from './icons/Gow.svg';
 import CancelIcon from './icons/qaploins.svg';
 import LightningIcon from './icons/Lighting.svg';
 import SearchIcon from './icons/search.svg';
 import BackIcon from './icons/back.svg';
 import OkIcon from './icons/OkIcon.svg';
 import CloseIcon from './icons/CloseIcon.svg';
-import ClashIcon from './icons/Clash.svg';
-import HeartstoneIcon from './icons/Heartstone.svg';
-import LOLIcon from './icons/LOL.svg';
-import OverwatchIcon from './icons/Overwatch.svg';
-import SmashIcon from './icons/Smash.svg';
-import HaloIcon from './icons/Halo5.svg';
 import WinIcon from './icons/ganado.svg';
 import LostIcon from './icons/perdido.svg';
 import TieIcon from './icons/empatado.svg';
@@ -33,7 +21,6 @@ import DiscordIcon from './icons/discord.svg';
 import SettingsIcon from './icons/settings.svg';
 import EditIcon from './icons/edit.svg';
 import NoVerifiedIcon from './icons/sin-verificar.svg';
-import FacebookIcon from './icons/facebook_round.svg';
 import GoogleIcon from './icons/google-logo.svg';
 import AppleIcon from './icons/AppleLogo.svg';
 import TwitchIcon from './icons/twitchIcon.svg';
@@ -64,6 +51,7 @@ import CloseThiccIcon from './icons/Close-Thicc.svg';
 import AlertIcon from './icons/AlertIcon.svg';
 import TwitchExtrudedLogo from './icons/TwitchExtrudedLogo.svg';
 import ActivityQoin from './icons/ActivityQoin.svg';
+import xq from './icons/XQ.svg';
 import ActivityXQ from './icons/ActivityXQ.svg';
 import DuotoneDefault from './icons/DuotoneDefault.svg';
 import DuotoneActive from './icons/DuotoneActive.svg';
@@ -94,31 +82,16 @@ import CameraPermissions from './icons/CameraPermissions.svg';
 import CameraPermissionsES from './icons/CameraPermissionsES.svg';
 import RightArrow from './icons/RightArrow.svg';
 import Unfollow from './icons/Unfollow.svg';
+import Boostx2 from './icons/Boostx2.svg';
+import Boostx3 from './icons/Boostx3.svg';
+import Boostx5 from './icons/Boostx5.svg';
+import Boostx10 from './icons/Boostx10.svg';
 import EditQlan from './icons/EditQlan.svg';
+import Qoin from './icons/Qoin.svg';
 
 // Images
-
 const images = {
 	png: {
-		betaChatImage: {
-			img: require('./images/BetaChatImage.jpg'),
-		},
-		welcome1Img: {
-			img: require('./images/welcome1.png'),
-			uri: '@assets/icons/welcome1.png'
-		},
-		welcome2Img: {
-			img: require('./images/welcome2.png'),
-			uri: '@assets/icons/welcome2.png'
-		},
-		welcome3Img: {
-			img: require('./images/welcome3.png'),
-			uri: '@assets/icons/welcome3.png'
-		},
-		welcome4Img: {
-			img: require('./images/welcome4.png'),
-			uri: '@assets/icons/welcome4.png'
-		},
 		signUpControllers: {
 			img: require('./images/signup.png'),
 			uri: '@assets/images/signup.svg'
@@ -139,14 +112,6 @@ const images = {
 			img: require('./images/HeartHands.png'),
 			uri: '@assets/images/HeartHands.png'
 		},
-		uploadVideoClutch: {
-			img: require('./images/UploadVideoClutch.jpg'),
-			uri: '@assets/images/UploadVideoClutch.jpg'
-		},
-		shareClutchLink: {
-			img: require('./images/ShareClutchLink.jpg'),
-			uri: '@assets/images/ShareClutchLink.jpg'
-		},
 		connectOnBoarding: {
 			img: require('./images/connect-onboarding.png')
 		},
@@ -165,13 +130,6 @@ const images = {
 		divider: {
 			img: require('./images/divider-onboarding.png')
 		},
-		verificationProccesSuccess: {
-			img: require('./images/VerificationProccesSuccess.png')
-		},
-		clashPC: {
-			img: require('./images/PEKKA.png'),
-			uri: '@assets/images/PEKKA.png'
-		},
 		addButton: {
 			img: require('./images/addButton.png')
 		},
@@ -180,46 +138,6 @@ const images = {
 		},
 		qaplaHeaderIcon: {
 			img: require('./icons/qapla.png')
-		},
-		fifaXbox: {
-			img: require('./images/FIFAXbox.png'),
-			uri: '@assets/images/FIFA.png'
-		},
-		fifaPS: {
-			img: require('./images/FIFAPs.png'),
-			uri: '@assets/images/FIFAPs.png'
-		},
-		GOWXbox: {
-			img: require('./images/GOW4Xbox.png'),
-			uri: '@assets/images/GOW4Xbox.png'
-		},
-		HALOXbox: {
-			img: require('./images/HALO5Xbox.png'),
-			uri: '@assets/images/HALO5Xbox.png'
-		},
-		heartstonePC: {
-			img: require('./images/HEARTHSTONE.png'),
-			uri: '@assets/images/HEARTHSTONE.png'
-		},
-		overwatchPS: {
-			img: require('./images/OverwatchPs.png'),
-			uri: '@assets/images/Overwatch.png'
-		},
-		overwatchPC: {
-			img: require('./images/OVERWATCHPC.png'),
-			uri: '@assets/images/OVERWATCHPC.png'
-		},
-		overwatchXbox: {
-			img: require('./images/OVERWATCHXbox.png'),
-			uri: '@assets/images/OVERWATCHXbox.png'
-		},
-		lolPC: {
-			img: require('./images/LEAGUELEGENDS.png'),
-			uri: '@assets/images/LEAGUELEGENDS.png'
-		},
-		smashSW: {
-			img: require('./images/SAMSHBROS.png'),
-			uri: '@assets/images/SAMSHBROS.png'
 		},
 		Qoin3D: {
 			img: require('./images/3DQoin.png'),
@@ -287,11 +205,7 @@ const images = {
 		},
 	},
 	svg: {
-		facebookIcon: FacebookIcon,
 		googleIcon: GoogleIcon,
-		favouritesIcon: FavouritesIcon,
-		testIcon: TestIcon,
-		publicFeedMatchIcon: PublicFeedMatchIcon,
 		qaploinsIcon: QaploinsIcon,
 		cancelIcon: CancelIcon,
 		lightningIcon: LightningIcon,
@@ -310,14 +224,6 @@ const images = {
 		alreadyChoosedClipIcon: AlreadyChoosedClipIcon,
 		verifyIcon: VerifyIcon,
 		supportIcon: SupportIcon,
-		gowIcon: GowIcon,
-		fifaIcon: FifaIcon,
-		clashIcon: ClashIcon,
-		heartstoneIcon: HeartstoneIcon,
-		overwatchIcon: OverwatchIcon,
-		lolIcon: LOLIcon,
-		smashIcon: SmashIcon,
-		haloIcon: HaloIcon,
 		discordIcon: DiscordIcon,
 		settingsIcon: SettingsIcon,
 		editIcon: EditIcon,
@@ -352,6 +258,7 @@ const images = {
 		twitchExtrudedLogo: TwitchExtrudedLogo,
 		activityQoin: ActivityQoin,
 		activityXQ: ActivityXQ,
+		xq: xq,
 		duotoneDefault: DuotoneDefault,
 		duotoneActive: DuotoneActive,
 		seasonLevelEs1: SeasonLevelEs1,
@@ -381,8 +288,19 @@ const images = {
 		CameraPermissionsES: CameraPermissionsES,
 		rightArrow: RightArrow,
 		unfollow: Unfollow,
+		boostX2: Boostx2,
+		boostX3: Boostx3,
+		boostX5: Boostx5,
+		boostX10: Boostx10,
 		editQlan: EditQlan,
+		qoin: Qoin
 	},
+	gif: {
+		loadingStreamers: {
+			img: require('./images/LoadingStreamers.gif'),
+			uri: '@assets/images/LoadingStreamers.gif'
+		},
+	}
 };
 
 export default images;

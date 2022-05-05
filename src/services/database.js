@@ -18,11 +18,8 @@ export const cuentasVerificadasRef = database.ref('/CuentasVerificadas');
 export const verificationOnProccessRef = database.ref('/VerificacionEnProceso');
 export const veriLogroSocialRef = database.ref('/verificarLogroSocial');
 export const feedbackUsersRef = database.ref('/FeedbackUsers');
-export const tournamentsRef = database.ref('/torneos');
-export const activeTournamentsRef = tournamentsRef.child('torneosActivos');
-export const pointsTournamentsRef = database.ref('/puntosTorneos');
 export const eventsRef = database.ref('/eventosEspeciales');
-export const activeEventsRef = eventsRef.child('eventsData');
+export const eventsDataRef = eventsRef.child('eventsData');
 const eventsRequestsRef = eventsRef.child('JoinRequests');
 export const eventParticipantsRef = database.ref('/EventParticipants');
 export const announcementsActRef = database.ref('/Announcements/Active');
@@ -47,6 +44,9 @@ const userToStreamerSubscriptionsRef = database.ref('/UserToStreamerSubscription
 const qreatorsCodesRef = database.ref('/QreatorsCodes');
 const qlanesMembersRef = database.ref('/QlanesMembers');
 const qlanesRef = database.ref('/Qlanes');
+const activeCustomRewardsRef = database.ref('/ActiveCustomRewards');
+const listOfStreamersPublicProfileKeysRef = database.ref('/ListOfStreamersPublicProfileKeys');
+const streamersFollowersRef = database.ref('/StreamersFollowers');
 
 /**
  * Returns the userName of the specified user
@@ -760,20 +760,6 @@ export async function isUserParticipantOnEvent(uid, eventId) {
 }
 
 // -----------------------------------------------
-// Verification
-// -----------------------------------------------
-
-/**
- * Write a request for verification on the database
- * @param {string} uid user identifier on database
- * @param {object} verificationInfo Object with the necessary information to write the request
- */
-export function createVerificationRequest(uid, verificationInfo) {
-    verificationOnProccessRef.child(uid).set(verificationInfo);
-    cuentasVerificadasRef.child(uid).set(verificationInfo);
-}
-
-// -----------------------------------------------
 // Feedback
 // -----------------------------------------------
 
@@ -860,20 +846,6 @@ export function joinEventWithCustomData(uid, eventId, eventEntry, participantDat
          * saving the token on this node allows us to accomplish this this with minimal cost
          */
         token: user.token
-    });
-}
-
-/**
- * Allow the user to join in the given tournament
- * @param {string} uid User identifier on database
- * @param {string} tournamentId Tournament identifier on the database
- * @param {number} totalPuntos The total of points of the tournament
- */
-export async function joinInTournament(uid, tournamentId, totalPuntos) {
-    pointsTournamentsRef.child(uid).child(tournamentId).update({
-        puntosCompletados: 0,
-        redimido: false,
-        totalPuntos
     });
 }
 
@@ -1045,17 +1017,6 @@ export function removeUserListeners(uid) {
     usersRef.child(uid).off('child_added');
     usersRef.child(uid).off('child_changed');
     usersRef.child(uid).off('child_removed');
-}
-
-/**
- * Remove all the database listeners related to the logrosReducer
- * @param {string} uid User identifier
- */
-export function removeLogrosListeners(uid) {
-    cuentasVerificadasRef.child(uid).off('value');
-    logrosRef.child(uid).child('logroCompleto').off('child_added');
-    logrosRef.child(uid).child('logroIncompleto').off('value');
-    pointsTournamentsRef.child(uid).off('value');
 }
 
 /**
@@ -1490,13 +1451,6 @@ export async function getQaplaLevels() {
 // -----------------------------------------------
 
 /**
- * Return all the public profiles of streamers
- */
- export async function getStreamersPublicProfiles() {
-    return await streamersPublicProfilesRef.once('value');
-}
-
-/**
  * Return the given number of profiles after the profile indicated (with the cursor)
  * @param {number} limit Number of profiles to load (100 by default)
  * @param {string} cursor Start point to load (optional)
@@ -1622,4 +1576,57 @@ export async function unsubscribeUserFromQlan(uid, qlanId) {
         active: false,
         inactiveSince: (new Date()).getTime()
     });
+}
+
+// -----------------------------------------------
+// Live streams
+// -----------------------------------------------
+
+/**
+ * Listen to an specific active custom reward
+ * @param {string} streamId Stream identifier
+ * @param {function} callback Function called every time the active rewards are updated
+ */
+export function listenStreamCustomRewards(streamId, callback) {
+    return activeCustomRewardsRef.child(streamId).on('value', callback);
+}
+
+/**
+ * Returns the value of the isStreaming flag of the specified streamer
+ * (this flag is updated only by cloud functions, is true when the streamer is live on Twitch)
+ * @param {string} streamerUid Streamer uid
+ */
+export async function getStreamerStreamingStatus(streamerUid) {
+    return (await userStreamerRef.child(streamerUid).child('isStreaming').once('value')).val();
+}
+
+/**
+ * Gets the thumbnail URL of the live stream of the specified streamer
+ * @param {string} streamerUid Streamer uid
+ */
+export async function getStreamerThumbnailUrl(streamerUid) {
+    return await userStreamerRef.child(streamerUid).child('thumbnailUrl').once('value');
+}
+
+/**
+ * Gets the displayName from the given streamer
+ * @param {string} streamerUid Streamer uid
+ */
+export async function getStreamerName(streamerUid) {
+    return await userStreamerRef.child(streamerUid).child('displayName').once('value');
+}
+
+/**
+ * Get the length of profile keys
+ */
+export async function getStreamersPublicProfilesLength() {
+    return await listOfStreamersPublicProfileKeysRef.child('length').once('value');
+}
+
+/**
+ * Get the specified key from the streamer profile
+ * @param {number} index Index to load from keys object
+ */
+export async function getStreamerPublicProfileKeyAtIndex(index) {
+    return await listOfStreamersPublicProfileKeysRef.child('keys').child(index).once('value');
 }

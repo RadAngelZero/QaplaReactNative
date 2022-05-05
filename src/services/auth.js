@@ -10,7 +10,6 @@ import { GoogleSignin } from '@react-native-community/google-signin';
 import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
-import { emptyLogros } from '../actions/logrosActions';
 import { updateUserLoggedStatus, removeUserListeners, removeLogrosListeners } from './database';
 import { unsubscribeUserFromAllSubscribedTopics } from './messaging';
 
@@ -142,8 +141,6 @@ export async function signOut() {
         updateUserLoggedStatus(false);
         await unsubscribeUserFromAllSubscribedTopics(uid);
         removeUserListeners(uid);
-        removeLogrosListeners(uid);
-        await store.dispatch(emptyLogros());
         await store.dispatch(signOutUser());
         await auth.signOut();
     } catch (error) {

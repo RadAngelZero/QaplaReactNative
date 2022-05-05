@@ -39,7 +39,6 @@ export const SET_CURRENT_SCREEN_ID = 'SET_CURRENT_SCREEN_ID';
 export const SET_PREVIOUS_SCREEN_ID = 'SET_PREVIOUS_SCREEN_ID';
 
 // Profile Leader Board REDUX constants
-export const SET_ENABLE_SCROLL = 'SET_ENABLE_SCROLL';
 export const SET_USER_IMAGE = 'SET_USER_IMAGE';
 
 // Crear Reta Button in PublicMatchesFeedScreen.js
@@ -49,10 +48,14 @@ export const HIGHLIGHT_1_CREATE_MATCH_FLAG = 'HIGHLIGHT_1_CREATE_MATCH_FLAG';
 // Notification Button in HeaderBar.js
 export const HIGHLIGHT_2_NOTIFICATIONS = 'HIGHLIGHT_2_NOTIFICATIONS';
 
-// Logros constants
-export const LOAD_LOGROS_ACTIVOS = 'LOAD_LOGROS_ACTIVOS';
-export const REMOVE_LOGRO_ACTIVO = 'REMOVE_LOGRO_ACTIVO';
-export const EMPTY_LOGROS = 'EMPTY_LOGROS';
+// Streams constants
+export const LOAD_FEATURED_STREAM = 'LOAD_FEATURED_STREAM';
+export const UPDATE_FEATURED_STREAM = 'UPDATE_FEATURED_STREAM';
+export const REMOVE_FEATURED_STREAM = 'REMOVE_FEATURED_STREAM';
+export const LOAD_STREAMS_BY_DATE_RANGE = 'LOAD_STREAMS_BY_DATE_RANGE';
+export const UPDATE_STREAM = 'UPDATE_STREAM';
+export const REMOVE_STREAM = 'REMOVE_STREAM';
+export const LOAD_LIVE_STREAM = 'LOAD_LIVE_STREAM';
 
 // QaplaLevel constants
 export const GET_QAPLA_LEVELS = 'GET_QAPLA_LEVELS';
@@ -102,9 +105,6 @@ export const QAPLOIN_PACKAGES = [ { qaploins: 300, price: '$2 USD' } ];
 // New line separator used in DB text
 export const DB_NEW_LINE_SEPARATOR = "QaplaMoo";
 
-// Verification Process
-export const VERIFICATION_COUNTDOWN_MILISECONDS = 60000;
-
 // Navigation Top Bar Icons
 export const NAV_TOPBAR_ICON_LEFT_MARGIN = 8;
 export const NAV_TOPBAR_ICON_RIGHT_MARGIN = 8;
@@ -134,7 +134,10 @@ export const ANDROID_PACKAGE_NAME = 'com.qapla.gaming.app';
 
 // Bottom Sheets
 export const SHEET_MAX_HEIGHT = heightPercentageToPx(65);
-export const SHEET_MIN_HEIGHT = heightPercentageToPx(15.5);
+export const SHEET_MIN_HEIGHT = heightPercentageToPx(26.5);
+
+// Bottom bar
+export const BOTTOM_NAVIGATION_BAR_HEIGHT = 85;
 
 // Default user images
 export const defaultUserImages = [

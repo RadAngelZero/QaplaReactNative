@@ -29,7 +29,7 @@
              * QaplaTabBar component use this translations so we need it to be predictable
              * that is why is all in lowercase and not so nested
             **/
-            "timeline": "Timeline",
+            "timeline": "Descubrir",
             "mystreams": "Mis streams",
             "discover": "Descubre",
             "following": "Siguiendo",
@@ -49,6 +49,7 @@
         "bottomNavigators": {
             "mainNavigator": {
                 "streams": "Streams",
+                "explore": "Explorar",
                 "community": "Comunidad",
                 "profile": "Perfil"
             }
@@ -325,7 +326,13 @@
         "eventsPermissionDescription": "Recibir notificaciones sobre los eventos a los que estoy suscrito"
     },
     "TimelineStreams": {
-        "featuredEvent": "Destacado"
+        "featuredEvent": "Destacado",
+        "live": "En vivo",
+        "qreators": "Qreadores",
+        "streamerHasNoProfileTitle": "¡Oh no! No encontramos su perfil Qapla",
+        "streamerHasNoProfileDescription": "%{streamerName} no ha creado un perfil en Qapla, pero puedes visitar su canal en Twitch",
+        "cancel": "Cancelar",
+        "goToTwitch": "Ir a Twitch"
     },
     "CommunityScreen": {
         "comingSoon": "¡Proximamente!",
@@ -443,7 +450,7 @@
         "joinDiscordChannel": "Unete a nuestro canal de Chat para soporte adicional.",
         "chat": "Chat",
         "description": "Descripción",
-        "prizes": "PREMIOS",
+        "prizes": "RECOMPENSAS",
         "instructions": "Instrucciones",
         "howToParticipate": "Como participar",
         "participate": "Unirme al stream",
@@ -590,6 +597,9 @@
     },
     "streamerCard": {
         "viewMore": "Ver más"
+    },
+    "loadingStreamerCard": {
+        "loading": "Curando..."
     },
     "qlan": {
         "myQlan": "Mi Qlan",

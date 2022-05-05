@@ -4,7 +4,6 @@ import {
 } from '../utilities/Constants';
 
 import { listenForGamesResourcesChanges } from '../services/database';
-import { gamesResources } from '../utilities/GamesResources';
 
 export const getListOfGames = () => async (dispatch) => {
     let listOfGames = {};
@@ -26,18 +25,7 @@ export const getListOfGames = () => async (dispatch) => {
             listOfPlatformsWithGames.forEach((platform) => {
                 listOfGames[platform.key] = platform.val();
                 platform.forEach((game) => {
-                    /**
-                     * If we have the game media on the local we replaces the icon and image field with references to the
-                     * local icon and image and we set the local flag to true, so we can render the image correctly on the
-                     * componentes
-                     */
-                    if (gamesResources[platform.key] && gamesResources[platform.key][game.key]){
-                        listOfGames[platform.key][game.key].icon = gamesResources[platform.key][game.key].icon;
-                        listOfGames[platform.key][game.key].image = gamesResources[platform.key][game.key].image;
-                        listOfGames[platform.key][game.key].local = true;
-                    } else {
-                        listOfGames[platform.key][game.key].local = false;
-                    }
+                    listOfGames[platform.key][game.key].local = false;
                 });
             });
 

@@ -9,6 +9,7 @@ import { getLocaleLanguage } from '../../utilities/i18';
 import QaplaText from '../QaplaText/QaplaText';
 import { trackOnSegment } from '../../services/statistics';
 import Images from './../../../assets/images';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 const StreamCardContainer = ({ children, onPress }) => (
     <TouchableWithoutFeedback onPress={onPress}
@@ -192,15 +193,9 @@ class StreamLiveCard extends React.PureComponent {
                         style={styles.backgroundImageContainer}
                         blurRadius={5}
                         source={thumbnail ? { uri: thumbnail } : null}>
-                        <View style={{ display: 'flex', width: '100%', height: '100%' }}>
+                        <View style={styles.thumbnailContainer}>
                             <Image source={thumbnail ? { uri: thumbnail } : null}
-                                style={{
-                                    position: 'absolute',
-                                    top: 28,
-                                    left: 0,
-                                    right: 0,
-                                    height: 160
-                                }}
+                                style={styles.thumbnail}
                             />
                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'absolute', right: 24, top: 24 }}>
                                 {badges}

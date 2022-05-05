@@ -10,7 +10,7 @@ export default styles = StyleSheet.create({
         borderRadius: 20,
     },
     backgroundImageContainer: {
-        height: widthPercentageToPx(52),
+        height: widthPercentageToPx(53.33),
         justifyContent: 'center',
         borderRadius: 20,
     },
@@ -19,6 +19,14 @@ export default styles = StyleSheet.create({
         justifyContent:'center',
         alignItems: 'center',
         resizeMode: 'cover',
+    },
+    thumbnailContainer: {
+        display: 'flex',
+        flex: 1,
+        justifyContent: 'center'
+    },
+    thumbnail: {
+        height: heightPercentageToPx(16.12)
     },
     titleContainer: {
         marginLeft: widthPercentageToPx(1.33),

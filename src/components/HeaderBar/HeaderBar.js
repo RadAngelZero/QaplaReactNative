@@ -191,34 +191,26 @@ class HeaderBar extends Component {
                         </View>
                     }
                     <View style={styles.iconsContainer}>
-                        <HighlightModal
-                            visible={this.state.showHg2Modal}
-                            onClose={this.toggleHg2Modal}
-                            showDelay={1000}
-                            cb1={this.markHg2}
-                            header={translate('headerBar.highlightModal.header')}
-                            body={translate('headerBar.highlightModal.body')}>
-                            <QaplaIcon onPress={this.onActivityPressBttn}>
-                                {this.userHaveUnreadActivity() ?
-                                    <DuotoneActiveIcon height={35} width={35} />
-                                :
-                                    <DuotoneDefaultIcon height={35} width={35} />
-                                }
-                            </QaplaIcon>
-                        </HighlightModal>
+                        <QaplaIcon onPress={this.onActivityPressBttn} touchableStyle={styles.leftIconTouchableStyle}>
+                            {this.userHaveUnreadActivity() ?
+                                <DuotoneActiveIcon height={32} width={32} />
+                            :
+                                <DuotoneDefaultIcon height={32} width={32} />
+                            }
+                        </QaplaIcon>
                         {this.props.currentScreenId !== 'Profile' &&
-                                <QaplaIcon onPress={this.sendToDiscord}>
+                                <QaplaIcon onPress={this.sendToDiscord} touchableStyle={styles.rightIconTouchableStyle}>
                                     <DiscordIcon
-                                        height={35}
-                                        width={35}
+                                        height={32}
+                                        width={32}
                                         fill='#FFF' />
                                 </QaplaIcon>
                         }
                         {this.props.currentScreenId === 'Profile' &&
-                            <QaplaIcon onPress={this.goToUserProfile}>
+                            <QaplaIcon onPress={this.goToUserProfile} touchableStyle={styles.rightIconTouchableStyle}>
                                 <SettingsIcon
-                                    height={33}
-                                    width={33}
+                                    height={28}
+                                    width={28}
                                     fill='#FFF' />
                             </QaplaIcon>
                         }

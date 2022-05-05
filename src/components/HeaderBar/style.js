@@ -45,7 +45,17 @@ export const styles = StyleSheet.create({
         fontSize: 24
     },
     iconsContainer: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    leftIconTouchableStyle: {
+        justifyContent: 'center',
+        width: 40
+    },
+    rightIconTouchableStyle: {
+        justifyContent: 'center',
+        width: 40,
+        marginRight: 16
     },
     unreadNotificationsIcon: {
         position: 'absolute',

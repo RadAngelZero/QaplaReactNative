@@ -9,7 +9,7 @@ class LoadingStreamerCard extends React.PureComponent {
     render() {
         return (
             <View style={styles.loadingCard}>
-                <Image source={images.gif.loadingStreamers.img} />
+                <Image style={{ width: 150, height: 150 }} source={images.gif.loadingStreamers.img} />
                 <Text style={styles.loadingText}>
                     {translate('loadingStreamerCard.loading')}
                 </Text>

@@ -31,7 +31,7 @@ export default styles = StyleSheet.create({
         letterSpacing: 1,
         color: '#FFF',
         lineHeight: 22,
-        minHeight: heightPercentageToPx(getPercentHeight(44)),
+        minHeight: heightPercentageToPx(5.42),
     },
     body: {
         display: 'flex',
@@ -58,23 +58,20 @@ export default styles = StyleSheet.create({
     },
     dateText: {
         color: '#FFF',
-        marginLeft: widthPercentageToPx(getPercentWidth(8)),
+        marginLeft: widthPercentageToPx(2.13),
         fontSize: 11,
         fontWeight: '500',
         lineHeight: 26,
-        letterSpacing: 0.5,
-        // textAlign: left;
+        letterSpacing: 0.5
 
     },
     streamerDetails: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: widthPercentageToPx(getPercentWidth(193)),
-        height: heightPercentageToPx(getPercentHeight(59)),
+        width: widthPercentageToPx(51.47),
+        height: heightPercentageToPx(7.27),
         padding: 12,
-        borderRadius: 20,
-        // backgroundColor: '#f0f'
-
+        borderRadius: 20
     },
     streamPlatformText: {
         fontSize: 16,

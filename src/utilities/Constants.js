@@ -137,7 +137,7 @@ export const SHEET_MAX_HEIGHT = heightPercentageToPx(65);
 export const SHEET_MIN_HEIGHT = heightPercentageToPx(26.5);
 
 // Bottom bar
-export const BOTTOM_NAVIGATION_BAR_HEIGHT = 85;
+export const BOTTOM_NAVIGATION_BAR_HEIGHT = 75;
 
 // Default user images
 export const defaultUserImages = [

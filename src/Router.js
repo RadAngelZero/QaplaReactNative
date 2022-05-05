@@ -178,7 +178,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
         <View style={{
           display: 'flex',
           height: 20,
-          marginBottom: 20,
+          marginBottom: 10,
           justifyContent: 'center'
         }} >
           <QaplaText style={{
@@ -230,7 +230,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
         <View style={{
           display: 'flex',
           height: 20,
-          marginBottom: 20,
+          marginBottom: 10,
           justifyContent: 'center'
         }} >
           <QaplaText style={{
@@ -281,7 +281,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
         <View style={{
           display: 'flex',
           height: 20,
-          marginBottom: 20,
+          marginBottom: 10,
           justifyContent: 'center'
         }} >
           <QaplaText style={{
@@ -332,7 +332,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
         <View style={{
           display: 'flex',
           height: 20,
-          marginBottom: 20,
+          marginBottom: 10,
           justifyContent: 'center'
         }} >
           <QaplaText style={{

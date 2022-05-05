@@ -59,6 +59,7 @@ class StreamCard extends React.PureComponent {
         const streamHasBoost = customRewardsMultipliers && (customRewardsMultipliers.xq > 1 || customRewardsMultipliers.qoins > 1);
 
         if (streamHasBoost) {
+            customRewardsMultipliers.qoins = 10
             if (customRewardsMultipliers.xq === customRewardsMultipliers.qoins) {
                 switch (customRewardsMultipliers.xq) {
                     case 2:
@@ -93,7 +94,6 @@ class StreamCard extends React.PureComponent {
                     default:
                         break;
                 }
-
                 switch (customRewardsMultipliers.xq) {
                     case 2:
                         SecondBoostIcon = () => <Images.svg.boostX2 />;
@@ -113,19 +113,43 @@ class StreamCard extends React.PureComponent {
             }
         }
 
+        const ViewWithShadow = ({ children, style }) => (
+            <View style={[{
+                    borderRadius: 100,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84,
+                    elevation: 5,
+                }, style]}>
+                {children}
+            </View>
+        );
+
         return (
             <>
                 {FirstBoostIcon &&
+                <ViewWithShadow style={{ marginRight: 5 }}>
                     <FirstBoostIcon />
+                </ViewWithShadow>
                 }
                 {customRewardsMultipliers.qoins > 1 &&
+                <ViewWithShadow style={{ marginRight: 5 }}>
                     <Images.svg.qoin />
+                </ViewWithShadow>
                 }
                 {SecondBoostIcon &&
+                <ViewWithShadow style={{ marginRight: 5 }}>
                     <SecondBoostIcon />
+                </ViewWithShadow>
                 }
                 {customRewardsMultipliers.xq > 1 &&
+                <ViewWithShadow>
                     <Images.svg.xq />
+                </ViewWithShadow>
                 }
             </>
         );
@@ -211,7 +235,7 @@ class StreamCard extends React.PureComponent {
                             <Image
                                 style={styles.streamerPhoto}
                                 source={streamerPhoto ? { uri: streamerPhoto } : null} />
-                            <QaplaText style={styles.streamPlatformText}>
+                            <QaplaText style={styles.streamPlatformText} numberOfLines={1} ellipsizeMode='tail'>
                                 {streamerName}
                             </QaplaText>
                         </LinearGradient>

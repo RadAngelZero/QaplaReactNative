@@ -77,11 +77,13 @@ export default styles = StyleSheet.create({
 
     },
     streamPlatformText: {
-        fontSize: heightPercentageToPx(2.22),
+        fontSize: 16,
+        flexShrink: 1,
         fontWeight: '700',
-        lineHeight: heightPercentageToPx(2.22),
+        lineHeight: 20,
         color: '#FFF',
-        marginLeft: widthPercentageToPx(2.67),
+        marginLeft: 8,
+        letterSpacing: 0.5
     },
     streamerPhoto: {
         borderRadius: 30,

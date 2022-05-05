@@ -760,20 +760,6 @@ export async function isUserParticipantOnEvent(uid, eventId) {
 }
 
 // -----------------------------------------------
-// Verification
-// -----------------------------------------------
-
-/**
- * Write a request for verification on the database
- * @param {string} uid user identifier on database
- * @param {object} verificationInfo Object with the necessary information to write the request
- */
-export function createVerificationRequest(uid, verificationInfo) {
-    verificationOnProccessRef.child(uid).set(verificationInfo);
-    cuentasVerificadasRef.child(uid).set(verificationInfo);
-}
-
-// -----------------------------------------------
 // Feedback
 // -----------------------------------------------
 

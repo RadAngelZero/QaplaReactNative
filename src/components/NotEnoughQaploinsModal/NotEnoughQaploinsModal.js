@@ -40,10 +40,6 @@ class NotEnoughQaploins extends Component {
 
 		// Close the Modal
     	this.props.onClose();
-
-		if (this.props.deletedFromMatchDetail) {
-			this.props.navigation.goBack('NotificationRetas');
-		}
     }
 
     render() {

@@ -33,7 +33,7 @@ class TopNavOptions extends Component {
          *
          * If we are on the SignIn/LogIn screen
          */
-        if ((this.props.currentScreen === 'SignIn' && this.props.previousScreen === 'Profile') || this.props.currentScreen === 'LogIn' || this.props.previousScreen === 'LogIn') {
+        if ((this.props.currentScreen === 'SignIn' && this.props.previousScreen === 'Profile')) {
 
             return this.props.navigation.navigate('Explore');
         }
@@ -43,7 +43,7 @@ class TopNavOptions extends Component {
 
     render() {
         return (
-            <SafeAreaView style={(this.props.currentScreen !== 'LogIn' && this.props.currentScreen !== 'SignIn') ?
+            <SafeAreaView style={(this.props.currentScreen !== 'SignIn') ?
                 styles.sfvContainer : styles.sfvContainerSignInWithEmail}>
                 <View style={styles.optionsContainer}>
                     <View style={styles.backIconContainer}>

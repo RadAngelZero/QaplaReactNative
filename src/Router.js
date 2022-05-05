@@ -8,42 +8,22 @@ import Svg, { G, Path, Rect, Ellipse } from 'react-native-svg';
 import { connect } from 'react-redux';
 
 import { setCurrentScreenId, setPreviousScreenId } from './actions/screensActions';
-import { isUserLogged } from './services/auth';
 
 import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen';
-import PublicMatchesFeedScreen from './screens/PublicMatchesFeedScreen/PublicMatchesFeedScreen';
-import MyMatchesScreen from './screens/MyMatchesScreen/MyMatchesScreen';
-import PublicMatchCardScreen from './screens/PublicMatchCardScreen/PublicMatchCardScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
-import LoginWithEmailScreen from './screens/LoginWithEmailScreen/LoginWithEmailScreen';
 import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameScreen';
-import ChooseMatchTypeScreen from './screens/ChooseMatchTypeScreen/ChooseMatchTypeScreen';
-import LoadGamesScreen from './screens/LoadGamesScreen/LoadGamesScreen';
-import ChooseOpponentScreen from './screens/ChooseOpponentScreen/ChooseOpponentScreen';
-import SetBetScreen from './screens/SetBetScreen/SetBetScreen';
-import CheckOutPaymentScreen from './screens/CheckOutPaymentScreen/CheckOutPaymentScreen';
-import ActivityNotificationsScreen from './screens/ActivityNotificationsScreen/ActivityNotificationsScreen';
-import RetasNotificationsScreen from './screens/RetasNotificationsScreen/RetasNotificationsScreen';
-import UploadMatchResultScreen from './screens/UploadMatchResultScreen/UploadMatchResultScreen';
 import NewUserProfileScreen from './screens/NewUserProfileScreen/NewUserProfileScreen';
 import TimelineStreams from './screens/TimelineStreams/TimelineStreams';
-// import VerificationScreen from './screens/VerificationScreen/VerificationScreen';
 import SupportScreen from './screens/SupportScreen/SupportScreen';
 import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
 import LinkBrokenScreen from './screens/LinkBrokenScreen/LinkBrokenScreen';
-import ChatScreen from './screens/ChatScreen/ChatScreen';
-import ExchangeQoins from './screens/ExchangeQoins/ExchangeQoins';
 
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
-import NotificationsHeader from './components/NotificationsHeader/NotificationsHeader';
-import BadgeForNotificationTab from './components/BadgeForNotificationTab/BadgeForNotificationTab';
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
-import { widthPercentageToPx } from './utilities/iosAndroidDim';
 import { translate } from './utilities/i18';
 import NotificationsSettingsScreen from './screens/NotificationsSettingsScreen/NotificationsSettingsScreen';
 import QaplaText from './components/QaplaText/QaplaText';
-import ChatHeader from './components/Chat/ChatHeader/ChatHeader';
 import DiscoverStreamersScreen from './screens/DiscoverStreamersScreen/DiscoverStreamersScreen';
 import DonationsLeaderBoard from './components/DonationsLeaderBoard/DonationsLeaderBoard';
 import TwitchAuthScreen from './screens/TwitchAuthScreen/TwitchAuthScreen';
@@ -58,51 +38,6 @@ import MyStreamsScreen from './screens/MyStreamsScreen/MyStreamsScreen';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT } from './utilities/Constants';
 
 //#region Stack Navigators
-
-const CheckOutStackNavigator = createStackNavigator({
-  CheckOut: {
-    screen: CheckOutPaymentScreen,
-    navigationOptions: {
-      header: (props) => <TopNavOptions close {...props} />
-    }
-  }
-});
-
-const MatchWizardStackNavigator = createStackNavigator({
-  ChooseMatchType: {
-    screen: ChooseMatchTypeScreen,
-    navigationOptions: {
-      header: (props) => <TopNavOptions close {...props} onCloseNavigateTo='Public' />
-    }
-  },
-  SelectGame: {
-    screen: LoadGamesScreen,
-    navigationOptions: {
-      header: (props) => <TopNavOptions back close {...props} />
-    }
-  },
-  SetBet: SetBetScreen
-},
-  {
-    navigationOptions: {
-      gestureEnabled: false
-    }
-  });
-
-const MatchDetailsStackNavigator = createStackNavigator({
-  MatchDetails: {
-    screen: PublicMatchCardScreen,
-    navigationOptions: {
-      header: (props) => <TopNavOptions close {...props} />
-    }
-  },
-  UploadMatchResult: {
-    screen: UploadMatchResultScreen,
-    navigationOptions: {
-      header: (props) => <TopNavOptions close {...props} />
-    }
-  }
-});
 
 const SettingsMenuStackNavigator = createStackNavigator({
   AppSettingsMenu: {
@@ -125,36 +60,11 @@ const SettingsMenuStackNavigator = createStackNavigator({
   }
 });
 
-const AddGameStackNavigator = createStackNavigator({
-  AddGame: {
-    screen: LoadGamesScreen,
-    navigationOptions: {
-      header: (props) => <TopNavOptions close {...props} />
-    }
-  }
-});
-
-/**
- * @deprecated
- */
-const VerificationStackNavigator = createStackNavigator({
-  Verification: () => <View />
-}, {
-  headerMode: 'none'
-});
-
-
 const AuthStackNavigator = createStackNavigator({
   SignIn: {
     screen: AuthHandlerScreen,
     navigationOptions: {
       headerShown: false
-    }
-  },
-  LogIn: {
-    screen: LoginWithEmailScreen,
-    navigationOptions: {
-      header: (props) => <TopNavOptions back close {...props} />
     }
   },
   TwitchLogIn: {
@@ -166,15 +76,6 @@ const AuthStackNavigator = createStackNavigator({
 }, {
   navigationOptions: {
     gestureEnabled: false
-  }
-});
-
-const ChatStackNavigator = createStackNavigator({
-  EventChat: {
-    screen: ChatScreen,
-    navigationOptions: {
-      header: (props) => <ChatHeader {...props} />
-    }
   }
 });
 
@@ -205,96 +106,6 @@ const StreamerProfileStackNavigator = createStackNavigator({
 //#endregion
 
 //#region Top Tab Navigators
-
-/** @deprecated
-const MatchesTopTabNavigator = createMaterialTopTabNavigator(
-  {
-    Public: {
-      screen: PublicMatchesFeedScreen,
-      navigationOptions: {
-        title: translate('router.topNavigators.matches.public')
-      }
-    },
-    MyMatches: {
-      screen: MyMatchesScreen,
-      navigationOptions: {
-        title: translate('router.topNavigators.matches.myMatches')
-      }
-    }
-  },
-  {
-    tabBarOptions: {
-      upperCaseLabel: false,
-      style: {
-        backgroundColor: '#0C1021'
-      },
-      tabStyle: {
-        width: widthPercentageToPx(35)
-      },
-      labelStyle: {
-        fontSize: 14,
-        fontFamily: 'SFRounded-Ultralight',
-        fontWeight: 'bold'
-      },
-      activeTintColor: '#FFF',
-      inactiveTintColor: '#FFF',
-      indicatorStyle: {
-        borderBottomColor: '#36E5CE',
-        borderBottomWidth: 2,
-        width: widthPercentageToPx(35)
-      }
-    },
-  }
-);*/
-
-/**
- * @deprecated
-**/
-const NotificationsTopTabNavigator = createMaterialTopTabNavigator(
-  {
-    NotificationActividad: {
-      screen: ActivityNotificationsScreen,
-      navigationOptions: {
-        title: translate('router.topNavigators.notifications.activity')
-      }
-    },
-    NotificationRetas: {
-      screen: RetasNotificationsScreen,
-      navigationOptions: {
-        title: translate('router.topNavigators.notifications.matches'),
-        tabBarIcon: ({ tintColor, focused }) => (
-          <BadgeForNotificationTab />
-        )
-      }
-    }
-  },
-  {
-    initialRouteName: 'NotificationActividad',
-    navigationOptions: {
-      header: (props) => <NotificationsHeader {...props} />
-    },
-    tabBarOptions: {
-      upperCaseLabel: false,
-      style: {
-        backgroundColor: '#0C1021'
-      },
-      tabStyle: {
-        width: widthPercentageToPx(35)
-      },
-      labelStyle: {
-        fontSize: 14,
-        fontWeight: 'bold',
-      },
-      activeTintColor: '#FFF',
-      inactiveTintColor: '#FFF',
-      indicatorStyle: {
-        borderBottomColor: '#36E5CE',
-        borderBottomWidth: 2,
-        width: widthPercentageToPx(35)
-      }
-    },
-  }
-);
 
 const StreamsTopTabNavigator = createMaterialTopTabNavigator(
   {
@@ -588,19 +399,8 @@ const RootStackNavigator = createStackNavigator({
       animationEnabled: false
     }
   },
-  MatchWizard: MatchWizardStackNavigator,
-  ChatStackNavigator: ChatStackNavigator,
-  MatchDetails: MatchDetailsStackNavigator,
   SettingsMenu: SettingsMenuStackNavigator,
-  AddGame: AddGameStackNavigator,
-  CheckOut: CheckOutStackNavigator,
-  Auth: AuthStackNavigator,
-  ExchangeQoinsScreen: {
-    screen: ExchangeQoins,
-    navigationOptions: {
-      header: (props) => <TopNavOptions close onCloseNavigateTo='Profile' {...props} />
-    }
-  }
+  Auth: AuthStackNavigator
 }, {
   headerMode: 'screen',
   defaultNavigationOptions: {

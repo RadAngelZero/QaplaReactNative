@@ -55,11 +55,7 @@ class ChooseUserNameScreen extends Component {
 
                         const originScreen = this.props.navigation.getParam('originScreen', 'Explore');
 
-                        if (originScreen !== 'Public') {
-                            this.props.navigation.navigate(originScreen);
-                        } else {
-                            this.props.navigation.navigate('MatchWizard');
-                        }
+                        this.props.navigation.navigate(originScreen);
                     } else {
                     this.setState({
                         showErrorMessage: true,

@@ -14,9 +14,6 @@ import images from '../../../assets/images';
 import { getUserNode } from '../../actions/userActions';
 import {
     getUserNameWithUID,
-    getMatchWitMatchId,
-    getGamerTagWithUID,
-    getUserDiscordTag,
     updateUserLanguage,
     getTwitchUserName
 } from '../../services/database';
@@ -201,25 +198,6 @@ class AuthLoadingScreen extends Component {
                 }
             }
 
-            if (type === 'appDeepLink') {
-                const type2 = this.getParameterFromUrl(url, 'type2');
-
-                if (type2 === 'matchCard') {
-                    const matchId = this.getParameterFromUrl(url, 'matchId');
-
-                    trackOnSegment('Deep link - matchCard', {
-                        MatchId: matchId
-                    });
-
-                    return this.redirectUserToPublicMatchCard(url);
-                } else if (type2 === 'eventInvitation') {
-                    const eventId = this.getParameterFromUrl(url, 'eventId');
-                    if (eventId) {
-                        return this.props.navigation.navigate('Explore', { eventToDisplay: eventId });
-                    }
-                }
-            }
-
             this.props.navigation.navigate(screenName);
         }
     }
@@ -240,49 +218,6 @@ class AuthLoadingScreen extends Component {
      */
     redirectUserToStreamerProfile(streamerId) {
         this.props.navigation.navigate('StreamerProfile', { streamerId });
-    }
-
-    /**
-     * Redirect to MatchCard screen with 'matchId'
-     * @param {string} url Url of deeplink pressed by the user
-     */
-    async redirectUserToPublicMatchCard(url) {
-        const matchId = this.getParameterFromUrl(url, 'matchId');
-        const matchDBObj = await getMatchWitMatchId(matchId);
-
-        let matchObj = {
-            deepLink: true,
-            expired: true
-        };
-
-        if (matchDBObj) {
-            //Get the userName from a external function because the match object only have the UID
-            const userName = await getUserNameWithUID(matchDBObj.adversary1);
-            const gamerTag = await getGamerTagWithUID(matchDBObj.adversary1, matchDBObj.game, matchDBObj.platform);
-
-            matchObj = {
-                ...matchObj,
-                adversaryUid: matchDBObj.adversary1,
-                alphaNumericIdMatch: matchDBObj.alphaNumericIdMatch,
-                bet: matchDBObj.bet,
-                date: matchDBObj.date,
-                game: matchDBObj.game,
-                hour: matchDBObj.hour,
-                hourResult: matchDBObj.hourResult,
-                idMatch: matchId,
-                numMatches: matchDBObj.numMatches,
-                observations: matchDBObj.observations,
-                platform: matchDBObj.platform,
-                timeStamp: matchDBObj.timeStamp,
-                winBet: matchDBObj.winBet,
-                userName: userName,
-                gamerTag: gamerTag,
-                discordTag: await getUserDiscordTag(matchDBObj.adversary1),
-                expired: false
-            };
-        }
-
-        this.props.navigation.navigate('MatchDetails', { matchCard: matchObj });
     }
 
     render() {

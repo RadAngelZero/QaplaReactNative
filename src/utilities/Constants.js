@@ -105,9 +105,6 @@ export const QAPLOIN_PACKAGES = [ { qaploins: 300, price: '$2 USD' } ];
 // New line separator used in DB text
 export const DB_NEW_LINE_SEPARATOR = "QaplaMoo";
 
-// Verification Process
-export const VERIFICATION_COUNTDOWN_MILISECONDS = 60000;
-
 // Navigation Top Bar Icons
 export const NAV_TOPBAR_ICON_LEFT_MARGIN = 8;
 export const NAV_TOPBAR_ICON_RIGHT_MARGIN = 8;

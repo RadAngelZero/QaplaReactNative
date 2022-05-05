@@ -3,7 +3,7 @@ import { TouchableOpacity, Image, View, ScrollView, Linking, Text, TouchableWith
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
-import images from '../../../assets/images';
+import Images from '../../../assets/images';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import QaplaChip from '../../components/QaplaChip/QaplaChip';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
@@ -15,12 +15,12 @@ import { getLocaleLanguage, translate } from './../../utilities/i18';
 import styles from './style';
 
 const socialMediaIcons = {
-    Twitch: images.svg.twitchLight,
-    Instagram: images.svg.instagram,
-    Twitter: images.svg.twitter,
-    Discord: images.svg.discordSocial,
-    TikTok: images.svg.tikTok,
-    Youtube: images.svg.youTube
+    Twitch: Images.svg.twitchLight,
+    Instagram: Images.svg.instagram,
+    Twitter: Images.svg.twitter,
+    Discord: Images.svg.discordSocial,
+    TikTok: Images.svg.tikTok,
+    Youtube: Images.svg.youTube
 };
 
 class StreamerProfileScreen extends Component {
@@ -187,16 +187,16 @@ class StreamerProfileScreen extends Component {
             if (customRewardsMultipliers.xq === customRewardsMultipliers.qoins) {
                 switch (customRewardsMultipliers.xq) {
                     case 2:
-                        FirstBoostIcon = () => <images.svg.boostX2 />;
+                        FirstBoostIcon = () => <Images.svg.boostX2 />;
                         break;
                     case 3:
-                        FirstBoostIcon = () => <images.svg.boostX3 />;
+                        FirstBoostIcon = () => <Images.svg.boostX3 />;
                         break;
                     case 5:
-                        FirstBoostIcon = () => <images.svg.boostX5 />;
+                        FirstBoostIcon = () => <Images.svg.boostX5 />;
                         break;
                     case 10:
-                        FirstBoostIcon = () => <images.svg.boostX10 />;
+                        FirstBoostIcon = () => <Images.svg.boostX10 />;
                         break;
                     default:
                         break;
@@ -204,33 +204,32 @@ class StreamerProfileScreen extends Component {
             } else {
                 switch (customRewardsMultipliers.qoins) {
                     case 2:
-                        FirstBoostIcon = () => <images.svg.boostX2 />;
+                        FirstBoostIcon = () => <Images.svg.boostX2 />;
                         break;
                     case 3:
-                        FirstBoostIcon = () => <images.svg.boostX3 />;
+                        FirstBoostIcon = () => <Images.svg.boostX3 />;
                         break;
                     case 5:
-                        FirstBoostIcon = () => <images.svg.boostX5 />;
+                        FirstBoostIcon = () => <Images.svg.boostX5 />;
                         break;
                     case 10:
-                        FirstBoostIcon = () => <images.svg.boostX10 />;
+                        FirstBoostIcon = () => <Images.svg.boostX10 />;
                         break;
                     default:
                         break;
                 }
-
                 switch (customRewardsMultipliers.xq) {
                     case 2:
-                        SecondBoostIcon = () => <images.svg.boostX2 />;
+                        SecondBoostIcon = () => <Images.svg.boostX2 />;
                         break;
                     case 3:
-                        SecondBoostIcon = () => <images.svg.boostX3 />;
+                        SecondBoostIcon = () => <Images.svg.boostX3 />;
                         break;
                     case 5:
-                        SecondBoostIcon = () => <images.svg.boostX5 />;
+                        SecondBoostIcon = () => <Images.svg.boostX5 />;
                         break;
                     case 10:
-                        SecondBoostIcon = () => <images.svg.boostX10 />;
+                        SecondBoostIcon = () => <Images.svg.boostX10 />;
                         break;
                     default:
                         break;
@@ -238,19 +237,43 @@ class StreamerProfileScreen extends Component {
             }
         }
 
+        const ViewWithShadow = ({ children, style }) => (
+            <View style={[{
+                    borderRadius: 100,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84,
+                    elevation: 5,
+                }, style]}>
+                {children}
+            </View>
+        );
+
         return (
             <>
                 {FirstBoostIcon &&
+                <ViewWithShadow style={{ marginRight: 5 }}>
                     <FirstBoostIcon />
+                </ViewWithShadow>
                 }
                 {customRewardsMultipliers.qoins > 1 &&
-                    <images.svg.qoin />
+                <ViewWithShadow style={{ marginRight: 5 }}>
+                    <Images.svg.qoin />
+                </ViewWithShadow>
                 }
                 {SecondBoostIcon &&
+                <ViewWithShadow style={{ marginRight: 5 }}>
                     <SecondBoostIcon />
+                </ViewWithShadow>
                 }
                 {customRewardsMultipliers.xq > 1 &&
-                    <images.svg.xq />
+                <ViewWithShadow>
+                    <Images.svg.xq />
+                </ViewWithShadow>
                 }
             </>
         );
@@ -274,7 +297,7 @@ class StreamerProfileScreen extends Component {
                 <ScrollView>
                     <View style={styles.topNav}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('MainBottomNavigator')}>
-                            <images.svg.backIcon />
+                            <Images.svg.backIcon />
                         </TouchableOpacity>
                     </View>
                     {backgroundUrl ?
@@ -298,7 +321,7 @@ class StreamerProfileScreen extends Component {
                                     <Text style={!this.state.isUserFollowingStreamer ? styles.followButtonText : !this.state.showUnfollowConfirmation ? styles.followingButtonText : styles.unfollowButtonText}>
                                         {!this.state.isUserFollowingStreamer ? translate('streamerProfileScreen.follow') : !this.state.showUnfollowConfirmation ? translate('streamerProfileScreen.following') : translate('streamerProfileScreen.unfollow')}
                                     </Text>
-                                    {this.state.showUnfollowConfirmation && <images.svg.unfollow style={{ marginLeft: 6 }} />}
+                                    {this.state.showUnfollowConfirmation && <Images.svg.unfollow style={{ marginLeft: 6 }} />}
                                 </View>
                             </TouchableOpacity>
                             {!this.state.showUnfollowConfirmation &&
@@ -306,12 +329,12 @@ class StreamerProfileScreen extends Component {
                                 {/* Button hidden temporarily */}
                                 {/* <TouchableOpacity onPress={() => console.log('Share Icon Press')}>
                                     <View style={styles.iconContainer}>
-                                        <images.svg.share />
+                                        <Images.svg.share />
                                     </View>
                                 </TouchableOpacity> */}
                                 <TouchableOpacity onPress={() => this.setState({ openSupportStreamerModal: true })}>
                                     <View style={styles.iconContainer}>
-                                        <images.svg.sendIcon />
+                                        <Images.svg.sendIcon />
                                     </View>
                                 </TouchableOpacity>
                                 </>
@@ -322,7 +345,7 @@ class StreamerProfileScreen extends Component {
                                 {displayName}
                             </Text>
                             {badge &&
-                                <images.svg.founderBadge />
+                                <Images.svg.founderBadge />
                             }
                         </View>
                         <Text style={styles.bio}>
@@ -339,7 +362,7 @@ class StreamerProfileScreen extends Component {
                                     ))}
                                     {tags.length > 5 &&
                                         <TouchableOpacity onPress={() => this.setState({ showAllTags: true })}>
-                                            <images.svg.moreCircle />
+                                            <Images.svg.moreCircle />
                                         </TouchableOpacity>
                                     }
                                 </>
@@ -351,7 +374,7 @@ class StreamerProfileScreen extends Component {
                                         </QaplaChip>
                                     ))}
                                     <TouchableOpacity onPress={() => this.setState({ showAllTags: false })}>
-                                        <images.svg.lessCircle />
+                                        <Images.svg.lessCircle />
                                     </TouchableOpacity>
                                 </>
                                 }
@@ -379,13 +402,13 @@ class StreamerProfileScreen extends Component {
                                         </Text>
                                         <View style={styles.nextStreamTimeContainer}>
                                             <View style={styles.timeContainer}>
-                                                <images.svg.calendar style={{ alignSelf: 'center' }} />
+                                                <Images.svg.calendar style={{ alignSelf: 'center' }} />
                                                 <Text style={styles.timeText}>
                                                     {this.formatStreamDate(nextStream.timestamp)}
                                                 </Text>
                                             </View>
                                             <View style={styles.timeContainer}>
-                                                <images.svg.clock />
+                                                <Images.svg.clock />
                                                 <Text style={styles.timeText}>
                                                     {this.formatStreamHour(nextStream.timestamp)}
                                                 </Text>
@@ -432,7 +455,7 @@ class StreamerProfileScreen extends Component {
                                                                 {code.code}
                                                             </Text>
                                                             <View style={styles.copyCode}>
-                                                                <images.svg.copyCreatorCode />
+                                                                <Images.svg.copyCreatorCode />
                                                             </View>
                                                         </View>
                                                     </TouchableOpacity>

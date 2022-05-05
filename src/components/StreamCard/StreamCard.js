@@ -59,7 +59,6 @@ class StreamCard extends React.PureComponent {
         const streamHasBoost = customRewardsMultipliers && (customRewardsMultipliers.xq > 1 || customRewardsMultipliers.qoins > 1);
 
         if (streamHasBoost) {
-            customRewardsMultipliers.qoins = 10
             if (customRewardsMultipliers.xq === customRewardsMultipliers.qoins) {
                 switch (customRewardsMultipliers.xq) {
                     case 2:

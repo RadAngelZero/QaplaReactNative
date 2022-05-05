@@ -93,7 +93,6 @@ class StreamLiveCard extends React.PureComponent {
                     default:
                         break;
                 }
-
                 switch (customRewardsMultipliers.xq) {
                     case 2:
                         SecondBoostIcon = () => <Images.svg.boostX2 />;
@@ -113,19 +112,43 @@ class StreamLiveCard extends React.PureComponent {
             }
         }
 
+        const ViewWithShadow = ({ children, style }) => (
+            <View style={[{
+                    borderRadius: 100,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84,
+                    elevation: 5,
+                }, style]}>
+                {children}
+            </View>
+        );
+
         return (
             <>
                 {FirstBoostIcon &&
+                <ViewWithShadow style={{ marginRight: 5 }}>
                     <FirstBoostIcon />
+                </ViewWithShadow>
                 }
                 {customRewardsMultipliers.qoins > 1 &&
+                <ViewWithShadow style={{ marginRight: 5 }}>
                     <Images.svg.qoin />
+                </ViewWithShadow>
                 }
                 {SecondBoostIcon &&
+                <ViewWithShadow style={{ marginRight: 5 }}>
                     <SecondBoostIcon />
+                </ViewWithShadow>
                 }
                 {customRewardsMultipliers.xq > 1 &&
+                <ViewWithShadow>
                     <Images.svg.xq />
+                </ViewWithShadow>
                 }
             </>
         );

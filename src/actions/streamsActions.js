@@ -6,6 +6,7 @@ import {
     getStreamerThumbnailUrl
 } from '../services/database';
 import {
+    CLEAN_ALL_STREAMS,
     HOURS_IN_DAY,
     LOAD_FEATURED_STREAM,
     LOAD_LIVE_STREAM,
@@ -47,18 +48,6 @@ export const loadFeaturedStreams = (uid) => async (dispatch) => {
                             }
                             dispatch(removeFeaturedStream(featuredStream.key));
                             dispatch(loadLiveStream(featuredStream.key, streamObject));
-
-                            /**
-                             * If the stream is live then remove real time listener for participation (the user
-                             * can not join the stream once it has started)
-                             */
-                            if (uid) {
-                                eventParticipantsRef.child(featuredStream.key).child(uid).off('value');
-                                const indexToRemove = listeningStreams.indexOf(featuredStream.key);
-                                if (indexToRemove >= 0) {
-                                    listeningStreams.splice(indexToRemove, 1);
-                                }
-                            }
                         }
                     }
 
@@ -66,7 +55,7 @@ export const loadFeaturedStreams = (uid) => async (dispatch) => {
                 }
             });
 
-            if (uid && listeningStreams.indexOf(featuredStream.key) < 0) {
+            if (uid) {
                 eventParticipantsRef.child(featuredStream.key).child(uid).on('value', (userParticipant) => {
                     listeningStreams.push(featuredStream.key);
                     if (userParticipant.exists()) {
@@ -119,18 +108,6 @@ export const loadStreamsByListIndex = (uid, index) => async (dispatch) => {
                                 }
                                 dispatch(removeStream(stream.key, index));
                                 dispatch(loadLiveStream(stream.key, streamObject));
-
-                                /**
-                                 * If the stream is live then remove real time listener for participation (the user
-                                 * can not join the stream once it has started)
-                                 */
-                                if (uid) {
-                                    eventParticipantsRef.child(stream.key).child(uid).off('value');
-                                    const indexToRemove = listeningStreams.indexOf(stream.key);
-                                    if (indexToRemove >= 0) {
-                                        listeningStreams.splice(indexToRemove, 1);
-                                    }
-                                }
                             }
                         }
 
@@ -139,7 +116,7 @@ export const loadStreamsByListIndex = (uid, index) => async (dispatch) => {
                 });
             }
 
-            if (uid && listeningStreams.indexOf(stream.key) < 0) {
+            if (uid) {
                 eventParticipantsRef.child(stream.key).child(uid).on('value', (userParticipant) => {
                     listeningStreams.push(stream.key);
                     if (userParticipant.exists()) {
@@ -149,6 +126,14 @@ export const loadStreamsByListIndex = (uid, index) => async (dispatch) => {
             }
         }
     });
+}
+
+export const cleanStreamsLists = (uid) => (dispatch) => {
+    listeningStreams.forEach((node) => {
+        eventParticipantsRef.child(node).child(uid).off('value');
+    });
+
+    dispatch(cleanAllStreams());
 }
 
 const loadFeaturedStreamSuccess = (payload) => ({
@@ -190,4 +175,8 @@ const loadLiveStream = (id, payload) => ({
     type: LOAD_LIVE_STREAM,
     id,
     payload
+});
+
+const cleanAllStreams = () => ({
+    type: CLEAN_ALL_STREAMS
 });

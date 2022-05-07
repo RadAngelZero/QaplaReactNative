@@ -56,6 +56,7 @@ export const LOAD_STREAMS_BY_DATE_RANGE = 'LOAD_STREAMS_BY_DATE_RANGE';
 export const UPDATE_STREAM = 'UPDATE_STREAM';
 export const REMOVE_STREAM = 'REMOVE_STREAM';
 export const LOAD_LIVE_STREAM = 'LOAD_LIVE_STREAM';
+export const CLEAN_ALL_STREAMS = 'CLEAN_ALL_STREAMS';
 
 // QaplaLevel constants
 export const GET_QAPLA_LEVELS = 'GET_QAPLA_LEVELS';

@@ -12,6 +12,7 @@ import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
 import { updateUserLoggedStatus, removeUserListeners, removeLogrosListeners } from './database';
 import { unsubscribeUserFromAllSubscribedTopics } from './messaging';
+import { cleanStreamsLists } from '../actions/streamsActions';
 
 const webClientIdForGoogleAuth = '779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com';
 
@@ -142,6 +143,8 @@ export async function signOut() {
         await unsubscribeUserFromAllSubscribedTopics(uid);
         removeUserListeners(uid);
         await store.dispatch(signOutUser());
+        // Reset streams lists and remove database listeners from event participants node
+        store.dispatch(cleanStreamsLists(uid));
         await auth.signOut();
     } catch (error) {
         console.error(error);

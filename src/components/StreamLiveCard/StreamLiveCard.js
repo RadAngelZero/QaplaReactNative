@@ -210,21 +210,21 @@ class StreamLiveCard extends React.PureComponent {
                         </QaplaText>
                     </View>
                     <View style={{ height: 16 }} />
-                    <TouchableOpacity onPress={() => this.props.onStreamerProfileButtonPress(idStreamer, streamerChannelLink)}>
-                        <LinearGradient
-                            style={styles.streamerDetails}
-                            useAngle={true}
-                            angle={150}
-                            angleCenter={{ x: 0.5, y: 0.5 }}
-                            colors={['#141539', '#141539']}>
+                    <LinearGradient
+                        style={styles.streamerDetails}
+                        useAngle={true}
+                        angle={150}
+                        angleCenter={{ x: 0.5, y: 0.5 }}
+                        colors={['#141539', '#141539']}>
+                        <TouchableOpacity style={styles.streamerDetailsTouchable} onPress={() => this.props.onStreamerProfileButtonPress(idStreamer, streamerChannelLink)}>
                             <Image
                                 style={styles.streamerPhoto}
                                 source={streamerPhoto ? { uri: streamerPhoto } : null} />
                             <QaplaText style={styles.streamPlatformText}>
                                 {streamerName}
                             </QaplaText>
-                        </LinearGradient>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+                    </LinearGradient>
                 </View>
             </StreamCardContainer >
         );

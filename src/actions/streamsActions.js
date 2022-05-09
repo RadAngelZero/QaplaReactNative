@@ -94,7 +94,7 @@ export const loadStreamsByListIndex = (uid, index) => async (dispatch) => {
              * If the stream is scheduled for today (index === 0) then listen for custom rewards (as the stream can
              * suddenly start while the user is in the app)
              */
-            if (index === 0) {
+            if (index === 0 || index === 1) {
                 listenStreamCustomRewards(stream.key, (streamRewards) => {
                     if (streamRewards.exists()) {
                         async function checkIfStreamerIsStreaming() {

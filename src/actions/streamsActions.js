@@ -13,6 +13,7 @@ import {
     LOAD_STREAMS_BY_DATE_RANGE,
     ONE_HOUR_MILISECONDS,
     REMOVE_FEATURED_STREAM,
+    REMOVE_LIVE_STREAM,
     REMOVE_STREAM,
     UPDATE_FEATURED_STREAM,
     UPDATE_STREAM
@@ -72,7 +73,7 @@ export const loadStreamsByListIndex = (uid, index) => async (dispatch) => {
     if (index > 0) {
         today.setHours(0, 0, 0, 0);
     } else {
-        today.setHours(today.getHours() < 3 ? 0 : today.getHours() - 3, 0, 0, 0);
+        today.setHours(today.getHours() - 3);
     }
 
     const startAt = new Date(today.getTime() + ((ONE_HOUR_MILISECONDS * HOURS_IN_DAY) * index));
@@ -91,7 +92,7 @@ export const loadStreamsByListIndex = (uid, index) => async (dispatch) => {
             dispatch(loadStreamByDateRange(streamObject, index));
 
             /**
-             * If the stream is scheduled for today (index === 0) then listen for custom rewards (as the stream can
+             * If the stream is scheduled for today or tomorrow (index === 0 || index === 1) then listen for custom rewards (as the stream can
              * suddenly start while the user is in the app)
              */
             if (index === 0 || index === 1) {
@@ -112,6 +113,13 @@ export const loadStreamsByListIndex = (uid, index) => async (dispatch) => {
                         }
 
                         checkIfStreamerIsStreaming();
+                    } else {
+                        /**
+                         * If there are no rewards remove the stream from live list (this help us to remove
+                         * streams that finished while user is using the app. If the stream is not
+                         * on the list there are no problems, we validate that on streamsReducer)
+                         */
+                        dispatch(removeLiveStream(stream.key));
                     }
                 });
             }
@@ -175,6 +183,11 @@ const loadLiveStream = (id, payload) => ({
     type: LOAD_LIVE_STREAM,
     id,
     payload
+});
+
+const removeLiveStream = (id) => ({
+    type: REMOVE_LIVE_STREAM,
+    id
 });
 
 const cleanAllStreams = () => ({

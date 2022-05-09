@@ -7,7 +7,7 @@ import { getDonationsLeaderBoard, getLeaderBoardPrizes, getUserDonationLeaderBoa
 import QaplaText from '../QaplaText/QaplaText';
 import styles from './styles';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import { defaultUserImages } from '../../utilities/Constants';
+import { BOTTOM_NAVIGATION_BAR_HEIGHT, defaultUserImages } from '../../utilities/Constants';
 import QaplaTooltip from '../QaplaTooltip/QaplaTooltip';
 import { translate } from '../../utilities/i18';
 import { retrieveData, storeData } from '../../utilities/persistance';
@@ -480,6 +480,10 @@ class DonationsLeaderBoard extends Component {
                             {this.state.userLeaderBoardData.totalDonations}xp
                         </QaplaText>
                     </View>
+                    {/**
+                     * View with height is to avoid Bottom bar on content
+                     */}
+                    <View style={{ marginBottom: BOTTOM_NAVIGATION_BAR_HEIGHT * 1.5 }} />
                 </ScrollView>
             </View>
         );

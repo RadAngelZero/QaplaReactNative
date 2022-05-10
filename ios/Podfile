@@ -34,11 +34,7 @@ target 'QaplaReactNative' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'FBSDKCoreKit','~> 5.8.0'
-  pod 'FBSDKLoginKit','~> 5.8.0'
-  pod 'FBSDKShareKit', '~> 5.8.0'
-
-  pod 'RNGoogleSignin', :path => '../node_modules/@react-native-community/google-signin' 
+  pod 'RNGoogleSignin', :path => '../node_modules/@react-native-community/google-signin'
   pod 'GoogleSignIn', '~> 5.0.2'
 
   #pod 'RNAnalyticsIntegration-Mixpanel', :path => '../node_modules/@segment/analytics-react-native-mixpanel'

@@ -1,11 +1,9 @@
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import {
     auth,
-    FBProvider,
     GoogleProvider,
     AppleProvider
 } from './../utilities/firebase';
-import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
@@ -15,24 +13,6 @@ import { unsubscribeUserFromAllSubscribedTopics } from './messaging';
 import { cleanStreamsLists } from '../actions/streamsActions';
 
 const webClientIdForGoogleAuth = '779347879760-3uud8furtp2778sskfhabbtqmg4qdlma.apps.googleusercontent.com';
-
-/**
- * Signin a user using facebook
- */
-export async function signInWithFacebook() {
-    const facebookResult = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-
-    if (facebookResult.isCancelled) {
-        console.log('Facebook authentication cancelled');
-    } else {
-        const facebookToken = await AccessToken.getCurrentAccessToken();
-        const credential = FBProvider.credential(facebookToken.accessToken);
-        const finalUser = await auth.signInWithCredential(credential);
-        setUserIdOnSegment(finalUser.user.uid, finalUser.user.email);
-
-        return finalUser;
-    }
-}
 
 /**
  * Signin a user using Google

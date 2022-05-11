@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import images from '../../../assets/images';
 import ProgressDotsIndicator from '../../components/ProgressDotsIndicator/ProgressDotsIndicator';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { getPercentHeight, getPercentWidth, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import styles from './style';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import { createAccountWitEmailAndPassword, setupGoogleSignin, signInWithApple, signInWithEmailAndPassword, signInWithGoogle } from '../../services/auth';
@@ -19,14 +19,6 @@ import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import TermsAndConditionsModal from '../../components/TermsAndConditionsModal/TermsAndConditionsModal';
 
 class AuthHandlerScreen extends Component {
-    texts = null;
-    screens = null;
-    firstButton = null;
-    firstButtonBackgroundColor = null;
-    secondButton = null;
-    secondButtonBackgroundColor = null;
-    emailButton = null;
-
     state = {
         steps: 0,
         currentStep: -1,
@@ -51,7 +43,6 @@ class AuthHandlerScreen extends Component {
     componentDidMount() {
         setupGoogleSignin();
         Keyboard.addListener('keyboardDidShow', (e) => {
-            // - 96 because we want the back button to still visible and with a margin of 16
             this.setState({ keyboard: true });
         });
 
@@ -291,7 +282,7 @@ class AuthHandlerScreen extends Component {
                                 <Text style={styles.qlanImageText}>Qlan</Text>
                             </ImageBackground>
                         }
-                        <View style={[styles.card, this.state.keyboard ? { position: 'absolute', top: heightPercentageToPx(getPercentHeight(-150)) } : {}]}>
+                        <View style={[styles.card, this.state.keyboard ? { position: 'absolute', top: heightPercentageToPx(-18.47) } : {}]}>
                             <LinearGradient useAngle={true}
                                 angle={136}
                                 style={styles.card}
@@ -311,15 +302,15 @@ class AuthHandlerScreen extends Component {
                                     {
                                         marginTop: this.state.currentStep === 3 ?
                                             this.state.keyboard ?
-                                                heightPercentageToPx(getPercentHeight(118))
+                                                heightPercentageToPx(14.53)
                                                 :
-                                                heightPercentageToPx(getPercentHeight(42))
+                                                heightPercentageToPx(5.17)
                                             :
                                             this.state.keyboard ?
-                                                heightPercentageToPx(getPercentHeight(72))
+                                                heightPercentageToPx(8.87)
                                                 :
                                                 0,
-                                        marginBottom: this.state.currentStep === 3 ? heightPercentageToPx(getPercentHeight(-28)) : 0,
+                                        marginBottom: this.state.currentStep === 3 ? heightPercentageToPx(-3.45) : 0,
                                     }]}>
                                         {this.state.currentStep === -1 && translate('authHandlerScreen.textsCarrousel.welcome')}
                                         {this.state.currentStep === 0 &&
@@ -341,7 +332,6 @@ class AuthHandlerScreen extends Component {
                                         }
                                         {this.state.currentStep === 3 &&
                                             //translation pending
-                                            // translate('authHandlerScreen.textsCarrousel.createUsername')
                                             translate('authHandlerScreen.textsCarrousel.haveQreatorQode')
                                         }
                                     </QaplaText>
@@ -465,15 +455,15 @@ class AuthHandlerScreen extends Component {
                                                 ?
                                                 this.state.keyboard
                                                     ?
-                                                    heightPercentageToPx(getPercentHeight(45))
+                                                    heightPercentageToPx(5.54)
                                                     :
-                                                    heightPercentageToPx(getPercentHeight(-14))
+                                                    heightPercentageToPx(-1.72)
                                                 :
                                                 this.state.currentStep === 4 ?
-                                                    heightPercentageToPx(getPercentHeight(-90))
+                                                    heightPercentageToPx(-11)
                                                     :
                                                     this.state.currentStep === 2 ?
-                                                        heightPercentageToPx(getPercentHeight(5))
+                                                        heightPercentageToPx(0.62)
                                                         :
                                                         0,
                                         }]}
@@ -539,8 +529,8 @@ class AuthHandlerScreen extends Component {
                                         color={'rgba(0,254,223,0.54)'}
                                         activeColor={'#00FEDF'}
                                         /* We use heightPercentageToPx to achieve circular Views */
-                                        width={heightPercentageToPx(getPercentHeight(8))}
-                                        activeWidth={widthPercentageToPx(getPercentWidth(30))}
+                                        width={heightPercentageToPx(0.98)}
+                                        activeWidth={widthPercentageToPx(8)}
                                         marginHorizontal={heightPercentageToPx(1)} />
                                 </View>
                             </LinearGradient>

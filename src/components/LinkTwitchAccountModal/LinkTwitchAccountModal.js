@@ -26,6 +26,14 @@ class LinkTwitchAccountModal extends Component {
         this.props.onClose();
     }
 
+    onAuthSuccessful = (user, isNewUser) => {
+        if (this.props.onAuthSuccessful) {
+            this.props.onAuthSuccessful(user, isNewUser);
+        }
+
+        this.props.onClose();
+    }
+
     onSkipTwitchLink = () => {
         if (this.props.onSkipTwitchLink) {
             this.props.onSkipTwitchLink();
@@ -54,7 +62,10 @@ class LinkTwitchAccountModal extends Component {
                                     </Text>
                                 </TouchableOpacity>
                             </View>
-                            <LinkTwitchAccount onLinkSuccessful={this.onLinkSuccessful} linkingWithQreatorCode={this.props.linkingWithQreatorCode} />
+                            <LinkTwitchAccount onLinkSuccessful={this.onLinkSuccessful}
+                                onAuthSuccessful={this.onAuthSuccessful}
+                                onFail={this.props.onClose}
+                                linkingWithQreatorCode={this.props.linkingWithQreatorCode} />
                         </>
                     }
                     {this.state.showDontLinkWarning &&

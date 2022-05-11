@@ -24,7 +24,7 @@ class AuthHandlerScreen extends Component {
         currentStep: -1,
         createAccountIsSelected: true,
         screenIndex: 0,
-        showLinkWitTwitchModal: false,
+        showLinkWitTwitchModal: true,
         hideEmailUI: false,
         email: '',
         password: '',
@@ -52,6 +52,7 @@ class AuthHandlerScreen extends Component {
     }
 
     /**
+     * For Google and Apple Auth only
      * Check if the user is new, if it's new create the profile and send the user
      * to ChooseUserNameScreen
      * If isn't just close and back to the previous flow
@@ -79,6 +80,22 @@ class AuthHandlerScreen extends Component {
                 }
             }
         });
+    }
+
+    handleTwitchSignIn = async (user, isNewUser) => {
+        if (isNewUser) {
+            await createUserProfile(user.user.uid, user.user.email, user.user.displayName);
+        }
+
+        updateUserLoggedStatus(true, user.user.uid);
+        const onSuccessCallback = this.props.navigation.getParam('onSuccessSignIn', () => { });
+        onSuccessCallback(user.user.uid);
+
+        if (isNewUser) {
+            this.setState({ currentStep: 3 });
+        } else {
+            this.props.navigation.navigate(this.props.originScreen);
+        }
     }
 
     handleFirstButtonPress = async () => {
@@ -162,13 +179,15 @@ class AuthHandlerScreen extends Component {
 
     closeTwitchLinkModal = async () => {
         this.setState({ showLinkWitTwitchModal: false });
-        const userName = await getUserNameWithUID(this.state.uid);
-        if (!userName) {
-            this.goToCreateUsernameStep();
-        }  else if (this.state.currentStep === 3) {
-            this.setState({ joiningQlan: false, disabled: false });
-        } else {
-            return this.props.navigation.navigate(this.props.originScreen);
+        if (this.state.uid) {
+            const userName = await getUserNameWithUID(this.state.uid);
+            if (!userName) {
+                this.goToCreateUsernameStep();
+            }  else if (this.state.currentStep === 3) {
+                this.setState({ joiningQlan: false, disabled: false });
+            } else {
+                return this.props.navigation.navigate(this.props.originScreen);
+            }
         }
     }
 
@@ -233,11 +252,10 @@ class AuthHandlerScreen extends Component {
             }
         } else {
             this.setState({ joiningQlan: false, disabled: false });
-            console.log('Invalid Qlan code');
         }
     }
 
-    finishProcess = () => { console.log('press'); this.props.navigation.navigate(this.props.originScreen);}
+    finishProcess = () => this.props.navigation.navigate(this.props.originScreen);
 
     openTermsModal = () => this.setState({ openTermsModal: true });
 
@@ -250,6 +268,7 @@ class AuthHandlerScreen extends Component {
     render() {
         let showIOSButton = Platform.OS === 'ios' && appleAuth.isSignUpButtonSupported;
 
+        console.log(this.state.currentStep);
         return (
             <SafeAreaView style={styles.sfvContainer}>
                 <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.sfvContainer}>
@@ -331,7 +350,6 @@ class AuthHandlerScreen extends Component {
                                             translate('authHandlerScreen.textsCarrousel.createUsername')
                                         }
                                         {this.state.currentStep === 3 &&
-                                            //translation pending
                                             translate('authHandlerScreen.textsCarrousel.haveQreatorQode')
                                         }
                                     </QaplaText>
@@ -539,6 +557,7 @@ class AuthHandlerScreen extends Component {
                     <LinkTwitchAccountModal
                         open={this.state.showLinkWitTwitchModal}
                         onClose={this.closeTwitchLinkModal}
+                        onAuthSuccessful={this.handleTwitchSignIn}
                         onLinkSuccessful={this.handleQlan}
                         linkingWithQreatorCode={Boolean(this.state.qlanCode)} />
                 </ScrollView>

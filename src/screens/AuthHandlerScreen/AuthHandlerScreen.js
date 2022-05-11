@@ -24,7 +24,7 @@ class AuthHandlerScreen extends Component {
         currentStep: -1,
         createAccountIsSelected: true,
         screenIndex: 0,
-        showLinkWitTwitchModal: true,
+        showLinkWitTwitchModal: false,
         hideEmailUI: false,
         email: '',
         password: '',

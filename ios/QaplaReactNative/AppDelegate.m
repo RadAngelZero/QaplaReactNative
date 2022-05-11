@@ -12,7 +12,6 @@
 #import <React/RCTRootView.h>
 
 #import <RNGoogleSignin/RNGoogleSignin.h>
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 // This import should be removed if React Native Firebase library is removed
 #import <Firebase.h>
@@ -59,7 +58,7 @@
  BOOL handled = [RCTLinkingManager application:application openURL:url options:options];
 
   if (!handled) {
-      handled = [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] || [RNGoogleSignin application:application openURL:url options:options] || [[RNFirebaseLinks instance] application:application openURL:url options:options];
+      handled = [RNGoogleSignin application:application openURL:url options:options] || [[RNFirebaseLinks instance] application:application openURL:url options:options];
   }
 
   return handled;

@@ -11,6 +11,7 @@ import StreamLiveList from '../../components/StreamLiveList/StreamLiveList';
 import { getStreamerName, getStreamerPublicProfile } from '../../services/database';
 import { translate } from '../../utilities/i18';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT } from '../../utilities/Constants';
+import { isUserLogged } from '../../services/auth';
 
 class Mystreamsscreen extends Component {
     listsToRender = [0, 1, 2, 3, 4, 5, 6];
@@ -18,6 +19,24 @@ class Mystreamsscreen extends Component {
         openEventDetailsModal: false,
         selectedStream: null
     };
+
+    componentDidMount() {
+        this.list = [
+            this.props.navigation.addListener(
+                'willFocus',
+                (payload) => {
+                    if (!isUserLogged()) {
+                        this.props.navigation.navigate('Auth');
+                    }
+                }
+            )
+        ]
+    }
+
+    componentWillUnmount() {
+        //Remove navigation listeners
+        this.list.forEach((item) => item.remove());
+    }
 
     onStreamPress = (stream) => {
         this.setState({ selectedStream: stream }, () => this.setState({ openEventDetailsModal: true }));

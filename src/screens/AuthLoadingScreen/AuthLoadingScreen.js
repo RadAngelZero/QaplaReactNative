@@ -21,7 +21,7 @@ import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment, setUserIdOnSegment } from '../../services/statistics';
 import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
-import { loadFeaturedStreams } from '../../actions/streamsActions';
+import { loadFeaturedStreams, loadStreamsByListIndex } from '../../actions/streamsActions';
 import { translate } from '../../utilities/i18';
 import { checkNotificationPermission } from '../../services/messaging';
 import remoteConf from '../../services/remoteConfig';
@@ -66,6 +66,9 @@ class AuthLoadingScreen extends Component {
             if (user) {
                 this.props.loadUserData(user.uid);
                 this.props.loadFeaturedStreams(user.uid);
+                for (let i = 0; i < 7; i++) {
+                    this.props.loadStreamsByListIndex(user.uid, i);
+                }
 
                 // If username does not exist because profile does not exist as well, then
                 // user is redirected to ChooUserName where they will create their profile.
@@ -132,6 +135,9 @@ class AuthLoadingScreen extends Component {
                 }
             } else {
                 this.props.loadFeaturedStreams(null);
+                for (let i = 0; i < 7; i++) {
+                    this.props.loadStreamsByListIndex(null, i);
+                }
             }
 
             /**
@@ -244,7 +250,8 @@ function mapDispatchToProps(dispatch) {
         loadListOfGames: () => getListOfGames()(dispatch),
         loadShowHg1Modal: () => getHg1CreateMatch()(dispatch),
         getServerTimeOffset: () => getServerTimeOffset()(dispatch),
-        loadFeaturedStreams: (uid) => loadFeaturedStreams(uid)(dispatch)
+        loadFeaturedStreams: (uid) => loadFeaturedStreams(uid)(dispatch),
+        loadStreamsByListIndex: (uid, index) => loadStreamsByListIndex(uid, index)(dispatch)
     };
 }
 

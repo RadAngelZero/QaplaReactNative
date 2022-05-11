@@ -71,12 +71,16 @@ export default styles = StyleSheet.create({
     streamerDetails: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: widthPercentageToPx(getPercentWidth(193)),
-        height: heightPercentageToPx(getPercentHeight(59)),
-        padding: 12,
+        width: widthPercentageToPx(51.47),
+        height: heightPercentageToPx(7.27),
         borderRadius: 20,
         backgroundColor: '#f0f'
-
+    },
+    streamerDetailsTouchable: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        flex: 1,
+        padding: 12
     },
     streamPlatformText: {
         fontSize: heightPercentageToPx(2.2),

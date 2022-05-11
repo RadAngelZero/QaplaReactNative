@@ -63,7 +63,7 @@ class TwitchAuthScreen extends Component {
                 if (qaplaCustomAuthToken.data && qaplaCustomAuthToken.data.token) {
 
                     // Uid´s of users created with Twitch accounts are their Twitch id´s
-                    if (false && await uidExists(data.id)) {
+                    if (await uidExists(data.id)) {
                         const user = await auth.signInWithCustomToken(qaplaCustomAuthToken.data.token);
                         await saveTwitchData(user.user.uid, {
                             photoUrl: data.profile_image_url,

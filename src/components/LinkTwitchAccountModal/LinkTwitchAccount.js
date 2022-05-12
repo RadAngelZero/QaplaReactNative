@@ -25,14 +25,6 @@ class LinkTwitchAccount extends Component {
         this.setState({ linking: false });
     }
 
-    successTwitchAuth = (user, isNewUser) => {
-        if (this.props.onAuthSuccessful) {
-            this.props.onAuthSuccessful(user, isNewUser);
-        }
-
-        this.setState({ linking: false });
-    }
-
     render() {
         return (
             <LinearGradient
@@ -72,7 +64,6 @@ class LinkTwitchAccount extends Component {
                         </View>
                     :
                         <TwitchAuthScreen onLinkSuccess={this.successTwitchLink}
-                            onAuthSuccessful={this.successTwitchAuth}
                             onFail={this.props.onFail} />
                     }
                 </View>

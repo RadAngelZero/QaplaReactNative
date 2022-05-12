@@ -63,7 +63,6 @@ class LinkTwitchAccountModal extends Component {
                                 </TouchableOpacity>
                             </View>
                             <LinkTwitchAccount onLinkSuccessful={this.onLinkSuccessful}
-                                onAuthSuccessful={this.onAuthSuccessful}
                                 onFail={this.props.onClose}
                                 linkingWithQreatorCode={this.props.linkingWithQreatorCode} />
                         </>

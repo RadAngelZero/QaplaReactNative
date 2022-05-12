@@ -88,6 +88,10 @@ import Boostx5 from './icons/Boostx5.svg';
 import Boostx10 from './icons/Boostx10.svg';
 import EditQlan from './icons/EditQlan.svg';
 import Qoin from './icons/Qoin.svg';
+import TwitchDark from './icons/TwitchDark.svg';
+import AppleAuth from './icons/AppleBlackLogoRound.svg';
+import GoogleAuth from './icons/GoogleBlackLogoRound.svg';
+import EmailAuth from './icons/EmailBlackLogoRound.svg';
 
 // Images
 const images = {
@@ -293,7 +297,11 @@ const images = {
 		boostX5: Boostx5,
 		boostX10: Boostx10,
 		editQlan: EditQlan,
-		qoin: Qoin
+		qoin: Qoin,
+		twitchDark: TwitchDark,
+		appleAuth: AppleAuth,
+		googleAuth: GoogleAuth,
+		emailAuth: EmailAuth
 	},
 	gif: {
 		loadingStreamers: {

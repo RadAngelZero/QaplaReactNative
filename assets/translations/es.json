@@ -384,7 +384,6 @@
         },
         "buttonsCarrousel": {
             "createAccount": "Crear mi cuenta",
-            "continueWithApple": "Continuar con Apple",
             "alreadyHaveAccount": "Ya tengo cuenta",
             "continueWithGoogle": "Continuar con Google",
             "continueWithTwitch": "Continuar con Twitch",

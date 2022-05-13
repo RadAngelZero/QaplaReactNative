@@ -24,7 +24,6 @@ class AuthHandlerScreen extends Component {
         steps: 0,
         currentStep: -1,
         createAccountIsSelected: true,
-        screenIndex: 0,
         showLinkWitTwitchModal: false,
         hideEmailUI: false,
         email: '',
@@ -176,14 +175,14 @@ class AuthHandlerScreen extends Component {
     }
 
     goToNextScreen = () => {
-        this.setState({ screenIndex: this.state.screenIndex + 1, currentStep: this.state.currentStep + 1 });
+        this.setState({ currentStep: this.state.currentStep + 1 });
     }
 
     backToPreviousScreen = () => {
         if (this.state.currentStep === 0) {
             this.setState({ steps: 0 });
         }
-        this.setState({ screenIndex: this.state.screenIndex - 1, currentStep: this.state.currentStep - 1 });
+        this.setState({ currentStep: this.state.currentStep - 1 });
     }
 
     closeAndBackButton = () => {
@@ -193,8 +192,12 @@ class AuthHandlerScreen extends Component {
             } else {
                 return this.props.navigation.navigate('Timeline');
             }
-        } else if (this.state.screenIndex !== -1) {
-            this.backToPreviousScreen();
+        } else {
+            if (this.state.currentStep === 5) {
+                this.setState({ currentStep: 0 });
+            } else {
+                this.backToPreviousScreen();
+            }
         }
     }
 
@@ -296,7 +299,7 @@ class AuthHandlerScreen extends Component {
                         {this.state.currentStep !== 3 && this.state.currentStep !== 4 &&
                             <TouchableOpacity onPress={this.closeAndBackButton}>
                                 <View style={styles.closeBackIcon}>
-                                    {this.state.screenIndex !== 0 ?
+                                    {this.state.currentStep !== -1 ?
                                         <images.svg.backIcon />
                                         :
                                         <images.svg.closeIcon />

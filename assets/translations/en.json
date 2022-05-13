@@ -384,9 +384,9 @@
         },
         "buttonsCarrousel": {
             "createAccount": "Create my account",
-            "continueWithApple": "Continue with Apple",
             "alreadyHaveAccount": "I already have an account",
             "continueWithGoogle": "Continue with Google",
+            "continueWithTwitch": "Continue with Twitch",
             "continue": "Continue",
             "validatingUsername": "Validating username...",
             "iamReady": "I am ready!",

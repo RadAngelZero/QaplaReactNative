@@ -8,7 +8,7 @@ import { GoogleSignin } from '@react-native-community/google-signin';
 import { setUserIdOnSegment } from './statistics';
 import store from './../store/store';
 import { signOutUser } from '../actions/userActions';
-import { updateUserLoggedStatus, removeUserListeners, removeLogrosListeners } from './database';
+import { updateUserLoggedStatus, removeUserListeners } from './database';
 import { unsubscribeUserFromAllSubscribedTopics } from './messaging';
 import { cleanStreamsLists } from '../actions/streamsActions';
 
@@ -81,35 +81,8 @@ export async function createAccountWitEmailAndPassword(email, password) {
     return user;
 }
 
-/**
- * Send a SMS to the given number of the user to verify their phone number
- * @param {string} phoneNumber Phone number of the user
- */
-export async function sendVerificationSMSToUser(phoneNumber) {
-    /**
-     * https://rnfirebase.io/docs/v5.x.x/auth/reference/auth#verifyPhoneNumber
-     */
-    return await auth.verifyPhoneNumber(phoneNumber, false, true);
-}
-
-/**
- * Link the current account of the user with the new cellphone account
- * @param {object} phoneCredential Phone credentials of firebase auth
- */
-export async function linkUserAccountWithPhone(phoneCredential) {
-    return await auth.currentUser.linkWithCredential(phoneCredential);
-}
-
 export function isUserLogged() {
     return auth.currentUser !== null;
-}
-
-export async function getIdTokenFromUser() {
-    try {
-        return await auth.currentUser.getIdToken(true);
-    } catch(error) {
-        console.log('Error: ', error);
-    }
 }
 
 /**

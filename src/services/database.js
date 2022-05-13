@@ -49,6 +49,14 @@ const listOfStreamersPublicProfileKeysRef = database.ref('/ListOfStreamersPublic
 const streamersFollowersRef = database.ref('/StreamersFollowers');
 
 /**
+ * Returns true if the user with the given uid exists
+ * @param {string} uid User identifier
+ */
+export async function uidExists(uid) {
+    return (await usersRef.child(uid).once('value')).exists();
+}
+
+/**
  * Returns the userName of the specified user
  * @param {string} Uid User id from firebase
  */

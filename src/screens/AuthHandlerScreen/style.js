@@ -78,7 +78,7 @@ export default styles = StyleSheet.create({
     },
     button: {
         backgroundColor: '#00FFDD',
-        width: widthPercentageToPx(getPercentWidth(260)),
+        width: widthPercentageToPx(69.33),
         height: heightPercentageToPx(getPercentHeight(74)),
         borderRadius: heightPercentageToPx(getPercentHeight(36)),
         justifyContent: 'center',
@@ -89,7 +89,7 @@ export default styles = StyleSheet.create({
         alignSelf: 'center',
     },
     buttonWithIconContainer: {
-        width: widthPercentageToPx(getPercentWidth(260)),
+        width: widthPercentageToPx(69.33),
         height: heightPercentageToPx(getPercentHeight(74)),
         borderRadius: heightPercentageToPx(getPercentHeight(36)),
         alignItems: 'center',
@@ -99,6 +99,14 @@ export default styles = StyleSheet.create({
     buttonText: {
         fontSize: heightPercentageToPx(getPercentHeight(17)),
         textAlign: 'center',
+    },
+    iOSAuthOptionsContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        width: widthPercentageToPx(69.33),
+        height: heightPercentageToPx(getPercentHeight(74)),
+        marginBottom: 30
     },
     checkBox: {
         marginTop: heightPercentageToPx(getPercentHeight(16)),
@@ -170,7 +178,7 @@ export default styles = StyleSheet.create({
         lineHeight: heightPercentageToPx(getPercentHeight(26)),
         letterSpacing: widthPercentageToPx(getPercentWidth(0.3499999940395355)),
         textAlign: 'center',
-        width: widthPercentageToPx(getPercentWidth(260)),
+        width: widthPercentageToPx(69.33),
         marginTop: heightPercentageToPx(getPercentHeight(-10)),
         marginBottom: heightPercentageToPx(getPercentHeight(12)),
     },
@@ -201,6 +209,10 @@ export default styles = StyleSheet.create({
         letterSpacing: widthPercentageToPx(getPercentWidth(0.2545454502105713)),
         textAlign: 'center',
         color: '#fff',
-        width: widthPercentageToPx(getPercentWidth(260)),
+        width: widthPercentageToPx(69.33),
     },
+    twitchAuthScreenContainer: {
+        width: '100%',
+        height: '100%'
+    }
 });

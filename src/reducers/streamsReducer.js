@@ -1,8 +1,10 @@
 import {
+    CLEAN_ALL_STREAMS,
     LOAD_FEATURED_STREAM,
     LOAD_LIVE_STREAM,
     LOAD_STREAMS_BY_DATE_RANGE,
     REMOVE_FEATURED_STREAM,
+    REMOVE_LIVE_STREAM,
     REMOVE_STREAM,
     UPDATE_FEATURED_STREAM,
     UPDATE_STREAM
@@ -53,6 +55,14 @@ function streamsReducer(state = initialState, action) {
             live[action.payload.id] = { ...live[action.payload.id], ...action.payload };
 
             return { ...state, streamsLists: { ...streamsLists, live } };
+        case REMOVE_LIVE_STREAM:
+            if (live[action.id]) {
+                delete live[action.id];
+            }
+
+            return { ...state, streamsLists: { ...streamsLists, live } };
+        case CLEAN_ALL_STREAMS:
+            return { ...state, streamsLists: initialState.streamsLists };
         default:
             return state;
     }

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import images from '../../../assets/images';
 import ProgressDotsIndicator from '../../components/ProgressDotsIndicator/ProgressDotsIndicator';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { getPercentHeight, getPercentWidth, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import styles from './style';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import { createAccountWitEmailAndPassword, setupGoogleSignin, signInWithApple, signInWithEmailAndPassword, signInWithGoogle } from '../../services/auth';
@@ -17,21 +17,13 @@ import { translate } from '../../utilities/i18';
 import QaplaTextInput from '../QaplaTextInput/QaplaTextInput';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import TermsAndConditionsModal from '../../components/TermsAndConditionsModal/TermsAndConditionsModal';
+import TwitchAuthScreen from '../TwitchAuthScreen/TwitchAuthScreen';
 
 class AuthHandlerScreen extends Component {
-    texts = null;
-    screens = null;
-    firstButton = null;
-    firstButtonBackgroundColor = null;
-    secondButton = null;
-    secondButtonBackgroundColor = null;
-    emailButton = null;
-
     state = {
         steps: 0,
         currentStep: -1,
         createAccountIsSelected: true,
-        screenIndex: 0,
         showLinkWitTwitchModal: false,
         hideEmailUI: false,
         email: '',
@@ -51,7 +43,6 @@ class AuthHandlerScreen extends Component {
     componentDidMount() {
         setupGoogleSignin();
         Keyboard.addListener('keyboardDidShow', (e) => {
-            // - 96 because we want the back button to still visible and with a margin of 16
             this.setState({ keyboard: true });
         });
 
@@ -61,6 +52,7 @@ class AuthHandlerScreen extends Component {
     }
 
     /**
+     * For Google and Apple Auth only
      * Check if the user is new, if it's new create the profile and send the user
      * to ChooseUserNameScreen
      * If isn't just close and back to the previous flow
@@ -90,13 +82,53 @@ class AuthHandlerScreen extends Component {
         });
     }
 
+    handleTwitchSignIn = (user, isNewUser) => {
+        this.setState({ uid: user.user.uid, email: user.user.email }, async () => {
+            if (isNewUser) {
+                await createUserProfile(user.user.uid, user.user.email, user.user.displayName);
+            }
+
+            updateUserLoggedStatus(true, user.user.uid);
+            const onSuccessCallback = this.props.navigation.getParam('onSuccessSignIn', () => { });
+            onSuccessCallback(user.user.uid);
+
+            if (isNewUser) {
+                this.setState({ currentStep: 3 });
+            } else {
+                this.props.navigation.navigate(this.props.originScreen);
+            }
+        })
+    }
+
+    signWithApple = async () => {
+        try {
+            this.setState({ hideEmailUI: true }, async () => {
+                const user = await signInWithApple();
+                await this.succesfullSignIn(user);
+            });
+        } catch (error) {
+            this.setState({ hideEmailUI: false });
+        }
+    }
+
+    signWithGoogle = async () => {
+        try {
+            this.setState({ hideEmailUI: true }, async () => {
+                const user = await signInWithGoogle();
+                await this.succesfullSignIn(user);
+            });
+        } catch (error) {
+            this.setState({ hideEmailUI: false });
+        }
+    }
+
     handleFirstButtonPress = async () => {
         if (this.state.currentStep === -1) {
             this.goToCreateAccount();
         } else if (this.state.currentStep === 0) {
             this.setState({ hideEmailUI: true }, async () => {
                 try {
-                    const user = await signInWithApple();
+                    const user = await signInWithGoogle();
                     await this.succesfullSignIn(user);
                 } catch (error) {
                     this.setState({ hideEmailUI: false });
@@ -111,14 +143,10 @@ class AuthHandlerScreen extends Component {
                 this.goToHaveAccount();
                 break;
             case 0:
-                this.setState({ hideEmailUI: true }, async () => {
-                    try {
-                        const user = await signInWithGoogle();
-                        await this.succesfullSignIn(user);
-                    } catch (error) {
-                        this.setState({ hideEmailUI: false });
-                    }
-                });
+                /**
+                 * Sign with twitch
+                 */
+                this.setState({ currentStep: 5 });
                 break;
             case 1:
                 this.authenticateWithEmail();
@@ -147,37 +175,43 @@ class AuthHandlerScreen extends Component {
     }
 
     goToNextScreen = () => {
-        this.setState({ screenIndex: this.state.screenIndex + 1, currentStep: this.state.currentStep + 1 });
+        this.setState({ currentStep: this.state.currentStep + 1 });
     }
 
     backToPreviousScreen = () => {
         if (this.state.currentStep === 0) {
             this.setState({ steps: 0 });
         }
-        this.setState({ screenIndex: this.state.screenIndex - 1, currentStep: this.state.currentStep - 1 });
+        this.setState({ currentStep: this.state.currentStep - 1 });
     }
 
     closeAndBackButton = () => {
         if (this.state.currentStep === -1) {
-            if (this.props.originScreen !== 'Profile') {
+            if (this.props.originScreen !== 'Profile' && this.props.originScreen !== 'MyStreams') {
                 return this.props.navigation.navigate(this.props.originScreen);
             } else {
-                return this.props.navigation.navigate('Explore');
+                return this.props.navigation.navigate('Timeline');
             }
-        } else if (this.state.screenIndex !== -1) {
-            this.backToPreviousScreen();
+        } else {
+            if (this.state.currentStep === 5) {
+                this.setState({ currentStep: 0 });
+            } else {
+                this.backToPreviousScreen();
+            }
         }
     }
 
     closeTwitchLinkModal = async () => {
         this.setState({ showLinkWitTwitchModal: false });
-        const userName = await getUserNameWithUID(this.state.uid);
-        if (!userName) {
-            this.goToCreateUsernameStep();
-        }  else if (this.state.currentStep === 3) {
-            this.setState({ joiningQlan: false, disabled: false });
-        } else {
-            return this.props.navigation.navigate(this.props.originScreen);
+        if (this.state.uid) {
+            const userName = await getUserNameWithUID(this.state.uid);
+            if (!userName) {
+                this.goToCreateUsernameStep();
+            }  else if (this.state.currentStep === 3) {
+                this.setState({ joiningQlan: false, disabled: false });
+            } else {
+                return this.props.navigation.navigate(this.props.originScreen);
+            }
         }
     }
 
@@ -242,11 +276,10 @@ class AuthHandlerScreen extends Component {
             }
         } else {
             this.setState({ joiningQlan: false, disabled: false });
-            console.log('Invalid Qlan code');
         }
     }
 
-    finishProcess = () => { console.log('press'); this.props.navigation.navigate(this.props.originScreen);}
+    finishProcess = () => this.props.navigation.navigate(this.props.originScreen);
 
     openTermsModal = () => this.setState({ openTermsModal: true });
 
@@ -266,7 +299,7 @@ class AuthHandlerScreen extends Component {
                         {this.state.currentStep !== 3 && this.state.currentStep !== 4 &&
                             <TouchableOpacity onPress={this.closeAndBackButton}>
                                 <View style={styles.closeBackIcon}>
-                                    {this.state.screenIndex !== 0 ?
+                                    {this.state.currentStep !== -1 ?
                                         <images.svg.backIcon />
                                         :
                                         <images.svg.closeIcon />
@@ -291,11 +324,13 @@ class AuthHandlerScreen extends Component {
                                 <Text style={styles.qlanImageText}>Qlan</Text>
                             </ImageBackground>
                         }
-                        <View style={[styles.card, this.state.keyboard ? { position: 'absolute', top: heightPercentageToPx(getPercentHeight(-150)) } : {}]}>
+                        <View style={[styles.card, (this.state.keyboard && this.state.currentStep !== 5) ? { position: 'absolute', top: heightPercentageToPx(-18.47) } : {}]}>
                             <LinearGradient useAngle={true}
                                 angle={136}
                                 style={styles.card}
                                 colors={['#A716EE', '#2C07FA']}>
+                                {this.state.currentStep !== 5 ?
+                                <>
                                 <View style={styles.titleAndDescriptionContainer}>
                                     {this.state.currentStep === 4 &&
                                         <>
@@ -311,15 +346,15 @@ class AuthHandlerScreen extends Component {
                                     {
                                         marginTop: this.state.currentStep === 3 ?
                                             this.state.keyboard ?
-                                                heightPercentageToPx(getPercentHeight(118))
+                                                heightPercentageToPx(14.53)
                                                 :
-                                                heightPercentageToPx(getPercentHeight(42))
+                                                heightPercentageToPx(5.17)
                                             :
                                             this.state.keyboard ?
-                                                heightPercentageToPx(getPercentHeight(72))
+                                                heightPercentageToPx(8.87)
                                                 :
                                                 0,
-                                        marginBottom: this.state.currentStep === 3 ? heightPercentageToPx(getPercentHeight(-28)) : 0,
+                                        marginBottom: this.state.currentStep === 3 ? heightPercentageToPx(-3.45) : 0,
                                     }]}>
                                         {this.state.currentStep === -1 && translate('authHandlerScreen.textsCarrousel.welcome')}
                                         {this.state.currentStep === 0 &&
@@ -340,8 +375,6 @@ class AuthHandlerScreen extends Component {
                                             translate('authHandlerScreen.textsCarrousel.createUsername')
                                         }
                                         {this.state.currentStep === 3 &&
-                                            //translation pending
-                                            // translate('authHandlerScreen.textsCarrousel.createUsername')
                                             translate('authHandlerScreen.textsCarrousel.haveQreatorQode')
                                         }
                                     </QaplaText>
@@ -420,60 +453,85 @@ class AuthHandlerScreen extends Component {
                                 <View style={{ alignItems: 'center' }}>
                                     {(this.state.currentStep === 0 || this.state.currentStep === -1) &&
                                         <>
-                                            <TouchableOpacity onPress={this.goToEmailAuthenticationScreen} disabled={this.state.currentStep !== 0}>
-                                                <View style={[styles.emailButtonContainer, { opacity: this.state.currentStep === 0 ? 1 : 0 }]}>
-                                                    <QaplaText style={styles.emailButton}>
-                                                        {this.state.createAccountIsSelected ?
-                                                            translate('authHandlerScreen.signUpWithEmail')
-                                                            :
-                                                            translate('authHandlerScreen.signInWithEmail')
-                                                        }
-                                                    </QaplaText>
-                                                    <images.svg.rightArrow />
-                                                </View>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={{ marginBottom: 24 }} onPress={this.handleFirstButtonPress} disabled={this.state.currentStep === 0 && !showIOSButton}>
-                                                <View style={[styles.button, { backgroundColor: this.state.currentStep === -1 ? '#00FFDD' : ((showIOSButton && this.state.currentStep < 1) ? '#000000' : 'transparent') }]}
-                                                    onRef={this.props.onBackgroundRef}>
-                                                    {this.state.currentStep === -1 &&
-                                                        <View style={styles.buttonTextContainer}>
-                                                            <QaplaText style={[styles.buttonText, { color: '#0D1021' }]}>
-                                                                {translate('authHandlerScreen.buttonsCarrousel.createAccount')}
-                                                            </QaplaText>
-                                                        </View>
-                                                    }
-                                                    {this.state.currentStep === 0 &&
-                                                        <View style={styles.buttonWithIconContainer}>
-                                                            {showIOSButton &&
-                                                                <>
-                                                                    <images.svg.appleIcon height={32} width={32} style={{ marginRight: 8 }} />
-                                                                    <QaplaText style={[styles.buttonText, { color: '#FFF' }]}>
-                                                                        {translate('authHandlerScreen.buttonsCarrousel.continueWithApple')}
-                                                                    </QaplaText>
-                                                                </>
+                                            {/*
+                                                Must only appear on android devices for Email auth
+                                                (on iOS we have the options on the view with style "iOSAuthOptionsContainer")
+                                             */}
+                                            {this.state.currentStep === 0 && !showIOSButton &&
+                                                <TouchableOpacity onPress={this.goToEmailAuthenticationScreen} disabled={this.state.currentStep !== 0}>
+                                                    <View style={styles.emailButtonContainer}>
+                                                        <QaplaText style={styles.emailButton}>
+                                                            {this.state.createAccountIsSelected ?
+                                                                translate('authHandlerScreen.signUpWithEmail')
+                                                                :
+                                                                translate('authHandlerScreen.signInWithEmail')
                                                             }
-                                                        </View>
-                                                    }
+                                                        </QaplaText>
+                                                        <images.svg.rightArrow />
+                                                    </View>
+                                                </TouchableOpacity>
+                                            }
+                                            {/*
+                                                Button for create account on step -1. In step 0 must only appear on android devices for
+                                                Google auth (on iOS we have the options on the view with style "iOSAuthOptionsContainer")
+                                             */}
+                                            {(this.state.currentStep === -1 || (this.state.currentStep === 0 && !showIOSButton)) &&
+                                                <TouchableOpacity style={{ marginBottom: 24 }} onPress={this.handleFirstButtonPress}>
+                                                    <View style={[styles.button, { backgroundColor: this.state.currentStep === -1 ? '#00FFDD' : (this.state.currentStep === 0 ? '#FFF' : 'transparent') }]}
+                                                        onRef={this.props.onBackgroundRef}>
+                                                        {this.state.currentStep === -1 &&
+                                                            <View style={styles.buttonTextContainer}>
+                                                                <QaplaText style={[styles.buttonText, { color: '#0D1021' }]}>
+                                                                    {translate('authHandlerScreen.buttonsCarrousel.createAccount')}
+                                                                </QaplaText>
+                                                            </View>
+                                                        }
+                                                        {this.state.currentStep === 0 &&
+                                                            <View style={styles.buttonWithIconContainer}>
+                                                                <images.svg.googleIcon height={32} width={32} style={{ marginRight: 8 }} />
+                                                                <QaplaText style={[styles.buttonText, { color: '#585858' }]}>
+                                                                    {translate('authHandlerScreen.buttonsCarrousel.continueWithGoogle')}
+                                                                </QaplaText>
+                                                            </View>
+                                                        }
+                                                    </View>
+                                                </TouchableOpacity>
+                                            }
+                                            {/*
+                                                Auth options for iOS devices
+                                             */}
+                                            {this.state.currentStep === 0 && showIOSButton &&
+                                                <View style={styles.iOSAuthOptionsContainer}>
+                                                    <TouchableOpacity onPress={this.signWithApple}>
+                                                        <images.svg.appleAuth />
+                                                    </TouchableOpacity>
+                                                    <TouchableOpacity onPress={this.signWithGoogle}>
+                                                        <images.svg.googleAuth />
+                                                    </TouchableOpacity>
+                                                    <TouchableOpacity onPress={this.goToEmailAuthenticationScreen}>
+                                                        <images.svg.emailAuth />
+                                                    </TouchableOpacity>
                                                 </View>
-                                            </TouchableOpacity>
-                                        </>}
+                                            }
+                                        </>
+                                    }
                                     <TouchableOpacity onPress={this.handleSecondButtonPress}
                                         disabled={this.state.disabled}>
                                         <View style={[styles.button, {
-                                            backgroundColor: this.state.currentStep === -1 ? '#3B4BF9' : (this.state.currentStep === 0 ? '#FFF' : '#00FFDD'),
+                                            backgroundColor: this.state.currentStep === -1 ? '#3B4BF9' : (this.state.currentStep === 0 ? '#000' : '#00FFDD'),
                                             marginTop: this.state.currentStep === 3
                                                 ?
                                                 this.state.keyboard
                                                     ?
-                                                    heightPercentageToPx(getPercentHeight(45))
+                                                    heightPercentageToPx(5.54)
                                                     :
-                                                    heightPercentageToPx(getPercentHeight(-14))
+                                                    heightPercentageToPx(-1.72)
                                                 :
                                                 this.state.currentStep === 4 ?
-                                                    heightPercentageToPx(getPercentHeight(-90))
+                                                    heightPercentageToPx(-11)
                                                     :
                                                     this.state.currentStep === 2 ?
-                                                        heightPercentageToPx(getPercentHeight(5))
+                                                        heightPercentageToPx(0.62)
                                                         :
                                                         0,
                                         }]}
@@ -485,9 +543,9 @@ class AuthHandlerScreen extends Component {
                                             }
                                             {this.state.currentStep === 0 &&
                                                 <View style={styles.buttonWithIconContainer}>
-                                                    <images.svg.googleIcon height={32} width={32} style={{ marginRight: 8 }} />
-                                                    <QaplaText style={[styles.buttonText, { color: '#585858' }]}>
-                                                        {translate('authHandlerScreen.buttonsCarrousel.continueWithGoogle')}
+                                                    <images.svg.twitchDark height={32} width={32} style={{ marginRight: 8 }} />
+                                                    <QaplaText style={[styles.buttonText, { color: '#FFF' }]}>
+                                                        {translate('authHandlerScreen.buttonsCarrousel.continueWithTwitch')}
                                                     </QaplaText>
                                                 </View>
                                             }
@@ -534,15 +592,21 @@ class AuthHandlerScreen extends Component {
                                 </View>
                                 <View style={styles.dotStepsContainer}>
                                     <ProgressDotsIndicator
-                                        steps={this.state.steps}
+                                        steps={this.state.steps - 1}
                                         selected={this.state.currentStep}
                                         color={'rgba(0,254,223,0.54)'}
                                         activeColor={'#00FEDF'}
                                         /* We use heightPercentageToPx to achieve circular Views */
-                                        width={heightPercentageToPx(getPercentHeight(8))}
-                                        activeWidth={widthPercentageToPx(getPercentWidth(30))}
+                                        width={heightPercentageToPx(0.98)}
+                                        activeWidth={widthPercentageToPx(8)}
                                         marginHorizontal={heightPercentageToPx(1)} />
                                 </View>
+                                </>
+                                :
+                                <View style={styles.twitchAuthScreenContainer}>
+                                    <TwitchAuthScreen onAuthSuccessful={this.handleTwitchSignIn} />
+                                </View>
+                                }
                             </LinearGradient>
                         </View>
                     </View>

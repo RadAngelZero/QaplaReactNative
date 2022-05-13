@@ -131,8 +131,8 @@ android {
         applicationId "com.qapla.gaming.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 108
-        versionName "3.5.0"
+        versionCode 109
+        versionName "3.5.1"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
     }
@@ -200,7 +200,6 @@ dependencies {
     implementation "com.google.firebase:firebase-invites:17.0.0"
     implementation "com.google.firebase:firebase-config:17.0.0"
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
-    implementation project(":react-native-fbsdk")
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

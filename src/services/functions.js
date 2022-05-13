@@ -1,12 +1,7 @@
-// diego	      - 20-08-2019 - us89 - addQaploinsToUserCloudFunction for beta on iOS
-// josep.sanahuja - 08-08-2019 - us85 - +callCloudFunction &&  +userHasQaploinsToPlayMatch
-//                                      && - auth import
-// diego	      - 06-08-2019 - us68 - acceptChallengeRequest with idNotification parameter changed to notification
-// diego          - 05-08-2019 - us58 - File creation
-
 import {functions} from '../utilities/firebase'
 
 /**
+ * @deprecated
  * Accept challenge for idMatch
  * @param {object} notificationObj Notification object from the challenge request
  * @param {string} idChallenged    uid from the user that receives the challenge request
@@ -26,42 +21,6 @@ export function acceptChallengeRequest(notificationObj, idChallenged) {
 }
 
 /**
- * Cancel public match with id idMatch
- * @param {string} idMatch id of the match to cancel
- */
-export function cancelPublicMatch(idMatch) {
-	return callCloudFunction({
-		cfName: 'cancelMatch',
-		params: {idMatch: idMatch}
-	});
-}
-
-/**
- * Add qaploins with no payment checkout process (iOS beta version)
- */
-export function addQaploinsToUserCloudFunction() {
-	return callCloudFunction({
-		cfName: 'addQaploinsToUserBETA',
-		params: {}
-	});
-}
-
-/**
- * Allow the user to redeem a completed logro (completed on points)
- * @param {string} idLogro Identifier of the logro on the database
- * @param {number} qaploins Quantity of qaploins to add
- */
-export function redeemLogroCloudFunction(idLogro, qaploins) {
-	return callCloudFunction({
-		cfName: 'redeemLogro',
-		params: {
-			idLogro,
-			qaploins
-		}
-	});
-}
-
-/**
  * Gets the Twitch user information from the Qapla user with their TwitchId
  * @param {string} userTwitchId Twitch Id of the user
  */
@@ -70,6 +29,23 @@ export async function getTwitchDataCloudFunction(userTwitchId) {
 		cfName: 'getTwitchUserData',
 		params: {
 			userTwitchId
+		}
+	});
+}
+
+/**
+ * Generate an auth token for the user to signIn with Twitch (custom auth)
+ * @param {string} userTwitchId Twitch Id of the user
+ * @param {string} displayName Twitch username of the user
+ * @param {string} email Twitch email of the user
+ */
+export async function generateAuthTokenForTwitchSignIn(userTwitchId, displayName, email) {
+	return await callCloudFunction({
+		cfName: 'appTwitchSignin',
+		params: {
+			uid: userTwitchId,
+			displayName,
+			email
 		}
 	});
 }

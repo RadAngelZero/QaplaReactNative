@@ -6,12 +6,14 @@ import {
     getStreamerThumbnailUrl
 } from '../services/database';
 import {
+    CLEAN_ALL_STREAMS,
     HOURS_IN_DAY,
     LOAD_FEATURED_STREAM,
     LOAD_LIVE_STREAM,
     LOAD_STREAMS_BY_DATE_RANGE,
     ONE_HOUR_MILISECONDS,
     REMOVE_FEATURED_STREAM,
+    REMOVE_LIVE_STREAM,
     REMOVE_STREAM,
     UPDATE_FEATURED_STREAM,
     UPDATE_STREAM
@@ -21,7 +23,7 @@ const listeningStreams = [];
 
 export const loadFeaturedStreams = (uid) => async (dispatch) => {
     const today = new Date();
-    today.setHours(today.getHours() - 3);
+    today.setHours(today.getHours() < 3 ? 0 : today.getHours() - 3, 0, 0, 0);
 
     eventsDataRef.orderByChild('featured').equalTo(true).on('child_added', (featuredStream) => {
         const featuredStreamObject = {
@@ -47,18 +49,6 @@ export const loadFeaturedStreams = (uid) => async (dispatch) => {
                             }
                             dispatch(removeFeaturedStream(featuredStream.key));
                             dispatch(loadLiveStream(featuredStream.key, streamObject));
-
-                            /**
-                             * If the stream is live then remove real time listener for participation (the user
-                             * can not join the stream once it has started)
-                             */
-                            if (uid) {
-                                eventParticipantsRef.child(featuredStream.key).child(uid).off('value');
-                                const indexToRemove = listeningStreams.indexOf(featuredStream.key);
-                                if (indexToRemove >= 0) {
-                                    listeningStreams.splice(indexToRemove, 1);
-                                }
-                            }
                         }
                     }
 
@@ -66,7 +56,7 @@ export const loadFeaturedStreams = (uid) => async (dispatch) => {
                 }
             });
 
-            if (uid && listeningStreams.indexOf(featuredStream.key) < 0) {
+            if (uid) {
                 eventParticipantsRef.child(featuredStream.key).child(uid).on('value', (userParticipant) => {
                     listeningStreams.push(featuredStream.key);
                     if (userParticipant.exists()) {
@@ -102,10 +92,10 @@ export const loadStreamsByListIndex = (uid, index) => async (dispatch) => {
             dispatch(loadStreamByDateRange(streamObject, index));
 
             /**
-             * If the stream is scheduled for today (index === 0) then listen for custom rewards (as the stream can
+             * If the stream is scheduled for today or tomorrow (index === 0 || index === 1) then listen for custom rewards (as the stream can
              * suddenly start while the user is in the app)
              */
-            if (index === 0) {
+            if (index === 0 || index === 1) {
                 listenStreamCustomRewards(stream.key, (streamRewards) => {
                     if (streamRewards.exists()) {
                         async function checkIfStreamerIsStreaming() {
@@ -119,27 +109,22 @@ export const loadStreamsByListIndex = (uid, index) => async (dispatch) => {
                                 }
                                 dispatch(removeStream(stream.key, index));
                                 dispatch(loadLiveStream(stream.key, streamObject));
-
-                                /**
-                                 * If the stream is live then remove real time listener for participation (the user
-                                 * can not join the stream once it has started)
-                                 */
-                                if (uid) {
-                                    eventParticipantsRef.child(stream.key).child(uid).off('value');
-                                    const indexToRemove = listeningStreams.indexOf(stream.key);
-                                    if (indexToRemove >= 0) {
-                                        listeningStreams.splice(indexToRemove, 1);
-                                    }
-                                }
                             }
                         }
 
                         checkIfStreamerIsStreaming();
+                    } else {
+                        /**
+                         * If there are no rewards remove the stream from live list (this help us to remove
+                         * streams that finished while user is using the app. If the stream is not
+                         * on the list there are no problems, we validate that on streamsReducer)
+                         */
+                        dispatch(removeLiveStream(stream.key));
                     }
                 });
             }
 
-            if (uid && listeningStreams.indexOf(stream.key) < 0) {
+            if (uid) {
                 eventParticipantsRef.child(stream.key).child(uid).on('value', (userParticipant) => {
                     listeningStreams.push(stream.key);
                     if (userParticipant.exists()) {
@@ -149,6 +134,14 @@ export const loadStreamsByListIndex = (uid, index) => async (dispatch) => {
             }
         }
     });
+}
+
+export const cleanStreamsLists = (uid) => (dispatch) => {
+    listeningStreams.forEach((node) => {
+        eventParticipantsRef.child(node).child(uid).off('value');
+    });
+
+    dispatch(cleanAllStreams());
 }
 
 const loadFeaturedStreamSuccess = (payload) => ({
@@ -190,4 +183,13 @@ const loadLiveStream = (id, payload) => ({
     type: LOAD_LIVE_STREAM,
     id,
     payload
+});
+
+const removeLiveStream = (id) => ({
+    type: REMOVE_LIVE_STREAM,
+    id
+});
+
+const cleanAllStreams = () => ({
+    type: CLEAN_ALL_STREAMS
 });

@@ -63,7 +63,8 @@ class LinkTwitchAccount extends Component {
                             </TouchableOpacity>
                         </View>
                     :
-                        <TwitchAuthScreen onSuccess={this.successTwitchLink} />
+                        <TwitchAuthScreen onLinkSuccess={this.successTwitchLink}
+                            onFail={this.props.onFail} />
                     }
                 </View>
             </LinearGradient>

@@ -264,7 +264,6 @@ class AuthHandlerScreen extends Component {
         const qlanId = await getQlanIdWithQreatorCode(this.state.qlanCode);
         if (qlanId) {
             if (this.props.twitchId) {
-                console.log(this.state.uid, qlanId, this.state.username, this.props.twitchUsername);
                 await subscribeUserToQlan(this.state.uid, qlanId, this.state.username, this.props.twitchUsername);
                 const qlanData = await getQlanData(qlanId);
 

@@ -82,7 +82,7 @@ class TopLeaders extends Component {
                                 {this.adjustUserName(this.props.topLeaders[1].userName)}
                             </QaplaText>
                             <QaplaText style={styles.topLeaderExperience}>
-                                {this.props.topLeaders[1].totalDonations}xp
+                                {this.props.topLeaders[1].totalDonations}xq
                             </QaplaText>
                         </View>
                     }
@@ -100,7 +100,7 @@ class TopLeaders extends Component {
                                 {this.adjustUserName(this.props.topLeaders[0].userName)}
                             </QaplaText>
                             <QaplaText style={styles.topLeaderExperience}>
-                                {this.props.topLeaders[0].totalDonations}xp
+                                {this.props.topLeaders[0].totalDonations}xq
                             </QaplaText>
                         </View>
                     }
@@ -118,7 +118,7 @@ class TopLeaders extends Component {
                                 {this.adjustUserName(this.props.topLeaders[2].userName)}
                             </QaplaText>
                             <QaplaText style={styles.topLeaderExperience}>
-                                {this.props.topLeaders[2].totalDonations}xp
+                                {this.props.topLeaders[2].totalDonations}xq
                             </QaplaText>
                         </View>
                     }
@@ -174,7 +174,7 @@ class LeaderRow extends Component {
                 </View>
                 <View style={styles.leaderDonationsContainer}>
                     <QaplaText style={styles.totalDonations}>
-                        {this.props.item.totalDonations}xp
+                        {this.props.item.totalDonations}xq
                     </QaplaText>
                 </View>
             </View>
@@ -477,7 +477,7 @@ class DonationsLeaderBoard extends Component {
                             </QaplaText>
                         </View>
                         <QaplaText style={styles.userLeaderDonations}>
-                            {this.state.userLeaderBoardData.totalDonations}xp
+                            {this.state.userLeaderBoardData.totalDonations}xq
                         </QaplaText>
                     </View>
                     {/**

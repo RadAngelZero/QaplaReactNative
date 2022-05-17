@@ -152,7 +152,7 @@
         "level": "Level",
         "lastSeason": "Last season level",
         "qoins": "Qoins",
-        "bitsTooltip": "Use your Qoins to support your favorite streamers. You need 200 Qoins for a donation",
+        "bitsTooltip": "Use your Qoins to support your favorite streamers. You need 50 Qoins for a donation",
         "next": "Next",
         "done": "Done",
         "loots": "Loots"
@@ -588,7 +588,6 @@
     },
     "supportStreamerModal": {
         "supportTo": "⚡️ Send a live interaction to ",
-        "supportToSecondPart": "\nwith 200 Qoins",
         "description": "Your cheers are sent in real-time, and your messages appear live on their Twitch channel",
         "sendCheers": "Send Cheers"
     },

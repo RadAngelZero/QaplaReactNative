@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { View } from 'react-native';
 import { translate } from '../../utilities/i18';
 
 import QaplaTabBarItem from './QaplaTabBarItem';
@@ -11,18 +11,16 @@ class QaplaTabBar extends Component {
         const routes = navigation.state.routes;
 
         return (
-            <SafeAreaView>
-                <View style={styles.container}>
-                    {routes.map((route, index) => (
-                        <QaplaTabBarItem key={route.key}
-                            onPress={() => this.props.navigation.navigate(route.key)}
-                            focused={navigation.state.index === index}
-                            index={index}>
-                            {translate(`router.topNavigators.${route.routeName.toLowerCase()}`)}
-                        </QaplaTabBarItem>
-                    ))}
-                </View>
-            </SafeAreaView>
+            <View style={styles.container}>
+                {routes.map((route, index) => (
+                    <QaplaTabBarItem key={route.key}
+                        onPress={() => this.props.navigation.navigate(route.key)}
+                        focused={navigation.state.index === index}
+                        index={index}>
+                        {translate(`router.topNavigators.${route.routeName.toLowerCase()}`)}
+                    </QaplaTabBarItem>
+                ))}
+            </View>
         );
     }
 }

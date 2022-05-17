@@ -483,7 +483,7 @@ class DonationsLeaderBoard extends Component {
                     {/**
                      * View with height is to avoid Bottom bar on content
                      */}
-                    <View style={{ marginBottom: BOTTOM_NAVIGATION_BAR_HEIGHT * 1.5 }} />
+                    <View style={{ marginBottom: BOTTOM_NAVIGATION_BAR_HEIGHT * 1.25 }} />
                 </ScrollView>
             </View>
         );

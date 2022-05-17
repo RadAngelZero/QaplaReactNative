@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import StreamerCardsList from '../../components/StreamerCardsList/StreamerCardsList';
 import { getStreamersData } from '../../actions/streamersActions';
-import { STREAMERS_BLACKLIST } from '../../utilities/Constants';
+import { BOTTOM_NAVIGATION_BAR_HEIGHT, STREAMERS_BLACKLIST } from '../../utilities/Constants';
 
 class DiscoverStreamersScreen extends Component {
     componentDidMount() {
@@ -58,6 +58,10 @@ class DiscoverStreamersScreen extends Component {
                     onCardPress={this.goToStreamerProfile}
                     horizontal={this.props.horizontal}
                     dynamicSeparation={this.props.dynamicSeparation}/>
+                {/**
+                 * View with height is to avoid Bottom bar on content
+                 */}
+                <View style={{ marginBottom: BOTTOM_NAVIGATION_BAR_HEIGHT * 1.25 }} />
             </View>
         );
     }

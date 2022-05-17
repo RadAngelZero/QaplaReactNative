@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import StreamerCardsList from '../../components/StreamerCardsList/StreamerCardsList';
 import { getSingleStreamerData } from '../../actions/streamersActions';
-import { STREAMERS_BLACKLIST } from '../../utilities/Constants';
+import { BOTTOM_NAVIGATION_BAR_HEIGHT, STREAMERS_BLACKLIST } from '../../utilities/Constants';
 
 class FollowingStreamersScreen extends Component {
     loadMoreStreamers = () => {
@@ -69,6 +69,10 @@ class FollowingStreamersScreen extends Component {
                 <StreamerCardsList streamersData={streamersData}
                     onEndReached={this.loadMoreStreamers}
                     onCardPress={this.goToStreamerProfile} />
+                {/**
+                 * View with height is to avoid Bottom bar on content
+                 */}
+                <View style={{ marginBottom: BOTTOM_NAVIGATION_BAR_HEIGHT * 1.25 }} />
             </View>
         );
     }

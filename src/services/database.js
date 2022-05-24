@@ -1330,11 +1330,11 @@ export async function getUserDonationLeaderBoard(uid) {
 // -----------------------------------------------
 
 /**
- * Return all the streamers with premium status
+ * Return all the streamers
  * @returns {Object} Object of streamers
  */
-export async function getPremiumStreamers() {
-    return await userStreamerRef.orderByChild('premium').equalTo(true).once('value');
+export async function getAllStreamers() {
+    return await userStreamerRef.once('value');
 }
 
 // -----------------------------------------------

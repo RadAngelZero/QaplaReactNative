@@ -15,11 +15,29 @@ export default styles = StyleSheet.create({
         paddingBottom: 40,
         marginBottom: 30
     },
+    smallCard: {
+        width: 168,
+        alignSelf: 'center',
+        borderRadius: 25,
+        backgroundColor: '#141833',
+        justifyContent: 'flex-start',
+        paddingRight: 18,
+        paddingLeft: 18,
+        overflow: 'hidden',
+        paddingBottom: 20,
+        marginBottom: 30
+    },
     coverImage: {
         display: 'flex',
         alignSelf: 'center',
         width: widthPercentageToPx(91.46),
         height: heightPercentageToPx(13)
+    },
+    smallCoverImage: {
+        display: 'flex',
+        alignSelf: 'center',
+        width: 168,
+        height: 64,
     },
     streamerImage: {
         height: heightPercentageToPx(12),
@@ -27,6 +45,13 @@ export default styles = StyleSheet.create({
         borderRadius: 100,
         alignSelf: 'center',
         marginTop: heightPercentageToPx(-6) // Margin with (negative) half of height/width to center the streamerImage with coverImage
+    },
+    smallStreamerImage: {
+        height: 65,
+        width: 65, // We use height to get a circular Image component
+        borderRadius: 100,
+        alignSelf: 'center',
+        marginTop: -30 // Margin with (negative) half of height/width to center the streamerImage with coverImage
     },
     streamerNameContainer: {
         height: heightPercentageToPx(3),
@@ -40,7 +65,15 @@ export default styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '700',
         lineHeight: 22,
-        marginRight: 6
+        marginRight: 6,
+    },
+    miniStreamerName: {
+        color: '#FFF',
+        fontSize: 14,
+        fontWeight: '700',
+        lineHeight: 22,
+        marginRight: 6,
+        letterSpacing: -0.41
     },
     bio: {
         height: heightPercentageToPx(10),
@@ -96,5 +129,27 @@ export default styles = StyleSheet.create({
         color: 'rgba(255, 255, 255, .7)',
         fontWeight: '600',
         textAlign: 'center'
-    }
+    },
+    streamerDetails: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: widthPercentageToPx(51.47),
+        height: heightPercentageToPx(7.27),
+        padding: 12,
+        borderRadius: 20
+    },
+    streamerPhoto: {
+        borderRadius: 30,
+        height: 35,
+        width: 35,
+    },
+    streamPlatformText: {
+        fontSize: 16,
+        flexShrink: 1,
+        fontWeight: '700',
+        lineHeight: 20,
+        color: '#FFF',
+        marginLeft: 8,
+        letterSpacing: 0.5
+    },
 });

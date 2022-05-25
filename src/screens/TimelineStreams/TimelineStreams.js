@@ -10,7 +10,7 @@ import StreamsList from '../../components/StreamsList/StreamsList';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 import { trackOnSegment } from '../../services/statistics';
 import StreamLiveList from '../../components/StreamLiveList/StreamLiveList';
-import { getStreamerName, getStreamerPublicProfile } from '../../services/database';
+import { getStreamById, getStreamerName, getStreamerPublicProfile, isUserParticipantOnEvent } from '../../services/database';
 import { translate } from '../../utilities/i18';
 import Randomstreamerslist from '../../components/RandomStreamersList/RandomStreamersList';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT } from '../../utilities/Constants';
@@ -20,11 +20,34 @@ export class TimelineStreams extends Component {
     state = {
         openLevelInformationModal: false,
         openEventDetailsModal: false,
-        selectedStream: null
+        selectedStream: null,
+        deepLinkId: ''
     };
 
     componentDidMount() {
+        this.props.navigation.addListener('willFocus', this.checkStreamDeepLinkData);
+        this.checkStreamDeepLinkData();
+
         this.checkLevelModalStatus();
+    }
+
+    checkStreamDeepLinkData = async () => {
+        let streamId = this.props.navigation.getParam('streamId', null);
+
+        // streamId !== this.state.deepLinkId Prevent the modal to open every time the screen receive the focus
+        if (streamId && streamId !== this.state.deepLinkId) {
+            /**
+             * Because we load the data of the streams on the streams reducer in an async way and also because of
+             * the way we store the data in that reducer the best approach here is to load the data directly from
+             * the database, maybe we are going to duplicate the request but is the fastest and more reliable way
+             * we have
+             */
+            const streamData = await getStreamById(streamId);
+            if (streamData.exists()) {
+                const isUserAParticipant = this.props.uid ? await isUserParticipantOnEvent(this.props.uid, streamId) : false;
+                this.setState({ deepLinkId: streamId, selectedStream: { ...streamData.val(), isUserAParticipant, id: streamId } }, () => this.setState({ openEventDetailsModal: true }));
+            }
+        }
     }
 
     checkLevelModalStatus = async () => {

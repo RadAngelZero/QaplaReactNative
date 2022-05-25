@@ -1638,3 +1638,15 @@ export async function getStreamersPublicProfilesLength() {
 export async function getStreamerPublicProfileKeyAtIndex(index) {
     return await listOfStreamersPublicProfileKeysRef.child('keys').child(index).once('value');
 }
+
+// -----------------------------------------------
+// Streams
+// -----------------------------------------------
+
+/**
+ * Returns the stream data of the given stream
+ * @param {string} streamId Stream identifier
+ */
+export async function getStreamById(streamId) {
+    return await eventsDataRef.child(streamId).once('value');
+}

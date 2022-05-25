@@ -197,11 +197,22 @@ class AuthLoadingScreen extends Component {
             let screenName = 'LinkBroken';
             const type = this.getParameterFromUrl(url, 'type');
 
-            if (type === 'streamerProfile') {
-                const streamerId = this.getParameterFromUrl(url, 'streamerId');
-                if (streamerId) {
-                    return this.redirectUserToStreamerProfile(streamerId);
-                }
+            switch (type) {
+                case 'streamerProfile':
+                    const streamerId = this.getParameterFromUrl(url, 'streamerId');
+                    if (streamerId) {
+                        return this.redirectUserToStreamerProfile(streamerId);
+                    }
+                    break;
+                case 'stream':
+                    const streamId = this.getParameterFromUrl(url, 'streamId');
+                    console.log('Op', streamId);
+                    if (streamId) {
+                        return this.props.navigation.navigate('Timeline', { streamId });
+                    }
+                    break;
+                default:
+                    break;
             }
 
             this.props.navigation.navigate(screenName);

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Images from '../../../assets/images';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
+import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 import QaplaChip from '../../components/QaplaChip/QaplaChip';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
 import SupportStreamerModal from '../../components/SupportStreamerModal/SupportStreamerModal';
@@ -42,7 +43,9 @@ class StreamerProfileScreen extends Component {
         },
         openSupportStreamerModal: false,
         openLinkTwitchAccountModal: false,
-        showUnfollowConfirmation: false
+        showUnfollowConfirmation: false,
+        openEventDetailsModal: false,
+        selectedStream: null
     };
 
     componentDidMount() {
@@ -386,7 +389,7 @@ class StreamerProfileScreen extends Component {
                                     {translate('streamerProfileScreen.upcomingStreams')}
                                 </Text>
                                 {this.state.nextStreams.map((nextStream) => (
-                                    <>
+                                    <TouchableOpacity onPress={() => this.setState({ selectedStream: nextStream }, () => this.setState({ openEventDetailsModal: true }) )}>
                                         <LinearGradient useAngle={true}
                                             angle={133.34}
                                             style={styles.upcomingStreamImageLinearGradientBackground}
@@ -414,7 +417,7 @@ class StreamerProfileScreen extends Component {
                                                 </Text>
                                             </View>
                                         </View>
-                                    </>
+                                    </TouchableOpacity>
                                 ))}
                             </View>
                         }
@@ -476,6 +479,9 @@ class StreamerProfileScreen extends Component {
                 <LinkTwitchAccountModal open={this.state.openLinkTwitchAccountModal}
                     onClose={() => this.setState({ openLinkTwitchAccountModal: false })}
                     onLinkSuccessful={this.goToSendCheersScreen} />
+                <EventDetailsModal open={this.state.openEventDetailsModal}
+                    onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
+                    stream={this.state.selectedStream} />
             </View>
         );
     }

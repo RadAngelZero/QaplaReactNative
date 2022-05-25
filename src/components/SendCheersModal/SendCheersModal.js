@@ -9,7 +9,7 @@ import { translate } from '../../utilities/i18';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import Colors from '../../utilities/Colors';
 import ChatAnimatedDots from '../ChatAnimatedDots/ChatAnimatedDots';
-import { getPremiumStreamers, sendCheers, updateTwitchUsername } from '../../services/database';
+import { getAllStreamers, sendCheers, updateTwitchUsername } from '../../services/database';
 import { getTwitchDataCloudFunction } from '../../services/functions';
 import images from '../../../assets/images';
 
@@ -88,7 +88,7 @@ export default class FormularioCheers extends React.Component {
 
 	getStreamers = async () => {
 		const streamersBlackList = ['141617732', '683167758', '613408163', '180517858', '448926957', '140436068', '528477359'];
-		const streamers = await getPremiumStreamers();
+		const streamers = await getAllStreamers();
 		if (streamers.exists()) {
 			const streamersData = [];
 			streamers.forEach((streamer) => {
@@ -292,6 +292,7 @@ export default class FormularioCheers extends React.Component {
 								}}>
 								<FlatList
 									data={this.state.streamersData}
+									initialNumToRender={12}
 									renderItem={this.renderItem}
 									keyExtractor={item => item.streamer}
 									extraData={this.state.selectedStreamer}

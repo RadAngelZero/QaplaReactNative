@@ -47,6 +47,7 @@ const qlanesRef = database.ref('/Qlanes');
 const activeCustomRewardsRef = database.ref('/ActiveCustomRewards');
 const listOfStreamersPublicProfileKeysRef = database.ref('/ListOfStreamersPublicProfileKeys');
 const streamersFollowersRef = database.ref('/StreamersFollowers');
+const userToStreamerDonationsRef = database.ref('/UserToStreamerDonations');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1479,6 +1480,13 @@ export async function getStreamerPublicProfile(streamerId) {
     return await streamersPublicProfilesRef.child(streamerId).once('value');
 }
 
+/**
+ * Listen for child_added event of streamers streaming
+ */
+export async function getAllStreamersStreaming() {
+    return await userStreamerRef.orderByChild('isStreaming').equalTo(true).once('value');
+}
+
 // -----------------------------------------------
 // Streamers Links
 // -----------------------------------------------
@@ -1649,4 +1657,17 @@ export async function getStreamerPublicProfileKeyAtIndex(index) {
  */
 export async function getStreamById(streamId) {
     return await eventsDataRef.child(streamId).once('value');
+}
+
+// -----------------------------------------------
+// User to streamer donations
+// -----------------------------------------------
+
+/**
+ * Gets between 0 and limit streamers ordered by donation date
+ * @param {string} uid User identifier
+ * @param {number} limit Max number of streamers to get
+ */
+export async function getRecentStreamersDonations(uid, limit = 6) {
+    return await userToStreamerDonationsRef.child(uid).orderByChild('lastDonation').limitToLast(limit).once('value');
 }

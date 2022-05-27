@@ -1671,3 +1671,13 @@ export async function getStreamById(streamId) {
 export async function getRecentStreamersDonations(uid, limit = 6) {
     return await userToStreamerDonationsRef.child(uid).orderByChild('lastDonation').limitToLast(limit).once('value');
 }
+
+/**
+ * Gets between 0 and limit streamers ordered by number of donations from the user
+ * (favs = streamers who receive cheers with more frequency from the user)
+ * @param {string} uid Unique identifier
+ * @param {number} limit Max number of streamers to get
+ */
+export async function getUserFavsStreamers(uid, limit = 5) {
+    return await userToStreamerDonationsRef.child(uid).orderByChild('numberOfDonations').limitToLast(limit).once('value');
+}

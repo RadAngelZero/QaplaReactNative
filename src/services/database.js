@@ -48,6 +48,7 @@ const activeCustomRewardsRef = database.ref('/ActiveCustomRewards');
 const listOfStreamersPublicProfileKeysRef = database.ref('/ListOfStreamersPublicProfileKeys');
 const streamersFollowersRef = database.ref('/StreamersFollowers');
 const userToStreamerDonationsRef = database.ref('/UserToStreamerDonations');
+const userStreamerPublicDataRef = database.ref('/UserStreamerPublicData');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1481,10 +1482,10 @@ export async function getStreamerPublicProfile(streamerId) {
 }
 
 /**
- * Listen for child_added event of streamers streaming
+ * Get all the streamers streaming
  */
 export async function getAllStreamersStreaming() {
-    return await userStreamerRef.orderByChild('isStreaming').equalTo(true).once('value');
+    return await userStreamerPublicDataRef.orderByChild('isStreaming').equalTo(true).once('value');
 }
 
 // -----------------------------------------------

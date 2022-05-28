@@ -206,7 +206,6 @@ class AuthLoadingScreen extends Component {
                     break;
                 case 'stream':
                     const streamId = this.getParameterFromUrl(url, 'streamId');
-                    console.log('Op', streamId);
                     if (streamId) {
                         return this.props.navigation.navigate('Timeline', { streamId });
                     }

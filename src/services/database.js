@@ -49,6 +49,10 @@ const listOfStreamersPublicProfileKeysRef = database.ref('/ListOfStreamersPublic
 const streamersFollowersRef = database.ref('/StreamersFollowers');
 const userToStreamerDonationsRef = database.ref('/UserToStreamerDonations');
 const userStreamerPublicDataRef = database.ref('/UserStreamerPublicData');
+const qaplaInteractionsRef = database.ref('/QaplaInteractions');
+const gifsInteractionsRef = qaplaInteractionsRef.child('/Gifs');
+const emotesInteractionsRef = qaplaInteractionsRef.child('/Emotes');
+const memesInteractionsRef = qaplaInteractionsRef.child('/Memes');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1346,6 +1350,9 @@ export async function getAllStreamers() {
 /**
  * Store cheers on the database at StreamersDonations node
  * @param {number} amountQoins Amount of donated Qoins
+ * @param {object} media Object for cheers with specified media
+ * @param {string} media.type Type of media (one of "GIF", "EMOTE" or "MEME")
+ * @param {string} media.source Url of the media
  * @param {string} message Message from the user
  * @param {number} timeStamp Timestamp of the moment when the donation is sent
  * @param {string} streamerName Name of the streamer
@@ -1355,9 +1362,10 @@ export async function getAllStreamers() {
  * @param {string} userPhotoURL URL of the user profile photo
  * @param {string} streamerID Streamer uid
  */
-export async function sendCheers(amountQoins, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID) {
+export async function sendCheers(amountQoins, media, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID) {
     const donationRef = streamersDonationsRef.child(streamerID).push({
         amountQoins,
+        media,
         message,
         timestamp,
         uid,
@@ -1681,4 +1689,20 @@ export async function getRecentStreamersDonations(uid, limit = 6) {
  */
 export async function getUserFavsStreamers(uid, limit = 5) {
     return await userToStreamerDonationsRef.child(uid).orderByChild('numberOfDonations').limitToLast(limit).once('value');
+}
+
+/**
+ * Qapla Interactions
+ */
+
+export async function getGifsLibrary() {
+    return await gifsInteractionsRef.once('value');
+}
+
+export async function getEmotesLibrary() {
+    return await emotesInteractionsRef.once('value');
+}
+
+export async function getMemesLibrary() {
+    return await memesInteractionsRef.once('value');
 }

@@ -1362,10 +1362,9 @@ export async function getAllStreamers() {
  * @param {string} userPhotoURL URL of the user profile photo
  * @param {string} streamerID Streamer uid
  */
-export async function sendCheers(amountQoins, media, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID) {
+export async function sendCheers(amountQoins, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID) {
     const donationRef = streamersDonationsRef.child(streamerID).push({
         amountQoins,
-        media,
         message,
         timestamp,
         uid,

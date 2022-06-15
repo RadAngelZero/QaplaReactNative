@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import QaplaText from '../QaplaText/QaplaText';
 import styles from './style';
 
 class StreamerCardMini extends Component {
 
     render() {
         return (
-            <TouchableOpacity onPress={() => this.props.onStreamerProfileButtonPress(idStreamer, streamerChannelLink)}>
+            <TouchableOpacity>
                 <LinearGradient
                     style={styles.streamerDetails}
                     useAngle={true}
@@ -15,7 +17,7 @@ class StreamerCardMini extends Component {
                     colors={['#141539', '#141539']}>
                     <Image
                         style={styles.streamerPhoto}
-                        source={streamerPhoto ? { uri: this.props.streamerPhoto } : null} />
+                        source={{ uri: this.props.streamerPhoto }} />
                     <QaplaText style={styles.streamPlatformText} numberOfLines={1} ellipsizeMode='tail'>
                         {this.props.streamerName}
                     </QaplaText>

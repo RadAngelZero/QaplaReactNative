@@ -155,4 +155,9 @@ export const defaultUserImages = [
 export const XQ = 'xq';
 export const QOINS = 'qoins';
 
+// Media types for cheers
+export const GIF = 'GIF';
+export const EMOTE = 'EMOTE';
+export const MEME = 'MEME';
+
 export const STREAMERS_BLACKLIST = ['141617732-catskullgamer', '683167758-catskullgg', '613408163-dhvsll', '180517858-QaplaGG', '448926957-qaplita', '140436068-RadAngelZero', '528477359-mariyolo1bot'];

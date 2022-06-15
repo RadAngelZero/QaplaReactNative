@@ -47,6 +47,12 @@ const qlanesRef = database.ref('/Qlanes');
 const activeCustomRewardsRef = database.ref('/ActiveCustomRewards');
 const listOfStreamersPublicProfileKeysRef = database.ref('/ListOfStreamersPublicProfileKeys');
 const streamersFollowersRef = database.ref('/StreamersFollowers');
+const userToStreamerDonationsRef = database.ref('/UserToStreamerDonations');
+const userStreamerPublicDataRef = database.ref('/UserStreamerPublicData');
+const qaplaInteractionsRef = database.ref('/QaplaInteractions');
+const gifsInteractionsRef = qaplaInteractionsRef.child('/Gifs');
+const emotesInteractionsRef = qaplaInteractionsRef.child('/Emotes');
+const memesInteractionsRef = qaplaInteractionsRef.child('/Memes');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1330,11 +1336,11 @@ export async function getUserDonationLeaderBoard(uid) {
 // -----------------------------------------------
 
 /**
- * Return all the streamers with premium status
+ * Return all the streamers
  * @returns {Object} Object of streamers
  */
-export async function getPremiumStreamers() {
-    return await userStreamerRef.orderByChild('premium').equalTo(true).once('value');
+export async function getAllStreamers() {
+    return await userStreamerRef.once('value');
 }
 
 // -----------------------------------------------
@@ -1344,6 +1350,9 @@ export async function getPremiumStreamers() {
 /**
  * Store cheers on the database at StreamersDonations node
  * @param {number} amountQoins Amount of donated Qoins
+ * @param {object} media Object for cheers with specified media
+ * @param {string} media.type Type of media (one of "GIF", "EMOTE" or "MEME")
+ * @param {string} media.source Url of the media
  * @param {string} message Message from the user
  * @param {number} timeStamp Timestamp of the moment when the donation is sent
  * @param {string} streamerName Name of the streamer
@@ -1477,6 +1486,13 @@ export async function getStreamersPublicProfileWithLimit(limit = 100, cursor) {
  */
 export async function getStreamerPublicProfile(streamerId) {
     return await streamersPublicProfilesRef.child(streamerId).once('value');
+}
+
+/**
+ * Get all the streamers streaming
+ */
+export async function getAllStreamersStreaming() {
+    return await userStreamerPublicDataRef.orderByChild('isStreaming').equalTo(true).once('value');
 }
 
 // -----------------------------------------------
@@ -1637,4 +1653,55 @@ export async function getStreamersPublicProfilesLength() {
  */
 export async function getStreamerPublicProfileKeyAtIndex(index) {
     return await listOfStreamersPublicProfileKeysRef.child('keys').child(index).once('value');
+}
+
+// -----------------------------------------------
+// Streams
+// -----------------------------------------------
+
+/**
+ * Returns the stream data of the given stream
+ * @param {string} streamId Stream identifier
+ */
+export async function getStreamById(streamId) {
+    return await eventsDataRef.child(streamId).once('value');
+}
+
+// -----------------------------------------------
+// User to streamer donations
+// -----------------------------------------------
+
+/**
+ * Gets between 0 and limit streamers ordered by donation date
+ * @param {string} uid User identifier
+ * @param {number} limit Max number of streamers to get
+ */
+export async function getRecentStreamersDonations(uid, limit = 6) {
+    return await userToStreamerDonationsRef.child(uid).orderByChild('lastDonation').limitToLast(limit).once('value');
+}
+
+/**
+ * Gets between 0 and limit streamers ordered by number of donations from the user
+ * (favs = streamers who receive cheers with more frequency from the user)
+ * @param {string} uid Unique identifier
+ * @param {number} limit Max number of streamers to get
+ */
+export async function getUserFavsStreamers(uid, limit = 5) {
+    return await userToStreamerDonationsRef.child(uid).orderByChild('numberOfDonations').limitToLast(limit).once('value');
+}
+
+/**
+ * Qapla Interactions
+ */
+
+export async function getGifsLibrary() {
+    return await gifsInteractionsRef.once('value');
+}
+
+export async function getEmotesLibrary() {
+    return await emotesInteractionsRef.once('value');
+}
+
+export async function getMemesLibrary() {
+    return await memesInteractionsRef.once('value');
 }

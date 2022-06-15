@@ -73,7 +73,7 @@ export const loadStreamsByListIndex = (uid, index) => async (dispatch) => {
     if (index > 0) {
         today.setHours(0, 0, 0, 0);
     } else {
-        today.setHours(today.getHours() - 3);
+        today.setHours(today.getHours() < 3 ? 0 : today.getHours() - 3, 0, 0, 0);
     }
 
     const startAt = new Date(today.getTime() + ((ONE_HOUR_MILISECONDS * HOURS_IN_DAY) * index));

@@ -30,6 +30,7 @@ import { connectUserToSendBird } from '../../services/SendBird';
 import { getUserProfileImgUrl } from '../../services/storage';
 
 import LoadingAnimation from '../../components/LoadingAnimation/LoadingAnimation';
+import { identifyQonversion, getProductsQonversion } from '../../services/Qonversion';
 
 const QaplaLogo = images.svg.qaplalogoIcon;
 

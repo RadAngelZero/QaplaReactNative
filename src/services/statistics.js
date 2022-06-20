@@ -1,8 +1,7 @@
-// diego          - 02-09-2019 - us91 - File creation
-
 import analytics from '@segment/analytics-react-native';
 
 import { SEGMENT_KEY } from '../utilities/Constants';
+import { getProductsQonversion } from './Qonversion';
 
 /**
  * @description Initialize segemnt (necessary to send data to segment)
@@ -65,6 +64,7 @@ export async function trackOnSegment(event, properties = {}) {
  */
 export async function setUserIdOnSegment(uid, email, username, twitchUsername) {
     try {
+        getProductsQonversion(uid);
         analytics.identify(uid, {
             email,
             username,

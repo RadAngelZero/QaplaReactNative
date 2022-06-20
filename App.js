@@ -3,6 +3,7 @@ import { StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import NetInfo from '@react-native-community/netinfo';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Qonversion from 'react-native-qonversion';
 
 import Router from './src/Router';
 import { notifications } from './src/utilities/firebase';
@@ -27,6 +28,8 @@ import {
 } from './src/services/statistics';
 
 console.disableYellowBox = true;
+
+Qonversion.launchWithKey('lrTSINU4i6um-PUdlac98tRqnJR2wcuk', false);
 
 class App extends React.Component {
     state = {

@@ -39,6 +39,7 @@ class StreamLiveList extends React.Component {
 					<FlatList data={Object.keys(liveStreams).sort((a, b) => liveStreams[a].timestamp - liveStreams[b].timestamp).map((streamId) => liveStreams[streamId])}
 						onScrollBeginDrag={() => { if (this.props.dynamicSeparation) {this.setState({ scrolled: true });}}}
 						onMomentumScrollEnd={(e) => { if (this.props.dynamicSeparation) {this.setState({scrolled: e.nativeEvent.contentOffset.x >= 20});}}}
+						showsHorizontalScrollIndicator={false}
 						horizontal
 						initialNumToRender={5}
 						renderItem={this.renderEventOnList}

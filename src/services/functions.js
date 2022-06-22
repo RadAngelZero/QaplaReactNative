@@ -60,13 +60,20 @@ async function callCloudFunction(ctx) {
 	let res = null;
 	let cloudFunc = functions.httpsCallable(ctx.cfName);
 
-	try {
-		res = await cloudFunc(ctx.params);
-	}
-	catch (err) {
-		console.log('[callCloudFunction] - ' + ctx.cfName + ' - Error - ' + err);
-		res = err;
-	}
+	res = await cloudFunc(ctx.params);
 
 	return res;
+}
+
+/**
+ * Delete an account from the auth and any reference from the uid on the database
+ * @param {string} uid User identifier
+ */
+ export async function deleteUserAccount(uid) {
+	return await callCloudFunction({
+		cfName: 'deleteAccount',
+		params: {
+			uid
+		}
+	});
 }

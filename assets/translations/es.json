@@ -188,18 +188,13 @@
         "termsAndConditions": "Términos y Condiciones",
         "privacyNotice": "Aviso de Privacidad",
         "closeSession": "Cerrar sesión",
-        "addDiscordTagModal": {
-            "title": "Agrega tu tag de Discord",
-            "placeholder": "Inserta tu Discord tag",
-            "cancel": "Cancelar",
-            "done": "Listo"
-        },
-        "addBioModal": {
-            "title": "Agrega tu biografía",
-            "placeholder": "Inserta tu biografía",
-            "cancel": "Cancelar",
-            "done": "Listo"
-        }
+        "deleteAccount": "Eliminar cuenta",
+        "deleteAccountDescription": "¿Estas seguro que deseas eliminar tu cuenta y toda la información de la misma de forma permanente?",
+        "cancel": "Cancelar",
+        "accountDeleted": "Cuenta eliminada",
+        "accountDeletedDescription": "Tu cuenta y la información relacionada a la misma han sido eliminadas",
+        "accountDeletionError": "Error al eliminar cuenta",
+        "accountDeletionErrorDescription": "No se pudo eliminar la cuenta, por favor intentelo mas tarde o contacta con soporte tecnico"
     },
     "supportScreen": {
         "placeholder": "¿Contento? ¿Frustrado? ¿Triste? Compártenos tu opinión aquí",

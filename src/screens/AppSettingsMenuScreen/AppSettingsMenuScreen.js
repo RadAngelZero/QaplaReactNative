@@ -59,15 +59,15 @@ class AppSettingsMenuScreen extends Component {
 
     deleteAccountConfirmation = () => {
         Alert.alert(
-            'Eliminar cuenta',
-            '¿Estas seguro que deseas eliminar tu cuenta y toda la información de la misma de forma permanente?',
+            translate('settingsMenuScreen.deleteAccount'),
+            translate('settingsMenuScreen.deleteAccountDescription'),
             [
                 {
-                    text: 'Cancelar',
+                    text: translate('settingsMenuScreen.cancel'),
                     style: 'cancel'
                 },
                 {
-                    text: 'Eliminar cuenta',
+                    text: translate('settingsMenuScreen.deleteAccount'),
                     onPress: () => this.tryToDeleteAccount(),
                     style: 'destructive'
                 }
@@ -87,8 +87,8 @@ class AppSettingsMenuScreen extends Component {
             await deleteUserAccount(this.props.uid);
 
             Alert.alert(
-                'Cuenta eliminada',
-                'Tu cuenta y la información relacionada a la misma han sido eliminadas',
+                translate('settingsMenuScreen.accountDeleted'),
+                translate('settingsMenuScreen.accountDeletedDescription'),
                 [
                     {
                         text: 'Ok',
@@ -100,10 +100,9 @@ class AppSettingsMenuScreen extends Component {
                 ]
             );
         } catch (error) {
-            console.log(error);
             Alert.alert(
-                'Error al eliminar cuenta',
-                'No se pudo eliminar la cuenta, por favor intentelo mas tarde o contacta con soporte tecnico',
+                translate('settingsMenuScreen.accountDeletionError'),
+                translate('settingsMenuScreen.accountDeletionErrorDescription'),
                 [
                     {
                         text: 'Ok'
@@ -157,7 +156,7 @@ class AppSettingsMenuScreen extends Component {
                         <TouchableWithoutFeedback onPress={this.deleteAccountConfirmation}>
                             <View style={styles.menuItemRow}>
                                 <QaplaText style={styles.menuItemRowTextDanger}>
-                                    Eliminar cuenta
+                                {translate('settingsMenuScreen.deleteAccount')}
                                 </QaplaText>
                             </View>
                         </TouchableWithoutFeedback>

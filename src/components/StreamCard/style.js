@@ -2,6 +2,12 @@ import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
+    liveContainer: {
+        backgroundColor: '#14183300',
+        marginHorizontal: 13,
+        width: widthPercentageToPx(72),
+        borderRadius: 20,
+    },
     container: {
         marginTop: 60,
         backgroundColor: '#14183300',
@@ -32,6 +38,12 @@ export default styles = StyleSheet.create({
         color: '#FFF',
         lineHeight: 22,
         minHeight: heightPercentageToPx(5.42),
+    },
+    liveBody: {
+        display: 'flex',
+        flexDirection: 'column',
+        marginBottom: 8,
+        marginTop: 16,
     },
     body: {
         display: 'flex',

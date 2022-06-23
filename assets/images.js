@@ -92,6 +92,8 @@ import TwitchDark from './icons/TwitchDark.svg';
 import AppleAuth from './icons/AppleBlackLogoRound.svg';
 import GoogleAuth from './icons/GoogleBlackLogoRound.svg';
 import EmailAuth from './icons/EmailBlackLogoRound.svg';
+import InteractionsIcon from './icons/InteractionsIcon.svg';
+import SearchStreamerIcon from './icons/SearchStreamerIcon.svg';
 
 // Images
 const images = {
@@ -301,7 +303,9 @@ const images = {
 		twitchDark: TwitchDark,
 		appleAuth: AppleAuth,
 		googleAuth: GoogleAuth,
-		emailAuth: EmailAuth
+		emailAuth: EmailAuth,
+		interactionsIcon: InteractionsIcon,
+		searchStreamerIcon: SearchStreamerIcon,
 	},
 	gif: {
 		loadingStreamers: {

@@ -37,6 +37,11 @@ export default styles = StyleSheet.create({
         fontSize: 12,
         marginLeft: widthPercentageToPx(5)
     },
+    menuItemRowTextDanger: {
+        color: '#FF0000',
+        fontSize: 12,
+        marginLeft: widthPercentageToPx(5)
+    },
     menuHeader: {
         width: widthPercentageToPx(100),
         height: widthPercentageToPx(20),

@@ -68,6 +68,7 @@ class Randomstreamerslist extends Component {
                     <FlatList
                         onScrollBeginDrag={() => this.setState({ scrolled: true })}
                         onMomentumScrollEnd={(e) => this.setState({ scrolled: e.nativeEvent.contentOffset.x >= 20 })}
+                        showsHorizontalScrollIndicator={false}
                         horizontal
                         style={{ paddingHorizontal: widthPercentageToPx(4.2) }}
                         initialNumToRender={5}

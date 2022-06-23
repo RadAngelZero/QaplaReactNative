@@ -188,18 +188,13 @@
         "termsAndConditions": "Terms and Conditions",
         "privacyNotice": "Privacy Notice",
         "closeSession": "Close Session",
-        "addDiscordTagModal": {
-            "title": "Add your Discord tag",
-            "placeholder": "Insert here your Discord tag",
-            "cancel": "Cancel",
-            "done": "Done"
-        },
-        "addBioModal": {
-            "title": "Add your biography",
-            "placeholder": "Insert here you biography",
-            "cancel": "Cancel",
-            "done": "Done"
-        }
+        "deleteAccount": "Delete account",
+        "deleteAccountDescription": "Are you sure you want to delete your account and all the information in it permanently?",
+        "cancel": "Cancel",
+        "accountDeleted": "Account deleted",
+        "accountDeletedDescription": "Your account and the information related to it have been deleted",
+        "accountDeletionError": "Failed to delete account",
+        "accountDeletionErrorDescription": "Failed to delete account, please try again later or contact support"
     },
     "supportScreen": {
         "placeholder": "Happy? Frustrated? Sad? Share your opinion here",

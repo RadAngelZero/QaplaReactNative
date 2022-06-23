@@ -3,19 +3,18 @@
 // josep.sanahuja  - 13-11-2019 - us147 - File creation
 
 import React, { Component } from 'react';
-import { SafeAreaView, View, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { Alert, SafeAreaView, View, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
 import Images from './../../../assets/images';
 import { signOut } from '../../services/auth';
-
-import AddDiscordTagModal from '../../components/AddDiscordTagModal/AddDiscordTagModal';
-import AddBioModal from '../../components/AddBioModal/AddBioModal';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import { translate } from '../../utilities/i18';
 import TermsAndConditionsModal from './../../components/TermsAndConditionsModal/TermsAndConditionsModal';
 import QaplaText from '../../components/QaplaText/QaplaText';
+import { deleteUserAccount } from '../../services/functions';
+import { trackOnSegment } from '../../services/statistics';
 
 const QaplaAppIcon = Images.png.qaplaSignupLogo.img;
 
@@ -24,7 +23,6 @@ class AppSettingsMenuScreen extends Component {
         super(props);
 
         this.state = {
-            discordModalOpen: false,
             bioModalOpen: false,
             privacyModalOpen: false,
             termsModalOpen: false
@@ -33,12 +31,6 @@ class AppSettingsMenuScreen extends Component {
 
     goToSupport = () => {
         this.props.navigation.navigate('Support');
-    }
-
-    toggleDiscordModal = () => {
-        this.setState({
-            discordModalOpen: !this.state.discordModalOpen
-        })
     }
 
     /**
@@ -60,12 +52,68 @@ class AppSettingsMenuScreen extends Component {
         this.props.navigation.navigate('Explore');
     }
 
-    toggleBioModal = () => this.setState({ bioModalOpen: !this.state.bioModalOpen });
-
     /**
      * Toggle the Terms and conditions modal
      */
     toggleTermsAndConditionsModal = () => this.setState({ termsModalOpen: !this.state.termsModalOpen });
+
+    deleteAccountConfirmation = () => {
+        Alert.alert(
+            translate('settingsMenuScreen.deleteAccount'),
+            translate('settingsMenuScreen.deleteAccountDescription'),
+            [
+                {
+                    text: translate('settingsMenuScreen.cancel'),
+                    style: 'cancel'
+                },
+                {
+                    text: translate('settingsMenuScreen.deleteAccount'),
+                    onPress: () => this.tryToDeleteAccount(),
+                    style: 'destructive'
+                }
+            ],
+            {
+                cancelable: true
+            }
+        );
+    }
+
+    tryToDeleteAccount = async () => {
+        try {
+            trackOnSegment('User deleted their account', {
+                uid: this.props.uid
+            });
+
+            await deleteUserAccount(this.props.uid);
+
+            Alert.alert(
+                translate('settingsMenuScreen.accountDeleted'),
+                translate('settingsMenuScreen.accountDeletedDescription'),
+                [
+                    {
+                        text: 'Ok',
+                        onPress: async () => {
+                            await signOut();
+                            this.props.navigation.navigate('Explore')
+                        }
+                    }
+                ]
+            );
+        } catch (error) {
+            Alert.alert(
+                translate('settingsMenuScreen.accountDeletionError'),
+                translate('settingsMenuScreen.accountDeletionErrorDescription'),
+                [
+                    {
+                        text: 'Ok'
+                    }
+                ],
+                {
+                    cancelable: true
+                }
+            );
+        }
+    }
 
     render() {
         return (
@@ -83,16 +131,6 @@ class AppSettingsMenuScreen extends Component {
                         <TouchableWithoutFeedback onPress={this.goToSupport}>
                             <View style={styles.menuItemRow}>
                                 <QaplaText style={styles.menuItemRowText}>{translate('settingsMenuScreen.support')}</QaplaText>
-                            </View>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={this.toggleBioModal}>
-                            <View style={styles.menuItemRow}>
-                                <QaplaText style={styles.menuItemRowText}>{translate('settingsMenuScreen.editBio')}</QaplaText>
-                            </View>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={this.toggleDiscordModal}>
-                            <View style={styles.menuItemRow}>
-                                <QaplaText style={styles.menuItemRowText}>{translate('settingsMenuScreen.editDiscord')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.goToNotificationsSettings}>
@@ -115,14 +153,15 @@ class AppSettingsMenuScreen extends Component {
                                 <QaplaText style={styles.menuItemRowText}>{translate('settingsMenuScreen.closeSession')}</QaplaText>
                             </View>
                         </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={this.deleteAccountConfirmation}>
+                            <View style={styles.menuItemRow}>
+                                <QaplaText style={styles.menuItemRowTextDanger}>
+                                {translate('settingsMenuScreen.deleteAccount')}
+                                </QaplaText>
+                            </View>
+                        </TouchableWithoutFeedback>
                     </ScrollView>
                 </View>
-                <AddDiscordTagModal
-                    open={this.state.discordModalOpen}
-                    onClose={this.toggleDiscordModal} />
-                <AddBioModal
-                    open={this.state.bioModalOpen}
-                    onClose={this.toggleBioModal} />
                 <PrivacyModal
                     open={this.state.privacyModalOpen}
                     onClose={this.togglePrivacyModal} />
@@ -136,7 +175,8 @@ class AppSettingsMenuScreen extends Component {
 
 function mapStateToProps(state) {
     return {
-        userName: state.userReducer.user.userName
+        userName: state.userReducer.user.userName,
+        uid: state.userReducer.user.id
     }
 }
 

@@ -58,6 +58,7 @@ class StreamsList extends React.Component {
                     <FlatList data={Object.keys(streamsToRender).map((key) => (streamsToRender[key]))}
                         onScrollBeginDrag={() => { if (this.props.dynamicSeparation) {this.setState({ scrolled: true });}}}
                         onMomentumScrollEnd={(e) => { if (this.props.dynamicSeparation) {this.setState({scrolled: e.nativeEvent.contentOffset.x >= 20});}}}
+                        showsHorizontalScrollIndicator={false}
                         horizontal
                         initialNumToRender={5}
                         renderItem={this.renderEventOnList}

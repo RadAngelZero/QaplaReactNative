@@ -44,6 +44,7 @@ class FeaturedStreamsList extends React.Component {
 					<FlatList data={Object.keys(featuredStreams).sort((a, b) => featuredStreams[a].timestamp - featuredStreams[b].timestamp).map((streamId) => featuredStreams[streamId])}
 						onScrollBeginDrag={() => { if (this.props.dynamicSeparation) {this.setState({ scrolled: true });}}}
 						onMomentumScrollEnd={(e) => { if (this.props.dynamicSeparation) {this.setState({scrolled: e.nativeEvent.contentOffset.x >= 20});}}}
+						showsHorizontalScrollIndicator={false}
 						horizontal
 						initialNumToRender={5}
 						renderItem={this.renderEventOnList}

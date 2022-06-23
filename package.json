@@ -12,6 +12,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@giphy/react-native-sdk": "^1.8.0",
     "@invertase/react-native-apple-authentication": "2.0.2",
     "@react-native-community/async-storage": "1.9.0",
     "@react-native-community/blur": "^3.6.0",
@@ -47,8 +48,8 @@
     "sendbird": "3.0.125"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/runtime": "^7.6.2",
+    "@babel/core": "^7.9.0",
+    "@babel/runtime": "^7.9.2",
     "@react-native-community/eslint-config": "^0.0.5",
     "babel-jest": "^24.9.0",
     "babel-plugin-root-import": "^6.4.1",

@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import NetInfo from '@react-native-community/netinfo';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Qonversion from 'react-native-qonversion';
+import { GiphySDK } from '@giphy/react-native-sdk';
+
 
 import Router from './src/Router';
 import { notifications } from './src/utilities/firebase';
@@ -30,6 +32,8 @@ import {
 console.disableYellowBox = true;
 
 Qonversion.launchWithKey('lrTSINU4i6um-PUdlac98tRqnJR2wcuk', false);
+
+GiphySDK.configure({ apiKey: '1WgsSOSfrTXTN4IGMMuhajM7WsfxoSdq' });
 
 class App extends React.Component {
     state = {

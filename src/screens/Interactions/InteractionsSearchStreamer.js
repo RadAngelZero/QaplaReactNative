@@ -22,7 +22,7 @@ const Item = ({ streamerName, streamerImg, isLive, streamerId, navigation }) => 
     <TouchableOpacity
         onPress={() => {
             console.log(streamerName + ' pressed');
-            navigation.navigate('InteractionsSelectInteraction', { id: streamerId, name: streamerName, img: streamerImg });
+            navigation.navigate('InteractionsPersonalize', { id: streamerId, name: streamerName, img: streamerImg });
         }}
     >
         <View style={{

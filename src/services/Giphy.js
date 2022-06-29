@@ -22,14 +22,33 @@ export async function generateGiphyUserRandomId() {
 /**
  * Get media (gifs, clips or stickers) from Giphy
  * @param {string} userGiphyId User Giphy random identifier
- * @param {string} type One of
+ * @param {('gifs'|'stickers'|'clips')} type Type of media to get
  * @param {number} limit Maximum number of media to get from Giphy
  * @param {number} offset Offset (for pagination)
  * @returns Array of data (gifs, clips, etc.) from Giphy
  */
 export async function getGiphyTrending(userGiphyId, type, limit, offset = 0) {
-    console.log(`https://api.giphy.com/v1/${type}/trending?api_key=${GIPHY_KEY}&random_id=${userGiphyId}&limit=${limit}&offset=${offset}&rating=pg-13&bundle=${type === GIPHY_CLIPS ? 'clips_grid_picker' : 'messaging_non_clips'}`);
     const response = await fetch(`https://api.giphy.com/v1/${type}/trending?api_key=${GIPHY_KEY}&random_id=${userGiphyId}&limit=${limit}&offset=${offset}&rating=pg-13&bundle=${type === GIPHY_CLIPS ? 'clips_grid_picker' : 'messaging_non_clips'}`, {
+        method: 'get'
+    });
+
+    const data = (await response.json()).data;
+
+    return data;
+}
+
+/**
+ * Search for specific media (gifs, clips or stickers) on Giphy library based on the given search query
+ * @param {string} userGiphyId User Giphy random identifier
+ * @param {string} searchQuery Search query term or phrase
+ * @param {('gifs'|'stickers'|'clips')} type Type of media to get
+ * @param {string} lang User language
+ * @param {number} limit Maximum number of media to get from Giphy
+ * @param {number} offset Offset (for pagination)
+ * @returns Array of data (gifs, clips, etc.) from Giphy
+ */
+export async function searchGiphyMedia(userGiphyId, searchQuery, type, lang, limit, offset) {
+    const response = await fetch(`https://api.giphy.com/v1/${type}/search?api_key=${GIPHY_KEY}&random_id=${userGiphyId}&q=${searchQuery}&lang=${lang}&limit=${limit}&offset=${offset}&rating=pg-13&bundle=${type === GIPHY_CLIPS ? 'clips_grid_picker' : 'messaging_non_clips'}`, {
         method: 'get'
     });
 

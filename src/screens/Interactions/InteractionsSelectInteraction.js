@@ -3,9 +3,10 @@ import { Text, FlatList, View, TouchableOpacity, Image, TouchableWithoutFeedback
 import { connect } from 'react-redux';
 
 import styles from './style';
-import { GIPHY_STICKERS } from '../../utilities/Constants';
-import { generateGiphyUserRandomId, getGiphyTrending } from '../../services/Giphy';
+import { GIPHY_GIFS, GIPHY_STICKERS } from '../../utilities/Constants';
+import { generateGiphyUserRandomId, getGiphyTrending, searchGiphyMedia } from '../../services/Giphy';
 import { setUserGiphyId } from '../../services/database';
+import { getLocaleLanguage } from '../../utilities/i18';
 
 const MemesData = [
     {
@@ -73,6 +74,7 @@ class InteractionsSelectInteraction extends Component {
         imgList1: [],
         imgList2: [],
         gifs: [],
+        searchQuery: 'Spongebob',
         selectedID: '',
     }
 
@@ -92,7 +94,7 @@ class InteractionsSelectInteraction extends Component {
             id = this.props.giphyId;
         }
 
-        const gifs = await getGiphyTrending(id, GIPHY_STICKERS, 25);
+        const gifs = await getGiphyTrending(id, GIPHY_GIFS, 25);
         this.setState({ gifs });
     }
 
@@ -101,6 +103,12 @@ class InteractionsSelectInteraction extends Component {
         let gifsList = [...this.state.gifs];
         gifsList = gifsList.concat(gifs);
         this.setState({ gifs: gifsList });
+    }
+
+    searchGifs = async () => {
+        const userLanguage = getLocaleLanguage();
+        const gifs = await searchGiphyMedia(this.props.giphyId, this.state.searchQuery, GIPHY_GIFS, userLanguage, 25);
+        this.setState({ gifs });
     }
 
     getImageHeight = (url, index, id) => {

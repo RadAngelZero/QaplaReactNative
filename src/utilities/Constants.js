@@ -7,6 +7,14 @@ export const SEGMENT_KEY = 'fCfir8yrQiZRVrpuwLHYRePN68SqW8AS';
 // SendBird key
 export const SENDBIRD_KEY = '7E54A9F8-DCE3-420E-8DC8-D3E8B081A2B0';
 
+// Giphy API hey
+export const GIPHY_KEY = 'VDvH7301JvDdgFGQY41bv0Sr8zl5v4In';
+
+// Giphy media types
+export const GIPHY_GIFS = 'gifs';
+export const GIPHY_STICKERS = 'stickers';
+export const GIPHY_CLIPS = 'clips';
+
 // Twitch Client Id
 export const TWITCH_CLIENT_ID = '3cwpzmazn716nmz6g1087kh4ciu4sp';
 export const TWITCH_REDIRECT_URI = 'https://dashboard.qapla.gg/';

@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { Alert, Linking, ScrollView, Text, FlatList, View, Modal, TouchableOpacity, Image, TextInput, Dimensions, Touchable, TouchableWithoutFeedback } from 'react-native';
+import { Text, FlatList, View, TouchableOpacity, Image, TouchableWithoutFeedback } from 'react-native';
+import { connect } from 'react-redux';
+
 import styles from './style';
-import images from '../../../assets/images';
+import { GIPHY_STICKERS } from '../../utilities/Constants';
+import { generateGiphyUserRandomId, getGiphyTrending } from '../../services/Giphy';
+import { setUserGiphyId } from '../../services/database';
 
 const MemesData = [
     {
@@ -68,6 +72,7 @@ class InteractionsSelectInteraction extends Component {
         imgSizes: {},
         imgList1: [],
         imgList2: [],
+        gifs: [],
         selectedID: '',
     }
 
@@ -77,8 +82,25 @@ class InteractionsSelectInteraction extends Component {
         });
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    loadGifs = async () => {
+        let id = '';
+        if (!this.props.giphyId) {
+            const randomId = await generateGiphyUserRandomId();
+            setUserGiphyId(this.props.uid, randomId);
+            id = randomId;
+        } else {
+            id = this.props.giphyId;
+        }
 
+        const gifs = await getGiphyTrending(id, GIPHY_STICKERS, 25);
+        this.setState({ gifs });
+    }
+
+    loadMoreGifs = async () => {
+        const gifs = await getGiphyTrending(this.props.giphyId, GIPHY_GIFS, 25, this.state.gifs.length);
+        let gifsList = [...this.state.gifs];
+        gifsList = gifsList.concat(gifs);
+        this.setState({ gifs: gifsList });
     }
 
     getImageHeight = (url, index, id) => {
@@ -163,7 +185,7 @@ class InteractionsSelectInteraction extends Component {
                         </TouchableOpacity>
                         <View style={{ width: 4 }} />
                         <TouchableOpacity
-                            onPress={() => this.setState({ screen: 1 })}
+                            onPress={() => { this.loadGifs(); this.setState({ screen: 1 }); }}
                         >
                             <View style={{
                                 paddingVertical: 6,
@@ -257,4 +279,11 @@ class InteractionsSelectInteraction extends Component {
     }
 }
 
-export default InteractionsSelectInteraction;
+function mapStateToProps(state) {
+    return {
+        uid: state.userReducer.user.id,
+        giphyId: state.userReducer.user.giphyId
+    }
+}
+
+export default connect(mapStateToProps)(InteractionsSelectInteraction);

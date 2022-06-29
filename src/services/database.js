@@ -1024,6 +1024,15 @@ export function updateUserLoggedStatus(isUserLogged, uid = '') {
 }
 
 /**
+ * Sets the giphyId field on the user profile
+ * @param {string} uid User identifier
+ * @param {string} giphyId Giphy identifier
+ */
+export function setUserGiphyId(uid, giphyId) {
+    usersRef.child(uid).child('giphyId').set(giphyId);
+}
+
+/**
  * Remove all the database listeners related to the userReducer
  * @param {string} uid User identifier
  */

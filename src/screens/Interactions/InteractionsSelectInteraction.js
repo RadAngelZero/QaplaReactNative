@@ -1,14 +1,5 @@
 import React, { Component } from 'react';
 import { Alert, Linking, ScrollView, Text, FlatList, View, Modal, TouchableOpacity, Image, TextInput, Dimensions, Touchable, TouchableWithoutFeedback } from 'react-native';
-import {
-    GiphyContent,
-    GiphyGridView,
-    GiphyMedia,
-    GiphyMediaType,
-    GiphySDK,
-    GiphyVideoView,
-    GiphyRating
-} from '@giphy/react-native-sdk';
 import styles from './style';
 import images from '../../../assets/images';
 
@@ -208,12 +199,6 @@ class InteractionsSelectInteraction extends Component {
                         {this.state.screen === 1 &&
                             <>
                                 <Text style={{ color: '#fff' }}>GIFs</Text>
-                                <GiphyGridView
-                                    content={GiphyContent.trending({mediaType: GiphyMediaType.Gif, rating: GiphyRating.PG13})}
-                                    cellPadding={3}
-                                    style={{ height: 300, marginTop: 24 }}
-                                // onMediaSelect={(e) => setMedia(e.nativeEvent.media)}
-                                />
                             </>
                         }
                         {this.state.screen === 2 &&

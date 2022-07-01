@@ -3,7 +3,7 @@ import { Alert, Linking, ScrollView, Text, FlatList, View, Modal, TouchableOpaci
 import { connect } from 'react-redux';
 import styles from './style';
 import images from '../../../assets/images';
-import SearchStreamerModal from '../../components/SearchStreamerModal/SearchStreamerModal';
+import SearchStreamerModal from '../../components/InteractionsModals/SearchStreamerModal';
 import StreamerCardSmall from '../../components/StreamerCard/StreamerCardSmall';
 import StreamerCardMini from '../../components/StreamerCard/StreamerCardMini';
 import StreamCardLive from '../../components/StreamCard/StreamCardLive';
@@ -302,7 +302,7 @@ export class InteractionsFeed extends Component {
                     onPress={() => this.props.navigation.navigate('InteractionsSearchStreamer')}
                 />
             </>
-        )
+        );
     }
 }
 

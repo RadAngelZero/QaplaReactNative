@@ -4,7 +4,7 @@ import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } fr
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0D1021'
+        backgroundColor: '#0D1021',
     },
     personalizeButtonContainer: {
         marginTop: 18 * getScreenSizeMultiplier(),
@@ -51,5 +51,5 @@ export default styles = StyleSheet.create({
         lineHeight: 21 * getScreenSizeMultiplier(),
         letterSpacing: -0.3199999928474426 * getScreenSizeMultiplier(),
         marginLeft: 8 * getScreenSizeMultiplier(),
-    }
+    },
 });

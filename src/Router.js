@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, Text } from 'react-native';
 import { createAppContainer, createSwitchNavigator, NavigationActions } from 'react-navigation';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator, createBottomTabNavigator } from 'react-navigation-tabs';
@@ -42,7 +42,9 @@ import { BOTTOM_NAVIGATION_BAR_HEIGHT } from './utilities/Constants';
 import InteractionsLoadHandler from './screens/Interactions/InteractionsLoadHandler';
 import InteractionsSearchStreamer from './screens/Interactions/InteractionsSearchStreamer';
 import InteractionsPersonalize from './screens/Interactions/InteractionsPersonalize';
+import InteractionsSelectGIF from './screens/Interactions/InteractionsSelectGIF';
 import InteractionsSelectInteraction from './screens/Interactions/InteractionsSelectInteraction';
+import PersonalizeInteractionHeader from './components/PersonalizeInteractionHeader/PersonalizeInteractionHeader';
 
 //#region Stack Navigators
 
@@ -133,10 +135,21 @@ const InteractionsStackNavigator = createStackNavigator({
       ...TransitionPresets.SlideFromRightIOS,
     },
   },
+});
+
+const InteractionsPersonlizeStackNavigator = createStackNavigator({
   InteractionsPersonalize: {
     screen: InteractionsPersonalize,
     navigationOptions: {
-      headerShown: false,
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsSelectGIF: {
+    screen: InteractionsSelectGIF,
+    navigationOptions: {
+      headerShown: true,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     },
@@ -456,7 +469,7 @@ const RootStackNavigator = createStackNavigator({
   Activity: {
     screen: ActivityScreen,
     navigationOptions: {
-      headerShown: false
+      headerShown: false,
     }
   },
   StreamerProfile: {
@@ -468,11 +481,20 @@ const RootStackNavigator = createStackNavigator({
   SettingsMenu: SettingsMenuStackNavigator,
   Auth: AuthStackNavigator,
   InteractionsStack: InteractionsStackNavigator,
+  InteractionsPersonlizeStack: {
+    screen: InteractionsPersonlizeStackNavigator,
+    navigationOptions: {
+      gestureDirection: 'horizontal',
+      header: (props) => <PersonalizeInteractionHeader {...props} />,
+      headerTransparent: true,
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
 }, {
   headerMode: 'screen',
   defaultNavigationOptions: {
     header: null,
-    headerVisible: false
+    headerVisible: false,
   }
 });
 

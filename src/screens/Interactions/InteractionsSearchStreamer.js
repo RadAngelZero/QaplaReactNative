@@ -22,7 +22,7 @@ const Item = ({ streamerName, streamerImg, isLive, streamerId, navigation }) => 
     <TouchableOpacity
         onPress={() => {
             console.log(streamerName + ' pressed');
-            navigation.navigate('InteractionsPersonalize', { id: streamerId, name: streamerName, img: streamerImg });
+            navigation.navigate('InteractionsPersonalize', { streamerId, streamerName, streamerImg });
         }}
     >
         <View style={{
@@ -71,7 +71,7 @@ class InteractionsSearchStreamer extends Component {
         <Item streamerName={item.streamerName} streamerImg={item.streamerImg} isLive={item.isLive} streamerId={item.id} navigation={this.props.navigation} />
     )
 
-    searchHanler = (e) => {
+    searchHandler = (e) => {
         this.setState({ search: e.nativeEvent.text });
         if (e.nativeEvent.text === '') {
             console.log('No busques');
@@ -117,7 +117,7 @@ class InteractionsSearchStreamer extends Component {
                         <View style={{ opacity: 0.4 }}>
                             <images.svg.searchStreamerIcon />
                         </View>
-                        <View style={{ width: 12 }} />
+                        <View style={{ width: 10 }} />
                         <TextInput
                             style={{
                                 backgroundColor: '#f0f0',
@@ -129,7 +129,7 @@ class InteractionsSearchStreamer extends Component {
                                 letterSpacing: 0.2,
                             }}
                             value={this.state.search}
-                            onChange={this.searchHanler}
+                            onChange={this.searchHandler}
                         />
                     </View>
                 </View>

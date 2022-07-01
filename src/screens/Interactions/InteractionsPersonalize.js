@@ -6,10 +6,17 @@ import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } fr
 
 class InteractionsPersonalize extends Component {
 
+    gifs = () => {
+        this.props.navigation.navigate('InteractionsSelectGIF');
+    }
+
     render() {
         return (
-            <View style={[styles.container, { paddingHorizontal: 16 * getScreenSizeMultiplier()}]}>
-                <View style={{
+            <View style={[styles.container, {
+                paddingHorizontal: 16 * getScreenSizeMultiplier(),
+                paddingTop: 32 * getScreenSizeMultiplier(),
+            }]}>
+                {/* <View style={{
                     display: 'flex',
                     flexDirection: 'row',
                     marginTop: heightPercentageToPx(2),
@@ -55,12 +62,11 @@ class InteractionsPersonalize extends Component {
                             marginLeft: 6,
                         }} />
                     </View>
-                </View>
+                </View> */}
                 <View style={{
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
-                    marginTop: 16,
                 }}>
                     <Text style={{
                         color: '#fff',
@@ -90,7 +96,7 @@ class InteractionsPersonalize extends Component {
                     marginTop: 8,
                 }}>
                     <TouchableOpacity
-                        onPress={() => console.log('a')}
+                        onPress={this.gifs}
                         style={styles.personalizeButtonContainer}
                     >
                         <ImageBackground
@@ -247,7 +253,7 @@ class InteractionsPersonalize extends Component {
                         </Text>
                     </TouchableOpacity>
                 </View>
-            </View >
+            </View>
         );
     }
 

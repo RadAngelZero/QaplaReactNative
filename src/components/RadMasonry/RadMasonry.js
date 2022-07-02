@@ -29,12 +29,13 @@ class RadMasonry extends Component {
 
                     }}
                     ListHeaderComponent={(
-                        <View style={{
-                            flex: 1,
-                            // display: 'flex',
-                            // marginBottom: 55 * getScreenSizeMultiplier(),
-                            flexDirection: this.props.horizontal ? 'column' : 'row',
-                        }}
+                        <View style={[
+                            {
+                                flex: 1,
+                                flexDirection: this.props.horizontal ? 'column' : 'row',
+                            },
+                            this.props.containerStyle,
+                        ]}
                         >
                             {Array.from(Array(this.props.numColumns || 2), (_, num) => {
                                 return (
@@ -56,9 +57,7 @@ class RadMasonry extends Component {
                                             return null;
                                         }).filter((e) => !!e)}
                                     </View>
-
                                 );
-
                             })}
                         </View>
                     )}

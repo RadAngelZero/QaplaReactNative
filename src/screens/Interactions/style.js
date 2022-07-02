@@ -19,7 +19,7 @@ export default styles = StyleSheet.create({
     },
     personalizeButtonIconContainer: {
         display: 'flex',
-        transform: [{ scale: getScreenSizeMultiplier() }]
+        transform: [{ scale: getScreenSizeMultiplier() }],
     },
     personalizeButtonIconText: {
         color: '#fff',
@@ -27,6 +27,10 @@ export default styles = StyleSheet.create({
         fontWeight: '600',
         lineHeight: 21 * getScreenSizeMultiplier(),
         marginTop: 4 * getScreenSizeMultiplier(),
+    },
+    qoin: {
+        maxWidth: 25 * getScreenSizeMultiplier(),
+        maxHeight: 25 * getScreenSizeMultiplier(),
     },
     personalizeButtonDisplayQoinsContainer: {
         display: 'flex',

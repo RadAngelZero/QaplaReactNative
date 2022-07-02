@@ -45,6 +45,9 @@ import InteractionsPersonalize from './screens/Interactions/InteractionsPersonal
 import InteractionsSelectGIF from './screens/Interactions/InteractionsSelectGIF';
 import InteractionsSelectInteraction from './screens/Interactions/InteractionsSelectInteraction';
 import PersonalizeInteractionHeader from './components/PersonalizeInteractionHeader/PersonalizeInteractionHeader';
+import InteractionsConfirmSelection from './screens/Interactions/InteractionsConfirmSelection';
+import InteractionsAddTTS from './screens/Interactions/InteractionsAddTTS';
+import InteractionsTTS from './screens/Interactions/InteractionsTTS';
 
 //#region Stack Navigators
 
@@ -148,6 +151,30 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
   },
   InteractionsSelectGIF: {
     screen: InteractionsSelectGIF,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsConfirmSelection: {
+    screen: InteractionsConfirmSelection,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsAddTTS: {
+    screen: InteractionsAddTTS,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsTTS: {
+    screen: InteractionsTTS,
     navigationOptions: {
       headerShown: true,
       gestureDirection: 'horizontal',

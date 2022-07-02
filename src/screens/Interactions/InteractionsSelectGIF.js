@@ -64,6 +64,7 @@ class InteractionsSelectGIF extends Component {
         searchQuery: '',
         selectedID: '',
         keyboardOpen: false,
+        gifSection: 1,
     };
 
     componentDidMount() {
@@ -90,12 +91,17 @@ class InteractionsSelectGIF extends Component {
         var newSizes = this.state.imgSizes;
         Image.getSize(url, (width, height) => {
             if (height !== undefined) {
-                newSizes[id] = { height, width };
+                newSizes[id] = { height, width, fetching: true };
                 this.setState({
                     ...this.state,
                     imgSizes: newSizes,
                 });
             } else {
+                newSizes[id] = { height: 0, width: 0, fetching: true };
+                this.setState({
+                    ...this.state,
+                    imgSizes: newSizes,
+                });
             }
         }, (error) => {
             console.log(error.message);
@@ -105,12 +111,19 @@ class InteractionsSelectGIF extends Component {
     renderImage = ({ item, i }) => {
         if (this.state.imgSizes[item.id] === undefined) {
             this.getImageHeight(item.url, i, item.id);
+            console.log('retry');
             return (<></>);
         }
         const ratio = this.state.imgSizes[item.id].width / this.state.imgSizes[item.id].height;
         return (
             <TouchableOpacity
                 onPress={() => {
+                    this.props.navigation.navigate('InteractionsConfirmSelection', {
+                        itemID: item.id,
+                        itemURL: item.url,
+                        size: { height: this.state.imgSizes[item.id].height, width: this.state.imgSizes[item.id].width },
+                        ratio,
+                    });
                     console.log(item.id);
                     console.log(item.url);
                     console.log(i);
@@ -120,7 +133,7 @@ class InteractionsSelectGIF extends Component {
                     marginBottom: 8 * getScreenSizeMultiplier(),
                     marginHorizontal: 4 * getScreenSizeMultiplier(),
                     overflow: 'hidden',
-                    backgroundColor: '#00FFDD',
+                    backgroundColor: '#202152',
                 }}
             >
                 <Image
@@ -207,11 +220,66 @@ class InteractionsSelectGIF extends Component {
                             numColumns={2}
                             renderItem={this.renderImage}
                             onEndReached={this.onEndReached}
+                            containerStyle={{
+                                paddingBottom: 75 * getScreenSizeMultiplier(),
+                            }}
                         />
                     </View>
-
                 </View>
-            </View>
+                <View style={{
+                    flexDirection: 'row',
+                    position: 'absolute',
+                    bottom: 0,
+                    backgroundColor: '#141539',
+                    height: 75 * getScreenSizeMultiplier(),
+                    width: '100%',
+                    borderTopLeftRadius: 30 * getScreenSizeMultiplier(),
+                    borderTopRightRadius: 30 * getScreenSizeMultiplier(),
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    overflow: 'hidden',
+                }}>
+                    <TouchableOpacity
+                        onPress={() => this.setState({ ...this.state, searchQuery: '', gifSection: 0 })}
+                        style={{
+                            backgroundColor: !this.state.gifSection ? '#29326B' : '#0000',
+                            paddingHorizontal: 13 * getScreenSizeMultiplier(),
+                            paddingVertical: 6 * getScreenSizeMultiplier(),
+                            borderRadius: 6 * getScreenSizeMultiplier(),
+                        }}
+                    >
+                        <Text style={{
+                            color: !this.state.gifSection ? '#FFFFFF' : '#FFFFFF99',
+                            fontSize: 17 * getScreenSizeMultiplier(),
+                            fontWeight: '600',
+                            lineHeight: 22 * getScreenSizeMultiplier(),
+                            letterSpacing: 0,
+                        }}>
+                            Recientes
+                        </Text>
+                    </TouchableOpacity>
+                    <View style={{width: 8 * getScreenSizeMultiplier()}}/>
+                    <TouchableOpacity
+                        onPress={() => this.setState({ ...this.state, searchQuery: '', gifSection: 1 })}
+                        style={{
+                            backgroundColor: this.state.gifSection ? '#29326B' : '#0000',
+                            paddingHorizontal: 13 * getScreenSizeMultiplier(),
+                            paddingVertical: 6 * getScreenSizeMultiplier(),
+                            borderRadius: 6 * getScreenSizeMultiplier(),
+                        }}
+                    >
+                        <Text style={{
+                            color: this.state.gifSection ? '#FFFFFF' : '#FFFFFF99',
+                            fontSize: 17 * getScreenSizeMultiplier(),
+                            fontWeight: '600',
+                            lineHeight: 22 * getScreenSizeMultiplier(),
+                            letterSpacing: 0,
+                        }}>
+                            Tendencia
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </View >
         );
     }
 

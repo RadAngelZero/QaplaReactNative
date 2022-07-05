@@ -39,7 +39,6 @@ import CheersSentScreen from './screens/CheersSentScreen/CheersSentScreen';
 import MyStreamsScreen from './screens/MyStreamsScreen/MyStreamsScreen';
 import InteractionsFeed from './screens/Interactions/InteractionsFeed';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT } from './utilities/Constants';
-import InteractionsLoadHandler from './screens/Interactions/InteractionsLoadHandler';
 import InteractionsSearchStreamer from './screens/Interactions/InteractionsSearchStreamer';
 import InteractionsPersonalize from './screens/Interactions/InteractionsPersonalize';
 import InteractionsSelectInteraction from './screens/Interactions/InteractionsSelectInteraction';
@@ -289,7 +288,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
     }
   },
   Interactions: {
-    screen: InteractionsLoadHandler,
+    screen: () => <></>, // We do not really want a screen here, we want to navigate to InteractionsStack (check tabBarOnPress)
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
@@ -309,7 +308,6 @@ const MainBottomTabNavigator = createBottomTabNavigator({
         <></>
       ),
       tabBarOnPress: ({ navigation, defaultHandler }) => {
-        console.log(navigation)
         navigation.navigate('InteractionsStack');
       },
     },

@@ -169,3 +169,6 @@ export const EMOTE = 'EMOTE';
 export const MEME = 'MEME';
 
 export const STREAMERS_BLACKLIST = ['141617732-catskullgamer', '683167758-catskullgg', '613408163-dhvsll', '180517858-QaplaGG', '448926957-qaplita', '140436068-RadAngelZero', '528477359-mariyolo1bot'];
+
+// Default image for streams where we can not load thumbnail URL
+export const DEFAULT_404_TWITCH_PREVIEW_URL = 'https://static-cdn.jtvnw.net/ttv-static/404_preview-480x270.jpg';

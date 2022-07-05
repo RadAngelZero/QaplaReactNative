@@ -1,15 +1,12 @@
-import React, { Component } from "react";
-import { View, Modal, Text, TextInput, TouchableWithoutFeedback } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import BottomSheet from 'reanimated-bottom-sheet';
-import { SHEET_MAX_HEIGHT, SHEET_MIN_HEIGHT } from "../../utilities/Constants";
-import LinearGradient from "react-native-linear-gradient";
+import LinearGradient from 'react-native-linear-gradient';
 import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
-import images from "../../../assets/images";
+import images from '../../../assets/images';
 
 class SearchStreamerModal extends Component {
-
-
     renderContent = () => (
         <TouchableWithoutFeedback
             onPress={this.props.onPress}
@@ -40,7 +37,7 @@ class SearchStreamerModal extends Component {
                             lineHeight: 28,
                             letterSpacing: 1,
                         }}>
-                            {'Envia un' + " "}
+                            {`Envia un `}
                             <Text style={{ color: '#00FFDD' }}>
                                 gif
                             </Text>

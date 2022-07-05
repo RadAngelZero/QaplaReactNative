@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, TouchableOpacity, ImageBackground, TouchableWithoutFeedback } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import styles from './style';
-import { translate, getLocaleLanguage } from '../../utilities/i18';
 import QaplaText from '../QaplaText/QaplaText';
-import Images from '../../../assets/images';
 import Colors from '../../utilities/Colors';
 
 const StreamCardContainer = ({ children, onPress }) => (
@@ -17,7 +15,6 @@ const StreamCardContainer = ({ children, onPress }) => (
 );
 
 class StreamCardLive extends Component {
-
     render() {
         return (
             <StreamCardContainer onPress={this.props.onPress}>

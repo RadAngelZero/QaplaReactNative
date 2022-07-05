@@ -1504,6 +1504,22 @@ export async function getAllStreamersStreaming() {
     return await userStreamerPublicDataRef.orderByChild('isStreaming').equalTo(true).once('value');
 }
 
+/**
+ * Get given streamer public data
+ * @param {string} streamerId Streamer identifier
+ */
+export async function getStreamerPublicData(streamerId) {
+    return await userStreamerPublicDataRef.child(streamerId).once('value');
+}
+
+/**
+ * Looks for streamers on the database based in their name or part of their name
+ * @param {string} searchQuery Part of the name to search for on the database
+ */
+export async function getStreamersByName(searchQuery) {
+    return await userStreamerPublicDataRef.orderByChild('displayName').startAt(searchQuery).endAt(searchQuery+'\uf8ff').once('value');
+}
+
 // -----------------------------------------------
 // Streamers Links
 // -----------------------------------------------

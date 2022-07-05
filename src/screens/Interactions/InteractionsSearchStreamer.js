@@ -1,28 +1,14 @@
 import React, { Component } from 'react';
-import { Alert, Linking, ScrollView, Text, FlatList, View, Modal, TouchableOpacity, Image, TextInput } from 'react-native';
-import { connect } from 'react-redux';
+import { Text, FlatList, View, TouchableOpacity, Image, TextInput } from 'react-native';
 import styles from './style';
 import images from '../../../assets/images';
-
-const TestData = [
-    {
-        id: 'rad',
-        streamerName: 'RadAngelZero',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/86cd83bb-4186-4d5d-b401-b37b37d6cb36-profile_image-70x70.png',
-        isLive: true,
-    },
-    {
-        id: 'shonzo',
-        streamerName: 'Shonzo',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/3ec78fbd-4695-46ff-8577-224005f004be-profile_image-70x70.png',
-    },
-];
+import { getStreamersByName } from '../../services/database';
 
 const Item = ({ streamerName, streamerImg, isLive, streamerId, navigation }) => (
     <TouchableOpacity
         onPress={() => {
-            console.log(streamerName + ' pressed');
-            navigation.navigate('InteractionsPersonalize', { id: streamerId, name: streamerName, img: streamerImg });
+            console.log(streamerId + ' pressed');
+            //navigation.navigate('InteractionsPersonalize', { id: streamerId, name: streamerName, img: streamerImg });
         }}
     >
         <View style={{
@@ -62,19 +48,31 @@ const Item = ({ streamerName, streamerImg, isLive, streamerId, navigation }) => 
 );
 
 class InteractionsSearchStreamer extends Component {
-
     state = {
         search: '',
-    }
+        searchResults: []
+    };
+
+    searchTimeout = null;
 
     renderItem = ({ item }) => (
-        <Item streamerName={item.streamerName} streamerImg={item.streamerImg} isLive={item.isLive} streamerId={item.id} navigation={this.props.navigation} />
-    )
+        <Item
+            streamerName={item.displayName}
+            streamerImg={item.photoUrl} isLive={item.isStreaming}
+            streamerId={item.streamerId}
+            navigation={this.props.navigation} />
+    );
 
-    searchHanler = (e) => {
-        this.setState({ search: e.nativeEvent.text });
-        if (e.nativeEvent.text === '') {
-            console.log('No busques');
+    searchHandler = (e) => {
+        const searchQuery = e.nativeEvent.text;
+        this.setState({ search: searchQuery, searchResults: [] });
+        if (searchQuery !== '') {
+            this.searchTimeout = setTimeout(async () => {
+                const streamers = await getStreamersByName(searchQuery);
+                if (streamers.exists()) {
+                    this.setState({ searchResults: streamers.val() });
+                }
+            }, 250);
         }
     }
 
@@ -129,7 +127,7 @@ class InteractionsSearchStreamer extends Component {
                                 letterSpacing: 0.2,
                             }}
                             value={this.state.search}
-                            onChange={this.searchHanler}
+                            onChange={this.searchHandler}
                         />
                     </View>
                 </View>
@@ -138,7 +136,7 @@ class InteractionsSearchStreamer extends Component {
                         width: '90%',
                         alignSelf: 'center',
                     }}
-                    data={TestData}
+                    data={Object.keys(this.state.searchResults).map((streamerId) => ({ streamerId, ...this.state.searchResults[streamerId] }) )}
                     renderItem={this.renderItem}
                     keyExtractor={item => item.id}
                 />

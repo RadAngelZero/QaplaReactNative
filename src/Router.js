@@ -41,6 +41,7 @@ import InteractionsFeed from './screens/Interactions/InteractionsFeed';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT } from './utilities/Constants';
 import InteractionsLoadHandler from './screens/Interactions/InteractionsLoadHandler';
 import InteractionsSearchStreamer from './screens/Interactions/InteractionsSearchStreamer';
+import InteractionsPersonalize from './screens/Interactions/InteractionsPersonalize';
 import InteractionsSelectInteraction from './screens/Interactions/InteractionsSelectInteraction';
 
 //#region Stack Navigators
@@ -129,10 +130,14 @@ const InteractionsStackNavigator = createStackNavigator({
     navigationOptions: {
       headerShown: false,
       gestureDirection: 'horizontal',
-      // transitionSpec: {
-      //   open: TransitionSpecs.TransitionIOSSpec,
-      //   close: TransitionSpecs.TransitionIOSSpec,
-      // },
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsPersonalize: {
+    screen: InteractionsPersonalize,
+    navigationOptions: {
+      headerShown: false,
+      gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     },
   },

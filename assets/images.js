@@ -94,6 +94,13 @@ import GoogleAuth from './icons/GoogleBlackLogoRound.svg';
 import EmailAuth from './icons/EmailBlackLogoRound.svg';
 import InteractionsIcon from './icons/InteractionsIcon.svg';
 import SearchStreamerIcon from './icons/SearchStreamerIcon.svg';
+import QuestionMark from './icons/QuestionMark.svg';
+import InteractionsGIF from './icons/Interactions/GIF.svg';
+import InteractionsSticker from './icons/Interactions/Sticker.svg';
+import InteractionsClip from './icons/Interactions/Clip.svg';
+import InteractionsTtGiphy from './icons/Interactions/TtGiphy.svg';
+import InteractionsTTS from './icons/Interactions/MessageBubble.svg';
+import InteractionsMemes from './icons/Interactions/Memes.svg';
 
 // Images
 const images = {
@@ -209,6 +216,30 @@ const images = {
 			img: require('./icons/JoinQlanGlow.png'),
 			uri: '@assets/icons/JoinQlanGlow.png'
 		},
+		InteractionGradient1: {
+			img: require('./images/InteractionGradient1.png'),
+			uri: '@assets/images/InteractionGradient1.png'
+		},
+		InteractionGradient2: {
+			img: require('./images/InteractionGradient2.png'),
+			uri: '@assets/images/InteractionGradient2.png'
+		},
+		InteractionGradient3: {
+			img: require('./images/InteractionGradient3.png'),
+			uri: '@assets/images/InteractionGradient3.png'
+		},
+		InteractionGradient4: {
+			img: require('./images/InteractionGradient4.png'),
+			uri: '@assets/images/InteractionGradient4.png'
+		},
+		InteractionGradient5: {
+			img: require('./images/InteractionGradient5.png'),
+			uri: '@assets/images/InteractionGradient5.png'
+		},
+		InteractionGradient6: {
+			img: require('./images/InteractionGradient6.png'),
+			uri: '@assets/images/InteractionGradient6.png'
+		},
 	},
 	svg: {
 		googleIcon: GoogleIcon,
@@ -306,6 +337,13 @@ const images = {
 		emailAuth: EmailAuth,
 		interactionsIcon: InteractionsIcon,
 		searchStreamerIcon: SearchStreamerIcon,
+		questionMark: QuestionMark,
+		interactionsGIF: InteractionsGIF,
+		interactionsSticker: InteractionsSticker,
+		interactionsClip: InteractionsClip,
+		interactionsTtGiphy: InteractionsTtGiphy,
+		interactionsTTS: InteractionsTTS,
+		interactionsMemes: InteractionsMemes,
 	},
 	gif: {
 		loadingStreamers: {

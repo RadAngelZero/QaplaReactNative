@@ -38,14 +38,14 @@ class StreamCardLive extends Component {
                         angle={95}
                         angleCenter={{ x: 0.5, y: 0.5 }}
                         colors={this.props.featured ? Colors.featuredStreamsGradients[this.props.index] : ['#141539', '#141539']}>
-                        <TouchableOpacity style={styles.streamerDetailsTouchable} onPress={() => this.props.onStreamerProfileButtonPress(idStreamer, streamerChannelLink)}>
+                        <View style={styles.streamerDetailsTouchable}>
                             <Image
                                 style={styles.streamerPhoto}
                                 source={{ uri: this.props.streamerPhoto }} />
                             <QaplaText style={styles.streamPlatformText} numberOfLines={1} ellipsizeMode='tail'>
                                 {this.props.streamerName}
                             </QaplaText>
-                        </TouchableOpacity>
+                        </View>
                     </LinearGradient>
                 </View>
             </StreamCardContainer>

@@ -10,6 +10,7 @@ import StreamCardLive from '../../components/StreamCard/StreamCardLive';
 import styles from './style';
 import images from '../../../assets/images';
 import Colors from '../../utilities/Colors';
+import { DEFAULT_404_TWITCH_PREVIEW_URL } from '../../utilities/Constants';
 
 import {
     getAllStreamersStreaming,
@@ -18,8 +19,6 @@ import {
     getStreamerPublicProfile,
     getUserFavsStreamers
 } from '../../services/database';
-import { DEFAULT_404_TWITCH_PREVIEW_URL } from '../../utilities/Constants';
-
 
 const MAXIM_CARDS_LENGTH = 6;
 

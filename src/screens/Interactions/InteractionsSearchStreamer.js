@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Text, FlatList, View, TouchableOpacity, Image, TextInput, SafeAreaView } from 'react-native';
+
 import styles from './style';
 import images from '../../../assets/images';
+
 import { getStreamersByName } from '../../services/database';
 
 const Item = ({ streamerName, streamerImg, isStreaming, streamerId, onPress }) => (

@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { View, Image, Text, ImageBackground, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { View, Image, Text, ImageBackground, TouchableOpacity, SafeAreaView } from 'react-native';
+
 import styles from './style';
 import images from '../../../assets/images';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
+import { heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
 
 class InteractionsPersonalize extends Component {
-
     render() {
+        const photoUrl = this.props.navigation.getParam('photoUrl', '');
+        const displayName = this.props.navigation.getParam('displayName', '');
+        const isStreaming = this.props.navigation.getParam('isStreaming', '');
+
         return (
-            <View style={[styles.container, { paddingHorizontal: 16 * getScreenSizeMultiplier()}]}>
+            <SafeAreaView style={[styles.container, { paddingHorizontal: 16 * getScreenSizeMultiplier()}]}>
                 <View style={{
                     display: 'flex',
                     flexDirection: 'row',
@@ -22,7 +26,8 @@ class InteractionsPersonalize extends Component {
                         justifyContent: 'center',
                         alignItems: 'center',
                         paddingTop: 4,
-                    }}>
+                    }}
+                        onPress={() => this.props.navigation.goBack()}>
                         <images.svg.leftArrowThiccIcon />
                     </TouchableOpacity>
                     <View style={{
@@ -32,7 +37,7 @@ class InteractionsPersonalize extends Component {
                         marginLeft: 16,
                     }}>
                         <Image
-                            source={{ uri: 'https://static-cdn.jtvnw.net/jtv_user_pictures/5268db62-d87e-44fb-958a-6b14d54391bd-profile_image-70x70.png' }}
+                            source={{ uri: photoUrl }}
                             style={{
                                 width: 32,
                                 height: 32,
@@ -46,14 +51,18 @@ class InteractionsPersonalize extends Component {
                             letterSpacing: 0.5,
                             lineHeight: 20,
                             marginLeft: 8,
-                        }}>{'Neenoh'}</Text>
-                        <View style={{
-                            backgroundColor: '#FF006B',
-                            width: 12,
-                            height: 12,
-                            borderRadius: 6,
-                            marginLeft: 6,
-                        }} />
+                        }}>
+                            {displayName}
+                        </Text>
+                        {isStreaming &&
+                            <View style={{
+                                backgroundColor: '#FF006B',
+                                width: 12,
+                                height: 12,
+                                borderRadius: 6,
+                                marginLeft: 6,
+                            }} />
+                        }
                     </View>
                 </View>
                 <View style={{
@@ -247,7 +256,7 @@ class InteractionsPersonalize extends Component {
                         </Text>
                     </TouchableOpacity>
                 </View>
-            </View >
+            </SafeAreaView>
         );
     }
 

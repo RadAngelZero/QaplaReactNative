@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-import { Text, FlatList, View, TouchableOpacity, Image, TextInput } from 'react-native';
+import { Text, FlatList, View, TouchableOpacity, Image, TextInput, SafeAreaView } from 'react-native';
 import styles from './style';
 import images from '../../../assets/images';
 import { getStreamersByName } from '../../services/database';
 
-const Item = ({ streamerName, streamerImg, isLive, streamerId, navigation }) => (
-    <TouchableOpacity
-        onPress={() => {
-            console.log(streamerId + ' pressed');
-            //navigation.navigate('InteractionsPersonalize', { id: streamerId, name: streamerName, img: streamerImg });
-        }}
-    >
+const Item = ({ streamerName, streamerImg, isStreaming, streamerId, onPress }) => (
+    <TouchableOpacity onPress={() => onPress(streamerId, streamerName, streamerImg, isStreaming)}>
         <View style={{
             display: 'flex',
             flexDirection: 'row',
@@ -34,7 +29,7 @@ const Item = ({ streamerName, streamerImg, isLive, streamerId, navigation }) => 
                 lineHeight: 20,
                 letterSpacing: 0.5,
             }}>{streamerName}</Text>
-            {isLive &&
+            {isStreaming &&
                 <View style={{
                     width: 12,
                     height: 12,
@@ -58,12 +53,14 @@ class InteractionsSearchStreamer extends Component {
     renderItem = ({ item }) => (
         <Item
             streamerName={item.displayName}
-            streamerImg={item.photoUrl} isLive={item.isStreaming}
+            streamerImg={item.photoUrl}
+            isStreaming={item.isStreaming}
             streamerId={item.streamerId}
-            navigation={this.props.navigation} />
+            onPress={this.onStreamerSelected} />
     );
 
     searchHandler = (e) => {
+        clearTimeout(this.searchTimeout);
         const searchQuery = e.nativeEvent.text;
         this.setState({ search: searchQuery, searchResults: [] });
         if (searchQuery !== '') {
@@ -76,13 +73,16 @@ class InteractionsSearchStreamer extends Component {
         }
     }
 
+    onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming) => {
+        this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+    }
+
     render() {
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <View style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    marginTop: 60,
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}>
@@ -140,7 +140,7 @@ class InteractionsSearchStreamer extends Component {
                     renderItem={this.renderItem}
                     keyExtractor={item => item.id}
                 />
-            </View>
+            </SafeAreaView>
         );
     }
 

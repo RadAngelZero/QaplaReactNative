@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
+import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
     container: {

@@ -102,6 +102,10 @@ export class InteractionsFeed extends Component {
         this.setState({ recentStreamers, favStreamers, dataFetched: true });
     }
 
+    onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming) => {
+        this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+    }
+
     renderLiveItem = ({ item, index }) => {
         let thumbnailUrl = DEFAULT_404_TWITCH_PREVIEW_URL;
         if (item.thumbnailUrl) {
@@ -118,7 +122,8 @@ export class InteractionsFeed extends Component {
                 streamerPhoto={item.photoUrl}
                 streamerName={item.displayName}
                 index={index}
-                featured={item.featured} />
+                featured={item.featured}
+                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, true)} />
         );
     };
 
@@ -132,7 +137,7 @@ export class InteractionsFeed extends Component {
                 backgroundUrl={item.backgroundUrl}
                 backgroundGradient={item.backgroundGradient}
                 displayName={item.displayName}
-            />
+                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, false)} />
         </View>
     );
 
@@ -145,7 +150,7 @@ export class InteractionsFeed extends Component {
             <StreamerCardMini
                 streamerPhoto={item.photoUrl}
                 streamerName={item.displayName}
-            />
+                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, false)} />
         </View>
     );
 
@@ -297,9 +302,7 @@ export class InteractionsFeed extends Component {
                             </TouchableOpacity>
                         </View>
                     </SafeAreaView>
-                    <SearchStreamerModal
-                        onPress={() => this.props.navigation.navigate('InteractionsSearchStreamer')}
-                    />
+                    <SearchStreamerModal onPress={() => this.props.navigation.navigate('InteractionsSearchStreamer')} />
                 </>
             );
         } else {

@@ -6,8 +6,17 @@ import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } fr
 
 class InteractionsPersonalize extends Component {
 
+    state = {
+        GIFCost: 100,
+        StickerCost: 100,
+        ClipsCost: 200,
+        TTSCost: 200,
+        MemeCost: 100,
+        OnlyQoins: 50,
+    }
+
     gifs = () => {
-        this.props.navigation.navigate('InteractionsSelectGIF');
+        this.props.navigation.navigate('InteractionsSelectGIF', { cost: this.state.GIFCost, type: 0, messageCost: this.state.TTSCost });
     }
 
     render() {
@@ -16,53 +25,6 @@ class InteractionsPersonalize extends Component {
                 paddingHorizontal: 16 * getScreenSizeMultiplier(),
                 paddingTop: 32 * getScreenSizeMultiplier(),
             }]}>
-                {/* <View style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    marginTop: heightPercentageToPx(2),
-                }}>
-                    <TouchableOpacity style={{
-                        backgroundColor: '#141539',
-                        width: 40,
-                        height: 40,
-                        borderRadius: 20,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        paddingTop: 4,
-                    }}>
-                        <images.svg.leftArrowThiccIcon />
-                    </TouchableOpacity>
-                    <View style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginLeft: 16,
-                    }}>
-                        <Image
-                            source={{ uri: 'https://static-cdn.jtvnw.net/jtv_user_pictures/5268db62-d87e-44fb-958a-6b14d54391bd-profile_image-70x70.png' }}
-                            style={{
-                                width: 32,
-                                height: 32,
-                                borderRadius: 16,
-                            }}
-                        />
-                        <Text style={{
-                            color: '#fff',
-                            fontSize: 18,
-                            fontWeight: '500',
-                            letterSpacing: 0.5,
-                            lineHeight: 20,
-                            marginLeft: 8,
-                        }}>{'Neenoh'}</Text>
-                        <View style={{
-                            backgroundColor: '#FF006B',
-                            width: 12,
-                            height: 12,
-                            borderRadius: 6,
-                            marginLeft: 6,
-                        }} />
-                    </View>
-                </View> */}
                 <View style={{
                     display: 'flex',
                     flexDirection: 'row',
@@ -112,7 +74,7 @@ class InteractionsPersonalize extends Component {
                             <View style={styles.personalizeButtonDisplayQoinsContainer}>
                                 <images.svg.qoin style={styles.qoin} />
                                 <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                    {'100'}
+                                    {this.state.GIFCost}
                                 </Text>
                             </View>
                         </ImageBackground>
@@ -134,7 +96,7 @@ class InteractionsPersonalize extends Component {
                             <View style={styles.personalizeButtonDisplayQoinsContainer}>
                                 <images.svg.qoin style={styles.qoin} />
                                 <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                    {'100'}
+                                    {this.state.StickerCost}
                                 </Text>
                             </View>
                         </ImageBackground>
@@ -156,7 +118,7 @@ class InteractionsPersonalize extends Component {
                             <View style={styles.personalizeButtonDisplayQoinsContainer}>
                                 <images.svg.qoin style={styles.qoin} />
                                 <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                    {'200'}
+                                    {this.state.ClipsCost}
                                 </Text>
                             </View>
                         </ImageBackground>
@@ -200,7 +162,7 @@ class InteractionsPersonalize extends Component {
                             <View style={styles.personalizeButtonDisplayQoinsContainer}>
                                 <images.svg.qoin style={styles.qoin} />
                                 <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                    {'200'}
+                                    {this.state.TTSCost}
                                 </Text>
                             </View>
                         </ImageBackground>
@@ -222,7 +184,7 @@ class InteractionsPersonalize extends Component {
                             <View style={styles.personalizeButtonDisplayQoinsContainer}>
                                 <images.svg.qoin style={styles.qoin} />
                                 <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                    {'100'}
+                                    {this.state.MemeCost}
                                 </Text>
                             </View>
                         </ImageBackground>
@@ -251,7 +213,7 @@ class InteractionsPersonalize extends Component {
                             <View style={styles.personalizeButtonDisplayQoinsContainer}>
                                 <images.svg.qoin style={styles.qoin} />
                                 <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                    {'50'}
+                                    {this.state.OnlyQoins}
                                 </Text>
                             </View>
                         </ImageBackground>

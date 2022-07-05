@@ -43,11 +43,11 @@ import InteractionsLoadHandler from './screens/Interactions/InteractionsLoadHand
 import InteractionsSearchStreamer from './screens/Interactions/InteractionsSearchStreamer';
 import InteractionsPersonalize from './screens/Interactions/InteractionsPersonalize';
 import InteractionsSelectGIF from './screens/Interactions/InteractionsSelectGIF';
-import InteractionsSelectInteraction from './screens/Interactions/InteractionsSelectInteraction';
 import PersonalizeInteractionHeader from './components/PersonalizeInteractionHeader/PersonalizeInteractionHeader';
 import InteractionsConfirmSelection from './screens/Interactions/InteractionsConfirmSelection';
 import InteractionsAddTTS from './screens/Interactions/InteractionsAddTTS';
 import InteractionsTTS from './screens/Interactions/InteractionsTTS';
+import InteractionsCheckout from './screens/Interactions/InteractionsCheckout';
 
 //#region Stack Navigators
 
@@ -130,14 +130,6 @@ const InteractionsStackNavigator = createStackNavigator({
       // animationEnabled:false,
     },
   },
-  InteractionsSelectInteraction: {
-    screen: InteractionsSelectInteraction,
-    navigationOptions: {
-      headerShown: false,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
 });
 
 const InteractionsPersonlizeStackNavigator = createStackNavigator({
@@ -175,6 +167,14 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
   },
   InteractionsTTS: {
     screen: InteractionsTTS,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsCheckout: {
+    screen: InteractionsCheckout,
     navigationOptions: {
       headerShown: true,
       gestureDirection: 'horizontal',

@@ -6,12 +6,29 @@ import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } fr
 
 class PersonalizeInteractionHeader extends Component {
 
+    state = {
+        hideBackButton: false,
+    }
+
     componentDidMount() {
         console.log('mounted');
         console.log(this.props.navigation.getScreenProps());
         console.log(this.props.navigation.router);
 
         console.log(this.props.navigation.state.routes[0].params);
+    }
+
+    componentDidUpdate() {
+        console.log('header update');
+        console.log(this.props.navigation.state.routes);
+        console.log(this.props.navigation.state.routes[this.props.navigation.state.routes.length - 1].params);
+        if (this.props.navigation.state.routes[this.props.navigation.state.routes.length - 1].params) {
+            if (this.props.navigation.state.routes[this.props.navigation.state.routes.length - 1].params.hideBackButton && !this.state.hideBackButton) {
+                this.setState({ hideBackButton: this.props.navigation.state.routes[this.props.navigation.state.routes.length - 1].params.hideBackButton });
+            }
+        } else if (this.state.hideBackButton) {
+            this.setState({ hideBackButton: false });
+        }
     }
 
     render() {
@@ -22,8 +39,9 @@ class PersonalizeInteractionHeader extends Component {
                     flexDirection: 'row',
                     marginTop: 32 * getScreenSizeMultiplier(),
                     alignItems: 'center',
+                    height: 40,
                 }}>
-                    <TouchableOpacity
+                    {!this.state.hideBackButton && <TouchableOpacity
                         style={{
                             backgroundColor: '#141539',
                             width: 40,
@@ -32,16 +50,16 @@ class PersonalizeInteractionHeader extends Component {
                             justifyContent: 'center',
                             alignItems: 'center',
                             paddingTop: 4,
+                            marginRight: 16,
                         }}
                         onPress={() => this.props.navigation.pop()}
                     >
                         <images.svg.leftArrowThiccIcon />
-                    </TouchableOpacity>
+                    </TouchableOpacity>}
                     <View style={{
                         display: 'flex',
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginLeft: 16,
                     }}>
                         <Image
                             source={{ uri: this.props.navigation.state.routes[0].params.streamerImg }}
@@ -59,13 +77,13 @@ class PersonalizeInteractionHeader extends Component {
                             lineHeight: 20,
                             marginLeft: 8,
                         }}>{this.props.navigation.state.routes[0].params.streamerName}</Text>
-                        <View style={{
+                        {this.props.navigation.state.routes[0].params.isLive && <View style={{
                             backgroundColor: '#FF006B',
                             width: 12,
                             height: 12,
                             borderRadius: 6,
                             marginLeft: 6,
-                        }} />
+                        }} />}
                     </View>
                 </View>
             </View>

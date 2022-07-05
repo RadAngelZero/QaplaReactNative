@@ -8,6 +8,23 @@ class InteractionsTTS extends Component {
 
     state = {
         message: '',
+        tooMuch: false,
+        maxCharLimit: 100,
+    }
+
+    textHandler = (e) => {
+        if ((e.nativeEvent.text.length > this.state.maxCharLimit) && !this.state.tooMuch) {
+            console.log('much');
+
+            this.setState({ tooMuch: true });
+        } else if ((e.nativeEvent.text.length <= this.state.maxCharLimit) && this.state.tooMuch) {
+            this.setState({ tooMuch: false });
+        }
+        this.setState({ message: e.nativeEvent.text });
+    }
+
+    sendButtonHandler = () => {
+        this.props.navigation.navigate('InteractionsCheckout', { message: this.state.message, hideBackButton: true});
     }
 
     render() {
@@ -107,19 +124,19 @@ class InteractionsTTS extends Component {
                             }}>
                                 <TextInput style={{
                                     flex: 1,
-                                    color: '#fff',
+                                    color: this.state.tooMuch ? '#f66' : '#fff',
                                     fontSize: 16 * getScreenSizeMultiplier(),
                                     fontWeight: '400',
                                     lineHeight: 24 * getScreenSizeMultiplier(),
                                     letterSpacing: 0,
                                 }}
-                                    onChange={(e) => this.setState({ message: e.nativeEvent.text })}
+                                    onChange={this.textHandler}
                                     value={this.state.message}
                                 />
                             </View>
                             <View style={{ width: 16 * getScreenSizeMultiplier() }} />
                             <TouchableOpacity
-                                onPress={() => console.log('send' + this.state.message)}
+                                onPress={this.sendButtonHandler}
                                 disabled={this.state.message === ''}
                                 style={{
                                     opacity: this.state.message === '' ? 0.4 : 1,
@@ -132,7 +149,6 @@ class InteractionsTTS extends Component {
                                     maxHeight: 30 * getScreenSizeMultiplier(),
                                 }} />
                             </TouchableOpacity>
-
                         </View>
                     </View>
                 </View>

@@ -116,7 +116,7 @@ class InteractionsAddTTS extends Component {
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={() => this.props.navigation.pop()}
+                            onPress={() => this.props.navigation.navigate('InteractionsCheckout')}
                             style={{
                                 backgroundColor: '#0000',
                                 width: 260 * getScreenSizeMultiplier(),

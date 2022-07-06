@@ -182,7 +182,7 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
   },
 }, {
   defaultNavigationOptions: {
-    header: null
+    header: (props) => <PersonalizeInteractionHeader {...props} />,
   }
 });
 
@@ -511,13 +511,7 @@ const RootStackNavigator = createStackNavigator({
   Auth: AuthStackNavigator,
   InteractionsStack: InteractionsStackNavigator,
   InteractionsPersonlizeStack: {
-    screen: InteractionsPersonlizeStackNavigator,
-    navigationOptions: {
-      gestureDirection: 'horizontal',
-      header: (props) => <PersonalizeInteractionHeader {...props} />,
-      headerTransparent: true,
-      ...TransitionPresets.SlideFromRightIOS,
-    },
+    screen: InteractionsPersonlizeStackNavigator
   },
 }, {
   headerMode: 'screen',

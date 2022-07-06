@@ -1,26 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, Image, SafeAreaView, TouchableOpacity } from 'react-native';
+
 import styles from './style';
 import images from '../../../assets/images';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
+import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
 
 class PersonalizeInteractionHeader extends Component {
-
     state = {
         hideBackButton: false,
-    }
-
-    componentDidMount() {
-    }
-
-    componentDidUpdate() {
-        if (this.props.navigation.state.routes[this.props.navigation.state.routes.length - 1].params) {
-            if (this.props.navigation.state.routes[this.props.navigation.state.routes.length - 1].params.hideBackButton && !this.state.hideBackButton) {
-                this.setState({ hideBackButton: this.props.navigation.state.routes[this.props.navigation.state.routes.length - 1].params.hideBackButton });
-            }
-        } else if (this.state.hideBackButton) {
-            this.setState({ hideBackButton: false });
-        }
     }
 
     render() {
@@ -29,7 +16,7 @@ class PersonalizeInteractionHeader extends Component {
                 <View style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    marginTop: 32 * getScreenSizeMultiplier(),
+                    marginTop: 32,
                     alignItems: 'center',
                     height: 40,
                 }}>
@@ -54,7 +41,7 @@ class PersonalizeInteractionHeader extends Component {
                         alignItems: 'center',
                     }}>
                         <Image
-                            source={{ uri: this.props.navigation.state.routes[0].params.photoUrl }}
+                            source={{ uri: this.props.navigation.getParam('photoUrl') }}
                             style={{
                                 width: 32,
                                 height: 32,
@@ -68,8 +55,8 @@ class PersonalizeInteractionHeader extends Component {
                             letterSpacing: 0.5,
                             lineHeight: 20,
                             marginLeft: 8,
-                        }}>{this.props.navigation.state.routes[0].params.displayName}</Text>
-                        {this.props.navigation.state.routes[0].params.isStreaming && <View style={{
+                        }}>{this.props.navigation.getParam('displayName', '')}</Text>
+                        {this.props.navigation.getParam('isStreaming', false) && <View style={{
                             backgroundColor: '#FF006B',
                             width: 12,
                             height: 12,

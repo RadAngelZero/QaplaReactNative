@@ -13,7 +13,6 @@ import { getLocaleLanguage } from '../../utilities/i18';
 class InteractionsSelectGIF extends Component {
     state = {
         searchQuery: '',
-        keyboardOpen: false,
         gifSection: 1,
         gifs: []
     };
@@ -21,18 +20,6 @@ class InteractionsSelectGIF extends Component {
 
     componentDidMount() {
         this.fetchTrendingGifs();
-        this.keyboardDidShowSubscription = Keyboard.addListener(
-            'keyboardDidShow',
-            () => {
-                this.setState({ keyboardOpen: true });
-            },
-        );
-        this.keyboardDidHideSubscription = Keyboard.addListener(
-            'keyboardDidHide',
-            () => {
-                this.setState({ keyboardOpen: false });
-            },
-        );
     }
 
     fetchTrendingGifs = async () => {
@@ -47,11 +34,6 @@ class InteractionsSelectGIF extends Component {
         this.setState({ gifs });
     }
 
-    componentWillUnmount() {
-        this.keyboardDidShowSubscription.remove();
-        this.keyboardDidHideSubscription.remove();
-    }
-
     renderImage = ({ item }) => {
         if (item.images.fixed_height_small) {
             const ratio = item.images.fixed_height_small.width / item.images.fixed_height_small.height;
@@ -59,7 +41,8 @@ class InteractionsSelectGIF extends Component {
                 <TouchableOpacity
                     onPress={() => {
                         this.props.navigation.navigate('InteractionsConfirmSelection', {
-                            selectedGif: item.images
+                            selectedMedia: item.images,
+                            ...this.props.navigation.state.params
                         });
                     }}
                     style={{
@@ -140,7 +123,7 @@ class InteractionsSelectGIF extends Component {
                 <View style={{
                     position: 'absolute',
                     backgroundColor: '#141539',
-                    height: heightPercentageToPx(this.state.keyboardOpen ? 50.6 : 85),
+                    height: heightPercentageToPx(85),
                     bottom: 0,
                     borderTopLeftRadius: 40 * getScreenSizeMultiplier(),
                     borderTopRightRadius: 40 * getScreenSizeMultiplier(),

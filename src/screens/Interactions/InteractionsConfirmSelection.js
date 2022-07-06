@@ -10,7 +10,7 @@ class InteractionsConfirmSelection extends Component {
     };
 
     render() {
-        const giphyGif = this.props.navigation.getParam('selectedGif');
+        const media = this.props.navigation.getParam('selectedMedia');
 
         return (
             <View style={styles.container}>
@@ -25,11 +25,11 @@ class InteractionsConfirmSelection extends Component {
                         animating={this.state.loadingMedia} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}/>
                     <Image
                         onLoadEnd={() => this.setState({ loadingMedia: false })}
-                        source={{ uri: giphyGif.original.url }}
+                        source={{ uri: media.original.url }}
                         style={{
                             opacity: this.state.loadingMedia ? 0 : 1,
                             flex: 1,
-                            aspectRatio: giphyGif.original.width / giphyGif.original.height,
+                            aspectRatio: media.original.width / media.original.height,
                             maxHeight: heightPercentageToPx(40),
                             maxWidth: widthPercentageToPx(80),
                         }}

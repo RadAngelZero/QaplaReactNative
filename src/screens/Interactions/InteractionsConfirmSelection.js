@@ -6,10 +6,6 @@ import ConfirmSelectionModal from '../../components/InteractionsModals/ConfirmSe
 
 class InteractionsConfirmSelection extends Component {
     componentDidMount() {
-        console.log(this.props.navigation.getParam('itemID', null));
-        console.log(this.props.navigation.getParam('itemURL', null));
-        console.log(this.props.navigation.getParam('ratio', null));
-        console.log(this.props.navigation.getParam('size', null));
 
     }
     render() {

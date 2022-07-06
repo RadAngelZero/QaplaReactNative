@@ -1,73 +1,26 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native';
+import { connect } from 'react-redux';
+
 import styles from './style';
 import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
 import images from '../../../assets/images';
 import RadMasonry from '../../components/RadMasonry/RadMasonry';
-
-const GIFsData = [
-    {
-        id: 'theWok',
-        url: 'https://c.tenor.com/IU3SbooHGWkAAAAM/wok-the-wock.gif',
-    },
-    {
-        id: 'onNoCringe',
-        url: 'https://c.tenor.com/WarZqLGgTHoAAAAC/oh-no-cringe-cringe.gif',
-    },
-    {
-        id: 'superman',
-        url: 'https://media.giphy.com/media/YsTs5ltWtEhnq/giphy.gif',
-    },
-    {
-        id: 'celebration',
-        url: 'https://media4.giphy.com/media/BWR7oherCy0EHevd4w/giphy.webp?cid=6220afc6gxwtgcea3jbdsctutceaslmn8tpcaohivtu3gkv9&rid=giphy.webp&ct=g',
-    },
-    {
-        id: 'theWok',
-        url: 'https://c.tenor.com/IU3SbooHGWkAAAAM/wok-the-wock.gif',
-    },
-    {
-        id: 'onNoCringe',
-        url: 'https://c.tenor.com/WarZqLGgTHoAAAAC/oh-no-cringe-cringe.gif',
-    },
-    {
-        id: 'superman',
-        url: 'https://media.giphy.com/media/YsTs5ltWtEhnq/giphy.gif',
-    },
-    {
-        id: 'celebration',
-        url: 'https://media4.giphy.com/media/BWR7oherCy0EHevd4w/giphy.webp?cid=6220afc6gxwtgcea3jbdsctutceaslmn8tpcaohivtu3gkv9&rid=giphy.webp&ct=g',
-    },
-    {
-        id: 'theWok',
-        url: 'https://c.tenor.com/IU3SbooHGWkAAAAM/wok-the-wock.gif',
-    },
-    {
-        id: 'onNoCringe',
-        url: 'https://c.tenor.com/WarZqLGgTHoAAAAC/oh-no-cringe-cringe.gif',
-    },
-    {
-        id: 'superman',
-        url: 'https://media.giphy.com/media/YsTs5ltWtEhnq/giphy.gif',
-    },
-    {
-        id: 'celebration',
-        url: 'https://media4.giphy.com/media/BWR7oherCy0EHevd4w/giphy.webp?cid=6220afc6gxwtgcea3jbdsctutceaslmn8tpcaohivtu3gkv9&rid=giphy.webp&ct=g',
-    },
-];
-
+import { generateGiphyUserRandomId, getGiphyTrending, searchGiphyMedia } from '../../services/Giphy';
+import { GIPHY_GIFS } from '../../utilities/Constants';
+import { getLocaleLanguage } from '../../utilities/i18';
 
 class InteractionsSelectGIF extends Component {
-
     state = {
-        imgSizes: {},
         searchQuery: '',
-        selectedID: '',
         keyboardOpen: false,
         gifSection: 1,
+        gifs: []
     };
+    searchTimeout = null;
 
     componentDidMount() {
+        this.fetchTrendingGifs();
         this.keyboardDidShowSubscription = Keyboard.addListener(
             'keyboardDidShow',
             () => {
@@ -82,89 +35,102 @@ class InteractionsSelectGIF extends Component {
         );
     }
 
+    fetchTrendingGifs = async () => {
+        let giphyRandomId = '';
+        if (!this.props.giphyId) {
+            giphyRandomId = await generateGiphyUserRandomId();
+        } else {
+            giphyRandomId = this.props.giphyId;
+        }
+
+        const gifs = await getGiphyTrending(giphyRandomId, GIPHY_GIFS, 25);
+        this.setState({ gifs });
+    }
+
     componentWillUnmount() {
         this.keyboardDidShowSubscription.remove();
         this.keyboardDidHideSubscription.remove();
     }
 
-    getImageHeight = (url, index, id) => {
-        var newSizes = this.state.imgSizes;
-        Image.getSize(url, (width, height) => {
-            if (height !== undefined) {
-                newSizes[id] = { height, width, fetching: true };
-                this.setState({
-                    ...this.state,
-                    imgSizes: newSizes,
-                });
-            } else {
-                newSizes[id] = { height: 0, width: 0, fetching: true };
-                this.setState({
-                    ...this.state,
-                    imgSizes: newSizes,
-                });
-            }
-        }, (error) => {
-            console.log(error.message);
-        });
-    }
-
-    renderImage = ({ item, i }) => {
-        if (this.state.imgSizes[item.id] === undefined) {
-            this.getImageHeight(item.url, i, item.id);
-            console.log('retry');
-            return (<></>);
+    renderImage = ({ item }) => {
+        if (item.images.fixed_height_small) {
+            const ratio = item.images.fixed_height_small.width / item.images.fixed_height_small.height;
+            return (
+                <TouchableOpacity
+                    onPress={() => {
+                        this.props.navigation.navigate('InteractionsConfirmSelection', {
+                            itemID: item.id,
+                            itemURL: item.url,
+                            size: { height: item.images.fixed_height_small.height, width: item.images.fixed_height_small.width },
+                            ratio
+                        });
+                    }}
+                    style={{
+                        borderRadius: 10 * getScreenSizeMultiplier(),
+                        marginBottom: 8 * getScreenSizeMultiplier(),
+                        marginHorizontal: 4 * getScreenSizeMultiplier(),
+                        overflow: 'hidden',
+                        backgroundColor: '#202152',
+                    }}
+                >
+                    <Image
+                        source={{ uri: item.images.fixed_height_small.url }}
+                        style={[
+                            {
+                                display: 'flex',
+                                aspectRatio: ratio,
+                                minWidth: '100%',
+                            }
+                        ]}
+                        resizeMode='cover'
+                    />
+                </TouchableOpacity>
+            );
         }
-        const ratio = this.state.imgSizes[item.id].width / this.state.imgSizes[item.id].height;
-        return (
-            <TouchableOpacity
-                onPress={() => {
-                    this.props.navigation.navigate('InteractionsConfirmSelection', {
-                        itemID: item.id,
-                        itemURL: item.url,
-                        size: { height: this.state.imgSizes[item.id].height, width: this.state.imgSizes[item.id].width },
-                        ratio,
-                    });
-                    console.log(item.id);
-                    console.log(item.url);
-                    console.log(i);
-                }}
-                style={{
-                    borderRadius: 10 * getScreenSizeMultiplier(),
-                    marginBottom: 8 * getScreenSizeMultiplier(),
-                    marginHorizontal: 4 * getScreenSizeMultiplier(),
-                    overflow: 'hidden',
-                    backgroundColor: '#202152',
-                }}
-            >
-                <Image
-                    source={{ uri: item.url }}
-                    style={[
-                        {
-                            display: 'flex',
-                            aspectRatio: ratio,
-                            minWidth: '100%',
-                        },
-                        // this.props.selectedID === item.id ? {
-                        //     borderWidth: 5,
-                        //     borderColor: '#00FFDD',
-                        // } : {},
-                    ]}
-                    resizeMode="cover"
-                />
-            </TouchableOpacity>
-        );
     };
 
     searchHandler = (e) => {
-        this.setState({ searchQuery: e.nativeEvent.text });
-        if (e.nativeEvent.text === '') {
-            console.log('No busques');
-        }
+        this.setState({ searchQuery: e.nativeEvent.text }, () => {
+            if (this.state.searchQuery !== '') {
+                this.setState({ gifs: [] }, () => {
+                    clearTimeout(this.searchTimeout);
+                    this.searchTimeout = setTimeout(async () => {
+                            let giphyRandomId = '';
+                            if (!this.props.giphyId) {
+                                giphyRandomId = await generateGiphyUserRandomId();
+                            } else {
+                                giphyRandomId = this.props.giphyId;
+                            }
+
+                            const userLang = getLocaleLanguage();
+                            const gifs = await searchGiphyMedia(giphyRandomId, this.state.searchQuery, GIPHY_GIFS, userLang, 25);
+
+                            this.setState({ gifs });
+                    }, 500);
+                });
+            }
+        });
     }
 
-    onEndReached = (e) => {
-        console.log('el fin');
-        // console.log(e);
+    fetchMoreGifs = async (e) => {
+        let giphyRandomId = '';
+        if (!this.props.giphyId) {
+            giphyRandomId = await generateGiphyUserRandomId();
+        } else {
+            giphyRandomId = this.props.giphyId;
+        }
+
+        const actualGifsCopy = [...this.state.gifs];
+        let newGifs = [];
+        if (this.state.searchQuery === '') {
+            newGifs = await getGiphyTrending(giphyRandomId, GIPHY_GIFS, 25, this.state.gifs.length);
+
+        } else {
+            const userLang = getLocaleLanguage();
+            newGifs = await searchGiphyMedia(giphyRandomId, this.state.searchQuery, GIPHY_GIFS, userLang, 25, this.state.gifs.length);
+        }
+
+        this.setState({ gifs: actualGifsCopy.concat(newGifs) });
     }
 
     render() {
@@ -216,10 +182,11 @@ class InteractionsSelectGIF extends Component {
                         paddingHorizontal: 6 * getScreenSizeMultiplier(),
                     }}>
                         <RadMasonry
-                            data={GIFsData}
+                            onEndReachedThreshold={0.25}
+                            data={this.state.gifs}
                             numColumns={2}
                             renderItem={this.renderImage}
-                            onEndReached={this.onEndReached}
+                            onEndReached={this.fetchMoreGifs}
                             containerStyle={{
                                 paddingBottom: 75 * getScreenSizeMultiplier(),
                             }}
@@ -282,7 +249,12 @@ class InteractionsSelectGIF extends Component {
             </View >
         );
     }
-
 }
 
-export default InteractionsSelectGIF;
+function mapStateToProps(state) {
+    return {
+        giphyId: state.userReducer.user.giphyId
+    };
+}
+
+export default connect(mapStateToProps)(InteractionsSelectGIF);

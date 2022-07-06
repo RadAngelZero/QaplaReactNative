@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, Text, FlatList, View, TouchableOpacity, ActivityIndicator, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 
-import SearchStreamerModal from '../../components/SearchStreamerModal/SearchStreamerModal';
+import SearchStreamerModal from '../../components/InteractionsModals/SearchStreamerModal';
 import StreamerCardSmall from '../../components/StreamerCard/StreamerCardSmall';
 import StreamerCardMini from '../../components/StreamerCard/StreamerCardMini';
 import StreamCardLive from '../../components/StreamCard/StreamCardLive';

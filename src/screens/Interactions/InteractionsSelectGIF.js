@@ -90,10 +90,10 @@ class InteractionsSelectGIF extends Component {
     };
 
     searchHandler = (e) => {
+        clearTimeout(this.searchTimeout);
         this.setState({ searchQuery: e.nativeEvent.text }, () => {
             if (this.state.searchQuery !== '') {
                 this.setState({ gifs: [] }, () => {
-                    clearTimeout(this.searchTimeout);
                     this.searchTimeout = setTimeout(async () => {
                             let giphyRandomId = '';
                             if (!this.props.giphyId) {

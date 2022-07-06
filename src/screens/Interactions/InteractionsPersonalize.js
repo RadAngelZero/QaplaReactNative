@@ -29,58 +29,6 @@ class InteractionsPersonalize extends Component {
                 <View style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    marginTop: heightPercentageToPx(2),
-                }}>
-                    <TouchableOpacity style={{
-                        backgroundColor: '#141539',
-                        width: 40,
-                        height: 40,
-                        borderRadius: 20,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        paddingTop: 4,
-                    }}
-                        onPress={() => this.props.navigation.goBack()}>
-                        <images.svg.leftArrowThiccIcon />
-                    </TouchableOpacity>
-                    <View style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginLeft: 16,
-                    }}>
-                        <Image
-                            source={{ uri: photoUrl }}
-                            style={{
-                                width: 32,
-                                height: 32,
-                                borderRadius: 16,
-                            }}
-                        />
-                        <Text style={{
-                            color: '#fff',
-                            fontSize: 18,
-                            fontWeight: '500',
-                            letterSpacing: 0.5,
-                            lineHeight: 20,
-                            marginLeft: 8,
-                        }}>
-                            {displayName}
-                        </Text>
-                        {isStreaming &&
-                            <View style={{
-                                backgroundColor: '#FF006B',
-                                width: 12,
-                                height: 12,
-                                borderRadius: 6,
-                                marginLeft: 6,
-                            }} />
-                        }
-                    </View>
-                </View>
-                <View style={{
-                    display: 'flex',
-                    flexDirection: 'row',
                     alignItems: 'center',
                 }}>
                     <Text style={{

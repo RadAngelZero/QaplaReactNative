@@ -180,6 +180,10 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
       ...TransitionPresets.SlideFromRightIOS,
     },
   },
+}, {
+  defaultNavigationOptions: {
+    header: null
+  }
 });
 
 //#endregion

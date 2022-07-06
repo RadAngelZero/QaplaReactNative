@@ -59,10 +59,7 @@ class InteractionsSelectGIF extends Component {
                 <TouchableOpacity
                     onPress={() => {
                         this.props.navigation.navigate('InteractionsConfirmSelection', {
-                            itemID: item.id,
-                            itemURL: item.url,
-                            size: { height: item.images.fixed_height_small.height, width: item.images.fixed_height_small.width },
-                            ratio
+                            selectedGif: item.images
                         });
                     }}
                     style={{

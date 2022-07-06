@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, Text } from 'react-native';
 import { createAppContainer, createSwitchNavigator, NavigationActions } from 'react-navigation';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator, createBottomTabNavigator } from 'react-navigation-tabs';
@@ -41,7 +41,12 @@ import InteractionsFeed from './screens/Interactions/InteractionsFeed';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT } from './utilities/Constants';
 import InteractionsSearchStreamer from './screens/Interactions/InteractionsSearchStreamer';
 import InteractionsPersonalize from './screens/Interactions/InteractionsPersonalize';
-import InteractionsSelectInteraction from './screens/Interactions/InteractionsSelectInteraction';
+import InteractionsSelectGIF from './screens/Interactions/InteractionsSelectGIF';
+import PersonalizeInteractionHeader from './components/PersonalizeInteractionHeader/PersonalizeInteractionHeader';
+import InteractionsConfirmSelection from './screens/Interactions/InteractionsConfirmSelection';
+import InteractionsAddTTS from './screens/Interactions/InteractionsAddTTS';
+import InteractionsTTS from './screens/Interactions/InteractionsTTS';
+import InteractionsCheckout from './screens/Interactions/InteractionsCheckout';
 
 //#region Stack Navigators
 
@@ -124,18 +129,53 @@ const InteractionsStackNavigator = createStackNavigator({
       // animationEnabled:false,
     },
   },
-  InteractionsSelectInteraction: {
-    screen: InteractionsSelectInteraction,
+});
+
+const InteractionsPersonlizeStackNavigator = createStackNavigator({
+  InteractionsPersonalize: {
+    screen: InteractionsPersonalize,
     navigationOptions: {
-      headerShown: false,
+      headerShown: true,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     },
   },
-  InteractionsPersonalize: {
-    screen: InteractionsPersonalize,
+  InteractionsSelectGIF: {
+    screen: InteractionsSelectGIF,
     navigationOptions: {
-      headerShown: false,
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsConfirmSelection: {
+    screen: InteractionsConfirmSelection,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsAddTTS: {
+    screen: InteractionsAddTTS,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsTTS: {
+    screen: InteractionsTTS,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsCheckout: {
+    screen: InteractionsCheckout,
+    navigationOptions: {
+      headerShown: true,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     },
@@ -454,7 +494,7 @@ const RootStackNavigator = createStackNavigator({
   Activity: {
     screen: ActivityScreen,
     navigationOptions: {
-      headerShown: false
+      headerShown: false,
     }
   },
   StreamerProfile: {
@@ -466,11 +506,20 @@ const RootStackNavigator = createStackNavigator({
   SettingsMenu: SettingsMenuStackNavigator,
   Auth: AuthStackNavigator,
   InteractionsStack: InteractionsStackNavigator,
+  InteractionsPersonlizeStack: {
+    screen: InteractionsPersonlizeStackNavigator,
+    navigationOptions: {
+      gestureDirection: 'horizontal',
+      header: (props) => <PersonalizeInteractionHeader {...props} />,
+      headerTransparent: true,
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
 }, {
   headerMode: 'screen',
   defaultNavigationOptions: {
     header: null,
-    headerVisible: false
+    headerVisible: false,
   }
 });
 

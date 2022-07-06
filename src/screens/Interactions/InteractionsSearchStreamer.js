@@ -117,7 +117,7 @@ class InteractionsSearchStreamer extends Component {
                         <View style={{ opacity: 0.4 }}>
                             <images.svg.searchStreamerIcon />
                         </View>
-                        <View style={{ width: 12 }} />
+                        <View style={{ width: 10 }} />
                         <TextInput
                             style={{
                                 backgroundColor: '#f0f0',

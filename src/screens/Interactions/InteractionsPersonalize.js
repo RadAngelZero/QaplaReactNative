@@ -6,6 +6,19 @@ import images from '../../../assets/images';
 import { heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
 
 class InteractionsPersonalize extends Component {
+    state = {
+        GIFCost: 100,
+        StickerCost: 100,
+        ClipsCost: 200,
+        TTSCost: 200,
+        MemeCost: 100,
+        OnlyQoins: 50,
+    }
+
+    gifs = () => {
+        this.props.navigation.navigate('InteractionsSelectGIF', { cost: this.state.GIFCost, type: 0, messageCost: this.state.TTSCost });
+    }
+
     render() {
         const photoUrl = this.props.navigation.getParam('photoUrl', '');
         const displayName = this.props.navigation.getParam('displayName', '');
@@ -69,7 +82,6 @@ class InteractionsPersonalize extends Component {
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
-                    marginTop: 16,
                 }}>
                     <Text style={{
                         color: '#fff',
@@ -99,7 +111,7 @@ class InteractionsPersonalize extends Component {
                     marginTop: 8,
                 }}>
                     <TouchableOpacity
-                        onPress={() => console.log('a')}
+                        onPress={this.gifs}
                         style={styles.personalizeButtonContainer}
                     >
                         <ImageBackground
@@ -113,9 +125,9 @@ class InteractionsPersonalize extends Component {
                                 GIFs
                             </Text>
                             <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                <images.svg.qoin />
+                                <images.svg.qoin style={styles.qoin} />
                                 <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                    {'100'}
+                                    {this.state.GIFCost}
                                 </Text>
                             </View>
                         </ImageBackground>
@@ -125,7 +137,7 @@ class InteractionsPersonalize extends Component {
                         style={styles.personalizeButtonContainer}
                     >
                         <ImageBackground
-                            source={images.png.InteractionGradient2.img}
+                            source={images.png.InteractionGradient4.img}
                             style={styles.personalizeButtonBackgroundImage}
                         >
                             <View style={styles.personalizeButtonIconContainer}>
@@ -135,9 +147,9 @@ class InteractionsPersonalize extends Component {
                                 Sticker
                             </Text>
                             <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                <images.svg.qoin />
+                                <images.svg.qoin style={styles.qoin} />
                                 <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                    {'100'}
+                                    {this.state.StickerCost}
                                 </Text>
                             </View>
                         </ImageBackground>
@@ -147,7 +159,7 @@ class InteractionsPersonalize extends Component {
                         style={styles.personalizeButtonContainer}
                     >
                         <ImageBackground
-                            source={images.png.InteractionGradient3.img}
+                            source={images.png.InteractionGradient2.img}
                             style={styles.personalizeButtonBackgroundImage}
                         >
                             <View style={styles.personalizeButtonIconContainer}>
@@ -157,19 +169,19 @@ class InteractionsPersonalize extends Component {
                                 Clips
                             </Text>
                             <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                <images.svg.qoin />
+                                <images.svg.qoin style={styles.qoin} />
                                 <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                    {'200'}
+                                    {this.state.ClipsCost}
                                 </Text>
                             </View>
                         </ImageBackground>
                     </TouchableOpacity>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         onPress={() => console.log('d')}
                         style={styles.personalizeButtonContainer}
                     >
                         <ImageBackground
-                            source={images.png.InteractionGradient4.img}
+                            source={images.png.InteractionGradient5.img}
                             style={styles.personalizeButtonBackgroundImage}
                         >
                             <View style={styles.personalizeButtonIconContainer}>
@@ -179,31 +191,31 @@ class InteractionsPersonalize extends Component {
                                 Texto Giphy
                             </Text>
                             <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                <images.svg.qoin />
+                                <images.svg.qoin style={styles.qoin} />
                                 <Text style={styles.personalizeButtonDisplayQoinsText}>
                                     {'50'}
                                 </Text>
                             </View>
                         </ImageBackground>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <TouchableOpacity
                         onPress={() => console.log('e')}
                         style={styles.personalizeButtonContainer}
                     >
                         <ImageBackground
-                            source={images.png.InteractionGradient5.img}
+                            source={images.png.InteractionGradient3.img}
                             style={styles.personalizeButtonBackgroundImage}
                         >
                             <View style={styles.personalizeButtonIconContainer}>
                                 <images.svg.interactionsTTS />
                             </View>
                             <Text style={styles.personalizeButtonIconText} >
-                                TTS
+                                Text-to-Speech
                             </Text>
                             <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                <images.svg.qoin />
+                                <images.svg.qoin style={styles.qoin} />
                                 <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                    {'200'}
+                                    {this.state.TTSCost}
                                 </Text>
                             </View>
                         </ImageBackground>
@@ -223,9 +235,38 @@ class InteractionsPersonalize extends Component {
                                 Memes
                             </Text>
                             <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                <images.svg.qoin />
+                                <images.svg.qoin style={styles.qoin} />
                                 <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                    {'100'}
+                                    {this.state.MemeCost}
+                                </Text>
+                            </View>
+                        </ImageBackground>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => console.log('d')}
+                        style={styles.personalizeButtonContainer}
+                    >
+                        <ImageBackground
+                            source={images.png.InteractionGradient5.img}
+                            style={styles.personalizeButtonBackgroundImage}
+                        >
+                            {/* <View style={styles.personalizeButtonIconContainer}>
+                                <images.svg.interactionsTtGiphy />
+                            </View> */}
+                            <Text style={[styles.personalizeButtonIconText,
+                            {
+                                maxWidth: 110 * getScreenSizeMultiplier(),
+                                height: 75 * getScreenSizeMultiplier(),
+                                marginTop: 0,
+                                textAlignVertical: 'center',
+                            }]} >
+                                Enviar sólo
+                                Qoins, desde:
+                            </Text>
+                            <View style={styles.personalizeButtonDisplayQoinsContainer}>
+                                <images.svg.qoin style={styles.qoin} />
+                                <Text style={styles.personalizeButtonDisplayQoinsText}>
+                                    {this.state.OnlyQoins}
                                 </Text>
                             </View>
                         </ImageBackground>

@@ -4,7 +4,7 @@ import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0D1021'
+        backgroundColor: '#0D1021',
     },
     personalizeButtonContainer: {
         marginTop: 18 * getScreenSizeMultiplier(),
@@ -19,7 +19,7 @@ export default styles = StyleSheet.create({
     },
     personalizeButtonIconContainer: {
         display: 'flex',
-        transform: [{ scale: getScreenSizeMultiplier() }]
+        transform: [{ scale: getScreenSizeMultiplier() }],
     },
     personalizeButtonIconText: {
         color: '#fff',
@@ -27,6 +27,10 @@ export default styles = StyleSheet.create({
         fontWeight: '600',
         lineHeight: 21 * getScreenSizeMultiplier(),
         marginTop: 4 * getScreenSizeMultiplier(),
+    },
+    qoin: {
+        maxWidth: 25 * getScreenSizeMultiplier(),
+        maxHeight: 25 * getScreenSizeMultiplier(),
     },
     personalizeButtonDisplayQoinsContainer: {
         display: 'flex',
@@ -51,5 +55,5 @@ export default styles = StyleSheet.create({
         lineHeight: 21 * getScreenSizeMultiplier(),
         letterSpacing: -0.3199999928474426 * getScreenSizeMultiplier(),
         marginLeft: 8 * getScreenSizeMultiplier(),
-    }
+    },
 });

@@ -36,8 +36,6 @@ class InteractionsCheckout extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.navigation);
-        console.log(this.props.navigation.dangerouslyGetParent().state.routes);
         var arr = this.props.navigation.dangerouslyGetParent().state.routes;
         arr.map(e => {
             console.log(e);

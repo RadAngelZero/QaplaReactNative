@@ -108,6 +108,10 @@ class InteractionsSelectGIF extends Component {
                             this.setState({ gifs });
                     }, 500);
                 });
+            } else {
+                this.setState({ gifs: [] }, () => {
+                    this.fetchTrendingGifs();
+                });
             }
         });
     }

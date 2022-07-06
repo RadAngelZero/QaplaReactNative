@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, SafeAreaView, TouchableOpacity } from 'react-native';
 import styles from './style';
 import images from '../../../assets/images';
 import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
@@ -11,17 +11,9 @@ class PersonalizeInteractionHeader extends Component {
     }
 
     componentDidMount() {
-        console.log('mounted');
-        console.log(this.props.navigation.getScreenProps());
-        console.log(this.props.navigation.router);
-
-        console.log(this.props.navigation.state.routes[0].params);
     }
 
     componentDidUpdate() {
-        console.log('header update');
-        console.log(this.props.navigation.state.routes);
-        console.log(this.props.navigation.state.routes[this.props.navigation.state.routes.length - 1].params);
         if (this.props.navigation.state.routes[this.props.navigation.state.routes.length - 1].params) {
             if (this.props.navigation.state.routes[this.props.navigation.state.routes.length - 1].params.hideBackButton && !this.state.hideBackButton) {
                 this.setState({ hideBackButton: this.props.navigation.state.routes[this.props.navigation.state.routes.length - 1].params.hideBackButton });
@@ -33,7 +25,7 @@ class PersonalizeInteractionHeader extends Component {
 
     render() {
         return (
-            <View style={[styles.container, { paddingHorizontal: 16 * getScreenSizeMultiplier() }]}>
+            <SafeAreaView style={[styles.container, { paddingHorizontal: 16 * getScreenSizeMultiplier() }]}>
                 <View style={{
                     display: 'flex',
                     flexDirection: 'row',
@@ -62,7 +54,7 @@ class PersonalizeInteractionHeader extends Component {
                         alignItems: 'center',
                     }}>
                         <Image
-                            source={{ uri: this.props.navigation.state.routes[0].params.streamerImg }}
+                            source={{ uri: this.props.navigation.state.routes[0].params.photoUrl }}
                             style={{
                                 width: 32,
                                 height: 32,
@@ -76,8 +68,8 @@ class PersonalizeInteractionHeader extends Component {
                             letterSpacing: 0.5,
                             lineHeight: 20,
                             marginLeft: 8,
-                        }}>{this.props.navigation.state.routes[0].params.streamerName}</Text>
-                        {this.props.navigation.state.routes[0].params.isLive && <View style={{
+                        }}>{this.props.navigation.state.routes[0].params.displayName}</Text>
+                        {this.props.navigation.state.routes[0].params.isStreaming && <View style={{
                             backgroundColor: '#FF006B',
                             width: 12,
                             height: 12,
@@ -86,7 +78,7 @@ class PersonalizeInteractionHeader extends Component {
                         }} />}
                     </View>
                 </View>
-            </View>
+            </SafeAreaView>
         )
     }
 

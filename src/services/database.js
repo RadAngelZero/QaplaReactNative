@@ -1719,14 +1719,14 @@ export async function getUserFavsStreamers(uid, limit = 5) {
  * Qapla Interactions
  */
 
-export async function getGifsLibrary() {
-    return await gifsInteractionsRef.once('value');
-}
-
 export async function getEmotesLibrary() {
     return await emotesInteractionsRef.once('value');
 }
 
-export async function getMemesLibrary() {
-    return await memesInteractionsRef.once('value');
+/**
+ * Return the specified number of memes from the Qapla library
+ * @param {number} limit Limit of memes to return
+ */
+export async function getMemesLibrary(limit) {
+    return await memesInteractionsRef.limitToLast(limit).once('value');
 }

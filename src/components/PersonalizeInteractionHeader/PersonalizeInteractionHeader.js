@@ -3,7 +3,7 @@ import { View, Text, Image, SafeAreaView, TouchableOpacity } from 'react-native'
 
 import styles from './style';
 import images from '../../../assets/images';
-import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
+import { getScreenSizeMultiplier, widthPercentageToPx } from '../../utilities/iosAndroidDim'
 
 class PersonalizeInteractionHeader extends Component {
     state = {
@@ -49,13 +49,17 @@ class PersonalizeInteractionHeader extends Component {
                             }}
                         />
                         <Text style={{
-                            color: '#fff',
-                            fontSize: 18,
-                            fontWeight: '500',
-                            letterSpacing: 0.5,
-                            lineHeight: 20,
-                            marginLeft: 8,
-                        }}>{this.props.navigation.getParam('displayName', '')}</Text>
+                                color: '#fff',
+                                fontSize: 18,
+                                fontWeight: '500',
+                                letterSpacing: 0.5,
+                                lineHeight: 20,
+                                marginLeft: 8,
+                                maxWidth: widthPercentageToPx(30),
+                            }}
+                            numberOfLines={1} >
+                            {this.props.navigation.getParam('displayName', '')}
+                        </Text>
                         {this.props.navigation.getParam('isStreaming', false) && <View style={{
                             backgroundColor: '#FF006B',
                             width: 12,

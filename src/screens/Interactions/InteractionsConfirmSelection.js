@@ -11,6 +11,7 @@ class InteractionsConfirmSelection extends Component {
 
     render() {
         const media = this.props.navigation.getParam('selectedMedia');
+        const mediaType = this.props.navigation.getParam('mediaType');
 
         return (
             <View style={styles.container}>
@@ -35,7 +36,8 @@ class InteractionsConfirmSelection extends Component {
                         }}
                         resizeMode='contain' />
                 </View>
-                <ConfirmSelectionModal navigation={this.props.navigation} />
+                <ConfirmSelectionModal mediaType={mediaType}
+                    navigation={this.props.navigation} />
             </View>
         );
     }

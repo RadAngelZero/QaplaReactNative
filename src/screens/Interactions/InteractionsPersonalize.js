@@ -4,7 +4,7 @@ import { View, Text, ImageBackground, TouchableOpacity, SafeAreaView } from 'rea
 import styles from './style';
 import images from '../../../assets/images';
 import { getScreenSizeMultiplier, heightPercentageToPx } from '../../utilities/iosAndroidDim'
-import { GIPHY_CLIPS, GIPHY_GIFS, GIPHY_STICKERS } from '../../utilities/Constants';
+import { GIPHY_CLIPS, GIPHY_GIFS, GIPHY_STICKERS, MEME } from '../../utilities/Constants';
 
 class InteractionsPersonalize extends Component {
     state = {
@@ -17,13 +17,17 @@ class InteractionsPersonalize extends Component {
     }
 
     navigateToSelectedMedia = (mediaType) => {
-        this.props.navigation.navigate('InteractionsGiphyMediaSelector', {
-            mediaType,
-            cost: this.state.GIFCost,
-            type: 0,
-            messageCost: this.state.TTSCost,
-            ...this.props.navigation.state.params
-        });
+        if (mediaType === MEME) {
+            this.props.navigation.navigate('InteractionsMemeSelector');
+        } else {
+            this.props.navigation.navigate('InteractionsGiphyMediaSelector', {
+                mediaType,
+                cost: this.state.GIFCost,
+                type: 0,
+                messageCost: this.state.TTSCost,
+                ...this.props.navigation.state.params
+            });
+        }
     }
 
     render() {
@@ -183,7 +187,7 @@ class InteractionsPersonalize extends Component {
                                 </ImageBackground>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={() => console.log('f')}
+                                onPress={() => this.navigateToSelectedMedia(MEME)}
                                 style={styles.personalizeButtonContainer}
                             >
                                 <ImageBackground

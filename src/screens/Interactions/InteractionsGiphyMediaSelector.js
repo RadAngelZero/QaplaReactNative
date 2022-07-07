@@ -89,11 +89,13 @@ class InteractionsGiphyMediaSelector extends Component {
     renderImage = ({ item }) => {
         if (item.images.fixed_height_small) {
             const ratio = item.images.fixed_height_small.width / item.images.fixed_height_small.height;
+            const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
             return (
                 <TouchableOpacity
                     onPress={() => {
                         this.props.navigation.navigate('InteractionsConfirmSelection', {
                             selectedMedia: item.images,
+                            mediaType,
                             ...this.props.navigation.state.params
                         });
                     }}

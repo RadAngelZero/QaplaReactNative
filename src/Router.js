@@ -47,6 +47,7 @@ import InteractionsConfirmSelection from './screens/Interactions/InteractionsCon
 import InteractionsAddTTS from './screens/Interactions/InteractionsAddTTS';
 import InteractionsTTS from './screens/Interactions/InteractionsTTS';
 import InteractionsCheckout from './screens/Interactions/InteractionsCheckout';
+import InteractionsMemeSelector from './screens/Interactions/InteractionsMemeSelector';
 
 //#region Stack Navigators
 
@@ -142,6 +143,14 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
   },
   InteractionsGiphyMediaSelector: {
     screen: InteractionsGiphyMediaSelector,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsMemeSelector: {
+    screen: InteractionsMemeSelector,
     navigationOptions: {
       headerShown: true,
       gestureDirection: 'horizontal',

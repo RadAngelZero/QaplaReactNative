@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
+
 import images from '../../../assets/images';
-import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
+import { MAX_CHAR_FOR_TTS } from './../../utilities/Constants';
 import styles from './style';
 
 class InteractionsTTS extends Component {
-
     state = {
         message: '',
-        tooMuch: false,
-        maxCharLimit: 100,
+        tooMuch: false
     }
 
     textHandler = (e) => {
-        if ((e.nativeEvent.text.length > this.state.maxCharLimit) && !this.state.tooMuch) {
-            console.log('much');
-
+        if ((e.nativeEvent.text.length > MAX_CHAR_FOR_TTS)) {
             this.setState({ tooMuch: true });
-        } else if ((e.nativeEvent.text.length <= this.state.maxCharLimit) && this.state.tooMuch) {
+        } else {
             this.setState({ tooMuch: false });
+            this.setState({ message: e.nativeEvent.text });
         }
-        this.setState({ message: e.nativeEvent.text });
     }
 
     sendButtonHandler = () => {

@@ -18,28 +18,23 @@ class InteractionsPersonalize extends Component {
 
     navigateToSelectedMedia = (mediaType) => {
         if (mediaType === MEME) {
-            this.props.navigation.navigate('InteractionsMemeSelector');
+            this.props.navigation.navigate('InteractionsMemeSelector', {
+                mediaType,
+                ...this.props.navigation.state.params
+            });
         } else {
             this.props.navigation.navigate('InteractionsGiphyMediaSelector', {
                 mediaType,
-                cost: this.state.GIFCost,
-                type: 0,
-                messageCost: this.state.TTSCost,
                 ...this.props.navigation.state.params
             });
         }
     }
 
     render() {
-        const photoUrl = this.props.navigation.getParam('photoUrl', '');
-        const displayName = this.props.navigation.getParam('displayName', '');
-        const isStreaming = this.props.navigation.getParam('isStreaming', '');
-
         return (
             <SafeAreaView style={[styles.container, { paddingHorizontal: 16 * getScreenSizeMultiplier()}]}>
                 <View style={{
                     flex: 1,
-
                     maxHeight: heightPercentageToPx(90),
                     justifyContent: 'space-between'
                 }}>

@@ -55,7 +55,7 @@ class ConfirmSelectionModal extends Component {
                 }}>
 
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('InteractionsAddTTS')}
+                        onPress={this.props.onConfirmSelection}
                         style={{
                             backgroundColor: '#00FFDD',
                             width: 260 * getScreenSizeMultiplier(),
@@ -77,7 +77,7 @@ class ConfirmSelectionModal extends Component {
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.pop()}
+                        onPress={this.props.onCancel}
                         style={{
                             backgroundColor: '#0000',
                             width: 260 * getScreenSizeMultiplier(),

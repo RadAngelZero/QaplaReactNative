@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Image, Text, View } from 'react-native';
+import { ActivityIndicator, Image, View } from 'react-native';
 import styles from './style';
 import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import ConfirmSelectionModal from '../../components/InteractionsModals/ConfirmSelectionModal';
@@ -8,6 +8,16 @@ class InteractionsConfirmSelection extends Component {
     state = {
         loadingMedia: true
     };
+
+    onConfirmSelection = async () => {
+        this.props.navigation.navigate('InteractionsAddTTS', {
+            ...this.props.navigation.state.params
+        });
+    }
+
+    onCancel = () => {
+        this.props.navigation.goBack();
+    }
 
     render() {
         const media = this.props.navigation.getParam('selectedMedia');
@@ -37,7 +47,8 @@ class InteractionsConfirmSelection extends Component {
                         resizeMode='contain' />
                 </View>
                 <ConfirmSelectionModal mediaType={mediaType}
-                    navigation={this.props.navigation} />
+                    onConfirmSelection={this.onConfirmSelection}
+                    onCancel={this.onCancel} />
             </View>
         );
     }

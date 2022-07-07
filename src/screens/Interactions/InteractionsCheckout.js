@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Image, ScrollView, Text, View } from 'react-native';
+import { connect } from 'react-redux';
 
 import styles from './style';
 import { getScreenSizeMultiplier, heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
+import { sendCheers } from '../../services/database';
 
 class InteractionsCheckout extends Component {
 
@@ -26,6 +28,7 @@ class InteractionsCheckout extends Component {
         },
         tipIncrement: 50,
         userQoins: 50,
+        totalCost: 0
     }
 
     addTip = () => {
@@ -47,7 +50,24 @@ class InteractionsCheckout extends Component {
     }
 
     onSendInteraction = async () => {
-        console.log('Send interaction');
+        const streamerName = this.props.navigation.getParam('displayName');
+        const streamerId = this.props.navigation.getParam('streamerId');
+        const media = {
+            url: this.state.selectedMedia.original.url,
+            type: this.state.mediaType
+        };
+
+        /* sendCheers(
+            this.state.totalCost,
+            message,
+            (new Date()).getTime(),
+            streamerName,
+            this.props.uid,
+            this.props.userName,
+            this.props.twitchUserName,
+            this.props.photoUrl,
+            streamerId
+        ); */
     }
 
     onCancel = () => {
@@ -55,8 +75,6 @@ class InteractionsCheckout extends Component {
     }
 
     render() {
-        console.log(this.state.selectedMedia.original.url);
-        console.log(this.state.selectedMedia.original.width / this.state.selectedMedia.original.height);
         return (
             <View style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false} style={{
@@ -208,4 +226,13 @@ class InteractionsCheckout extends Component {
     }
 }
 
-export default InteractionsCheckout;
+function mapStateToProps(state) {
+    return {
+        uid: state.userReducer.user.id,
+        userName: state.userReducer.user.userName,
+        twitchUserName: state.userReducer.user.twitchUserName,
+        photoUrl: state.userReducer.user.photoUrl
+    };
+}
+
+export default connect(mapStateToProps)(InteractionsCheckout);

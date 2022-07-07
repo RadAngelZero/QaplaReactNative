@@ -1359,9 +1359,9 @@ export async function getAllStreamers() {
 /**
  * Store cheers on the database at StreamersDonations node
  * @param {number} amountQoins Amount of donated Qoins
- * @param {object} media Object for cheers with specified media
+ * @param {object | null} media Object for cheers with specified media
  * @param {string} media.type Type of media (one of "GIF", "EMOTE" or "MEME")
- * @param {string} media.source Url of the media
+ * @param {string} media.url Url of the media
  * @param {string} message Message from the user
  * @param {number} timeStamp Timestamp of the moment when the donation is sent
  * @param {string} streamerName Name of the streamer
@@ -1371,9 +1371,10 @@ export async function getAllStreamers() {
  * @param {string} userPhotoURL URL of the user profile photo
  * @param {string} streamerID Streamer uid
  */
-export async function sendCheers(amountQoins, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID) {
+export async function sendCheers(amountQoins, media, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID) {
     const donationRef = streamersDonationsRef.child(streamerID).push({
         amountQoins,
+        media,
         message,
         timestamp,
         uid,

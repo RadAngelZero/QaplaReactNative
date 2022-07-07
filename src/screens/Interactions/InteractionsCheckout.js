@@ -67,14 +67,14 @@ class InteractionsCheckout extends Component {
                     <View>
                             <View style={{
                                 borderRadius: 10,
-                                maxHeight: heightPercentageToPx(20),
-                                maxWidth: '60%',
                                 overflow: 'hidden',
                                 justifyContent: 'center',
                             }}>
                             <Image source={this.state.selectedMedia.original.url ? { uri: this.state.selectedMedia.original.url } : null}
                                 resizeMode='contain'
                                 style={{
+                                    maxHeight: heightPercentageToPx(20),
+                                    maxWidth: '60%',
                                     aspectRatio: (this.state.selectedMedia.original.width / this.state.selectedMedia.original.height) || 0,
                                 }} />
                             </View>

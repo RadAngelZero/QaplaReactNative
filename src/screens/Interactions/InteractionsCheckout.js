@@ -1,10 +1,9 @@
-import React, { Component } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
-import MaskedView from '@react-native-community/masked-view';
+import React, { Component } from 'react';
+import { Image, ScrollView, Text, View } from 'react-native';
+
 import styles from './style';
 import { getScreenSizeMultiplier, heightPercentageToPx } from '../../utilities/iosAndroidDim';
-import LinearGradient from 'react-native-linear-gradient';
-import SendInteractionModal from "../../components/InteractionsModals/SendInteractionModal";
+import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
 
 class InteractionsCheckout extends Component {
 
@@ -17,6 +16,14 @@ class InteractionsCheckout extends Component {
         message: '',
         messageCost: 0,
         extraTip: 0,
+        mediaType: '',
+        selectedMedia: {
+            original: {
+                url: '',
+                width: 0,
+                height: 0
+            }
+        },
         tipIncrement: 50,
         userQoins: 50,
     }
@@ -36,33 +43,28 @@ class InteractionsCheckout extends Component {
     }
 
     componentDidMount() {
-        var arr = this.props.navigation.dangerouslyGetParent().state.routes;
-        arr.map(e => {
-            console.log(e);
-            if (e.params) {
-                if (e.params.cost) {
-                    this.setState({ itemCost: e.params.cost, type: e.params.type, messageCost: e.params.messageCost });
-                }
-                if (e.params.itemID) {
-                    this.setState({ itemID: e.params.itemID, itemURL: e.params.itemURL, itemSize: e.params.size, itemRatio: e.params.ratio });
-                }
-                if (e.params.message) {
-                    this.setState({ message: e.params.message });
-                }
-            }
-        });
+        this.setState({ ...this.props.navigation.state.params });
+    }
+
+    onSendInteraction = async () => {
+        console.log('Send interaction');
+    }
+
+    onCancel = () => {
+        this.props.navigation.goBack();
     }
 
     render() {
+        console.log(this.state.selectedMedia.original.url);
+        console.log(this.state.selectedMedia.original.width / this.state.selectedMedia.original.height);
         return (
             <View style={styles.container}>
-                <ScrollView style={{
+                <ScrollView showsVerticalScrollIndicator={false} style={{
                     flex: 1,
                     marginTop: 32 * getScreenSizeMultiplier(),
                     paddingHorizontal: 16 * getScreenSizeMultiplier(),
                 }}>
                     <View>
-                        {this.state.itemID !== '' &&
                             <View style={{
                                 borderRadius: 10,
                                 maxHeight: heightPercentageToPx(20),
@@ -70,12 +72,12 @@ class InteractionsCheckout extends Component {
                                 overflow: 'hidden',
                                 justifyContent: 'center',
                             }}>
-                                <Image source={{ uri: this.state.itemURL }}
-                                    resizeMode={'contain'}
-                                    style={{
-                                        aspectRatio: this.state.itemRatio,
-                                    }} />
-                            </View>}
+                            <Image source={this.state.selectedMedia.original.url ? { uri: this.state.selectedMedia.original.url } : null}
+                                resizeMode='contain'
+                                style={{
+                                    aspectRatio: (this.state.selectedMedia.original.width / this.state.selectedMedia.original.height) || 0,
+                                }} />
+                            </View>
                         {this.state.message !== '' &&
                             <View style={{
                                 backgroundColor: '#3B4BF9',
@@ -198,6 +200,8 @@ class InteractionsCheckout extends Component {
                     extraTip={this.state.extraTip}
                     addTip={this.addTip}
                     subTip={this.subTip}
+                    onSendInteraction={this.onSendInteraction}
+                    onCancel={this.onCancel}
                 />
             </View >
         );

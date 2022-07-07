@@ -24,7 +24,11 @@ class InteractionsTTS extends Component {
     }
 
     sendButtonHandler = () => {
-        this.props.navigation.navigate('InteractionsCheckout', { message: this.state.message, hideBackButton: true});
+        this.props.navigation.navigate('InteractionsCheckout', {
+            message: this.state.message,
+            ...this.props.navigation.state.params,
+            hideBackButton: true
+        });
     }
 
     render() {

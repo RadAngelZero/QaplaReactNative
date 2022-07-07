@@ -6,10 +6,6 @@ import images from '../../../assets/images';
 import { getScreenSizeMultiplier, widthPercentageToPx } from '../../utilities/iosAndroidDim'
 
 class PersonalizeInteractionHeader extends Component {
-    state = {
-        hideBackButton: false,
-    }
-
     render() {
         return (
             <SafeAreaView style={[styles.container, { paddingHorizontal: 16 * getScreenSizeMultiplier() }]}>
@@ -20,7 +16,7 @@ class PersonalizeInteractionHeader extends Component {
                     alignItems: 'center',
                     height: 40,
                 }}>
-                    {!this.state.hideBackButton && <TouchableOpacity
+                    {!this.props.navigation.getParam('hideBackButton', false) && <TouchableOpacity
                         style={{
                             backgroundColor: '#141539',
                             width: 40,

@@ -5,6 +5,13 @@ import styles from './style';
 import images from '../../../assets/images';
 
 class InteractionsAddTTS extends Component {
+    sendTTS = () => {
+        this.props.navigation.navigate('InteractionsTTS', { ...this.props.navigation.state.params });
+    }
+
+    sendOnlyMedia = () => {
+        this.props.navigation.navigate('InteractionsCheckout', { ...this.props.navigation.state.params });
+    }
 
     render() {
         return (
@@ -32,7 +39,7 @@ class InteractionsAddTTS extends Component {
                         alignItems: 'flex-start',
                     }}>
                         <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('InteractionsTTS')}
+                            onPress={this.sendTTS}
                             style={styles.personalizeButtonContainer}
                         >
                             <ImageBackground
@@ -94,7 +101,7 @@ class InteractionsAddTTS extends Component {
                     }}>
 
                         <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('InteractionsTTS')}
+                            onPress={this.sendTTS}
                             style={{
                                 backgroundColor: '#3B4BF9',
                                 width: 260 * getScreenSizeMultiplier(),
@@ -116,7 +123,7 @@ class InteractionsAddTTS extends Component {
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('InteractionsCheckout')}
+                            onPress={this.sendOnlyMedia}
                             style={{
                                 backgroundColor: '#0000',
                                 width: 260 * getScreenSizeMultiplier(),

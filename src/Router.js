@@ -48,6 +48,7 @@ import InteractionsConfirmSelection from './screens/Interactions/InteractionsCon
 import InteractionsAddTTS from './screens/Interactions/InteractionsAddTTS';
 import InteractionsTTS from './screens/Interactions/InteractionsTTS';
 import InteractionsCheckout from './screens/Interactions/InteractionsCheckout';
+import BuyQoins from './screens/BuyQoins/BuyQoins';
 
 //#region Stack Navigators
 
@@ -515,6 +516,12 @@ const RootStackNavigator = createStackNavigator({
       header: (props) => <PersonalizeInteractionHeader {...props} />,
       headerTransparent: true,
       ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  BuyQoins: {
+    screen: BuyQoins,
+    navigationOptions: {
+      headerShown: false,
     },
   },
 }, {

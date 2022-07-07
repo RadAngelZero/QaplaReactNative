@@ -35,6 +35,10 @@ class InteractionsCheckout extends Component {
         }
     }
 
+    sendInteractionHandler = () => {
+        this.props.navigation.navigate('BuyQoins');
+    }
+
     componentDidMount() {
         console.log(this.props.navigation);
         console.log(this.props.navigation.dangerouslyGetParent().state.routes);
@@ -200,6 +204,8 @@ class InteractionsCheckout extends Component {
                     extraTip={this.state.extraTip}
                     addTip={this.addTip}
                     subTip={this.subTip}
+                    sendInteraction={this.sendInteractionHandler}
+                    cancel={() => console.log('cancel')}
                 />
             </View >
         );

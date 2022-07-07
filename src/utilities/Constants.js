@@ -172,3 +172,5 @@ export const STREAMERS_BLACKLIST = ['141617732-catskullgamer', '683167758-catsku
 
 // Default image for streams where we can not load thumbnail URL
 export const DEFAULT_404_TWITCH_PREVIEW_URL = 'https://static-cdn.jtvnw.net/ttv-static/404_preview-480x270.jpg';
+
+export const MAX_CHAR_FOR_TTS = 100;

@@ -4,6 +4,7 @@ import { View, Text, ImageBackground, TouchableOpacity, SafeAreaView } from 'rea
 import styles from './style';
 import images from '../../../assets/images';
 import { getScreenSizeMultiplier, heightPercentageToPx } from '../../utilities/iosAndroidDim'
+import { GIPHY_CLIPS, GIPHY_GIFS, GIPHY_STICKERS } from '../../utilities/Constants';
 
 class InteractionsPersonalize extends Component {
     state = {
@@ -15,8 +16,9 @@ class InteractionsPersonalize extends Component {
         OnlyQoins: 50,
     }
 
-    gifs = () => {
-        this.props.navigation.navigate('InteractionsSelectGIF', {
+    navigateToSelectedMedia = (mediaType) => {
+        this.props.navigation.navigate('InteractionsGiphyMediaSelector', {
+            mediaType,
             cost: this.state.GIFCost,
             type: 0,
             messageCost: this.state.TTSCost,
@@ -71,7 +73,7 @@ class InteractionsPersonalize extends Component {
                             marginTop: 8,
                         }}>
                             <TouchableOpacity
-                                onPress={this.gifs}
+                                onPress={() => this.navigateToSelectedMedia(GIPHY_GIFS)}
                                 style={styles.personalizeButtonContainer}
                             >
                                 <ImageBackground
@@ -93,7 +95,7 @@ class InteractionsPersonalize extends Component {
                                 </ImageBackground>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={() => console.log('b')}
+                                onPress={() => this.navigateToSelectedMedia(GIPHY_STICKERS)}
                                 style={styles.personalizeButtonContainer}
                             >
                                 <ImageBackground
@@ -115,7 +117,7 @@ class InteractionsPersonalize extends Component {
                                 </ImageBackground>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={() => console.log('c')}
+                                onPress={() => this.navigateToSelectedMedia(GIPHY_CLIPS)}
                                 style={styles.personalizeButtonContainer}
                             >
                                 <ImageBackground

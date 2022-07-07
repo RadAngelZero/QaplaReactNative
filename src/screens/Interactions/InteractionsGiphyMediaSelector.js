@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -10,19 +10,19 @@ import { generateGiphyUserRandomId, getGiphyTrending, searchGiphyMedia } from '.
 import { GIPHY_GIFS } from '../../utilities/Constants';
 import { getLocaleLanguage } from '../../utilities/i18';
 
-class InteractionsSelectGIF extends Component {
+class InteractionsGiphyMediaSelector extends Component {
     state = {
         searchQuery: '',
         gifSection: 1,
-        gifs: []
+        media: []
     };
     searchTimeout = null;
 
     componentDidMount() {
-        this.fetchTrendingGifs();
+        this.fetchTrendingMedia();
     }
 
-    fetchTrendingGifs = async () => {
+    fetchTrendingMedia = async () => {
         let giphyRandomId = '';
         if (!this.props.giphyId) {
             giphyRandomId = await generateGiphyUserRandomId();
@@ -30,8 +30,60 @@ class InteractionsSelectGIF extends Component {
             giphyRandomId = this.props.giphyId;
         }
 
-        const gifs = await getGiphyTrending(giphyRandomId, GIPHY_GIFS, 25);
-        this.setState({ gifs });
+        const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
+        const media = await getGiphyTrending(giphyRandomId, mediaType, 25);
+        this.setState({ media });
+    }
+
+    searchHandler = (e) => {
+        clearTimeout(this.searchTimeout);
+        this.setState({ searchQuery: e.nativeEvent.text }, () => {
+            if (this.state.searchQuery !== '') {
+                this.setState({ media: [] }, () => {
+                    this.searchTimeout = setTimeout(async () => {
+                            let giphyRandomId = '';
+                            if (!this.props.giphyId) {
+                                giphyRandomId = await generateGiphyUserRandomId();
+                            } else {
+                                giphyRandomId = this.props.giphyId;
+                            }
+
+                            const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
+                            const userLang = getLocaleLanguage();
+                            const media = await searchGiphyMedia(giphyRandomId, this.state.searchQuery, mediaType, userLang, 25);
+
+                            this.setState({ media });
+                    }, 500);
+                });
+            } else {
+                this.setState({ media: [] }, () => {
+                    this.fetchTrendingMedia();
+                });
+            }
+        });
+    }
+
+    fetchMoreMedia = async (e) => {
+        let giphyRandomId = '';
+        if (!this.props.giphyId) {
+            giphyRandomId = await generateGiphyUserRandomId();
+        } else {
+            giphyRandomId = this.props.giphyId;
+        }
+
+        const actualMediaCopy = [...this.state.media];
+        let newMedia = [];
+        if (this.state.searchQuery === '') {
+            const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
+            newMedia = await getGiphyTrending(giphyRandomId, mediaType, 25, this.state.media.length);
+
+        } else {
+            const userLang = getLocaleLanguage();
+            const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
+            newMedia = await searchGiphyMedia(giphyRandomId, this.state.searchQuery, mediaType, userLang, 25, this.state.media.length);
+        }
+
+        this.setState({ media: actualMediaCopy.concat(newMedia) });
     }
 
     renderImage = ({ item }) => {
@@ -68,54 +120,6 @@ class InteractionsSelectGIF extends Component {
             );
         }
     };
-
-    searchHandler = (e) => {
-        clearTimeout(this.searchTimeout);
-        this.setState({ searchQuery: e.nativeEvent.text }, () => {
-            if (this.state.searchQuery !== '') {
-                this.setState({ gifs: [] }, () => {
-                    this.searchTimeout = setTimeout(async () => {
-                            let giphyRandomId = '';
-                            if (!this.props.giphyId) {
-                                giphyRandomId = await generateGiphyUserRandomId();
-                            } else {
-                                giphyRandomId = this.props.giphyId;
-                            }
-
-                            const userLang = getLocaleLanguage();
-                            const gifs = await searchGiphyMedia(giphyRandomId, this.state.searchQuery, GIPHY_GIFS, userLang, 25);
-
-                            this.setState({ gifs });
-                    }, 500);
-                });
-            } else {
-                this.setState({ gifs: [] }, () => {
-                    this.fetchTrendingGifs();
-                });
-            }
-        });
-    }
-
-    fetchMoreGifs = async (e) => {
-        let giphyRandomId = '';
-        if (!this.props.giphyId) {
-            giphyRandomId = await generateGiphyUserRandomId();
-        } else {
-            giphyRandomId = this.props.giphyId;
-        }
-
-        const actualGifsCopy = [...this.state.gifs];
-        let newGifs = [];
-        if (this.state.searchQuery === '') {
-            newGifs = await getGiphyTrending(giphyRandomId, GIPHY_GIFS, 25, this.state.gifs.length);
-
-        } else {
-            const userLang = getLocaleLanguage();
-            newGifs = await searchGiphyMedia(giphyRandomId, this.state.searchQuery, GIPHY_GIFS, userLang, 25, this.state.gifs.length);
-        }
-
-        this.setState({ gifs: actualGifsCopy.concat(newGifs) });
-    }
 
     render() {
         return (
@@ -167,10 +171,10 @@ class InteractionsSelectGIF extends Component {
                     }}>
                         <RadMasonry
                             onEndReachedThreshold={0.25}
-                            data={this.state.gifs}
+                            data={this.state.media}
                             numColumns={2}
                             renderItem={this.renderImage}
-                            onEndReached={this.fetchMoreGifs}
+                            onEndReached={this.fetchMoreMedia}
                             containerStyle={{
                                 paddingBottom: 75 * getScreenSizeMultiplier(),
                             }}
@@ -241,4 +245,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(InteractionsSelectGIF);
+export default connect(mapStateToProps)(InteractionsGiphyMediaSelector);

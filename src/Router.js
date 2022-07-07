@@ -41,7 +41,7 @@ import InteractionsFeed from './screens/Interactions/InteractionsFeed';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT } from './utilities/Constants';
 import InteractionsSearchStreamer from './screens/Interactions/InteractionsSearchStreamer';
 import InteractionsPersonalize from './screens/Interactions/InteractionsPersonalize';
-import InteractionsSelectGIF from './screens/Interactions/InteractionsSelectGIF';
+import InteractionsGiphyMediaSelector from './screens/Interactions/InteractionsGiphyMediaSelector';
 import PersonalizeInteractionHeader from './components/PersonalizeInteractionHeader/PersonalizeInteractionHeader';
 import InteractionsConfirmSelection from './screens/Interactions/InteractionsConfirmSelection';
 import InteractionsAddTTS from './screens/Interactions/InteractionsAddTTS';
@@ -140,8 +140,8 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
       ...TransitionPresets.SlideFromRightIOS,
     },
   },
-  InteractionsSelectGIF: {
-    screen: InteractionsSelectGIF,
+  InteractionsGiphyMediaSelector: {
+    screen: InteractionsGiphyMediaSelector,
     navigationOptions: {
       headerShown: true,
       gestureDirection: 'horizontal',

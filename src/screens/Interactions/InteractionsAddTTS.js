@@ -1,12 +1,37 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
+
+import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
 import styles from './style';
 import images from '../../../assets/images';
+import { getMediaTypeCost } from '../../services/database';
+import { TTS } from '../../utilities/Constants';
 
 class InteractionsAddTTS extends Component {
-    sendTTS = () => {
-        this.props.navigation.navigate('InteractionsTTS', { ...this.props.navigation.state.params });
+    state= {
+        mediaCost: null
+    };
+
+    componentDidMount() {
+        this.fetchMediaCost()
+    }
+
+    fetchMediaCost = async () => {
+        const cost = await getMediaTypeCost(TTS);
+        if (cost.exists()) {
+            this.setState({ mediaCost: cost.val() });
+        }
+    }
+
+    sendTTS = async () => {
+        const costsObject = this.props.navigation.getParam('costs', {});
+        this.props.navigation.navigate('InteractionsTTS', {
+            ...this.props.navigation.state.params,
+            costs: {
+                [TTS]: this.state.mediaCost,
+                ...costsObject
+            }
+        });
     }
 
     sendOnlyMedia = () => {
@@ -55,7 +80,7 @@ class InteractionsAddTTS extends Component {
                                 <View style={styles.personalizeButtonDisplayQoinsContainer}>
                                     <images.svg.qoin style={styles.qoin} />
                                     <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                        {'200'}
+                                        {this.state.mediaCost}
                                     </Text>
                                 </View>
                             </ImageBackground>

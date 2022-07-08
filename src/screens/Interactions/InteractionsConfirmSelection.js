@@ -3,15 +3,35 @@ import { ActivityIndicator, Image, View } from 'react-native';
 import styles from './style';
 import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import ConfirmSelectionModal from '../../components/InteractionsModals/ConfirmSelectionModal';
+import { getMediaTypeCost } from '../../services/database';
 
 class InteractionsConfirmSelection extends Component {
     state = {
-        loadingMedia: true
+        loadingMedia: true,
+        mediaCost: null
     };
 
+    componentDidMount() {
+        this.fetchMediaCost();
+    }
+
+    fetchMediaCost = async () => {
+        const mediaType = this.props.navigation.getParam('mediaType');
+        const cost = await getMediaTypeCost(mediaType);
+        if (cost.exists()) {
+            this.setState({ mediaCost: cost.val() });
+        }
+    }
+
     onConfirmSelection = async () => {
+        const mediaType = this.props.navigation.getParam('mediaType');
+        const costsObject = this.props.navigation.getParam('costs', {});
         this.props.navigation.navigate('InteractionsAddTTS', {
-            ...this.props.navigation.state.params
+            ...this.props.navigation.state.params,
+            costs: {
+                [mediaType]: this.state.mediaCost,
+                ...costsObject
+            }
         });
     }
 
@@ -46,9 +66,12 @@ class InteractionsConfirmSelection extends Component {
                         }}
                         resizeMode='contain' />
                 </View>
-                <ConfirmSelectionModal mediaType={mediaType}
-                    onConfirmSelection={this.onConfirmSelection}
-                    onCancel={this.onCancel} />
+                {this.state.mediaCost !== null &&
+                    <ConfirmSelectionModal mediaType={mediaType}
+                        cost={this.state.mediaCost}
+                        onConfirmSelection={this.onConfirmSelection}
+                        onCancel={this.onCancel} />
+                }
             </View>
         );
     }

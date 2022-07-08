@@ -8,7 +8,6 @@ import SendInteractionModal from '../../components/InteractionsModals/SendIntera
 import { sendCheers } from '../../services/database';
 
 class InteractionsCheckout extends Component {
-
     state = {
         itemID: '',
         itemURL: '',
@@ -28,7 +27,19 @@ class InteractionsCheckout extends Component {
         },
         tipIncrement: 50,
         userQoins: 50,
+        interactionCost: 0,
         totalCost: 0
+    };
+
+    componentDidMount() {
+        const costs = this.props.navigation.getParam('costs', {});
+        let interactionCost = 0;
+        Object.values(costs).forEach((cost) => {
+            console.log(cost);
+            interactionCost += cost;
+        });
+
+        this.setState({ interactionCost });
     }
 
     addTip = () => {
@@ -49,16 +60,15 @@ class InteractionsCheckout extends Component {
         this.props.navigation.navigate('BuyQoins');
     }
 
-    componentDidMount() {
-        this.setState({ ...this.props.navigation.state.params });
-    }
-
     onSendInteraction = async () => {
         const streamerName = this.props.navigation.getParam('displayName');
         const streamerId = this.props.navigation.getParam('streamerId');
+        const costs = this.props.navigation.getParam('costs');
+        const selectedMedia = this.props.navigation.getParam('selectedMedia');
+        const mediaType = this.props.navigation.getParam('mediaType');
         const media = {
-            url: this.state.selectedMedia.original.url,
-            type: this.state.mediaType
+            url: selectedMedia.original.url,
+            type: mediaType
         };
 
         /* sendCheers(
@@ -79,6 +89,10 @@ class InteractionsCheckout extends Component {
     }
 
     render() {
+        const selectedMedia = this.props.navigation.getParam('selectedMedia');
+        const message = this.props.navigation.getParam('message');
+        const costs = this.props.navigation.getParam('costs', {});
+
         return (
             <View style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false} style={{
@@ -92,15 +106,15 @@ class InteractionsCheckout extends Component {
                                 overflow: 'hidden',
                                 justifyContent: 'center',
                             }}>
-                            <Image source={this.state.selectedMedia.original.url ? { uri: this.state.selectedMedia.original.url } : null}
+                            <Image source={selectedMedia.original.url ? { uri: selectedMedia.original.url } : null}
                                 resizeMode='contain'
                                 style={{
                                     maxHeight: heightPercentageToPx(20),
                                     maxWidth: '60%',
-                                    aspectRatio: (this.state.selectedMedia.original.width / this.state.selectedMedia.original.height) || 0,
+                                    aspectRatio: (selectedMedia.original.width / selectedMedia.original.height) || 0,
                                 }} />
                             </View>
-                        {this.state.message !== '' &&
+                        {message !== '' &&
                             <View style={{
                                 backgroundColor: '#3B4BF9',
                                 borderRadius: 20,
@@ -116,7 +130,7 @@ class InteractionsCheckout extends Component {
                                     fontWeight: '600',
                                     lineHeight: 24,
                                     letterSpacing: 0,
-                                }}>{this.state.message}</Text>
+                                }}>{message}</Text>
                             </View>
                         }
                     </View>
@@ -170,7 +184,7 @@ class InteractionsCheckout extends Component {
                                     letterSpacing: 0,
                                 }}>{this.state.extraTip}</Text>
                             </View>
-                            {this.state.itemID !== '' &&
+                            {Object.keys(costs).map((product) => (
                                 <View style={{
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
@@ -182,44 +196,26 @@ class InteractionsCheckout extends Component {
                                         fontWeight: '500',
                                         lineHeight: 32,
                                         letterSpacing: 0,
-                                    }}>GIF</Text>
+                                    }}>
+                                        {product}
+                                    </Text>
                                     <Text style={{
                                         color: '#fff',
                                         fontSize: 16,
                                         fontWeight: '500',
                                         lineHeight: 32,
                                         letterSpacing: 0,
-                                    }}>{this.state.itemCost}</Text>
+                                    }}>
+                                        {costs[product]}
+                                    </Text>
                                 </View>
-                            }
-                            {this.state.message !== '' &&
-                                <View style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    marginTop: 8,
-                                }}>
-                                    <Text style={{
-                                        color: '#fff',
-                                        fontSize: 16,
-                                        fontWeight: '500',
-                                        lineHeight: 32,
-                                        letterSpacing: 0,
-                                    }}>Text-to-Speech</Text>
-                                    <Text style={{
-                                        color: '#fff',
-                                        fontSize: 16,
-                                        fontWeight: '500',
-                                        lineHeight: 32,
-                                        letterSpacing: 0,
-                                    }}>{this.state.messageCost}</Text>
-                                </View>
-                            }
+                            ))}
                         </View>
                         <View style={{ height: heightPercentageToPx(40) }} />
                     </View>
                 </ScrollView>
                 <SendInteractionModal
-                    baseCost={this.state.itemCost + (this.state.message === '' ? 0 : this.state.messageCost)}
+                    baseCost={this.state.interactionCost}
                     extraTip={this.state.extraTip}
                     addTip={this.addTip}
                     subTip={this.subTip}

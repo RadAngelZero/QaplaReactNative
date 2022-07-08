@@ -53,6 +53,7 @@ const qaplaInteractionsRef = database.ref('/QaplaInteractions');
 const gifsInteractionsRef = qaplaInteractionsRef.child('/Gifs');
 const emotesInteractionsRef = qaplaInteractionsRef.child('/Emotes');
 const memesInteractionsRef = qaplaInteractionsRef.child('/Memes');
+const interactionsCostsRef = database.ref('/InteractionsCosts');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1730,4 +1731,12 @@ export async function getEmotesLibrary() {
  */
 export async function getMemesLibrary(limit) {
     return await memesInteractionsRef.limitToLast(limit).once('value');
+}
+
+/**
+ * Gets the cost of the specified media type for Qapla interactions
+ * @param {('gifs' | 'memes' | 'stickers' | 'tts')} mediaType Media type to check cost
+ */
+export async function getMediaTypeCost(mediaType) {
+    return await interactionsCostsRef.child(mediaType).once('value');
 }

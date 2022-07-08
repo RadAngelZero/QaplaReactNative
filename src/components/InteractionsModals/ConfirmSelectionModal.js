@@ -39,7 +39,7 @@ class ConfirmSelectionModal extends Component {
                             letterSpacing: 1 * getScreenSizeMultiplier(),
                         }}
                     >
-                        100
+                        {this.props.cost}
                     </Text>
                     <images.svg.qoin style={{
                         minWidth: 30 * getScreenSizeMultiplier(),

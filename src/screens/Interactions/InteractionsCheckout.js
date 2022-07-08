@@ -90,6 +90,7 @@ class InteractionsCheckout extends Component {
                                 paddingHorizontal: 24,
                                 paddingVertical: 16,
                                 marginTop: 8,
+                                alignSelf: 'flex-start',
                             }}>
                                 <Text style={{
                                     color: '#fff',

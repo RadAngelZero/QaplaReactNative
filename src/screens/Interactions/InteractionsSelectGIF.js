@@ -180,33 +180,47 @@ class InteractionsSelectGIF extends Component {
                     width: widthPercentageToPx(100),
                 }} >
                     <View style={{
-                        backgroundColor: '#0D1021',
                         flexDirection: 'row',
-                        width: 343 * getScreenSizeMultiplier(),
+                        alignItems: 'center',
                         height: 40 * getScreenSizeMultiplier(),
                         marginTop: 16 * getScreenSizeMultiplier(),
-                        borderRadius: 50 * getScreenSizeMultiplier(),
-                        paddingHorizontal: 18 * getScreenSizeMultiplier(),
-                        alignSelf: 'center',
-                        alignItems: 'center',
+                        paddingHorizontal: 16 * getScreenSizeMultiplier(),
+                        justifyContent: 'space-between',
                     }}>
-                        <View style={{ opacity: 0.4 }}>
-                            <images.svg.searchStreamerIcon />
+                        <View style={{
+                            backgroundColor: '#0D1021',
+                            flexDirection: 'row',
+                            height: '100%',
+                            width: 270 * getScreenSizeMultiplier(),
+                            borderRadius: 50 * getScreenSizeMultiplier(),
+                            paddingHorizontal: 18 * getScreenSizeMultiplier(),
+                            alignSelf: 'center',
+                            alignItems: 'center',
+                        }}>
+                            <View style={{ opacity: 0.4 }}>
+                                <images.svg.searchStreamerIcon />
+                            </View>
+                            <View style={{ width: 10 }} />
+                            <TextInput
+                                value={this.state.searchQuery}
+                                onChange={this.searchHandler}
+                                style={{
+                                    color: '#fff',
+                                    width: '92%',
+                                    fontSize: 16,
+                                    fontWeight: '400',
+                                    lineHeight: 28,
+                                    letterSpacing: 1,
+                                    textAlignVertical: 'center',
+                                }}
+                            />
                         </View>
-                        <View style={{ width: 10 }} />
-                        <TextInput
-                            value={this.state.searchQuery}
-                            onChange={this.searchHandler}
-                            style={{
-                                color: '#fff',
-                                width: '92%',
-                                fontSize: 16,
-                                fontWeight: '400',
-                                lineHeight: 28,
-                                letterSpacing: 1,
-                                textAlignVertical: 'center',
-                            }}
-                        />
+                        <Image source={images.png.PoweredbyGiphy.img} style={{
+                            flex: 1,
+                            width: 77 * getScreenSizeMultiplier(),
+                            maxWidth: 77 * getScreenSizeMultiplier(),
+                            height: 28 * getScreenSizeMultiplier(),
+                        }} />
                     </View>
                     <View style={{
                         flex: 1,
@@ -258,7 +272,7 @@ class InteractionsSelectGIF extends Component {
                             Recientes
                         </Text>
                     </TouchableOpacity>
-                    <View style={{width: 8 * getScreenSizeMultiplier()}}/>
+                    <View style={{ width: 8 * getScreenSizeMultiplier() }} />
                     <TouchableOpacity
                         onPress={() => this.setState({ ...this.state, searchQuery: '', gifSection: 1 })}
                         style={{

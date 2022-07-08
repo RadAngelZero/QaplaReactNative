@@ -240,6 +240,10 @@ const images = {
 			img: require('./images/InteractionGradient6.png'),
 			uri: '@assets/images/InteractionGradient6.png'
 		},
+		PoweredbyGiphy: {
+			img: require('./images/PoweredbyGiphy.png'),
+			uri: '@assets/images/PoweredbyGiphy.png'
+		},
 	},
 	svg: {
 		googleIcon: GoogleIcon,

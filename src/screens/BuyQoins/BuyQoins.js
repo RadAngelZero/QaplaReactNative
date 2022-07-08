@@ -20,6 +20,7 @@ class BuyQoins extends Component {
 
     handlePack1 = () => {
         console.log('Cobrese 2 dolares');
+        this.props.navigation.navigate('InteractionsSent');
     }
 
     handlePack2 = () => {

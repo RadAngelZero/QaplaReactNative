@@ -20,6 +20,8 @@ class InteractionsCheckout extends Component {
         Object.values(costs).forEach((cost) => {
             interactionCost += cost;
         });
+
+        this.setState({ interactionCost })
     }
 
     addTip = () => {

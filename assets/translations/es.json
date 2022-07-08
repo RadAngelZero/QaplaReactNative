@@ -346,7 +346,8 @@
         "unfollow": "Dejar de seguir",
         "upcomingStreams": "Próximos streams",
         "myCommunity": "Mi comunidad",
-        "creatorCodes": "Códigos de creador"
+        "creatorCodes": "Códigos de creador",
+        "sendInteraction": "Enviar interacción en vivo"
     },
     "writeCheerMessageScreen": {
         "sendPersonalizedMessage": "¿Quieres decirle algo especial?\n💬",

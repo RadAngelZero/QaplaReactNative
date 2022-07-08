@@ -346,7 +346,8 @@
         "unfollow": "Unfollow",
         "upcomingStreams": "Upcoming streams",
         "myCommunity": "My community",
-        "creatorCodes": "Creator Codes"
+        "creatorCodes": "Creator Codes",
+        "sendInteraction": "Send live interaction"
     },
     "writeCheerMessageScreen": {
         "sendPersonalizedMessage": "Do you want to say something special?\n💬",

@@ -4,6 +4,7 @@ import styles from './style';
 import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import ConfirmSelectionModal from '../../components/InteractionsModals/ConfirmSelectionModal';
 import { getMediaTypeCost } from '../../services/database';
+import { TTS } from '../../utilities/Constants';
 
 class InteractionsConfirmSelection extends Component {
     state = {
@@ -26,13 +27,24 @@ class InteractionsConfirmSelection extends Component {
     onConfirmSelection = async () => {
         const mediaType = this.props.navigation.getParam('mediaType');
         const costsObject = this.props.navigation.getParam('costs', {});
-        this.props.navigation.navigate('InteractionsAddTTS', {
-            ...this.props.navigation.state.params,
-            costs: {
-                [mediaType]: this.state.mediaCost,
-                ...costsObject
-            }
-        });
+        // If the user has already added TTS to their items then go directly to checkout
+        if (costsObject[TTS]) {
+            this.props.navigation.navigate('InteractionsCheckout', {
+                ...this.props.navigation.state.params,
+                costs: {
+                    [mediaType]: this.state.mediaCost,
+                    ...costsObject
+                }
+            });
+        } else {
+            this.props.navigation.navigate('InteractionsAddTTS', {
+                ...this.props.navigation.state.params,
+                costs: {
+                    [mediaType]: this.state.mediaCost,
+                    ...costsObject
+                }
+            });
+        }
     }
 
     onCancel = () => {

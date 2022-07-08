@@ -4,7 +4,7 @@ import { View, Text, ImageBackground, TouchableOpacity, SafeAreaView } from 'rea
 import styles from './style';
 import images from '../../../assets/images';
 import { getScreenSizeMultiplier, heightPercentageToPx } from '../../utilities/iosAndroidDim'
-import { GIPHY_CLIPS, GIPHY_GIFS, GIPHY_STICKERS, MEME } from '../../utilities/Constants';
+import { GIPHY_CLIPS, GIPHY_GIFS, GIPHY_STICKERS, MEME, TTS } from '../../utilities/Constants';
 
 class InteractionsPersonalize extends Component {
     state = {
@@ -14,7 +14,7 @@ class InteractionsPersonalize extends Component {
         TTSCost: 200,
         MemeCost: 100,
         OnlyQoins: 50,
-    }
+    };
 
     navigateToSelectedMedia = (mediaType) => {
         if (mediaType === MEME) {
@@ -30,7 +30,18 @@ class InteractionsPersonalize extends Component {
         }
     }
 
+    navigateToWriteMessage = () => {
+        const costsObject = this.props.navigation.getParam('costs', {});
+        this.props.navigation.navigate('InteractionsTTS', {
+            costs: {
+                [TTS]: this.state.TTSCost,
+                ...costsObject
+            }
+        });
+    }
+
     render() {
+        console.log(this.props.navigation.state.params);
         return (
             <SafeAreaView style={[styles.container, { paddingHorizontal: 16 * getScreenSizeMultiplier()}]}>
                 <View style={{
@@ -160,7 +171,7 @@ class InteractionsPersonalize extends Component {
                                 </ImageBackground>
                             </TouchableOpacity> */}
                             <TouchableOpacity
-                                onPress={() => console.log('e')}
+                                onPress={this.navigateToWriteMessage}
                                 style={styles.personalizeButtonContainer}
                             >
                                 <ImageBackground

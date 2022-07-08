@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 
 import images from '../../../assets/images';
 import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
@@ -22,11 +23,17 @@ class InteractionsTTS extends Component {
     }
 
     sendButtonHandler = () => {
-        this.props.navigation.navigate('InteractionsCheckout', {
-            message: this.state.message,
-            ...this.props.navigation.state.params,
-            hideBackButton: true
-        });
+        if (this.props.previousScreen === 'InteractionsAddTTS') {
+            this.props.navigation.navigate('InteractionsCheckout', {
+                message: this.state.message,
+                ...this.props.navigation.state.params
+            });
+        } else {
+            this.props.navigation.navigate('InteractionsPersonalize', {
+                message: this.state.message,
+                ...this.props.navigation.state.params
+            })
+        }
     }
 
     render() {
@@ -159,4 +166,10 @@ class InteractionsTTS extends Component {
     }
 }
 
-export default InteractionsTTS;
+function mapStateToProps(state) {
+    return {
+        previousScreen: state.screensReducer.previousScreenId
+    };
+}
+
+export default connect(mapStateToProps)(InteractionsTTS);

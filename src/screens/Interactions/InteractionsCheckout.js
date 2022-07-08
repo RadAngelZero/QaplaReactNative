@@ -108,13 +108,15 @@ class InteractionsCheckout extends Component {
                                 overflow: 'hidden',
                                 justifyContent: 'center',
                             }}>
-                            <Image source={selectedMedia.original.url ? { uri: selectedMedia.original.url } : null}
-                                resizeMode='contain'
-                                style={{
-                                    maxHeight: heightPercentageToPx(20),
-                                    maxWidth: '60%',
-                                    aspectRatio: (selectedMedia.original.width / selectedMedia.original.height) || 0,
-                                }} />
+                            {selectedMedia &&
+                                <Image source={selectedMedia.original.url ? { uri: selectedMedia.original.url } : null}
+                                    resizeMode='contain'
+                                    style={{
+                                        maxHeight: heightPercentageToPx(20),
+                                        maxWidth: '60%',
+                                        aspectRatio: (selectedMedia.original.width / selectedMedia.original.height) || 0,
+                                    }} />
+                            }
                             </View>
                         {message !== '' &&
                             <View style={{

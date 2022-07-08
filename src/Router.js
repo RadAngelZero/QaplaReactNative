@@ -48,6 +48,8 @@ import InteractionsAddTTS from './screens/Interactions/InteractionsAddTTS';
 import InteractionsTTS from './screens/Interactions/InteractionsTTS';
 import InteractionsCheckout from './screens/Interactions/InteractionsCheckout';
 import InteractionsMemeSelector from './screens/Interactions/InteractionsMemeSelector';
+import BuyQoins from './screens/BuyQoins/BuyQoins';
+import InteractionsSent from './screens/Interactions/InteractionsSent';
 
 //#region Stack Navigators
 
@@ -56,20 +58,20 @@ const SettingsMenuStackNavigator = createStackNavigator({
     screen: AppSettingsMenuScreen,
     navigationOptions: {
       header: (props) => <TopNavOptions close {...props} />
-    }
+    },
   },
   Support: {
     screen: SupportScreen,
     navigationOptions: {
       header: (props) => <TopNavOptions back close {...props} />
-    }
+    },
   },
   NotificationsSettings: {
     screen: NotificationsSettingsScreen,
     navigationOptions: {
       header: (props) => <TopNavOptions back close {...props} />
-    }
-  }
+    },
+  },
 });
 
 const AuthStackNavigator = createStackNavigator({
@@ -83,12 +85,12 @@ const AuthStackNavigator = createStackNavigator({
     screen: TwitchAuthScreen,
     navigationOptions: {
       header: (props) => <TopNavOptions close {...props} />
-    }
+    },
   }
 }, {
   navigationOptions: {
     gestureEnabled: false
-  }
+  },
 });
 
 const StreamerProfileStackNavigator = createStackNavigator({
@@ -97,7 +99,7 @@ const StreamerProfileStackNavigator = createStackNavigator({
     navigationOptions: {
       headerShown: false,
       animationEnabled: false
-    }
+    },
   },
   WriteCheerMessage: {
     screen: WriteCheerMessageScreen,
@@ -111,8 +113,8 @@ const StreamerProfileStackNavigator = createStackNavigator({
     navigationOptions: {
       headerShown: false,
       animationEnabled: false
-    }
-  }
+    },
+  },
 });
 
 const InteractionsStackNavigator = createStackNavigator({
@@ -189,6 +191,14 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
       ...TransitionPresets.SlideFromRightIOS,
     },
   },
+  InteractionsSent: {
+    screen: InteractionsSent,
+    navigationOptions: {
+      headerShown: false,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
 }, {
   defaultNavigationOptions: {
     header: (props) => <PersonalizeInteractionHeader {...props} />,
@@ -206,13 +216,13 @@ const StreamsTopTabNavigator = createMaterialTopTabNavigator(
     },
     MyStreams: {
       screen: MyStreamsScreen
-    }
+    },
   },
   {
     initialRouteName: 'Timeline',
     lazy: true,
     tabBarComponent: (props) => <QaplaTabBar {...props} />
-  }
+  },
 );
 
 const CommunityTopTabNavigator = createMaterialTopTabNavigator(
@@ -222,13 +232,13 @@ const CommunityTopTabNavigator = createMaterialTopTabNavigator(
     },
     Following: {
       screen: FollowingStreamersScreen
-    }
+    },
   },
   {
     initialRouteName: 'Discover',
     lazy: true,
     tabBarComponent: (props) => <QaplaTabBar {...props} />
-  }
+  },
 );
 
 //#endregion
@@ -306,9 +316,9 @@ const MainBottomTabNavigator = createBottomTabNavigator({
                   <G id="Community" transform="translate(94.000000, 17.000000)">
                     <G id="Ranking" transform="translate(32.000000, 0.000000)">
                       <G id="Column-01-Up" transform="translate(1.250000, 2.500000)">
-                        <Rect fill={focused ? tintColor : '#FFF'} x="10" y="0" width="7.5" height="25" rx="2.5"></Rect>
-                        <Rect fill={focused ? '#4040FF' : '#4E5166'} x="0" y="5" width="7.5" height="20" rx="2.5"></Rect>
-                        <Rect fill={focused ? '#4040FF' : '#4E5166'} x="20" y="10" width="7.5" height="15" rx="2.5"></Rect>
+                        <Rect fill={focused ? tintColor : '#FFF'} x="10" y="0" width="7.5" height="25" rx="2.5" />
+                        <Rect fill={focused ? '#4040FF' : '#4E5166'} x="0" y="5" width="7.5" height="20" rx="2.5" />
+                        <Rect fill={focused ? '#4040FF' : '#4E5166'} x="20" y="10" width="7.5" height="15" rx="2.5" />
                       </G>
                     </G>
                   </G>
@@ -337,8 +347,8 @@ const MainBottomTabNavigator = createBottomTabNavigator({
             Ranking
           </QaplaText>
         </View>
-      )
-    }
+      ),
+    },
   },
   Interactions: {
     screen: () => <></>, // We do not really want a screen here, we want to navigate to InteractionsStack (check tabBarOnPress)
@@ -346,7 +356,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
         <View style={{
-          display: "flex",
+          display: 'flex',
           marginTop: -6,
           paddingTop: 2,
           transform: [{ scale: 1 }],
@@ -383,8 +393,8 @@ const MainBottomTabNavigator = createBottomTabNavigator({
                   <G id="Community" transform="translate(125.000000, 12.000000)">
                     <G id="chat" transform="translate(48.000000, 0.000000)">
                       <G id="Comment" transform="translate(2.500000, 2.500000)">
-                        <Path fill={tintColor} d="M4.99346 1.11165C2.8809 1.4331 1.20706 2.9811 0.844325 5.08696C0.591513 6.55465 0.375 8.41906 0.375 10.5C0.375 12.5809 0.591513 14.4454 0.844325 15.913C1.1557 17.7207 2.4332 19.1174 4.125 19.68V23.9345C4.125 24.9024 5.17764 25.503 6.01091 25.0106L13.6551 20.4936C16.423 20.4482 18.9048 20.1701 20.7565 19.8884C22.8691 19.5669 24.543 18.0189 24.9056 15.913C25.1585 14.4454 25.375 12.5809 25.375 10.5C25.375 8.41906 25.1585 6.55465 24.9056 5.08696C24.543 2.9811 22.8691 1.4331 20.7565 1.11165C18.7324 0.803662 15.9555 0.5 12.875 0.5C9.79449 0.5 7.01764 0.803662 4.99346 1.11165Z" id="Path"></Path>
-                        <Path fill={focused ? '#4040FF' : '#FFF'} d="M19.7069 9.47228C19.0348 9.05106 18.1434 9.24615 17.7158 9.90813C17.698 9.93555 15.9031 12.6592 12.875 12.6592C9.84694 12.6592 8.05202 9.93555 8.03421 9.90813C7.60658 9.24622 6.71518 9.05113 6.04315 9.47228C5.37112 9.8935 5.17302 10.7715 5.60066 11.4332C5.70796 11.5992 8.28127 15.5 12.875 15.5C17.4687 15.5 20.042 11.5993 20.1493 11.4332C20.577 10.7713 20.3789 9.8935 19.7069 9.47228Z" id="Shape"></Path>
+                        <Path fill={tintColor} d="M4.99346 1.11165C2.8809 1.4331 1.20706 2.9811 0.844325 5.08696C0.591513 6.55465 0.375 8.41906 0.375 10.5C0.375 12.5809 0.591513 14.4454 0.844325 15.913C1.1557 17.7207 2.4332 19.1174 4.125 19.68V23.9345C4.125 24.9024 5.17764 25.503 6.01091 25.0106L13.6551 20.4936C16.423 20.4482 18.9048 20.1701 20.7565 19.8884C22.8691 19.5669 24.543 18.0189 24.9056 15.913C25.1585 14.4454 25.375 12.5809 25.375 10.5C25.375 8.41906 25.1585 6.55465 24.9056 5.08696C24.543 2.9811 22.8691 1.4331 20.7565 1.11165C18.7324 0.803662 15.9555 0.5 12.875 0.5C9.79449 0.5 7.01764 0.803662 4.99346 1.11165Z" id="Path" />
+                        <Path fill={focused ? '#4040FF' : '#FFF'} d="M19.7069 9.47228C19.0348 9.05106 18.1434 9.24615 17.7158 9.90813C17.698 9.93555 15.9031 12.6592 12.875 12.6592C9.84694 12.6592 8.05202 9.93555 8.03421 9.90813C7.60658 9.24622 6.71518 9.05113 6.04315 9.47228C5.37112 9.8935 5.17302 10.7715 5.60066 11.4332C5.70796 11.5992 8.28127 15.5 12.875 15.5C17.4687 15.5 20.042 11.5993 20.1493 11.4332C20.577 10.7713 20.3789 9.8935 19.7069 9.47228Z" id="Shape" />
                       </G>
                     </G>
                   </G>
@@ -399,7 +409,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
           display: 'flex',
           height: 20,
           marginBottom: 10,
-          justifyContent: 'center'
+          justifyContent: 'center',
         }} >
           <QaplaText style={{
             color: tintColor,
@@ -414,7 +424,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
           </QaplaText>
         </View>
       ),
-    }
+    },
   },
   Profile: {
     screen: NewUserProfileScreen,
@@ -434,8 +444,8 @@ const MainBottomTabNavigator = createBottomTabNavigator({
                   <G id="Profile" transform="translate(250.000000, 11.000000)">
                     <G id="user-profile" transform="translate(48.000000, 0.000000)">
                       <G id="User" transform="translate(3.750000, 1.250000)">
-                        <Path fill={focused ? tintColor : '#FFF'} d="M18.125 6.5C18.125 9.95177 15.3267 12.75 11.875 12.75C8.42322 12.75 5.625 9.95177 5.625 6.5C5.625 3.04822 8.42322 0.25 11.875 0.25C15.3267 0.25 18.125 3.04822 18.125 6.5Z" id="Path" fill-rule="nonzero"></Path>
-                        <Path fill={focused ? '#3B4BF9' : tintColor} d="M20.3975 16.656C19.627 15.7626 18.3035 15.8086 17.2686 16.3751C15.6673 17.2516 13.8294 17.75 11.875 17.75C9.92062 17.75 8.08273 17.2516 6.48131 16.3751C5.44646 15.8086 4.12301 15.7626 3.3525 16.656C1.65277 18.6267 0.625 21.1934 0.625 24V25.25C0.625 26.6306 1.74429 27.75 3.125 27.75H20.625C22.0058 27.75 23.125 26.6306 23.125 25.25V24C23.125 21.1934 22.0972 18.6267 20.3975 16.656Z" id="Path"></Path>
+                        <Path fill={focused ? tintColor : '#FFF'} d="M18.125 6.5C18.125 9.95177 15.3267 12.75 11.875 12.75C8.42322 12.75 5.625 9.95177 5.625 6.5C5.625 3.04822 8.42322 0.25 11.875 0.25C15.3267 0.25 18.125 3.04822 18.125 6.5Z" id="Path" fill-rule="nonzero" />
+                        <Path fill={focused ? '#3B4BF9' : tintColor} d="M20.3975 16.656C19.627 15.7626 18.3035 15.8086 17.2686 16.3751C15.6673 17.2516 13.8294 17.75 11.875 17.75C9.92062 17.75 8.08273 17.2516 6.48131 16.3751C5.44646 15.8086 4.12301 15.7626 3.3525 16.656C1.65277 18.6267 0.625 21.1934 0.625 24V25.25C0.625 26.6306 1.74429 27.75 3.125 27.75H20.625C22.0058 27.75 23.125 26.6306 23.125 25.25V24C23.125 21.1934 22.0972 18.6267 20.3975 16.656Z" id="Path" />
                       </G>
                     </G>
                   </G>
@@ -450,7 +460,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
           display: 'flex',
           height: 20,
           marginBottom: 10,
-          justifyContent: 'center'
+          justifyContent: 'center',
         }} >
           <QaplaText style={{
             color: tintColor,
@@ -486,10 +496,10 @@ const MainBottomTabNavigator = createBottomTabNavigator({
     tabStyle: {
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
     },
-    showIcon: true
-  }
+    showIcon: true,
+  },
 }
 );
 
@@ -502,25 +512,31 @@ const RootStackNavigator = createStackNavigator({
     screen: MainBottomTabNavigator,
     navigationOptions: {
       header: (props) => <HeaderBar {...props} />
-    }
+    },
   },
   Activity: {
     screen: ActivityScreen,
     navigationOptions: {
       headerShown: false,
-    }
+    },
   },
   StreamerProfile: {
     screen: StreamerProfileStackNavigator,
     navigationOptions: {
-      animationEnabled: false
-    }
+      animationEnabled: false,
+    },
   },
   SettingsMenu: SettingsMenuStackNavigator,
   Auth: AuthStackNavigator,
   InteractionsStack: InteractionsStackNavigator,
   InteractionsPersonlizeStack: {
     screen: InteractionsPersonlizeStackNavigator
+  },
+  BuyQoins: {
+    screen: BuyQoins,
+    navigationOptions: {
+      headerShown: false,
+    },
   },
 }, {
   headerMode: 'screen',
@@ -539,7 +555,7 @@ const MainSwitchNavigator = createSwitchNavigator({
   App: RootStackNavigator,
   onBoarding: WelcomeOnboardingScreen,
   ChooseUserName: ChooseUserNameScreen,
-  LinkBroken: LinkBrokenScreen
+  LinkBroken: LinkBrokenScreen,
 });
 
 //#endregion

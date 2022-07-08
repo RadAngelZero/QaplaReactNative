@@ -240,6 +240,10 @@ const images = {
 			img: require('./images/InteractionGradient6.png'),
 			uri: '@assets/images/InteractionGradient6.png'
 		},
+		PoweredbyGiphy: {
+			img: require('./images/PoweredbyGiphy.png'),
+			uri: '@assets/images/PoweredbyGiphy.png'
+		},
 	},
 	svg: {
 		googleIcon: GoogleIcon,
@@ -350,7 +354,35 @@ const images = {
 			img: require('./images/LoadingStreamers.gif'),
 			uri: '@assets/images/LoadingStreamers.gif'
 		},
-	}
+		markRebillet: {
+			img: require('./gifs/marc-rebillet-tiwtch.gif'),
+			uri: '@assets/gifs/marc-rebillet-tiwtch.gif',
+		},
+		heartLoveSticker: {
+			img: require('./gifs/HeartLoveSticker.gif'),
+			uri: '@assets/gifs/HeartLoveSticker.gif',
+		},
+		thugDoug: {
+			img: require('./gifs/thug-doug.gif'),
+			uri: '@assets/gifs/thug-doug.gif',
+		},
+		frankTwitch: {
+			img: require('./gifs/frank-twitch.gif'),
+			uri: '@assets/gifs/frank-twitch.gif',
+		},
+		loveTwitch: {
+			img: require('./gifs/love-twitch.gif'),
+			uri: '@assets/gifs/love-twitch.gif',
+		},
+		vibesCat: {
+			img: require('./gifs/vibes-cat.gif'),
+			uri: '@assets/gifs/vibes-cat.gif',
+		},
+		whatTheWtf: {
+			img: require('./gifs/WhatTheWtf.gif'),
+			uri: '@assets/gifs/WhatTheWtf.gif',
+		},
+	},
 };
 
 export default images;

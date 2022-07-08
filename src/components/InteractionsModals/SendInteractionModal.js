@@ -8,17 +8,6 @@ import images from "../../../assets/images";
 
 class SendInteractionModal extends Component {
 
-    state = {
-        actualCost: this.props.baseCost + this.props.extraTip,
-    }
-
-    componentDidUpdate(past) {
-        if (past.extraTip !== this.props.extraTip) {
-            console.log('no e')
-            this.setState({ actualCost: this.props.baseCost + this.props.extraTip });
-        }
-    }
-
     renderContent = () => (
         <View style={{
             width: '100%',
@@ -58,7 +47,7 @@ class SendInteractionModal extends Component {
                         }} />
                     </TouchableOpacity>
                         <Text
-                            children={this.state.actualCost}
+                            children={this.props.baseCost + this.props.extraTip}
                             style={{
                                 color: '#00FFDD',
                                 fontSize: 48,

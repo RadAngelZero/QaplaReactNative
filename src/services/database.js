@@ -1373,45 +1373,47 @@ export async function getAllStreamers() {
  * @param {string} streamerID Streamer uid
  */
 export async function sendCheers(amountQoins, media, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID) {
-    const donationRef = streamersDonationsRef.child(streamerID).push({
-        amountQoins,
-        media,
-        message,
-        timestamp,
-        uid,
-        read: false,
-        twitchUserName,
-        userName,
-        photoURL: userPhotoURL
-    });
-
     usersRef.child(uid).child('credits').transaction((credits) => {
         if (credits) {
             credits -= amountQoins;
         }
 
         return credits >= 0 ? credits : 0;
-    });
+    }, async (error, commited) => {
+        if (!error && commited) {
+            const donationRef = streamersDonationsRef.child(streamerID).push({
+                amountQoins,
+                media,
+                message,
+                timestamp,
+                uid,
+                read: false,
+                twitchUserName,
+                userName,
+                photoURL: userPhotoURL
+            });
 
-    userStreamerRef.child(streamerID).child('qoinsBalance').transaction((streamerQoins) => {
-        if (streamerQoins) {
-            streamerQoins += amountQoins;
+            userStreamerRef.child(streamerID).child('qoinsBalance').transaction((streamerQoins) => {
+                if (streamerQoins) {
+                    streamerQoins += amountQoins;
+                }
+
+                return streamerQoins ? streamerQoins : amountQoins;
+            });
+
+            await completeUserDonation(uid, amountQoins);
+
+            database.ref('/StreamersDonationAdministrative').child(donationRef.key).set({
+                amountQoins,
+                message,
+                timestamp,
+                uid,
+                sent: false,
+                twitchUserName,
+                userName,
+                streamerName
+            });
         }
-
-        return streamerQoins ? streamerQoins : amountQoins;
-    });
-
-    await completeUserDonation(uid, amountQoins);
-
-    database.ref('/StreamersDonationAdministrative').child(donationRef.key).set({
-        amountQoins,
-        message,
-        timestamp,
-        uid,
-        sent: false,
-        twitchUserName,
-        userName,
-        streamerName
     });
 }
 

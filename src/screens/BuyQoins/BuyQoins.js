@@ -7,12 +7,10 @@ import images from '../../../assets/images';
 import styles from './style';
 
 class BuyQoins extends Component {
-
-    //Si queremos las gradientes tiene que estar hardcodeada la cantidad de Qoins
     state = {
         qoins1: '',
         qoins2: '',
-    }
+    };
 
     componentDidMount() {
         setTimeout(() => { this.setState({ qoins1: '2,000', qoins2: '4,500' }) }, 1000);
@@ -20,11 +18,12 @@ class BuyQoins extends Component {
 
     handlePack1 = () => {
         console.log('Cobrese 2 dolares');
-        this.props.navigation.navigate('InteractionsSent');
+        this.props.navigation.goBack();
     }
 
     handlePack2 = () => {
         console.log('Cobrese 4 dolares');
+        this.props.navigation.goBack();
     }
 
     render() {

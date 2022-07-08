@@ -26,9 +26,7 @@ class InteractionsCheckout extends Component {
             }
         },
         tipIncrement: 50,
-        userQoins: 50,
-        interactionCost: 0,
-        totalCost: 0
+        interactionCost: 0
     };
 
     componentDidMount() {
@@ -61,27 +59,31 @@ class InteractionsCheckout extends Component {
     }
 
     onSendInteraction = async () => {
-        const streamerName = this.props.navigation.getParam('displayName');
-        const streamerId = this.props.navigation.getParam('streamerId');
-        const costs = this.props.navigation.getParam('costs');
-        const selectedMedia = this.props.navigation.getParam('selectedMedia');
-        const mediaType = this.props.navigation.getParam('mediaType');
-        const media = {
-            url: selectedMedia.original.url,
-            type: mediaType
-        };
+        const totalCost = this.state.interactionCost + this.state.extraTip;
+        if (totalCost <= this.props.qoins) {
+            const streamerName = this.props.navigation.getParam('displayName');
+            const streamerId = this.props.navigation.getParam('streamerId');
+            const selectedMedia = this.props.navigation.getParam('selectedMedia');
+            const mediaType = this.props.navigation.getParam('mediaType');
+            const media = {
+                url: selectedMedia.original.url,
+                type: mediaType
+            };
 
-        /* sendCheers(
-            this.state.totalCost,
-            message,
-            (new Date()).getTime(),
-            streamerName,
-            this.props.uid,
-            this.props.userName,
-            this.props.twitchUserName,
-            this.props.photoUrl,
-            streamerId
-        ); */
+            /* sendCheers(
+                totalCost,
+                message,
+                (new Date()).getTime(),
+                streamerName,
+                this.props.uid,
+                this.props.userName,
+                this.props.twitchUserName,
+                this.props.photoUrl,
+                streamerId
+            ); */
+        } else {
+            this.props.navigation.navigate('BuyQoins');
+        }
     }
 
     onCancel = () => {
@@ -157,7 +159,7 @@ class InteractionsCheckout extends Component {
                                     fontWeight: '600',
                                     lineHeight: 19,
                                     letterSpacing: 1,
-                                }}>{this.state.userQoins}</Text>
+                                }}>{this.props.qoins}</Text>
                         </View>
                         <View style={{
                             backgroundColor: '#141539',
@@ -232,7 +234,8 @@ function mapStateToProps(state) {
         uid: state.userReducer.user.id,
         userName: state.userReducer.user.userName,
         twitchUserName: state.userReducer.user.twitchUserName,
-        photoUrl: state.userReducer.user.photoUrl
+        photoUrl: state.userReducer.user.photoUrl,
+        qoins: state.userReducer.user.credits
     };
 }
 

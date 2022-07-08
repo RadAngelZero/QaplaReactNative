@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, SafeAreaView, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -8,13 +9,11 @@ import { getScreenSizeMultiplier, widthPercentageToPx } from '../../utilities/io
 class PersonalizeInteractionHeader extends Component {
     render() {
         return (
-            <SafeAreaView style={[styles.container, { paddingHorizontal: 16 * getScreenSizeMultiplier(), opacity: this.props.navigation.state.routes[this.props.navigation.state.index].routeName !== 'InteractionsSent' ? 1 : 0 }]}>
+            <SafeAreaView style={[styles.container, { paddingHorizontal: 16 * getScreenSizeMultiplier(), opacity: this.props.currentScreen !== 'InteractionsSent' ? 1 : 0 }]}>
                 <View style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    marginTop: 32,
-                    alignItems: 'center',
-                    height: 40,
+                    alignItems: 'center'
                 }}>
                     <View style={{
                         display: 'flex',
@@ -23,9 +22,9 @@ class PersonalizeInteractionHeader extends Component {
                         alignItems: 'center',
                         height: 40,
                     }}>
-                        {this.props.navigation.state.routes[this.props.navigation.state.index].routeName !== 'InteractionsSent' &&
+                        {this.props.currentScreen !== 'InteractionsSent' &&
                             <>
-                                {this.props.navigation.state.routes[this.props.navigation.state.index].routeName !== 'InteractionsCheckout' &&
+                                {this.props.currentScreen !== 'InteractionsCheckout' &&
                                     <TouchableOpacity
                                         style={{
                                             backgroundColor: '#141539',
@@ -81,7 +80,12 @@ class PersonalizeInteractionHeader extends Component {
             </SafeAreaView>
         );
     }
-
 }
 
-export default PersonalizeInteractionHeader;
+function mapStateToProps(state) {
+    return {
+        currentScreen: state.screensReducer.currentScreenId
+    };
+}
+
+export default connect(mapStateToProps)(PersonalizeInteractionHeader);

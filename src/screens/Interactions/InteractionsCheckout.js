@@ -9,22 +9,7 @@ import { sendCheers } from '../../services/database';
 
 class InteractionsCheckout extends Component {
     state = {
-        itemID: '',
-        itemURL: '',
-        itemSize: 0,
-        itemRatio: 0,
-        itemCost: 0,
-        message: '',
-        messageCost: 0,
         extraTip: 0,
-        mediaType: '',
-        selectedMedia: {
-            original: {
-                url: '',
-                width: 0,
-                height: 0
-            }
-        },
         tipIncrement: 50,
         interactionCost: 0
     };
@@ -33,11 +18,8 @@ class InteractionsCheckout extends Component {
         const costs = this.props.navigation.getParam('costs', {});
         let interactionCost = 0;
         Object.values(costs).forEach((cost) => {
-            console.log(cost);
             interactionCost += cost;
         });
-
-        this.setState({ interactionCost });
     }
 
     addTip = () => {
@@ -45,7 +27,6 @@ class InteractionsCheckout extends Component {
     }
 
     subTip = () => {
-        console.log('sub')
         if (this.state.extraTip > 0) {
             this.setState({ extraTip: this.state.extraTip - this.state.tipIncrement });
         }
@@ -54,22 +35,34 @@ class InteractionsCheckout extends Component {
         }
     }
 
-    sendInteractionHandler = () => {
-        this.props.navigation.navigate('BuyQoins');
-    }
-
     onSendInteraction = async () => {
         const totalCost = this.state.interactionCost + this.state.extraTip;
         if (totalCost <= this.props.qoins) {
             const streamerName = this.props.navigation.getParam('displayName');
             const streamerId = this.props.navigation.getParam('streamerId');
-            const selectedMedia = this.props.navigation.getParam('selectedMedia');
+            const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
             const mediaType = this.props.navigation.getParam('mediaType');
-            const media = {
-                url: selectedMedia.original.url,
-                type: mediaType
-            };
+            const message = this.props.navigation.getParam('message', '');
+            let media = null;
+            if (selectedMedia && selectedMedia.original) {
+                media = {
+                    url: selectedMedia.original.url,
+                    type: mediaType
+                };
+            }
 
+            console.log(
+                totalCost,
+                media,
+                message,
+                (new Date()).getTime(),
+                streamerName,
+                this.props.uid,
+                this.props.userName,
+                this.props.twitchUserName,
+                this.props.photoUrl,
+                streamerId
+            );
             /* sendCheers(
                 totalCost,
                 message,
@@ -235,7 +228,7 @@ function mapStateToProps(state) {
     return {
         uid: state.userReducer.user.id,
         userName: state.userReducer.user.userName,
-        twitchUserName: state.userReducer.user.twitchUserName,
+        twitchUserName: state.userReducer.user.twitchUsername,
         photoUrl: state.userReducer.user.photoUrl,
         qoins: state.userReducer.user.credits
     };

@@ -1742,3 +1742,10 @@ export async function getMemesLibrary(limit) {
 export async function getMediaTypeCost(mediaType) {
     return await interactionsCostsRef.child(mediaType).once('value');
 }
+
+/**
+ * Returns the complete object of media costs for Qapla interactions
+ */
+export async function getAllMediaTypeCosts() {
+    return await interactionsCostsRef.once('value');
+}

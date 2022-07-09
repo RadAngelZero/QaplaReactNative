@@ -614,5 +614,11 @@
         "youWillReceive": "Recibirás 200 Qoins en tus siguientes 3 directos de Qapla 🌱 ",
         "backToProfile": "Volver a mi perfil",
         "update": "Actualizar"
+    },
+    "interactions": {
+        "feed": {
+            "favs": "Tus favs",
+            "recents": "Recientes"
+        }
     }
 }

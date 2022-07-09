@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { Alert, Linking, ScrollView, Text, FlatList, View, Modal, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, FlatList, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import { translate } from '../../utilities/i18';
 import styles from './style';
 import images from '../../../assets/images';
 import SearchStreamerModal from '../../components/InteractionsModals/SearchStreamerModal';
 import StreamerCardSmall from '../../components/StreamerCard/StreamerCardSmall';
 import StreamerCardMini from '../../components/StreamerCard/StreamerCardMini';
 import StreamCardLive from '../../components/StreamCard/StreamCardLive';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-
 
 const FavsData = [
     {
@@ -160,7 +159,7 @@ export class InteractionsFeed extends Component {
                     <View style={styles.feedMainContainer}>
                         <View style={styles.feedSectionHeaderContainer}>
                             <Text style={[styles.whiteText, styles.feedSectionHeader]}>
-                                En vivo
+                                {translate('TimelineStreams.live')}
                             </Text>
                             <View style={styles.feedLiveIcon} />
                         </View>
@@ -178,7 +177,7 @@ export class InteractionsFeed extends Component {
 
                         <View style={[styles.feedSectionHeaderContainer, styles.feedSectionHeaderMarginTop]}>
                             <Text style={[styles.whiteText, styles.feedSectionHeader]}>
-                                Tus favs
+                                {translate('interactions.feed.favs')}
                             </Text>
                         </View>
 
@@ -195,7 +194,7 @@ export class InteractionsFeed extends Component {
 
                         <View style={styles.feedSectionHeaderContainer}>
                             <Text style={[styles.whiteText, styles.feedSectionHeader]}>
-                                Recientes
+                                {translate('interactions.feed.recents')}
                             </Text>
                         </View>
 

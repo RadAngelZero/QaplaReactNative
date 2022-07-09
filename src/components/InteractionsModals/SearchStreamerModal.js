@@ -8,6 +8,27 @@ import images from '../../../assets/images';
 
 class SearchStreamerModal extends Component {
 
+    state = {
+        textRotation: 'GIF',
+        textRotationState: 0,
+    }
+
+    texts = ['GIF', 'Meme', 'Sticker', 'Mensaje']
+
+    componentDidMount() {
+        this.textRotator = setInterval(() => {
+            if (this.state.textRotationState >= this.texts.length - 1) {
+                this.setState({ textRotation: this.texts[0], textRotationState: 0 });
+
+            } else {
+                this.setState({ textRotation: this.texts[this.state.textRotationState + 1], textRotationState: this.state.textRotationState + 1 });
+            }
+        }, 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.textRotator);
+    }
 
     renderContent = () => (
         <TouchableWithoutFeedback
@@ -24,7 +45,7 @@ class SearchStreamerModal extends Component {
                         <Text style={[styles.bottomSheetWhiteText, styles.bottomSheetSearchStreamerHeader]}>
                             {'Envía un' + " "}
                             <Text style={styles.bottomSheetAccentText}>
-                                GIF
+                                {this.state.textRotation}
                             </Text>
                         </Text>
                         <View style={{ height: 4 }} />

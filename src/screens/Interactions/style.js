@@ -53,6 +53,11 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: widthPercentageToPx(4.26),
     },
+    headerContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     feedSectionHeader: {
         fontWeight: '700',
         fontSize: 22,
@@ -70,8 +75,11 @@ export default styles = StyleSheet.create({
         fontWeight: '700',
         lineHeight: heightPercentageToPx(3.94),
     },
+    headerMaxWidth: {
+        maxWidth: widthPercentageToPx(56.8),
+    },
     screenHeaderTextAddTTS: {
-        maxWidth: widthPercentageToPx(68.26)
+        maxWidth: widthPercentageToPx(68.26),
     },
     helpButton: {
         backgroundColor: '#22272F',
@@ -413,6 +421,9 @@ export default styles = StyleSheet.create({
         lineHeight: heightPercentageToPx(2.95),
         maxWidth: widthPercentageToPx(54.4),
         marginTop: heightPercentageToPx(3.69),
+    },
+    onlyQoinsText: {
+        maxWidth: widthPercentageToPx(71.4),
     },
     onlySendQoinsContainer: {
         position: 'absolute',

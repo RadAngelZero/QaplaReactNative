@@ -19,9 +19,9 @@ class SendInteractionModal extends Component {
                 <View style={styles.bottomSheetMainContainer}>
                     <TouchableOpacity
                         onPress={this.props.subTip}
-                        disabled={this.props.extraTip <= 0}
+                        disabled={this.props.extraTip <= this.props.minimum}
                         style={[styles.checkoutMinTouchable, {
-                            opacity: this.props.extraTip <= 0 ? 0.4 : 1,
+                            opacity: this.props.extraTip <= this.props.minimum ? 0.4 : 1,
                         }]}
                     >
                         <images.svg.minusBubble style={styles.checkoutAddRemIcon} />
@@ -41,16 +41,23 @@ class SendInteractionModal extends Component {
                 </View>
                 <View style={styles.bottomSheetButtonsContainer}>
                     <TouchableOpacity
-                        onPress={this.props.sendInteraction}
+                        onPress={this.props.yesButtonAction}
                         style={[styles.bottomSheetButton, styles.bottomSheetButtonBackground]}
                     >
                         <Text style={styles.bottomSheetButtonText}>
-                            Enviar Interacción
+                            {this.props.onlyQoins ?
+                                <>
+                                    {`Enviar Cheers`}
+                                </>
+                                :
+                                <>
+                                    {`Enviar Interacción`}
+                                </>}
                         </Text>
                     </TouchableOpacity>
                     <View style={styles.bottomSheetButton}>
                         <TouchableOpacity
-                            onPress={() => this.props.cancel}
+                            onPress={this.props.cancel}
                             style={styles.bottomSheetNoButton}
                         >
                             <Text style={[styles.bottomSheetButtonText, styles.bottomSheetNoButtonText]}>

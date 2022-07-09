@@ -26,7 +26,7 @@ class ConfirmSelectionModal extends Component {
                 </View>
                 <View style={styles.bottomSheetButtonsContainer}>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('InteractionsAddTTS')}
+                        onPress={this.props.yesButton}
                         style={[styles.bottomSheetButton, styles.bottomSheetButtonBackground]}
                     >
                         <Text style={styles.bottomSheetButtonText}>
@@ -35,7 +35,7 @@ class ConfirmSelectionModal extends Component {
                     </TouchableOpacity>
                     <View style={styles.bottomSheetButton}>
                         <TouchableOpacity
-                            onPress={() => this.props.navigation.pop()}
+                            onPress={this.props.noButton}
                             style={styles.bottomSheetNoButton}
                         >
                             <Text style={[styles.bottomSheetButtonText, styles.bottomSheetNoButtonText]}>

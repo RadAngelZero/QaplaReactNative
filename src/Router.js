@@ -50,6 +50,7 @@ import InteractionsTTS from './screens/Interactions/InteractionsTTS';
 import InteractionsCheckout from './screens/Interactions/InteractionsCheckout';
 import BuyQoins from './screens/BuyQoins/BuyQoins';
 import InteractionsSent from './screens/Interactions/InteractionsSent';
+import InteractionsAddVisual from './screens/Interactions/InteractionsAddVisual';
 
 //#region Stack Navigators
 
@@ -169,6 +170,14 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
   },
   InteractionsTTS: {
     screen: InteractionsTTS,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsAddVisual: {
+    screen: InteractionsAddVisual,
     navigationOptions: {
       headerShown: true,
       gestureDirection: 'horizontal',

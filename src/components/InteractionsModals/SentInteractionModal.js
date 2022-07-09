@@ -32,7 +32,16 @@ class SentInteractionModal extends Component {
                         style={[styles.bottomSheetButton, styles.bottomSheetButtonBackground]}
                     >
                         <Text style={styles.bottomSheetButtonText}>
-                            Ir a Twitch
+                            {this.props.isLive ?
+                                <>
+                                    {`Ir a Twitch`}
+
+                                </>
+                                :
+                                <>
+                                    {`Volver al inicio`}
+                                </>
+                            }
                         </Text>
                     </TouchableOpacity>
                 </View>

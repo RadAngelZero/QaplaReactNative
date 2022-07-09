@@ -3,7 +3,7 @@ import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import styles from './style';
 import images from '../../../assets/images';
 
-class InteractionsPersonalize extends Component {
+class InteractionsAddVisual extends Component {
 
     state = {
         GIFCost: 100,
@@ -18,12 +18,8 @@ class InteractionsPersonalize extends Component {
         this.props.navigation.navigate('InteractionsSelectGIF', { cost: this.state.GIFCost, type: 0, messageCost: this.state.TTSCost });
     }
 
-    tts = () => {
-        this.props.navigation.navigate('InteractionsTTS', { messageCost: this.state.TTSCost });
-    }
-
-    onlyQoins = () => {
-        this.props.navigation.navigate('InteractionsCheckout', { onlyQoins: true });
+    onlyTTS = () => {
+        this.props.navigation.navigate('InteractionsCheckout', { hideBackButton: true });
     }
 
     render() {
@@ -31,12 +27,12 @@ class InteractionsPersonalize extends Component {
             <View style={styles.container}>
                 <View style={styles.innerConatiner}>
                     <View style={styles.headerContainer}>
-                        <Text style={[styles.whiteText, styles.screenHeaderText]}>
-                            {'Personaliza tu interacción'}
+                        <Text style={[styles.whiteText, styles.screenHeaderText, styles.headerMaxWidth]}>
+                            {'Agrega un Gif, Sticker o Meme a tu interacción'}
                         </Text>
-                        <TouchableOpacity style={styles.helpButton}>
+                        {/* <TouchableOpacity style={styles.helpButton}>
                             <images.svg.questionMark />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     <View style={styles.personalizeButtonsContainer}>
                         <TouchableOpacity
@@ -127,7 +123,7 @@ class InteractionsPersonalize extends Component {
                             </View>
                         </ImageBackground>
                     </TouchableOpacity> */}
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                             onPress={this.tts}
                             style={styles.personalizeButtonContainer}
                         >
@@ -148,7 +144,7 @@ class InteractionsPersonalize extends Component {
                                     </Text>
                                 </View>
                             </ImageBackground>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                         <TouchableOpacity
                             onPress={() => console.log('f')}
                             style={styles.personalizeButtonContainer}
@@ -171,42 +167,16 @@ class InteractionsPersonalize extends Component {
                                 </View>
                             </ImageBackground>
                         </TouchableOpacity>
-                        {/* <TouchableOpacity
-                            onPress={() => console.log('d')}
-                            style={styles.personalizeButtonContainer}
-                        >
-                            <ImageBackground
-                                source={images.png.InteractionGradient5.img}
-                                style={styles.personalizeButtonBackgroundImage}
-                            >
-                                <Text style={[styles.personalizeButtonIconText,
-                                {
-                                    maxWidth: widthPercentageToPx(32),
-                                    height: heightPercentageToPx(9.23),
-                                    marginTop: 0,
-                                    textAlignVertical: 'center',
-                                }]} >
-                                    Enviar sólo
-                                    Qoins, desde:
-                                </Text>
-                                <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                    <images.svg.qoin style={styles.qoin} />
-                                    <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                        {this.state.OnlyQoins}
-                                    </Text>
-                                </View>
-                            </ImageBackground>
-                        </TouchableOpacity> */}
                     </View>
                 </View>
                 <View style={styles.onlySendQoinsContainer}>
                     <TouchableOpacity style={styles.onlySendQoinsTouchable}
-                        onPress={this.onlyQoins}
+                        onPress={this.onlyTTS}
                     >
                         <Text style={[styles.semitransparentText, styles.onlySendQoinsText]}>
-                            {'Sólo enviar' + ' '}
+                            {'Sólo enviar mi' + ' '}
                             <Text style={styles.whiteText}>
-                                Qoins
+                                TTS
                             </Text>
                         </Text>
                     </TouchableOpacity>
@@ -217,4 +187,4 @@ class InteractionsPersonalize extends Component {
 
 }
 
-export default InteractionsPersonalize;
+export default InteractionsAddVisual;

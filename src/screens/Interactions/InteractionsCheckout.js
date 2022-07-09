@@ -15,7 +15,10 @@ class InteractionsCheckout extends Component {
         messageCost: 0,
         extraTip: 0,
         tipIncrement: 50,
+        minimum: 0,
         userQoins: 50,
+        onlyQoins: false,
+        streamerName: '',
     }
 
     addTip = () => {
@@ -24,27 +27,40 @@ class InteractionsCheckout extends Component {
 
     subTip = () => {
         console.log('sub');
-        if (this.state.extraTip > 0) {
+        if (this.state.extraTip > this.state.minimum) {
             this.setState({ extraTip: this.state.extraTip - this.state.tipIncrement });
         }
-        if (this.state.extraTip < 0) {
-            this.setState({ extraTip: 0 });
+        if (this.state.extraTip < this.state.minimum) {
+            this.setState({ extraTip: this.state.minimum });
         }
     }
 
-    sendInteractionHandler = () => {
-        this.props.navigation.navigate('BuyQoins');
+    yesButtonAction = () => {
+        this.props.navigation.navigate('InteractionsSent');
+    }
+
+    cancel = () => {
+        this.props.navigation.goBack();
     }
 
     componentDidMount() {
         console.log(this.props.navigation);
         console.log(this.props.navigation.dangerouslyGetParent().state.routes);
+        const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
+        const streamerName = this.props.navigation.dangerouslyGetParent().state.routes[0].params.streamerName;
+        this.setState({ streamerName });
+        if (onlyQoins) {
+            this.setState({ minimum: 50, extraTip: 50, onlyQoins: true });
+        }
         var arr = this.props.navigation.dangerouslyGetParent().state.routes;
         arr.map(e => {
             console.log(e);
             if (e.params) {
                 if (e.params.cost) {
-                    this.setState({ itemCost: e.params.cost, type: e.params.type, messageCost: e.params.messageCost });
+                    this.setState({ itemCost: e.params.cost, type: e.params.type });
+                }
+                if (e.params.messageCost) {
+                    this.setState({ messageCost: e.params.messageCost });
                 }
                 if (e.params.itemID) {
                     this.setState({ itemID: e.params.itemID, itemURL: e.params.itemURL, itemSize: e.params.size, itemRatio: e.params.ratio });
@@ -77,7 +93,16 @@ class InteractionsCheckout extends Component {
                             </View>
                         }
                     </View>
-                    <View style={styles.checkoutContainer}>
+                    {this.state.onlyQoins && <View style={styles.sentContainer}>
+                        <Text style={[styles.whiteText, styles.sentText, styles.onlyQoinsText]}>
+                            {'Apoya a '}
+                            <Text style={styles.accentTextColor}>
+                                {this.state.streamerName}
+                            </Text>
+                            {' envíando cheers de Qoins 💚 '}
+                        </Text>
+                    </View>}
+                    {!this.state.onlyQoins && <View style={styles.checkoutContainer}>
                         <View style={styles.checkoutDataDisplayMainContainer}>
                             <View style={styles.checkoutDataDisplayContainer}>
                                 <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>Mis Qoins</Text>
@@ -115,15 +140,17 @@ class InteractionsCheckout extends Component {
                             }
                         </View>
                         <View style={styles.checkoutMarginDisplay} />
-                    </View>
+                    </View>}
                 </ScrollView>
                 <SendInteractionModal
                     baseCost={this.state.itemCost + (this.state.message === '' ? 0 : this.state.messageCost)}
                     extraTip={this.state.extraTip}
                     addTip={this.addTip}
                     subTip={this.subTip}
-                    sendInteraction={this.sendInteractionHandler}
-                    cancel={() => console.log('cancel')}
+                    minimum={this.state.minimum}
+                    yesButtonAction={this.yesButtonAction}
+                    onlyQoins={this.state.onlyQoins}
+                    cancel={this.cancel}
                 />
             </View >
         );

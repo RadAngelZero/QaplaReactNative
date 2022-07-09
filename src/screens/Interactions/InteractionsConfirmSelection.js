@@ -9,6 +9,18 @@ class InteractionsConfirmSelection extends Component {
         qoinsCost: 200,
     }
 
+    yesButton = () => {
+        if (this.props.navigation.dangerouslyGetParent().state.routes.length >= 5) {
+            this.props.navigation.navigate('InteractionsCheckout', { hideBackButton: true });
+            return;
+        }
+        this.props.navigation.navigate('InteractionsAddTTS');
+    }
+
+    noButton = () => {
+        this.props.navigation.pop();
+    }
+
     componentDidMount() {
         console.log(this.props.navigation.getParam('itemID', null));
         console.log(this.props.navigation.getParam('itemURL', null));
@@ -30,7 +42,7 @@ class InteractionsConfirmSelection extends Component {
                         />
                     </View>
                 </View>
-                <ConfirmSelectionModal navigation={this.props.navigation} qoinsCost={this.state.qoinsCost} />
+                <ConfirmSelectionModal yesButton={this.yesButton} noButton={this.noButton} qoinsCost={this.state.qoinsCost} />
             </View>
         );
     }

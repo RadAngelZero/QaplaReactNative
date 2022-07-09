@@ -23,6 +23,10 @@ class InteractionsTTS extends Component {
     }
 
     sendButtonHandler = () => {
+        if (this.props.navigation.dangerouslyGetParent().state.routes.length <= 2) {
+            this.props.navigation.navigate('InteractionsAddVisual', { message: this.state.message });
+            return;
+        }
         this.props.navigation.navigate('InteractionsCheckout', { message: this.state.message, hideBackButton: true });
     }
 

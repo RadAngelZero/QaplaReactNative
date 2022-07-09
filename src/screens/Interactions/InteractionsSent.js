@@ -6,12 +6,30 @@ import styles from './style';
 
 class InteractionsSent extends Component {
     state = {
-        streamerName: 'Rad',
+        streamerName: '',
+        isLive: false,
         totalQoins: 350,
     }
 
+    componentDidMount() {
+        console.log(this.props.navigation.dangerouslyGetParent().state.routes);
+        console.log();
+        const streamerName = this.props.navigation.dangerouslyGetParent().state.routes[0].params.streamerName;
+        const isLive = this.props.navigation.dangerouslyGetParent().state.routes[0].params.isLive;
+        const onlyQoins = this.props.navigation.dangerouslyGetParent().state.routes[this.props.navigation.dangerouslyGetParent().state.index - 1].params.onlyQoins;
+        this.setState({ streamerName });
+        if (isLive) {
+            this.setState({ isLive });
+        }
+        if (onlyQoins) {
+            this.setState({ onlyQoins });
+        }
+    }
+
     pressHandler = () => {
-        console.log('ir a twitch o a feed');
+        if (this.state.isLive) {
+            return console.log('a twitch');
+        }
         this.props.navigation.dismiss();
     }
 
@@ -23,15 +41,25 @@ class InteractionsSent extends Component {
                         style={styles.sentCircle}
                         resizeMode="contain"
                     />
-                    <Text style={[styles.whiteText, styles.sentText]}>
-                        {'Interacción enviada\n\n¡Ve al canal '}
-                        <Text style={styles.accentTextColor}>
-                            {this.state.streamerName}
+                    {!this.state.isLive ?
+                        <Text style={[styles.whiteText, styles.sentText, !this.state.isLive ? styles.onlyQoinsText : {}]}>
+                            {`Interacción en cola\n\n`}
+                            <Text style={styles.accentTextColor}>
+                                {this.state.streamerName}
+                            </Text>
+                            {`  no está en vivo. Tu alerta saldrá su próximo stream`}
                         </Text>
-                        {' para ver tu alerta en vivo!'}
-                    </Text>
+                        :
+                        <Text style={[styles.whiteText, styles.sentText]}>
+                            {`Interacción enviada\n\n¡Ve al canal de `}
+                            <Text style={styles.accentTextColor}>
+                                {this.state.streamerName}
+                            </Text>
+                            {` para ver tu alerta en vivo!`}
+                        </Text>
+                    }
                 </View>
-                <SentInteractionModal onPress={this.pressHandler} streamerName={this.state.streamerName} qoins={this.state.totalQoins} />
+                <SentInteractionModal onPress={this.pressHandler} streamerName={this.state.streamerName} qoins={this.state.totalQoins} isLive={this.state.isLive} />
             </View>
         )
     }

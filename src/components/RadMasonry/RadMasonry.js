@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
 
 class RadMasonry extends Component {
 

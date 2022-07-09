@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Image, Text, View } from 'react-native';
 import images from '../../../assets/images';
 import SentInteractionModal from '../../components/InteractionsModals/SentInteractionModal';
-import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
 import styles from './style';
 
 class InteractionsSent extends Component {
@@ -19,30 +18,14 @@ class InteractionsSent extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{
-                    marginTop: 100 * getScreenSizeMultiplier(),
-                    alignItems: 'center',
-                }}>
+                <View style={styles.sentContainer}>
                     <Image source={images.png.checkCircleGlow.img}
-                        style={{
-                            height: 140 * getScreenSizeMultiplier(),
-                        }}
+                        style={styles.sentCircle}
                         resizeMode="contain"
                     />
-                    <Text style={{
-                        color: '#fff',
-                        fontSize: 20,
-                        fontWeight: '600',
-                        lineHeight: 24,
-                        letterSpacing: 0,
-                        textAlign: 'center',
-                        maxWidth: 204 * getScreenSizeMultiplier(),
-                        marginTop: 30 * getScreenSizeMultiplier(),
-                    }}>
+                    <Text style={[styles.whiteText, styles.sentText]}>
                         {'Interacción enviada\n\n¡Ve al canal '}
-                        <Text style={{
-                            color: '#00FFDD',
-                        }}>
+                        <Text style={styles.accentTextColor}>
                             {this.state.streamerName}
                         </Text>
                         {' para ver tu alerta en vivo!'}

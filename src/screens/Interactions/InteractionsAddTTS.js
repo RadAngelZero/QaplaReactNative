@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
 import styles from './style';
 import images from '../../../assets/images';
 
@@ -9,22 +8,8 @@ class InteractionsAddTTS extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{
-                    display: 'flex',
-                    flex: 1,
-                    flexDirection: 'column',
-                    marginTop: 42 * getScreenSizeMultiplier(),
-                    paddingHorizontal: 16 * getScreenSizeMultiplier(),
-                    justifyContent: 'space-between',
-                }}>
-                    <Text style={{
-                        color: '#fff',
-                        fontSize: 22 * getScreenSizeMultiplier(),
-                        fontWeight: '600',
-                        lineHeight: 32 * getScreenSizeMultiplier(),
-                        letterSpacing: 0,
-                        maxWidth: 256 * getScreenSizeMultiplier(),
-                    }}>
+                <View style={[styles.innerConatiner, styles.addTTSContainer]}>
+                    <Text style={[styles.whiteText, styles.screenHeaderText, styles.screenHeaderTextAddTTS]}>
                         Agrega un Text-to-Speech
                         a tu interacción
                     </Text>
@@ -53,91 +38,43 @@ class InteractionsAddTTS extends Component {
                                 </View>
                             </ImageBackground>
                         </TouchableOpacity>
-                        <View style={{
-                            backgroundColor: '#141539',
-                            paddingHorizontal: 24 * getScreenSizeMultiplier(),
-                            paddingVertical: 16 * getScreenSizeMultiplier(),
-                            borderRadius: 20 * getScreenSizeMultiplier(),
-                            borderTopLeftRadius: 4 * getScreenSizeMultiplier(),
-                            marginTop: 16 * getScreenSizeMultiplier(),
-                        }}>
-                            <Text style={{
-                                color: '#fff',
-                                fontSize: 16 * getScreenSizeMultiplier(),
-                                fontWeight: '400',
-                                lineHeight: 24 * getScreenSizeMultiplier(),
-                                letterSpacing: 0,
-                                maxWidth: 250 * getScreenSizeMultiplier(),
-
-                            }}>
+                        <View style={styles.chatBubbleContainer}>
+                            <Text style={[styles.whiteText, styles.chatBubbleText]}>
                                 {'🗣 Agrega un mensaje con Bot de Voz para' + ' '}
-                                <Text style={{
-                                    color: '#00FFDD',
-                                    fontWeight: '500',
-                                }}>
+                                <Text style={[styles.accentTextColor, styles.chatBubbleTextAccent]}>
                                     {'Danae' + ' '}
                                 </Text>
                                 {'a tu interacción por' + ' '}
-                                <Text style={{
-                                    color: '#00FFDD',
-                                    fontWeight: '500',
-                                }}>
+                                <Text style={[styles.accentTextColor, styles.chatBubbleTextAccent]}>
                                     {'200' + ' '}
                                 </Text>
                                 Qoins
                             </Text>
                         </View>
                     </View>
-                    <View style={{
-                        maxWidth: 260 * getScreenSizeMultiplier(),
-                        alignSelf: 'center',
-                    }}>
+                    <View style={styles.buttonsContainer}>
 
                         <TouchableOpacity
                             onPress={() => this.props.navigation.navigate('InteractionsTTS')}
-                            style={{
-                                backgroundColor: '#3B4BF9',
-                                width: 260 * getScreenSizeMultiplier(),
-                                height: 74 * getScreenSizeMultiplier(),
-                                borderRadius: 37 * getScreenSizeMultiplier(),
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
+                            style={[styles.bottomButton, styles.bottomButtonBackground]}
                         >
-                            <Text style={{
-                                color: '#fff',
-                                fontSize: 17 * getScreenSizeMultiplier(),
-                                fontWeight: '600',
-                                lineHeight: 22 * getScreenSizeMultiplier(),
-                                letterSpacing: 0.492000013589859 * getScreenSizeMultiplier(),
-
-                            }}>
+                            <Text style={[styles.whiteText, styles.bottomButtonText]}>
                                 Agregar Text-to-Speech
                             </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('InteractionsCheckout')}
-                            style={{
-                                backgroundColor: '#0000',
-                                width: 260 * getScreenSizeMultiplier(),
-                                height: 74 * getScreenSizeMultiplier(),
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Text style={{
-                                color: '#FFFFFF99',
-                                fontSize: 17 * getScreenSizeMultiplier(),
-                                fontWeight: '500',
-                                lineHeight: 22 * getScreenSizeMultiplier(),
-                                letterSpacing: 1 * getScreenSizeMultiplier(),
-                            }}>
-                                {'Sólo enviar mi' + ' '}
-                                <Text style={{ color: '#fff', fontWeight: '600', }}>
-                                    GIF
+                        <View style={styles.bottomButton}>
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.navigate('InteractionsCheckout')}
+                                style={styles.noBottomButton}
+                            >
+                                <Text style={[styles.bottomButtonText, styles.noBottomButtomText]}>
+                                    {'Sólo enviar mi' + ' '}
+                                    <Text style={[styles.whiteText, styles.noBottomButtonTextAccent]}>
+                                        GIF
+                                    </Text>
                                 </Text>
-                            </Text>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
 

@@ -7,6 +7,7 @@ import SearchStreamerModal from '../../components/InteractionsModals/SearchStrea
 import StreamerCardSmall from '../../components/StreamerCard/StreamerCardSmall';
 import StreamerCardMini from '../../components/StreamerCard/StreamerCardMini';
 import StreamCardLive from '../../components/StreamCard/StreamCardLive';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 
 const FavsData = [
@@ -156,145 +157,73 @@ export class InteractionsFeed extends Component {
         return (
             <>
                 <ScrollView style={styles.container}>
-                    <View style={{
-                        marginTop: 38,
-                    }}>
-                        <View style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            marginLeft: 16,
-                        }}>
-                            <Text style={{
-                                color: '#fff',
-                                fontWeight: '700',
-                                fontSize: 22,
-                                lineHeight: 28,
-                                letterSpacing: 1,
-                            }}>
+                    <View style={styles.feedMainContainer}>
+                        <View style={styles.feedSectionHeaderContainer}>
+                            <Text style={[styles.whiteText, styles.feedSectionHeader]}>
                                 En vivo
                             </Text>
-                            <View style={{
-                                width: 12,
-                                height: 12,
-                                backgroundColor: '#FF006B',
-                                borderRadius: 6,
-                                marginLeft: 8,
-                                marginTop: 4,
-                            }} />
+                            <View style={styles.feedLiveIcon} />
                         </View>
 
-                        <View style={{
-                            display: 'flex',
-                            marginTop: 30,
-                            width: '100%',
-                        }}>
+                        <View style={[styles.widthMax, styles.marginTop30]}>
                             <FlatList
                                 renderItem={this.renderLiveItem}
                                 keyExtractor={item => item.id}
                                 data={LiveData}
-                                style={{
-                                    width: '100%',
-                                }}
+                                style={styles.widthMax}
+                                showsHorizontalScrollIndicator={false}
                                 horizontal
                             />
                         </View>
 
-                        <View style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            marginLeft: 16,
-                            marginTop: 20,
-                        }}>
-                            <Text style={{
-                                color: '#fff',
-                                fontWeight: '700',
-                                fontSize: 22,
-                                lineHeight: 28,
-                                letterSpacing: 1,
-                            }}>
+                        <View style={[styles.feedSectionHeaderContainer, styles.feedSectionHeaderMarginTop]}>
+                            <Text style={[styles.whiteText, styles.feedSectionHeader]}>
                                 Tus favs
                             </Text>
                         </View>
 
-                        <View style={{
-                            display: 'flex',
-                            marginTop: 30,
-                            width: '100%',
-                        }}>
+                        <View style={[styles.widthMax, styles.marginTop30]}>
                             <FlatList
                                 renderItem={this.renderFavItem}
                                 keyExtractor={item => item.id}
                                 data={FavsData}
-                                style={{
-                                    width: '100%',
-                                }}
+                                style={styles.widthMax}
+                                showsHorizontalScrollIndicator={false}
                                 horizontal
                             />
                         </View>
 
-                        <View style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            marginLeft: 16,
-                        }}>
-                            <Text style={{
-                                color: '#fff',
-                                fontWeight: '700',
-                                fontSize: 22,
-                                lineHeight: 28,
-                                letterSpacing: 1,
-                            }}>
+                        <View style={styles.feedSectionHeaderContainer}>
+                            <Text style={[styles.whiteText, styles.feedSectionHeader]}>
                                 Recientes
                             </Text>
                         </View>
 
-                        <View style={{
-                            display: 'flex',
-                            marginTop: 30,
-                            width: '100%',
-                        }}>
+                        <View style={[styles.marginTop30]}>
                             <ScrollView
                                 horizontal
+                                showsHorizontalScrollIndicator={false}
                             >
                                 <FlatList
                                     renderItem={this.renderRecentItem}
                                     keyExtractor={item => item.id}
                                     data={RecentsData}
-                                    style={{
-                                        width: '100%',
-                                    }}
                                     numColumns={Math.ceil(RecentsData.length / 2)}
                                     showsVerticalScrollIndicator={false}
                                 />
                             </ScrollView>
                         </View>
                         <View
-                            style={{
-                                height: 200,
-                            }}
+                            style={styles.feedBrowserBottomVisible}
                         />
                     </View>
                 </ScrollView>
-                <View style={{
-                    display: 'flex',
-                    position: 'absolute',
-                    width: 40,
-                    height: 40,
-                    top: 32,
-                    right: 18,
-                }}>
+                <View style={[styles.backButton, styles.feedBackButtonPos]}>
                     <TouchableOpacity
                         onPress={() => this.props.navigation.pop()}
                     >
-                        <View style={{
-                            display: 'flex',
-                            width: 40,
-                            height: 40,
-                        }}>
-                            <images.svg.closeIcon />
+                        <View style={styles.backButton}>
+                            <images.svg.closeIcon style={styles.backButtonIconOffset} />
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -309,7 +238,7 @@ export class InteractionsFeed extends Component {
 
 function mapStateToProps(state) {
     return {
-        uid: state.userReducer.user.id
+        uid: state.userReducer.user.id,
     };
 }
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Linking, ScrollView, Text, FlatList, View, Modal, TouchableOpacity, Image, TextInput } from 'react-native';
-import { connect } from 'react-redux';
+import { Text, FlatList, View, TouchableOpacity, Image, TextInput } from 'react-native';
 import styles from './style';
 import images from '../../../assets/images';
 
@@ -81,67 +80,37 @@ class InteractionsSearchStreamer extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    marginTop: 60,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.goBack()}
-                    >
-                        <View style={{
-                            width: 40,
-                            height: 40,
-                            borderRadius: 20,
-                            backgroundColor: '#141539',
-                        }}>
-                            <View style={{ backgroundColor: '#f0f0', marginLeft: -4.6, marginTop: -2 }}>
-                                <images.svg.leftArrowThiccIcon />
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                    <View style={{ width: 8 }} />
+                <View style={styles.innerConatiner}>
                     <View style={{
-                        display: 'flex',
                         flexDirection: 'row',
-                        width: 295,
-                        height: 50,
-                        borderRadius: 50,
-                        backgroundColor: '#141539',
-                        alignSelf: 'center',
-                        paddingHorizontal: 18,
-                        alignItems: 'center',
+                        justifyContent: 'center',
                     }}>
-                        <View style={{ opacity: 0.4 }}>
-                            <images.svg.searchStreamerIcon />
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.goBack()}
+                        >
+                            <View style={styles.backButton}>
+                                <View style={styles.backButtonIconOffset}>
+                                    <images.svg.leftArrowThiccIcon />
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                        <View style={[styles.searchBar, styles.streamerSearchBar]}>
+                            <View style={{ opacity: 0.4 }}>
+                                <images.svg.searchStreamerIcon style={styles.searchIcon} />
+                            </View>
+                            <TextInput
+                                style={styles.gridSearchBarTextInput}
+                                value={this.state.search}
+                                onChange={this.searchHandler}
+                            />
                         </View>
-                        <View style={{ width: 10 }} />
-                        <TextInput
-                            style={{
-                                backgroundColor: '#f0f0',
-                                width: '90%',
-                                color: '#fff',
-                                fontSize: 16,
-                                fontWeight: '400',
-                                lineHeight: 28,
-                                letterSpacing: 0.2,
-                            }}
-                            value={this.state.search}
-                            onChange={this.searchHandler}
-                        />
                     </View>
+                    <FlatList
+                        data={TestData}
+                        renderItem={this.renderItem}
+                        keyExtractor={item => item.id}
+                    />
                 </View>
-                <FlatList
-                    style={{
-                        width: '90%',
-                        alignSelf: 'center',
-                    }}
-                    data={TestData}
-                    renderItem={this.renderItem}
-                    keyExtractor={item => item.id}
-                />
             </View>
         );
     }

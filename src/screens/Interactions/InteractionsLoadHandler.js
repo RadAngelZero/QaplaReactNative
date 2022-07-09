@@ -4,7 +4,7 @@ import { View } from 'react-native';
 class InteractionsLoadHandler extends Component {
 
     componentDidMount() {
-        console.log('to interactions')
+        console.log('to interactions');
         this.props.navigation.navigate('Interactions');
     }
 

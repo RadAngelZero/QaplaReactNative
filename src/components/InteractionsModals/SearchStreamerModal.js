@@ -1,11 +1,10 @@
-import React, { Component } from "react";
-import { View, Modal, Text, TextInput, TouchableWithoutFeedback } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import BottomSheet from 'reanimated-bottom-sheet';
-import { SHEET_MAX_HEIGHT, SHEET_MIN_HEIGHT } from "../../utilities/Constants";
-import LinearGradient from "react-native-linear-gradient";
-import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
-
-import images from "../../../assets/images";
+import LinearGradient from 'react-native-linear-gradient';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { styles, gradients } from './style';
+import images from '../../../assets/images';
 
 class SearchStreamerModal extends Component {
 
@@ -14,68 +13,31 @@ class SearchStreamerModal extends Component {
         <TouchableWithoutFeedback
             onPress={this.props.onPress}
         >
-            <View style={{
-                height: '100%',
-                width: '100%',
-            }}>
+            <View style={styles.bottomSheetContainer}>
                 <LinearGradient
-                    colors={['#A716EE', '#2C07FA']}
-                    style={{
-                        height: '100%',
-                        borderTopLeftRadius: 40,
-                        borderTopRightRadius: 40,
-                    }}
+                    colors={gradients.gradient1}
+                    style={styles.bottomSheetLinearGradient}
                     angle={100}
                     useAngle
                 >
-                    <View style={{
-                        display: 'flex',
-                        marginTop: 24,
-                        marginLeft: widthPercentageToPx(9)
-                    }}>
-                        <Text style={{
-                            color: '#fff',
-                            fontSize: 22,
-                            fontWeight: '700',
-                            lineHeight: 28,
-                            letterSpacing: 1,
-                        }}>
-                            {'Envia un' + " "}
-                            <Text style={{ color: '#00FFDD' }}>
-                                gif
+                    <View style={styles.bottomSheetSearchStreamerMainContainer}>
+                        <Text style={[styles.bottomSheetWhiteText, styles.bottomSheetSearchStreamerHeader]}>
+                            {'Envía un' + " "}
+                            <Text style={styles.bottomSheetAccentText}>
+                                GIF
                             </Text>
                         </Text>
                         <View style={{ height: 4 }} />
-                        <Text style={{
-                            color: '#fff',
-                            fontSize: 16,
-                            fontWeight: '500',
-                            lineHeight: 28,
-                            letterSpacing: 1,
-                        }}>
+                        <Text style={[styles.bottomSheetWhiteText, styles.bottomSheetSearchStreamerSubtitle]}>
                             en vivo a tu streamer
                         </Text>
                     </View>
-                    <View style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        backgroundColor: '#141539',
-                        width: widthPercentageToPx(92),
-                        height: heightPercentageToPx(6.2),
-                        alignSelf: 'center',
-                        borderRadius: 50,
-                        marginTop: 14,
-                        paddingHorizontal: 18,
-                        alignItems: 'center',
-                    }}>
-                        <View style={{opacity: 0.4}}>
-                            <images.svg.searchStreamerIcon />
+                    <View style={styles.bottomSheetSearchBar}>
+                        <View style={{ opacity: 0.4 }}>
+                            <images.svg.searchStreamerIcon style={styles.bottomSheetSearchStreamerIcon} />
                         </View>
-                        <View style={{ width: 12 }} />
                         <Text
-                            style={{
-                                color: '#fff6',
-                            }}
+                            style={styles.bottomSheetSearchBarText}
                         >
                             Busca un streamer por su nombre
                         </Text>

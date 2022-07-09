@@ -1,10 +1,7 @@
-import React, { Component } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
-import MaskedView from '@react-native-community/masked-view';
+import React, { Component } from 'react';
+import { Image, ScrollView, Text, View } from 'react-native';
 import styles from './style';
-import { getScreenSizeMultiplier, heightPercentageToPx } from '../../utilities/iosAndroidDim';
-import LinearGradient from 'react-native-linear-gradient';
-import SendInteractionModal from "../../components/InteractionsModals/SendInteractionModal";
+import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
 
 class InteractionsCheckout extends Component {
 
@@ -26,7 +23,7 @@ class InteractionsCheckout extends Component {
     }
 
     subTip = () => {
-        console.log('sub')
+        console.log('sub');
         if (this.state.extraTip > 0) {
             this.setState({ extraTip: this.state.extraTip - this.state.tipIncrement });
         }
@@ -62,20 +59,10 @@ class InteractionsCheckout extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView style={{
-                    flex: 1,
-                    marginTop: 32 * getScreenSizeMultiplier(),
-                    paddingHorizontal: 16 * getScreenSizeMultiplier(),
-                }}>
+                <ScrollView style={styles.innerConatiner}>
                     <View>
                         {this.state.itemID !== '' &&
-                            <View style={{
-                                borderRadius: 10,
-                                maxHeight: heightPercentageToPx(20),
-                                maxWidth: '60%',
-                                overflow: 'hidden',
-                                justifyContent: 'center',
-                            }}>
+                            <View style={styles.checkoutItemContainer}>
                                 <Image source={{ uri: this.state.itemURL }}
                                     resizeMode={'contain'}
                                     style={{
@@ -83,121 +70,51 @@ class InteractionsCheckout extends Component {
                                     }} />
                             </View>}
                         {this.state.message !== '' &&
-                            <View style={{
-                                backgroundColor: '#3B4BF9',
-                                borderRadius: 20,
-                                borderTopLeftRadius: 4,
-                                paddingHorizontal: 24,
-                                paddingVertical: 16,
-                                marginTop: 8,
-                                alignSelf: 'flex-start',
-                            }}>
-                                <Text style={{
-                                    color: '#fff',
-                                    fontSize: 16,
-                                    fontWeight: '600',
-                                    lineHeight: 24,
-                                    letterSpacing: 0,
-                                }}>{this.state.message}</Text>
+                            <View style={styles.checkoutChatBubble}>
+                                <Text style={[styles.whiteText, styles.checkoutChatBubbleText]}>
+                                    {this.state.message}
+                                </Text>
                             </View>
                         }
                     </View>
-                    <View style={{
-                        marginTop: 16,
-                    }}>
-                        <View style={{
-                            backgroundColor: '#141539',
-                            padding: 24,
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            borderRadius: 25,
-                        }}>
-                                <Text style={{
-                                    color: '#fff',
-                                    fontSize: 16,
-                                    fontWeight: '600',
-                                    lineHeight: 19,
-                                    letterSpacing: 1,
-                                }}>Mis Qoins</Text>
-                                <Text style={{
-                                    color: '#fff',
-                                    fontSize: 16,
-                                    fontWeight: '600',
-                                    lineHeight: 19,
-                                    letterSpacing: 1,
-                                }}>{this.state.userQoins}</Text>
+                    <View style={styles.checkoutContainer}>
+                        <View style={styles.checkoutDataDisplayMainContainer}>
+                            <View style={styles.checkoutDataDisplayContainer}>
+                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>Mis Qoins</Text>
+                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>{this.state.userQoins}</Text>
+                            </View>
                         </View>
-                        <View style={{
-                            backgroundColor: '#141539',
-                            padding: 24,
-                            borderRadius: 25,
-                            marginTop: 16,
-                        }}>
-                            <View style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                            }}>
-                                <Text style={{
-                                    color: '#fff',
-                                    fontSize: 16,
-                                    fontWeight: '500',
-                                    lineHeight: 32,
-                                    letterSpacing: 0,
-                                }}>Extra Tip</Text>
-                                <Text style={{
-                                    color: '#fff',
-                                    fontSize: 16,
-                                    fontWeight: '500',
-                                    lineHeight: 32,
-                                    letterSpacing: 0,
-                                }}>{this.state.extraTip}</Text>
+                        <View style={[styles.checkoutDataDisplayMainContainer, styles.marginTop16]}>
+                            <View style={styles.checkoutDataDisplayContainer}>
+                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                    Extra Tip
+                                </Text>
+                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                    {this.state.extraTip}
+                                </Text>
                             </View>
                             {this.state.itemID !== '' &&
-                                <View style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    marginTop: 8,
-                                }}>
-                                    <Text style={{
-                                        color: '#fff',
-                                        fontSize: 16,
-                                        fontWeight: '500',
-                                        lineHeight: 32,
-                                        letterSpacing: 0,
-                                    }}>GIF</Text>
-                                    <Text style={{
-                                        color: '#fff',
-                                        fontSize: 16,
-                                        fontWeight: '500',
-                                        lineHeight: 32,
-                                        letterSpacing: 0,
-                                    }}>{this.state.itemCost}</Text>
+                                <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                        GIF
+                                    </Text>
+                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                        {this.state.itemCost}
+                                    </Text>
                                 </View>
                             }
                             {this.state.message !== '' &&
-                                <View style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    marginTop: 8,
-                                }}>
-                                    <Text style={{
-                                        color: '#fff',
-                                        fontSize: 16,
-                                        fontWeight: '500',
-                                        lineHeight: 32,
-                                        letterSpacing: 0,
-                                    }}>Text-to-Speech</Text>
-                                    <Text style={{
-                                        color: '#fff',
-                                        fontSize: 16,
-                                        fontWeight: '500',
-                                        lineHeight: 32,
-                                        letterSpacing: 0,
-                                    }}>{this.state.messageCost}</Text>
+                                <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                        Text-to-Speech
+                                    </Text>
+                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                        {this.state.messageCost}
+                                    </Text>
                                 </View>
                             }
                         </View>
-                        <View style={{ height: heightPercentageToPx(40) }} />
+                        <View style={styles.checkoutMarginDisplay} />
                     </View>
                 </ScrollView>
                 <SendInteractionModal

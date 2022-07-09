@@ -13,9 +13,7 @@ class PersonalizeInteractionHeader extends Component {
     render() {
         return (
             <>
-                <View style={[styles.container, {
-                    opacity: this.props.navigation.state.routes[this.props.navigation.state.index].routeName !== 'InteractionsSent' ? 1 : 0
-                }]}>
+                <View style={styles.container}>
                     <View style={styles.mainContainer}>
                         {this.props.navigation.state.routes[this.props.navigation.state.index].routeName !== 'InteractionsSent' && <>
                             {this.props.navigation.state.routes[this.props.navigation.state.index].routeName !== 'InteractionsCheckout' && <TouchableOpacity

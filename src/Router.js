@@ -195,7 +195,7 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
   InteractionsSent: {
     screen: InteractionsSent,
     navigationOptions: {
-      headerShown: false,
+      headerShown: true,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     },

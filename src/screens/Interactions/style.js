@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
+import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0D1021',
+        backgroundColor: '#0D1021'
     },
     innerConatiner: {
+        flex: 1,
         paddingHorizontal: widthPercentageToPx(4.26),
         paddingTop: heightPercentageToPx(3.94),
     },
@@ -116,8 +117,7 @@ export default styles = StyleSheet.create({
         borderRadius: widthPercentageToPx(2.66),
         marginBottom: heightPercentageToPx(0.98),
         marginHorizontal: widthPercentageToPx(1.06),
-        overflow: 'hidden',
-        backgroundColor: '#202152',
+        overflow: 'hidden'
     },
     searchBar: {
         flexDirection: 'row',

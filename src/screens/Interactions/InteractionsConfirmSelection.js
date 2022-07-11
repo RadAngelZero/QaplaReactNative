@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Image, View } from 'react-native';
+import { ActivityIndicator, Image, SafeAreaView, View } from 'react-native';
 import styles from './style';
-import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import ConfirmSelectionModal from '../../components/InteractionsModals/ConfirmSelectionModal';
 import { getMediaTypeCost } from '../../services/database';
 import { TTS } from '../../utilities/Constants';
@@ -56,35 +55,29 @@ class InteractionsConfirmSelection extends Component {
         const mediaType = this.props.navigation.getParam('mediaType');
 
         return (
-            <View style={styles.container}>
-                <View style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginBottom: 244 * getScreenSizeMultiplier(),
-                }}>
-                    <ActivityIndicator size='large'
-                        color='rgb(61, 249, 223)'
-                        animating={this.state.loadingMedia} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}/>
-                    <Image
-                        onLoadEnd={() => this.setState({ loadingMedia: false })}
-                        source={{ uri: media.original.url }}
-                        style={{
-                            opacity: this.state.loadingMedia ? 0 : 1,
-                            flex: 1,
-                            aspectRatio: media.original.width / media.original.height,
-                            maxHeight: heightPercentageToPx(40),
-                            maxWidth: widthPercentageToPx(80),
-                        }}
-                        resizeMode='contain' />
+            <SafeAreaView style={styles.container}>
+                <View style={styles.interactionSelectedScreenContainer}>
+                    <View style={styles.interactionSelectedBorderRadius}>
+                        <ActivityIndicator size='large'
+                            color='rgb(61, 249, 223)'
+                            animating={this.state.loadingMedia} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}/>
+                        <Image
+                            onLoadEnd={() => this.setState({ loadingMedia: false })}
+                            source={{ uri: media.original.url }}
+                            style={[styles.interactionSelectedConatiner, {
+                                opacity: this.state.loadingMedia ? 0 : 1,
+                                aspectRatio: media.original.width / media.original.height
+                            }]}
+                            resizeMode='contain' />
+                    </View>
                 </View>
                 {this.state.mediaCost !== null &&
                     <ConfirmSelectionModal mediaType={mediaType}
-                        cost={this.state.mediaCost}
                         onConfirmSelection={this.onConfirmSelection}
-                        onCancel={this.onCancel} />
+                        onCancel={this.onCancel}
+                        cost={this.state.mediaCost} />
                 }
-            </View>
+            </SafeAreaView>
         );
     }
 }

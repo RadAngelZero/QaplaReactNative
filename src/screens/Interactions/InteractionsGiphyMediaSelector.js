@@ -3,11 +3,11 @@ import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import images from '../../../assets/images';
 import RadMasonry from '../../components/RadMasonry/RadMasonry';
 import { generateGiphyUserRandomId, getGiphyTrending, searchGiphyMedia } from '../../services/Giphy';
-import { GIPHY_GIFS } from '../../utilities/Constants';
+import { GIPHY_GIFS, GIPHY_STICKERS } from '../../utilities/Constants';
 import { getLocaleLanguage } from '../../utilities/i18';
 
 class InteractionsGiphyMediaSelector extends Component {
@@ -99,13 +99,9 @@ class InteractionsGiphyMediaSelector extends Component {
                             ...this.props.navigation.state.params
                         });
                     }}
-                    style={{
-                        borderRadius: 10 * getScreenSizeMultiplier(),
-                        marginBottom: 8 * getScreenSizeMultiplier(),
-                        marginHorizontal: 4 * getScreenSizeMultiplier(),
-                        overflow: 'hidden',
-                        backgroundColor: '#202152',
-                    }}
+                    style={[styles.gridElementContainer, {
+                        backgroundColor: mediaType !== GIPHY_STICKERS ? '#202152' : 'transparent'
+                    }]}
                 >
                     <Image
                         source={{ uri: item.images.fixed_height_small.url }}
@@ -124,128 +120,62 @@ class InteractionsGiphyMediaSelector extends Component {
     };
 
     render() {
+        const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
+
         return (
             <View style={styles.container}>
-                <View style={{
-                    position: 'absolute',
-                    backgroundColor: '#141539',
-                    height: heightPercentageToPx(85),
-                    bottom: 0,
-                    borderTopLeftRadius: 40 * getScreenSizeMultiplier(),
-                    borderTopRightRadius: 40 * getScreenSizeMultiplier(),
-                    width: widthPercentageToPx(100),
-                }} >
-                    <View style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        height: 40 * getScreenSizeMultiplier(),
-                        marginTop: 16 * getScreenSizeMultiplier(),
-                        paddingHorizontal: 16 * getScreenSizeMultiplier(),
-                        justifyContent: 'space-between',
-                    }}>
-                        <View style={{
-                            backgroundColor: '#0D1021',
-                            flexDirection: 'row',
-                            height: '100%',
-                            width: 270 * getScreenSizeMultiplier(),
-                            borderRadius: 50 * getScreenSizeMultiplier(),
-                            paddingHorizontal: 18 * getScreenSizeMultiplier(),
-                            alignSelf: 'center',
-                            alignItems: 'center',
-                        }}>
+                <View style={[styles.gridMainContainer, {
+                    height: heightPercentageToPx(this.state.keyboardOpen ? 50.6 : 85),
+                }]} >
+                    <View style={styles.gridSearchBarContainer}>
+                        <View style={[styles.searchBar, styles.gridSearchBar]}>
                             <View style={{ opacity: 0.4 }}>
-                                <images.svg.searchStreamerIcon />
+                                <images.svg.searchStreamerIcon style={styles.searchIcon} />
                             </View>
-                            <View style={{ width: 10 }} />
                             <TextInput
                                 value={this.state.searchQuery}
                                 onChange={this.searchHandler}
-                                style={{
-                                    color: '#fff',
-                                    width: '92%',
-                                    fontSize: 16,
-                                    fontWeight: '400',
-                                    lineHeight: 28,
-                                    letterSpacing: 1,
-                                    textAlignVertical: 'center',
-                                }}
+                                style={styles.gridSearchBarTextInput}
+                                placeholder={"Buscar en Giphy"}
+                                placeholderTextColor={'#fff3'}
                             />
                         </View>
-                        <Image source={images.png.PoweredbyGiphy.img} style={{
-                            flex: 1,
-                            width: 77 * getScreenSizeMultiplier(),
-                            maxWidth: 77 * getScreenSizeMultiplier(),
-                            height: 28 * getScreenSizeMultiplier(),
-                        }} />
+                        <Image source={images.png.PoweredbyGiphy.img} style={styles.gridPoweredbyGiphy} />
                     </View>
-                    <View style={{
-                        flex: 1,
-                        width: '100%',
-                        alignSelf: 'center',
-                        marginTop: 16 * getScreenSizeMultiplier(),
-                        paddingHorizontal: 6 * getScreenSizeMultiplier(),
-                    }}>
+                    <View style={styles.gridMasonryContainer}>
                         <RadMasonry
                             onEndReachedThreshold={0.25}
                             data={this.state.media}
-                            numColumns={2}
+                            numColumns={mediaType === GIPHY_STICKERS ? 3 : 2}
                             renderItem={this.renderImage}
                             onEndReached={this.fetchMoreMedia}
-                            containerStyle={{
-                                paddingBottom: 75 * getScreenSizeMultiplier(),
-                            }}
-                        />
+                            containerStyle={styles.gridMasonrySubContainer} />
                     </View>
                 </View>
-                <View style={{
-                    flexDirection: 'row',
-                    position: 'absolute',
-                    bottom: 0,
-                    backgroundColor: '#141539',
-                    height: 75 * getScreenSizeMultiplier(),
-                    width: '100%',
-                    borderTopLeftRadius: 30 * getScreenSizeMultiplier(),
-                    borderTopRightRadius: 30 * getScreenSizeMultiplier(),
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    overflow: 'hidden',
-                }}>
+                <View style={styles.gridBottomSectionSelector}>
                     <TouchableOpacity
                         onPress={() => this.setState({ ...this.state, searchQuery: '', gifSection: 0 })}
-                        style={{
+                        style={[styles.gridBottomSelectionSelectorButton, {
                             backgroundColor: !this.state.gifSection ? '#29326B' : '#0000',
-                            paddingHorizontal: 13 * getScreenSizeMultiplier(),
-                            paddingVertical: 6 * getScreenSizeMultiplier(),
-                            borderRadius: 6 * getScreenSizeMultiplier(),
-                        }}
+                        }]}
                     >
-                        <Text style={{
+                        <Text style={[styles.gridBottomSelectionSelectorButtonText, {
                             color: !this.state.gifSection ? '#FFFFFF' : '#FFFFFF99',
-                            fontSize: 17 * getScreenSizeMultiplier(),
-                            fontWeight: '600',
-                            lineHeight: 22 * getScreenSizeMultiplier(),
-                            letterSpacing: 0,
-                        }}>
+                        }]}
+                        >
                             Recientes
                         </Text>
                     </TouchableOpacity>
-                    <View style={{ width: 8 * getScreenSizeMultiplier() }} />
                     <TouchableOpacity
                         onPress={() => this.setState({ ...this.state, searchQuery: '', gifSection: 1 })}
-                        style={{
+                        style={[styles.gridBottomSelectionSelectorButton, {
                             backgroundColor: this.state.gifSection ? '#29326B' : '#0000',
-                            paddingHorizontal: 13 * getScreenSizeMultiplier(),
-                            paddingVertical: 6 * getScreenSizeMultiplier(),
-                            borderRadius: 6 * getScreenSizeMultiplier(),
-                        }}
+                        }]}
                     >
-                        <Text style={{
+                        <Text style={[styles.gridBottomSelectionSelectorButtonText, {
                             color: this.state.gifSection ? '#FFFFFF' : '#FFFFFF99',
-                            fontSize: 17 * getScreenSizeMultiplier(),
-                            fontWeight: '600',
-                            lineHeight: 22 * getScreenSizeMultiplier(),
-                            letterSpacing: 0,
-                        }}>
+                        }]}
+                        >
                             Tendencia
                         </Text>
                     </TouchableOpacity>

@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { ScrollView, Text, FlatList, View, TouchableOpacity, ActivityIndicator, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 
+import styles from './style';
+import images from '../../../assets/images';
+import { translate } from '../../utilities/i18';
 import SearchStreamerModal from '../../components/InteractionsModals/SearchStreamerModal';
 import StreamerCardSmall from '../../components/StreamerCard/StreamerCardSmall';
 import StreamerCardMini from '../../components/StreamerCard/StreamerCardMini';
 import StreamCardLive from '../../components/StreamCard/StreamCardLive';
-
-import styles from './style';
-import images from '../../../assets/images';
 import Colors from '../../utilities/Colors';
 import { DEFAULT_404_TWITCH_PREVIEW_URL } from '../../utilities/Constants';
 
@@ -158,145 +158,73 @@ export class InteractionsFeed extends Component {
             return (
                 <>
                     <SafeAreaView style={styles.container}>
-                        <ScrollView>
-                            <View style={{
-                                marginTop: 38,
-                            }}>
-                                <View style={{
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    marginLeft: 16,
-                                }}>
-                                    <Text style={{
-                                        color: '#fff',
-                                        fontWeight: '700',
-                                        fontSize: 22,
-                                        lineHeight: 28,
-                                        letterSpacing: 1,
-                                    }}>
-                                        En vivo
+                        <ScrollView style={styles.container}>
+                            <View style={styles.feedMainContainer}>
+                                <View style={styles.feedSectionHeaderContainer}>
+                                    <Text style={[styles.whiteText, styles.feedSectionHeader]}>
+                                        {translate('TimelineStreams.live')}
                                     </Text>
-                                    <View style={{
-                                        width: 12,
-                                        height: 12,
-                                        backgroundColor: '#FF006B',
-                                        borderRadius: 6,
-                                        marginLeft: 8,
-                                        marginTop: 4,
-                                    }} />
+                                    <View style={styles.feedLiveIcon} />
                                 </View>
 
-                                <View style={{
-                                    display: 'flex',
-                                    marginTop: 30,
-                                    width: '100%',
-                                }}>
+                                <View style={[styles.widthMax, styles.marginTop30]}>
                                     <FlatList
                                         renderItem={this.renderLiveItem}
                                         keyExtractor={item => item.streamerId}
                                         data={this.state.liveStreamers}
-                                        style={{
-                                            width: '100%',
-                                        }}
-                                        horizontal
+                                        style={styles.widthMax}
                                         showsHorizontalScrollIndicator={false}
+                                        horizontal
                                     />
                                 </View>
 
-                                <View style={{
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    marginLeft: 16,
-                                    marginTop: 20,
-                                }}>
-                                    <Text style={{
-                                        color: '#fff',
-                                        fontWeight: '700',
-                                        fontSize: 22,
-                                        lineHeight: 28,
-                                        letterSpacing: 1,
-                                    }}>
-                                        Tus favs
+                                <View style={[styles.feedSectionHeaderContainer, styles.feedSectionHeaderMarginTop]}>
+                                    <Text style={[styles.whiteText, styles.feedSectionHeader]}>
+                                        {translate('interactions.feed.favs')}
                                     </Text>
                                 </View>
 
-                                <View style={{
-                                    display: 'flex',
-                                    marginTop: 30,
-                                    width: '100%',
-                                }}>
+                                <View style={[styles.widthMax, styles.marginTop30]}>
                                     <FlatList
                                         renderItem={this.renderFavItem}
                                         keyExtractor={item => item.streamerId}
                                         data={this.state.favStreamers}
-                                        style={{
-                                            width: '100%',
-                                        }}
-                                        horizontal
+                                        style={styles.widthMax}
                                         showsHorizontalScrollIndicator={false}
+                                        horizontal
                                     />
                                 </View>
 
-                                <View style={{
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    marginLeft: 16,
-                                }}>
-                                    <Text style={{
-                                        color: '#fff',
-                                        fontWeight: '700',
-                                        fontSize: 22,
-                                        lineHeight: 28,
-                                        letterSpacing: 1,
-                                    }}>
-                                        Recientes
+                                <View style={styles.feedSectionHeaderContainer}>
+                                    <Text style={[styles.whiteText, styles.feedSectionHeader]}>
+                                        {translate('interactions.feed.recents')}
                                     </Text>
                                 </View>
 
-                                <View style={{
-                                    display: 'flex',
-                                    marginTop: 30,
-                                    width: '100%',
-                                }}>
-                                    <ScrollView horizontal
-                                        showsHorizontalScrollIndicator={false}>
+                                <View style={[styles.marginTop30]}>
+                                    <ScrollView
+                                        horizontal
+                                        showsHorizontalScrollIndicator={false}
+                                    >
                                         <FlatList
                                             renderItem={this.renderRecentItem}
-                                            keyExtractor={item => item.id}
-                                            data={Object.keys(this.state.recentStreamers).map((streamerId) => ({ streamerId, ...this.state.recentStreamers[streamerId] }))}
-                                            style={{
-                                                width: '100%',
-                                            }}
-                                            numColumns={MAXIM_CARDS_LENGTH / 2}
+                                            keyExtractor={item => item.streamerId}
+                                            data={this.state.recentStreamers}
+                                            numColumns={Math.ceil(this.state.recentStreamers.length / 2)}
                                             showsVerticalScrollIndicator={false}
                                         />
                                     </ScrollView>
                                 </View>
                                 <View
-                                    style={{
-                                        height: 200,
-                                    }}
+                                    style={styles.feedBrowserBottomVisible}
                                 />
                             </View>
                         </ScrollView>
-                        <View style={{
-                            display: 'flex',
-                            position: 'absolute',
-                            width: 40,
-                            height: 40,
-                            top: 80,
-                            right: 18,
-                        }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.pop()}>
-                                <View style={{
-                                    display: 'flex',
-                                    width: 40,
-                                    height: 40,
-                                }}>
-                                    <images.svg.closeIcon />
+                        <View style={[styles.backButton, styles.feedBackButtonPos]}>
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.pop()}>
+                                <View style={styles.backButton}>
+                                    <images.svg.closeIcon style={styles.backButtonIconOffset} />
                                 </View>
                             </TouchableOpacity>
                         </View>
@@ -317,7 +245,7 @@ export class InteractionsFeed extends Component {
 
 function mapStateToProps(state) {
     return {
-        uid: state.userReducer.user.id
+        uid: state.userReducer.user.id,
     };
 }
 

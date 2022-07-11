@@ -606,5 +606,11 @@
         "backToProfile": "Go back to my profile",
         "youWillReceive": "You will receive 200 Qoins in your next 3 Qapla streams 🌱",
         "update": "Update"
+    },
+    "interactions": {
+        "feed": {
+            "favs": "Your favs",
+            "recents": "Recents"
+        }
     }
 }

@@ -3,7 +3,7 @@ import { Image, ScrollView, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import { getScreenSizeMultiplier, heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
 import { sendCheers } from '../../services/database';
 
@@ -11,7 +11,8 @@ class InteractionsCheckout extends Component {
     state = {
         extraTip: 0,
         tipIncrement: 50,
-        interactionCost: 0
+        interactionCost: 0,
+        minimum: 0
     };
 
     componentDidMount() {
@@ -21,7 +22,7 @@ class InteractionsCheckout extends Component {
             interactionCost += cost;
         });
 
-        this.setState({ interactionCost })
+        this.setState({ interactionCost });
     }
 
     addTip = () => {
@@ -29,11 +30,11 @@ class InteractionsCheckout extends Component {
     }
 
     subTip = () => {
-        if (this.state.extraTip > 0) {
+        if (this.state.extraTip > this.state.minimum) {
             this.setState({ extraTip: this.state.extraTip - this.state.tipIncrement });
         }
-        if (this.state.extraTip < 0) {
-            this.setState({ extraTip: 0 });
+        if (this.state.extraTip < this.state.minimum) {
+            this.setState({ extraTip: this.state.minimum });
         }
     }
 
@@ -92,132 +93,85 @@ class InteractionsCheckout extends Component {
 
         return (
             <View style={styles.container}>
-                <ScrollView showsVerticalScrollIndicator={false} style={{
-                    flex: 1,
-                    marginTop: 32 * getScreenSizeMultiplier(),
-                    paddingHorizontal: 16 * getScreenSizeMultiplier(),
-                }}>
+                <ScrollView showsVerticalScrollIndicator={false} style={styles.innerConatiner}>
                     <View>
-                            <View style={{
-                                borderRadius: 10,
-                                overflow: 'hidden',
-                                justifyContent: 'center',
-                            }}>
-                            {selectedMedia &&
-                                <Image source={selectedMedia.original.url ? { uri: selectedMedia.original.url } : null}
-                                    resizeMode='contain'
-                                    style={{
-                                        maxHeight: heightPercentageToPx(20),
-                                        maxWidth: '60%',
-                                        aspectRatio: (selectedMedia.original.width / selectedMedia.original.height) || 0,
-                                    }} />
-                            }
-                            </View>
+                        <View style={{
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            justifyContent: 'center',
+                        }}>
+                        {selectedMedia &&
+                            <Image source={selectedMedia.original.url ? { uri: selectedMedia.original.url } : null}
+                                resizeMode='contain'
+                                style={{
+                                    maxHeight: heightPercentageToPx(20),
+                                    maxWidth: '60%',
+                                    aspectRatio: (selectedMedia.original.width / selectedMedia.original.height) || 0,
+                                }} />
+                        }
+                        </View>
                         {message !== '' &&
-                            <View style={{
-                                backgroundColor: '#3B4BF9',
-                                borderRadius: 20,
-                                borderTopLeftRadius: 4,
-                                paddingHorizontal: 24,
-                                paddingVertical: 16,
-                                marginTop: 8,
-                                alignSelf: 'flex-start',
-                            }}>
-                                <Text style={{
-                                    color: '#fff',
-                                    fontSize: 16,
-                                    fontWeight: '600',
-                                    lineHeight: 24,
-                                    letterSpacing: 0,
-                                }}>{message}</Text>
+                            <View style={styles.checkoutChatBubble}>
+                                <Text style={[styles.whiteText, styles.checkoutChatBubbleText]}>
+                                    {message}
+                                </Text>
                             </View>
                         }
                     </View>
-                    <View style={{
-                        marginTop: 16,
-                    }}>
-                        <View style={{
-                            backgroundColor: '#141539',
-                            padding: 24,
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            borderRadius: 25,
-                        }}>
-                                <Text style={{
-                                    color: '#fff',
-                                    fontSize: 16,
-                                    fontWeight: '600',
-                                    lineHeight: 19,
-                                    letterSpacing: 1,
-                                }}>Mis Qoins</Text>
-                                <Text style={{
-                                    color: '#fff',
-                                    fontSize: 16,
-                                    fontWeight: '600',
-                                    lineHeight: 19,
-                                    letterSpacing: 1,
-                                }}>{this.props.qoins}</Text>
+                    {this.state.onlyQoins &&
+                        <View style={styles.sentContainer}>
+                            <Text style={[styles.whiteText, styles.sentText, styles.onlyQoinsText]}>
+                                {'Apoya a '}
+                                <Text style={styles.accentTextColor}>
+                                    {this.state.streamerName}
+                                </Text>
+                                {' envíando cheers de Qoins 💚 '}
+                            </Text>
                         </View>
-                        <View style={{
-                            backgroundColor: '#141539',
-                            padding: 24,
-                            borderRadius: 25,
-                            marginTop: 16,
-                        }}>
-                            <View style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                            }}>
-                                <Text style={{
-                                    color: '#fff',
-                                    fontSize: 16,
-                                    fontWeight: '500',
-                                    lineHeight: 32,
-                                    letterSpacing: 0,
-                                }}>Extra Tip</Text>
-                                <Text style={{
-                                    color: '#fff',
-                                    fontSize: 16,
-                                    fontWeight: '500',
-                                    lineHeight: 32,
-                                    letterSpacing: 0,
-                                }}>{this.state.extraTip}</Text>
-                            </View>
-                            {Object.keys(costs).map((product) => (
-                                <View style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    marginTop: 8,
-                                }}>
-                                    <Text style={{
-                                        color: '#fff',
-                                        fontSize: 16,
-                                        fontWeight: '500',
-                                        lineHeight: 32,
-                                        letterSpacing: 0,
-                                    }}>
-                                        {product}
+                    }
+                    {!this.state.onlyQoins &&
+                        <>
+                            <View style={styles.checkoutContainer}>
+                                <View style={styles.checkoutDataDisplayContainer}>
+                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>
+                                        Mis Qoins
                                     </Text>
-                                    <Text style={{
-                                        color: '#fff',
-                                        fontSize: 16,
-                                        fontWeight: '500',
-                                        lineHeight: 32,
-                                        letterSpacing: 0,
-                                    }}>
-                                        {costs[product]}
+                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>
+                                        {this.props.qoins}
                                     </Text>
                                 </View>
-                            ))}
-                        </View>
-                        <View style={{ height: heightPercentageToPx(40) }} />
-                    </View>
+                            </View>
+                            <View style={[styles.checkoutDataDisplayMainContainer, styles.marginTop16]}>
+                                <View style={styles.checkoutDataDisplayContainer}>
+                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                        Extra Tip
+                                    </Text>
+                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                        {this.state.extraTip}
+                                    </Text>
+                                </View>
+                                {Object.keys(costs).map((product) => (
+                                    <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                            {product}
+                                        </Text>
+                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                            {costs[product]}
+                                        </Text>
+                                    </View>
+                                ))}
+                            </View>
+                            <View style={styles.checkoutMarginDisplay} />
+                        </>
+                }
                 </ScrollView>
                 <SendInteractionModal
                     baseCost={this.state.interactionCost}
                     extraTip={this.state.extraTip}
                     addTip={this.addTip}
                     subTip={this.subTip}
+                    minimum={this.state.minimum}
+                    onlyQoins={this.state.onlyQoins}
                     onSendInteraction={this.onSendInteraction}
                     onCancel={this.onCancel}
                 />

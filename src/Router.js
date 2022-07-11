@@ -50,6 +50,7 @@ import InteractionsCheckout from './screens/Interactions/InteractionsCheckout';
 import InteractionsMemeSelector from './screens/Interactions/InteractionsMemeSelector';
 import BuyQoins from './screens/BuyQoins/BuyQoins';
 import InteractionsSent from './screens/Interactions/InteractionsSent';
+import InteractionsAddVisual from './screens/Interactions/InteractionsAddVisual';
 
 //#region Stack Navigators
 
@@ -183,6 +184,14 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
       ...TransitionPresets.SlideFromRightIOS,
     },
   },
+  InteractionsAddVisual: {
+    screen: InteractionsAddVisual,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
   InteractionsCheckout: {
     screen: InteractionsCheckout,
     navigationOptions: {
@@ -194,7 +203,7 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
   InteractionsSent: {
     screen: InteractionsSent,
     navigationOptions: {
-      headerShown: false,
+      headerShown: true,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     },

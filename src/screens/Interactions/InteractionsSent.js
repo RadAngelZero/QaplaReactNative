@@ -2,53 +2,74 @@ import React, { Component } from 'react';
 import { Image, Text, View } from 'react-native';
 import images from '../../../assets/images';
 import SentInteractionModal from '../../components/InteractionsModals/SentInteractionModal';
-import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
 import styles from './style';
 
 class InteractionsSent extends Component {
     state = {
-        streamerName: 'Rad',
+        streamerName: '',
+        isLive: false,
         totalQoins: 350,
+        onlyQoins: false,
+    }
+
+    componentDidMount() {
+        console.log(this.props.navigation.dangerouslyGetParent().state.routes);
+        console.log();
+        const streamerName = this.props.navigation.dangerouslyGetParent().state.routes[0].params.streamerName;
+        const isLive = this.props.navigation.dangerouslyGetParent().state.routes[0].params.isLive;
+        const onlyQoins = this.props.navigation.dangerouslyGetParent().state.routes[this.props.navigation.dangerouslyGetParent().state.index - 1].params.onlyQoins;
+        this.setState({ streamerName });
+        if (isLive) {
+            this.setState({ isLive });
+        }
+        if (onlyQoins) {
+            this.setState({ onlyQoins });
+        }
     }
 
     pressHandler = () => {
-        console.log('ir a twitch o a feed');
+        if (this.state.isLive) {
+            return console.log('a twitch');
+        }
         this.props.navigation.dismiss();
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <View style={{
-                    marginTop: 100 * getScreenSizeMultiplier(),
-                    alignItems: 'center',
-                }}>
+                <View style={styles.sentContainer}>
                     <Image source={images.png.checkCircleGlow.img}
-                        style={{
-                            height: 140 * getScreenSizeMultiplier(),
-                        }}
+                        style={styles.sentCircle}
                         resizeMode="contain"
                     />
-                    <Text style={{
-                        color: '#fff',
-                        fontSize: 20,
-                        fontWeight: '600',
-                        lineHeight: 24,
-                        letterSpacing: 0,
-                        textAlign: 'center',
-                        maxWidth: 204 * getScreenSizeMultiplier(),
-                        marginTop: 30 * getScreenSizeMultiplier(),
-                    }}>
-                        {'Interacción enviada\n\n¡Ve al canal '}
-                        <Text style={{
-                            color: '#00FFDD',
-                        }}>
-                            {this.state.streamerName}
+                    {this.state.onlyQoins ?
+                        <Text style={[styles.whiteText, styles.sentText, !this.state.isLive ? styles.onlyQoinsText : {}]}>
+                            {`Cheers enviados\n\n`}
+                            <Text style={styles.accentTextColor}>
+                                {this.state.streamerName}
+                            </Text>
+                            {` te agradece por tu apoyo 🌱`}
                         </Text>
-                        {' para ver tu alerta en vivo!'}
-                    </Text>
+                        :
+                        !this.state.isLive ?
+                            <Text style={[styles.whiteText, styles.sentText, !this.state.isLive ? styles.onlyQoinsText : {}]}>
+                                {`Interacción en cola\n\n`}
+                                <Text style={styles.accentTextColor}>
+                                    {this.state.streamerName}
+                                </Text>
+                                {`  no está en vivo. Tu alerta saldrá su próximo stream`}
+                            </Text>
+                            :
+                            <Text style={[styles.whiteText, styles.sentText]}>
+                                {`Interacción enviada\n\n¡Ve al canal de `}
+                                <Text style={styles.accentTextColor}>
+                                    {this.state.streamerName}
+                                </Text>
+                                {` para ver tu alerta en vivo!`}
+                            </Text>
+                    }
                 </View>
-                <SentInteractionModal onPress={this.pressHandler} streamerName={this.state.streamerName} qoins={this.state.totalQoins} />
+                <SentInteractionModal onPress={this.pressHandler} streamerName={this.state.streamerName} qoins={this.state.totalQoins} isLive={this.state.isLive} />
             </View>
         )
     }

@@ -2,77 +2,63 @@ import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import BottomSheet from 'reanimated-bottom-sheet';
 import LinearGradient from 'react-native-linear-gradient';
-import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim';
-
+import { styles, gradients } from './style';
 import images from '../../../assets/images';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class SearchStreamerModal extends Component {
+
+    state = {
+        textRotation: 'GIF',
+        textRotationState: 0,
+    }
+
+    texts = ['GIF', 'Meme', 'Sticker', 'Mensaje']
+
+    componentDidMount() {
+        this.textRotator = setInterval(() => {
+            if (this.state.textRotationState >= this.texts.length - 1) {
+                this.setState({ textRotation: this.texts[0], textRotationState: 0 });
+
+            } else {
+                this.setState({ textRotation: this.texts[this.state.textRotationState + 1], textRotationState: this.state.textRotationState + 1 });
+            }
+        }, 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.textRotator);
+    }
+
     renderContent = () => (
         <TouchableWithoutFeedback
             onPress={this.props.onPress}
         >
-            <View style={{
-                height: '100%',
-                width: '100%',
-            }}>
+            <View style={styles.bottomSheetContainer}>
                 <LinearGradient
-                    colors={['#A716EE', '#2C07FA']}
-                    style={{
-                        height: '100%',
-                        borderTopLeftRadius: 40,
-                        borderTopRightRadius: 40,
-                    }}
+                    colors={gradients.gradient1}
+                    style={styles.bottomSheetLinearGradient}
                     angle={100}
                     useAngle
                 >
-                    <View style={{
-                        display: 'flex',
-                        marginTop: 24,
-                        marginLeft: widthPercentageToPx(9)
-                    }}>
-                        <Text style={{
-                            color: '#fff',
-                            fontSize: 22,
-                            fontWeight: '700',
-                            lineHeight: 28,
-                            letterSpacing: 1,
-                        }}>
-                            {`Envia un `}
-                            <Text style={{ color: '#00FFDD' }}>
-                                gif
+                    <View style={styles.bottomSheetSearchStreamerMainContainer}>
+                        <Text style={[styles.bottomSheetWhiteText, styles.bottomSheetSearchStreamerHeader]}>
+                            {'Envía un' + " "}
+                            <Text style={styles.bottomSheetAccentText}>
+                                {this.state.textRotation}
                             </Text>
                         </Text>
                         <View style={{ height: 4 }} />
-                        <Text style={{
-                            color: '#fff',
-                            fontSize: 16,
-                            fontWeight: '500',
-                            lineHeight: 28,
-                            letterSpacing: 1,
-                        }}>
+                        <Text style={[styles.bottomSheetWhiteText, styles.bottomSheetSearchStreamerSubtitle]}>
                             en vivo a tu streamer
                         </Text>
                     </View>
-                    <View style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        backgroundColor: '#141539',
-                        width: widthPercentageToPx(92),
-                        height: heightPercentageToPx(6.2),
-                        alignSelf: 'center',
-                        borderRadius: 50,
-                        marginTop: 14,
-                        paddingHorizontal: 18,
-                        alignItems: 'center',
-                    }}>
-                        <View style={{opacity: 0.4}}>
-                            <images.svg.searchStreamerIcon />
+                    <View style={styles.bottomSheetSearchBar}>
+                        <View style={{ opacity: 0.4 }}>
+                            <images.svg.searchStreamerIcon style={styles.bottomSheetSearchStreamerIcon} />
                         </View>
-                        <View style={{ width: 12 }} />
                         <Text
-                            style={{
-                                color: '#fff6',
-                            }}
+                            style={styles.bottomSheetSearchBarText}
                         >
                             Busca un streamer por su nombre
                         </Text>

@@ -1678,6 +1678,14 @@ export async function getStreamerTwitchId(streamerUid) {
 }
 
 /**
+ * Returns the Twitch id of the given streamer
+ * @param {string} streamerUid Streamer identifier
+ */
+ export async function getStreamerRefreshToken(streamerUid) {
+    return await userStreamerRef.child(streamerUid).child('refreshToken').once('value');
+}
+
+/**
  * Get the length of profile keys
  */
 export async function getStreamersPublicProfilesLength() {

@@ -5,19 +5,10 @@ import SentInteractionModal from '../../components/InteractionsModals/SentIntera
 import styles from './style';
 
 class InteractionsSent extends Component {
-    state = {
-        streamerName: '',
-        isLive: false,
-        totalQoins: 350,
-        onlyQoins: false,
-    }
-
     componentDidMount() {
-        console.log(this.props.navigation.dangerouslyGetParent().state.routes);
-        console.log();
-        const streamerName = this.props.navigation.dangerouslyGetParent().state.routes[0].params.streamerName;
-        const isLive = this.props.navigation.dangerouslyGetParent().state.routes[0].params.isLive;
-        const onlyQoins = this.props.navigation.dangerouslyGetParent().state.routes[this.props.navigation.dangerouslyGetParent().state.index - 1].params.onlyQoins;
+        const streamerName = this.props.navigation.getParam('displayName');
+        const isLive = this.props.navigation.getParam('isStreaming');
+        const onlyQoins = this.props.navigation.getParam('onlyQoins');
         this.setState({ streamerName });
         if (isLive) {
             this.setState({ isLive });
@@ -28,13 +19,19 @@ class InteractionsSent extends Component {
     }
 
     pressHandler = () => {
-        if (this.state.isLive) {
+        const isStreaming = this.props.navigation.getParam('isStreaming');
+        if (isStreaming) {
             return console.log('a twitch');
         }
         this.props.navigation.dismiss();
     }
 
     render() {
+        const streamerName = this.props.navigation.getParam('displayName', '');
+        const isStreaming = this.props.navigation.getParam('isStreaming', false);
+        const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
+        const donationTotal = this.props.navigation.getParam('donationTotal', 0);
+
         return (
             <View style={styles.container}>
                 <View style={styles.sentContainer}>
@@ -42,20 +39,20 @@ class InteractionsSent extends Component {
                         style={styles.sentCircle}
                         resizeMode="contain"
                     />
-                    {this.state.onlyQoins ?
-                        <Text style={[styles.whiteText, styles.sentText, !this.state.isLive ? styles.onlyQoinsText : {}]}>
+                    {onlyQoins ?
+                        <Text style={[styles.whiteText, styles.sentText, !isStreaming ? styles.onlyQoinsText : {}]}>
                             {`Cheers enviados\n\n`}
                             <Text style={styles.accentTextColor}>
-                                {this.state.streamerName}
+                                {streamerName}
                             </Text>
                             {` te agradece por tu apoyo 🌱`}
                         </Text>
                         :
-                        !this.state.isLive ?
-                            <Text style={[styles.whiteText, styles.sentText, !this.state.isLive ? styles.onlyQoinsText : {}]}>
+                        !isStreaming ?
+                            <Text style={[styles.whiteText, styles.sentText, !isStreaming ? styles.onlyQoinsText : {}]}>
                                 {`Interacción en cola\n\n`}
                                 <Text style={styles.accentTextColor}>
-                                    {this.state.streamerName}
+                                    {streamerName}
                                 </Text>
                                 {`  no está en vivo. Tu alerta saldrá su próximo stream`}
                             </Text>
@@ -63,13 +60,13 @@ class InteractionsSent extends Component {
                             <Text style={[styles.whiteText, styles.sentText]}>
                                 {`Interacción enviada\n\n¡Ve al canal de `}
                                 <Text style={styles.accentTextColor}>
-                                    {this.state.streamerName}
+                                    {streamerName}
                                 </Text>
                                 {` para ver tu alerta en vivo!`}
                             </Text>
                     }
                 </View>
-                <SentInteractionModal onPress={this.pressHandler} streamerName={this.state.streamerName} qoins={this.state.totalQoins} isLive={this.state.isLive} />
+                <SentInteractionModal onPress={this.pressHandler} streamerName={streamerName} qoins={donationTotal} isLive={isStreaming} />
             </View>
         )
     }

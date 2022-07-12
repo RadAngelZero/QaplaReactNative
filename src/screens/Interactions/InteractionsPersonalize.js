@@ -43,38 +43,23 @@ class InteractionsPersonalize extends Component {
     navigateToWriteMessage = () => {
         const costsObject = this.props.navigation.getParam('costs', {});
         this.props.navigation.navigate('InteractionsTTS', {
+            ...this.props.navigation.state.params,
             costs: {
-                [TTS]: this.state.TTSCost,
+                [TTS]: this.state[TTS],
                 ...costsObject
             }
-        });
-    }
-
-    justSendTTS = () => {
-        this.props.navigation.navigate('InteractionsCheckout', {
-            ...this.props.navigation.state.params
         });
     }
 
     justSendQoins = () => {
         // Send to only Qoins donation screen
         this.props.navigation.navigate('InteractionsCheckout', {
-            donationBase: 50,
-            ...this.props.navigation.state.params
+            ...this.props.navigation.state.params,
+            onlyQoins: true
         });
     }
 
-    tts = () => {
-        this.props.navigation.navigate('InteractionsTTS', { messageCost: this.state.TTSCost });
-    }
-
-    onlyQoins = () => {
-        this.props.navigation.navigate('InteractionsCheckout', { onlyQoins: true });
-    }
-
     render() {
-        const userHasSelectedTTS = Boolean(this.props.navigation.getParam('message', null));
-
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.innerConatiner}>

@@ -28,7 +28,7 @@ class InteractionsTTS extends Component {
                 ...this.props.navigation.state.params
             });
         } else {
-            this.props.navigation.navigate('InteractionsPersonalize', {
+            this.props.navigation.navigate('InteractionsAddVisual', {
                 message: this.state.message,
                 ...this.props.navigation.state.params
             })

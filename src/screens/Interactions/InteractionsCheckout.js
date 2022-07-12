@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Image, ScrollView, Text, View } from 'react-native';
+import { Alert, Image, ScrollView, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
-import { sendCheers } from '../../services/database';
+import { getStreamerTwitchId, sendCheers } from '../../services/database';
+import { isUserBannedOnStreamerChannel } from '../../services/twitch';
 
 class InteractionsCheckout extends Component {
     state = {
@@ -16,13 +17,18 @@ class InteractionsCheckout extends Component {
     };
 
     componentDidMount() {
-        const costs = this.props.navigation.getParam('costs', {});
-        let interactionCost = 0;
-        Object.values(costs).forEach((cost) => {
-            interactionCost += cost;
-        });
+        const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
+        if (!onlyQoins) {
+            const costs = this.props.navigation.getParam('costs', {});
+            let interactionCost = 0;
+            Object.values(costs).forEach((cost) => {
+                interactionCost += cost;
+            });
 
-        this.setState({ interactionCost });
+            this.setState({ interactionCost });
+        } else {
+            this.setState({ minimum: 50, extraTip: 50 });
+        }
     }
 
     addTip = () => {
@@ -41,42 +47,62 @@ class InteractionsCheckout extends Component {
     onSendInteraction = async () => {
         const totalCost = this.state.interactionCost + this.state.extraTip;
         if (totalCost <= this.props.qoins) {
-            const streamerName = this.props.navigation.getParam('displayName');
             const streamerId = this.props.navigation.getParam('streamerId');
-            const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
-            const mediaType = this.props.navigation.getParam('mediaType');
-            const message = this.props.navigation.getParam('message', '');
-            let media = null;
-            if (selectedMedia && selectedMedia.original) {
-                media = {
-                    url: selectedMedia.original.url,
-                    type: mediaType
-                };
-            }
+            const streamerName = this.props.navigation.getParam('displayName');
+            const streamerTwitchId = await getStreamerTwitchId(streamerId);
 
-            console.log(
-                totalCost,
-                media,
-                message,
-                (new Date()).getTime(),
-                streamerName,
-                this.props.uid,
-                this.props.userName,
-                this.props.twitchUserName,
-                this.props.photoUrl,
-                streamerId
-            );
-            /* sendCheers(
-                totalCost,
-                message,
-                (new Date()).getTime(),
-                streamerName,
-                this.props.uid,
-                this.props.userName,
-                this.props.twitchUserName,
-                this.props.photoUrl,
-                streamerId
-            ); */
+            // Update streamer token
+                const banned = await isUserBannedOnStreamerChannel(streamerTwitchId.val(), this.props.twitchId, '07hbe28yvgaq3bigexdehg7d9iuexy');
+                if (!banned) {
+                    const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
+                    const mediaType = this.props.navigation.getParam('mediaType');
+                    const message = this.props.navigation.getParam('message', '');
+                    let media = null;
+                    if (selectedMedia && selectedMedia.original) {
+                        media = {
+                            url: selectedMedia.original.url,
+                            type: mediaType
+                        };
+                    }
+
+                    console.log(
+                        totalCost,
+                        media,
+                        message,
+                        (new Date()).getTime(),
+                        streamerName,
+                        this.props.uid,
+                        this.props.userName,
+                        this.props.twitchUserName,
+                        this.props.photoUrl,
+                        streamerId
+                    );
+                    this.props.navigation.navigate('InteractionsSent', {
+                        ...this.props.navigation.state.params,
+                        donationTotal: totalCost
+                    });
+                    /* sendCheers(
+                        totalCost,
+                        message,
+                        (new Date()).getTime(),
+                        streamerName,
+                        this.props.uid,
+                        this.props.userName,
+                        this.props.twitchUserName,
+                        this.props.photoUrl,
+                        streamerId
+                    ); */
+                } else {
+                    Alert.alert(
+                        `You can not interact with ${streamerName}`,
+                        `You are banned from the ${streamerName}´s Twitch channel`,
+                        [
+                            {
+                                text: 'Ok'
+                            }
+                        ]
+                    )
+                }
         } else {
             this.props.navigation.navigate('BuyQoins');
         }
@@ -88,8 +114,9 @@ class InteractionsCheckout extends Component {
 
     render() {
         const selectedMedia = this.props.navigation.getParam('selectedMedia');
-        const message = this.props.navigation.getParam('message');
+        const message = this.props.navigation.getParam('message', '');
         const costs = this.props.navigation.getParam('costs', {});
+        const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
 
         return (
             <View style={styles.container}>
@@ -118,7 +145,7 @@ class InteractionsCheckout extends Component {
                             </View>
                         }
                     </View>
-                    {this.state.onlyQoins &&
+                    {onlyQoins &&
                         <View style={styles.sentContainer}>
                             <Text style={[styles.whiteText, styles.sentText, styles.onlyQoinsText]}>
                                 {'Apoya a '}
@@ -129,7 +156,7 @@ class InteractionsCheckout extends Component {
                             </Text>
                         </View>
                     }
-                    {!this.state.onlyQoins &&
+                    {!onlyQoins &&
                         <>
                             <View style={styles.checkoutContainer}>
                                 <View style={styles.checkoutDataDisplayContainer}>
@@ -171,7 +198,7 @@ class InteractionsCheckout extends Component {
                     addTip={this.addTip}
                     subTip={this.subTip}
                     minimum={this.state.minimum}
-                    onlyQoins={this.state.onlyQoins}
+                    onlyQoins={onlyQoins}
                     onSendInteraction={this.onSendInteraction}
                     onCancel={this.onCancel}
                 />
@@ -186,7 +213,8 @@ function mapStateToProps(state) {
         userName: state.userReducer.user.userName,
         twitchUserName: state.userReducer.user.twitchUsername,
         photoUrl: state.userReducer.user.photoUrl,
-        qoins: state.userReducer.user.credits
+        qoins: state.userReducer.user.credits,
+        twitchId: state.userReducer.user.twitchId,
     };
 }
 

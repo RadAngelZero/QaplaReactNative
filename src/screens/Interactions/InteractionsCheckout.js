@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
-import { getStreamerRefreshToken, getStreamerTwitchId, sendCheers } from '../../services/database';
-import { isUserBannedOnStreamerChannel } from '../../services/twitch';
-import { refreshUserAccessToken } from '../../services/functions';
+import { sendCheers } from '../../services/database';
 
 class InteractionsCheckout extends Component {
     state = {
@@ -48,66 +46,47 @@ class InteractionsCheckout extends Component {
     onSendInteraction = async () => {
         const totalCost = this.state.interactionCost + this.state.extraTip;
         if (totalCost <= this.props.qoins) {
-            const streamerId = this.props.navigation.getParam('streamerId');
-            const streamerName = this.props.navigation.getParam('displayName');
+            const streamerId = this.props.navigation.getParam('streamerId', '');
+            const streamerName = this.props.navigation.getParam('displayName', '');
+            const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
+            const mediaType = this.props.navigation.getParam('mediaType');
+            const message = this.props.navigation.getParam('message', null);
+            let media = null;
+            if (selectedMedia && selectedMedia.original) {
+                media = {
+                    url: selectedMedia.original.url,
+                    type: mediaType
+                };
+            }
 
-            const streamerRefreshToken = await getStreamerRefreshToken(streamerId);
-            if (streamerRefreshToken.exists()) {
-                const newAccessToken = await refreshUserAccessToken(streamerRefreshToken.val());
-                if (newAccessToken.data.status === 200) {
-                    const streamerTwitchId = await getStreamerTwitchId(streamerId);
-                    const banned = await isUserBannedOnStreamerChannel(streamerTwitchId.val(), this.props.twitchId, newAccessToken.data.access_token);
-                    if (!banned) {
-                        const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
-                        const mediaType = this.props.navigation.getParam('mediaType');
-                        const message = this.props.navigation.getParam('message', '');
-                        let media = null;
-                        if (selectedMedia && selectedMedia.original) {
-                            media = {
-                                url: selectedMedia.original.url,
-                                type: mediaType
-                            };
+            try {
+                await sendCheers(
+                    totalCost,
+                    media,
+                    message,
+                    (new Date()).getTime(),
+                    streamerName,
+                    this.props.uid,
+                    this.props.userName,
+                    this.props.twitchUserName,
+                    this.props.photoUrl,
+                    streamerId
+                );
+
+                this.props.navigation.navigate('InteractionsSent', {
+                    ...this.props.navigation.state.params,
+                    donationTotal: totalCost
+                });
+            } catch (error) {
+                Alert.alert(
+                    'Error',
+                    'We could not complete the operation, try again later',
+                    [
+                        {
+                            text: 'Ok'
                         }
-
-                        console.log(
-                            totalCost,
-                            media,
-                            message,
-                            (new Date()).getTime(),
-                            streamerName,
-                            this.props.uid,
-                            this.props.userName,
-                            this.props.twitchUserName,
-                            this.props.photoUrl,
-                            streamerId
-                        );
-                        this.props.navigation.navigate('InteractionsSent', {
-                            ...this.props.navigation.state.params,
-                            donationTotal: totalCost
-                        });
-                        /* sendCheers(
-                            totalCost,
-                            message,
-                            (new Date()).getTime(),
-                            streamerName,
-                            this.props.uid,
-                            this.props.userName,
-                            this.props.twitchUserName,
-                            this.props.photoUrl,
-                            streamerId
-                        ); */
-                    } else {
-                        Alert.alert(
-                            `You can not interact with ${streamerName}`,
-                            `You are banned from the ${streamerName}´s Twitch channel`,
-                            [
-                                {
-                                    text: 'Ok'
-                                }
-                            ]
-                        )
-                    }
-                }
+                    ]
+                )
             }
         } else {
             this.props.navigation.navigate('BuyQoins');

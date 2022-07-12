@@ -1373,7 +1373,7 @@ export async function getAllStreamers() {
  * @param {string} streamerID Streamer uid
  */
 export async function sendCheers(amountQoins, media, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID) {
-    usersRef.child(uid).child('credits').transaction((credits) => {
+    await usersRef.child(uid).child('credits').transaction((credits) => {
         if (credits) {
             credits -= amountQoins;
         }

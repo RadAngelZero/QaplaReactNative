@@ -5,13 +5,26 @@ export function identifyQonversion(uid) {
     Qonversion.identify(uid);
 }
 
+export async function purchaseProduct(productId) {
+    try {
+        const permissions = await Qonversion.purchaseProduct(productId);
+        console.log(permissions);
+    } catch (e) {
+        if (e.userCanceled) {
+          // purchase canceled by the user
+        }
+        console.log(e);
+    }
+}
+
 export async function getProductsQonversion() {
     try {
-        const offerings = await Qonversion.offerings();
-        if (offerings.main !== null && offerings.main.products.length > 0) {
-          // Display products for sale
-          console.log('Products', offerings.main.products);
-        }
+        const offerings = await Qonversion.products();
+        offerings.forEach((prod) => {
+            if (prod.currencyCode) {
+                console.log(prod);
+            }
+        });
       } catch (e) {
         console.log('No products', e);
         // handle error here

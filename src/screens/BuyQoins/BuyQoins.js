@@ -5,7 +5,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import images from '../../../assets/images';
 import styles from './style';
-import style from './style';
 
 class BuyQoins extends Component {
     state = {

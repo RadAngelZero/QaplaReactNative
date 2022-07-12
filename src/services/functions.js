@@ -77,16 +77,3 @@ async function callCloudFunction(ctx) {
 		}
 	});
 }
-
-/**
- * Refresh the access token of the user by using their refresh token
- * @param {string} refreshToken refreshToken for Twitch access token
- */
- export async function refreshUserAccessToken(refreshToken) {
-	return await callCloudFunction({
-		cfName: 'refreshTwitchAccessToken',
-		params: {
-			refreshToken
-		}
-	});
-}

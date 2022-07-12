@@ -618,7 +618,70 @@
     "interactions": {
         "feed": {
             "favs": "Tus favs",
-            "recents": "Recientes"
+            "recents": "Recientes",
+            "modal": {
+                "sendA": "Envía un",
+                "message": "Mensaje",
+                "liveToStreamer": "en vivo a un streamer",
+                "searchByName": "Busca a un streamer por su nombre"
+            }
+        },
+        "personalize": {
+            "personalizeYourInteraction": "Personaliza tu interacción",
+            "onlySend": "Sólo enviar"
+        },
+        "addVisual": {
+            "addVisual": "Agrega un Gif, Sticker o Meme a tu interacción",
+        },
+        "visual": {
+            "searchOn": "Buscar en",
+            "tabs": {
+                "trends": "Tendencia"
+            }
+        },
+        "VisualConfirmation": {
+            "use": "Usar",
+            "chooseAnother": "Elegir otro"
+        },
+        "addTTS": {
+            "addTTSInYourInteraction": "Agrega un Text-to-Speech a tu interacción",
+            "addAMessageP1": "🗣 Agrega un mensaje con Bot de Voz para",
+            "addAMessageP2": "a tu interacción por",
+            "modal": {
+                "add": "Agregar Text-to-Speech",
+                "onlySendMy": "Sólo enviar mi"
+            }
+        },
+        "TTS": {
+            "writeYourMessage": "Escribe tu mensaje",
+            "whatYouWantToSay": "🗣 ¿Qué le quieres decir en el directo?",
+            "TTS": "Text-to-Speech"
+        },
+        "checkout": {
+            "my": "mis",
+            "extraTip": "Extra Tip",
+            "supportP1": "Apoya a",
+            "supportP2": "envíando cheers de Qoins 💚",
+            "modal": {
+                "sendInteraction": "Enviar Interacción"
+            }
+        },
+        "final": {
+            "interactionSentP1": "Interacción enviada\n\n¡Ve al canal de",
+            "interactionSentP2": "para ver tu alerta en vivo!",
+            "cheersSentP1": "Cheers enviados\n\n",
+            "cheersSentP2": "te agradece por tu apoyo 🌱",
+            "modal": {
+                "weveSentYourQoins": "¡Hemos enviado tus %{qoins} Qoins a %{streamerName}! ⚡️",
+                "backToStart": "Volver al inicio"
+            }
+        }
+    },
+    "buyQoins": {
+        "sendInteractiunsUsingQoins": "Envía interacciones en vivo usando tus Qoins",
+        "save": "Ahorras",
+        "pharases": {
+            "p1": "Diablos señorita 😳"
         }
     }
 }

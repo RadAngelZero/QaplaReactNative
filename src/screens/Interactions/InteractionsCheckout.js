@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert, Image, ScrollView, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
+import { translate } from '../../utilities/i18';
 import styles from './style';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
@@ -132,12 +133,14 @@ class InteractionsCheckout extends Component {
                     </View>
                     {onlyQoins &&
                         <View style={styles.sentContainer}>
+                            <Image source={{ uri: 'https://media.giphy.com/media/5QP99om3Co7s8YJPez/giphy.gif' }}
+                                style={styles.onlyQoinsImage} />
                             <Text style={[styles.whiteText, styles.sentText, styles.onlyQoinsText]}>
-                                {'Apoya a '}
+                                {`${translate('interactions.checkout.supportP1')} `}
                                 <Text style={styles.accentTextColor}>
                                     {this.state.streamerName}
                                 </Text>
-                                {' envíando cheers de Qoins 💚 '}
+                                {`${translate('interactions.checkout.supportP2')}`}
                             </Text>
                         </View>
                     }
@@ -146,7 +149,7 @@ class InteractionsCheckout extends Component {
                             <View style={styles.checkoutContainer}>
                                 <View style={styles.checkoutDataDisplayContainer}>
                                     <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>
-                                        Mis Qoins
+                                        {`${translate('interactions.checkout.my')} Qoins`}
                                     </Text>
                                     <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>
                                         {this.props.qoins}

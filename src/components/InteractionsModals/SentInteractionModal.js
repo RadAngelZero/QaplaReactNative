@@ -5,6 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { styles, gradients } from './style';
 import images from '../../../assets/images';
+import { translate } from '../../utilities/i18';
 
 class SentInteractionModal extends Component {
 
@@ -20,9 +21,9 @@ class SentInteractionModal extends Component {
                     style={styles.heartHands}
                 />
                 <Text style={[styles.bottomSheetWhiteText, styles.sentText]}>
-                    {'¡Hemos enviado tus\n'}
+                    {`${translate('interactions.final.modal.weveSentYourQoinsP1')}`}
                     <Text style={styles.sentAccentText}>
-                        {`${this.props.qoins} Qoins a ${this.props.streamerName}! ⚡️`}
+                        {`${translate('interactions.final.modal.weveSentYourQoinsP2', { qoins: this.props.qoins, streamerName: this.props.streamerName })}`}
                     </Text>
                 </Text>
                 <View style={[styles.bottomSheetButtonsContainer, styles.sentMarginButtonBottom]}>
@@ -34,12 +35,12 @@ class SentInteractionModal extends Component {
                         <Text style={styles.bottomSheetButtonText}>
                             {this.props.isLive ?
                                 <>
-                                    {`Ir a Twitch`}
+                                    {`${translate('TimelineStreams.goToTwitch')}`}
 
                                 </>
                                 :
                                 <>
-                                    {`Volver al inicio`}
+                                    {`${translate('interactions.final.modal.backToStart')}`}
                                 </>
                             }
                         </Text>

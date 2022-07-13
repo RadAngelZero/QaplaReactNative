@@ -54,6 +54,7 @@ const gifsInteractionsRef = qaplaInteractionsRef.child('/Gifs');
 const emotesInteractionsRef = qaplaInteractionsRef.child('/Emotes');
 const memesInteractionsRef = qaplaInteractionsRef.child('/Memes');
 const interactionsCostsRef = database.ref('/InteractionsCosts');
+const userProfileGIFsRef = database.ref('/UserProfileGIFs');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1748,4 +1749,8 @@ export async function getMediaTypeCost(mediaType) {
  */
 export async function getAllMediaTypeCosts() {
     return await interactionsCostsRef.once('value');
+}
+
+export async function getUserProfileGIFs() {
+    return await userProfileGIFsRef.once('value');
 }

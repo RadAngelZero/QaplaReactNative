@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { styles, gradients } from './style';
 import images from '../../../assets/images';
+import { translate } from '../../utilities/i18';
 
 class SendInteractionModal extends Component {
 
@@ -48,11 +49,11 @@ class SendInteractionModal extends Component {
                         <Text style={styles.bottomSheetButtonText}>
                             {this.props.onlyQoins ?
                                 <>
-                                    {`Enviar Cheers`}
+                                    {`${translate('supportStreamerModal.sendCheers')}`}
                                 </>
                                 :
                                 <>
-                                    {`Enviar Interacción`}
+                                    {`${translate('interactions.checkout.modal.sendInteraction')}`}
                                 </>}
                         </Text>
                     </TouchableOpacity>
@@ -62,7 +63,7 @@ class SendInteractionModal extends Component {
                             style={styles.bottomSheetNoButton}
                         >
                             <Text style={[styles.bottomSheetButtonText, styles.bottomSheetNoButtonText]}>
-                                Cancelar
+                                {`${translate('TimelineStreams.cancel')}`}
                             </Text>
                         </TouchableOpacity>
                     </View>

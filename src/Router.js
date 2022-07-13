@@ -13,7 +13,7 @@ import { setCurrentScreenId, setPreviousScreenId } from './actions/screensAction
 import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
 import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameScreen';
-import NewUserProfileScreen from './screens/NewUserProfileScreen/NewUserProfileScreen';
+import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
 import TimelineStreams from './screens/TimelineStreams/TimelineStreams';
 import SupportScreen from './screens/SupportScreen/SupportScreen';
 import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
@@ -436,7 +436,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
     },
   },
   Profile: {
-    screen: NewUserProfileScreen,
+    screen: UserProfileScreen,
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (

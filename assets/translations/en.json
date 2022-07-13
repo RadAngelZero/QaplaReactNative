@@ -145,9 +145,7 @@
         },
         "buyQaploinsModal": {
             "body": ""
-        }
-    },
-    "newUserProfileScreen": {
+        },
         "linkAccount": "Link account",
         "level": "Level",
         "lastSeason": "Last season level",
@@ -155,7 +153,11 @@
         "bitsTooltip": "Use your Qoins to support your favorite streamers. You need 50 Qoins for a donation",
         "next": "Next",
         "done": "Done",
-        "loots": "Loots"
+        "loots": "Loots",
+        "interactions": {
+            "interact" : "Interactúa",
+            "liveToYourStreamer": "on-screen to your streamer"
+        }
     },
     "notificationsScreen": {
         "notificationsHeader": "Notifications",
@@ -610,7 +612,71 @@
     "interactions": {
         "feed": {
             "favs": "Your favs",
-            "recents": "Recents"
+            "recents": "Recents",
+            "modal": {
+                "sendA": "Send a",
+                "message": "Message",
+                "liveToStreamer": "on-screen to your streamer",
+                "searchByName": "Search streamer by name"
+            }
+        },
+        "personalize": {
+            "personalizeYourInteraction": "Customize your interaction",
+            "onlySend": "Only send"
+        },
+        "addVisual": {
+            "addVisual": "Add a GIF, Sticker or Meme to your interaction"
+        },
+        "visual": {
+            "searchOn": "Search",
+            "tabs": {
+                "trends": "Trending"
+            }
+        },
+        "visualConfirmation": {
+            "use": "Use",
+            "chooseAnother": "Choose a different"
+        },
+        "addTTS": {
+            "addTTSInYourInteraction": "Add Text-to-Speech to your interaction",
+            "addAMessageP1": "🗣 Give voice to your message to",
+            "addAMessageP2": "to your interaction for",
+            "add": "Add Text-to-Speech",
+            "onlySendMy": "Only send my"
+        },
+        "TTS": {
+            "writeYourMessage": "Type your message",
+            "whatYouWantToSay": "🗣 What do you want to say?",
+            "TTS": "Text-to-Speech"
+        },
+        "checkout": {
+            "my": "My",
+            "extraTip": "Extra Tip",
+            "supportP1": "Support",
+            "supportP2": "sending Qoins as cheers 💚",
+            "modal": {
+                "sendInteraction": "Send Live Interaction"
+            }
+        },
+        "final": {
+            "interactionSentP1": "Live interaction sent!\n\nGo to",
+            "interactionSentP2": "’s channel to watch your live alert",
+            "interactionOnQueueP1": "Interaction queued\n\n",
+            "interactionOnQueueP2": "is offline. We’ll send your alert in their next live stream",
+            "cheersSentP1": "Cheers sent\n\n",
+            "cheersSentP2": "says Thank You for your support 🌱",
+            "modal": {
+                "weveSentYourQoinsP1": "We’ve sent your\n",
+                "weveSentYourQoinsP2": "%{qoins} Qoins to %{streamerName}! ⚡️",
+                "backToStart": "Go to the main screen"
+            }
+        }
+    },
+    "buyQoins": {
+        "sendInteractiunsUsingQoins": "Send live interactions using your Qoins",
+        "save": "You save",
+        "pharases": {
+            "p1": "I’ll take ten 💸💸💸"
         }
     }
 }

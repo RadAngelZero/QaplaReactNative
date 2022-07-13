@@ -4,6 +4,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import LinearGradient from 'react-native-linear-gradient';
 import { styles, gradients } from './style';
 import images from '../../../assets/images';
+import { translate } from '../../utilities/i18';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class SearchStreamerModal extends Component {
@@ -13,7 +14,7 @@ class SearchStreamerModal extends Component {
         textRotationState: 0,
     }
 
-    texts = ['GIF', 'Meme', 'Sticker', 'Mensaje']
+    texts = ['GIF', 'Meme', 'Sticker', translate('interactions.feed.modal.message')]
 
     componentDidMount() {
         this.textRotator = setInterval(() => {
@@ -43,14 +44,14 @@ class SearchStreamerModal extends Component {
                 >
                     <View style={styles.bottomSheetSearchStreamerMainContainer}>
                         <Text style={[styles.bottomSheetWhiteText, styles.bottomSheetSearchStreamerHeader]}>
-                            {'Envía un' + " "}
+                            {`${translate('interactions.feed.modal.sendA')} `}
                             <Text style={styles.bottomSheetAccentText}>
                                 {this.state.textRotation}
                             </Text>
                         </Text>
                         <View style={{ height: 4 }} />
                         <Text style={[styles.bottomSheetWhiteText, styles.bottomSheetSearchStreamerSubtitle]}>
-                            en vivo a tu streamer
+                            {`${translate('interactions.feed.modal.liveToStreamer')}`}
                         </Text>
                     </View>
                     <View style={styles.bottomSheetSearchBar}>
@@ -60,7 +61,7 @@ class SearchStreamerModal extends Component {
                         <Text
                             style={styles.bottomSheetSearchBarText}
                         >
-                            Busca un streamer por su nombre
+                            {`${translate('interactions.feed.modal.searchByName')}`}
                         </Text>
                     </View>
                 </LinearGradient>

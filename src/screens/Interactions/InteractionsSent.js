@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Image, Text, View } from 'react-native';
 import images from '../../../assets/images';
 import SentInteractionModal from '../../components/InteractionsModals/SentInteractionModal';
+import { translate } from '../../utilities/i18';
 import styles from './style';
 
 class InteractionsSent extends Component {
@@ -41,28 +42,28 @@ class InteractionsSent extends Component {
                     />
                     {onlyQoins ?
                         <Text style={[styles.whiteText, styles.sentText, !isStreaming ? styles.onlyQoinsText : {}]}>
-                            {`Cheers enviados\n\n`}
+                            {`${translate('interactions.final.cheersSentP1')} `}
                             <Text style={styles.accentTextColor}>
                                 {streamerName}
                             </Text>
-                            {` te agradece por tu apoyo 🌱`}
+                            {`${translate('interactions.final.cheersSentP2')}`}
                         </Text>
                         :
                         !isStreaming ?
                             <Text style={[styles.whiteText, styles.sentText, !isStreaming ? styles.onlyQoinsText : {}]}>
-                                {`Interacción en cola\n\n`}
+                                {`${translate('interactions.final.interactionOnQueueP1')} `}
                                 <Text style={styles.accentTextColor}>
                                     {streamerName}
                                 </Text>
-                                {`  no está en vivo. Tu alerta saldrá su próximo stream`}
+                                {`${translate('interactions.final.interactionOnQueueP2')}`}
                             </Text>
                             :
                             <Text style={[styles.whiteText, styles.sentText]}>
-                                {`Interacción enviada\n\n¡Ve al canal de `}
+                                {`${translate('interactions.final.interactionSentP1')} `}
                                 <Text style={styles.accentTextColor}>
                                     {streamerName}
                                 </Text>
-                                {` para ver tu alerta en vivo!`}
+                                {`${translate('interactions.final.interactionSentP2')} `}
                             </Text>
                     }
                 </View>

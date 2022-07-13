@@ -5,6 +5,7 @@ import styles from './style';
 import images from '../../../assets/images';
 import { GIPHY_GIFS, GIPHY_STICKERS, MEME, TTS } from '../../utilities/Constants';
 import { getAllMediaTypeCosts } from '../../services/database';
+import { translate } from '../../utilities/i18';
 
 class InteractionsPersonalize extends Component {
     state = {
@@ -65,7 +66,7 @@ class InteractionsPersonalize extends Component {
                 <View style={styles.innerConatiner}>
                     <View style={styles.headerContainer}>
                         <Text style={[styles.whiteText, styles.screenHeaderText]}>
-                            Personaliza tu interacción
+                            {`${translate('interactions.personalize.personalizeYourInteraction')}`}
                         </Text>
                         <TouchableOpacity style={styles.helpButton}>
                             <images.svg.questionMark />
@@ -213,7 +214,7 @@ class InteractionsPersonalize extends Component {
                         <TouchableOpacity style={styles.onlySendQoinsTouchable}
                             onPress={this.justSendQoins}>
                             <Text style={[styles.semitransparentText, styles.onlySendQoinsText]}>
-                                {'Sólo enviar' + ' '}
+                                {`${translate('interactions.personalize.onlySend')} `}
                                 <Text style={styles.whiteText}>
                                     Qoins
                                 </Text>

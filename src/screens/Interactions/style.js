@@ -444,5 +444,9 @@ export default styles = StyleSheet.create({
         fontWeight: '500',
         lineHeight: heightPercentageToPx(3.44),
         letterSpacing: 1,
-    }
+    },
+    onlyQoinsImage: {
+        width: widthPercentageToPx(44.73),
+        height: widthPercentageToPx(44.73),
+    },
 });

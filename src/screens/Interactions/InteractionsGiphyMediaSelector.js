@@ -8,7 +8,7 @@ import images from '../../../assets/images';
 import RadMasonry from '../../components/RadMasonry/RadMasonry';
 import { generateGiphyUserRandomId, getGiphyTrending, searchGiphyMedia } from '../../services/Giphy';
 import { GIPHY_GIFS, GIPHY_STICKERS } from '../../utilities/Constants';
-import { getLocaleLanguage } from '../../utilities/i18';
+import { getLocaleLanguage, translate } from '../../utilities/i18';
 
 class InteractionsGiphyMediaSelector extends Component {
     state = {
@@ -136,7 +136,7 @@ class InteractionsGiphyMediaSelector extends Component {
                                 value={this.state.searchQuery}
                                 onChange={this.searchHandler}
                                 style={styles.gridSearchBarTextInput}
-                                placeholder={"Buscar en Giphy"}
+                                placeholder={`${translate('interactions.visual.searchOn')} Giphy`}
                                 placeholderTextColor={'#fff3'}
                             />
                         </View>
@@ -163,7 +163,7 @@ class InteractionsGiphyMediaSelector extends Component {
                             color: !this.state.gifSection ? '#FFFFFF' : '#FFFFFF99',
                         }]}
                         >
-                            Recientes
+                            {translate('interactions.feed.recents')}
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -176,7 +176,7 @@ class InteractionsGiphyMediaSelector extends Component {
                             color: this.state.gifSection ? '#FFFFFF' : '#FFFFFF99',
                         }]}
                         >
-                            Tendencia
+                            {translate('interactions.visual.tabs.trends')}
                         </Text>
                     </TouchableOpacity>
                 </View>

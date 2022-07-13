@@ -168,7 +168,7 @@ class InteractionsCheckout extends Component {
                                 {Object.keys(costs).map((product) => (
                                     <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
                                         <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                            {product}
+                                            {translate(`interactions.checkout.concepts.${product}`)}
                                         </Text>
                                         <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
                                             {costs[product]}

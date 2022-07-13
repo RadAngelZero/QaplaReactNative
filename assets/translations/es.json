@@ -658,6 +658,12 @@
             "extraTip": "Extra Tip",
             "supportP1": "Apoya a",
             "supportP2": "envíando cheers de Qoins 💚",
+            "concepts": {
+                "gifs": "Gif",
+                "stickers": "Sticker",
+                "memes": "Meme",
+                "tts": "Text-to-Speech"
+            },
             "modal": {
                 "sendInteraction": "Enviar Interacción"
             }

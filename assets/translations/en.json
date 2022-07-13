@@ -635,7 +635,13 @@
         },
         "visualConfirmation": {
             "use": "Use",
-            "chooseAnother": "Choose a different"
+            "chooseAnother": "Choose a different",
+            "mediaTypes": {
+                "gifs": "Gif",
+                "stickers": "Sticker",
+                "memes": "Meme",
+                "tts": "Text-to-Speech"
+            }
         },
         "addTTS": {
             "addTTSInYourInteraction": "Add Text-to-Speech to your interaction",
@@ -654,6 +660,12 @@
             "extraTip": "Extra Tip",
             "supportP1": "Support",
             "supportP2": "sending Qoins as cheers 💚",
+            "concepts": {
+                "gifs": "Gif",
+                "stickers": "Sticker",
+                "memes": "Meme",
+                "tts": "Text-to-Speech"
+            },
             "modal": {
                 "sendInteraction": "Send Live Interaction"
             }

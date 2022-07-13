@@ -38,67 +38,70 @@ export class InteractionsFeed extends Component {
         const liveStreamers = await getAllStreamersStreaming();
         const liveData = liveStreamers.val();
 
-        const favStreamersSnap = await getUserFavsStreamers(this.props.uid, 10);
-        const favsNoLive = [];
-        favStreamersSnap.forEach((fav) => {
-            if (!liveStreamers.val()[fav.key]) {
-                favsNoLive.push({ streamerId: fav.key, ...favStreamersSnap.val()[fav.key] });
-            } else {
-                if (liveData) {
-                    liveData[fav.key].featured = true;
-                }
-            }
-        });
-
-        const favStreamers = [];
-        for (let i = 0; i < favsNoLive.length; i++) {
-            if (favStreamers.length < MAXIM_CARDS_LENGTH) {
-                const fav = favsNoLive[i];
-                const streamerProfile = await getStreamerPublicProfile(fav.streamerId);
-                if (streamerProfile.exists()) {
-                    favStreamers.push({ streamerId: fav.streamerId, ...streamerProfile.val() });
+        if (this.props.uid) {
+            const favStreamersSnap = await getUserFavsStreamers(this.props.uid, 10);
+            const favsNoLive = [];
+            favStreamersSnap.forEach((fav) => {
+                if (!liveStreamers.val()[fav.key]) {
+                    favsNoLive.push({ streamerId: fav.key, ...favStreamersSnap.val()[fav.key] });
                 } else {
-                    const streamerData = await getStreamerPublicData(fav.streamerId);
-                    const randomBackground = Colors.streamersProfileBackgroundGradients[Math.floor(Math.random() * Colors.streamersProfileBackgroundGradients.length)]
-                    favStreamers.push({ streamerId: fav.streamerId, ...streamerData.val(), backgroundGradient: randomBackground });
+                    if (liveData) {
+                        liveData[fav.key].featured = true;
+                    }
                 }
-            } else {
-                break;
-            }
-        }
+            });
 
-        const recentStreamersSnap = await getRecentStreamersDonations(this.props.uid, 12);
-        const recentStreamersNoLiveNoFav = [];
-        recentStreamersSnap.forEach((recent) => {
-            if (!liveStreamers.val()[recent.key] && !favStreamers.find((streamer) => streamer.streamerId === recent.key)) {
-                recentStreamersNoLiveNoFav.push({ streamerId: recent.key, ...recentStreamersSnap.val()[recent.key]});
-            } else if (liveStreamers.val()[recent.key]) {
-                liveData[recent.key].featured = true;
-            }
-        });
-
-        const recentStreamers = [];
-        for (let i = 0; i < recentStreamersNoLiveNoFav.length; i++) {
-            if (recentStreamers.length < MAXIM_CARDS_LENGTH) {
-                const recent = recentStreamersNoLiveNoFav[i];
-                const streamerProfile = await getStreamerPublicProfile(recent.streamerId);
-                if (streamerProfile.exists()) {
-                    recentStreamers.push({ streamerId: recent.streamerId, ...streamerProfile.val()});
+            const favStreamers = [];
+            for (let i = 0; i < favsNoLive.length; i++) {
+                if (favStreamers.length < MAXIM_CARDS_LENGTH) {
+                    const fav = favsNoLive[i];
+                    const streamerProfile = await getStreamerPublicProfile(fav.streamerId);
+                    if (streamerProfile.exists()) {
+                        favStreamers.push({ streamerId: fav.streamerId, ...streamerProfile.val() });
+                    } else {
+                        const streamerData = await getStreamerPublicData(fav.streamerId);
+                        const randomBackground = Colors.streamersProfileBackgroundGradients[Math.floor(Math.random() * Colors.streamersProfileBackgroundGradients.length)]
+                        favStreamers.push({ streamerId: fav.streamerId, ...streamerData.val(), backgroundGradient: randomBackground });
+                    }
+                } else {
+                    break;
                 }
-            } else {
-                break;
             }
+
+            const recentStreamersSnap = await getRecentStreamersDonations(this.props.uid, 12);
+            const recentStreamersNoLiveNoFav = [];
+            recentStreamersSnap.forEach((recent) => {
+                if (!liveStreamers.val()[recent.key] && !favStreamers.find((streamer) => streamer.streamerId === recent.key)) {
+                    recentStreamersNoLiveNoFav.push({ streamerId: recent.key, ...recentStreamersSnap.val()[recent.key]});
+                } else if (liveStreamers.val()[recent.key]) {
+                    liveData[recent.key].featured = true;
+                }
+            });
+
+            const recentStreamers = [];
+            for (let i = 0; i < recentStreamersNoLiveNoFav.length; i++) {
+                if (recentStreamers.length < MAXIM_CARDS_LENGTH) {
+                    const recent = recentStreamersNoLiveNoFav[i];
+                    const streamerProfile = await getStreamerPublicProfile(recent.streamerId);
+                    if (streamerProfile.exists()) {
+                        recentStreamers.push({ streamerId: recent.streamerId, ...streamerProfile.val()});
+                    }
+                } else {
+                    break;
+                }
+            }
+
+            this.setState({ recentStreamers, favStreamers, dataFetched: true });
         }
 
         if (liveStreamers.exists()) {
             this.setState({
                 liveStreamers: Object.keys(liveData)
                     .sort((a, b) => (Number(liveData[b].featured) || 0) - (Number(liveData[a].featured) || 0))
-                    .map((streamerId) => ({ streamerId, ...liveData[streamerId] }))
+                    .map((streamerId) => ({ streamerId, ...liveData[streamerId] })),
+                dataFetched: true
             });
         }
-
-        this.setState({ recentStreamers, favStreamers, dataFetched: true });
     }
 
     onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming) => {

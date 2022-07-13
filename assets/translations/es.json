@@ -145,9 +145,7 @@
         },
         "buyQaploinsModal": {
             "body": ""
-        }
-    },
-    "newUserProfileScreen": {
+        },
         "linkAccount": "Vincular cuenta",
         "level": "Nivel",
         "lastSeason": "Última temporada",
@@ -155,7 +153,11 @@
         "bitsTooltip": "Usa tus Qoins para donarle a tus streamers favoritos. Puedes donar desde 50 Qoins",
         "next": "Siguiente",
         "done": "Listo",
-        "loots": "Loots"
+        "loots": "Loots",
+        "interactions": {
+            "interact" : "Interactúa",
+            "liveToYourStreamer": "en vivo a tu streamer"
+        }
     },
     "notificationsScreen": {
         "notificationsHeader": "Notificaciones",

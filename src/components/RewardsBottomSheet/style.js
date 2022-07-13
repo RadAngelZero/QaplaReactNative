@@ -6,7 +6,7 @@ import { SHEET_MAX_HEIGHT } from '../../utilities/Constants';
 
 export default styles = StyleSheet.create({
     container: {
-        backgroundColor: '#3B4BF9',
+        backgroundColor: '#141539',
         padding: 12,
         height: SHEET_MAX_HEIGHT
     },

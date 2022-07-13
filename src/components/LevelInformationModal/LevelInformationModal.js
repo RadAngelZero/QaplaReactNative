@@ -41,7 +41,7 @@ class LevelInformationModal extends Component {
                                         descriptionComponent={() => (
                                             <View style={styles.expTextContainer}>
                                                 <QaplaText style={styles.expText}>
-                                                    {translate('newUserProfileScreen.level')}
+                                                    {translate('userProfileScreen.level')}
                                                 </QaplaText>
                                             </View>
                                         )} />

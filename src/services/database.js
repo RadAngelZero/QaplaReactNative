@@ -53,6 +53,7 @@ const qaplaInteractionsRef = database.ref('/QaplaInteractions');
 const gifsInteractionsRef = qaplaInteractionsRef.child('/Gifs');
 const emotesInteractionsRef = qaplaInteractionsRef.child('/Emotes');
 const memesInteractionsRef = qaplaInteractionsRef.child('/Memes');
+export const userProfileGIFsRef = database.ref('/UserProfileGIFs');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1704,4 +1705,8 @@ export async function getEmotesLibrary() {
 
 export async function getMemesLibrary() {
     return await memesInteractionsRef.once('value');
+}
+
+export async function getUserProfileGIFs() {
+    return await userProfileGIFsRef.once('value');
 }

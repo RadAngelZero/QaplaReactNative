@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Image, ScrollView, Text, View } from 'react-native';
+import { translate } from '../../utilities/i18';
 import styles from './style';
 import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
 
@@ -36,7 +37,7 @@ class InteractionsCheckout extends Component {
     }
 
     yesButtonAction = () => {
-        this.props.navigation.navigate('InteractionsSent');
+        this.props.navigation.navigate('BuyQoins');
     }
 
     cancel = () => {
@@ -94,18 +95,21 @@ class InteractionsCheckout extends Component {
                         }
                     </View>
                     {this.state.onlyQoins && <View style={styles.sentContainer}>
+                        <Image source={{ uri: 'https://media.giphy.com/media/5QP99om3Co7s8YJPez/giphy.gif' }}
+                            style={styles.onlyQoinsImage}
+                        />
                         <Text style={[styles.whiteText, styles.sentText, styles.onlyQoinsText]}>
-                            {'Apoya a '}
+                            {`${translate('interactions.checkout.supportP1')} `}
                             <Text style={styles.accentTextColor}>
-                                {this.state.streamerName}
+                                {`${this.state.streamerName} `}
                             </Text>
-                            {' envíando cheers de Qoins 💚 '}
+                            {`${translate('interactions.checkout.supportP2')}`}
                         </Text>
                     </View>}
                     {!this.state.onlyQoins && <View style={styles.checkoutContainer}>
                         <View style={styles.checkoutDataDisplayMainContainer}>
                             <View style={styles.checkoutDataDisplayContainer}>
-                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>Mis Qoins</Text>
+                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>{`${translate('interactions.checkout.my')} Qoins`}</Text>
                                 <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>{this.state.userQoins}</Text>
                             </View>
                         </View>

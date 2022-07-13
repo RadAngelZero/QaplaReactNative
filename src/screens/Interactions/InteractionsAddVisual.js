@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import { translate } from '../../utilities/i18';
 import styles from './style';
 import images from '../../../assets/images';
 
@@ -28,7 +29,7 @@ class InteractionsAddVisual extends Component {
                 <View style={styles.innerConatiner}>
                     <View style={styles.headerContainer}>
                         <Text style={[styles.whiteText, styles.screenHeaderText, styles.headerMaxWidth]}>
-                            {'Agrega un Gif, Sticker o Meme a tu interacción'}
+                            {`${translate('interactions.addVisual.addVisual')}`}
                         </Text>
                         {/* <TouchableOpacity style={styles.helpButton}>
                             <images.svg.questionMark />
@@ -174,7 +175,7 @@ class InteractionsAddVisual extends Component {
                         onPress={this.onlyTTS}
                     >
                         <Text style={[styles.semitransparentText, styles.onlySendQoinsText]}>
-                            {'Sólo enviar mi' + ' '}
+                            {`${translate('interactions.addTTS.onlySendMy')} `}
                             <Text style={styles.whiteText}>
                                 TTS
                             </Text>

@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import { Text, TouchableOpacity, View } from 'react-native';
 import BottomSheet from 'reanimated-bottom-sheet';
-import LinearGradient from "react-native-linear-gradient";
+import LinearGradient from 'react-native-linear-gradient';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { styles, gradients } from './style';
-import images from "../../../assets/images";
+import images from '../../../assets/images';
+import { translate } from "../../utilities/i18";
 
 class ConfirmSelectionModal extends Component {
+
+    state = {
+        typeOfVisual: 'GIF',
+    }
 
     renderContent = () => (
         <View style={styles.bottomSheetContainer}>
@@ -30,7 +35,7 @@ class ConfirmSelectionModal extends Component {
                         style={[styles.bottomSheetButton, styles.bottomSheetButtonBackground]}
                     >
                         <Text style={styles.bottomSheetButtonText}>
-                            Usar GIF
+                            {`${translate('interactions.visualConfirmation.use')} ${this.state.typeOfVisual}`}
                         </Text>
                     </TouchableOpacity>
                     <View style={styles.bottomSheetButton}>
@@ -39,7 +44,7 @@ class ConfirmSelectionModal extends Component {
                             style={styles.bottomSheetNoButton}
                         >
                             <Text style={[styles.bottomSheetButtonText, styles.bottomSheetNoButtonText]}>
-                                Elegir otro GIF
+                                {`${translate('interactions.visualConfirmation.chooseAnother')} ${this.state.typeOfVisual}`}
                             </Text>
                         </TouchableOpacity>
                     </View>

@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import images from '../../../assets/images';
 import styles from './style';
-import style from './style';
+import { translate } from '../../utilities/i18';
 
 class BuyQoins extends Component {
 
@@ -59,21 +59,20 @@ class BuyQoins extends Component {
                         resizeMode={'cover'}
                     />
                     <View style={styles.centralGIFContainer}>
-                        <Image source={images.gif.whatTheWtf.img}
+                        <Image source={images.gif.llevare10.img}
                             style={styles.centralGIFSize}
                             resizeMode={'contain'}
                         />
                     </View>
                     <View style={styles.bubbleChat}>
                         <Text style={[styles.whiteText, styles.bubbleChatText]}>
-                            {`Diablos señorita 😳`}
+                            {`${translate('buyQoins.pharases.p1')}`}
                         </Text>
                     </View>
                 </LinearGradient>
                 <View style={styles.mainContentContainer}>
                     <Text style={[styles.whiteText, styles.header]}>
-                        Envía interacciones en vivo
-                        usando tus Qoins
+                        {`${translate('buyQoins.sendInteractiunsUsingQoins')}`}
                     </Text>
                     <View style={styles.pricesContainer}>
                         <TouchableOpacity
@@ -150,7 +149,7 @@ class BuyQoins extends Component {
                                     </View>
                                     <View style={styles.marginTop16}>
                                         <Text style={[styles.whiteText, styles.bigSubText, styles.smallSubText]}>
-                                            {'Ahorras 25%'}
+                                            {`${translate('buyQoins.save')} 25%`}
                                         </Text>
                                     </View>
                                 </View>

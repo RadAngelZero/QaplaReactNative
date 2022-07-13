@@ -1,17 +1,37 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
+import { translate } from '../../utilities/i18';
 import styles from './style';
 import images from '../../../assets/images';
 
 class InteractionsAddTTS extends Component {
+
+    state = {
+        streamerName: '',
+        messageCost: 0,
+        visualType: 'GIF',
+    }
+
+    componentDidMount() {
+        const streamerName = this.props.navigation.dangerouslyGetParent().state.routes[0].params.streamerName;
+        this.setState({ streamerName });
+        var arr = this.props.navigation.dangerouslyGetParent().state.routes;
+        arr.map(e => {
+            console.log(e);
+            if (e.params) {
+                if (e.params.messageCost) {
+                    this.setState({ messageCost: e.params.messageCost });
+                }
+            }
+        });
+    }
 
     render() {
         return (
             <View style={styles.container}>
                 <View style={[styles.innerConatiner, styles.addTTSContainer]}>
                     <Text style={[styles.whiteText, styles.screenHeaderText, styles.screenHeaderTextAddTTS]}>
-                        Agrega un Text-to-Speech
-                        a tu interacción
+                        {translate('interactions.addTTS.addTTSInYourInteraction')}
                     </Text>
                     <View style={{
                         alignItems: 'flex-start',
@@ -40,26 +60,25 @@ class InteractionsAddTTS extends Component {
                         </TouchableOpacity>
                         <View style={styles.chatBubbleContainer}>
                             <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                {'🗣 Agrega un mensaje con Bot de Voz para' + ' '}
+                                {`${translate('interactions.addTTS.addAMessageP1')} `}
                                 <Text style={[styles.accentTextColor, styles.chatBubbleTextAccent]}>
-                                    {'Danae' + ' '}
+                                    {`${this.state.streamerName} `}
                                 </Text>
-                                {'a tu interacción por' + ' '}
+                                {`${translate('interactions.addTTS.addAMessageP2')} `}
                                 <Text style={[styles.accentTextColor, styles.chatBubbleTextAccent]}>
-                                    {'200' + ' '}
+                                    {`${this.state.messageCost} `}
                                 </Text>
                                 Qoins
                             </Text>
                         </View>
                     </View>
                     <View style={styles.buttonsContainer}>
-
                         <TouchableOpacity
                             onPress={() => this.props.navigation.navigate('InteractionsTTS')}
                             style={[styles.bottomButton, styles.bottomButtonBackground]}
                         >
                             <Text style={[styles.whiteText, styles.bottomButtonText]}>
-                                Agregar Text-to-Speech
+                                {`${translate('interactions.addTTS.add')}`}
                             </Text>
                         </TouchableOpacity>
                         <View style={styles.bottomButton}>
@@ -68,9 +87,9 @@ class InteractionsAddTTS extends Component {
                                 style={styles.noBottomButton}
                             >
                                 <Text style={[styles.bottomButtonText, styles.noBottomButtomText]}>
-                                    {'Sólo enviar mi' + ' '}
+                                    {`${translate('interactions.addTTS.onlySendMy')} `}
                                     <Text style={[styles.whiteText, styles.noBottomButtonTextAccent]}>
-                                        GIF
+                                        {this.state.visualType}
                                     </Text>
                                 </Text>
                             </TouchableOpacity>

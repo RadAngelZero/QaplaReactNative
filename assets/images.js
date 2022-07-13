@@ -378,9 +378,9 @@ const images = {
 			img: require('./gifs/vibes-cat.gif'),
 			uri: '@assets/gifs/vibes-cat.gif',
 		},
-		whatTheWtf: {
-			img: require('./gifs/WhatTheWtf.gif'),
-			uri: '@assets/gifs/WhatTheWtf.gif',
+		llevare10: {
+			img: require('./gifs/llevare10.gif'),
+			uri: '@assets/gifs/llevare10.gif',
 		},
 	},
 };

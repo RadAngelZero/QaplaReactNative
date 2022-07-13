@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import styles from './style';
 import images from '../../../assets/images';
+import { translate } from '../../utilities/i18';
 
 class InteractionsPersonalize extends Component {
 
@@ -32,7 +33,7 @@ class InteractionsPersonalize extends Component {
                 <View style={styles.innerConatiner}>
                     <View style={styles.headerContainer}>
                         <Text style={[styles.whiteText, styles.screenHeaderText]}>
-                            {'Personaliza tu interacción'}
+                            {`${translate('interactions.personalize.personalizeYourInteraction')}`}
                         </Text>
                         <TouchableOpacity style={styles.helpButton}>
                             <images.svg.questionMark />
@@ -204,7 +205,7 @@ class InteractionsPersonalize extends Component {
                         onPress={this.onlyQoins}
                     >
                         <Text style={[styles.semitransparentText, styles.onlySendQoinsText]}>
-                            {'Sólo enviar' + ' '}
+                            {`${translate('interactions.personalize.onlySend')} `}
                             <Text style={styles.whiteText}>
                                 Qoins
                             </Text>

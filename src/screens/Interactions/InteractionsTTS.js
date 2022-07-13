@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import images from '../../../assets/images';
+import { translate } from '../../utilities/i18';
 import styles from './style';
 
 class InteractionsTTS extends Component {
@@ -35,7 +36,7 @@ class InteractionsTTS extends Component {
             <View style={styles.container}>
                 <View style={[styles.innerConatiner, styles.addTTSContainer]}>
                     <Text style={[styles.whiteText, styles.screenHeaderText]}>
-                        Escribe tu mensaje
+                        {`${translate('interactions.TTS.writeYourMessage')}`}
                     </Text>
                     <View style={styles.chatContainer}>
                         <View>
@@ -50,7 +51,7 @@ class InteractionsTTS extends Component {
                             </View>
                             <View style={styles.chatBubbleContainer}>
                                 <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                    {'🗣 ¿Qué quieres decir en el directo?'}
+                                    {`${translate('interactions.TTS.whatYouWantToSay')}`}
                                 </Text>
                             </View>
                         </View>

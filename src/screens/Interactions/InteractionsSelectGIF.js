@@ -4,6 +4,7 @@ import styles from './style';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import images from '../../../assets/images';
 import RadMasonry from '../../components/RadMasonry/RadMasonry';
+import { translate } from '../../utilities/i18';
 
 const GIFsData = [
     {
@@ -171,7 +172,7 @@ class InteractionsSelectGIF extends Component {
                                 value={this.state.searchQuery}
                                 onChange={this.searchHandler}
                                 style={styles.gridSearchBarTextInput}
-                                placeholder={"Buscar en Giphy"}
+                                placeholder={`${translate('interactions.visual.searchOn')} Giphy`}
                                 placeholderTextColor={'#fff3'}
                             />
                         </View>
@@ -198,7 +199,7 @@ class InteractionsSelectGIF extends Component {
                             color: !this.state.gifSection ? '#FFFFFF' : '#FFFFFF99',
                         }]}
                         >
-                            Recientes
+                            {translate('interactions.feed.recents')}
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -211,7 +212,7 @@ class InteractionsSelectGIF extends Component {
                             color: this.state.gifSection ? '#FFFFFF' : '#FFFFFF99',
                         }]}
                         >
-                            Tendencia
+                            {translate('interactions.visual.tabs.trends')}
                         </Text>
                     </TouchableOpacity>
                 </View>

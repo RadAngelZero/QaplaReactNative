@@ -5,6 +5,7 @@ import styles from './style';
 import images from '../../../assets/images';
 
 import { getStreamersByName } from '../../services/database';
+import { STREAMERS_BLACKLIST } from '../../utilities/Constants';
 
 const Item = ({ streamerName, streamerImg, isStreaming, streamerId, onPress }) => (
     <TouchableOpacity onPress={() => onPress(streamerId, streamerName, streamerImg, isStreaming)}>
@@ -52,14 +53,20 @@ class InteractionsSearchStreamer extends Component {
 
     searchTimeout = null;
 
-    renderItem = ({ item }) => (
-        <Item
-            streamerName={item.displayName}
-            streamerImg={item.photoUrl}
-            isStreaming={item.isStreaming}
-            streamerId={item.streamerId}
-            onPress={this.onStreamerSelected} />
-    );
+    renderItem = ({ item }) => {
+        if (!STREAMERS_BLACKLIST.includes(item.streamerId)) {
+            return (
+                <Item
+                    streamerName={item.displayName}
+                    streamerImg={item.photoUrl}
+                    isStreaming={item.isStreaming}
+                    streamerId={item.streamerId}
+                    onPress={this.onStreamerSelected} />
+            );
+        }
+
+        return null;
+    };
 
     searchHandler = (e) => {
         clearTimeout(this.searchTimeout);

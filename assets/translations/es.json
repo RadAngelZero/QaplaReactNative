@@ -646,7 +646,12 @@
             "addAMessageP1": "🗣 Agrega un mensaje con Bot de Voz para",
             "addAMessageP2": "a tu interacción por",
             "add": "Agregar Text-to-Speech",
-            "onlySendMy": "Sólo enviar mi"
+            "onlySendMy": "Sólo enviar mi",
+            "mediaTypes": {
+                "gifs": "Gif",
+                "stickers": "Sticker",
+                "memes": "Meme"
+            }
         },
         "TTS": {
             "writeYourMessage": "Escribe tu mensaje",
@@ -684,9 +689,13 @@
     },
     "buyQoins": {
         "sendInteractiunsUsingQoins": "Envía interacciones en vivo usando tus Qoins",
-        "save": "Ahorras",
+        "save": "¡25% más Qoins!",
         "pharases": {
             "p1": "Llevaré diez 💸💸💸"
+        },
+        "pendingPaymentAlert": {
+            "title": "Tu banco está pendiente de procesar tu pago",
+            "message": "Abonaremos tus Qoins una vez realizado el cobro. Te notificaremos en cuanto se realice"
         }
     }
 }

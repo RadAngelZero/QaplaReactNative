@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -14,12 +14,32 @@ class InteractionsGiphyMediaSelector extends Component {
     state = {
         searchQuery: '',
         gifSection: 1,
+        keyboardHeight: 0,
+        keyboardOpen: false,
         media: []
     };
     searchTimeout = null;
 
     componentDidMount() {
+        this.keyboardDidShowSubscription = Keyboard.addListener(
+            'keyboardDidShow',
+            (e) => {
+                this.setState({ keyboardOpen: true, keyboardHeight: e.endCoordinates.height });
+            },
+        );
+        this.keyboardDidHideSubscription = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                this.setState({ keyboardOpen: false });
+            },
+        );
+
         this.fetchTrendingMedia();
+    }
+
+    componentWillUnmount() {
+        this.keyboardDidShowSubscription.remove();
+        this.keyboardDidHideSubscription.remove();
     }
 
     fetchTrendingMedia = async () => {
@@ -125,7 +145,7 @@ class InteractionsGiphyMediaSelector extends Component {
         return (
             <View style={styles.container}>
                 <View style={[styles.gridMainContainer, {
-                    height: heightPercentageToPx(this.state.keyboardOpen ? 50.6 : 85),
+                    height: this.state.keyboardOpen ? this.state.keyboardHeight : heightPercentageToPx(85),
                 }]} >
                     <View style={styles.gridSearchBarContainer}>
                         <View style={[styles.searchBar, styles.gridSearchBar]}>

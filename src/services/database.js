@@ -55,6 +55,7 @@ const emotesInteractionsRef = qaplaInteractionsRef.child('/Emotes');
 const memesInteractionsRef = qaplaInteractionsRef.child('/Memes');
 const interactionsCostsRef = database.ref('/InteractionsCosts');
 const userProfileGIFsRef = database.ref('/UserProfileGIFs');
+const inAppPurchasesProductsRef = database.ref('/inAppPurchasesProducts');
 
 /**
  * Returns true if the user with the given uid exists
@@ -393,6 +394,22 @@ export async function substractQaploinsToUser(uid, currentCredits, quantityToSub
     } catch (error) {
         console.error(error);
     }
+}
+
+/**
+ * Add the specified amount of Qoins to the user
+ * @param {string} uid User identifier
+ * @param {number} qoinsToAdd Qoins to give
+ */
+export async function addQoinsToUser(uid, qoinsToAdd) {
+    console.log(uid, qoinsToAdd);
+    return await usersRef.child(uid).child('credits').transaction((qoins) => {
+        if (qoins) {
+            return qoins + qoinsToAdd;
+        }
+
+        return qoinsToAdd;
+    });
 }
 
 /**
@@ -1753,4 +1770,12 @@ export async function getAllMediaTypeCosts() {
 
 export async function getUserProfileGIFs() {
     return await userProfileGIFsRef.once('value');
+}
+
+/**
+ * Get the details for the given android product
+ * @param {string} productId Product identifier
+ */
+export async function getAndroidProductDetails(productId) {
+    return await inAppPurchasesProductsRef.child('android').child(productId).once('value');
 }

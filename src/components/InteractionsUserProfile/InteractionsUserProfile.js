@@ -11,7 +11,6 @@ class InteractionsUserProfile extends Component {
     state = {
         textRotation: 'GIF',
         textRotationState: 0,
-        openInfoTooltip: false,
         GIFURL: '',
     }
 
@@ -38,10 +37,6 @@ class InteractionsUserProfile extends Component {
 
     componentWillUnmount() {
         clearInterval(this.textRotator);
-    }
-
-    toggleInfoTooltip = () => {
-        this.setState({ openInfoTooltip: !this.state.openInfoTooltip });
     }
 
     render() {

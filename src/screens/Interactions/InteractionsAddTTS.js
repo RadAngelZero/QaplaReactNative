@@ -5,7 +5,7 @@ import { translate } from '../../utilities/i18';
 import styles from './style';
 import images from '../../../assets/images';
 import { getMediaTypeCost } from '../../services/database';
-import { TTS } from '../../utilities/Constants';
+import { GIPHY_GIFS, TTS } from '../../utilities/Constants';
 
 class InteractionsAddTTS extends Component {
     state= {
@@ -47,6 +47,7 @@ class InteractionsAddTTS extends Component {
 
     render() {
         const streamerName = this.props.navigation.getParam('displayName', {});
+        const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
 
         if (this.state.dataFetched) {
             return (
@@ -107,7 +108,7 @@ class InteractionsAddTTS extends Component {
                                 <Text style={[styles.bottomButtonText, styles.noBottomButtomText, styles.marginTop16]}>
                                     {`${translate('interactions.addTTS.onlySendMy')} `}
                                     <Text style={[styles.whiteText, styles.noBottomButtonTextAccent]}>
-                                        {this.state.visualType}
+                                        {translate(`interactions.addTTS.mediaTypes.${mediaType}`)}
                                     </Text>
                                 </Text>
                             </TouchableOpacity>

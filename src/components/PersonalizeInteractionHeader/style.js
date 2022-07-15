@@ -1,17 +1,15 @@
 import { StyleSheet } from 'react-native';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#0D1021',
-        paddingHorizontal: widthPercentageToPx(4.26),
+        backgroundColor: '#0D1021'
     },
     mainContainer: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        height: heightPercentageToPx(4.92),
+        marginLeft: 16,
         marginTop: heightPercentageToPx(3.94),
     },
     backButtonContainer: {

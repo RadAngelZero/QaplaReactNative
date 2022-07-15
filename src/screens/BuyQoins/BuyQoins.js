@@ -1,30 +1,83 @@
 import React, { Component } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
 import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
+import { connect } from 'react-redux';
+
 import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import images from '../../../assets/images';
 import styles from './style';
 import { translate } from '../../utilities/i18';
+import { getProductsQonversion, purchaseProduct } from '../../services/Qonversion';
 
 class BuyQoins extends Component {
     state = {
-        qoins1: '',
-        qoins2: '',
+        qoins1: {
+            id: '',
+            title: '',
+            price: 0,
+            currency: '',
+            androidId: ''
+        },
+        qoins2: {
+            id: '',
+            title: '',
+            price: 0,
+            currency: '',
+            androidId: ''
+        },
     };
 
     componentDidMount() {
-        setTimeout(() => { this.setState({ qoins1: '2,000', qoins2: '4,500' }) }, 1000);
+        this.fetchProducts();
+    }
+
+    fetchProducts = async () => {
+        const prod = await getProductsQonversion();
+        const prods = [];
+        prod.forEach((prod) => {
+            prods.push({
+                title: prod.skuDetails.description,
+                id: prod.qonversionID,
+                androidId: prod.storeID,
+                price: prod.price,
+                currency: prod.currencyCode
+            });
+        });
+
+        this.setState({ qoins1: prods[1], qoins2: prods[0] });
     }
 
     handlePack1 = () => {
-        console.log('Cobrese 2 dolares');
-        this.props.navigation.goBack();
+        purchaseProduct(this.props.uid, this.state.qoins1.id, this.state.qoins1.androidId, () => {
+            this.props.navigation.goBack();
+        }, () => {
+            Alert.alert(
+                translate('buyQoins.pendingPaymentAlert.title'),
+                translate('buyQoins.pendingPaymentAlert.message'),
+                [
+                    {
+                        text: 'Ok'
+                    }
+                ]
+            )
+        });
     }
 
     handlePack2 = () => {
-        console.log('Cobrese 4 dolares');
-        this.props.navigation.goBack();
+        purchaseProduct(this.props.uid, this.state.qoins2.id, this.state.qoins2.androidId, () => {
+            this.props.navigation.goBack();
+        }, () => {
+            Alert.alert(
+                translate('buyQoins.pendingPaymentAlert.title'),
+                translate('buyQoins.pendingPaymentAlert.message'),
+                [
+                    {
+                        text: 'Ok'
+                    }
+                ]
+            )
+        });
     }
 
     render() {
@@ -79,8 +132,8 @@ class BuyQoins extends Component {
                             style={styles.pack1Container}
                         >
                             <View style={styles.qoinsContainer}>
-                                {this.state.qoins1 !== '' && <MaskedView maskElement={
-                                    <Text style={[styles.whiteText, styles.qoinsText]}>{this.state.qoins1}</Text>
+                                {this.state.qoins1.title !== '' && <MaskedView maskElement={
+                                    <Text style={[styles.whiteText, styles.qoinsText]}>{this.state.qoins1.title}</Text>
                                 }>
                                     <LinearGradient
                                         colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
@@ -89,7 +142,7 @@ class BuyQoins extends Component {
                                         angle={227}
                                     >
                                         <Text style={[styles.transparentText, styles.qoinsText]}>
-                                            {this.state.qoins1}
+                                            {this.state.qoins1.title}
                                         </Text>
                                     </LinearGradient>
                                 </MaskedView>}
@@ -97,9 +150,9 @@ class BuyQoins extends Component {
                             </View>
                             <View style={styles.marginTop16}>
                                 <Text style={[styles.whiteText, styles.paddingTopFix, styles.bigSubText]}>
-                                    {'$2 '}
+                                    {`$${this.state.qoins1.price} `}
                                     <Text style={styles.smallSubText}>
-                                        USD
+                                        {this.state.qoins1.currency}
                                     </Text>
                                 </Text>
                             </View>
@@ -120,9 +173,9 @@ class BuyQoins extends Component {
                                     justifyContent: 'center',
                                 }}>
                                     <View style={styles.qoinsContainer}>
-                                        {this.state.qoins1 !== '' && <MaskedView maskElement={
+                                        {this.state.qoins2.title !== '' && <MaskedView maskElement={
                                             <Text style={[styles.whiteText, styles.qoinsText]}>
-                                                {this.state.qoins2}
+                                                {this.state.qoins2.title}
                                             </Text>
                                         }>
                                             <LinearGradient
@@ -132,7 +185,7 @@ class BuyQoins extends Component {
                                                 angle={197}
                                             >
                                                 <Text style={[styles.transparentText, styles.qoinsText]}>
-                                                    {this.state.qoins2}
+                                                    {this.state.qoins2.title}
                                                 </Text>
                                             </LinearGradient>
                                         </MaskedView>}
@@ -140,15 +193,15 @@ class BuyQoins extends Component {
                                     </View>
                                     <View style={styles.marginTop16}>
                                         <Text style={[styles.whiteText, styles.paddingTopFix, styles.bigSubText]}>
-                                            {'$4 '}
+                                            {`$${this.state.qoins2.price} `}
                                             <Text style={styles.smallSubText}>
-                                                USD
+                                                {this.state.qoins2.currency}
                                             </Text>
                                         </Text>
                                     </View>
                                     <View style={styles.marginTop16}>
                                         <Text style={[styles.whiteText, styles.bigSubText, styles.smallSubText]}>
-                                            {`${translate('buyQoins.save')} 25%`}
+                                            {translate('buyQoins.save')}
                                         </Text>
                                     </View>
                                 </View>
@@ -182,4 +235,10 @@ class BuyQoins extends Component {
     }
 }
 
-export default BuyQoins;
+function mapStateToProps(state) {
+    return {
+        uid: state.userReducer.user.id
+    };
+}
+
+export default connect(mapStateToProps)(BuyQoins);

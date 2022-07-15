@@ -155,7 +155,7 @@
         "done": "Done",
         "loots": "Loots",
         "interactions": {
-            "interact" : "Interactúa",
+            "interact" : "Interact",
             "liveToYourStreamer": "on-screen to your streamer"
         }
     },
@@ -648,7 +648,12 @@
             "addAMessageP1": "🗣 Give voice to your message to",
             "addAMessageP2": "to your interaction for",
             "add": "Add Text-to-Speech",
-            "onlySendMy": "Only send my"
+            "onlySendMy": "Only send my",
+            "mediaTypes": {
+                "gifs": "Gif",
+                "stickers": "Sticker",
+                "memes": "Meme"
+            }
         },
         "TTS": {
             "writeYourMessage": "Type your message",
@@ -686,9 +691,13 @@
     },
     "buyQoins": {
         "sendInteractiunsUsingQoins": "Send live interactions using your Qoins",
-        "save": "You save",
+        "save": "25% more Qoins!",
         "pharases": {
             "p1": "I’ll take ten 💸💸💸"
+        },
+        "pendingPaymentAlert": {
+            "title": "Your bank is pending to process your payment",
+            "message": "We will pay your Qoins once the payment has been made. We will notify you as soon as it is done"
         }
     }
 }

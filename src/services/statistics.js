@@ -64,7 +64,6 @@ export async function trackOnSegment(event, properties = {}) {
  */
 export async function setUserIdOnSegment(uid, email, username, twitchUsername) {
     try {
-        identifyQonversion(uid);
         analytics.identify(uid, {
             email,
             username,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, FlatList, View, TouchableOpacity, ActivityIndicator, SafeAreaView } from 'react-native';
+import { ScrollView, Text, FlatList, View, TouchableOpacity, ActivityIndicator, SafeAreaView, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -32,6 +32,9 @@ export class InteractionsFeed extends Component {
 
     componentDidMount() {
         this.fetchStreamersData();
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            this.props.navigation.dismiss();
+        });
     }
 
     fetchStreamersData = async () => {

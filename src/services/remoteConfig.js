@@ -18,7 +18,7 @@ export default remoteConf = {
 		try {
 			// fetch(0) cleans cache and gets data from server,
 			// default time to fetch data again is 12h.
-			await remoteConfig.fetch();
+			await remoteConfig.fetch(0);
 			const activated = await remoteConfig.activateFetched();
 
 			if (activated){

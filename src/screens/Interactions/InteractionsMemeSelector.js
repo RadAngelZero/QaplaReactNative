@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -111,7 +111,7 @@ class InteractionsMemeSelector extends Component {
                         />
                     </View>
                 </View>
-                <View style={{
+                {/* <View style={{
                     flexDirection: 'row',
                     position: 'absolute',
                     bottom: 0,
@@ -163,7 +163,7 @@ class InteractionsMemeSelector extends Component {
                             Tendencia
                         </Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View >
         );
     }

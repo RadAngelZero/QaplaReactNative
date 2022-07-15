@@ -55,7 +55,7 @@ class InteractionsCheckout extends Component {
             let media = null;
             if (selectedMedia && selectedMedia.original) {
                 media = {
-                    url: selectedMedia.original.url,
+                    media: selectedMedia.original,
                     type: mediaType
                 };
             }

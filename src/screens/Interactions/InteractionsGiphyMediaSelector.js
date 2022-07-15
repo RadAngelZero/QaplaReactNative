@@ -198,7 +198,7 @@ class InteractionsGiphyMediaSelector extends Component {
                             containerStyle={styles.gridMasonrySubContainer} />
                     </View>
                 </View>
-                <View style={styles.gridBottomSectionSelector}>
+                {/* <View style={styles.gridBottomSectionSelector}>
                     <TouchableOpacity
                         onPress={() => this.setState({ ...this.state, searchQuery: '', gifSection: 0 })}
                         style={[styles.gridBottomSelectionSelectorButton, {
@@ -225,7 +225,7 @@ class InteractionsGiphyMediaSelector extends Component {
                             {translate('interactions.visual.tabs.trends')}
                         </Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View >
         );
     }

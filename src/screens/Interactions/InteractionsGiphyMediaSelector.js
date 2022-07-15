@@ -9,6 +9,7 @@ import RadMasonry from '../../components/RadMasonry/RadMasonry';
 import { generateGiphyUserRandomId, getGiphyTrending, searchGiphyMedia } from '../../services/Giphy';
 import { GIPHY_GIFS, GIPHY_STICKERS } from '../../utilities/Constants';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
+import { getEmotesLibrary } from '../../services/database';
 
 class InteractionsGiphyMediaSelector extends Component {
     state = {
@@ -51,7 +52,32 @@ class InteractionsGiphyMediaSelector extends Component {
         }
 
         const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
-        const media = await getGiphyTrending(giphyRandomId, mediaType, 25);
+        let media = [];
+        if (mediaType === GIPHY_STICKERS) {
+            const qaplaEmotes = await getEmotesLibrary();
+            if (qaplaEmotes.exists()) {
+                qaplaEmotes.forEach((emote) => {
+                    const item = {
+                        images: {
+                            fixed_height_small: {
+                                url: emote.val().url,
+                                height: emote.val().height,
+                                width: emote.val().width,
+                            },
+                            original: {
+                                url: emote.val().url,
+                                height: emote.val().height,
+                                width: emote.val().width,
+                            },
+                        },
+                    };
+                    media.push(item);
+                });
+            }
+        }
+
+        media = media.concat(await getGiphyTrending(giphyRandomId, mediaType, 25));
+
         this.setState({ media });
     }
 

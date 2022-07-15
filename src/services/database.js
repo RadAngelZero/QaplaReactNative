@@ -402,7 +402,6 @@ export async function substractQaploinsToUser(uid, currentCredits, quantityToSub
  * @param {number} qoinsToAdd Qoins to give
  */
 export async function addQoinsToUser(uid, qoinsToAdd) {
-    console.log(uid, qoinsToAdd);
     return await usersRef.child(uid).child('credits').transaction((qoins) => {
         if (qoins) {
             return qoins + qoinsToAdd;
@@ -1741,6 +1740,9 @@ export async function getUserFavsStreamers(uid, limit = 5) {
  * Qapla Interactions
  */
 
+/**
+ * Return the emotes from the Qapla library
+ */
 export async function getEmotesLibrary() {
     return await emotesInteractionsRef.once('value');
 }

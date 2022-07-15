@@ -18,7 +18,8 @@
       android:launchMode="singleTop"
       android:requestLegacyExternalStorage="true">
       <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-      <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
+      <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService"
+          android:exported="true">
         <intent-filter>
           <action android:name="com.google.firebase.MESSAGING_EVENT" />
         </intent-filter>

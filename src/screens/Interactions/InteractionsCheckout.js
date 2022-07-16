@@ -7,13 +7,16 @@ import styles from './style';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
 import { sendCheers } from '../../services/database';
+import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
+import { isUserLogged } from '../../services/auth';
 
 class InteractionsCheckout extends Component {
     state = {
         extraTip: 0,
         tipIncrement: 50,
         interactionCost: 0,
-        minimum: 0
+        minimum: 0,
+        openLinkWitTwitchModal: false
     };
 
     componentDidMount() {
@@ -45,52 +48,60 @@ class InteractionsCheckout extends Component {
     }
 
     onSendInteraction = async () => {
-        const totalCost = this.state.interactionCost + this.state.extraTip;
-        if (totalCost <= this.props.qoins) {
-            const streamerId = this.props.navigation.getParam('streamerId', '');
-            const streamerName = this.props.navigation.getParam('displayName', '');
-            const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
-            const mediaType = this.props.navigation.getParam('mediaType');
-            const message = this.props.navigation.getParam('message', null);
-            let media = null;
-            if (selectedMedia && selectedMedia.original) {
-                media = {
-                    ...selectedMedia.original,
-                    type: mediaType
-                };
-            }
+        if (isUserLogged()) {
+            if (this.props.twitchId && this.props.twitchUserName) {
+                const totalCost = this.state.interactionCost + this.state.extraTip;
+                if (totalCost <= this.props.qoins) {
+                    const streamerId = this.props.navigation.getParam('streamerId', '');
+                    const streamerName = this.props.navigation.getParam('displayName', '');
+                    const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
+                    const mediaType = this.props.navigation.getParam('mediaType');
+                    const message = this.props.navigation.getParam('message', null);
+                    let media = null;
+                    if (selectedMedia && selectedMedia.original) {
+                        media = {
+                            ...selectedMedia.original,
+                            type: mediaType
+                        };
+                    }
 
-            try {
-                await sendCheers(
-                    totalCost,
-                    media,
-                    message,
-                    (new Date()).getTime(),
-                    streamerName,
-                    this.props.uid,
-                    this.props.userName,
-                    this.props.twitchUserName,
-                    this.props.photoUrl,
-                    streamerId
-                );
+                    try {
+                        await sendCheers(
+                            totalCost,
+                            media,
+                            message,
+                            (new Date()).getTime(),
+                            streamerName,
+                            this.props.uid,
+                            this.props.userName,
+                            this.props.twitchUserName,
+                            this.props.photoUrl,
+                            streamerId
+                        );
 
-                this.props.navigation.navigate('InteractionsSent', {
-                    ...this.props.navigation.state.params,
-                    donationTotal: totalCost
-                });
-            } catch (error) {
-                Alert.alert(
-                    'Error',
-                    'We could not complete the operation, try again later',
-                    [
-                        {
-                            text: 'Ok'
-                        }
-                    ]
-                )
+                        this.props.navigation.navigate('InteractionsSent', {
+                            ...this.props.navigation.state.params,
+                            donationTotal: totalCost
+                        });
+                    } catch (error) {
+                        Alert.alert(
+                            'Error',
+                            'We could not complete the operation, try again later',
+                            [
+                                {
+                                    text: 'Ok'
+                                }
+                            ]
+                        )
+                    }
+                } else {
+                    this.props.navigation.navigate('BuyQoins');
+                }
+            } else {
+                this.setState({ openLinkWitTwitchModal: true });
             }
         } else {
-            this.props.navigation.navigate('BuyQoins');
+            this.props.navigation.navigate('SignIn');
         }
     }
 
@@ -188,8 +199,12 @@ class InteractionsCheckout extends Component {
                     minimum={this.state.minimum}
                     onlyQoins={onlyQoins}
                     onSendInteraction={this.onSendInteraction}
-                    onCancel={this.onCancel}
-                />
+                    onCancel={this.onCancel} />
+                <LinkTwitchAccountModal
+                    open={this.state.openLinkWitTwitchModal}
+                    onClose={() => this.setState({ openLinkWitTwitchModal: false })}
+                    onLinkSuccessful={this.onSendInteraction}
+                    linkingWithQreatorCode={false} />
             </View >
         );
     }

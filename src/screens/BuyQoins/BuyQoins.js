@@ -9,6 +9,7 @@ import images from '../../../assets/images';
 import styles from './style';
 import { translate } from '../../utilities/i18';
 import { getProductsQonversion, purchaseProduct } from '../../services/Qonversion';
+import { isUserLogged } from '../../services/auth';
 
 class BuyQoins extends Component {
     state = {
@@ -49,35 +50,43 @@ class BuyQoins extends Component {
     }
 
     handlePack1 = () => {
-        purchaseProduct(this.props.uid, this.state.qoins1.id, this.state.qoins1.androidId, () => {
-            this.props.navigation.goBack();
-        }, () => {
-            Alert.alert(
-                translate('buyQoins.pendingPaymentAlert.title'),
-                translate('buyQoins.pendingPaymentAlert.message'),
-                [
-                    {
-                        text: 'Ok'
-                    }
-                ]
-            )
-        });
+        if (isUserLogged()) {
+            purchaseProduct(this.props.uid, this.state.qoins1.id, this.state.qoins1.androidId, () => {
+                this.props.navigation.goBack();
+            }, () => {
+                Alert.alert(
+                    translate('buyQoins.pendingPaymentAlert.title'),
+                    translate('buyQoins.pendingPaymentAlert.message'),
+                    [
+                        {
+                            text: 'Ok'
+                        }
+                    ]
+                )
+            });
+        } else {
+            this.props.navigation.navigate('SignIn');
+        }
     }
 
     handlePack2 = () => {
-        purchaseProduct(this.props.uid, this.state.qoins2.id, this.state.qoins2.androidId, () => {
-            this.props.navigation.goBack();
-        }, () => {
-            Alert.alert(
-                translate('buyQoins.pendingPaymentAlert.title'),
-                translate('buyQoins.pendingPaymentAlert.message'),
-                [
-                    {
-                        text: 'Ok'
-                    }
-                ]
-            )
-        });
+        if (isUserLogged()) {
+            purchaseProduct(this.props.uid, this.state.qoins2.id, this.state.qoins2.androidId, () => {
+                this.props.navigation.goBack();
+            }, () => {
+                Alert.alert(
+                    translate('buyQoins.pendingPaymentAlert.title'),
+                    translate('buyQoins.pendingPaymentAlert.message'),
+                    [
+                        {
+                            text: 'Ok'
+                        }
+                    ]
+                )
+            });
+        } else {
+            this.props.navigation.navigate('SignIn');
+        }
     }
 
     render() {

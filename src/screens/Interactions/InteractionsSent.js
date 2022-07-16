@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Linking, Text, View } from 'react-native';
 import images from '../../../assets/images';
 import SentInteractionModal from '../../components/InteractionsModals/SentInteractionModal';
 import { translate } from '../../utilities/i18';
@@ -21,9 +21,11 @@ class InteractionsSent extends Component {
 
     pressHandler = () => {
         const isStreaming = this.props.navigation.getParam('isStreaming');
+        const streamerName = this.props.navigation.getParam('displayName');
         if (isStreaming) {
-            return console.log('a twitch');
+            Linking.openURL(`https://www.twitch.tv/${streamerName.toLowerCase()}`);
         }
+
         this.props.navigation.dismiss();
     }
 

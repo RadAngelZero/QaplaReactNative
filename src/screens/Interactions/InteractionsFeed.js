@@ -180,47 +180,58 @@ export class InteractionsFeed extends Component {
                                         horizontal
                                     />
                                 </View>
+                                {this.props.uid &&
+                                    <>
+                                        {this.state.favStreamers.length > 0 &&
+                                            <>
+                                            <View style={[styles.feedSectionHeaderContainer, styles.feedSectionHeaderMarginTop]}>
+                                                <Text style={[styles.whiteText, styles.feedSectionHeader]}>
+                                                    {translate('interactions.feed.favs')}
+                                                </Text>
+                                            </View>
 
-                                <View style={[styles.feedSectionHeaderContainer, styles.feedSectionHeaderMarginTop]}>
-                                    <Text style={[styles.whiteText, styles.feedSectionHeader]}>
-                                        {translate('interactions.feed.favs')}
-                                    </Text>
-                                </View>
+                                            <View style={[styles.widthMax, styles.marginTop30]}>
+                                                <FlatList
+                                                    renderItem={this.renderFavItem}
+                                                    keyExtractor={item => item.streamerId}
+                                                    data={this.state.favStreamers}
+                                                    style={styles.widthMax}
+                                                    showsHorizontalScrollIndicator={false}
+                                                    horizontal
+                                                />
+                                            </View>
+                                            </>
+                                        }
 
-                                <View style={[styles.widthMax, styles.marginTop30]}>
-                                    <FlatList
-                                        renderItem={this.renderFavItem}
-                                        keyExtractor={item => item.streamerId}
-                                        data={this.state.favStreamers}
-                                        style={styles.widthMax}
-                                        showsHorizontalScrollIndicator={false}
-                                        horizontal
-                                    />
-                                </View>
+                                        {this.state.recentStreamers.length > 0 &&
+                                            <>
+                                            <View style={styles.feedSectionHeaderContainer}>
+                                                <Text style={[styles.whiteText, styles.feedSectionHeader]}>
+                                                    {translate('interactions.feed.recents')}
+                                                </Text>
+                                            </View>
 
-                                <View style={styles.feedSectionHeaderContainer}>
-                                    <Text style={[styles.whiteText, styles.feedSectionHeader]}>
-                                        {translate('interactions.feed.recents')}
-                                    </Text>
-                                </View>
-
-                                <View style={[styles.marginTop30]}>
-                                    <ScrollView
-                                        horizontal
-                                        showsHorizontalScrollIndicator={false}
-                                    >
-                                        <FlatList
-                                            renderItem={this.renderRecentItem}
-                                            keyExtractor={item => item.streamerId}
-                                            data={this.state.recentStreamers}
-                                            numColumns={Math.ceil(this.state.recentStreamers.length / 2)}
-                                            showsVerticalScrollIndicator={false}
+                                            <View style={[styles.marginTop30]}>
+                                                <ScrollView
+                                                    horizontal
+                                                    showsHorizontalScrollIndicator={false}
+                                                >
+                                                    <FlatList
+                                                        renderItem={this.renderRecentItem}
+                                                        keyExtractor={item => item.streamerId}
+                                                        data={this.state.recentStreamers}
+                                                        numColumns={Math.ceil(this.state.recentStreamers.length / 2)}
+                                                        showsVerticalScrollIndicator={false}
+                                                    />
+                                                </ScrollView>
+                                            </View>
+                                            </>
+                                        }
+                                        <View
+                                            style={styles.feedBrowserBottomVisible}
                                         />
-                                    </ScrollView>
-                                </View>
-                                <View
-                                    style={styles.feedBrowserBottomVisible}
-                                />
+                                    </>
+                                }
                             </View>
                         </ScrollView>
                         <View style={[styles.backButton, styles.feedBackButtonPos]}>

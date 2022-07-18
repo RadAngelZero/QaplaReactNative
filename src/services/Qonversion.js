@@ -19,18 +19,18 @@ export function identifyQonversion(uid) {
  * @param {function} onSuccess Function called after a successful payment
  * @param {function} onPendingPurchase Function called on Pending purchase
  */
-export async function purchaseProduct(uid, productId, storeId, onSuccess, onPendingPurchase) {
+export async function purchaseProduct(uid, product, onSuccess, onPendingPurchase) {
     identifyQonversion(uid);
     try {
         if (Platform.OS === 'android') {
-            await Qonversion.purchase(productId);
-            const productDetails = await getAndroidProductDetails(storeId);
+            await Qonversion.purchase(product.qonversionID);
+            const productDetails = await getAndroidProductDetails(product.storeID);
             if (productDetails.val().type === 'Qoins') {
                 await addQoinsToUser(uid, productDetails.val().amount);
             }
             onSuccess();
         } else {
-            const permissions = await Qonversion.purchaseProduct(productId);
+            const permissions = await Qonversion.purchaseProduct(product);
             console.log(permissions);
         }
     } catch (e) {

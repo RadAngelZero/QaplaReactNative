@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Platform, Text, TouchableOpacity, View } from 'react-native';
 import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
@@ -13,20 +13,8 @@ import { isUserLogged } from '../../services/auth';
 
 class BuyQoins extends Component {
     state = {
-        qoins1: {
-            id: '',
-            title: '',
-            price: 0,
-            currency: '',
-            androidId: ''
-        },
-        qoins2: {
-            id: '',
-            title: '',
-            price: 0,
-            currency: '',
-            androidId: ''
-        },
+        qoins1: null,
+        qoins2: null,
     };
 
     componentDidMount() {
@@ -35,23 +23,18 @@ class BuyQoins extends Component {
 
     fetchProducts = async () => {
         const prod = await getProductsQonversion();
-        const prods = [];
+        const products = [];
         prod.forEach((prod) => {
-            prods.push({
-                title: prod.skuDetails.description,
-                id: prod.qonversionID,
-                androidId: prod.storeID,
-                price: prod.price,
-                currency: prod.currencyCode
-            });
+            prod.storeID
+            products.push(prod);
         });
 
-        this.setState({ qoins1: prods[1], qoins2: prods[0] });
+        this.setState({ qoins1: products[1], qoins2: products[0] });
     }
 
     handlePack1 = () => {
         if (isUserLogged()) {
-            purchaseProduct(this.props.uid, this.state.qoins1.id, this.state.qoins1.androidId, () => {
+            purchaseProduct(this.props.uid, this.state.qoins1, () => {
                 this.props.navigation.goBack();
             }, () => {
                 Alert.alert(
@@ -71,7 +54,7 @@ class BuyQoins extends Component {
 
     handlePack2 = () => {
         if (isUserLogged()) {
-            purchaseProduct(this.props.uid, this.state.qoins2.id, this.state.qoins2.androidId, () => {
+            purchaseProduct(this.props.uid, this.state.qoins2, () => {
                 this.props.navigation.goBack();
             }, () => {
                 Alert.alert(
@@ -135,33 +118,34 @@ class BuyQoins extends Component {
                     <Text style={[styles.whiteText, styles.header]}>
                         {`${translate('buyQoins.sendInteractiunsUsingQoins')}`}
                     </Text>
+                    {this.state.qoins1 && this.state.qoins2 &&
                     <View style={styles.pricesContainer}>
                         <TouchableOpacity
                             onPress={this.handlePack1}
-                            style={styles.pack1Container}
-                        >
+                            style={styles.pack1Container}>
                             <View style={styles.qoinsContainer}>
-                                {this.state.qoins1.title !== '' && <MaskedView maskElement={
-                                    <Text style={[styles.whiteText, styles.qoinsText]}>{this.state.qoins1.title}</Text>
+                                <MaskedView maskElement={
+                                    <Text style={[styles.whiteText, styles.qoinsText]}>
+                                        {Platform.OS === 'android' ? this.state.qoins1.skuDetails.description : this.state.qoins1.skProduct.localizedDescription}
+                                    </Text>
                                 }>
                                     <LinearGradient
                                         colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
                                         locations={[0.09, 0.49, 0.90]}
                                         useAngle
-                                        angle={227}
-                                    >
+                                        angle={227}>
                                         <Text style={[styles.transparentText, styles.qoinsText]}>
-                                            {this.state.qoins1.title}
+                                            {Platform.OS === 'android' ? this.state.qoins1.skuDetails.description : this.state.qoins1.skProduct.localizedDescription}
                                         </Text>
                                     </LinearGradient>
-                                </MaskedView>}
+                                </MaskedView>
                                 <images.svg.qoin style={styles.qoin} />
                             </View>
                             <View style={styles.marginTop16}>
                                 <Text style={[styles.whiteText, styles.paddingTopFix, styles.bigSubText]}>
                                     {`$${this.state.qoins1.price} `}
                                     <Text style={styles.smallSubText}>
-                                        {this.state.qoins1.currency}
+                                        {this.state.qoins1.currencyCode}
                                     </Text>
                                 </Text>
                             </View>
@@ -184,7 +168,7 @@ class BuyQoins extends Component {
                                     <View style={styles.qoinsContainer}>
                                         {this.state.qoins2.title !== '' && <MaskedView maskElement={
                                             <Text style={[styles.whiteText, styles.qoinsText]}>
-                                                {this.state.qoins2.title}
+                                                {Platform.OS === 'android' ? this.state.qoins2.skuDetails.description : this.state.qoins2.skProduct.localizedDescription}
                                             </Text>
                                         }>
                                             <LinearGradient
@@ -194,7 +178,7 @@ class BuyQoins extends Component {
                                                 angle={197}
                                             >
                                                 <Text style={[styles.transparentText, styles.qoinsText]}>
-                                                    {this.state.qoins2.title}
+                                                    {Platform.OS === 'android' ? this.state.qoins2.skuDetails.description : this.state.qoins2.skProduct.localizedDescription}
                                                 </Text>
                                             </LinearGradient>
                                         </MaskedView>}
@@ -204,7 +188,7 @@ class BuyQoins extends Component {
                                         <Text style={[styles.whiteText, styles.paddingTopFix, styles.bigSubText]}>
                                             {`$${this.state.qoins2.price} `}
                                             <Text style={styles.smallSubText}>
-                                                {this.state.qoins2.currency}
+                                                {this.state.qoins2.currencyCode}
                                             </Text>
                                         </Text>
                                     </View>
@@ -218,6 +202,7 @@ class BuyQoins extends Component {
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>
+                    }
                 </View>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.goBack()}

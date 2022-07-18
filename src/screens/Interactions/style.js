@@ -144,7 +144,6 @@ export default styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: '400',
-        lineHeight: heightPercentageToPx(3.44),
         letterSpacing: 1,
         textAlignVertical: 'center',
         marginLeft: widthPercentageToPx(2.66),

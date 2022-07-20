@@ -84,11 +84,9 @@ class App extends React.Component {
             if (Platform.OS === 'android') {
                 await RNIap.flushFailedPurchasesCachedAsPendingAndroid();
             }
-            console.log('Init');
             this.purchaseUpdateSubscription = RNIap.purchaseUpdatedListener(async (purchase) => {
+                console.log('Listener called');
                 const receipt = JSON.parse(purchase.transactionReceipt);
-                await iOSPurchasesTest(receipt);
-                console.log(receipt.purchaseState);
                 if ((Platform.OS === 'android' && receipt && receipt.purchaseState === 0) || Platform.OS === 'ios') {
                     // Transmit receipt to backend
                     // Backend must check if order is paid

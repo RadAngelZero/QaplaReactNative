@@ -68,7 +68,7 @@ class BuyQoins extends Component {
     requestPurchase = async (sku) => {
         try {
             const purchase = await RNIap.requestPurchase(sku, false);
-            await iOSPurchasesTest(purchase);
+            console.log('After Buy call');
         } catch (err) {
             console.warn(err.code, err.message);
         }

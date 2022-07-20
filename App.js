@@ -89,7 +89,7 @@ class App extends React.Component {
                 const receipt = JSON.parse(purchase.transactionReceipt);
                 await iOSPurchasesTest(receipt);
                 console.log(receipt.purchaseState);
-                if (receipt && receipt.purchaseState === 0) {
+                if ((Platform.OS === 'android' && receipt && receipt.purchaseState === 0) || Platform.OS === 'ios') {
                     // Transmit receipt to backend
                     // Backend must check if order is paid
                     // If order paid

@@ -349,8 +349,6 @@ PODS:
     - React
   - react-native-cameraroll (1.8.1):
     - React
-  - react-native-netinfo (5.3.3):
-    - React
   - react-native-qonversion (3.3.2):
     - Qonversion (= 2.18.4)
     - React
@@ -440,6 +438,8 @@ PODS:
   - RNGoogleSignin (3.0.4):
     - GoogleSignIn (~> 5.0.0)
     - React
+  - RNIap (8.2.1):
+    - React-Core
   - RNReanimated (1.7.0):
     - React
   - RNScreens (2.0.0-beta.13):
@@ -488,7 +488,6 @@ DEPENDENCIES:
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
-  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-qonversion (from `../node_modules/react-native-qonversion`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -510,6 +509,7 @@ DEPENDENCIES:
   - RNFirebase (from `../node_modules/react-native-firebase/ios`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-community/google-signin`)"
+  - RNIap (from `../node_modules/react-native-iap`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -590,8 +590,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-community/cameraroll"
-  react-native-netinfo:
-    :path: "../node_modules/@react-native-community/netinfo"
   react-native-qonversion:
     :path: "../node_modules/react-native-qonversion"
   react-native-safe-area-context:
@@ -632,6 +630,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-community/google-signin"
+  RNIap:
+    :path: "../node_modules/react-native-iap"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -693,7 +693,6 @@ SPEC CHECKSUMS:
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-camera: 2e5b6551a242d4bf542bcfca272823bc4f4cde2f
   react-native-cameraroll: e2917a5e62da9f10c3d525e157e25e694d2d6dfa
-  react-native-netinfo: 8884d510fe67349940b4399c01db3e3591c922aa
   react-native-qonversion: 88c8935321abf722ce505a3ee390ebdc4edc06ed
   react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   react-native-webview: fcb5f377aadc216273300f452ee0d321fb85809b
@@ -714,12 +713,13 @@ SPEC CHECKSUMS:
   RNFirebase: 37daa9a346d070f9f6ee1f3b4aaf4c8e3b1d5d1c
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
   RNGoogleSignin: a00f87261ea13df9a5cea8deafa6927d6f2c3562
+  RNIap: 7b833f386ecee6e4ab3a5303332274bd6844e4d9
   RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
   RNScreens: ba539a5086136eb356e43699cb588a80369763ca
   RNSVG: 7e16ddfc6e00d5aa69c9eb83e699bcce5dcb85d4
   Segment-Firebase: 41677a446f58989db69912059949107afb0c3f38
   Yoga: 3ebccbdd559724312790e7742142d062476b698e
 
-PODFILE CHECKSUM: f0b2e809a89b67d3e43b9a1d6e545f00dd352c3a
+PODFILE CHECKSUM: a9fcf7f9381dd7c17477e0f140725584d3de5e11
 
 COCOAPODS: 1.11.3

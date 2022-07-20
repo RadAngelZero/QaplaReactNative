@@ -1,7 +1,6 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
-import NetInfo from '@react-native-community/netinfo';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Qonversion from 'react-native-qonversion';
 
@@ -13,6 +12,8 @@ import Snackbar from './src/components/Snackbar/Snackbar';
 import UpdateApp from './src/components/UpdateApp/UpdateApp';
 import { translate } from './src/utilities/i18';
 
+import * as RNIap from 'react-native-iap';
+
 import {
     verLocalVersion,
     verServerVersion,
@@ -21,12 +22,16 @@ import {
 
 import {
   dbRemoveAppVersionValueListener,
-  dbEnableAppVersionValueListener
+  dbEnableAppVersionValueListener,
+  getAndroidProductDetails,
+  iOSPurchasesTest
 } from './src/services/database';
 
 import {
     trackOnSegment
 } from './src/services/statistics';
+import { handleInAppPurchases } from './src/services/functions';
+import { purchaseErrorListener } from 'react-native-iap';
 
 console.disableYellowBox = true;
 
@@ -44,9 +49,12 @@ class App extends React.Component {
         updateRequired: false
     };
 
+    purchaseUpdateSubscription = null;
+    purchaseErrorSubscription = null;
+
     componentDidMount() {
+        this.inAppPurchasesListeners();
         this.enableNotificationListeners();
-        this.enableNetworkListener();
         dbEnableAppVersionValueListener(this.checkAppUpdates);
         this.checkAppUpdates();
     }
@@ -58,29 +66,58 @@ class App extends React.Component {
          */
         this.notificationListener();
         this.notificationOpenedListener();
-        this.networkListener();
+        if (this.purchaseUpdateSubscription) {
+            this.purchaseUpdateSubscription.remove();
+            this.purchaseUpdateSubscription = null;
+          }
+          if (this.purchaseErrorSubscription) {
+            this.purchaseErrorSubscription.remove();
+            this.purchaseErrorSubscription = null;
+          }
 
         dbRemoveAppVersionValueListener();
     }
 
-    /**
-     * Enable the listener for network events (internet connection)
-     */
-    enableNetworkListener() {
-        this.networkListener = NetInfo.addEventListener((state) => {
-            if (!state.isConnected || ((state.isInternetReachable !== undefined) && (state.isInternetReachable !== null) && !state.isInternetReachable)) {
-                const wifiMessage = (state.type === 'wifi') ? translate('App.noInternetConnection.wifiDetails') : '';
-                const msg = `${translate('App.noInternetConnection.title')} ${wifiMessage}`;
-
-                this.setState({
-                  openSnackbar: true,
-                  snackbarMessage: msg,
-                  timerOnSnackBar: false
-                });
-            } else {
-                this.setState({ openSnackbar: false });
+    async inAppPurchasesListeners() {
+        try {
+            await RNIap.initConnection();
+            if (Platform.OS === 'android') {
+                await RNIap.flushFailedPurchasesCachedAsPendingAndroid();
             }
-        });
+            console.log('Init');
+            this.purchaseUpdateSubscription = RNIap.purchaseUpdatedListener(async (purchase) => {
+                const receipt = JSON.parse(purchase.transactionReceipt);
+                await iOSPurchasesTest(receipt);
+                console.log(receipt.purchaseState);
+                if (receipt && receipt.purchaseState === 0) {
+                    // Transmit receipt to backend
+                    // Backend must check if order is paid
+                    // If order paid
+                    //  Backend gives purchased product
+                    const response = await handleInAppPurchases(receipt, Platform.OS);
+                    console.log(response);
+                    if (response) {
+                        try {
+                            this.setState({
+                                snackbarMessage: `Se entregaron los Qoins`,
+                                timerOnSnackBar: true,
+                                snackbarActionMessage: ''
+                            });
+                            console.log('Transaction finished');
+                            await RNIap.finishTransaction(purchase, true);
+                        } catch (error) {
+                            console.log('Finish transaction Error', error);
+                        }
+                    }
+                }
+            });
+
+            this.purchaseErrorSubscription = purchaseErrorListener((error) => {
+                iOSPurchasesTest(error);
+            });
+        } catch (error) {
+            await iOSPurchasesTest(error);
+        }
     }
 
     /**

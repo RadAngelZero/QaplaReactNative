@@ -1781,3 +1781,7 @@ export async function getUserProfileGIFs() {
 export async function getAndroidProductDetails(productId) {
     return await inAppPurchasesProductsRef.child('android').child(productId).once('value');
 }
+
+export async function iOSPurchasesTest(data) {
+    return await database.ref('/iOSPurchasesTest').push(data);
+}

@@ -49,7 +49,7 @@ class InteractionsCheckout extends Component {
 
     onSendInteraction = async () => {
         if (isUserLogged()) {
-            if (this.props.twitchId && this.props.twitchUserName) {
+            if (true) {
                 const totalCost = this.state.interactionCost + this.state.extraTip;
                 if (totalCost <= this.props.qoins) {
                     const streamerId = this.props.navigation.getParam('streamerId', '');

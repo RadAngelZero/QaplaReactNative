@@ -22,6 +22,8 @@ import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import io.invertase.firebase.links.RNFirebaseLinksPackage;
 import io.invertase.firebase.config.RNFirebaseRemoteConfigPackage;
 
+import com.dooboolab.RNIap.RNIapPackage;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 

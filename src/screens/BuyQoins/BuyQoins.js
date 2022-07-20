@@ -3,6 +3,17 @@ import { Alert, Image, Platform, Text, TouchableOpacity, View } from 'react-nati
 import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
+import * as RNIap from 'react-native-iap';
+/* import {
+    endConnection,
+    finishTransaction,
+    flushFailedPurchasesCachedAsPendingAndroid,
+    getProducts,
+    initConnection,
+    purchaseErrorListener,
+    purchaseUpdatedListener,
+    requestPurchase
+} from 'react-native-iap'; */
 
 import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import images from '../../../assets/images';
@@ -10,6 +21,18 @@ import styles from './style';
 import { translate } from '../../utilities/i18';
 import { getProductsQonversion, purchaseProduct } from '../../services/Qonversion';
 import { isUserLogged } from '../../services/auth';
+import { iOSPurchasesTest } from '../../services/database';
+
+const productIds = Platform.select({
+    ios: [
+        '2kQoins',
+        '4kQoinsPlus'
+    ],
+    android: [
+        '2kqoins',
+        '4kqoinsplus'
+    ]
+});
 
 class BuyQoins extends Component {
     state = {
@@ -17,19 +40,43 @@ class BuyQoins extends Component {
         qoins2: null,
     };
 
+
     componentDidMount() {
-        this.fetchProducts();
+        this.setPurchasesListeners();
+    }
+
+    setPurchasesListeners = async () => {
+        try {
+            await this.fetchProducts();
+        } catch (error) {
+            console.log('Error while connecting to store', error);
+        }
+    }
+
+    componentWillUnmount() {
+        RNIap.endConnection();
+        if (this.purchaseUpdateSubscription) {
+            this.purchaseUpdateSubscription.remove();
+            this.purchaseUpdateSubscription = null;
+        }
+        if (this.purchaseErrorSubscription) {
+            this.purchaseErrorSubscription.remove();
+            this.purchaseErrorSubscription = null;
+        }
+    }
+
+    requestPurchase = async (sku) => {
+        try {
+            const purchase = await RNIap.requestPurchase(sku, false);
+            await iOSPurchasesTest(purchase);
+        } catch (err) {
+            console.warn(err.code, err.message);
+        }
     }
 
     fetchProducts = async () => {
-        const prod = await getProductsQonversion();
-        const products = [];
-        prod.forEach((prod) => {
-            prod.storeID
-            products.push(prod);
-        });
-
-        this.setState({ qoins1: products[1], qoins2: products[0] });
+        const rniapProds = await RNIap.getProducts(productIds);
+        this.setState({ qoins1: rniapProds[0], qoins2: rniapProds[1] });
     }
 
     handlePack1 = () => {
@@ -121,12 +168,12 @@ class BuyQoins extends Component {
                     {this.state.qoins1 && this.state.qoins2 &&
                     <View style={styles.pricesContainer}>
                         <TouchableOpacity
-                            onPress={this.handlePack1}
+                            onPress={() => this.requestPurchase(this.state.qoins1.productId)}
                             style={styles.pack1Container}>
                             <View style={styles.qoinsContainer}>
                                 <MaskedView maskElement={
                                     <Text style={[styles.whiteText, styles.qoinsText]}>
-                                        {Platform.OS === 'android' ? this.state.qoins1.skuDetails.description : this.state.qoins1.skProduct.localizedDescription}
+                                        {this.state.qoins1.description}
                                     </Text>
                                 }>
                                     <LinearGradient
@@ -135,7 +182,7 @@ class BuyQoins extends Component {
                                         useAngle
                                         angle={227}>
                                         <Text style={[styles.transparentText, styles.qoinsText]}>
-                                            {Platform.OS === 'android' ? this.state.qoins1.skuDetails.description : this.state.qoins1.skProduct.localizedDescription}
+                                            {this.state.qoins1.description}
                                         </Text>
                                     </LinearGradient>
                                 </MaskedView>
@@ -145,13 +192,13 @@ class BuyQoins extends Component {
                                 <Text style={[styles.whiteText, styles.paddingTopFix, styles.bigSubText]}>
                                     {`$${this.state.qoins1.price} `}
                                     <Text style={styles.smallSubText}>
-                                        {this.state.qoins1.currencyCode}
+                                        {this.state.qoins1.currency}
                                     </Text>
                                 </Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={this.handlePack2}
+                            onPress={() => this.requestPurchase(this.state.qoins2.productId)}
                             style={{
                                 height: 165 * getScreenSizeMultiplier(),
                                 marginTop: 9 * getScreenSizeMultiplier(),
@@ -168,7 +215,7 @@ class BuyQoins extends Component {
                                     <View style={styles.qoinsContainer}>
                                         {this.state.qoins2.title !== '' && <MaskedView maskElement={
                                             <Text style={[styles.whiteText, styles.qoinsText]}>
-                                                {Platform.OS === 'android' ? this.state.qoins2.skuDetails.description : this.state.qoins2.skProduct.localizedDescription}
+                                                {this.state.qoins2.description}
                                             </Text>
                                         }>
                                             <LinearGradient
@@ -178,7 +225,7 @@ class BuyQoins extends Component {
                                                 angle={197}
                                             >
                                                 <Text style={[styles.transparentText, styles.qoinsText]}>
-                                                    {Platform.OS === 'android' ? this.state.qoins2.skuDetails.description : this.state.qoins2.skProduct.localizedDescription}
+                                                    {this.state.qoins2.description}
                                                 </Text>
                                             </LinearGradient>
                                         </MaskedView>}
@@ -188,7 +235,7 @@ class BuyQoins extends Component {
                                         <Text style={[styles.whiteText, styles.paddingTopFix, styles.bigSubText]}>
                                             {`$${this.state.qoins2.price} `}
                                             <Text style={styles.smallSubText}>
-                                                {this.state.qoins2.currencyCode}
+                                                {this.state.qoins2.currency}
                                             </Text>
                                         </Text>
                                     </View>

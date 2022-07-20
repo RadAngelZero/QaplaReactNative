@@ -11,6 +11,7 @@
 		00E356F31AD99517003FC87E /* QaplaReactNativeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* QaplaReactNativeTests.m */; };
 		03D2BF4CB3724AA18B2A7BF8 /* QaploinsPrize.svg in Resources */ = {isa = PBXBuildFile; fileRef = DA24F0CF02C44F86A3F6045D /* QaploinsPrize.svg */; };
 		06CB7BBC64C6488391727CB5 /* Calendar.svg in Resources */ = {isa = PBXBuildFile; fileRef = 46F11CD9A9D24C529176B9AB /* Calendar.svg */; };
+		09189130DE5E98EC88D5B6E4 /* Pods_QaplaReactNativeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C13A655AE2AB621B31FA830 /* Pods_QaplaReactNativeTests.framework */; };
 		095C3EA0E1C24CF8854E2F83 /* QaplaSignUpLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = E9A692632AC4403B86A55947 /* QaplaSignUpLogo.png */; };
 		0C912D4DEDC642079143923F /* Share.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7036D731D43F4D23B2ADA096 /* Share.svg */; };
 		0FDF49394ED443DAB3395F39 /* rewardIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 225BEABA6F2E4939AA6CA068 /* rewardIcon.svg */; };
@@ -23,13 +24,12 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		16E3A0E38E5A4C3483B600ED /* Interact.svg in Resources */ = {isa = PBXBuildFile; fileRef = 2F8B9AF8795546868E7D5525 /* Interact.svg */; };
 		1704531A39C443EEAB0C5C68 /* F_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = DB4A130EA74B4C7AA6860820 /* F_icon.svg */; };
-		182C2A7D5E15FB24216005B5 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		1FA1A703DF5240AAAA31C85F /* Twitter.svg in Resources */ = {isa = PBXBuildFile; fileRef = A0D9F258900D43ACA50A81D8 /* Twitter.svg */; };
 		203259F797504BA3B6878770 /* QaplaSignUpLogo2021.png in Resources */ = {isa = PBXBuildFile; fileRef = 509C313C5D7D414790E9FE41 /* QaplaSignUpLogo2021.png */; };
 		23BE7EB8C3E542ABAFF66F8B /* Acquire.svg in Resources */ = {isa = PBXBuildFile; fileRef = C726C81939A049198E864B43 /* Acquire.svg */; };
+		23F5A00E29D352A867B5CD59 /* Pods_QaplaReactNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1580CE7F455BB7F2492D260A /* Pods_QaplaReactNative.framework */; };
 		2487C760C03240C89CA6B65B /* SentIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = F8DE89C460AD44E486F637CE /* SentIcon.svg */; };
 		2B54B8B211774C3D8E1CC03E /* 1024px-Instagram_logo_2016.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0FE0D0D3092842AF941574D2 /* 1024px-Instagram_logo_2016.svg */; };
-		2C398B143AB2C9ED45D7FFA5 /* libPods-QaplaReactNative-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4188EAB21B006D7815773462 /* libPods-QaplaReactNative-tvOSTests.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -68,6 +68,7 @@
 		53F42FFCFE5A4960A020FC1E /* Onboarding_Illustration.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B80EF29440C4A748B887F21 /* Onboarding_Illustration.png */; };
 		5443EEEC44F64E3DAC9216FA /* arrowDown.svg in Resources */ = {isa = PBXBuildFile; fileRef = 3FF7D0E6151F44D38F578733 /* arrowDown.svg */; };
 		55CE3C26C0A34B6B86D4EA69 /* NotEnoughQoins.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9E626FC1B1435B9D7E2344 /* NotEnoughQoins.png */; };
+		579FB0F416B8DFDE948F31E0 /* Pods_QaplaReactNative_tvOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7C87C406A93DD112B0D61F /* Pods_QaplaReactNative_tvOSTests.framework */; };
 		5800B09ED4944839A5314503 /* twitchLight.svg in Resources */ = {isa = PBXBuildFile; fileRef = 010200AB0F79413C86DE4D5D /* twitchLight.svg */; };
 		58BF54B0997E4B19B11D249C /* Community3DIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 69DD004D33E44B3BBADC9221 /* Community3DIcon.svg */; };
 		5C84CFD9302C46DAB4B902AE /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A0D773DB81B4A26A91684AF /* facebook.png */; };
@@ -83,8 +84,6 @@
 		7786B107B9AA4061B8130556 /* ganado.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6E29D28C5C85445F953C8511 /* ganado.svg */; };
 		7C4417D767B74EEE86A77238 /* SeasonLevelEs3.svg in Resources */ = {isa = PBXBuildFile; fileRef = 79ECF63F0A5442F79465CE01 /* SeasonLevelEs3.svg */; };
 		7CE4C7310C014EC3A7CD995B /* donatedStarIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = BF18589CB72A4CBD814E5608 /* donatedStarIcon.svg */; };
-		7E3ABD762FB9BC75A5D7BEBB /* libPods-QaplaReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F69920E096D9E5CC7A9F9EEE /* libPods-QaplaReactNative.a */; };
-		7E8FDE921CD486E060BC7DD9 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		823BD416C1A74213ADD4DBBE /* SeasonLevelEn4.svg in Resources */ = {isa = PBXBuildFile; fileRef = D819DFB050314D1B8DC03179 /* SeasonLevelEn4.svg */; };
 		82BE62CBA0D642A4B6C5B880 /* edit.svg in Resources */ = {isa = PBXBuildFile; fileRef = 60CB0620693A491E9B688547 /* edit.svg */; };
 		848EF09BB8FB41F0A1BEA536 /* YouTube.svg in Resources */ = {isa = PBXBuildFile; fileRef = 16C331A841C64EDA85253C61 /* YouTube.svg */; };
@@ -97,9 +96,8 @@
 		9506166E265F40E3A7F83278 /* plusBubble.svg in Resources */ = {isa = PBXBuildFile; fileRef = 2B6478EEB62F4B0F827B9133 /* plusBubble.svg */; };
 		958EBB9A6ED84A4AA3358C3C /* HighFive.svg in Resources */ = {isa = PBXBuildFile; fileRef = FFDD3DDB7D774B54A4BA7E7F /* HighFive.svg */; };
 		9A5A1D0F53D2483E81AFDD4F /* support.svg in Resources */ = {isa = PBXBuildFile; fileRef = 80604B8413754A0081DA067C /* support.svg */; };
-		9D0F996ED94D53498A4FC6C6 /* libPods-QaplaReactNativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 121EC3935676F25D67E6FD16 /* libPods-QaplaReactNativeTests.a */; };
+		9BABD575BB648F843920D6DE /* Pods_QaplaReactNative_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CF26B43BF1C84144E4C1782 /* Pods_QaplaReactNative_tvOS.framework */; };
 		A1FEA7BB87C94034A8DC01AF /* SendChat.svg in Resources */ = {isa = PBXBuildFile; fileRef = 5F0EC17210C94C189CA31B15 /* SendChat.svg */; };
-		A5C320EEEE3ECD2A198511EE /* libPods-QaplaReactNative-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17CF0BC0971775D1FAD28A4A /* libPods-QaplaReactNative-tvOS.a */; };
 		A6190421F6D84F18AC1EE1D7 /* back.svg in Resources */ = {isa = PBXBuildFile; fileRef = A9E812CE6FA34B0B908A5BCC /* back.svg */; };
 		A792CA452B5547ABAFBA1A69 /* donatedBitIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 2588425C634A42D9904EEB5D /* donatedBitIcon.svg */; };
 		A79382B216034B1DBC7025AE /* HeartHands.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C33C0567D6546EAA972B37F /* HeartHands.png */; };
@@ -459,7 +457,6 @@
 		0FE0D0D3092842AF941574D2 /* 1024px-Instagram_logo_2016.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "1024px-Instagram_logo_2016.svg"; path = "../assets/icons/1024px-Instagram_logo_2016.svg"; sourceTree = "<group>"; };
 		10783FAF1737FD21023CA87E /* Pods-QaplaReactNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QaplaReactNative.debug.xcconfig"; path = "Target Support Files/Pods-QaplaReactNative/Pods-QaplaReactNative.debug.xcconfig"; sourceTree = "<group>"; };
 		116864D728C04EF898057436 /* pic-twinkle.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "pic-twinkle.jpg"; path = "../assets/images/pic-twinkle.jpg"; sourceTree = "<group>"; };
-		121EC3935676F25D67E6FD16 /* libPods-QaplaReactNativeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNativeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Qapla Gaming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Qapla Gaming.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -471,11 +468,11 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = QaplaReactNative/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		14786C0F529A42EFAB3014C5 /* settings.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = settings.svg; path = ../assets/icons/settings.svg; sourceTree = "<group>"; };
+		1580CE7F455BB7F2492D260A /* Pods_QaplaReactNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QaplaReactNative.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		169A91486A824082A5E95A21 /* qaplaSplash@1x.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "qaplaSplash@1x.png"; path = "../assets/icons/qaplaSplash@1x.png"; sourceTree = "<group>"; };
 		16C331A841C64EDA85253C61 /* YouTube.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = YouTube.svg; path = ../assets/icons/YouTube.svg; sourceTree = "<group>"; };
 		16ED824681FD43348AF2F7BE /* Arrow-Left-Thicc.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Arrow-Left-Thicc.svg"; path = "../assets/icons/Arrow-Left-Thicc.svg"; sourceTree = "<group>"; };
 		17A1BA897AF648B8A562B258 /* TikTok.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = TikTok.svg; path = ../assets/icons/TikTok.svg; sourceTree = "<group>"; };
-		17CF0BC0971775D1FAD28A4A /* libPods-QaplaReactNative-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B72394371C840B08308CFA7 /* SeasonLevelEs4.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SeasonLevelEs4.svg; path = ../assets/icons/SeasonLevelEs4.svg; sourceTree = "<group>"; };
 		1B80EF29440C4A748B887F21 /* Onboarding_Illustration.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Onboarding_Illustration.png; path = ../assets/images/Onboarding_Illustration.png; sourceTree = "<group>"; };
 		1CE30685B7054B98A971C833 /* CopyCreatorCode.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = CopyCreatorCode.svg; path = ../assets/icons/CopyCreatorCode.svg; sourceTree = "<group>"; };
@@ -486,6 +483,8 @@
 		2697BB6D818F4174B6E7C103 /* send.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = send.svg; path = ../assets/icons/send.svg; sourceTree = "<group>"; };
 		2A38CE4635FF48469FFF5C73 /* DuotoneDefault.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = DuotoneDefault.svg; path = ../assets/icons/DuotoneDefault.svg; sourceTree = "<group>"; };
 		2B6478EEB62F4B0F827B9133 /* plusBubble.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = plusBubble.svg; path = ../assets/icons/plusBubble.svg; sourceTree = "<group>"; };
+		2C13A655AE2AB621B31FA830 /* Pods_QaplaReactNativeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QaplaReactNativeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CF26B43BF1C84144E4C1782 /* Pods_QaplaReactNative_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QaplaReactNative_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* QaplaReactNative-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QaplaReactNative-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* QaplaReactNative-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "QaplaReactNative-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -497,7 +496,6 @@
 		39F7882BB64D44D59653E921 /* MoreCircle.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MoreCircle.svg; path = ../assets/icons/MoreCircle.svg; sourceTree = "<group>"; };
 		3C022F205F4040B18540B9B4 /* qaplaSplash@3x.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "qaplaSplash@3x.png"; path = "../assets/icons/qaplaSplash@3x.png"; sourceTree = "<group>"; };
 		3FF7D0E6151F44D38F578733 /* arrowDown.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = arrowDown.svg; path = ../assets/icons/arrowDown.svg; sourceTree = "<group>"; };
-		4188EAB21B006D7815773462 /* libPods-QaplaReactNative-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46F11CD9A9D24C529176B9AB /* Calendar.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Calendar.svg; path = ../assets/icons/Calendar.svg; sourceTree = "<group>"; };
 		4990440437F34C9F8EA84626 /* SeasonLevelEn1.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SeasonLevelEn1.svg; path = ../assets/icons/SeasonLevelEn1.svg; sourceTree = "<group>"; };
 		4A0D773DB81B4A26A91684AF /* facebook.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = facebook.png; path = ../assets/icons/facebook.png; sourceTree = "<group>"; };
@@ -528,6 +526,7 @@
 		752ACB1977FC40039A953067 /* Onboarding_Illustration-5.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Onboarding_Illustration-5.png"; path = "../assets/images/Onboarding_Illustration-5.png"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		79ECF63F0A5442F79465CE01 /* SeasonLevelEs3.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SeasonLevelEs3.svg; path = ../assets/icons/SeasonLevelEs3.svg; sourceTree = "<group>"; };
+		7D7C87C406A93DD112B0D61F /* Pods_QaplaReactNative_tvOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QaplaReactNative_tvOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F67226FBBAC41709009228F /* CloseIcon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = CloseIcon.svg; path = ../assets/icons/CloseIcon.svg; sourceTree = "<group>"; };
 		80604B8413754A0081DA067C /* support.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = support.svg; path = ../assets/icons/support.svg; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -591,8 +590,8 @@
 		F12B0427287384EB00688533 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		F1C3EF34252CEBCC006A5C46 /* Qapla GamingRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Qapla GamingRelease.entitlements"; path = "QaplaReactNative/Qapla GamingRelease.entitlements"; sourceTree = "<group>"; };
 		F1C4F047F09E4844968F7224 /* qapla-smile.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "qapla-smile.png"; path = "../assets/images/qapla-smile.png"; sourceTree = "<group>"; };
+		F1E75F0A288608FD00F2FA22 /* QaplaReactNative-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QaplaReactNative-Bridging-Header.h"; sourceTree = "<group>"; };
 		F55A77273CB246939097FC26 /* minusBubble.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = minusBubble.svg; path = ../assets/icons/minusBubble.svg; sourceTree = "<group>"; };
-		F69920E096D9E5CC7A9F9EEE /* libPods-QaplaReactNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QaplaReactNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F73E0BBB5DB246F09088BF5F /* qoins-flip.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "qoins-flip.svg"; path = "../assets/icons/qoins-flip.svg"; sourceTree = "<group>"; };
 		F840FD55B1434C3899A66F6E /* DiscordSocial.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = DiscordSocial.svg; path = ../assets/icons/DiscordSocial.svg; sourceTree = "<group>"; };
 		F8AEEE605C2B4B37815F4485 /* AlertIcon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AlertIcon.svg; path = ../assets/icons/AlertIcon.svg; sourceTree = "<group>"; };
@@ -614,7 +613,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D0F996ED94D53498A4FC6C6 /* libPods-QaplaReactNativeTests.a in Frameworks */,
+				09189130DE5E98EC88D5B6E4 /* Pods_QaplaReactNativeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,7 +623,7 @@
 			files = (
 				F12B0428287384EB00688533 /* StoreKit.framework in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
-				7E3ABD762FB9BC75A5D7BEBB /* libPods-QaplaReactNative.a in Frameworks */,
+				23F5A00E29D352A867B5CD59 /* Pods_QaplaReactNative.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -641,8 +640,7 @@
 				2D02E4C61E0B4AEC006451C7 /* libRCTSettings-tvOS.a in Frameworks */,
 				2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */,
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
-				182C2A7D5E15FB24216005B5 /* (null) in Frameworks */,
-				A5C320EEEE3ECD2A198511EE /* libPods-QaplaReactNative-tvOS.a in Frameworks */,
+				9BABD575BB648F843920D6DE /* Pods_QaplaReactNative_tvOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,8 +649,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */,
-				7E8FDE921CD486E060BC7DD9 /* (null) in Frameworks */,
-				2C398B143AB2C9ED45D7FFA5 /* libPods-QaplaReactNative-tvOSTests.a in Frameworks */,
+				579FB0F416B8DFDE948F31E0 /* Pods_QaplaReactNative_tvOSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -786,10 +783,10 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
-				F69920E096D9E5CC7A9F9EEE /* libPods-QaplaReactNative.a */,
-				17CF0BC0971775D1FAD28A4A /* libPods-QaplaReactNative-tvOS.a */,
-				4188EAB21B006D7815773462 /* libPods-QaplaReactNative-tvOSTests.a */,
-				121EC3935676F25D67E6FD16 /* libPods-QaplaReactNativeTests.a */,
+				1580CE7F455BB7F2492D260A /* Pods_QaplaReactNative.framework */,
+				2CF26B43BF1C84144E4C1782 /* Pods_QaplaReactNative_tvOS.framework */,
+				7D7C87C406A93DD112B0D61F /* Pods_QaplaReactNative_tvOSTests.framework */,
+				2C13A655AE2AB621B31FA830 /* Pods_QaplaReactNativeTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -994,6 +991,7 @@
 				5379857A42C48E3FD835830A /* Pods */,
 				F951DB4622D518B000801C80 /* Recovered References */,
 				7A5EE30BF78D4FA295E494D8 /* Resources */,
+				F1E75F0A288608FD00F2FA22 /* QaplaReactNative-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1131,6 +1129,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = TRFNHWRW5M;
+						LastSwiftMigration = 1340;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -1917,10 +1916,11 @@
 			baseConfigurationReference = 10783FAF1737FD21023CA87E /* Pods-QaplaReactNative.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "QaplaReactNative/Qapla Gaming.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 118;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
@@ -1943,6 +1943,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
 				PRODUCT_NAME = "Qapla Gaming";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "QaplaReactNative-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1952,10 +1955,11 @@
 			baseConfigurationReference = C300DEA277A2B1E4FEC0FD72 /* Pods-QaplaReactNative.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "QaplaReactNative/Qapla GamingRelease.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 113;
+				CURRENT_PROJECT_VERSION = 118;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
@@ -1978,6 +1982,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.Qapla.QaplaApp;
 				PRODUCT_NAME = "Qapla Gaming";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "QaplaReactNative-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

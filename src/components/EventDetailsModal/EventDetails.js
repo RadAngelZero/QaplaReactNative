@@ -56,6 +56,7 @@ function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
 class EventDetails extends Component {
 
     state = {
+        isFollower: false,
         twitchURLCopied: false,
         xq: 150,
         qoins: 20,
@@ -204,11 +205,19 @@ class EventDetails extends Component {
                                 {streamerName}
                             </Text>
                         </View>
-                        <TouchableOpacity style={styles.eventStreamerKnowButton}>
-                            <Text style={[styles.whiteText, styles.eventStreamerKnowButtonText]}>
-                                {`${translate('eventDetailsModal.details.know')}`}
-                            </Text>
-                        </TouchableOpacity>
+                        {this.state.isFollower ?
+                            <TouchableOpacity style={styles.eventStreamerFollowingButton} onPress={this.goToStreamerChannel}>
+                                <Text style={[styles.eventStreamerFollowingButtonText, styles.eventStreamerKnowButtonText]}>
+                                    {`${translate('eventDetailsModal.details.following')}`}
+                                </Text>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity style={styles.eventStreamerKnowButton} onPress={this.goToStreamerChannel}>
+                                <Text style={[styles.whiteText, styles.eventStreamerKnowButtonText]}>
+                                    {`${translate('eventDetailsModal.details.know')}`}
+                                </Text>
+                            </TouchableOpacity>
+                        }
 
                     </View>
                     <View style={styles.eventFarmDataContainer}>

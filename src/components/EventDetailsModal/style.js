@@ -488,6 +488,16 @@ export default styles = StyleSheet.create({
         lineHeight: heightPercentageToPx(2.58),
         letterSpacing: -0.3199999928474426,
     },
+    eventStreamerFollowingButton: {
+        borderRadius: widthPercentageToPx(5.33),
+        paddingVertical: heightPercentageToPx(1.23),
+        paddingHorizontal: widthPercentageToPx(6),
+        borderWidth: 2,
+        borderColor: '#3B4BF9',
+    },
+    eventStreamerFollowingButtonText: {
+        color: '#FFFFFF99',
+    },
     eventFarmDataContainer: {
         marginTop: heightPercentageToPx(2.95),
         paddingHorizontal: widthPercentageToPx(4.53),

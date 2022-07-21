@@ -461,7 +461,18 @@
         "alreadyAccepted": "Tu inscripción ha quedado completada, ¡asegurate de estar listo cuando el evento comience!",
         "succedRequest": "Tu solicitud ha sido enviada :D, espera a que",
         "nextStepsFeedback": "acepte tu solicitud. Te enviaremos una notificación cuando esto pase ;)",
-        "finish": "Finalizar"
+        "finish": "Finalizar",
+        "details": {
+            "know": "Conocer",
+            "farm": "Minas"
+        },
+        "success": {
+            "joinedStream": "¡Te has unido al stream!",
+            "remind": "Te recordaremos cuando comience el stream de ",
+            "discover": "Descubrir más streams"
+        },
+        "shareWithYourFriends": "Invita a tus amigos al stream",
+        "linkCopied": "Link copiado"
     },
     "updateApp": {
         "header": "Hay una nueva versión de Qapla, actualiza a la nueva versión.",

@@ -88,6 +88,8 @@
 		82BE62CBA0D642A4B6C5B880 /* edit.svg in Resources */ = {isa = PBXBuildFile; fileRef = 60CB0620693A491E9B688547 /* edit.svg */; };
 		848EF09BB8FB41F0A1BEA536 /* YouTube.svg in Resources */ = {isa = PBXBuildFile; fileRef = 16C331A841C64EDA85253C61 /* YouTube.svg */; };
 		86A6D84304F34468A7E7359F /* pic-green-glasses.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B09806E9DA894F13AC712975 /* pic-green-glasses.jpg */; };
+		86AE0D6C2888AAF000D8E594 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86AE0D6B2888AAF000D8E594 /* GoogleService-Info.plist */; };
+		86AE0D6D2888AAF000D8E594 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86AE0D6B2888AAF000D8E594 /* GoogleService-Info.plist */; };
 		8D1EB95EAEEC4BD5BB47B0C6 /* MoreCircle.svg in Resources */ = {isa = PBXBuildFile; fileRef = 39F7882BB64D44D59653E921 /* MoreCircle.svg */; };
 		8DC3F82BC6B74A4FA77A253D /* video-clip.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0915266C8EE54CA5B62E07F3 /* video-clip.svg */; };
 		8EC491BE30DE428E8384AEC8 /* Onboarding_Illustration-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4FF628CAF74DDBB3DC0D10 /* Onboarding_Illustration-3.png */; };
@@ -149,7 +151,6 @@
 		F8F690EA89DD4E47B2CF8C02 /* SeasonLevelEs4.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1B72394371C840B08308CFA7 /* SeasonLevelEs4.svg */; };
 		F9073A872406D29500BB648D /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = F9073A862406D29500BB648D /* main.jsbundle */; };
 		F9073AB024070EA900BB648D /* assets in Resources */ = {isa = PBXBuildFile; fileRef = F9073AAF24070EA900BB648D /* assets */; };
-		F968D5012416CA10007A72DD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F968D5002416CA10007A72DD /* GoogleService-Info.plist */; };
 		FBD94FCE52FF413A85840F52 /* Onboarding_Illustration-4.png in Resources */ = {isa = PBXBuildFile; fileRef = EFE2E3520603449C88EA50E7 /* Onboarding_Illustration-4.png */; };
 		FD7C6EB2F8FC44B2ABF24442 /* notification-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 09976C835160488493C6BD78 /* notification-icon.png */; };
 		FF1295834C6549758517F8F3 /* verificado.svg in Resources */ = {isa = PBXBuildFile; fileRef = 5EB434E09BE448E79E555DEA /* verificado.svg */; };
@@ -530,6 +531,7 @@
 		7F67226FBBAC41709009228F /* CloseIcon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = CloseIcon.svg; path = ../assets/icons/CloseIcon.svg; sourceTree = "<group>"; };
 		80604B8413754A0081DA067C /* support.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = support.svg; path = ../assets/icons/support.svg; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		86AE0D6B2888AAF000D8E594 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		86E17ABDDCF247E2B778F245 /* twitchIcon.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = twitchIcon.svg; path = ../assets/icons/twitchIcon.svg; sourceTree = "<group>"; };
 		8CEC8897363949B08F2FE561 /* Clock.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Clock.svg; path = ../assets/icons/Clock.svg; sourceTree = "<group>"; };
 		91696B94B0564ADE85668B58 /* discord.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = discord.svg; path = ../assets/icons/discord.svg; sourceTree = "<group>"; };
@@ -599,7 +601,6 @@
 		F8EBC948237F49A3BF6E0812 /* life.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = life.svg; path = ../assets/icons/life.svg; sourceTree = "<group>"; };
 		F9073A862406D29500BB648D /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		F9073AAF24070EA900BB648D /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
-		F968D5002416CA10007A72DD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F97D0A29233BF33000C00713 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		F9D86F412416DCA900712411 /* Qapla Gaming.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Qapla Gaming.entitlements"; path = "QaplaReactNative/Qapla Gaming.entitlements"; sourceTree = "<group>"; };
 		F9F4B79223885C80003AD8FC /* QaplaReactNativeRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = QaplaReactNativeRelease.entitlements; path = QaplaReactNative/QaplaReactNativeRelease.entitlements; sourceTree = "<group>"; };
@@ -981,7 +982,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				F968D5002416CA10007A72DD /* GoogleService-Info.plist */,
+				86AE0D6B2888AAF000D8E594 /* GoogleService-Info.plist */,
 				F9073AAF24070EA900BB648D /* assets */,
 				13B07FAE1A68108700A75B9A /* QaplaReactNative */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -1493,6 +1494,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86AE0D6D2888AAF000D8E594 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1502,7 +1504,6 @@
 			files = (
 				F9073AB024070EA900BB648D /* assets in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				F968D5012416CA10007A72DD /* GoogleService-Info.plist in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				F9073A872406D29500BB648D /* main.jsbundle in Resources */,
 				2B54B8B211774C3D8E1CC03E /* 1024px-Instagram_logo_2016.svg in Resources */,
@@ -1581,6 +1582,7 @@
 				6D7EC632EEC14924949CC5AD /* ActivityXQ.svg in Resources */,
 				CB15DBB7FB91420185DD3CCA /* AlertIcon.svg in Resources */,
 				E26AC1593FE74D1D8A79D085 /* AppleLogo.svg in Resources */,
+				86AE0D6C2888AAF000D8E594 /* GoogleService-Info.plist in Resources */,
 				D7593DD7586B461F8ACAA908 /* Arrow-Left-Thicc.svg in Resources */,
 				06CB7BBC64C6488391727CB5 /* Calendar.svg in Resources */,
 				E0F6CCFF061F40F18494CF57 /* CameraPermissions.svg in Resources */,
@@ -1886,7 +1888,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 39SG46B6SY;
+				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",

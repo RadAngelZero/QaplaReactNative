@@ -65,6 +65,8 @@ class App extends React.Component {
          * means that we are removing that listener, in this case we are doing that
          */
         this.notificationListener();
+
+        RNIap.endConnection();
         this.notificationOpenedListener();
         if (this.purchaseUpdateSubscription) {
             this.purchaseUpdateSubscription.remove();
@@ -84,14 +86,12 @@ class App extends React.Component {
             if (Platform.OS === 'android') {
                 await RNIap.flushFailedPurchasesCachedAsPendingAndroid();
             }
+
             this.purchaseUpdateSubscription = RNIap.purchaseUpdatedListener(async (purchase) => {
+                console.log(purchase);
                 console.log('Listener called');
-                const receipt = JSON.parse(purchase.transactionReceipt);
+                const receipt = Platform.OS === 'android' ? JSON.parse(purchase.transactionReceipt) : { productId: purchase.productId, iOSReceipt: purchase.transactionReceipt };
                 if ((Platform.OS === 'android' && receipt && receipt.purchaseState === 0) || Platform.OS === 'ios') {
-                    // Transmit receipt to backend
-                    // Backend must check if order is paid
-                    // If order paid
-                    //  Backend gives purchased product
                     const response = await handleInAppPurchases(receipt, Platform.OS);
                     console.log(response);
                     if (response) {

@@ -53,22 +53,9 @@ class BuyQoins extends Component {
         }
     }
 
-    componentWillUnmount() {
-        RNIap.endConnection();
-        if (this.purchaseUpdateSubscription) {
-            this.purchaseUpdateSubscription.remove();
-            this.purchaseUpdateSubscription = null;
-        }
-        if (this.purchaseErrorSubscription) {
-            this.purchaseErrorSubscription.remove();
-            this.purchaseErrorSubscription = null;
-        }
-    }
-
     requestPurchase = async (sku) => {
         try {
-            const purchase = await RNIap.requestPurchase(sku, false);
-            console.log('After Buy call');
+            await RNIap.requestPurchase(sku, false);
         } catch (err) {
             console.warn(err.code, err.message);
         }

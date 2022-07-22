@@ -18,7 +18,7 @@ class FinishingBuyTransactionModal extends Component {
                 onRequestClose={() => {}}>
                 <SafeAreaView style={styles.container}>
                     <View style={[styles.gifStatusContainer, {
-                        bottom: isValidating ? heightPercentageToPx(14) : heightPercentageToPx(10),
+                        bottom: isValidating ? heightPercentageToPx(14) : heightPercentageToPx(7),
                         left: isValidating ? undefined : 0,
                     }]}>
                         <Image style={[styles.gifStatus, {

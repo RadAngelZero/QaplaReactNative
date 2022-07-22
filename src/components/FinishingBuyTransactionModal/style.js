@@ -12,6 +12,7 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(100)
     },
     gifStatusContainer: {
+        flex: 1,
         position: 'absolute',
         zIndex: -1,
         bottom: heightPercentageToPx(10)
@@ -22,16 +23,17 @@ export default styles = StyleSheet.create({
     gradientContainer: {
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
-        height: heightPercentageToPx(25.24),
         width: widthPercentageToPx(100),
         zIndex: 9999,
         position: 'absolute',
         bottom: 0,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingBottom: 48
     },
     progressContainer: {
+        marginTop: 88,
         width: widthPercentageToPx(87.2)
     },
     statusText: {

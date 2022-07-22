@@ -57,7 +57,6 @@ target 'QaplaReactNative' do
 
   pod 'react-native-camera', path: '../node_modules/react-native-camera'
 
-  pod 'react-native-qonversion', :path => '../node_modules/react-native-qonversion'
   pod 'RNIap', :path => '../node_modules/react-native-iap', :modular_headers => true
 
   target 'QaplaReactNativeTests' do

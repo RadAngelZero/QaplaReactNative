@@ -65,13 +65,14 @@ class EventRegistrationSuccessful extends Component {
                         {`${translate('eventDetailsModal.success.joinedStream')}`}
                     </Text>
                     <Text style={[styles.whiteText, styles.successSubTitle]}>
-                        {`${translate('eventDetailsModal.success.remind')}`}
+                        {`${translate('eventDetailsModal.success.remindP1')} `}
                         <Text style={{
                             color: '#00FFDD',
                             fontWeight: '500',
                         }}>
                             {this.props.event.streamerName}
                         </Text>
+                        {`${translate('eventDetailsModal.success.remindP2')}`}
                     </Text>
                     <TouchableOpacity style={styles.successDiscoverButton}
                         onPress={this.props.finishProcess}

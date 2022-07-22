@@ -469,7 +469,8 @@
         },
         "success": {
             "joinedStream": "¡Te has unido al stream!",
-            "remind": "Te recordaremos cuando comience el stream de ",
+            "remindP1": "Te recordaremos cuando comience el stream de",
+            "remindP2": "",
             "discover": "Descubrir más streams"
         },
         "shareWithYourFriends": "Invita a tus amigos al stream",

@@ -134,12 +134,12 @@ class EventDetailsModal extends Component {
     registerUserToEvent = async () => {
         const twitchUserName = await getTwitchUserName(this.props.uid);
         if (this.props.stream.acceptAllUsers) {
-            // joinEventWithCustomData(this.props.uid, this.props.stream.id, this.props.stream.eventEntry, { "Twitch Username": twitchUserName });
+            joinEventWithCustomData(this.props.uid, this.props.stream.id, this.props.stream.eventEntry, { "Twitch Username": twitchUserName });
         } else {
             /**
              * Save on the database the request of the user
              */
-            // await sendRequestToJoinEvent(this.props.stream.id, this.props.uid, this.props.stream.eventEntry, { "Twitch Username": twitchUserName });
+            await sendRequestToJoinEvent(this.props.stream.id, this.props.uid, this.props.stream.eventEntry, { "Twitch Username": twitchUserName });
         }
         this.setState({ eventRegistrationStep: 2 });
     }

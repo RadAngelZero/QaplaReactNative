@@ -461,7 +461,20 @@
         "alreadyAccepted": "Your registration is complete, make sure you are ready when the event starts!",
         "succedRequest": "Your request has been sent :D Wait for",
         "nextStepsFeedback": "to accept your registration. We´ll send you a notification when it happens ;)",
-        "finish": "Finish"
+        "finish": "Finish",
+        "details": {
+            "know": "Meet",
+            "following": "Following",
+            "farm": "You mine"
+        },
+        "success": {
+            "joinedStream": "You've joined the stream!",
+            "remindP1": "We'll remind you when the",
+            "remindP2": "'s stream starts",
+            "discover": "Discover more streams"
+        },
+        "shareWithYourFriends": "Invite your friends to the stream",
+        "linkCopied": "Link copied"
     },
     "updateApp": {
         "header": "There is a new version of Qapla, please update to the latest version.",

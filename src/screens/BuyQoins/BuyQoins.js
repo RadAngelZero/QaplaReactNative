@@ -1,27 +1,16 @@
 import React, { Component } from 'react';
-import { Alert, Image, Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
 import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import * as RNIap from 'react-native-iap';
-/* import {
-    endConnection,
-    finishTransaction,
-    flushFailedPurchasesCachedAsPendingAndroid,
-    getProducts,
-    initConnection,
-    purchaseErrorListener,
-    purchaseUpdatedListener,
-    requestPurchase
-} from 'react-native-iap'; */
 
 import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import images from '../../../assets/images';
 import styles from './style';
 import { translate } from '../../utilities/i18';
-import { getProductsQonversion, purchaseProduct } from '../../services/Qonversion';
 import { isUserLogged } from '../../services/auth';
-import { iOSPurchasesTest } from '../../services/database';
+import { setOnPurchaseFinished } from '../../actions/purchasesActions';
 
 const productIds = Platform.select({
     ios: [
@@ -39,26 +28,11 @@ class BuyQoins extends Component {
         qoins1: null,
         qoins2: null,
     };
-
+    purchaseUpdateSubscription = null;
+    purchaseErrorSubscription = null;
 
     componentDidMount() {
-        this.setPurchasesListeners();
-    }
-
-    setPurchasesListeners = async () => {
-        try {
-            await this.fetchProducts();
-        } catch (error) {
-            console.log('Error while connecting to store', error);
-        }
-    }
-
-    requestPurchase = async (sku) => {
-        try {
-            await RNIap.requestPurchase(sku, false);
-        } catch (err) {
-            console.warn(err.code, err.message);
-        }
+        this.fetchProducts();
     }
 
     fetchProducts = async () => {
@@ -66,41 +40,14 @@ class BuyQoins extends Component {
         this.setState({ qoins1: rniapProds[0], qoins2: rniapProds[1] });
     }
 
-    handlePack1 = () => {
+    requestPurchase = async (sku) => {
         if (isUserLogged()) {
-            purchaseProduct(this.props.uid, this.state.qoins1, () => {
-                this.props.navigation.goBack();
-            }, () => {
-                Alert.alert(
-                    translate('buyQoins.pendingPaymentAlert.title'),
-                    translate('buyQoins.pendingPaymentAlert.message'),
-                    [
-                        {
-                            text: 'Ok'
-                        }
-                    ]
-                )
-            });
-        } else {
-            this.props.navigation.navigate('SignIn');
-        }
-    }
-
-    handlePack2 = () => {
-        if (isUserLogged()) {
-            purchaseProduct(this.props.uid, this.state.qoins2, () => {
-                this.props.navigation.goBack();
-            }, () => {
-                Alert.alert(
-                    translate('buyQoins.pendingPaymentAlert.title'),
-                    translate('buyQoins.pendingPaymentAlert.message'),
-                    [
-                        {
-                            text: 'Ok'
-                        }
-                    ]
-                )
-            });
+            try {
+                this.props.setOnFinishPurchase(this.props.navigation.getParam('onSuccessfulBuy', () => {}));
+                await RNIap.requestPurchase(sku, false);
+            } catch (err) {
+                console.warn(err.code, err.message);
+            }
         } else {
             this.props.navigation.navigate('SignIn');
         }
@@ -269,4 +216,10 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(BuyQoins);
+function mapDispatchToProps(dispatch) {
+    return {
+        setOnFinishPurchase: (onFinishPurchase) => setOnPurchaseFinished(onFinishPurchase)(dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BuyQoins);

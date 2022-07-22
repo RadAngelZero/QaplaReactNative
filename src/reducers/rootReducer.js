@@ -8,6 +8,7 @@ import screensReducer from './screensReducer';
 import profileLeaderBoardReducer from './profileLeaderBoardReducer';
 import qaplaLevelReducer from './QaplaLevelReducer';
 import streamersReducer from './streamersReducer';
+import purchasesReducer from './purchasesReducer';
 
 export default combineReducers({
     userReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
     screensReducer,
     profileLeaderBoardReducer,
     qaplaLevelReducer,
-    streamersReducer
+    streamersReducer,
+    purchasesReducer
 });

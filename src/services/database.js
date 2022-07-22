@@ -56,6 +56,8 @@ const memesInteractionsRef = qaplaInteractionsRef.child('/Memes');
 const interactionsCostsRef = database.ref('/InteractionsCosts');
 const userProfileGIFsRef = database.ref('/UserProfileGIFs');
 const inAppPurchasesProductsRef = database.ref('/inAppPurchasesProducts');
+const inAppPurchasesAttemptsRef = database.ref('/inAppPurchasesAttempts');
+const usersInAppPurchasesRef = database.ref('/UsersInAppPurchases');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1782,6 +1784,31 @@ export async function getAndroidProductDetails(productId) {
     return await inAppPurchasesProductsRef.child('android').child(productId).once('value');
 }
 
-export async function iOSPurchasesTest(data) {
-    return await database.ref('/iOSPurchasesTest').push(data);
+/**
+ * Record a purchase attempt
+ * @param {string} uid User identifier
+ * @param {string} transactionId Transaction identifier
+ * @param {object | string} receipt Receipt (object on android, string on iOS)
+ * @param {('android' | 'ios')} platform Platform
+ */
+export async function purchaseAttempt(uid, transactionId, receipt, platform) {
+    return await inAppPurchasesAttemptsRef.child(uid).push({ transactionId, receipt, platform });
+}
+
+/**
+ * Listen for a specific purchase
+ * @param {string} uid User identifier
+ * @param {string} transactionId Transaction identifier
+ * @param {function} callback Function to handle database responses
+ */
+export function listenToPurchaseCompleted(uid, transactionId, callback) {
+    usersInAppPurchasesRef.child(uid).orderByChild('transactionId').equalTo(transactionId).on('value', callback);
+}
+
+/**
+ * Remove all the purchases listeners for a specified user
+ * @param {string} uid User identifier
+ */
+export function removeListenerToPurchaseCompleted(uid) {
+    usersInAppPurchasesRef.child(uid).off();
 }

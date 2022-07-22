@@ -382,6 +382,14 @@ const images = {
 			img: require('./gifs/llevare10.gif'),
 			uri: '@assets/gifs/llevare10.gif',
 		},
+		validatingPayment: {
+			img: require('./gifs/validatingPayment.webp'),
+			uri: '@assets/gifs/validatingPayment.webp',
+		},
+		paymentSuccessful: {
+			img: require('./gifs/PaymentSuccessful.webp'),
+			uri: '@assets/gifs/PaymentSuccessful.webp',
+		}
 	},
 };
 

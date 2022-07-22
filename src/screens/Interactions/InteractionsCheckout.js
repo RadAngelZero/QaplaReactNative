@@ -49,8 +49,9 @@ class InteractionsCheckout extends Component {
 
     onSendInteraction = async () => {
         if (isUserLogged()) {
-            if (true) {
+            if (this.props.twitchId && this.props.twitchUserName) {
                 const totalCost = this.state.interactionCost + this.state.extraTip;
+                console.log(totalCost, this.props.qoins);
                 if (totalCost <= this.props.qoins) {
                     const streamerId = this.props.navigation.getParam('streamerId', '');
                     const streamerName = this.props.navigation.getParam('displayName', '');
@@ -95,7 +96,8 @@ class InteractionsCheckout extends Component {
                         )
                     }
                 } else {
-                    this.props.navigation.navigate('BuyQoins');
+                    // After a successful buy try to send the interaction again
+                    this.props.navigation.navigate('BuyQoins', { onSuccessfulBuy: this.onSendInteraction });
                 }
             } else {
                 this.setState({ openLinkWitTwitchModal: true });

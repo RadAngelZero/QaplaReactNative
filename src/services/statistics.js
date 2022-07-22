@@ -1,7 +1,6 @@
 import analytics from '@segment/analytics-react-native';
 
 import { SEGMENT_KEY } from '../utilities/Constants';
-import { identifyQonversion } from './Qonversion';
 
 /**
  * @description Initialize segemnt (necessary to send data to segment)

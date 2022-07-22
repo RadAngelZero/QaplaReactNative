@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Easing, Platform, StatusBar } from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as RNIap from 'react-native-iap';
@@ -113,10 +113,11 @@ class App extends React.Component {
                                         const { onPurchaseFinished } = store.getState().purchasesReducer;
                                         if (onPurchaseFinished) {
                                             onPurchaseFinished();
-                                            setTimeout(() => {
-                                                this.setState({ openTransactionModal: false });
-                                            }, 750);
                                         }
+
+                                        setTimeout(() => {
+                                            this.setState({ openTransactionModal: false });
+                                        }, 750);
                                     }
                                 });
                             } catch (error) {

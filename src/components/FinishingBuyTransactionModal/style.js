@@ -2,7 +2,6 @@
 import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
-
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -15,10 +14,7 @@ export default styles = StyleSheet.create({
     gifStatusContainer: {
         position: 'absolute',
         zIndex: -1,
-        left: 0,
-        bottom: heightPercentageToPx(20),
-        borderColor: '#FF0000',
-        borderWidth: 1
+        bottom: heightPercentageToPx(10)
     },
     gifStatus: {
         resizeMode: 'contain'

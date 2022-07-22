@@ -383,12 +383,12 @@ const images = {
 			uri: '@assets/gifs/llevare10.gif',
 		},
 		validatingPayment: {
-			img: require('./gifs/validatingPayment.webp'),
-			uri: '@assets/gifs/validatingPayment.webp',
+			img: require('./gifs/validatingPayment.gif'),
+			uri: '@assets/gifs/validatingPayment.gif',
 		},
 		paymentSuccessful: {
-			img: require('./gifs/PaymentSuccessful.webp'),
-			uri: '@assets/gifs/PaymentSuccessful.webp',
+			img: require('./gifs/paymentSuccessful.gif'),
+			uri: '@assets/gifs/paymentSuccessful.gif',
 		}
 	},
 };

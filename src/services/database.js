@@ -1540,7 +1540,7 @@ export async function getStreamerPublicData(streamerId) {
  * @param {string} searchQuery Part of the name to search for on the database
  */
 export async function getStreamersByName(searchQuery) {
-    return await userStreamerPublicDataRef.orderByChild('displayName').startAt(searchQuery).endAt(searchQuery+'\uf8ff').once('value');
+    return await userStreamerPublicDataRef.orderByChild('displayNameLowerCase').startAt(searchQuery.toLowerCase()).endAt(searchQuery.toLowerCase()+'\uf8ff').once('value');
 }
 
 // -----------------------------------------------

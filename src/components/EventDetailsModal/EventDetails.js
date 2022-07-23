@@ -17,8 +17,6 @@ import { copyDataToClipboard } from '../../utilities/utils';
 import Images from '../../../assets/images';
 import QaplaText from '../QaplaText/QaplaText';
 import { trackOnSegment } from '../../services/statistics';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import MaskedView from '@react-native-community/masked-view';
 
 function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
     const validColorRegExp = new RegExp('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
@@ -62,6 +60,10 @@ class EventDetails extends Component {
         qoins: 20,
     }
 
+    componentDidMount() {
+        console.log(this.props.userSubscriptions[this.props.event.idStreamer]);
+    }
+
     goToStreamerChannel = () => {
         const { streamerChannelLink } = this.props.event;
 
@@ -72,8 +74,8 @@ class EventDetails extends Component {
     }
 
     copyStreamerTwitchURL = () => {
-        const { streamerChannelLink } = this.props.event;
-        copyDataToClipboard(streamerChannelLink);
+        const { streamLink } = this.props.event;
+        copyDataToClipboard(streamLink);
         this.setState({ twitchURLCopied: true });
         setTimeout(() => {
             this.setState({ twitchURLCopied: false });
@@ -90,22 +92,12 @@ class EventDetails extends Component {
 
     render() {
         const {
-            title,
-            titulo,
-            description,
-            descriptions,
-            descriptionsTitle,
             backgroundImage,
-            appStringPrizes,
-            instructionsToParticipate,
-            streamingPlatformImage,
             streamerName,
-            streamerChannelLink,
             sponsorImage,
             streamerPhoto,
             streamerGameData,
             gradientColors,
-            eventChatUrl,
             timestamp
         } = this.props.event;
 
@@ -136,9 +128,6 @@ class EventDetails extends Component {
                         source={{ uri: backgroundImage }}
                         style={styles.backgroundImageContainer}
                         imageStyle={styles.backgroundImage}>
-                        {/* <QaplaText style={styles.eventTitle}>
-                            {title && title[userLanguage] ? title[userLanguage] : titulo}
-                        </QaplaText> */}
                         <View style={styles.eventDateContainer}>
                             <View style={styles.eventSubDateContainer}>
                                 <Images.svg.calendarWhite />
@@ -407,7 +396,8 @@ class EventDetails extends Component {
 
 function mapStateToProps(state) {
     return {
-        uid: state.userReducer.user.id
+        uid: state.userReducer.user.id,
+        userSubscriptions: state.userReducer.user.userToStreamersSubscriptions || {}
     }
 }
 

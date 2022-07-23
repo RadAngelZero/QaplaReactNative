@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim'
+import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0D1021'
+        backgroundColor: '#0D1021',
     },
     innerConatiner: {
         flex: 1,

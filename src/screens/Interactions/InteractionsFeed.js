@@ -27,7 +27,7 @@ export class InteractionsFeed extends Component {
         liveStreamers: [],
         favStreamers: [],
         recentStreamers: [],
-        dataFetched: false
+        dataFetched: false,
     };
 
     componentDidMount() {
@@ -159,31 +159,30 @@ export class InteractionsFeed extends Component {
     render() {
         if (this.state.dataFetched) {
             return (
-                <>
-                    <SafeAreaView style={styles.container}>
-                        <ScrollView style={styles.container}>
-                            <View style={styles.feedMainContainer}>
-                                <View style={styles.feedSectionHeaderContainer}>
-                                    <Text style={[styles.whiteText, styles.feedSectionHeader]}>
-                                        {translate('TimelineStreams.live')}
-                                    </Text>
-                                    <View style={styles.feedLiveIcon} />
-                                </View>
+                <View style={styles.container}>
+                    <ScrollView style={styles.container}>
+                        <View style={styles.feedMainContainer}>
+                            <View style={styles.feedSectionHeaderContainer}>
+                                <Text style={[styles.whiteText, styles.feedSectionHeader]}>
+                                    {translate('TimelineStreams.live')}
+                                </Text>
+                                <View style={styles.feedLiveIcon} />
+                            </View>
 
-                                <View style={[styles.widthMax, styles.marginTop30]}>
-                                    <FlatList
-                                        renderItem={this.renderLiveItem}
-                                        keyExtractor={item => item.streamerId}
-                                        data={this.state.liveStreamers}
-                                        style={styles.widthMax}
-                                        showsHorizontalScrollIndicator={false}
-                                        horizontal
-                                    />
-                                </View>
-                                {this.props.uid &&
-                                    <>
-                                        {this.state.favStreamers.length > 0 &&
-                                            <>
+                            <View style={[styles.widthMax, styles.marginTop30]}>
+                                <FlatList
+                                    renderItem={this.renderLiveItem}
+                                    keyExtractor={item => item.streamerId}
+                                    data={this.state.liveStreamers}
+                                    style={styles.widthMax}
+                                    showsHorizontalScrollIndicator={false}
+                                    horizontal
+                                />
+                            </View>
+                            {this.props.uid &&
+                                <>
+                                    {this.state.favStreamers.length > 0 &&
+                                        <>
                                             <View style={[styles.feedSectionHeaderContainer, styles.feedSectionHeaderMarginTop]}>
                                                 <Text style={[styles.whiteText, styles.feedSectionHeader]}>
                                                     {translate('interactions.feed.favs')}
@@ -200,11 +199,11 @@ export class InteractionsFeed extends Component {
                                                     horizontal
                                                 />
                                             </View>
-                                            </>
-                                        }
+                                        </>
+                                    }
 
-                                        {this.state.recentStreamers.length > 0 &&
-                                            <>
+                                    {this.state.recentStreamers.length > 0 &&
+                                        <>
                                             <View style={styles.feedSectionHeaderContainer}>
                                                 <Text style={[styles.whiteText, styles.feedSectionHeader]}>
                                                     {translate('interactions.feed.recents')}
@@ -225,26 +224,25 @@ export class InteractionsFeed extends Component {
                                                     />
                                                 </ScrollView>
                                             </View>
-                                            </>
-                                        }
-                                        <View
-                                            style={styles.feedBrowserBottomVisible}
-                                        />
-                                    </>
-                                }
-                            </View>
-                        </ScrollView>
-                        <View style={[styles.backButton, styles.feedBackButtonPos]}>
-                            <TouchableOpacity
-                                onPress={() => this.props.navigation.pop()}>
-                                <View style={styles.backButton}>
-                                    <images.svg.closeIcon style={styles.backButtonIconOffset} />
-                                </View>
-                            </TouchableOpacity>
+                                        </>
+                                    }
+                                    <View
+                                        style={styles.feedBrowserBottomVisible}
+                                    />
+                                </>
+                            }
                         </View>
-                    </SafeAreaView>
+                    </ScrollView>
+                    <View style={[styles.backButton, styles.feedBackButtonPos]}>
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.pop()}>
+                            <View style={styles.backButton}>
+                                <images.svg.closeIcon style={styles.backButtonIconOffset} />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                     <SearchStreamerModal onPress={() => this.props.navigation.navigate('InteractionsSearchStreamer')} />
-                </>
+                </View>
             );
         } else {
             return (

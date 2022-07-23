@@ -26,7 +26,7 @@ class InteractionsSent extends Component {
             Linking.openURL(`https://www.twitch.tv/${streamerName.toLowerCase()}`);
         }
 
-        this.props.navigation.dismiss();
+        this.props.navigation.navigate('');
     }
 
     render() {
@@ -48,7 +48,7 @@ class InteractionsSent extends Component {
                             <Text style={styles.accentTextColor}>
                                 {streamerName}
                             </Text>
-                            {`${translate('interactions.final.cheersSentP2')}`}
+                            {` ${translate('interactions.final.cheersSentP2')}`}
                         </Text>
                         :
                         !isStreaming ?

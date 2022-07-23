@@ -97,11 +97,7 @@ class InteractionsSearchStreamer extends Component {
                         <TouchableOpacity
                             onPress={() => this.props.navigation.goBack()}
                         >
-                            <View style={styles.backButton}>
-                                <View style={styles.backButtonIconOffset}>
-                                    <images.svg.leftArrowThiccIcon />
-                                </View>
-                            </View>
+                            <images.svg.backIcon />
                         </TouchableOpacity>
                         <View style={[styles.searchBar, styles.streamerSearchBar]}>
                             <View style={{ opacity: 0.4 }}>
@@ -111,17 +107,18 @@ class InteractionsSearchStreamer extends Component {
                                 style={styles.gridSearchBarTextInput}
                                 value={this.state.search}
                                 onChange={this.searchHandler}
+                                autoFocus
                             />
                         </View>
                     </View>
                     <FlatList
-                    style={{
-                        width: '90%',
-                        alignSelf: 'center',
-                    }}
-                    data={Object.keys(this.state.searchResults).map((streamerId) => ({ streamerId, ...this.state.searchResults[streamerId] }) )}
-                    renderItem={this.renderItem}
-                    keyExtractor={item => item.id} />
+                        style={{
+                            width: '90%',
+                            alignSelf: 'center',
+                        }}
+                        data={Object.keys(this.state.searchResults).map((streamerId) => ({ streamerId, ...this.state.searchResults[streamerId] }))}
+                        renderItem={this.renderItem}
+                        keyExtractor={item => item.id} />
                 </View>
             </SafeAreaView>
         );

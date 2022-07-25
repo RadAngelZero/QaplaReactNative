@@ -12,10 +12,6 @@ export default styles = StyleSheet.create({
         paddingTop: heightPercentageToPx(3.94),
     },
     backButton: {
-        backgroundColor: '#141539',
-        width: widthPercentageToPx(10.66),
-        height: widthPercentageToPx(10.66),
-        borderRadius: widthPercentageToPx(5.33),
     },
     backButtonIconOffset: {
         marginLeft: widthPercentageToPx(-0.65),
@@ -23,7 +19,6 @@ export default styles = StyleSheet.create({
     },
     feedBackButtonPos: {
         position: 'absolute',
-        top: heightPercentageToPx(3.94),
         right: widthPercentageToPx(4.8),
     },
     feedLiveIcon: {
@@ -44,7 +39,6 @@ export default styles = StyleSheet.create({
         color: '#FFFFFF99',
     },
     feedMainContainer: {
-        marginTop: heightPercentageToPx(4.67),
     },
     feedBrowserBottomVisible: {
         height: heightPercentageToPx(24.63),
@@ -331,8 +325,10 @@ export default styles = StyleSheet.create({
     },
     chatContainer: {
         flex: 1,
-        marginTop: heightPercentageToPx(10.46),
+        position: 'absolute',
+        width: widthPercentageToPx(100),
         justifyContent: 'flex-end',
+        paddingHorizontal: widthPercentageToPx(4.26),
     },
     chatSenderContainer: {
         flexDirection: 'row',
@@ -353,7 +349,6 @@ export default styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: heightPercentageToPx(3.94),
         marginTop: heightPercentageToPx(4.43),
     },
     chatInputContainer: {

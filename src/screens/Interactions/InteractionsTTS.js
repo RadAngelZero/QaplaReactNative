@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, Keyboard } from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity, Keyboard, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
 import images from '../../../assets/images';
 import { MAX_CHAR_FOR_TTS } from './../../utilities/Constants';
 import { translate } from '../../utilities/i18';
 import styles from './style';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class InteractionsTTS extends Component {
     state = {
         message: '',
         tooMuch: false,
         keyboardOpen: false,
+        keyboardHeight: 0,
     }
 
     componentDidMount() {
@@ -64,7 +66,11 @@ class InteractionsTTS extends Component {
                     <Text style={[styles.whiteText, styles.screenHeaderText]}>
                         {`${translate('interactions.TTS.writeYourMessage')}`}
                     </Text>
-                    <View style={styles.chatContainer}>
+                    <View style={[styles.chatContainer,
+                    {
+                        bottom: heightPercentageToPx(3.94) + (Platform.OS === 'ios' && this.state.keyboardOpen ? this.state.keyboardHeight : 0),
+                    }
+                    ]}>
                         <View>
                             <View style={styles.chatSenderContainer}>
                                 <Image

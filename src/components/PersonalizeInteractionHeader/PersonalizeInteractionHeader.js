@@ -12,12 +12,11 @@ class PersonalizeInteractionHeader extends Component {
                 <View style={styles.mainContainer}>
                     {this.props.currentScreen !== 'InteractionsSent' &&
                         <>
-                            {this.props.currentScreen !== 'InteractionsCheckout' &&
                             <TouchableOpacity
                                 style={styles.backButtonContainer}
                                 onPress={() => this.props.navigation.pop()}>
                                 <images.svg.backIcon style={styles.backButtonShadow} />
-                            </TouchableOpacity>}
+                            </TouchableOpacity>
                             <View style={styles.streamerContainer}>
                                 <Image
                                     source={{ uri: this.props.navigation.getParam('photoUrl') }}

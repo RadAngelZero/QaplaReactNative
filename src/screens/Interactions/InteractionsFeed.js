@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, FlatList, View, TouchableOpacity, ActivityIndicator, SafeAreaView } from 'react-native';
+import { ScrollView, Text, FlatList, View, TouchableOpacity, ActivityIndicator, SafeAreaView, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -19,6 +19,7 @@ import {
     getStreamerPublicProfile,
     getUserFavsStreamers
 } from '../../services/database';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 const MAXIM_CARDS_LENGTH = 6;
 
@@ -72,7 +73,7 @@ export class InteractionsFeed extends Component {
             const recentStreamersNoLiveNoFav = [];
             recentStreamersSnap.forEach((recent) => {
                 if (!liveStreamers.val()[recent.key] && !favStreamers.find((streamer) => streamer.streamerId === recent.key)) {
-                    recentStreamersNoLiveNoFav.push({ streamerId: recent.key, ...recentStreamersSnap.val()[recent.key]});
+                    recentStreamersNoLiveNoFav.push({ streamerId: recent.key, ...recentStreamersSnap.val()[recent.key] });
                 } else if (liveStreamers.val()[recent.key]) {
                     liveData[recent.key].featured = true;
                 }
@@ -84,7 +85,7 @@ export class InteractionsFeed extends Component {
                     const recent = recentStreamersNoLiveNoFav[i];
                     const streamerProfile = await getStreamerPublicProfile(recent.streamerId);
                     if (streamerProfile.exists()) {
-                        recentStreamers.push({ streamerId: recent.streamerId, ...streamerProfile.val()});
+                        recentStreamers.push({ streamerId: recent.streamerId, ...streamerProfile.val() });
                     }
                 } else {
                     break;
@@ -161,7 +162,11 @@ export class InteractionsFeed extends Component {
             return (
                 <View style={styles.container}>
                     <ScrollView style={styles.container}>
-                        <View style={styles.feedMainContainer}>
+                        <View style={[styles.feedMainContainer,
+                        {
+                            marginTop: heightPercentageToPx(4.67) + (Platform.OS === 'ios' ? heightPercentageToPx(5.91) : 0),
+                        }
+                        ]}>
                             <View style={styles.feedSectionHeaderContainer}>
                                 <Text style={[styles.whiteText, styles.feedSectionHeader]}>
                                     {translate('TimelineStreams.live')}
@@ -233,11 +238,13 @@ export class InteractionsFeed extends Component {
                             }
                         </View>
                     </ScrollView>
-                    <View style={[styles.backButton, styles.feedBackButtonPos]}>
+                    <View style={[styles.backButton, styles.feedBackButtonPos, {
+                        top: heightPercentageToPx(3.94) + (Platform.OS === 'ios' ? heightPercentageToPx(5.91) : 0),
+                    }]}>
                         <TouchableOpacity
                             onPress={() => this.props.navigation.pop()}>
                             <View style={styles.backButton}>
-                                <images.svg.closeIcon style={styles.backButtonIconOffset} />
+                                <images.svg.closeIcon />
                             </View>
                         </TouchableOpacity>
                     </View>

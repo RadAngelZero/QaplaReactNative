@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
-import { Image, ScrollView, Text, View } from 'react-native';
+import { Alert, Image, ScrollView, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+
 import { translate } from '../../utilities/i18';
 import styles from './style';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
+import { sendCheers } from '../../services/database';
+import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
+import { isUserLogged } from '../../services/auth';
 
 class InteractionsCheckout extends Component {
-
     state = {
-        itemID: '',
-        itemURL: '',
-        itemSize: 0,
-        itemRatio: 0,
-        itemCost: 0,
-        message: '',
-        messageCost: 0,
         extraTip: 0,
         tipIncrement: 50,
+        interactionCost: 0,
         minimum: 0,
-        userQoins: 50,
-        onlyQoins: false,
-        streamerName: '',
+        openLinkWitTwitchModal: false
+    };
+
+    componentDidMount() {
+        const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
+        if (!onlyQoins) {
+            const costs = this.props.navigation.getParam('costs', {});
+            let interactionCost = 0;
+            Object.values(costs).forEach((cost) => {
+                interactionCost += cost;
+            });
+
+            this.setState({ interactionCost });
+        } else {
+            this.setState({ minimum: 50, extraTip: 50 });
+        }
     }
 
     addTip = () => {
@@ -27,7 +39,6 @@ class InteractionsCheckout extends Component {
     }
 
     subTip = () => {
-        console.log('sub');
         if (this.state.extraTip > this.state.minimum) {
             this.setState({ extraTip: this.state.extraTip - this.state.tipIncrement });
         }
@@ -36,129 +47,187 @@ class InteractionsCheckout extends Component {
         }
     }
 
-    yesButtonAction = () => {
-        this.props.navigation.navigate('BuyQoins');
-    }
+    onSendInteraction = async () => {
+        if (isUserLogged()) {
+            if (this.props.twitchId && this.props.twitchUserName) {
+                const totalCost = this.state.interactionCost + this.state.extraTip;
+                if (totalCost <= this.props.qoins) {
+                    const streamerId = this.props.navigation.getParam('streamerId', '');
+                    const streamerName = this.props.navigation.getParam('displayName', '');
+                    const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
+                    const mediaType = this.props.navigation.getParam('mediaType');
+                    const message = this.props.navigation.getParam('message', null);
+                    let media = null;
+                    if (selectedMedia && selectedMedia.original) {
+                        media = {
+                            ...selectedMedia.original,
+                            type: mediaType
+                        };
+                    }
 
-    cancel = () => {
-        this.props.navigation.goBack();
-    }
+                    try {
+                        await sendCheers(
+                            totalCost,
+                            media,
+                            message,
+                            (new Date()).getTime(),
+                            streamerName,
+                            this.props.uid,
+                            this.props.userName,
+                            this.props.twitchUserName,
+                            this.props.photoUrl,
+                            streamerId
+                        );
 
-    componentDidMount() {
-        console.log(this.props.navigation);
-        console.log(this.props.navigation.dangerouslyGetParent().state.routes);
-        const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
-        const streamerName = this.props.navigation.dangerouslyGetParent().state.routes[0].params.streamerName;
-        this.setState({ streamerName });
-        if (onlyQoins) {
-            this.setState({ minimum: 50, extraTip: 50, onlyQoins: true });
-        }
-        var arr = this.props.navigation.dangerouslyGetParent().state.routes;
-        arr.map(e => {
-            console.log(e);
-            if (e.params) {
-                if (e.params.cost) {
-                    this.setState({ itemCost: e.params.cost, type: e.params.type });
+                        this.props.navigation.navigate('InteractionsSent', {
+                            ...this.props.navigation.state.params,
+                            donationTotal: totalCost
+                        });
+                    } catch (error) {
+                        Alert.alert(
+                            'Error',
+                            'We could not complete the operation, try again later',
+                            [
+                                {
+                                    text: 'Ok'
+                                }
+                            ]
+                        )
+                    }
+                } else {
+                    // After a successful buy try to send the interaction again
+                    this.props.navigation.navigate('BuyQoins', { onSuccessfulBuy: this.onSendInteraction });
                 }
-                if (e.params.messageCost) {
-                    this.setState({ messageCost: e.params.messageCost });
-                }
-                if (e.params.itemID) {
-                    this.setState({ itemID: e.params.itemID, itemURL: e.params.itemURL, itemSize: e.params.size, itemRatio: e.params.ratio });
-                }
-                if (e.params.message) {
-                    this.setState({ message: e.params.message });
-                }
+            } else {
+                this.setState({ openLinkWitTwitchModal: true });
             }
-        });
+        } else {
+            this.props.navigation.navigate('SignIn');
+        }
+    }
+
+    onCancel = () => {
+        Alert.alert(
+            translate('interactions.checkout.discardInteraction'),
+            translate('interactions.checkout.areYouSure'),
+            [
+                {
+                    text: translate('interactions.checkout.no'),
+                    style: 'cancel'
+                },
+                {
+                    text: translate('interactions.checkout.yes'),
+                    onPress: this.props.navigation.dismiss
+                }
+            ]
+        )
     }
 
     render() {
+        const selectedMedia = this.props.navigation.getParam('selectedMedia');
+        const message = this.props.navigation.getParam('message', '');
+        const costs = this.props.navigation.getParam('costs', {});
+        const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
+
         return (
             <View style={styles.container}>
-                <ScrollView style={styles.innerConatiner}>
+                <ScrollView showsVerticalScrollIndicator={false} style={styles.innerConatiner}>
                     <View>
-                        {this.state.itemID !== '' &&
-                            <View style={styles.checkoutItemContainer}>
-                                <Image source={{ uri: this.state.itemURL }}
-                                    resizeMode={'contain'}
-                                    style={{
-                                        aspectRatio: this.state.itemRatio,
-                                    }} />
-                            </View>}
-                        {this.state.message !== '' &&
+                        {selectedMedia &&
+                            <Image source={selectedMedia.original.url ? { uri: selectedMedia.original.url } : null}
+                                resizeMode='contain'
+                                style={[{
+                                    borderRadius: 10,
+                                    maxHeight: heightPercentageToPx(20),
+                                    maxWidth: '60%',
+                                    aspectRatio: (selectedMedia.original.width / selectedMedia.original.height) || 0,
+                                }]} />
+                        }
+                        {message !== '' &&
                             <View style={styles.checkoutChatBubble}>
                                 <Text style={[styles.whiteText, styles.checkoutChatBubbleText]}>
-                                    {this.state.message}
+                                    {message}
                                 </Text>
                             </View>
                         }
                     </View>
-                    {this.state.onlyQoins && <View style={styles.sentContainer}>
-                        <Image source={{ uri: 'https://media.giphy.com/media/5QP99om3Co7s8YJPez/giphy.gif' }}
-                            style={styles.onlyQoinsImage}
-                        />
-                        <Text style={[styles.whiteText, styles.sentText, styles.onlyQoinsText]}>
-                            {`${translate('interactions.checkout.supportP1')} `}
-                            <Text style={styles.accentTextColor}>
-                                {`${this.state.streamerName} `}
+                    {onlyQoins &&
+                        <View style={styles.sentContainer}>
+                            <Image source={{ uri: 'https://media.giphy.com/media/5QP99om3Co7s8YJPez/giphy.gif' }}
+                                style={styles.onlyQoinsImage} />
+                            <Text style={[styles.whiteText, styles.sentText, styles.onlyQoinsText]}>
+                                {`${translate('interactions.checkout.supportP1')} `}
+                                <Text style={styles.accentTextColor}>
+                                    {this.state.streamerName}
+                                </Text>
+                                {`${translate('interactions.checkout.supportP2')}`}
                             </Text>
-                            {`${translate('interactions.checkout.supportP2')}`}
-                        </Text>
-                    </View>}
-                    {!this.state.onlyQoins && <View style={styles.checkoutContainer}>
-                        <View style={styles.checkoutDataDisplayMainContainer}>
-                            <View style={styles.checkoutDataDisplayContainer}>
-                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>{`${translate('interactions.checkout.my')} Qoins`}</Text>
-                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>{this.state.userQoins}</Text>
-                            </View>
                         </View>
-                        <View style={[styles.checkoutDataDisplayMainContainer, styles.marginTop16]}>
-                            <View style={styles.checkoutDataDisplayContainer}>
-                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                    Extra Tip
-                                </Text>
-                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                    {this.state.extraTip}
-                                </Text>
-                            </View>
-                            {this.state.itemID !== '' &&
-                                <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
-                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                        GIF
+                    }
+                    {!onlyQoins &&
+                        <>
+                            <View style={[styles.checkoutContainer, styles.checkoutDataDisplayMainContainer]}>
+                                <View style={styles.checkoutDataDisplayContainer}>
+                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>
+                                        {`${translate('interactions.checkout.my')} Qoins`}
                                     </Text>
-                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                        {this.state.itemCost}
+                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>
+                                        {this.props.qoins}
                                     </Text>
                                 </View>
-                            }
-                            {this.state.message !== '' &&
-                                <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                            </View>
+                            <View style={[styles.checkoutDataDisplayMainContainer, styles.marginTop16]}>
+                                <View style={styles.checkoutDataDisplayContainer}>
                                     <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                        Text-to-Speech
+                                        Extra Tip
                                     </Text>
                                     <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                        {this.state.messageCost}
+                                        {this.state.extraTip}
                                     </Text>
                                 </View>
-                            }
-                        </View>
-                        <View style={styles.checkoutMarginDisplay} />
-                    </View>}
+                                {Object.keys(costs).map((product) => (
+                                    <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                            {translate(`interactions.checkout.concepts.${product}`)}
+                                        </Text>
+                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                            {costs[product]}
+                                        </Text>
+                                    </View>
+                                ))}
+                            </View>
+                            <View style={styles.checkoutMarginDisplay} />
+                        </>
+                    }
                 </ScrollView>
                 <SendInteractionModal
-                    baseCost={this.state.itemCost + (this.state.message === '' ? 0 : this.state.messageCost)}
+                    baseCost={this.state.interactionCost}
                     extraTip={this.state.extraTip}
                     addTip={this.addTip}
                     subTip={this.subTip}
                     minimum={this.state.minimum}
-                    yesButtonAction={this.yesButtonAction}
-                    onlyQoins={this.state.onlyQoins}
-                    cancel={this.cancel}
-                />
+                    onlyQoins={onlyQoins}
+                    onSendInteraction={this.onSendInteraction}
+                    onCancel={this.onCancel} />
+                <LinkTwitchAccountModal
+                    open={this.state.openLinkWitTwitchModal}
+                    onClose={() => this.setState({ openLinkWitTwitchModal: false })}
+                    onLinkSuccessful={this.onSendInteraction}
+                    linkingWithQreatorCode={false} />
             </View >
         );
     }
 }
 
-export default InteractionsCheckout;
+function mapStateToProps(state) {
+    return {
+        uid: state.userReducer.user.id,
+        userName: state.userReducer.user.userName,
+        twitchUserName: state.userReducer.user.twitchUsername,
+        photoUrl: state.userReducer.user.photoUrl,
+        qoins: state.userReducer.user.credits,
+        twitchId: state.userReducer.user.twitchId,
+    };
+}
+
+export default connect(mapStateToProps)(InteractionsCheckout);

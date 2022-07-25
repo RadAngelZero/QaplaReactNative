@@ -58,11 +58,11 @@ import DuotoneActive from './icons/DuotoneActive.svg';
 import SeasonLevelEs1 from './icons/SeasonLevelEs1.svg';
 import SeasonLevelEs2 from './icons/SeasonLevelEs2.svg';
 import SeasonLevelEs3 from './icons/SeasonLevelEs3.svg';
-import SeasonLevelEs4 from './icons/seasonLevelEs4.svg';
-import SeasonLevelEn1 from './icons/seasonLevelEn1.svg';
-import SeasonLevelEn2 from './icons/seasonLevelEn2.svg';
-import SeasonLevelEn3 from './icons/seasonLevelEn3.svg';
-import SeasonLevelEn4 from './icons/seasonLevelEn4.svg';
+import SeasonLevelEs4 from './icons/SeasonLevelEs4.svg';
+import SeasonLevelEn1 from './icons/SeasonLevelEn1.svg';
+import SeasonLevelEn2 from './icons/SeasonLevelEn2.svg';
+import SeasonLevelEn3 from './icons/SeasonLevelEn3.svg';
+import SeasonLevelEn4 from './icons/SeasonLevelEn4.svg';
 import SeasonLevelNoLevel from './icons/SeasonLevelNoLevel.svg';
 import SendChat from './icons/SendChat.svg';
 import FounderBadge from './icons/FounderBadge.svg';
@@ -101,6 +101,14 @@ import InteractionsClip from './icons/Interactions/Clip.svg';
 import InteractionsTtGiphy from './icons/Interactions/TtGiphy.svg';
 import InteractionsTTS from './icons/Interactions/MessageBubble.svg';
 import InteractionsMemes from './icons/Interactions/Memes.svg';
+import ClockWhite from './icons/ClockWhite.svg';
+import CalendarWhite from './icons/CalendarWhite.svg';
+import ShareArrow from './icons/ShareArrow.svg';
+import TickOk from './icons/TickOk.svg';
+import ShareArrowTransparent from './icons/ShareButtonTransparent.svg';
+import TickSquareTransparent from './icons/TickSquareTransparent.svg';
+
+
 
 // Images
 const images = {
@@ -348,11 +356,17 @@ const images = {
 		interactionsTtGiphy: InteractionsTtGiphy,
 		interactionsTTS: InteractionsTTS,
 		interactionsMemes: InteractionsMemes,
+		clockWhite: ClockWhite,
+		calendarWhite: CalendarWhite,
+		shareArrow: ShareArrow,
+		tickOk: TickOk,
+		shareArrowTransparent: ShareArrowTransparent,
+		tickOkTransparent: TickSquareTransparent
 	},
 	gif: {
 		loadingStreamers: {
 			img: require('./images/LoadingStreamers.gif'),
-			uri: '@assets/images/LoadingStreamers.gif'
+			uri: '@assets/images/LoadingStreamers.gif',
 		},
 		markRebillet: {
 			img: require('./gifs/marc-rebillet-tiwtch.gif'),
@@ -382,6 +396,14 @@ const images = {
 			img: require('./gifs/llevare10.gif'),
 			uri: '@assets/gifs/llevare10.gif',
 		},
+		validatingPayment: {
+			img: require('./gifs/validatingPayment.gif'),
+			uri: '@assets/gifs/validatingPayment.gif',
+		},
+		paymentSuccessful: {
+			img: require('./gifs/paymentSuccessful.gif'),
+			uri: '@assets/gifs/paymentSuccessful.gif',
+		}
 	},
 };
 

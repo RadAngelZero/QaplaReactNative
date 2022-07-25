@@ -1,28 +1,31 @@
 import { StyleSheet } from 'react-native';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
+import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAndroidDim'
 
 export default styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#0D1021',
-        paddingHorizontal: widthPercentageToPx(4.26),
+        backgroundColor: '#0D1021'
     },
     mainContainer: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        height: heightPercentageToPx(4.92),
+        marginLeft: 16,
         marginTop: heightPercentageToPx(3.94),
     },
     backButtonContainer: {
-        backgroundColor: '#141539',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: heightPercentageToPx(4.92),
-        height: heightPercentageToPx(4.92),
-        borderRadius: widthPercentageToPx(5.33),
         marginRight: widthPercentageToPx(4.26),
-        paddingTop: heightPercentageToPx(0.49),
+    },
+    backButtonShadow: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+
+        elevation: 3,
+        borderRadius: 100,
     },
     streamerContainer: {
         display: 'flex',

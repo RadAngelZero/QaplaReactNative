@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 
 class RadMasonry extends Component {
-
     isCloseToBottom = (e, onEndReachedThreshold) => {
         const { layoutMeasurement, contentOffset, contentSize } = e;
         const paddingToBottom = contentSize.height * onEndReachedThreshold;
@@ -16,11 +15,12 @@ class RadMasonry extends Component {
         return (
             <>
                 <FlatList
+                    keyboardShouldPersistTaps={'always'}
                     renderItem={null}
                     keyExtractor={null}
                     data={null}
                     showsVerticalScrollIndicator={false}
-                    onScroll={(e) => {
+                    onScrollEndDrag={(e) => {
                         const nativeEvent = e.nativeEvent;
                         if (this.isCloseToBottom(nativeEvent, this.props.onEndReachedThreshold || 0.1)) {
                             this.props.onEndReached(e);

@@ -348,45 +348,6 @@ export class UserProfileScreen extends Component {
                             </View>
                             <View style={styles.bitsCardContainer}>
                                 <InteractionsUserProfile onPress={this.onInteract} />
-                                {/* <View style={styles.bitsModuleView}>
-                                    <View>
-                                        <View style={styles.infoImageContainer}>
-                                            <QaplaTooltip
-                                                style={styles.infoImage}
-                                                toggleTooltip={this.toggleInfoTooltip}
-                                                open={this.state.openInfoTooltip}
-                                                content={translate('userProfileScreen.bitsTooltip')}
-                                                buttonText={this.state.openedTooltips >= 2 ? translate('userProfileScreen.done') : translate('userProfileScreen.next')}
-                                                buttonAction={this.tooltipAction} />
-                                        </View>
-                                        <BitsIcon style={styles.bits3dIconImage} />
-                                    </View>
-                                    <View style={styles.donationValueContainer}>
-                                        <View style={styles.bitsValueContainer}>
-                                            <QaplaText style={styles.bitsNumber}>
-                                                {this.state.qoinsToDonate}
-                                            </QaplaText>
-                                            <QaplaText style={styles.bitsTitle}>
-                                                {translate('userProfileScreen.qoins')}
-                                            </QaplaText>
-                                        </View>
-                                        <View style={styles.handleDonationContainer}>
-                                            <TouchableOpacity style={styles.updateDonationIcon} onPress={this.addECoinToDonation}>
-                                                <images.svg.plusBubble />
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={styles.updateDonationIcon} onPress={this.substractECoinToDonation}>
-                                                <images.svg.minusBubble />
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                    <TouchableOpacity
-                                        style={styles.buttonView}
-                                        onPress={this.exchangeQaploins}>
-                                        <QaplaText style={styles.supportText}>
-                                            Support
-                                        </QaplaText>
-                                    </TouchableOpacity>
-                                </View> */}
                                 <View style={styles.levelModalView}>
                                     <AnimatedCircleIndicator
                                         size={120}

@@ -1,236 +1,263 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, FlatList, View, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, FlatList, View, TouchableOpacity, ActivityIndicator, SafeAreaView, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { translate } from '../../utilities/i18';
+
 import styles from './style';
 import images from '../../../assets/images';
+import { translate } from '../../utilities/i18';
 import SearchStreamerModal from '../../components/InteractionsModals/SearchStreamerModal';
 import StreamerCardSmall from '../../components/StreamerCard/StreamerCardSmall';
 import StreamerCardMini from '../../components/StreamerCard/StreamerCardMini';
 import StreamCardLive from '../../components/StreamCard/StreamCardLive';
+import Colors from '../../utilities/Colors';
+import { DEFAULT_404_TWITCH_PREVIEW_URL } from '../../utilities/Constants';
 
-const FavsData = [
-    {
-        streamerName: 'Madelain',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/729376cb-b131-4c5c-ac4c-dc3ccbb9b96a-profile_image-70x70.png',
-        streamerBackground: 'https://www.creativefabrica.com/wp-content/uploads/2020/09/09/Set-of-four-illustrated-backgrounds-Graphics-5375422-1-1-580x409.jpg',
-        id: 'Made-123141',
-    },
-    {
-        streamerName: 'CaptainLunna',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/d5316bfd-54d9-4de8-ac24-3f62292527c1-profile_image-70x70.png',
-        streamerBackground: 'https://www.creativefabrica.com/wp-content/uploads/2020/09/09/Set-of-four-illustrated-backgrounds-Graphics-5375422-1-1-580x409.jpg',
-        id: 'Cap-123141',
-    },
-    {
-        streamerName: 'RadAngelZero',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/86cd83bb-4186-4d5d-b401-b37b37d6cb36-profile_image-70x70.png',
-        streamerBackground: 'https://www.creativefabrica.com/wp-content/uploads/2020/09/09/Set-of-four-illustrated-backgrounds-Graphics-5375422-1-1-580x409.jpg',
-        id: 'Rad-123141',
-    },
-    {
-        streamerName: 'QaplaGaming',
-        streamerImg: 'https://pbs.twimg.com/profile_images/1297265691901517824/ps0CZEe4_400x400.jpg',
-        streamerBackground: 'https://www.creativefabrica.com/wp-content/uploads/2020/09/09/Set-of-four-illustrated-backgrounds-Graphics-5375422-1-1-580x409.jpg',
-        id: 'QG-123141',
-    },
-    {
-        streamerName: 'TestSub1',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/729376cb-b131-4c5c-ac4c-dc3ccbb9b96a-profile_image-70x70.png',
-        streamerBackground: 'https://www.creativefabrica.com/wp-content/uploads/2020/09/09/Set-of-four-illustrated-backgrounds-Graphics-5375422-1-1-580x409.jpg',
-        id: 'TS1-123141',
-    },
-];
+import {
+    getAllStreamersStreaming,
+    getRecentStreamersDonations,
+    getStreamerPublicData,
+    getStreamerPublicProfile,
+    getUserFavsStreamers
+} from '../../services/database';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
-const RecentsData = [
-    {
-        streamerName: 'Madelain',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/729376cb-b131-4c5c-ac4c-dc3ccbb9b96a-profile_image-70x70.png',
-        id: 'Made-123141',
-    },
-    {
-        streamerName: 'CaptainLunna',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/d5316bfd-54d9-4de8-ac24-3f62292527c1-profile_image-70x70.png',
-        id: 'Cap-123141',
-    },
-    {
-        streamerName: 'RadAngelZero',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/86cd83bb-4186-4d5d-b401-b37b37d6cb36-profile_image-70x70.png',
-        id: 'Rad-123141',
-    },
-    {
-        streamerName: 'QaplaGaming',
-        streamerImg: 'https://pbs.twimg.com/profile_images/1297265691901517824/ps0CZEe4_400x400.jpg',
-        id: 'QG-123141',
-    },
-    {
-        streamerName: 'TestSub1',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/729376cb-b131-4c5c-ac4c-dc3ccbb9b96a-profile_image-70x70.png',
-        id: 'TS1-123141',
-    },
-    // {
-    //     streamerName: 'TestSub2',
-    //     streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/729376cb-b131-4c5c-ac4c-dc3ccbb9b96a-profile_image-70x70.png',
-    //     id: 'TS2-123141',
-    // },
-];
-
-const LiveData = [
-    {
-        streamerName: 'Cindyrocks',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/8defb274-3539-47c9-b38b-2d5ed71f8875-profile_image-70x70.png',
-        streamImage: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_cindyrocks-848x480.jpg',
-        id: 'cindyrocks-123141',
-        featured: true,
-    },
-    {
-        streamerName: 'Emikukis',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/ba54c1cf-e7b0-4ab2-8003-3bef6f4ed007-profile_image-70x70.png',
-        streamImage: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_emikukis-848x480.jpg',
-        id: 'Emikukis-123141',
-    },
-    // {
-    //     streamerName: 'RadAngelZero',
-    //     streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/86cd83bb-4186-4d5d-b401-b37b37d6cb36-profile_image-70x70.png',
-    //     id: 'Rad-123141',
-    // },
-    // {
-    //     streamerName: 'QaplaGaming',
-    //     streamerImg: 'https://pbs.twimg.com/profile_images/1297265691901517824/ps0CZEe4_400x400.jpg',
-    //     id: 'QG-123141',
-    // },
-    // {
-    //     streamerName: 'TestSub1',
-    //     streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/729376cb-b131-4c5c-ac4c-dc3ccbb9b96a-profile_image-70x70.png',
-    //     id: 'TS1-123141',
-    // },
-    // {
-    //     streamerName: 'TestSub2',
-    //     streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/729376cb-b131-4c5c-ac4c-dc3ccbb9b96a-profile_image-70x70.png',
-    //     id: 'TS2-123141',
-    // },
-];
-
+const MAXIM_CARDS_LENGTH = 6;
 
 export class InteractionsFeed extends Component {
+    state = {
+        liveStreamers: [],
+        favStreamers: [],
+        recentStreamers: [],
+        dataFetched: false,
+    };
 
-    renderLiveItem = ({ item, index }) => (
-        <View>
+    componentDidMount() {
+        this.fetchStreamersData();
+    }
+
+    fetchStreamersData = async () => {
+        const liveStreamers = await getAllStreamersStreaming();
+        const liveData = liveStreamers.val();
+
+        if (this.props.uid) {
+            const favStreamersSnap = await getUserFavsStreamers(this.props.uid, 10);
+            const favsNoLive = [];
+            favStreamersSnap.forEach((fav) => {
+                if (!liveStreamers.val()[fav.key]) {
+                    favsNoLive.push({ streamerId: fav.key, ...favStreamersSnap.val()[fav.key] });
+                } else {
+                    if (liveData) {
+                        liveData[fav.key].featured = true;
+                    }
+                }
+            });
+
+            const favStreamers = [];
+            for (let i = 0; i < favsNoLive.length; i++) {
+                if (favStreamers.length < MAXIM_CARDS_LENGTH) {
+                    const fav = favsNoLive[i];
+                    const streamerProfile = await getStreamerPublicProfile(fav.streamerId);
+                    if (streamerProfile.exists()) {
+                        favStreamers.push({ streamerId: fav.streamerId, ...streamerProfile.val() });
+                    } else {
+                        const streamerData = await getStreamerPublicData(fav.streamerId);
+                        const randomBackground = Colors.streamersProfileBackgroundGradients[Math.floor(Math.random() * Colors.streamersProfileBackgroundGradients.length)]
+                        favStreamers.push({ streamerId: fav.streamerId, ...streamerData.val(), backgroundGradient: randomBackground });
+                    }
+                } else {
+                    break;
+                }
+            }
+
+            const recentStreamersSnap = await getRecentStreamersDonations(this.props.uid, 12);
+            const recentStreamersNoLiveNoFav = [];
+            recentStreamersSnap.forEach((recent) => {
+                if (!liveStreamers.val()[recent.key] && !favStreamers.find((streamer) => streamer.streamerId === recent.key)) {
+                    recentStreamersNoLiveNoFav.push({ streamerId: recent.key, ...recentStreamersSnap.val()[recent.key] });
+                } else if (liveStreamers.val()[recent.key]) {
+                    liveData[recent.key].featured = true;
+                }
+            });
+
+            const recentStreamers = [];
+            for (let i = 0; i < recentStreamersNoLiveNoFav.length; i++) {
+                if (recentStreamers.length < MAXIM_CARDS_LENGTH) {
+                    const recent = recentStreamersNoLiveNoFav[i];
+                    const streamerProfile = await getStreamerPublicProfile(recent.streamerId);
+                    if (streamerProfile.exists()) {
+                        recentStreamers.push({ streamerId: recent.streamerId, ...streamerProfile.val() });
+                    }
+                } else {
+                    break;
+                }
+            }
+
+            this.setState({ recentStreamers, favStreamers, dataFetched: true });
+        }
+
+        if (liveStreamers.exists()) {
+            this.setState({
+                liveStreamers: Object.keys(liveData)
+                    .sort((a, b) => (Number(liveData[b].featured) || 0) - (Number(liveData[a].featured) || 0))
+                    .map((streamerId) => ({ streamerId, ...liveData[streamerId] })),
+                dataFetched: true
+            });
+        }
+    }
+
+    onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming) => {
+        this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+    }
+
+    renderLiveItem = ({ item, index }) => {
+        let thumbnailUrl = DEFAULT_404_TWITCH_PREVIEW_URL;
+        if (item.thumbnailUrl) {
+            thumbnailUrl = item.thumbnailUrl.replace('{width}', '480').replace('{height}', '270');
+        }
+
+        /**
+         * This component is basically StreamLiveCard with less things, we need to make this the base of
+         * StreamLiveCard
+         */
+        return (
             <StreamCardLive
-                streamImage={item.streamImage}
-                streamerPhoto={item.streamerImg}
-                streamerName={item.streamerName}
+                streamImage={thumbnailUrl}
+                streamerPhoto={item.photoUrl}
+                streamerName={item.displayName}
                 index={index}
                 featured={item.featured}
-            />
-        </View>
-    );
+                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, true)} />
+        );
+    };
 
     renderFavItem = ({ item, index }) => (
         <View style={{
             marginLeft: index === 0 ? 16 : 8,
-            marginRight: (FavsData.length - 1) === index ? 16 : 0,
+            marginRight: (this.state.favStreamers.length - 1) === index ? 16 : 0,
         }}>
             <StreamerCardSmall
-                photoUrl={item.streamerImg}
-                backgroundUrl={item.streamerBackground}
-                displayName={item.streamerName}
-            />
+                photoUrl={item.photoUrl}
+                backgroundUrl={item.backgroundUrl}
+                backgroundGradient={item.backgroundGradient}
+                displayName={item.displayName}
+                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, false)} />
         </View>
     );
 
     renderRecentItem = ({ item, index }) => (
         <View style={{
-            marginLeft: (index === 0 || index === Math.ceil(RecentsData.length / 2)) ? 16 : 10,
-            marginRight: index === (Math.ceil(RecentsData.length / 2) - 1) ? 16 : 0,
-            marginTop: index > (Math.ceil(RecentsData.length / 2) - 1) ? 10 : 0,
+            marginLeft: (index === 0 || index === Math.ceil(this.state.recentStreamers.length / 2)) ? 16 : 10,
+            marginRight: index === (Math.ceil(this.state.recentStreamers.length / 2) - 1) ? 16 : 0,
+            marginTop: index > (Math.ceil(this.state.recentStreamers.length / 2) - 1) ? 10 : 0,
         }}>
             <StreamerCardMini
-                streamerPhoto={item.streamerImg}
-                streamerName={item.streamerName}
-            />
+                streamerPhoto={item.photoUrl}
+                streamerName={item.displayName}
+                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, false)} />
         </View>
     );
 
     render() {
-        return (
-            <>
-                <ScrollView style={styles.container}>
-                    <View style={styles.feedMainContainer}>
-                        <View style={styles.feedSectionHeaderContainer}>
-                            <Text style={[styles.whiteText, styles.feedSectionHeader]}>
-                                {translate('TimelineStreams.live')}
-                            </Text>
-                            <View style={styles.feedLiveIcon} />
-                        </View>
+        if (this.state.dataFetched) {
+            return (
+                <View style={styles.container}>
+                    <ScrollView style={styles.container}>
+                        <View style={[styles.feedMainContainer,
+                        {
+                            marginTop: heightPercentageToPx(4.67) + (Platform.OS === 'ios' ? heightPercentageToPx(5.91) : 0),
+                        }
+                        ]}>
+                            <View style={styles.feedSectionHeaderContainer}>
+                                <Text style={[styles.whiteText, styles.feedSectionHeader]}>
+                                    {translate('TimelineStreams.live')}
+                                </Text>
+                                <View style={styles.feedLiveIcon} />
+                            </View>
 
-                        <View style={[styles.widthMax, styles.marginTop30]}>
-                            <FlatList
-                                renderItem={this.renderLiveItem}
-                                keyExtractor={item => item.id}
-                                data={LiveData}
-                                style={styles.widthMax}
-                                showsHorizontalScrollIndicator={false}
-                                horizontal
-                            />
-                        </View>
-
-                        <View style={[styles.feedSectionHeaderContainer, styles.feedSectionHeaderMarginTop]}>
-                            <Text style={[styles.whiteText, styles.feedSectionHeader]}>
-                                {translate('interactions.feed.favs')}
-                            </Text>
-                        </View>
-
-                        <View style={[styles.widthMax, styles.marginTop30]}>
-                            <FlatList
-                                renderItem={this.renderFavItem}
-                                keyExtractor={item => item.id}
-                                data={FavsData}
-                                style={styles.widthMax}
-                                showsHorizontalScrollIndicator={false}
-                                horizontal
-                            />
-                        </View>
-
-                        <View style={styles.feedSectionHeaderContainer}>
-                            <Text style={[styles.whiteText, styles.feedSectionHeader]}>
-                                {translate('interactions.feed.recents')}
-                            </Text>
-                        </View>
-
-                        <View style={[styles.marginTop30]}>
-                            <ScrollView
-                                horizontal
-                                showsHorizontalScrollIndicator={false}
-                            >
+                            <View style={[styles.widthMax, styles.marginTop30]}>
                                 <FlatList
-                                    renderItem={this.renderRecentItem}
-                                    keyExtractor={item => item.id}
-                                    data={RecentsData}
-                                    numColumns={Math.ceil(RecentsData.length / 2)}
-                                    showsVerticalScrollIndicator={false}
+                                    renderItem={this.renderLiveItem}
+                                    keyExtractor={item => item.streamerId}
+                                    data={this.state.liveStreamers}
+                                    style={styles.widthMax}
+                                    showsHorizontalScrollIndicator={false}
+                                    horizontal
                                 />
-                            </ScrollView>
+                            </View>
+                            {this.props.uid &&
+                                <>
+                                    {this.state.favStreamers.length > 0 &&
+                                        <>
+                                            <View style={[styles.feedSectionHeaderContainer, styles.feedSectionHeaderMarginTop]}>
+                                                <Text style={[styles.whiteText, styles.feedSectionHeader]}>
+                                                    {translate('interactions.feed.favs')}
+                                                </Text>
+                                            </View>
+
+                                            <View style={[styles.widthMax, styles.marginTop30]}>
+                                                <FlatList
+                                                    renderItem={this.renderFavItem}
+                                                    keyExtractor={item => item.streamerId}
+                                                    data={this.state.favStreamers}
+                                                    style={styles.widthMax}
+                                                    showsHorizontalScrollIndicator={false}
+                                                    horizontal
+                                                />
+                                            </View>
+                                        </>
+                                    }
+
+                                    {this.state.recentStreamers.length > 0 &&
+                                        <>
+                                            <View style={styles.feedSectionHeaderContainer}>
+                                                <Text style={[styles.whiteText, styles.feedSectionHeader]}>
+                                                    {translate('interactions.feed.recents')}
+                                                </Text>
+                                            </View>
+
+                                            <View style={[styles.marginTop30]}>
+                                                <ScrollView
+                                                    horizontal
+                                                    showsHorizontalScrollIndicator={false}
+                                                >
+                                                    <FlatList
+                                                        renderItem={this.renderRecentItem}
+                                                        keyExtractor={item => item.streamerId}
+                                                        data={this.state.recentStreamers}
+                                                        numColumns={Math.ceil(this.state.recentStreamers.length / 2)}
+                                                        showsVerticalScrollIndicator={false}
+                                                    />
+                                                </ScrollView>
+                                            </View>
+                                        </>
+                                    }
+                                    <View
+                                        style={styles.feedBrowserBottomVisible}
+                                    />
+                                </>
+                            }
                         </View>
-                        <View
-                            style={styles.feedBrowserBottomVisible}
-                        />
+                    </ScrollView>
+                    <View style={[styles.backButton, styles.feedBackButtonPos, {
+                        top: heightPercentageToPx(3.94) + (Platform.OS === 'ios' ? heightPercentageToPx(5.91) : 0),
+                    }]}>
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.pop()}>
+                            <View style={styles.backButton}>
+                                <images.svg.closeIcon />
+                            </View>
+                        </TouchableOpacity>
                     </View>
-                </ScrollView>
-                <View style={[styles.backButton, styles.feedBackButtonPos]}>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.pop()}
-                    >
-                        <View style={styles.backButton}>
-                            <images.svg.closeIcon style={styles.backButtonIconOffset} />
-                        </View>
-                    </TouchableOpacity>
+                    <SearchStreamerModal onPress={() => this.props.navigation.navigate('InteractionsSearchStreamer')} />
                 </View>
-                <SearchStreamerModal
-                    onPress={() => this.props.navigation.navigate('InteractionsSearchStreamer')}
-                />
-            </>
-        );
+            );
+        } else {
+            return (
+                <View style={[styles.container, { justifyContent: 'center', alignContent: 'center' }]}>
+                    <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
+                </View>
+            );
+        }
     }
 }
 

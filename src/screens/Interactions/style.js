@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim'
+import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
@@ -7,14 +7,11 @@ export default styles = StyleSheet.create({
         backgroundColor: '#0D1021',
     },
     innerConatiner: {
+        flex: 1,
         paddingHorizontal: widthPercentageToPx(4.26),
         paddingTop: heightPercentageToPx(3.94),
     },
     backButton: {
-        backgroundColor: '#141539',
-        width: widthPercentageToPx(10.66),
-        height: widthPercentageToPx(10.66),
-        borderRadius: widthPercentageToPx(5.33),
     },
     backButtonIconOffset: {
         marginLeft: widthPercentageToPx(-0.65),
@@ -22,7 +19,6 @@ export default styles = StyleSheet.create({
     },
     feedBackButtonPos: {
         position: 'absolute',
-        top: heightPercentageToPx(3.94),
         right: widthPercentageToPx(4.8),
     },
     feedLiveIcon: {
@@ -43,7 +39,6 @@ export default styles = StyleSheet.create({
         color: '#FFFFFF99',
     },
     feedMainContainer: {
-        marginTop: heightPercentageToPx(4.67),
     },
     feedBrowserBottomVisible: {
         height: heightPercentageToPx(24.63),
@@ -78,6 +73,9 @@ export default styles = StyleSheet.create({
     headerMaxWidth: {
         maxWidth: widthPercentageToPx(56.8),
     },
+    addVisualHeaderMaxWidth: {
+        maxWidth: widthPercentageToPx(62.66),
+    },
     screenHeaderTextAddTTS: {
         maxWidth: widthPercentageToPx(68.26),
     },
@@ -100,6 +98,7 @@ export default styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: '#141539',
         bottom: 0,
+        height: heightPercentageToPx(85),
         borderTopLeftRadius: widthPercentageToPx(10.66),
         borderTopRightRadius: widthPercentageToPx(10.66),
         width: widthPercentageToPx(100),
@@ -117,7 +116,6 @@ export default styles = StyleSheet.create({
         marginBottom: heightPercentageToPx(0.98),
         marginHorizontal: widthPercentageToPx(1.06),
         overflow: 'hidden',
-        backgroundColor: '#202152',
     },
     searchBar: {
         flexDirection: 'row',
@@ -144,7 +142,6 @@ export default styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: '400',
-        lineHeight: heightPercentageToPx(3.44),
         letterSpacing: 1,
         textAlignVertical: 'center',
         marginLeft: widthPercentageToPx(2.66),
@@ -154,6 +151,27 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(20.53),
         maxWidth: widthPercentageToPx(20.53),
         height: heightPercentageToPx(3.44),
+    },
+    memesContainer: {
+        position: 'absolute',
+        backgroundColor: '#141539',
+        height: heightPercentageToPx(85),
+        bottom: 0,
+        borderTopLeftRadius: widthPercentageToPx(10.66),
+        borderTopRightRadius: widthPercentageToPx(10.66),
+        width: widthPercentageToPx(100),
+        overflow: 'hidden',
+    },
+    gridMemeContainer: {
+        flex: 1,
+        width: '100%',
+        alignSelf: 'center',
+        // marginTop: heightPercentageToPx(1.97),
+        paddingHorizontal: widthPercentageToPx(1.6),
+    },
+    gridMemeSubContainer: {
+        paddingTop: heightPercentageToPx(1.6),
+        paddingBottom: heightPercentageToPx(10),
     },
     gridMasonryContainer: {
         flex: 1,
@@ -244,18 +262,19 @@ export default styles = StyleSheet.create({
         marginBottom: heightPercentageToPx(30.04),
     },
     interactionSelectedConatiner: {
-        display: 'flex',
-        flex: 1,
-        maxHeight: heightPercentageToPx(40),
-        maxWidth: widthPercentageToPx(80),
+        borderRadius: widthPercentageToPx(2.66),
+        overflow: 'hidden',
+        overlayColor: '#00f',
     },
     interactionSelectedBorderRadius: {
         borderRadius: widthPercentageToPx(2.66),
+        maxHeight: heightPercentageToPx(40),
+        maxWidth: widthPercentageToPx(80),
         overflow: 'hidden',
     },
     addTTSContainer: {
         flex: 1,
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
     },
     chatBubbleContainer: {
         backgroundColor: '#141539',
@@ -278,6 +297,7 @@ export default styles = StyleSheet.create({
     buttonsContainer: {
         maxWidth: widthPercentageToPx(69.33),
         alignSelf: 'center',
+        paddingBottom: heightPercentageToPx(4.06),
     },
     bottomButton: {
         width: widthPercentageToPx(69.33),
@@ -307,8 +327,10 @@ export default styles = StyleSheet.create({
     },
     chatContainer: {
         flex: 1,
-        marginTop: heightPercentageToPx(10.46),
+        position: 'absolute',
+        width: widthPercentageToPx(100),
         justifyContent: 'flex-end',
+        paddingHorizontal: widthPercentageToPx(4.26),
     },
     chatSenderContainer: {
         flexDirection: 'row',
@@ -329,7 +351,6 @@ export default styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: heightPercentageToPx(1.47),
         marginTop: heightPercentageToPx(4.43),
     },
     chatInputContainer: {
@@ -434,10 +455,9 @@ export default styles = StyleSheet.create({
     onlySendQoinsTouchable: {
         display: 'flex',
         alignSelf: 'center',
-        paddingHorizontal: widthPercentageToPx(5.33),
-        paddingVertical: heightPercentageToPx(1.23),
-        backgroundColor: '#4040FF4D',
-        borderRadius: widthPercentageToPx(9.86),
+    },
+    onlySendTTS: {
+        bottom: heightPercentageToPx(12.93),
     },
     onlySendQoinsText: {
         fontSize: 16,

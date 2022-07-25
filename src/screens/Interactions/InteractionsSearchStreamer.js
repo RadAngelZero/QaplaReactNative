@@ -1,29 +1,14 @@
 import React, { Component } from 'react';
-import { Text, FlatList, View, TouchableOpacity, Image, TextInput } from 'react-native';
+import { Text, FlatList, View, TouchableOpacity, Image, TextInput, SafeAreaView } from 'react-native';
+
 import styles from './style';
 import images from '../../../assets/images';
 
-const TestData = [
-    {
-        id: 'rad',
-        streamerName: 'RadAngelZero',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/86cd83bb-4186-4d5d-b401-b37b37d6cb36-profile_image-70x70.png',
-        isLive: true,
-    },
-    {
-        id: 'shonzo',
-        streamerName: 'Shonzo',
-        streamerImg: 'https://static-cdn.jtvnw.net/jtv_user_pictures/3ec78fbd-4695-46ff-8577-224005f004be-profile_image-70x70.png',
-    },
-];
+import { getStreamersByName } from '../../services/database';
+import { STREAMERS_BLACKLIST } from '../../utilities/Constants';
 
-const Item = ({ streamerName, streamerImg, isLive, streamerId, navigation }) => (
-    <TouchableOpacity
-        onPress={() => {
-            console.log(streamerName + ' pressed');
-            navigation.navigate('InteractionsPersonalize', { streamerId, streamerName, streamerImg, isLive });
-        }}
-    >
+const Item = ({ streamerName, streamerImg, isStreaming, streamerId, onPress }) => (
+    <TouchableOpacity onPress={() => onPress(streamerId, streamerName, streamerImg, isStreaming)}>
         <View style={{
             display: 'flex',
             flexDirection: 'row',
@@ -47,7 +32,7 @@ const Item = ({ streamerName, streamerImg, isLive, streamerId, navigation }) => 
                 lineHeight: 20,
                 letterSpacing: 0.5,
             }}>{streamerName}</Text>
-            {isLive &&
+            {isStreaming &&
                 <View style={{
                     width: 12,
                     height: 12,
@@ -61,25 +46,49 @@ const Item = ({ streamerName, streamerImg, isLive, streamerId, navigation }) => 
 );
 
 class InteractionsSearchStreamer extends Component {
-
     state = {
         search: '',
-    }
+        searchResults: []
+    };
 
-    renderItem = ({ item }) => (
-        <Item streamerName={item.streamerName} streamerImg={item.streamerImg} isLive={item.isLive} streamerId={item.id} navigation={this.props.navigation} />
-    )
+    searchTimeout = null;
+
+    renderItem = ({ item }) => {
+        if (!STREAMERS_BLACKLIST.includes(item.streamerId)) {
+            return (
+                <Item
+                    streamerName={item.displayName}
+                    streamerImg={item.photoUrl}
+                    isStreaming={item.isStreaming}
+                    streamerId={item.streamerId}
+                    onPress={this.onStreamerSelected} />
+            );
+        }
+
+        return null;
+    };
 
     searchHandler = (e) => {
-        this.setState({ search: e.nativeEvent.text });
-        if (e.nativeEvent.text === '') {
-            console.log('No busques');
+        clearTimeout(this.searchTimeout);
+        const searchQuery = e.nativeEvent.text;
+        this.setState({ search: searchQuery, searchResults: [] });
+        if (searchQuery !== '') {
+            this.searchTimeout = setTimeout(async () => {
+                const streamers = await getStreamersByName(searchQuery);
+                if (streamers.exists()) {
+                    this.setState({ searchResults: streamers.val() });
+                }
+            }, 250);
         }
+    }
+
+    onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming) => {
+        this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
     }
 
     render() {
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <View style={styles.innerConatiner}>
                     <View style={{
                         flexDirection: 'row',
@@ -88,11 +97,7 @@ class InteractionsSearchStreamer extends Component {
                         <TouchableOpacity
                             onPress={() => this.props.navigation.goBack()}
                         >
-                            <View style={styles.backButton}>
-                                <View style={styles.backButtonIconOffset}>
-                                    <images.svg.leftArrowThiccIcon />
-                                </View>
-                            </View>
+                            <images.svg.backIcon />
                         </TouchableOpacity>
                         <View style={[styles.searchBar, styles.streamerSearchBar]}>
                             <View style={{ opacity: 0.4 }}>
@@ -102,16 +107,22 @@ class InteractionsSearchStreamer extends Component {
                                 style={styles.gridSearchBarTextInput}
                                 value={this.state.search}
                                 onChange={this.searchHandler}
+                                autoFocus
                             />
                         </View>
                     </View>
                     <FlatList
-                        data={TestData}
+                        style={{
+                            width: '90%',
+                            alignSelf: 'center',
+                        }}
+                        data={Object.keys(this.state.searchResults).map((streamerId) => ({ streamerId, ...this.state.searchResults[streamerId] }))}
                         renderItem={this.renderItem}
                         keyExtractor={item => item.id}
-                    />
+                        keyboardShouldPersistTaps={'always'}
+                        />
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }
 

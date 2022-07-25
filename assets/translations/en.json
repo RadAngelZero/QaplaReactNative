@@ -155,7 +155,7 @@
         "done": "Done",
         "loots": "Loots",
         "interactions": {
-            "interact" : "Interactúa",
+            "interact" : "Interact",
             "liveToYourStreamer": "on-screen to your streamer"
         }
     },
@@ -190,18 +190,13 @@
         "termsAndConditions": "Terms and Conditions",
         "privacyNotice": "Privacy Notice",
         "closeSession": "Close Session",
-        "addDiscordTagModal": {
-            "title": "Add your Discord tag",
-            "placeholder": "Insert here your Discord tag",
-            "cancel": "Cancel",
-            "done": "Done"
-        },
-        "addBioModal": {
-            "title": "Add your biography",
-            "placeholder": "Insert here you biography",
-            "cancel": "Cancel",
-            "done": "Done"
-        }
+        "deleteAccount": "Delete account",
+        "deleteAccountDescription": "Are you sure you want to delete your account and all the information in it permanently?",
+        "cancel": "Cancel",
+        "accountDeleted": "Account deleted",
+        "accountDeletedDescription": "Your account and the information related to it have been deleted",
+        "accountDeletionError": "Failed to delete account",
+        "accountDeletionErrorDescription": "Failed to delete account, please try again later or contact support"
     },
     "supportScreen": {
         "placeholder": "Happy? Frustrated? Sad? Share your opinion here",
@@ -353,7 +348,8 @@
         "unfollow": "Unfollow",
         "upcomingStreams": "Upcoming streams",
         "myCommunity": "My community",
-        "creatorCodes": "Creator Codes"
+        "creatorCodes": "Creator Codes",
+        "sendInteraction": "Send live interaction"
     },
     "writeCheerMessageScreen": {
         "sendPersonalizedMessage": "Do you want to say something special?\n💬",
@@ -468,7 +464,20 @@
         "alreadyAccepted": "Your registration is complete, make sure you are ready when the event starts!",
         "succedRequest": "Your request has been sent :D Wait for",
         "nextStepsFeedback": "to accept your registration. We´ll send you a notification when it happens ;)",
-        "finish": "Finish"
+        "finish": "Finish",
+        "details": {
+            "know": "Meet",
+            "following": "Following",
+            "farm": "You mine"
+        },
+        "success": {
+            "joinedStream": "You've joined the stream!",
+            "remindP1": "We'll remind you when the",
+            "remindP2": "'s stream starts",
+            "discover": "Discover more streams"
+        },
+        "shareWithYourFriends": "Invite your friends to the stream",
+        "linkCopied": "Link copied"
     },
     "updateApp": {
         "header": "There is a new version of Qapla, please update to the latest version.",
@@ -639,14 +648,25 @@
         },
         "visualConfirmation": {
             "use": "Use",
-            "chooseAnother": "Choose a different"
+            "chooseAnother": "Choose a different",
+            "mediaTypes": {
+                "gifs": "Gif",
+                "stickers": "Sticker",
+                "memes": "Meme",
+                "tts": "Text-to-Speech"
+            }
         },
         "addTTS": {
             "addTTSInYourInteraction": "Add Text-to-Speech to your interaction",
             "addAMessageP1": "🗣 Give voice to your message to",
             "addAMessageP2": "to your interaction for",
             "add": "Add Text-to-Speech",
-            "onlySendMy": "Only send my"
+            "onlySendMy": "Only send my",
+            "mediaTypes": {
+                "gifs": "Gif",
+                "stickers": "Sticker",
+                "memes": "Meme"
+            }
         },
         "TTS": {
             "writeYourMessage": "Type your message",
@@ -658,6 +678,16 @@
             "extraTip": "Extra Tip",
             "supportP1": "Support",
             "supportP2": "sending Qoins as cheers 💚",
+            "concepts": {
+                "gifs": "Gif",
+                "stickers": "Sticker",
+                "memes": "Meme",
+                "tts": "Text-to-Speech"
+            },
+            "discardInteraction": "Discard interaction",
+            "areYouSure": "Are you sure you want to discard your interaction?",
+            "yes": "Yes",
+            "no": "No",
             "modal": {
                 "sendInteraction": "Send Live Interaction"
             }
@@ -678,9 +708,13 @@
     },
     "buyQoins": {
         "sendInteractiunsUsingQoins": "Send live interactions using your Qoins",
-        "save": "You save",
+        "save": "25% more Qoins!",
         "pharases": {
             "p1": "I’ll take ten 💸💸💸"
+        },
+        "pendingPaymentAlert": {
+            "title": "Your bank is pending to process your payment",
+            "message": "We will pay your Qoins once the payment has been made. We will notify you as soon as it is done"
         }
     }
 }

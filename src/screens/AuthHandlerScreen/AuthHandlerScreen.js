@@ -281,7 +281,7 @@ class AuthHandlerScreen extends Component {
 
     finishProcess = () => this.props.navigation.navigate(this.props.originScreen);
 
-    openTermsModal = () => this.setState({ openTermsModal: true });
+    openTermsAndConditionsModal = () => this.setState({ openTermsModal: true });
 
     openPrivacyModal = () => this.setState({ openPrivacyModal: true });
 
@@ -590,6 +590,18 @@ class AuthHandlerScreen extends Component {
                                         </View>
                                     </TouchableOpacity>
                                 </View>
+                                {this.state.currentStep === 0 && this.state.createAccountIsSelected &&
+                                    <QaplaText style={styles.termsAndConditionsText}>
+                                        {`${translate('chooseUserNameScreen.bodyFirstPart')} `}
+                                        <QaplaText style={styles.hyperlinkText} onPress={this.openTermsAndConditionsModal}>
+                                            {translate('chooseUserNameScreen.termsAndConditions')}
+                                        </QaplaText>
+                                        {` ${translate('chooseUserNameScreen.bodySecondPart')} `}
+                                        <QaplaText style={styles.hyperlinkText} onPress={this.openPrivacyModal}>
+                                            {translate('chooseUserNameScreen.privacyPolicy')}
+                                        </QaplaText>
+                                    </QaplaText>
+                                }
                                 <View style={styles.dotStepsContainer}>
                                     <ProgressDotsIndicator
                                         steps={this.state.steps - 1}
@@ -615,6 +627,10 @@ class AuthHandlerScreen extends Component {
                         onClose={this.closeTwitchLinkModal}
                         onLinkSuccessful={this.handleQlan}
                         linkingWithQreatorCode={Boolean(this.state.qlanCode)} />
+                    <PrivacyModal open={this.state.openPrivacyModal}
+                        onClose={this.closePrivacyModal} />
+                    <TermsAndConditionsModal open={this.state.openTermsModal}
+                        onClose={this.closeTermsAndConditionsModal} />
                 </ScrollView>
             </SafeAreaView>
         );

@@ -1,44 +1,46 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, SafeAreaView, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+
 import styles from './style';
 import images from '../../../assets/images';
 
 class PersonalizeInteractionHeader extends Component {
-
-    componentDidMount() {
-        console.log('mounted');
-        console.log(this.props.navigation.state.routes[this.props.navigation.state.index].routeName);
-    }
-
     render() {
         return (
-            <>
-                <View style={styles.container}>
-                    <View style={styles.mainContainer}>
-                        {this.props.navigation.state.routes[this.props.navigation.state.index].routeName !== 'InteractionsSent' && <>
-                            {this.props.navigation.state.routes[this.props.navigation.state.index].routeName !== 'InteractionsCheckout' && <TouchableOpacity
+            <SafeAreaView style={styles.container}>
+                <View style={styles.mainContainer}>
+                    {this.props.currentScreen !== 'InteractionsSent' &&
+                        <>
+                            <TouchableOpacity
                                 style={styles.backButtonContainer}
-                                onPress={() => this.props.navigation.pop()}
-                            >
-                                <images.svg.leftArrowThiccIcon />
-                            </TouchableOpacity>}
+                                onPress={() => this.props.navigation.pop()}>
+                                <images.svg.backIcon style={styles.backButtonShadow} />
+                            </TouchableOpacity>
                             <View style={styles.streamerContainer}>
                                 <Image
-                                    source={{ uri: this.props.navigation.state.routes[0].params.streamerImg }}
+                                    source={{ uri: this.props.navigation.getParam('photoUrl') }}
                                     style={styles.streamerImage}
                                 />
                                 <Text style={styles.streamerName}>
-                                    {this.props.navigation.state.routes[0].params.streamerName}
+                                    {this.props.navigation.getParam('displayName', '')}
                                 </Text>
-                                {this.props.navigation.state.routes[0].params.isLive && <View style={styles.streamerLive} />}
+                                {this.props.navigation.getParam('isStreaming', false) &&
+                                    <View style={styles.streamerLive} />
+                                }
                             </View>
-                        </>}
-                    </View>
+                        </>
+                    }
                 </View>
-            </>
+            </SafeAreaView>
         );
     }
-
 }
 
-export default PersonalizeInteractionHeader;
+function mapStateToProps(state) {
+    return {
+        currentScreen: state.screensReducer.currentScreenId
+    };
+}
+
+export default connect(mapStateToProps)(PersonalizeInteractionHeader);

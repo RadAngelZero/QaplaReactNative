@@ -1,5 +1,5 @@
 export default Colors = {
-    greenQapla: '#3DF9DF',
+    greenQapla: '#00FFDD',
     pinkQapla: '#FA2D79',
     backgroundColor: '#0D1021',
     eventCardBackground: '#141735',
@@ -30,5 +30,12 @@ export default Colors = {
         ['#3C00FF', '#AA00F8'],
         ['#9847FF', '#42FFC7'],
         ['#1400FF', '#00EAF8']
+    ],
+    streamersProfileBackgroundGradients: [
+        { angle: 98, colors: ['#2D07FA', '#A716EE'] },
+        { angle: 262, colors: ['#00FEC1', '#FA00FF'] },
+        { angle: 98, colors: ['#FF2B77', '#E5E91E'] },
+        { angle: 98, colors: ['#00E0FF', '#2E08FB'] },
+        { angle: 98, colors: ['#00FF75', '#7516EF'] },
     ]
 };

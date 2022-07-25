@@ -12,6 +12,7 @@ import ChatAnimatedDots from '../ChatAnimatedDots/ChatAnimatedDots';
 import { getAllStreamers, sendCheers, updateTwitchUsername } from '../../services/database';
 import { getTwitchDataCloudFunction } from '../../services/functions';
 import images from '../../../assets/images';
+import { GIF } from '../../utilities/Constants';
 
 const LeftArrowThiccIcon = Images.svg.leftArrowThiccIcon;
 const SendChat = Images.svg.sendChat;
@@ -162,7 +163,7 @@ export default class FormularioCheers extends React.Component {
 		const twitchData = await getTwitchDataCloudFunction(this.props.twitchId);
 		await updateTwitchUsername(this.props.uid, twitchData.data.display_name);
 		if (this.props.qoinsToDonate > 0) {
-			await sendCheers(this.props.qoinsToDonate, this.state.message === ' ' ? '' : this.state.message, now.getTime(), this.state.selectedStreamer, this.props.uid, this.props.userName, twitchData.data.display_name, this.props.userPhotoURL, this.state.selectedStreamerID);
+			await sendCheers(this.props.qoinsToDonate, { type: GIF, source: 'https://c.tenor.com/jNIHz5yviKgAAAAC/emotional-damage-steven-he.gif' }, this.state.message, now.getTime(), this.state.selectedStreamer, this.props.uid, this.props.userName, twitchData.data.display_name, this.props.userPhotoURL, this.state.selectedStreamerID);
 		}
 
 		// Random timeout to show chatbot animation response after sending Qoins message

@@ -8,7 +8,7 @@ class StreamerCardMini extends Component {
 
     render() {
         return (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.props.onPress}>
                 <LinearGradient
                     style={styles.streamerDetails}
                     useAngle={true}

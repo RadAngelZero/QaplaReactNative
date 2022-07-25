@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import BottomSheet from 'reanimated-bottom-sheet';
 import LinearGradient from 'react-native-linear-gradient';
+
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { styles, gradients } from './style';
 import images from '../../../assets/images';
@@ -42,7 +43,7 @@ class SendInteractionModal extends Component {
                 </View>
                 <View style={styles.bottomSheetButtonsContainer}>
                     <TouchableOpacity
-                        onPress={this.props.yesButtonAction}
+                        onPress={this.props.onSendInteraction}
                         style={[styles.bottomSheetButton, styles.bottomSheetButtonBackground]}
                     >
                         <Text style={styles.bottomSheetButtonText}>
@@ -58,7 +59,7 @@ class SendInteractionModal extends Component {
                     </TouchableOpacity>
                     <View style={styles.bottomSheetButton}>
                         <TouchableOpacity
-                            onPress={this.props.cancel}
+                            onPress={this.props.onCancel}
                             style={styles.bottomSheetNoButton}
                         >
                             <Text style={[styles.bottomSheetButtonText, styles.bottomSheetNoButtonText]}>

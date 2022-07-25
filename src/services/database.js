@@ -53,7 +53,11 @@ const qaplaInteractionsRef = database.ref('/QaplaInteractions');
 const gifsInteractionsRef = qaplaInteractionsRef.child('/Gifs');
 const emotesInteractionsRef = qaplaInteractionsRef.child('/Emotes');
 const memesInteractionsRef = qaplaInteractionsRef.child('/Memes');
-export const userProfileGIFsRef = database.ref('/UserProfileGIFs');
+const interactionsCostsRef = database.ref('/InteractionsCosts');
+const userProfileGIFsRef = database.ref('/UserProfileGIFs');
+const inAppPurchasesProductsRef = database.ref('/inAppPurchasesProducts');
+const inAppPurchasesAttemptsRef = database.ref('/inAppPurchasesAttempts');
+const usersInAppPurchasesRef = database.ref('/UsersInAppPurchases');
 
 /**
  * Returns true if the user with the given uid exists
@@ -392,6 +396,21 @@ export async function substractQaploinsToUser(uid, currentCredits, quantityToSub
     } catch (error) {
         console.error(error);
     }
+}
+
+/**
+ * Add the specified amount of Qoins to the user
+ * @param {string} uid User identifier
+ * @param {number} qoinsToAdd Qoins to give
+ */
+export async function addQoinsToUser(uid, qoinsToAdd) {
+    return await usersRef.child(uid).child('credits').transaction((qoins) => {
+        if (qoins) {
+            return qoins + qoinsToAdd;
+        }
+
+        return qoinsToAdd;
+    });
 }
 
 /**
@@ -1025,6 +1044,15 @@ export function updateUserLoggedStatus(isUserLogged, uid = '') {
 }
 
 /**
+ * Sets the giphyId field on the user profile
+ * @param {string} uid User identifier
+ * @param {string} giphyId Giphy identifier
+ */
+export function setUserGiphyId(uid, giphyId) {
+    usersRef.child(uid).child('giphyId').set(giphyId);
+}
+
+/**
  * Remove all the database listeners related to the userReducer
  * @param {string} uid User identifier
  */
@@ -1351,9 +1379,9 @@ export async function getAllStreamers() {
 /**
  * Store cheers on the database at StreamersDonations node
  * @param {number} amountQoins Amount of donated Qoins
- * @param {object} media Object for cheers with specified media
+ * @param {object | null} media Object for cheers with specified media
  * @param {string} media.type Type of media (one of "GIF", "EMOTE" or "MEME")
- * @param {string} media.source Url of the media
+ * @param {string} media.url Url of the media
  * @param {string} message Message from the user
  * @param {number} timeStamp Timestamp of the moment when the donation is sent
  * @param {string} streamerName Name of the streamer
@@ -1363,45 +1391,48 @@ export async function getAllStreamers() {
  * @param {string} userPhotoURL URL of the user profile photo
  * @param {string} streamerID Streamer uid
  */
-export async function sendCheers(amountQoins, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID) {
-    const donationRef = streamersDonationsRef.child(streamerID).push({
-        amountQoins,
-        message,
-        timestamp,
-        uid,
-        read: false,
-        twitchUserName,
-        userName,
-        photoURL: userPhotoURL
-    });
-
-    usersRef.child(uid).child('credits').transaction((credits) => {
+export async function sendCheers(amountQoins, media, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID) {
+    await usersRef.child(uid).child('credits').transaction((credits) => {
         if (credits) {
             credits -= amountQoins;
         }
 
         return credits >= 0 ? credits : 0;
-    });
+    }, async (error, commited) => {
+        if (!error && commited) {
+            const donationRef = streamersDonationsRef.child(streamerID).push({
+                amountQoins,
+                media,
+                message,
+                timestamp,
+                uid,
+                read: false,
+                twitchUserName,
+                userName,
+                photoURL: userPhotoURL
+            });
 
-    userStreamerRef.child(streamerID).child('qoinsBalance').transaction((streamerQoins) => {
-        if (streamerQoins) {
-            streamerQoins += amountQoins;
+            userStreamerRef.child(streamerID).child('qoinsBalance').transaction((streamerQoins) => {
+                if (streamerQoins) {
+                    streamerQoins += amountQoins;
+                }
+
+                return streamerQoins ? streamerQoins : amountQoins;
+            });
+
+            await completeUserDonation(uid, amountQoins);
+
+            database.ref('/StreamersDonationAdministrative').child(donationRef.key).set({
+                amountQoins,
+                message,
+                timestamp,
+                uid,
+                sent: false,
+                twitchUserName,
+                userName,
+                streamerName
+            });
         }
-
-        return streamerQoins ? streamerQoins : amountQoins;
-    });
-
-    await completeUserDonation(uid, amountQoins);
-
-    database.ref('/StreamersDonationAdministrative').child(donationRef.key).set({
-        amountQoins,
-        message,
-        timestamp,
-        uid,
-        sent: false,
-        twitchUserName,
-        userName,
-        streamerName
     });
 }
 
@@ -1494,6 +1525,22 @@ export async function getStreamerPublicProfile(streamerId) {
  */
 export async function getAllStreamersStreaming() {
     return await userStreamerPublicDataRef.orderByChild('isStreaming').equalTo(true).once('value');
+}
+
+/**
+ * Get given streamer public data
+ * @param {string} streamerId Streamer identifier
+ */
+export async function getStreamerPublicData(streamerId) {
+    return await userStreamerPublicDataRef.child(streamerId).once('value');
+}
+
+/**
+ * Looks for streamers on the database based in their name or part of their name
+ * @param {string} searchQuery Part of the name to search for on the database
+ */
+export async function getStreamersByName(searchQuery) {
+    return await userStreamerPublicDataRef.orderByChild('displayNameLowerCase').startAt(searchQuery.toLowerCase()).endAt(searchQuery.toLowerCase()+'\uf8ff').once('value');
 }
 
 // -----------------------------------------------
@@ -1695,18 +1742,73 @@ export async function getUserFavsStreamers(uid, limit = 5) {
  * Qapla Interactions
  */
 
-export async function getGifsLibrary() {
-    return await gifsInteractionsRef.once('value');
-}
-
+/**
+ * Return the emotes from the Qapla library
+ */
 export async function getEmotesLibrary() {
     return await emotesInteractionsRef.once('value');
 }
 
-export async function getMemesLibrary() {
-    return await memesInteractionsRef.once('value');
+/**
+ * Return the specified number of memes from the Qapla library
+ * @param {number} limit Limit of memes to return
+ */
+export async function getMemesLibrary(limit) {
+    return await memesInteractionsRef.limitToLast(limit).once('value');
+}
+
+/**
+ * Gets the cost of the specified media type for Qapla interactions
+ * @param {('gifs' | 'memes' | 'stickers' | 'tts')} mediaType Media type to check cost
+ */
+export async function getMediaTypeCost(mediaType) {
+    return await interactionsCostsRef.child(mediaType).once('value');
+}
+
+/**
+ * Returns the complete object of media costs for Qapla interactions
+ */
+export async function getAllMediaTypeCosts() {
+    return await interactionsCostsRef.once('value');
 }
 
 export async function getUserProfileGIFs() {
     return await userProfileGIFsRef.once('value');
+}
+
+/**
+ * Get the details for the given android product
+ * @param {string} productId Product identifier
+ */
+export async function getAndroidProductDetails(productId) {
+    return await inAppPurchasesProductsRef.child('android').child(productId).once('value');
+}
+
+/**
+ * Record a purchase attempt
+ * @param {string} uid User identifier
+ * @param {string} transactionId Transaction identifier
+ * @param {object | string} receipt Receipt (object on android, string on iOS)
+ * @param {('android' | 'ios')} platform Platform
+ */
+export async function purchaseAttempt(uid, transactionId, receipt, platform) {
+    return await inAppPurchasesAttemptsRef.child(uid).push({ transactionId, receipt, platform });
+}
+
+/**
+ * Listen for a specific purchase
+ * @param {string} uid User identifier
+ * @param {string} transactionId Transaction identifier
+ * @param {function} callback Function to handle database responses
+ */
+export function listenToPurchaseCompleted(uid, transactionId, callback) {
+    usersInAppPurchasesRef.child(uid).orderByChild('transactionId').equalTo(transactionId).on('value', callback);
+}
+
+/**
+ * Remove all the purchases listeners for a specified user
+ * @param {string} uid User identifier
+ */
+export function removeListenerToPurchaseCompleted(uid) {
+    usersInAppPurchasesRef.child(uid).off();
 }

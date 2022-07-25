@@ -39,15 +39,15 @@ import CheersSentScreen from './screens/CheersSentScreen/CheersSentScreen';
 import MyStreamsScreen from './screens/MyStreamsScreen/MyStreamsScreen';
 import InteractionsFeed from './screens/Interactions/InteractionsFeed';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT } from './utilities/Constants';
-import InteractionsLoadHandler from './screens/Interactions/InteractionsLoadHandler';
 import InteractionsSearchStreamer from './screens/Interactions/InteractionsSearchStreamer';
 import InteractionsPersonalize from './screens/Interactions/InteractionsPersonalize';
-import InteractionsSelectGIF from './screens/Interactions/InteractionsSelectGIF';
+import InteractionsGiphyMediaSelector from './screens/Interactions/InteractionsGiphyMediaSelector';
 import PersonalizeInteractionHeader from './components/PersonalizeInteractionHeader/PersonalizeInteractionHeader';
 import InteractionsConfirmSelection from './screens/Interactions/InteractionsConfirmSelection';
 import InteractionsAddTTS from './screens/Interactions/InteractionsAddTTS';
 import InteractionsTTS from './screens/Interactions/InteractionsTTS';
 import InteractionsCheckout from './screens/Interactions/InteractionsCheckout';
+import InteractionsMemeSelector from './screens/Interactions/InteractionsMemeSelector';
 import BuyQoins from './screens/BuyQoins/BuyQoins';
 import InteractionsSent from './screens/Interactions/InteractionsSent';
 import InteractionsAddVisual from './screens/Interactions/InteractionsAddVisual';
@@ -144,8 +144,16 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
       ...TransitionPresets.SlideFromRightIOS,
     },
   },
-  InteractionsSelectGIF: {
-    screen: InteractionsSelectGIF,
+  InteractionsGiphyMediaSelector: {
+    screen: InteractionsGiphyMediaSelector,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsMemeSelector: {
+    screen: InteractionsMemeSelector,
     navigationOptions: {
       headerShown: true,
       gestureDirection: 'horizontal',
@@ -200,6 +208,10 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
       ...TransitionPresets.SlideFromRightIOS,
     },
   },
+}, {
+  defaultNavigationOptions: {
+    header: (props) => <PersonalizeInteractionHeader {...props} />,
+  }
 });
 
 //#endregion
@@ -348,7 +360,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
     },
   },
   Interactions: {
-    screen: InteractionsLoadHandler,
+    screen: () => <></>, // We do not really want a screen here, we want to navigate to InteractionsStack (check tabBarOnPress)
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
@@ -528,12 +540,6 @@ const RootStackNavigator = createStackNavigator({
   InteractionsStack: InteractionsStackNavigator,
   InteractionsPersonlizeStack: {
     screen: InteractionsPersonlizeStackNavigator,
-    navigationOptions: {
-      gestureDirection: 'horizontal',
-      header: (props) => <PersonalizeInteractionHeader {...props} />,
-      headerTransparent: true,
-      ...TransitionPresets.SlideFromRightIOS,
-    },
   },
   BuyQoins: {
     screen: BuyQoins,

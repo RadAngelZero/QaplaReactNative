@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import BottomSheet from 'reanimated-bottom-sheet';
 import LinearGradient from 'react-native-linear-gradient';
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { styles, gradients } from './style';
 import images from '../../../assets/images';
 import { translate } from '../../utilities/i18';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class SearchStreamerModal extends Component {
 

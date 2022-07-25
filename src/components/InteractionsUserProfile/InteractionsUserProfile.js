@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { translate } from '../../utilities/i18';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import { userProfileGIFsRef, getUserProfileGIFs } from '../../services/database';
+import { getUserProfileGIFs } from '../../services/database';
 import styles from './style';
 import images from '../../../assets/images';
 
@@ -11,7 +10,6 @@ class InteractionsUserProfile extends Component {
     state = {
         textRotation: 'GIF',
         textRotationState: 0,
-        openInfoTooltip: false,
         GIFURL: '',
     }
 
@@ -38,10 +36,6 @@ class InteractionsUserProfile extends Component {
 
     componentWillUnmount() {
         clearInterval(this.textRotator);
-    }
-
-    toggleInfoTooltip = () => {
-        this.setState({ openInfoTooltip: !this.state.openInfoTooltip });
     }
 
     render() {

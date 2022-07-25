@@ -3,7 +3,10 @@ import {
     eventParticipantsRef,
     listenStreamCustomRewards,
     getStreamerStreamingStatus,
-    getStreamerThumbnailUrl
+    getStreamerThumbnailUrl,
+    getAllStreamersStreaming,
+    getRecentStreamersDonations,
+    getUserFavsStreamers
 } from '../services/database';
 import {
     CLEAN_ALL_STREAMS,
@@ -24,6 +27,20 @@ const listeningStreams = [];
 export const loadFeaturedStreams = (uid) => async (dispatch) => {
     const today = new Date();
     today.setHours(today.getHours() < 3 ? 0 : today.getHours() - 3, 0, 0, 0);
+
+    /* const streamers = await getAllStreamersStreaming();
+
+    Object.keys(streamers.val()).sort((a, b) => Number(streamers.val()[b].premium) - Number(streamers.val()[a].premium)).forEach((streamerId) => {
+        console.log(streamerId);
+    }); */
+
+    /* const al = await getRecentStreamersDonations(uid, 1);
+    console.log(al.val()); */
+
+    /* const favs = await getUserFavsStreamers(uid, 6);
+    favs.forEach((a) => {
+        console.log(a.key);
+    }); */
 
     eventsDataRef.orderByChild('featured').equalTo(true).on('child_added', (featuredStream) => {
         const featuredStreamObject = {

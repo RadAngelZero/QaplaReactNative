@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Image, View, ScrollView, Linking, Text, TouchableWithoutFeedback } from 'react-native';
+import { TouchableOpacity, Image, View, ScrollView, Linking, Text, TouchableWithoutFeedback, Animated, Easing, SafeAreaView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
@@ -8,12 +8,12 @@ import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/Link
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 import QaplaChip from '../../components/QaplaChip/QaplaChip';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
-import SupportStreamerModal from '../../components/SupportStreamerModal/SupportStreamerModal';
-import { getStreamerPublicProfile, getStreamerSocialLinks, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile, userHaveTwitchId } from '../../services/database';
+import { getStreamerPublicProfile, getStreamerSocialLinks, getStreamerStreamingStatus, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile, userHaveTwitchId } from '../../services/database';
 import { getStreamerProfilePhotoUrl } from '../../services/storage';
 import { copyDataToClipboard } from '../../utilities/utils';
 import { getLocaleLanguage, translate } from './../../utilities/i18';
 import styles from './style';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 const socialMediaIcons = {
     Twitch: Images.svg.twitchLight,
@@ -41,11 +41,11 @@ class StreamerProfileScreen extends Component {
             backgroundGradient: { angle: 0, colors: [ '#000', '#000' ] },
             isUserFollowingStreamer: false
         },
-        openSupportStreamerModal: false,
         openLinkTwitchAccountModal: false,
         showUnfollowConfirmation: false,
         openEventDetailsModal: false,
-        selectedStream: null
+        selectedStream: null,
+        interactButtonAnimation: new Animated.Value(0)
     };
 
     componentDidMount() {
@@ -96,6 +96,20 @@ class StreamerProfileScreen extends Component {
         }
 
         streamerEvents.sort((a, b) => a.timestamp - b.timestamp);
+
+        const isStreaming = await getStreamerStreamingStatus(streamerId);
+
+        if (isStreaming) {
+            Animated.sequence([
+                Animated.delay(300),
+                Animated.timing(this.state.interactButtonAnimation, {
+                    toValue: 12,
+                    duration: 250,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }),
+            ]).start();
+        }
 
         // Only show the 2 most upcoming streams
         this.setState({ nextStreams: streamerEvents.slice(0, 2) });
@@ -157,14 +171,6 @@ class StreamerProfileScreen extends Component {
             }
         } else {
             this.setState({ showUnfollowConfirmation: true });
-        }
-    }
-
-    goToSendCheersScreen = async (qoinsToDonate) => {
-        if (await userHaveTwitchId(this.props.uid)) {
-            this.props.navigation.navigate('WriteCheerMessage', { streamerData: this.state.streamerData, qoinsToDonate });
-        } else {
-            this.setState({ openSupportStreamerModal: false, openLinkTwitchAccountModal: true });
         }
     }
 
@@ -282,6 +288,19 @@ class StreamerProfileScreen extends Component {
         );
     }
 
+    sendLiveInteraction = async () => {
+        if (await userHaveTwitchId(this.props.uid)) {
+            this.props.navigation.navigate('InteractionsPersonalize', {
+                streamerId: this.state.streamerData.streamerId,
+                displayName: this.state.streamerData.displayName,
+                photoUrl: this.state.streamerData.photoUrl,
+                isStreaming: true
+            });
+        } else {
+            this.setState({ openLinkTwitchAccountModal: true });
+        }
+    }
+
     render() {
         const {
             displayName,
@@ -335,11 +354,6 @@ class StreamerProfileScreen extends Component {
                                         <Images.svg.share />
                                     </View>
                                 </TouchableOpacity> */}
-                                <TouchableOpacity onPress={() => this.setState({ openSupportStreamerModal: true })}>
-                                    <View style={styles.iconContainer}>
-                                        <Images.svg.sendIcon />
-                                    </View>
-                                </TouchableOpacity>
                                 </>
                             }
                         </View>
@@ -472,13 +486,21 @@ class StreamerProfileScreen extends Component {
                     <View style={{ height: 40 }} />
                 </ScrollView>
                 </TouchableWithoutFeedback>
-                <SupportStreamerModal open={this.state.openSupportStreamerModal}
-                    onClose={() => this.setState({ openSupportStreamerModal: false })}
-                    streamerData={this.state.streamerData}
-                    sendCheers={this.goToSendCheersScreen} />
+                <Animated.View
+                    style={[styles.interactionButtonContainer, { transform:
+                        [{translateY: this.state.interactButtonAnimation.interpolate({ inputRange:[0,12], outputRange: [heightPercentageToPx(15), 0]})}] } ]}>
+                    <TouchableOpacity
+                        style={{flex:1}}
+                        underlayColor='#2aa897'
+                        onPress={this.sendLiveInteraction}>
+                        <Text style={styles.interactionButtonText}>
+                            {translate('streamerProfileScreen.sendInteraction')}
+                        </Text>
+                    </TouchableOpacity>
+                </Animated.View>
                 <LinkTwitchAccountModal open={this.state.openLinkTwitchAccountModal}
                     onClose={() => this.setState({ openLinkTwitchAccountModal: false })}
-                    onLinkSuccessful={this.goToSendCheersScreen} />
+                    onLinkSuccessful={this.sendLiveInteraction} />
                 <EventDetailsModal open={this.state.openEventDetailsModal}
                     onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
                     stream={this.state.selectedStream} />

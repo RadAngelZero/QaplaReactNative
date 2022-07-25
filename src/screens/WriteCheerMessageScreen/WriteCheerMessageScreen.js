@@ -9,6 +9,7 @@ import { getStreamerPublicProfile, sendCheers, updateTwitchUsername } from '../.
 import { connect } from 'react-redux';
 import QaplaIcon from '../../components/QaplaIcon/QaplaIcon';
 import ChatAnimatedDots from '../../components/ChatAnimatedDots/ChatAnimatedDots';
+import { GIF } from '../../utilities/Constants';
 
 class WriteCheerMessageScreen extends Component {
     textInput = null;
@@ -82,7 +83,7 @@ class WriteCheerMessageScreen extends Component {
             const qoinsToDonate = this.props.navigation.getParam('qoinsToDonate', 200);
 
             let now = new Date();
-            await sendCheers(qoinsToDonate, finalMessage, now.getTime(), this.state.streamerData.displayName, this.props.uid, this.props.userName, twitchUsername, this.props.userImage, this.state.streamerData.streamerId);
+            await sendCheers(qoinsToDonate, { type: GIF, source: 'https://c.tenor.com/jNIHz5yviKgAAAAC/emotional-damage-steven-he.gif' } , finalMessage, now.getTime(), this.state.streamerData.displayName, this.props.uid, this.props.userName, twitchUsername, this.props.userImage, this.state.streamerData.streamerId);
 
             callback();
         } catch (error) {

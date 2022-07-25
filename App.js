@@ -1,11 +1,11 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
-import NetInfo from '@react-native-community/netinfo';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import * as RNIap from 'react-native-iap';
 
 import Router from './src/Router';
-import { notifications } from './src/utilities/firebase';
+import { auth, notifications } from './src/utilities/firebase';
 import store from './src/store/store';
 import Snackbar from './src/components/Snackbar/Snackbar';
 import UpdateApp from './src/components/UpdateApp/UpdateApp';
@@ -19,12 +19,17 @@ import {
 
 import {
   dbRemoveAppVersionValueListener,
-  dbEnableAppVersionValueListener
+  dbEnableAppVersionValueListener,
+  purchaseAttempt,
+  listenToPurchaseCompleted,
+  removeListenerToPurchaseCompleted
 } from './src/services/database';
+import { handleInAppPurchases } from './src/services/functions';
 
 import {
     trackOnSegment
 } from './src/services/statistics';
+import FinishingBuyTransactionModal from './src/components/FinishingBuyTransactionModal/FinishingBuyTransactionModal';
 
 console.disableYellowBox = true;
 
@@ -37,12 +42,18 @@ class App extends React.Component {
         snackbarActionMessage: '',
         navigateTo: '',
         closeSnackBar: false,
-        updateRequired: false
+        updateRequired: false,
+        openTransactionModal: false,
+        transactionProgress: 0,
+        transactionText: ''
     };
 
+    purchaseUpdateSubscription = null;
+    purchaseErrorSubscription = null;
+
     componentDidMount() {
+        this.inAppPurchasesListeners();
         this.enableNotificationListeners();
-        this.enableNetworkListener();
         dbEnableAppVersionValueListener(this.checkAppUpdates);
         this.checkAppUpdates();
     }
@@ -53,30 +64,88 @@ class App extends React.Component {
          * means that we are removing that listener, in this case we are doing that
          */
         this.notificationListener();
+
+        RNIap.endConnection();
         this.notificationOpenedListener();
-        this.networkListener();
+        if (this.purchaseUpdateSubscription) {
+            this.purchaseUpdateSubscription.remove();
+            this.purchaseUpdateSubscription = null;
+          }
+          if (this.purchaseErrorSubscription) {
+            this.purchaseErrorSubscription.remove();
+            this.purchaseErrorSubscription = null;
+          }
 
         dbRemoveAppVersionValueListener();
     }
 
-    /**
-     * Enable the listener for network events (internet connection)
-     */
-    enableNetworkListener() {
-        this.networkListener = NetInfo.addEventListener((state) => {
-            if (!state.isConnected || ((state.isInternetReachable !== undefined) && (state.isInternetReachable !== null) && !state.isInternetReachable)) {
-                const wifiMessage = (state.type === 'wifi') ? translate('App.noInternetConnection.wifiDetails') : '';
-                const msg = `${translate('App.noInternetConnection.title')} ${wifiMessage}`;
-
-                this.setState({
-                  openSnackbar: true,
-                  snackbarMessage: msg,
-                  timerOnSnackBar: false
-                });
-            } else {
-                this.setState({ openSnackbar: false });
+    async inAppPurchasesListeners() {
+        try {
+            await RNIap.initConnection();
+            if (Platform.OS === 'android') {
+                await RNIap.flushFailedPurchasesCachedAsPendingAndroid();
             }
-        });
+
+            this.purchaseUpdateSubscription = RNIap.purchaseUpdatedListener(async (purchase) => {
+                this.setState({ openTransactionModal: true });
+                const receipt = Platform.OS === 'android' ? { transactionId: purchase.transactionId, ...JSON.parse(purchase.transactionReceipt)} : { transactionId: purchase.transactionId, productId: purchase.productId, iOSReceipt: purchase.transactionReceipt };
+                if ((Platform.OS === 'android' && receipt && receipt.purchaseState === 0) || Platform.OS === 'ios') {
+                    // Store purchase attempt
+                    await purchaseAttempt(auth.currentUser.uid, purchase.transactionId, receipt, Platform.OS);
+                    this.setState({ transactionProgress: 0.25, transactionText: 'Validando transacción' });
+
+                    // Finish transaction (notify Google/Apple)
+                    await RNIap.finishTransaction(purchase, true);
+                    this.setState({ transactionProgress: 0.5 });
+
+                    // Validate purchase and distribute Qoins
+                    const response = await handleInAppPurchases(receipt, Platform.OS);
+
+                    if (response && response.data && response.data.status) {
+                        // Everything is OK
+                        if (response.data.status === 200) {
+                            this.setState({ transactionProgress: 0.75, transactionText: 'Abonando Qoins' });
+                            try {
+                                listenToPurchaseCompleted(auth.currentUser.uid, purchase.transactionId, (transaction) => {
+                                    if (transaction.exists()) {
+                                        removeListenerToPurchaseCompleted(auth.currentUser.uid);
+                                        this.setState({ transactionProgress: 1, transactionText: 'Qoins abonados' });
+                                        const { onPurchaseFinished } = store.getState().purchasesReducer;
+                                        if (onPurchaseFinished) {
+                                            onPurchaseFinished();
+                                        }
+
+                                        setTimeout(() => {
+                                            this.setState({ openTransactionModal: false });
+                                        }, 750);
+                                    }
+                                });
+                            } catch (error) {
+                                console.log('Finish transaction Error', error);
+                            }
+                        // Qoins transaction failed
+                        } else if (response.data.status === 500) {
+                            console.log('Qoins transaction failed');
+                        // Payment could not be verified
+                        } else if (response.data.status === 400) {
+                            console.log('Payment could not be verified');
+                        }
+                    // Unknown error
+                    }  else {
+                        console.log('Unknown error');
+                    }
+                // Payment pending
+                } else if (Platform.OS === 'android' && receipt && receipt.purchaseState === 4) {
+                    console.log('Payment pending');
+                }
+            });
+
+            this.purchaseErrorSubscription = RNIap.purchaseErrorListener((error) => {
+                console.log(error);
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     /**
@@ -177,6 +246,9 @@ class App extends React.Component {
 	                    openAndCollapse={this.state.timerOnSnackBar}
 	                    action={this.state.snackbarAction}
 	                    actionMessage={this.state.snackbarActionMessage} />
+                    <FinishingBuyTransactionModal open={this.state.openTransactionModal}
+                        transactionProgress={this.state.transactionProgress}
+                        transactionText={this.state.transactionText} />
                 </SafeAreaProvider>
               }
           </>

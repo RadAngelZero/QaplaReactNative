@@ -14,7 +14,7 @@ class ProgressBar extends Component {
       indeterminateAnimationDuration: 1000,
       progress: 0,
       useNativeDriver: false,
-      animationConfig: { easing: Easing.inOut(Easing.quad), duration: 500 },
+      animationConfig: { easing: Easing.inOut(Easing.quad), duration: 300 },
       animationType: 'timing',
     };
 
@@ -81,6 +81,7 @@ class ProgressBar extends Component {
         };
         const progressStyle = {
             backgroundColor: color,
+            borderRadius,
             height,
             transform: [
                 {

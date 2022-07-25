@@ -92,6 +92,23 @@ import TwitchDark from './icons/TwitchDark.svg';
 import AppleAuth from './icons/AppleBlackLogoRound.svg';
 import GoogleAuth from './icons/GoogleBlackLogoRound.svg';
 import EmailAuth from './icons/EmailBlackLogoRound.svg';
+import InteractionsIcon from './icons/InteractionsIcon.svg';
+import SearchStreamerIcon from './icons/SearchStreamerIcon.svg';
+import QuestionMark from './icons/QuestionMark.svg';
+import InteractionsGIF from './icons/Interactions/GIF.svg';
+import InteractionsSticker from './icons/Interactions/Sticker.svg';
+import InteractionsClip from './icons/Interactions/Clip.svg';
+import InteractionsTtGiphy from './icons/Interactions/TtGiphy.svg';
+import InteractionsTTS from './icons/Interactions/MessageBubble.svg';
+import InteractionsMemes from './icons/Interactions/Memes.svg';
+import ClockWhite from './icons/ClockWhite.svg';
+import CalendarWhite from './icons/CalendarWhite.svg';
+import ShareArrow from './icons/ShareArrow.svg';
+import TickOk from './icons/TickOk.svg';
+import ShareArrowTransparent from './icons/ShareButtonTransparent.svg';
+import TickSquareTransparent from './icons/TickSquareTransparent.svg';
+
+
 
 // Images
 const images = {
@@ -207,6 +224,34 @@ const images = {
 			img: require('./icons/JoinQlanGlow.png'),
 			uri: '@assets/icons/JoinQlanGlow.png'
 		},
+		InteractionGradient1: {
+			img: require('./images/InteractionGradient1.png'),
+			uri: '@assets/images/InteractionGradient1.png'
+		},
+		InteractionGradient2: {
+			img: require('./images/InteractionGradient2.png'),
+			uri: '@assets/images/InteractionGradient2.png'
+		},
+		InteractionGradient3: {
+			img: require('./images/InteractionGradient3.png'),
+			uri: '@assets/images/InteractionGradient3.png'
+		},
+		InteractionGradient4: {
+			img: require('./images/InteractionGradient4.png'),
+			uri: '@assets/images/InteractionGradient4.png'
+		},
+		InteractionGradient5: {
+			img: require('./images/InteractionGradient5.png'),
+			uri: '@assets/images/InteractionGradient5.png'
+		},
+		InteractionGradient6: {
+			img: require('./images/InteractionGradient6.png'),
+			uri: '@assets/images/InteractionGradient6.png'
+		},
+		PoweredbyGiphy: {
+			img: require('./images/PoweredbyGiphy.png'),
+			uri: '@assets/images/PoweredbyGiphy.png'
+		},
 	},
 	svg: {
 		googleIcon: GoogleIcon,
@@ -301,14 +346,65 @@ const images = {
 		twitchDark: TwitchDark,
 		appleAuth: AppleAuth,
 		googleAuth: GoogleAuth,
-		emailAuth: EmailAuth
+		emailAuth: EmailAuth,
+		interactionsIcon: InteractionsIcon,
+		searchStreamerIcon: SearchStreamerIcon,
+		questionMark: QuestionMark,
+		interactionsGIF: InteractionsGIF,
+		interactionsSticker: InteractionsSticker,
+		interactionsClip: InteractionsClip,
+		interactionsTtGiphy: InteractionsTtGiphy,
+		interactionsTTS: InteractionsTTS,
+		interactionsMemes: InteractionsMemes,
+		clockWhite: ClockWhite,
+		calendarWhite: CalendarWhite,
+		shareArrow: ShareArrow,
+		tickOk: TickOk,
+		shareArrowTransparent: ShareArrowTransparent,
+		tickOkTransparent: TickSquareTransparent
 	},
 	gif: {
 		loadingStreamers: {
 			img: require('./images/LoadingStreamers.gif'),
-			uri: '@assets/images/LoadingStreamers.gif'
+			uri: '@assets/images/LoadingStreamers.gif',
 		},
-	}
+		markRebillet: {
+			img: require('./gifs/marc-rebillet-tiwtch.gif'),
+			uri: '@assets/gifs/marc-rebillet-tiwtch.gif',
+		},
+		heartLoveSticker: {
+			img: require('./gifs/HeartLoveSticker.gif'),
+			uri: '@assets/gifs/HeartLoveSticker.gif',
+		},
+		thugDoug: {
+			img: require('./gifs/thug-doug.gif'),
+			uri: '@assets/gifs/thug-doug.gif',
+		},
+		frankTwitch: {
+			img: require('./gifs/frank-twitch.gif'),
+			uri: '@assets/gifs/frank-twitch.gif',
+		},
+		loveTwitch: {
+			img: require('./gifs/love-twitch.gif'),
+			uri: '@assets/gifs/love-twitch.gif',
+		},
+		vibesCat: {
+			img: require('./gifs/vibes-cat.gif'),
+			uri: '@assets/gifs/vibes-cat.gif',
+		},
+		llevare10: {
+			img: require('./gifs/llevare10.gif'),
+			uri: '@assets/gifs/llevare10.gif',
+		},
+		validatingPayment: {
+			img: require('./gifs/validatingPayment.gif'),
+			uri: '@assets/gifs/validatingPayment.gif',
+		},
+		paymentSuccessful: {
+			img: require('./gifs/paymentSuccessful.gif'),
+			uri: '@assets/gifs/paymentSuccessful.gif',
+		}
+	},
 };
 
 export default images;

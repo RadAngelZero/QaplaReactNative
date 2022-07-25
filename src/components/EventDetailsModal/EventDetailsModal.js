@@ -2,19 +2,20 @@ import React, { Component } from 'react';
 import {
     Modal,
     View,
-    ScrollView,
     TouchableHighlight,
+    TouchableOpacity,
     Animated,
-    Easing
+    Easing,
+    Text,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
+import { BlurView } from '@react-native-community/blur';
 
 import styles from './style';
-import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import Images from './../../../assets/images';
-import { userHasRequestToJoinEvent } from '../../services/database';
+import { getQaplaLevels, userHasRequestToJoinEvent } from '../../services/database';
 import EventDetails from './EventDetails';
 import EventRegistration from './EventRegistration';
 import { isUserLogged } from '../../services/auth';
@@ -22,8 +23,9 @@ import EventRegistrationSuccessful from './EventRegistrationSuccessful';
 import { userHaveTwitchId, joinEventWithCustomData, getTwitchUserName, substractQaploinsToUser, sendRequestToJoinEvent } from '../../services/database';
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
 import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
-import { translate } from '../../utilities/i18';
+import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { copyDataToClipboard } from '../../utilities/utils';
 
 class EventDetailsModal extends Component {
     state = {
@@ -33,8 +35,22 @@ class EventDetailsModal extends Component {
         registerButtonAnimation: new Animated.Value(0),
         showLinkWitTwitchModal: false,
         openEntryDialog: false,
-        openUserDontHaveEnoughQoinsDialog: false
+        openUserDontHaveEnoughQoinsDialog: false,
+        streamTitle: '',
+        twitchURLCopied: false,
+        qaplaLevels: []
     };
+
+    userLanguage = getLocaleLanguage();
+
+    componentDidMount() {
+        this.getQaplaLevels();
+    }
+
+    getQaplaLevels = async () => {
+        const qaplaLevels = await getQaplaLevels();
+        this.setState({ qaplaLevels: qaplaLevels.val() });
+    }
 
     /**
      * Check if the user has sent a request for this event
@@ -52,6 +68,10 @@ class EventDetailsModal extends Component {
         }
     }
 
+    getStreamTite = () => {
+        return this.props.stream.title && this.props.stream.title[this.userLanguage] ? this.props.stream.title[this.userLanguage] : this.props.stream.titulo;
+    }
+
     /**
      * Send the user to the next component
      */
@@ -59,19 +79,27 @@ class EventDetailsModal extends Component {
         if (this.state.eventRegistrationStep === 0) {
             if (isUserLogged()) {
                 //Check if the user have linked their Twitch account
-                if (await userHaveTwitchId(this.props.uid)){
+                if (await userHaveTwitchId(this.props.uid)) {
                     this.registerTwitchUser();
                 } else {
-                   this.setState({ showLinkWitTwitchModal: true });
+                    this.setState({ showLinkWitTwitchModal: true });
                 }
             } else {
                 this.props.navigation.navigate('SignIn', { streamer: this.props.stream.streamerName });
                 this.closeModal();
             }
-        } else if (this.scrollView) {
-            this.scrollView.scrollTo({ y: 0, animated: false });
+        } else {
             this.setState({ eventRegistrationStep: 2 });
         }
+    }
+
+    copyStreamerTwitchURL = () => {
+        const { streamerChannelLink } = this.props.stream;
+        copyDataToClipboard(streamerChannelLink);
+        this.setState({ twitchURLCopied: true });
+        setTimeout(() => {
+            this.setState({ twitchURLCopied: false });
+        }, 3000);
     }
 
     /**
@@ -118,11 +146,7 @@ class EventDetailsModal extends Component {
              */
             await sendRequestToJoinEvent(this.props.stream.id, this.props.uid, this.props.stream.eventEntry, { "Twitch Username": twitchUserName });
         }
-
-        if (this.scrollView) {
-            this.scrollView.scrollTo({ y: 0, animated: false });
-            this.setState({ eventRegistrationStep: 2 });
-        }
+        this.setState({ eventRegistrationStep: 2 });
     }
 
     /**
@@ -180,10 +204,7 @@ class EventDetailsModal extends Component {
     }
 
     skipTwitchLogin = () => {
-        if (this.scrollView) {
-            this.scrollView.scrollTo({ y: 0, animated: false });
-            this.setState({ eventRegistrationStep: 1 });
-        }
+        this.setState({ eventRegistrationStep: 1 });
     }
 
     render() {
@@ -198,17 +219,37 @@ class EventDetailsModal extends Component {
                     visible={this.props.open}
                     onRequestClose={this.closeModal}>
                     <View style={styles.mainContainer}>
-                        <ScrollView
-                            ref={(scrollView) => this.scrollView = scrollView}
-                            contentContainerStyle={styles.eventInfoContainer}>
-                            <QaplaIcon
-                                touchableStyle={styles.closeIcon}
-                                onPress={this.closeModal}>
-                                <Images.svg.closeIcon />
-                            </QaplaIcon>
-                            <View style={[styles.container, { marginBottom: (!this.state.existsRequest && !this.state.isParticipant && this.state.eventRegistrationStep === 0) ? heightPercentageToPx(7.5) : 0 }]}>
+                        <BlurView
+                            blurAmount={100}
+                            blurType={'dark'}
+                            reducedTransparencyFallbackColor={'black'}
+                            style={styles.blurView}
+                        />
+                        <View
+                            contentContainerStyle={styles.eventInfoContainer}
+                            style={styles.modalMainContainer}
+                        >
+                            <View style={styles.topContainer}>
+                                <TouchableOpacity
+                                    style={styles.closeIcon}
+                                    onPress={this.closeModal}>
+                                    <View style={{
+                                    }}>
+                                        <Images.svg.closeIcon />
+                                    </View>
+                                </TouchableOpacity>
+                                {this.state.eventRegistrationStep !== 2 &&
+                                    <Text style={[styles.whiteText, styles.streamTitle]}>
+                                        {this.getStreamTite()}
+                                    </Text>
+                                }
+                            </View>
+                            <View style={[styles.container,
+                                // { marginBottom: (!this.state.existsRequest && !this.state.isParticipant && this.state.eventRegistrationStep === 0) ? heightPercentageToPx(7.5) : 0 }
+                            ]}>
                                 {this.state.eventRegistrationStep === 0 &&
                                     <EventDetails
+                                        qaplaLevels={this.state.qaplaLevels}
                                         event={this.props.stream}
                                         eventId={this.props.stream.id}
                                         goToNextStep={this.goToNextRegistrationStep}
@@ -229,27 +270,27 @@ class EventDetailsModal extends Component {
                                         event={this.props.stream}
                                         finishProcess={this.closeModal} />
                                 }
+                                {(!this.state.existsRequest && !this.state.isParticipant && this.state.eventRegistrationStep === 0) ?
+                                    <Animated.View
+                                        style={[styles.participateButtonContainer, {
+                                            transform:
+                                                [{ translateY: this.state.registerButtonAnimation.interpolate({ inputRange: [0, 12], outputRange: [heightPercentageToPx(15), 0] }) }]
+                                        }]}
+                                    >
+                                        <TouchableHighlight
+                                            style={styles.flex1}
+                                            underlayColor='#2aa897'
+                                            onPress={this.goToNextRegistrationStep}>
+                                            <QaplaText style={styles.participateButtonText}>
+                                                {translate('eventDetailsModal.participate')}
+                                            </QaplaText>
+                                        </TouchableHighlight>
+                                    </Animated.View>
+                                    :
+                                    <></>
+                                }
                             </View>
-                        </ScrollView>
-                        {(!this.state.existsRequest && !this.state.isParticipant && this.state.eventRegistrationStep===0) ?
-                        <>
-                            <Animated.View
-                                style={[styles.participateButtonContainer, { transform:
-                                    [{translateY: this.state.registerButtonAnimation.interpolate({inputRange:[0,12], outputRange: [heightPercentageToPx(15), 0]})}] } ]}
-                            >
-                                <TouchableHighlight
-                                    style={{flex:1}}
-                                    underlayColor='#2aa897'
-                                    onPress={this.goToNextRegistrationStep}>
-                                    <QaplaText style={styles.participateButtonText}>
-                                        {translate('eventDetailsModal.participate')}
-                                    </QaplaText>
-                                </TouchableHighlight>
-                            </Animated.View>
-                        </>
-                        :
-                            <></>
-                        }
+                        </View>
                     </View>
                     <LinkTwitchAccountModal
                         open={this.state.showLinkWitTwitchModal}

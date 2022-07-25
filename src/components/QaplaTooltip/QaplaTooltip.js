@@ -34,7 +34,7 @@ class QaplaTooltip extends Component {
                             </TouchableOpacity>
                         </LinearGradient>
                     }>
-                    <images.svg.infoIcon />
+                    <images.svg.infoIcon style={this.props.iconStyle} />
                 </Tooltip>
             </TouchableOpacity>
         );

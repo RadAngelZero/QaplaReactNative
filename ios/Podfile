@@ -1,3 +1,4 @@
+use_frameworks! :linkage => :static
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
@@ -55,6 +56,8 @@ target 'QaplaReactNative' do
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios' 
 
   pod 'react-native-camera', path: '../node_modules/react-native-camera'
+
+  pod 'RNIap', :path => '../node_modules/react-native-iap', :modular_headers => true
 
   target 'QaplaReactNativeTests' do
     inherit! :search_paths

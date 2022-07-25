@@ -9,7 +9,7 @@ import { getLocaleLanguage } from '../../utilities/i18';
 import QaplaText from '../QaplaText/QaplaText';
 import { trackOnSegment } from '../../services/statistics';
 import Images from './../../../assets/images';
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { DEFAULT_404_TWITCH_PREVIEW_URL } from '../../utilities/Constants';
 
 const StreamCardContainer = ({ children, onPress }) => (
     <TouchableWithoutFeedback onPress={onPress}
@@ -172,7 +172,7 @@ class StreamLiveCard extends React.PureComponent {
          * 404 Twitch image for default (if the user does not have thumbnailUrl for any reason this prevent
          * the app from crashing)
          */
-        let thumbnail = 'https://static-cdn.jtvnw.net/ttv-static/404_preview-480x270.jpg';
+        let thumbnail = DEFAULT_404_TWITCH_PREVIEW_URL;
 
         if (thumbnailUrl) {
             thumbnail = thumbnailUrl.replace('{width}', '480').replace('{height}', '270');

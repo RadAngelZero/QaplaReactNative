@@ -145,9 +145,7 @@
         },
         "buyQaploinsModal": {
             "body": ""
-        }
-    },
-    "newUserProfileScreen": {
+        },
         "linkAccount": "Link account",
         "level": "Level",
         "lastSeason": "Last season level",
@@ -155,7 +153,11 @@
         "bitsTooltip": "Use your Qoins to support your favorite streamers. You need 50 Qoins for a donation",
         "next": "Next",
         "done": "Done",
-        "loots": "Loots"
+        "loots": "Loots",
+        "interactions": {
+            "interact" : "Interact",
+            "liveToYourStreamer": "on-screen to your streamer"
+        }
     },
     "notificationsScreen": {
         "notificationsHeader": "Notifications",
@@ -346,7 +348,8 @@
         "unfollow": "Unfollow",
         "upcomingStreams": "Upcoming streams",
         "myCommunity": "My community",
-        "creatorCodes": "Creator Codes"
+        "creatorCodes": "Creator Codes",
+        "sendInteraction": "Send live interaction"
     },
     "writeCheerMessageScreen": {
         "sendPersonalizedMessage": "Do you want to say something special?\n💬",
@@ -461,7 +464,20 @@
         "alreadyAccepted": "Your registration is complete, make sure you are ready when the event starts!",
         "succedRequest": "Your request has been sent :D Wait for",
         "nextStepsFeedback": "to accept your registration. We´ll send you a notification when it happens ;)",
-        "finish": "Finish"
+        "finish": "Finish",
+        "details": {
+            "know": "Meet",
+            "following": "Following",
+            "farm": "You mine"
+        },
+        "success": {
+            "joinedStream": "You've joined the stream!",
+            "remindP1": "We'll remind you when the",
+            "remindP2": "'s stream starts",
+            "discover": "Discover more streams"
+        },
+        "shareWithYourFriends": "Invite your friends to the stream",
+        "linkCopied": "Link copied"
     },
     "updateApp": {
         "header": "There is a new version of Qapla, please update to the latest version.",
@@ -605,5 +621,100 @@
         "backToProfile": "Go back to my profile",
         "youWillReceive": "You will receive 200 Qoins in your next 3 Qapla streams 🌱",
         "update": "Update"
+    },
+    "interactions": {
+        "feed": {
+            "favs": "Your favs",
+            "recents": "Recents",
+            "modal": {
+                "sendA": "Send a",
+                "message": "Message",
+                "liveToStreamer": "on-screen to your streamer",
+                "searchByName": "Search streamer by name"
+            }
+        },
+        "personalize": {
+            "personalizeYourInteraction": "Customize your interaction",
+            "onlySend": "Only send"
+        },
+        "addVisual": {
+            "addVisual": "Add a GIF, Sticker or Meme to your interaction"
+        },
+        "visual": {
+            "searchOn": "Search",
+            "tabs": {
+                "trends": "Trending"
+            }
+        },
+        "visualConfirmation": {
+            "use": "Use",
+            "chooseAnother": "Choose a different",
+            "mediaTypes": {
+                "gifs": "Gif",
+                "stickers": "Sticker",
+                "memes": "Meme",
+                "tts": "Text-to-Speech"
+            }
+        },
+        "addTTS": {
+            "addTTSInYourInteraction": "Add Text-to-Speech to your interaction",
+            "addAMessageP1": "🗣 Give voice to your message to",
+            "addAMessageP2": "to your interaction for",
+            "add": "Add Text-to-Speech",
+            "onlySendMy": "Only send my",
+            "mediaTypes": {
+                "gifs": "Gif",
+                "stickers": "Sticker",
+                "memes": "Meme"
+            }
+        },
+        "TTS": {
+            "writeYourMessage": "Type your message",
+            "whatYouWantToSay": "🗣 What do you want to say?",
+            "TTS": "Text-to-Speech"
+        },
+        "checkout": {
+            "my": "My",
+            "extraTip": "Extra Tip",
+            "supportP1": "Support",
+            "supportP2": "sending Qoins as cheers 💚",
+            "concepts": {
+                "gifs": "Gif",
+                "stickers": "Sticker",
+                "memes": "Meme",
+                "tts": "Text-to-Speech"
+            },
+            "discardInteraction": "Discard interaction",
+            "areYouSure": "Are you sure you want to discard your interaction?",
+            "yes": "Yes",
+            "no": "No",
+            "modal": {
+                "sendInteraction": "Send Live Interaction"
+            }
+        },
+        "final": {
+            "interactionSentP1": "Live interaction sent!\n\nGo to",
+            "interactionSentP2": "’s channel to watch your live alert",
+            "interactionOnQueueP1": "Interaction queued\n\n",
+            "interactionOnQueueP2": "is offline. We’ll send your alert in their next live stream",
+            "cheersSentP1": "Cheers sent\n\n",
+            "cheersSentP2": "says Thank You for your support 🌱",
+            "modal": {
+                "weveSentYourQoinsP1": "We’ve sent your\n",
+                "weveSentYourQoinsP2": "%{qoins} Qoins to %{streamerName}! ⚡️",
+                "backToStart": "Go to the main screen"
+            }
+        }
+    },
+    "buyQoins": {
+        "sendInteractiunsUsingQoins": "Send live interactions using your Qoins",
+        "save": "25% more Qoins!",
+        "pharases": {
+            "p1": "I’ll take ten 💸💸💸"
+        },
+        "pendingPaymentAlert": {
+            "title": "Your bank is pending to process your payment",
+            "message": "We will pay your Qoins once the payment has been made. We will notify you as soon as it is done"
+        }
     }
 }

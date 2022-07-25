@@ -77,3 +77,17 @@ async function callCloudFunction(ctx) {
 		}
 	});
 }
+
+/**
+ * Verify buys and assigns products
+ * @param {string} uid User identifier
+ */
+ export async function handleInAppPurchases(receipt, platform) {
+	return await callCloudFunction({
+		cfName: 'handleInAppPurchases',
+		params: {
+			receipt,
+			platform
+		}
+	});
+}

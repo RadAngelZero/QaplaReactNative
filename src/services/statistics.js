@@ -1,5 +1,3 @@
-// diego          - 02-09-2019 - us91 - File creation
-
 import analytics from '@segment/analytics-react-native';
 
 import { SEGMENT_KEY } from '../utilities/Constants';

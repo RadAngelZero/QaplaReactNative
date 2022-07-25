@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import Colors from '../../utilities/Colors';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
@@ -226,5 +227,23 @@ export default styles = StyleSheet.create({
         backgroundColor: 'rgba(64, 64, 255, 0.3)',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    interactionButtonContainer: {
+        position:'absolute',
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        bottom: 0,
+        width: '100%',
+        backgroundColor: Colors.greenQapla,
+    },
+    interactionButtonText: {
+        flex: 1,
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: Colors.backgroundDarkModal,
+        textAlign: 'center',
+        textAlignVertical:'center',
+        marginTop: 34,
+        marginBottom: 34
     }
 });

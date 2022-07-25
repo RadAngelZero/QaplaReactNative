@@ -1,19 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style';
 import Images from '../../../assets/images';
-import QaplaChip from '../QaplaChip/QaplaChip';
 import { getStreamerProfilePhotoUrl } from '../../services/storage';
 
 const FounderBadge = Images.svg.founderBadge;
 
-class StreamerCardSmall extends React.PureComponent {
+class StreamerCardSmall extends Component {
     state = {
-        viewMore: false,
-        bio: this.props.bio,
-        imageUrl: this.props.photoUrl
+        imageUrl: this.props.photoUrl,
     };
 
     getFallbackImage = async () => {

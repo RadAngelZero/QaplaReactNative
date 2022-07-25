@@ -7,6 +7,14 @@ export const SEGMENT_KEY = 'fCfir8yrQiZRVrpuwLHYRePN68SqW8AS';
 // SendBird key
 export const SENDBIRD_KEY = '7E54A9F8-DCE3-420E-8DC8-D3E8B081A2B0';
 
+// Giphy API hey
+export const GIPHY_KEY = 'VDvH7301JvDdgFGQY41bv0Sr8zl5v4In';
+
+// Giphy media types
+export const GIPHY_GIFS = 'gifs';
+export const GIPHY_STICKERS = 'stickers';
+export const GIPHY_CLIPS = 'clips';
+
 // Twitch Client Id
 export const TWITCH_CLIENT_ID = '3cwpzmazn716nmz6g1087kh4ciu4sp';
 export const TWITCH_REDIRECT_URI = 'https://dashboard.qapla.gg/';
@@ -40,6 +48,9 @@ export const SET_PREVIOUS_SCREEN_ID = 'SET_PREVIOUS_SCREEN_ID';
 
 // Profile Leader Board REDUX constants
 export const SET_USER_IMAGE = 'SET_USER_IMAGE';
+
+// Purchases reducer
+export const ON_PURCHASE_FINISHED = 'ON_PURCHASE_FINISHED';
 
 // Crear Reta Button in PublicMatchesFeedScreen.js
 export const HIGHLIGHT_1_CREATE_MATCH = 'HIGHLIGHT_1_CREATE_MATCH';
@@ -156,8 +167,14 @@ export const XQ = 'xq';
 export const QOINS = 'qoins';
 
 // Media types for cheers
-export const GIF = 'GIF';
-export const EMOTE = 'EMOTE';
-export const MEME = 'MEME';
+export const MEME = 'memes';
+export const TTS = 'tts';
 
-export const STREAMERS_BLACKLIST = ['141617732-catskullgamer', '683167758-catskullgg', '613408163-dhvsll', '180517858-QaplaGG', '448926957-qaplita', '140436068-RadAngelZero', '528477359-mariyolo1bot'];
+export const STREAMERS_BLACKLIST = ['141617732-catskullgamer', '683167758-catskullgg', '613408163-d_h_v_s', '698301557-QaplaGaming', '448926957-qaplita', '528477359-mariyolo1bot', '448926957-qaplita'];
+
+// Default image for streams where we can not load thumbnail URL
+export const DEFAULT_404_TWITCH_PREVIEW_URL = 'https://static-cdn.jtvnw.net/ttv-static/404_preview-480x270.jpg';
+
+export const MAX_CHAR_FOR_TTS = 100;
+
+export const MEDIA_TO_LOAD_FROM_GIPHY = 10;

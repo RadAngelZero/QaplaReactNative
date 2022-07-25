@@ -31,6 +31,7 @@ import LevelInformationModal from '../../components/LevelInformationModal/LevelI
 import { getLevels } from '../../actions/QaplaLevelActions';
 import JoinQlanModal from '../../components/JoinQlanModal/JoinQlanModal';
 import LinearGradient from 'react-native-linear-gradient';
+import InteractionsUserProfile from '../../components/InteractionsUserProfile/InteractionsUserProfile';
 
 const BitsIcon = images.svg.bitsIcon;
 
@@ -49,7 +50,7 @@ const SeasonLevelIcons = {
     ]
 }
 
-export class NewUserProfileScreen extends Component {
+export class UserProfileScreen extends Component {
     state = {
         qoinsToDonate: 0,
         donationCost: null,
@@ -288,6 +289,10 @@ export class NewUserProfileScreen extends Component {
         });
     }
 
+    onInteract = () => {
+        this.props.navigation.navigate('InteractionsStack');
+    }
+
     render() {
         const userLevel = this.props.qaplaLevels ? this.getUserSeasonLevel() : 0;
         const userQoins = isNaN(this.props.userQoins - this.state.qoinsToDonate) ? 0 : this.props.userQoins - this.state.qoinsToDonate;
@@ -336,51 +341,13 @@ export class NewUserProfileScreen extends Component {
                                                 style={styles.twitchIconButton} />
                                         </TouchableOpacity>
                                         <Text style={styles.linkAccountText}>
-                                            {translate('newUserProfileScreen.linkAccount')}
+                                            {translate('userProfileScreen.linkAccount')}
                                         </Text>
                                     </View>
                                 }
                             </View>
                             <View style={styles.bitsCardContainer}>
-                                <View style={styles.bitsModuleView}>
-                                    <View>
-                                        <View style={styles.infoImageContainer}>
-                                            <QaplaTooltip
-                                                style={styles.infoImage}
-                                                toggleTooltip={this.toggleInfoTooltip}
-                                                open={this.state.openInfoTooltip}
-                                                content={translate('newUserProfileScreen.bitsTooltip')}
-                                                buttonText={this.state.openedTooltips >= 2 ? translate('newUserProfileScreen.done') : translate('newUserProfileScreen.next')}
-                                                buttonAction={this.tooltipAction} />
-                                        </View>
-                                        <BitsIcon style={styles.bits3dIconImage} />
-                                    </View>
-                                    <View style={styles.donationValueContainer}>
-                                        <View style={styles.bitsValueContainer}>
-                                            <QaplaText style={styles.bitsNumber}>
-                                                {this.state.qoinsToDonate}
-                                            </QaplaText>
-                                            <QaplaText style={styles.bitsTitle}>
-                                                {translate('newUserProfileScreen.qoins')}
-                                            </QaplaText>
-                                        </View>
-                                        <View style={styles.handleDonationContainer}>
-                                            <TouchableOpacity style={styles.updateDonationIcon} onPress={this.addECoinToDonation}>
-                                                <images.svg.plusBubble />
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={styles.updateDonationIcon} onPress={this.substractECoinToDonation}>
-                                                <images.svg.minusBubble />
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                    <TouchableOpacity
-                                        style={styles.buttonView}
-                                        onPress={this.exchangeQaploins}>
-                                        <QaplaText style={styles.supportText}>
-                                            Support
-                                        </QaplaText>
-                                    </TouchableOpacity>
-                                </View>
+                                <InteractionsUserProfile onPress={this.onInteract} />
                                 <View style={styles.levelModalView}>
                                     <AnimatedCircleIndicator
                                         size={120}
@@ -399,13 +366,13 @@ export class NewUserProfileScreen extends Component {
                                         descriptionComponent={() => (
                                             <View style={styles.expTextContainer}>
                                                 <QaplaText style={styles.expText}>
-                                                    {`${translate('newUserProfileScreen.level')} ${userLevel}`}
+                                                    {`${translate('userProfileScreen.level')} ${userLevel}`}
                                                 </QaplaText>
                                             </View>
                                         )} />
                                     <TouchableOpacity style={styles.lastSeasonLevelContainer} onPress={() => this.setState({ openLevelInformationModal: true })}>
                                         <QaplaText style={styles.lastSeasonCopie}>
-                                            {translate('newUserProfileScreen.lastSeason')}
+                                            {translate('userProfileScreen.lastSeason')}
                                         </QaplaText>
                                         <View style={styles.seasonLevelContainer}>
                                             {this.props.lastSeasonLevel ?
@@ -467,12 +434,12 @@ export class NewUserProfileScreen extends Component {
                                             </TouchableOpacity>
                                         </View>
                                     </>
-                                    )
+                                )
                             }
                         </View>
                         <View style={[styles.donationNavigatorContainer, { height: this.state.collapsableToolBarMaxHeight }]}>
                             <QaplaText style={styles.storeTitle}>
-                                {translate('newUserProfileScreen.loots')}
+                                {translate('userProfileScreen.loots')}
                             </QaplaText>
                             <RewardsStore />
                         </View>
@@ -550,4 +517,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewUserProfileScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfileScreen);

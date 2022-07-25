@@ -52,7 +52,7 @@ class InteractionsAddTTS extends Component {
         if (this.state.dataFetched) {
             return (
                 <SafeAreaView style={styles.container}>
-                    <View style={[styles.innerConatiner, styles.addTTSContainer, styles.addTTSSpace]}>
+                    <View style={[styles.innerConatiner, styles.addTTSContainer]}>
                         <Text style={[styles.whiteText, styles.screenHeaderText, styles.screenHeaderTextAddTTS]}>
                             {translate('interactions.addTTS.addTTSInYourInteraction')}
                         </Text>

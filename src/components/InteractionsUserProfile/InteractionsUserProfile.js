@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { translate } from '../../utilities/i18';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import { userProfileGIFsRef, getUserProfileGIFs } from '../../services/database';
+import { getUserProfileGIFs } from '../../services/database';
 import styles from './style';
 import images from '../../../assets/images';
 

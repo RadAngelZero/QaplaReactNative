@@ -5,7 +5,8 @@ import {
     ImageBackground,
     Image,
     TouchableOpacity,
-    Text
+    Text,
+    Alert
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -17,6 +18,7 @@ import { copyDataToClipboard } from '../../utilities/utils';
 import Images from '../../../assets/images';
 import QaplaText from '../QaplaText/QaplaText';
 import { trackOnSegment } from '../../services/statistics';
+import { getStreamerPublicProfile } from '../../services/database';
 
 function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
     const validColorRegExp = new RegExp('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
@@ -52,24 +54,46 @@ function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
 }
 
 class EventDetails extends Component {
-
     state = {
-        isFollower: false,
         twitchURLCopied: false,
         xq: 150,
         qoins: 20,
     }
 
-    componentDidMount() {
-        console.log(this.props.userSubscriptions[this.props.event.idStreamer]);
-    }
+    goToStreamerProfile = async () => {
+        const profile = await getStreamerPublicProfile(this.props.event.idStreamer);
+        if (profile.exists()) {
+            this.props.navigation.navigate('StreamerProfile', { streamerData: { ...profile.val(), streamerId: this.props.event.idStreamer } });
+            trackOnSegment('User open streamr profile from card', {
+                StreamerId: this.props.event.idStreamer
+            });
 
-    goToStreamerChannel = () => {
-        const { streamerChannelLink } = this.props.event;
-
-        if (streamerChannelLink) {
-            Linking.openURL(streamerChannelLink);
-            trackOnSegment('User follow streamer', { EventStreamer: this.props.event.streamerName });
+            this.props.closeModal();
+        } else {
+            const streamerName = this.props.event.streamerName;
+            Alert.alert(
+                translate('TimelineStreams.streamerHasNoProfileTitle'),
+                translate('TimelineStreams.streamerHasNoProfileDescription', { streamerName }),
+                [
+                    {
+                        text: translate('TimelineStreams.cancel'),
+                        onPress: () => trackOnSegment('User did not want to go to streamer´s Twitch', {
+                            StreamerId: this.props.event.idStreamer,
+                            StreamerName: streamerName
+                        })
+                    },
+                    {
+                        text: translate('TimelineStreams.goToTwitch'),
+                        onPress: () => {
+                            trackOnSegment('User goes to streamer´s Twitch', {
+                                StreamerId: this.props.event.idStreamer,
+                                StreamerName: streamerName
+                            });
+                            Linking.openURL(this.props.event.streamerChannelLink);
+                        }
+                    }
+                ]
+            );
         }
     }
 
@@ -194,14 +218,14 @@ class EventDetails extends Component {
                                 {streamerName}
                             </Text>
                         </View>
-                        {this.state.isFollower ?
-                            <TouchableOpacity style={styles.eventStreamerFollowingButton} onPress={this.goToStreamerChannel}>
+                        {this.props.userSubscriptions[this.props.event.idStreamer] ?
+                            <TouchableOpacity style={styles.eventStreamerFollowingButton} onPress={this.goToStreamerProfile}>
                                 <Text style={[styles.eventStreamerFollowingButtonText, styles.eventStreamerKnowButtonText]}>
                                     {`${translate('eventDetailsModal.details.following')}`}
                                 </Text>
                             </TouchableOpacity>
                             :
-                            <TouchableOpacity style={styles.eventStreamerKnowButton} onPress={this.goToStreamerChannel}>
+                            <TouchableOpacity style={styles.eventStreamerKnowButton} onPress={this.goToStreamerProfile}>
                                 <Text style={[styles.whiteText, styles.eventStreamerKnowButtonText]}>
                                     {`${translate('eventDetailsModal.details.know')}`}
                                 </Text>

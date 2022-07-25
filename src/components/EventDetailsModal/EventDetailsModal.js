@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
+import { BlurView } from '@react-native-community/blur';
 
 import styles from './style';
-import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import Images from './../../../assets/images';
 import { userHasRequestToJoinEvent } from '../../services/database';
@@ -24,10 +24,7 @@ import { userHaveTwitchId, joinEventWithCustomData, getTwitchUserName, substract
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
 import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import { BlurView } from '@react-native-community/blur';
-import LinearGradient from 'react-native-linear-gradient';
-import MaskedView from '@react-native-community/masked-view';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { copyDataToClipboard } from '../../utilities/utils';
 
 class EventDetailsModal extends Component {
@@ -61,9 +58,8 @@ class EventDetailsModal extends Component {
         }
     }
 
-    getStreamTite = async () => {
-        let streamTitle = this.props.stream.title && this.props.stream.title[this.userLanguage] ? this.props.stream.title[this.userLanguage] : this.props.stream.titulo;
-        this.setState({ streamTitle });
+    getStreamTite = () => {
+        return this.props.stream.title && this.props.stream.title[this.userLanguage] ? this.props.stream.title[this.userLanguage] : this.props.stream.titulo;
     }
 
     /**
@@ -119,7 +115,6 @@ class EventDetailsModal extends Component {
     onOpenModal = () => {
         this.checkIfUserIsParticipant();
         this.checkUserRequest();
-        this.getStreamTite();
         Animated.sequence([
             Animated.delay(300),
             Animated.timing(this.state.registerButtonAnimation, {
@@ -235,7 +230,7 @@ class EventDetailsModal extends Component {
                                 </TouchableOpacity>
                                 {this.state.eventRegistrationStep !== 2 &&
                                     <Text style={[styles.whiteText, styles.streamTitle]}>
-                                        {this.state.streamTitle}
+                                        {this.getStreamTite()}
                                     </Text>
                                 }
                             </View>

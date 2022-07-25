@@ -9,14 +9,9 @@ import {
 import styles from './style';
 import Images from './../../../assets/images';
 import { translate } from '../../utilities/i18';
-import QaplaText from '../QaplaText/QaplaText';
 import LinearGradient from 'react-native-linear-gradient';
-import MaskedView from '@react-native-community/masked-view';
-import { userProfileGIFsRef, getUserProfileGIFs } from '../../services/database';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { getUserProfileGIFs } from '../../services/database';
 import { copyDataToClipboard } from '../../utilities/utils';
-
-
 
 class EventRegistrationSuccessful extends Component {
 
@@ -37,8 +32,8 @@ class EventRegistrationSuccessful extends Component {
     }
 
     copyStreamerTwitchURL = () => {
-        const { streamerChannelLink } = this.props.event;
-        copyDataToClipboard(streamerChannelLink);
+        const { streamLink } = this.props.event;
+        copyDataToClipboard(streamLink);
         this.setState({ twitchURLCopied: true });
         setTimeout(() => {
             this.setState({ twitchURLCopied: false });
@@ -46,8 +41,6 @@ class EventRegistrationSuccessful extends Component {
     }
 
     render() {
-        const { streamerName, acceptAllUsers } = this.props.event;
-
         return (
             <View>
                 <LinearGradient

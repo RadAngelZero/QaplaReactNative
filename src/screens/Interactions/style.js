@@ -276,9 +276,6 @@ export default styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between'
     },
-    addTTSSpace: {
-        justifyContent: 'space-between',
-    },
     chatBubbleContainer: {
         backgroundColor: '#141539',
         paddingHorizontal: 24 * getScreenSizeMultiplier(),

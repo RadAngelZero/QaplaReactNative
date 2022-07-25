@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Alert, Image, Modal, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Alert, Image, ScrollView, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { translate } from '../../utilities/i18';
 import styles from './style';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
 import { sendCheers } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../services/auth';
-import { BlurView } from '@react-native-community/blur';
 
 class InteractionsCheckout extends Component {
     state = {
@@ -17,8 +16,7 @@ class InteractionsCheckout extends Component {
         tipIncrement: 50,
         interactionCost: 0,
         minimum: 0,
-        openLinkWitTwitchModal: false,
-        confirmCancelOpen: false,
+        openLinkWitTwitchModal: false
     };
 
     componentDidMount() {
@@ -109,7 +107,20 @@ class InteractionsCheckout extends Component {
     }
 
     onCancel = () => {
-        this.setState({ confirmCancelOpen: true });
+        Alert.alert(
+            'Discard interaction',
+            'Are you sure you want to discard your interaction?',
+            [
+                {
+                    text: 'No',
+                    style: 'cancel'
+                },
+                {
+                    text: 'Yes',
+                    onPress: this.props.navigation.dismiss
+                }
+            ]
+        )
     }
 
     render() {
@@ -194,66 +205,6 @@ class InteractionsCheckout extends Component {
                         </>
                     }
                 </ScrollView>
-                <Modal transparent
-                    visible={this.state.confirmCancelOpen}
-                >
-                    <TouchableWithoutFeedback
-                        onPress={() => this.setState({ confirmCancelOpen: false })}
-                    >
-                        <View style={{
-                            position: 'absolute',
-                            width: '100%',
-                            height: '100%',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}>
-                            <BlurView style={{
-                                position: 'absolute',
-                                width: '100%',
-                                height: '100%',
-                            }}
-                                blurAmount={20}
-                                blurType="dark"
-                                reducedTransparencyFallbackColor="white"
-                            />
-                            <TouchableWithoutFeedback>
-                                <View style={{
-                                    backgroundColor: '#141539',
-                                    padding: widthPercentageToPx(6.4),
-                                    borderRadius: widthPercentageToPx(8),
-                                }}>
-                                    <Text style={{
-                                        color: '#fff',
-                                        fontSize: 24,
-                                    }}>
-                                        ¿Estas seguro?
-                                    </Text>
-                                    <View style={{
-                                        flexDirection: 'row',
-                                        marginTop: heightPercentageToPx(2),
-                                        justifyContent: 'flex-end',
-                                    }}>
-                                        <TouchableOpacity
-                                            onPress={() => this.setState({ confirmCancelOpen: false })}
-                                        >
-                                            <Text style={{
-                                                color: '#fff',
-                                                fontSize: 20,
-                                            }}>NO</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('MainBottomNavigator')}>
-                                            <Text style={{
-                                                color: '#fff',
-                                                fontSize: 20,
-                                                marginLeft: widthPercentageToPx(4),
-                                            }}>SI</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </TouchableWithoutFeedback>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </Modal>
                 <SendInteractionModal
                     baseCost={this.state.interactionCost}
                     extraTip={this.state.extraTip}

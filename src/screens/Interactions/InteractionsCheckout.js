@@ -53,7 +53,6 @@ class InteractionsCheckout extends Component {
         if (isUserLogged()) {
             if (this.props.twitchId && this.props.twitchUserName) {
                 const totalCost = this.state.interactionCost + this.state.extraTip;
-                console.log(totalCost, this.props.qoins);
                 if (totalCost <= this.props.qoins) {
                     const streamerId = this.props.navigation.getParam('streamerId', '');
                     const streamerName = this.props.navigation.getParam('displayName', '');
@@ -195,7 +194,7 @@ class InteractionsCheckout extends Component {
                         </>
                     }
                 </ScrollView>
-                <Modal
+                <Modal transparent
                     visible={this.state.confirmCancelOpen}
                 >
                     <TouchableWithoutFeedback

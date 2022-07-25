@@ -141,6 +141,7 @@ export const styles = StyleSheet.create({
         letterSpacing: 1,
     },
     heartHands: {
+        zIndex: 9999,
         position: 'absolute',
         width: widthPercentageToPx(49.86),
         height: widthPercentageToPx(49.86),

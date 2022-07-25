@@ -101,6 +101,14 @@ import InteractionsClip from './icons/Interactions/Clip.svg';
 import InteractionsTtGiphy from './icons/Interactions/TtGiphy.svg';
 import InteractionsTTS from './icons/Interactions/MessageBubble.svg';
 import InteractionsMemes from './icons/Interactions/Memes.svg';
+import ClockWhite from './icons/ClockWhite.svg';
+import CalendarWhite from './icons/CalendarWhite.svg';
+import ShareArrow from './icons/ShareArrow.svg';
+import TickOk from './icons/TickOk.svg';
+import ShareArrowTransparent from './icons/ShareButtonTransparent.svg';
+import TickSquareTransparent from './icons/TickSquareTransparent.svg';
+
+
 
 // Images
 const images = {
@@ -348,11 +356,17 @@ const images = {
 		interactionsTtGiphy: InteractionsTtGiphy,
 		interactionsTTS: InteractionsTTS,
 		interactionsMemes: InteractionsMemes,
+		clockWhite: ClockWhite,
+		calendarWhite: CalendarWhite,
+		shareArrow: ShareArrow,
+		tickOk: TickOk,
+		shareArrowTransparent: ShareArrowTransparent,
+		tickOkTransparent: TickSquareTransparent
 	},
 	gif: {
 		loadingStreamers: {
 			img: require('./images/LoadingStreamers.gif'),
-			uri: '@assets/images/LoadingStreamers.gif'
+			uri: '@assets/images/LoadingStreamers.gif',
 		},
 		markRebillet: {
 			img: require('./gifs/marc-rebillet-tiwtch.gif'),

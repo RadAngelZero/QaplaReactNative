@@ -4,7 +4,8 @@ import {
     View,
     ImageBackground,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    Text
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -16,7 +17,6 @@ import { copyDataToClipboard } from '../../utilities/utils';
 import Images from '../../../assets/images';
 import QaplaText from '../QaplaText/QaplaText';
 import { trackOnSegment } from '../../services/statistics';
-
 
 function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
     const validColorRegExp = new RegExp('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
@@ -36,7 +36,7 @@ function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
             <LinearGradient
                 useAngle={true}
                 angle={150}
-                angleCenter={{ x: .5, y: .5}}
+                angleCenter={{ x: .5, y: .5 }}
                 style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
                 colors={validColors ? [gradientColors.primary, gradientColors.secondary] : ['#AA16EE', '#07EAfA']}>
                 {children}
@@ -53,6 +53,17 @@ function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
 
 class EventDetails extends Component {
 
+    state = {
+        isFollower: false,
+        twitchURLCopied: false,
+        xq: 150,
+        qoins: 20,
+    }
+
+    componentDidMount() {
+        console.log(this.props.userSubscriptions[this.props.event.idStreamer]);
+    }
+
     goToStreamerChannel = () => {
         const { streamerChannelLink } = this.props.event;
 
@@ -60,6 +71,15 @@ class EventDetails extends Component {
             Linking.openURL(streamerChannelLink);
             trackOnSegment('User follow streamer', { EventStreamer: this.props.event.streamerName });
         }
+    }
+
+    copyStreamerTwitchURL = () => {
+        const { streamLink } = this.props.event;
+        copyDataToClipboard(streamLink);
+        this.setState({ twitchURLCopied: true });
+        setTimeout(() => {
+            this.setState({ twitchURLCopied: false });
+        }, 3000);
     }
 
     /**
@@ -72,22 +92,12 @@ class EventDetails extends Component {
 
     render() {
         const {
-            title,
-            titulo,
-            description,
-            descriptions,
-            descriptionsTitle,
             backgroundImage,
-            appStringPrizes,
-            instructionsToParticipate,
-            streamingPlatformImage,
             streamerName,
-            streamerChannelLink,
             sponsorImage,
             streamerPhoto,
             streamerGameData,
             gradientColors,
-            eventChatUrl,
             timestamp
         } = this.props.event;
 
@@ -97,7 +107,7 @@ class EventDetails extends Component {
 
         const eventDate = new Date(timestamp);
 
-        const days = [ "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" ];
+        const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
         const eventDay = translate(`days.${days[eventDate.getDay()]}`);
 
         day = eventDate.getDate();
@@ -118,9 +128,20 @@ class EventDetails extends Component {
                         source={{ uri: backgroundImage }}
                         style={styles.backgroundImageContainer}
                         imageStyle={styles.backgroundImage}>
-                        <QaplaText style={styles.eventTitle}>
-                            {title && title[userLanguage] ? title[userLanguage] : titulo}
-                        </QaplaText>
+                        <View style={styles.eventDateContainer}>
+                            <View style={styles.eventSubDateContainer}>
+                                <Images.svg.calendarWhite />
+                                <Text style={[styles.whiteText, styles.eventDateText]}>
+                                    {eventDay.slice(0, 3)} {day}
+                                </Text>
+                            </View>
+                            <View style={[styles.eventSubDateContainer, styles.eventSubDateContainerSeparator]}>
+                                <Images.svg.clockWhite />
+                                <Text style={[styles.whiteText, styles.eventDateText]}>
+                                    {`${eventHour} ${hourSuffix}`}
+                                </Text>
+                            </View>
+                        </View>
                         <View>
                             <Image
                                 style={styles.eventSponsorImage}
@@ -129,39 +150,109 @@ class EventDetails extends Component {
                     </ImageBackground>
                 </BackgroundImageContainer>
 
-                {this.props.existsRequest &&
-                    <QaplaText style={styles.waitingAnswerFeedback}>
-                        {translate('eventDetailsModal.waitingApproval')}
-                    </QaplaText>
-                }
-
-                {this.props.isParticipant && streamerGameData &&
-                    <View style={[styles.eventCard, styles.streamerGameDataCard]}>
-                        <QaplaText style={styles.eventCardTitle}>
-                            {translate('eventDetailsModal.eventInformation')}
+                <View style={styles.eventDataContainer}>
+                    {
+                        this.props.existsRequest &&
+                        <QaplaText style={styles.waitingAnswerFeedback}>
+                            {translate('eventDetailsModal.waitingApproval')}
                         </QaplaText>
-                        <View style={styles.divider} />
-                        {Object.keys(streamerGameData).map((streamerInfoKey) => (
-                            <View style={styles.streamerGameInfoContainer}>
-                                <QaplaText style={styles.streamerGameInfoKey}>
-                                    {streamerInfoKey}
-                                </QaplaText>
-                                <View style={styles.streamerGameInfoValueContainer}>
-                                    <QaplaText style={styles.streamerGameInfoValue}>
-                                        {streamerGameData[streamerInfoKey]}
-                                    </QaplaText>
-                                    <TouchableOpacity
-                                        style={styles.copyIconContainer}
-                                        onPress={() => copyDataToClipboard(streamerGameData[streamerInfoKey])}>
-                                        <Images.svg.copyIcon />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        ))}
-                    </View>
-                }
+                    }
 
-                <View style={[styles.eventCard, styles.streamerCard]}>
+                    {
+                        this.props.isParticipant && streamerGameData &&
+                        <View style={[styles.eventCard, styles.streamerGameDataCard]}>
+                            <QaplaText style={styles.eventCardTitle}>
+                                {translate('eventDetailsModal.eventInformation')}
+                            </QaplaText>
+                            <View style={styles.divider} />
+                            {Object.keys(streamerGameData).map((streamerInfoKey) => (
+                                <View style={styles.streamerGameInfoContainer}>
+                                    <QaplaText style={styles.streamerGameInfoKey}>
+                                        {streamerInfoKey}
+                                    </QaplaText>
+                                    <View style={styles.streamerGameInfoValueContainer}>
+                                        <QaplaText style={styles.streamerGameInfoValue}>
+                                            {streamerGameData[streamerInfoKey]}
+                                        </QaplaText>
+                                        <TouchableOpacity
+                                            style={styles.copyIconContainer}
+                                            onPress={() => copyDataToClipboard(streamerGameData[streamerInfoKey])}>
+                                            <Images.svg.copyIcon />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            ))}
+                        </View>
+                    }
+
+                    <View style={styles.eventStreamerContainer}>
+                        <View style={styles.eventStreamerDataContainer}>
+                            <Image
+                                source={{ uri: streamerPhoto }}
+                                style={styles.streamerPhoto} />
+                            <Text style={[styles.whiteText, styles.eventStreamerName]}>
+                                {streamerName}
+                            </Text>
+                        </View>
+                        {this.state.isFollower ?
+                            <TouchableOpacity style={styles.eventStreamerFollowingButton} onPress={this.goToStreamerChannel}>
+                                <Text style={[styles.eventStreamerFollowingButtonText, styles.eventStreamerKnowButtonText]}>
+                                    {`${translate('eventDetailsModal.details.following')}`}
+                                </Text>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity style={styles.eventStreamerKnowButton} onPress={this.goToStreamerChannel}>
+                                <Text style={[styles.whiteText, styles.eventStreamerKnowButtonText]}>
+                                    {`${translate('eventDetailsModal.details.know')}`}
+                                </Text>
+                            </TouchableOpacity>
+                        }
+
+                    </View>
+                    <View style={styles.eventFarmDataContainer}>
+                        <Text style={[styles.whiteText, styles.eventFarmTitle]}>
+                            {`${translate('eventDetailsModal.details.farm')}:`}
+                        </Text>
+                        <View style={styles.eventFarmMainDataContainer}>
+                            <View style={styles.eventFarmContainer}>
+                                <Images.svg.xq />
+                                <Text style={[styles.whiteText, styles.eventFarmText]}>
+                                    {this.state.xq}
+                                </Text>
+                            </View>
+                            <View style={[styles.eventFarmContainer, styles.eventFarmContainerSeparator]}>
+                                <Images.svg.qoin />
+                                <Text style={[styles.whiteText, styles.eventFarmText]}>
+                                    {this.state.qoins}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                    <TouchableOpacity style={[styles.shareContainer, styles.detailsShareContainerMarginTop]}
+                        onPress={this.copyStreamerTwitchURL}
+                        disabled={this.state.twitchURLCopied}
+                    >
+                        {this.state.twitchURLCopied ?
+                            <Images.svg.tickOkTransparent />
+                            :
+                            <Images.svg.shareArrowTransparent />
+                        }
+                        <Text style={[styles.detailsShareText, this.state.twitchURLCopied ? { color: '#fff' } : {}]}>
+                            {this.state.twitchURLCopied ?
+                                <>
+                                    {`${translate('eventDetailsModal.linkCopied')}`}
+                                </>
+                                :
+                                <>
+                                    {`${translate('eventDetailsModal.shareWithYourFriends')}`}
+                                </>
+                            }
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
+
+                {/* <View style={[styles.eventCard, styles.streamerCard]}>
                     <QaplaText style={styles.eventCardTitle}>
                         {translate('eventDetailsModal.hostedBy')}
                     </QaplaText>
@@ -192,9 +283,9 @@ class EventDetails extends Component {
                             </TouchableOpacity>
                         }
                     </View>
-                </View>
+                </View> */}
 
-                <View style={[styles.eventCard, styles.dateCard]}>
+                {/* <View style={[styles.eventCard, styles.dateCard]}>
                     <QaplaText style={styles.eventCardTitle}>
                         {translate('eventDetailsModal.dateAndTime')}
                     </QaplaText>
@@ -212,9 +303,10 @@ class EventDetails extends Component {
                             </QaplaText>
                         </View>
                     </View>
-                </View>
+                </View> */}
 
-                {(this.props.existsRequest || this.props.isParticipant) &&
+                {/* {
+                    (this.props.existsRequest || this.props.isParticipant) &&
                     <View style={[styles.eventCard, styles.eventChatCard]}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <QaplaText style={styles.eventCardTitle}>
@@ -242,9 +334,9 @@ class EventDetails extends Component {
                             </View>
                         </View>
                     </View>
-                }
+                } */}
 
-                <View style={[styles.eventCard, styles.descriptionCard]}>
+                {/* <View style={[styles.eventCard, styles.descriptionCard]}>
                     <QaplaText style={styles.eventCardTitle}>
                         {translate('eventDetailsModal.description')}
                     </QaplaText>
@@ -277,9 +369,9 @@ class EventDetails extends Component {
                             </>
                         }
                     </View>
-                </View>
+                </View> */}
 
-                {instructionsToParticipate && instructionsToParticipate[userLanguage] &&
+                {/* {instructionsToParticipate && instructionsToParticipate[userLanguage] &&
                     <View style={[styles.eventCard, styles.instructionsCard]}>
                         <QaplaText style={styles.eventCardTitle}>
                             {translate('eventDetailsModal.instructions')}
@@ -296,8 +388,7 @@ class EventDetails extends Component {
                             ))}
                         </View>
                     </View>
-                }
-                <View style={{ marginBottom: 30 }}></View>
+                } */}
             </>
         );
     }
@@ -305,7 +396,8 @@ class EventDetails extends Component {
 
 function mapStateToProps(state) {
     return {
-        uid: state.userReducer.user.id
+        uid: state.userReducer.user.id,
+        userSubscriptions: state.userReducer.user.userToStreamersSubscriptions || {}
     }
 }
 

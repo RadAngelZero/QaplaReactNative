@@ -1,5 +1,5 @@
 export default Colors = {
-    greenQapla: '#3DF9DF',
+    greenQapla: '#00FFDD',
     pinkQapla: '#FA2D79',
     backgroundColor: '#0D1021',
     eventCardBackground: '#141735',

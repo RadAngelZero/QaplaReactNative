@@ -8,7 +8,7 @@ import { getMediaTypeCost } from '../../services/database';
 import { GIPHY_GIFS, TTS } from '../../utilities/Constants';
 
 class InteractionsAddTTS extends Component {
-    state= {
+    state = {
         mediaCost: null,
         dataFetched: false
     };
@@ -52,7 +52,7 @@ class InteractionsAddTTS extends Component {
         if (this.state.dataFetched) {
             return (
                 <SafeAreaView style={styles.container}>
-                    <View style={[styles.innerConatiner, styles.addTTSContainer]}>
+                    <View style={[styles.innerConatiner, styles.addTTSContainer, styles.addTTSSpace]}>
                         <Text style={[styles.whiteText, styles.screenHeaderText, styles.screenHeaderTextAddTTS]}>
                             {translate('interactions.addTTS.addTTSInYourInteraction')}
                         </Text>

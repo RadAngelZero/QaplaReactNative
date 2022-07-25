@@ -15,6 +15,7 @@ export default styles = StyleSheet.create({
     gifsContainerLinearGradient: {
         width: widthPercentageToPx(100),
         height: heightPercentageToPx(35.34),
+        overflow: 'visible',
     },
     markRebillet: {
         position: 'absolute',
@@ -149,5 +150,15 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(25.6),
         height: widthPercentageToPx(25.6),
         alignSelf: 'center',
+    },
+    closeIconContainer: {
+        position: 'absolute',
+        top: heightPercentageToPx(4.91),
+        right: widthPercentageToPx(6.4),
+        shadowColor: '#000',
+        shadowOffset: { width: widthPercentageToPx(1), height: heightPercentageToPx(1.23) },
+        shadowOpacity: 0.5,
+        shadowRadius: widthPercentageToPx(2.66),
+        elevation: widthPercentageToPx(2.66),
     },
 });

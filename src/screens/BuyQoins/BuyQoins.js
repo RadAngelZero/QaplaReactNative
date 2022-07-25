@@ -43,7 +43,7 @@ class BuyQoins extends Component {
     requestPurchase = async (sku) => {
         if (isUserLogged()) {
             try {
-                this.props.setOnFinishPurchase(this.props.navigation.getParam('onSuccessfulBuy', () => {}));
+                this.props.setOnFinishPurchase(this.props.navigation.getParam('onSuccessfulBuy', () => { }));
                 await RNIap.requestPurchase(sku, false);
             } catch (err) {
                 console.warn(err.code, err.message);
@@ -100,110 +100,95 @@ class BuyQoins extends Component {
                         {`${translate('buyQoins.sendInteractiunsUsingQoins')}`}
                     </Text>
                     {this.state.qoins1 && this.state.qoins2 &&
-                    <View style={styles.pricesContainer}>
-                        <TouchableOpacity
-                            onPress={() => this.requestPurchase(this.state.qoins1.productId)}
-                            style={styles.pack1Container}>
-                            <View style={styles.qoinsContainer}>
-                                <MaskedView maskElement={
-                                    <Text style={[styles.whiteText, styles.qoinsText]}>
-                                        {this.state.qoins1.description}
-                                    </Text>
-                                }>
-                                    <LinearGradient
-                                        colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
-                                        locations={[0.09, 0.49, 0.90]}
-                                        useAngle
-                                        angle={227}>
-                                        <Text style={[styles.transparentText, styles.qoinsText]}>
+                        <View style={styles.pricesContainer}>
+                            <TouchableOpacity
+                                onPress={() => this.requestPurchase(this.state.qoins1.productId)}
+                                style={styles.pack1Container}>
+                                <View style={styles.qoinsContainer}>
+                                    <MaskedView maskElement={
+                                        <Text style={[styles.whiteText, styles.qoinsText]}>
                                             {this.state.qoins1.description}
                                         </Text>
-                                    </LinearGradient>
-                                </MaskedView>
-                                <images.svg.qoin style={styles.qoin} />
-                            </View>
-                            <View style={styles.marginTop16}>
-                                <Text style={[styles.whiteText, styles.paddingTopFix, styles.bigSubText]}>
-                                    {`$${this.state.qoins1.price} `}
-                                    <Text style={styles.smallSubText}>
-                                        {this.state.qoins1.currency}
-                                    </Text>
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => this.requestPurchase(this.state.qoins2.productId)}
-                            style={{
-                                height: 165 * getScreenSizeMultiplier(),
-                                marginTop: 9 * getScreenSizeMultiplier(),
-                            }}
-                        >
-                            <LinearGradient
-                                colors={['#A716EE', '#2C07FA']}
-                                useAngle
-                                angle={136}
-                                style={styles.pack2Container}>
-                                <View style={{
-                                    justifyContent: 'center',
-                                }}>
-                                    <View style={styles.qoinsContainer}>
-                                        {this.state.qoins2.title !== '' && <MaskedView maskElement={
-                                            <Text style={[styles.whiteText, styles.qoinsText]}>
-                                                {this.state.qoins2.description}
+                                    }>
+                                        <LinearGradient
+                                            colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
+                                            locations={[0.09, 0.49, 0.90]}
+                                            useAngle
+                                            angle={227}>
+                                            <Text style={[styles.transparentText, styles.qoinsText]}>
+                                                {this.state.qoins1.description}
                                             </Text>
-                                        }>
-                                            <LinearGradient
-                                                colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
-                                                locations={[0.09, 0.49, 0.90]}
-                                                useAngle
-                                                angle={197}
-                                            >
-                                                <Text style={[styles.transparentText, styles.qoinsText]}>
+                                        </LinearGradient>
+                                    </MaskedView>
+                                    <images.svg.qoin style={styles.qoin} />
+                                </View>
+                                <View style={styles.marginTop16}>
+                                    <Text style={[styles.whiteText, styles.paddingTopFix, styles.bigSubText]}>
+                                        {`$${this.state.qoins1.price} `}
+                                        <Text style={styles.smallSubText}>
+                                            {this.state.qoins1.currency}
+                                        </Text>
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => this.requestPurchase(this.state.qoins2.productId)}
+                                style={{
+                                    height: 165 * getScreenSizeMultiplier(),
+                                    marginTop: 9 * getScreenSizeMultiplier(),
+                                }}
+                            >
+                                <LinearGradient
+                                    colors={['#A716EE', '#2C07FA']}
+                                    useAngle
+                                    angle={136}
+                                    style={styles.pack2Container}>
+                                    <View style={{
+                                        justifyContent: 'center',
+                                    }}>
+                                        <View style={styles.qoinsContainer}>
+                                            {this.state.qoins2.title !== '' && <MaskedView maskElement={
+                                                <Text style={[styles.whiteText, styles.qoinsText]}>
                                                     {this.state.qoins2.description}
                                                 </Text>
-                                            </LinearGradient>
-                                        </MaskedView>}
-                                        <images.svg.qoin style={styles.qoin} />
-                                    </View>
-                                    <View style={styles.marginTop16}>
-                                        <Text style={[styles.whiteText, styles.paddingTopFix, styles.bigSubText]}>
-                                            {`$${this.state.qoins2.price} `}
-                                            <Text style={styles.smallSubText}>
-                                                {this.state.qoins2.currency}
+                                            }>
+                                                <LinearGradient
+                                                    colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
+                                                    locations={[0.09, 0.49, 0.90]}
+                                                    useAngle
+                                                    angle={197}
+                                                >
+                                                    <Text style={[styles.transparentText, styles.qoinsText]}>
+                                                        {this.state.qoins2.description}
+                                                    </Text>
+                                                </LinearGradient>
+                                            </MaskedView>}
+                                            <images.svg.qoin style={styles.qoin} />
+                                        </View>
+                                        <View style={styles.marginTop16}>
+                                            <Text style={[styles.whiteText, styles.paddingTopFix, styles.bigSubText]}>
+                                                {`$${this.state.qoins2.price} `}
+                                                <Text style={styles.smallSubText}>
+                                                    {this.state.qoins2.currency}
+                                                </Text>
                                             </Text>
-                                        </Text>
+                                        </View>
+                                        <View style={styles.marginTop16}>
+                                            <Text style={[styles.whiteText, styles.bigSubText, styles.smallSubText]}>
+                                                {translate('buyQoins.save')}
+                                            </Text>
+                                        </View>
                                     </View>
-                                    <View style={styles.marginTop16}>
-                                        <Text style={[styles.whiteText, styles.bigSubText, styles.smallSubText]}>
-                                            {translate('buyQoins.save')}
-                                        </Text>
-                                    </View>
-                                </View>
-                                <Image source={images.gif.thugDoug.img} style={styles.thugDoug} />
-                            </LinearGradient>
-                        </TouchableOpacity>
-                    </View>
+                                    <Image source={images.gif.thugDoug.img} style={styles.thugDoug} />
+                                </LinearGradient>
+                            </TouchableOpacity>
+                        </View>
                     }
                 </View>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.goBack()}
-                    style={{
-                        position: 'absolute',
-                        backgroundColor: '#141539',
-                        top: heightPercentageToPx(4.91),
-                        right: widthPercentageToPx(6.4),
-                        width: widthPercentageToPx(10.66),
-                        height: widthPercentageToPx(10.66),
-                        borderRadius: widthPercentageToPx(5.33),
-                        shadowColor: '#000',
-                        shadowOffset: { width: widthPercentageToPx(1), height: heightPercentageToPx(1.23) },
-                        shadowOpacity: 0.5,
-                        shadowRadius: widthPercentageToPx(2.66),
-                        elevation: widthPercentageToPx(2.66),
-                    }}>
-                    <images.svg.closeThiccIcon style={{
-                        marginLeft: widthPercentageToPx(-0.4),
-                    }} />
+                    style={styles.closeIconContainer}>
+                    <images.svg.closeIcon />
                 </TouchableOpacity>
             </View>
         );

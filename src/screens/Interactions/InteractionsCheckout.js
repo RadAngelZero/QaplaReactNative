@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Alert, Image, ScrollView, Text, View } from 'react-native';
+import { Alert, Image, Modal, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { translate } from '../../utilities/i18';
 import styles from './style';
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
 import { sendCheers } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../services/auth';
+import { BlurView } from '@react-native-community/blur';
 
 class InteractionsCheckout extends Component {
     state = {
@@ -16,7 +17,8 @@ class InteractionsCheckout extends Component {
         tipIncrement: 50,
         interactionCost: 0,
         minimum: 0,
-        openLinkWitTwitchModal: false
+        openLinkWitTwitchModal: false,
+        confirmCancelOpen: false,
     };
 
     componentDidMount() {
@@ -67,18 +69,18 @@ class InteractionsCheckout extends Component {
                     }
 
                     try {
-                        await sendCheers(
-                            totalCost,
-                            media,
-                            message,
-                            (new Date()).getTime(),
-                            streamerName,
-                            this.props.uid,
-                            this.props.userName,
-                            this.props.twitchUserName,
-                            this.props.photoUrl,
-                            streamerId
-                        );
+                        // await sendCheers(
+                        //     totalCost,
+                        //     media,
+                        //     message,
+                        //     (new Date()).getTime(),
+                        //     streamerName,
+                        //     this.props.uid,
+                        //     this.props.userName,
+                        //     this.props.twitchUserName,
+                        //     this.props.photoUrl,
+                        //     streamerId
+                        // );
 
                         this.props.navigation.navigate('InteractionsSent', {
                             ...this.props.navigation.state.params,
@@ -108,7 +110,7 @@ class InteractionsCheckout extends Component {
     }
 
     onCancel = () => {
-        this.props.navigation.goBack();
+        this.setState({ confirmCancelOpen: true });
     }
 
     render() {
@@ -125,16 +127,16 @@ class InteractionsCheckout extends Component {
                             borderRadius: 10,
                             overflow: 'hidden',
                             justifyContent: 'center',
+                            maxHeight: heightPercentageToPx(20),
+                            maxWidth: '60%',
                         }}>
-                        {selectedMedia &&
-                            <Image source={selectedMedia.original.url ? { uri: selectedMedia.original.url } : null}
-                                resizeMode='contain'
-                                style={{
-                                    maxHeight: heightPercentageToPx(20),
-                                    maxWidth: '60%',
-                                    aspectRatio: (selectedMedia.original.width / selectedMedia.original.height) || 0,
-                                }} />
-                        }
+                            {selectedMedia &&
+                                <Image source={selectedMedia.original.url ? { uri: selectedMedia.original.url } : null}
+                                    resizeMode="contain"
+                                    style={{
+                                        aspectRatio: (selectedMedia.original.width / selectedMedia.original.height) || 0,
+                                    }} />
+                            }
                         </View>
                         {message !== '' &&
                             <View style={styles.checkoutChatBubble}>
@@ -159,7 +161,7 @@ class InteractionsCheckout extends Component {
                     }
                     {!onlyQoins &&
                         <>
-                            <View style={styles.checkoutContainer}>
+                            <View style={[styles.checkoutContainer, styles.checkoutDataDisplayMainContainer]}>
                                 <View style={styles.checkoutDataDisplayContainer}>
                                     <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>
                                         {`${translate('interactions.checkout.my')} Qoins`}
@@ -191,8 +193,68 @@ class InteractionsCheckout extends Component {
                             </View>
                             <View style={styles.checkoutMarginDisplay} />
                         </>
-                }
+                    }
                 </ScrollView>
+                <Modal
+                    visible={this.state.confirmCancelOpen}
+                >
+                    <TouchableWithoutFeedback
+                        onPress={() => this.setState({ confirmCancelOpen: false })}
+                    >
+                        <View style={{
+                            position: 'absolute',
+                            width: '100%',
+                            height: '100%',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
+                            <BlurView style={{
+                                position: 'absolute',
+                                width: '100%',
+                                height: '100%',
+                            }}
+                                blurAmount={20}
+                                blurType="dark"
+                                reducedTransparencyFallbackColor="white"
+                            />
+                            <TouchableWithoutFeedback>
+                                <View style={{
+                                    backgroundColor: '#141539',
+                                    padding: widthPercentageToPx(6.4),
+                                    borderRadius: widthPercentageToPx(8),
+                                }}>
+                                    <Text style={{
+                                        color: '#fff',
+                                        fontSize: 24,
+                                    }}>
+                                        ¿Estas seguro?
+                                    </Text>
+                                    <View style={{
+                                        flexDirection: 'row',
+                                        marginTop: heightPercentageToPx(2),
+                                        justifyContent: 'flex-end',
+                                    }}>
+                                        <TouchableOpacity
+                                            onPress={() => this.setState({ confirmCancelOpen: false })}
+                                        >
+                                            <Text style={{
+                                                color: '#fff',
+                                                fontSize: 20,
+                                            }}>NO</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('MainBottomNavigator')}>
+                                            <Text style={{
+                                                color: '#fff',
+                                                fontSize: 20,
+                                                marginLeft: widthPercentageToPx(4),
+                                            }}>SI</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </Modal>
                 <SendInteractionModal
                     baseCost={this.state.interactionCost}
                     extraTip={this.state.extraTip}

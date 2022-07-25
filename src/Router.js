@@ -539,7 +539,7 @@ const RootStackNavigator = createStackNavigator({
   Auth: AuthStackNavigator,
   InteractionsStack: InteractionsStackNavigator,
   InteractionsPersonlizeStack: {
-    screen: InteractionsPersonlizeStackNavigator
+    screen: InteractionsPersonlizeStackNavigator,
   },
   BuyQoins: {
     screen: BuyQoins,

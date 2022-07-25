@@ -4,6 +4,7 @@ import styles from './style';
 import ConfirmSelectionModal from '../../components/InteractionsModals/ConfirmSelectionModal';
 import { getMediaTypeCost } from '../../services/database';
 import { TTS } from '../../utilities/Constants';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class InteractionsConfirmSelection extends Component {
     state = {
@@ -55,20 +56,29 @@ class InteractionsConfirmSelection extends Component {
         const mediaType = this.props.navigation.getParam('mediaType');
 
         return (
-            <SafeAreaView style={styles.container}>
+            <View style={styles.container}>
                 <View style={styles.interactionSelectedScreenContainer}>
                     <View style={styles.interactionSelectedBorderRadius}>
                         <ActivityIndicator size='large'
                             color='rgb(61, 249, 223)'
-                            animating={this.state.loadingMedia} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}/>
+                            animating={this.state.loadingMedia} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }} />
                         <Image
                             onLoadEnd={() => this.setState({ loadingMedia: false })}
                             source={{ uri: media.original.url }}
                             style={[styles.interactionSelectedConatiner, {
                                 opacity: this.state.loadingMedia ? 0 : 1,
-                                aspectRatio: media.original.width / media.original.height
-                            }]}
-                            resizeMode='contain' />
+                                aspectRatio: media.original.width / media.original.height,
+                            },
+                            media.original.width >= media.original.height ?
+                                {
+                                    width: widthPercentageToPx(80),
+                                }
+                                :
+                                {
+                                    height: heightPercentageToPx(40),
+                                },
+                            ]}
+                            resizeMode="contain" />
                     </View>
                 </View>
                 {this.state.mediaCost !== null &&
@@ -77,7 +87,7 @@ class InteractionsConfirmSelection extends Component {
                         onCancel={this.onCancel}
                         cost={this.state.mediaCost} />
                 }
-            </SafeAreaView>
+            </View>
         );
     }
 }

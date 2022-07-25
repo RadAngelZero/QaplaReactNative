@@ -118,7 +118,9 @@ class InteractionsSearchStreamer extends Component {
                         }}
                         data={Object.keys(this.state.searchResults).map((streamerId) => ({ streamerId, ...this.state.searchResults[streamerId] }))}
                         renderItem={this.renderItem}
-                        keyExtractor={item => item.id} />
+                        keyExtractor={item => item.id}
+                        keyboardShouldPersistTaps={'always'}
+                        />
                 </View>
             </SafeAreaView>
         );

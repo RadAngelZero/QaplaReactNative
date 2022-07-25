@@ -68,9 +68,9 @@ class InteractionsPersonalize extends Component {
                         <Text style={[styles.whiteText, styles.screenHeaderText]}>
                             {`${translate('interactions.personalize.personalizeYourInteraction')}`}
                         </Text>
-                        <TouchableOpacity style={styles.helpButton}>
+                        {/* <TouchableOpacity style={styles.helpButton}>
                             <images.svg.questionMark />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     <View style={styles.personalizeButtonsContainer}>
                         {this.state.dataFetched &&

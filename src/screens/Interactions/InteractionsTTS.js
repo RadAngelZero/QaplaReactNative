@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 
 import images from '../../../assets/images';
@@ -10,7 +10,28 @@ import styles from './style';
 class InteractionsTTS extends Component {
     state = {
         message: '',
-        tooMuch: false
+        tooMuch: false,
+        keyboardOpen: false,
+    }
+
+    componentDidMount() {
+        this.keyboardDidShowSubscription = Keyboard.addListener(
+            'keyboardDidShow',
+            (e) => {
+                this.setState({ keyboardOpen: true, keyboardHeight: e.endCoordinates.height });
+            },
+        );
+        this.keyboardDidHideSubscription = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                this.setState({ keyboardOpen: false });
+            },
+        );
+    }
+
+    componentWillUnmount() {
+        this.keyboardDidShowSubscription.remove();
+        this.keyboardDidHideSubscription.remove();
     }
 
     textHandler = (e) => {
@@ -67,6 +88,8 @@ class InteractionsTTS extends Component {
                                 }]}
                                     onChange={this.textHandler}
                                     value={this.state.message}
+                                    autoFocus
+                                    onSubmitEditing={this.sendButtonHandler}
                                 />
                             </View>
                             <TouchableOpacity

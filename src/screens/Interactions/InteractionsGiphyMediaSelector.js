@@ -153,12 +153,11 @@ class InteractionsGiphyMediaSelector extends Component {
                         source={{ uri: item.images.fixed_height_small.url }}
                         style={[
                             {
-                                display: 'flex',
                                 aspectRatio: ratio,
                                 minWidth: '100%',
                             }
                         ]}
-                        resizeMode='cover'
+                        resizeMode="cover"
                     />
                 </TouchableOpacity>
             );
@@ -171,7 +170,7 @@ class InteractionsGiphyMediaSelector extends Component {
         return (
             <View style={styles.container}>
                 <View style={[styles.gridMainContainer, {
-                    height: this.state.keyboardOpen ? this.state.keyboardHeight : heightPercentageToPx(85),
+                    height: this.state.keyboardOpen ? this.state.keyboardHeight + heightPercentageToPx(16.5) : heightPercentageToPx(85),
                 }]} >
                     <View style={styles.gridSearchBarContainer}>
                         <View style={[styles.searchBar, styles.gridSearchBar]}>

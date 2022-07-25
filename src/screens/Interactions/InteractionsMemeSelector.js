@@ -83,31 +83,15 @@ class InteractionsMemeSelector extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{
-                    position: 'absolute',
-                    backgroundColor: '#141539',
-                    height: heightPercentageToPx(85),
-                    bottom: 0,
-                    borderTopLeftRadius: 40 * getScreenSizeMultiplier(),
-                    borderTopRightRadius: 40 * getScreenSizeMultiplier(),
-                    width: widthPercentageToPx(100),
-                }} >
-                    <View style={{
-                        flex: 1,
-                        width: '100%',
-                        alignSelf: 'center',
-                        marginTop: 16 * getScreenSizeMultiplier(),
-                        paddingHorizontal: 6 * getScreenSizeMultiplier(),
-                    }}>
+                <View style={styles.memesContainer} >
+                    <View style={styles.gridMemeContainer}>
                         <RadMasonry
                             onEndReachedThreshold={0.25}
                             data={this.state.media}
                             numColumns={2}
                             renderItem={this.renderImage}
                             onEndReached={this.fetchMoreMemes}
-                            containerStyle={{
-                                paddingBottom: 75 * getScreenSizeMultiplier(),
-                            }}
+                            containerStyle={styles.gridMemeSubContainer}
                         />
                     </View>
                 </View>

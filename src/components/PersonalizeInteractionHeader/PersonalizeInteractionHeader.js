@@ -16,7 +16,7 @@ class PersonalizeInteractionHeader extends Component {
                             <TouchableOpacity
                                 style={styles.backButtonContainer}
                                 onPress={() => this.props.navigation.pop()}>
-                                <images.svg.leftArrowThiccIcon />
+                                <images.svg.backIcon style={styles.backButtonShadow} />
                             </TouchableOpacity>}
                             <View style={styles.streamerContainer}>
                                 <Image

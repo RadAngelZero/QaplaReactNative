@@ -15,6 +15,7 @@ class RadMasonry extends Component {
         return (
             <>
                 <FlatList
+                    keyboardShouldPersistTaps={'always'}
                     renderItem={null}
                     keyExtractor={null}
                     data={null}

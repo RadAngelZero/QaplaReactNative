@@ -13,14 +13,19 @@ export default styles = StyleSheet.create({
         marginTop: heightPercentageToPx(3.94),
     },
     backButtonContainer: {
-        backgroundColor: '#141539',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: heightPercentageToPx(4.92),
-        height: heightPercentageToPx(4.92),
-        borderRadius: widthPercentageToPx(5.33),
         marginRight: widthPercentageToPx(4.26),
-        paddingTop: heightPercentageToPx(0.49),
+    },
+    backButtonShadow: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+
+        elevation: 3,
+        borderRadius: 100,
     },
     streamerContainer: {
         display: 'flex',

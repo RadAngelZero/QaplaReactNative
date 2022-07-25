@@ -55,7 +55,7 @@ class InteractionsAddVisual extends Component {
             <View style={styles.container}>
                 <View style={styles.innerConatiner}>
                     <View style={styles.headerContainer}>
-                        <Text style={[styles.whiteText, styles.screenHeaderText, styles.headerMaxWidth]}>
+                        <Text style={[styles.whiteText, styles.screenHeaderText, styles.headerMaxWidth, styles.addVisualHeaderMaxWidth]}>
                             {`${translate('interactions.addVisual.addVisual')}`}
                         </Text>
                     </View>
@@ -174,7 +174,7 @@ class InteractionsAddVisual extends Component {
                         </View>
                     }
                 </View>
-                <View style={styles.onlySendQoinsContainer}>
+                <View style={[styles.onlySendQoinsContainer, styles.onlySendTTS]}>
                     <TouchableOpacity style={styles.onlySendQoinsTouchable}
                         onPress={this.justSendTTS}
                     >

@@ -6,27 +6,14 @@ import { translate } from '../../utilities/i18';
 import styles from './style';
 
 class InteractionsSent extends Component {
-    componentDidMount() {
-        const streamerName = this.props.navigation.getParam('displayName');
-        const isLive = this.props.navigation.getParam('isStreaming');
-        const onlyQoins = this.props.navigation.getParam('onlyQoins');
-        this.setState({ streamerName });
-        if (isLive) {
-            this.setState({ isLive });
-        }
-        if (onlyQoins) {
-            this.setState({ onlyQoins });
-        }
-    }
-
     pressHandler = () => {
-        const isStreaming = this.props.navigation.getParam('isStreaming');
-        const streamerName = this.props.navigation.getParam('displayName');
+        const isStreaming = this.props.navigation.getParam('isStreaming', false);
+        const streamerName = this.props.navigation.getParam('displayName', '');
         if (isStreaming) {
             Linking.openURL(`https://www.twitch.tv/${streamerName.toLowerCase()}`);
         }
 
-        this.props.navigation.navigate('');
+        this.props.navigation.navigate('Timeline');
     }
 
     render() {

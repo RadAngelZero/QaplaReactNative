@@ -8,18 +8,17 @@ import images from '../../../assets/images';
 import { translate } from '../../utilities/i18';
 
 class SentInteractionModal extends Component {
-
     renderContent = () => (
         <View style={styles.bottomSheetContainer}>
+            <Image source={images.png.heartHands.img}
+                style={styles.heartHands}
+            />
             <LinearGradient
                 colors={gradients.gradient1}
                 style={[styles.bottomSheetLinearGradient, styles.bottomSheetLinearGradientWithButtons]}
                 angle={100}
                 useAngle
             >
-                <Image source={images.png.heartHands.img}
-                    style={styles.heartHands}
-                />
                 <Text style={[styles.bottomSheetWhiteText, styles.sentText]}>
                     {`${translate('interactions.final.modal.weveSentYourQoinsP1')}`}
                     <Text style={styles.sentAccentText}>

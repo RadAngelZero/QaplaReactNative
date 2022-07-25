@@ -15,7 +15,7 @@ import { BlurView } from '@react-native-community/blur';
 import styles from './style';
 import QaplaText from '../../components/QaplaText/QaplaText';
 import Images from './../../../assets/images';
-import { userHasRequestToJoinEvent } from '../../services/database';
+import { getQaplaLevels, userHasRequestToJoinEvent } from '../../services/database';
 import EventDetails from './EventDetails';
 import EventRegistration from './EventRegistration';
 import { isUserLogged } from '../../services/auth';
@@ -38,9 +38,19 @@ class EventDetailsModal extends Component {
         openUserDontHaveEnoughQoinsDialog: false,
         streamTitle: '',
         twitchURLCopied: false,
+        qaplaLevels: []
     };
 
     userLanguage = getLocaleLanguage();
+
+    componentDidMount() {
+        this.getQaplaLevels();
+    }
+
+    getQaplaLevels = async () => {
+        const qaplaLevels = await getQaplaLevels();
+        this.setState({ qaplaLevels: qaplaLevels.val() });
+    }
 
     /**
      * Check if the user has sent a request for this event
@@ -239,6 +249,7 @@ class EventDetailsModal extends Component {
                             ]}>
                                 {this.state.eventRegistrationStep === 0 &&
                                     <EventDetails
+                                        qaplaLevels={this.state.qaplaLevels}
                                         event={this.props.stream}
                                         eventId={this.props.stream.id}
                                         goToNextStep={this.goToNextRegistrationStep}

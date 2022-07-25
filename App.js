@@ -105,7 +105,7 @@ class App extends React.Component {
                         // Everything is OK
                         if (response.data.status === 200) {
                             this.setState({ transactionProgress: 0.75, transactionText: 'Abonando Qoins' });
-                            try {;
+                            try {
                                 listenToPurchaseCompleted(auth.currentUser.uid, purchase.transactionId, (transaction) => {
                                     if (transaction.exists()) {
                                         removeListenerToPurchaseCompleted(auth.currentUser.uid);

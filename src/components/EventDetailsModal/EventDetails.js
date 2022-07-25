@@ -55,9 +55,7 @@ function BackgroundImageContainer({ isSponsored, children, gradientColors }) {
 
 class EventDetails extends Component {
     state = {
-        twitchURLCopied: false,
-        xq: 150,
-        qoins: 20,
+        twitchURLCopied: false
     }
 
     goToStreamerProfile = async () => {
@@ -122,7 +120,8 @@ class EventDetails extends Component {
             streamerPhoto,
             streamerGameData,
             gradientColors,
-            timestamp
+            timestamp,
+            customRewardsMultipliers
         } = this.props.event;
 
         let day = '';
@@ -140,8 +139,6 @@ class EventDetails extends Component {
         hour = hour ? hour : 12;
         minute = eventDate.getMinutes() > 9 ? eventDate.getMinutes() : `0${eventDate.getMinutes()}`;
         const eventHour = `${hour}:${minute}`;
-
-        const userLanguage = getLocaleLanguage();
 
         return (
             <>
@@ -241,13 +238,13 @@ class EventDetails extends Component {
                             <View style={styles.eventFarmContainer}>
                                 <Images.svg.xq />
                                 <Text style={[styles.whiteText, styles.eventFarmText]}>
-                                    {this.state.xq}
+                                    {15 * customRewardsMultipliers.xq}
                                 </Text>
                             </View>
                             <View style={[styles.eventFarmContainer, styles.eventFarmContainerSeparator]}>
                                 <Images.svg.qoin />
                                 <Text style={[styles.whiteText, styles.eventFarmText]}>
-                                    {this.state.qoins}
+                                    {this.props.qaplaLevels[this.props.lastSeasonLevel] && (this.props.qaplaLevels[this.props.lastSeasonLevel].qoinsToGive * customRewardsMultipliers.qoins)}
                                 </Text>
                             </View>
                         </View>
@@ -421,7 +418,8 @@ class EventDetails extends Component {
 function mapStateToProps(state) {
     return {
         uid: state.userReducer.user.id,
-        userSubscriptions: state.userReducer.user.userToStreamersSubscriptions || {}
+        userSubscriptions: state.userReducer.user.userToStreamersSubscriptions || {},
+        lastSeasonLevel: state.userReducer.user.lastSeasonLevel || 0
     }
 }
 

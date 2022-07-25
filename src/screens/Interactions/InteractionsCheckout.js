@@ -66,18 +66,18 @@ class InteractionsCheckout extends Component {
                     }
 
                     try {
-                        // await sendCheers(
-                        //     totalCost,
-                        //     media,
-                        //     message,
-                        //     (new Date()).getTime(),
-                        //     streamerName,
-                        //     this.props.uid,
-                        //     this.props.userName,
-                        //     this.props.twitchUserName,
-                        //     this.props.photoUrl,
-                        //     streamerId
-                        // );
+                        await sendCheers(
+                            totalCost,
+                            media,
+                            message,
+                            (new Date()).getTime(),
+                            streamerName,
+                            this.props.uid,
+                            this.props.userName,
+                            this.props.twitchUserName,
+                            this.props.photoUrl,
+                            streamerId
+                        );
 
                         this.props.navigation.navigate('InteractionsSent', {
                             ...this.props.navigation.state.params,

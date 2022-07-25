@@ -669,6 +669,10 @@
                 "memes": "Meme",
                 "tts": "Text-to-Speech"
             },
+            "discardInteraction": "Descartar interacción",
+            "areYouSure": "¿Estas seguro que deseas descartar tu interacción?",
+            "yes": "Si",
+            "no": "No",
             "modal": {
                 "sendInteraction": "Enviar Interacción"
             }

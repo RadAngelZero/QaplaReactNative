@@ -671,6 +671,10 @@
                 "memes": "Meme",
                 "tts": "Text-to-Speech"
             },
+            "discardInteraction": "Discard interaction",
+            "areYouSure": "Are you sure you want to discard your interaction?",
+            "yes": "Yes",
+            "no": "No",
             "modal": {
                 "sendInteraction": "Send Live Interaction"
             }

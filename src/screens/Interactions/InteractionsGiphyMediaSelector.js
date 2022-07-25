@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native';
+import { View, Image, TouchableOpacity, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import images from '../../../assets/images';
 import RadMasonry from '../../components/RadMasonry/RadMasonry';
 import { generateGiphyUserRandomId, getGiphyTrending, searchGiphyMedia } from '../../services/Giphy';
-import { GIPHY_GIFS, GIPHY_STICKERS } from '../../utilities/Constants';
+import { GIPHY_GIFS, GIPHY_STICKERS, MEDIA_TO_LOAD_FROM_GIPHY } from '../../utilities/Constants';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { getEmotesLibrary } from '../../services/database';
 
@@ -16,31 +15,12 @@ class InteractionsGiphyMediaSelector extends Component {
         searchQuery: '',
         gifSection: 1,
         keyboardHeight: 0,
-        keyboardOpen: false,
         media: []
     };
     searchTimeout = null;
 
     componentDidMount() {
-        this.keyboardDidShowSubscription = Keyboard.addListener(
-            'keyboardDidShow',
-            (e) => {
-                this.setState({ keyboardOpen: true, keyboardHeight: e.endCoordinates.height });
-            },
-        );
-        this.keyboardDidHideSubscription = Keyboard.addListener(
-            'keyboardDidHide',
-            () => {
-                this.setState({ keyboardOpen: false });
-            },
-        );
-
         this.fetchTrendingMedia();
-    }
-
-    componentWillUnmount() {
-        this.keyboardDidShowSubscription.remove();
-        this.keyboardDidHideSubscription.remove();
     }
 
     fetchTrendingMedia = async () => {
@@ -76,7 +56,7 @@ class InteractionsGiphyMediaSelector extends Component {
             }
         }
 
-        media = media.concat(await getGiphyTrending(giphyRandomId, mediaType, 25));
+        media = media.concat(await getGiphyTrending(giphyRandomId, mediaType, MEDIA_TO_LOAD_FROM_GIPHY));
 
         this.setState({ media });
     }
@@ -96,7 +76,7 @@ class InteractionsGiphyMediaSelector extends Component {
 
                             const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
                             const userLang = getLocaleLanguage();
-                            const media = await searchGiphyMedia(giphyRandomId, this.state.searchQuery, mediaType, userLang, 25);
+                            const media = await searchGiphyMedia(giphyRandomId, this.state.searchQuery, mediaType, userLang, MEDIA_TO_LOAD_FROM_GIPHY);
 
                             this.setState({ media });
                     }, 500);
@@ -121,12 +101,12 @@ class InteractionsGiphyMediaSelector extends Component {
         let newMedia = [];
         if (this.state.searchQuery === '') {
             const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
-            newMedia = await getGiphyTrending(giphyRandomId, mediaType, 25, this.state.media.length);
+            newMedia = await getGiphyTrending(giphyRandomId, mediaType, MEDIA_TO_LOAD_FROM_GIPHY, this.state.media.length);
 
         } else {
             const userLang = getLocaleLanguage();
             const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
-            newMedia = await searchGiphyMedia(giphyRandomId, this.state.searchQuery, mediaType, userLang, 25, this.state.media.length);
+            newMedia = await searchGiphyMedia(giphyRandomId, this.state.searchQuery, mediaType, userLang, MEDIA_TO_LOAD_FROM_GIPHY, this.state.media.length);
         }
 
         this.setState({ media: actualMediaCopy.concat(newMedia) });
@@ -169,9 +149,7 @@ class InteractionsGiphyMediaSelector extends Component {
 
         return (
             <View style={styles.container}>
-                <View style={[styles.gridMainContainer, {
-                    height: this.state.keyboardOpen ? this.state.keyboardHeight + heightPercentageToPx(16.5) : heightPercentageToPx(85),
-                }]} >
+                <View style={[styles.gridMainContainer]} >
                     <View style={styles.gridSearchBarContainer}>
                         <View style={[styles.searchBar, styles.gridSearchBar]}>
                             <View style={{ opacity: 0.4 }}>

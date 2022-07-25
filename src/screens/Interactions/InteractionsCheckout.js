@@ -108,15 +108,15 @@ class InteractionsCheckout extends Component {
 
     onCancel = () => {
         Alert.alert(
-            'Discard interaction',
-            'Are you sure you want to discard your interaction?',
+            translate('interactions.checkout.discardInteraction'),
+            translate('interactions.checkout.areYouSure'),
             [
                 {
-                    text: 'No',
+                    text: translate('interactions.checkout.no'),
                     style: 'cancel'
                 },
                 {
-                    text: 'Yes',
+                    text: translate('interactions.checkout.yes'),
                     onPress: this.props.navigation.dismiss
                 }
             ]
@@ -133,21 +133,16 @@ class InteractionsCheckout extends Component {
             <View style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false} style={styles.innerConatiner}>
                     <View>
-                        <View style={{
-                            borderRadius: 10,
-                            overflow: 'hidden',
-                            justifyContent: 'center',
-                            maxHeight: heightPercentageToPx(20),
-                            maxWidth: '60%',
-                        }}>
-                            {selectedMedia &&
-                                <Image source={selectedMedia.original.url ? { uri: selectedMedia.original.url } : null}
-                                    resizeMode="contain"
-                                    style={{
-                                        aspectRatio: (selectedMedia.original.width / selectedMedia.original.height) || 0,
-                                    }} />
-                            }
-                        </View>
+                        {selectedMedia &&
+                            <Image source={selectedMedia.original.url ? { uri: selectedMedia.original.url } : null}
+                                resizeMode='contain'
+                                style={[{
+                                    borderRadius: 10,
+                                    maxHeight: heightPercentageToPx(20),
+                                    maxWidth: '60%',
+                                    aspectRatio: (selectedMedia.original.width / selectedMedia.original.height) || 0,
+                                }]} />
+                        }
                         {message !== '' &&
                             <View style={styles.checkoutChatBubble}>
                                 <Text style={[styles.whiteText, styles.checkoutChatBubbleText]}>

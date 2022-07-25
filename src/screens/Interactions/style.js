@@ -98,6 +98,7 @@ export default styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: '#141539',
         bottom: 0,
+        height: heightPercentageToPx(85),
         borderTopLeftRadius: widthPercentageToPx(10.66),
         borderTopRightRadius: widthPercentageToPx(10.66),
         width: widthPercentageToPx(100),
@@ -273,6 +274,7 @@ export default styles = StyleSheet.create({
     },
     addTTSContainer: {
         flex: 1,
+        justifyContent: 'space-between'
     },
     chatBubbleContainer: {
         backgroundColor: '#141539',

@@ -170,9 +170,11 @@ export const QOINS = 'qoins';
 export const MEME = 'memes';
 export const TTS = 'tts';
 
-export const STREAMERS_BLACKLIST = ['141617732-catskullgamer', '683167758-catskullgg', '613408163-d_h_v_s', '180517858-QaplaGG', '448926957-qaplita', '528477359-mariyolo1bot', '448926957-qaplita'];
+export const STREAMERS_BLACKLIST = ['141617732-catskullgamer', '683167758-catskullgg', '613408163-d_h_v_s', '698301557-QaplaGaming', '448926957-qaplita', '528477359-mariyolo1bot', '448926957-qaplita'];
 
 // Default image for streams where we can not load thumbnail URL
 export const DEFAULT_404_TWITCH_PREVIEW_URL = 'https://static-cdn.jtvnw.net/ttv-static/404_preview-480x270.jpg';
 
 export const MAX_CHAR_FOR_TTS = 100;
+
+export const MEDIA_TO_LOAD_FROM_GIPHY = 10;

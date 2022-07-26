@@ -17,7 +17,7 @@ export const GIPHY_CLIPS = 'clips';
 
 // Twitch Client Id
 export const TWITCH_CLIENT_ID = '3cwpzmazn716nmz6g1087kh4ciu4sp';
-export const TWITCH_REDIRECT_URI = 'https://dashboard.qapla.gg/';
+export const TWITCH_REDIRECT_URI = 'http://localhost:3000';
 
 // User constants
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';

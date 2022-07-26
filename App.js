@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar } from 'react-native';
+import { Alert, Platform, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as RNIap from 'react-native-iap';
@@ -87,12 +87,12 @@ class App extends React.Component {
             }
 
             this.purchaseUpdateSubscription = RNIap.purchaseUpdatedListener(async (purchase) => {
-                this.setState({ openTransactionModal: true });
                 const receipt = Platform.OS === 'android' ? { transactionId: purchase.transactionId, ...JSON.parse(purchase.transactionReceipt)} : { transactionId: purchase.transactionId, productId: purchase.productId, iOSReceipt: purchase.transactionReceipt };
                 if ((Platform.OS === 'android' && receipt && receipt.purchaseState === 0) || Platform.OS === 'ios') {
+                    this.setState({ openTransactionModal: true });
                     // Store purchase attempt
                     await purchaseAttempt(auth.currentUser.uid, purchase.transactionId, receipt, Platform.OS);
-                    this.setState({ transactionProgress: 0.25, transactionText: 'Validando transacción' });
+                    this.setState({ transactionProgress: 0.25, transactionText: translate('App.processingPayment.validating') });
 
                     // Finish transaction (notify Google/Apple)
                     await RNIap.finishTransaction(purchase, true);
@@ -104,12 +104,12 @@ class App extends React.Component {
                     if (response && response.data && response.data.status) {
                         // Everything is OK
                         if (response.data.status === 200) {
-                            this.setState({ transactionProgress: 0.75, transactionText: 'Abonando Qoins' });
+                            this.setState({ transactionProgress: 0.75, transactionText: translate('App.processingPayment.deliveringQoins') });
                             try {
                                 listenToPurchaseCompleted(auth.currentUser.uid, purchase.transactionId, (transaction) => {
                                     if (transaction.exists()) {
                                         removeListenerToPurchaseCompleted(auth.currentUser.uid);
-                                        this.setState({ transactionProgress: 1, transactionText: 'Qoins abonados' });
+                                        this.setState({ transactionProgress: 1, transactionText: translate('App.processingPayment.qoinsDelivered') });
                                         const { onPurchaseFinished } = store.getState().purchasesReducer;
                                         if (onPurchaseFinished) {
                                             onPurchaseFinished();
@@ -117,7 +117,7 @@ class App extends React.Component {
 
                                         setTimeout(() => {
                                             this.setState({ openTransactionModal: false });
-                                        }, 750);
+                                        }, 1000);
                                     }
                                 });
                             } catch (error) {
@@ -136,7 +136,17 @@ class App extends React.Component {
                     }
                 // Payment pending
                 } else if (Platform.OS === 'android' && receipt && receipt.purchaseState === 4) {
-                    console.log('Payment pending');
+                    // Store purchase attempt
+                    await purchaseAttempt(auth.currentUser.uid, purchase.transactionId, receipt, Platform.OS);
+                    Alert.alert(
+                        translate('App.processingPayment.pendingPaymentAlert.title'),
+                        translate('App.processingPayment.pendingPaymentAlert.message'),
+                        [
+                            {
+                                text: 'Ok'
+                            }
+                        ]
+                    )
                 }
             });
 

@@ -1,8 +1,13 @@
 {
     "App": {
-        "noInternetConnection": {
-            "title": "No estás conectado a internet, revisa tu conexión.",
-            "wifiDetails": "Usa tu conexión de datos"
+        "processingPayment": {
+            "validating": "Validando transacción",
+            "deliveringQoins": "Abonando Qoins",
+            "qoinsDelivered": "Qoins abonados",
+            "pendingPaymentAlert": {
+                "title": "Tu banco está pendiente de procesar tu pago",
+                "message": "Abonaremos tus Qoins una vez realizado el cobro. Te notificaremos en cuanto se realice"
+            }
         },
         "snackBar": {
             "details": "Ver más"
@@ -709,10 +714,6 @@
         "save": "¡25% más Qoins!",
         "pharases": {
             "p1": "Llevaré diez 💸💸💸"
-        },
-        "pendingPaymentAlert": {
-            "title": "Tu banco está pendiente de procesar tu pago",
-            "message": "Abonaremos tus Qoins una vez realizado el cobro. Te notificaremos en cuanto se realice"
         }
     }
 }

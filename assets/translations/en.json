@@ -1,8 +1,13 @@
 {
     "App": {
-        "noInternetConnection": {
-            "title": "No internet, check your connection.",
-            "wifiDetails": "Try connecting with your data plan"
+        "processingPayment": {
+            "validating": "Validating transaction",
+            "deliveringQoins": "Delivering Qoins",
+            "qoinsDelivered": "Qoins delivered",
+            "pendingPaymentAlert": {
+                "title": "Your bank is pending to process your payment",
+                "message": "We will pay your Qoins once the payment has been made. We will notify you as soon as it is done"
+            }
         },
         "snackBar": {
             "details": "Details"

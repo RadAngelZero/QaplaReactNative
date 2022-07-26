@@ -31,6 +31,7 @@ class FollowingStreamersScreen extends Component {
 
     formatStreamers = () => {
         const streamersData = [];
+        const streamersAlreadyLoaded = [];
         this.props.streamers.forEach((streamer) => {
             if (!STREAMERS_BLACKLIST.includes(streamer.key) && this.props.userSubscriptions[streamer.key]) {
                 if ((streamer.backgroundGradient || streamer.backgroundUrl) && streamer.displayName && streamer.photoUrl && streamer.bio && streamer.tags) {
@@ -51,9 +52,28 @@ class FollowingStreamersScreen extends Component {
                         creatorCodes: streamer.creatorCodes,
                         backgroundGradient: streamer.backgroundGradient
                     });
+
+                    streamersAlreadyLoaded.push(streamer.key);
                 }
             }
         });
+
+        if (streamersData.length === 0) {
+            let streamersLoaded = 0;
+            Object.keys(this.props.userSubscriptions).every((streamerId, i) => {
+                if (i < 2 || streamersLoaded < 2) {
+                    if (!streamersData.includes(streamerId)) {
+                        /**
+                         * We load the streamers one by one excluding the ones already loaded, this could be very
+                         * expensive for user following a big number of streamers, consider paginate this queries
+                         * if the screen starts showing a bad performance for the average user
+                         */
+                        this.props.getSingleStreamerProfile(streamerId);
+                        streamersLoaded++;
+                    }
+                }
+            });
+        }
 
         return streamersData;
     }

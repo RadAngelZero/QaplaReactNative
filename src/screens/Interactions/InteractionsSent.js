@@ -18,6 +18,7 @@ class InteractionsSent extends Component {
 
     render() {
         const streamerName = this.props.navigation.getParam('displayName', '');
+        // const isStreaming = this.props.navigation.getParam('isStreaming', false);
         const isStreaming = this.props.navigation.getParam('isStreaming', false);
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
         const donationTotal = this.props.navigation.getParam('donationTotal', 0);
@@ -31,20 +32,20 @@ class InteractionsSent extends Component {
                     />
                     {onlyQoins ?
                         <Text style={[styles.whiteText, styles.sentText, !isStreaming ? styles.onlyQoinsText : {}]}>
-                            {`${translate('interactions.final.cheersSentP1')} `}
+                            {`${translate('interactions.final.cheersSent')}\n\n`}
+                            {`${translate('interactions.final.weveSentYourQoins', { qoins: donationTotal })} `}
                             <Text style={styles.accentTextColor}>
                                 {streamerName}
                             </Text>
-                            {` ${translate('interactions.final.cheersSentP2')}`}
                         </Text>
                         :
                         !isStreaming ?
                             <Text style={[styles.whiteText, styles.sentText, !isStreaming ? styles.onlyQoinsText : {}]}>
-                                {`${translate('interactions.final.interactionOnQueueP1')} `}
+                                {`${translate('interactions.final.interactionOnQueueP1')}`}
                                 <Text style={styles.accentTextColor}>
                                     {streamerName}
                                 </Text>
-                                {`${translate('interactions.final.interactionOnQueueP2')}`}
+                                {` ${translate('interactions.final.interactionOnQueueP2')}`}
                             </Text>
                             :
                             <Text style={[styles.whiteText, styles.sentText]}>
@@ -56,7 +57,7 @@ class InteractionsSent extends Component {
                             </Text>
                     }
                 </View>
-                <SentInteractionModal onPress={this.pressHandler} streamerName={streamerName} qoins={donationTotal} isLive={isStreaming} />
+                <SentInteractionModal onPress={this.pressHandler} streamerName={streamerName} qoins={donationTotal} isLive={isStreaming} goHome={() => this.props.navigation.navigate('Timeline')} />
             </View>
         )
     }

@@ -700,9 +700,10 @@
             "interactionSentP2": " para ver tu alerta en vivo!",
             "interactionOnQueueP1": "Interacción en cola\n\n",
             "interactionOnQueueP2": "no está en vivo. Tu alerta saldrá su próximo stream",
-            "cheersSentP1": "Cheers enviados\n\n",
-            "cheersSentP2": "te agradece por tu apoyo 🌱",
+            "cheersSent": "Cheers enviados",
+            "weveSentYourQoins": "Hemos enviado tus %{qoins} Qoins a 🌱",
             "modal": {
+                "viewMyInteractions": "Ver mi interacción",
                 "weveSentYourQoinsP1": "¡Hemos enviado tus\n",
                 "weveSentYourQoinsP2": "%{qoins} Qoins a %{streamerName}! ⚡️",
                 "backToStart": "Volver al inicio"

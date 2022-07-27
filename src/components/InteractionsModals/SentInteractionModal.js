@@ -15,18 +15,19 @@ class SentInteractionModal extends Component {
             />
             <LinearGradient
                 colors={gradients.gradient1}
-                style={[styles.bottomSheetLinearGradient, styles.bottomSheetLinearGradientWithButtons]}
+                style={[styles.bottomSheetLinearGradient, styles.bottomSheetLinearGradientWithButtons, styles.sentContainer]}
                 angle={100}
                 useAngle
             >
-                <Text style={[styles.bottomSheetWhiteText, styles.sentText]}>
+                {!this.props.isLive &&
+                    <Text style={[styles.bottomSheetWhiteText, styles.sentText]}>
                     {`${translate('interactions.final.modal.weveSentYourQoinsP1')}`}
                     <Text style={styles.sentAccentText}>
                         {`${translate('interactions.final.modal.weveSentYourQoinsP2', { qoins: this.props.qoins, streamerName: this.props.streamerName })}`}
                     </Text>
                 </Text>
+                }
                 <View style={[styles.bottomSheetButtonsContainer, styles.sentMarginButtonBottom]}>
-
                     <TouchableOpacity
                         onPress={this.props.onPress}
                         style={[styles.bottomSheetButton, styles.bottomSheetButtonBackground]}
@@ -34,7 +35,7 @@ class SentInteractionModal extends Component {
                         <Text style={styles.bottomSheetButtonText}>
                             {this.props.isLive ?
                                 <>
-                                    {`${translate('TimelineStreams.goToTwitch')}`}
+                                    {`${translate('interactions.final.modal.viewMyInteractions')}`}
 
                                 </>
                                 :
@@ -44,6 +45,19 @@ class SentInteractionModal extends Component {
                             }
                         </Text>
                     </TouchableOpacity>
+                    {this.props.isLive ?
+                        <View style={styles.bottomSheetButton}>
+                            <TouchableOpacity
+                                onPress={this.props.goHome}
+                                style={styles.bottomSheetNoButton}>
+                                <Text style={[styles.bottomSheetButtonText, styles.bottomSheetNoButtonText]}>
+                                    {`${translate('interactions.final.modal.backToStart')}`}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        <View style={styles.sentQueueButtonMarginBottom} />
+                    }
                 </View>
             </LinearGradient>
         </View>

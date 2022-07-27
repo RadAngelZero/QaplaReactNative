@@ -6,6 +6,7 @@ import {
     Alert
 } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { requestTrackingPermission } from 'react-native-tracking-transparency';
 
 import styles from './style';
 import { TWITCH_CLIENT_ID, TWITCH_REDIRECT_URI } from '../../utilities/Constants';
@@ -19,8 +20,18 @@ import Colors from '../../utilities/Colors';
 class TwitchAuthScreen extends Component {
     alreadyLoaded = false;
     state = {
-        hideWebView: false
+        hideWebView: false,
+        userAllowTracking: false
     };
+
+    componentDidMount() {
+        this.requestTrackingPermission();
+    }
+
+    async requestTrackingPermission() {
+        const trackingStatus = await requestTrackingPermission();
+        this.setState({ userAllowTracking: trackingStatus === 'authorized' || trackingStatus === 'unavailable' });
+    }
 
     async handleNavigation(data) {
         const url = data.url;
@@ -106,22 +117,26 @@ class TwitchAuthScreen extends Component {
             'response_type=token&' +
             `scope=user:read:email%20user:read:subscriptions%20user:read:follows%20user:read:broadcast`;
 
-        return (
-            <SafeAreaView style={styles.sfvContainer}>
-                {!this.state.hideWebView ?
-                    <View style={[styles.container, { opacity: this.state.hideWebView ? 0 : 1 }]}>
-                        <WebView
-                            source={{ uri }}
-                            onNavigationStateChange={(data) => this.handleNavigation(data)}
-                            scalesPageToFit={true} />
-                    </View>
-                    :
-                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor: '#131833' }}>
-                        <ActivityIndicator size='large' color={Colors.greenQapla} />
-                    </View>
-                }
-            </SafeAreaView>
-        );
+        if (this.state.userAllowTracking) {
+            return (
+                <SafeAreaView style={styles.sfvContainer}>
+                    {!this.state.hideWebView ?
+                        <View style={[styles.container, { opacity: this.state.hideWebView ? 0 : 1 }]}>
+                            <WebView
+                                source={{ uri }}
+                                onNavigationStateChange={(data) => this.handleNavigation(data)}
+                                scalesPageToFit={true} />
+                        </View>
+                        :
+                        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor: '#131833' }}>
+                            <ActivityIndicator size='large' color={Colors.greenQapla} />
+                        </View>
+                    }
+                </SafeAreaView>
+            );
+        }
+
+        return null;
     }
 }
 

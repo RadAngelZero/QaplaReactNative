@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Image, TouchableOpacity, TextInput, Keyboard, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -9,6 +9,7 @@ import { generateGiphyUserRandomId, getGiphyTrending, searchGiphyMedia } from '.
 import { GIPHY_GIFS, GIPHY_STICKERS, MEDIA_TO_LOAD_FROM_GIPHY } from '../../utilities/Constants';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { getEmotesLibrary } from '../../services/database';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class InteractionsGiphyMediaSelector extends Component {
     state = {
@@ -21,6 +22,17 @@ class InteractionsGiphyMediaSelector extends Component {
 
     componentDidMount() {
         this.fetchTrendingMedia();
+        this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+			this.setState({ keyboardHeight: parseInt(e.endCoordinates.height) });
+		});
+		this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', () => {
+			this.setState({ keyboardHeight: 0 });
+		});
+    }
+
+    componentWillUnmount() {
+        this.keyboardWillShowListener.remove();
+        this.keyboardWillHideListener.remove();
     }
 
     fetchTrendingMedia = async () => {
@@ -149,7 +161,9 @@ class InteractionsGiphyMediaSelector extends Component {
 
         return (
             <View style={styles.container}>
-                <View style={[styles.gridMainContainer]} >
+                <View style={[styles.gridMainContainer, {
+                    height: (Platform.OS === 'android' && this.state.keyboardHeight) ? this.state.keyboardHeight : heightPercentageToPx(85)
+                }]} >
                     <View style={styles.gridSearchBarContainer}>
                         <View style={[styles.searchBar, styles.gridSearchBar]}>
                             <View style={{ opacity: 0.4 }}>

@@ -155,12 +155,19 @@ export const styles = StyleSheet.create({
         letterSpacing: 1,
         textAlign: 'center',
         marginTop: heightPercentageToPx(9.11),
+        marginBottom: heightPercentageToPx(2.95),
     },
     sentAccentText: {
         fontWeight: '700',
     },
     sentMarginButtonBottom: {
-        marginBottom: heightPercentageToPx(5.29),
+        marginBottom: heightPercentageToPx(1.5),
+    },
+    sentContainer: {
+        justifyContent: 'flex-end',
+    },
+    sentQueueButtonMarginBottom: {
+        height: 43,
     },
 });
 

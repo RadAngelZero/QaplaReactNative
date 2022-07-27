@@ -160,7 +160,7 @@
         "done": "Done",
         "loots": "Loots",
         "interactions": {
-            "interact" : "Interact",
+            "interact": "Interact",
             "liveToYourStreamer": "on-screen to your streamer"
         }
     },
@@ -702,9 +702,10 @@
             "interactionSentP2": "’s channel to watch your live alert",
             "interactionOnQueueP1": "Interaction queued\n\n",
             "interactionOnQueueP2": "is offline. We’ll send your alert in their next live stream",
-            "cheersSentP1": "Cheers sent\n\n",
-            "cheersSentP2": "says Thank You for your support 🌱",
+            "cheersSent": "Cheers sent",
+            "weveSentYourQoins": "We’ve sent your %{qoins} Qoins to 🌱",
             "modal": {
+                "viewMyInteractions": "Watch my interaction",
                 "weveSentYourQoinsP1": "We’ve sent your\n",
                 "weveSentYourQoinsP2": "%{qoins} Qoins to %{streamerName}! ⚡️",
                 "backToStart": "Go to the main screen"

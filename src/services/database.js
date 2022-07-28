@@ -1390,47 +1390,60 @@ export async function getAllStreamers() {
  * @param {string} twitchUserName Username of Twitch
  * @param {string} userPhotoURL URL of the user profile photo
  * @param {string} streamerID Streamer uid
+ * @param {function} onSuccess Function to call once the cheer is sent
+ * @param {function} onError Function to call on any possible error
  */
-export async function sendCheers(amountQoins, media, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID) {
-    await usersRef.child(uid).child('credits').transaction((credits) => {
+export function sendCheers(amountQoins, media, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID, onSuccess, onError) {
+    usersRef.child(uid).child('credits').transaction((credits) => {
         if (credits) {
             credits -= amountQoins;
         }
 
         return credits >= 0 ? credits : 0;
-    }, async (error, commited) => {
-        if (!error && commited) {
-            const donationRef = streamersDonationsRef.child(streamerID).push({
-                amountQoins,
-                media,
-                message,
-                timestamp,
-                uid,
-                read: false,
-                twitchUserName,
-                userName,
-                photoURL: userPhotoURL
-            });
-
+    }, async (error, userQoinsCommitted) => {
+        if (error) {
+            onError();
+        } else if (userQoinsCommitted) {
             userStreamerRef.child(streamerID).child('qoinsBalance').transaction((streamerQoins) => {
                 if (streamerQoins) {
                     streamerQoins += amountQoins;
                 }
 
                 return streamerQoins ? streamerQoins : amountQoins;
-            });
+            }, async (error, streamerQoinsCommitted) => {
+                if (error) {
+                    onError();
+                    usersRef.child(uid).child('credits').transaction((credits) => {
+                        return credits ? (credits + amountQoins) : amountQoins;
+                    });
+                } else if (streamerQoinsCommitted) {
+                    const donationRef = streamersDonationsRef.child(streamerID).push({
+                        amountQoins,
+                        media,
+                        message,
+                        timestamp,
+                        uid,
+                        read: false,
+                        twitchUserName,
+                        userName,
+                        photoURL: userPhotoURL
+                    });
 
-            await completeUserDonation(uid, amountQoins);
+                    await completeUserDonation(uid, amountQoins);
 
-            database.ref('/StreamersDonationAdministrative').child(donationRef.key).set({
-                amountQoins,
-                message,
-                timestamp,
-                uid,
-                sent: false,
-                twitchUserName,
-                userName,
-                streamerName
+                    await database.ref('/StreamersDonationAdministrative').child(donationRef.key).set({
+                        amountQoins,
+                        message,
+                        timestamp,
+                        uid,
+                        sent: false,
+                        twitchUserName,
+                        userName,
+                        streamerName
+                    });
+
+                    onSuccess();
+                }
             });
         }
     });

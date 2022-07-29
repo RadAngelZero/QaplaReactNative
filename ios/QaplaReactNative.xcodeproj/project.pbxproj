@@ -143,7 +143,9 @@
 		EF82A2004EC2496A9EAE8D91 /* comparte-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = D993E97029C345FFB3F5DC33 /* comparte-onboarding.png */; };
 		F054D3EA47E9453CBB0908DB /* close.svg in Resources */ = {isa = PBXBuildFile; fileRef = B992432FF00048309FA2A6ED /* close.svg */; };
 		F12B0428287384EB00688533 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F12B0427287384EB00688533 /* StoreKit.framework */; };
+		F175B3E42894584C001EC9BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F175B3E62894584C001EC9BB /* InfoPlist.strings */; };
 		F1E51258208F414AB3F4F5E6 /* LessQaploins.svg in Resources */ = {isa = PBXBuildFile; fileRef = C32BD5EC73DE46578A0E029E /* LessQaploins.svg */; };
+		F1EE3F4D28946AA7003D6DDD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1EE3F4F28946AA7003D6DDD /* InfoPlist.strings */; };
 		F3F2AF3172AE4BD2AAC9EB2A /* signup.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EE7B35A0704BB6A0F13ADD /* signup.png */; };
 		F605B1F535884143B7B66BC9 /* infoIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 918561C56096470F923E78E5 /* infoIcon.svg */; };
 		F700A32B68B94E5D8BBA5465 /* ActivityQoin.svg in Resources */ = {isa = PBXBuildFile; fileRef = BE3DB182F75E4633A12097F3 /* ActivityQoin.svg */; };
@@ -590,9 +592,14 @@
 		EFE2E3520603449C88EA50E7 /* Onboarding_Illustration-4.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Onboarding_Illustration-4.png"; path = "../assets/images/Onboarding_Illustration-4.png"; sourceTree = "<group>"; };
 		F0FA513E5CE4A2EFBD2C4698 /* Pods_QaplaReactNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QaplaReactNative.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F12B0427287384EB00688533 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		F175B3E52894584C001EC9BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F1C3EF34252CEBCC006A5C46 /* Qapla GamingRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Qapla GamingRelease.entitlements"; path = "QaplaReactNative/Qapla GamingRelease.entitlements"; sourceTree = "<group>"; };
 		F1C4F047F09E4844968F7224 /* qapla-smile.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "qapla-smile.png"; path = "../assets/images/qapla-smile.png"; sourceTree = "<group>"; };
 		F1E75F0A288608FD00F2FA22 /* QaplaReactNative-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QaplaReactNative-Bridging-Header.h"; sourceTree = "<group>"; };
+		F1EE3F4B28946A92003D6DDD /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		F1EE3F4C28946A9B003D6DDD /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		F1EE3F4E28946AA7003D6DDD /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F1EE3F5028946AA8003D6DDD /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		F55A77273CB246939097FC26 /* minusBubble.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = minusBubble.svg; path = ../assets/icons/minusBubble.svg; sourceTree = "<group>"; };
 		F73E0BBB5DB246F09088BF5F /* qoins-flip.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "qoins-flip.svg"; path = "../assets/icons/qoins-flip.svg"; sourceTree = "<group>"; };
 		F840FD55B1434C3899A66F6E /* DiscordSocial.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = DiscordSocial.svg; path = ../assets/icons/DiscordSocial.svg; sourceTree = "<group>"; };
@@ -946,6 +953,8 @@
 				1B80EF29440C4A748B887F21 /* Onboarding_Illustration.png */,
 				509C313C5D7D414790E9FE41 /* QaplaSignUpLogo2021.png */,
 				AC9E626FC1B1435B9D7E2344 /* NotEnoughQoins.png */,
+				F175B3E62894584C001EC9BB /* InfoPlist.strings */,
+				F1EE3F4F28946AA7003D6DDD /* InfoPlist.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1152,6 +1161,8 @@
 				English,
 				en,
 				Base,
+				es,
+				"es-419",
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -1503,6 +1514,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9073AB024070EA900BB648D /* assets in Resources */,
+				F175B3E42894584C001EC9BB /* InfoPlist.strings in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				F9073A872406D29500BB648D /* main.jsbundle in Resources */,
@@ -1520,6 +1532,7 @@
 				958EBB9A6ED84A4AA3358C3C /* HighFive.svg in Resources */,
 				F1E51258208F414AB3F4F5E6 /* LessQaploins.svg in Resources */,
 				6FD1CC95507246CFA1F8379C /* Lighting.svg in Resources */,
+				F1EE3F4D28946AA7003D6DDD /* InfoPlist.strings in Resources */,
 				DC01A8CC45DD4D6895D617FA /* MoreQaploins.svg in Resources */,
 				D0480312D3084EF2B826A133 /* Notifications.svg in Resources */,
 				4E202AA87EF048FD89452E3C /* OkIcon.svg in Resources */,
@@ -1837,9 +1850,28 @@
 			isa = PBXVariantGroup;
 			children = (
 				13B07FB21A68108700A75B9A /* Base */,
+				F1EE3F4B28946A92003D6DDD /* es */,
+				F1EE3F4C28946A9B003D6DDD /* es-419 */,
 			);
 			name = LaunchScreen.xib;
 			path = QaplaReactNative;
+			sourceTree = "<group>";
+		};
+		F175B3E62894584C001EC9BB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F175B3E52894584C001EC9BB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F1EE3F4F28946AA7003D6DDD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1EE3F4E28946AA7003D6DDD /* es */,
+				F1EE3F5028946AA8003D6DDD /* es-419 */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

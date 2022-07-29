@@ -3,7 +3,8 @@ import {
     ActivityIndicator,
     View,
     SafeAreaView,
-    Alert
+    Alert,
+    Linking
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { requestTrackingPermission } from 'react-native-tracking-transparency';
@@ -16,6 +17,7 @@ import { connect } from 'react-redux';
 import { generateAuthTokenForTwitchSignIn } from '../../services/functions';
 import { auth } from '../../utilities/firebase';
 import Colors from '../../utilities/Colors';
+import { translate } from '../../utilities/i18';
 
 class TwitchAuthScreen extends Component {
     alreadyLoaded = false;
@@ -30,7 +32,24 @@ class TwitchAuthScreen extends Component {
 
     async requestTrackingPermission() {
         const trackingStatus = await requestTrackingPermission();
-        this.setState({ userAllowTracking: trackingStatus === 'authorized' || trackingStatus === 'unavailable' });
+        if (trackingStatus === 'authorized' || trackingStatus === 'unavailable') {
+            this.setState({ userAllowTracking: true });
+        } else {
+            Alert.alert(
+                translate('linkTwitchAccount.rejectTrakingTitle'),
+                translate('linkTwitchAccount.rejectTrakingMessage'),
+                [
+                    {
+                        text: translate('linkTwitchAccount.rejectTrackingCancel'),
+                        onPress: this.props.onTrackingReject
+                    },
+                    {
+                        text: translate('linkTwitchAccount.rejectTrackingSettings'),
+                        onPress: Linking.openSettings
+                    }
+                ]
+            );
+        }
     }
 
     async handleNavigation(data) {

@@ -64,7 +64,8 @@ class LinkTwitchAccount extends Component {
                         </View>
                     :
                         <TwitchAuthScreen onLinkSuccess={this.successTwitchLink}
-                            onFail={this.props.onFail} />
+                            onFail={this.props.onFail}
+                            onTrackingReject={this.props.onTrackingReject} />
                     }
                 </View>
             </LinearGradient>

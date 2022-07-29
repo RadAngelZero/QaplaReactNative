@@ -616,13 +616,15 @@ class AuthHandlerScreen extends Component {
                                 </>
                                 :
                                 <View style={styles.twitchAuthScreenContainer}>
-                                    <TwitchAuthScreen onAuthSuccessful={this.handleTwitchSignIn} />
+                                    <TwitchAuthScreen onAuthSuccessful={this.handleTwitchSignIn}
+                                    onTrackingReject={() => this.setState({ currentStep: -1 })} />
                                 </View>
                                 }
                             </LinearGradient>
                         </View>
                     </View>
                     <LinkTwitchAccountModal
+                        onTrackingReject={this.closeTwitchLinkModal}
                         open={this.state.showLinkWitTwitchModal}
                         onClose={this.closeTwitchLinkModal}
                         onLinkSuccessful={this.handleQlan}

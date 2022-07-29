@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Allow Qapla and third partie providers to save cookies about you</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -93,6 +91,8 @@
 	<string>Photo Library Access Warning</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow access to Photos to edit your profile picture. Your picture will show in your profile and ranking standings</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Allow Qapla and third partie providers to save cookies about you</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SFRounded-Ultralight.ttf</string>

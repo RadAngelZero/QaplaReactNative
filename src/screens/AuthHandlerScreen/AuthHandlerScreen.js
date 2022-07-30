@@ -617,7 +617,7 @@ class AuthHandlerScreen extends Component {
                                 :
                                 <View style={styles.twitchAuthScreenContainer}>
                                     <TwitchAuthScreen onAuthSuccessful={this.handleTwitchSignIn}
-                                    onTrackingReject={() => this.setState({ currentStep: -1 })} />
+                                        onTrackingReject={() => this.setState({ currentStep: -1 })} />
                                 </View>
                                 }
                             </LinearGradient>

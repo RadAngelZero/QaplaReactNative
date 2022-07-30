@@ -45,7 +45,10 @@ class TwitchAuthScreen extends Component {
                     },
                     {
                         text: translate('linkTwitchAccount.rejectTrackingSettings'),
-                        onPress: Linking.openSettings
+                        onPress: () => {
+                            Linking.openSettings();
+                            this.props.onTrackingReject();
+                        }
                     }
                 ]
             );

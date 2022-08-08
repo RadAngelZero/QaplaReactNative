@@ -177,8 +177,10 @@ class AuthLoadingScreen extends Component {
     listenBranchLinks = async () => {
         branch.subscribe({
             onOpenComplete: ({ error, params }) => {
-                this.setState({ linkOnProgress: true });
-                this.processBranchLinkData(params);
+                if (params) {
+                    this.setState({ linkOnProgress: true });
+                    this.processBranchLinkData(params);
+                }
             }
         });
     }

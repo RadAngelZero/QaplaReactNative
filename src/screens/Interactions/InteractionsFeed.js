@@ -37,7 +37,12 @@ export class InteractionsFeed extends Component {
 
     fetchStreamersData = async () => {
         const liveStreamers = await getAllStreamersStreaming();
-        const liveData = liveStreamers.val();
+        liveStreamers.forEach((streamer) => {
+            console.log(streamer.val());
+        })
+        const liveData = Object.keys(liveStreamers.val())
+            .filter((streamerId) => liveStreamers.val()[streamerId].isOverlayActive)
+            .map((streamerId) => ({ streamerId, ...liveStreamers.val()[streamerId]}) );
 
         if (this.props.uid) {
             const favStreamersSnap = await getUserFavsStreamers(this.props.uid, 10);
@@ -45,10 +50,6 @@ export class InteractionsFeed extends Component {
             favStreamersSnap.forEach((fav) => {
                 if (!liveStreamers.val()[fav.key]) {
                     favsNoLive.push({ streamerId: fav.key, ...favStreamersSnap.val()[fav.key] });
-                } else {
-                    if (liveData) {
-                        liveData[fav.key].featured = true;
-                    }
                 }
             });
 
@@ -74,8 +75,6 @@ export class InteractionsFeed extends Component {
             recentStreamersSnap.forEach((recent) => {
                 if (!liveStreamers.val()[recent.key] && !favStreamers.find((streamer) => streamer.streamerId === recent.key)) {
                     recentStreamersNoLiveNoFav.push({ streamerId: recent.key, ...recentStreamersSnap.val()[recent.key] });
-                } else if (liveStreamers.val()[recent.key]) {
-                    liveData[recent.key].featured = true;
                 }
             });
 
@@ -97,9 +96,7 @@ export class InteractionsFeed extends Component {
 
         if (liveStreamers.exists()) {
             this.setState({
-                liveStreamers: Object.keys(liveData)
-                    .sort((a, b) => (Number(liveData[b].featured) || 0) - (Number(liveData[a].featured) || 0))
-                    .map((streamerId) => ({ streamerId, ...liveData[streamerId] })),
+                liveStreamers: liveData,
                 dataFetched: true
             });
         }

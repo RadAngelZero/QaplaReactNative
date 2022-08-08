@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
+import branch from 'react-native-branch';
 
 import store from '../..//store/store';
 import {
@@ -15,7 +16,8 @@ import { getUserNode } from '../../actions/userActions';
 import {
     getUserNameWithUID,
     updateUserLanguage,
-    getTwitchUserName
+    getTwitchUserName,
+    getStreamerPublicProfile
 } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment, setUserIdOnSegment } from '../../services/statistics';
@@ -169,6 +171,16 @@ class AuthLoadingScreen extends Component {
 
         this.manageStartDeepLinks();
         this.manageBackgroundDeepLinks();
+        this.listenBranchLinks();
+    }
+
+    listenBranchLinks = async () => {
+        branch.subscribe({
+            onOpenComplete: ({ error, params }) => {
+                this.setState({ linkOnProgress: true });
+                this.processBranchLinkData(params);
+            }
+        });
     }
 
     /**
@@ -184,6 +196,10 @@ class AuthLoadingScreen extends Component {
         if (!this.unsubscribeBackgroundDpl) {
             this.unsubscribeBackgroundDpl = links.onLink(this.processLinkUrl);
         }
+    }
+
+    processBranchLinkData = (linkData) => {
+        return this.redirectUserToStreamerProfile(linkData.streamerId);
     }
 
     /**
@@ -232,8 +248,11 @@ class AuthLoadingScreen extends Component {
      * Redirect to StreamerProfile screen with streamerId
      * @param {string} streamerId StreamerId on the processed deeplink
      */
-    redirectUserToStreamerProfile(streamerId) {
-        this.props.navigation.navigate('StreamerProfile', { streamerId });
+    async redirectUserToStreamerProfile(streamerId) {
+        const profile = await getStreamerPublicProfile(streamerId);
+        if (profile.exists()) {
+            this.props.navigation.navigate('StreamerProfile', { streamerData: { ...profile.val(), streamerId } });
+        }
     }
 
     render() {

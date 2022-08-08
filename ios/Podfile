@@ -58,6 +58,7 @@ target 'QaplaReactNative' do
   pod 'react-native-camera', path: '../node_modules/react-native-camera'
 
   pod 'RNIap', :path => '../node_modules/react-native-iap', :modular_headers => true
+  pod 'react-native-branch', path: '../node_modules/react-native-branch'
 
   target 'QaplaReactNativeTests' do
     inherit! :search_paths

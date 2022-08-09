@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import StreamerCardsList from '../../components/StreamerCardsList/StreamerCardsList';
 import { getStreamersData } from '../../actions/streamersActions';
-import { BOTTOM_NAVIGATION_BAR_HEIGHT, STREAMERS_BLACKLIST } from '../../utilities/Constants';
+import { BOTTOM_NAVIGATION_BAR_HEIGHT, STREAMERS_BLACKLIST, TWITCH_AFFILIATE, TWITCH_PARTNER } from '../../utilities/Constants';
 
 class DiscoverStreamersScreen extends Component {
     componentDidMount() {
@@ -20,7 +20,9 @@ class DiscoverStreamersScreen extends Component {
         const streamersData = [];
         this.props.streamers.forEach((streamer) => {
             if (!STREAMERS_BLACKLIST.includes(streamer.key) && !this.props.userSubscriptions[streamer.key]) {
-                if ((streamer.backgroundGradient || streamer.backgroundUrl) && streamer.displayName && streamer.photoUrl && streamer.bio && streamer.tags) {
+                if ((streamer.backgroundGradient || streamer.backgroundUrl)
+                    && streamer.displayName && streamer.photoUrl && streamer.bio && streamer.tags &&
+                    (streamer.broadcasterType === TWITCH_PARTNER || streamer.broadcasterType === TWITCH_AFFILIATE)) {
                     streamersData.push({
                         displayName: streamer.displayName,
                         /**

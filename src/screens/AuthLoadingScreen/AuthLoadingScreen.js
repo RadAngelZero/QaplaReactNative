@@ -178,7 +178,6 @@ class AuthLoadingScreen extends Component {
         branch.subscribe({
             onOpenComplete: ({ error, params }) => {
                 if (params) {
-                    this.setState({ linkOnProgress: true });
                     this.processBranchLinkData(params);
                 }
             }
@@ -201,7 +200,10 @@ class AuthLoadingScreen extends Component {
     }
 
     processBranchLinkData = (linkData) => {
-        return this.redirectUserToStreamerProfile(linkData.streamerId);
+        if (linkData.streamerId) {
+            this.setState({ linkOnProgress: true });
+            return this.redirectUserToStreamerProfile(linkData.streamerId);
+        }
     }
 
     /**

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, FlatList, View, TouchableOpacity, ActivityIndicator, SafeAreaView, Platform } from 'react-native';
+import { ScrollView, Text, FlatList, View, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -10,7 +10,7 @@ import StreamerCardSmall from '../../components/StreamerCard/StreamerCardSmall';
 import StreamerCardMini from '../../components/StreamerCard/StreamerCardMini';
 import StreamCardLive from '../../components/StreamCard/StreamCardLive';
 import Colors from '../../utilities/Colors';
-import { DEFAULT_404_TWITCH_PREVIEW_URL } from '../../utilities/Constants';
+import { DEFAULT_404_TWITCH_PREVIEW_URL, TWITCH_AFFILIATE, TWITCH_PARTNER } from '../../utilities/Constants';
 
 import {
     getAllStreamersStreaming,
@@ -55,12 +55,14 @@ export class InteractionsFeed extends Component {
                 if (favStreamers.length < MAXIM_CARDS_LENGTH) {
                     const fav = favsNoLive[i];
                     const streamerProfile = await getStreamerPublicProfile(fav.streamerId);
-                    if (streamerProfile.exists()) {
+                    if (streamerProfile.exists() && (streamerProfile.val().broadcasterType === TWITCH_PARTNER || streamerProfile.val().broadcasterType === TWITCH_AFFILIATE)) {
                         favStreamers.push({ streamerId: fav.streamerId, ...streamerProfile.val() });
                     } else {
                         const streamerData = await getStreamerPublicData(fav.streamerId);
-                        const randomBackground = Colors.streamersProfileBackgroundGradients[Math.floor(Math.random() * Colors.streamersProfileBackgroundGradients.length)]
-                        favStreamers.push({ streamerId: fav.streamerId, ...streamerData.val(), backgroundGradient: randomBackground });
+                        if (streamerData.exists() && streamerData.val().broadcasterType === TWITCH_PARTNER || streamerData.val().broadcasterType === TWITCH_AFFILIATE) {
+                            const randomBackground = Colors.streamersProfileBackgroundGradients[Math.floor(Math.random() * Colors.streamersProfileBackgroundGradients.length)]
+                            favStreamers.push({ streamerId: fav.streamerId, ...streamerData.val(), backgroundGradient: randomBackground });
+                        }
                     }
                 } else {
                     break;
@@ -79,9 +81,9 @@ export class InteractionsFeed extends Component {
             for (let i = 0; i < recentStreamersNoLiveNoFav.length; i++) {
                 if (recentStreamers.length < MAXIM_CARDS_LENGTH) {
                     const recent = recentStreamersNoLiveNoFav[i];
-                    const streamerProfile = await getStreamerPublicProfile(recent.streamerId);
-                    if (streamerProfile.exists()) {
-                        recentStreamers.push({ streamerId: recent.streamerId, ...streamerProfile.val() });
+                    const streamerData = await getStreamerPublicData(recent.streamerId);
+                    if (streamerData.exists() && streamerData.val().broadcasterType === TWITCH_PARTNER || streamerData.val().broadcasterType === TWITCH_AFFILIATE) {
+                        recentStreamers.push({ streamerId: recent.streamerId, ...streamerData.val() });
                     }
                 } else {
                     break;

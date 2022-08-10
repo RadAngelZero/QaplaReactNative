@@ -37,9 +37,6 @@ export class InteractionsFeed extends Component {
 
     fetchStreamersData = async () => {
         const liveStreamers = await getAllStreamersStreaming();
-        liveStreamers.forEach((streamer) => {
-            console.log(streamer.val());
-        })
         const liveData = Object.keys(liveStreamers.val())
             .filter((streamerId) => liveStreamers.val()[streamerId].isOverlayActive)
             .map((streamerId) => ({ streamerId, ...liveStreamers.val()[streamerId]}) );

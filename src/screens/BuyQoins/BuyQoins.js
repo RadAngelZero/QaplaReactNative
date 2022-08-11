@@ -5,12 +5,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import * as RNIap from 'react-native-iap';
 
-import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
 import images from '../../../assets/images';
 import styles from './style';
 import { translate } from '../../utilities/i18';
 import { isUserLogged } from '../../services/auth';
 import { setOnPurchaseFinished } from '../../actions/purchasesActions';
+import { trackOnSegment } from '../../services/statistics';
 
 const productIds = Platform.select({
     ios: [
@@ -32,6 +33,7 @@ class BuyQoins extends Component {
     purchaseErrorSubscription = null;
 
     componentDidMount() {
+        trackOnSegment('Buy Qoins Screen Opened');
         this.fetchProducts();
     }
 
@@ -42,6 +44,7 @@ class BuyQoins extends Component {
 
     requestPurchase = async (sku) => {
         if (isUserLogged()) {
+            trackOnSegment('Purchase Attempt');
             try {
                 this.props.setOnFinishPurchase(this.props.navigation.getParam('onSuccessfulBuy', () => { }));
                 await RNIap.requestPurchase(sku, false);

@@ -9,6 +9,7 @@ import SendInteractionModal from '../../components/InteractionsModals/SendIntera
 import { sendCheers } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../services/auth';
+import { trackOnSegment } from '../../services/statistics';
 
 class InteractionsCheckout extends Component {
     state = {
@@ -80,6 +81,12 @@ class InteractionsCheckout extends Component {
                                 this.props.photoUrl,
                                 streamerId,
                                 () => {
+                                    trackOnSegment('Interaction Sent', {
+                                        MessageLength: message ? message.length : null,
+                                        ExtraTip: this.state.extraTip,
+                                        TotalQoins: totalCost
+                                    });
+
                                     this.props.navigation.navigate('InteractionsSent', {
                                         ...this.props.navigation.state.params,
                                         donationTotal: totalCost

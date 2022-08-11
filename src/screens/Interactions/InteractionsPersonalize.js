@@ -6,6 +6,7 @@ import images from '../../../assets/images';
 import { GIPHY_GIFS, GIPHY_STICKERS, MEME, TTS } from '../../utilities/Constants';
 import { getAllMediaTypeCosts } from '../../services/database';
 import { translate } from '../../utilities/i18';
+import { trackOnSegment } from '../../services/statistics';
 
 class InteractionsPersonalize extends Component {
     state = {
@@ -28,6 +29,10 @@ class InteractionsPersonalize extends Component {
     }
 
     navigateToSelectedMedia = (mediaType) => {
+        trackOnSegment('Media For Interaction Selected', {
+            MediaType: mediaType
+        });
+
         if (mediaType === MEME) {
             this.props.navigation.navigate('InteractionsMemeSelector', {
                 mediaType,
@@ -42,6 +47,10 @@ class InteractionsPersonalize extends Component {
     }
 
     navigateToWriteMessage = () => {
+        trackOnSegment('Media For Interaction Selected', {
+            MediaType: 'TTS'
+        });
+
         const costsObject = this.props.navigation.getParam('costs', {});
         this.props.navigation.navigate('InteractionsTTS', {
             ...this.props.navigation.state.params,
@@ -53,6 +62,8 @@ class InteractionsPersonalize extends Component {
     }
 
     justSendQoins = () => {
+        trackOnSegment('Only Send Qoins');
+
         // Send to only Qoins donation screen
         this.props.navigation.navigate('InteractionsCheckout', {
             ...this.props.navigation.state.params,

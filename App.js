@@ -122,6 +122,8 @@ class App extends React.Component {
                                         setTimeout(() => {
                                             this.setState({ openTransactionModal: false });
                                         }, 1000);
+
+                                        trackOnSegment('Qoins Purchase Finished');
                                     }
                                 });
                             } catch (error) {

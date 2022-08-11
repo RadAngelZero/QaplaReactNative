@@ -20,6 +20,7 @@ import {
     getUserFavsStreamers
 } from '../../services/database';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { trackOnSegment } from '../../services/statistics';
 
 const MAXIM_CARDS_LENGTH = 6;
 
@@ -101,8 +102,14 @@ export class InteractionsFeed extends Component {
         }
     }
 
-    onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming) => {
-        this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+    onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming, type) => {
+        trackOnSegment('Streamer Selected To Send Interaction', {
+            Streamer: displayName,
+            StreamerId: streamerId,
+            Category: type
+        });
+
+        return this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
     }
 
     renderLiveItem = ({ item, index }) => {
@@ -122,7 +129,7 @@ export class InteractionsFeed extends Component {
                 streamerName={item.displayName}
                 index={index}
                 featured={item.featured}
-                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, true)} />
+                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, true, 'Live')} />
         );
     };
 
@@ -136,7 +143,7 @@ export class InteractionsFeed extends Component {
                 backgroundUrl={item.backgroundUrl}
                 backgroundGradient={item.backgroundGradient}
                 displayName={item.displayName}
-                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, false)} />
+                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, false, 'Fav')} />
         </View>
     );
 
@@ -149,7 +156,7 @@ export class InteractionsFeed extends Component {
             <StreamerCardMini
                 streamerPhoto={item.photoUrl}
                 streamerName={item.displayName}
-                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, false)} />
+                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, false, 'Recent')} />
         </View>
     );
 

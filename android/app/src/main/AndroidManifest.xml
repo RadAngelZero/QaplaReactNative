@@ -49,8 +49,46 @@
           <data android:host="example.page.link" android:scheme="http"/>
           <data android:host="example.page.link" android:scheme="https"/>
         </intent-filter>
+        <intent-filter>
+          <data android:scheme="Qapla" android:host="open" />
+          <action android:name="android.intent.action.VIEW" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.BROWSABLE" />
+        </intent-filter>
+
+        <intent-filter android:autoVerify="true">
+          <action android:name="android.intent.action.VIEW" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.BROWSABLE" />
+          <data android:scheme="http" android:host="qapla.app.link" />
+          <data android:scheme="https" android:host="qapla.app.link" />
+          <!-- qapla-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website.  -->
+          <data android:scheme="http" android:host="qapla-alternate.app.link" />
+          <data android:scheme="https" android:host="qapla-alternate.app.link" />
+        </intent-filter>
+
+        <intent-filter android:autoVerify="true">
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" android:host="example.test-app.link" />
+            <!-- example-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website.  -->
+            <data android:scheme="https" android:host="example-alternate.test-app.link" />
+        </intent-filter>
       </activity>
+
+      <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_bg6p6DgKXOhIDT1ShRTQijhcxslLZvQ2" />
+      <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_hlxrWC5Zx16DkYmWu4AHiimdqugRYMr" />
+      <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />
+
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
     </application>
+
+    <queries>
+      <intent>
+          <action android:name="android.intent.action.SEND" />
+          <data android:mimeType="text/plain" />
+      </intent>
+    </queries>
 
 </manifest>

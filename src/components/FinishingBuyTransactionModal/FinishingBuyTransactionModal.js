@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Image, Modal, SafeAreaView, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import MaskedView from '@react-native-community/masked-view'
 
 import images from '../../../assets/images';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
@@ -36,9 +37,22 @@ class FinishingBuyTransactionModal extends Component {
                                 unfilledColor='rgba(0, 254, 223, 0.2)'
                                 color={'#00FEDF'}
                                 borderWidth={0} />
-                            <Text style={styles.statusText}>
-                                {this.props.transactionText}
-                            </Text>
+                            {this.props.transactionText !== '' ?
+                                <MaskedView maskElement={<Text style={styles.statusText}>{this.props.transactionText}</Text>} style={{ alignContent: 'center' }}>
+                                    <LinearGradient
+                                        colors={['#FFD3FB', '#F5FFCB', '#9FFFDD']}
+                                        useAngle
+                                        angle={248.41}>
+                                        <Text style={[styles.statusText, { opacity: 0 }]}>
+                                            {this.props.transactionText}
+                                        </Text>
+                                    </LinearGradient>
+                                </MaskedView>
+                                :
+                                <Text style={[styles.statusText, { opacity: 0 }]}>
+                                    {this.props.transactionText}
+                                </Text>
+                            }
                         </View>
                     </LinearGradient>
                 </SafeAreaView>

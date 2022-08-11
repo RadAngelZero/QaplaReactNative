@@ -178,3 +178,6 @@ export const DEFAULT_404_TWITCH_PREVIEW_URL = 'https://static-cdn.jtvnw.net/ttv-
 export const MAX_CHAR_FOR_TTS = 100;
 
 export const MEDIA_TO_LOAD_FROM_GIPHY = 10;
+
+export const TWITCH_PARTNER = 'partner';
+export const TWITCH_AFFILIATE = 'affiliate';

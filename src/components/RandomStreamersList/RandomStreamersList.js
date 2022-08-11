@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
 import { connect } from 'react-redux';
 
+import styles from './style';
 import { getStreamerPublicProfile, getStreamerPublicProfileKeyAtIndex, getStreamersPublicProfilesLength } from '../../services/database';
 import { STREAMERS_BLACKLIST } from '../../utilities/Constants';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';

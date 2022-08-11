@@ -78,6 +78,7 @@ class JoinQlanModal extends Component {
                                         }
                                         <View style={styles.textInput}>
                                             <TextInput
+                                                autoFocus
                                                 value={this.state.code}
                                                 onChange={(e) => { this.setState({ code: e.nativeEvent.text }) }}
                                                 style={styles.textInputText}

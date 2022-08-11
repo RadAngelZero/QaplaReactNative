@@ -5,7 +5,7 @@ import styles from './style';
 import images from '../../../assets/images';
 
 import { getStreamersByName } from '../../services/database';
-import { STREAMERS_BLACKLIST } from '../../utilities/Constants';
+import { STREAMERS_BLACKLIST, TWITCH_AFFILIATE, TWITCH_PARTNER } from '../../utilities/Constants';
 
 const Item = ({ streamerName, streamerImg, isStreaming, streamerId, onPress }) => (
     <TouchableOpacity onPress={() => onPress(streamerId, streamerName, streamerImg, isStreaming)}>
@@ -54,7 +54,7 @@ class InteractionsSearchStreamer extends Component {
     searchTimeout = null;
 
     renderItem = ({ item }) => {
-        if (!STREAMERS_BLACKLIST.includes(item.streamerId)) {
+        if (!STREAMERS_BLACKLIST.includes(item.streamerId) && item.broadcasterType === TWITCH_PARTNER || item.broadcasterType === TWITCH_AFFILIATE) {
             return (
                 <Item
                     streamerName={item.displayName}
@@ -83,7 +83,7 @@ class InteractionsSearchStreamer extends Component {
     }
 
     onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming) => {
-        this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+        this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming: true });
     }
 
     render() {

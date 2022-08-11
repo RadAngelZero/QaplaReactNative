@@ -527,7 +527,11 @@
         "linkAccount": "Link your account",
         "descriptionQreatorCode": "to use your Qreator Code and get your referral tokens 🙌",
         "description": "🌱 Mine tokens in real-time using your channel points on  Twitch.",
-        "linkButton": "Link account"
+        "linkButton": "Link account",
+        "rejectTrakingTitle": "Allow Qapla to Request to Track to link your Twitch",
+        "rejectTrakingMessage": "We use the data exclusively to connect your accounts",
+        "rejectTrackingCancel": "Cancel",
+        "rejectTrackingSettings": "Go to settings"
     },
     "skipLinkTwitchAccount": {
         "important": "Important",

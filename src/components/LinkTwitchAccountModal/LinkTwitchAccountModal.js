@@ -55,6 +55,7 @@ class LinkTwitchAccountModal extends Component {
                                 </TouchableOpacity>
                             </View>
                             <LinkTwitchAccount onLinkSuccessful={this.onLinkSuccessful}
+                                onTrackingReject={() => this.setState({ showDontLinkWarning: true })}
                                 onFail={this.props.onClose}
                                 linkingWithQreatorCode={this.props.linkingWithQreatorCode} />
                         </>

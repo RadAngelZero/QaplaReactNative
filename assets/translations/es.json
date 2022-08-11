@@ -527,7 +527,11 @@
         "linkAccount": "Vincula tu cuenta",
         "descriptionQreatorCode": "para poder usar tu Código de Qreador y recibir tus tokens de referido 🙌",
         "description": "🌱 Mina tokens en tiempo real usando tus puntos del canal en Twitch.",
-        "linkButton": "Vincular con Twitch"
+        "linkButton": "Vincular con Twitch",
+        "rejectTrakingTitle": "Permite a Qapla solicitar accesos para poder vincular tu Twitch",
+        "rejectTrakingMessage": "Únicamente se usarán tus datos para vincular tus cuentas",
+        "rejectTrackingCancel": "Cancelar",
+        "rejectTrackingSettings": "Ir a Ajustes"
     },
     "skipLinkTwitchAccount": {
         "important": "Importante",

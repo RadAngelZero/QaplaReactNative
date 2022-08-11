@@ -9,6 +9,7 @@ import SendInteractionModal from '../../components/InteractionsModals/SendIntera
 import { sendCheers } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../services/auth';
+import { trackOnSegment } from '../../services/statistics';
 
 class InteractionsCheckout extends Component {
     state = {
@@ -16,7 +17,8 @@ class InteractionsCheckout extends Component {
         tipIncrement: 50,
         interactionCost: 0,
         minimum: 0,
-        openLinkWitTwitchModal: false
+        openLinkWitTwitchModal: false,
+        sendingInteraction: false
     };
 
     componentDidMount() {
@@ -48,61 +50,63 @@ class InteractionsCheckout extends Component {
     }
 
     onSendInteraction = async () => {
-        if (isUserLogged()) {
-            if (this.props.twitchId && this.props.twitchUserName) {
-                const totalCost = this.state.interactionCost + this.state.extraTip;
-                if (totalCost <= this.props.qoins) {
-                    const streamerId = this.props.navigation.getParam('streamerId', '');
-                    const streamerName = this.props.navigation.getParam('displayName', '');
-                    const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
-                    const mediaType = this.props.navigation.getParam('mediaType');
-                    const message = this.props.navigation.getParam('message', null);
-                    let media = null;
-                    if (selectedMedia && selectedMedia.original) {
-                        media = {
-                            ...selectedMedia.original,
-                            type: mediaType
-                        };
-                    }
+        if (!this.state.sendingInteraction) {
+            this.setState({ sendingInteraction: true }, () => {
+                if (isUserLogged()) {
+                    if (this.props.twitchId && this.props.twitchUserName) {
+                        const totalCost = this.state.interactionCost + this.state.extraTip;
+                        if (totalCost <= this.props.qoins) {
+                            const streamerId = this.props.navigation.getParam('streamerId', '');
+                            const streamerName = this.props.navigation.getParam('displayName', '');
+                            const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
+                            const mediaType = this.props.navigation.getParam('mediaType');
+                            const message = this.props.navigation.getParam('message', null);
+                            let media = null;
+                            if (selectedMedia && selectedMedia.original) {
+                                media = {
+                                    ...selectedMedia.original,
+                                    type: mediaType
+                                };
+                            }
 
-                    try {
-                        await sendCheers(
-                            totalCost,
-                            media,
-                            message,
-                            (new Date()).getTime(),
-                            streamerName,
-                            this.props.uid,
-                            this.props.userName,
-                            this.props.twitchUserName,
-                            this.props.photoUrl,
-                            streamerId
-                        );
+                            sendCheers(
+                                totalCost,
+                                media,
+                                message,
+                                (new Date()).getTime(),
+                                streamerName,
+                                this.props.uid,
+                                this.props.userName,
+                                this.props.twitchUserName,
+                                this.props.photoUrl,
+                                streamerId,
+                                () => {
+                                    trackOnSegment('Interaction Sent', {
+                                        MessageLength: message ? message.length : null,
+                                        ExtraTip: this.state.extraTip,
+                                        TotalQoins: totalCost
+                                    });
 
-                        this.props.navigation.navigate('InteractionsSent', {
-                            ...this.props.navigation.state.params,
-                            donationTotal: totalCost
-                        });
-                    } catch (error) {
-                        Alert.alert(
-                            'Error',
-                            'We could not complete the operation, try again later',
-                            [
-                                {
-                                    text: 'Ok'
-                                }
-                            ]
-                        )
+                                    this.props.navigation.navigate('InteractionsSent', {
+                                        ...this.props.navigation.state.params,
+                                        donationTotal: totalCost
+                                    });
+                                },
+                                () => this.setState({ sendingInteraction: false })
+                            );
+                        } else {
+                            this.setState({ sendingInteraction: false });
+                            // After a successful buy try to send the interaction again
+                            this.props.navigation.navigate('BuyQoins', { onSuccessfulBuy: this.onSendInteraction });
+                        }
+                    } else {
+                        this.setState({ openLinkWitTwitchModal: true, sendingInteraction: false });
                     }
                 } else {
-                    // After a successful buy try to send the interaction again
-                    this.props.navigation.navigate('BuyQoins', { onSuccessfulBuy: this.onSendInteraction });
+                    this.setState({ sendingInteraction: false });
+                    this.props.navigation.navigate('SignIn');
                 }
-            } else {
-                this.setState({ openLinkWitTwitchModal: true });
-            }
-        } else {
-            this.props.navigation.navigate('SignIn');
+            });
         }
     }
 

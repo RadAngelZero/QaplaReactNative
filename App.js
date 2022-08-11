@@ -104,12 +104,16 @@ class App extends React.Component {
                     if (response && response.data && response.data.status) {
                         // Everything is OK
                         if (response.data.status === 200) {
-                            this.setState({ transactionProgress: 0.75, transactionText: translate('App.processingPayment.deliveringQoins') });
+                            /**
+                             * We empty transactionText string and then fill it to trick the MaskedView component on android so we can have cool
+                             * gradients on the text of the FinishingBuyTransactionModal
+                             */
+                            this.setState({ transactionProgress: 0.75, transactionText: '' }, () => this.setState({ transactionText: translate('App.processingPayment.deliveringQoins') }));
                             try {
                                 listenToPurchaseCompleted(auth.currentUser.uid, purchase.transactionId, (transaction) => {
                                     if (transaction.exists()) {
                                         removeListenerToPurchaseCompleted(auth.currentUser.uid);
-                                        this.setState({ transactionProgress: 1, transactionText: translate('App.processingPayment.qoinsDelivered') });
+                                        this.setState({ transactionProgress: 1, transactionText: '' }, () => this.setState({ transactionText: translate('App.processingPayment.qoinsDelivered') }));
                                         const { onPurchaseFinished } = store.getState().purchasesReducer;
                                         if (onPurchaseFinished) {
                                             onPurchaseFinished();
@@ -118,6 +122,8 @@ class App extends React.Component {
                                         setTimeout(() => {
                                             this.setState({ openTransactionModal: false });
                                         }, 1000);
+
+                                        trackOnSegment('Qoins Purchase Finished');
                                     }
                                 });
                             } catch (error) {

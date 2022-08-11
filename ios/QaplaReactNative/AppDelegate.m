@@ -13,6 +13,8 @@
 
 #import <RNGoogleSignin/RNGoogleSignin.h>
 
+#import <RNBranch/RNBranch.h>
+
 // This import should be removed if React Native Firebase library is removed
 #import <Firebase.h>
 #import "RNFirebaseNotifications.h"
@@ -24,11 +26,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
+  NSURL *jsCodeLocation;
+
   // This line should be removed if React Native Firebase library is removed
   [FIROptions defaultOptions].deepLinkURLScheme = @"org.Qapla.QaplaApp";
   [FIRApp configure];
   [RNFirebaseNotifications configure];
-    
+
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"QaplaReactNative"
@@ -53,21 +58,24 @@
 #endif
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options {
-  
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+
  BOOL handled = [RCTLinkingManager application:application openURL:url options:options];
 
   if (!handled) {
-      handled = [RNGoogleSignin application:application openURL:url options:options] || [[RNFirebaseLinks instance] application:application openURL:url options:options];
+    handled = [RNGoogleSignin application:application openURL:url options:options] || [[RNFirebaseLinks instance] application:application openURL:url options:options] || [RNBranch application:application openURL:url options:options];
   }
 
-  return handled;
+  return YES;
 }
 
-- (BOOL)application:(UIApplication *)application
-continueUserActivity:(NSUserActivity *)userActivity
- restorationHandler:(void (^)(NSArray *))restorationHandler {
-     return [[RNFirebaseLinks instance] application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
+  BOOL handled = [[RNFirebaseLinks instance] application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+  if (!handled) {
+    [RNBranch continueUserActivity:userActivity];
+  }
+
+  return YES;
 }
 
 // Notifications helping functions

@@ -2,16 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>branch_key</key>
-	<dict>
-		<key>live</key>
-		<string>key_live_bg6p6DgKXOhIDT1ShRTQijhcxslLZvQ2</string>
-	</dict>
-	<key>branch_universal_link_domains</key>
-	<array>
-		<string>qapla.app.link</string>
-		<string>qapla-alternate.app.link</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -35,13 +25,13 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>org.Qapla.QaplaApp</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>Qapla</string>
 				<string>fb270131990285283</string>
 			</array>
-			<key>CFBundleURLName</key>
-			<string>org.Qapla.QaplaApp</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
@@ -126,5 +116,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>branch_key</key>
+	<dict>
+		<key>live</key>
+		<string>key_live_bg6p6DgKXOhIDT1ShRTQijhcxslLZvQ2</string>
+	</dict>
+	<key>branch_universal_link_domains</key>
+	<array>
+		<string>qapla.app.link</string>
+		<string>qapla-alternate.app.link</string>
+	</array>
 </dict>
 </plist>

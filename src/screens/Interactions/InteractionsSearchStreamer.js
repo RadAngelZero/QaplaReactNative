@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, FlatList, View, TouchableOpacity, Image, TextInput, SafeAreaView } from 'react-native';
+import { Text, FlatList, View, TouchableOpacity, Image, TextInput, SafeAreaView, Keyboard } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -48,10 +48,16 @@ const Item = ({ streamerName, streamerImg, isStreaming, streamerId, onPress }) =
 class InteractionsSearchStreamer extends Component {
     state = {
         search: '',
-        searchResults: []
+        searchResults: [],
     };
 
     searchTimeout = null;
+
+    componentDidMount() {
+        if (this.props.navigation.isFocused()) {
+            this.searchBar.focus();
+        }
+    }
 
     renderItem = ({ item }) => {
         if (!STREAMERS_BLACKLIST.includes(item.streamerId) && item.broadcasterType === TWITCH_PARTNER || item.broadcasterType === TWITCH_AFFILIATE) {
@@ -107,7 +113,7 @@ class InteractionsSearchStreamer extends Component {
                                 style={styles.gridSearchBarTextInput}
                                 value={this.state.search}
                                 onChange={this.searchHandler}
-                                autoFocus
+                                ref={(ti) => { this.searchBar = ti; }}
                             />
                         </View>
                     </View>
@@ -120,7 +126,7 @@ class InteractionsSearchStreamer extends Component {
                         renderItem={this.renderItem}
                         keyExtractor={item => item.id}
                         keyboardShouldPersistTaps={'always'}
-                        />
+                    />
                 </View>
             </SafeAreaView>
         );

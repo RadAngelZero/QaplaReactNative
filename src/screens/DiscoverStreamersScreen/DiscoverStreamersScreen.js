@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
 import StreamerCardsList from '../../components/StreamerCardsList/StreamerCardsList';
 import { getStreamersData } from '../../actions/streamersActions';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT, STREAMERS_BLACKLIST, TWITCH_AFFILIATE, TWITCH_PARTNER } from '../../utilities/Constants';
+import images from './../../../assets/images';
+import { searchStreamersPublicProfilesByName } from '../../services/database';
 
 class DiscoverStreamersScreen extends Component {
+    state = {
+        streamerToSearch: '',
+        requestedStreamers: []
+    };
+
+    searchTimeout = null;
+
     componentDidMount() {
         this.props.getStreamersProfiles(40);
     }
@@ -23,6 +32,7 @@ class DiscoverStreamersScreen extends Component {
                 if ((streamer.backgroundGradient || streamer.backgroundUrl)
                     && streamer.displayName && streamer.photoUrl && streamer.bio && streamer.tags &&
                     (streamer.broadcasterType === TWITCH_PARTNER || streamer.broadcasterType === TWITCH_AFFILIATE)) {
+
                     streamersData.push({
                         displayName: streamer.displayName,
                         /**
@@ -51,11 +61,64 @@ class DiscoverStreamersScreen extends Component {
         this.props.navigation.navigate('StreamerProfile', { streamerData });
     }
 
+    searchHandler = (streamerToSearch) => {
+        clearTimeout(this.searchTimeout);
+        this.setState({ streamerToSearch, requestedStreamers: [] });
+        if (streamerToSearch !== '') {
+            this.searchTimeout = setTimeout(async () => {
+                const streamers = await searchStreamersPublicProfilesByName(streamerToSearch);
+                if (streamers.exists()) {
+                    const requestedStreamers = [];
+                    streamers.forEach((streamerSnapshot) => {
+                        const streamer = streamerSnapshot.val();
+                        if (!STREAMERS_BLACKLIST.includes(streamerSnapshot.key) && !this.props.userSubscriptions[streamerSnapshot.key]) {
+                            if ((streamer.backgroundGradient || streamer.backgroundUrl)
+                                && streamer.displayName && streamer.photoUrl && streamer.bio && streamer.tags &&
+                                (streamer.broadcasterType === TWITCH_PARTNER || streamer.broadcasterType === TWITCH_AFFILIATE)) {
+
+                                requestedStreamers.push({
+                                    displayName: streamer.displayName,
+                                    /**
+                                     * If the streamer change their profile image on Twitch the link on the database
+                                     * will not contain any photo to show until the streamer update their information
+                                     * on the dashboard (this is automatically done every time the streamer SignIn on the
+                                     * dashboard or any time a token is refreshed)
+                                     */
+                                    photoUrl: streamer.photoUrl,
+                                    streamerId: streamerSnapshot.key,
+                                    bio: streamer.bio,
+                                    backgroundUrl: streamer.backgroundUrl,
+                                    badge: streamer.badge,
+                                    tags: streamer.tags,
+                                    creatorCodes: streamer.creatorCodes,
+                                    backgroundGradient: streamer.backgroundGradient
+                                });
+                            }
+                        }
+                    });
+
+                    this.setState({ requestedStreamers });
+                }
+            }, 250);
+        }
+    }
+
     render() {
         const streamersData = this.formatStreamers();
         return (
             <View style={styles.container}>
-                <StreamerCardsList streamersData={streamersData}
+                <View style={[styles.searchBar, styles.streamerSearchBar]}>
+                    <View style={{ opacity: 0.4 }}>
+                        <images.svg.searchStreamerIcon />
+                    </View>
+                    <TextInput
+                        style={styles.gridSearchBarTextInput}
+                        value={this.state.streamerToSearch}
+                        placeholder={'Search by name'}
+                        placeholderTextColor={'rgba(255, 255, 255, 0.4)'}
+                        onChangeText={this.searchHandler} />
+                </View>
+                <StreamerCardsList streamersData={(this.state.requestedStreamers.length <= 0 && !this.state.streamerToSearch) ? streamersData : this.state.requestedStreamers}
                     onEndReached={this.loadMoreStreamers}
                     onCardPress={this.goToStreamerProfile}
                     horizontal={this.props.horizontal}

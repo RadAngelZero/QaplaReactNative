@@ -3,17 +3,21 @@ import { ActivityIndicator, Image, SafeAreaView, View } from 'react-native';
 import styles from './style';
 import ConfirmSelectionModal from '../../components/InteractionsModals/ConfirmSelectionModal';
 import { getMediaTypeCost } from '../../services/database';
-import { TTS } from '../../utilities/Constants';
+import { GIPHY_CLIPS, GIPHY_GIFS, GIPHY_STICKERS, MEME, TTS } from '../../utilities/Constants';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { GiphyMediaView, GiphyVideoView } from '@giphy/react-native-sdk';
 
 class InteractionsConfirmSelection extends Component {
     state = {
-        loadingMedia: true,
-        mediaCost: null
+        loadingMedia: this.props.navigation.getParam('mediaType') === MEME,
+        mediaCost: null,
+        muteClip: false,
+        mediaType: null,
     };
 
     componentDidMount() {
         this.fetchMediaCost();
+        this.setState({ mediaType: this.props.navigation.getParam('mediaType') });
     }
 
     fetchMediaCost = async () => {
@@ -27,8 +31,10 @@ class InteractionsConfirmSelection extends Component {
     onConfirmSelection = async () => {
         const mediaType = this.props.navigation.getParam('mediaType');
         const costsObject = this.props.navigation.getParam('costs', {});
+        this.setState({ muteClip: true });
         // If the user has already added TTS to their items then go directly to checkout
-        if (costsObject[TTS]) {
+        // or if is a video clip
+        if (costsObject[TTS] || this.state.mediaType === GIPHY_CLIPS) {
             this.props.navigation.navigate('InteractionsCheckout', {
                 ...this.props.navigation.state.params,
                 costs: {
@@ -53,36 +59,78 @@ class InteractionsConfirmSelection extends Component {
 
     render() {
         const media = this.props.navigation.getParam('selectedMedia');
-        const mediaType = this.props.navigation.getParam('mediaType');
+        console.log(media.aspectRatio);
 
         return (
             <View style={styles.container}>
                 <View style={styles.interactionSelectedScreenContainer}>
                     <View style={styles.interactionSelectedBorderRadius}>
                         <ActivityIndicator size='large'
-                            color='rgb(61, 249, 223)'
+                            color="rgb(61, 249, 223)"
                             animating={this.state.loadingMedia} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }} />
-                        <Image
-                            onLoadEnd={() => this.setState({ loadingMedia: false })}
-                            source={{ uri: media.original.url }}
-                            style={[styles.interactionSelectedConatiner, {
-                                opacity: this.state.loadingMedia ? 0 : 1,
-                                aspectRatio: media.original.width / media.original.height,
-                            },
-                            media.original.width >= media.original.height ?
-                                {
-                                    width: widthPercentageToPx(80),
-                                }
-                                :
-                                {
-                                    height: heightPercentageToPx(40),
+                        {this.state.mediaType === MEME ?
+                            <Image
+                                onLoadEnd={() => this.setState({ loadingMedia: false })}
+                                source={{ uri: media.original.url }}
+                                style={[styles.interactionSelectedConatiner, {
+                                    opacity: this.state.loadingMedia ? 0 : 1,
+                                    aspectRatio: media.original.width / media.original.height,
                                 },
-                            ]}
-                            resizeMode="contain" />
+                                media.original.width >= media.original.height ?
+                                    {
+                                        width: widthPercentageToPx(80),
+                                    }
+                                    :
+                                    {
+                                        height: heightPercentageToPx(40),
+                                    },
+                                ]}
+                                resizeMode="contain" />
+                            :
+                            this.state.mediaType === GIPHY_CLIPS ?
+                                <GiphyVideoView
+                                    muted={this.state.muteClip}
+                                    onMute={() => this.setState({ muteClip: true })}
+                                    onUnmute={() => this.setState({ muteClip: false })}
+                                    autoPlay
+                                    media={media}
+                                    showCheckeredBackground={false}
+                                    style={[{
+                                        aspectRatio: media.aspectRatio,
+                                    },
+                                    media.aspectRatio > 1 ?
+                                        {
+                                            width: widthPercentageToPx(80),
+                                        }
+                                        :
+                                        {
+                                            height: heightPercentageToPx(40),
+                                        },
+                                    ]}
+                                />
+                                :
+                                <GiphyMediaView
+                                    media={media}
+                                    showCheckeredBackground={false}
+                                    style={[{
+                                        aspectRatio: media.aspectRatio,
+                                    },
+                                    media.aspectRatio > 1 ?
+                                        {
+                                            width: widthPercentageToPx(80),
+                                        }
+                                        :
+                                        {
+                                            height: heightPercentageToPx(40),
+                                        },
+                                    ]}
+                                />
+                        }
+
                     </View>
                 </View>
                 {this.state.mediaCost !== null &&
-                    <ConfirmSelectionModal mediaType={mediaType}
+                    <ConfirmSelectionModal mediaType={this.state.mediaType}
                         onConfirmSelection={this.onConfirmSelection}
                         onCancel={this.onCancel}
                         cost={this.state.mediaCost} />

@@ -107,7 +107,9 @@ import ShareArrow from './icons/ShareArrow.svg';
 import TickOk from './icons/TickOk.svg';
 import ShareArrowTransparent from './icons/ShareButtonTransparent.svg';
 import TickSquareTransparent from './icons/TickSquareTransparent.svg';
-
+import VolumeUp from './icons/VolumeUp.svg';
+import EditSimple from './icons/EditSimple.svg';
+import CheckCircle from './icons/CheckCircle.svg';
 
 
 // Images
@@ -252,6 +254,10 @@ const images = {
 			img: require('./images/PoweredbyGiphy.png'),
 			uri: '@assets/images/PoweredbyGiphy.png'
 		},
+		PoweredbyGiphyDark: {
+			img: require('./images/PoweredbyGiphyDark.png'),
+			uri: '@assets/images/PoweredbyGiphyDark.png',
+		},
 	},
 	svg: {
 		googleIcon: GoogleIcon,
@@ -361,7 +367,10 @@ const images = {
 		shareArrow: ShareArrow,
 		tickOk: TickOk,
 		shareArrowTransparent: ShareArrowTransparent,
-		tickOkTransparent: TickSquareTransparent
+		tickOkTransparent: TickSquareTransparent,
+		volumeUp: VolumeUp,
+		editSimple: EditSimple,
+		checkCircle: CheckCircle,
 	},
 	gif: {
 		loadingStreamers: {
@@ -403,7 +412,7 @@ const images = {
 		paymentSuccessful: {
 			img: require('./gifs/paymentSuccessful.gif'),
 			uri: '@assets/gifs/paymentSuccessful.gif',
-		}
+		},
 	},
 };
 

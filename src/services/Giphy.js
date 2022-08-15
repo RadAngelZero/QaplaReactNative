@@ -28,8 +28,8 @@ export async function generateGiphyUserRandomId() {
  * @returns Array of data (gifs, clips, etc.) from Giphy
  */
 export async function getGiphyTrending(userGiphyId, type, limit, offset = 0) {
-    const response = await fetch(`https://api.giphy.com/v1/${type}/trending?api_key=${GIPHY_KEY}&random_id=${userGiphyId}&limit=${limit}&offset=${offset}&rating=pg-13&bundle=${type === GIPHY_CLIPS ? 'clips_grid_picker' : 'messaging_non_clips'}`, {
-        method: 'get'
+    const response = await fetch(`https://api.giphy.com/v1/${type}s/trending?api_key=${GIPHY_KEY}&random_id=${userGiphyId}&limit=${limit}&offset=${offset}&rating=pg-13&bundle=${type === GIPHY_CLIPS ? 'clips_grid_picker' : 'messaging_non_clips'}`, {
+        method: 'get',
     });
 
     const data = (await response.json()).data;
@@ -48,7 +48,7 @@ export async function getGiphyTrending(userGiphyId, type, limit, offset = 0) {
  * @returns Array of data (gifs, clips, etc.) from Giphy
  */
 export async function searchGiphyMedia(userGiphyId, searchQuery, type, lang, limit, offset) {
-    const response = await fetch(`https://api.giphy.com/v1/${type}/search?api_key=${GIPHY_KEY}&random_id=${userGiphyId}&q=${searchQuery}&lang=${lang}&limit=${limit}&offset=${offset}&rating=pg-13&bundle=${type === GIPHY_CLIPS ? 'clips_grid_picker' : 'messaging_non_clips'}`, {
+    const response = await fetch(`https://api.giphy.com/v1/${type}s/search?api_key=${GIPHY_KEY}&random_id=${userGiphyId}&q=${searchQuery}&lang=${lang}&limit=${limit}&offset=${offset}&rating=pg-13&bundle=${type === GIPHY_CLIPS ? 'clips_grid_picker' : 'messaging_non_clips'}`, {
         method: 'get'
     });
 

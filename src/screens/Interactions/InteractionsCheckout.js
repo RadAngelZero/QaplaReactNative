@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 
 import { translate } from '../../utilities/i18';
 import styles from './style';
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
 import { sendCheers } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../services/auth';
+import { GiphyMediaView } from '@giphy/react-native-sdk';
+import { GIPHY_STICKERS, MEME } from '../../utilities/Constants';
 
 class InteractionsCheckout extends Component {
     state = {
@@ -17,10 +19,11 @@ class InteractionsCheckout extends Component {
         interactionCost: 0,
         minimum: 0,
         openLinkWitTwitchModal: false,
-        sendingInteraction: false
+        sendingInteraction: false,
     };
 
     componentDidMount() {
+        console.log(this.props.navigation.state.params);
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
         if (!onlyQoins) {
             const costs = this.props.navigation.getParam('costs', {});
@@ -28,7 +31,7 @@ class InteractionsCheckout extends Component {
             Object.values(costs).forEach((cost) => {
                 interactionCost += cost;
             });
-
+            interactionCost += this.props.navigation.state.params.voiceCost;
             this.setState({ interactionCost });
         } else {
             this.setState({ minimum: 50, extraTip: 50 });
@@ -122,6 +125,7 @@ class InteractionsCheckout extends Component {
 
     render() {
         const selectedMedia = this.props.navigation.getParam('selectedMedia');
+        const mediaType = this.props.navigation.getParam('mediaType');
         const message = this.props.navigation.getParam('message', '');
         const costs = this.props.navigation.getParam('costs', {});
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
@@ -131,14 +135,51 @@ class InteractionsCheckout extends Component {
                 <ScrollView showsVerticalScrollIndicator={false} style={styles.innerConatiner}>
                     <View>
                         {selectedMedia &&
-                            <Image source={selectedMedia.original.url ? { uri: selectedMedia.original.url } : null}
-                                resizeMode='contain'
-                                style={[{
-                                    borderRadius: 10,
-                                    maxHeight: heightPercentageToPx(20),
-                                    maxWidth: '60%',
-                                    aspectRatio: (selectedMedia.original.width / selectedMedia.original.height) || 0,
-                                }]} />
+                            <>
+                                {mediaType !== MEME ?
+                                    <View style={[styles.interactionSelectedBorderRadius,
+                                    {
+                                        aspectRatio: selectedMedia.aspectRatio,
+                                    },
+                                    selectedMedia.aspectRatio > 1 ?
+                                        {
+                                            width: widthPercentageToPx(60),
+                                        }
+                                        :
+                                        {
+                                            height: heightPercentageToPx(20),
+                                        },
+                                    ]}>
+                                        <GiphyMediaView
+                                            showCheckeredBackground={false}
+                                            media={selectedMedia}
+                                            style={[{
+                                                aspectRatio: selectedMedia.aspectRatio,
+                                                borderRadius: 10,
+                                            },
+                                            selectedMedia.aspectRatio > 1 ?
+                                                {
+                                                    width: widthPercentageToPx(60),
+                                                }
+                                                :
+                                                {
+                                                    height: heightPercentageToPx(20),
+                                                },
+                                            ]}
+                                        />
+                                    </View>
+                                    :
+                                    <Image source={selectedMedia.original.url ? { uri: selectedMedia.original.url } : null}
+                                        resizeMode="contain"
+                                        style={[{
+                                            borderRadius: 10,
+                                            maxHeight: heightPercentageToPx(20),
+                                            maxWidth: '60%',
+                                            aspectRatio: (selectedMedia.original.width / selectedMedia.original.height) || 0,
+                                        }]} />
+                                }
+                            </>
+
                         }
                         {message !== '' &&
                             <View style={styles.checkoutChatBubble}>
@@ -148,7 +189,8 @@ class InteractionsCheckout extends Component {
                             </View>
                         }
                     </View>
-                    {onlyQoins &&
+                    {
+                        onlyQoins &&
                         <View style={styles.sentContainer}>
                             <Image source={{ uri: 'https://media.giphy.com/media/5QP99om3Co7s8YJPez/giphy.gif' }}
                                 style={styles.onlyQoinsImage} />
@@ -161,7 +203,8 @@ class InteractionsCheckout extends Component {
                             </Text>
                         </View>
                     }
-                    {!onlyQoins &&
+                    {
+                        !onlyQoins &&
                         <>
                             <View style={[styles.checkoutContainer, styles.checkoutDataDisplayMainContainer]}>
                                 <View style={styles.checkoutDataDisplayContainer}>
@@ -192,11 +235,21 @@ class InteractionsCheckout extends Component {
                                         </Text>
                                     </View>
                                 ))}
+                                {this.props.navigation.state.params.message &&
+                                    <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                            {`${this.props.navigation.state.params.voiceName} Voice`}
+                                        </Text>
+                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                            {this.props.navigation.state.params.voiceCost}
+                                        </Text>
+                                    </View>
+                                }
                             </View>
                             <View style={styles.checkoutMarginDisplay} />
                         </>
                     }
-                </ScrollView>
+                </ScrollView >
                 <SendInteractionModal
                     baseCost={this.state.interactionCost}
                     extraTip={this.state.extraTip}

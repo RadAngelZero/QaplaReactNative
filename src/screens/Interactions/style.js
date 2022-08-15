@@ -9,7 +9,7 @@ export default styles = StyleSheet.create({
     innerConatiner: {
         flex: 1,
         paddingHorizontal: widthPercentageToPx(4.26),
-        paddingTop: heightPercentageToPx(3.94),
+        paddingTop: heightPercentageToPx(2),
     },
     backButton: {
     },
@@ -52,6 +52,10 @@ export default styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    headerMargins: {
+        marginTop: heightPercentageToPx(3.94),
+        marginBottom: heightPercentageToPx(2.95),
     },
     feedSectionHeader: {
         fontWeight: '700',
@@ -98,7 +102,6 @@ export default styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: '#141539',
         bottom: 0,
-        height: heightPercentageToPx(85),
         borderTopLeftRadius: widthPercentageToPx(10.66),
         borderTopRightRadius: widthPercentageToPx(10.66),
         width: widthPercentageToPx(100),
@@ -127,7 +130,7 @@ export default styles = StyleSheet.create({
     },
     gridSearchBar: {
         backgroundColor: '#0D1021',
-        width: widthPercentageToPx(70),
+        width: widthPercentageToPx(91.46),
     },
     streamerSearchBar: {
         backgroundColor: '#141539',
@@ -148,9 +151,9 @@ export default styles = StyleSheet.create({
     },
     gridPoweredbyGiphy: {
         flex: 1,
-        width: widthPercentageToPx(20.53),
-        maxWidth: widthPercentageToPx(20.53),
-        height: heightPercentageToPx(3.44),
+        width: widthPercentageToPx(27.66),
+        maxWidth: widthPercentageToPx(27.66),
+        height: heightPercentageToPx(1.23),
     },
     memesContainer: {
         position: 'absolute',
@@ -239,7 +242,7 @@ export default styles = StyleSheet.create({
         borderRadius: widthPercentageToPx(2.66),
         paddingHorizontal: widthPercentageToPx(3.46),
         paddingVertical: heightPercentageToPx(0.73),
-        marginTop: heightPercentageToPx(1.41),
+        marginBottom: heightPercentageToPx(3.07),
         shadowColor: '#000',
         shadowOffset: { width: widthPercentageToPx(1), height: heightPercentageToPx(1.23) },
         shadowOpacity: 0.5,
@@ -284,6 +287,17 @@ export default styles = StyleSheet.create({
         borderTopLeftRadius: 4 * getScreenSizeMultiplier(),
         marginTop: 16 * getScreenSizeMultiplier(),
         alignSelf: 'flex-start',
+    },
+    userChatBubbleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#3D42DF',
+        paddingHorizontal: 24 * getScreenSizeMultiplier(),
+        paddingVertical: 16 * getScreenSizeMultiplier(),
+        borderRadius: 20 * getScreenSizeMultiplier(),
+        borderTopRightRadius: 4 * getScreenSizeMultiplier(),
+        marginTop: 16 * getScreenSizeMultiplier(),
+        alignSelf: 'flex-end',
     },
     chatBubbleText: {
         fontSize: 16,
@@ -469,4 +483,17 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(44.73),
         height: widthPercentageToPx(44.73),
     },
+    loadingDots: {
+        backgroundColor: '#3D42DF',
+        width: widthPercentageToPx(3.2),
+        height: widthPercentageToPx(3.2),
+        borderRadius: widthPercentageToPx(1.6),
+        marginHorizontal: widthPercentageToPx(1.33),
+    },
+    noMarginLeft: {
+        marginLeft: 0,
+    },
+    noMarginRight: {
+        marginRight: 0,
+    }
 });

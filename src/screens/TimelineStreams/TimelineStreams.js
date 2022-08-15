@@ -3,8 +3,6 @@ import { Alert, Linking, ScrollView, Text, FlatList, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import LevelInformationModal from '../../components/LevelInformationModal/LevelInformationModal';
-import { retrieveData, storeData } from '../../utilities/persistance';
 import FeaturedStreamsList from '../../components/FeaturedStreamsList/FeaturedStreamsList';
 import StreamsList from '../../components/StreamsList/StreamsList';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
@@ -27,8 +25,6 @@ export class TimelineStreams extends Component {
     componentDidMount() {
         this.props.navigation.addListener('willFocus', this.checkStreamDeepLinkData);
         this.checkStreamDeepLinkData();
-
-        this.checkLevelModalStatus();
     }
 
     checkStreamDeepLinkData = async () => {
@@ -47,14 +43,6 @@ export class TimelineStreams extends Component {
                 const isUserAParticipant = this.props.uid ? await isUserParticipantOnEvent(this.props.uid, streamId) : false;
                 this.setState({ deepLinkId: streamId, selectedStream: { ...streamData.val(), isUserAParticipant, id: streamId } }, () => this.setState({ openEventDetailsModal: true }));
             }
-        }
-    }
-
-    checkLevelModalStatus = async () => {
-        const isLevelModalViewed = await retrieveData('level-modal-viewed');
-        if (!isLevelModalViewed) {
-            this.setState({ openLevelInformationModal: true });
-            storeData('level-modal-viewed', 'true');
         }
     }
 
@@ -144,8 +132,6 @@ export class TimelineStreams extends Component {
                 <EventDetailsModal open={this.state.openEventDetailsModal}
                     onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
                     stream={this.state.selectedStream} />
-                <LevelInformationModal open={this.state.openLevelInformationModal}
-                    onClose={() => this.setState({ openLevelInformationModal: false })} />
             </ScrollView>
         );
     }

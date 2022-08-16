@@ -11,7 +11,7 @@ import styles from './style';
 import images from '../../../assets/images';
 import RadMasonry from '../../components/RadMasonry/RadMasonry';
 import { generateGiphyUserRandomId, getGiphyTrending, searchGiphyMedia } from '../../services/Giphy';
-import { GIPHY_GIFS, GIPHY_STICKERS, GIPHY_TEXT, GIPHY_CLIPS, MEDIA_TO_LOAD_FROM_GIPHY, MEME } from '../../utilities/Constants';
+import { GIPHY_GIFS, GIPHY_STICKERS, MEDIA_TO_LOAD_FROM_GIPHY, MEME } from '../../utilities/Constants';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { getEmotesLibrary } from '../../services/database';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
@@ -194,7 +194,7 @@ class InteractionsGiphyMediaSelector extends Component {
                             <RadMasonry
                                 onEndReachedThreshold={0.25}
                                 data={this.state.media}
-                                numColumns={mediaType === GIPHY_STICKERS ? 3 : 2}
+                                numColumns={2}
                                 renderItem={this.renderImage}
                                 onEndReached={this.fetchMoreMedia}
                                 containerStyle={styles.gridMasonrySubContainer} />

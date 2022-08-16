@@ -58,6 +58,7 @@ const userProfileGIFsRef = database.ref('/UserProfileGIFs');
 const inAppPurchasesProductsRef = database.ref('/inAppPurchasesProducts');
 const inAppPurchasesAttemptsRef = database.ref('/inAppPurchasesAttempts');
 const usersInAppPurchasesRef = database.ref('/UsersInAppPurchases');
+const reactionsSamplesRef = database.ref('/ReactionsSamples');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1824,4 +1825,12 @@ export function listenToPurchaseCompleted(uid, transactionId, callback) {
  */
 export function removeListenerToPurchaseCompleted(uid) {
     usersInAppPurchasesRef.child(uid).off();
+}
+
+export async function getReactionsSamplesCount(type) {
+    return await reactionsSamplesRef.child(type).child('length').once('value');
+}
+
+export async function getReactionSample(type, index) {
+    return await reactionsSamplesRef.child(type).child('samples').child(index).once('value');
 }

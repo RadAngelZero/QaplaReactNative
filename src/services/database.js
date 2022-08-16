@@ -59,6 +59,7 @@ const inAppPurchasesProductsRef = database.ref('/inAppPurchasesProducts');
 const inAppPurchasesAttemptsRef = database.ref('/inAppPurchasesAttempts');
 const usersInAppPurchasesRef = database.ref('/UsersInAppPurchases');
 const reactionsSamplesRef = database.ref('/ReactionsSamples');
+const usersReactionsCountRef = database.ref('/UsersReactionsCount');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1842,4 +1843,17 @@ export async function getReactionsSamplesCount(type) {
  */
 export async function getReactionSample(type, index) {
     return await reactionsSamplesRef.child(type).child('samples').child(index).once('value');
+}
+
+/**
+ * UsersReactionsCount
+*/
+
+/**
+ * Returns the number of reactions the user have with the given streamer
+ * @param {string} uid User identifier
+ * @param {string} streamerUid Streamer identifier
+ */
+export async function getUserReactionsCount(uid, streamerUid) {
+    return await usersReactionsCountRef.child(uid).child(streamerUid).once('value');
 }

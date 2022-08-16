@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Text, FlatList, View, TouchableOpacity, Image, TextInput, SafeAreaView, Keyboard } from 'react-native';
+import { Text, FlatList, View, TouchableOpacity, Image, TextInput, SafeAreaView } from 'react-native';
+import { connect } from 'react-redux';
 
 import styles from './style';
 import images from '../../../assets/images';
 
-import { getStreamersByName } from '../../services/database';
+import { getStreamersByName, getUserReactionsCount } from '../../services/database';
 import { STREAMERS_BLACKLIST, TWITCH_AFFILIATE, TWITCH_PARTNER } from '../../utilities/Constants';
+import { trackOnSegment } from '../../services/statistics';
 
 const Item = ({ streamerName, streamerImg, isStreaming, streamerId, onPress }) => (
     <TouchableOpacity onPress={() => onPress(streamerId, streamerName, streamerImg, isStreaming)}>
@@ -89,7 +91,19 @@ class InteractionsSearchStreamer extends Component {
     }
 
     onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming) => {
-        this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming: true });
+        const numberOfReactions = await getUserReactionsCount(this.props.uid, streamerId);
+        // We do not check this with exists() because the value can be 0, so it is easier to check if the snapshot has a valid value (not null, not undefined and greater than 0)
+        if (numberOfReactions.val()) {
+            console.log(numberOfReactions.val());
+        } else {
+            trackOnSegment('Streamer Selected To Send Interaction', {
+                Streamer: displayName,
+                StreamerId: streamerId,
+                Category: 'Custom Search'
+            });
+    
+            this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+        }
     }
 
     render() {
@@ -131,7 +145,12 @@ class InteractionsSearchStreamer extends Component {
             </SafeAreaView>
         );
     }
-
 }
 
-export default InteractionsSearchStreamer;
+function mapStateToProps(state) {
+    return {
+        uid: state.userReducer.user.id
+    };
+}
+
+export default connect(mapStateToProps)(InteractionsSearchStreamer);

@@ -17,7 +17,8 @@ import {
     getRecentStreamersDonations,
     getStreamerPublicData,
     getStreamerPublicProfile,
-    getUserFavsStreamers
+    getUserFavsStreamers,
+    getUserReactionsCount
 } from '../../services/database';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { trackOnSegment } from '../../services/statistics';
@@ -103,13 +104,19 @@ export class InteractionsFeed extends Component {
     }
 
     onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming, type) => {
-        trackOnSegment('Streamer Selected To Send Interaction', {
-            Streamer: displayName,
-            StreamerId: streamerId,
-            Category: type
-        });
+        const numberOfReactions = await getUserReactionsCount(this.props.uid, streamerId);
+        // We do not check this with exists() because the value can be 0, so it is easier to check if the snapshot has a valid value (not null, not undefined and greater than 0)
+        if (numberOfReactions.val()) {
+            console.log(numberOfReactions.val());
+        } else {
+            trackOnSegment('Streamer Selected To Send Interaction', {
+                Streamer: displayName,
+                StreamerId: streamerId,
+                Category: type
+            });
 
-        return this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+            return this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+        }
     }
 
     renderLiveItem = ({ item, index }) => {

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Text, FlatList, View, TouchableOpacity, Image, TextInput, SafeAreaView } from 'react-native';
+import { Text, FlatList, View, TouchableOpacity, Image, TextInput, SafeAreaView, Keyboard } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';
 
 import { getStreamersByName } from '../../services/database';
-import { STREAMERS_BLACKLIST } from '../../utilities/Constants';
+import { STREAMERS_BLACKLIST, TWITCH_AFFILIATE, TWITCH_PARTNER } from '../../utilities/Constants';
 
 const Item = ({ streamerName, streamerImg, isStreaming, streamerId, onPress }) => (
     <TouchableOpacity onPress={() => onPress(streamerId, streamerName, streamerImg, isStreaming)}>
@@ -48,13 +48,19 @@ const Item = ({ streamerName, streamerImg, isStreaming, streamerId, onPress }) =
 class InteractionsSearchStreamer extends Component {
     state = {
         search: '',
-        searchResults: []
+        searchResults: [],
     };
 
     searchTimeout = null;
 
+    componentDidMount() {
+        if (this.props.navigation.isFocused()) {
+            this.searchBar.focus();
+        }
+    }
+
     renderItem = ({ item }) => {
-        if (!STREAMERS_BLACKLIST.includes(item.streamerId)) {
+        if (!STREAMERS_BLACKLIST.includes(item.streamerId) && item.broadcasterType === TWITCH_PARTNER || item.broadcasterType === TWITCH_AFFILIATE) {
             return (
                 <Item
                     streamerName={item.displayName}
@@ -83,7 +89,7 @@ class InteractionsSearchStreamer extends Component {
     }
 
     onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming) => {
-        this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+        this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming: true });
     }
 
     render() {
@@ -107,7 +113,7 @@ class InteractionsSearchStreamer extends Component {
                                 style={styles.gridSearchBarTextInput}
                                 value={this.state.search}
                                 onChange={this.searchHandler}
-                                autoFocus
+                                ref={(ti) => { this.searchBar = ti; }}
                             />
                         </View>
                     </View>
@@ -120,7 +126,7 @@ class InteractionsSearchStreamer extends Component {
                         renderItem={this.renderItem}
                         keyExtractor={item => item.id}
                         keyboardShouldPersistTaps={'always'}
-                        />
+                    />
                 </View>
             </SafeAreaView>
         );

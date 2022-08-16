@@ -1610,7 +1610,7 @@ export async function listenToUserToStreamersSubscriptions(uid, callback) {
 export async function getQlanIdWithQreatorCode(qreatorCode) {
     let id = '';
 
-    const codes = await qreatorsCodesRef.orderByChild('code').equalTo(qreatorCode).once('value');
+    const codes = await qreatorsCodesRef.orderByChild('codeLowerCase').equalTo(qreatorCode.toLowerCase()).once('value');
 
     /**
      * We know this query will return a maximum of one code, however firebase returns an object of objects

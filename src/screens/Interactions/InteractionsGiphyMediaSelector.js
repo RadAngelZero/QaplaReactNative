@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native';
+import { View, Image, TouchableOpacity, TextInput, Keyboard, Platform } from 'react-native';
 import {
     GiphyContent,
     GiphyGridView,
@@ -31,11 +31,11 @@ class InteractionsGiphyMediaSelector extends Component {
         const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
         this.setState({ mediaType });
         this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
-            this.setState({ keyboardOpen: true });
-        });
-        this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', (e) => {
-            this.setState({ keyboardOpen: false });
-        });
+			this.setState({ keyboardHeight: parseInt(e.endCoordinates.height) });
+		});
+		this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', () => {
+			this.setState({ keyboardHeight: 0 });
+		});
     }
 
     componentWillUnmount() {
@@ -170,7 +170,7 @@ class InteractionsGiphyMediaSelector extends Component {
         return (
             <View style={styles.container}>
                 <View style={[styles.gridMainContainer, {
-                    height: this.state.keyboardOpen ? heightPercentageToPx(50.65) : heightPercentageToPx(85),
+                    height: (Platform.OS === 'android' && this.state.keyboardHeight) ? this.state.keyboardHeight : heightPercentageToPx(85)
                 }]} >
                     <View style={styles.gridSearchBarContainer}>
                         <View style={[styles.searchBar, styles.gridSearchBar]}>

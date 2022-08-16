@@ -161,7 +161,7 @@ export class InteractionsFeed extends Component {
         if (this.state.dataFetched) {
             return (
                 <View style={styles.container}>
-                    <ScrollView style={styles.container}>
+                    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                         <View style={[styles.feedMainContainer,
                         {
                             marginTop: heightPercentageToPx(4.67) + (Platform.OS === 'ios' ? heightPercentageToPx(5.91) : 0),

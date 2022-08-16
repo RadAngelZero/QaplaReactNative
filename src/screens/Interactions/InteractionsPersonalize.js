@@ -24,18 +24,6 @@ class InteractionsPersonalize extends Component {
 
     componentDidMount() {
         this.fetchCosts();
-        this.fetchHello();
-    }
-
-    fetchHello = async () => {
-        var test = GiphyContent.search(
-            {
-                searchQuery: 'Hello Originals',
-                rating: GiphyRating.PG13,
-                mediaType: GiphyMediaType.Video,
-            }
-        );
-        console.log(test);
     }
 
     fetchCosts = async () => {
@@ -82,7 +70,7 @@ class InteractionsPersonalize extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.innerConatiner}>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         <View style={styles.headerContainer}>
                             <Text style={[styles.whiteText, styles.screenHeaderText]}>
                                 {`${translate('interactions.personalize.personalizeYourInteraction')}`}

@@ -227,7 +227,6 @@ class InteractionsGiphyMediaSelector extends Component {
                                             mediaType,
                                             ...this.props.navigation.state.params,
                                         });
-                                        console.log(e.nativeEvent.media);
                                     }}
                             />}
                     </View>

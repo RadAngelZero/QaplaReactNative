@@ -23,7 +23,6 @@ class InteractionsCheckout extends Component {
     };
 
     componentDidMount() {
-        console.log(this.props.navigation.state.params);
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
         if (!onlyQoins) {
             const costs = this.props.navigation.getParam('costs', {});

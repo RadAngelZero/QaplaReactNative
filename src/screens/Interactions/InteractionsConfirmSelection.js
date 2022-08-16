@@ -59,7 +59,6 @@ class InteractionsConfirmSelection extends Component {
 
     render() {
         const media = this.props.navigation.getParam('selectedMedia');
-        console.log(media.aspectRatio);
 
         return (
             <View style={styles.container}>

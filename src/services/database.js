@@ -5,6 +5,7 @@ import store from '../store/store';
 import { getLocaleLanguage } from '../utilities/i18';
 import { unsubscribeUserFromTopic, subscribeUserToTopic } from './messaging';
 import { checkNotificationPermission } from '../services/messaging';
+import { RNFirebase } from 'react-native-firebase';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
@@ -60,6 +61,7 @@ const inAppPurchasesAttemptsRef = database.ref('/inAppPurchasesAttempts');
 const usersInAppPurchasesRef = database.ref('/UsersInAppPurchases');
 const reactionsSamplesRef = database.ref('/ReactionsSamples');
 const usersReactionsCountRef = database.ref('/UsersReactionsCount');
+const giphyTextRequestsRef = database.ref('/GiphyTextRequests');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1856,4 +1858,13 @@ export async function getReactionSample(type, index) {
  */
 export async function getUserReactionsCount(uid, streamerUid) {
     return await usersReactionsCountRef.child(uid).child(streamerUid).once('value');
+}
+
+/**
+ * Listen for changes on the Giphy Text Request node
+ * @param {string} uid User identifier
+ * @param {RNFirebase.database.QuerySuccessCallback} callback Function called to handle firebase data
+ */
+export function listenGiphyTextSearch(uid, callback) {
+    giphyTextRequestsRef.child(uid).child('data').on('value', callback);
 }

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
 
 import styles from './style';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
+import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
 import RadMasonry from '../../components/RadMasonry/RadMasonry';
 import { getMemesLibrary } from '../../services/database';
 import { MEME } from '../../utilities/Constants';
@@ -153,10 +152,4 @@ class InteractionsMemeSelector extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        giphyId: state.userReducer.user.giphyId
-    };
-}
-
-export default connect(mapStateToProps)(InteractionsMemeSelector);
+export default InteractionsMemeSelector;

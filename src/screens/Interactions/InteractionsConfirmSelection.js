@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Image, SafeAreaView, View } from 'react-native';
+import { ActivityIndicator, Image, View } from 'react-native';
 import styles from './style';
 import ConfirmSelectionModal from '../../components/InteractionsModals/ConfirmSelectionModal';
 import { getMediaTypeCost } from '../../services/database';
-import { GIPHY_CLIPS, GIPHY_GIFS, GIPHY_STICKERS, MEME, TTS } from '../../utilities/Constants';
+import { GIPHY_CLIPS, MEME, TTS } from '../../utilities/Constants';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { GiphyMediaView, GiphyVideoView } from '@giphy/react-native-sdk';
+import { NavigationEvents } from 'react-navigation';
 
 class InteractionsConfirmSelection extends Component {
     state = {
@@ -128,6 +129,8 @@ class InteractionsConfirmSelection extends Component {
 
                     </View>
                 </View>
+                {/* Mute clip when user leave the screen */}
+                <NavigationEvents onWillBlur={() => this.setState({ muteClip: true })} />
                 {this.state.mediaCost !== null &&
                     <ConfirmSelectionModal mediaType={this.state.mediaType}
                         onConfirmSelection={this.onConfirmSelection}

@@ -3,10 +3,6 @@ import { View, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native
 import {
     GiphyContent,
     GiphyGridView,
-    GiphyMedia,
-    GiphyMediaType,
-    GiphySDK,
-    GiphyVideoView,
     GiphyRating,
 } from '@giphy/react-native-sdk';
 import { connect } from 'react-redux';

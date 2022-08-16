@@ -96,13 +96,6 @@ class InteractionsPersonalize extends Component {
                                         backgroundIndex={3}
                                         icon={images.svg.interactionsSticker}
                                     />
-                                    {/* <DeckButton
-                                    onPress={() => this.navigateToSelectedMedia(GIPHY_CLIPS)}
-                                    label="Clips"
-                                    cost={this.state[GIPHY_STICKERS]}
-                                    backgroundIndex={1}
-                                    icon={images.svg.interactionsClip}
-                                /> */}
                                     <DeckButton
                                         onPress={this.navigateToWriteMessage}
                                         label="Text-to-Speech"

@@ -1827,10 +1827,19 @@ export function removeListenerToPurchaseCompleted(uid) {
     usersInAppPurchasesRef.child(uid).off();
 }
 
+/**
+ * Gets the length of the array of samples from the given type of media
+ * @param {('video' | 'text')} type Type of samples to get length
+ */
 export async function getReactionsSamplesCount(type) {
     return await reactionsSamplesRef.child(type).child('length').once('value');
 }
 
+/**
+ * Gets the selected index of the array of samples from the given type of media
+ * @param {('video' | 'text')} type Type of samples to get
+ * @param {number} index Index to load
+ */
 export async function getReactionSample(type, index) {
     return await reactionsSamplesRef.child(type).child('samples').child(index).once('value');
 }

@@ -6,6 +6,7 @@ import styles from './style';
 import images from '../../../assets/images';
 import { getMediaTypeCost } from '../../services/database';
 import { GIPHY_GIFS, TTS } from '../../utilities/Constants';
+import DeckButton from '../../components/DeckButton/DeckButton';
 
 class InteractionsAddTTS extends Component {
     state = {
@@ -59,28 +60,13 @@ class InteractionsAddTTS extends Component {
                         <View style={{
                             alignItems: 'flex-start',
                         }}>
-                            <TouchableOpacity
+                            <DeckButton
                                 onPress={this.sendTTS}
-                                style={styles.personalizeButtonContainer}
-                            >
-                                <ImageBackground
-                                    source={images.png.InteractionGradient3.img}
-                                    style={styles.personalizeButtonBackgroundImage}
-                                >
-                                    <View style={styles.personalizeButtonIconContainer}>
-                                        <images.svg.interactionsTTS />
-                                    </View>
-                                    <Text style={styles.personalizeButtonIconText} >
-                                        Text-to-Speech
-                                    </Text>
-                                    <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                        <images.svg.qoin style={styles.qoin} />
-                                        <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                            {this.state.mediaCost}
-                                        </Text>
-                                    </View>
-                                </ImageBackground>
-                            </TouchableOpacity>
+                                label="Text-to-Speech"
+                                cost={this.state.mediaCost}
+                                backgroundIndex={2}
+                                icon={images.svg.interactionsTTS}
+                            />
                             <View style={styles.chatBubbleContainer}>
                                 <Text style={[styles.whiteText, styles.chatBubbleText]}>
                                     {`${translate('interactions.addTTS.addAMessageP1')} `}

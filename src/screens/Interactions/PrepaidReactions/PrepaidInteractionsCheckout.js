@@ -2,18 +2,17 @@ import React, { Component } from 'react';
 import { Alert, Image, ScrollView, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { translate } from '../../utilities/i18';
-import styles from './style';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
-import { sendCheers } from '../../services/database';
-import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
-import { isUserLogged } from '../../services/auth';
+import { translate } from '../../../utilities/i18';
+import styles from '../style';
+import { heightPercentageToPx, widthPercentageToPx } from '../../../utilities/iosAndroidDim';
+import SendInteractionModal from '../../../components/InteractionsModals/SendInteractionModal';
+import { sendCheers } from '../../../services/database';
+import LinkTwitchAccountModal from '../../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
+import { isUserLogged } from '../../../services/auth';
 import { GiphyMediaView } from '@giphy/react-native-sdk';
-import { MEME } from '../../utilities/Constants';
-import { trackOnSegment } from '../../services/statistics';
+import { GIPHY_STICKERS, MEME } from '../../../utilities/Constants';
 
-class InteractionsCheckout extends Component {
+class PrepaidPrepaidInteractionsCheckout extends Component {
     state = {
         extraTip: 0,
         tipIncrement: 50,
@@ -24,6 +23,7 @@ class InteractionsCheckout extends Component {
     };
 
     componentDidMount() {
+        console.log(this.props.navigation.state.params);
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
         if (!onlyQoins) {
             const costs = this.props.navigation.getParam('costs', {});
@@ -83,13 +83,7 @@ class InteractionsCheckout extends Component {
                                 this.props.photoUrl,
                                 streamerId,
                                 () => {
-                                    trackOnSegment('Interaction Sent', {
-                                        MessageLength: message ? message.length : null,
-                                        ExtraTip: this.state.extraTip,
-                                        TotalQoins: totalCost
-                                    });
-
-                                    this.props.navigation.navigate('InteractionsSent', {
+                                    this.props.navigation.navigate('PrepaidInteractionsSent', {
                                         ...this.props.navigation.state.params,
                                         donationTotal: totalCost,
                                     });
@@ -286,4 +280,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(InteractionsCheckout);
+export default connect(mapStateToProps)(PrepaidInteractionsCheckout);

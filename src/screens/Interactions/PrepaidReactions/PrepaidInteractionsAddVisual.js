@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import { translate } from '../../utilities/i18';
-import styles from './style';
+import styles from '../style';
 import images from '../../../assets/images';
 import { GIPHY_GIFS, GIPHY_STICKERS, MEME, TTS } from '../../utilities/Constants';
 import { getAllMediaTypeCosts } from '../../services/database';
-import { trackOnSegment } from '../../services/statistics';
 import DeckButton from '../../components/DeckButton/DeckButton';
 
-class InteractionsAddVisual extends Component {
+class PrepaidInteractionsAddVisual extends Component {
     state = {
         [GIPHY_GIFS]: null,
         [GIPHY_STICKERS]: null,
@@ -28,17 +27,13 @@ class InteractionsAddVisual extends Component {
     }
 
     navigateToSelectedMedia = (mediaType) => {
-        trackOnSegment('Media Added After Media Selection', {
-            MediaType: mediaType
-        });
-
         if (mediaType === MEME) {
-            this.props.navigation.navigate('InteractionsMemeSelector', {
+            this.props.navigation.navigate('PrepaidInteractionsMemeSelector', {
                 mediaType,
                 ...this.props.navigation.state.params
             });
         } else {
-            this.props.navigation.navigate('InteractionsGiphyMediaSelector', {
+            this.props.navigation.navigate('PrepaidInteractionsGiphyMediaSelector', {
                 mediaType,
                 ...this.props.navigation.state.params
             });
@@ -46,10 +41,8 @@ class InteractionsAddVisual extends Component {
     }
 
     justSendTTS = () => {
-        trackOnSegment('Only Send TTS Without Media');
-
         const costsObject = this.props.navigation.getParam('costs', {});
-        this.props.navigation.navigate('InteractionsCheckout', {
+        this.props.navigation.navigate('PrepaidInteractionsCheckout', {
             ...this.props.navigation.state.params,
             costs: {
                 [TTS]: this.state.mediaCost,
@@ -155,4 +148,4 @@ class InteractionsAddVisual extends Component {
 
 }
 
-export default InteractionsAddVisual;
+export default PrepaidInteractionsAddVisual;

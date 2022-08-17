@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity, Keyboard, Platform, Animated, Easing } from 'react-native';
 import { connect } from 'react-redux';
 
-import images from '../../../assets/images';
-import { MAX_CHAR_FOR_TTS } from './../../utilities/Constants';
-import { translate } from '../../utilities/i18';
-import styles from './style';
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import images from '../../../../assets/images';
+import { MAX_CHAR_FOR_TTS } from '../../../utilities/Constants';
+import { translate } from '../../../utilities/i18';
+import styles from '../style';
+import { heightPercentageToPx } from '../../../utilities/iosAndroidDim';
 import LinearGradient from 'react-native-linear-gradient';
 import MaskedView from '@react-native-community/masked-view';
 
@@ -40,7 +40,7 @@ class OptionButton extends Component {
     }
 }
 
-class InteractionsTTS extends Component {
+class PrepaidInteractionsTTS extends Component {
     state = {
         message: '',
         noEditedMessage: '',
@@ -153,14 +153,14 @@ class InteractionsTTS extends Component {
 
     readyHandler = () => {
         if (this.props.previousScreen === 'InteractionsAddTTS') {
-            this.props.navigation.navigate('InteractionsCheckout', {
+            this.props.navigation.navigate('PrepaidInteractionsCheckout', {
                 message: this.state.message,
                 voiceCost: this.state.voiceCost,
                 voiceName: this.state.voiceName,
                 ...this.props.navigation.state.params,
             });
         } else {
-            this.props.navigation.navigate('InteractionsAddVisual', {
+            this.props.navigation.navigate('PrepaidInteractionsAddVisual', {
                 message: this.state.message,
                 voiceCost: this.state.voiceCost,
                 voiceName: this.state.voiceName,
@@ -435,4 +435,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(InteractionsTTS);
+export default connect(mapStateToProps)(PrepaidInteractionsTTS);

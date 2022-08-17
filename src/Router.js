@@ -51,6 +51,15 @@ import InteractionsMemeSelector from './screens/Interactions/InteractionsMemeSel
 import BuyQoins from './screens/BuyQoins/BuyQoins';
 import InteractionsSent from './screens/Interactions/InteractionsSent';
 import InteractionsAddVisual from './screens/Interactions/InteractionsAddVisual';
+import PrepaidInteractionsPersonalize from './screens/Interactions/PrepaidReactions/PrepaidInteractionsPersonalize';
+import PrepaidInteractionsGiphyMediaSelector from './screens/Interactions/PrepaidReactions/PrepaidInteractionsGiphyMediaSelector';
+import PrepaidInteractionsMemeSelector from './screens/Interactions/PrepaidReactions/PrepaidInteractionsMemeSelector';
+import PrepaidInteractionsConfirmSelection from './screens/Interactions/PrepaidReactions/PrepaidInteractionsConfirmSelection';
+import PrepaidInteractionsAddTTS from './screens/Interactions/PrepaidReactions/PrepaidInteractionsAddTTS';
+import PrepaidInteractionsTTS from './screens/Interactions/PrepaidReactions/PrepaidInteractionsTTS';
+import PrepaidInteractionsAddVisual from './screens/Interactions/PrepaidReactions/PrepaidInteractionsAddVisual';
+import PrepaidInteractionsCheckout from './screens/Interactions/PrepaidReactions/PrepaidInteractionsCheckout';
+import PrepaidInteractionsSent from './screens/Interactions/PrepaidReactions/PrepaidInteractionsSent';
 
 //#region Stack Navigators
 
@@ -202,6 +211,84 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
   },
   InteractionsSent: {
     screen: InteractionsSent,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+}, {
+  defaultNavigationOptions: {
+    header: (props) => <PersonalizeInteractionHeader {...props} />,
+  }
+});
+const PrepaidInteractionsPersonlizeStackNavigator = createStackNavigator({
+  PrepaidInteractionsPersonalize: {
+    screen: PrepaidInteractionsPersonalize,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  PrepaidInteractionsGiphyMediaSelector: {
+    screen: PrepaidInteractionsGiphyMediaSelector,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  PrepaidInteractionsMemeSelector: {
+    screen: PrepaidInteractionsMemeSelector,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  PrepaidInteractionsConfirmSelection: {
+    screen: PrepaidInteractionsConfirmSelection,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  PrepaidInteractionsAddTTS: {
+    screen: PrepaidInteractionsAddTTS,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  PrepaidInteractionsTTS: {
+    screen: PrepaidInteractionsTTS,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  PrepaidInteractionsAddVisual: {
+    screen: PrepaidInteractionsAddVisual,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  PrepaidInteractionsCheckout: {
+    screen: PrepaidInteractionsCheckout,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  PrepaidInteractionsSent: {
+    screen: PrepaidInteractionsSent,
     navigationOptions: {
       headerShown: true,
       gestureDirection: 'horizontal',

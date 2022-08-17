@@ -206,10 +206,10 @@ export default styles = StyleSheet.create({
     gridBottomSelectionSelectorButtonText: {
         fontSize: 17,
         fontWeight: '700',
-        lineHeight: heightPercentageToPx(2.71),
+        lineHeight: heightPercentageToPx(2.21),
     },
     personalizeButtonContainer: {
-        marginTop: 18 * getScreenSizeMultiplier(),
+        marginTop: heightPercentageToPx(2.21),
     },
     personalizeButtonBackgroundImage: {
         width: widthPercentageToPx(43),
@@ -281,29 +281,29 @@ export default styles = StyleSheet.create({
     },
     chatBubbleContainer: {
         backgroundColor: '#141539',
-        paddingHorizontal: 24 * getScreenSizeMultiplier(),
-        paddingVertical: 16 * getScreenSizeMultiplier(),
-        borderRadius: 20 * getScreenSizeMultiplier(),
-        borderTopLeftRadius: 4 * getScreenSizeMultiplier(),
-        marginTop: 16 * getScreenSizeMultiplier(),
+        paddingHorizontal: widthPercentageToPx(6.4),
+        paddingVertical: heightPercentageToPx(1.97),
+        borderRadius: widthPercentageToPx(5.33),
+        borderTopLeftRadius: widthPercentageToPx(1.06),
+        marginTop: heightPercentageToPx(1.97),
         alignSelf: 'flex-start',
     },
     userChatBubbleContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#3D42DF',
-        paddingHorizontal: 24 * getScreenSizeMultiplier(),
-        paddingVertical: 16 * getScreenSizeMultiplier(),
-        borderRadius: 20 * getScreenSizeMultiplier(),
-        borderTopRightRadius: 4 * getScreenSizeMultiplier(),
-        marginTop: 16 * getScreenSizeMultiplier(),
+        paddingHorizontal: widthPercentageToPx(6.4),
+        paddingVertical: heightPercentageToPx(1.97),
+        borderRadius: widthPercentageToPx(5.33),
+        borderTopLeftRadius: widthPercentageToPx(1.06),
+        marginTop: heightPercentageToPx(1.97),
         alignSelf: 'flex-end',
     },
     chatBubbleText: {
         fontSize: 16,
         fontWeight: '400',
-        lineHeight: 24 * getScreenSizeMultiplier(),
-        maxWidth: 250 * getScreenSizeMultiplier(),
+        lineHeight: heightPercentageToPx(2.95),
+        maxWidth: widthPercentageToPx(66.66),
     },
     chatBubbleTextAccent: {
         fontWeight: '500',
@@ -372,7 +372,7 @@ export default styles = StyleSheet.create({
         backgroundColor: '#141539',
         borderRadius: widthPercentageToPx(4.8),
         height: heightPercentageToPx(4.92),
-        paddingHorizontal: 17 * getScreenSizeMultiplier(),
+        paddingHorizontal: widthPercentageToPx(4.53),
     },
     chatTextInput: {
         flex: 1,
@@ -495,5 +495,56 @@ export default styles = StyleSheet.create({
     },
     noMarginRight: {
         marginRight: 0,
-    }
+    },
+    loadingDotsContainer: {
+        flexDirection: 'row',
+    },
+    transparentText: {
+        color: '#0000',
+    },
+    optionsContainer: {
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        marginTop: heightPercentageToPx(0.49),
+    },
+    optionContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: heightPercentageToPx(1.84),
+    },
+    marginRight16: {
+        marginRight: widthPercentageToPx(4.26),
+    },
+    smallQoin: {
+        maxWidth: widthPercentageToPx(4.26),
+        maxHeight: widthPercentageToPx(4.26),
+    },
+    optionQoinsMargin: {
+        marginRight: widthPercentageToPx(1.06),
+    },
+    optionOutIconMargin: {
+        marginRight: widthPercentageToPx(4),
+    },
+    optionPriceContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: widthPercentageToPx(8.53),
+    },
+    optionOuterConainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    },
+    prepaidReactionsContainer: {
+        backgroundColor: '#1C1E64',
+        marginTop: heightPercentageToPx(2.95),
+        padding: widthPercentageToPx(2.13),
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    interactionIconMargin: {
+        marginRight: widthPercentageToPx(1.6),
+        maxWidth: widthPercentageToPx(4.26),
+        maxHeight: widthPercentageToPx(4.26),
+    },
 });

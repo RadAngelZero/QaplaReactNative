@@ -3,7 +3,7 @@ import { View, Text, Image, TextInput, TouchableOpacity, Keyboard, Platform, Ani
 import { connect } from 'react-redux';
 
 import images from '../../../../assets/images';
-import { MAX_CHAR_FOR_TTS } from '../../../utilities/Constants';
+import { CUSTOM_TTS_VOICE, MAX_CHAR_FOR_TTS } from '../../../utilities/Constants';
 import { translate } from '../../../utilities/i18';
 import styles from '../style';
 import { heightPercentageToPx } from '../../../utilities/iosAndroidDim';
@@ -152,19 +152,28 @@ class PrepaidInteractionsTTS extends Component {
     }
 
     readyHandler = () => {
+        const costsObject = this.props.navigation.getParam('costs', {});
         if (this.props.previousScreen === 'InteractionsAddTTS') {
+            console.log('a', [CUSTOM_TTS_VOICE], this.state.voiceCost,);
             this.props.navigation.navigate('PrepaidInteractionsCheckout', {
-                message: this.state.message,
-                voiceCost: this.state.voiceCost,
-                voiceName: this.state.voiceName,
                 ...this.props.navigation.state.params,
+                message: this.state.message,
+                voiceName: this.state.voiceName,
+                costs: {
+                    [CUSTOM_TTS_VOICE]: this.state.voiceCost,
+                    ...costsObject
+                },
             });
         } else {
+            console.log('b', [CUSTOM_TTS_VOICE], this.state.voiceCost,);
             this.props.navigation.navigate('PrepaidInteractionsAddVisual', {
-                message: this.state.message,
-                voiceCost: this.state.voiceCost,
-                voiceName: this.state.voiceName,
                 ...this.props.navigation.state.params,
+                message: this.state.message,
+                voiceName: this.state.voiceName,
+                costs: {
+                    [CUSTOM_TTS_VOICE]: this.state.voiceCost,
+                    ...costsObject
+                },
             });
         }
     }

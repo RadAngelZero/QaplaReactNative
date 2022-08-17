@@ -10,7 +10,7 @@ import { sendCheers } from '../../../services/database';
 import LinkTwitchAccountModal from '../../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../../services/auth';
 import { GiphyMediaView } from '@giphy/react-native-sdk';
-import { MEME } from '../../../utilities/Constants';
+import { CUSTOM_TTS_VOICE, MEME } from '../../../utilities/Constants';
 
 class PrepaidInteractionsCheckout extends Component {
     state = {
@@ -31,7 +31,7 @@ class PrepaidInteractionsCheckout extends Component {
             Object.values(costs).forEach((cost) => {
                 interactionCost += cost;
             });
-            interactionCost += this.props.navigation.state.params.voiceCost;
+
             this.setState({ interactionCost });
         } else {
             this.setState({ minimum: 50, extraTip: 50 });
@@ -228,23 +228,17 @@ class PrepaidInteractionsCheckout extends Component {
                                 {Object.keys(costs).map((product) => (
                                     <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
                                         <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                            {translate(`interactions.checkout.concepts.${product}`)}
+                                            {product !== CUSTOM_TTS_VOICE ?
+                                                translate(`interactions.checkout.concepts.${product}`)
+                                                :
+                                                `${this.props.navigation.state.params.voiceName} Voice`
+                                            }
                                         </Text>
                                         <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
                                             {costs[product]}
                                         </Text>
                                     </View>
                                 ))}
-                                {this.props.navigation.state.params.message &&
-                                    <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
-                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                            {`${this.props.navigation.state.params.voiceName} Voice`}
-                                        </Text>
-                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                            {this.props.navigation.state.params.voiceCost}
-                                        </Text>
-                                    </View>
-                                }
                             </View>
                             <View style={styles.checkoutMarginDisplay} />
                         </>

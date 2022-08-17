@@ -170,6 +170,7 @@ export const QOINS = 'qoins';
 // Media types for cheers
 export const MEME = 'meme';
 export const TTS = 'tts';
+export const CUSTOM_TTS_VOICE = 'customTTSVoice';
 
 export const STREAMERS_BLACKLIST = ['141617732-catskullgamer', '683167758-catskullgg', '613408163-d_h_v_s', '698301557-QaplaGaming', '448926957-qaplita', '528477359-mariyolo1bot', '448926957-qaplita'];
 

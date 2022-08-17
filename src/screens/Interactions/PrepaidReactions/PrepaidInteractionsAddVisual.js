@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 import { translate } from '../../../utilities/i18.js';
 import styles from '../style';
@@ -68,6 +68,7 @@ class PrepaidInteractionsAddVisual extends Component {
                                 label="GIFs"
                                 cost={this.state[GIPHY_GIFS]}
                                 backgroundIndex={0}
+                                hideCost
                                 icon={images.svg.interactionsGIF}
                             />
                             <DeckButton
@@ -75,6 +76,7 @@ class PrepaidInteractionsAddVisual extends Component {
                                 label="Sticker"
                                 cost={this.state[GIPHY_STICKERS]}
                                 backgroundIndex={3}
+                                hideCost
                                 icon={images.svg.interactionsSticker}
                             />
                             <DeckButton
@@ -82,6 +84,7 @@ class PrepaidInteractionsAddVisual extends Component {
                                 label="Memes"
                                 cost={this.state[MEME]}
                                 backgroundIndex={5}
+                                hideCost
                                 icon={images.svg.interactionsMemes}
                             />
                             {/* <TouchableOpacity

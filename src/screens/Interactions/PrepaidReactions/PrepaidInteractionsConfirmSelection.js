@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Image, SafeAreaView, View } from 'react-native';
+import { ActivityIndicator, Image, View } from 'react-native';
+import { NavigationEvents } from 'react-navigation';
+
 import styles from '../style';
 import ConfirmSelectionModal from '../../../components/InteractionsModals/ConfirmSelectionModal';
 import { getMediaTypeCost } from '../../../services/database';
-import { GIPHY_CLIPS, GIPHY_GIFS, GIPHY_STICKERS, MEME, TTS } from '../../../utilities/Constants';
+import { GIPHY_CLIPS, MEME, TTS } from '../../../utilities/Constants';
 import { heightPercentageToPx, widthPercentageToPx } from '../../../utilities/iosAndroidDim';
 import { GiphyMediaView, GiphyVideoView } from '@giphy/react-native-sdk';
 
@@ -59,7 +61,6 @@ class PrepaidInteractionsConfirmSelection extends Component {
 
     render() {
         const media = this.props.navigation.getParam('selectedMedia');
-        console.log(media.aspectRatio);
 
         return (
             <View style={styles.container}>
@@ -129,6 +130,8 @@ class PrepaidInteractionsConfirmSelection extends Component {
 
                     </View>
                 </View>
+                {/* Mute clip when user leave the screen */}
+                <NavigationEvents onWillBlur={() => this.setState({ muteClip: true })} />
                 {this.state.mediaCost !== null &&
                     <ConfirmSelectionModal mediaType={this.state.mediaType}
                         onConfirmSelection={this.onConfirmSelection}

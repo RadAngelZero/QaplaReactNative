@@ -26,6 +26,7 @@ class InteractionsGiphyMediaSelector extends Component {
         keyboardOpen: false,
     };
     searchTimeout = null;
+
     componentDidMount() {
         this.fetchTrendingMedia();
         const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);

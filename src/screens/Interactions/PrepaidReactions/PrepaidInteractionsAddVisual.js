@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
-import { translate } from '../../utilities/i18';
+
+import { translate } from '../../../utilities/i18.js';
 import styles from '../style';
-import images from '../../../assets/images';
-import { GIPHY_GIFS, GIPHY_STICKERS, MEME, TTS } from '../../utilities/Constants';
-import { getAllMediaTypeCosts } from '../../services/database';
-import DeckButton from '../../components/DeckButton/DeckButton';
+import images from '../../../../assets/images.js';
+import { GIPHY_GIFS, GIPHY_STICKERS, MEME, TTS } from '../../../utilities/Constants';
+import { getAllMediaTypeCosts } from '../../../services/database';
+import DeckButton from '../../../components/DeckButton/DeckButton';
 
 class PrepaidInteractionsAddVisual extends Component {
     state = {

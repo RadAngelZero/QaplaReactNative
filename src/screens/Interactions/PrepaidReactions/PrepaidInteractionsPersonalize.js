@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
 
 import styles from '../style';
 import images from '../../../../assets/images';
 import { GIPHY_CLIPS, GIPHY_GIFS, GIPHY_STICKERS, GIPHY_TEXT, MEME, TTS } from '../../../utilities/Constants';
-import { getAllMediaTypeCosts } from '../../../services/database';
+import { getAllMediaTypeCosts, getReactionSample, getReactionsSamplesCount } from '../../../services/database';
 import { translate } from '../../../utilities/i18';
 import DeckButton from '../../../components/DeckButton/DeckButton';
 import { heightPercentageToPx, widthPercentageToPx } from '../../../utilities/iosAndroidDim';
-import { GiphyContent, GiphyMediaType, GiphyRating, GiphyVideoView } from '@giphy/react-native-sdk';
 
 class PrepaidInteractionsPersonalize extends Component {
     state = {
@@ -18,6 +17,8 @@ class PrepaidInteractionsPersonalize extends Component {
         [GIPHY_CLIPS]: null,
         [TTS]: null,
         [MEME]: null,
+        clipsSample: null,
+        giphyTextSample: null,
         dataFetched: false,
         videoContent: null,
         reactions: 5,
@@ -25,18 +26,8 @@ class PrepaidInteractionsPersonalize extends Component {
 
     componentDidMount() {
         this.fetchCosts();
-        this.fetchHello();
-    }
-
-    fetchHello = async () => {
-        var test = GiphyContent.search(
-            {
-                searchQuery: 'Hello Originals',
-                rating: GiphyRating.PG13,
-                mediaType: GiphyMediaType.Video,
-            }
-        );
-        console.log(test);
+        this.fetchClipsSample();
+        this.fetchGiphyTextSample();
     }
 
     fetchCosts = async () => {
@@ -44,6 +35,22 @@ class PrepaidInteractionsPersonalize extends Component {
         if (costs.exists()) {
             this.setState({ ...costs.val(), dataFetched: true });
         }
+    }
+
+    fetchClipsSample = async () => {
+        const clipsLength = await getReactionsSamplesCount(GIPHY_CLIPS);
+        const index = Math.floor(Math.random() * clipsLength.val());
+        const clipsSample = await getReactionSample(GIPHY_CLIPS, index);
+
+        this.setState({ clipsSample: clipsSample.val() });
+    }
+
+    fetchGiphyTextSample = async () => {
+        const clipsLength = await getReactionsSamplesCount(GIPHY_TEXT);
+        const index = Math.floor(Math.random() * clipsLength.val());
+        const giphyTextSample = await getReactionSample(GIPHY_TEXT, index);
+
+        this.setState({ giphyTextSample: giphyTextSample.val() });
     }
 
     navigateToSelectedMedia = (mediaType) => {
@@ -83,7 +90,7 @@ class PrepaidInteractionsPersonalize extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.innerConatiner}>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         <View style={styles.headerContainer}>
                             <Text style={[styles.whiteText, styles.screenHeaderText]}>
                                 {`${translate('interactions.personalize.personalizeYourInteraction')}`}
@@ -153,13 +160,43 @@ class PrepaidInteractionsPersonalize extends Component {
                             <images.svg.questionMark />
                         </TouchableOpacity> */}
                         </View>
-                        {this.state.dataFetched && <TouchableOpacity style={{
-
-                        }}
-                            onPress={() => this.navigateToSelectedMedia(GIPHY_CLIPS)}
-                        >
+                        {this.state.dataFetched &&
+                            <TouchableOpacity onPress={() => this.navigateToSelectedMedia(GIPHY_CLIPS)}>
+                                <ImageBackground
+                                    source={this.state.clipsSample ? { uri: this.state.clipsSample } : null}
+                                    style={{
+                                        justifyContent: 'flex-end',
+                                        alignItems: 'center',
+                                        // width: widthPercentageToPx(100),
+                                        height: heightPercentageToPx(23.39),
+                                        borderRadius: widthPercentageToPx(5.33),
+                                        overflow: 'hidden',
+                                    }}
+                                    imageStyle={{
+                                    }}
+                                    resizeMode="cover"
+                                >
+                                    <View style={styles.personalizeButtonDisplayQoinsContainer}>
+                                        <images.svg.qoin style={styles.qoin} />
+                                        <Text style={styles.personalizeButtonDisplayQoinsText}>
+                                            {this.state[GIPHY_CLIPS]}
+                                        </Text>
+                                    </View>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                        }
+                        <View style={[styles.headerContainer, styles.headerMargins]}>
+                            <Text style={[styles.whiteText, styles.screenHeaderText]}>
+                                {/* {`${translate('interactions.personalize.personalizeYourInteraction')}`} */}
+                                {`Custom TTS`}
+                            </Text>
+                            {/* <TouchableOpacity style={styles.helpButton}>
+                                <images.svg.questionMark />
+                            </TouchableOpacity> */}
+                        </View>
+                        <TouchableOpacity onPress={() => this.navigateToSelectedMedia(GIPHY_TEXT)}>
                             <ImageBackground
-                                source={{ uri: 'https://i.pinimg.com/originals/d3/01/fd/d301fdc8f718cc4e956c6456eb2af1ee.gif' }}
+                                source={this.state.giphyTextSample ? { uri: this.state.giphyTextSample } : null}
                                 style={{
                                     justifyContent: 'flex-end',
                                     alignItems: 'center',
@@ -170,45 +207,7 @@ class PrepaidInteractionsPersonalize extends Component {
                                 }}
                                 imageStyle={{
                                 }}
-                                resizeMode="cover"
-                            >
-                                <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                    <images.svg.qoin style={styles.qoin} />
-                                    <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                        {this.state[GIPHY_CLIPS]}
-                                    </Text>
-                                </View>
-                            </ImageBackground>
-                        </TouchableOpacity>}
-                        {/* <View style={[styles.headerContainer, styles.headerMargins]}>
-                            <Text style={[styles.whiteText, styles.screenHeaderText]}> */}
-                        {/* {`${translate('interactions.personalize.personalizeYourInteraction')}`} */}
-                        {/* {`Custom TTS`} */}
-                        {/* {`TTS Personalizado`} */}
-                        {/* </Text> */}
-                        {/* <TouchableOpacity style={styles.helpButton}>
-                            <images.svg.questionMark />
-                        </TouchableOpacity> */}
-                        {/* </View>
-                        <TouchableOpacity style={{
-
-                        }}
-                            onPress={() => this.navigateToSelectedMedia(GIPHY_TEXT)}
-                        >
-                            <ImageBackground
-                                source={{ uri: 'https://i.pinimg.com/originals/d3/01/fd/d301fdc8f718cc4e956c6456eb2af1ee.gif' }}
-                                style={{
-                                    justifyContent: 'flex-end',
-                                    alignItems: 'center',
-                                    // width: widthPercentageToPx(100),
-                                    height: heightPercentageToPx(23.39),
-                                    borderRadius: widthPercentageToPx(5.33),
-                                    overflow: 'hidden',
-                                }}
-                                imageStyle={{
-                                }}
-                                resizeMode="cover"
-                            >
+                                resizeMode="cover">
                                 <View style={styles.personalizeButtonDisplayQoinsContainer}>
                                     <images.svg.qoin style={styles.qoin} />
                                     <Text style={styles.personalizeButtonDisplayQoinsText}>
@@ -216,7 +215,7 @@ class PrepaidInteractionsPersonalize extends Component {
                                     </Text>
                                 </View>
                             </ImageBackground>
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
                         <View style={{ height: heightPercentageToPx(6.15) }} />
                         {/* <View style={styles.onlySendQoinsContainer}>
                         <TouchableOpacity style={styles.onlySendQoinsTouchable}

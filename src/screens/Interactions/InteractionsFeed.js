@@ -104,10 +104,26 @@ export class InteractionsFeed extends Component {
     }
 
     onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming, type) => {
-        const numberOfReactions = await getUserReactionsCount(this.props.uid, streamerId);
-        // We do not check this with exists() because the value can be 0, so it is easier to check if the snapshot has a valid value (not null, not undefined and greater than 0)
-        if (numberOfReactions.val()) {
-            console.log(numberOfReactions.val());
+        if (this.props.uid) {
+            const numberOfReactions = await getUserReactionsCount(this.props.uid, streamerId);
+            // We do not check this with exists() because the value can be 0, so it is easier to check if the snapshot has a valid value (not null, not undefined and greater than 0)
+            if (numberOfReactions.val()) {
+                trackOnSegment('Streamer Selected To Send Interaction', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: 'Custom Search'
+                });
+
+                this.props.navigation.navigate('PrepaidInteractionsPersonlizeStack', { streamerId, displayName, photoUrl, isStreaming });
+            } else {
+                trackOnSegment('Streamer Selected To Send Interaction', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: type
+                });
+
+                return this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+            }
         } else {
             trackOnSegment('Streamer Selected To Send Interaction', {
                 Streamer: displayName,

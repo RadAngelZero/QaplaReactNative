@@ -202,8 +202,7 @@ class InteractionsPersonalize extends Component {
                                 }}
                                 imageStyle={{
                                 }}
-                                resizeMode="cover"
-                            >
+                                resizeMode="cover">
                                 <View style={styles.personalizeButtonDisplayQoinsContainer}>
                                     <images.svg.qoin style={styles.qoin} />
                                     <Text style={styles.personalizeButtonDisplayQoinsText}>

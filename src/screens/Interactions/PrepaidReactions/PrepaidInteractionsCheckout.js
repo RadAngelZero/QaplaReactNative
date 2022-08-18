@@ -24,7 +24,6 @@ class PrepaidInteractionsCheckout extends Component {
     };
 
     componentDidMount() {
-        console.log(this.props.navigation.state.params);
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
         if (!onlyQoins) {
             const costs = this.props.navigation.getParam('costs', {});
@@ -65,11 +64,19 @@ class PrepaidInteractionsCheckout extends Component {
                             const mediaType = this.props.navigation.getParam('mediaType');
                             const message = this.props.navigation.getParam('message', null);
                             let media = null;
-                            if (selectedMedia && selectedMedia.original) {
-                                media = {
-                                    ...selectedMedia.original,
-                                    type: mediaType
-                                };
+
+                            if (selectedMedia) {
+                                if (selectedMedia.data && selectedMedia.data.images && selectedMedia.data.images.original) {
+                                    media = {
+                                        ...selectedMedia.data.images.original,
+                                        type: mediaType
+                                    };
+                                } else if (selectedMedia.original) {
+                                    media = {
+                                        ...selectedMedia.original,
+                                        type: mediaType
+                                    };
+                                }
                             }
 
                             sendCheers(

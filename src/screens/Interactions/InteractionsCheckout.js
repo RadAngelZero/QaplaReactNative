@@ -57,21 +57,29 @@ class InteractionsCheckout extends Component {
                 if (isUserLogged()) {
                     if (this.props.twitchId && this.props.twitchUserName) {
                         const totalCost = this.state.interactionCost + this.state.extraTip;
-                        if (totalCost <= this.props.qoins) {
+                        if (true) {
                             const streamerId = this.props.navigation.getParam('streamerId', '');
                             const streamerName = this.props.navigation.getParam('displayName', '');
                             const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
                             const mediaType = this.props.navigation.getParam('mediaType');
                             const message = this.props.navigation.getParam('message', null);
                             let media = null;
-                            if (selectedMedia && selectedMedia.original) {
-                                media = {
-                                    ...selectedMedia.original,
-                                    type: mediaType
-                                };
+                            console.log(selectedMedia.data.images.original);
+                            if (selectedMedia) {
+                                if (selectedMedia.data && selectedMedia.data.images && selectedMedia.data.images.original) {
+                                    media = {
+                                        ...selectedMedia.data.images.original,
+                                        type: mediaType
+                                    };
+                                } else if (selectedMedia.original) {
+                                    media = {
+                                        ...selectedMedia.original,
+                                        type: mediaType
+                                    };
+                                }
                             }
 
-                            sendCheers(
+                            /* sendCheers(
                                 totalCost,
                                 media,
                                 message,
@@ -95,7 +103,7 @@ class InteractionsCheckout extends Component {
                                     });
                                 },
                                 () => this.setState({ sendingInteraction: false })
-                            );
+                            ); */
                         } else {
                             this.setState({ sendingInteraction: false });
                             // After a successful buy try to send the interaction again

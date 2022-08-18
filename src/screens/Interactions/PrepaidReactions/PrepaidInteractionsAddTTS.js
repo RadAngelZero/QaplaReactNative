@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ImageBackground, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 
 import { translate } from '../../../utilities/i18';
 import styles from '../style';
@@ -42,12 +42,6 @@ class PrepaidInteractionsAddTTS extends Component {
     sendOnlyMedia = () => {
         trackOnSegment('Send Only Media Without TTS');
         this.props.navigation.navigate('PrepaidInteractionsCheckout', { ...this.props.navigation.state.params });
-    }
-
-    state = {
-        streamerName: '',
-        messageCost: 0,
-        visualType: 'GIF',
     }
 
     render() {

@@ -59,14 +59,14 @@ class PrepaidInteractionsPersonalize extends Component {
         });
 
         if (mediaType === MEME) {
-            this.props.navigation.navigate('InteractionsMemeSelector', {
+            this.props.navigation.navigate('PrepaidInteractionsMemeSelector', {
                 mediaType,
                 ...this.props.navigation.state.params,
             });
         } else if (mediaType === GIPHY_TEXT) {
             console.log('Send to giphy text');
         } else {
-            this.props.navigation.navigate('InteractionsGiphyMediaSelector', {
+            this.props.navigation.navigate('PrepaidInteractionsGiphyMediaSelector', {
                 mediaType,
                 ...this.props.navigation.state.params,
             });
@@ -85,16 +85,6 @@ class PrepaidInteractionsPersonalize extends Component {
                 [TTS]: this.state[TTS],
                 ...costsObject
             }
-        });
-    }
-
-    justSendQoins = () => {
-        trackOnSegment('Only Send Qoins');
-
-        // Send to only Qoins donation screen
-        this.props.navigation.navigate('PrepaidInteractionsCheckout', {
-            ...this.props.navigation.state.params,
-            onlyQoins: true
         });
     }
 
@@ -229,17 +219,6 @@ class PrepaidInteractionsPersonalize extends Component {
                             </ImageBackground>
                         </TouchableOpacity>
                         <View style={{ height: heightPercentageToPx(6.15) }} />
-                        {/* <View style={styles.onlySendQoinsContainer}>
-                        <TouchableOpacity style={styles.onlySendQoinsTouchable}
-                            onPress={this.justSendQoins}>
-                            <Text style={[styles.semitransparentText, styles.onlySendQoinsText]}>
-                                {`${translate('interactions.personalize.onlySend')} `}
-                                <Text style={styles.whiteText}>
-                                    Qoins
-                                </Text>
-                            </Text>
-                        </TouchableOpacity>
-                    </View> */}
                     </ScrollView>
                 </View>
             </View>

@@ -5,7 +5,7 @@ import { NavigationEvents } from 'react-navigation';
 import styles from '../style';
 import ConfirmSelectionModal from '../../../components/InteractionsModals/ConfirmSelectionModal';
 import { getMediaTypeCost } from '../../../services/database';
-import { GIPHY_CLIPS, MEME, TTS } from '../../../utilities/Constants';
+import { GIPHY_CLIPS, MEME } from '../../../utilities/Constants';
 import { heightPercentageToPx, widthPercentageToPx } from '../../../utilities/iosAndroidDim';
 import { GiphyMediaView, GiphyVideoView } from '@giphy/react-native-sdk';
 

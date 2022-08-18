@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from '../style';
-import { widthPercentageToPx, heightPercentageToPx, getScreenSizeMultiplier } from '../../../utilities/iosAndroidDim';
+import { getScreenSizeMultiplier } from '../../../utilities/iosAndroidDim';
 import RadMasonry from '../../../components/RadMasonry/RadMasonry';
 import { getMemesLibrary } from '../../../services/database';
 import { MEME } from '../../../utilities/Constants';

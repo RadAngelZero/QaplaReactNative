@@ -114,7 +114,7 @@ export class InteractionsFeed extends Component {
                     Category: 'Custom Search'
                 });
 
-                this.props.navigation.navigate('PrepaidInteractionsPersonlizeStack', { streamerId, displayName, photoUrl, isStreaming });
+                this.props.navigation.navigate('PrepaidInteractionsPersonlizeStack', { streamerId, displayName, photoUrl, isStreaming, numberOfReactions: numberOfReactions.val() });
             } else {
                 trackOnSegment('Streamer Selected To Send Interaction', {
                     Streamer: displayName,

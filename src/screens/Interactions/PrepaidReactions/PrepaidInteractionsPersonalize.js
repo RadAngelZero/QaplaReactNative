@@ -21,8 +21,7 @@ class PrepaidInteractionsPersonalize extends Component {
         clipsSample: null,
         giphyTextSample: null,
         dataFetched: false,
-        videoContent: null,
-        reactions: 5,
+        videoContent: null
     };
 
     componentDidMount() {
@@ -115,7 +114,7 @@ class PrepaidInteractionsPersonalize extends Component {
                         <View style={styles.prepaidReactionsContainer}>
                             <images.svg.interactionsIcon styles={styles.interactionIconMargin} />
                             <Text>
-                                {`(${this.state.reactions}) Reactions`}
+                                {`(${this.props.navigation.getParam('numberOfReactions', 0)}) Reactions`}
                             </Text>
                         </View>
                         <View style={styles.personalizeButtonsContainer}>

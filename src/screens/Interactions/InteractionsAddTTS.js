@@ -51,7 +51,7 @@ class InteractionsAddTTS extends Component {
     }
 
     render() {
-        const streamerName = this.props.navigation.getParam('displayName', {});
+        const streamerName = this.props.navigation.getParam('displayName', '');
         const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
 
         if (this.state.dataFetched) {

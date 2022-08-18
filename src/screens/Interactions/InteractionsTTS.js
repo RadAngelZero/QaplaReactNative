@@ -88,7 +88,6 @@ class InteractionsTTS extends Component {
 
     fetchAvailableVoices = async () => {
         const voices = await getBotAvailableVoices();
-        console.log(voices.val());
         this.setState({ availableVoices: voices.val() });
     }
 

@@ -12,7 +12,7 @@ import { isUserLogged } from '../../../services/auth';
 import { GiphyMediaView } from '@giphy/react-native-sdk';
 import { GIPHY_STICKERS, MEME } from '../../../utilities/Constants';
 
-class PrepaidPrepaidInteractionsCheckout extends Component {
+class PrepaidInteractionsCheckout extends Component {
     state = {
         extraTip: 0,
         tipIncrement: 50,

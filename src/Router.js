@@ -628,6 +628,9 @@ const RootStackNavigator = createStackNavigator({
   InteractionsPersonlizeStack: {
     screen: InteractionsPersonlizeStackNavigator,
   },
+  PrepaidInteractionsPersonlizeStack: {
+    screen: PrepaidInteractionsPersonlizeStackNavigator,
+  },
   BuyQoins: {
     screen: BuyQoins,
     navigationOptions: {

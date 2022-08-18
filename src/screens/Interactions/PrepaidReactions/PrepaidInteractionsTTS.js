@@ -152,7 +152,7 @@ class PrepaidInteractionsTTS extends Component {
     }
 
     readyHandler = () => {
-        if (this.props.previousScreen === 'InteractionsAddTTS') {
+        if (this.props.previousScreen === 'PrepaidInteractionsAddTTS') {
             this.props.navigation.navigate('PrepaidInteractionsCheckout', {
                 message: this.state.message,
                 voiceCost: this.state.voiceCost,
@@ -273,7 +273,7 @@ class PrepaidInteractionsTTS extends Component {
                                                             {this.state.voice3Name}
                                                         </Text>
                                                         <View style={styles.optionPriceContainer}>
-                                                            <images.svg.qoin style={[styles.smallQoin,styles.optionQoinsMargin]} />
+                                                            <images.svg.qoin style={[styles.smallQoin, styles.optionQoinsMargin]} />
                                                             <MaskedView maskElement={
                                                                 <Text style={[styles.whiteText, styles.chatBubbleText]}>
                                                                     {this.state.voice3Cost}

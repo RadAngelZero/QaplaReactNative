@@ -62,6 +62,7 @@ const usersInAppPurchasesRef = database.ref('/UsersInAppPurchases');
 const reactionsSamplesRef = database.ref('/ReactionsSamples');
 const usersReactionsCountRef = database.ref('/UsersReactionsCount');
 const giphyTextRequestsRef = database.ref('/GiphyTextRequests');
+const voiceBotAvailableVoicesRef = database.ref('/VoiceBotAvailableVoices');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1867,4 +1868,11 @@ export async function getUserReactionsCount(uid, streamerUid) {
  */
 export function listenGiphyTextSearch(uid, callback) {
     giphyTextRequestsRef.child(uid).child('data').on('value', callback);
+}
+
+/**
+ * Returns the snapshot of all the available voices for the voice bot
+ */
+export async function getBotAvailableVoices() {
+    return await voiceBotAvailableVoicesRef.once('value');
 }

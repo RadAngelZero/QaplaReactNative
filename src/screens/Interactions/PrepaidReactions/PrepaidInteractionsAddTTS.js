@@ -7,6 +7,7 @@ import images from '../../../../assets/images';
 import { getMediaTypeCost } from '../../../services/database';
 import { GIPHY_GIFS, TTS } from '../../../utilities/Constants';
 import DeckButton from '../../../components/DeckButton/DeckButton';
+import { trackOnSegment } from '../../../services/statistics';
 
 class PrepaidInteractionsAddTTS extends Component {
     state = {
@@ -26,6 +27,8 @@ class PrepaidInteractionsAddTTS extends Component {
     }
 
     sendTTS = async () => {
+        trackOnSegment('TTS Added After Media Selection');
+
         const costsObject = this.props.navigation.getParam('costs', {});
         this.props.navigation.navigate('PrepaidInteractionsTTS', {
             ...this.props.navigation.state.params,
@@ -37,6 +40,7 @@ class PrepaidInteractionsAddTTS extends Component {
     }
 
     sendOnlyMedia = () => {
+        trackOnSegment('Send Only Media Without TTS');
         this.props.navigation.navigate('PrepaidInteractionsCheckout', { ...this.props.navigation.state.params });
     }
 

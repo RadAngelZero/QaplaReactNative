@@ -11,6 +11,7 @@ import LinkTwitchAccountModal from '../../../components/LinkTwitchAccountModal/L
 import { isUserLogged } from '../../../services/auth';
 import { GiphyMediaView } from '@giphy/react-native-sdk';
 import { CUSTOM_TTS_VOICE, MEME } from '../../../utilities/Constants';
+import { trackOnSegment } from '../../../services/statistics';
 
 class PrepaidInteractionsCheckout extends Component {
     state = {
@@ -83,6 +84,12 @@ class PrepaidInteractionsCheckout extends Component {
                                 this.props.photoUrl,
                                 streamerId,
                                 () => {
+                                    trackOnSegment('Interaction Sent', {
+                                        MessageLength: message ? message.length : null,
+                                        ExtraTip: this.state.extraTip,
+                                        TotalQoins: totalCost
+                                    });
+
                                     this.props.navigation.navigate('PrepaidInteractionsSent', {
                                         ...this.props.navigation.state.params,
                                         donationTotal: totalCost,

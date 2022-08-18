@@ -8,6 +8,7 @@ import { getAllMediaTypeCosts, getReactionSample, getReactionsSamplesCount } fro
 import { translate } from '../../../utilities/i18';
 import DeckButton from '../../../components/DeckButton/DeckButton';
 import { heightPercentageToPx, widthPercentageToPx } from '../../../utilities/iosAndroidDim';
+import { trackOnSegment } from '../../../services/statistics';
 
 class PrepaidInteractionsPersonalize extends Component {
     state = {
@@ -54,13 +55,19 @@ class PrepaidInteractionsPersonalize extends Component {
     }
 
     navigateToSelectedMedia = (mediaType) => {
+        trackOnSegment('Media For Interaction Selected', {
+            MediaType: mediaType
+        });
+
         if (mediaType === MEME) {
-            this.props.navigation.navigate('PrepaidInteractionsMemeSelector', {
+            this.props.navigation.navigate('InteractionsMemeSelector', {
                 mediaType,
                 ...this.props.navigation.state.params,
             });
+        } else if (mediaType === GIPHY_TEXT) {
+            console.log('Send to giphy text');
         } else {
-            this.props.navigation.navigate('PrepaidInteractionsGiphyMediaSelector', {
+            this.props.navigation.navigate('InteractionsGiphyMediaSelector', {
                 mediaType,
                 ...this.props.navigation.state.params,
             });
@@ -68,6 +75,10 @@ class PrepaidInteractionsPersonalize extends Component {
     }
 
     navigateToWriteMessage = () => {
+        trackOnSegment('Media For Interaction Selected', {
+            MediaType: 'TTS'
+        });
+
         const costsObject = this.props.navigation.getParam('costs', {});
         this.props.navigation.navigate('PrepaidInteractionsTTS', {
             ...this.props.navigation.state.params,
@@ -79,6 +90,8 @@ class PrepaidInteractionsPersonalize extends Component {
     }
 
     justSendQoins = () => {
+        trackOnSegment('Only Send Qoins');
+
         // Send to only Qoins donation screen
         this.props.navigation.navigate('PrepaidInteractionsCheckout', {
             ...this.props.navigation.state.params,

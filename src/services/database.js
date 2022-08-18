@@ -1382,12 +1382,16 @@ export async function getAllStreamers() {
 // -----------------------------------------------
 
 /**
- * Store cheers on the database at StreamersDonations node
+ * Store cheers on the database at StreamersDonations node and remove Qoins
  * @param {number} amountQoins Amount of donated Qoins
  * @param {object | null} media Object for cheers with specified media
  * @param {string} media.type Type of media (one of "GIF", "EMOTE" or "MEME")
  * @param {string} media.url Url of the media
  * @param {string} message Message from the user
+ * @param {object | null} messageExtraData Extra data for the message
+ * @param {string} messageExtraData.voiceAPIName Google Text to speech API voice for the voice bot
+ * @param {boolean} messageExtraData.isGiphyText True if contains giphy Text
+ * @param {string | undefined} messageExtraData.giphyTextUrl Url of the giphy text
  * @param {number} timeStamp Timestamp of the moment when the donation is sent
  * @param {string} streamerName Name of the streamer
  * @param {string} uid User identifier
@@ -1398,7 +1402,7 @@ export async function getAllStreamers() {
  * @param {function} onSuccess Function to call once the cheer is sent
  * @param {function} onError Function to call on any possible error
  */
-export function sendCheers(amountQoins, media, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID, onSuccess, onError) {
+export function sendCheers(amountQoins, media, message, messageExtraData, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID, onSuccess, onError) {
     usersRef.child(uid).child('credits').transaction((credits) => {
         if (credits) {
             credits -= amountQoins;
@@ -1426,12 +1430,14 @@ export function sendCheers(amountQoins, media, message, timestamp, streamerName,
                         amountQoins,
                         media,
                         message,
+                        messageExtraData,
                         timestamp,
                         uid,
                         read: false,
                         twitchUserName,
                         userName,
-                        photoURL: userPhotoURL
+                        photoURL: userPhotoURL,
+                        pointsChannelInteractions: false
                     });
 
                     await completeUserDonation(uid, amountQoins);
@@ -1444,7 +1450,8 @@ export function sendCheers(amountQoins, media, message, timestamp, streamerName,
                         sent: false,
                         twitchUserName,
                         userName,
-                        streamerName
+                        streamerName,
+                        pointsChannelInteractions: false
                     });
 
                     onSuccess();
@@ -1452,6 +1459,107 @@ export function sendCheers(amountQoins, media, message, timestamp, streamerName,
             });
         }
     });
+}
+
+/**
+ * Store cheers on the database at StreamersDonations node and remove pre paid interaction (and Qoins if necessary)
+ * @param {string} uid User identifier
+ * @param {string} userName Qapla username
+ * @param {string} twitchUserName Username of Twitch
+ * @param {string} userPhotoURL URL of the user profile photo
+ * @param {string} streamerUid Streamer uid
+ * @param {string} streamerName Name of the streamer
+ * @param {object | null} media Object for cheers with specified media
+ * @param {string} media.type Type of media (one of "GIF", "EMOTE" or "MEME")
+ * @param {string} media.url Url of the media
+ * @param {string} message Message from the user
+ * @param {object | null} messageExtraData Extra data for the message
+ * @param {string} messageExtraData.voiceAPIName Google Text to speech API voice for the voice bot
+ * @param {boolean} messageExtraData.isGiphyText True if contains giphy Text
+ * @param {string | undefined} messageExtraData.giphyTextUrl Url of the giphy text
+ * @param {number} qoinsToRemove Amount of donated Qoins
+ * @param {function} onSuccess Function to call once the cheer is sent
+ * @param {function} onError Function to call on any possible error
+ */
+export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, qoinsToRemove, onSuccess, onError) {
+    let qoinsTaken = qoinsToRemove ? false : true;
+    if (qoinsToRemove) {
+        qoinsTaken = (await usersRef.child(uid).child('credits').transaction((qoins) => {
+            if (qoins - qoinsToRemove >= 0) {
+                return qoins - qoinsToRemove;
+            }
+        })).committed;
+
+        if (qoinsTaken) {
+            userStreamerRef.child(streamerUid).child('qoinsBalance').transaction((streamerQoins) => {
+                if (streamerQoins) {
+                    streamerQoins += qoinsToRemove;
+                }
+
+                return streamerQoins ? streamerQoins : qoinsToRemove;
+            });
+        }
+    }
+
+    if (qoinsTaken) {
+        const reactionTaken = (await usersReactionsCountRef.child(uid).child(streamerUid).transaction((reactionsCount) => {
+            return reactionsCount - 1;
+        })).committed;
+
+        if (reactionTaken) {
+            const timestamp = (new Date()).getTime();
+            const donationRef = streamersDonationsRef.child(streamerUid).push({
+                amountQoins: qoinsToRemove,
+                media,
+                message,
+                messageExtraData,
+                timestamp,
+                uid,
+                read: false,
+                twitchUserName,
+                userName,
+                photoURL: userPhotoURL,
+                pointsChannelInteractions: true
+            });
+
+            if (qoinsToRemove) {
+                await completeUserDonation(uid, qoinsToRemove);
+            }
+
+            await database.ref('/StreamersDonationAdministrative').child(donationRef.key).set({
+                amountQoins: qoinsToRemove,
+                message,
+                timestamp,
+                uid,
+                sent: false,
+                twitchUserName,
+                userName,
+                streamerName,
+                pointsChannelInteractions: true
+            });
+
+            onSuccess();
+        } else {
+            /**
+             * Here the Qoins were removed but the reaction could not be removed so we must return the
+             * Qoins to the user
+             */
+            await usersRef.child(uid).child('credits').transaction((qoins) => {
+                return qoins + qoinsToRemove;
+            });
+
+            /**
+             * And remove the Qoins from the streamer Qoins balance
+             */
+            userStreamerRef.child(streamerUid).child('qoinsBalance').transaction((streamerQoins) => {
+                return streamerQoins - qoinsToRemove;
+            });
+
+            onError();
+        }
+    } else {
+        onError();
+    }
 }
 
 /**

@@ -4,8 +4,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { translate } from '../../../utilities/i18.js';
 import styles from '../style';
 import images from '../../../../assets/images.js';
-import { GIPHY_GIFS, GIPHY_STICKERS, MEME, TTS } from '../../../utilities/Constants';
-import { getAllMediaTypeCosts } from '../../../services/database';
+import { GIPHY_GIFS, GIPHY_STICKERS, MEME } from '../../../utilities/Constants';
 import DeckButton from '../../../components/DeckButton/DeckButton';
 import { trackOnSegment } from '../../../services/statistics.js';
 
@@ -16,17 +15,6 @@ class PrepaidInteractionsAddVisual extends Component {
         [MEME]: null,
         dataFetched: false
     };
-
-    componentDidMount() {
-        this.fetchCosts();
-    }
-
-    fetchCosts = async () => {
-        const costs = await getAllMediaTypeCosts();
-        if (costs.exists()) {
-            this.setState({ ...costs.val(), dataFetched: true });
-        }
-    }
 
     navigateToSelectedMedia = (mediaType) => {
         trackOnSegment('Media Added After Media Selection', {
@@ -49,13 +37,8 @@ class PrepaidInteractionsAddVisual extends Component {
     justSendTTS = () => {
         trackOnSegment('Only Send TTS Without Media');
 
-        const costsObject = this.props.navigation.getParam('costs', {});
         this.props.navigation.navigate('PrepaidInteractionsCheckout', {
-            ...this.props.navigation.state.params,
-            costs: {
-                [TTS]: this.state.mediaCost,
-                ...costsObject
-            }
+            ...this.props.navigation.state.params
         });
     }
 
@@ -68,78 +51,76 @@ class PrepaidInteractionsAddVisual extends Component {
                             {`${translate('interactions.addVisual.addVisual')}`}
                         </Text>
                     </View>
-                    {this.state.dataFetched &&
-                        <View style={styles.personalizeButtonsContainer}>
-                            <DeckButton
-                                onPress={() => this.navigateToSelectedMedia(GIPHY_GIFS)}
-                                label="GIFs"
-                                cost={this.state[GIPHY_GIFS]}
-                                backgroundIndex={0}
-                                hideCost
-                                icon={images.svg.interactionsGIF}
-                            />
-                            <DeckButton
-                                onPress={() => this.navigateToSelectedMedia(GIPHY_STICKERS)}
-                                label="Sticker"
-                                cost={this.state[GIPHY_STICKERS]}
-                                backgroundIndex={3}
-                                hideCost
-                                icon={images.svg.interactionsSticker}
-                            />
-                            <DeckButton
-                                onPress={() => this.navigateToSelectedMedia(MEME)}
-                                label="Memes"
-                                cost={this.state[MEME]}
-                                backgroundIndex={5}
-                                hideCost
-                                icon={images.svg.interactionsMemes}
-                            />
-                            {/* <TouchableOpacity
-                                onPress={() => console.log('c')}
-                                style={styles.personalizeButtonContainer}
-                            >
-                                <ImageBackground
-                                    source={images.png.InteractionGradient2.img}
-                                    style={styles.personalizeButtonBackgroundImage}
-                                >
-                                    <View style={styles.personalizeButtonIconContainer}>
-                                        <images.svg.interactionsClip />
-                                    </View>
-                                    <Text style={styles.personalizeButtonIconText} >
-                                        Clips
-                                    </Text>
-                                    <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                        <images.svg.qoin style={styles.qoin} />
-                                        <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                            {this.state.ClipsCost}
-                                        </Text>
-                                    </View>
-                                </ImageBackground>
-                            </TouchableOpacity> */}
-                            {/* <TouchableOpacity
-                            onPress={() => console.log('d')}
+                    <View style={styles.personalizeButtonsContainer}>
+                        <DeckButton
+                            onPress={() => this.navigateToSelectedMedia(GIPHY_GIFS)}
+                            label="GIFs"
+                            cost={this.state[GIPHY_GIFS]}
+                            backgroundIndex={0}
+                            hideCost
+                            icon={images.svg.interactionsGIF}
+                        />
+                        <DeckButton
+                            onPress={() => this.navigateToSelectedMedia(GIPHY_STICKERS)}
+                            label="Sticker"
+                            cost={this.state[GIPHY_STICKERS]}
+                            backgroundIndex={3}
+                            hideCost
+                            icon={images.svg.interactionsSticker}
+                        />
+                        <DeckButton
+                            onPress={() => this.navigateToSelectedMedia(MEME)}
+                            label="Memes"
+                            cost={this.state[MEME]}
+                            backgroundIndex={5}
+                            hideCost
+                            icon={images.svg.interactionsMemes}
+                        />
+                        {/* <TouchableOpacity
+                            onPress={() => console.log('c')}
                             style={styles.personalizeButtonContainer}
                         >
                             <ImageBackground
-                                source={images.png.InteractionGradient5.img}
+                                source={images.png.InteractionGradient2.img}
                                 style={styles.personalizeButtonBackgroundImage}
                             >
                                 <View style={styles.personalizeButtonIconContainer}>
-                                    <images.svg.interactionsTtGiphy />
+                                    <images.svg.interactionsClip />
                                 </View>
                                 <Text style={styles.personalizeButtonIconText} >
-                                    Texto Giphy
+                                    Clips
                                 </Text>
                                 <View style={styles.personalizeButtonDisplayQoinsContainer}>
                                     <images.svg.qoin style={styles.qoin} />
                                     <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                        {'50'}
+                                        {this.state.ClipsCost}
                                     </Text>
                                 </View>
                             </ImageBackground>
                         </TouchableOpacity> */}
-                        </View>
-                    }
+                        {/* <TouchableOpacity
+                        onPress={() => console.log('d')}
+                        style={styles.personalizeButtonContainer}
+                    >
+                        <ImageBackground
+                            source={images.png.InteractionGradient5.img}
+                            style={styles.personalizeButtonBackgroundImage}
+                        >
+                            <View style={styles.personalizeButtonIconContainer}>
+                                <images.svg.interactionsTtGiphy />
+                            </View>
+                            <Text style={styles.personalizeButtonIconText} >
+                                Texto Giphy
+                            </Text>
+                            <View style={styles.personalizeButtonDisplayQoinsContainer}>
+                                <images.svg.qoin style={styles.qoin} />
+                                <Text style={styles.personalizeButtonDisplayQoinsText}>
+                                    {'50'}
+                                </Text>
+                            </View>
+                        </ImageBackground>
+                    </TouchableOpacity> */}
+                    </View>
                 </View>
                 <View style={[styles.onlySendQoinsContainer, styles.onlySendTTS]}>
                     <TouchableOpacity style={styles.onlySendQoinsTouchable}

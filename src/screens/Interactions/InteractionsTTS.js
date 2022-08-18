@@ -88,6 +88,7 @@ class InteractionsTTS extends Component {
 
     fetchAvailableVoices = async () => {
         const voices = await getBotAvailableVoices();
+        console.log(voices.val());
         this.setState({ availableVoices: voices.val() });
     }
 
@@ -135,8 +136,8 @@ class InteractionsTTS extends Component {
             this.playDotsAnimation(() => { this.setState({ showVoiceSelection: true, showVoiceSelectionBubbleChatText: true }); });
         }
     }
-    voiceSelectionHandler = (voiceName, voiceCost) => {
-        this.setState({ voiceName, voiceCost, step: 2, showFinalSelectionBubbleChat: true });
+    voiceSelectionHandler = (voiceAPIName, voiceName, voiceCost) => {
+        this.setState({ voiceAPIName, voiceName, voiceCost, step: 2, showFinalSelectionBubbleChat: true });
         if (this.state.editVoice) {
             this.setState({ showFinalSelection: true, showFinalSelectionBubbleChatText: true });
         } else {
@@ -157,7 +158,10 @@ class InteractionsTTS extends Component {
             this.props.navigation.navigate('InteractionsCheckout', {
                 ...this.props.navigation.state.params,
                 message: this.state.message,
-                voiceName: this.state.voiceName,
+                messageVoice: {
+                    voiceName: this.state.voiceName,
+                    voiceAPIName: this.state.voiceAPIName
+                },
                 costs: {
                     [CUSTOM_TTS_VOICE]: this.state.voiceCost,
                     ...costsObject
@@ -167,7 +171,10 @@ class InteractionsTTS extends Component {
             this.props.navigation.navigate('InteractionsAddVisual', {
                 ...this.props.navigation.state.params,
                 message: this.state.message,
-                voiceName: this.state.voiceName,
+                messageVoice: {
+                    voiceName: this.state.voiceName,
+                    voiceAPIName: this.state.voiceAPIName
+                },
                 costs: {
                     [CUSTOM_TTS_VOICE]: this.state.voiceCost,
                     ...costsObject
@@ -244,13 +251,13 @@ class InteractionsTTS extends Component {
                                         <>
                                             <View style={styles.optionsContainer}>
                                                 {Object.keys(this.state.availableVoices)
-                                                    .sort((a, b) => this.state.availableVoices[a] - this.state.availableVoices[b])
+                                                    .sort((a, b) => this.state.availableVoices[a].cost - this.state.availableVoices[b].cost)
                                                     .map((voiceName) => {
-                                                        if (this.state.availableVoices[voiceName] === 0) {
+                                                        if (this.state.availableVoices[voiceName].cost === 0) {
                                                             return (
                                                                 <View style={styles.optionContainer}>
                                                                     <images.svg.volumeUp style={styles.optionOutIconMargin} />
-                                                                    <OptionButton onPress={() => this.voiceSelectionHandler(voiceName, this.state.availableVoices[voiceName])}>
+                                                                    <OptionButton onPress={() => this.voiceSelectionHandler(this.state.availableVoices[voiceName].voiceAPIName, voiceName, this.state.availableVoices[voiceName].cost)}>
                                                                         <Text style={[styles.whiteText, styles.chatBubbleText]}>
                                                                             {voiceName}
                                                                         </Text>
@@ -261,7 +268,7 @@ class InteractionsTTS extends Component {
                                                             return (
                                                                 <View style={styles.optionContainer}>
                                                                     <images.svg.volumeUp style={styles.optionOutIconMargin} />
-                                                                    <OptionButton onPress={() => this.voiceSelectionHandler(voiceName, this.state.availableVoices[voiceName])}>
+                                                                    <OptionButton onPress={() => this.voiceSelectionHandler(this.state.availableVoices[voiceName].voiceAPIName, voiceName, this.state.availableVoices[voiceName].cost)}>
                                                                         <Text style={[styles.whiteText, styles.chatBubbleText]}>
                                                                             {voiceName}
                                                                         </Text>
@@ -269,12 +276,12 @@ class InteractionsTTS extends Component {
                                                                             <images.svg.qoin style={[styles.smallQoin, styles.optionQoinsMargin]} />
                                                                             <MaskedView maskElement={
                                                                                 <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                                                    {this.state.availableVoices[voiceName]}
+                                                                                    {this.state.availableVoices[voiceName].cost}
                                                                                 </Text>
                                                                             }>
                                                                                 <LinearGradient colors={['#FFD3FB', '#F5FFCB', '#9FFFDD']}>
                                                                                     <Text style={[styles.transparentText, styles.chatBubbleText]}>
-                                                                                        {this.state.availableVoices[voiceName]}
+                                                                                        {this.state.availableVoices[voiceName].cost}
                                                                                     </Text>
                                                                                 </LinearGradient>
                                                                             </MaskedView>

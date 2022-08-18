@@ -4,8 +4,7 @@ import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import { translate } from '../../../utilities/i18';
 import styles from '../style';
 import images from '../../../../assets/images';
-import { getMediaTypeCost } from '../../../services/database';
-import { GIPHY_GIFS, TTS } from '../../../utilities/Constants';
+import { GIPHY_GIFS } from '../../../utilities/Constants';
 import DeckButton from '../../../components/DeckButton/DeckButton';
 import { trackOnSegment } from '../../../services/statistics';
 
@@ -20,22 +19,15 @@ class PrepaidInteractionsAddTTS extends Component {
     }
 
     fetchMediaCost = async () => {
-        const cost = await getMediaTypeCost(TTS);
-        if (cost.exists()) {
-            this.setState({ mediaCost: cost.val(), dataFetched: true });
-        }
+        // TTS is free for pre paid interactions
+        this.setState({ mediaCost: 0, dataFetched: true });
     }
 
     sendTTS = async () => {
         trackOnSegment('TTS Added After Media Selection');
 
-        const costsObject = this.props.navigation.getParam('costs', {});
         this.props.navigation.navigate('PrepaidInteractionsTTS', {
-            ...this.props.navigation.state.params,
-            costs: {
-                [TTS]: this.state.mediaCost,
-                ...costsObject
-            }
+            ...this.props.navigation.state.params
         });
     }
 

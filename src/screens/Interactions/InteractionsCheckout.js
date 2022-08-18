@@ -63,7 +63,11 @@ class InteractionsCheckout extends Component {
                             const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
                             const mediaType = this.props.navigation.getParam('mediaType');
                             const message = this.props.navigation.getParam('message', null);
+                            const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
+                            const costs = this.props.navigation.getParam('costs', {});
+
                             let media = null;
+                            let messageExtraData = null;
 
                             if (selectedMedia) {
                                 if (selectedMedia.data && selectedMedia.data.images && selectedMedia.data.images.original) {
@@ -79,10 +83,18 @@ class InteractionsCheckout extends Component {
                                 }
                             }
 
+                            if (message && costs[CUSTOM_TTS_VOICE] && messageVoiceData) {
+                                messageExtraData = {
+                                    ...messageVoiceData,
+                                    isGiphyText: false // Determine this with Giphy Text data
+                                }
+                            }
+
                             sendCheers(
                                 totalCost,
                                 media,
                                 message,
+                                messageExtraData,
                                 (new Date()).getTime(),
                                 streamerName,
                                 this.props.uid,
@@ -93,6 +105,8 @@ class InteractionsCheckout extends Component {
                                 () => {
                                     trackOnSegment('Interaction Sent', {
                                         MessageLength: message ? message.length : null,
+                                        messageExtraData,
+                                        Media: media ? true : false,
                                         ExtraTip: this.state.extraTip,
                                         TotalQoins: totalCost
                                     });
@@ -143,6 +157,7 @@ class InteractionsCheckout extends Component {
         const message = this.props.navigation.getParam('message', '');
         const costs = this.props.navigation.getParam('costs', {});
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
+        const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
 
         return (
             <View style={styles.container}>
@@ -245,7 +260,7 @@ class InteractionsCheckout extends Component {
                                             {product !== CUSTOM_TTS_VOICE ?
                                                 translate(`interactions.checkout.concepts.${product}`)
                                                 :
-                                                `${this.props.navigation.state.params.voiceName} Voice`
+                                                `${messageVoiceData.voiceName} Voice`
                                             }
                                         </Text>
                                         <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>

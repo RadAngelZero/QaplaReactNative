@@ -33,7 +33,7 @@ class PrepaidInteractionsPersonalize extends Component {
     fetchCosts = async () => {
         const costs = await getAllMediaTypeCosts();
         if (costs.exists()) {
-            this.setState({ ...costs.val(), dataFetched: true });
+            this.setState({ ...costs.val() });
         }
     }
 
@@ -50,7 +50,7 @@ class PrepaidInteractionsPersonalize extends Component {
         const index = Math.floor(Math.random() * clipsLength.val());
         const giphyTextSample = await getReactionSample(GIPHY_TEXT, index);
 
-        this.setState({ giphyTextSample: giphyTextSample.val() });
+        this.setState({ giphyTextSample: giphyTextSample.val(), dataFetched: true });
     }
 
     navigateToSelectedMedia = (mediaType) => {
@@ -78,13 +78,8 @@ class PrepaidInteractionsPersonalize extends Component {
             MediaType: 'TTS'
         });
 
-        const costsObject = this.props.navigation.getParam('costs', {});
         this.props.navigation.navigate('PrepaidInteractionsTTS', {
-            ...this.props.navigation.state.params,
-            costs: {
-                [TTS]: this.state[TTS],
-                ...costsObject
-            }
+            ...this.props.navigation.state.params
         });
     }
 
@@ -108,49 +103,40 @@ class PrepaidInteractionsPersonalize extends Component {
                             </Text>
                         </View>
                         <View style={styles.personalizeButtonsContainer}>
-                            {this.state.dataFetched &&
-                                <>
-                                    <DeckButton
-                                        onPress={() => this.navigateToSelectedMedia(GIPHY_GIFS)}
-                                        label="GIFs"
-                                        cost={this.state[GIPHY_GIFS]}
-                                        backgroundIndex={0}
-                                        icon={images.svg.interactionsGIF}
-                                        hideCost
-                                    />
-                                    <DeckButton
-                                        onPress={() => this.navigateToSelectedMedia(GIPHY_STICKERS)}
-                                        label="Sticker"
-                                        cost={this.state[GIPHY_STICKERS]}
-                                        backgroundIndex={3}
-                                        icon={images.svg.interactionsSticker}
-                                        hideCost
-                                    />
-                                    {/* <DeckButton
-                                    onPress={() => this.navigateToSelectedMedia(GIPHY_CLIPS)}
-                                    label="Clips"
-                                    cost={this.state[GIPHY_STICKERS]}
-                                    backgroundIndex={1}
-                                    icon={images.svg.interactionsClip}
-                                /> */}
-                                    <DeckButton
-                                        onPress={this.navigateToWriteMessage}
-                                        label="Text-to-Speech"
-                                        cost={this.state[TTS]}
-                                        backgroundIndex={2}
-                                        icon={images.svg.interactionsTTS}
-                                        hideCost
-                                    />
-                                    <DeckButton
-                                        onPress={() => this.navigateToSelectedMedia(MEME)}
-                                        label="Memes"
-                                        cost={this.state[MEME]}
-                                        backgroundIndex={5}
-                                        icon={images.svg.interactionsMemes}
-                                        hideCost
-                                    />
-                                </>
-                            }
+                            <DeckButton
+                                onPress={() => this.navigateToSelectedMedia(GIPHY_GIFS)}
+                                label="GIFs"
+                                backgroundIndex={0}
+                                icon={images.svg.interactionsGIF}
+                                hideCost
+                            />
+                            <DeckButton
+                                onPress={() => this.navigateToSelectedMedia(GIPHY_STICKERS)}
+                                label="Sticker"
+                                backgroundIndex={3}
+                                icon={images.svg.interactionsSticker}
+                                hideCost
+                            />
+                            {/* <DeckButton
+                            onPress={() => this.navigateToSelectedMedia(GIPHY_CLIPS)}
+                            label="Clips"
+                            backgroundIndex={1}
+                            icon={images.svg.interactionsClip}
+                        /> */}
+                            <DeckButton
+                                onPress={this.navigateToWriteMessage}
+                                label="Text-to-Speech"
+                                backgroundIndex={2}
+                                icon={images.svg.interactionsTTS}
+                                hideCost
+                            />
+                            <DeckButton
+                                onPress={() => this.navigateToSelectedMedia(MEME)}
+                                label="Memes"
+                                backgroundIndex={5}
+                                icon={images.svg.interactionsMemes}
+                                hideCost
+                            />
                         </View>
                         <View style={[styles.headerContainer, styles.headerMargins]}>
                             <Text style={[styles.whiteText, styles.screenHeaderText]}>
@@ -196,28 +182,30 @@ class PrepaidInteractionsPersonalize extends Component {
                                 <images.svg.questionMark />
                             </TouchableOpacity> */}
                         </View>
-                        <TouchableOpacity onPress={() => this.navigateToSelectedMedia(GIPHY_TEXT)}>
-                            <ImageBackground
-                                source={this.state.giphyTextSample ? { uri: this.state.giphyTextSample } : null}
-                                style={{
-                                    justifyContent: 'flex-end',
-                                    alignItems: 'center',
-                                    // width: widthPercentageToPx(100),
-                                    height: heightPercentageToPx(23.39),
-                                    borderRadius: widthPercentageToPx(5.33),
-                                    overflow: 'hidden',
-                                }}
-                                imageStyle={{
-                                }}
-                                resizeMode="cover">
-                                <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                    <images.svg.qoin style={styles.qoin} />
-                                    <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                        {this.state[GIPHY_TEXT]}
-                                    </Text>
-                                </View>
-                            </ImageBackground>
-                        </TouchableOpacity>
+                        {this.state.dataFetched &&
+                            <TouchableOpacity onPress={() => this.navigateToSelectedMedia(GIPHY_TEXT)}>
+                                <ImageBackground
+                                    source={this.state.giphyTextSample ? { uri: this.state.giphyTextSample } : null}
+                                    style={{
+                                        justifyContent: 'flex-end',
+                                        alignItems: 'center',
+                                        // width: widthPercentageToPx(100),
+                                        height: heightPercentageToPx(23.39),
+                                        borderRadius: widthPercentageToPx(5.33),
+                                        overflow: 'hidden',
+                                    }}
+                                    imageStyle={{
+                                    }}
+                                    resizeMode="cover">
+                                    <View style={styles.personalizeButtonDisplayQoinsContainer}>
+                                        <images.svg.qoin style={styles.qoin} />
+                                        <Text style={styles.personalizeButtonDisplayQoinsText}>
+                                            {this.state[GIPHY_TEXT]}
+                                        </Text>
+                                    </View>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                        }
                         <View style={{ height: heightPercentageToPx(6.15) }} />
                     </ScrollView>
                 </View>

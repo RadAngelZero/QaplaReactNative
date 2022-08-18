@@ -1679,6 +1679,24 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		0ED484288E1933FB1757040C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QaplaReactNative/Pods-QaplaReactNative-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Giphy/GiphyUISDK.framework/GiphyUISDK",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GiphyUISDK.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-QaplaReactNative/Pods-QaplaReactNative-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		23E8AB3398428DACC07BB6B6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1960,7 +1978,7 @@
 				CODE_SIGN_ENTITLEMENTS = "QaplaReactNative/Qapla Gaming.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 125;
+				CURRENT_PROJECT_VERSION = 129;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
@@ -1999,7 +2017,7 @@
 				CODE_SIGN_ENTITLEMENTS = "QaplaReactNative/Qapla GamingRelease.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 125;
+				CURRENT_PROJECT_VERSION = 129;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (

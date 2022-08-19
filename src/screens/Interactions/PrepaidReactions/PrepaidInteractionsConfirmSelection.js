@@ -43,8 +43,13 @@ class PrepaidInteractionsConfirmSelection extends Component {
         // If the user has already added TTS to their items then go directly to checkout
         // or if is a video clip
         if (message || mediaType === GIPHY_CLIPS) {
+            const costsObject = this.props.navigation.getParam('costs', {});
             this.props.navigation.navigate('PrepaidInteractionsCheckout', {
-                ...this.props.navigation.state.params
+                ...this.props.navigation.state.params,
+                costs: {
+                    [mediaType]: this.state.mediaCost,
+                    ...costsObject
+                }
             });
         } else {
             this.props.navigation.navigate('PrepaidInteractionsAddTTS', {

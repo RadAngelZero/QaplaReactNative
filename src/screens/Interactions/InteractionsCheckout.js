@@ -255,18 +255,22 @@ class InteractionsCheckout extends Component {
                                     </Text>
                                 </View>
                                 {Object.keys(costs).map((product) => (
-                                    <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
-                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                            {product !== CUSTOM_TTS_VOICE ?
-                                                translate(`interactions.checkout.concepts.${product}`)
-                                                :
-                                                `${messageVoiceData.voiceName} Voice`
-                                            }
-                                        </Text>
-                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                            {costs[product]}
-                                        </Text>
-                                    </View>
+                                    <>
+                                        {costs[product] !== 0 &&
+                                            <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                                    {product !== CUSTOM_TTS_VOICE ?
+                                                        translate(`interactions.checkout.concepts.${product}`)
+                                                        :
+                                                        `${messageVoiceData.voiceName} Voice`
+                                                    }
+                                                </Text>
+                                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                                    {costs[product]}
+                                                </Text>
+                                            </View>
+                                        }
+                                    </>
                                 ))}
                             </View>
                             <View style={styles.checkoutMarginDisplay} />

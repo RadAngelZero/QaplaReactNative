@@ -1654,6 +1654,14 @@ export async function getAllStreamersStreaming() {
 }
 
 /**
+ * Get the isOverlayActive flag of the given streamer
+ * @param {string} streamerId Streamer identifier
+ */
+ export async function streamersHasOverlayActive(streamerId) {
+    return await userStreamerPublicDataRef.child(streamerId).child('isOverlayActive').once('value');
+}
+
+/**
  * Get given streamer public data
  * @param {string} streamerId Streamer identifier
  */

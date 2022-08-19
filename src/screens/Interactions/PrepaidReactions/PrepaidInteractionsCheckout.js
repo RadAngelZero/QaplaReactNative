@@ -6,11 +6,11 @@ import { translate } from '../../../utilities/i18';
 import styles from '../style';
 import { heightPercentageToPx, widthPercentageToPx } from '../../../utilities/iosAndroidDim';
 import SendInteractionModal from '../../../components/InteractionsModals/SendInteractionModal';
-import { sendReaction } from '../../../services/database';
+import { sendCheers, sendReaction } from '../../../services/database';
 import LinkTwitchAccountModal from '../../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../../services/auth';
 import { GiphyMediaView } from '@giphy/react-native-sdk';
-import { CUSTOM_TTS_VOICE, MEME } from '../../../utilities/Constants';
+import { CUSTOM_TTS_VOICE, GIPHY_CLIPS, MEME } from '../../../utilities/Constants';
 import { trackOnSegment } from '../../../services/statistics';
 
 class PrepaidInteractionsCheckout extends Component {
@@ -91,33 +91,64 @@ class PrepaidInteractionsCheckout extends Component {
                                 }
                             }
 
-                            sendReaction(
-                                this.props.uid,
-                                this.props.userName,
-                                this.props.twitchUserName,
-                                this.props.photoUrl,
-                                streamerId,
-                                streamerName,
-                                media,
-                                message,
-                                messageExtraData,
-                                totalCost,
-                                () => {
-                                    trackOnSegment('Pre Paid Interaction Sent', {
-                                        MessageLength: message ? message.length : null,
-                                        messageExtraData,
-                                        Media: media ? true : false,
-                                        ExtraTip: this.state.extraTip,
-                                        TotalQoins: totalCost
-                                    });
+                            if (!mediaType || mediaType !== GIPHY_CLIPS) {
+                                sendReaction(
+                                    this.props.uid,
+                                    this.props.userName,
+                                    this.props.twitchUserName,
+                                    this.props.photoUrl,
+                                    streamerId,
+                                    streamerName,
+                                    media,
+                                    message,
+                                    messageExtraData,
+                                    totalCost,
+                                    () => {
+                                        trackOnSegment('Pre Paid Interaction Sent', {
+                                            MessageLength: message ? message.length : null,
+                                            messageExtraData,
+                                            Media: media ? true : false,
+                                            ExtraTip: this.state.extraTip,
+                                            TotalQoins: totalCost
+                                        });
 
-                                    this.props.navigation.navigate('PrepaidInteractionsSent', {
-                                        ...this.props.navigation.state.params,
-                                        donationTotal: totalCost,
-                                    });
-                                },
-                                () => this.setState({ sendingInteraction: false })
-                            );
+                                        this.props.navigation.navigate('PrepaidInteractionsSent', {
+                                            ...this.props.navigation.state.params,
+                                            donationTotal: totalCost,
+                                        });
+                                    },
+                                    () => this.setState({ sendingInteraction: false })
+                                );
+                            } else {
+                                sendCheers(
+                                    totalCost,
+                                    media,
+                                    message,
+                                    messageExtraData,
+                                    (new Date()).getTime(),
+                                    streamerName,
+                                    this.props.uid,
+                                    this.props.userName,
+                                    this.props.twitchUserName,
+                                    this.props.photoUrl,
+                                    streamerId,
+                                    () => {
+                                        trackOnSegment('Interaction Sent', {
+                                            MessageLength: message ? message.length : null,
+                                            messageExtraData,
+                                            Media: media ? true : false,
+                                            ExtraTip: this.state.extraTip,
+                                            TotalQoins: totalCost
+                                        });
+
+                                        this.props.navigation.navigate('InteractionsSent', {
+                                            ...this.props.navigation.state.params,
+                                            donationTotal: totalCost,
+                                        });
+                                    },
+                                    () => this.setState({ sendingInteraction: false })
+                                )
+                            }
                         } else {
                             this.setState({ sendingInteraction: false });
                             // After a successful buy try to send the interaction again

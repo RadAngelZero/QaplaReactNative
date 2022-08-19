@@ -72,6 +72,7 @@ class PrepaidInteractionsCheckout extends Component {
                             if (selectedMedia) {
                                 if (selectedMedia.data && selectedMedia.data.images && selectedMedia.data.images.original) {
                                     media = {
+                                        id: selectedMedia.data.id,
                                         ...selectedMedia.data.images.original,
                                         type: mediaType
                                     };

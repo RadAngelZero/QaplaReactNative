@@ -53,7 +53,7 @@ class PrepaidInteractionsAddTTS extends Component {
                             <DeckButton
                                 onPress={this.sendTTS}
                                 label="Text-to-Speech"
-                                cost={this.state.mediaCost}
+                                hideCost
                                 backgroundIndex={2}
                                 icon={images.svg.interactionsTTS}
                             />

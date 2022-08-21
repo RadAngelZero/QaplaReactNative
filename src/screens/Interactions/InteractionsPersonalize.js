@@ -64,7 +64,9 @@ class InteractionsPersonalize extends Component {
                 ...this.props.navigation.state.params,
             });
         } else if (mediaType === GIPHY_TEXT) {
-            console.log('Send to giphy text');
+            this.props.navigation.navigate('InteractionsInsertGiphyText', {
+                ...this.props.navigation.state.params,
+            });
         } else {
             this.props.navigation.navigate('InteractionsGiphyMediaSelector', {
                 mediaType,

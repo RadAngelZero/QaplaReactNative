@@ -60,6 +60,10 @@ import PrepaidInteractionsTTS from './screens/Interactions/PrepaidReactions/Prep
 import PrepaidInteractionsAddVisual from './screens/Interactions/PrepaidReactions/PrepaidInteractionsAddVisual';
 import PrepaidInteractionsCheckout from './screens/Interactions/PrepaidReactions/PrepaidInteractionsCheckout';
 import PrepaidInteractionsSent from './screens/Interactions/PrepaidReactions/PrepaidInteractionsSent';
+import PrepaidInteractionsInsertGiphyText from './screens/Interactions/PrepaidReactions/PrepaidInteractionsInsertGiphyText';
+import PrepaidInteractionsGiphyTextSelector from './screens/Interactions/PrepaidReactions/PrepaidInteractionsGiphyTextSelector';
+import InteractionsGiphyTextSelector from './screens/Interactions/InteractionsGiphyTextSelector';
+import InteractionsInsertGiphyText from './screens/Interactions/InteractionsInsertGiphyText';
 
 //#region Stack Navigators
 
@@ -201,6 +205,22 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
       ...TransitionPresets.SlideFromRightIOS,
     },
   },
+  InteractionsInsertGiphyText: {
+    screen: InteractionsInsertGiphyText,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  InteractionsGiphyTextSelector: {
+    screen: InteractionsGiphyTextSelector,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
   InteractionsCheckout: {
     screen: InteractionsCheckout,
     navigationOptions: {
@@ -273,6 +293,22 @@ const PrepaidInteractionsPersonlizeStackNavigator = createStackNavigator({
   },
   PrepaidInteractionsAddVisual: {
     screen: PrepaidInteractionsAddVisual,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  PrepaidInteractionsInsertGiphyText: {
+    screen: PrepaidInteractionsInsertGiphyText,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  PrepaidInteractionsGiphyTextSelector: {
+    screen: PrepaidInteractionsGiphyTextSelector,
     navigationOptions: {
       headerShown: true,
       gestureDirection: 'horizontal',

@@ -666,7 +666,8 @@
                 "gif": "Gif",
                 "sticker": "Sticker",
                 "meme": "Meme",
-                "video": "Clip"
+                "video": "Clip",
+                "text": "Texto"
             }
         },
         "addTTS": {
@@ -697,7 +698,8 @@
                 "sticker": "Sticker",
                 "meme": "Meme",
                 "tts": "Text-to-Speech",
-                "video": "Clip"
+                "video": "Clip",
+                "text": "Texto"
             },
             "discardInteraction": "Descartar interacción",
             "areYouSure": "¿Estas seguro que deseas descartar tu interacción?",

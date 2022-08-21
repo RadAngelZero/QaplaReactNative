@@ -663,7 +663,8 @@
                 "sticker": "Sticker",
                 "meme": "Meme",
                 "tts": "Text-to-Speech",
-                "video": "Clip"
+                "video": "Clip",
+                "text": "Text"
             }
         },
         "addTTS": {
@@ -694,7 +695,8 @@
                 "sticker": "Sticker",
                 "meme": "Meme",
                 "tts": "Text-to-Speech",
-                "video": "Clip"
+                "video": "Clip",
+                "text": "Text"
             },
             "discardInteraction": "Discard interaction",
             "areYouSure": "Are you sure you want to discard your interaction?",

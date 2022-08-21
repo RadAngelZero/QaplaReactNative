@@ -111,7 +111,6 @@ import VolumeUp from './icons/VolumeUp.svg';
 import EditSimple from './icons/EditSimple.svg';
 import CheckCircle from './icons/CheckCircle.svg';
 
-
 // Images
 const images = {
 	png: {
@@ -413,6 +412,9 @@ const images = {
 			img: require('./gifs/paymentSuccessful.gif'),
 			uri: '@assets/gifs/paymentSuccessful.gif',
 		},
+		maxChars: {
+			img: require('./gifs/maxChars.gif')
+		}
 	},
 };
 

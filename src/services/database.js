@@ -1987,6 +1987,14 @@ export function listenGiphyTextSearch(uid, callback) {
 }
 
 /**
+ * Remove the Giphy Text requests
+ * @param {string} uid User identifier
+ */
+export async function removeGiphyTextRequests(uid) {
+    return await giphyTextRequestsRef.child(uid).remove('value');
+}
+
+/**
  * Returns the snapshot of all the available voices for the voice bot
  */
 export async function getBotAvailableVoices() {

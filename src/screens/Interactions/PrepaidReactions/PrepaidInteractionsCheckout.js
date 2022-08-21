@@ -91,6 +91,10 @@ class PrepaidInteractionsCheckout extends Component {
                                 }
                             }
 
+                            /**
+                             * Clips and direct selection of custom TTS must not take the pre paid reaction
+                             * they must just take the Qoins from the user
+                             */
                             if (!mediaType || mediaType !== GIPHY_CLIPS) {
                                 sendReaction(
                                     this.props.uid,

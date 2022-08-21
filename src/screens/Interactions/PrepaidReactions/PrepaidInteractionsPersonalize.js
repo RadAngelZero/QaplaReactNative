@@ -64,7 +64,9 @@ class PrepaidInteractionsPersonalize extends Component {
                 ...this.props.navigation.state.params,
             });
         } else if (mediaType === GIPHY_TEXT) {
-            console.log('Send to giphy text');
+            this.props.navigation.navigate('PrepaidInteractionsInsertGiphyText', {
+                ...this.props.navigation.state.params,
+            });
         } else {
             this.props.navigation.navigate('PrepaidInteractionsGiphyMediaSelector', {
                 mediaType,

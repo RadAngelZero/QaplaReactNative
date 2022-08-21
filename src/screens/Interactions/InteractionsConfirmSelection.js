@@ -5,7 +5,7 @@ import { NavigationEvents } from 'react-navigation';
 import styles from './style';
 import ConfirmSelectionModal from '../../components/InteractionsModals/ConfirmSelectionModal';
 import { getMediaTypeCost } from '../../services/database';
-import { GIPHY_CLIPS, MEME, TTS } from '../../utilities/Constants';
+import { GIPHY_CLIPS, GIPHY_TEXT, MEME } from '../../utilities/Constants';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { GiphyMediaView, GiphyVideoView } from '@giphy/react-native-sdk';
 
@@ -19,24 +19,33 @@ class InteractionsConfirmSelection extends Component {
 
     componentDidMount() {
         this.fetchMediaCost();
-        this.setState({ mediaType: this.props.navigation.getParam('mediaType') });
     }
 
     fetchMediaCost = async () => {
         const mediaType = this.props.navigation.getParam('mediaType');
-        const cost = await getMediaTypeCost(mediaType);
-        if (cost.exists()) {
-            this.setState({ mediaCost: cost.val() });
+
+        // The only type of media with a cost for pre paid reactions is the Giphy Clip
+        if (mediaType === GIPHY_CLIPS || GIPHY_TEXT) {
+            const mediaType = this.props.navigation.getParam('mediaType');
+            const cost = await getMediaTypeCost(mediaType);
+            if (cost.exists()) {
+                this.setState({ mediaCost: cost.val() });
+            }
+        } else {
+            this.setState({ mediaCost: 0 });
         }
     }
 
     onConfirmSelection = async () => {
         const mediaType = this.props.navigation.getParam('mediaType');
-        const costsObject = this.props.navigation.getParam('costs', {});
+        const message = this.props.navigation.getParam('message', '');
         this.setState({ muteClip: true });
-        // If the user has already added TTS to their items then go directly to checkout
-        // or if is a video clip
-        if (costsObject[TTS] || this.state.mediaType === GIPHY_CLIPS) {
+        // If the user has already added TTS
+        // or if the media is a video clip
+        // or if the media is Giphy Text
+        // Then go directly to checkout
+        if (message || mediaType === GIPHY_CLIPS || mediaType === GIPHY_TEXT) {
+            const costsObject = this.props.navigation.getParam('costs', {});
             this.props.navigation.navigate('InteractionsCheckout', {
                 ...this.props.navigation.state.params,
                 costs: {
@@ -46,11 +55,7 @@ class InteractionsConfirmSelection extends Component {
             });
         } else {
             this.props.navigation.navigate('InteractionsAddTTS', {
-                ...this.props.navigation.state.params,
-                costs: {
-                    [mediaType]: this.state.mediaCost,
-                    ...costsObject
-                }
+                ...this.props.navigation.state.params
             });
         }
     }
@@ -61,6 +66,7 @@ class InteractionsConfirmSelection extends Component {
 
     render() {
         const media = this.props.navigation.getParam('selectedMedia');
+        const mediaType = this.props.navigation.getParam('mediaType');
 
         return (
             <View style={styles.container}>
@@ -69,7 +75,7 @@ class InteractionsConfirmSelection extends Component {
                         <ActivityIndicator size='large'
                             color="rgb(61, 249, 223)"
                             animating={this.state.loadingMedia} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }} />
-                        {this.state.mediaType === MEME ?
+                        {mediaType === MEME ?
                             <Image
                                 onLoadEnd={() => this.setState({ loadingMedia: false })}
                                 source={{ uri: media.original.url }}
@@ -88,7 +94,26 @@ class InteractionsConfirmSelection extends Component {
                                 ]}
                                 resizeMode="contain" />
                             :
-                            this.state.mediaType === GIPHY_CLIPS ?
+                            mediaType === GIPHY_TEXT ?
+                            <Image
+                                onLoadEnd={() => this.setState({ loadingMedia: false })}
+                                source={{ uri: media.original.url }}
+                                style={[styles.interactionSelectedConatiner, {
+                                    opacity: this.state.loadingMedia ? 0 : 1,
+                                    aspectRatio: media.original.width / media.original.height,
+                                },
+                                media.original.width >= media.original.height ?
+                                    {
+                                        width: widthPercentageToPx(80),
+                                    }
+                                    :
+                                    {
+                                        height: heightPercentageToPx(40),
+                                    },
+                                ]}
+                                resizeMode="contain" />
+                            :
+                            mediaType === GIPHY_CLIPS ?
                                 <GiphyVideoView
                                     muted={this.state.muteClip}
                                     onMute={() => this.setState({ muteClip: true })}
@@ -133,7 +158,7 @@ class InteractionsConfirmSelection extends Component {
                 {/* Mute clip when user leave the screen */}
                 <NavigationEvents onWillBlur={() => this.setState({ muteClip: true })} />
                 {this.state.mediaCost !== null &&
-                    <ConfirmSelectionModal mediaType={this.state.mediaType}
+                    <ConfirmSelectionModal mediaType={mediaType}
                         onConfirmSelection={this.onConfirmSelection}
                         onCancel={this.onCancel}
                         cost={this.state.mediaCost} />

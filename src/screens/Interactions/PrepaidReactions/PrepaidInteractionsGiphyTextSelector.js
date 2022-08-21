@@ -4,13 +4,13 @@ import { NavigationEvents } from 'react-navigation';
 import WebView from 'react-native-webview';
 import { connect } from 'react-redux';
 
-import styles from './style';
-import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
-import RadMasonry from '../../components/RadMasonry/RadMasonry';
-import { GIPHY_TEXT } from '../../utilities/Constants';
-import { listenGiphyTextSearch, removeGiphyTextRequests } from '../../services/database';
+import styles from './../style';
+import { getScreenSizeMultiplier } from '../../../utilities/iosAndroidDim';
+import RadMasonry from '../../../components/RadMasonry/RadMasonry';
+import { GIPHY_TEXT } from '../../../utilities/Constants';
+import { listenGiphyTextSearch, removeGiphyTextRequests } from '../../../services/database';
 
-class InteractionsGiphyTextSelector extends Component {
+class PrepaidInteractionsGiphyTextSelector extends Component {
     state = {
         fetchGiphyText: false,
         searchQuery: '',
@@ -50,7 +50,7 @@ class InteractionsGiphyTextSelector extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    this.props.navigation.navigate('InteractionsConfirmSelection', {
+                    this.props.navigation.navigate('PrepaidInteractionsConfirmSelection', {
                         selectedMedia,
                         mediaType: GIPHY_TEXT,
                         ...this.props.navigation.state.params
@@ -113,4 +113,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(InteractionsGiphyTextSelector);
+export default connect(mapStateToProps)(PrepaidInteractionsGiphyTextSelector);

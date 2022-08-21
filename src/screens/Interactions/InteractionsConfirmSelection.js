@@ -11,7 +11,7 @@ import { GiphyMediaView, GiphyVideoView } from '@giphy/react-native-sdk';
 
 class InteractionsConfirmSelection extends Component {
     state = {
-        loadingMedia: this.props.navigation.getParam('mediaType') === MEME,
+        loadingMedia: this.props.navigation.getParam('mediaType', '') === MEME || this.props.navigation.getParam('mediaType', '') === GIPHY_TEXT,
         mediaCost: null,
         muteClip: false,
         mediaType: null,
@@ -23,30 +23,28 @@ class InteractionsConfirmSelection extends Component {
 
     fetchMediaCost = async () => {
         const mediaType = this.props.navigation.getParam('mediaType');
+        const cost = await getMediaTypeCost(mediaType);
 
-        // The only type of media with a cost for pre paid reactions is the Giphy Clip
-        if (mediaType === GIPHY_CLIPS || GIPHY_TEXT) {
-            const mediaType = this.props.navigation.getParam('mediaType');
-            const cost = await getMediaTypeCost(mediaType);
-            if (cost.exists()) {
-                this.setState({ mediaCost: cost.val() });
-            }
-        } else {
-            this.setState({ mediaCost: 0 });
+        if (cost.exists()) {
+            this.setState({ mediaCost: cost.val() });
         }
     }
 
     onConfirmSelection = async () => {
         const mediaType = this.props.navigation.getParam('mediaType');
         const message = this.props.navigation.getParam('message', '');
+        const costsObject = this.props.navigation.getParam('costs', {});
         this.setState({ muteClip: true });
         // If the user has already added TTS
         // or if the media is a video clip
         // or if the media is Giphy Text
         // Then go directly to checkout
         if (message || mediaType === GIPHY_CLIPS || mediaType === GIPHY_TEXT) {
-            const costsObject = this.props.navigation.getParam('costs', {});
+            const giphyText = this.props.navigation.getParam('text', '');
+            const giphyTextData = mediaType === GIPHY_TEXT ? { message: giphyText } : {};
+
             this.props.navigation.navigate('InteractionsCheckout', {
+                ...giphyTextData,
                 ...this.props.navigation.state.params,
                 costs: {
                     [mediaType]: this.state.mediaCost,
@@ -55,7 +53,11 @@ class InteractionsConfirmSelection extends Component {
             });
         } else {
             this.props.navigation.navigate('InteractionsAddTTS', {
-                ...this.props.navigation.state.params
+                ...this.props.navigation.state.params,
+                costs: {
+                    [mediaType]: this.state.mediaCost,
+                    ...costsObject
+                }
             });
         }
     }

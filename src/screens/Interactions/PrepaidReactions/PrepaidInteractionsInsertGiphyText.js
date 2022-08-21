@@ -55,7 +55,8 @@ class PrepaidInteractionsInsertGiphyText extends Component {
     sendText = () => {
         this.hideKeyboard();
         this.props.navigation.navigate('PrepaidInteractionsGiphyTextSelector', {
-            text: this.state.text
+            text: this.state.text,
+            ...this.props.navigation.state.params
         });
     }
 

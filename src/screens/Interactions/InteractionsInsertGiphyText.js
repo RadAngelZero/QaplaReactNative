@@ -55,7 +55,8 @@ class InteractionsInsertGiphyText extends Component {
     sendText = () => {
         this.hideKeyboard();
         this.props.navigation.navigate('InteractionsGiphyTextSelector', {
-            text: this.state.text
+            text: this.state.text,
+            ...this.props.navigation.state.params
         });
     }
 

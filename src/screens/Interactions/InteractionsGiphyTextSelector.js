@@ -38,7 +38,7 @@ class InteractionsGiphyTextSelector extends Component {
 
     renderImage = ({ item }) => {
         const ratio = item.images.fixed_height_small.width / item.images.fixed_height_small.height;
-        const selectedMedia = {
+        const giphyText = {
             original: {
                 ...item.images.original
             },
@@ -51,8 +51,7 @@ class InteractionsGiphyTextSelector extends Component {
             <TouchableOpacity
                 onPress={() => {
                     this.props.navigation.navigate('InteractionsConfirmSelection', {
-                        selectedMedia,
-                        mediaType: GIPHY_TEXT,
+                        giphyText,
                         ...this.props.navigation.state.params
                     });
                 }}

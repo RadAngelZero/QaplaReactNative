@@ -63,6 +63,7 @@ class InteractionsCheckout extends Component {
                             const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
                             const mediaType = this.props.navigation.getParam('mediaType');
                             const message = this.props.navigation.getParam('message', null);
+                            const giphyText = this.props.navigation.getParam('giphyText', {});
                             const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
                             const costs = this.props.navigation.getParam('costs', {});
 
@@ -84,10 +85,10 @@ class InteractionsCheckout extends Component {
                                 }
                             }
 
-                            if (message && costs[CUSTOM_TTS_VOICE] && messageVoiceData) {
+                            if (message && ((costs[CUSTOM_TTS_VOICE] && messageVoiceData) || giphyText)) {
                                 messageExtraData = {
                                     ...messageVoiceData,
-                                    isGiphyText: false // Determine this with Giphy Text data
+                                    giphyText: giphyText.original
                                 }
                             }
 

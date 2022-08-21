@@ -1390,7 +1390,7 @@ export async function getAllStreamers() {
  * @param {string} message Message from the user
  * @param {object | null} messageExtraData Extra data for the message
  * @param {string} messageExtraData.voiceAPIName Google Text to speech API voice for the voice bot
- * @param {boolean} messageExtraData.isGiphyText True if contains giphy Text
+ * @param {object} messageExtraData.giphyText Object with Giphy Text data
  * @param {string | undefined} messageExtraData.giphyTextUrl Url of the giphy text
  * @param {number} timeStamp Timestamp of the moment when the donation is sent
  * @param {string} streamerName Name of the streamer

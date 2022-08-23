@@ -221,6 +221,14 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
       ...TransitionPresets.SlideFromRightIOS,
     },
   },
+  InteractionsConfirmSelectionAddOn: {
+    screen: InteractionsConfirmSelection,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
   InteractionsCheckout: {
     screen: InteractionsCheckout,
     navigationOptions: {

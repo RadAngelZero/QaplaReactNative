@@ -9,7 +9,7 @@ import { getMediaTypeCost, sendCheers, sendReaction } from '../../../services/da
 import LinkTwitchAccountModal from '../../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../../services/auth';
 import { GiphyMediaView } from '@giphy/react-native-sdk';
-import { CUSTOM_TTS_VOICE, GIPHY_CLIPS, GIPHY_TEXT, MEME } from '../../../utilities/Constants';
+import { CUSTOM_TTS_VOICE, EMOJI, GIPHY_CLIPS, GIPHY_TEXT, MEME } from '../../../utilities/Constants';
 import { trackOnSegment } from '../../../services/statistics';
 import images from '../../../../assets/images';
 import LinearGradient from 'react-native-linear-gradient';
@@ -38,6 +38,20 @@ class PrepaidInteractionsCheckout extends Component {
         openLinkWitTwitchModal: false,
         sendingInteraction: false,
     };
+
+    componentDidMount() {
+        const showAddOnsOnCheckout = this.props.navigation.getParam('showAddOnsOnCheckout', true);
+        if (showAddOnsOnCheckout) {
+            this.calculateCosts();
+            this.fetchAddOnsCosts();
+        }
+    }
+
+    fetchAddOnsCosts = async () => {
+        const giphyTextCost = await getMediaTypeCost(GIPHY_TEXT);
+        const emojiRainCost = await getMediaTypeCost(EMOJI);
+        this.setState({ giphyTextCost: giphyTextCost.val(), emojiRainCost: emojiRainCost.val() });
+    }
 
     calculateCosts = () => {
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
@@ -238,7 +252,7 @@ class PrepaidInteractionsCheckout extends Component {
                 });
             } else {
                 this.props.navigation.navigate('PrepaidInteractionsInsertGiphyText', {
-                    showCutTextWarning: true,
+                    showCutTextWarning: message.length > 50,
                     addDiscountToGiphyText: true,
                     costs: {
                         [GIPHY_TEXT]: cost.val() / 2,
@@ -323,11 +337,11 @@ class PrepaidInteractionsCheckout extends Component {
                                 }]} />
                         :
                             message !== '' &&
-                            <View style={styles.checkoutChatBubble}>
-                                <Text style={[styles.whiteText, styles.checkoutChatBubbleText]}>
-                                    {message}
-                                </Text>
-                            </View>
+                                <View style={styles.checkoutChatBubble}>
+                                    <Text style={[styles.whiteText, styles.checkoutChatBubbleText]}>
+                                        {message}
+                                    </Text>
+                                </View>
                         }
                     </View>
                     {!onlyQoins &&
@@ -338,41 +352,45 @@ class PrepaidInteractionsCheckout extends Component {
                                         {`Add Ons`}
                                     </Text>
                                     <View style={styles.addOnsContainer}>
-                                        <TouchableOpacity style={styles.AddonContainer}>
-                                            <ImageBackground
-                                                source={images.png.InteractionGradient3.img}
-                                                style={styles.checkoutAddonImageContainer}
-                                            >
-                                                <Text style={styles.addonEmojiText}>
-                                                    {`🤡`}
-                                                </Text>
-                                                <Text style={styles.addonText}>
-                                                    {`Emoji raid`}
-                                                </Text>
-                                                <View style={styles.checkoutAddonQoinDisplayCointainer}>
-                                                    <images.svg.qoin style={styles.addonQoin} />
-                                                    <Text style={styles.addonQoinText}>
-                                                        {this.props.emojiRainCost || 100}
+                                        {this.state.emojiRainCost &&
+                                            <TouchableOpacity style={styles.AddonContainer}>
+                                                <ImageBackground
+                                                    source={images.png.InteractionGradient3.img}
+                                                    style={styles.checkoutAddonImageContainer}
+                                                >
+                                                    <Text style={styles.addonEmojiText}>
+                                                        {`🤡`}
                                                     </Text>
-                                                </View>
-                                            </ImageBackground>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={styles.AddonContainer} onPress={this.navigateToCustomTTS}>
-                                            <ImageBackground
-                                                source={images.png.InteractionGradient6.img}
-                                                style={styles.checkoutAddonImageContainer}
-                                            >
-                                                <Text style={styles.addonText}>
-                                                    {`Custom TTS`}
-                                                </Text>
-                                                <View style={styles.checkoutAddonQoinDisplayCointainer}>
-                                                    <images.svg.qoin style={styles.addonQoin} />
-                                                    <Text style={styles.addonQoinText}>
-                                                        {this.props.emojiRainCost || 100}
+                                                    <Text style={styles.addonText}>
+                                                        {`Emoji raid`}
                                                     </Text>
-                                                </View>
-                                            </ImageBackground>
-                                        </TouchableOpacity>
+                                                    <View style={styles.checkoutAddonQoinDisplayCointainer}>
+                                                        <images.svg.qoin style={styles.addonQoin} />
+                                                        <Text style={styles.addonQoinText}>
+                                                            {this.props.emojiRainCost || 100}
+                                                        </Text>
+                                                    </View>
+                                                </ImageBackground>
+                                            </TouchableOpacity>
+                                        }
+                                        {this.state.giphyTextCost &&
+                                            <TouchableOpacity style={styles.AddonContainer} onPress={this.navigateToCustomTTS}>
+                                                <ImageBackground
+                                                    source={images.png.InteractionGradient6.img}
+                                                    style={styles.checkoutAddonImageContainer}
+                                                >
+                                                    <Text style={styles.addonText}>
+                                                        {`Custom TTS`}
+                                                    </Text>
+                                                    <View style={styles.checkoutAddonQoinDisplayCointainer}>
+                                                        <images.svg.qoin style={styles.addonQoin} />
+                                                        <Text style={styles.addonQoinText}>
+                                                            {this.props.emojiRainCost || 100}
+                                                        </Text>
+                                                    </View>
+                                                </ImageBackground>
+                                            </TouchableOpacity>
+                                        }
                                     </View>
                                 </View>
                             }

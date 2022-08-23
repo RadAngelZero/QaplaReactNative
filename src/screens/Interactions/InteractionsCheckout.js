@@ -155,6 +155,19 @@ class InteractionsCheckout extends Component {
         )
     }
 
+    navigateToCustomTTS = async () => {
+        const costsObject = this.props.navigation.getParam('costs', {});
+        const cost = await getMediaTypeCost(GIPHY_TEXT);
+        if (cost.exists()) {
+            this.props.navigation.navigate('PrepaidInteractionsInsertGiphyText', {
+                costs: {
+                    [GIPHY_TEXT]: cost.val(),
+                    ...costsObject
+                }
+            });
+        }
+    }
+
     render() {
         const selectedMedia = this.props.navigation.getParam('selectedMedia');
         const mediaType = this.props.navigation.getParam('mediaType');
@@ -273,7 +286,7 @@ class InteractionsCheckout extends Component {
                                                 </View>
                                             </ImageBackground>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={styles.AddonContainer}>
+                                        <TouchableOpacity style={styles.AddonContainer} onPress={this.navigateToCustomTTS}>
                                             <ImageBackground
                                                 source={images.png.InteractionGradient6.img}
                                                 style={styles.checkoutAddonImageContainer}
@@ -359,48 +372,38 @@ class InteractionsCheckout extends Component {
                                             transform: [{ rotate: this.state.totalOpen ? '0deg' : '180deg' }],
                                         }]} />
                                     </View>
-
                                 </View>
-
                             </TouchableOpacity>
-                            {this.state.totalOpen && <View style={[styles.checkoutDataDisplayMainContainer, styles.marginTop16]}>
-                                <View style={styles.checkoutDataDisplayContainer}>
-                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                        Extra Tip
-                                    </Text>
-                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                        {this.state.extraTip}
-                                    </Text>
-                                </View>
-                                {Object.keys(costs).map((product) => (
-                                    <>
-                                        {costs[product] !== 0 &&
-                                            <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
-                                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                                    {product !== CUSTOM_TTS_VOICE ?
-                                                        translate(`interactions.checkout.concepts.${product}`)
-                                                        :
-                                                        `${messageVoiceData.voiceName} Voice`
-                                                    }
-                                                </Text>
-                                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                                    {costs[product]}
-                                                </Text>
-                                            </View>
-                                        }
-                                    </>
-                                ))}
-                                {this.props.navigation.state.params.message &&
-                                    <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                            {this.state.totalOpen &&
+                                <View style={[styles.checkoutDataDisplayMainContainer, styles.marginTop16]}>
+                                    <View style={styles.checkoutDataDisplayContainer}>
                                         <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                            {`${this.props.navigation.state.params.voiceName} Voice`}
+                                            Extra Tip
                                         </Text>
                                         <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                            {this.props.navigation.state.params.voiceCost}
+                                            {this.state.extraTip}
                                         </Text>
                                     </View>
-                                }
-                            </View>}
+                                    {Object.keys(costs).map((product) => (
+                                        <>
+                                            {costs[product] !== 0 &&
+                                                <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                                        {product !== CUSTOM_TTS_VOICE ?
+                                                            translate(`interactions.checkout.concepts.${product}`)
+                                                            :
+                                                            `${messageVoiceData.voiceName} Voice`
+                                                        }
+                                                    </Text>
+                                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                                        {costs[product]}
+                                                    </Text>
+                                                </View>
+                                            }
+                                        </>
+                                    ))}
+                                </View>
+                            }
                             <TouchableOpacity style={styles.checkoutSendButton}>
                                 <Text style={styles.checkoutSendButtonText}>
                                     Send Live Interaction

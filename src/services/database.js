@@ -1983,7 +1983,7 @@ export async function getUserReactionsCount(uid, streamerUid) {
  * @param {RNFirebase.database.QuerySuccessCallback} callback Function called to handle firebase data
  */
 export function listenGiphyTextSearch(uid, callback) {
-    giphyTextRequestsRef.child(uid).child('data').on('value', callback);
+    giphyTextRequestsRef.child(uid).on('value', callback);
 }
 
 /**

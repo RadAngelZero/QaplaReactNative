@@ -315,6 +315,14 @@ const PrepaidInteractionsPersonlizeStackNavigator = createStackNavigator({
       ...TransitionPresets.SlideFromRightIOS,
     },
   },
+  PrepaidInteractionsConfirmAddOn: {
+    screen: PrepaidInteractionsConfirmSelection,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
   PrepaidInteractionsCheckout: {
     screen: PrepaidInteractionsCheckout,
     navigationOptions: {

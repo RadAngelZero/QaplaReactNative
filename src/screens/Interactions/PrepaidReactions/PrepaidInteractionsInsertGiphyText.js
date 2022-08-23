@@ -85,6 +85,7 @@ class PrepaidInteractionsInsertGiphyText extends Component {
                         }}>
                         <View style={styles.insertGiphyTextTextInputContainer}>
                             <TextInput style={styles.insertGiphyTextTextInput}
+                                maxLength={50}
                                 onChangeText={(text) => this.setState({ text })}
                                 value={this.state.text}
                                 autoFocus

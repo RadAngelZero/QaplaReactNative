@@ -1,6 +1,7 @@
 import { GIPHY_KEY, GIPHY_CLIPS } from '../utilities/Constants';
 
 /**
+ * @deprecated
  * Generates a random id for the user to identify him on Giphy
  * @returns RandomId
  */
@@ -20,6 +21,7 @@ export async function generateGiphyUserRandomId() {
 }
 
 /**
+ * @deprecated
  * Get media (gifs, clips or stickers) from Giphy
  * @param {string} userGiphyId User Giphy random identifier
  * @param {('gifs'|'stickers'|'clips')} type Type of media to get
@@ -38,6 +40,7 @@ export async function getGiphyTrending(userGiphyId, type, limit, offset = 0) {
 }
 
 /**
+ * @deprecated
  * Search for specific media (gifs, clips or stickers) on Giphy library based on the given search query
  * @param {string} userGiphyId User Giphy random identifier
  * @param {string} searchQuery Search query term or phrase

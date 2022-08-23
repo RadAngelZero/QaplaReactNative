@@ -170,6 +170,7 @@ export const QOINS = 'qoins';
 // Media types for cheers
 export const MEME = 'meme';
 export const TTS = 'tts';
+export const CUSTOM_TTS_VOICE = 'customTTSVoice';
 
 export const STREAMERS_BLACKLIST = ['141617732-catskullgamer', '683167758-catskullgg', '613408163-d_h_v_s', '698301557-QaplaGaming', '448926957-qaplita', '528477359-mariyolo1bot', '448926957-qaplita'];
 
@@ -178,4 +179,5 @@ export const DEFAULT_404_TWITCH_PREVIEW_URL = 'https://static-cdn.jtvnw.net/ttv-
 
 export const MAX_CHAR_FOR_TTS = 100;
 
-export const MEDIA_TO_LOAD_FROM_GIPHY = 20;
+export const TWITCH_PARTNER = 'partner';
+export const TWITCH_AFFILIATE = 'affiliate';

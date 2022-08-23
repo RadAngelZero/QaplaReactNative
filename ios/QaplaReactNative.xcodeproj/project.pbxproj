@@ -142,8 +142,11 @@
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 		EF82A2004EC2496A9EAE8D91 /* comparte-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = D993E97029C345FFB3F5DC33 /* comparte-onboarding.png */; };
 		F054D3EA47E9453CBB0908DB /* close.svg in Resources */ = {isa = PBXBuildFile; fileRef = B992432FF00048309FA2A6ED /* close.svg */; };
+		F1090F31289C6EFD0063C1DF /* QaplaReactNative.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = F9F4B7BE23885FBE003AD8FC /* QaplaReactNative.entitlements */; };
+		F1090F32289C6EFD0063C1DF /* QaplaReactNativeRelease.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = F9F4B79223885C80003AD8FC /* QaplaReactNativeRelease.entitlements */; };
 		F12B0428287384EB00688533 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F12B0427287384EB00688533 /* StoreKit.framework */; };
 		F175B3E42894584C001EC9BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F175B3E62894584C001EC9BB /* InfoPlist.strings */; };
+		F1C17789289AD8320021A571 /* Qapla Gaming.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = F9D86F412416DCA900712411 /* Qapla Gaming.entitlements */; };
 		F1E51258208F414AB3F4F5E6 /* LessQaploins.svg in Resources */ = {isa = PBXBuildFile; fileRef = C32BD5EC73DE46578A0E029E /* LessQaploins.svg */; };
 		F1EE3F4D28946AA7003D6DDD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1EE3F4F28946AA7003D6DDD /* InfoPlist.strings */; };
 		F3F2AF3172AE4BD2AAC9EB2A /* signup.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EE7B35A0704BB6A0F13ADD /* signup.png */; };
@@ -1514,6 +1517,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1090F31289C6EFD0063C1DF /* QaplaReactNative.entitlements in Resources */,
+				F1090F32289C6EFD0063C1DF /* QaplaReactNativeRelease.entitlements in Resources */,
+				F1C17789289AD8320021A571 /* Qapla Gaming.entitlements in Resources */,
 				F9073AB024070EA900BB648D /* assets in Resources */,
 				F175B3E42894584C001EC9BB /* InfoPlist.strings in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
@@ -1673,6 +1679,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		0ED484288E1933FB1757040C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QaplaReactNative/Pods-QaplaReactNative-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Giphy/GiphyUISDK.framework/GiphyUISDK",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GiphyUISDK.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-QaplaReactNative/Pods-QaplaReactNative-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		23E8AB3398428DACC07BB6B6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1973,7 +1997,7 @@
 				CODE_SIGN_ENTITLEMENTS = "QaplaReactNative/Qapla Gaming.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 122;
+				CURRENT_PROJECT_VERSION = 129;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
@@ -1986,7 +2010,7 @@
 				INFOPLIST_FILE = QaplaReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 3.7.1;
+				MARKETING_VERSION = 3.8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2012,7 +2036,7 @@
 				CODE_SIGN_ENTITLEMENTS = "QaplaReactNative/Qapla GamingRelease.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 122;
+				CURRENT_PROJECT_VERSION = 129;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = TRFNHWRW5M;
 				HEADER_SEARCH_PATHS = (
@@ -2025,7 +2049,7 @@
 				INFOPLIST_FILE = QaplaReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 3.7.1;
+				MARKETING_VERSION = 3.8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

@@ -3,12 +3,13 @@ import { View, Text, Image, TextInput, TouchableOpacity, Keyboard, Platform, Ani
 import { connect } from 'react-redux';
 
 import images from '../../../assets/images';
-import { MAX_CHAR_FOR_TTS } from './../../utilities/Constants';
+import { CUSTOM_TTS_VOICE, MAX_CHAR_FOR_TTS } from './../../utilities/Constants';
 import { translate } from '../../utilities/i18';
 import styles from './style';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import LinearGradient from 'react-native-linear-gradient';
 import MaskedView from '@react-native-community/masked-view';
+import { getBotAvailableVoices } from '../../services/database';
 
 class OptionButton extends Component {
 
@@ -62,14 +63,7 @@ class InteractionsTTS extends Component {
         editVoice: false,
         voiceCost: null,
         voiceName: '',
-        voice1Cost: 0,
-        voice1Name: 'Google Translate',
-        voice2Cost: 75,
-        voice2Name: '"Portuguese"',
-        voice3Cost: 100,
-        voice3Name: 'Google Maps',
-        voice4Cost: 125,
-        voice4Name: 'TikTok',
+        availableVoices: {}
     }
 
     componentDidMount() {
@@ -90,6 +84,11 @@ class InteractionsTTS extends Component {
     componentWillUnmount() {
         this.keyboardDidShowSubscription.remove();
         this.keyboardDidHideSubscription.remove();
+    }
+
+    fetchAvailableVoices = async () => {
+        const voices = await getBotAvailableVoices();
+        this.setState({ availableVoices: voices.val() });
     }
 
     textHandler = (e) => {
@@ -131,12 +130,13 @@ class InteractionsTTS extends Component {
         if (this.state.editMessage) {
             this.setState({ step: 2, showFinalSelectionBubbleChat: true, showFinalSelection: true, showFinalSelectionBubbleChatText: true, editMessage: false });
         } else {
+            this.fetchAvailableVoices();
             this.setState({ step: 1, showVoiceSelectionBubbleChat: true });
             this.playDotsAnimation(() => { this.setState({ showVoiceSelection: true, showVoiceSelectionBubbleChatText: true }); });
         }
     }
-    voiceSelectionHandler = (voiceName, voiceCost) => {
-        this.setState({ voiceName, voiceCost, step: 2, showFinalSelectionBubbleChat: true });
+    voiceSelectionHandler = (voiceAPIName, voiceName, voiceCost) => {
+        this.setState({ voiceAPIName, voiceName, voiceCost, step: 2, showFinalSelectionBubbleChat: true });
         if (this.state.editVoice) {
             this.setState({ showFinalSelection: true, showFinalSelectionBubbleChatText: true });
         } else {
@@ -152,19 +152,32 @@ class InteractionsTTS extends Component {
     }
 
     readyHandler = () => {
+        const costsObject = this.props.navigation.getParam('costs', {});
         if (this.props.previousScreen === 'InteractionsAddTTS') {
             this.props.navigation.navigate('InteractionsCheckout', {
-                message: this.state.message,
-                voiceCost: this.state.voiceCost,
-                voiceName: this.state.voiceName,
                 ...this.props.navigation.state.params,
+                message: this.state.message,
+                messageVoice: {
+                    voiceName: this.state.voiceName,
+                    voiceAPIName: this.state.voiceAPIName
+                },
+                costs: {
+                    [CUSTOM_TTS_VOICE]: this.state.voiceCost,
+                    ...costsObject
+                },
             });
         } else {
             this.props.navigation.navigate('InteractionsAddVisual', {
-                message: this.state.message,
-                voiceCost: this.state.voiceCost,
-                voiceName: this.state.voiceName,
                 ...this.props.navigation.state.params,
+                message: this.state.message,
+                messageVoice: {
+                    voiceName: this.state.voiceName,
+                    voiceAPIName: this.state.voiceAPIName
+                },
+                costs: {
+                    [CUSTOM_TTS_VOICE]: this.state.voiceCost,
+                    ...costsObject
+                },
             });
         }
     }
@@ -236,80 +249,48 @@ class InteractionsTTS extends Component {
                                     {(this.state.showVoiceSelection && (this.state.voiceCost === null && this.state.voiceName === '')) &&
                                         <>
                                             <View style={styles.optionsContainer}>
-                                                <View style={styles.optionContainer}>
-                                                    <images.svg.volumeUp style={styles.optionOutIconMargin} />
-                                                    <OptionButton onPress={() => this.voiceSelectionHandler(this.state.voice1Name, this.state.voice1Cost)}>
-                                                        <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                            {this.state.voice1Name}
-                                                        </Text>
-                                                    </OptionButton>
-                                                </View>
-                                                <View style={styles.optionContainer}>
-                                                    <images.svg.volumeUp style={styles.optionOutIconMargin} />
-                                                    <OptionButton onPress={() => this.voiceSelectionHandler(this.state.voice2Name, this.state.voice2Cost)}>
-                                                        <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                            {this.state.voice2Name}
-                                                        </Text>
-                                                        <View style={styles.optionPriceContainer}>
-                                                            <images.svg.qoin style={[styles.smallQoin, styles.optionQoinsMargin]} />
-                                                            <MaskedView maskElement={
-                                                                <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                                    {this.state.voice2Cost}
-                                                                </Text>
-                                                            }>
-                                                                <LinearGradient colors={['#FFD3FB', '#F5FFCB', '#9FFFDD']}>
-                                                                    <Text style={[styles.transparentText, styles.chatBubbleText]}>
-                                                                        {this.state.voice2Cost}
-                                                                    </Text>
-                                                                </LinearGradient>
-                                                            </MaskedView>
-                                                        </View>
-                                                    </OptionButton>
-                                                </View>
-                                                <View style={styles.optionContainer}>
-                                                    <images.svg.volumeUp style={styles.optionOutIconMargin} />
-                                                    <OptionButton onPress={() => this.voiceSelectionHandler(this.state.voice3Name, this.state.voice3Cost)}>
-                                                        <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                            {this.state.voice3Name}
-                                                        </Text>
-                                                        <View style={styles.optionPriceContainer}>
-                                                            <images.svg.qoin style={[styles.smallQoin,styles.optionQoinsMargin]} />
-                                                            <MaskedView maskElement={
-                                                                <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                                    {this.state.voice3Cost}
-                                                                </Text>
-                                                            }>
-                                                                <LinearGradient colors={['#FFD3FB', '#F5FFCB', '#9FFFDD']}>
-                                                                    <Text style={[styles.transparentText, styles.chatBubbleText]}>
-                                                                        {this.state.voice3Cost}
-                                                                    </Text>
-                                                                </LinearGradient>
-                                                            </MaskedView>
-                                                        </View>
-                                                    </OptionButton>
-                                                </View>
-                                                <View style={styles.optionContainer}>
-                                                    <images.svg.volumeUp style={styles.optionOutIconMargin} />
-                                                    <OptionButton onPress={() => this.voiceSelectionHandler(this.state.voice4Name, this.state.voice4Cost)}>
-                                                        <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                            {this.state.voice4Name}
-                                                        </Text>
-                                                        <View style={styles.optionPriceContainer}>
-                                                            <images.svg.qoin style={[styles.smallQoin, styles.optionQoinsMargin]} />
-                                                            <MaskedView maskElement={
-                                                                <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                                    {this.state.voice4Cost}
-                                                                </Text>
-                                                            }>
-                                                                <LinearGradient colors={['#FFD3FB', '#F5FFCB', '#9FFFDD']}>
-                                                                    <Text style={[styles.transparentText, styles.chatBubbleText]}>
-                                                                        {this.state.voice4Cost}
-                                                                    </Text>
-                                                                </LinearGradient>
-                                                            </MaskedView>
-                                                        </View>
-                                                    </OptionButton>
-                                                </View>
+                                                {Object.keys(this.state.availableVoices)
+                                                    .sort((a, b) => this.state.availableVoices[a].cost - this.state.availableVoices[b].cost)
+                                                    .map((voiceName) => {
+                                                        if (this.state.availableVoices[voiceName].cost === 0) {
+                                                            return (
+                                                                <View style={styles.optionContainer}>
+                                                                    <images.svg.volumeUp style={styles.optionOutIconMargin} />
+                                                                    <OptionButton onPress={() => this.voiceSelectionHandler(this.state.availableVoices[voiceName].voiceAPIName, voiceName, this.state.availableVoices[voiceName].cost)}>
+                                                                        <Text style={[styles.whiteText, styles.chatBubbleText]}>
+                                                                            {voiceName}
+                                                                        </Text>
+                                                                    </OptionButton>
+                                                                </View>
+                                                            );
+                                                        } else {
+                                                            return (
+                                                                <View style={styles.optionContainer}>
+                                                                    <images.svg.volumeUp style={styles.optionOutIconMargin} />
+                                                                    <OptionButton onPress={() => this.voiceSelectionHandler(this.state.availableVoices[voiceName].voiceAPIName, voiceName, this.state.availableVoices[voiceName].cost)}>
+                                                                        <Text style={[styles.whiteText, styles.chatBubbleText]}>
+                                                                            {voiceName}
+                                                                        </Text>
+                                                                        <View style={styles.optionPriceContainer}>
+                                                                            <images.svg.qoin style={[styles.smallQoin, styles.optionQoinsMargin]} />
+                                                                            <MaskedView maskElement={
+                                                                                <Text style={[styles.whiteText, styles.chatBubbleText]}>
+                                                                                    {this.state.availableVoices[voiceName].cost}
+                                                                                </Text>
+                                                                            }>
+                                                                                <LinearGradient colors={['#FFD3FB', '#F5FFCB', '#9FFFDD']}>
+                                                                                    <Text style={[styles.transparentText, styles.chatBubbleText]}>
+                                                                                        {this.state.availableVoices[voiceName].cost}
+                                                                                    </Text>
+                                                                                </LinearGradient>
+                                                                            </MaskedView>
+                                                                        </View>
+                                                                    </OptionButton>
+                                                                </View>
+                                                            );
+                                                        }
+                                                    })
+                                                }
                                             </View>
                                         </>
                                     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, FlatList, View, TouchableOpacity, ActivityIndicator, SafeAreaView, Platform } from 'react-native';
+import { ScrollView, Text, FlatList, View, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -10,16 +10,18 @@ import StreamerCardSmall from '../../components/StreamerCard/StreamerCardSmall';
 import StreamerCardMini from '../../components/StreamerCard/StreamerCardMini';
 import StreamCardLive from '../../components/StreamCard/StreamCardLive';
 import Colors from '../../utilities/Colors';
-import { DEFAULT_404_TWITCH_PREVIEW_URL } from '../../utilities/Constants';
+import { DEFAULT_404_TWITCH_PREVIEW_URL, TWITCH_AFFILIATE, TWITCH_PARTNER } from '../../utilities/Constants';
 
 import {
     getAllStreamersStreaming,
     getRecentStreamersDonations,
     getStreamerPublicData,
     getStreamerPublicProfile,
-    getUserFavsStreamers
+    getUserFavsStreamers,
+    getUserReactionsCount
 } from '../../services/database';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { trackOnSegment } from '../../services/statistics';
 
 const MAXIM_CARDS_LENGTH = 6;
 
@@ -37,7 +39,9 @@ export class InteractionsFeed extends Component {
 
     fetchStreamersData = async () => {
         const liveStreamers = await getAllStreamersStreaming();
-        const liveData = liveStreamers.val();
+        const liveData = Object.keys(liveStreamers.val())
+            .filter((streamerId) => liveStreamers.val()[streamerId].isOverlayActive)
+            .map((streamerId) => ({ streamerId, ...liveStreamers.val()[streamerId]}) );
 
         if (this.props.uid) {
             const favStreamersSnap = await getUserFavsStreamers(this.props.uid, 10);
@@ -45,10 +49,6 @@ export class InteractionsFeed extends Component {
             favStreamersSnap.forEach((fav) => {
                 if (!liveStreamers.val()[fav.key]) {
                     favsNoLive.push({ streamerId: fav.key, ...favStreamersSnap.val()[fav.key] });
-                } else {
-                    if (liveData) {
-                        liveData[fav.key].featured = true;
-                    }
                 }
             });
 
@@ -57,12 +57,14 @@ export class InteractionsFeed extends Component {
                 if (favStreamers.length < MAXIM_CARDS_LENGTH) {
                     const fav = favsNoLive[i];
                     const streamerProfile = await getStreamerPublicProfile(fav.streamerId);
-                    if (streamerProfile.exists()) {
+                    if (streamerProfile.exists() && (streamerProfile.val().broadcasterType === TWITCH_PARTNER || streamerProfile.val().broadcasterType === TWITCH_AFFILIATE)) {
                         favStreamers.push({ streamerId: fav.streamerId, ...streamerProfile.val() });
                     } else {
                         const streamerData = await getStreamerPublicData(fav.streamerId);
-                        const randomBackground = Colors.streamersProfileBackgroundGradients[Math.floor(Math.random() * Colors.streamersProfileBackgroundGradients.length)]
-                        favStreamers.push({ streamerId: fav.streamerId, ...streamerData.val(), backgroundGradient: randomBackground });
+                        if (streamerData.exists() && streamerData.val().broadcasterType === TWITCH_PARTNER || streamerData.val().broadcasterType === TWITCH_AFFILIATE) {
+                            const randomBackground = Colors.streamersProfileBackgroundGradients[Math.floor(Math.random() * Colors.streamersProfileBackgroundGradients.length)]
+                            favStreamers.push({ streamerId: fav.streamerId, ...streamerData.val(), backgroundGradient: randomBackground });
+                        }
                     }
                 } else {
                     break;
@@ -74,8 +76,6 @@ export class InteractionsFeed extends Component {
             recentStreamersSnap.forEach((recent) => {
                 if (!liveStreamers.val()[recent.key] && !favStreamers.find((streamer) => streamer.streamerId === recent.key)) {
                     recentStreamersNoLiveNoFav.push({ streamerId: recent.key, ...recentStreamersSnap.val()[recent.key] });
-                } else if (liveStreamers.val()[recent.key]) {
-                    liveData[recent.key].featured = true;
                 }
             });
 
@@ -83,9 +83,9 @@ export class InteractionsFeed extends Component {
             for (let i = 0; i < recentStreamersNoLiveNoFav.length; i++) {
                 if (recentStreamers.length < MAXIM_CARDS_LENGTH) {
                     const recent = recentStreamersNoLiveNoFav[i];
-                    const streamerProfile = await getStreamerPublicProfile(recent.streamerId);
-                    if (streamerProfile.exists()) {
-                        recentStreamers.push({ streamerId: recent.streamerId, ...streamerProfile.val() });
+                    const streamerData = await getStreamerPublicData(recent.streamerId);
+                    if (streamerData.exists() && streamerData.val().broadcasterType === TWITCH_PARTNER || streamerData.val().broadcasterType === TWITCH_AFFILIATE) {
+                        recentStreamers.push({ streamerId: recent.streamerId, ...streamerData.val() });
                     }
                 } else {
                     break;
@@ -97,16 +97,42 @@ export class InteractionsFeed extends Component {
 
         if (liveStreamers.exists()) {
             this.setState({
-                liveStreamers: Object.keys(liveData)
-                    .sort((a, b) => (Number(liveData[b].featured) || 0) - (Number(liveData[a].featured) || 0))
-                    .map((streamerId) => ({ streamerId, ...liveData[streamerId] })),
+                liveStreamers: liveData,
                 dataFetched: true
             });
         }
     }
 
-    onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming) => {
-        this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+    onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming, type) => {
+        if (this.props.uid) {
+            const numberOfReactions = await getUserReactionsCount(this.props.uid, streamerId);
+            // We do not check this with exists() because the value can be 0, so it is easier to check if the snapshot has a valid value (not null, not undefined and greater than 0)
+            if (numberOfReactions.val()) {
+                trackOnSegment('Streamer Selected To Send Interaction', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: 'Custom Search'
+                });
+
+                this.props.navigation.navigate('PrepaidInteractionsPersonlizeStack', { streamerId, displayName, photoUrl, isStreaming, numberOfReactions: numberOfReactions.val() });
+            } else {
+                trackOnSegment('Streamer Selected To Send Interaction', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: type
+                });
+
+                return this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+            }
+        } else {
+            trackOnSegment('Streamer Selected To Send Interaction', {
+                Streamer: displayName,
+                StreamerId: streamerId,
+                Category: type
+            });
+
+            return this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+        }
     }
 
     renderLiveItem = ({ item, index }) => {
@@ -126,7 +152,7 @@ export class InteractionsFeed extends Component {
                 streamerName={item.displayName}
                 index={index}
                 featured={item.featured}
-                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, true)} />
+                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, true, 'Live')} />
         );
     };
 
@@ -140,7 +166,7 @@ export class InteractionsFeed extends Component {
                 backgroundUrl={item.backgroundUrl}
                 backgroundGradient={item.backgroundGradient}
                 displayName={item.displayName}
-                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, false)} />
+                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, false, 'Fav')} />
         </View>
     );
 
@@ -153,7 +179,7 @@ export class InteractionsFeed extends Component {
             <StreamerCardMini
                 streamerPhoto={item.photoUrl}
                 streamerName={item.displayName}
-                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, false)} />
+                onPress={() => this.onStreamerSelected(item.streamerId, item.displayName, item.photoUrl, false, 'Recent')} />
         </View>
     );
 
@@ -161,7 +187,7 @@ export class InteractionsFeed extends Component {
         if (this.state.dataFetched) {
             return (
                 <View style={styles.container}>
-                    <ScrollView style={styles.container}>
+                    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                         <View style={[styles.feedMainContainer,
                         {
                             marginTop: heightPercentageToPx(4.67) + (Platform.OS === 'ios' ? heightPercentageToPx(5.91) : 0),

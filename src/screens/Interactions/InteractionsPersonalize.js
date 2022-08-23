@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';
 import { GIPHY_CLIPS, GIPHY_GIFS, GIPHY_STICKERS, GIPHY_TEXT, MEME, TTS } from '../../utilities/Constants';
-import { getAllMediaTypeCosts } from '../../services/database';
+import { getAllMediaTypeCosts, getReactionSample, getReactionsSamplesCount } from '../../services/database';
 import { translate } from '../../utilities/i18';
 import DeckButton from '../../components/DeckButton/DeckButton';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import { GiphyContent, GiphyMediaType, GiphyRating, GiphyVideoView } from '@giphy/react-native-sdk';
+import { trackOnSegment } from '../../services/statistics';
 
 class InteractionsPersonalize extends Component {
     state = {
@@ -18,24 +18,16 @@ class InteractionsPersonalize extends Component {
         [GIPHY_CLIPS]: null,
         [TTS]: null,
         [MEME]: null,
+        clipsSample: null,
+        giphyTextSample: null,
         dataFetched: false,
         videoContent: null,
     };
 
     componentDidMount() {
         this.fetchCosts();
-        this.fetchHello();
-    }
-
-    fetchHello = async () => {
-        var test = GiphyContent.search(
-            {
-                searchQuery: 'Hello Originals',
-                rating: GiphyRating.PG13,
-                mediaType: GiphyMediaType.Video,
-            }
-        );
-        console.log(test);
+        this.fetchClipsSample();
+        this.fetchGiphyTextSample();
     }
 
     fetchCosts = async () => {
@@ -45,10 +37,34 @@ class InteractionsPersonalize extends Component {
         }
     }
 
+    fetchClipsSample = async () => {
+        const clipsLength = await getReactionsSamplesCount(GIPHY_CLIPS);
+        const index = Math.floor(Math.random() * clipsLength.val());
+        const clipsSample = await getReactionSample(GIPHY_CLIPS, index);
+
+        this.setState({ clipsSample: clipsSample.val() });
+    }
+
+    fetchGiphyTextSample = async () => {
+        const clipsLength = await getReactionsSamplesCount(GIPHY_TEXT);
+        const index = Math.floor(Math.random() * clipsLength.val());
+        const giphyTextSample = await getReactionSample(GIPHY_TEXT, index);
+
+        this.setState({ giphyTextSample: giphyTextSample.val() });
+    }
+
     navigateToSelectedMedia = (mediaType) => {
+        trackOnSegment('Media For Interaction Selected', {
+            MediaType: mediaType
+        });
+
         if (mediaType === MEME) {
             this.props.navigation.navigate('InteractionsMemeSelector', {
                 mediaType,
+                ...this.props.navigation.state.params,
+            });
+        } else if (mediaType === GIPHY_TEXT) {
+            this.props.navigation.navigate('InteractionsInsertGiphyText', {
                 ...this.props.navigation.state.params,
             });
         } else {
@@ -60,6 +76,10 @@ class InteractionsPersonalize extends Component {
     }
 
     navigateToWriteMessage = () => {
+        trackOnSegment('Media For Interaction Selected', {
+            MediaType: 'TTS'
+        });
+
         const costsObject = this.props.navigation.getParam('costs', {});
         this.props.navigation.navigate('InteractionsTTS', {
             ...this.props.navigation.state.params,
@@ -71,6 +91,8 @@ class InteractionsPersonalize extends Component {
     }
 
     justSendQoins = () => {
+        trackOnSegment('Only Send Qoins');
+
         // Send to only Qoins donation screen
         this.props.navigation.navigate('InteractionsCheckout', {
             ...this.props.navigation.state.params,
@@ -82,7 +104,7 @@ class InteractionsPersonalize extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.innerConatiner}>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         <View style={styles.headerContainer}>
                             <Text style={[styles.whiteText, styles.screenHeaderText]}>
                                 {`${translate('interactions.personalize.personalizeYourInteraction')}`}
@@ -108,13 +130,6 @@ class InteractionsPersonalize extends Component {
                                         backgroundIndex={3}
                                         icon={images.svg.interactionsSticker}
                                     />
-                                    {/* <DeckButton
-                                    onPress={() => this.navigateToSelectedMedia(GIPHY_CLIPS)}
-                                    label="Clips"
-                                    cost={this.state[GIPHY_STICKERS]}
-                                    backgroundIndex={1}
-                                    icon={images.svg.interactionsClip}
-                                /> */}
                                     <DeckButton
                                         onPress={this.navigateToWriteMessage}
                                         label="Text-to-Speech"
@@ -142,50 +157,43 @@ class InteractionsPersonalize extends Component {
                             <images.svg.questionMark />
                         </TouchableOpacity> */}
                         </View>
-                        {this.state.dataFetched && <TouchableOpacity style={{
-
-                        }}
-                            onPress={() => this.navigateToSelectedMedia(GIPHY_CLIPS)}
-                        >
-                            <ImageBackground
-                                source={{ uri: 'https://i.pinimg.com/originals/d3/01/fd/d301fdc8f718cc4e956c6456eb2af1ee.gif' }}
-                                style={{
-                                    justifyContent: 'flex-end',
-                                    alignItems: 'center',
-                                    // width: widthPercentageToPx(100),
-                                    height: heightPercentageToPx(23.39),
-                                    borderRadius: widthPercentageToPx(5.33),
-                                    overflow: 'hidden',
-                                }}
-                                imageStyle={{
-                                }}
-                                resizeMode="cover"
-                            >
-                                <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                    <images.svg.qoin style={styles.qoin} />
-                                    <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                        {this.state[GIPHY_CLIPS]}
-                                    </Text>
-                                </View>
-                            </ImageBackground>
-                        </TouchableOpacity>}
-                        {/* <View style={[styles.headerContainer, styles.headerMargins]}>
-                            <Text style={[styles.whiteText, styles.screenHeaderText]}> */}
+                        {this.state.dataFetched &&
+                            <TouchableOpacity onPress={() => this.navigateToSelectedMedia(GIPHY_CLIPS)}>
+                                <ImageBackground
+                                    source={this.state.clipsSample ? { uri: this.state.clipsSample } : null}
+                                    style={{
+                                        justifyContent: 'flex-end',
+                                        alignItems: 'center',
+                                        // width: widthPercentageToPx(100),
+                                        height: heightPercentageToPx(23.39),
+                                        borderRadius: widthPercentageToPx(5.33),
+                                        overflow: 'hidden',
+                                    }}
+                                    imageStyle={{
+                                    }}
+                                    resizeMode="cover"
+                                >
+                                    <View style={styles.personalizeButtonDisplayQoinsContainer}>
+                                        <images.svg.qoin style={styles.qoin} />
+                                        <Text style={styles.personalizeButtonDisplayQoinsText}>
+                                            {this.state[GIPHY_CLIPS]}
+                                        </Text>
+                                    </View>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                        }
+                        <View style={[styles.headerContainer, styles.headerMargins]}>
+                            <Text style={[styles.whiteText, styles.screenHeaderText]}>
                                 {/* {`${translate('interactions.personalize.personalizeYourInteraction')}`} */}
-                                {/* {`Custom TTS`} */}
-                                {/* {`TTS Personalizado`} */}
-                            {/* </Text> */}
+                                {`Custom TTS`}
+                            </Text>
                             {/* <TouchableOpacity style={styles.helpButton}>
-                            <images.svg.questionMark />
-                        </TouchableOpacity> */}
-                        {/* </View>
-                        <TouchableOpacity style={{
-
-                        }}
-                            onPress={() => this.navigateToSelectedMedia(GIPHY_TEXT)}
-                        >
+                                <images.svg.questionMark />
+                            </TouchableOpacity> */}
+                        </View>
+                        <TouchableOpacity onPress={() => this.navigateToSelectedMedia(GIPHY_TEXT)}>
                             <ImageBackground
-                                source={{ uri: 'https://i.pinimg.com/originals/d3/01/fd/d301fdc8f718cc4e956c6456eb2af1ee.gif' }}
+                                source={this.state.giphyTextSample ? { uri: this.state.giphyTextSample } : null}
                                 style={{
                                     justifyContent: 'flex-end',
                                     alignItems: 'center',
@@ -196,8 +204,7 @@ class InteractionsPersonalize extends Component {
                                 }}
                                 imageStyle={{
                                 }}
-                                resizeMode="cover"
-                            >
+                                resizeMode="cover">
                                 <View style={styles.personalizeButtonDisplayQoinsContainer}>
                                     <images.svg.qoin style={styles.qoin} />
                                     <Text style={styles.personalizeButtonDisplayQoinsText}>
@@ -205,7 +212,7 @@ class InteractionsPersonalize extends Component {
                                     </Text>
                                 </View>
                             </ImageBackground>
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
                         <View style={{ height: heightPercentageToPx(6.15) }} />
                         {/* <View style={styles.onlySendQoinsContainer}>
                         <TouchableOpacity style={styles.onlySendQoinsTouchable}

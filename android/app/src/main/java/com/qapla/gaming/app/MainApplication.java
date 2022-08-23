@@ -7,6 +7,7 @@ import com.facebook.react.PackageList;
 import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
 import com.facebook.react.bridge.JavaScriptExecutorFactory;
 import com.facebook.react.ReactApplication;
+import io.branch.rnbranch.RNBranchPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -22,6 +23,8 @@ import io.invertase.firebase.links.RNFirebaseLinksPackage;
 import io.invertase.firebase.config.RNFirebaseRemoteConfigPackage;
 
 import com.dooboolab.RNIap.RNIapPackage;
+
+import io.branch.rnbranch.RNBranchModule;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -67,6 +70,9 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this); // Remove this line if you don't want Flipper enabled
+
+    RNBranchModule.enableLogging();
+    RNBranchModule.getAutoInstance(this);
   }
 
   /**

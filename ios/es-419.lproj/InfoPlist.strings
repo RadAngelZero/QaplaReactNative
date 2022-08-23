@@ -1,3 +1,1 @@
-NSUserTrackingUsageDescription = "Twitch usa cookies para vincular tu cuenta. Los datos únicamente serán usados para conectar tus cuentas";
-
 NSPhotoLibraryUsageDescription = "Permite el acceso a tus fotos para editar tu foto de perfil. Tu foto de perfil saldrá en tu perfil y en los rankings";

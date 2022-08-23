@@ -34,7 +34,8 @@ import FinishingBuyTransactionModal from './src/components/FinishingBuyTransacti
 
 console.disableYellowBox = true;
 
-GiphySDK.configure({ apiKey: '1WgsSOSfrTXTN4IGMMuhajM7WsfxoSdq' });
+const apiKey = Platform.select({ ios: 'rzkRmwwKiG7ORdkorEeZaQYWtEH0Rc1R', android: 's9vO5AnXWPBJC4FYQJ8li4Hu4g5NbGio' });
+GiphySDK.configure({ apiKey });
 
 class App extends React.Component {
     state = {
@@ -125,6 +126,8 @@ class App extends React.Component {
                                         setTimeout(() => {
                                             this.setState({ openTransactionModal: false });
                                         }, 1000);
+
+                                        trackOnSegment('Qoins Purchase Finished');
                                     }
                                 });
                             } catch (error) {

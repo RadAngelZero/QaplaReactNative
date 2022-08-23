@@ -5,6 +5,7 @@ import store from '../store/store';
 import { getLocaleLanguage } from '../utilities/i18';
 import { unsubscribeUserFromTopic, subscribeUserToTopic } from './messaging';
 import { checkNotificationPermission } from '../services/messaging';
+import { RNFirebase } from 'react-native-firebase';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
@@ -58,6 +59,10 @@ const userProfileGIFsRef = database.ref('/UserProfileGIFs');
 const inAppPurchasesProductsRef = database.ref('/inAppPurchasesProducts');
 const inAppPurchasesAttemptsRef = database.ref('/inAppPurchasesAttempts');
 const usersInAppPurchasesRef = database.ref('/UsersInAppPurchases');
+const reactionsSamplesRef = database.ref('/ReactionsSamples');
+const usersReactionsCountRef = database.ref('/UsersReactionsCount');
+const giphyTextRequestsRef = database.ref('/GiphyTextRequests');
+const voiceBotAvailableVoicesRef = database.ref('/VoiceBotAvailableVoices');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1377,12 +1382,16 @@ export async function getAllStreamers() {
 // -----------------------------------------------
 
 /**
- * Store cheers on the database at StreamersDonations node
+ * Store cheers on the database at StreamersDonations node and remove Qoins
  * @param {number} amountQoins Amount of donated Qoins
  * @param {object | null} media Object for cheers with specified media
  * @param {string} media.type Type of media (one of "GIF", "EMOTE" or "MEME")
  * @param {string} media.url Url of the media
  * @param {string} message Message from the user
+ * @param {object | null} messageExtraData Extra data for the message
+ * @param {string} messageExtraData.voiceAPIName Google Text to speech API voice for the voice bot
+ * @param {object} messageExtraData.giphyText Object with Giphy Text data
+ * @param {string | undefined} messageExtraData.giphyTextUrl Url of the giphy text
  * @param {number} timeStamp Timestamp of the moment when the donation is sent
  * @param {string} streamerName Name of the streamer
  * @param {string} uid User identifier
@@ -1393,7 +1402,7 @@ export async function getAllStreamers() {
  * @param {function} onSuccess Function to call once the cheer is sent
  * @param {function} onError Function to call on any possible error
  */
-export function sendCheers(amountQoins, media, message, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID, onSuccess, onError) {
+export function sendCheers(amountQoins, media, message, messageExtraData, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID, onSuccess, onError) {
     usersRef.child(uid).child('credits').transaction((credits) => {
         if (credits) {
             credits -= amountQoins;
@@ -1421,12 +1430,14 @@ export function sendCheers(amountQoins, media, message, timestamp, streamerName,
                         amountQoins,
                         media,
                         message,
+                        messageExtraData,
                         timestamp,
                         uid,
                         read: false,
                         twitchUserName,
                         userName,
-                        photoURL: userPhotoURL
+                        photoURL: userPhotoURL,
+                        pointsChannelInteractions: false
                     });
 
                     await completeUserDonation(uid, amountQoins);
@@ -1439,7 +1450,8 @@ export function sendCheers(amountQoins, media, message, timestamp, streamerName,
                         sent: false,
                         twitchUserName,
                         userName,
-                        streamerName
+                        streamerName,
+                        pointsChannelInteractions: false
                     });
 
                     onSuccess();
@@ -1447,6 +1459,107 @@ export function sendCheers(amountQoins, media, message, timestamp, streamerName,
             });
         }
     });
+}
+
+/**
+ * Store cheers on the database at StreamersDonations node and remove pre paid interaction (and Qoins if necessary)
+ * @param {string} uid User identifier
+ * @param {string} userName Qapla username
+ * @param {string} twitchUserName Username of Twitch
+ * @param {string} userPhotoURL URL of the user profile photo
+ * @param {string} streamerUid Streamer uid
+ * @param {string} streamerName Name of the streamer
+ * @param {object | null} media Object for cheers with specified media
+ * @param {string} media.type Type of media (one of "GIF", "EMOTE" or "MEME")
+ * @param {string} media.url Url of the media
+ * @param {string} message Message from the user
+ * @param {object | null} messageExtraData Extra data for the message
+ * @param {string} messageExtraData.voiceAPIName Google Text to speech API voice for the voice bot
+ * @param {boolean} messageExtraData.isGiphyText True if contains giphy Text
+ * @param {string | undefined} messageExtraData.giphyTextUrl Url of the giphy text
+ * @param {number} qoinsToRemove Amount of donated Qoins
+ * @param {function} onSuccess Function to call once the cheer is sent
+ * @param {function} onError Function to call on any possible error
+ */
+export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, qoinsToRemove, onSuccess, onError) {
+    let qoinsTaken = qoinsToRemove ? false : true;
+    if (qoinsToRemove) {
+        qoinsTaken = (await usersRef.child(uid).child('credits').transaction((qoins) => {
+            if (qoins - qoinsToRemove >= 0) {
+                return qoins - qoinsToRemove;
+            }
+        })).committed;
+
+        if (qoinsTaken) {
+            userStreamerRef.child(streamerUid).child('qoinsBalance').transaction((streamerQoins) => {
+                if (streamerQoins) {
+                    streamerQoins += qoinsToRemove;
+                }
+
+                return streamerQoins ? streamerQoins : qoinsToRemove;
+            });
+        }
+    }
+
+    if (qoinsTaken) {
+        const reactionTaken = (await usersReactionsCountRef.child(uid).child(streamerUid).transaction((reactionsCount) => {
+            return reactionsCount - 1;
+        })).committed;
+
+        if (reactionTaken) {
+            const timestamp = (new Date()).getTime();
+            const donationRef = streamersDonationsRef.child(streamerUid).push({
+                amountQoins: qoinsToRemove,
+                media,
+                message,
+                messageExtraData,
+                timestamp,
+                uid,
+                read: false,
+                twitchUserName,
+                userName,
+                photoURL: userPhotoURL,
+                pointsChannelInteractions: true
+            });
+
+            if (qoinsToRemove) {
+                await completeUserDonation(uid, qoinsToRemove);
+            }
+
+            await database.ref('/StreamersDonationAdministrative').child(donationRef.key).set({
+                amountQoins: qoinsToRemove,
+                message,
+                timestamp,
+                uid,
+                sent: false,
+                twitchUserName,
+                userName,
+                streamerName,
+                pointsChannelInteractions: true
+            });
+
+            onSuccess();
+        } else {
+            /**
+             * Here the Qoins were removed but the reaction could not be removed so we must return the
+             * Qoins to the user
+             */
+            await usersRef.child(uid).child('credits').transaction((qoins) => {
+                return qoins + qoinsToRemove;
+            });
+
+            /**
+             * And remove the Qoins from the streamer Qoins balance
+             */
+            userStreamerRef.child(streamerUid).child('qoinsBalance').transaction((streamerQoins) => {
+                return streamerQoins - qoinsToRemove;
+            });
+
+            onError();
+        }
+    } else {
+        onError();
+    }
 }
 
 /**
@@ -1541,6 +1654,14 @@ export async function getAllStreamersStreaming() {
 }
 
 /**
+ * Get the isOverlayActive flag of the given streamer
+ * @param {string} streamerId Streamer identifier
+ */
+ export async function streamersHasOverlayActive(streamerId) {
+    return await userStreamerPublicDataRef.child(streamerId).child('isOverlayActive').once('value');
+}
+
+/**
  * Get given streamer public data
  * @param {string} streamerId Streamer identifier
  */
@@ -1610,7 +1731,7 @@ export async function listenToUserToStreamersSubscriptions(uid, callback) {
 export async function getQlanIdWithQreatorCode(qreatorCode) {
     let id = '';
 
-    const codes = await qreatorsCodesRef.orderByChild('code').equalTo(qreatorCode).once('value');
+    const codes = await qreatorsCodesRef.orderByChild('codeLowerCase').equalTo(qreatorCode.toLowerCase()).once('value');
 
     /**
      * We know this query will return a maximum of one code, however firebase returns an object of objects
@@ -1824,4 +1945,58 @@ export function listenToPurchaseCompleted(uid, transactionId, callback) {
  */
 export function removeListenerToPurchaseCompleted(uid) {
     usersInAppPurchasesRef.child(uid).off();
+}
+
+/**
+ * Gets the length of the array of samples from the given type of media
+ * @param {('video' | 'text')} type Type of samples to get length
+ */
+export async function getReactionsSamplesCount(type) {
+    return await reactionsSamplesRef.child(type).child('length').once('value');
+}
+
+/**
+ * Gets the selected index of the array of samples from the given type of media
+ * @param {('video' | 'text')} type Type of samples to get
+ * @param {number} index Index to load
+ */
+export async function getReactionSample(type, index) {
+    return await reactionsSamplesRef.child(type).child('samples').child(index).once('value');
+}
+
+/**
+ * UsersReactionsCount
+*/
+
+/**
+ * Returns the number of reactions the user have with the given streamer
+ * @param {string} uid User identifier
+ * @param {string} streamerUid Streamer identifier
+ */
+export async function getUserReactionsCount(uid, streamerUid) {
+    return await usersReactionsCountRef.child(uid).child(streamerUid).once('value');
+}
+
+/**
+ * Listen for changes on the Giphy Text Request node
+ * @param {string} uid User identifier
+ * @param {RNFirebase.database.QuerySuccessCallback} callback Function called to handle firebase data
+ */
+export function listenGiphyTextSearch(uid, callback) {
+    giphyTextRequestsRef.child(uid).child('data').on('value', callback);
+}
+
+/**
+ * Remove the Giphy Text requests
+ * @param {string} uid User identifier
+ */
+export async function removeGiphyTextRequests(uid) {
+    return await giphyTextRequestsRef.child(uid).remove('value');
+}
+
+/**
+ * Returns the snapshot of all the available voices for the voice bot
+ */
+export async function getBotAvailableVoices() {
+    return await voiceBotAvailableVoicesRef.once('value');
 }

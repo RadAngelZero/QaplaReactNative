@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ImageBackground, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 
 import { translate } from '../../utilities/i18';
 import styles from './style';
 import images from '../../../assets/images';
 import { getMediaTypeCost } from '../../services/database';
 import { GIPHY_GIFS, TTS } from '../../utilities/Constants';
+import { trackOnSegment } from '../../services/statistics';
 import DeckButton from '../../components/DeckButton/DeckButton';
 
 class InteractionsAddTTS extends Component {
@@ -26,6 +27,8 @@ class InteractionsAddTTS extends Component {
     }
 
     sendTTS = async () => {
+        trackOnSegment('TTS Added After Media Selection');
+
         const costsObject = this.props.navigation.getParam('costs', {});
         this.props.navigation.navigate('InteractionsTTS', {
             ...this.props.navigation.state.params,
@@ -37,17 +40,12 @@ class InteractionsAddTTS extends Component {
     }
 
     sendOnlyMedia = () => {
+        trackOnSegment('Send Only Media Without TTS');
         this.props.navigation.navigate('InteractionsCheckout', { ...this.props.navigation.state.params });
     }
 
-    state = {
-        streamerName: '',
-        messageCost: 0,
-        visualType: 'GIF',
-    }
-
     render() {
-        const streamerName = this.props.navigation.getParam('displayName', {});
+        const streamerName = this.props.navigation.getParam('displayName', '');
         const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
 
         if (this.state.dataFetched) {

@@ -659,10 +659,12 @@
             "use": "Use",
             "chooseAnother": "Choose a different",
             "mediaTypes": {
-                "gifs": "Gif",
-                "stickers": "Sticker",
-                "memes": "Meme",
-                "tts": "Text-to-Speech"
+                "gif": "Gif",
+                "sticker": "Sticker",
+                "meme": "Meme",
+                "tts": "Text-to-Speech",
+                "video": "Clip",
+                "text": "Text"
             }
         },
         "addTTS": {
@@ -672,9 +674,10 @@
             "add": "Add Text-to-Speech",
             "onlySendMy": "Only send my",
             "mediaTypes": {
-                "gifs": "Gif",
-                "stickers": "Sticker",
-                "memes": "Meme"
+                "gif": "Gif",
+                "sticker": "Sticker",
+                "meme": "Meme",
+                "video": "Clip"
             }
         },
         "TTS": {
@@ -688,10 +691,12 @@
             "supportP1": "Support",
             "supportP2": "sending Qoins as cheers 💚",
             "concepts": {
-                "gifs": "Gif",
-                "stickers": "Sticker",
-                "memes": "Meme",
-                "tts": "Text-to-Speech"
+                "gif": "Gif",
+                "sticker": "Sticker",
+                "meme": "Meme",
+                "tts": "Text-to-Speech",
+                "video": "Clip",
+                "text": "Text"
             },
             "discardInteraction": "Discard interaction",
             "areYouSure": "Are you sure you want to discard your interaction?",

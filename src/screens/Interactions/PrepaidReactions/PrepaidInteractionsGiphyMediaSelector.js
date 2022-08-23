@@ -3,21 +3,14 @@ import { View, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native
 import {
     GiphyContent,
     GiphyGridView,
-    GiphyMedia,
-    GiphyMediaType,
-    GiphySDK,
-    GiphyVideoView,
     GiphyRating,
 } from '@giphy/react-native-sdk';
 import { connect } from 'react-redux';
 
 import styles from '../style';
 import images from '../../../../assets/images';
-import RadMasonry from '../../../components/RadMasonry/RadMasonry';
-import { generateGiphyUserRandomId, getGiphyTrending, searchGiphyMedia } from '../../../services/Giphy';
-import { GIPHY_GIFS, GIPHY_STICKERS, GIPHY_TEXT, GIPHY_CLIPS, MEDIA_TO_LOAD_FROM_GIPHY, MEME } from '../../../utilities/Constants';
-import { getLocaleLanguage, translate } from '../../../utilities/i18';
-import { getEmotesLibrary } from '../../../services/database';
+import { GIPHY_GIFS, GIPHY_STICKERS } from '../../../utilities/Constants';
+import { translate } from '../../../utilities/i18';
 import { heightPercentageToPx } from '../../../utilities/iosAndroidDim';
 
 class PrepaidInteractionsGiphyMediaSelector extends Component {
@@ -25,15 +18,11 @@ class PrepaidInteractionsGiphyMediaSelector extends Component {
         searchQuery: '',
         gifSection: 1,
         keyboardHeight: 0,
-        media: [],
-        mediaType: 'gif',
         keyboardOpen: false,
     };
     searchTimeout = null;
+
     componentDidMount() {
-        this.fetchTrendingMedia();
-        const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
-        this.setState({ mediaType });
         this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
             this.setState({ keyboardOpen: true });
         });
@@ -47,93 +36,9 @@ class PrepaidInteractionsGiphyMediaSelector extends Component {
         this.keyboardWillShowListener.remove();
     }
 
-    fetchTrendingMedia = async () => {
-        let giphyRandomId = '';
-        if (!this.props.giphyId) {
-            giphyRandomId = await generateGiphyUserRandomId();
-        } else {
-            giphyRandomId = this.props.giphyId;
-        }
-
-        const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
-        let media = [];
-        if (mediaType === GIPHY_STICKERS) {
-            const qaplaEmotes = await getEmotesLibrary();
-            if (qaplaEmotes.exists()) {
-                qaplaEmotes.forEach((emote) => {
-                    const item = {
-                        images: {
-                            fixed_height_small: {
-                                url: emote.val().url,
-                                height: emote.val().height,
-                                width: emote.val().width,
-                            },
-                            original: {
-                                url: emote.val().url,
-                                height: emote.val().height,
-                                width: emote.val().width,
-                            },
-                        },
-                    };
-                    media.push(item);
-                });
-            }
-        }
-
-        media = media.concat(await getGiphyTrending(giphyRandomId, mediaType, MEDIA_TO_LOAD_FROM_GIPHY));
-
-        this.setState({ media });
-    }
-
     searchHandler = (e) => {
         clearTimeout(this.searchTimeout);
-        this.setState({ searchQuery: e.nativeEvent.text }, () => {
-            if (this.state.searchQuery !== '') {
-                this.setState({ media: [] }, () => {
-                    this.searchTimeout = setTimeout(async () => {
-                        let giphyRandomId = '';
-                        if (!this.props.giphyId) {
-                            giphyRandomId = await generateGiphyUserRandomId();
-                        } else {
-                            giphyRandomId = this.props.giphyId;
-                        }
-
-                        const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
-                        const userLang = getLocaleLanguage();
-                        const media = await searchGiphyMedia(giphyRandomId, this.state.searchQuery, mediaType, userLang, MEDIA_TO_LOAD_FROM_GIPHY);
-
-                        this.setState({ media });
-                    }, 500);
-                });
-            } else {
-                this.setState({ media: [] }, () => {
-                    this.fetchTrendingMedia();
-                });
-            }
-        });
-    }
-
-    fetchMoreMedia = async (e) => {
-        let giphyRandomId = '';
-        if (!this.props.giphyId) {
-            giphyRandomId = await generateGiphyUserRandomId();
-        } else {
-            giphyRandomId = this.props.giphyId;
-        }
-
-        const actualMediaCopy = [...this.state.media];
-        let newMedia = [];
-        if (this.state.searchQuery === '') {
-            const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
-            newMedia = await getGiphyTrending(giphyRandomId, mediaType, MEDIA_TO_LOAD_FROM_GIPHY, this.state.media.length);
-
-        } else {
-            const userLang = getLocaleLanguage();
-            const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
-            newMedia = await searchGiphyMedia(giphyRandomId, this.state.searchQuery, mediaType, userLang, MEDIA_TO_LOAD_FROM_GIPHY, this.state.media.length);
-        }
-
-        this.setState({ media: actualMediaCopy.concat(newMedia) });
+        this.setState({ searchQuery: e.nativeEvent.text });
     }
 
     renderImage = ({ item }) => {
@@ -194,42 +99,32 @@ class PrepaidInteractionsGiphyMediaSelector extends Component {
                         </View>
                     </View>
                     <View style={styles.gridMasonryContainer}>
-                        {mediaType === MEME ?
-                            <RadMasonry
-                                onEndReachedThreshold={0.25}
-                                data={this.state.media}
-                                numColumns={mediaType === GIPHY_STICKERS ? 3 : 2}
-                                renderItem={this.renderImage}
-                                onEndReached={this.fetchMoreMedia}
-                                containerStyle={styles.gridMasonrySubContainer} />
-                            :
-                            <GiphyGridView
-                                content={this.state.searchQuery === '' ?
-                                    GiphyContent.trending({
-                                        rating: GiphyRating.PG13,
-                                        mediaType: this.state.mediaType,
-                                    })
-                                    :
-                                    GiphyContent.search({
-                                        searchQuery: this.state.searchQuery,
-                                        mediaType: this.state.mediaType,
-                                        rating: GiphyRating.PG13,
-                                    })
-                                }
-                                cellPadding={11}
-                                showCheckeredBackground={false}
-                                spanCount={this.state.mediaType === GIPHY_STICKERS ? 3 : 2}
-                                style={{ flex: 1 }}
-                                onMediaSelect={
-                                    (e) => {
-                                        this.props.navigation.navigate('PrepaidInteractionsConfirmSelection', {
-                                            selectedMedia: e.nativeEvent.media,
-                                            mediaType,
-                                            ...this.props.navigation.state.params,
-                                        });
-                                        console.log(e.nativeEvent.media);
-                                    }}
-                            />}
+                        <GiphyGridView
+                            content={this.state.searchQuery === '' ?
+                                GiphyContent.trending({
+                                    rating: GiphyRating.PG13,
+                                    mediaType: mediaType,
+                                })
+                                :
+                                GiphyContent.search({
+                                    searchQuery: this.state.searchQuery,
+                                    mediaType: mediaType,
+                                    rating: GiphyRating.PG13,
+                                })
+                            }
+                            cellPadding={11}
+                            showCheckeredBackground={false}
+                            spanCount={mediaType === GIPHY_STICKERS ? 3 : 2}
+                            style={{ flex: 1 }}
+                            onMediaSelect={
+                                (e) => {
+                                    this.props.navigation.navigate('PrepaidInteractionsConfirmSelection', {
+                                        selectedMedia: e.nativeEvent.media,
+                                        mediaType,
+                                        ...this.props.navigation.state.params,
+                                    });
+                                }}
+                        />
                     </View>
                 </View>
                 {/* <View style={styles.gridBottomSectionSelector}>

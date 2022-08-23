@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Image, Linking, Text, View } from 'react-native';
+
 import images from '../../../assets/images';
 import SentInteractionModal from '../../components/InteractionsModals/SentInteractionModal';
+import { trackOnSegment } from '../../services/statistics';
 import { translate } from '../../utilities/i18';
 import styles from './style';
 
@@ -10,6 +12,7 @@ class InteractionsSent extends Component {
         const isStreaming = this.props.navigation.getParam('isStreaming', false);
         const streamerName = this.props.navigation.getParam('displayName', '');
         if (isStreaming) {
+            trackOnSegment('Go To Twitch After Interaction Sent');
             Linking.openURL(`https://www.twitch.tv/${streamerName.toLowerCase()}`);
         }
 

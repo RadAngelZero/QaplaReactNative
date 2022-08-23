@@ -3,11 +3,9 @@ import {
     ActivityIndicator,
     View,
     SafeAreaView,
-    Alert,
-    Linking
+    Alert
 } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { requestTrackingPermission } from 'react-native-tracking-transparency';
 
 import styles from './style';
 import { TWITCH_CLIENT_ID, TWITCH_REDIRECT_URI } from '../../utilities/Constants';
@@ -17,43 +15,12 @@ import { connect } from 'react-redux';
 import { generateAuthTokenForTwitchSignIn } from '../../services/functions';
 import { auth } from '../../utilities/firebase';
 import Colors from '../../utilities/Colors';
-import { translate } from '../../utilities/i18';
 
 class TwitchAuthScreen extends Component {
     alreadyLoaded = false;
     state = {
-        hideWebView: false,
-        userAllowTracking: false
+        hideWebView: false
     };
-
-    componentDidMount() {
-        this.requestTrackingPermission();
-    }
-
-    async requestTrackingPermission() {
-        const trackingStatus = await requestTrackingPermission();
-        if (trackingStatus === 'authorized' || trackingStatus === 'unavailable') {
-            this.setState({ userAllowTracking: true });
-        } else {
-            Alert.alert(
-                translate('linkTwitchAccount.rejectTrakingTitle'),
-                translate('linkTwitchAccount.rejectTrakingMessage'),
-                [
-                    {
-                        text: translate('linkTwitchAccount.rejectTrackingCancel'),
-                        onPress: this.props.onTrackingReject
-                    },
-                    {
-                        text: translate('linkTwitchAccount.rejectTrackingSettings'),
-                        onPress: () => {
-                            Linking.openSettings();
-                            this.props.onTrackingReject();
-                        }
-                    }
-                ]
-            );
-        }
-    }
 
     async handleNavigation(data) {
         const url = data.url;
@@ -139,26 +106,22 @@ class TwitchAuthScreen extends Component {
             'response_type=token&' +
             `scope=user:read:email%20user:read:subscriptions%20user:read:follows%20user:read:broadcast`;
 
-        if (this.state.userAllowTracking) {
-            return (
-                <SafeAreaView style={styles.sfvContainer}>
-                    {!this.state.hideWebView ?
-                        <View style={[styles.container, { opacity: this.state.hideWebView ? 0 : 1 }]}>
-                            <WebView
-                                source={{ uri }}
-                                onNavigationStateChange={(data) => this.handleNavigation(data)}
-                                scalesPageToFit={true} />
-                        </View>
-                        :
-                        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor: '#131833' }}>
-                            <ActivityIndicator size='large' color={Colors.greenQapla} />
-                        </View>
-                    }
-                </SafeAreaView>
-            );
-        }
-
-        return null;
+        return (
+            <SafeAreaView style={styles.sfvContainer}>
+                {!this.state.hideWebView ?
+                    <View style={[styles.container, { opacity: this.state.hideWebView ? 0 : 1 }]}>
+                        <WebView
+                            source={{ uri }}
+                            onNavigationStateChange={(data) => this.handleNavigation(data)}
+                            scalesPageToFit={true} />
+                    </View>
+                    :
+                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor: '#131833' }}>
+                        <ActivityIndicator size='large' color={Colors.greenQapla} />
+                    </View>
+                }
+            </SafeAreaView>
+        );
     }
 }
 

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ImageBackground, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 
 import { translate } from '../../../utilities/i18';
 import styles from '../style';
 import images from '../../../../assets/images';
-import { getMediaTypeCost } from '../../../services/database';
-import { GIPHY_GIFS, TTS } from '../../../utilities/Constants';
+import { GIPHY_GIFS } from '../../../utilities/Constants';
 import DeckButton from '../../../components/DeckButton/DeckButton';
+import { trackOnSegment } from '../../../services/statistics';
 
 class PrepaidInteractionsAddTTS extends Component {
     state = {
@@ -19,35 +19,25 @@ class PrepaidInteractionsAddTTS extends Component {
     }
 
     fetchMediaCost = async () => {
-        const cost = await getMediaTypeCost(TTS);
-        if (cost.exists()) {
-            this.setState({ mediaCost: cost.val(), dataFetched: true });
-        }
+        // TTS is free for pre paid interactions
+        this.setState({ mediaCost: 0, dataFetched: true });
     }
 
     sendTTS = async () => {
-        const costsObject = this.props.navigation.getParam('costs', {});
+        trackOnSegment('TTS Added After Media Selection');
+
         this.props.navigation.navigate('PrepaidInteractionsTTS', {
-            ...this.props.navigation.state.params,
-            costs: {
-                [TTS]: this.state.mediaCost,
-                ...costsObject
-            }
+            ...this.props.navigation.state.params
         });
     }
 
     sendOnlyMedia = () => {
+        trackOnSegment('Send Only Media Without TTS');
         this.props.navigation.navigate('PrepaidInteractionsCheckout', { ...this.props.navigation.state.params });
     }
 
-    state = {
-        streamerName: '',
-        messageCost: 0,
-        visualType: 'GIF',
-    }
-
     render() {
-        const streamerName = this.props.navigation.getParam('displayName', {});
+        const streamerName = this.props.navigation.getParam('displayName', '');
         const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
 
         if (this.state.dataFetched) {
@@ -63,7 +53,7 @@ class PrepaidInteractionsAddTTS extends Component {
                             <DeckButton
                                 onPress={this.sendTTS}
                                 label="Text-to-Speech"
-                                cost={this.state.mediaCost}
+                                hideCost
                                 backgroundIndex={2}
                                 icon={images.svg.interactionsTTS}
                             />

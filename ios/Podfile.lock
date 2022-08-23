@@ -7,6 +7,7 @@ PODS:
   - AppAuth/ExternalUserAgent (1.5.0):
     - AppAuth/Core
   - boost-for-react-native (1.63.0)
+  - Branch (1.43.1)
   - BVLinearGradient (2.5.6):
     - React
   - Crashlytics (3.14.0):
@@ -350,6 +351,9 @@ PODS:
   - React-jsinspector (0.62.2)
   - react-native-blur (0.8.0):
     - React
+  - react-native-branch (5.5.0):
+    - Branch (= 1.43.1)
+    - React-Core
   - react-native-camera (3.5.0):
     - React
     - react-native-camera/RCT (= 3.5.0)
@@ -361,8 +365,6 @@ PODS:
   - react-native-cameraroll (1.8.1):
     - React
   - react-native-safe-area-context (0.7.3):
-    - React
-  - react-native-tracking-transparency (0.1.1):
     - React
   - react-native-webview (8.1.2):
     - React
@@ -497,10 +499,10 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
+  - react-native-branch (from `../node_modules/react-native-branch`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
-  - react-native-tracking-transparency (from `../node_modules/react-native-tracking-transparency`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -532,6 +534,7 @@ SPEC REPOS:
     - Analytics
     - AppAuth
     - boost-for-react-native
+    - Branch
     - Crashlytics
     - Fabric
     - Firebase
@@ -600,14 +603,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-blur:
     :path: "../node_modules/@react-native-community/blur"
+  react-native-branch:
+    :path: "../node_modules/react-native-branch"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-community/cameraroll"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
-  react-native-tracking-transparency:
-    :path: "../node_modules/react-native-tracking-transparency"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-RCTActionSheet:
@@ -659,6 +662,7 @@ SPEC CHECKSUMS:
   Analytics: 67cce2129e4b0df5b532bf0c043043f292b32f5f
   AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  Branch: b5b57fc2e6f098916fd2ea26c9b66f52ffe7e293
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
@@ -707,10 +711,10 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 1540d1c01bb493ae3124ed83351b1b6a155db7da
   React-jsinspector: 512e560d0e985d0e8c479a54a4e5c147a9c83493
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
+  react-native-branch: a655936d3cb08e238ace630f7067a3a7058c06a5
   react-native-camera: 2e5b6551a242d4bf542bcfca272823bc4f4cde2f
   react-native-cameraroll: e2917a5e62da9f10c3d525e157e25e694d2d6dfa
   react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
-  react-native-tracking-transparency: b2029ff756f1128b1f2c7c7c7f3003bc3c950f9f
   react-native-webview: fcb5f377aadc216273300f452ee0d321fb85809b
   React-RCTActionSheet: f41ea8a811aac770e0cc6e0ad6b270c644ea8b7c
   React-RCTAnimation: 49ab98b1c1ff4445148b72a3d61554138565bad0
@@ -736,6 +740,6 @@ SPEC CHECKSUMS:
   Segment-Firebase: 41677a446f58989db69912059949107afb0c3f38
   Yoga: 3ebccbdd559724312790e7742142d062476b698e
 
-PODFILE CHECKSUM: 9af9f1d73d6c4b4d41ade5700eab9f7a51b0dc08
+PODFILE CHECKSUM: f58551be2d5c1d28f51a9eae60fccbea0a950050
 
 COCOAPODS: 1.11.3

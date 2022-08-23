@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Text, FlatList, View, TouchableOpacity, Image, TextInput, SafeAreaView } from 'react-native';
+import { connect } from 'react-redux';
 
 import styles from './style';
 import images from '../../../assets/images';
 
-import { getStreamersByName } from '../../services/database';
-import { STREAMERS_BLACKLIST } from '../../utilities/Constants';
+import { getStreamersByName, getUserReactionsCount } from '../../services/database';
+import { STREAMERS_BLACKLIST, TWITCH_AFFILIATE, TWITCH_PARTNER } from '../../utilities/Constants';
+import { trackOnSegment } from '../../services/statistics';
 
 const Item = ({ streamerName, streamerImg, isStreaming, streamerId, onPress }) => (
     <TouchableOpacity onPress={() => onPress(streamerId, streamerName, streamerImg, isStreaming)}>
@@ -48,13 +50,19 @@ const Item = ({ streamerName, streamerImg, isStreaming, streamerId, onPress }) =
 class InteractionsSearchStreamer extends Component {
     state = {
         search: '',
-        searchResults: []
+        searchResults: [],
     };
 
     searchTimeout = null;
 
+    componentDidMount() {
+        if (this.props.navigation.isFocused()) {
+            this.searchBar.focus();
+        }
+    }
+
     renderItem = ({ item }) => {
-        if (!STREAMERS_BLACKLIST.includes(item.streamerId)) {
+        if (!STREAMERS_BLACKLIST.includes(item.streamerId) && item.broadcasterType === TWITCH_PARTNER || item.broadcasterType === TWITCH_AFFILIATE) {
             return (
                 <Item
                     streamerName={item.displayName}
@@ -83,7 +91,35 @@ class InteractionsSearchStreamer extends Component {
     }
 
     onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming) => {
-        this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+        if (this.props.uid) {
+            const numberOfReactions = await getUserReactionsCount(this.props.uid, streamerId);
+            // We do not check this with exists() because the value can be 0, so it is easier to check if the snapshot has a valid value (not null, not undefined and greater than 0)
+            if (numberOfReactions.val()) {
+                trackOnSegment('Streamer Selected To Send Interaction', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: 'Custom Search'
+                });
+
+                this.props.navigation.navigate('PrepaidInteractionsPersonlizeStack', { streamerId, displayName, photoUrl, isStreaming, numberOfReactions: numberOfReactions.val() });
+            } else {
+                trackOnSegment('Streamer Selected To Send Interaction', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: 'Custom Search'
+                });
+
+                this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+            }
+        } else {
+            trackOnSegment('Streamer Selected To Send Interaction', {
+                Streamer: displayName,
+                StreamerId: streamerId,
+                Category: 'Custom Search'
+            });
+
+            this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+        }
     }
 
     render() {
@@ -107,7 +143,7 @@ class InteractionsSearchStreamer extends Component {
                                 style={styles.gridSearchBarTextInput}
                                 value={this.state.search}
                                 onChange={this.searchHandler}
-                                autoFocus
+                                ref={(ti) => { this.searchBar = ti; }}
                             />
                         </View>
                     </View>
@@ -120,12 +156,17 @@ class InteractionsSearchStreamer extends Component {
                         renderItem={this.renderItem}
                         keyExtractor={item => item.id}
                         keyboardShouldPersistTaps={'always'}
-                        />
+                    />
                 </View>
             </SafeAreaView>
         );
     }
-
 }
 
-export default InteractionsSearchStreamer;
+function mapStateToProps(state) {
+    return {
+        uid: state.userReducer.user.id
+    };
+}
+
+export default connect(mapStateToProps)(InteractionsSearchStreamer);

@@ -661,7 +661,14 @@
         },
         "visualConfirmation": {
             "use": "Usar",
-            "chooseAnother": "Elegir otro"
+            "chooseAnother": "Elegir otro",
+            "mediaTypes": {
+                "gif": "Gif",
+                "sticker": "Sticker",
+                "meme": "Meme",
+                "video": "Clip",
+                "text": "Texto"
+            }
         },
         "addTTS": {
             "addTTSInYourInteraction": "Agrega un Text-to-Speech a tu interacción",
@@ -670,9 +677,10 @@
             "add": "Agregar Text-to-Speech",
             "onlySendMy": "Sólo enviar mi",
             "mediaTypes": {
-                "gifs": "Gif",
-                "stickers": "Sticker",
-                "memes": "Meme"
+                "gif": "Gif",
+                "sticker": "Sticker",
+                "meme": "Meme",
+                "video": "Clip"
             }
         },
         "TTS": {
@@ -686,10 +694,12 @@
             "supportP1": "Apoya a",
             "supportP2": "envíando cheers de Qoins 💚",
             "concepts": {
-                "gifs": "Gif",
-                "stickers": "Sticker",
-                "memes": "Meme",
-                "tts": "Text-to-Speech"
+                "gif": "Gif",
+                "sticker": "Sticker",
+                "meme": "Meme",
+                "tts": "Text-to-Speech",
+                "video": "Clip",
+                "text": "Texto"
             },
             "discardInteraction": "Descartar interacción",
             "areYouSure": "¿Estas seguro que deseas descartar tu interacción?",

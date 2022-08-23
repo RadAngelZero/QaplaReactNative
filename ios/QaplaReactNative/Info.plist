@@ -25,8 +25,11 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>org.Qapla.QaplaApp</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>Qapla</string>
 				<string>fb270131990285283</string>
 			</array>
 		</dict>
@@ -91,8 +94,6 @@
 	<string>Photo Library Access Warning</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow access to Photos to edit your profile picture. Your picture will show in your profile and ranking standings</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Allow Qapla and third partie providers to save cookies about you</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SFRounded-Ultralight.ttf</string>
@@ -113,5 +114,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>branch_key</key>
+	<dict>
+		<key>live</key>
+		<string>key_live_bg6p6DgKXOhIDT1ShRTQijhcxslLZvQ2</string>
+	</dict>
+	<key>branch_universal_link_domains</key>
+	<array>
+		<string>qapla.app.link</string>
+		<string>qapla-alternate.app.link</string>
+	</array>
 </dict>
 </plist>

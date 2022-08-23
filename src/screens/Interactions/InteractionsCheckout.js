@@ -10,9 +10,10 @@ import { sendCheers } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../services/auth';
 import { GiphyMediaView } from '@giphy/react-native-sdk';
-import { GIPHY_STICKERS, MEME } from '../../utilities/Constants';
 import images from '../../../assets/images';
 import LinearGradient from 'react-native-linear-gradient';
+import { CUSTOM_TTS_VOICE, GIPHY_STICKERS, MEME } from '../../utilities/Constants';
+import { trackOnSegment } from '../../services/statistics';
 
 class InteractionsCheckout extends Component {
     state = {
@@ -27,7 +28,6 @@ class InteractionsCheckout extends Component {
     };
 
     componentDidMount() {
-        console.log(this.props.navigation.state.params);
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
         if (!onlyQoins) {
             const costs = this.props.navigation.getParam('costs', {});
@@ -35,7 +35,7 @@ class InteractionsCheckout extends Component {
             Object.values(costs).forEach((cost) => {
                 interactionCost += cost;
             });
-            interactionCost += this.props.navigation.state.params.voiceCost;
+
             this.setState({ interactionCost });
         } else {
             this.setState({ minimum: 50, extraTip: 50 });
@@ -67,18 +67,40 @@ class InteractionsCheckout extends Component {
                             const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
                             const mediaType = this.props.navigation.getParam('mediaType');
                             const message = this.props.navigation.getParam('message', null);
+                            const giphyText = this.props.navigation.getParam('giphyText', {});
+                            const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
+                            const costs = this.props.navigation.getParam('costs', {});
+
                             let media = null;
-                            if (selectedMedia && selectedMedia.original) {
-                                media = {
-                                    ...selectedMedia.original,
-                                    type: mediaType
-                                };
+                            let messageExtraData = null;
+
+                            if (selectedMedia) {
+                                if (selectedMedia.data && selectedMedia.data.images && selectedMedia.data.images.original) {
+                                    media = {
+                                        id: selectedMedia.data.id,
+                                        ...selectedMedia.data.images.original,
+                                        type: mediaType
+                                    };
+                                } else if (selectedMedia.original) {
+                                    media = {
+                                        ...selectedMedia.original,
+                                        type: mediaType
+                                    };
+                                }
+                            }
+
+                            if (message && ((costs[CUSTOM_TTS_VOICE] && messageVoiceData) || giphyText)) {
+                                messageExtraData = {
+                                    ...messageVoiceData,
+                                    giphyText: giphyText.original
+                                }
                             }
 
                             sendCheers(
                                 totalCost,
                                 media,
                                 message,
+                                messageExtraData,
                                 (new Date()).getTime(),
                                 streamerName,
                                 this.props.uid,
@@ -87,6 +109,14 @@ class InteractionsCheckout extends Component {
                                 this.props.photoUrl,
                                 streamerId,
                                 () => {
+                                    trackOnSegment('Interaction Sent', {
+                                        MessageLength: message ? message.length : null,
+                                        messageExtraData,
+                                        Media: media ? true : false,
+                                        ExtraTip: this.state.extraTip,
+                                        TotalQoins: totalCost
+                                    });
+
                                     this.props.navigation.navigate('InteractionsSent', {
                                         ...this.props.navigation.state.params,
                                         donationTotal: totalCost,
@@ -133,6 +163,7 @@ class InteractionsCheckout extends Component {
         const message = this.props.navigation.getParam('message', '');
         const costs = this.props.navigation.getParam('costs', {});
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
+        const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
 
         return (
             <View style={styles.container}>
@@ -343,14 +374,22 @@ class InteractionsCheckout extends Component {
                                     </Text>
                                 </View>
                                 {Object.keys(costs).map((product) => (
-                                    <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
-                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                            {translate(`interactions.checkout.concepts.${product}`)}
-                                        </Text>
-                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                            {costs[product]}
-                                        </Text>
-                                    </View>
+                                    <>
+                                        {costs[product] !== 0 &&
+                                            <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                                    {product !== CUSTOM_TTS_VOICE ?
+                                                        translate(`interactions.checkout.concepts.${product}`)
+                                                        :
+                                                        `${messageVoiceData.voiceName} Voice`
+                                                    }
+                                                </Text>
+                                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                                    {costs[product]}
+                                                </Text>
+                                            </View>
+                                        }
+                                    </>
                                 ))}
                                 {this.props.navigation.state.params.message &&
                                     <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>

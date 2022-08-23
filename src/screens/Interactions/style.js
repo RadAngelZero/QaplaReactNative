@@ -690,4 +690,42 @@ export default styles = StyleSheet.create({
         lineHeight: heightPercentageToPx(2.41),
         letterSpacing: 0.492000013589859,
     },
+    /**
+     * PrepaidInteractionsInsertGiphyText
+     */
+     insertGiphyTextContainer: {
+        flex: 1,
+        justifyContent: 'space-between'
+    },
+    insertGiphyTextHeader: {
+        marginTop: 32,
+        marginLeft: 16
+    },
+    insertGiphyTextLimit: {
+        color: '#FFF',
+        textAlign: 'center',
+        flexWrap: 'wrap',
+        fontSize: 16,
+        maxWidth: 250
+    },
+    insertGiphyTextTextInputContainer: {
+        backgroundColor: '#141539',
+        padding: 16,
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    insertGiphyTextTextInput: {
+        flex: 1,
+        backgroundColor: '#0D1021',
+        color: '#FFF',
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 16,
+        paddingRight: 8,
+        borderRadius: 18,
+        fontSize: 16,
+        marginRight: 8
+    }
 });

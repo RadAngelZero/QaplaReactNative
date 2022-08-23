@@ -8,13 +8,14 @@ import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/Link
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 import QaplaChip from '../../components/QaplaChip/QaplaChip';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
-import { getStreamerPublicProfile, getStreamerSocialLinks, getStreamerStreamingStatus, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile, userHaveTwitchId } from '../../services/database';
+import { getStreamerPublicProfile, getStreamerSocialLinks, getStreamerStreamingStatus, getUserReactionsCount, streamersHasOverlayActive, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile, userHaveTwitchId } from '../../services/database';
 import { getStreamerProfilePhotoUrl } from '../../services/storage';
 import { copyDataToClipboard } from '../../utilities/utils';
 import { getLocaleLanguage, translate } from './../../utilities/i18';
 import styles from './style';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import InteractionsShortcut from '../../components/InteractionsUserProfile/InteractionsShortcut';
+import { trackOnSegment } from '../../services/statistics';
 
 const socialMediaIcons = {
     Twitch: Images.svg.twitchLight,
@@ -42,11 +43,11 @@ class StreamerProfileScreen extends Component {
             backgroundGradient: { angle: 0, colors: ['#000', '#000'] },
             isUserFollowingStreamer: false
         },
-        openLinkTwitchAccountModal: false,
         showUnfollowConfirmation: false,
         openEventDetailsModal: false,
         selectedStream: null,
-        interactButtonAnimation: new Animated.Value(0)
+        interactButtonAnimation: new Animated.Value(0),
+        showInteractModule: false
     };
 
     componentDidMount() {
@@ -99,18 +100,8 @@ class StreamerProfileScreen extends Component {
         streamerEvents.sort((a, b) => a.timestamp - b.timestamp);
 
         const isStreaming = await getStreamerStreamingStatus(streamerId);
-
-        if (isStreaming) {
-            Animated.sequence([
-                Animated.delay(300),
-                Animated.timing(this.state.interactButtonAnimation, {
-                    toValue: 12,
-                    duration: 250,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }),
-            ]).start();
-        }
+        const hasActiveOverlay = await streamersHasOverlayActive(streamerId);
+        this.setState({ showInteractModule: isStreaming && hasActiveOverlay.exists() && hasActiveOverlay.val() });
 
         // Only show the 2 most upcoming streams
         this.setState({ nextStreams: streamerEvents.slice(0, 2) });
@@ -289,21 +280,37 @@ class StreamerProfileScreen extends Component {
         );
     }
 
-    sendLiveInteraction = async () => {
-        if (await userHaveTwitchId(this.props.uid)) {
-            this.props.navigation.navigate('InteractionsPersonalize', {
-                streamerId: this.state.streamerData.streamerId,
-                displayName: this.state.streamerData.displayName,
-                photoUrl: this.state.streamerData.photoUrl,
-                isStreaming: true
-            });
-        } else {
-            this.setState({ openLinkTwitchAccountModal: true });
-        }
-    }
+    onInteractionShorcut = async () => {
+        if (this.props.uid) {
+            const { streamerId, displayName, photoUrl, isStreaming } = this.state.streamerData;
+            const numberOfReactions = await getUserReactionsCount(this.props.uid, streamerId);
+            // We do not check this with exists() because the value can be 0, so it is easier to check if the snapshot has a valid value (not null, not undefined and greater than 0)
+            if (numberOfReactions.val()) {
+                trackOnSegment('Streamer Selected To Send Interaction From Streamer Profile', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: 'Custom Search'
+                });
 
-    onInteractionShorcut = () => {
-        //novigate to interactions
+                this.props.navigation.navigate('PrepaidInteractionsPersonlizeStack', { streamerId, displayName, photoUrl, isStreaming: true, numberOfReactions: numberOfReactions.val() });
+            } else {
+                trackOnSegment('Streamer Selected To Send Interaction From Streamer Profile', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: 'Custom Search'
+                });
+
+                this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming: true });
+            }
+        } else {
+            trackOnSegment('Streamer Selected To Send Interaction From Streamer Profile', {
+                Streamer: displayName,
+                StreamerId: streamerId,
+                Category: 'Custom Search'
+            });
+
+            this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming: true });
+        }
     }
 
     render() {
@@ -440,11 +447,13 @@ class StreamerProfileScreen extends Component {
                                     ))}
                                 </View>
                             }
-                            <View style={{
-                                marginTop: 30,
-                            }}>
-                                <InteractionsShortcut onPress={this.onInteractionShorcut} />
-                            </View>
+                            {this.state.showInteractModule &&
+                                <View style={{
+                                    marginTop: 30,
+                                }}>
+                                    <InteractionsShortcut onPress={this.onInteractionShorcut} />
+                                </View>
+                            }
                             {this.state.socialLinks && this.state.socialLinks.length > 0 &&
                                 <View style={styles.streamerCommunityContainer}>
                                     <Text style={styles.sectionTitle}>
@@ -496,23 +505,6 @@ class StreamerProfileScreen extends Component {
                         <View style={{ height: 40 }} />
                     </ScrollView>
                 </TouchableWithoutFeedback>
-                <Animated.View
-                    style={[styles.interactionButtonContainer, {
-                        transform:
-                            [{ translateY: this.state.interactButtonAnimation.interpolate({ inputRange: [0, 12], outputRange: [heightPercentageToPx(15), 0] }) }]
-                    }]}>
-                    <TouchableOpacity
-                        style={{ flex: 1 }}
-                        underlayColor='#2aa897'
-                        onPress={this.sendLiveInteraction}>
-                        <Text style={styles.interactionButtonText}>
-                            {translate('streamerProfileScreen.sendInteraction')}
-                        </Text>
-                    </TouchableOpacity>
-                </Animated.View>
-                <LinkTwitchAccountModal open={this.state.openLinkTwitchAccountModal}
-                    onClose={() => this.setState({ openLinkTwitchAccountModal: false })}
-                    onLinkSuccessful={this.sendLiveInteraction} />
                 <EventDetailsModal open={this.state.openEventDetailsModal}
                     onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
                     stream={this.state.selectedStream} />

@@ -65,10 +65,12 @@ class InteractionsPersonalize extends Component {
             });
         } else if (mediaType === GIPHY_TEXT) {
             this.props.navigation.navigate('InteractionsInsertGiphyText', {
+                showAddOnsOnCheckout: false,
                 ...this.props.navigation.state.params,
             });
         } else {
             this.props.navigation.navigate('InteractionsGiphyMediaSelector', {
+                showAddOnsOnCheckout: mediaType !== GIPHY_CLIPS,
                 mediaType,
                 ...this.props.navigation.state.params,
             });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Image, ScrollView, Text, View } from 'react-native';
+import { Alert, Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { translate } from '../../../utilities/i18';
@@ -12,6 +12,7 @@ import { isUserLogged } from '../../../services/auth';
 import { GiphyMediaView } from '@giphy/react-native-sdk';
 import { CUSTOM_TTS_VOICE, GIPHY_CLIPS, MEME } from '../../../utilities/Constants';
 import { trackOnSegment } from '../../../services/statistics';
+import images from '../../../../assets/images';
 
 class PrepaidInteractionsCheckout extends Component {
     state = {
@@ -24,6 +25,8 @@ class PrepaidInteractionsCheckout extends Component {
     };
 
     componentDidMount() {
+        const showAddOnsOnCheckout = this.props.navigation.getParam('showAddOnsOnCheckout', true);
+        console.log(showAddOnsOnCheckout);
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
         if (!onlyQoins) {
             const costs = this.props.navigation.getParam('costs', {});
@@ -194,6 +197,8 @@ class PrepaidInteractionsCheckout extends Component {
         const costs = this.props.navigation.getParam('costs', {});
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
         const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
+        const showAddOnsOnCheckout = this.props.navigation.getParam('showAddOnsOnCheckout', true);
+        const totalCost = this.state.interactionCost + this.state.extraTip;
 
         return (
             <View style={styles.container}>
@@ -254,24 +259,92 @@ class PrepaidInteractionsCheckout extends Component {
                             </View>
                         }
                     </View>
-                    {
-                        onlyQoins &&
-                        <View style={styles.sentContainer}>
-                            <Image source={{ uri: 'https://media.giphy.com/media/5QP99om3Co7s8YJPez/giphy.gif' }}
-                                style={styles.onlyQoinsImage} />
-                            <Text style={[styles.whiteText, styles.sentText, styles.onlyQoinsText]}>
-                                {`${translate('interactions.checkout.supportP1')} `}
-                                <Text style={styles.accentTextColor}>
-                                    {this.state.streamerName}
-                                </Text>
-                                {`${translate('interactions.checkout.supportP2')}`}
-                            </Text>
-                        </View>
-                    }
-                    {
-                        !onlyQoins &&
+                    {!onlyQoins &&
                         <>
-                            <View style={[styles.checkoutContainer, styles.checkoutDataDisplayMainContainer]}>
+                            {showAddOnsOnCheckout &&
+                                <View style={styles.marginTop24}>
+                                    <Text style={styles.checkoutSectionHeaderText}>
+                                        {`Add Ons`}
+                                    </Text>
+                                    <View style={styles.addOnsContainer}>
+                                        <TouchableOpacity style={styles.AddonContainer}>
+                                            <ImageBackground
+                                                source={images.png.InteractionGradient3.img}
+                                                style={styles.checkoutAddonImageContainer}
+                                            >
+                                                <Text style={styles.addonEmojiText}>
+                                                    {`🤡`}
+                                                </Text>
+                                                <Text style={styles.addonText}>
+                                                    {`Emoji raid`}
+                                                </Text>
+                                                <View style={styles.checkoutAddonQoinDisplayCointainer}>
+                                                    <images.svg.qoin style={styles.addonQoin} />
+                                                    <Text style={styles.addonQoinText}>
+                                                        {this.props.emojiRainCost || 100}
+                                                    </Text>
+                                                </View>
+                                            </ImageBackground>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.AddonContainer}>
+                                            <ImageBackground
+                                                source={images.png.InteractionGradient6.img}
+                                                style={styles.checkoutAddonImageContainer}
+                                            >
+                                                <Text style={styles.addonText}>
+                                                    {`Custom TTS`}
+                                                </Text>
+                                                <View style={styles.checkoutAddonQoinDisplayCointainer}>
+                                                    <images.svg.qoin style={styles.addonQoin} />
+                                                    <Text style={styles.addonQoinText}>
+                                                        {this.props.emojiRainCost || 100}
+                                                    </Text>
+                                                </View>
+                                            </ImageBackground>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            }
+                            <View style={styles.marginTop24}>
+                                <Text style={styles.checkoutSectionHeaderText}>
+                                    {`Send Extra Tip`}
+                                </Text>
+                                <View style={[styles.extraTipOptionsContainer, styles.marginTop16]}>
+                                    <TouchableOpacity
+                                        onPress={() => console.log('200')}
+                                        style={styles.extraTipContainer}>
+                                        <images.svg.qoin style={styles.addonQoin} />
+                                        <Text style={styles.extraTipText}>
+                                            {200}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => console.log('500')}
+                                        style={styles.extraTipContainer}>
+                                        <images.svg.qoin style={styles.addonQoin} />
+                                        <Text style={styles.extraTipText}>
+                                            {500}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => console.log('1000')}
+                                        style={styles.extraTipContainer}>
+                                        <images.svg.qoin style={styles.addonQoin} />
+                                        <Text style={styles.extraTipText}>
+                                            {'1,000'}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => console.log('Custom')}
+                                        style={styles.extraTipContainer}>
+                                        <images.svg.qoin style={styles.addonQoin} />
+                                        <Text style={styles.extraTipText}>
+                                            {`Other`}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            {/* <View style={[styles.checkoutContainer, styles.checkoutDataDisplayMainContainer]}>
                                 <View style={styles.checkoutDataDisplayContainer}>
                                     <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>
                                         {`${translate('interactions.checkout.my')} Qoins`}
@@ -280,8 +353,30 @@ class PrepaidInteractionsCheckout extends Component {
                                         {this.props.qoins}
                                     </Text>
                                 </View>
-                            </View>
-                            <View style={[styles.checkoutDataDisplayMainContainer, styles.marginTop16]}>
+                            </View> */}
+                            <TouchableOpacity
+                                onPress={() => this.setState({ totalOpen: !this.state.totalOpen })}
+                                style={[styles.checkoutDataDisplayMainContainer, styles.marginTop24]}>
+                                <View style={styles.checkoutDataDisplayContainer}>
+                                    <Text style={[styles.whiteText, styles.checkoutTotalText]}>
+                                        Total
+                                    </Text>
+                                    <View style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                    }}>
+                                        <Text style={[styles.whiteText, styles.checkoutTotalText]}>
+                                            {totalCost}
+                                        </Text>
+                                        <images.svg.arrowDownWhite style={[styles.totalArrow, {
+                                            transform: [{ rotate: this.state.totalOpen ? '0deg' : '180deg' }],
+                                        }]} />
+                                    </View>
+
+                                </View>
+
+                            </TouchableOpacity>
+                            {this.state.totalOpen && <View style={[styles.checkoutDataDisplayMainContainer, styles.marginTop16]}>
                                 <View style={styles.checkoutDataDisplayContainer}>
                                     <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
                                         Extra Tip
@@ -308,20 +403,26 @@ class PrepaidInteractionsCheckout extends Component {
                                         }
                                     </>
                                 ))}
-                            </View>
+                                {this.props.navigation.state.params.message &&
+                                    <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                            {`${this.props.navigation.state.params.voiceName} Voice`}
+                                        </Text>
+                                        <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                            {this.props.navigation.state.params.voiceCost}
+                                        </Text>
+                                    </View>
+                                }
+                            </View>}
+                            <TouchableOpacity style={styles.checkoutSendButton}>
+                                <Text style={styles.checkoutSendButtonText}>
+                                    Send Live Interaction
+                                </Text>
+                            </TouchableOpacity>
                             <View style={styles.checkoutMarginDisplay} />
                         </>
                     }
                 </ScrollView >
-                <SendInteractionModal
-                    baseCost={this.state.interactionCost}
-                    extraTip={this.state.extraTip}
-                    addTip={this.addTip}
-                    subTip={this.subTip}
-                    minimum={this.state.minimum}
-                    onlyQoins={onlyQoins}
-                    onSendInteraction={this.onSendInteraction}
-                    onCancel={this.onCancel} />
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}
                     onClose={() => this.setState({ openLinkWitTwitchModal: false })}

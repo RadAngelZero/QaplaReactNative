@@ -5,14 +5,12 @@ import { connect } from 'react-redux';
 import { translate } from '../../utilities/i18';
 import styles from './style';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import SendInteractionModal from '../../components/InteractionsModals/SendInteractionModal';
 import { sendCheers } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../services/auth';
 import { GiphyMediaView } from '@giphy/react-native-sdk';
 import images from '../../../assets/images';
-import LinearGradient from 'react-native-linear-gradient';
-import { CUSTOM_TTS_VOICE, GIPHY_STICKERS, MEME } from '../../utilities/Constants';
+import { CUSTOM_TTS_VOICE, MEME } from '../../utilities/Constants';
 import { trackOnSegment } from '../../services/statistics';
 
 class InteractionsCheckout extends Component {
@@ -164,6 +162,8 @@ class InteractionsCheckout extends Component {
         const costs = this.props.navigation.getParam('costs', {});
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
         const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
+        const showAddOnsOnCheckout = this.props.navigation.getParam('showAddOnsOnCheckout', true);
+        const totalCost = this.state.interactionCost + this.state.extraTip;
 
         return (
             <View style={styles.container}>
@@ -233,8 +233,7 @@ class InteractionsCheckout extends Component {
                             </View>
                         }
                     </View>
-                    {
-                        onlyQoins &&
+                    {onlyQoins &&
                         <View style={styles.sentContainer}>
                             <Image source={{ uri: 'https://media.giphy.com/media/5QP99om3Co7s8YJPez/giphy.gif' }}
                                 style={styles.onlyQoinsImage} />
@@ -247,51 +246,52 @@ class InteractionsCheckout extends Component {
                             </Text>
                         </View>
                     }
-                    {
-                        !onlyQoins &&
+                    {!onlyQoins &&
                         <>
-                            <View style={styles.marginTop24}>
-                                <Text style={styles.checkoutSectionHeaderText}>
-                                    {`Add Ons`}
-                                </Text>
-                                <View style={styles.addOnsContainer}>
-                                    <TouchableOpacity style={styles.AddonContainer}>
-                                        <ImageBackground
-                                            source={images.png.InteractionGradient3.img}
-                                            style={styles.checkoutAddonImageContainer}
-                                        >
-                                            <Text style={styles.addonEmojiText}>
-                                                {`🤡`}
-                                            </Text>
-                                            <Text style={styles.addonText}>
-                                                {`Emoji raid`}
-                                            </Text>
-                                            <View style={styles.checkoutAddonQoinDisplayCointainer}>
-                                                <images.svg.qoin style={styles.addonQoin} />
-                                                <Text style={styles.addonQoinText}>
-                                                    {this.props.emojiRainCost || 100}
+                            {showAddOnsOnCheckout &&
+                                <View style={styles.marginTop24}>
+                                    <Text style={styles.checkoutSectionHeaderText}>
+                                        {`Add Ons`}
+                                    </Text>
+                                    <View style={styles.addOnsContainer}>
+                                        <TouchableOpacity style={styles.AddonContainer}>
+                                            <ImageBackground
+                                                source={images.png.InteractionGradient3.img}
+                                                style={styles.checkoutAddonImageContainer}
+                                            >
+                                                <Text style={styles.addonEmojiText}>
+                                                    {`🤡`}
                                                 </Text>
-                                            </View>
-                                        </ImageBackground>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.AddonContainer}>
-                                        <ImageBackground
-                                            source={images.png.InteractionGradient6.img}
-                                            style={styles.checkoutAddonImageContainer}
-                                        >
-                                            <Text style={styles.addonText}>
-                                                {`Custom TTS`}
-                                            </Text>
-                                            <View style={styles.checkoutAddonQoinDisplayCointainer}>
-                                                <images.svg.qoin style={styles.addonQoin} />
-                                                <Text style={styles.addonQoinText}>
-                                                    {this.props.emojiRainCost || 100}
+                                                <Text style={styles.addonText}>
+                                                    {`Emoji raid`}
                                                 </Text>
-                                            </View>
-                                        </ImageBackground>
-                                    </TouchableOpacity>
+                                                <View style={styles.checkoutAddonQoinDisplayCointainer}>
+                                                    <images.svg.qoin style={styles.addonQoin} />
+                                                    <Text style={styles.addonQoinText}>
+                                                        {this.props.emojiRainCost || 100}
+                                                    </Text>
+                                                </View>
+                                            </ImageBackground>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.AddonContainer}>
+                                            <ImageBackground
+                                                source={images.png.InteractionGradient6.img}
+                                                style={styles.checkoutAddonImageContainer}
+                                            >
+                                                <Text style={styles.addonText}>
+                                                    {`Custom TTS`}
+                                                </Text>
+                                                <View style={styles.checkoutAddonQoinDisplayCointainer}>
+                                                    <images.svg.qoin style={styles.addonQoin} />
+                                                    <Text style={styles.addonQoinText}>
+                                                        {this.props.emojiRainCost || 100}
+                                                    </Text>
+                                                </View>
+                                            </ImageBackground>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
-                            </View>
+                            }
                             <View style={styles.marginTop24}>
                                 <Text style={styles.checkoutSectionHeaderText}>
                                     {`Send Extra Tip`}
@@ -353,8 +353,7 @@ class InteractionsCheckout extends Component {
                                         alignItems: 'center',
                                     }}>
                                         <Text style={[styles.whiteText, styles.checkoutTotalText]}>
-                                            {/* {this.state.extraTip} */}
-                                            {`100`}
+                                            {totalCost}
                                         </Text>
                                         <images.svg.arrowDownWhite style={[styles.totalArrow, {
                                             transform: [{ rotate: this.state.totalOpen ? '0deg' : '180deg' }],
@@ -410,16 +409,7 @@ class InteractionsCheckout extends Component {
                             <View style={styles.checkoutMarginDisplay} />
                         </>
                     }
-                </ScrollView >
-                {/* <SendInteractionModal
-                    baseCost={this.state.interactionCost}
-                    extraTip={this.state.extraTip}
-                    addTip={this.addTip}
-                    subTip={this.subTip}
-                    minimum={this.state.minimum}
-                    onlyQoins={onlyQoins}
-                    onSendInteraction={this.onSendInteraction}
-                    onCancel={this.onCancel} /> */}
+                </ScrollView>
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}
                     onClose={() => this.setState({ openLinkWitTwitchModal: false })}

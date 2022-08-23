@@ -65,10 +65,12 @@ class PrepaidInteractionsPersonalize extends Component {
             });
         } else if (mediaType === GIPHY_TEXT) {
             this.props.navigation.navigate('PrepaidInteractionsInsertGiphyText', {
+                showAddOnsOnCheckout: false,
                 ...this.props.navigation.state.params,
             });
         } else {
             this.props.navigation.navigate('PrepaidInteractionsGiphyMediaSelector', {
+                showAddOnsOnCheckout: mediaType !== GIPHY_CLIPS,
                 mediaType,
                 ...this.props.navigation.state.params,
             });

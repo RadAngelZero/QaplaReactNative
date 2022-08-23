@@ -110,6 +110,7 @@ import TickSquareTransparent from './icons/TickSquareTransparent.svg';
 import VolumeUp from './icons/VolumeUp.svg';
 import EditSimple from './icons/EditSimple.svg';
 import CheckCircle from './icons/CheckCircle.svg';
+import ArrowDownWhite from './icons/arrowDownWhite.svg';
 
 // Images
 const images = {
@@ -370,6 +371,7 @@ const images = {
 		volumeUp: VolumeUp,
 		editSimple: EditSimple,
 		checkCircle: CheckCircle,
+		arrowDownWhite: ArrowDownWhite,
 	},
 	gif: {
 		loadingStreamers: {

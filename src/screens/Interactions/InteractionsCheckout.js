@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, ImageBackground, Modal, ScrollView, Text, TextInput, TouchableOpacity, View, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 
 import { translate } from '../../utilities/i18';
@@ -12,6 +12,9 @@ import { GiphyMediaView } from '@giphy/react-native-sdk';
 import images from '../../../assets/images';
 import { CUSTOM_TTS_VOICE, MEME } from '../../utilities/Constants';
 import { trackOnSegment } from '../../services/statistics';
+import emoji from 'emoji-datasource';
+import EmojiSelector from '../../components/EmojiSelector/EmojiSelector';
+import LinearGradient from 'react-native-linear-gradient';
 
 class InteractionsCheckout extends Component {
     state = {
@@ -20,9 +23,11 @@ class InteractionsCheckout extends Component {
         interactionCost: 0,
         minimum: 0,
         openLinkWitTwitchModal: false,
+        openEmojiSelector: false,
         sendingInteraction: false,
         totalOpen: false,
         emoji: '',
+        keyboardOpened: false,
     };
 
     componentDidMount() {
@@ -38,6 +43,16 @@ class InteractionsCheckout extends Component {
         } else {
             this.setState({ minimum: 50, extraTip: 50 });
         }
+        this.keyboardShow = Keyboard.addListener('keyboardDidShow', () => {
+            this.setState({ keyboardOpened: true });
+        });
+        this.keyboardHide = Keyboard.addListener('keyboardDidHide', () => {
+            this.setState({ keyboardOpened: false });
+        });
+    }
+    componentWillUnmount() {
+        this.keyboardShow.remove();
+        this.keyboardHide.remove();
     }
 
     addTip = () => {
@@ -152,7 +167,12 @@ class InteractionsCheckout extends Component {
                     onPress: this.props.navigation.dismiss
                 }
             ]
-        )
+        );
+    }
+
+    emojiSelectedHanler = (emoji) => {
+        console.log(emoji);
+        this.setState({ emoji, openEmojiSelector: false });
     }
 
     render() {
@@ -254,13 +274,15 @@ class InteractionsCheckout extends Component {
                                         {`Add Ons`}
                                     </Text>
                                     <View style={styles.addOnsContainer}>
-                                        <TouchableOpacity style={styles.AddonContainer}>
+                                        <TouchableOpacity
+                                            onPress={() => this.setState({ openEmojiSelector: true })}
+                                            style={styles.AddonContainer}>
                                             <ImageBackground
                                                 source={images.png.InteractionGradient3.img}
                                                 style={styles.checkoutAddonImageContainer}
                                             >
                                                 <Text style={styles.addonEmojiText}>
-                                                    {`🤡`}
+                                                    {`${this.state.emoji || '🤡'}`}
                                                 </Text>
                                                 <Text style={styles.addonText}>
                                                     {`Emoji raid`}
@@ -410,6 +432,83 @@ class InteractionsCheckout extends Component {
                         </>
                     }
                 </ScrollView>
+                <Modal
+                    visible={this.state.openEmojiSelector}
+                    // visible={true}
+
+                    onRequestClose={() => this.setState({ openEmojiSelector: false })}
+                    transparent={true}
+                    animationType="slide"
+                >
+                    <View style={{
+                        backgroundColor: '#0D1021',
+                        flex: 1,
+                        justifyContent: 'flex-end',
+                    }}>
+                        <TouchableOpacity
+                            onPress={() => this.setState({ openEmojiSelector: false })}
+                            style={{
+                                marginBottom: 20,
+                                marginLeft: 16,
+                            }}>
+                            <images.svg.backIcon />
+                        </TouchableOpacity>
+                        <View style={{
+                            marginLeft: 16,
+                            marginBottom: 20,
+                            flexDirection: 'row',
+                        }}>
+                            <Text style={{
+                                color: '#fff',
+                                fontSize: 22,
+                                fontWeight: '700',
+                                lineHeight: 32,
+                            }}>Choose an Emoji</Text>
+                            <LinearGradient
+                                colors={['#2D07FA', '#A716EE']}
+                                style={{
+                                    paddingVertical: 6,
+                                    paddingHorizontal: 13,
+                                    marginLeft: 8,
+                                    borderRadius: 10,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'flex-start',
+                                    alignSelf: 'flex-start',
+                                }}
+                                useAngle
+                                angle={90}
+                            >
+                                <images.svg.qoin style={{
+                                    maxWidth: 16,
+                                    maxHeight: 16,
+                                }} />
+                                <Text style={{
+                                    color: '#fff',
+                                    fontSize: 16,
+                                    fontWeight: '700',
+                                    lineHeight: 19,
+                                    marginLeft: 8,
+                                }}>
+                                    {`100`}
+                                </Text>
+                            </LinearGradient>
+                        </View>
+                        <View style={{
+                            backgroundColor: '#141539',
+                            height: this.state.keyboardOpened ? 370 : 652,
+                            borderTopLeftRadius: 30,
+                            borderTopRightRadius: 30,
+                            overflow: 'hidden',
+                        }}>
+                            <EmojiSelector
+                                onEmojiSelected={this.emojiSelectedHanler}
+                                showHistory={false}
+                            />
+                        </View>
+
+                    </View>
+                </Modal >
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}
                     onClose={() => this.setState({ openLinkWitTwitchModal: false })}

@@ -221,6 +221,14 @@ const InteractionsPersonlizeStackNavigator = createStackNavigator({
       ...TransitionPresets.SlideFromRightIOS,
     },
   },
+  InteractionsConfirmSelectionAddOn: {
+    screen: InteractionsConfirmSelection,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
   InteractionsCheckout: {
     screen: InteractionsCheckout,
     navigationOptions: {
@@ -309,6 +317,14 @@ const PrepaidInteractionsPersonlizeStackNavigator = createStackNavigator({
   },
   PrepaidInteractionsGiphyTextSelector: {
     screen: PrepaidInteractionsGiphyTextSelector,
+    navigationOptions: {
+      headerShown: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+  PrepaidInteractionsConfirmAddOn: {
+    screen: PrepaidInteractionsConfirmSelection,
     navigationOptions: {
       headerShown: true,
       gestureDirection: 'horizontal',

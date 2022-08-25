@@ -15,6 +15,7 @@ class InteractionsConfirmSelection extends Component {
         mediaCost: null,
         muteClip: false,
         mediaType: null,
+        fetchingMedia: false
     };
 
     componentDidMount() {
@@ -27,7 +28,7 @@ class InteractionsConfirmSelection extends Component {
         const cost = await getMediaTypeCost(giphyText ? GIPHY_TEXT : mediaType);
 
         if (cost.exists()) {
-            this.setState({ mediaCost: cost.val() });
+            this.setState({ mediaCost: cost.val(), fetchingMedia: false });
         }
     }
 
@@ -42,7 +43,6 @@ class InteractionsConfirmSelection extends Component {
         // or if the media is Giphy Text
         // Then go directly to checkout
         if (message || mediaType === GIPHY_CLIPS || giphyText) {
-            const costsObject = this.props.navigation.getParam('costs', {});
             const text = this.props.navigation.getParam('text', '');
             const giphyTextData = giphyText ? { message: text } : {};
 
@@ -165,8 +165,9 @@ class InteractionsConfirmSelection extends Component {
                     </View>
                 </View>
                 {/* Mute clip when user leave the screen */}
-                <NavigationEvents onWillBlur={() => this.setState({ muteClip: true })} />
-                {this.state.mediaCost !== null &&
+                <NavigationEvents onWillFocus={this.fetchMediaCost}
+                    onWillBlur={() => this.setState({ muteClip: true, fetchingMedia: true })} />
+                {this.state.mediaCost !== null && !this.state.fetchingMedia &&
                     <ConfirmSelectionModal mediaType={giphyText ? GIPHY_TEXT : mediaType}
                         onConfirmSelection={this.onConfirmSelection}
                         onCancel={this.onCancel}

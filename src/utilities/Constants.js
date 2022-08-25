@@ -169,6 +169,7 @@ export const QOINS = 'qoins';
 
 // Media types for cheers
 export const MEME = 'meme';
+export const EMOJI = 'emoji';
 export const TTS = 'tts';
 export const CUSTOM_TTS_VOICE = 'customTTSVoice';
 

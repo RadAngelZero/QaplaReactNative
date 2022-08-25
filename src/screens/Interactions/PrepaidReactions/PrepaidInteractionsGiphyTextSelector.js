@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import styles from './../style';
 import { getScreenSizeMultiplier } from '../../../utilities/iosAndroidDim';
 import RadMasonry from '../../../components/RadMasonry/RadMasonry';
-import { GIPHY_TEXT } from '../../../utilities/Constants';
 import { listenGiphyTextSearch, removeGiphyTextRequests } from '../../../services/database';
 
 class PrepaidInteractionsGiphyTextSelector extends Component {
@@ -37,6 +36,7 @@ class PrepaidInteractionsGiphyTextSelector extends Component {
     }
 
     renderImage = ({ item }) => {
+        const addDiscountToGiphyText = this.props.navigation.getParam('addDiscountToGiphyText', false);
         const ratio = item.images.fixed_height_small.width / item.images.fixed_height_small.height;
         const giphyText = {
             original: {
@@ -50,7 +50,7 @@ class PrepaidInteractionsGiphyTextSelector extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    this.props.navigation.navigate('PrepaidInteractionsConfirmSelection', {
+                    this.props.navigation.navigate(addDiscountToGiphyText ? 'PrepaidInteractionsConfirmAddOn' : 'PrepaidInteractionsConfirmSelection', {
                         giphyText,
                         ...this.props.navigation.state.params
                     });

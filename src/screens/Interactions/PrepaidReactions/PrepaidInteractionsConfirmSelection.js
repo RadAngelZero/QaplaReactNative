@@ -15,24 +15,22 @@ class PrepaidInteractionsConfirmSelection extends Component {
         mediaCost: null,
         muteClip: false,
         mediaType: null,
+        fetchingMedia: false
     };
-
-    componentDidMount() {
-        this.fetchMediaCost();
-    }
 
     fetchMediaCost = async () => {
         const mediaType = this.props.navigation.getParam('mediaType');
         const giphyText = this.props.navigation.getParam('giphyText', null);
+        const addDiscountToGiphyText = this.props.navigation.getParam('addDiscountToGiphyText', false);
 
         // The only type of media with a cost for pre paid reactions is the Giphy Clip
         if (mediaType === GIPHY_CLIPS || giphyText) {
             const cost = await getMediaTypeCost(giphyText ? GIPHY_TEXT : mediaType);
             if (cost.exists()) {
-                this.setState({ mediaCost: cost.val() });
+                this.setState({ mediaCost: addDiscountToGiphyText ? cost.val() / 2 : cost.val(), fetchingMedia: false });
             }
         } else {
-            this.setState({ mediaCost: 0 });
+            this.setState({ mediaCost: 0, fetchingMedia: false });
         }
     }
 
@@ -168,8 +166,9 @@ class PrepaidInteractionsConfirmSelection extends Component {
                     </View>
                 </View>
                 {/* Mute clip when user leave the screen */}
-                <NavigationEvents onWillBlur={() => this.setState({ muteClip: true })} />
-                {this.state.mediaCost !== null &&
+                <NavigationEvents onWillFocus={this.fetchMediaCost}
+                    onWillBlur={() => this.setState({ muteClip: true, fetchingMedia: true })} />
+                {this.state.mediaCost !== null && !this.state.fetchingMedia &&
                     <ConfirmSelectionModal mediaType={giphyText ? GIPHY_TEXT : mediaType}
                         onConfirmSelection={this.onConfirmSelection}
                         onCancel={this.onCancel}

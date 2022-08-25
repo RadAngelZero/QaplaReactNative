@@ -37,6 +37,7 @@ class InteractionsGiphyTextSelector extends Component {
     }
 
     renderImage = ({ item }) => {
+        const isAddOn = this.props.navigation.getParam('isAddOn', false);
         const ratio = item.images.fixed_height_small.width / item.images.fixed_height_small.height;
         const giphyText = {
             original: {
@@ -50,7 +51,7 @@ class InteractionsGiphyTextSelector extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    this.props.navigation.navigate('InteractionsConfirmSelection', {
+                    this.props.navigation.navigate(isAddOn ? 'InteractionsConfirmSelectionAddOn' : 'InteractionsConfirmSelection', {
                         giphyText,
                         ...this.props.navigation.state.params
                     });

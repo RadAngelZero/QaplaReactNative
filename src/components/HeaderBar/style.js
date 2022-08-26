@@ -46,16 +46,18 @@ export const styles = StyleSheet.create({
     },
     iconsContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        // justifyContent: 'space-between',
+        alignItems: 'center',
     },
     leftIconTouchableStyle: {
         justifyContent: 'center',
-        width: 40
+        width: 30,
+        marginRight: 16,
     },
     rightIconTouchableStyle: {
         justifyContent: 'center',
-        width: 40,
-        marginRight: 16
+        width: 30,
+        marginRight: 16,
     },
     unreadNotificationsIcon: {
         position: 'absolute',

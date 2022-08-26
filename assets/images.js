@@ -111,6 +111,7 @@ import VolumeUp from './icons/VolumeUp.svg';
 import EditSimple from './icons/EditSimple.svg';
 import CheckCircle from './icons/CheckCircle.svg';
 import ArrowDownWhite from './icons/arrowDownWhite.svg';
+import PlusIcon from './icons/PlusIcon.svg';
 
 // Images
 const images = {
@@ -372,6 +373,7 @@ const images = {
 		editSimple: EditSimple,
 		checkCircle: CheckCircle,
 		arrowDownWhite: ArrowDownWhite,
+		plusIcon: PlusIcon,
 	},
 	gif: {
 		loadingStreamers: {

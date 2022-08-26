@@ -3,7 +3,12 @@ import {
     SafeAreaView,
     View,
     Linking,
-    Image
+    Image,
+    Text,
+    TouchableOpacity,
+    Modal,
+    ScrollView,
+    Switch
 } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 import { styles } from './style';
@@ -19,6 +24,8 @@ import { translate } from '../../utilities/i18';
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import QaplaText from '../QaplaText/QaplaText';
 import EditProfileImgBadge from '../EditProfileImgBadge/EditProfileImgBadge';
+import { BlurView } from '@react-native-community/blur';
+import UserProfileModal from '../UserProfileModal/UserProfileModal';
 
 const NotificationIcon = images.svg.notificationIcon;
 const DiscordIcon = images.svg.discordIcon;
@@ -31,7 +38,8 @@ class HeaderBar extends Component {
         super(props);
 
         this.state = {
-            showHg2Modal: false
+            showHg2Modal: false,
+            showProfile: false,
         };
     }
 
@@ -57,7 +65,7 @@ class HeaderBar extends Component {
     onActivityPressBttn = () => {
 
         // If showHg1Modal is enabled then
-        if (this.state.showHg2Modal){
+        if (this.state.showHg2Modal) {
 
             // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
             // and it should not show up again.
@@ -105,8 +113,8 @@ class HeaderBar extends Component {
 
             }
         } catch (error) {
-          // Error retrieving flag data
-          console.log("[HeaderBar] {checkHighlightsFlags} - error retrieving flag data : " + value);
+            // Error retrieving flag data
+            console.log("[HeaderBar] {checkHighlightsFlags} - error retrieving flag data : " + value);
         }
     }
 
@@ -168,16 +176,16 @@ class HeaderBar extends Component {
 
     render() {
         if (this.props.currentScreenId !== 'StreamerProfile') {
-        return (
-            <SafeAreaView style={styles.sfvContainer} testID='container'>
-                <View style={styles.topNavBarView}>
-                    {this.props.currentScreenId !== 'Profile' ?
+            return (
+                <SafeAreaView style={styles.sfvContainer} testID='container'>
+                    <View style={styles.topNavBarView}>
+                        {/* {this.props.currentScreenId !== 'Profile' ? */}
                         <View>
                             <Image
                                 source={images.png.qaplaHeaderIcon.img}
-                                style={styles.qaplaImage}/>
+                                style={styles.qaplaImage} />
                         </View>
-                        :
+                        {/* :
                         <View style={styles.profileImageContainer}>
                             {this.props.userName && this.props.userName.length <= 14 ?
                             <QaplaText style={styles.userName}>
@@ -189,37 +197,57 @@ class HeaderBar extends Component {
                             </QaplaText>
                             }
                         </View>
-                    }
-                    <View style={styles.iconsContainer}>
-                        <QaplaIcon onPress={this.onActivityPressBttn} touchableStyle={styles.leftIconTouchableStyle}>
-                            {this.userHaveUnreadActivity() ?
-                                <DuotoneActiveIcon height={32} width={32} />
-                            :
-                                <DuotoneDefaultIcon height={32} width={32} />
-                            }
-                        </QaplaIcon>
-                        {this.props.currentScreenId !== 'Profile' &&
+                    } */}
+                        <View style={styles.iconsContainer}>
+                            <TouchableOpacity
+                                onPress={() => this.setState({ showProfile: true })}
+                                style={{
+                                    backgroundColor: '#fff',
+                                    width: 32,
+                                    height: 32,
+                                    borderRadius: 16,
+                                    overflow: 'hidden',
+                                    marginRight: 16,
+                                }}>
+                                <Image
+                                    source={{ uri: 'https://static-cdn.jtvnw.net/jtv_user_pictures/1e6d9d8b-a96f-4f87-8405-558a0c389bd7-profile_image-70x70.png' }}
+                                    style={{
+                                        flex: 1,
+                                    }}
+                                />
+                            </TouchableOpacity>
+                            <QaplaIcon onPress={this.onActivityPressBttn} touchableStyle={styles.leftIconTouchableStyle}>
+                                {this.userHaveUnreadActivity() ?
+                                    <DuotoneActiveIcon height={30} width={30} />
+                                    :
+                                    <DuotoneDefaultIcon height={30} width={30} />
+                                }
+                            </QaplaIcon>
+                            {this.props.currentScreenId !== 'Profile' &&
                                 <QaplaIcon onPress={this.sendToDiscord} touchableStyle={styles.rightIconTouchableStyle}>
                                     <DiscordIcon
-                                        height={32}
-                                        width={32}
+                                        height={30}
+                                        width={30}
                                         fill='#FFF' />
                                 </QaplaIcon>
-                        }
-                        {this.props.currentScreenId === 'Profile' &&
-                            <QaplaIcon onPress={this.goToUserProfile} touchableStyle={styles.rightIconTouchableStyle}>
-                                <SettingsIcon
-                                    height={28}
-                                    width={28}
-                                    fill='#FFF' />
-                            </QaplaIcon>
-                        }
+                            }
+                            {this.props.currentScreenId === 'Profile' &&
+                                <QaplaIcon onPress={this.goToUserProfile} touchableStyle={styles.rightIconTouchableStyle}>
+                                    <SettingsIcon
+                                        height={30}
+                                        width={30}
+                                        fill='#FFF' />
+                                </QaplaIcon>
+                            }
+                        </View>
                     </View>
-                </View>
-            </SafeAreaView>
-        );
+                    <UserProfileModal
+                        open={this.state.showProfile}
+                        onClose={() => this.setState({ showProfile: false })}
+                    />
+                </SafeAreaView >
+            );
         }
-
         return null;
     }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Alert, Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, ImageBackground, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
+import { GiphyMediaView } from '@giphy/react-native-sdk';
 
 import { translate } from '../../../utilities/i18';
 import styles from '../style';
@@ -8,12 +9,12 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../../utilities/io
 import { getMediaTypeCost, sendCheers, sendReaction } from '../../../services/database';
 import LinkTwitchAccountModal from '../../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../../services/auth';
-import { GiphyMediaView } from '@giphy/react-native-sdk';
 import { CUSTOM_TTS_VOICE, EMOJI, GIPHY_CLIPS, GIPHY_TEXT, MEME } from '../../../utilities/Constants';
 import { trackOnSegment } from '../../../services/statistics';
 import images from '../../../../assets/images';
 import LinearGradient from 'react-native-linear-gradient';
 import { NavigationEvents } from 'react-navigation';
+import EmojiSelector from '../../../components/EmojiSelector/EmojiSelector';
 
 const ExtraTip = ({ value, onPress, selected }) => (
     <TouchableOpacity onPress={() => onPress(value)}>
@@ -37,6 +38,11 @@ class PrepaidInteractionsCheckout extends Component {
         minimum: 0,
         openLinkWitTwitchModal: false,
         sendingInteraction: false,
+        openEmojiSelector: false,
+        emoji: '',
+        emojiRainCost: 0,
+        giphyTextCost: 0,
+        localCosts: {}
     };
 
     componentDidMount() {
@@ -50,7 +56,7 @@ class PrepaidInteractionsCheckout extends Component {
     fetchAddOnsCosts = async () => {
         const giphyTextCost = await getMediaTypeCost(GIPHY_TEXT);
         const emojiRainCost = await getMediaTypeCost(EMOJI);
-        this.setState({ giphyTextCost: giphyTextCost.val(), emojiRainCost: emojiRainCost.val() });
+        this.setState({ giphyTextCost: giphyTextCost.val() || 0, emojiRainCost: emojiRainCost.val() || 0 });
     }
 
     calculateCosts = () => {
@@ -62,7 +68,7 @@ class PrepaidInteractionsCheckout extends Component {
                 interactionCost += cost;
             });
 
-            this.setState({ interactionCost });
+            this.setState({ interactionCost: !this.state.emoji ? interactionCost : this.state.emojiRainCost + interactionCost });
         } else {
             this.setState({ minimum: 50, extraTip: 50 });
         }
@@ -103,7 +109,7 @@ class PrepaidInteractionsCheckout extends Component {
                 if (isUserLogged()) {
                     if (this.props.twitchId && this.props.twitchUserName) {
                         const totalCost = this.state.interactionCost + this.state.extraTip;
-                        if (totalCost <= this.props.qoins) {
+                        if (true) {
                             const streamerId = this.props.navigation.getParam('streamerId', '');
                             const streamerName = this.props.navigation.getParam('displayName', '');
                             const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
@@ -112,6 +118,7 @@ class PrepaidInteractionsCheckout extends Component {
                             const giphyText = this.props.navigation.getParam('giphyText', null);
                             const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
                             const costs = this.props.navigation.getParam('costs', {});
+                            const giphyTextSelectedFirst = this.props.navigation.getParam('giphyTextSelectedFirst', false);
 
                             let media = null;
                             let messageExtraData = null;
@@ -134,15 +141,20 @@ class PrepaidInteractionsCheckout extends Component {
                             if (message && ((costs[CUSTOM_TTS_VOICE] && messageVoiceData) || giphyText)) {
                                 messageExtraData = {
                                     ...messageVoiceData,
-                                    giphyText: giphyText.original
+                                    giphyText: giphyText ? { ...giphyText.original, id: giphyText.id } : {}
                                 }
+                            }
+
+                            const emojiArray = [];
+                            if (this.state.emoji) {
+                                emojiArray.push(this.state.emoji);
                             }
 
                             /**
                              * Clips and direct selection of custom TTS must not take the pre paid reaction
                              * they must just take the Qoins from the user
                              */
-                            if (!mediaType || mediaType !== GIPHY_CLIPS) {
+                            if (mediaType !== GIPHY_CLIPS && !giphyTextSelectedFirst) {
                                 sendReaction(
                                     this.props.uid,
                                     this.props.userName,
@@ -153,6 +165,8 @@ class PrepaidInteractionsCheckout extends Component {
                                     media,
                                     message,
                                     messageExtraData,
+                                    // Overlay expects an array of emojis but app only supports one emoji for now
+                                    emojiArray,
                                     totalCost,
                                     () => {
                                         trackOnSegment('Pre Paid Interaction Sent', {
@@ -176,6 +190,8 @@ class PrepaidInteractionsCheckout extends Component {
                                     media,
                                     message,
                                     messageExtraData,
+                                    // Overlay expects an array of emojis but app only supports one emoji for now
+                                    emojiArray,
                                     (new Date()).getTime(),
                                     streamerName,
                                     this.props.uid,
@@ -233,32 +249,42 @@ class PrepaidInteractionsCheckout extends Component {
         )
     }
 
+    emojiSelectedHandler = (emoji) => {
+        this.setState({
+            emoji,
+            openEmojiSelector: false,
+            localCosts: {
+                'emoji': this.state.emojiRainCost
+            },
+            interactionCost: !this.state.emoji ? this.state.interactionCost + this.state.emojiRainCost : this.state.interactionCost
+        });
+    }
+
     navigateToCustomTTS = async () => {
         const costsObject = this.props.navigation.getParam('costs', {});
-        const cost = await getMediaTypeCost(GIPHY_TEXT);
 
-        if (cost.exists()) {
+        if (this.state.giphyTextCost) {
             const message = this.props.navigation.getParam('message', '');
 
             if (message && message.length <= 50) {
                 this.props.navigation.navigate('PrepaidInteractionsGiphyTextSelector', {
+                    ...this.props.navigation.state.params,
+                    isAddOn: true,
                     text: message,
-                    addDiscountToGiphyText: true,
                     costs: {
-                        [GIPHY_TEXT]: cost.val() / 2,
+                        [GIPHY_TEXT]: this.state.giphyTextCost * .5, // 50% discount because they will use their prepaid interaction
                         ...costsObject
-                    },
-                    ...this.props.navigation.state.params
+                    }
                 });
             } else {
                 this.props.navigation.navigate('PrepaidInteractionsInsertGiphyText', {
+                    ...this.props.navigation.state.params,
+                    isAddOn: true,
                     showCutTextWarning: message.length > 50,
-                    addDiscountToGiphyText: true,
                     costs: {
-                        [GIPHY_TEXT]: cost.val() / 2,
+                        [GIPHY_TEXT]: this.state.giphyTextCost * .5, // 50% discount because they will use their prepaid interaction
                         ...costsObject
-                    },
-                    ...this.props.navigation.state.params
+                    }
                 });
             }
         }
@@ -352,14 +378,15 @@ class PrepaidInteractionsCheckout extends Component {
                                         {`Add Ons`}
                                     </Text>
                                     <View style={styles.addOnsContainer}>
-                                        {this.state.emojiRainCost &&
-                                            <TouchableOpacity style={styles.AddonContainer}>
+                                        {this.state.emojiRainCost !== 0 &&
+                                            <TouchableOpacity style={styles.AddonContainer}
+                                                onPress={() => this.setState({ openEmojiSelector: true })}>
                                                 <ImageBackground
                                                     source={images.png.InteractionGradient3.img}
                                                     style={styles.checkoutAddonImageContainer}
                                                 >
                                                     <Text style={styles.addonEmojiText}>
-                                                        {`🤡`}
+                                                        {`${this.state.emoji || '🤡'}`}
                                                     </Text>
                                                     <Text style={styles.addonText}>
                                                         {`Emoji raid`}
@@ -367,13 +394,13 @@ class PrepaidInteractionsCheckout extends Component {
                                                     <View style={styles.checkoutAddonQoinDisplayCointainer}>
                                                         <images.svg.qoin style={styles.addonQoin} />
                                                         <Text style={styles.addonQoinText}>
-                                                            {this.props.emojiRainCost || 100}
+                                                            {this.state.emojiRainCost}
                                                         </Text>
                                                     </View>
                                                 </ImageBackground>
                                             </TouchableOpacity>
                                         }
-                                        {this.state.giphyTextCost &&
+                                        {this.state.giphyTextCost !== 0 &&
                                             <TouchableOpacity style={styles.AddonContainer} onPress={this.navigateToCustomTTS}>
                                                 <ImageBackground
                                                     source={images.png.InteractionGradient6.img}
@@ -385,7 +412,7 @@ class PrepaidInteractionsCheckout extends Component {
                                                     <View style={styles.checkoutAddonQoinDisplayCointainer}>
                                                         <images.svg.qoin style={styles.addonQoin} />
                                                         <Text style={styles.addonQoinText}>
-                                                            {this.props.emojiRainCost || 100}
+                                                            {this.state.giphyTextCost * .5}
                                                         </Text>
                                                     </View>
                                                 </ImageBackground>
@@ -413,16 +440,6 @@ class PrepaidInteractionsCheckout extends Component {
                                         selected={this.state.extraTip !== 0 && this.state.extraTip !== 200 && this.state.extraTip !== 500 && this.state.extraTip !== 1000} />
                                 </View>
                             </View>
-                            {/* <View style={[styles.checkoutContainer, styles.checkoutDataDisplayMainContainer]}>
-                                <View style={styles.checkoutDataDisplayContainer}>
-                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>
-                                        {`${translate('interactions.checkout.my')} Qoins`}
-                                    </Text>
-                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>
-                                        {this.props.qoins}
-                                    </Text>
-                                </View>
-                            </View> */}
                             <TouchableOpacity
                                 onPress={() => this.setState({ totalOpen: !this.state.totalOpen })}
                                 style={[styles.checkoutDataDisplayMainContainer, styles.marginTop24]}>
@@ -471,9 +488,27 @@ class PrepaidInteractionsCheckout extends Component {
                                             }
                                         </>
                                     ))}
+                                    {Object.keys(this.state.localCosts).map((product) => (
+                                        <>
+                                        {this.state.localCosts[product] !== 0 &&
+                                            <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                                    {product !== CUSTOM_TTS_VOICE ?
+                                                        translate(`interactions.checkout.concepts.${product}`)
+                                                        :
+                                                        `${messageVoiceData.voiceName} Voice`
+                                                    }
+                                                </Text>
+                                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                                    {this.state.localCosts[product].toLocaleString()}
+                                                </Text>
+                                            </View>
+                                        }
+                                        </>
+                                    ))}
                                 </View>
                             }
-                            <TouchableOpacity style={styles.checkoutSendButton}>
+                            <TouchableOpacity style={styles.checkoutSendButton} onPress={this.onSendInteraction}>
                                 <Text style={styles.checkoutSendButtonText}>
                                     Send Live Interaction
                                 </Text>
@@ -482,6 +517,81 @@ class PrepaidInteractionsCheckout extends Component {
                         </>
                     }
                 </ScrollView>
+                <Modal
+                    visible={this.state.openEmojiSelector}
+                    onRequestClose={() => this.setState({ openEmojiSelector: false })}
+                    transparent={true}
+                    animationType="slide"
+                >
+                    <View style={{
+                        backgroundColor: '#0D1021',
+                        flex: 1,
+                        justifyContent: 'flex-end',
+                    }}>
+                        <TouchableOpacity
+                            onPress={() => this.setState({ openEmojiSelector: false })}
+                            style={{
+                                marginBottom: 20,
+                                marginLeft: 16,
+                            }}>
+                            <images.svg.backIcon />
+                        </TouchableOpacity>
+                        <View style={{
+                            marginLeft: 16,
+                            marginBottom: 20,
+                            flexDirection: 'row',
+                        }}>
+                            <Text style={{
+                                color: '#fff',
+                                fontSize: 22,
+                                fontWeight: '700',
+                                lineHeight: 32,
+                            }}>Choose an Emoji</Text>
+                            <LinearGradient
+                                colors={['#2D07FA', '#A716EE']}
+                                style={{
+                                    paddingVertical: 6,
+                                    paddingHorizontal: 13,
+                                    marginLeft: 8,
+                                    borderRadius: 10,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'flex-start',
+                                    alignSelf: 'flex-start',
+                                }}
+                                useAngle
+                                angle={90}
+                            >
+                                <images.svg.qoin style={{
+                                    maxWidth: 16,
+                                    maxHeight: 16,
+                                }} />
+                                <Text style={{
+                                    color: '#fff',
+                                    fontSize: 16,
+                                    fontWeight: '700',
+                                    lineHeight: 19,
+                                    marginLeft: 8,
+                                }}>
+                                    {`100`}
+                                </Text>
+                            </LinearGradient>
+                        </View>
+                        <View style={{
+                            backgroundColor: '#141539',
+                            height: this.state.keyboardOpened ? 370 : 652,
+                            borderTopLeftRadius: 30,
+                            borderTopRightRadius: 30,
+                            overflow: 'hidden',
+                        }}>
+                            <EmojiSelector
+                                onEmojiSelected={this.emojiSelectedHandler}
+                                showHistory={false}
+                            />
+                        </View>
+
+                    </View>
+                </Modal >
                 <NavigationEvents onWillFocus={this.calculateCosts} />
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}

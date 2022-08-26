@@ -153,7 +153,7 @@ class PrepaidInteractionsTTS extends Component {
 
     readyHandler = () => {
         const costsObject = this.props.navigation.getParam('costs', {});
-        if (this.props.previousScreen === 'PrepaidInteractionsAddTTS') {
+        if (this.props.previousScreen === 'PrepaidInteractionsAddTTS' || this.props.previousScreen === 'PrepaidInteractionsCheckout') {
             this.props.navigation.navigate('PrepaidInteractionsCheckout', {
                 ...this.props.navigation.state.params,
                 message: this.state.message,

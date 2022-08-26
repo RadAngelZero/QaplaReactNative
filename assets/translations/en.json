@@ -696,7 +696,8 @@
                 "meme": "Meme",
                 "tts": "Text-to-Speech",
                 "video": "Clip",
-                "text": "Text"
+                "text": "Custom Text-to-Speech",
+                "emoji": "Emoji rain"
             },
             "discardInteraction": "Discard interaction",
             "areYouSure": "Are you sure you want to discard your interaction?",

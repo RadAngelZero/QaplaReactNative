@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Alert, Image, ImageBackground, Modal, ScrollView, Text, TextInput, TouchableOpacity, View, Keyboard } from 'react-native';
+import { Alert, Image, ImageBackground, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
+import { GiphyMediaView } from '@giphy/react-native-sdk';
 
 import { translate } from '../../utilities/i18';
 import styles from './style';
@@ -8,11 +9,9 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 import { getMediaTypeCost, sendCheers } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../services/auth';
-import { GiphyMediaView } from '@giphy/react-native-sdk';
 import images from '../../../assets/images';
-import { CUSTOM_TTS_VOICE, EMOJI, GIPHY_TEXT, MEME } from '../../utilities/Constants';
+import { CUSTOM_TTS_VOICE, EMOJI, GIPHY_CLIPS, GIPHY_TEXT, MEME } from '../../utilities/Constants';
 import { trackOnSegment } from '../../services/statistics';
-import emoji from 'emoji-datasource';
 import EmojiSelector from '../../components/EmojiSelector/EmojiSelector';
 import LinearGradient from 'react-native-linear-gradient';
 import { NavigationEvents } from 'react-navigation';
@@ -42,8 +41,9 @@ class InteractionsCheckout extends Component {
         sendingInteraction: false,
         totalOpen: false,
         emoji: '',
-        giphyTextCost: null,
-        emojiRainCost: null
+        emojiRainCost: 0,
+        giphyTextCost: 0,
+        localCosts: {}
     };
 
     componentDidMount() {
@@ -57,7 +57,7 @@ class InteractionsCheckout extends Component {
     fetchAddOnsCosts = async () => {
         const giphyTextCost = await getMediaTypeCost(GIPHY_TEXT);
         const emojiRainCost = await getMediaTypeCost(EMOJI);
-        this.setState({ giphyTextCost: giphyTextCost.val(), emojiRainCost: emojiRainCost.val() });
+        this.setState({ giphyTextCost: giphyTextCost.val() || 0, emojiRainCost: emojiRainCost.val() || 0 });
     }
 
     calculateCosts = () => {
@@ -69,20 +69,10 @@ class InteractionsCheckout extends Component {
                 interactionCost += cost;
             });
 
-            this.setState({ interactionCost });
+            this.setState({ interactionCost: !this.state.emoji ? interactionCost : this.state.emojiRainCost + interactionCost });
         } else {
             this.setState({ minimum: 50, extraTip: 50 });
         }
-        this.keyboardShow = Keyboard.addListener('keyboardDidShow', () => {
-            this.setState({ keyboardOpened: true });
-        });
-        this.keyboardHide = Keyboard.addListener('keyboardDidHide', () => {
-            this.setState({ keyboardOpened: false });
-        });
-    }
-    componentWillUnmount() {
-        this.keyboardShow.remove();
-        this.keyboardHide.remove();
     }
 
     addTip = (tip) => {
@@ -129,6 +119,7 @@ class InteractionsCheckout extends Component {
                             const giphyText = this.props.navigation.getParam('giphyText', null);
                             const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
                             const costs = this.props.navigation.getParam('costs', {});
+                            const giphyTextSelectedFirst = this.props.navigation.getParam('giphyTextSelectedFirst', false);
 
                             let media = null;
                             let messageExtraData = null;
@@ -155,11 +146,18 @@ class InteractionsCheckout extends Component {
                                 }
                             }
 
+                            const emojiArray = [];
+                            if (this.state.emoji) {
+                                emojiArray.push(this.state.emoji);
+                            }
+
                             sendCheers(
                                 totalCost,
                                 media,
                                 message,
                                 messageExtraData,
+                                // Overlay expects an array of emojis but app only supports one emoji for now
+                                emojiArray,
                                 (new Date()).getTime(),
                                 streamerName,
                                 this.props.uid,
@@ -216,37 +214,42 @@ class InteractionsCheckout extends Component {
         );
     }
 
-    emojiSelectedHanler = (emoji) => {
-        console.log(emoji);
-        this.setState({ emoji, openEmojiSelector: false });
+    emojiSelectedHandler = (emoji) => {
+        this.setState({
+            emoji,
+            openEmojiSelector: false,
+            localCosts: {
+                'emoji': this.state.emojiRainCost
+            },
+            interactionCost: !this.state.emoji ? this.state.interactionCost + this.state.emojiRainCost : this.state.interactionCost
+        });
     }
 
     navigateToCustomTTS = async () => {
         const costsObject = this.props.navigation.getParam('costs', {});
-        const cost = await getMediaTypeCost(GIPHY_TEXT);
 
-        if (cost.exists()) {
+        if (this.state.giphyTextCost) {
             const message = this.props.navigation.getParam('message', '');
 
             if (message && message.length <= 50) {
                 this.props.navigation.navigate('InteractionsGiphyTextSelector', {
+                    ...this.props.navigation.state.params,
                     isAddOn: true,
                     text: message,
                     costs: {
-                        [GIPHY_TEXT]: cost.val(),
+                        [GIPHY_TEXT]: this.state.giphyTextCost,
                         ...costsObject
-                    },
-                    ...this.props.navigation.state.params
+                    }
                 });
             } else {
                 this.props.navigation.navigate('InteractionsInsertGiphyText', {
+                    ...this.props.navigation.state.params,
                     isAddOn: true,
                     showCutTextWarning: message.length > 50,
                     costs: {
-                        [GIPHY_TEXT]: cost.val(),
+                        [GIPHY_TEXT]: this.state.giphyTextCost,
                         ...costsObject
-                    },
-                    ...this.props.navigation.state.params
+                    }
                 });
             }
         }
@@ -353,7 +356,7 @@ class InteractionsCheckout extends Component {
                                         {`Add Ons`}
                                     </Text>
                                     <View style={styles.addOnsContainer}>
-                                        {this.state.emojiRainCost &&
+                                        {this.state.emojiRainCost !== 0 &&
                                             <TouchableOpacity
                                             onPress={() => this.setState({ openEmojiSelector: true })}
                                             style={styles.AddonContainer}>
@@ -376,7 +379,7 @@ class InteractionsCheckout extends Component {
                                                 </ImageBackground>
                                             </TouchableOpacity>
                                         }
-                                        {this.state.giphyTextCost &&
+                                        {this.state.giphyTextCost !== 0 &&
                                             <TouchableOpacity style={styles.AddonContainer} onPress={this.navigateToCustomTTS}>
                                                 <ImageBackground
                                                     source={images.png.InteractionGradient6.img}
@@ -416,16 +419,6 @@ class InteractionsCheckout extends Component {
                                         selected={this.state.extraTip !== 0 && this.state.extraTip !== 200 && this.state.extraTip !== 500 && this.state.extraTip !== 1000} />
                                 </View>
                             </View>
-                            {/* <View style={[styles.checkoutContainer, styles.checkoutDataDisplayMainContainer]}>
-                                <View style={styles.checkoutDataDisplayContainer}>
-                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>
-                                        {`${translate('interactions.checkout.my')} Qoins`}
-                                    </Text>
-                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText]}>
-                                        {this.props.qoins}
-                                    </Text>
-                                </View>
-                            </View> */}
                             <TouchableOpacity
                                 onPress={() => this.setState({ totalOpen: !this.state.totalOpen })}
                                 style={[styles.checkoutDataDisplayMainContainer, styles.marginTop24]}>
@@ -474,6 +467,24 @@ class InteractionsCheckout extends Component {
                                             }
                                         </>
                                     ))}
+                                    {Object.keys(this.state.localCosts).map((product) => (
+                                        <>
+                                        {this.state.localCosts[product] !== 0 &&
+                                            <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                                    {product !== CUSTOM_TTS_VOICE ?
+                                                        translate(`interactions.checkout.concepts.${product}`)
+                                                        :
+                                                        `${messageVoiceData.voiceName} Voice`
+                                                    }
+                                                </Text>
+                                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                                    {this.state.localCosts[product].toLocaleString()}
+                                                </Text>
+                                            </View>
+                                        }
+                                        </>
+                                    ))}
                                 </View>
                             }
                             <TouchableOpacity style={styles.checkoutSendButton}>
@@ -487,8 +498,6 @@ class InteractionsCheckout extends Component {
                 </ScrollView>
                 <Modal
                     visible={this.state.openEmojiSelector}
-                    // visible={true}
-
                     onRequestClose={() => this.setState({ openEmojiSelector: false })}
                     transparent={true}
                     animationType="slide"
@@ -555,7 +564,7 @@ class InteractionsCheckout extends Component {
                             overflow: 'hidden',
                         }}>
                             <EmojiSelector
-                                onEmojiSelected={this.emojiSelectedHanler}
+                                onEmojiSelected={this.emojiSelectedHandler}
                                 showHistory={false}
                             />
                         </View>

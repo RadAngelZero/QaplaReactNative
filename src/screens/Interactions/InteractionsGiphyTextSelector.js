@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Image, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import WebView from 'react-native-webview';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import { getScreenSizeMultiplier } from '../../utilities/iosAndroidDim';
-import RadMasonry from '../../components/RadMasonry/RadMasonry';
-import { GIPHY_TEXT } from '../../utilities/Constants';
+import { getScreenSizeMultiplier, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { listenGiphyTextSearch, removeGiphyTextRequests } from '../../services/database';
 
 class InteractionsGiphyTextSelector extends Component {
@@ -51,12 +49,23 @@ class InteractionsGiphyTextSelector extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    this.props.navigation.navigate(isAddOn ? 'InteractionsConfirmSelectionAddOn' : 'InteractionsConfirmSelection', {
-                        giphyText,
-                        ...this.props.navigation.state.params
-                    });
+                    const text = this.props.navigation.getParam('text', '');
+                    if (isAddOn) {
+                        this.props.navigation.navigate('InteractionsCheckout', {
+                            ...this.props.navigation.state.params,
+                            giphyText,
+                            message: text
+                        });
+                    } else {
+                        this.props.navigation.navigate('InteractionsConfirmSelection', {
+                            ...this.props.navigation.state.params,
+                            giphyText,
+                            message: text
+                        });
+                    }
                 }}
                 style={{
+                    width: widthPercentageToPx(45),
                     borderRadius: 10 * getScreenSizeMultiplier(),
                     marginBottom: 8 * getScreenSizeMultiplier(),
                     marginHorizontal: 4 * getScreenSizeMultiplier(),
@@ -72,8 +81,7 @@ class InteractionsGiphyTextSelector extends Component {
                             minWidth: '100%',
                         }
                     ]}
-                    resizeMode='cover'
-                />
+                    resizeMode='cover' />
             </TouchableOpacity>
         );
     };
@@ -84,14 +92,11 @@ class InteractionsGiphyTextSelector extends Component {
                 <View style={styles.memesContainer} >
                     <View style={styles.gridMemeContainer}>
                         {!this.state.fetchGiphyText ?
-                            <RadMasonry
-                                onEndReachedThreshold={0.25}
-                                onEndReached={() => {}}
-                                data={this.state.media}
+                            <FlatList data={this.state.media}
                                 numColumns={2}
+                                columnWrapperStyle={{justifyContent: 'space-between'}}
                                 renderItem={this.renderImage}
-                                containerStyle={styles.gridMemeSubContainer}
-                            />
+                                containerStyle={styles.gridMemeSubContainer} />
                             :
                             <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
                         }

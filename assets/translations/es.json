@@ -699,7 +699,8 @@
                 "meme": "Meme",
                 "tts": "Text-to-Speech",
                 "video": "Clip",
-                "text": "Texto"
+                "text": "Custom Text-to-Speech",
+                "emoji": "Lluvia de emojis"
             },
             "discardInteraction": "Descartar interacción",
             "areYouSure": "¿Estas seguro que deseas descartar tu interacción?",

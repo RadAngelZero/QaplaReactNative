@@ -169,7 +169,7 @@ export default styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignSelf: 'center',
-        // marginTop: heightPercentageToPx(1.97),
+        justifyContent: 'center',
         paddingHorizontal: widthPercentageToPx(1.6),
     },
     gridMemeSubContainer: {

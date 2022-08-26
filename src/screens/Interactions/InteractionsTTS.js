@@ -153,7 +153,7 @@ class InteractionsTTS extends Component {
 
     readyHandler = () => {
         const costsObject = this.props.navigation.getParam('costs', {});
-        if (this.props.previousScreen === 'InteractionsAddTTS') {
+        if (this.props.previousScreen === 'InteractionsAddTTS' || this.props.previousScreen === 'InteractionsCheckout') {
             this.props.navigation.navigate('InteractionsCheckout', {
                 ...this.props.navigation.state.params,
                 message: this.state.message,

@@ -66,6 +66,7 @@ class InteractionsPersonalize extends Component {
         } else if (mediaType === GIPHY_TEXT) {
             this.props.navigation.navigate('InteractionsInsertGiphyText', {
                 showAddOnsOnCheckout: false,
+                giphyTextSelectedFirst: true,
                 ...this.props.navigation.state.params,
             });
         } else {

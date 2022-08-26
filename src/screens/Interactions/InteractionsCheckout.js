@@ -119,7 +119,6 @@ class InteractionsCheckout extends Component {
                             const giphyText = this.props.navigation.getParam('giphyText', null);
                             const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
                             const costs = this.props.navigation.getParam('costs', {});
-                            const giphyTextSelectedFirst = this.props.navigation.getParam('giphyTextSelectedFirst', false);
 
                             let media = null;
                             let messageExtraData = null;
@@ -487,7 +486,7 @@ class InteractionsCheckout extends Component {
                                     ))}
                                 </View>
                             }
-                            <TouchableOpacity style={styles.checkoutSendButton}>
+                            <TouchableOpacity style={styles.checkoutSendButton} onPress={this.onSendInteraction}>
                                 <Text style={styles.checkoutSendButtonText}>
                                     Send Live Interaction
                                 </Text>

@@ -109,7 +109,7 @@ class PrepaidInteractionsCheckout extends Component {
                 if (isUserLogged()) {
                     if (this.props.twitchId && this.props.twitchUserName) {
                         const totalCost = this.state.interactionCost + this.state.extraTip;
-                        if (true) {
+                        if (totalCost <= this.props.qoins) {
                             const streamerId = this.props.navigation.getParam('streamerId', '');
                             const streamerName = this.props.navigation.getParam('displayName', '');
                             const selectedMedia = this.props.navigation.getParam('selectedMedia', null);

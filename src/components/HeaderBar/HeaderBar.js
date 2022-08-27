@@ -199,27 +199,25 @@ class HeaderBar extends Component {
                                 style={styles.qaplaImage} />
                         </View>
                         <View style={styles.iconsContainer}>
-                            <TouchableOpacity
-                                onPress={this.onOpenProfile}
-                                style={{
-                                    backgroundColor: '#fff',
-                                    width: 32,
-                                    height: 32,
-                                    borderRadius: 16,
-                                    overflow: 'hidden',
-                                    marginRight: 16,
-                                }}>
-                                {this.state.userImage &&
-                                    <Image
-                                        source={this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img}
-                                        style={{
-                                            flex: 1,
-                                            height: undefined,
-                                            aspectRatio: 1
-                                        }}
-                                    />
-                                }
-                            </TouchableOpacity>
+                            {this.state.userImage &&
+                                <TouchableOpacity
+                                    onPress={this.onOpenProfile}
+                                    style={{
+                                        width: 26,
+                                        height: 26,
+                                        overflow: 'hidden',
+                                    }}>
+                                        <Image
+                                            source={this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img}
+                                            style={{
+                                                borderRadius: 16,
+                                                flex: 1,
+                                                height: undefined,
+                                                aspectRatio: 1
+                                            }}
+                                        />
+                                </TouchableOpacity>
+                            }
                             <QaplaIcon onPress={this.onActivityPressBttn} touchableStyle={styles.leftIconTouchableStyle}>
                                 {this.userHaveUnreadActivity() ?
                                     <DuotoneActiveIcon height={30} width={30} />

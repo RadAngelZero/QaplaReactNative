@@ -49,7 +49,6 @@ import PrepaidInteractionsPersonalize from './screens/Interactions/PrepaidReacti
 import PrepaidInteractionsGiphyMediaSelector from './screens/Interactions/PrepaidReactions/PrepaidInteractionsGiphyMediaSelector';
 import PrepaidInteractionsMemeSelector from './screens/Interactions/PrepaidReactions/PrepaidInteractionsMemeSelector';
 import PrepaidInteractionsConfirmSelection from './screens/Interactions/PrepaidReactions/PrepaidInteractionsConfirmSelection';
-import PrepaidInteractionsAddTTS from './screens/Interactions/PrepaidReactions/PrepaidInteractionsAddTTS';
 import PrepaidInteractionsTTS from './screens/Interactions/PrepaidReactions/PrepaidInteractionsTTS';
 import PrepaidInteractionsAddVisual from './screens/Interactions/PrepaidReactions/PrepaidInteractionsAddVisual';
 import PrepaidInteractionsCheckout from './screens/Interactions/PrepaidReactions/PrepaidInteractionsCheckout';
@@ -242,14 +241,6 @@ const PrepaidInteractionsPersonlizeStackNavigator = createStackNavigator({
   },
   PrepaidInteractionsConfirmSelection: {
     screen: PrepaidInteractionsConfirmSelection,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  PrepaidInteractionsAddTTS: {
-    screen: PrepaidInteractionsAddTTS,
     navigationOptions: {
       headerShown: true,
       gestureDirection: 'horizontal',

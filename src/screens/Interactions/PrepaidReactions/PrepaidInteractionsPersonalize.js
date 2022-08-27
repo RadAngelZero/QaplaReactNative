@@ -101,11 +101,13 @@ class PrepaidInteractionsPersonalize extends Component {
                             <images.svg.questionMark />
                         </TouchableOpacity> */}
                         </View>
-                        <View style={styles.prepaidReactionsContainer}>
-                            <images.svg.interactionsIcon styles={styles.interactionIconMargin} />
-                            <Text>
-                                {`(${this.props.navigation.getParam('numberOfReactions', 0)}) Reactions`}
-                            </Text>
+                        <View style={[styles.prepaidReactionsContainer, styles.marginTop24]}>
+                            <View style={styles.prepaidReactionsBody}>
+                                <images.svg.interactions  />
+                                <Text style={styles.reactionsText}>
+                                    {`(${this.props.navigation.getParam('numberOfReactions', 0).toLocaleString()}) Reactions`}
+                                </Text>
+                            </View>
                         </View>
                         <View style={styles.personalizeButtonsContainer}>
                             <DeckButton
@@ -122,12 +124,6 @@ class PrepaidInteractionsPersonalize extends Component {
                                 icon={images.svg.interactionsSticker}
                                 hideCost
                             />
-                            {/* <DeckButton
-                            onPress={() => this.navigateToSelectedMedia(GIPHY_CLIPS)}
-                            label="Clips"
-                            backgroundIndex={1}
-                            icon={images.svg.interactionsClip}
-                        /> */}
                             <DeckButton
                                 onPress={this.navigateToWriteMessage}
                                 label="Text-to-Speech"

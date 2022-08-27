@@ -11,7 +11,7 @@ import { trackOnSegment } from '../../services/statistics';
 import { deleteUserAccount } from '../../services/functions';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { updateNotificationSettings } from '../../services/database';
-import { subscribeUserToTopic, unsubscribeUserFromTopic } from '../../services/messaging';
+import { unsubscribeUserFromTopic } from '../../services/messaging';
 import { messaging } from '../../utilities/firebase';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import { defaultUserImages } from '../../utilities/Constants';

@@ -60,7 +60,7 @@ class PrepaidInteractionsConfirmSelection extends Component {
                 ...this.props.navigation.state.params,
             });
         } else {
-            this.props.navigation.navigate('PrepaidInteractionsAddTTS', {
+            this.props.navigation.navigate('PrepaidInteractionsTTS', {
                 ...this.props.navigation.state.params
             });
         }

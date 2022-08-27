@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     userImageContainer: {
         width: widthPercentageToPx(13.33),
         height: widthPercentageToPx(13.33),
-        borderRadius: widthPercentageToPx(5.46),
+        borderRadius: 20.5,
         overflow: 'hidden',
     },
     userImage: {
@@ -71,7 +71,7 @@ export const styles = StyleSheet.create({
         alignSelf: 'center',
         paddingHorizontal: widthPercentageToPx(4.26),
         paddingVertical: heightPercentageToPx(1.1),
-        borderRadius: widthPercentageToPx(13.33),
+        borderRadius: 50,
     },
     twitchLinkButton: {
         backgroundColor: '#0D1021',
@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
         alignSelf: 'center',
         paddingHorizontal: widthPercentageToPx(4.26),
         paddingVertical: heightPercentageToPx(1.1),
-        borderRadius: widthPercentageToPx(13.33),
+        borderRadius: 50,
     },
     twitchLinkedText: {
         marginLeft: 4,
@@ -138,7 +138,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#3B4BF9',
         paddingHorizontal: widthPercentageToPx(6.4),
         paddingVertical: heightPercentageToPx(1.47),
-        borderRadius: widthPercentageToPx(5.33),
+        borderRadius: 20,
     },
     getQoinsText: {
         color: '#fff',
@@ -149,7 +149,7 @@ export const styles = StyleSheet.create({
     },
     subCategoryContanier: {
         backgroundColor: '#141539',
-        borderRadius: heightPercentageToPx(1.47),
+        borderRadius: 20,
         width: '100%',
         padding: widthPercentageToPx(6.4),
     },

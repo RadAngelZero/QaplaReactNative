@@ -16,7 +16,6 @@ import { BOTTOM_NAVIGATION_BAR_HEIGHT } from '../../utilities/Constants';
 export class TimelineStreams extends Component {
     listsToRender = [0, 1, 2, 3, 4, 5, 6];
     state = {
-        openLevelInformationModal: false,
         openEventDetailsModal: false,
         selectedStream: null,
         deepLinkId: ''

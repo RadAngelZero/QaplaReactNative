@@ -1,22 +1,18 @@
 import React from 'react';
 
-import { TouchableOpacity, View, Text } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { createAppContainer, createSwitchNavigator, NavigationActions } from 'react-navigation';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator, createBottomTabNavigator } from 'react-navigation-tabs';
-import Svg, { G, Path, Rect, Ellipse } from 'react-native-svg';
+import Svg, { G, Path, Ellipse } from 'react-native-svg';
 import { connect } from 'react-redux';
-import { BlurView } from '@react-native-community/blur';
 
 import { setCurrentScreenId, setPreviousScreenId } from './actions/screensActions';
 
 import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
 import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameScreen';
-import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
 import TimelineStreams from './screens/TimelineStreams/TimelineStreams';
-import SupportScreen from './screens/SupportScreen/SupportScreen';
-import AppSettingsMenuScreen from './screens/AppSettingsMenuScreen/AppSettingsMenuScreen';
 import LinkBrokenScreen from './screens/LinkBrokenScreen/LinkBrokenScreen';
 import images from '../assets/images';
 
@@ -24,10 +20,8 @@ import images from '../assets/images';
 import HeaderBar from './components/HeaderBar/HeaderBar';
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
 import { translate } from './utilities/i18';
-import NotificationsSettingsScreen from './screens/NotificationsSettingsScreen/NotificationsSettingsScreen';
 import QaplaText from './components/QaplaText/QaplaText';
 import DiscoverStreamersScreen from './screens/DiscoverStreamersScreen/DiscoverStreamersScreen';
-import DonationsLeaderBoard from './components/DonationsLeaderBoard/DonationsLeaderBoard';
 import TwitchAuthScreen from './screens/TwitchAuthScreen/TwitchAuthScreen';
 import ActivityScreen from './screens/ActivityScreen/ActivityScreen';
 import QaplaTabBar from './components/QaplaTabBar/QaplaTabBar';
@@ -66,27 +60,6 @@ import InteractionsGiphyTextSelector from './screens/Interactions/InteractionsGi
 import InteractionsInsertGiphyText from './screens/Interactions/InteractionsInsertGiphyText';
 
 //#region Stack Navigators
-
-const SettingsMenuStackNavigator = createStackNavigator({
-  AppSettingsMenu: {
-    screen: AppSettingsMenuScreen,
-    navigationOptions: {
-      header: (props) => <TopNavOptions close {...props} />
-    },
-  },
-  Support: {
-    screen: SupportScreen,
-    navigationOptions: {
-      header: (props) => <TopNavOptions back close {...props} />
-    },
-  },
-  NotificationsSettings: {
-    screen: NotificationsSettingsScreen,
-    navigationOptions: {
-      header: (props) => <TopNavOptions back close {...props} />
-    },
-  },
-});
 
 const AuthStackNavigator = createStackNavigator({
   SignIn: {
@@ -430,58 +403,6 @@ const MainBottomTabNavigator = createBottomTabNavigator({
       ),
     },
   },
-  Ranking: {
-    screen: DonationsLeaderBoard,
-    navigationOptions: {
-      tabBarButtonComponent: TouchableOpacity,
-      tabBarIcon: ({ tintColor, focused }) => (
-        <View style={{
-          transform: [{ scale: 1 }],
-          justifyContent: 'center',
-          marginTop: 15,
-          marginLeft: 0,
-        }}>
-          <Svg width="27.5px" height="25px" viewBox="0 0 27.5 26">
-            <G id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <G id="Community" transform="translate(-127.000000, -746.000000)">
-                <G id="Bottom-Nav-Bar" transform="translate(0.000000, 727.000000)">
-                  <G id="Community" transform="translate(94.000000, 17.000000)">
-                    <G id="Ranking" transform="translate(32.000000, 0.000000)">
-                      <G id="Column-01-Up" transform="translate(1.250000, 2.500000)">
-                        <Rect fill={focused ? tintColor : '#FFF'} x="10" y="0" width="7.5" height="25" rx="2.5" />
-                        <Rect fill={focused ? '#4040FF' : '#4E5166'} x="0" y="5" width="7.5" height="20" rx="2.5" />
-                        <Rect fill={focused ? '#4040FF' : '#4E5166'} x="20" y="10" width="7.5" height="15" rx="2.5" />
-                      </G>
-                    </G>
-                  </G>
-                </G>
-              </G>
-            </G>
-          </Svg>
-        </View>
-      ),
-      tabBarLabel: ({ tintColor, focused }) => (
-        <View style={{
-          display: 'flex',
-          height: 20,
-          marginBottom: 10,
-          justifyContent: 'center'
-        }} >
-          <QaplaText style={{
-            color: tintColor,
-            fontSize: 9,
-            fontWeight: '500',
-            lineHeight: 11,
-            letterSpacing: 0.5,
-            textAlign: 'center',
-            textAlignVertical: 'center',
-          }}>
-            Ranking
-          </QaplaText>
-        </View>
-      ),
-    },
-  },
   Interactions: {
     screen: () => <></>, // We do not really want a screen here, we want to navigate to InteractionsStack (check tabBarOnPress)
     navigationOptions: {
@@ -558,58 +479,6 @@ const MainBottomTabNavigator = createBottomTabNavigator({
       ),
     },
   },
-  Profile: {
-    screen: UserProfileScreen,
-    navigationOptions: {
-      tabBarButtonComponent: TouchableOpacity,
-      tabBarIcon: ({ tintColor, focused }) => (
-        <View style={{
-          transform: [{ scale: 1.2 }],
-          justifyContent: 'center',
-          marginTop: 16.25,
-          marginLeft: 5,
-        }}>
-          <Svg width="22.5px" height="27.5px" viewBox="0 0 30 30">
-            <G id="UI" stroke="none" stroke-width="1" fill-rule="evenodd">
-              <G id="Events-(Waiting-Aproval)" transform="translate(-301.000000, -744.000000)">
-                <G id="Bottom-Nav-Bar" transform="translate(0.000000, 732.000000)">
-                  <G id="Profile" transform="translate(250.000000, 11.000000)">
-                    <G id="user-profile" transform="translate(48.000000, 0.000000)">
-                      <G id="User" transform="translate(3.750000, 1.250000)">
-                        <Path fill={focused ? tintColor : '#FFF'} d="M18.125 6.5C18.125 9.95177 15.3267 12.75 11.875 12.75C8.42322 12.75 5.625 9.95177 5.625 6.5C5.625 3.04822 8.42322 0.25 11.875 0.25C15.3267 0.25 18.125 3.04822 18.125 6.5Z" id="Path" fill-rule="nonzero" />
-                        <Path fill={focused ? '#3B4BF9' : tintColor} d="M20.3975 16.656C19.627 15.7626 18.3035 15.8086 17.2686 16.3751C15.6673 17.2516 13.8294 17.75 11.875 17.75C9.92062 17.75 8.08273 17.2516 6.48131 16.3751C5.44646 15.8086 4.12301 15.7626 3.3525 16.656C1.65277 18.6267 0.625 21.1934 0.625 24V25.25C0.625 26.6306 1.74429 27.75 3.125 27.75H20.625C22.0058 27.75 23.125 26.6306 23.125 25.25V24C23.125 21.1934 22.0972 18.6267 20.3975 16.656Z" id="Path" />
-                      </G>
-                    </G>
-                  </G>
-                </G>
-              </G>
-            </G>
-          </Svg>
-        </View>
-      ),
-      tabBarLabel: ({ tintColor, focused }) => (
-        <View style={{
-          display: 'flex',
-          height: 20,
-          marginBottom: 10,
-          justifyContent: 'center',
-        }} >
-          <QaplaText style={{
-            color: tintColor,
-            fontSize: 9,
-            fontWeight: '500',
-            lineHeight: 11,
-            letterSpacing: 0.5,
-            textAlign: 'center',
-            textAlignVertical: 'center',
-          }}>
-            {translate('router.bottomNavigators.mainNavigator.profile')}
-          </QaplaText>
-        </View>
-
-      ),
-    }
-  }
 }, {
   tabBarOptions: {
     style: {
@@ -658,7 +527,6 @@ const RootStackNavigator = createStackNavigator({
       animationEnabled: false,
     },
   },
-  SettingsMenu: SettingsMenuStackNavigator,
   Auth: AuthStackNavigator,
   InteractionsStack: InteractionsStackNavigator,
   InteractionsPersonlizeStack: {

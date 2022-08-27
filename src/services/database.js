@@ -165,25 +165,15 @@ export async function createUserProfile(Uid, email, userName ) {
 
     const profileObj = {
         bio: '',
-        captain: 'false',
         city,
-        country: 'Mexico',
         credits: 0,
-        discordTag: '',
         email,
-        experience: 0,
         id: Uid,
         level: 0,
-        losses: 0,
-        penalty: '',
-        phoneNumber: '',
-        photoUrl: '',
-        searching: '',
         status: false,
         token: '',
         userName,
         isUserLoggedOut: false,
-        wins: 0,
         language: getLocaleLanguage()
     };
 
@@ -1120,12 +1110,12 @@ export function saveUserSubscriptionToTopic(uid, topic, type) {
 }
 
 /**
- * Update the notificationPermission flag of the given type
- * @param {string} notificationType Key of the category of the topics
+ * Update the notification settings flag of the given type
+ * @param {string} notificationType Notification type to change
  * @param {boolean} value True if the user allow push notifications
  */
-export function updateNotificationPermission(notificationType, value) {
-    usersRef.child(store.getState().userReducer.user.id).child('notificationPermissions').update({ [notificationType]: value });
+export function updateNotificationSettings(uid, notificationType, value) {
+    usersRef.child(uid).child('notificationSettings').update({ [notificationType]: value });
 }
 
 /**
@@ -1299,42 +1289,6 @@ export async function getDonationQoinsBase() {
 export async function getMinimumDonationValue() {
     return await DonationsCostsRef.child('minimumDonation').once('value');
 }
-
-/**
- * Donations Leader Board
- */
-
-/**
- * Get the number of winners in the current leaderboard season
- */
-export async function getLeaderboardWinnersNumber() {
-    return await leaderboardWinnersRef.once('value');
-}
-
-/**
- * Get the first X number of users in the leader board
- */
-export async function getDonationsLeaderBoard(numberOfUsers) {
-    return await DonationsLeaderBoardRef.orderByChild('totalDonations').limitToLast(numberOfUsers).once('value');
-}
-
-/**
- * Get the users values of the leader board
- */
-export async function getUserDonationLeaderBoard(uid) {
-    return await DonationsLeaderBoardRef.child(uid).once('value');
-}
-
-/**
- * Leader Board Prizes
- */
-
- /**
-  * Returns the list of the leader board prizes
-  */
- export async function getLeaderBoardPrizes() {
-    return await LeaderBoardPrizesRef.once('value');
- }
 
  export async function getCommunitySurvey() {
     return await database.ref('/CommunitySurvey').once('value');
@@ -1707,7 +1661,7 @@ export async function getStreamerSocialLinks(streamerId) {
  * @param {string} streamerId Streamer identifier
  */
 export async function subscribeUserToStreamerProfile(uid, streamerId) {
-    return await userToStreamerSubscriptionsRef.child(uid).child(streamerId).set(true);
+    return await userToStreamerSubscriptionsRef.child(uid).child(streamerId).set({ cancelations: true, changes: true, customMessages: true, reminders: true });
 }
 
 /**

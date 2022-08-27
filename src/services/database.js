@@ -1,3 +1,5 @@
+import { RNFirebase } from 'react-native-firebase';
+
 import { database, TimeStamp } from '../utilities/firebase';
 import { randomString, getGamerTagKeyWithGameAndPlatform } from '../utilities/utils';
 import { DB_NEW_LINE_SEPARATOR, EVENTS_TOPIC } from '../utilities/Constants';
@@ -5,7 +7,6 @@ import store from '../store/store';
 import { getLocaleLanguage } from '../utilities/i18';
 import { unsubscribeUserFromTopic, subscribeUserToTopic } from './messaging';
 import { checkNotificationPermission } from '../services/messaging';
-import { RNFirebase } from 'react-native-firebase';
 
 export const matchesRef = database.ref('/Matches');
 export const matchesPlayRef = database.ref('/MatchesPlay');
@@ -30,9 +31,6 @@ export const userTopicSubscriptions = database.ref('userTopicSubscriptions');
 const qoinsDonationFormUrlRef = database.ref('QoinsDonationFormUrl');
 const usersRewardsProgressRef = database.ref('/UsersRewardsProgress');
 const DonationsCostsRef = database.ref('/DonationsCosts');
-const DonationsLeaderBoardRef = database.ref('/DonationsLeaderBoard');
-const LeaderBoardPrizesRef = database.ref('/LeaderBoardPrizes');
-const leaderboardWinnersRef = database.ref('/LeaderboardWinners');
 const userStreamerRef = database.ref('/UserStreamer');
 const streamersDonationsRef = database.ref('StreamersDonations');
 const userStreamsRewardsRef = database.ref('/UserStreamsRewards');

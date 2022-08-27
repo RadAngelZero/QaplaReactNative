@@ -12,7 +12,6 @@ import MaskedView from '@react-native-community/masked-view';
 import { getBotAvailableVoices } from '../../services/database';
 
 class OptionButton extends Component {
-
     render() {
         return (
             <TouchableOpacity onPress={this.props.onPress}>
@@ -186,24 +185,17 @@ class InteractionsTTS extends Component {
         return (
             <View style={styles.container}>
                 <View style={[styles.innerConatiner, styles.addTTSContainer]}>
-                    <Text style={[styles.whiteText, styles.screenHeaderText]}>
-                        {`${translate('interactions.TTS.writeYourMessage')}`}
-                    </Text>
+                    {this.state.step === 0 &&
+                        <Text style={[styles.whiteText, styles.screenHeaderText]}>
+                            {`${translate('interactions.TTS.writeYourMessage')}`}
+                        </Text>
+                    }
                     <View style={[styles.chatContainer,
                     {
                         bottom: heightPercentageToPx(3.94) + (Platform.OS === 'ios' && this.state.keyboardOpen ? this.state.keyboardHeight : 0),
                     }
                     ]}>
                         <View>
-                            {/* <View style={styles.chatSenderContainer}>
-                                <Image
-                                    source={images.png.profileImagePlaceholder1.img}
-                                    style={styles.chatSenderImage}
-                                />
-                                <Text style={[styles.whiteText, styles.chatSenderText]}>
-                                    Qaplita
-                                </Text>
-                            </View> */}
                             <View style={styles.chatBubbleContainer}>
                                 <Text style={[styles.whiteText, styles.chatBubbleText]}>
                                     {`${translate('interactions.TTS.whatYouWantToSay')}`}
@@ -257,7 +249,7 @@ class InteractionsTTS extends Component {
                                                                 <View style={styles.optionContainer}>
                                                                     <images.svg.volumeUp style={styles.optionOutIconMargin} />
                                                                     <OptionButton onPress={() => this.voiceSelectionHandler(this.state.availableVoices[voiceName].voiceAPIName, voiceName, this.state.availableVoices[voiceName].cost)}>
-                                                                        <Text style={[styles.whiteText, styles.chatBubbleText]}>
+                                                                        <Text style={[styles.customVoiceText, styles.chatBubbleText]}>
                                                                             {voiceName}
                                                                         </Text>
                                                                     </OptionButton>
@@ -268,13 +260,13 @@ class InteractionsTTS extends Component {
                                                                 <View style={styles.optionContainer}>
                                                                     <images.svg.volumeUp style={styles.optionOutIconMargin} />
                                                                     <OptionButton onPress={() => this.voiceSelectionHandler(this.state.availableVoices[voiceName].voiceAPIName, voiceName, this.state.availableVoices[voiceName].cost)}>
-                                                                        <Text style={[styles.whiteText, styles.chatBubbleText]}>
+                                                                        <Text style={[styles.customVoiceText, styles.chatBubbleText]}>
                                                                             {voiceName}
                                                                         </Text>
                                                                         <View style={styles.optionPriceContainer}>
                                                                             <images.svg.qoin style={[styles.smallQoin, styles.optionQoinsMargin]} />
                                                                             <MaskedView maskElement={
-                                                                                <Text style={[styles.whiteText, styles.chatBubbleText]}>
+                                                                                <Text style={[styles.customVoiceCost, styles.chatBubbleText]}>
                                                                                     {this.state.availableVoices[voiceName].cost}
                                                                                 </Text>
                                                                             }>
@@ -296,7 +288,7 @@ class InteractionsTTS extends Component {
                                     }
                                     {this.state.step >= 2 &&
                                         <>
-                                            <View style={styles.userChatBubbleContainer}>
+                                            <View style={styles.userChatButtonSelected}>
                                                 <Text style={[styles.whiteText, styles.chatBubbleText]}>
                                                     {`${this.state.voiceName}`}
                                                 </Text>
@@ -366,11 +358,11 @@ class InteractionsTTS extends Component {
                                                     </OptionButton>
                                                 </View>
                                                 <View style={styles.optionContainer}>
-                                                    <OptionButton onPress={this.readyHandler}>
-                                                        <Text style={[styles.whiteText, styles.chatBubbleText]}>
+                                                    <TouchableOpacity style={styles.readyButton} onPress={this.readyHandler}>
+                                                        <Text style={[styles.readyText, styles.chatBubbleText]}>
                                                             {`Ready`}
                                                         </Text>
-                                                    </OptionButton>
+                                                    </TouchableOpacity>
                                                 </View>
                                             </View>
                                         </>

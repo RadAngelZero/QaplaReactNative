@@ -32,6 +32,21 @@ export default styles = StyleSheet.create({
     whiteText: {
         color: '#fff',
     },
+    readyText: {
+        fontWeight: 700,
+        fontSize: 16,
+        color: '#0D1021'
+    },
+    customVoiceText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '500'
+    },
+    customVoiceCost: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '600'
+    },
     accentTextColor: {
         color: '#00FFDD',
     },
@@ -295,7 +310,17 @@ export default styles = StyleSheet.create({
         paddingHorizontal: widthPercentageToPx(6.4),
         paddingVertical: heightPercentageToPx(1.97),
         borderRadius: widthPercentageToPx(5.33),
-        borderTopLeftRadius: widthPercentageToPx(1.06),
+        borderTopRightRadius: widthPercentageToPx(1.06),
+        marginTop: heightPercentageToPx(1.97),
+        alignSelf: 'flex-end',
+    },
+    userChatButtonSelected: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#3D42DF',
+        paddingHorizontal: widthPercentageToPx(6.4),
+        paddingVertical: heightPercentageToPx(1.97),
+        borderRadius: widthPercentageToPx(5.33),
         marginTop: heightPercentageToPx(1.97),
         alignSelf: 'flex-end',
     },
@@ -511,6 +536,17 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: heightPercentageToPx(1.84),
+    },
+    readyButton: {
+        padding: 2,
+        borderRadius: 20,
+        backgroundColor: '#00FFDD',
+        color: '#000',
+        paddingVertical: 16,
+        paddingHorizontal: 24,
+        borderRadius: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     marginRight16: {
         marginRight: widthPercentageToPx(4.26),

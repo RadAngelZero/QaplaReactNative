@@ -160,7 +160,6 @@
         "done": "Listo",
         "loots": "Loots",
         "interactions": {
-            "interact" : "Interactúa",
             "liveToYourStreamer": "en vivo a tu streamer"
         }
     },
@@ -354,7 +353,7 @@
         "upcomingStreams": "Próximos streams",
         "myCommunity": "Mi comunidad",
         "creatorCodes": "Códigos de creador",
-        "sendInteraction": "Enviar interacción en vivo"
+        "sendInteraction": "Enviar reacción en vivo"
     },
     "writeCheerMessageScreen": {
         "sendPersonalizedMessage": "¿Quieres decirle algo especial?\n💬",
@@ -383,7 +382,7 @@
             "signInWithEmail": "Inicia sesión con correo",
             "createUsername": "Crea tu nombre de usuario",
             "haveQreatorQode": "¿Tienes un Código de Qreador?",
-            "getCustomAlerts": "Recibe ⚡️ 3 interacciones⚡️ en vivo al minar Qoins en tus primeros 3 directos "
+            "getCustomAlerts": "Recibe ⚡️ 3 reacciones ⚡️ en vivo al minar Qoins en tus primeros 3 directos "
         },
         "buttonsCarrousel": {
             "createAccount": "Crear mi cuenta",
@@ -611,7 +610,7 @@
         "allow": "Permitir"
     },
     "supportStreamerModal": {
-        "supportTo": "⚡️ Envía una interacción en vivo a ",
+        "supportTo": "⚡️ Envía una reacción en vivo a ",
         "description": "Tus cheers son enviados al instante y tus mensajes aparecen en vivo durante sus directos en Twitch.",
         "sendCheers": "Enviar Cheers"
     },
@@ -648,11 +647,11 @@
             }
         },
         "personalize": {
-            "personalizeYourInteraction": "Personaliza tu interacción",
+            "personalizeYourInteraction": "Personaliza tu reacción",
             "onlySend": "Sólo enviar"
         },
         "addVisual": {
-            "addVisual": "Agrega un Gif, Sticker o Meme a tu interacción"
+            "addVisual": "Agrega un Gif, Sticker o Meme a tu reacción"
         },
         "visual": {
             "searchOn": "Buscar en",
@@ -672,9 +671,9 @@
             }
         },
         "addTTS": {
-            "addTTSInYourInteraction": "Agrega un Text-to-Speech a tu interacción",
+            "addTTSInYourInteraction": "Agrega un Text-to-Speech a tu reacción",
             "addAMessageP1": "🗣 Agrega un mensaje con Bot de Voz para",
-            "addAMessageP2": "a tu interacción por",
+            "addAMessageP2": "a tu reacción por",
             "add": "Agregar Text-to-Speech",
             "onlySendMy": "Sólo enviar mi",
             "mediaTypes": {
@@ -703,8 +702,8 @@
                 "text": "Custom Text-to-Speech",
                 "emoji": "Lluvia de emojis"
             },
-            "discardInteraction": "Descartar interacción",
-            "areYouSure": "¿Estas seguro que deseas descartar tu interacción?",
+            "discardInteraction": "Descartar reacción",
+            "areYouSure": "¿Estas seguro que deseas descartar tu reacción?",
             "yes": "Si",
             "no": "No",
             "modal": {
@@ -719,7 +718,7 @@
             "cheersSent": "Cheers enviados",
             "weveSentYourQoins": "Hemos enviado tus %{qoins} Qoins a 🌱",
             "modal": {
-                "viewMyInteractions": "Ver mi interacción",
+                "viewMyInteractions": "Ver mi reacción",
                 "weveSentYourQoinsP1": "¡Hemos enviado tus\n",
                 "weveSentYourQoinsP2": "%{qoins} Qoins a %{streamerName}! ⚡️",
                 "backToStart": "Volver al inicio"
@@ -727,7 +726,7 @@
         }
     },
     "buyQoins": {
-        "sendInteractiunsUsingQoins": "Envía interacciones en vivo usando tus Qoins",
+        "sendInteractiunsUsingQoins": "Envía reacciones en vivo usando tus Qoins",
         "save": "¡25% más Qoins!",
         "pharases": {
             "p1": "Llevaré diez 💸💸💸"

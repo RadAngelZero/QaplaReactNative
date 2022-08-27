@@ -62,11 +62,6 @@ class InteractionsUserProfile extends Component {
                             {`${translate('userProfileScreen.interactions.liveToYourStreamer')}`}
                         </Text>
                     </View>
-                    <TouchableOpacity style={styles.button} onPress={this.props.onPress}>
-                        <Text style={styles.buttonText}>
-                            {`${translate('userProfileScreen.interactions.interact')}`}
-                        </Text>
-                    </TouchableOpacity>
                 </ImageBackground >
             </View >
         );

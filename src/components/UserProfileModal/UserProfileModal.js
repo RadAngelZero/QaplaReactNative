@@ -1,32 +1,28 @@
 import React, { Component } from 'react';
-import { View, Modal, TouchableOpacity, ScrollView, Image, Text, Switch } from 'react-native';
+import { View, Modal, TouchableOpacity, ScrollView, Image, Text, Switch, Linking, Alert } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
+import { connect } from 'react-redux';
+
 import images from '../../../assets/images';
 import { styles } from './style';
+import { signOut } from '../../services/auth';
+import { trackOnSegment } from '../../services/statistics';
+import { deleteUserAccount } from '../../services/functions';
+import { getLocaleLanguage, translate } from '../../utilities/i18';
+import { updateNotificationSettings } from '../../services/database';
+import { subscribeUserToTopic, unsubscribeUserFromTopic } from '../../services/messaging';
+import { messaging } from '../../utilities/firebase';
 
 class UserProfileModal extends Component {
-
     state = {
-        qoins: 4500,
-        totalQoinsSent: 24580,
-        userName: 'RadAngelZero',
-        userImage: 'https://static-cdn.jtvnw.net/jtv_user_pictures/1e6d9d8b-a96f-4f87-8405-558a0c389bd7-profile_image-70x70.png',
         mySupportOpen: false,
         notificateNewStreams: false,
         notificateScheduledStreams: false,
         twitchLinked: false,
     }
 
-    componentDidMount() {
-
-    }
-
     linkTwitch = () => {
         console.log('link twitch');
-    }
-
-    getQoins = () => {
-        console.log('get qoins');
     }
 
     toggleSupportDisplay = () => this.setState({ mySupportOpen: !this.state.mySupportOpen });
@@ -43,22 +39,100 @@ class UserProfileModal extends Component {
     }
 
     openTermsAndConditions = () => {
-        console.log('tac screen');
+        Linking.openURL('');
     }
 
     openPrivacy = () => {
-        console.log('priv screen');
+        Linking.openURL('');
     }
 
-    logOut = () => {
-        console.log('log out');
+    closeSession = async () => {
+        await signOut();
+        this.props.onClose();
     }
 
-    deleteAccount = () => {
-        console.log('delete account');
+    deleteAccountConfirmation = () => {
+        Alert.alert(
+            translate('settingsMenuScreen.deleteAccount'),
+            translate('settingsMenuScreen.deleteAccountDescription'),
+            [
+                {
+                    text: translate('settingsMenuScreen.cancel'),
+                    style: 'cancel'
+                },
+                {
+                    text: translate('settingsMenuScreen.deleteAccount'),
+                    onPress: () => this.tryToDeleteAccount(),
+                    style: 'destructive'
+                }
+            ],
+            {
+                cancelable: true
+            }
+        );
+    }
+
+    tryToDeleteAccount = async () => {
+        try {
+            trackOnSegment('User deleted their account', {
+                uid: this.props.uid
+            });
+
+            await deleteUserAccount(this.props.uid);
+
+            Alert.alert(
+                translate('settingsMenuScreen.accountDeleted'),
+                translate('settingsMenuScreen.accountDeletedDescription'),
+                [
+                    {
+                        text: 'Ok',
+                        onPress: async () => {
+                            await signOut();
+                            this.props.onClose();
+                        }
+                    }
+                ]
+            );
+        } catch (error) {
+            Alert.alert(
+                translate('settingsMenuScreen.accountDeletionError'),
+                translate('settingsMenuScreen.accountDeletionErrorDescription'),
+                [
+                    {
+                        text: 'Ok'
+                    }
+                ],
+                {
+                    cancelable: true
+                }
+            );
+        }
+    }
+
+    toggleStreamsNotifications = () => {
+        const enableNotifications = this.props.notificationSettings.streamersSubscriptions != null ? !this.props.notificationSettings.streamersSubscriptions : false;
+        const userLanguage = getLocaleLanguage();
+
+        if (enableNotifications) {
+            Object.keys(this.props.userSubscriptions).forEach((streamerId) => {
+                messaging.subscribeToTopic(`${streamerId}_reminders_${userLanguage}`);
+                messaging.subscribeToTopic(`${streamerId}_cancelations_${userLanguage}`);
+                messaging.subscribeToTopic(`${streamerId}_changes_${userLanguage}`);
+            });
+        } else {
+            Object.keys(this.props.userSubscriptions).forEach((streamerId) => {
+                unsubscribeUserFromTopic(`${streamerId}_reminders_${userLanguage}`);
+                unsubscribeUserFromTopic(`${streamerId}_cancelations_${userLanguage}`);
+                unsubscribeUserFromTopic(`${streamerId}_changes_${userLanguage}`);
+            });
+        }
+
+        updateNotificationSettings(this.props.uid, 'streamersSubscriptions', enableNotifications);
     }
 
     render() {
+        const twitchLinked = this.props.twitchId && this.props.twitchUsername;
+
         return (
             <Modal
                 visible={this.props.open}
@@ -84,23 +158,23 @@ class UserProfileModal extends Component {
                             <View style={styles.userInfoContainer}>
                                 <View style={styles.userImageContainer}>
                                     <Image
-                                        source={{ uri: this.state.userImage }}
+                                        source={{ uri: this.props.photoUrl }}
                                         style={styles.userImage}
                                     />
                                 </View>
                                 <Text style={styles.userUsername}
                                 numberOfLines={1}
                                 >
-                                    {`${this.state.userName}`}
+                                    {this.props.username}
                                 </Text>
                             </View>
                             <TouchableOpacity
                                 onPress={this.linkTwitch}
-                                disabled={this.state.twitchLinked}
-                                style={this.state.twitchLinked ? styles.twitchLinkedButton : styles.twitchLinkButton}>
+                                disabled={twitchLinked}
+                                style={twitchLinked ? styles.twitchLinkedButton : styles.twitchLinkButton}>
                                 <images.svg.twitchIcon style={styles.twitchIcon} />
                                 <Text style={styles.twitchLinkedText}>
-                                    {this.state.twitchLinked ?
+                                    {twitchLinked ?
                                         <>
                                             {`Linked`}
                                         </>
@@ -120,7 +194,7 @@ class UserProfileModal extends Component {
                                 <View style={[styles.qoinsDisplayContainer, styles.marginTop16]}>
                                     <images.svg.qoin style={styles.bigQoin} />
                                     <Text style={styles.qoinsNumber}>
-                                        {`${this.state.qoins}`}
+                                        {this.props.qoins}
                                     </Text>
                                 </View>
                             </View>
@@ -148,7 +222,7 @@ class UserProfileModal extends Component {
                                     <View style={styles.supportDataContainer}>
                                         <images.svg.qoin style={styles.bigQoin} />
                                         <Text style={styles.qoinsNumber}>
-                                            {`${this.state.totalQoinsSent}`}
+                                            {this.props.qoinsDonated}
                                         </Text>
                                     </View>
                                     <Text style={styles.qoinsSubtext}>
@@ -179,8 +253,8 @@ class UserProfileModal extends Component {
                                     </Text>
                                 </View>
                                 <Switch
-                                    onChange={this.toggleNewStreamsNotifications}
-                                    value={this.state.notificateNewStreams}
+                                    onChange={this.toggleStreamsNotifications}
+                                    value={this.props.notificationSettings.streamersSubscriptions != null ? this.props.notificationSettings.streamersSubscriptions : true}
                                 />
                             </View>
                             <View style={[styles.marginTop16, styles.switchGroupContainer]}>
@@ -193,8 +267,8 @@ class UserProfileModal extends Component {
                                     </Text>
                                 </View>
                                 <Switch
-                                    onChange={this.toggleScheduledStreamsNotifications}
-                                    value={this.state.notificateScheduledStreams}
+                                    onChange={() => updateNotificationSettings(this.props.uid, 'scheduledStreams', this.props.notificationSettings.scheduledStreams != null ? !this.props.notificationSettings.scheduledStreams : false)}
+                                    value={this.props.notificationSettings.scheduledStreams != null ? this.props.notificationSettings.scheduledStreams : true}
                                 />
                             </View>
                         </View>
@@ -217,14 +291,14 @@ class UserProfileModal extends Component {
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity
-                            onPress={this.logOut}
+                            onPress={this.closeSession}
                             style={[styles.subCategoryContanier, styles.marginTop24]}>
                             <Text style={styles.finalButtonsText}>
                                 {`Log Out`}
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={this.deleteAccount}
+                            onPress={this.deleteAccountConfirmation}
                             style={[styles.subCategoryContanier, styles.marginTop24]}>
                             <Text style={[styles.finalButtonsText, styles.deleteTextColor]}>
                                 {`Delete Account`}
@@ -238,4 +312,18 @@ class UserProfileModal extends Component {
     }
 }
 
-export default UserProfileModal;
+function mapStateToProps(state) {
+    return {
+        uid: state.userReducer.user.id,
+        username: state.userReducer.user.userName,
+        photoUrl: state.userReducer.user.photoUrl,
+        qoins: state.userReducer.user.credits,
+        qoinsDonated: state.userReducer.user.UserRewards && state.userReducer.user.UserRewards.donations && state.userReducer.user.UserRewards.donations.qoins ? state.userReducer.user.UserRewards.donations.qoins : 0,
+        twitchId: state.userReducer.user.twitchId,
+        twitchUsername: state.userReducer.user.twitchUsername,
+        notificationSettings: state.userReducer.user.notificationSettings || {},
+        userSubscriptions: state.userReducer.user.userToStreamersSubscriptions || {}
+    };
+}
+
+export default connect(mapStateToProps)(UserProfileModal);

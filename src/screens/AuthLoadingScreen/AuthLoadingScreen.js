@@ -256,6 +256,8 @@ class AuthLoadingScreen extends Component {
         const profile = await getStreamerPublicProfile(streamerId);
         if (profile.exists()) {
             this.props.navigation.navigate('StreamerProfile', { streamerData: { ...profile.val(), streamerId } });
+        } else {
+            this.setState({ linkOnProgress: false });
         }
     }
 

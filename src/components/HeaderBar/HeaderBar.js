@@ -4,30 +4,18 @@ import {
     View,
     Linking,
     Image,
-    Text,
-    TouchableOpacity,
-    Modal,
-    ScrollView,
-    Switch
+    TouchableOpacity
 } from 'react-native';
-import { Svg, Circle } from 'react-native-svg';
 import { styles } from './style';
 import { connect } from 'react-redux';
 
 import images from './../../../assets/images';
 
-import HighlightModal from '../HighlightModal/HighlightModal';
-
 import { storeData, retrieveData } from '../../utilities/persistance';
-import { HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';
-import { translate } from '../../utilities/i18';
+import { HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';;
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
-import QaplaText from '../QaplaText/QaplaText';
-import EditProfileImgBadge from '../EditProfileImgBadge/EditProfileImgBadge';
-import { BlurView } from '@react-native-community/blur';
 import UserProfileModal from '../UserProfileModal/UserProfileModal';
 
-const NotificationIcon = images.svg.notificationIcon;
 const DiscordIcon = images.svg.discordIcon;
 const SettingsIcon = images.svg.settingsIcon;
 const DuotoneDefaultIcon = images.svg.duotoneDefault;
@@ -174,33 +162,29 @@ class HeaderBar extends Component {
         });
     }
 
+    onOpenProfile = () => {
+        if (this.props.uid) {
+            this.setState({ showProfile: true });
+        } else {
+            this.props.navigation.navigate('Auth', {
+                onSuccessSignIn: () => this.setState({ showProfile: true })
+            });
+        }
+    }
+
     render() {
         if (this.props.currentScreenId !== 'StreamerProfile') {
             return (
                 <SafeAreaView style={styles.sfvContainer} testID='container'>
                     <View style={styles.topNavBarView}>
-                        {/* {this.props.currentScreenId !== 'Profile' ? */}
                         <View>
                             <Image
                                 source={images.png.qaplaHeaderIcon.img}
                                 style={styles.qaplaImage} />
                         </View>
-                        {/* :
-                        <View style={styles.profileImageContainer}>
-                            {this.props.userName && this.props.userName.length <= 14 ?
-                            <QaplaText style={styles.userName}>
-                                    Hi! {this.props.userName && this.props.userName}
-                            </QaplaText>
-                            :
-                            <QaplaText style={styles.userName}>
-                                {`${this.props.userName ? this.props.userName.substring(0, 14) : ''}...`}
-                            </QaplaText>
-                            }
-                        </View>
-                    } */}
                         <View style={styles.iconsContainer}>
                             <TouchableOpacity
-                                onPress={() => this.setState({ showProfile: true })}
+                                onPress={this.onOpenProfile}
                                 style={{
                                     backgroundColor: '#fff',
                                     width: 32,
@@ -210,7 +194,7 @@ class HeaderBar extends Component {
                                     marginRight: 16,
                                 }}>
                                 <Image
-                                    source={{ uri: 'https://static-cdn.jtvnw.net/jtv_user_pictures/1e6d9d8b-a96f-4f87-8405-558a0c389bd7-profile_image-70x70.png' }}
+                                    source={{ uri: this.props.photoUrl }}
                                     style={{
                                         flex: 1,
                                     }}
@@ -254,7 +238,9 @@ class HeaderBar extends Component {
 
 function mapStateToProps(state) {
     return {
+        uid: state.userReducer.user.id,
         hg1CreateMatch: state.highlightsReducer.hg1CreateMatch,
+        photoUrl: state.userReducer.user.photoUrl,
         currentScreenId: state.screensReducer.currentScreenId,
         activity: state.userReducer.user.activity,
         matchNotifications: state.userReducer.user.notificationMatch,

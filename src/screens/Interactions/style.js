@@ -537,15 +537,21 @@ export default styles = StyleSheet.create({
     },
     prepaidReactionsContainer: {
         backgroundColor: '#1C1E64',
-        marginTop: heightPercentageToPx(2.95),
-        padding: widthPercentageToPx(2.13),
+        borderRadius: 10,
+        maxWidth: '50%'
+    },
+    prepaidReactionsBody: {
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'center'
+    },
+    reactionsText: {
+        fontSize: 16,
+        fontWeight: '500',
+        color: '#FFF'
     },
     interactionIconMargin: {
-        marginRight: widthPercentageToPx(1.6),
-        maxWidth: widthPercentageToPx(4.26),
-        maxHeight: widthPercentageToPx(4.26),
+        borderColor: '#FFF',
+        borderWidth: 1,
     },
     marginTop24: {
         marginTop: heightPercentageToPx(2.95),

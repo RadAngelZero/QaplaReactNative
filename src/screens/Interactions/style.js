@@ -33,7 +33,7 @@ export default styles = StyleSheet.create({
         color: '#fff',
     },
     readyText: {
-        fontWeight: 700,
+        fontWeight: '700',
         fontSize: 16,
         color: '#0D1021'
     },

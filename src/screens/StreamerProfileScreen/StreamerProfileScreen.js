@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Image, View, ScrollView, Linking, Text, TouchableWithoutFeedback, Animated, Easing, SafeAreaView } from 'react-native';
+import { TouchableOpacity, Image, View, ScrollView, Linking, Text, TouchableWithoutFeedback, Animated } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
 import Images from '../../../assets/images';
-import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 import QaplaChip from '../../components/QaplaChip/QaplaChip';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
-import { getStreamerPublicProfile, getStreamerSocialLinks, getStreamerStreamingStatus, getUserReactionsCount, streamersHasOverlayActive, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile, userHaveTwitchId } from '../../services/database';
+import { getStreamerPublicProfile, getStreamerSocialLinks, getStreamerStreamingStatus, getUserReactionsCount, streamersHasOverlayActive, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile } from '../../services/database';
 import { getStreamerProfilePhotoUrl } from '../../services/storage';
 import { copyDataToClipboard } from '../../utilities/utils';
 import { getLocaleLanguage, translate } from './../../utilities/i18';
 import styles from './style';
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
-import InteractionsShortcut from '../../components/InteractionsUserProfile/InteractionsShortcut';
+import InteractionsShortcut from '../../components/InteractionsShortcut/InteractionsShortcut';
 import { trackOnSegment } from '../../services/statistics';
 
 const socialMediaIcons = {

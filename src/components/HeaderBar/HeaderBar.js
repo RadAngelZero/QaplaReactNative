@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import images from './../../../assets/images';
 
 import { storeData, retrieveData } from '../../utilities/persistance';
-import { HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';;
+import { defaultUserImages, HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';;
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import UserProfileModal from '../UserProfileModal/UserProfileModal';
 
@@ -28,11 +28,13 @@ class HeaderBar extends Component {
         this.state = {
             showHg2Modal: false,
             showProfile: false,
+            userImage: { uri: true, img: this.props.photoUrl }
         };
     }
 
     componentDidMount() {
         this.checkHighlightsFlags();
+        this.setUserDefaultImage();
     }
 
     shouldComponentUpdate(nextProp, nextState) {
@@ -44,6 +46,20 @@ class HeaderBar extends Component {
         }
 
         return true;
+    }
+
+    setUserDefaultImage = async () => {
+        if (!this.props.photoUrl) {
+            let userImageIndex = await retrieveData('default-user-image');
+
+            if (!userImageIndex) {
+                userImageIndex = Math.floor(Math.random() * defaultUserImages.length);
+
+                storeData('default-user-image', `${userImageIndex}`);
+            }
+
+            this.setState({ userImage: { uri: false, img: defaultUserImages[userImageIndex].img } });
+        }
     }
 
     /**
@@ -193,12 +209,16 @@ class HeaderBar extends Component {
                                     overflow: 'hidden',
                                     marginRight: 16,
                                 }}>
-                                <Image
-                                    source={{ uri: this.props.photoUrl }}
-                                    style={{
-                                        flex: 1,
-                                    }}
-                                />
+                                {this.state.userImage &&
+                                    <Image
+                                        source={this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img}
+                                        style={{
+                                            flex: 1,
+                                            height: undefined,
+                                            aspectRatio: 1
+                                        }}
+                                    />
+                                }
                             </TouchableOpacity>
                             <QaplaIcon onPress={this.onActivityPressBttn} touchableStyle={styles.leftIconTouchableStyle}>
                                 {this.userHaveUnreadActivity() ?

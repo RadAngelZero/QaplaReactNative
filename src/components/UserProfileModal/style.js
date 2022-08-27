@@ -52,6 +52,8 @@ export const styles = StyleSheet.create({
     },
     userImage: {
         flex: 1,
+        height: undefined,
+        aspectRatio: 1
     },
     userUsername: {
         maxWidth: widthPercentageToPx(26.66),

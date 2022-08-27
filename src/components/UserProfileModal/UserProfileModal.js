@@ -12,6 +12,8 @@ import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { updateNotificationSettings } from '../../services/database';
 import { subscribeUserToTopic, unsubscribeUserFromTopic } from '../../services/messaging';
 import { messaging } from '../../utilities/firebase';
+import { retrieveData, storeData } from '../../utilities/persistance';
+import { defaultUserImages } from '../../utilities/Constants';
 
 class UserProfileModal extends Component {
     state = {
@@ -19,6 +21,25 @@ class UserProfileModal extends Component {
         notificateNewStreams: false,
         notificateScheduledStreams: false,
         twitchLinked: false,
+        userImage: { uri: true, img: this.props.photoUrl }
+    }
+
+    componentDidMount() {
+        this.setUserDefaultImage();
+    }
+
+    setUserDefaultImage = async () => {
+        if (!this.props.photoUrl) {
+            let userImageIndex = await retrieveData('default-user-image');
+
+            if (!userImageIndex) {
+                userImageIndex = Math.floor(Math.random() * defaultUserImages.length);
+
+                storeData('default-user-image', `${userImageIndex}`);
+            }
+
+            this.setState({ userImage: { uri: false, img: defaultUserImages[userImageIndex].img } });
+        }
     }
 
     linkTwitch = () => {
@@ -158,7 +179,7 @@ class UserProfileModal extends Component {
                             <View style={styles.userInfoContainer}>
                                 <View style={styles.userImageContainer}>
                                     <Image
-                                        source={{ uri: this.props.photoUrl }}
+                                        source={this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img}
                                         style={styles.userImage}
                                     />
                                 </View>

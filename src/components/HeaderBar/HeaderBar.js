@@ -17,7 +17,6 @@ import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import UserProfileModal from '../UserProfileModal/UserProfileModal';
 
 const DiscordIcon = images.svg.discordIcon;
-const SettingsIcon = images.svg.settingsIcon;
 const DuotoneDefaultIcon = images.svg.duotoneDefault;
 const DuotoneActiveIcon = images.svg.duotoneActive;
 
@@ -228,14 +227,6 @@ class HeaderBar extends Component {
                             {this.props.currentScreenId !== 'Profile' &&
                                 <QaplaIcon onPress={this.sendToDiscord} touchableStyle={styles.rightIconTouchableStyle}>
                                     <DiscordIcon
-                                        height={30}
-                                        width={30}
-                                        fill='#FFF' />
-                                </QaplaIcon>
-                            }
-                            {this.props.currentScreenId === 'Profile' &&
-                                <QaplaIcon onPress={this.goToUserProfile} touchableStyle={styles.rightIconTouchableStyle}>
-                                    <SettingsIcon
                                         height={30}
                                         width={30}
                                         fill='#FFF' />

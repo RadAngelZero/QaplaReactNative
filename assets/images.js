@@ -18,7 +18,6 @@ import AlreadyChoosedClipIcon from './icons/video-clip-check.svg';
 import VerifyIcon from './icons/verificado.svg';
 import SupportIcon from './icons/support.svg';
 import DiscordIcon from './icons/discord.svg';
-import SettingsIcon from './icons/settings.svg';
 import EditIcon from './icons/edit.svg';
 import NoVerifiedIcon from './icons/sin-verificar.svg';
 import GoogleIcon from './icons/google-logo.svg';
@@ -284,7 +283,6 @@ const images = {
 		verifyIcon: VerifyIcon,
 		supportIcon: SupportIcon,
 		discordIcon: DiscordIcon,
-		settingsIcon: SettingsIcon,
 		editIcon: EditIcon,
 		noVerifiedIcon: NoVerifiedIcon,
 		qoinFlipIcon: QoinFlipIcon,

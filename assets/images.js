@@ -112,6 +112,8 @@ import EditSimple from './icons/EditSimple.svg';
 import CheckCircle from './icons/CheckCircle.svg';
 import ArrowDownWhite from './icons/arrowDownWhite.svg';
 import PlusIcon from './icons/PlusIcon.svg';
+import Interactions from './icons/interactions.svg';
+import DeleteIcon from './icons/Delete.svg';
 
 // Images
 const images = {
@@ -354,6 +356,7 @@ const images = {
 		appleAuth: AppleAuth,
 		googleAuth: GoogleAuth,
 		emailAuth: EmailAuth,
+		interactions: Interactions,
 		interactionsIcon: InteractionsIcon,
 		searchStreamerIcon: SearchStreamerIcon,
 		questionMark: QuestionMark,
@@ -374,6 +377,7 @@ const images = {
 		checkCircle: CheckCircle,
 		arrowDownWhite: ArrowDownWhite,
 		plusIcon: PlusIcon,
+		deleteIcon: DeleteIcon
 	},
 	gif: {
 		loadingStreamers: {
@@ -418,6 +422,12 @@ const images = {
 		},
 		maxChars: {
 			img: require('./gifs/maxChars.gif')
+		},
+		makeItPop: {
+			img: require('./gifs/makeItPop.gif')
+		},
+		slaaay: {
+			img: require('./gifs/slaaay.gif')
 		}
 	},
 };

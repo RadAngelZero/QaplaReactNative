@@ -629,11 +629,24 @@ export default styles = StyleSheet.create({
         lineHeight: heightPercentageToPx(6.52),
     },
     addonText: {
-        color: '#0D1021',
+        color: '#FFF',
         fontSize: 16,
         fontWeight: '700',
         lineHeight: heightPercentageToPx(2.33),
         marginBottom: heightPercentageToPx(1.35),
+    },
+    customTTSImage: {
+        height: heightPercentageToPx(6.5),
+        width: widthPercentageToPx(40)
+    },
+    deleteAddOnIconContainer: {
+        zIndex: 9999,
+        width: 36, // 18 Icon width + 18 extra touchable area
+        height: 38, // 20 Icon height + 18 extra touchable area
+        justifyContent: 'flex-end',
+        position: 'absolute',
+        top: 2,
+        right: 2
     },
     checkoutAddonQoinDisplayCointainer: {
         flexDirection: 'row',

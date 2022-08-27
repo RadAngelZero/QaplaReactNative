@@ -41,6 +41,7 @@ class InteractionsCheckout extends Component {
         sendingInteraction: false,
         totalOpen: false,
         emoji: '',
+        giphyText: null,
         emojiRainCost: 0,
         giphyTextCost: 0,
         localCosts: {}
@@ -69,7 +70,9 @@ class InteractionsCheckout extends Component {
                 interactionCost += cost;
             });
 
-            this.setState({ interactionCost: !this.state.emoji ? interactionCost : this.state.emojiRainCost + interactionCost });
+            const giphyText = this.props.navigation.getParam('giphyText', null);
+
+            this.setState({ interactionCost: !this.state.emoji ? interactionCost : this.state.emojiRainCost + interactionCost, giphyText });
         } else {
             this.setState({ minimum: 50, extraTip: 50 });
         }
@@ -116,7 +119,6 @@ class InteractionsCheckout extends Component {
                             const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
                             const mediaType = this.props.navigation.getParam('mediaType');
                             const message = this.props.navigation.getParam('message', null);
-                            const giphyText = this.props.navigation.getParam('giphyText', null);
                             const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
                             const costs = this.props.navigation.getParam('costs', {});
 
@@ -138,10 +140,10 @@ class InteractionsCheckout extends Component {
                                 }
                             }
 
-                            if (message && ((costs[CUSTOM_TTS_VOICE] && messageVoiceData) || giphyText)) {
+                            if (message && ((costs[CUSTOM_TTS_VOICE] && messageVoiceData) || this.state.giphyText)) {
                                 messageExtraData = {
                                     ...messageVoiceData,
-                                    giphyText: giphyText.original
+                                    giphyText: this.state.giphyText ? { ...this.state.giphyText.original, id: this.state.giphyText.id } : {}
                                 }
                             }
 
@@ -224,6 +226,21 @@ class InteractionsCheckout extends Component {
         });
     }
 
+    removeEmoji = () => {
+        this.setState({
+            emoji: '',
+            localCosts: {},
+            interactionCost: this.state.interactionCost - this.state.emojiRainCost
+        });
+    }
+
+    removeGiphyText = () => {
+        this.setState({
+            giphyText: null,
+            interactionCost: this.state.interactionCost - this.state.giphyTextCost
+        });
+    }
+
     navigateToCustomTTS = async () => {
         const costsObject = this.props.navigation.getParam('costs', {});
 
@@ -261,9 +278,9 @@ class InteractionsCheckout extends Component {
         const costs = this.props.navigation.getParam('costs', {});
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
         const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
-        const giphyText = this.props.navigation.getParam('giphyText', null);
         const showAddOnsOnCheckout = this.props.navigation.getParam('showAddOnsOnCheckout', true);
         const totalCost = this.state.interactionCost + this.state.extraTip;
+        const giphyText = this.state.giphyText;
 
         return (
             <View style={styles.container}>
@@ -360,9 +377,14 @@ class InteractionsCheckout extends Component {
                                             onPress={() => this.setState({ openEmojiSelector: true })}
                                             style={styles.AddonContainer}>
                                                 <ImageBackground
-                                                    source={images.png.InteractionGradient3.img}
+                                                    source={this.state.emoji ? images.png.InteractionGradient1.img : images.png.InteractionGradient3.img}
                                                     style={styles.checkoutAddonImageContainer}
                                                 >
+                                                    {this.state.emoji !== '' &&
+                                                        <TouchableOpacity onPress={this.removeEmoji} style={styles.deleteAddOnIconContainer}>
+                                                            <images.svg.deleteIcon  />
+                                                        </TouchableOpacity>
+                                                    }
                                                     <Text style={styles.addonEmojiText}>
                                                         {`${this.state.emoji || '🤡'}`}
                                                     </Text>
@@ -381,10 +403,16 @@ class InteractionsCheckout extends Component {
                                         {this.state.giphyTextCost !== 0 &&
                                             <TouchableOpacity style={styles.AddonContainer} onPress={this.navigateToCustomTTS}>
                                                 <ImageBackground
-                                                    source={images.png.InteractionGradient6.img}
+                                                    source={giphyText ? images.png.InteractionGradient1.img : images.png.InteractionGradient6.img}
                                                     style={styles.checkoutAddonImageContainer}
                                                 >
-                                                    <Text style={styles.addonText}>
+                                                    {giphyText &&
+                                                        <TouchableOpacity onPress={this.removeGiphyText} style={styles.deleteAddOnIconContainer}>
+                                                            <images.svg.deleteIcon  />
+                                                        </TouchableOpacity>
+                                                    }
+                                                    <Image style={styles.customTTSImage} source={giphyText ? images.gif.slaaay.img : images.gif.makeItPop.img} />
+                                                    <Text style={[styles.addonText, { color: giphyText ? '#FFF' : '#0D1021' }]}>
                                                         {`Custom TTS`}
                                                     </Text>
                                                     <View style={styles.checkoutAddonQoinDisplayCointainer}>
@@ -450,7 +478,7 @@ class InteractionsCheckout extends Component {
                                     </View>
                                     {Object.keys(costs).map((product) => (
                                         <>
-                                            {costs[product] !== 0 &&
+                                            {(this.state.giphyText || product !== GIPHY_TEXT) && costs[product] !== 0 &&
                                                 <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
                                                     <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
                                                         {product !== CUSTOM_TTS_VOICE ?

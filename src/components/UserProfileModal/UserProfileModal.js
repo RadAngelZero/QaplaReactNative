@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Modal, TouchableOpacity, ScrollView, Image, Text, Switch, Linking, Alert } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import { connect } from 'react-redux';
+import { withNavigation } from 'react-navigation';
 
 import images from '../../../assets/images';
 import { styles } from './style';
@@ -26,6 +27,11 @@ class UserProfileModal extends Component {
 
     componentDidMount() {
         this.setUserDefaultImage();
+    }
+
+    getQoins = () => {
+        this.props.navigation.navigate('BuyQoins');
+        this.props.onClose();
     }
 
     setUserDefaultImage = async () => {
@@ -347,4 +353,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(UserProfileModal);
+export default connect(mapStateToProps)(withNavigation(UserProfileModal));

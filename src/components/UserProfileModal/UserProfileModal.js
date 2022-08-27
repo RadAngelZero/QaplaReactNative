@@ -10,23 +10,29 @@ import { signOut } from '../../services/auth';
 import { trackOnSegment } from '../../services/statistics';
 import { deleteUserAccount } from '../../services/functions';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
-import { updateNotificationSettings } from '../../services/database';
+import { getQlanData, updateNotificationSettings } from '../../services/database';
 import { unsubscribeUserFromTopic } from '../../services/messaging';
 import { messaging } from '../../utilities/firebase';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import { defaultUserImages } from '../../utilities/Constants';
+import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
+import JoinQlanModal from '../JoinQlanModal/JoinQlanModal';
 
 class UserProfileModal extends Component {
     state = {
         mySupportOpen: false,
         notificateNewStreams: false,
         notificateScheduledStreams: false,
-        twitchLinked: false,
-        userImage: { uri: true, img: this.props.photoUrl }
+        showLinkWithTwitchModal: false,
+        showJoinQlanModal: false,
+        userImage: { uri: true, img: this.props.photoUrl },
+        qlanData: null,
+        userWantsToJoinAQlan: false
     }
 
     componentDidMount() {
         this.setUserDefaultImage();
+        this.getUserQlanData();
     }
 
     getQoins = () => {
@@ -46,10 +52,6 @@ class UserProfileModal extends Component {
 
             this.setState({ userImage: { uri: false, img: defaultUserImages[userImageIndex].img } });
         }
-    }
-
-    linkTwitch = () => {
-        console.log('link twitch');
     }
 
     toggleSupportDisplay = () => this.setState({ mySupportOpen: !this.state.mySupportOpen });
@@ -157,6 +159,25 @@ class UserProfileModal extends Component {
         updateNotificationSettings(this.props.uid, 'streamersSubscriptions', enableNotifications);
     }
 
+    getUserQlanData = async () => {
+        if (this.props.qlanId) {
+            const qlanData = await getQlanData(this.props.qlanId);
+
+            console.log(qlanData.val());
+            this.setState({ qlanData: { ...qlanData.val() } });
+        }
+    }
+
+    openJoinQlanModal = () => {
+        this.setState({ userWantsToJoinAQlan: true }, () => {
+            if (this.props.twitchId && this.props.twitchUsername) {
+                this.setState({ showJoinQlanModal: true });
+            } else {
+                this.setState({ showLinkWithTwitchModal: true });
+            }
+        });
+    }
+
     render() {
         const twitchLinked = this.props.twitchId && this.props.twitchUsername;
 
@@ -196,7 +217,7 @@ class UserProfileModal extends Component {
                                 </Text>
                             </View>
                             <TouchableOpacity
-                                onPress={this.linkTwitch}
+                                onPress={() => this.setState({ showLinkWithTwitchModal: true })}
                                 disabled={twitchLinked}
                                 style={twitchLinked ? styles.twitchLinkedButton : styles.twitchLinkButton}>
                                 <images.svg.twitchIcon style={styles.twitchIcon} />
@@ -259,12 +280,16 @@ class UserProfileModal extends Component {
                             }
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={this.addQreatorCode}
+                            onPress={this.openJoinQlanModal}
                             style={[styles.subCategoryContanier, styles.marginTop24, styles.mySupportSubContainer]}>
                             <Text style={styles.subCategoryHeaderText}>
-                                {`🎁 Add a Qreator Code`}
+                                {`🎁 ${this.state.qlanData ? this.state.qlanData.name : 'Add a Qreator Code'}`}
                             </Text>
-                            <images.svg.plusIcon />
+                            {this.state.qlanData ?
+                                <images.svg.editQreatorCodeIcon />
+                                :
+                                <images.svg.plusIcon />
+                            }
                         </TouchableOpacity>
                         <View style={[styles.subCategoryContanier, styles.marginTop24]}>
                             <Text style={styles.subCategoryHeaderText}>
@@ -334,7 +359,18 @@ class UserProfileModal extends Component {
                         <View style={styles.bottomSeparation} />
                     </ScrollView>
                 </View>
-            </Modal >
+                <LinkTwitchAccountModal open={this.state.showLinkWithTwitchModal}
+                    onClose={() => this.setState({ showLinkWithTwitchModal: false })}
+                    onLinkSuccessful={this.state.userWantsToJoinAQlan ? this.openJoinQlanModal : null}
+                    linkingWithQreatorCode={this.state.userWantsToJoinAQlan} />
+                <JoinQlanModal open={this.state.showJoinQlanModal}
+                    onClose={() => this.setState({ showJoinQlanModal: false })}
+                    uid={this.props.uid}
+                    qlanId={this.props.qlanId}
+                    userName={this.props.username}
+                    twitchUsername={this.props.twitchUsername}
+                    onSuccess={this.getUserQlanData} />
+            </Modal>
         );
     }
 }
@@ -349,7 +385,8 @@ function mapStateToProps(state) {
         twitchId: state.userReducer.user.twitchId,
         twitchUsername: state.userReducer.user.twitchUsername,
         notificationSettings: state.userReducer.user.notificationSettings || {},
-        userSubscriptions: state.userReducer.user.userToStreamersSubscriptions || {}
+        userSubscriptions: state.userReducer.user.userToStreamersSubscriptions || {},
+        qlanId: state.userReducer.user.qlanId
     };
 }
 

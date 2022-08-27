@@ -65,6 +65,7 @@ export default styles = StyleSheet.create({
         marginBottom: 30
     },
     textInput: {
+        marginTop: 36,
         backgroundColor: '#202750',
         height: heightPercentageToPx(getPercentHeight(64)),
         width: widthPercentageToPx(getPercentWidth(260)),
@@ -117,4 +118,7 @@ export default styles = StyleSheet.create({
         color: '#fff',
         marginBottom: heightPercentageToPx(5.5)
     },
+    boldConfirmModalSubtitle: {
+        fontWeight: '700'
+    }
 });

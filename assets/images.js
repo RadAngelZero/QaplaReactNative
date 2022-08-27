@@ -114,6 +114,7 @@ import ArrowDownWhite from './icons/arrowDownWhite.svg';
 import PlusIcon from './icons/PlusIcon.svg';
 import Interactions from './icons/interactions.svg';
 import DeleteIcon from './icons/Delete.svg';
+import EditQreatorCodeIcon from './icons/EditQreatorCode.svg';
 
 // Images
 const images = {
@@ -377,7 +378,8 @@ const images = {
 		checkCircle: CheckCircle,
 		arrowDownWhite: ArrowDownWhite,
 		plusIcon: PlusIcon,
-		deleteIcon: DeleteIcon
+		deleteIcon: DeleteIcon,
+		editQreatorCodeIcon: EditQreatorCodeIcon
 	},
 	gif: {
 		loadingStreamers: {

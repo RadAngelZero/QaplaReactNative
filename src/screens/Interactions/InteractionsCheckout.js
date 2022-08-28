@@ -356,11 +356,11 @@ class InteractionsCheckout extends Component {
                             <Image source={{ uri: 'https://media.giphy.com/media/5QP99om3Co7s8YJPez/giphy.gif' }}
                                 style={styles.onlyQoinsImage} />
                             <Text style={[styles.whiteText, styles.sentText, styles.onlyQoinsText]}>
-                                {`${translate('interactions.checkout.supportP1')} `}
+                                {translate('interactions.checkout.supportP1')}
                                 <Text style={styles.accentTextColor}>
                                     {this.state.streamerName}
                                 </Text>
-                                {`${translate('interactions.checkout.supportP2')}`}
+                                {translate('interactions.checkout.supportP2')}
                             </Text>
                         </View>
                     }
@@ -369,7 +369,7 @@ class InteractionsCheckout extends Component {
                             {showAddOnsOnCheckout &&
                                 <View style={styles.marginTop24}>
                                     <Text style={styles.checkoutSectionHeaderText}>
-                                        {`Add Ons`}
+                                        Add Ons
                                     </Text>
                                     <View style={styles.addOnsContainer}>
                                         {this.state.emojiRainCost !== 0 &&
@@ -386,10 +386,10 @@ class InteractionsCheckout extends Component {
                                                         </TouchableOpacity>
                                                     }
                                                     <Text style={styles.addonEmojiText}>
-                                                        {`${this.state.emoji || '🤡'}`}
+                                                        {this.state.emoji || '🤡'}
                                                     </Text>
                                                     <Text style={styles.addonText}>
-                                                        {`Emoji raid`}
+                                                        Emoji raid
                                                     </Text>
                                                     <View style={styles.checkoutAddonQoinDisplayCointainer}>
                                                         <images.svg.qoin style={styles.addonQoin} />
@@ -429,7 +429,7 @@ class InteractionsCheckout extends Component {
                             }
                             <View style={styles.marginTop24}>
                                 <Text style={styles.checkoutSectionHeaderText}>
-                                    {`Send Extra Tip`}
+                                    {translate('interactions.checkout.sendExtraTip')}
                                 </Text>
                                 <View style={[styles.extraTipOptionsContainer, styles.marginTop16]}>
                                 <ExtraTip value={200}
@@ -441,7 +441,7 @@ class InteractionsCheckout extends Component {
                                     <ExtraTip value={1000}
                                         onPress={this.addTip}
                                         selected={this.state.extraTip === 1000} />
-                                    <ExtraTip value={'Other'}
+                                    <ExtraTip value={translate('interactions.checkout.other')}
                                         onPress={this.addCustomTip}
                                         selected={this.state.extraTip !== 0 && this.state.extraTip !== 200 && this.state.extraTip !== 500 && this.state.extraTip !== 1000} />
                                 </View>
@@ -516,7 +516,7 @@ class InteractionsCheckout extends Component {
                             }
                             <TouchableOpacity style={styles.checkoutSendButton} onPress={this.onSendInteraction}>
                                 <Text style={styles.checkoutSendButtonText}>
-                                    Send Live Interaction
+                                    {translate(`interactions.checkout.sendInteraction`)}
                                 </Text>
                             </TouchableOpacity>
                             <View style={styles.checkoutMarginDisplay} />
@@ -552,7 +552,9 @@ class InteractionsCheckout extends Component {
                                 fontSize: 22,
                                 fontWeight: '700',
                                 lineHeight: 32,
-                            }}>Choose an Emoji</Text>
+                            }}>
+                                {translate(`interactions.checkout.emojiModal.chooseAnEmoji`)}
+                            </Text>
                             <LinearGradient
                                 colors={['#2D07FA', '#A716EE']}
                                 style={{
@@ -579,7 +581,7 @@ class InteractionsCheckout extends Component {
                                     lineHeight: 19,
                                     marginLeft: 8,
                                 }}>
-                                    {`100`}
+                                    {this.state.emojiRainCost}
                                 </Text>
                             </LinearGradient>
                         </View>

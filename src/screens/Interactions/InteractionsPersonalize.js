@@ -110,7 +110,7 @@ class InteractionsPersonalize extends Component {
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <View style={styles.headerContainer}>
                             <Text style={[styles.whiteText, styles.screenHeaderText]}>
-                                {`${translate('interactions.personalize.personalizeYourInteraction')}`}
+                                {translate('interactions.personalize.personalizeYourInteraction')}
                             </Text>
                             {/* <TouchableOpacity style={styles.helpButton}>
                             <images.svg.questionMark />
@@ -152,9 +152,7 @@ class InteractionsPersonalize extends Component {
                         </View>
                         <View style={[styles.headerContainer, styles.headerMargins]}>
                             <Text style={[styles.whiteText, styles.screenHeaderText]}>
-                                {/* {`${translate('interactions.personalize.personalizeYourInteraction')}`} */}
-                                {`Pre-made clips`}
-                                {/* {`TTS Personalizado`} */}
+                                {translate('interactions.personalize.clips')}
                             </Text>
                             {/* <TouchableOpacity style={styles.helpButton}>
                             <images.svg.questionMark />
@@ -187,8 +185,7 @@ class InteractionsPersonalize extends Component {
                         }
                         <View style={[styles.headerContainer, styles.headerMargins]}>
                             <Text style={[styles.whiteText, styles.screenHeaderText]}>
-                                {/* {`${translate('interactions.personalize.personalizeYourInteraction')}`} */}
-                                {`Custom TTS`}
+                                {translate('interactions.personalize.giphyText')}
                             </Text>
                             {/* <TouchableOpacity style={styles.helpButton}>
                                 <images.svg.questionMark />

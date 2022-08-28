@@ -644,7 +644,9 @@
         },
         "personalize": {
             "personalizeYourInteraction": "Customize your reaction",
-            "onlySend": "Only send"
+            "onlySend": "Only send",
+            "clips": "Pre-made clips",
+            "giphyText": "Custom TTS"
         },
         "addVisual": {
             "addVisual": "Add a GIF, Sticker or Meme to your reaction"
@@ -683,7 +685,16 @@
         "TTS": {
             "writeYourMessage": "Type your message",
             "whatYouWantToSay": "🗣 What do you want to say?",
-            "TTS": "Text-to-Speech"
+            "TTS": "Text-to-Speech",
+            "chooseABotVoice": "🔥 Slaaay\n🤖 Now choose a bot voice:",
+            "readyToSend": "👌 Ready to send?",
+            "editMessage": "Edit message",
+            "chooseAnotherVoice": "Choose another bot voice",
+            "ready": "Ready"
+        },
+        "insertGiphyText": {
+            "useCustomTTS": "Use a custom TTS",
+            "cutDownTextWarning": "Cut down your message to 50 characters or less to use a Custom TTS"
         },
         "checkout": {
             "my": "My",
@@ -703,8 +714,11 @@
             "areYouSure": "Are you sure you want to discard your reaction?",
             "yes": "Yes",
             "no": "No",
-            "modal": {
-                "sendInteraction": "Send Live Interaction"
+            "sendExtraTip": "Send Extra Tip",
+            "other": "Other",
+            "sendInteraction": "Send Reaction",
+            "emojiModal": {
+                "chooseAnEmoji": "Choose an Emoji"
             }
         },
         "final": {

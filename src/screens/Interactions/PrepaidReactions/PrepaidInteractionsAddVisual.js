@@ -76,50 +76,6 @@ class PrepaidInteractionsAddVisual extends Component {
                             hideCost
                             icon={images.svg.interactionsMemes}
                         />
-                        {/* <TouchableOpacity
-                            onPress={() => console.log('c')}
-                            style={styles.personalizeButtonContainer}
-                        >
-                            <ImageBackground
-                                source={images.png.InteractionGradient2.img}
-                                style={styles.personalizeButtonBackgroundImage}
-                            >
-                                <View style={styles.personalizeButtonIconContainer}>
-                                    <images.svg.interactionsClip />
-                                </View>
-                                <Text style={styles.personalizeButtonIconText} >
-                                    Clips
-                                </Text>
-                                <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                    <images.svg.qoin style={styles.qoin} />
-                                    <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                        {this.state.ClipsCost}
-                                    </Text>
-                                </View>
-                            </ImageBackground>
-                        </TouchableOpacity> */}
-                        {/* <TouchableOpacity
-                        onPress={() => console.log('d')}
-                        style={styles.personalizeButtonContainer}
-                    >
-                        <ImageBackground
-                            source={images.png.InteractionGradient5.img}
-                            style={styles.personalizeButtonBackgroundImage}
-                        >
-                            <View style={styles.personalizeButtonIconContainer}>
-                                <images.svg.interactionsTtGiphy />
-                            </View>
-                            <Text style={styles.personalizeButtonIconText} >
-                                Texto Giphy
-                            </Text>
-                            <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                <images.svg.qoin style={styles.qoin} />
-                                <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                    {'50'}
-                                </Text>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity> */}
                     </View>
                 </View>
                 <View style={[styles.onlySendQoinsContainer, styles.onlySendTTS]}>

@@ -16,6 +16,8 @@ import {
 import styles from './style';
 import images from '../../../assets/images';
 import { translate } from '../../utilities/i18';
+import LinearGradient from 'react-native-linear-gradient';
+import { GIPHY_TEXT } from '../../utilities/Constants';
 
 class InteractionsInsertGiphyText extends Component {
     state = {
@@ -62,21 +64,64 @@ class InteractionsInsertGiphyText extends Component {
 
     render() {
         const showCutTextWarning = this.props.navigation.getParam('showCutTextWarning', false);
+        const isAddOn = this.props.navigation.getParam('isAddOn', false);
+        const costsObject = this.props.navigation.getParam('costs', {});
 
         return (
             <TouchableWithoutFeedback onPress={this.hideKeyboard}>
                 <SafeAreaView style={styles.container}>
                     <View style={styles.insertGiphyTextContainer}>
-                        <View style={[styles.headerContainer, styles.insertGiphyTextHeader]}>
-                            <Text style={[styles.whiteText, styles.screenHeaderText]}>
-                                {`${translate('interactions.personalize.personalizeYourInteraction')}`}
+                        <View style={{
+                            marginTop: 24,
+                            marginLeft: 16,
+                            marginBottom: 20,
+                            flexDirection: 'row',
+                        }}>
+                            <Text style={{
+                                color: '#fff',
+                                fontSize: 22,
+                                fontWeight: '700',
+                                lineHeight: 32,
+                            }}>
+                                {translate('interactions.insertGiphyText.useCustomTTS')}
                             </Text>
+                            {isAddOn && costsObject[GIPHY_TEXT] &&
+                                <LinearGradient
+                                    colors={['#2D07FA', '#A716EE']}
+                                    style={{
+                                        paddingVertical: 6,
+                                        paddingHorizontal: 13,
+                                        marginLeft: 8,
+                                        borderRadius: 10,
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        justifyContent: 'flex-start',
+                                        alignSelf: 'flex-start',
+                                    }}
+                                    useAngle
+                                    angle={90}
+                                >
+                                    <images.svg.qoin style={{
+                                        maxWidth: 16,
+                                        maxHeight: 16,
+                                    }} />
+                                    <Text style={{
+                                        color: '#fff',
+                                        fontSize: 16,
+                                        fontWeight: '700',
+                                        lineHeight: 19,
+                                        marginLeft: 8,
+                                    }}>
+                                        {costsObject[GIPHY_TEXT]}
+                                    </Text>
+                                </LinearGradient>
+                            }
                         </View>
                         <View style={{ alignItems: 'center' }}>
                             <Image source={images.gif.maxChars.img} />
                             {showCutTextWarning &&
                                 <Text style={styles.insertGiphyTextLimit}>
-                                    Cut down your message to 50 characters or less to use a Custom TTS
+                                    {translate('interactions.insertGiphyText.cutDownTextWarning')}
                                 </Text>
                             }
                         </View>

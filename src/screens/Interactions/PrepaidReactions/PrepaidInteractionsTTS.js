@@ -199,7 +199,7 @@ class PrepaidInteractionsTTS extends Component {
                         <View>
                             <View style={styles.chatBubbleContainer}>
                                 <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                    {`${translate('interactions.TTS.whatYouWantToSay')}`}
+                                    {translate('interactions.TTS.whatYouWantToSay')}
                                 </Text>
                             </View>
                             {this.state.step >= 1 &&
@@ -217,7 +217,7 @@ class PrepaidInteractionsTTS extends Component {
                                         <View style={styles.chatBubbleContainer}>
                                             {this.state.showVoiceSelectionBubbleChatText ?
                                                 <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                    {`🔥 Slaaay\n🤖 Now choose a bot voice: `}
+                                                    {translate('interactions.TTS.chooseABotVoice')}
                                                 </Text>
                                                 :
                                                 <View style={styles.loadingDotsContainer}>
@@ -291,7 +291,7 @@ class PrepaidInteractionsTTS extends Component {
                                         <>
                                             <View style={styles.userChatButtonSelected}>
                                                 <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                    {`${this.state.voiceName}`}
+                                                    {this.state.voiceName}
                                                 </Text>
                                                 {this.state.voiceCost > 0 &&
                                                     <View style={styles.optionPriceContainer}>
@@ -334,7 +334,7 @@ class PrepaidInteractionsTTS extends Component {
                                                     </View>
                                                     :
                                                     <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                        {`👌 Ready to send?`}
+                                                        {translate('interactions.TTS.readyToSend')}
                                                     </Text>}
                                             </View>
                                         </>
@@ -346,7 +346,7 @@ class PrepaidInteractionsTTS extends Component {
                                                     <OptionButton onPress={this.editMessageHandler}>
                                                         <images.svg.editSimple style={styles.marginRight16} />
                                                         <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                            {`Edit message`}
+                                                            {translate('interactions.TTS.editMessage')}
                                                         </Text>
                                                     </OptionButton>
                                                 </View>
@@ -354,14 +354,14 @@ class PrepaidInteractionsTTS extends Component {
                                                     <OptionButton onPress={this.changeVoiceHandler}>
                                                         <images.svg.volumeUp style={styles.marginRight16} />
                                                         <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                            {`Choose another bot voice`}
+                                                            {translate('interactions.TTS.chooseAnotherVoice')}
                                                         </Text>
                                                     </OptionButton>
                                                 </View>
                                                 <View style={styles.optionContainer}>
                                                     <TouchableOpacity style={styles.readyButton} onPress={this.readyHandler}>
                                                         <Text style={[styles.readyText, styles.chatBubbleText]}>
-                                                            {`Ready`}
+                                                            {translate('interactions.TTS.ready')}
                                                         </Text>
                                                     </TouchableOpacity>
                                                 </View>

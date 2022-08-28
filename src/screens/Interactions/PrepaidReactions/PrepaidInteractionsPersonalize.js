@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, ScrollView, Image } from 'react-native';
 
 import styles from '../style';
 import images from '../../../../assets/images';
@@ -181,27 +181,31 @@ class PrepaidInteractionsPersonalize extends Component {
                             </TouchableOpacity> */}
                         </View>
                         {this.state.dataFetched &&
-                            <TouchableOpacity onPress={() => this.navigateToSelectedMedia(GIPHY_TEXT)}>
-                                <ImageBackground
-                                    source={this.state.giphyTextSample ? { uri: this.state.giphyTextSample } : null}
+                            <TouchableOpacity onPress={() => this.navigateToSelectedMedia(GIPHY_TEXT)} style={{
+                                backgroundColor: this.state.giphyTextSample ? this.state.giphyTextSample.background : 'transparent',
+                                justifyContent: 'flex-end',
+                                alignItems: 'center',
+                                height: heightPercentageToPx(23.39),
+                                borderRadius: 20,
+                                overflow: 'hidden',
+                            }}>
+                                <Image
+                                    source={this.state.giphyTextSample ? { uri: this.state.giphyTextSample.url } : null}
                                     style={{
-                                        justifyContent: 'flex-end',
+                                        justifyContent: 'center',
                                         alignItems: 'center',
-                                        // width: widthPercentageToPx(100),
-                                        height: heightPercentageToPx(23.39),
-                                        borderRadius: widthPercentageToPx(5.33),
+                                        width: widthPercentageToPx(100),
+                                        height: heightPercentageToPx(15.6),
+                                        borderRadius: 20,
                                         overflow: 'hidden',
                                     }}
-                                    imageStyle={{
-                                    }}
-                                    resizeMode="cover">
+                                    resizeMode="cover" />
                                     <View style={styles.personalizeButtonDisplayQoinsContainer}>
                                         <images.svg.qoin style={styles.qoin} />
                                         <Text style={styles.personalizeButtonDisplayQoinsText}>
                                             {this.state[GIPHY_TEXT]}
                                         </Text>
                                     </View>
-                                </ImageBackground>
                             </TouchableOpacity>
                         }
                         <View style={{ height: heightPercentageToPx(6.15) }} />

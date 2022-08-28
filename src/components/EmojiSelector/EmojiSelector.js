@@ -161,7 +161,6 @@ export default class EmojiSelector extends Component {
     };
 
     addToHistoryAsync = async emoji => {
-        Async
         let history = await retrieveData(storage_key);
 
         let value = [];
@@ -390,7 +389,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#141539",
         flexDirection: "row",
         marginTop: 52,
-        marginBottom: 42,
+        marginBottom: 24,
         justifyContent: 'space-between',
     },
     scrollview: {

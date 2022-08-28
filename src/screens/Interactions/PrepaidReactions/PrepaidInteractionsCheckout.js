@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Image, ImageBackground, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, ImageBackground, Keyboard, Modal, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { GiphyMediaView } from '@giphy/react-native-sdk';
 
@@ -43,7 +43,9 @@ class PrepaidInteractionsCheckout extends Component {
         giphyText: null,
         emojiRainCost: 0,
         giphyTextCost: 0,
-        localCosts: {}
+        localCosts: {},
+        keyboardHeight: 0,
+        keyboardOpen: false,
     };
 
     componentDidMount() {
@@ -52,6 +54,18 @@ class PrepaidInteractionsCheckout extends Component {
             this.calculateCosts();
             this.fetchAddOnsCosts();
         }
+
+        this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+			this.setState({ keyboardHeight: parseInt(e.endCoordinates.height) });
+		});
+		this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', () => {
+			this.setState({ keyboardHeight: 0 });
+		});
+    }
+
+    componentWillUnmount() {
+        this.keyboardWillHideListener.remove();
+        this.keyboardWillShowListener.remove();
     }
 
     fetchAddOnsCosts = async () => {
@@ -610,8 +624,8 @@ class PrepaidInteractionsCheckout extends Component {
                             </LinearGradient>
                         </View>
                         <View style={{
+                            height: (Platform.OS === 'android' && this.state.keyboardHeight) ? this.state.keyboardHeight : heightPercentageToPx(80),
                             backgroundColor: '#141539',
-                            height: this.state.keyboardOpened ? 370 : 652,
                             borderTopLeftRadius: 30,
                             borderTopRightRadius: 30,
                             overflow: 'hidden',

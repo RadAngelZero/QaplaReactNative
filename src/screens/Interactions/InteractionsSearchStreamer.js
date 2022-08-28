@@ -139,7 +139,7 @@ class InteractionsSearchStreamer extends Component {
                             <View style={{ opacity: 0.4 }}>
                                 <images.svg.searchStreamerIcon style={styles.searchIcon} />
                             </View>
-                            <TextInput
+                            <TextInput autoFocus
                                 style={styles.gridSearchBarTextInput}
                                 value={this.state.search}
                                 onChange={this.searchHandler}

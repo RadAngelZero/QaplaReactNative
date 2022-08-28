@@ -44,7 +44,9 @@ class InteractionsCheckout extends Component {
         giphyText: null,
         emojiRainCost: 0,
         giphyTextCost: 0,
-        localCosts: {}
+        localCosts: {},
+        keyboardHeight: 0,
+        keyboardOpen: false,
     };
 
     componentDidMount() {
@@ -53,6 +55,18 @@ class InteractionsCheckout extends Component {
             this.calculateCosts();
             this.fetchAddOnsCosts();
         }
+
+        this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+			this.setState({ keyboardHeight: parseInt(e.endCoordinates.height) });
+		});
+		this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', () => {
+			this.setState({ keyboardHeight: 0 });
+		});
+    }
+
+    componentWillUnmount() {
+        this.keyboardWillHideListener.remove();
+        this.keyboardWillShowListener.remove();
     }
 
     fetchAddOnsCosts = async () => {
@@ -590,7 +604,7 @@ class InteractionsCheckout extends Component {
                         </View>
                         <View style={{
                             backgroundColor: '#141539',
-                            height: this.state.keyboardOpened ? 370 : 652,
+                            height: (Platform.OS === 'android' && this.state.keyboardHeight) ? this.state.keyboardHeight : heightPercentageToPx(80),
                             borderTopLeftRadius: 30,
                             borderTopRightRadius: 30,
                             overflow: 'hidden',

@@ -143,22 +143,30 @@
         }
     },
     "userProfileScreen": {
-        "buy": "Buy",
-        "exchange": "Redeem",
-        "userProfileGameCard": {
-            "level": "Level"
-        },
-        "buyQaploinsModal": {
-            "body": ""
-        },
-        "linkAccount": "Link account",
-        "level": "Level",
-        "lastSeason": "Last season level",
-        "qoins": "Qoins",
-        "bitsTooltip": "Use your Qoins to support your favorite streamers. You need 50 Qoins for a donation",
-        "next": "Next",
-        "done": "Done",
-        "loots": "Loots",
+        "linkAccount": "Link Twitch",
+        "linked": "Linked",
+        "myQoins": "My Qoins",
+        "getQoins": "Get Qoins",
+        "mySupport": "💜 My support",
+        "totalQoinsSent": "Total Qoins sent",
+        "addQreatorCode": "Add a Qreator Code",
+        "notifications": "Notifications",
+        "newStreams": "New streams",
+        "newStreamsDescription": "Receive notifications when a streamer you follow, posts a new stream",
+        "scheduledStreams": "Scheduled streams",
+        "scheduledStreamsDescription": "Receive notifications about the streams you scheduled in “My streams”",
+        "termsAndConditions": "Terms and Conditions",
+        "privacyNotice": "Privacy Notice",
+        "termsAndConditionsUrl": "https://www.qapla.gg/terms-and-conditions",
+        "privacyNoticeUrl": "https://www.qapla.gg/privacy-policy",
+        "logOut": "Log Out",
+        "deleteAccount": "Delete account",
+        "deleteAccountDescription": "Are you sure you want to delete your account and all the information in it permanently?",
+        "cancel": "Cancel",
+        "accountDeleted": "Account deleted",
+        "accountDeletedDescription": "Your account and the information related to it have been deleted",
+        "accountDeletionError": "Failed to delete account",
+        "accountDeletionErrorDescription": "Failed to delete account, please try again later or contact support",
         "interactions": {
             "liveToYourStreamer": "on-screen to your streamer"
         }
@@ -183,24 +191,6 @@
             "dontShowItAgain": "Don't show this message again",
             "continue": "Continue"
         }
-    },
-    "settingsMenuScreen": {
-        "header": "Configuration",
-        "menuHeader": "CONFIGURATION",
-        "support": "Support",
-        "editBio": "Edit Biography",
-        "editDiscord": "Edit Discord",
-        "notifications": "Push notifications",
-        "termsAndConditions": "Terms and Conditions",
-        "privacyNotice": "Privacy Notice",
-        "closeSession": "Close Session",
-        "deleteAccount": "Delete account",
-        "deleteAccountDescription": "Are you sure you want to delete your account and all the information in it permanently?",
-        "cancel": "Cancel",
-        "accountDeleted": "Account deleted",
-        "accountDeletedDescription": "Your account and the information related to it have been deleted",
-        "accountDeletionError": "Failed to delete account",
-        "accountDeletionErrorDescription": "Failed to delete account, please try again later or contact support"
     },
     "supportScreen": {
         "placeholder": "Happy? Frustrated? Sad? Share your opinion here",

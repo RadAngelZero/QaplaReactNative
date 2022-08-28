@@ -68,11 +68,11 @@ class UserProfileModal extends Component {
     }
 
     openTermsAndConditions = () => {
-        Linking.openURL('');
+        Linking.openURL(translate('userProfileScreen.termsAndConditionsUrl'));
     }
 
     openPrivacy = () => {
-        Linking.openURL('');
+        Linking.openURL(translate('userProfileScreen.privacyNoticeUrl'));
     }
 
     closeSession = async () => {
@@ -82,15 +82,15 @@ class UserProfileModal extends Component {
 
     deleteAccountConfirmation = () => {
         Alert.alert(
-            translate('settingsMenuScreen.deleteAccount'),
-            translate('settingsMenuScreen.deleteAccountDescription'),
+            translate('userProfileScreen.deleteAccount'),
+            translate('userProfileScreen.deleteAccountDescription'),
             [
                 {
-                    text: translate('settingsMenuScreen.cancel'),
+                    text: translate('userProfileScreen.cancel'),
                     style: 'cancel'
                 },
                 {
-                    text: translate('settingsMenuScreen.deleteAccount'),
+                    text: translate('userProfileScreen.deleteAccount'),
                     onPress: () => this.tryToDeleteAccount(),
                     style: 'destructive'
                 }
@@ -110,8 +110,8 @@ class UserProfileModal extends Component {
             await deleteUserAccount(this.props.uid);
 
             Alert.alert(
-                translate('settingsMenuScreen.accountDeleted'),
-                translate('settingsMenuScreen.accountDeletedDescription'),
+                translate('userProfileScreen.accountDeleted'),
+                translate('userProfileScreen.accountDeletedDescription'),
                 [
                     {
                         text: 'Ok',
@@ -124,8 +124,8 @@ class UserProfileModal extends Component {
             );
         } catch (error) {
             Alert.alert(
-                translate('settingsMenuScreen.accountDeletionError'),
-                translate('settingsMenuScreen.accountDeletionErrorDescription'),
+                translate('userProfileScreen.accountDeletionError'),
+                translate('userProfileScreen.accountDeletionErrorDescription'),
                 [
                     {
                         text: 'Ok'
@@ -223,13 +223,9 @@ class UserProfileModal extends Component {
                                 <images.svg.twitchIcon style={styles.twitchIcon} />
                                 <Text style={styles.twitchLinkedText}>
                                     {twitchLinked ?
-                                        <>
-                                            {`Linked`}
-                                        </>
+                                        translate('userProfileScreen.linked')
                                         :
-                                        <>
-                                            {`Link Twitch`}
-                                        </>
+                                        translate('userProfileScreen.linkAccount')
                                     }
                                 </Text>
                             </TouchableOpacity>
@@ -237,7 +233,7 @@ class UserProfileModal extends Component {
                         <View style={styles.qoinsContainer}>
                             <View>
                                 <Text style={styles.myQoinsText}>
-                                    {`🏦 My Qoins`}
+                                    {translate('userProfileScreen.myQoins')}
                                 </Text>
                                 <View style={[styles.qoinsDisplayContainer, styles.marginTop16]}>
                                     <images.svg.qoin style={styles.bigQoin} />
@@ -250,7 +246,7 @@ class UserProfileModal extends Component {
                                 onPress={this.getQoins}
                                 style={styles.getQoinsButton}>
                                 <Text style={styles.getQoinsText}>
-                                    {`Get Qoins`}
+                                    {translate('userProfileScreen.getQoins')}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -259,7 +255,7 @@ class UserProfileModal extends Component {
                             style={styles.subCategoryContanier}>
                             <View style={styles.mySupportSubContainer}>
                                 <Text style={styles.subCategoryHeaderText}>
-                                    {`💜 My support`}
+                                    {translate('userProfileScreen.mySupport')}
                                 </Text>
                                 <images.svg.arrowDownWhite style={{
                                     transform: [{ rotate: !this.state.mySupportOpen ? '0deg' : '180deg' }],
@@ -274,7 +270,7 @@ class UserProfileModal extends Component {
                                         </Text>
                                     </View>
                                     <Text style={styles.qoinsSubtext}>
-                                        {`Total Qoins sent`}
+                                        {translate('userProfileScreen.totalQoinsSent')}
                                     </Text>
                                 </View>
                             }
@@ -283,7 +279,7 @@ class UserProfileModal extends Component {
                             onPress={this.openJoinQlanModal}
                             style={[styles.subCategoryContanier, styles.marginTop24, styles.mySupportSubContainer]}>
                             <Text style={styles.subCategoryHeaderText}>
-                                {`🎁 ${this.state.qlanData ? this.state.qlanData.name : 'Add a Qreator Code'}`}
+                                {`🎁 ${this.state.qlanData ? this.state.qlanData.name : translate('userProfileScreen.addQreatorCode')}`}
                             </Text>
                             {this.state.qlanData ?
                                 <images.svg.editQreatorCodeIcon />
@@ -293,15 +289,15 @@ class UserProfileModal extends Component {
                         </TouchableOpacity>
                         <View style={[styles.subCategoryContanier, styles.marginTop24]}>
                             <Text style={styles.subCategoryHeaderText}>
-                                {`Notifications`}
+                                {translate('userProfileScreen.notifications')}
                             </Text>
                             <View style={[styles.marginTop16, styles.switchGroupContainer]}>
                                 <View style={styles.switchTextMaxWidth}>
                                     <Text style={styles.switchHeaderText}>
-                                        {`New streams`}
+                                        {translate('userProfileScreen.newStreams')}
                                     </Text>
                                     <Text style={styles.switchSubText}>
-                                        {`Receive notifications when a streamer you follow, posts a new stream `}
+                                        {translate('userProfileScreen.newStreamsDescription')}
                                     </Text>
                                 </View>
                                 <Switch
@@ -312,10 +308,10 @@ class UserProfileModal extends Component {
                             <View style={[styles.marginTop16, styles.switchGroupContainer]}>
                                 <View style={styles.switchTextMaxWidth}>
                                     <Text style={styles.switchHeaderText}>
-                                        {`Scheduled streams`}
+                                        {translate('userProfileScreen.scheduledStreams')}
                                     </Text>
                                     <Text style={styles.switchSubText}>
-                                        {`Receive notifications about the streams you scheduled in “My streams” `}
+                                        {translate('userProfileScreen.scheduledStreamsDescription')}
                                     </Text>
                                 </View>
                                 <Switch
@@ -329,7 +325,7 @@ class UserProfileModal extends Component {
                                 onPress={this.openTermsAndConditions}
                                 style={styles.switchGroupContainer}>
                                 <Text style={[styles.subCategoryHeaderText, styles.fontSize16]}>
-                                    {`Terms and Conditions`}
+                                    {translate('userProfileScreen.termsAndConditions')}
                                 </Text>
                                 <images.svg.shareArrowTransparent style={styles.externalLinkIcon} />
                             </TouchableOpacity>
@@ -337,7 +333,7 @@ class UserProfileModal extends Component {
                                 onPress={this.openPrivacy}
                                 style={[styles.marginTop16, styles.switchGroupContainer]}>
                                 <Text style={[styles.subCategoryHeaderText, styles.fontSize16]}>
-                                    {`Privacy Notice`}
+                                    {translate('userProfileScreen.privacyNotice')}
                                 </Text>
                                 <images.svg.shareArrowTransparent style={styles.externalLinkIcon} />
                             </TouchableOpacity>
@@ -346,14 +342,14 @@ class UserProfileModal extends Component {
                             onPress={this.closeSession}
                             style={[styles.subCategoryContanier, styles.marginTop24]}>
                             <Text style={styles.finalButtonsText}>
-                                {`Log Out`}
+                                {translate('userProfileScreen.logOut')}
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={this.deleteAccountConfirmation}
                             style={[styles.subCategoryContanier, styles.marginTop24]}>
                             <Text style={[styles.finalButtonsText, styles.deleteTextColor]}>
-                                {`Delete Account`}
+                                {translate('userProfileScreen.deleteAccount')}
                             </Text>
                         </TouchableOpacity>
                         <View style={styles.bottomSeparation} />

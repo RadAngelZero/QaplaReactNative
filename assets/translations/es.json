@@ -143,22 +143,30 @@
         }
     },
     "userProfileScreen": {
-        "buy": "Abonar",
-        "exchange": "Canjear",
-        "userProfileGameCard": {
-            "level": "Nivel"
-        },
-        "buyQaploinsModal": {
-            "body": ""
-        },
-        "linkAccount": "Vincular cuenta",
-        "level": "Nivel",
-        "lastSeason": "Última temporada",
-        "qoins": "Qoins",
-        "bitsTooltip": "Usa tus Qoins para donarle a tus streamers favoritos. Puedes donar desde 50 Qoins",
-        "next": "Siguiente",
-        "done": "Listo",
-        "loots": "Loots",
+        "linkAccount": "Vincular Twitch",
+        "linked": "Vinculada",
+        "myQoins": "Mis Qoins",
+        "getQoins": "Más Qoins",
+        "mySupport": "💜 Mi apoyo",
+        "totalQoinsSent": "Total de Qoins donados",
+        "addQreatorCode": "Agregar código de Qreador",
+        "notifications": "Notificaciones",
+        "newStreams": "Nuevos streams",
+        "newStreamsDescription": "Recibe notificaciones cuando un streamer que sigues publica un nuevo stream",
+        "scheduledStreams": "Streams agendados",
+        "scheduledStreamsDescription": "Recibe notificaciones sobre los streams agendados en “Mis streams”",
+        "termsAndConditions": "Términos y Condiciones",
+        "privacyNotice": "Aviso de Privacidad",
+        "termsAndConditionsUrl": "https://www.qapla.gg/es/terminos-y-condiciones",
+        "privacyNoticeUrl": "https://www.qapla.gg/es/aviso-de-privacidad",
+        "logOut": "Cerrar sesión",
+        "deleteAccount": "Eliminar cuenta",
+        "deleteAccountDescription": "¿Estas seguro que deseas eliminar tu cuenta y toda la información de la misma de forma permanente?",
+        "cancel": "Cancelar",
+        "accountDeleted": "Cuenta eliminada",
+        "accountDeletedDescription": "Tu cuenta y la información relacionada a la misma han sido eliminadas",
+        "accountDeletionError": "Error al eliminar cuenta",
+        "accountDeletionErrorDescription": "No se pudo eliminar la cuenta, por favor intentelo mas tarde o contacta con soporte tecnico",
         "interactions": {
             "liveToYourStreamer": "en vivo a tu streamer"
         }
@@ -183,24 +191,6 @@
             "dontShowItAgain": "Entendido, no volver a mostrar este mensaje",
             "continue": "Continuar"
         }
-    },
-    "settingsMenuScreen": {
-        "header": "Configuración",
-        "menuHeader": "CONFIGURACIÓN",
-        "support": "Soporte",
-        "editBio": "Editar Biografía",
-        "editDiscord": "Editar Discord",
-        "notifications": "Notificaciones",
-        "termsAndConditions": "Términos y Condiciones",
-        "privacyNotice": "Aviso de Privacidad",
-        "closeSession": "Cerrar sesión",
-        "deleteAccount": "Eliminar cuenta",
-        "deleteAccountDescription": "¿Estas seguro que deseas eliminar tu cuenta y toda la información de la misma de forma permanente?",
-        "cancel": "Cancelar",
-        "accountDeleted": "Cuenta eliminada",
-        "accountDeletedDescription": "Tu cuenta y la información relacionada a la misma han sido eliminadas",
-        "accountDeletionError": "Error al eliminar cuenta",
-        "accountDeletionErrorDescription": "No se pudo eliminar la cuenta, por favor intentelo mas tarde o contacta con soporte tecnico"
     },
     "supportScreen": {
         "placeholder": "¿Contento? ¿Frustrado? ¿Triste? Compártenos tu opinión aquí",

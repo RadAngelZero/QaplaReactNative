@@ -553,7 +553,7 @@ class PrepaidInteractionsCheckout extends Component {
                     transparent={true}
                     animationType="slide"
                 >
-                    <View style={{
+                    <ScrollView keyboardShouldPersistTaps='never' contentContainerStyle={{
                         backgroundColor: '#0D1021',
                         flex: 1,
                         justifyContent: 'flex-end',
@@ -621,9 +621,8 @@ class PrepaidInteractionsCheckout extends Component {
                                 showHistory={false}
                             />
                         </View>
-
-                    </View>
-                </Modal >
+                    </ScrollView>
+                </Modal>
                 <NavigationEvents onWillFocus={this.calculateCosts} />
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}

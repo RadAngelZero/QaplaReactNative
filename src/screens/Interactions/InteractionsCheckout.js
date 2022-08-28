@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Image, ImageBackground, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, ImageBackground, Keyboard, Modal, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { connect } from 'react-redux';
 import { GiphyMediaView } from '@giphy/react-native-sdk';
 
@@ -532,7 +532,7 @@ class InteractionsCheckout extends Component {
                     transparent={true}
                     animationType="slide"
                 >
-                    <View style={{
+                    <ScrollView keyboardShouldPersistTaps='never' contentContainerStyle={{
                         backgroundColor: '#0D1021',
                         flex: 1,
                         justifyContent: 'flex-end',
@@ -600,9 +600,8 @@ class InteractionsCheckout extends Component {
                                 showHistory={false}
                             />
                         </View>
-
-                    </View>
-                </Modal >
+                    </ScrollView>
+                </Modal>
                 <NavigationEvents onWillFocus={this.calculateCosts} />
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}

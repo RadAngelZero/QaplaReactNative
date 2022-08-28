@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Keyboard, Platform, Animated, Easing } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Keyboard, Platform, Animated, Easing, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
 import images from '../../../../assets/images';
@@ -196,7 +196,7 @@ class PrepaidInteractionsTTS extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <ScrollView keyboardShouldPersistTaps='never' style={{ backgroundColor: '#0D1021', }} contentContainerStyle={styles.container}>
                 <View style={[styles.innerConatiner, styles.addTTSContainer]}>
                     {this.state.step === 0 &&
                         <Text style={[styles.whiteText, styles.screenHeaderText]}>
@@ -420,7 +420,7 @@ class PrepaidInteractionsTTS extends Component {
                         }
                     </View>
                 </View>
-            </View >
+            </ScrollView>
         );
     }
 }

@@ -7,13 +7,12 @@ import {
     TextInput,
     Platform,
     ActivityIndicator,
-    AsyncStorage,
-    FlatList,
-    Keyboard
+    FlatList
 } from 'react-native';
 import emoji from 'emoji-datasource';
 import images from '../../../assets/images';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { retrieveData, storeData } from '../../utilities/persistance';
 
 export const Categories = {
     all: {
@@ -162,7 +161,8 @@ export default class EmojiSelector extends Component {
     };
 
     addToHistoryAsync = async emoji => {
-        let history = await AsyncStorage.getItem(storage_key);
+        Async
+        let history = await retrieveData(storage_key);
 
         let value = [];
         if (!history) {
@@ -179,14 +179,14 @@ export default class EmojiSelector extends Component {
             }
         }
 
-        AsyncStorage.setItem(storage_key, JSON.stringify(value));
+        storeData(storage_key, JSON.stringify(value));
         this.setState({
             history: value
         });
     };
 
     loadHistoryAsync = async () => {
-        let result = await AsyncStorage.getItem(storage_key);
+        let result = await retrieveData(storage_key);
         if (result) {
             let history = JSON.parse(result);
             this.setState({ history });
@@ -404,11 +404,11 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
     search: {
+        flex: 1,
         padding: 0,
         color: '#fff',
         fontSize: 16,
         fontWeight: '400',
-        lineHeight: 28,
         letterSpacing: 1,
         marginLeft: 10,
     },

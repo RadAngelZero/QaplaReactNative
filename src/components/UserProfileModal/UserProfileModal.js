@@ -56,10 +56,6 @@ class UserProfileModal extends Component {
 
     toggleSupportDisplay = () => this.setState({ mySupportOpen: !this.state.mySupportOpen });
 
-    addQreatorCode = () => {
-        console.log('creator code screen');
-    }
-
     toggleNewStreamsNotifications = () => {
         this.setState({ notificateNewStreams: !this.state.notificateNewStreams });
     }

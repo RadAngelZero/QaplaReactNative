@@ -193,8 +193,9 @@ class InteractionsPersonalize extends Component {
                         </View>
                         <TouchableOpacity onPress={() => this.navigateToSelectedMedia(GIPHY_TEXT)}>
                             <ImageBackground
-                                source={this.state.giphyTextSample ? { uri: this.state.giphyTextSample } : null}
+                                source={this.state.giphyTextSample ? { uri: this.state.giphyTextSample.url } : null}
                                 style={{
+                                    backgroundColor: this.state.giphyTextSample ? this.state.giphyTextSample.background : 'transparent',
                                     justifyContent: 'flex-end',
                                     alignItems: 'center',
                                     // width: widthPercentageToPx(100),

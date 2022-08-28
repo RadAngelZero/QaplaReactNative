@@ -100,7 +100,6 @@ export class TimelineStreams extends Component {
                     onStreamerProfileButtonPress={this.onStreamerProfileButtonPress} />
                 <View style={{ height: 25 }} />
                 <View style={{
-                    marginTop: 30,
                     alignSelf: 'center'
                 }}>
                     <InteractionsShortcut onPress={() => this.props.navigation.navigate('InteractionsFeed')} />

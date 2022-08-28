@@ -80,7 +80,7 @@ class InteractionsConfirmSelection extends Component {
                     <View style={styles.interactionSelectedBorderRadius}>
                         <ActivityIndicator size='large'
                             color="rgb(61, 249, 223)"
-                            animating={this.state.loadingMedia} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }} />
+                            animating={Boolean(this.state.loadingMedia).valueOf()} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }} />
                         {giphyText ?
                             <Image
                                 onLoadEnd={() => this.setState({ loadingMedia: false })}

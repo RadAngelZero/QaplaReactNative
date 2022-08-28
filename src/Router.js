@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 
 import { setCurrentScreenId, setPreviousScreenId } from './actions/screensActions';
 
-import WelcomeOnboardingScreen from './screens/WelcomeOnboardingScreen/WelcomeOnboardingScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen/AuthLoadingScreen';
 import ChooseUserNameScreen from './screens/ChooseUserNameScreen/ChooseUserNameScreen';
 import TimelineStreams from './screens/TimelineStreams/TimelineStreams';
@@ -547,7 +546,6 @@ const RootStackNavigator = createStackNavigator({
 const MainSwitchNavigator = createSwitchNavigator({
   SplashScreen: AuthLoadingScreen,
   App: RootStackNavigator,
-  onBoarding: WelcomeOnboardingScreen,
   ChooseUserName: ChooseUserNameScreen,
   LinkBroken: LinkBrokenScreen,
 });

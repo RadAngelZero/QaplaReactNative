@@ -639,8 +639,8 @@
         "personalize": {
             "personalizeYourInteraction": "Personaliza tu reacción",
             "onlySend": "Sólo enviar",
-            "clips": "Clips",
-            "giphyText": "Custom TTS"
+            "clips": "Video Clips",
+            "giphyText": "TTS personalizado"
         },
         "addVisual": {
             "addVisual": "Agrega un Gif, Sticker o Meme a tu reacción"
@@ -700,13 +700,14 @@
                 "meme": "Meme",
                 "tts": "Text-to-Speech",
                 "video": "Clip",
-                "text": "Custom Text-to-Speech",
+                "text": "TTS Personalizado",
                 "emoji": "Lluvia de emojis"
             },
             "discardInteraction": "Descartar reacción",
             "areYouSure": "¿Estas seguro que deseas descartar tu reacción?",
             "yes": "Si",
             "no": "No",
+            "customTTS": "TTS Personalizado",
             "sendExtraTip": "Enviar Extra Tip",
             "other": "Otro",
             "sendInteraction": "Enviar Reacción",

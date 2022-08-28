@@ -380,23 +380,26 @@ class InteractionsCheckout extends Component {
                                                     source={this.state.emoji ? images.png.InteractionGradient1.img : images.png.InteractionGradient3.img}
                                                     style={styles.checkoutAddonImageContainer}
                                                 >
-                                                    {this.state.emoji !== '' &&
-                                                        <TouchableOpacity onPress={this.removeEmoji} style={styles.deleteAddOnIconContainer}>
-                                                            <images.svg.deleteIcon  />
-                                                        </TouchableOpacity>
-                                                    }
-                                                    <Text style={styles.addonEmojiText}>
-                                                        {this.state.emoji || '🤡'}
-                                                    </Text>
-                                                    <Text style={styles.addonText}>
-                                                        Emoji raid
-                                                    </Text>
-                                                    <View style={styles.checkoutAddonQoinDisplayCointainer}>
-                                                        <images.svg.qoin style={styles.addonQoin} />
-                                                        <Text style={styles.addonQoinText}>
-                                                            {this.state.emojiRainCost}
+                                                    <ImageBackground source={images.gif.emojiRaid.img}
+                                                        style={styles.checkoutAddonImageContainer}>
+                                                        {this.state.emoji !== '' &&
+                                                            <TouchableOpacity onPress={this.removeEmoji} style={styles.deleteAddOnIconContainer}>
+                                                                <images.svg.deleteIcon  />
+                                                            </TouchableOpacity>
+                                                        }
+                                                        <Text style={styles.addonEmojiText}>
+                                                            {this.state.emoji || '🤡'}
                                                         </Text>
-                                                    </View>
+                                                        <Text style={styles.addonText}>
+                                                            Emoji raid
+                                                        </Text>
+                                                        <View style={styles.checkoutAddonQoinDisplayCointainer}>
+                                                            <images.svg.qoin style={styles.addonQoin} />
+                                                            <Text style={styles.addonQoinText}>
+                                                                {this.state.emojiRainCost}
+                                                            </Text>
+                                                        </View>
+                                                    </ImageBackground>
                                                 </ImageBackground>
                                             </TouchableOpacity>
                                         }
@@ -413,7 +416,7 @@ class InteractionsCheckout extends Component {
                                                     }
                                                     <Image style={styles.customTTSImage} source={giphyText ? images.gif.slaaay.img : images.gif.makeItPop.img} />
                                                     <Text style={[styles.addonText, { color: giphyText ? '#FFF' : '#0D1021' }]}>
-                                                        {`Custom TTS`}
+                                                        {translate('interactions.checkout.customTTS')}
                                                     </Text>
                                                     <View style={styles.checkoutAddonQoinDisplayCointainer}>
                                                         <images.svg.qoin style={styles.addonQoin} />

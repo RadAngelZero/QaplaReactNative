@@ -635,7 +635,7 @@
         "personalize": {
             "personalizeYourInteraction": "Customize your reaction",
             "onlySend": "Only send",
-            "clips": "Pre-made clips",
+            "clips": "Video Clips",
             "giphyText": "Custom TTS"
         },
         "addVisual": {
@@ -697,13 +697,14 @@
                 "meme": "Meme",
                 "tts": "Text-to-Speech",
                 "video": "Clip",
-                "text": "Custom Text-to-Speech",
+                "text": "Custom TTS",
                 "emoji": "Emoji rain"
             },
             "discardInteraction": "Discard reaction",
             "areYouSure": "Are you sure you want to discard your reaction?",
             "yes": "Yes",
             "no": "No",
+            "customTTS": "Custom TTS",
             "sendExtraTip": "Send Extra Tip",
             "other": "Other",
             "sendInteraction": "Send Reaction",

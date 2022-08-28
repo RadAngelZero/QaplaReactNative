@@ -428,6 +428,9 @@ const images = {
 		},
 		slaaay: {
 			img: require('./gifs/slaaay.gif')
+		},
+		emojiRaid: {
+			img: require('./gifs/emojiRaid.gif')
 		}
 	},
 };

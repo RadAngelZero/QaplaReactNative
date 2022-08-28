@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, TextInput, Keyboard } from 'react-native';
+import { View, Image, TouchableOpacity, TextInput, Keyboard, Platform, ScrollView } from 'react-native';
 import {
     GiphyContent,
     GiphyGridView,
@@ -78,7 +78,7 @@ class PrepaidInteractionsGiphyMediaSelector extends Component {
 
         return (
             <View style={styles.container}>
-                <View style={[styles.gridMainContainer, {
+                <ScrollView keyboardShouldPersistTaps='never' contentContainerStyle={[styles.gridMainContainer, {
                     height: (Platform.OS === 'android' && this.state.keyboardHeight) ? this.state.keyboardHeight : heightPercentageToPx(85)
                 }]} >
                     <View style={styles.gridSearchBarContainer}>
@@ -126,7 +126,7 @@ class PrepaidInteractionsGiphyMediaSelector extends Component {
                                 }}
                         />
                     </View>
-                </View>
+                </ScrollView>
                 {/* <View style={styles.gridBottomSectionSelector}>
                     <TouchableOpacity
                         onPress={() => this.setState({ ...this.state, searchQuery: '', gifSection: 0 })}

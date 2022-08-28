@@ -10,7 +10,7 @@ i18n.defaultLocale = 'en';
  * so we avoid create a lot of cases because any language have some variations, for example: 'en', 'en_US', 'en_UK', etc. we only take 'en'
  * for the english, however in the future as the app evolve we can evolve the translations files to get cover any variation of the supported languages
  */
-i18n.locale =
+i18n.locale = 'es'
     Platform.OS === 'ios' ?
         NativeModules.SettingsManager.settings.AppleLocale === undefined ?
             NativeModules.SettingsManager.settings.AppleLanguages[0].substring(0, 2)

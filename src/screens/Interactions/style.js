@@ -801,5 +801,69 @@ export default styles = StyleSheet.create({
         borderRadius: 18,
         fontSize: 16,
         marginRight: 8
+    },
+    // InsertExtraTipModal
+    extraTipModalContainer: {
+        marginTop: heightPercentageToPx(13), // Modal must be at bottom (100 - 87 = 13)
+        height: heightPercentageToPx(87), // Size must be 87% of screen
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        backgroundColor: '#141539',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingTop: 32,
+        paddingLeft: 32,
+        paddingRight: 32,
+        paddingBottom: 48
+    },
+    extraTipModalTipContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    extraTipModalTipText: {
+        fontSize: 64,
+        fontWeight: '700',
+        color: '#FFF',
+        marginLeft: 8
+    },
+    extraTipKeyboardContainer: {
+        flexDirection: 'row'
+    },
+    extraTipKeyboardColumnWrapper: {
+        marginBottom: 24
+    },
+    extraTipKeyboardContentContainer: {
+        justifyContent: 'space-between'
+    },
+    extraTipKeyboardItemContainer: {
+        borderRadius: 100,
+        height: heightPercentageToPx(8.25),
+        width: heightPercentageToPx(8.25), // We use heightPercentageToPx because we want a circular component
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    extraTipKeyboardItemText: {
+        fontSize: 24,
+        fontWeight: '700',
+        color: '#FFF'
+    },
+    addExtraTipButton: {
+        borderRadius: 36,
+        width: widthPercentageToPx(69.33)
+    },
+    addExtraTipButtonText: {
+        textAlign: 'center',
+        marginTop: 26,
+        marginBottom: 26,
+        fontSize: 17,
+        fontWeight: '700'
+    },
+    cancelExtraTipButtonText: {
+        textAlign: 'center',
+        marginTop: 24,
+        fontSize: 17,
+        fontWeight: '700',
+        color: 'rgba(255, 255, 255, .6)',
     }
 });

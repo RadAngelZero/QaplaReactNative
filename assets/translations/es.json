@@ -716,6 +716,11 @@
             "sendInteraction": "Enviar Reacción",
             "emojiModal": {
                 "chooseAnEmoji": "Selecciona un Emoji"
+            },
+            "extraTipModal": {
+                "addTip": "Agregar extra tip",
+                "noTip": "No extra Tip",
+                "cancel": "Cancelar"
             }
         },
         "final": {

@@ -10,11 +10,12 @@ import { getMediaTypeCost, sendCheers } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../services/auth';
 import images from '../../../assets/images';
-import { CUSTOM_TTS_VOICE, EMOJI, GIPHY_CLIPS, GIPHY_TEXT, MEME } from '../../utilities/Constants';
+import { CUSTOM_TTS_VOICE, EMOJI, GIPHY_TEXT, MEME } from '../../utilities/Constants';
 import { trackOnSegment } from '../../services/statistics';
 import EmojiSelector from '../../components/EmojiSelector/EmojiSelector';
 import LinearGradient from 'react-native-linear-gradient';
 import { NavigationEvents } from 'react-navigation';
+import InsertExtraTipModal from './InsertExtraTipModal';
 
 const ExtraTip = ({ value, onPress, selected }) => (
     <TouchableOpacity onPress={() => onPress(value)}>
@@ -47,6 +48,7 @@ class InteractionsCheckout extends Component {
         localCosts: {},
         keyboardHeight: 0,
         keyboardOpen: false,
+        openExtraTipModal: false
     };
 
     componentDidMount() {
@@ -100,25 +102,6 @@ class InteractionsCheckout extends Component {
         } else {
             Alert.alert('Error', 'Verifica que el valor insertado sea un numero valido y positivo');
         }
-    }
-
-    addCustomTip = () => {
-        Alert.prompt('Extra tip',
-            'Inserta la cantidad a donar (0 para no enviar nada)',
-            [
-                {
-                    text: 'Cancel',
-                    style: 'cancel'
-                },
-                {
-                    text: 'Ok',
-                    onPress: (extraTip) => this.addTip(extraTip)
-                }
-            ],
-            'plain-text',
-            '',
-            'numeric'
-        );
     }
 
     onSendInteraction = async () => {
@@ -459,7 +442,7 @@ class InteractionsCheckout extends Component {
                                         onPress={this.addTip}
                                         selected={this.state.extraTip === 1000} />
                                     <ExtraTip value={translate('interactions.checkout.other')}
-                                        onPress={this.addCustomTip}
+                                        onPress={() => this.setState({ openExtraTipModal: true })}
                                         selected={this.state.extraTip !== 0 && this.state.extraTip !== 200 && this.state.extraTip !== 500 && this.state.extraTip !== 1000} />
                                 </View>
                             </View>
@@ -622,6 +605,9 @@ class InteractionsCheckout extends Component {
                     onClose={() => this.setState({ openLinkWitTwitchModal: false })}
                     onLinkSuccessful={this.onSendInteraction}
                     linkingWithQreatorCode={false} />
+                <InsertExtraTipModal setExtraTip={(extraTip) => this.setState({ extraTip })}
+                    open={this.state.openExtraTipModal}
+                    onClose={() => this.setState({ openExtraTipModal: false })} />
             </View >
         );
     }

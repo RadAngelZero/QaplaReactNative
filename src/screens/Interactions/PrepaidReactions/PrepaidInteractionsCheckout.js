@@ -15,6 +15,7 @@ import images from '../../../../assets/images';
 import LinearGradient from 'react-native-linear-gradient';
 import { NavigationEvents } from 'react-navigation';
 import EmojiSelector from '../../../components/EmojiSelector/EmojiSelector';
+import InsertExtraTipModal from '../InsertExtraTipModal';
 
 const ExtraTip = ({ value, onPress, selected }) => (
     <TouchableOpacity onPress={() => onPress(value)}>
@@ -46,6 +47,7 @@ class PrepaidInteractionsCheckout extends Component {
         localCosts: {},
         keyboardHeight: 0,
         keyboardOpen: false,
+        openExtraTipModal: false
     };
 
     componentDidMount() {
@@ -99,25 +101,6 @@ class PrepaidInteractionsCheckout extends Component {
         } else {
             Alert.alert('Error', 'Verifica que el valor insertado sea un numero valido y positivo');
         }
-    }
-
-    addCustomTip = () => {
-        Alert.prompt('Extra tip',
-            'Inserta la cantidad a donar (0 para no enviar nada)',
-            [
-                {
-                    text: 'Cancel',
-                    style: 'cancel'
-                },
-                {
-                    text: 'Ok',
-                    onPress: (extraTip) => this.addTip(extraTip)
-                }
-            ],
-            'plain-text',
-            '',
-            'numeric'
-        );
     }
 
     onSendInteraction = async () => {
@@ -480,7 +463,7 @@ class PrepaidInteractionsCheckout extends Component {
                                         onPress={this.addTip}
                                         selected={this.state.extraTip === 1000} />
                                     <ExtraTip value={translate('interactions.checkout.other')}
-                                        onPress={this.addCustomTip}
+                                        onPress={() => this.setState({ openExtraTipModal: true })}
                                         selected={this.state.extraTip !== 0 && this.state.extraTip !== 200 && this.state.extraTip !== 500 && this.state.extraTip !== 1000} />
                                 </View>
                             </View>
@@ -643,7 +626,10 @@ class PrepaidInteractionsCheckout extends Component {
                     onClose={() => this.setState({ openLinkWitTwitchModal: false })}
                     onLinkSuccessful={this.onSendInteraction}
                     linkingWithQreatorCode={false} />
-            </View >
+                <InsertExtraTipModal setExtraTip={(extraTip) => this.setState({ extraTip })}
+                    open={this.state.openExtraTipModal}
+                    onClose={() => this.setState({ openExtraTipModal: false })} />
+            </View>
         );
     }
 }

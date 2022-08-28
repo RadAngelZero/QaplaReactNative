@@ -369,7 +369,12 @@
             "signInWithEmail": "Inicia sesión con correo",
             "createUsername": "Crea tu nombre de usuario",
             "haveQreatorQode": "¿Tienes un Código de Qreador?",
-            "getCustomAlerts": "Recibe ⚡️ 3 reacciones ⚡️ en vivo al minar Qoins en tus primeros 3 directos "
+            "youJoined": "¡Estás listo!",
+            "getCustomAlerts": "Recibe ⚡️ 200 Qoins extra ⚡️ al minar tus Qoins en tus primeros 3 directos",
+            "youWillReceiveP1": "Obtendras un ",
+            "youWillReceiveP2": "extra de 200 Qoins ",
+            "youWillReceiveP3": "por stream, en tus ",
+            "youWillReceiveP4": "primeros 3 streams Qapla 🌱"
         },
         "buttonsCarrousel": {
             "createAccount": "Crear mi cuenta",

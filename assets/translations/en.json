@@ -369,7 +369,12 @@
             "signInWithEmail": "Sign in with your email",
             "createUsername": "Create your username",
             "haveQreatorQode": "Do you have a Qreator Code?",
-            "getCustomAlerts": "Get ⚡️ 3 live reactions ⚡️ when mining Qoins during your first 3 streams "
+            "getCustomAlerts": "Get ⚡️ 200 extra Qoins⚡️ when mining Qoins during your first 3 streams",
+            "youJoined": "You are all set!",
+            "youWillReceiveP1": "You’ll get an ",
+            "youWillReceiveP2": "extra 200 Qoins ",
+            "youWillReceiveP3": "per stream, on your ",
+            "youWillReceiveP4": "first 3 Qapla streams 🌱"
         },
         "buttonsCarrousel": {
             "createAccount": "Create my account",

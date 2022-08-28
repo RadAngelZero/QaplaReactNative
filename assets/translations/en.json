@@ -167,9 +167,6 @@
         "accountDeletedDescription": "Your account and the information related to it have been deleted",
         "accountDeletionError": "Failed to delete account",
         "accountDeletionErrorDescription": "Failed to delete account, please try again later or contact support",
-        "interactions": {
-            "liveToYourStreamer": "on-screen to your streamer"
-        }
     },
     "notificationsScreen": {
         "notificationsHeader": "Notifications",
@@ -675,6 +672,7 @@
         "TTS": {
             "writeYourMessage": "Type your message",
             "whatYouWantToSay": "🗣 What do you want to say?",
+            "skip": "Skip",
             "TTS": "Text-to-Speech",
             "chooseABotVoice": "🔥 Slaaay\n🤖 Now choose a bot voice:",
             "readyToSend": "👌 Ready to send?",
@@ -737,5 +735,9 @@
             "title": "Your bank is pending to process your payment",
             "message": "We will pay your Qoins once the payment has been made. We will notify you as soon as it is done"
         }
+    },
+    "interactionsShortcut": {
+        "liveToYourStreamer": "on-screen to your streamer",
+        "send": "Send Reaction"
     }
 }

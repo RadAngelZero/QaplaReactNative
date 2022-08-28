@@ -167,9 +167,6 @@
         "accountDeletedDescription": "Tu cuenta y la información relacionada a la misma han sido eliminadas",
         "accountDeletionError": "Error al eliminar cuenta",
         "accountDeletionErrorDescription": "No se pudo eliminar la cuenta, por favor intentelo mas tarde o contacta con soporte tecnico",
-        "interactions": {
-            "liveToYourStreamer": "en vivo a tu streamer"
-        }
     },
     "notificationsScreen": {
         "notificationsHeader": "Notificaciones",
@@ -678,6 +675,7 @@
         "TTS": {
             "writeYourMessage": "Escribe tu mensaje",
             "whatYouWantToSay": "🗣 ¿Qué le quieres decir en el directo?",
+            "skip": "Omitir",
             "TTS": "Text-to-Speech",
             "chooseABotVoice": "🔥 ¡Cool!\n🤖 Ahora escoge una voz para el bot:",
             "readyToSend": "👌 ¿Listo para enviar?",
@@ -736,5 +734,9 @@
         "pharases": {
             "p1": "Llevaré diez 💸💸💸"
         }
+    },
+    "interactionsShortcut": {
+        "liveToYourStreamer": "en vivo a tu streamer",
+        "send": "Enviar reacción"
     }
 }

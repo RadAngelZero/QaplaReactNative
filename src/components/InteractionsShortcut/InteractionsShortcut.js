@@ -53,16 +53,16 @@ class InteractionsShortcut extends Component {
                             <Text style={styles.bigTextHeader}>
                                 {`${translate('interactions.feed.modal.sendA')} `}
                                 <Text style={styles.textAccentColor}>
-                                    {`${this.state.textRotation}`}
+                                    {this.state.textRotation}
                                 </Text>
                             </Text>
                             <Text style={[styles.textHeader, styles.textSubtitle]}>
-                                {`${translate('userProfileScreen.interactions.liveToYourStreamer')}`}
+                                {translate('interactionsShortcut.liveToYourStreamer')}
                             </Text>
                         </View>
                         <TouchableOpacity style={[styles.button, {alignSelf: 'flex-start'}]} onPress={this.props.onPress}>
                             <Text style={styles.buttonText}>
-                                {`Send Reaction`}
+                                {translate('interactionsShortcut.send')}
                             </Text>
                         </TouchableOpacity>
                     </View>

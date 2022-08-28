@@ -333,6 +333,25 @@ export default styles = StyleSheet.create({
     chatBubbleTextAccent: {
         fontWeight: '500',
     },
+    skipTTSContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    skipButtonContainer: {
+        marginTop: 16,
+        borderRadius: 100,
+        backgroundColor: 'rgba(64, 64, 255, 0.3)',
+    },
+    skipButtonText: {
+        marginRight: 32,
+        marginLeft: 32,
+        marginTop: 12,
+        marginBottom: 12,
+        fontSize: 17,
+        textAlign: 'center',
+        fontWeight: '600',
+        color: 'rgba(255, 255, 255, .65)'
+    },
     buttonsContainer: {
         maxWidth: widthPercentageToPx(69.33),
         alignSelf: 'center',

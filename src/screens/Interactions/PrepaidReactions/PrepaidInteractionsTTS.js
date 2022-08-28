@@ -152,34 +152,46 @@ class PrepaidInteractionsTTS extends Component {
     }
 
     readyHandler = () => {
-        const costsObject = this.props.navigation.getParam('costs', {});
-        if (this.props.previousScreen === 'PrepaidInteractionsConfirmSelection' || this.props.previousScreen === 'PrepaidInteractionsCheckout') {
-            this.props.navigation.navigate('PrepaidInteractionsCheckout', {
-                ...this.props.navigation.state.params,
-                message: this.state.message,
-                messageVoice: {
-                    voiceName: this.state.voiceName,
-                    voiceAPIName: this.state.voiceAPIName
-                },
-                costs: {
-                    [CUSTOM_TTS_VOICE]: this.state.voiceCost,
-                    ...costsObject
-                },
-            });
-        } else {
-            this.props.navigation.navigate('PrepaidInteractionsAddVisual', {
-                ...this.props.navigation.state.params,
-                message: this.state.message,
-                messageVoice: {
-                    voiceName: this.state.voiceName,
-                    voiceAPIName: this.state.voiceAPIName
-                },
-                costs: {
-                    [CUSTOM_TTS_VOICE]: this.state.voiceCost,
-                    ...costsObject
-                },
-            });
+        if (this.state.message.trim()) {
+            const costsObject = this.props.navigation.getParam('costs', {});
+            if (this.props.previousScreen === 'PrepaidInteractionsConfirmSelection' || this.props.previousScreen === 'PrepaidInteractionsCheckout') {
+                this.props.navigation.navigate('PrepaidInteractionsCheckout', {
+                    ...this.props.navigation.state.params,
+                    message: this.state.message,
+                    messageVoice: {
+                        voiceName: this.state.voiceName,
+                        voiceAPIName: this.state.voiceAPIName
+                    },
+                    costs: {
+                        [CUSTOM_TTS_VOICE]: this.state.voiceCost,
+                        ...costsObject
+                    },
+                });
+            } else {
+                this.props.navigation.navigate('PrepaidInteractionsAddVisual', {
+                    ...this.props.navigation.state.params,
+                    message: this.state.message,
+                    messageVoice: {
+                        voiceName: this.state.voiceName,
+                        voiceAPIName: this.state.voiceAPIName
+                    },
+                    costs: {
+                        [CUSTOM_TTS_VOICE]: this.state.voiceCost,
+                        ...costsObject
+                    },
+                });
+            }
         }
+    }
+
+    skipTTS = () => {
+        const costsObject = this.props.navigation.getParam('costs', {});
+        this.props.navigation.navigate('PrepaidInteractionsCheckout', {
+            ...this.props.navigation.state.params,
+            costs: {
+                ...costsObject
+            },
+        });
     }
 
     render() {
@@ -202,6 +214,16 @@ class PrepaidInteractionsTTS extends Component {
                                     {translate('interactions.TTS.whatYouWantToSay')}
                                 </Text>
                             </View>
+                            {this.props.previousScreen === 'PrepaidInteractionsConfirmSelection' && this.state.step === 0 &&
+                                <View style={styles.skipTTSContainer}>
+                                    <TouchableOpacity style={styles.skipButtonContainer}
+                                        onPress={this.skipTTS}>
+                                        <Text style={styles.skipButtonText}>
+                                            {translate('linkTwitchAccount.skip')}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            }
                             {this.state.step >= 1 &&
                                 <>
                                     <View style={styles.optionOuterConainer}>

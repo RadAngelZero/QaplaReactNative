@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Modal, View, Text, TouchableOpacity, FlatList } from 'react-native';
-import MaskedView from '@react-native-community/masked-view';
-import LinearGradient from 'react-native-linear-gradient';
 
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import images from '../../../assets/images';
@@ -29,21 +27,16 @@ class InsertExtraTipModal extends Component {
         }
 
         onSymbolPress = (symbol) => {
-            const realExtraTipValue = this.state.extraTip;
+            if (!isNaN(symbol)) {
+                this.setState({ extraTip: this.state.extraTip === '0' ? symbol.toString() : this.state.extraTip + symbol.toString() });
+            } else if (symbol === images.svg.closeThiccIcon) {
+                this.setState({ extraTip: '0' });
+            } else if (symbol === images.svg.leftArrowThiccIcon) {
+                let newValue = this.state.extraTip.substring(0, this.state.extraTip.length - 1);
+                newValue = newValue !== '' ? newValue : '0';
 
-            // We set extraTip to 0 only to trick the MaskedView on android devices
-            this.setState({ extraTip: '0' }, () => {
-                if (!isNaN(symbol)) {
-                    this.setState({ extraTip: realExtraTipValue === '0' ? symbol.toString() : realExtraTipValue + symbol.toString() });
-                } else if (symbol === images.svg.closeThiccIcon) {
-                    this.setState({ extraTip: '0' });
-                } else if (symbol === images.svg.leftArrowThiccIcon) {
-                    let newValue = realExtraTipValue.substring(0, realExtraTipValue.length - 1);
-                    newValue = newValue !== '' ? newValue : '0';
-
-                    this.setState({ extraTip: newValue });
-                }
-            });
+                this.setState({ extraTip: newValue });
+            }
         }
 
         const isCenterSymbol = centerSymbols.includes(item);
@@ -78,16 +71,9 @@ class InsertExtraTipModal extends Component {
                         {/* We use heightPercentageToPx because we want a circular component */}
                         <images.svg.qoin width={heightPercentageToPx(5)}
                             height={heightPercentageToPx(5)} />
-                            <MaskedView maskElement={<Text style={styles.extraTipModalTipText}>{extraTipNumber.toLocaleString()}</Text>} style={{ alignContent: 'center' }}>
-                                <LinearGradient
-                                    colors={['#FFD3FB', '#F5FFCB', '#9FFFDD']}
-                                    useAngle
-                                    angle={248.41}>
-                                    <Text style={[styles.extraTipModalTipText, { opacity: 0 }]}>
-                                        {extraTipNumber.toLocaleString()}
-                                    </Text>
-                                </LinearGradient>
-                            </MaskedView>
+                            <Text style={[styles.extraTipModalTipText]}>
+                                {extraTipNumber.toLocaleString()}
+                            </Text>
                     </View>
                     <View style={styles.extraTipKeyboardContainer}>
                         <FlatList numColumns={3}

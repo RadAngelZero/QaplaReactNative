@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import { getScreenSizeMultiplier, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { listenGiphyTextSearch, removeGiphyTextRequests } from '../../services/database';
+import { GIPHY_TEXT_GENERATOR_URL } from '../../utilities/Constants';
 
 class InteractionsGiphyTextSelector extends Component {
     state = {
@@ -104,7 +105,7 @@ class InteractionsGiphyTextSelector extends Component {
                 </View>
                 {this.state.fetchGiphyText &&
                     <WebView style={{ display: 'none', opacity: 0, zIndex: -9999 }}
-                        source={{ uri: `http://localhost:3000/giphyTextGenerator/${this.props.uid}/${this.props.navigation.getParam('text', '')}` }} />
+                        source={{ uri: `${GIPHY_TEXT_GENERATOR_URL}${this.props.uid}/${this.props.navigation.getParam('text', '')}` }} />
                 }
                 <NavigationEvents onWillFocus={this.onWillFocus} />
             </View>

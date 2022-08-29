@@ -182,3 +182,5 @@ export const MAX_CHAR_FOR_TTS = 100;
 
 export const TWITCH_PARTNER = 'partner';
 export const TWITCH_AFFILIATE = 'affiliate';
+
+export const GIPHY_TEXT_GENERATOR_URL = 'https://dashboard.qapla.gg/giphyTextGenerator/';

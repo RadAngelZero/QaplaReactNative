@@ -1,0 +1,739 @@
+{
+    "App": {
+        "processingPayment": {
+            "validating": "Validando transacción",
+            "deliveringQoins": "Abonando Qoins",
+            "qoinsDelivered": "Qoins abonados",
+            "pendingPaymentAlert": {
+                "title": "Tu banco está pendiente de procesar tu pago",
+                "message": "Abonaremos tus Qoins una vez realizado el cobro. Te notificaremos en cuanto se realice"
+            }
+        },
+        "snackBar": {
+            "details": "Ver más"
+        }
+    },
+    "platforms": {
+        "mobile": "PC/Móvil"
+    },
+    "days": {
+        "monday": "Lunes",
+        "tuesday": "Martes",
+        "wednesday": "Miércoles",
+        "thursday": "Jueves",
+        "friday": "Viernes",
+        "saturday": "Sábado",
+        "sunday": "Domingo",
+        "today": "Hoy",
+        "tomorrow": "Mañana",
+        "yesterday": "Ayer"
+    },
+    "router": {
+        "topNavigators": {
+            /**
+             * QaplaTabBar component use this translations so we need it to be predictable
+             * that is why is all in lowercase and not so nested
+            **/
+            "timeline": "Descubrir",
+            "mystreams": "Mis streams",
+            "discover": "Descubre",
+            "following": "Siguiendo",
+            "achievements": {
+                "active": "Activos",
+                "completed": "Completados"
+            },
+            "notifications": {
+                "activity": "Actividad",
+                "matches": "Partidas"
+            },
+            "matches": {
+                "public": "Públicas",
+                "myMatches": "Mis Partidas"
+            }
+        },
+        "bottomNavigators": {
+            "mainNavigator": {
+                "streams": "Streams",
+                "explore": "Explorar",
+                "community": "Comunidad",
+                "profile": "Perfil"
+            }
+        }
+    },
+    "loadingScreen": {
+        "activityIndicatorText": "Cargando..."
+    },
+    "onBoardingScreen": {
+        "discover": {
+            "description": "Descubre nuevos streamers y\nconecta con nuevas comunidades"
+        },
+        "follow": {
+            "description": "Sigue los streams publicados\nen Qapla y junta puntos del canal"
+        },
+        "get": {
+            "description": "Recibe Qoins y XQ en Qapla\npor tus puntos del canal 😮"
+        },
+        "support": {
+            "description": "Apoya a tus streamers con tus\nQoins ¡y se recompensado!"
+        },
+        "highlight": {
+            "description": "Destaca por tu esfuerzo y\napoyo a la comunidad"
+        },
+        "startNow": "¡Comienza ya!",
+        "skip": "Omitir"
+    },
+    "activeAchievementsScreen": {
+        "qaplaAchievement": {
+            "redeem": "Redimir"
+        },
+        "socialAchievement": {
+            "redeem": "Redimir",
+            "like": "Dar Like",
+            "upload": "Subir",
+            "modal": {
+                "header": "¡Felicidades!",
+                "body": "Tu imagen será verificada en breve y podrás redimir tu logro en breve",
+                "textButton": "Entendido"
+            }
+        },
+        "tournamentAchivement": {
+            "participate": "Participar"
+        },
+        "eventAchievement": {
+            "participate": "Participar",
+            "alreadyParticipating": "Estás inscrito.",
+            "goToEvent": "Ir al evento",
+            "eventRequirementsModal": {
+                "title": "Información requerida",
+                "body": "Esta información es necesaria para participar en este evento.",
+                "close": "Cerrar",
+                "addInfo": "Agregar información"
+            }
+        }
+    },
+    "publicMatchesFeedScreen": {
+        "highlightModal": {
+            "header": "Crea una Partida",
+            "body": "Empieza a competir con otros jugadores. ¡Crea tu partida y gana!"
+        },
+        "createMatchesButton": "Jugar Ahora"
+    },
+    "publicMatchCardScreen": {
+        "discordTag": "Discord Tag",
+        "numberOfMembers": "No. de Integrantes",
+        "waitingResult": "Esperando resultado de tu rival",
+        "uploadResultIn": "Sube tu resultado en:",
+        "expireIn": "Expira en:",
+        "challenge": "Retar",
+        "cancel": "Cancelar",
+        "resultUploaded": "Ya has subido un resultado a esta partida",
+        "uploadResult": "Subir Resultado",
+        "acceptChallenge": "Aceptar desafío",
+        "alreadyChallengedModal": {
+            "header": "Lo sentimos",
+            "body": "Ya enviaste un desafío al jugador para esta Partida",
+            "textButton": "Entendido"
+        },
+        "buyQaploinsModal": {
+            "body": "Compra Qoins para desafiar esta partida"
+        },
+        "expired": {
+            "description": "La partida expiró",
+            "bttnText": "Buscar Partidas"
+        }
+    },
+    "userProfileScreen": {
+        "linkAccount": "Vincular Twitch",
+        "linked": "Vinculada",
+        "myQoins": "Mis Qoins",
+        "getQoins": "Más Qoins",
+        "mySupport": "💜 Mi apoyo",
+        "totalQoinsSent": "Total de Qoins donados",
+        "addQreatorCode": "Agregar código de Qreador",
+        "notifications": "Notificaciones",
+        "newStreams": "Nuevos streams",
+        "newStreamsDescription": "Recibe notificaciones cuando un streamer que sigues publica un nuevo stream",
+        "scheduledStreams": "Streams agendados",
+        "scheduledStreamsDescription": "Recibe notificaciones sobre los streams agendados en “Mis streams”",
+        "termsAndConditions": "Términos y Condiciones",
+        "privacyNotice": "Aviso de Privacidad",
+        "termsAndConditionsUrl": "https://www.qapla.gg/es/terminos-y-condiciones",
+        "privacyNoticeUrl": "https://www.qapla.gg/es/aviso-de-privacidad",
+        "logOut": "Cerrar sesión",
+        "deleteAccount": "Eliminar cuenta",
+        "deleteAccountDescription": "¿Estas seguro que deseas eliminar tu cuenta y toda la información de la misma de forma permanente?",
+        "cancel": "Cancelar",
+        "accountDeleted": "Cuenta eliminada",
+        "accountDeletedDescription": "Tu cuenta y la información relacionada a la misma han sido eliminadas",
+        "accountDeletionError": "Error al eliminar cuenta",
+        "accountDeletionErrorDescription": "No se pudo eliminar la cuenta, por favor intentelo mas tarde o contacta con soporte tecnico",
+        "interactions": {
+            "liveToYourStreamer": "en vivo a tu streamer"
+        }
+    },
+    "notificationsScreen": {
+        "notificationsHeader": "Notificaciones",
+        "notificationTypes": {
+            "notificationWinner": "Has sido declarado ganador de la partida",
+            "notificationLooser": "%{userName} ha sido declarado ganador de la partida.",
+            "notificationResult": "¡%{userName} ha subido su resultado, tienes 15 minutos para subir el tuyo!",
+            "notificationRevision": "Tu partida entró en disputa y está siendo revisada. En cuanto este lista se te notificará.",
+            "notificationTie": "Tu partida con %{userName} concluyó sin un ganador.",
+            "notificationMatchAccepted": "%{userName} ha aceptado tu desafío.",
+            "matchNotification": {
+                "title": "¡%{userName} quiere desafiar tu partida de %{gameName}!",
+                "accept": "Aceptar",
+                "decline": "Rechazar"
+            }
+        },
+        "acceptChallengeModal": {
+            "body": "Al aceptar este desafío todos los otros desafíos que te han hecho a esta partida seran eliminados.",
+            "dontShowItAgain": "Entendido, no volver a mostrar este mensaje",
+            "continue": "Continuar"
+        }
+    },
+    "supportScreen": {
+        "placeholder": "¿Contento? ¿Frustrado? ¿Triste? Compártenos tu opinión aquí",
+        "send": "Enviar comentario",
+        "gratitudeModal": {
+            "header": "Gracias por tu comentario"
+        }
+    },
+    "chooseMatchTypeScreen": {
+        "title": "Escoge un tipo de partida",
+        "publicMatch": "Partida Pública",
+        "directMatch": "Buscar Usuario"
+    },
+    "loadGamesScreen": {
+        "title": "Elige tu juego"
+    },
+    "setBetScreen": {
+        "title": "¿Cuánto quieres ganar?",
+        "entry": "Entrada",
+        "createMatch": "Crear Ahora",
+        "buyQaploinsModal": {
+            "body": ""
+        }
+    },
+    "verificationScreen": {
+        "continue": "Continuar",
+        "sendCode": "Enviar Código",
+        "verify": "Verificar",
+        "finish": "Finalizar",
+        "resendVerCodeCountdown": {
+            "title": "Reenviar Código",
+            "codeWasResent": "El código fue reenviado...",
+            "resendCountdown": "Reenviar código en... %{countDownSecs} segundos"
+        },
+        "verificationPersonalData": {
+            "title": "¿Cómo te llamas?",
+            "namePlaceholder": "Nombre(s)",
+            "firstSurnamePlaceholder": "Apellido Paterno*",
+            "secondSurnamePlacholder": "Apellido Materno*",
+            "agePlaceholder": "Edad*"
+        },
+        "verificationPhoneNumber": {
+            "title": "¡Verifica tu Whatsapp!",
+            "phonePlaceholder": "Teléfono* ej: 6505551234",
+            "codePlaceholder": "Ingresa tu Código",
+            "codeSent": "Te enviamos un código de verificación",
+            "smsCodeError": "El código de verificación es incorrecto",
+            "alreadyLinkedAccountError": "Este número de teléfono ya está vinculado con una cuenta.",
+            "noMinDigitsPhoneNum": "El número de teléfono debe de tener mínimo 5 dígitos."
+        },
+        "verificationProcessSuccess": {
+            "title": "¡Gracias!",
+            "body": "Hemos recibido tu solicitud, este proceso puede tardar hasta 24 hrs. Apreciamos tu paciencia, estamos trabajando para ti."
+        }
+    },
+    "uploadMatchResultScreen": {
+        "title": "Selecciona tu resultado",
+        "results": {
+            "won": "Ganado",
+            "draw": "Empatado",
+            "lost": "Perdido",
+            "dontPlayed": "No Jugado"
+        },
+        "evidence": "Evidencia",
+        "uploadResult": "Subir Resultado"
+    },
+    "uploadClutchEvidenceScreen": {
+        "insertClipPlaceholder": "Inserta aquí el URL del clip",
+        "instructions": {
+            "firstPart": "Sube tu clip a tu perfil de CLUTCH usando el ",
+            "highlightedText1": "#qaplagaming",
+            "connector": " con el ",
+            "highlightedText2": "ID de la partida",
+            "secondPart": " en la descripción y compártenos el link, como se muestra en la imagen de arriba ;)"
+        },
+        "done": "Listo",
+        "goToClutch": "Ir a Clutch",
+        "uploadMatchResultsModal": {
+            "header": "¡Felicidades!",
+            "paragraph": "Tu resultado fué subido satisfactóriamente",
+            "okButton": "Entendido"
+        },
+        "uploadMatchEvidenceModal": {
+            "header": "Sube tu evidencia",
+            "paragraph": "¡Recuerda subir tu evidencia de la partida que jugaste! En caso de haber una disputa por el resultado ¡la evidencia será tu mejor prueba!",
+            "okButton": "Continuar sin evidencia"
+        }
+    },
+    "signInScreen": {
+        "facebookSignin": "Continuar con Facebook",
+        "googleSignin": "Continuar con Google",
+        "appleSignin": "Continuar con Apple",
+        "twitchSignin": "Continuar con Twitch",
+        "alreadyHaveAccount": "¿Ya tienes cuenta?",
+        "emailSignin": "Ingresa con correo"
+    },
+    "loginWithEmailScreen": {
+        "emailPlaceholder": "Email",
+        "passwordPlaceholder": "Contraseña",
+        "forgotPassword": "¿Olvidaste tu contraseña?",
+        "login": "Iniciar Sesión"
+    },
+    "chooseUserNameScreen": {
+        "title": "Crea tu nombre de usuario",
+        "userNamePlaceholder": "Introduce tu nombre de usuario",
+        "userNameAlreadyTaken": "Ese nombre de usuario ya está en uso, prueba con otro",
+        "bodyFirstPart": "Antes de registrarte en Qapla gaming asegúrate de haber leído y aceptado nuestros",
+        "termsAndConditions": "Términos y Condiciones",
+        "bodySecondPart": "y nuestra",
+        "privacyPolicy": "Política de privacidad",
+        "agreeWithTerms": "He leído y acepto los términos y condiciones",
+        "agreeWithPrivacy": "He leído y acepto la política de privacidad",
+        "validatingUserName": "Validando Username...",
+        "acceptButton": "Continuar",
+        "continue": "Continuar"
+    },
+    "chooseOpponentScreen": {
+        "title": "Buscar usuario a retar",
+        "searchPlaceholder": "Buscar usuario"
+    },
+    "notificationsSettingsScreen": {
+        "title": "Notificaciones",
+        "gamesPermissionDescription": "Recibir notificaciones sobre nuevas partidas de juegos que me interesan",
+        "eventsPermissionDescription": "Recibir notificaciones sobre los eventos a los que estoy suscrito"
+    },
+    "TimelineStreams": {
+        "featuredEvent": "Destacado",
+        "live": "En vivo",
+        "qreators": "Qreadores",
+        "streamerHasNoProfileTitle": "¡Oh no! No encontramos su perfil Qapla",
+        "streamerHasNoProfileDescription": "%{streamerName} no ha creado un perfil en Qapla, pero puedes visitar su canal en Twitch",
+        "cancel": "Cancelar",
+        "goToTwitch": "Ir a Twitch"
+    },
+    "CommunityScreen": {
+        "comingSoon": "¡Proximamente!",
+        "description": "Una mejor manera de interactuar con tu comunidad.",
+        "feedbackRequest": "¡Queremos tus comentarios!\nHaznos saber lo que te gustaría obtener de esta sección :D",
+        "answerSurvery": "Responder encuesta rápida"
+    },
+    "activityScreen": {
+        "activity": "Actividad",
+        "qoins": "Qoins de %{streamerName}",
+        "xq": "Experiencia de %{streamerName}"
+    },
+    "streamerProfileScreen": {
+        "follow": "Seguir",
+        "following": "Siguiendo",
+        "unfollow": "Dejar de seguir",
+        "upcomingStreams": "Próximos streams",
+        "myCommunity": "Mi comunidad",
+        "creatorCodes": "Códigos de creador",
+        "sendInteraction": "Enviar reacción en vivo"
+    },
+    "writeCheerMessageScreen": {
+        "sendPersonalizedMessage": "¿Quieres decirle algo especial?\n💬",
+        "tellUs": "🗣 ¡Dinos!, ¿Qué le quieres decir a %{streamerName}",
+        "sendCheerError": "😟 No pudimos enviar tus cheers en este momento, por favor inténtalo meas tarde. Si el problema persiste puedes contactarnos en soporte técnico en nuestro Discord.",
+        "backToProfile": "Regresar",
+        "skip": "Omitir"
+    },
+    "cheersSentScreen": {
+        "thankYouTitle": "¡Gracias!",
+        "sentCheersTo": "Hemos enviado tus\ncheers a ",
+        "cheersBarUpdated": "Tu barra de cheers ha sido actualizada :D",
+        "backToProfile": "Regresar"
+    },
+    "authHandlerScreen": {
+        "signUpWithEmail": "Registrate con correo",
+        "signInWithEmail": "Inicia sesión con correo",
+        "textsCarrousel": {
+            "welcome": "¡Bienvenido!",
+            "authOptions": "Crea una cuenta o inicia sesión para unirte a los streams",
+            "createAccount": "Crea tu cuenta",
+            "signIn": "Inicia sesión",
+            "firstTimeMessage": "Descubre a tu primer streamer ¡ahora!",
+            "welcomeBackMessage": "¡Bienvenido de vuelta! Te extrañamos :v",
+            "createAccountWithEmail": "Crea tu cuenta con correo",
+            "signInWithEmail": "Inicia sesión con correo",
+            "createUsername": "Crea tu nombre de usuario",
+            "haveQreatorQode": "¿Tienes un Código de Qreador?",
+            "getCustomAlerts": "Recibe ⚡️ 3 reacciones ⚡️ en vivo al minar Qoins en tus primeros 3 directos "
+        },
+        "buttonsCarrousel": {
+            "createAccount": "Crear mi cuenta",
+            "alreadyHaveAccount": "Ya tengo cuenta",
+            "continueWithGoogle": "Continuar con Google",
+            "continueWithTwitch": "Continuar con Twitch",
+            "continue": "Continuar",
+            "validatingUsername": "Validando username...",
+            "iamReady": "¡Estoy listo!",
+            "joinQlan": "Unirme al Qlan",
+            "joiningQlan": "Uniendose al Qlan",
+            "goToFirstStream": "Ir a mi primer stream"
+        }
+    },
+    "headerBar": {
+        "highlightModal": {
+            "header": "Ve tus Notificaciones",
+            "body": "Tus partidas recibirán notificaciones de desafío, ¡recuerda checar las notificaciones!"
+        }
+    },
+    "highlightModal": {
+        "acceptButton": "Entendido"
+    },
+    "imagePicker": {
+        "showMorePhotos": "Mostrar más fotografías",
+        "selectImage": "¡Quiero esta foto!",
+        "discardImage": "No quiero esta foto",
+        "savingImage": "Guardando foto..."
+    },
+    "qGCamera": {
+        "androidPermissions": {
+            "title": "Permiso para usar la cámara",
+            "message": "Necesitamos tu permiso para usar tu cámara",
+            "buttonPositive": "Aceptar",
+            "buttonNegative": "Cancelar"
+        },
+        "takePhoto": "Tomar Foto"
+    },
+    "qGCameraModal": {
+        "selectImage": "¡Quiero usar esta foto!"
+    },
+    "addGamerTagModal": {
+        "newGameBody": "Se va a añadir el Juego %{selectedGame} a tu perfil con el gamertag %{gamerTag}. Estás seguro?",
+        "updateGameBody": "Se actualizará tu gamertag de %{selectedGame}. Estás seguro?",
+        "gamerTagPlaceholder": "Escribe tu Gamertag",
+        "invalidGamerTag": "Gamertag inválido",
+        "accept": "Aceptar"
+    },
+    "notEnoughQaploinsModal": {
+        "header": "Adversario sin Qoins",
+        "accept": "Entendido",
+        "warning": "La notificación se borrará de la lista"
+    },
+    "matchExpireRememberModal": {
+        "header": "Recuerda",
+        "paragraph": "La partida expirará después de 10 minutos si no recibe y se acepta un desafío de otro jugador.",
+        "dontShowItAgain": "Entendido, no volver a mostrar este mensaje",
+        "okButton": "Entendido"
+    },
+    "eventDetailsModal": {
+        "waitingApproval": "Aun estas esperando la aprobación del creador ;)",
+        "eventInformation": "Información del evento",
+        "hostedBy": "Relizado por",
+        "follow": "Seguir",
+        "dateAndTime": "Día y hora",
+        "eventChat": "Chat del evento",
+        "joinDiscordChannel": "Unete a nuestro canal de Chat para soporte adicional.",
+        "chat": "Chat",
+        "description": "Descripción",
+        "prizes": "RECOMPENSAS",
+        "instructions": "Instrucciones",
+        "howToParticipate": "Como participar",
+        "participate": "Unirme al stream",
+        "nickName": "%{acronym} Nickname",
+        "enterNickName": "Ingresa el nombre que tienes en el juego %{gameName}",
+        "errorText": "Verifica que los campos estén llenados correctamente",
+        "errorOnRequest": "Error al registrarte, si este problema persiste porfavor escribenos al canal de soporte tecnico en discord",
+        "continue": "Continuar",
+        "eventEntryDialogBody": "El costo de entrada para este evento es de %{eventEntry} Qoins, actualmente cuentas con %{qoins} Qoins. ¿Estas seguro que desas continuar?",
+        "notEnoughQoinsDialogBody": "No se pudo completar tu registro: el costo de entrada para este evento es de %{eventEntry} Qoins, actualmente cuentas con %{qoins} Qoins.",
+        "awesomeTitle": "¡Genial!",
+        "thankYouTitle": "¡Gracias!",
+        "alreadyAccepted": "Tu inscripción ha quedado completada, ¡asegurate de estar listo cuando el evento comience!",
+        "succedRequest": "Tu solicitud ha sido enviada :D, espera a que",
+        "nextStepsFeedback": "acepte tu solicitud. Te enviaremos una notificación cuando esto pase ;)",
+        "finish": "Finalizar",
+        "details": {
+            "know": "Conocer",
+            "following": "Siguiendo",
+            "farm": "Minas"
+        },
+        "success": {
+            "joinedStream": "¡Te has unido al stream!",
+            "remindP1": "Te recordaremos cuando comience el stream de",
+            "remindP2": "",
+            "discover": "Descubrir más streams"
+        },
+        "shareWithYourFriends": "Invita a tus amigos al stream",
+        "linkCopied": "Link copiado"
+    },
+    "updateApp": {
+        "header": "Hay una nueva versión de Qapla, actualiza a la nueva versión.",
+        "updateBttnTxt": "Actualizar"
+    },
+    "deepLinks": {
+        "matchCard": {
+            "description": "Juega a tu juego favorito con otros jugadores y gana recompensas",
+            "title": "Juega una partida de %{game} (%{platform}) para ganar %{winBet} Qoins!"
+        },
+        "linkBroken": {
+            "title": "Enlace no encontrado",
+            "description": "El contenido que estás intentando acceder no se pudo acceder, prueba de nuevo o actualiza a una nueva versión y intenta de nuevo.",
+            "bttnText": "Actualizar"
+        }
+    },
+    "zeroQoinsEventModal": {
+        "header": "🔎 ¡Ups! Parece que no tienes suficientes Qoins",
+        "body": "Mina Qoins en los streams publicados en el feed principal para poder apoyar a tus streamers 🌱",
+        "bttnText": "Explorar streams"
+    },
+    "confirmationDialog": {
+        "cancelButton": "Cancelar",
+        "acceptButton": "Continuar"
+    },
+    "rewardsBottomSheet": {
+        "rewards": "Recompensas",
+        "transactions": "Transacciones",
+        "donation": "Qoins donados",
+        "rewardRedeemed": "Recompensa redimida",
+        "redeemPrize": "Redimir Premio",
+        "rewardsTooltip": "Cada donación que hagas se acumula para llenar tu barra de vida. Usa tus vidas para canjearlos en los loots :D",
+        "next": "Siguiente",
+        "done": "Listo"
+    },
+    "donationsLeaderBoard": {
+        "tooltip": "Gana puntos xq viendo eventos marcados con el icono xq en nuestra pantalla principal",
+        "done": "Listo"
+    },
+    "linkTwitchAccount": {
+        "skip": "Omitir",
+        "linkAccount": "Vincula tu cuenta",
+        "descriptionQreatorCode": "para poder usar tu Código de Qreador y recibir tus tokens de referido 🙌",
+        "description": "🌱 Mina tokens en tiempo real usando tus puntos del canal en Twitch.",
+        "linkButton": "Vincular con Twitch",
+        "rejectTrakingTitle": "Permite a Qapla solicitar accesos para poder vincular tu Twitch",
+        "rejectTrakingMessage": "Únicamente se usarán tus datos para vincular tus cuentas",
+        "rejectTrackingCancel": "Cancelar",
+        "rejectTrackingSettings": "Ir a Ajustes"
+    },
+    "skipLinkTwitchAccount": {
+        "important": "Importante",
+        "reminder": "para poder usar tu Código de Qreador y recibir tus tokens de referido 🙌",
+        "reminderQreatorCode": "Te recordamos que para obtener los beneficios de Qapla, deberás tener tu cuenta de Twitch vinculada.",
+        "description": "No te preocupes, puedes vincular tu cuenta después desde tu perfil 😉",
+        "continue": "Continuar sin vincular"
+    },
+    "sendCheersModal": {
+        "thankYouTitle": "¡Gracias!",
+        "sentCheersTo": "Hemos enviado tus\ncheers a ",
+        "lifesBarUpdated": "Tu barra de vidas ha sido\nactualizada :D",
+        "backToProfile": "Regresar a mi perfil",
+        "wantToSaySomething": "¿Quieres decirle algo especial?",
+        "youCanTypeAnything": "Puedes escribirle lo que quieras al streamer ❤, enviaremos tus cheers al terminar este paso",
+        "sendYourCheers": "Envía tus cheers",
+        "selectYourStreamer": "Selecciona al streamer que quieras apoyar",
+        "sending": "Enviando...",
+        "skip": "Omitir",
+        "next": "Siguiente",
+        "tellUs": "🗣 ¡Dinos!, ¿Qué le quieres decir a",
+        "optionalMessage": "Opcional, pulsa enviar para saltar",
+        "chatResponsePharases": {
+            "none": {
+                "part1": {
+                    "nonep1s1": "¿Sin palabras?, ",
+                    "nonep1s2": "¿Nada que decir?, "
+                },
+                "part2": {
+                    "nonep2s1": "no te sientas mal, ",
+                    "nonep2s2": "no te preocupes, "
+                }
+            },
+            "short": {
+                "short1": "Un mensaje breve, ",
+                "short2": "Un mensaje corto, ",
+                "short3": "Una persona de pocas palabras, "
+            },
+            "medium": {
+                "medium1": "Buena elección de palabras, ",
+                "medium2": "Gran elección de palabras, ",
+                "medium3": "Bonitas palabras, "
+            },
+            "long": {
+                "long1": "Eso es mucho texto, ",
+                "long2": "Es un gran párrafo, ",
+                "long3": "Esas son muchas palabras, ",
+                "long4": "WOW, eso es mucho texto, ",
+                "long5": "WOW, es un gran párrafo, ",
+                "long6": "WOW, esas son muchas palabras, "
+            },
+            "secondPart": {
+                "secondPart1": " apreciará mucho tu apoyo.",
+                "secondPart2": " amará mucho tu apoyo.",
+                "secondPart3": " estará muy fascinado por tu apoyo.",
+                "secondPart4": " estará muy encantado por tu apoyo.",
+                "secondPart5": " estará muy feliz por tu apoyo"
+            },
+            "willBeSent": {
+                "willBeSent1": "Le haremos llegar tus Qoins de inmediato",
+                "willBeSent2": "Le haremos llegar tus Qoins en este instante",
+                "willBeSent3": "Le haremos llegar tus Qoins ahora mismo",
+                "willBeSent4": "De inmediato le haremos llegar tus Qoins",
+                "willBeSent5": "En este instante le haremos llegar tus Qoins",
+                "willBeSent6": "Ahora mismo le haremos llegar tus Qoins"
+            }
+        }
+    },
+    "LevelInformationModal": {
+        "getMoreQoins": "¡Recibe más Qoins!",
+        "bodyTextOne": "Sube tu nivel cada temporada acumulando XQ y mina más Qoins en los streams que participes.",
+        "bodyTextTwo": "Tu nivel de la última temporada determina la cantidad de Qoins que minas por stream.",
+        "gotIt": "¡Entendido!"
+    },
+    "GalleryPermissionsModaliOS": {
+        "allowAccess": "Permite el acceso a tu galería para editar tu foto de perfil 🙏",
+        "allow": "Permitir"
+    },
+    "supportStreamerModal": {
+        "supportTo": "⚡️ Envía una reacción en vivo a ",
+        "description": "Tus cheers son enviados al instante y tus mensajes aparecen en vivo durante sus directos en Twitch.",
+        "sendCheers": "Enviar Cheers"
+    },
+    "streamerCard": {
+        "viewMore": "Ver más"
+    },
+    "loadingStreamerCard": {
+        "loading": "Curando..."
+    },
+    "qlan": {
+        "myQlan": "Mi Qlan",
+        "joinQlan": "¡Únete a un Qlan!",
+        "useCode": "Usa el Código de Qreador de tu streamer fav",
+        "typeQreatorCode": "Ingresa Código de Qreador",
+        "enterNewCode": "Ingresa nuevo Código de Qreador",
+        "joinQlanButton": "Unirme al Qlan",
+        "youJoined": "¡Estás listo!",
+        "backToProfile": "Volver a mi perfil",
+        "youWillReceiveP1": "Obtendras un ",
+        "youWillReceiveP2": "extra de 200 Qoins ",
+        "youWillReceiveP3": "por stream, en tus ",
+        "youWillReceiveP4": "primeros 3 streams Qapla 🌱",
+        "update": "Actualizar"
+    },
+    "interactions": {
+        "feed": {
+            "favs": "Tus favs",
+            "recents": "Recientes",
+            "modal": {
+                "sendA": "Envía un",
+                "message": "Mensaje",
+                "liveToStreamer": "en vivo a un streamer",
+                "searchByName": "Busca a un streamer por su nombre"
+            }
+        },
+        "personalize": {
+            "personalizeYourInteraction": "Personaliza tu reacción",
+            "onlySend": "Sólo enviar",
+            "clips": "Clips",
+            "giphyText": "Custom TTS"
+        },
+        "addVisual": {
+            "addVisual": "Agrega un Gif, Sticker o Meme a tu reacción"
+        },
+        "visual": {
+            "searchOn": "Buscar en",
+            "tabs": {
+                "trends": "Tendencia"
+            }
+        },
+        "visualConfirmation": {
+            "use": "Usar",
+            "chooseAnother": "Elegir otro",
+            "mediaTypes": {
+                "gif": "Gif",
+                "sticker": "Sticker",
+                "meme": "Meme",
+                "video": "Clip",
+                "text": "Texto"
+            }
+        },
+        "addTTS": {
+            "addTTSInYourInteraction": "Agrega un Text-to-Speech a tu reacción",
+            "addAMessageP1": "🗣 Agrega un mensaje con Bot de Voz para",
+            "addAMessageP2": "a tu reacción por",
+            "add": "Agregar Text-to-Speech",
+            "onlySendMy": "Sólo enviar mi",
+            "mediaTypes": {
+                "gif": "Gif",
+                "sticker": "Sticker",
+                "meme": "Meme",
+                "video": "Clip"
+            }
+        },
+        "TTS": {
+            "writeYourMessage": "Escribe tu mensaje",
+            "whatYouWantToSay": "🗣 ¿Qué le quieres decir en el directo?",
+            "TTS": "Text-to-Speech",
+            "chooseABotVoice": "🔥 ¡Cool!\n🤖 Ahora escoge una voz para el bot:",
+            "readyToSend": "👌 ¿Listo para enviar?",
+            "editMessage": "Editar mensaje",
+            "chooseAnotherVoice": "Escoge otra voz para el bot",
+            "ready": "Listo"
+        },
+        "insertGiphyText": {
+            "useCustomTTS": "Use a custom TTS",
+            "cutDownTextWarning": "Asegurate que tu mensaje tiene 50 caracteres o menos para usar custom TTS"
+        },
+        "checkout": {
+            "my": "Mis",
+            "extraTip": "Extra Tip",
+            "supportP1": "Apoya a",
+            "supportP2": "envíando cheers de Qoins 💚",
+            "concepts": {
+                "gif": "Gif",
+                "sticker": "Sticker",
+                "meme": "Meme",
+                "tts": "Text-to-Speech",
+                "video": "Clip",
+                "text": "Custom Text-to-Speech",
+                "emoji": "Lluvia de emojis"
+            },
+            "discardInteraction": "Descartar reacción",
+            "areYouSure": "¿Estas seguro que deseas descartar tu reacción?",
+            "yes": "Si",
+            "no": "No",
+            "sendExtraTip": "Enviar Extra Tip",
+            "other": "Otro",
+            "sendInteraction": "Enviar Reacción",
+            "emojiModal": {
+                "chooseAnEmoji": "Selecciona un Emoji"
+            }
+        },
+        "final": {
+            "interactionSentP1": "Interacción enviada\n\n¡Ve al canal de",
+            "interactionSentP2": " para ver tu alerta en vivo!",
+            "interactionOnQueueP1": "Interacción en cola\n\n",
+            "interactionOnQueueP2": "no está en vivo. Tu alerta saldrá su próximo stream",
+            "cheersSent": "Cheers enviados",
+            "weveSentYourQoins": "Hemos enviado tus %{qoins} Qoins a 🌱",
+            "modal": {
+                "viewMyInteractions": "Ver mi reacción",
+                "weveSentYourQoinsP1": "¡Hemos enviado tus\n",
+                "weveSentYourQoinsP2": "%{qoins} Qoins a %{streamerName}! ⚡️",
+                "backToStart": "Volver al inicio"
+            }
+        }
+    },
+    "buyQoins": {
+        "sendInteractiunsUsingQoins": "Envía reacciones en vivo usando tus Qoins",
+        "save": "¡25% más Qoins!",
+        "pharases": {
+            "p1": "Llevaré diez 💸💸💸"
+        }
+    }
+}

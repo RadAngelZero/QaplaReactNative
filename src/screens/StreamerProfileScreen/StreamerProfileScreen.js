@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Image, View, ScrollView, Linking, Text, TouchableWithoutFeedback, Animated, Easing, SafeAreaView } from 'react-native';
+import { TouchableOpacity, Image, View, ScrollView, Linking, Text, TouchableWithoutFeedback, Animated } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
 import Images from '../../../assets/images';
-import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 import QaplaChip from '../../components/QaplaChip/QaplaChip';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
-import { getStreamerPublicProfile, getStreamerSocialLinks, getStreamerStreamingStatus, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile, userHaveTwitchId } from '../../services/database';
+import { getStreamerPublicProfile, getStreamerSocialLinks, getStreamerStreamingStatus, getUserReactionsCount, streamersHasOverlayActive, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile } from '../../services/database';
 import { getStreamerProfilePhotoUrl } from '../../services/storage';
 import { copyDataToClipboard } from '../../utilities/utils';
 import { getLocaleLanguage, translate } from './../../utilities/i18';
 import styles from './style';
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import InteractionsShortcut from '../../components/InteractionsShortcut/InteractionsShortcut';
+import { trackOnSegment } from '../../services/statistics';
 
 const socialMediaIcons = {
     Twitch: Images.svg.twitchLight,
@@ -21,7 +21,7 @@ const socialMediaIcons = {
     Twitter: Images.svg.twitter,
     Discord: Images.svg.discordSocial,
     TikTok: Images.svg.tikTok,
-    Youtube: Images.svg.youTube
+    Youtube: Images.svg.youTube,
 };
 
 class StreamerProfileScreen extends Component {
@@ -38,14 +38,14 @@ class StreamerProfileScreen extends Component {
             badge: false,
             creatorCodes: {},
             tags: [],
-            backgroundGradient: { angle: 0, colors: [ '#000', '#000' ] },
+            backgroundGradient: { angle: 0, colors: ['#000', '#000'] },
             isUserFollowingStreamer: false
         },
-        openLinkTwitchAccountModal: false,
         showUnfollowConfirmation: false,
         openEventDetailsModal: false,
         selectedStream: null,
-        interactButtonAnimation: new Animated.Value(0)
+        interactButtonAnimation: new Animated.Value(0),
+        showInteractModule: false
     };
 
     componentDidMount() {
@@ -65,7 +65,7 @@ class StreamerProfileScreen extends Component {
             // So we get the streamer public profile data directly from the database
             const streamerData = await getStreamerPublicProfile(streamerId);
 
-            this.setState({ streamerData: { ...streamerData.val(), streamerId} });
+            this.setState({ streamerData: { ...streamerData.val(), streamerId } });
         } else {
             streamerId = streamerData.streamerId;
 
@@ -85,31 +85,21 @@ class StreamerProfileScreen extends Component {
 
         // Determine upcoming events and sort it by time
         let streamerEvents = Object.keys(this.props.streamsLists.featured)
-        .filter((streamId) => this.props.streamsLists.featured[streamId].idStreamer && this.props.streamsLists.featured[streamId].idStreamer === streamerId)
-        .map((streamId) => this.props.streamsLists.featured[streamId]);
+            .filter((streamId) => this.props.streamsLists.featured[streamId].idStreamer && this.props.streamsLists.featured[streamId].idStreamer === streamerId)
+            .map((streamId) => this.props.streamsLists.featured[streamId]);
 
         for (let i = 0; i < this.props.streamsLists.streams.length; i++) {
             const streamsList = this.props.streamsLists.streams[i];
             streamerEvents = streamerEvents.concat(Object.keys(streamsList)
-            .filter((streamId) => streamsList[streamId].idStreamer && streamsList[streamId].idStreamer === streamerId)
-            .map((streamId) => streamsList[streamId]));
+                .filter((streamId) => streamsList[streamId].idStreamer && streamsList[streamId].idStreamer === streamerId)
+                .map((streamId) => streamsList[streamId]));
         }
 
         streamerEvents.sort((a, b) => a.timestamp - b.timestamp);
 
         const isStreaming = await getStreamerStreamingStatus(streamerId);
-
-        if (isStreaming) {
-            Animated.sequence([
-                Animated.delay(300),
-                Animated.timing(this.state.interactButtonAnimation, {
-                    toValue: 12,
-                    duration: 250,
-                    easing: Easing.cubic,
-                    useNativeDriver: false,
-                }),
-            ]).start();
-        }
+        const hasActiveOverlay = await streamersHasOverlayActive(streamerId);
+        this.setState({ showInteractModule: isStreaming && hasActiveOverlay.exists() && hasActiveOverlay.val() });
 
         // Only show the 2 most upcoming streams
         this.setState({ nextStreams: streamerEvents.slice(0, 2) });
@@ -152,8 +142,8 @@ class StreamerProfileScreen extends Component {
             this.subscribeUserToStreamer(this.props.uid);
         } else {
             this.props.navigation.navigate('SignIn', {
-                    onSuccessSignIn: async (uid) => this.subscribeUserToStreamer(uid)
-                }
+                onSuccessSignIn: async (uid) => this.subscribeUserToStreamer(uid)
+            }
             );
         }
     }
@@ -248,16 +238,16 @@ class StreamerProfileScreen extends Component {
 
         const ViewWithShadow = ({ children, style }) => (
             <View style={[{
-                    borderRadius: 100,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 2,
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 3.84,
-                    elevation: 5,
-                }, style]}>
+                borderRadius: 100,
+                shadowColor: "#000",
+                shadowOffset: {
+                    width: 0,
+                    height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+            }, style]}>
                 {children}
             </View>
         );
@@ -265,39 +255,59 @@ class StreamerProfileScreen extends Component {
         return (
             <>
                 {FirstBoostIcon &&
-                <ViewWithShadow style={{ marginRight: 5 }}>
-                    <FirstBoostIcon />
-                </ViewWithShadow>
+                    <ViewWithShadow style={{ marginRight: 5 }}>
+                        <FirstBoostIcon />
+                    </ViewWithShadow>
                 }
                 {customRewardsMultipliers.qoins > 1 &&
-                <ViewWithShadow style={{ marginRight: 5 }}>
-                    <Images.svg.qoin />
-                </ViewWithShadow>
+                    <ViewWithShadow style={{ marginRight: 5 }}>
+                        <Images.svg.qoin />
+                    </ViewWithShadow>
                 }
                 {SecondBoostIcon &&
-                <ViewWithShadow style={{ marginRight: 5 }}>
-                    <SecondBoostIcon />
-                </ViewWithShadow>
+                    <ViewWithShadow style={{ marginRight: 5 }}>
+                        <SecondBoostIcon />
+                    </ViewWithShadow>
                 }
                 {customRewardsMultipliers.xq > 1 &&
-                <ViewWithShadow>
-                    <Images.svg.xq />
-                </ViewWithShadow>
+                    <ViewWithShadow>
+                        <Images.svg.xq />
+                    </ViewWithShadow>
                 }
             </>
         );
     }
 
-    sendLiveInteraction = async () => {
-        if (await userHaveTwitchId(this.props.uid)) {
-            this.props.navigation.navigate('InteractionsPersonalize', {
-                streamerId: this.state.streamerData.streamerId,
-                displayName: this.state.streamerData.displayName,
-                photoUrl: this.state.streamerData.photoUrl,
-                isStreaming: true
-            });
+    onInteractionShorcut = async () => {
+        if (this.props.uid) {
+            const { streamerId, displayName, photoUrl, isStreaming } = this.state.streamerData;
+            const numberOfReactions = await getUserReactionsCount(this.props.uid, streamerId);
+            // We do not check this with exists() because the value can be 0, so it is easier to check if the snapshot has a valid value (not null, not undefined and greater than 0)
+            if (numberOfReactions.val()) {
+                trackOnSegment('Streamer Selected To Send Interaction From Streamer Profile', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: 'Custom Search'
+                });
+
+                this.props.navigation.navigate('PrepaidInteractionsPersonlizeStack', { streamerId, displayName, photoUrl, isStreaming: true, numberOfReactions: numberOfReactions.val() });
+            } else {
+                trackOnSegment('Streamer Selected To Send Interaction From Streamer Profile', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: 'Custom Search'
+                });
+
+                this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming: true });
+            }
         } else {
-            this.setState({ openLinkTwitchAccountModal: true });
+            trackOnSegment('Streamer Selected To Send Interaction From Streamer Profile', {
+                Streamer: displayName,
+                StreamerId: streamerId,
+                Category: 'Custom Search'
+            });
+
+            this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming: true });
         }
     }
 
@@ -316,154 +326,161 @@ class StreamerProfileScreen extends Component {
             // We don´t use SafeAreaView intentionally here, we want the cover image and TopNav to appear at the top of the screen
             <View style={styles.container}>
                 <TouchableWithoutFeedback style={{ flex: 1 }} onPress={this.onOutsidePress}>
-                <ScrollView>
-                    <View style={styles.topNav}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('MainBottomNavigator')}>
-                            <Images.svg.backIcon />
-                        </TouchableOpacity>
-                    </View>
-                    {backgroundUrl ?
-                        <Image source={{ uri: backgroundUrl }}
-                            style={styles.backgroundImage} />
-                        :
-                        <LinearGradient style={styles.backgroundImage}
-                            useAngle
-                            angle={this.state.streamerData.backgroundGradient.angle}
-                            colors={this.state.streamerData.backgroundGradient.colors} />
-                    }
-                    <View style={styles.photoContainer}>
-                        <Image source={photoUrl ? { uri: photoUrl } : null}
-                            style={styles.photo}
-                            onError={this.getFallbackImage} />
-                    </View>
-                    <View style={styles.profileContainer}>
-                        <View style={styles.buttonsContainer}>
-                            <TouchableOpacity onPress={!this.state.isUserFollowingStreamer ? this.followStreamer : this.unfollowStreamer}>
-                                <View style={!this.state.isUserFollowingStreamer ? styles.followButton : !this.state.showUnfollowConfirmation ? styles.followingButton : styles.unfollowButton}>
-                                    <Text style={!this.state.isUserFollowingStreamer ? styles.followButtonText : !this.state.showUnfollowConfirmation ? styles.followingButtonText : styles.unfollowButtonText}>
-                                        {!this.state.isUserFollowingStreamer ? translate('streamerProfileScreen.follow') : !this.state.showUnfollowConfirmation ? translate('streamerProfileScreen.following') : translate('streamerProfileScreen.unfollow')}
-                                    </Text>
-                                    {this.state.showUnfollowConfirmation && <Images.svg.unfollow style={{ marginLeft: 6 }} />}
-                                </View>
+                    <ScrollView>
+                        <View style={styles.topNav}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('MainBottomNavigator')}>
+                                <Images.svg.backIcon />
                             </TouchableOpacity>
-                            {!this.state.showUnfollowConfirmation &&
-                                <>
-                                {/* Button hidden temporarily */}
-                                {/* <TouchableOpacity onPress={() => console.log('Share Icon Press')}>
+                        </View>
+                        {backgroundUrl ?
+                            <Image source={{ uri: backgroundUrl }}
+                                style={styles.backgroundImage} />
+                            :
+                            <LinearGradient style={styles.backgroundImage}
+                                useAngle
+                                angle={this.state.streamerData.backgroundGradient.angle}
+                                colors={this.state.streamerData.backgroundGradient.colors} />
+                        }
+                        <View style={styles.photoContainer}>
+                            <Image source={photoUrl ? { uri: photoUrl } : null}
+                                style={styles.photo}
+                                onError={this.getFallbackImage} />
+                        </View>
+                        <View style={styles.profileContainer}>
+                            <View style={styles.buttonsContainer}>
+                                <TouchableOpacity onPress={!this.state.isUserFollowingStreamer ? this.followStreamer : this.unfollowStreamer}>
+                                    <View style={!this.state.isUserFollowingStreamer ? styles.followButton : !this.state.showUnfollowConfirmation ? styles.followingButton : styles.unfollowButton}>
+                                        <Text style={!this.state.isUserFollowingStreamer ? styles.followButtonText : !this.state.showUnfollowConfirmation ? styles.followingButtonText : styles.unfollowButtonText}>
+                                            {!this.state.isUserFollowingStreamer ? translate('streamerProfileScreen.follow') : !this.state.showUnfollowConfirmation ? translate('streamerProfileScreen.following') : translate('streamerProfileScreen.unfollow')}
+                                        </Text>
+                                        {this.state.showUnfollowConfirmation && <Images.svg.unfollow style={{ marginLeft: 6 }} />}
+                                    </View>
+                                </TouchableOpacity>
+                                {!this.state.showUnfollowConfirmation &&
+                                    <>
+                                        {/* Button hidden temporarily */}
+                                        {/* <TouchableOpacity onPress={() => console.log('Share Icon Press')}>
                                     <View style={styles.iconContainer}>
                                         <Images.svg.share />
                                     </View>
                                 </TouchableOpacity> */}
-                                </>
-                            }
-                        </View>
-                        <View style={styles.nameContainer}>
-                            <Text style={styles.streamerName}>
-                                {displayName}
-                            </Text>
-                            {badge &&
-                                <Images.svg.founderBadge />
-                            }
-                        </View>
-                        <Text style={styles.bio}>
-                            {bio}
-                        </Text>
-                        {tags && tags.length > 0 &&
-                            <View style={styles.tagsContainer}>
-                                {!this.state.showAllTags ?
-                                <>
-                                    {tags.slice(0, 5).map((tag) => (
-                                        <QaplaChip style={styles.tagsMargin}>
-                                            {tag}
-                                        </QaplaChip>
-                                    ))}
-                                    {tags.length > 5 &&
-                                        <TouchableOpacity onPress={() => this.setState({ showAllTags: true })}>
-                                            <Images.svg.moreCircle />
-                                        </TouchableOpacity>
-                                    }
-                                </>
-                                :
-                                <>
-                                    {tags.map((tag) => (
-                                        <QaplaChip style={styles.tagsMargin}>
-                                            {tag}
-                                        </QaplaChip>
-                                    ))}
-                                    <TouchableOpacity onPress={() => this.setState({ showAllTags: false })}>
-                                        <Images.svg.lessCircle />
-                                    </TouchableOpacity>
-                                </>
+                                    </>
                                 }
                             </View>
-                        }
-                        {this.state.nextStreams && this.state.nextStreams.length > 0 &&
-                            <View style={styles.upcomingStreamsContainer}>
-                                <Text style={styles.sectionTitle}>
-                                    {translate('streamerProfileScreen.upcomingStreams')}
+                            <View style={styles.nameContainer}>
+                                <Text style={styles.streamerName}>
+                                    {displayName}
                                 </Text>
-                                {this.state.nextStreams.map((nextStream) => (
-                                    <TouchableOpacity onPress={() => this.setState({ selectedStream: nextStream }, () => this.setState({ openEventDetailsModal: true }) )}>
-                                        <LinearGradient useAngle={true}
-                                            angle={133.34}
-                                            style={styles.upcomingStreamImageLinearGradientBackground}
-                                            colors={['#2C07FA', '#A716EE']}>
-                                            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'absolute', right: 24, top: 24 }}>
-                                                {this.renderBadges(nextStream.customRewardsMultipliers)}
-                                            </View>
-                                            <Image style={styles.upcomingStreamImage}
-                                                source={{ uri: nextStream.backgroundImage }} />
-                                        </LinearGradient>
-                                        <Text style={styles.upcomingStreamTitle}>
-                                            {nextStream.title[userLanguage]}
-                                        </Text>
-                                        <View style={styles.nextStreamTimeContainer}>
-                                            <View style={styles.timeContainer}>
-                                                <Images.svg.calendar style={{ alignSelf: 'center' }} />
-                                                <Text style={styles.timeText}>
-                                                    {this.formatStreamDate(nextStream.timestamp)}
-                                                </Text>
-                                            </View>
-                                            <View style={styles.timeContainer}>
-                                                <Images.svg.clock />
-                                                <Text style={styles.timeText}>
-                                                    {this.formatStreamHour(nextStream.timestamp)}
-                                                </Text>
-                                            </View>
-                                        </View>
-                                    </TouchableOpacity>
-                                ))}
+                                {badge &&
+                                    <Images.svg.founderBadge />
+                                }
                             </View>
-                        }
-                        {this.state.socialLinks && this.state.socialLinks.length > 0 &&
-                            <View style={styles.streamerCommunityContainer}>
-                                <Text style={styles.sectionTitle}>
-                                    {translate('streamerProfileScreen.myCommunity')}
-                                </Text>
-                                <View style={styles.socialButtonsContainer}>
-                                    {this.state.socialLinks.map((socialLink) => (
-                                        socialLink.value !== '' ?
-                                            <SocialLinkContainedButton onPress={() => this.onSocialButtonPress(socialLink.value)}
-                                                Icon={socialMediaIcons[socialLink.socialPage]}
-                                                style={styles.socialButton}
-                                                key={`social-${socialLink.socialPage}`}>
-                                                {socialLink.socialPage}
-                                            </SocialLinkContainedButton>
-                                            :
-                                            null
+                            <Text style={styles.bio}>
+                                {bio}
+                            </Text>
+                            {tags && tags.length > 0 &&
+                                <View style={styles.tagsContainer}>
+                                    {!this.state.showAllTags ?
+                                        <>
+                                            {tags.slice(0, 5).map((tag) => (
+                                                <QaplaChip style={styles.tagsMargin}>
+                                                    {tag}
+                                                </QaplaChip>
+                                            ))}
+                                            {tags.length > 5 &&
+                                                <TouchableOpacity onPress={() => this.setState({ showAllTags: true })}>
+                                                    <Images.svg.moreCircle />
+                                                </TouchableOpacity>
+                                            }
+                                        </>
+                                        :
+                                        <>
+                                            {tags.map((tag) => (
+                                                <QaplaChip style={styles.tagsMargin}>
+                                                    {tag}
+                                                </QaplaChip>
+                                            ))}
+                                            <TouchableOpacity onPress={() => this.setState({ showAllTags: false })}>
+                                                <Images.svg.lessCircle />
+                                            </TouchableOpacity>
+                                        </>
+                                    }
+                                </View>
+                            }
+                            {this.state.nextStreams && this.state.nextStreams.length > 0 &&
+                                <View style={styles.upcomingStreamsContainer}>
+                                    <Text style={styles.sectionTitle}>
+                                        {translate('streamerProfileScreen.upcomingStreams')}
+                                    </Text>
+                                    {this.state.nextStreams.map((nextStream) => (
+                                        <TouchableOpacity onPress={() => this.setState({ selectedStream: nextStream }, () => this.setState({ openEventDetailsModal: true }))}>
+                                            <LinearGradient useAngle={true}
+                                                angle={133.34}
+                                                style={styles.upcomingStreamImageLinearGradientBackground}
+                                                colors={['#2C07FA', '#A716EE']}>
+                                                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'absolute', right: 24, top: 24 }}>
+                                                    {this.renderBadges(nextStream.customRewardsMultipliers)}
+                                                </View>
+                                                <Image style={styles.upcomingStreamImage}
+                                                    source={{ uri: nextStream.backgroundImage }} />
+                                            </LinearGradient>
+                                            <Text style={styles.upcomingStreamTitle}>
+                                                {nextStream.title[userLanguage]}
+                                            </Text>
+                                            <View style={styles.nextStreamTimeContainer}>
+                                                <View style={styles.timeContainer}>
+                                                    <Images.svg.calendar style={{ alignSelf: 'center' }} />
+                                                    <Text style={styles.timeText}>
+                                                        {this.formatStreamDate(nextStream.timestamp)}
+                                                    </Text>
+                                                </View>
+                                                <View style={styles.timeContainer}>
+                                                    <Images.svg.clock />
+                                                    <Text style={styles.timeText}>
+                                                        {this.formatStreamHour(nextStream.timestamp)}
+                                                    </Text>
+                                                </View>
+                                            </View>
+                                        </TouchableOpacity>
                                     ))}
                                 </View>
-                            </View>
-                        }
-                        {this.state.streamerData.creatorCodes && Object.keys(this.state.streamerData.creatorCodes).length > 0 &&
-                            <View style={styles.creatorCodesContainer}>
-                                <Text style={styles.sectionTitle}>
-                                    {translate('streamerProfileScreen.creatorCodes')}
-                                </Text>
-                                {Object.values(this.state.streamerData.creatorCodes).map((code) => (
-                                    <View style={styles.creatorCodeImage}>
-                                        <Image style={styles.creatorCodeImage}
-                                            source={{ uri: code.imageUrl }} />
+                            }
+                            {this.state.showInteractModule &&
+                                <View style={{
+                                    marginTop: 30,
+                                }}>
+                                    <InteractionsShortcut onPress={this.onInteractionShorcut} />
+                                </View>
+                            }
+                            {this.state.socialLinks && this.state.socialLinks.length > 0 &&
+                                <View style={styles.streamerCommunityContainer}>
+                                    <Text style={styles.sectionTitle}>
+                                        {translate('streamerProfileScreen.myCommunity')}
+                                    </Text>
+                                    <View style={styles.socialButtonsContainer}>
+                                        {this.state.socialLinks.map((socialLink) => (
+                                            socialLink.value !== '' ?
+                                                <SocialLinkContainedButton onPress={() => this.onSocialButtonPress(socialLink.value)}
+                                                    Icon={socialMediaIcons[socialLink.socialPage]}
+                                                    style={styles.socialButton}
+                                                    key={`social-${socialLink.socialPage}`}>
+                                                    {socialLink.socialPage}
+                                                </SocialLinkContainedButton>
+                                                :
+                                                null
+                                        ))}
+                                    </View>
+                                </View>
+                            }
+                            {this.state.streamerData.creatorCodes && Object.keys(this.state.streamerData.creatorCodes).length > 0 &&
+                                <View style={styles.creatorCodesContainer}>
+                                    <Text style={styles.sectionTitle}>
+                                        {translate('streamerProfileScreen.creatorCodes')}
+                                    </Text>
+                                    {Object.values(this.state.streamerData.creatorCodes).map((code) => (
+                                        <View style={styles.creatorCodeImage}>
+                                            <Image style={styles.creatorCodeImage}
+                                                source={{ uri: code.imageUrl }} />
                                             <View style={styles.createrCodeButtonContainer}>
                                                 <View style={styles.creatorCodeButton}>
                                                     <TouchableOpacity onPress={() => copyDataToClipboard(code.code)}>
@@ -478,29 +495,14 @@ class StreamerProfileScreen extends Component {
                                                     </TouchableOpacity>
                                                 </View>
                                             </View>
-                                    </View>
-                                ))}
-                            </View>
-                        }
-                    </View>
-                    <View style={{ height: 40 }} />
-                </ScrollView>
+                                        </View>
+                                    ))}
+                                </View>
+                            }
+                        </View>
+                        <View style={{ height: 40 }} />
+                    </ScrollView>
                 </TouchableWithoutFeedback>
-                <Animated.View
-                    style={[styles.interactionButtonContainer, { transform:
-                        [{translateY: this.state.interactButtonAnimation.interpolate({ inputRange:[0,12], outputRange: [heightPercentageToPx(15), 0]})}] } ]}>
-                    <TouchableOpacity
-                        style={{flex:1}}
-                        underlayColor='#2aa897'
-                        onPress={this.sendLiveInteraction}>
-                        <Text style={styles.interactionButtonText}>
-                            {translate('streamerProfileScreen.sendInteraction')}
-                        </Text>
-                    </TouchableOpacity>
-                </Animated.View>
-                <LinkTwitchAccountModal open={this.state.openLinkTwitchAccountModal}
-                    onClose={() => this.setState({ openLinkTwitchAccountModal: false })}
-                    onLinkSuccessful={this.sendLiveInteraction} />
                 <EventDetailsModal open={this.state.openEventDetailsModal}
                     onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
                     stream={this.state.selectedStream} />

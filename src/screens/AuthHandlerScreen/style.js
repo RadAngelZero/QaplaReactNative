@@ -214,5 +214,8 @@ export default styles = StyleSheet.create({
     twitchAuthScreenContainer: {
         width: '100%',
         height: '100%'
+    },
+    boldConfirmModalSubtitle: {
+        fontWeight: '700'
     }
 });

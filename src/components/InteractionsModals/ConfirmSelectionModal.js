@@ -17,14 +17,16 @@ class ConfirmSelectionModal extends Component {
                     angle={100}
                     useAngle
                 >
-                    <View style={styles.bottomSheetMainContainer}>
-                        <Text
-                            style={styles.bottomSheetSelectionQoinsText}
-                        >
-                            {this.props.cost}
-                        </Text>
-                        <images.svg.qoin style={styles.bottomSheetQoin} />
-                    </View>
+                    {this.props.cost > 0 &&
+                        <View style={styles.bottomSheetMainContainer}>
+                            <Text
+                                style={styles.bottomSheetSelectionQoinsText}
+                            >
+                                {this.props.cost}
+                            </Text>
+                            <images.svg.qoin style={styles.bottomSheetQoin} />
+                        </View>
+                    }
                     <View style={styles.bottomSheetButtonsContainer}>
                         <TouchableOpacity
                             onPress={this.props.onConfirmSelection}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ImageBackground, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 
 import { translate } from '../../utilities/i18';
 import styles from './style';
@@ -7,6 +7,7 @@ import images from '../../../assets/images';
 import { getMediaTypeCost } from '../../services/database';
 import { GIPHY_GIFS, TTS } from '../../utilities/Constants';
 import { trackOnSegment } from '../../services/statistics';
+import DeckButton from '../../components/DeckButton/DeckButton';
 
 class InteractionsAddTTS extends Component {
     state = {
@@ -43,14 +44,8 @@ class InteractionsAddTTS extends Component {
         this.props.navigation.navigate('InteractionsCheckout', { ...this.props.navigation.state.params });
     }
 
-    state = {
-        streamerName: '',
-        messageCost: 0,
-        visualType: 'GIF',
-    }
-
     render() {
-        const streamerName = this.props.navigation.getParam('displayName', {});
+        const streamerName = this.props.navigation.getParam('displayName', '');
         const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
 
         if (this.state.dataFetched) {
@@ -63,28 +58,13 @@ class InteractionsAddTTS extends Component {
                         <View style={{
                             alignItems: 'flex-start',
                         }}>
-                            <TouchableOpacity
+                            <DeckButton
                                 onPress={this.sendTTS}
-                                style={styles.personalizeButtonContainer}
-                            >
-                                <ImageBackground
-                                    source={images.png.InteractionGradient3.img}
-                                    style={styles.personalizeButtonBackgroundImage}
-                                >
-                                    <View style={styles.personalizeButtonIconContainer}>
-                                        <images.svg.interactionsTTS />
-                                    </View>
-                                    <Text style={styles.personalizeButtonIconText} >
-                                        Text-to-Speech
-                                    </Text>
-                                    <View style={styles.personalizeButtonDisplayQoinsContainer}>
-                                        <images.svg.qoin style={styles.qoin} />
-                                        <Text style={styles.personalizeButtonDisplayQoinsText}>
-                                            {this.state.mediaCost}
-                                        </Text>
-                                    </View>
-                                </ImageBackground>
-                            </TouchableOpacity>
+                                label="Text-to-Speech"
+                                cost={this.state.mediaCost}
+                                backgroundIndex={2}
+                                icon={images.svg.interactionsTTS}
+                            />
                             <View style={styles.chatBubbleContainer}>
                                 <Text style={[styles.whiteText, styles.chatBubbleText]}>
                                     {`${translate('interactions.addTTS.addAMessageP1')} `}

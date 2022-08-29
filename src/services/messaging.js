@@ -2,8 +2,7 @@ import { messaging } from '../utilities/firebase';
 import {
     userAllowsNotificationsFrom,
     saveUserSubscriptionToTopic,
-    getAllUserTopicSubscriptions,
-    updateNotificationPermission
+    getAllUserTopicSubscriptions
 } from './database';
 import { getLocaleLanguage } from './../utilities/i18';
 import { saveFCMUserToken } from './database';
@@ -49,30 +48,6 @@ export function subscribeUserToTopic(topic, uid = '', type, addLanguageSuffix = 
 }
 
 /**
- * Subscribes the user to all the topics he has registered
- * on userTopicSubscriptions node call this function on user sign in,
- * if the user change their device or he/she log in other device for any reason
- * he/she can get push notifications
- * @param {string} uid User identifier
- */
-export async function subscribeUserToAllRegistredTopics(uid) {
-    const userAllSubscriptions = await getAllUserTopicSubscriptions(uid);
-
-    userAllSubscriptions.forEach(async (subscriptionType) => {
-        /**
-         * Check if the user allows us to send push notifications for the subscription type
-         */
-        if (await userAllowsNotificationsFrom(subscriptionType.key, uid)) {
-            updateNotificationPermission(subscriptionType.key, true);
-
-            subscriptionType.forEach((topicName) => {
-                subscribeUserToTopic(topicName.key);
-            });
-        }
-    });
-}
-
-/**
  * Unsubscribe a user from the given topic
  * @param {string} topic Name of the topic
  */
@@ -91,7 +66,7 @@ export async function unsubscribeUserFromAllSubscribedTopics(uid) {
     const userAllSubscriptions = await getAllUserTopicSubscriptions(uid);
 
     userAllSubscriptions.forEach((subscriptionType) => {
-        updateNotificationPermission(subscriptionType.key, false);
+        // updateNotificationPermission(subscriptionType.key, false);
 
         subscriptionType.forEach((topicName) => {
             unsubscribeUserFromTopic(topicName.key);

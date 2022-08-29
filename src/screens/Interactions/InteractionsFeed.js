@@ -17,7 +17,8 @@ import {
     getRecentStreamersDonations,
     getStreamerPublicData,
     getStreamerPublicProfile,
-    getUserFavsStreamers
+    getUserFavsStreamers,
+    getUserReactionsCount
 } from '../../services/database';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { trackOnSegment } from '../../services/statistics';
@@ -103,13 +104,35 @@ export class InteractionsFeed extends Component {
     }
 
     onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming, type) => {
-        trackOnSegment('Streamer Selected To Send Interaction', {
-            Streamer: displayName,
-            StreamerId: streamerId,
-            Category: type
-        });
+        if (this.props.uid) {
+            const numberOfReactions = await getUserReactionsCount(this.props.uid, streamerId);
+            // We do not check this with exists() because the value can be 0, so it is easier to check if the snapshot has a valid value (not null, not undefined and greater than 0)
+            if (numberOfReactions.val()) {
+                trackOnSegment('Streamer Selected To Send Interaction', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: 'Custom Search'
+                });
 
-        return this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+                this.props.navigation.navigate('PrepaidInteractionsPersonlizeStack', { streamerId, displayName, photoUrl, isStreaming, numberOfReactions: numberOfReactions.val() });
+            } else {
+                trackOnSegment('Streamer Selected To Send Interaction', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: type
+                });
+
+                return this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+            }
+        } else {
+            trackOnSegment('Streamer Selected To Send Interaction', {
+                Streamer: displayName,
+                StreamerId: streamerId,
+                Category: type
+            });
+
+            return this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+        }
     }
 
     renderLiveItem = ({ item, index }) => {
@@ -164,7 +187,7 @@ export class InteractionsFeed extends Component {
         if (this.state.dataFetched) {
             return (
                 <View style={styles.container}>
-                    <ScrollView style={styles.container}>
+                    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                         <View style={[styles.feedMainContainer,
                         {
                             marginTop: heightPercentageToPx(4.67) + (Platform.OS === 'ios' ? heightPercentageToPx(5.91) : 0),

@@ -11,9 +11,10 @@ export const SENDBIRD_KEY = '7E54A9F8-DCE3-420E-8DC8-D3E8B081A2B0';
 export const GIPHY_KEY = 'VDvH7301JvDdgFGQY41bv0Sr8zl5v4In';
 
 // Giphy media types
-export const GIPHY_GIFS = 'gifs';
-export const GIPHY_STICKERS = 'stickers';
-export const GIPHY_CLIPS = 'clips';
+export const GIPHY_GIFS = 'gif';
+export const GIPHY_STICKERS = 'sticker';
+export const GIPHY_CLIPS = 'video';
+export const GIPHY_TEXT = 'text';
 
 // Twitch Client Id
 export const TWITCH_CLIENT_ID = '3cwpzmazn716nmz6g1087kh4ciu4sp';
@@ -159,7 +160,7 @@ export const defaultUserImages = [
 	images.png.profileImagePlaceholder3,
 	images.png.profileImagePlaceholder4,
 	images.png.profileImagePlaceholder5,
-	images.png.profileImagePlaceholder6
+	images.png.profileImagePlaceholder6,
 ];
 
 // Activity types
@@ -167,8 +168,10 @@ export const XQ = 'xq';
 export const QOINS = 'qoins';
 
 // Media types for cheers
-export const MEME = 'memes';
+export const MEME = 'meme';
+export const EMOJI = 'emoji';
 export const TTS = 'tts';
+export const CUSTOM_TTS_VOICE = 'customTTSVoice';
 
 export const STREAMERS_BLACKLIST = ['141617732-catskullgamer', '683167758-catskullgg', '613408163-d_h_v_s', '698301557-QaplaGaming', '448926957-qaplita', '528477359-mariyolo1bot', '448926957-qaplita'];
 
@@ -177,7 +180,7 @@ export const DEFAULT_404_TWITCH_PREVIEW_URL = 'https://static-cdn.jtvnw.net/ttv-
 
 export const MAX_CHAR_FOR_TTS = 100;
 
-export const MEDIA_TO_LOAD_FROM_GIPHY = 10;
-
 export const TWITCH_PARTNER = 'partner';
 export const TWITCH_AFFILIATE = 'affiliate';
+
+export const GIPHY_TEXT_GENERATOR_URL = 'https://dashboard.qapla.gg/giphyTextGenerator/';

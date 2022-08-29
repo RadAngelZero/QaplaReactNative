@@ -321,7 +321,6 @@ class AuthHandlerScreen extends Component {
                         {(this.state.currentStep === 3 || this.state.currentStep === 4) && !this.state.keyboard &&
                             <ImageBackground source={images.png.qlanProfile.img}
                                 style={styles.qlanImage} >
-                                <Text style={styles.qlanImageText}>Qlan</Text>
                             </ImageBackground>
                         }
                         <View style={[styles.card, (this.state.keyboard && this.state.currentStep !== 5) ? { position: 'absolute', top: heightPercentageToPx(-18.47) } : {}]}>
@@ -337,9 +336,18 @@ class AuthHandlerScreen extends Component {
                                             <Image source={images.png.checkCircleGlow.img}
                                                 style={styles.tickCircleGlow} />
                                             <Text style={styles.modalText}>
-                                                {translate('qlan.youJoinedP1')} <Text style={styles.qaplaColor}>{this.state.streamerUsername}</Text>{translate('qlan.youJoinedP2')}
+                                                {translate('qlan.youJoined')}
                                             </Text>
-                                            <Text style={styles.confirmModalSubtitle}>{translate('qlan.youWillReceive')}</Text>
+                                            <Text style={styles.confirmModalSubtitle}>
+                                                {translate('qlan.youWillReceiveP1')}
+                                                <Text style={styles.boldConfirmModalSubtitle}>
+                                                    {translate('qlan.youWillReceiveP2')}
+                                                </Text>
+                                                {translate('qlan.youWillReceiveP3')}
+                                                <Text style={styles.boldConfirmModalSubtitle}>
+                                                    {translate('qlan.youWillReceiveP4')}
+                                                </Text>
+                                            </Text>
                                         </>
                                     }
                                     <QaplaText style={[styles.title,

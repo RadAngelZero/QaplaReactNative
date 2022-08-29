@@ -167,7 +167,7 @@ export default styles = StyleSheet.create({
         marginLeft: 8
     },
     streamerCommunityContainer: {
-        marginTop: 60
+        marginTop: 30,
     },
     socialButtonsContainer: {
         marginTop: 20

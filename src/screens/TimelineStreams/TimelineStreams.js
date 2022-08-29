@@ -12,11 +12,11 @@ import { getStreamById, getStreamerName, getStreamerPublicProfile, isUserPartici
 import { translate } from '../../utilities/i18';
 import Randomstreamerslist from '../../components/RandomStreamersList/RandomStreamersList';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT } from '../../utilities/Constants';
+import InteractionsShortcut from '../../components/InteractionsShortcut/InteractionsShortcut';
 
 export class TimelineStreams extends Component {
     listsToRender = [0, 1, 2, 3, 4, 5, 6];
     state = {
-        openLevelInformationModal: false,
         openEventDetailsModal: false,
         selectedStream: null,
         deepLinkId: ''
@@ -98,6 +98,12 @@ export class TimelineStreams extends Component {
                 <FeaturedStreamsList uid={this.props.uid}
                     onCardPress={this.onStreamPress}
                     onStreamerProfileButtonPress={this.onStreamerProfileButtonPress} />
+                <View style={{ height: 25 }} />
+                <View style={{
+                    alignSelf: 'center'
+                }}>
+                    <InteractionsShortcut onPress={() => this.props.navigation.navigate('InteractionsFeed')} />
+                </View>
                 <View style={{ height: 25 }} />
                 <StreamLiveList
                     uid={this.props.uid}

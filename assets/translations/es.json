@@ -143,26 +143,30 @@
         }
     },
     "userProfileScreen": {
-        "buy": "Abonar",
-        "exchange": "Canjear",
-        "userProfileGameCard": {
-            "level": "Nivel"
-        },
-        "buyQaploinsModal": {
-            "body": ""
-        },
-        "linkAccount": "Vincular cuenta",
-        "level": "Nivel",
-        "lastSeason": "Última temporada",
-        "qoins": "Qoins",
-        "bitsTooltip": "Usa tus Qoins para donarle a tus streamers favoritos. Puedes donar desde 50 Qoins",
-        "next": "Siguiente",
-        "done": "Listo",
-        "loots": "Loots",
-        "interactions": {
-            "interact" : "Interactúa",
-            "liveToYourStreamer": "en vivo a tu streamer"
-        }
+        "linkAccount": "Vincular Twitch",
+        "linked": "Vinculada",
+        "myQoins": "Mis Qoins",
+        "getQoins": "Más Qoins",
+        "mySupport": "💜 Mi apoyo",
+        "totalQoinsSent": "Total de Qoins donados",
+        "addQreatorCode": "Agregar código de Qreador",
+        "notifications": "Notificaciones",
+        "newStreams": "Nuevos streams",
+        "newStreamsDescription": "Recibe notificaciones cuando un streamer que sigues publica un nuevo stream",
+        "scheduledStreams": "Streams agendados",
+        "scheduledStreamsDescription": "Recibe notificaciones sobre los streams agendados en “Mis streams”",
+        "termsAndConditions": "Términos y Condiciones",
+        "privacyNotice": "Aviso de Privacidad",
+        "termsAndConditionsUrl": "https://www.qapla.gg/es/terminos-y-condiciones",
+        "privacyNoticeUrl": "https://www.qapla.gg/es/aviso-de-privacidad",
+        "logOut": "Cerrar sesión",
+        "deleteAccount": "Eliminar cuenta",
+        "deleteAccountDescription": "¿Estas seguro que deseas eliminar tu cuenta y toda la información de la misma de forma permanente?",
+        "cancel": "Cancelar",
+        "accountDeleted": "Cuenta eliminada",
+        "accountDeletedDescription": "Tu cuenta y la información relacionada a la misma han sido eliminadas",
+        "accountDeletionError": "Error al eliminar cuenta",
+        "accountDeletionErrorDescription": "No se pudo eliminar la cuenta, por favor intentelo mas tarde o contacta con soporte tecnico",
     },
     "notificationsScreen": {
         "notificationsHeader": "Notificaciones",
@@ -184,24 +188,6 @@
             "dontShowItAgain": "Entendido, no volver a mostrar este mensaje",
             "continue": "Continuar"
         }
-    },
-    "settingsMenuScreen": {
-        "header": "Configuración",
-        "menuHeader": "CONFIGURACIÓN",
-        "support": "Soporte",
-        "editBio": "Editar Biografía",
-        "editDiscord": "Editar Discord",
-        "notifications": "Notificaciones",
-        "termsAndConditions": "Términos y Condiciones",
-        "privacyNotice": "Aviso de Privacidad",
-        "closeSession": "Cerrar sesión",
-        "deleteAccount": "Eliminar cuenta",
-        "deleteAccountDescription": "¿Estas seguro que deseas eliminar tu cuenta y toda la información de la misma de forma permanente?",
-        "cancel": "Cancelar",
-        "accountDeleted": "Cuenta eliminada",
-        "accountDeletedDescription": "Tu cuenta y la información relacionada a la misma han sido eliminadas",
-        "accountDeletionError": "Error al eliminar cuenta",
-        "accountDeletionErrorDescription": "No se pudo eliminar la cuenta, por favor intentelo mas tarde o contacta con soporte tecnico"
     },
     "supportScreen": {
         "placeholder": "¿Contento? ¿Frustrado? ¿Triste? Compártenos tu opinión aquí",
@@ -354,7 +340,7 @@
         "upcomingStreams": "Próximos streams",
         "myCommunity": "Mi comunidad",
         "creatorCodes": "Códigos de creador",
-        "sendInteraction": "Enviar interacción en vivo"
+        "sendInteraction": "Enviar reacción en vivo"
     },
     "writeCheerMessageScreen": {
         "sendPersonalizedMessage": "¿Quieres decirle algo especial?\n💬",
@@ -383,7 +369,12 @@
             "signInWithEmail": "Inicia sesión con correo",
             "createUsername": "Crea tu nombre de usuario",
             "haveQreatorQode": "¿Tienes un Código de Qreador?",
-            "getCustomAlerts": "Recibe ⚡️ 3 interacciones⚡️ en vivo al minar Qoins en tus primeros 3 directos "
+            "youJoined": "¡Estás listo!",
+            "getCustomAlerts": "Recibe ⚡️ 200 Qoins extra ⚡️ al minar tus Qoins en tus primeros 3 directos",
+            "youWillReceiveP1": "Obtendras un ",
+            "youWillReceiveP2": "extra de 200 Qoins ",
+            "youWillReceiveP3": "por stream, en tus ",
+            "youWillReceiveP4": "primeros 3 streams Qapla 🌱"
         },
         "buttonsCarrousel": {
             "createAccount": "Crear mi cuenta",
@@ -611,7 +602,7 @@
         "allow": "Permitir"
     },
     "supportStreamerModal": {
-        "supportTo": "⚡️ Envía una interacción en vivo a ",
+        "supportTo": "⚡️ Envía una reacción en vivo a ",
         "description": "Tus cheers son enviados al instante y tus mensajes aparecen en vivo durante sus directos en Twitch.",
         "sendCheers": "Enviar Cheers"
     },
@@ -625,14 +616,15 @@
         "myQlan": "Mi Qlan",
         "joinQlan": "¡Únete a un Qlan!",
         "useCode": "Usa el Código de Qreador de tu streamer fav",
-        "typeQreatorCode": "Ingresa un Código de Qreador",
-        "changingQlan": "¿Cambias de Qlan?",
-        "enterNewCode": "Ingresa un nuevo Código de Qreador?",
+        "typeQreatorCode": "Ingresa Código de Qreador",
+        "enterNewCode": "Ingresa nuevo Código de Qreador",
         "joinQlanButton": "Unirme al Qlan",
-        "youJoinedP1": "Te has unido al Qlan de",
-        "youJoinedP2": "",
-        "youWillReceive": "Recibirás 200 Qoins en tus siguientes 3 directos de Qapla 🌱 ",
+        "youJoined": "¡Estás listo!",
         "backToProfile": "Volver a mi perfil",
+        "youWillReceiveP1": "Obtendras un ",
+        "youWillReceiveP2": "extra de 200 Qoins ",
+        "youWillReceiveP3": "por stream, en tus ",
+        "youWillReceiveP4": "primeros 3 streams Qapla 🌱",
         "update": "Actualizar"
     },
     "interactions": {
@@ -647,11 +639,13 @@
             }
         },
         "personalize": {
-            "personalizeYourInteraction": "Personaliza tu interacción",
-            "onlySend": "Sólo enviar"
+            "personalizeYourInteraction": "Personaliza tu reacción",
+            "onlySend": "Sólo enviar",
+            "clips": "Video Clips",
+            "giphyText": "TTS personalizado"
         },
         "addVisual": {
-            "addVisual": "Agrega un Gif, Sticker o Meme a tu interacción"
+            "addVisual": "Agrega un Gif, Sticker o Meme a tu reacción"
         },
         "visual": {
             "searchOn": "Buscar en",
@@ -661,24 +655,42 @@
         },
         "visualConfirmation": {
             "use": "Usar",
-            "chooseAnother": "Elegir otro"
+            "chooseAnother": "Elegir otro",
+            "mediaTypes": {
+                "gif": "Gif",
+                "sticker": "Sticker",
+                "meme": "Meme",
+                "video": "Clip",
+                "text": "Texto"
+            }
         },
         "addTTS": {
-            "addTTSInYourInteraction": "Agrega un Text-to-Speech a tu interacción",
+            "addTTSInYourInteraction": "Agrega un Text-to-Speech a tu reacción",
             "addAMessageP1": "🗣 Agrega un mensaje con Bot de Voz para",
-            "addAMessageP2": "a tu interacción por",
+            "addAMessageP2": "a tu reacción por",
             "add": "Agregar Text-to-Speech",
             "onlySendMy": "Sólo enviar mi",
             "mediaTypes": {
-                "gifs": "Gif",
-                "stickers": "Sticker",
-                "memes": "Meme"
+                "gif": "Gif",
+                "sticker": "Sticker",
+                "meme": "Meme",
+                "video": "Clip"
             }
         },
         "TTS": {
             "writeYourMessage": "Escribe tu mensaje",
             "whatYouWantToSay": "🗣 ¿Qué le quieres decir en el directo?",
-            "TTS": "Text-to-Speech"
+            "skip": "Omitir",
+            "TTS": "Text-to-Speech",
+            "chooseABotVoice": "🔥 ¡Cool!\n🤖 Ahora escoge una voz para el bot:",
+            "readyToSend": "👌 ¿Listo para enviar?",
+            "editMessage": "Editar mensaje",
+            "chooseAnotherVoice": "Escoge otra voz para el bot",
+            "ready": "Listo"
+        },
+        "insertGiphyText": {
+            "useCustomTTS": "Use a custom TTS",
+            "cutDownTextWarning": "Asegurate que tu mensaje tiene 50 caracteres o menos para usar custom TTS"
         },
         "checkout": {
             "my": "Mis",
@@ -686,17 +698,29 @@
             "supportP1": "Apoya a",
             "supportP2": "envíando cheers de Qoins 💚",
             "concepts": {
-                "gifs": "Gif",
-                "stickers": "Sticker",
-                "memes": "Meme",
-                "tts": "Text-to-Speech"
+                "gif": "Gif",
+                "sticker": "Sticker",
+                "meme": "Meme",
+                "tts": "Text-to-Speech",
+                "video": "Clip",
+                "text": "TTS Personalizado",
+                "emoji": "Lluvia de emojis"
             },
-            "discardInteraction": "Descartar interacción",
-            "areYouSure": "¿Estas seguro que deseas descartar tu interacción?",
+            "discardInteraction": "Descartar reacción",
+            "areYouSure": "¿Estas seguro que deseas descartar tu reacción?",
             "yes": "Si",
             "no": "No",
-            "modal": {
-                "sendInteraction": "Enviar Interacción"
+            "customTTS": "TTS Personalizado",
+            "sendExtraTip": "Enviar Extra Tip",
+            "other": "Otro",
+            "sendInteraction": "Enviar Reacción",
+            "emojiModal": {
+                "chooseAnEmoji": "Selecciona un Emoji"
+            },
+            "extraTipModal": {
+                "addTip": "Agregar extra tip",
+                "noTip": "No extra Tip",
+                "cancel": "Cancelar"
             }
         },
         "final": {
@@ -707,7 +731,7 @@
             "cheersSent": "Cheers enviados",
             "weveSentYourQoins": "Hemos enviado tus %{qoins} Qoins a 🌱",
             "modal": {
-                "viewMyInteractions": "Ver mi interacción",
+                "viewMyInteractions": "Ver mi reacción",
                 "weveSentYourQoinsP1": "¡Hemos enviado tus\n",
                 "weveSentYourQoinsP2": "%{qoins} Qoins a %{streamerName}! ⚡️",
                 "backToStart": "Volver al inicio"
@@ -715,10 +739,14 @@
         }
     },
     "buyQoins": {
-        "sendInteractiunsUsingQoins": "Envía interacciones en vivo usando tus Qoins",
+        "sendInteractiunsUsingQoins": "Envía reacciones en vivo usando tus Qoins",
         "save": "¡25% más Qoins!",
         "pharases": {
             "p1": "Llevaré diez 💸💸💸"
         }
+    },
+    "interactionsShortcut": {
+        "liveToYourStreamer": "en vivo a tu streamer",
+        "send": "Enviar reacción"
     }
 }

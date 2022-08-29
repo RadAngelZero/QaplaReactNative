@@ -101,12 +101,14 @@ class PrepaidInteractionsPersonalize extends Component {
                             <images.svg.questionMark />
                         </TouchableOpacity> */}
                         </View>
-                        <View style={[styles.prepaidReactionsContainer, styles.marginTop24]}>
+                        <View style={styles.marginTop24}>
                             <View style={styles.prepaidReactionsBody}>
-                                <images.svg.interactions  />
-                                <Text style={styles.reactionsText}>
-                                    {`(${this.props.navigation.getParam('numberOfReactions', 0).toLocaleString()}) Reactions`}
-                                </Text>
+                                <View style={styles.prepaidReactionsCountContainer}>
+                                    <images.svg.interactionsNumberIcon  />
+                                    <Text style={styles.reactionsText} numberOfLines={1}>
+                                        {`(${this.props.navigation.getParam('numberOfReactions', 1).toLocaleString()}) Reactions`}
+                                    </Text>
+                                </View>
                             </View>
                         </View>
                         <View style={styles.personalizeButtonsContainer}>

@@ -114,6 +114,7 @@ import PlusIcon from './icons/PlusIcon.svg';
 import Interactions from './icons/interactions.svg';
 import DeleteIcon from './icons/Delete.svg';
 import EditQreatorCodeIcon from './icons/EditQreatorCode.svg';
+import InteractionsNumberIcon from './icons/interactionsNumber.svg';
 
 // Images
 const images = {
@@ -357,7 +358,8 @@ const images = {
 		arrowDownWhite: ArrowDownWhite,
 		plusIcon: PlusIcon,
 		deleteIcon: DeleteIcon,
-		editQreatorCodeIcon: EditQreatorCodeIcon
+		editQreatorCodeIcon: EditQreatorCodeIcon,
+		interactionsNumberIcon: InteractionsNumberIcon
 	},
 	gif: {
 		loadingStreamers: {

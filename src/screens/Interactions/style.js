@@ -7,7 +7,6 @@ export default styles = StyleSheet.create({
         backgroundColor: '#0D1021',
     },
     innerConatiner: {
-        flex: 1,
         paddingHorizontal: widthPercentageToPx(4.26),
         paddingTop: heightPercentageToPx(2),
     },
@@ -590,19 +589,25 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-end',
     },
-    prepaidReactionsContainer: {
-        backgroundColor: '#1C1E64',
-        borderRadius: 10,
-        maxWidth: '50%'
-    },
     prepaidReactionsBody: {
         flexDirection: 'row',
         alignItems: 'center'
     },
+    prepaidReactionsCountContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#1C1E64',
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 8,
+        paddingRight: 8,
+        borderRadius: 10,
+    },
     reactionsText: {
+        marginLeft: 8,
         fontSize: 16,
         fontWeight: '500',
-        color: '#FFF'
+        color: '#FFF',
     },
     interactionIconMargin: {
         borderColor: '#FFF',

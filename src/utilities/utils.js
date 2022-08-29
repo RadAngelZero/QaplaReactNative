@@ -14,7 +14,7 @@ const AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 export function randomString(){
     var string = '';
-    for(var i = 0; i < 8; i++){
+    for(var i = 0; i < 12; i++){
         string += AB[parseInt(Math.random() * 61)];
     }
     return string;

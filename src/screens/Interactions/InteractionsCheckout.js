@@ -529,7 +529,7 @@ class InteractionsCheckout extends Component {
                     transparent={true}
                     animationType="slide"
                 >
-                    <ScrollView keyboardShouldPersistTaps='never' contentContainerStyle={{
+                    <ScrollView keyboardShouldPersistTaps='never' scrollEnabled={false} contentContainerStyle={{
                         backgroundColor: '#0D1021',
                         flex: 1,
                         justifyContent: 'flex-end',

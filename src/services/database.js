@@ -1927,6 +1927,14 @@ export function listenGiphyTextSearch(uid, callback) {
 }
 
 /**
+ * Stop the listener for changes on the Giphy Text Request node
+ * @param {string} uid User identifier
+ */
+export function stopListeningGiphyTextSearch(uid) {
+    giphyTextRequestsRef.child(uid).off();
+}
+
+/**
  * Remove the Giphy Text requests
  * @param {string} uid User identifier
  */

@@ -6,8 +6,9 @@ import { connect } from 'react-redux';
 
 import styles from './style';
 import { getScreenSizeMultiplier, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import { listenGiphyTextSearch, removeGiphyTextRequests } from '../../services/database';
+import { listenGiphyTextSearch, removeGiphyTextRequests, stopListeningGiphyTextSearch } from '../../services/database';
 import { GIPHY_TEXT_GENERATOR_URL } from '../../utilities/Constants';
+import { randomString } from '../../utilities/utils';
 
 class InteractionsGiphyTextSelector extends Component {
     state = {
@@ -31,6 +32,7 @@ class InteractionsGiphyTextSelector extends Component {
         listenGiphyTextSearch(this.props.uid, (data) => {
             if (data.exists()) {
                 this.setState({ media: data.val(), fetchGiphyText: false });
+                stopListeningGiphyTextSearch(this.props.uid);
             }
         });
     }
@@ -114,8 +116,10 @@ class InteractionsGiphyTextSelector extends Component {
 }
 
 function mapStateToProps(state) {
+    let uid = state.userReducer.user.id ? state.userReducer.user.id : randomString();
+
     return {
-        uid: state.userReducer.user.id
+        uid
     };
 }
 

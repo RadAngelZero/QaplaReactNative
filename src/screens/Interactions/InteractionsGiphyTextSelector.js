@@ -6,9 +6,8 @@ import { connect } from 'react-redux';
 
 import styles from './style';
 import { getScreenSizeMultiplier, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-import { listenGiphyTextSearch, removeGiphyTextRequests, stopListeningGiphyTextSearch } from '../../services/database';
+import { getGiphyTextRequestKey, listenGiphyTextSearch, removeGiphyTextRequests, stopListeningGiphyTextSearch } from '../../services/database';
 import { GIPHY_TEXT_GENERATOR_URL } from '../../utilities/Constants';
-import { randomString } from '../../utilities/utils';
 
 class InteractionsGiphyTextSelector extends Component {
     state = {
@@ -22,17 +21,25 @@ class InteractionsGiphyTextSelector extends Component {
     };
 
     onWillFocus = async () => {
-        await removeGiphyTextRequests(this.props.uid);
+        /**
+         * RequestId for authenticated users are their uid so we need to clean any previous request to avoid
+         * render all content, for no authenticated users this do nothing.
+         * We also try to remove the reference after doing the request but we can not rely 100% on that call
+         */
+        await removeGiphyTextRequests(this.props.requestId);
         this.setState({ fetchGiphyText: true, media: [] }, () => {
             this.listenGiphyText();
         });
     }
 
     listenGiphyText = () => {
-        listenGiphyTextSearch(this.props.uid, (data) => {
+        listenGiphyTextSearch(this.props.requestId, (data) => {
             if (data.exists()) {
-                this.setState({ media: data.val(), fetchGiphyText: false });
-                stopListeningGiphyTextSearch(this.props.uid);
+                this.setState({ media: data.val(), fetchGiphyText: false }, () => {
+                    // After saving the data on the state remove listeners and data
+                    stopListeningGiphyTextSearch(this.props.requestId);
+                    removeGiphyTextRequests(this.props.requestId);
+                });
             }
         });
     }
@@ -107,7 +114,7 @@ class InteractionsGiphyTextSelector extends Component {
                 </View>
                 {this.state.fetchGiphyText &&
                     <WebView style={{ display: 'none', opacity: 0, zIndex: -9999 }}
-                        source={{ uri: `${GIPHY_TEXT_GENERATOR_URL}${this.props.uid}/${this.props.navigation.getParam('text', '')}` }} />
+                        source={{ uri: `${GIPHY_TEXT_GENERATOR_URL}${this.props.requestId}/${this.props.navigation.getParam('text', '')}` }} />
                 }
                 <NavigationEvents onWillFocus={this.onWillFocus} />
             </View>
@@ -116,10 +123,14 @@ class InteractionsGiphyTextSelector extends Component {
 }
 
 function mapStateToProps(state) {
-    let uid = state.userReducer.user.id ? state.userReducer.user.id : randomString();
+    /**
+     * Not recommended to do this here but is the best way, if we can not access the uid (most probably that means
+     * the user is not authenticated) then we generate a random firebase key for the request
+     */
+    let requestId = state.userReducer.user.id ? state.userReducer.user.id : getGiphyTextRequestKey();
 
     return {
-        uid
+        requestId
     };
 }
 

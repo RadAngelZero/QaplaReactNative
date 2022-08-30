@@ -1931,7 +1931,14 @@ export function listenGiphyTextSearch(uid, callback) {
  * @param {string} uid User identifier
  */
 export function stopListeningGiphyTextSearch(uid) {
-    giphyTextRequestsRef.child(uid).off();
+    giphyTextRequestsRef.child(uid).off('value');
+}
+
+/**
+ * Returns a valid firebase key for a Giphy Text request
+ */
+export function getGiphyTextRequestKey() {
+    return giphyTextRequestsRef.push().key;
 }
 
 /**

@@ -7,10 +7,11 @@ import {
     Animated,
     Easing,
     Text,
+    Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
-import { BlurView } from '@react-native-community/blur';
+import { BlurView, VibrancyView } from '@react-native-community/blur';
 
 import styles from './style';
 import QaplaText from '../../components/QaplaText/QaplaText';
@@ -38,7 +39,8 @@ class EventDetailsModal extends Component {
         openUserDontHaveEnoughQoinsDialog: false,
         streamTitle: '',
         twitchURLCopied: false,
-        qaplaLevels: []
+        qaplaLevels: [],
+        qoinsToGive: 0
     };
 
     userLanguage = getLocaleLanguage();
@@ -49,6 +51,7 @@ class EventDetailsModal extends Component {
 
     getQaplaLevels = async () => {
         const qaplaLevels = await getQaplaLevels();
+        console.log(qaplaLevels.val());
         this.setState({ qaplaLevels: qaplaLevels.val() });
     }
 
@@ -125,6 +128,9 @@ class EventDetailsModal extends Component {
     onOpenModal = () => {
         this.checkIfUserIsParticipant();
         this.checkUserRequest();
+        this.setState({ qoinsToGive: 0 }, () => {
+            this.setState({ qoinsToGive: this.state.qaplaLevels[this.props.lastSeasonLevel] ? (this.state.qaplaLevels[this.props.lastSeasonLevel].qoinsToGive * this.props.stream.customRewardsMultipliers.qoins) : 0 });
+        });
         Animated.sequence([
             Animated.delay(300),
             Animated.timing(this.state.registerButtonAnimation, {
@@ -219,12 +225,18 @@ class EventDetailsModal extends Component {
                     visible={this.props.open}
                     onRequestClose={this.closeModal}>
                     <View style={styles.mainContainer}>
-                        <BlurView
-                            blurAmount={100}
-                            blurType={'dark'}
-                            reducedTransparencyFallbackColor={'black'}
-                            style={styles.blurView}
-                        />
+                        {Platform.OS === 'ios' ?
+                            <VibrancyView
+                                blurAmount={100}
+                                blurType='thinMaterialDark'
+                                reducedTransparencyFallbackColor='black'
+                                style={styles.blurView} />
+                            :
+                            <BlurView
+                                blurAmount={100}
+                                blurType='dark'
+                                style={styles.blurView} />
+                        }
                         <View
                             contentContainerStyle={styles.eventInfoContainer}
                             style={styles.modalMainContainer}
@@ -249,7 +261,7 @@ class EventDetailsModal extends Component {
                             ]}>
                                 {this.state.eventRegistrationStep === 0 &&
                                     <EventDetails
-                                        qaplaLevels={this.state.qaplaLevels}
+                                        qoinsToGive={this.state.qoinsToGive}
                                         event={this.props.stream}
                                         eventId={this.props.stream.id}
                                         goToNextStep={this.goToNextRegistrationStep}
@@ -322,6 +334,7 @@ function mapStateToProps(state) {
         games: state.gamesReducer.games,
         uid: state.userReducer.user.id,
         qoins: state.userReducer.user.credits,
+        lastSeasonLevel: state.userReducer.user.lastSeasonLevel || 0
     }
 }
 

@@ -12,7 +12,7 @@ class PersonalizeInteractionHeader extends Component {
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.mainContainer}>
-                    {this.props.currentScreen !== 'InteractionsSent' &&
+                    {(this.props.currentScreen !== 'InteractionsSent' && this.props.currentScreen !== 'PrepaidInteractionsSent') &&
                         <>
                             <TouchableOpacity
                                 style={styles.backButtonContainer}

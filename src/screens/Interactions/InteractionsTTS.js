@@ -183,7 +183,7 @@ class InteractionsTTS extends Component {
 
     render() {
         return (
-            <ScrollView keyboardShouldPersistTaps='never' style={{ backgroundColor: '#0D1021', }} contentContainerStyle={styles.container}>
+            <ScrollView keyboardShouldPersistTaps='handled' style={{ backgroundColor: '#0D1021', }} contentContainerStyle={styles.container}>
                 <View style={[styles.innerConatiner, styles.addTTSContainer]}>
                     {this.state.step === 0 &&
                         <Text style={[styles.whiteText, styles.screenHeaderText]}>

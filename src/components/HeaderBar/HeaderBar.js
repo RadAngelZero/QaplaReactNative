@@ -16,7 +16,8 @@ import { defaultUserImages, HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Co
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import UserProfileModal from '../UserProfileModal/UserProfileModal';
 
-const DiscordIcon = images.svg.discordIcon;
+const SupportIcon = images.svg.supportIcon;
+const UserProfileIcon = images.svg.userProfile
 const DuotoneDefaultIcon = images.svg.duotoneDefault;
 const DuotoneActiveIcon = images.svg.duotoneActive;
 
@@ -202,11 +203,12 @@ class HeaderBar extends Component {
                                 <TouchableOpacity
                                     onPress={this.onOpenProfile}
                                     style={{
-                                        width: 26,
-                                        height: 26,
+                                        width: 30,
+                                        height: 30,
                                         overflow: 'hidden',
                                     }}>
-                                        <Image
+                                        <UserProfileIcon height={30} width={30} />
+                                        {/* <Image
                                             source={this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img}
                                             style={{
                                                 borderRadius: 16,
@@ -214,7 +216,7 @@ class HeaderBar extends Component {
                                                 height: undefined,
                                                 aspectRatio: 1
                                             }}
-                                        />
+                                        /> */}
                                 </TouchableOpacity>
                             }
                             <QaplaIcon onPress={this.onActivityPressBttn} touchableStyle={styles.leftIconTouchableStyle}>
@@ -226,7 +228,7 @@ class HeaderBar extends Component {
                             </QaplaIcon>
                             {this.props.currentScreenId !== 'Profile' &&
                                 <QaplaIcon onPress={this.sendToDiscord} touchableStyle={styles.rightIconTouchableStyle}>
-                                    <DiscordIcon
+                                    <SupportIcon
                                         height={30}
                                         width={30}
                                         fill='#FFF' />

@@ -61,6 +61,7 @@ export const styles = StyleSheet.create({
     rightIconTouchableStyle: {
         justifyContent: 'center',
         width: 30,
+        height: 30,
     },
     unreadNotificationsIcon: {
         position: 'absolute',

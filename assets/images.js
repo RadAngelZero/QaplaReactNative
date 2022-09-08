@@ -16,7 +16,7 @@ import TieIcon from './icons/empatado.svg';
 import ChooseClipIcon from './icons/video-clip.svg';
 import AlreadyChoosedClipIcon from './icons/video-clip-check.svg';
 import VerifyIcon from './icons/verificado.svg';
-import SupportIcon from './icons/support.svg';
+import SupportIcon from './icons/Support.svg';
 import DiscordIcon from './icons/discord.svg';
 import EditIcon from './icons/edit.svg';
 import NoVerifiedIcon from './icons/sin-verificar.svg';
@@ -115,6 +115,7 @@ import Interactions from './icons/interactions.svg';
 import DeleteIcon from './icons/Delete.svg';
 import EditQreatorCodeIcon from './icons/EditQreatorCode.svg';
 import InteractionsNumberIcon from './icons/interactionsNumber.svg';
+import UserProfile from './icons/UserProfile.svg';
 
 // Images
 const images = {
@@ -359,7 +360,8 @@ const images = {
 		plusIcon: PlusIcon,
 		deleteIcon: DeleteIcon,
 		editQreatorCodeIcon: EditQreatorCodeIcon,
-		interactionsNumberIcon: InteractionsNumberIcon
+		interactionsNumberIcon: InteractionsNumberIcon,
+		userProfile: UserProfile,
 	},
 	gif: {
 		loadingStreamers: {

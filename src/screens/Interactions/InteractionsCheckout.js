@@ -16,6 +16,38 @@ import EmojiSelector from '../../components/EmojiSelector/EmojiSelector';
 import LinearGradient from 'react-native-linear-gradient';
 import { NavigationEvents } from 'react-navigation';
 import InsertExtraTipModal from './InsertExtraTipModal';
+import EmoteSelector from '../../components/EmojiSelector/EmoteSelector';
+
+const EmotesData = [
+    {
+        id: 'AYAYA',
+        url: 'https://cdn.frankerfacez.com/emoticon/162146/1',
+    },
+    {
+        id: 'EZY',
+        url: 'https://cdn.frankerfacez.com/emoticon/185890/1',
+    },
+    {
+        id: 'HYPERS',
+        url: 'https://cdn.frankerfacez.com/emoticon/236895/1',
+    },
+    {
+        id: 'KEKW',
+        url: 'https://cdn.frankerfacez.com/emoticon/381875/1',
+    },
+    {
+        id: 'monkaS',
+        url: 'https://cdn.frankerfacez.com/emoticon/130762/1',
+    },
+    {
+        id: 'POGGERS',
+        url: 'https://cdn.frankerfacez.com/emoticon/214129/1',
+    },
+    {
+        id: 'Stonks',
+        url: 'https://cdn.frankerfacez.com/emoticon/428011/1',
+    },
+];
 
 const ExtraTip = ({ value, onPress, selected }) => (
     <TouchableOpacity onPress={() => onPress(value)}>
@@ -48,7 +80,9 @@ class InteractionsCheckout extends Component {
         localCosts: {},
         keyboardHeight: 0,
         keyboardOpen: false,
-        openExtraTipModal: false
+        openExtraTipModal: false,
+        emojiTab: false,
+        emoteUrl: '',
     };
 
     componentDidMount() {
@@ -59,11 +93,11 @@ class InteractionsCheckout extends Component {
         }
 
         this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
-			this.setState({ keyboardHeight: parseInt(e.endCoordinates.height) });
-		});
-		this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', () => {
-			this.setState({ keyboardHeight: 0 });
-		});
+            this.setState({ keyboardHeight: parseInt(e.endCoordinates.height) });
+        });
+        this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', () => {
+            this.setState({ keyboardHeight: 0 });
+        });
     }
 
     componentWillUnmount() {
@@ -212,6 +246,13 @@ class InteractionsCheckout extends Component {
         );
     }
 
+    emoteSelectedHanler = (emote) => {
+        this.setState({
+            emoteUrl: emote.url,
+            openEmojiSelector: false,
+        });
+    }
+
     emojiSelectedHandler = (emoji) => {
         this.setState({
             emoji,
@@ -339,13 +380,13 @@ class InteractionsCheckout extends Component {
                                     maxWidth: '60%',
                                     aspectRatio: (giphyText.original.width / giphyText.original.height) || 0,
                                 }]} />
-                        :
+                            :
                             message !== '' &&
-                                <View style={styles.messageSentMessageContainer}>
-                                    <Text style={styles.messageSentMessageText}>
-                                        {message}
-                                    </Text>
-                                </View>
+                            <View style={styles.messageSentMessageContainer}>
+                                <Text style={styles.messageSentMessageText}>
+                                    {message}
+                                </Text>
+                            </View>
                         }
                     </View>
                     {onlyQoins &&
@@ -371,8 +412,8 @@ class InteractionsCheckout extends Component {
                                     <View style={styles.addOnsContainer}>
                                         {this.state.emojiRainCost !== 0 &&
                                             <TouchableOpacity
-                                            onPress={() => this.setState({ openEmojiSelector: true })}
-                                            style={styles.AddonContainer}>
+                                                onPress={() => this.setState({ openEmojiSelector: true })}
+                                                style={styles.AddonContainer}>
                                                 <ImageBackground
                                                     source={this.state.emoji ? images.png.InteractionGradient1.img : images.png.InteractionGradient3.img}
                                                     style={styles.checkoutAddonImageContainer}
@@ -381,12 +422,14 @@ class InteractionsCheckout extends Component {
                                                         style={styles.checkoutAddonImageContainer}>
                                                         {this.state.emoji !== '' &&
                                                             <TouchableOpacity onPress={this.removeEmoji} style={styles.deleteAddOnIconContainer}>
-                                                                <images.svg.deleteIcon  />
+                                                                <images.svg.deleteIcon />
                                                             </TouchableOpacity>
                                                         }
-                                                        <Text style={styles.addonEmojiText}>
+                                                        {this.state.emoteUrl === '' ? <Text style={styles.addonEmojiText}>
                                                             {this.state.emoji || '🤡'}
                                                         </Text>
+                                                            :
+                                                            <Image source={{ uri: this.state.emoteUrl }} style={{ aspectRatio: 1, height: 26 }} />}
                                                         <Text style={styles.addonText}>
                                                             Emoji raid
                                                         </Text>
@@ -408,7 +451,7 @@ class InteractionsCheckout extends Component {
                                                 >
                                                     {giphyText &&
                                                         <TouchableOpacity onPress={this.removeGiphyText} style={styles.deleteAddOnIconContainer}>
-                                                            <images.svg.deleteIcon  />
+                                                            <images.svg.deleteIcon />
                                                         </TouchableOpacity>
                                                     }
                                                     <Image style={styles.customTTSImage} source={giphyText ? images.gif.slaaay.img : images.gif.makeItPop.img} />
@@ -432,7 +475,7 @@ class InteractionsCheckout extends Component {
                                     {translate('interactions.checkout.sendExtraTip')}
                                 </Text>
                                 <View style={[styles.extraTipOptionsContainer, styles.marginTop16]}>
-                                <ExtraTip value={200}
+                                    <ExtraTip value={200}
                                         onPress={this.addTip}
                                         selected={this.state.extraTip === 200} />
                                     <ExtraTip value={500}
@@ -496,20 +539,20 @@ class InteractionsCheckout extends Component {
                                     ))}
                                     {Object.keys(this.state.localCosts).map((product) => (
                                         <>
-                                        {this.state.localCosts[product] !== 0 &&
-                                            <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
-                                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                                    {product !== CUSTOM_TTS_VOICE ?
-                                                        translate(`interactions.checkout.concepts.${product}`)
-                                                        :
-                                                        `${messageVoiceData.voiceName} Voice`
-                                                    }
-                                                </Text>
-                                                <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
-                                                    {this.state.localCosts[product].toLocaleString()}
-                                                </Text>
-                                            </View>
-                                        }
+                                            {this.state.localCosts[product] !== 0 &&
+                                                <View style={[styles.checkoutDataDisplayContainer, styles.marginTop8]}>
+                                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                                        {product !== CUSTOM_TTS_VOICE ?
+                                                            translate(`interactions.checkout.concepts.${product}`)
+                                                            :
+                                                            `${messageVoiceData.voiceName} Voice`
+                                                        }
+                                                    </Text>
+                                                    <Text style={[styles.whiteText, styles.checkoutDataDisplayText, styles.checkoutDataDisplayTextRegular]}>
+                                                        {this.state.localCosts[product].toLocaleString()}
+                                                    </Text>
+                                                </View>
+                                            }
                                         </>
                                     ))}
                                 </View>
@@ -587,17 +630,69 @@ class InteractionsCheckout extends Component {
                         </View>
                         <View style={{
                             backgroundColor: '#141539',
-                            height: (Platform.OS === 'android' && this.state.keyboardHeight) ? this.state.keyboardHeight : heightPercentageToPx(80),
+                            height: (Platform.OS === 'android' && this.state.keyboardHeight) ? this.state.keyboardHeight : heightPercentageToPx(70),
                             borderTopLeftRadius: 30,
                             borderTopRightRadius: 30,
                             overflow: 'hidden',
                         }}>
-                            <EmojiSelector
-                                onEmojiSelected={this.emojiSelectedHandler}
-                                showHistory={false}
-                            />
+                            {this.state.emojiTab ?
+                                <EmojiSelector
+                                    onEmojiSelected={this.emojiSelectedHandler}
+                                    showHistory={false}
+                                />
+                                :
+                                <EmoteSelector
+                                    data={EmotesData}
+                                    onEmoteSelect={this.emoteSelectedHanler}
+                                />}
                         </View>
                     </ScrollView>
+                    <View style={{
+                        backgroundColor: '#141539',
+                        height: 75,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                        <TouchableOpacity style={{
+                            backgroundColor: !this.state.emojiTab ? '#29326B' : '#0000',
+                            paddingHorizontal: 13,
+                            paddingVertical: 6,
+                            borderRadius: 6,
+                            marginHorizontal: 4,
+                        }}
+                            disabled={!this.state.emojiTab}
+                            onPress={() => this.setState({ emojiTab: false })}
+                        >
+                            <Text style={{
+                                color: !this.state.emojiTab ? '#fff' : '#FFFFFF99',
+                                fontSize: 17,
+                                fontWeight: '600',
+                                lineHeight: 22,
+                            }}>
+                                {`Emotes`}
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{
+                            backgroundColor: this.state.emojiTab ? '#29326B' : '#0000',
+                            paddingHorizontal: 13,
+                            paddingVertical: 6,
+                            borderRadius: 6,
+                        }}
+                            disabled={this.state.emojiTab}
+                            onPress={() => this.setState({ emojiTab: true })}
+                        >
+                            <Text style={{
+                                color: this.state.emojiTab ? '#fff' : '#FFFFFF99',
+                                fontSize: 17,
+                                fontWeight: '600',
+                                lineHeight: 22,
+                                marginHorizontal: 4,
+                            }}>
+                                {`Emojis`}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </Modal>
                 <NavigationEvents onWillFocus={this.calculateCosts} />
                 <LinkTwitchAccountModal

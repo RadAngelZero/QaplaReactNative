@@ -27,7 +27,7 @@ class UserProfileModal extends Component {
         showJoinQlanModal: false,
         userImage: { uri: true, img: this.props.photoUrl },
         qlanData: null,
-        userWantsToJoinAQlan: false
+        userWantsToJoinAQlan: false,
     }
 
     componentDidMount() {
@@ -174,6 +174,10 @@ class UserProfileModal extends Component {
         });
     }
 
+    refreshTwitchData = () => {
+        console.log('new Twitch data');
+    }
+
     render() {
         const twitchLinked = this.props.twitchId && this.props.twitchUsername;
 
@@ -213,13 +217,12 @@ class UserProfileModal extends Component {
                                 </Text>
                             </View>
                             <TouchableOpacity
-                                onPress={() => this.setState({ showLinkWithTwitchModal: true })}
-                                disabled={twitchLinked}
+                                onPress={() => twitchLinked ? this.refreshTwitchData() : this.setState({ showLinkWithTwitchModal: true })}
                                 style={twitchLinked ? styles.twitchLinkedButton : styles.twitchLinkButton}>
                                 <images.svg.twitchIcon style={styles.twitchIcon} />
                                 <Text style={styles.twitchLinkedText}>
                                     {twitchLinked ?
-                                        translate('userProfileScreen.linked')
+                                        translate('userProfileScreen.refresh')
                                         :
                                         translate('userProfileScreen.linkAccount')
                                     }

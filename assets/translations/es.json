@@ -145,6 +145,7 @@
     "userProfileScreen": {
         "linkAccount": "Vincular Twitch",
         "linked": "Vinculada",
+        "refresh": "Actualizar",
         "myQoins": "Mis Qoins",
         "getQoins": "Más Qoins",
         "mySupport": "💜 Mi apoyo",

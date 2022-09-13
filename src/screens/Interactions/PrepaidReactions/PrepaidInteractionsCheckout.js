@@ -116,7 +116,6 @@ class PrepaidInteractionsCheckout extends Component {
                             const mediaType = this.props.navigation.getParam('mediaType');
                             const message = this.props.navigation.getParam('message', null);
                             const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
-                            const costs = this.props.navigation.getParam('costs', {});
                             const giphyTextSelectedFirst = this.props.navigation.getParam('giphyTextSelectedFirst', false);
 
                             let media = null;
@@ -137,7 +136,7 @@ class PrepaidInteractionsCheckout extends Component {
                                 }
                             }
 
-                            if (message && ((costs[CUSTOM_TTS_VOICE] && messageVoiceData) || this.state.giphyText)) {
+                            if (message && (messageVoiceData || this.state.giphyText)) {
                                 messageExtraData = {
                                     ...messageVoiceData,
                                     giphyText: this.state.giphyText ? { ...this.state.giphyText.original, id: this.state.giphyText.id } : {}

@@ -16,7 +16,7 @@ import TieIcon from './icons/empatado.svg';
 import ChooseClipIcon from './icons/video-clip.svg';
 import AlreadyChoosedClipIcon from './icons/video-clip-check.svg';
 import VerifyIcon from './icons/verificado.svg';
-import SupportIcon from './icons/Support.svg';
+import SupportIcon from './icons/support.svg';
 import DiscordIcon from './icons/discord.svg';
 import EditIcon from './icons/edit.svg';
 import NoVerifiedIcon from './icons/sin-verificar.svg';

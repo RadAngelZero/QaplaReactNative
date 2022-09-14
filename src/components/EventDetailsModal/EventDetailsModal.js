@@ -51,7 +51,6 @@ class EventDetailsModal extends Component {
 
     getQaplaLevels = async () => {
         const qaplaLevels = await getQaplaLevels();
-        console.log(qaplaLevels.val());
         this.setState({ qaplaLevels: qaplaLevels.val() });
     }
 

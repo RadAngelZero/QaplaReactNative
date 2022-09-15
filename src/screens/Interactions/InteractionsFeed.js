@@ -44,24 +44,22 @@ export class InteractionsFeed extends Component {
             .map((streamerId) => ({ streamerId, ...liveStreamers.val()[streamerId]}) );
 
         if (this.props.uid) {
-            const favStreamersSnap = await getUserFavsStreamers(this.props.uid, 10);
-            const favsNoLive = [];
+            const favStreamersSnap = await getUserFavsStreamers(this.props.uid, 5);
+            const favsWithoutData = [];
             favStreamersSnap.forEach((fav) => {
-                if (!liveStreamers.val()[fav.key]) {
-                    favsNoLive.push({ streamerId: fav.key, ...favStreamersSnap.val()[fav.key] });
-                }
+                favsWithoutData.push({ streamerId: fav.key, ...favStreamersSnap.val()[fav.key] });
             });
 
             const favStreamers = [];
-            for (let i = 0; i < favsNoLive.length; i++) {
+            for (let i = 0; i < favsWithoutData.length; i++) {
                 if (favStreamers.length < MAXIM_CARDS_LENGTH) {
-                    const fav = favsNoLive[i];
+                    const fav = favsWithoutData[i];
                     const streamerProfile = await getStreamerPublicProfile(fav.streamerId);
                     if (streamerProfile.exists() && (streamerProfile.val().broadcasterType === TWITCH_PARTNER || streamerProfile.val().broadcasterType === TWITCH_AFFILIATE)) {
                         favStreamers.push({ streamerId: fav.streamerId, ...streamerProfile.val() });
                     } else {
                         const streamerData = await getStreamerPublicData(fav.streamerId);
-                        if (streamerData.exists() && streamerData.val().broadcasterType === TWITCH_PARTNER || streamerData.val().broadcasterType === TWITCH_AFFILIATE) {
+                        if (streamerData.exists() && (streamerData.val().broadcasterType === TWITCH_PARTNER || streamerData.val().broadcasterType === TWITCH_AFFILIATE)) {
                             const randomBackground = Colors.streamersProfileBackgroundGradients[Math.floor(Math.random() * Colors.streamersProfileBackgroundGradients.length)]
                             favStreamers.push({ streamerId: fav.streamerId, ...streamerData.val(), backgroundGradient: randomBackground });
                         }
@@ -71,18 +69,16 @@ export class InteractionsFeed extends Component {
                 }
             }
 
-            const recentStreamersSnap = await getRecentStreamersDonations(this.props.uid, 12);
-            const recentStreamersNoLiveNoFav = [];
+            const recentStreamersSnap = await getRecentStreamersDonations(this.props.uid, 6);
+            const recentStreamersWithNoData = [];
             recentStreamersSnap.forEach((recent) => {
-                if (!liveStreamers.val()[recent.key] && !favStreamers.find((streamer) => streamer.streamerId === recent.key)) {
-                    recentStreamersNoLiveNoFav.push({ streamerId: recent.key, ...recentStreamersSnap.val()[recent.key] });
-                }
+                recentStreamersWithNoData.push({ streamerId: recent.key, ...recentStreamersSnap.val()[recent.key] });
             });
 
             const recentStreamers = [];
-            for (let i = 0; i < recentStreamersNoLiveNoFav.length; i++) {
+            for (let i = 0; i < recentStreamersWithNoData.length; i++) {
                 if (recentStreamers.length < MAXIM_CARDS_LENGTH) {
-                    const recent = recentStreamersNoLiveNoFav[i];
+                    const recent = recentStreamersWithNoData[i];
                     const streamerData = await getStreamerPublicData(recent.streamerId);
                     if (streamerData.exists() && streamerData.val().broadcasterType === TWITCH_PARTNER || streamerData.val().broadcasterType === TWITCH_AFFILIATE) {
                         recentStreamers.push({ streamerId: recent.streamerId, ...streamerData.val() });

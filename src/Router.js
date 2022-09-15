@@ -56,6 +56,7 @@ import PrepaidInteractionsInsertGiphyText from './screens/Interactions/PrepaidRe
 import PrepaidInteractionsGiphyTextSelector from './screens/Interactions/PrepaidReactions/PrepaidInteractionsGiphyTextSelector';
 import InteractionsGiphyTextSelector from './screens/Interactions/InteractionsGiphyTextSelector';
 import InteractionsInsertGiphyText from './screens/Interactions/InteractionsInsertGiphyText';
+import UserProfileModal from './components/UserProfileModal/UserProfileModal';
 
 //#region Stack Navigators
 
@@ -531,6 +532,14 @@ const RootStackNavigator = createStackNavigator({
       headerShown: false,
     },
   },
+  UserProfileModal: {
+    screen: UserProfileModal,
+    navigationOptions: {
+      cardStyle: {
+        backgroundColor: 'transparent',
+      }
+    },
+  }
 }, {
   headerMode: 'screen',
   defaultNavigationOptions: {

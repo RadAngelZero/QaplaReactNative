@@ -201,22 +201,13 @@ class HeaderBar extends Component {
                         <View style={styles.iconsContainer}>
                             {this.state.userImage &&
                                 <TouchableOpacity
-                                    onPress={this.onOpenProfile}
+                                    onPress={() => this.props.navigation.navigate('UserProfileModal')}
                                     style={{
                                         width: 30,
                                         height: 30,
                                         overflow: 'hidden',
                                     }}>
-                                        <UserProfileIcon height={30} width={30} />
-                                        {/* <Image
-                                            source={this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img}
-                                            style={{
-                                                borderRadius: 16,
-                                                flex: 1,
-                                                height: undefined,
-                                                aspectRatio: 1
-                                            }}
-                                        /> */}
+                                    <UserProfileIcon height={30} width={30} />
                                 </TouchableOpacity>
                             }
                             <QaplaIcon onPress={this.onActivityPressBttn} touchableStyle={styles.leftIconTouchableStyle}>
@@ -236,10 +227,6 @@ class HeaderBar extends Component {
                             }
                         </View>
                     </View>
-                    <UserProfileModal
-                        open={this.state.showProfile}
-                        onClose={() => this.setState({ showProfile: false })}
-                    />
                 </SafeAreaView >
             );
         }

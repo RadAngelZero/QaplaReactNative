@@ -17,6 +17,7 @@ import { retrieveData, storeData } from '../../utilities/persistance';
 import { defaultUserImages } from '../../utilities/Constants';
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
 import JoinQlanModal from '../JoinQlanModal/JoinQlanModal';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
 class UserProfileModal extends Component {
     state = {
@@ -28,6 +29,7 @@ class UserProfileModal extends Component {
         userImage: { uri: true, img: this.props.photoUrl },
         qlanData: null,
         userWantsToJoinAQlan: false,
+        updateProfileToolTip: true,
     }
 
     componentDidMount() {
@@ -178,16 +180,18 @@ class UserProfileModal extends Component {
         console.log('new Twitch data');
     }
 
+    toolTipGoToTwitch = () => {
+        this.setState({ updateProfileToolTip: false });
+        console.log('open twitch');
+    }
+
     render() {
         const twitchLinked = this.props.twitchId && this.props.twitchUsername;
 
         return (
-            <Modal
-                visible={this.props.open}
-                transparent
-                animationType='slide'
-                onRequestClose={this.props.onClose}
-            >
+            <View style={{
+                flex: 1,
+            }}>
                 <View style={styles.mainContainer}>
                     <BlurView
                         style={styles.blur}
@@ -205,13 +209,71 @@ class UserProfileModal extends Component {
                         <View style={styles.topContainer}>
                             <View style={styles.userInfoContainer}>
                                 <View style={styles.userImageContainer}>
-                                    <Image
-                                        source={this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img}
-                                        style={styles.userImage}
-                                    />
+                                    <Tooltip
+                                        isVisible={this.state.updateProfileToolTip}
+                                        content={
+                                            <View style={{
+                                                padding: 12,
+                                            }}>
+                                                <Text style={{
+                                                    color: '#fff',
+                                                    fontSize: 17,
+                                                    fontWeight: '600',
+                                                    lineHeight: 22,
+                                                }}>
+                                                    {`Update your profile\non Twitch `}
+                                                </Text>
+                                                <TouchableOpacity style={{
+                                                    backgroundColor: '#141735',
+                                                    paddingHorizontal: 19,
+                                                    paddingVertical: 13,
+                                                    borderRadius: 50,
+                                                    marginTop: 11,
+                                                    alignSelf: 'flex-end',
+                                                    shadowColor: '#000',
+                                                    shadowOffset: {
+                                                        width: 0,
+                                                        height: 11,
+                                                    },
+                                                    shadowOpacity: 0.55,
+                                                    shadowRadius: 14.78,
+
+                                                    elevation: 22,
+                                                }}
+                                                onPress={this.toolTipGoToTwitch}>
+                                                    <Text style={{
+                                                        color: '#fff',
+                                                        fontSize: 17,
+                                                        fontWeight: '700',
+                                                        lineHeight: 16,
+                                                    }}>
+                                                        {`Go to Twitch`}
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        }
+                                        placement="bottom"
+                                        onClose={() => this.setState({ updateProfileToolTip: false })}
+                                        arrowStyle={{ color: '#3B4BF9' }}
+                                        topAdjustment={50}
+                                        displayInsets={{
+                                            left: 50,
+                                        }}
+                                        contentStyle={{
+                                            backgroundColor: '#3B4BF9',
+                                            width: 245,
+                                            borderRadius: 15,
+                                        }}
+                                        backgroundColor="#0000"
+                                    >
+                                        <Image
+                                            source={this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img}
+                                            style={styles.userImage}
+                                        />
+                                    </Tooltip>
                                 </View>
                                 <Text style={styles.userUsername}
-                                numberOfLines={1}
+                                    numberOfLines={1}
                                 >
                                     {this.props.username}
                                 </Text>
@@ -352,8 +414,8 @@ class UserProfileModal extends Component {
                             </Text>
                         </TouchableOpacity>
                         <View style={styles.bottomSeparation} />
-                    </ScrollView>
-                </View>
+                    </ScrollView >
+                </View >
                 <LinkTwitchAccountModal open={this.state.showLinkWithTwitchModal}
                     onClose={() => this.setState({ showLinkWithTwitchModal: false })}
                     onLinkSuccessful={this.state.userWantsToJoinAQlan ? this.openJoinQlanModal : null}
@@ -365,7 +427,7 @@ class UserProfileModal extends Component {
                     userName={this.props.username}
                     twitchUsername={this.props.twitchUsername}
                     onSuccess={this.getUserQlanData} />
-            </Modal>
+            </View >
         );
     }
 }

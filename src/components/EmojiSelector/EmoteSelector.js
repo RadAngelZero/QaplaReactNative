@@ -11,8 +11,8 @@ import {
 
 class EmoteSelector extends Component {
     renderEmote = (emote, locked) => {
-        return(
-            <TouchableOpacity style={{
+        return (
+            <TouchableOpacity key={emote.id} style={{
                     flexBasis: '20%',
                     aspectRatio: 1,
                     padding: '4%',
@@ -30,6 +30,7 @@ class EmoteSelector extends Component {
     renderEmoteSection = ({ item, section }) => {
         return (
             <FlatList data={item}
+                keyExtractor={item.id}
                 renderItem={({ item }) => this.renderEmote(item, section.locked)}
                 numColumns={5} />
     )};
@@ -50,7 +51,7 @@ class EmoteSelector extends Component {
                 }
                 {this.props.data && this.props.data.length > 0 ?
                     <SectionList sections={this.props.data}
-                        keyExtractor={(item, index) => item + index}
+                        keyExtractor={(item) => item.key}
                         renderItem={this.renderEmoteSection}
                         renderSectionHeader={({ section: { key, data } }) => (
                             data && data[0] && data[0].length > 0 ?

@@ -10,7 +10,7 @@ import { getMediaTypeCost, sendCheers } from '../../services/database';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../services/auth';
 import images from '../../../assets/images';
-import { CUSTOM_TTS_VOICE, EMOJI, GIPHY_TEXT, MEME } from '../../utilities/Constants';
+import { CUSTOM_TTS_VOICE, EMOJI, EMOTE, GIPHY_TEXT, MEME } from '../../utilities/Constants';
 import { trackOnSegment } from '../../services/statistics';
 import EmojiSelector from '../../components/EmojiSelector/EmojiSelector';
 import LinearGradient from 'react-native-linear-gradient';
@@ -159,9 +159,17 @@ class InteractionsCheckout extends Component {
                                 }
                             }
 
+                            /**
+                             * As today the user can only choose either emoji or emote, this can change
+                             * later that´s why we have an if instead of an else if here
+                             */
                             const emojiArray = [];
                             if (this.state.emoji) {
-                                emojiArray.push(this.state.emoji);
+                                emojiArray.push({ type: EMOJI, element: this.state.emoji });
+                            }
+
+                            if (this.state.emoteUrl) {
+                                emojiArray.push({ type: EMOTE, element: this.state.emoteUrl });
                             }
 
                             sendCheers(

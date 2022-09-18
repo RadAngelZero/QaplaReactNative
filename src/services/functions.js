@@ -91,3 +91,18 @@ async function callCloudFunction(ctx) {
 		}
 	});
 }
+
+/**
+ * Get the streamer emotes of the given streamer
+ * @param {string} userTwitchId User Twitch identifier
+ * @param {string} streamerUid Streamer (database) identifier
+ */
+export async function getStreamerEmotes(userTwitchId, streamerUid) {
+	return await callCloudFunction({
+		cfName: 'getStreamerEmotes',
+		params: {
+			userTwitchId,
+			streamerUid
+		}
+	});
+}

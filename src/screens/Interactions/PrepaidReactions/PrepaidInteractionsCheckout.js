@@ -16,6 +16,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import { NavigationEvents } from 'react-navigation';
 import EmojiSelector from '../../../components/EmojiSelector/EmojiSelector';
 import InsertExtraTipModal from '../InsertExtraTipModal';
+import { getStreamerEmotes } from '../../../services/functions';
+import EmoteSelector from '../../../components/EmojiSelector/EmoteSelector';
 
 const ExtraTip = ({ value, onPress, selected }) => (
     <TouchableOpacity onPress={() => onPress(value)}>
@@ -47,7 +49,10 @@ class PrepaidInteractionsCheckout extends Component {
         localCosts: {},
         keyboardHeight: 0,
         keyboardOpen: false,
-        openExtraTipModal: false
+        openExtraTipModal: false,
+        emojiTab: false,
+        emoteUrl: '',
+        emotes: []
     };
 
     componentDidMount() {
@@ -55,6 +60,7 @@ class PrepaidInteractionsCheckout extends Component {
         if (showAddOnsOnCheckout) {
             this.calculateCosts();
             this.fetchAddOnsCosts();
+            this.fetchStreamerEmotes();
         }
 
         this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
@@ -90,6 +96,15 @@ class PrepaidInteractionsCheckout extends Component {
             this.setState({ interactionCost: !this.state.emoji ? interactionCost : this.state.emojiRainCost + interactionCost, giphyText });
         } else {
             this.setState({ minimum: 50, extraTip: 50 });
+        }
+    }
+
+    fetchStreamerEmotes = async () => {
+        const streamerId = this.props.navigation.getParam('streamerId', null);
+
+        if (streamerId) {
+            const emotesRequest = await getStreamerEmotes(this.props.twitchId, streamerId);
+            this.setState({ emotes: emotesRequest.data ? emotesRequest.data.emotes : null });
         }
     }
 
@@ -249,19 +264,35 @@ class PrepaidInteractionsCheckout extends Component {
     }
 
     emojiSelectedHandler = (emoji) => {
+        const emojiOrEmoteSelected = this.state.emoji || this.state.emoteUrl ? true : false;
+
         this.setState({
             emoji,
             openEmojiSelector: false,
             localCosts: {
                 'emoji': this.state.emojiRainCost
             },
-            interactionCost: !this.state.emoji ? this.state.interactionCost + this.state.emojiRainCost : this.state.interactionCost
+            interactionCost: !emojiOrEmoteSelected ? this.state.interactionCost + this.state.emojiRainCost : this.state.interactionCost
+        });
+    }
+
+    emoteSelectedHandler = (emoteUrl) => {
+        const emojiOrEmoteSelected = this.state.emoji || this.state.emoteUrl ? true : false;
+
+        this.setState({
+            emoteUrl,
+            localCosts: {
+                'emoji': this.state.emojiRainCost
+            },
+            openEmojiSelector: false,
+            interactionCost: !emojiOrEmoteSelected ? this.state.interactionCost + this.state.emojiRainCost : this.state.interactionCost
         });
     }
 
     removeEmoji = () => {
         this.setState({
             emoji: '',
+            emoteUrl: '',
             localCosts: {},
             interactionCost: this.state.interactionCost - this.state.emojiRainCost
         });
@@ -314,6 +345,7 @@ class PrepaidInteractionsCheckout extends Component {
         const showAddOnsOnCheckout = this.props.navigation.getParam('showAddOnsOnCheckout', true);
         const totalCost = this.state.interactionCost + this.state.extraTip;
         const giphyText = this.state.giphyText;
+        const emojiOrEmoteSelected = this.state.emoji || this.state.emoteUrl ? true : false;
 
         return (
             <View style={styles.container}>
@@ -395,19 +427,23 @@ class PrepaidInteractionsCheckout extends Component {
                                         {this.state.emojiRainCost !== 0 &&
                                             <TouchableOpacity style={styles.AddonContainer}
                                                 onPress={() => this.setState({ openEmojiSelector: true })}>
-                                                <ImageBackground source={this.state.emoji ? images.png.InteractionGradient1.img : images.png.InteractionGradient3.img}
+                                                <ImageBackground source={emojiOrEmoteSelected ? images.png.InteractionGradient1.img : images.png.InteractionGradient3.img}
                                                     style={styles.checkoutAddonImageContainer}
                                                 >
                                                     <ImageBackground source={images.gif.emojiRaid.img}
                                                         style={styles.checkoutAddonImageContainer}>
-                                                        {this.state.emoji !== '' &&
+                                                        {emojiOrEmoteSelected &&
                                                             <TouchableOpacity onPress={this.removeEmoji} style={styles.deleteAddOnIconContainer}>
                                                                 <images.svg.deleteIcon  />
                                                             </TouchableOpacity>
                                                         }
-                                                        <Text style={styles.addonEmojiText}>
-                                                            {this.state.emoji || '🤡'}
-                                                        </Text>
+                                                        {!this.state.emoteUrl ?
+                                                            <Text style={styles.addonEmojiText}>
+                                                                {this.state.emoji || '🤡'}
+                                                            </Text>
+                                                            :
+                                                            <Image source={{ uri: this.state.emoteUrl }} style={{ aspectRatio: 1, height: 26 }} />
+                                                        }
                                                         <Text style={styles.addonText}>
                                                             Emoji Raid
                                                         </Text>
@@ -613,10 +649,17 @@ class PrepaidInteractionsCheckout extends Component {
                             borderTopRightRadius: 30,
                             overflow: 'hidden',
                         }}>
-                            <EmojiSelector
-                                onEmojiSelected={this.emojiSelectedHandler}
-                                showHistory={false}
-                            />
+                            {this.state.emojiTab ?
+                                <EmojiSelector
+                                    onEmojiSelected={this.emojiSelectedHandler}
+                                    showHistory={false}
+                                />
+                                :
+                                <EmoteSelector
+                                    data={this.state.emotes}
+                                    onEmoteSelect={this.emoteSelectedHandler}
+                                />
+                            }
                         </View>
                     </ScrollView>
                 </Modal>

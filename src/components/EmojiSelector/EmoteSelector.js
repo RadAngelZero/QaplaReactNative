@@ -2,45 +2,78 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    StyleSheet,
     TouchableOpacity,
-    TextInput,
-    Platform,
-    ActivityIndicator,
     FlatList,
     Image,
+    SectionList,
+    ActivityIndicator,
 } from 'react-native';
 
 class EmoteSelector extends Component {
+    renderEmote = (emote, locked) => {
+        return(
+            <TouchableOpacity style={{
+                    flexBasis: '20%',
+                    aspectRatio: 1,
+                    padding: '4%',
+                }}
+                disabled={locked}
+                onPress={() => { this.props.onEmoteSelect(emote.images.url_4x) }}>
+                <Image source={{ uri: emote.images.url_4x }}
+                    style={{
+                        flex: 1,
+                    }} />
+            </TouchableOpacity>
+        );
+    }
 
-    renderItem = ({ item }) => (
-        <TouchableOpacity style={{
-            flexBasis: '25%',
-            aspectRatio: 1,
-            padding: '4%',
-        }}
-            onPress={() => { this.props.onEmoteSelect(item) }}
-        >
-            <Image source={{ uri: item.url }}
-                style={{
-                    flex: 1,
-                }} />
-        </TouchableOpacity>
-    );
+    renderEmoteSection = ({ item, section }) => {
+        return (
+            <FlatList data={item}
+                renderItem={({ item }) => this.renderEmote(item, section.locked)}
+                numColumns={5} />
+    )};
 
     render() {
-        return (<View style={{
-            flex: 1,
-            paddingTop: 16,
-            paddingHorizontal: 16,
-        }}>
-            <FlatList
-                numColumns={4}
-                data={this.props.data}
-                renderItem={this.renderItem}
-                keyExtractor={item => item.id}
-            />
-        </View>);
+        return (
+            <View style={{
+                flex: 1,
+                paddingTop: 16,
+                paddingHorizontal: 16,
+                alignContent: 'center',
+                justifyContent: 'center'
+            }}>
+                {this.props.data === null &&
+                    <Text style={{ fontSize: 16, fontWeight: '600', color: '#FFF' }}>
+                        Error
+                    </Text>
+                }
+                {this.props.data && this.props.data.length > 0 ?
+                    <SectionList sections={this.props.data}
+                        keyExtractor={(item, index) => item + index}
+                        renderItem={this.renderEmoteSection}
+                        renderSectionHeader={({ section: { key, data } }) => (
+                            data && data[0] && data[0].length > 0 ?
+                                <Text style={{
+                                    fontWeight: '500',
+                                    fontSize: 16,
+                                    color: 'rgba(255, 255, 255, .8)',
+                                    backgroundColor: '#141539',
+                                    marginBottom: 8
+                                }}>
+                                    {key}
+                                </Text>
+                                :
+                                null
+                        )} />
+                    :
+                    this.props.data !== null &&
+                    <ActivityIndicator
+                        size='large'
+                        color='rgb(61, 249, 223)' />
+                }
+            </View>
+        );
     }
 }
 

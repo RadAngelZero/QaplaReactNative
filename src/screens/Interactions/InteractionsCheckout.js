@@ -17,37 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { NavigationEvents } from 'react-navigation';
 import InsertExtraTipModal from './InsertExtraTipModal';
 import EmoteSelector from '../../components/EmojiSelector/EmoteSelector';
-
-const EmotesData = [
-    {
-        id: 'AYAYA',
-        url: 'https://cdn.frankerfacez.com/emoticon/162146/1',
-    },
-    {
-        id: 'EZY',
-        url: 'https://cdn.frankerfacez.com/emoticon/185890/1',
-    },
-    {
-        id: 'HYPERS',
-        url: 'https://cdn.frankerfacez.com/emoticon/236895/1',
-    },
-    {
-        id: 'KEKW',
-        url: 'https://cdn.frankerfacez.com/emoticon/381875/1',
-    },
-    {
-        id: 'monkaS',
-        url: 'https://cdn.frankerfacez.com/emoticon/130762/1',
-    },
-    {
-        id: 'POGGERS',
-        url: 'https://cdn.frankerfacez.com/emoticon/214129/1',
-    },
-    {
-        id: 'Stonks',
-        url: 'https://cdn.frankerfacez.com/emoticon/428011/1',
-    },
-];
+import { getStreamerEmotes } from '../../services/functions';
 
 const ExtraTip = ({ value, onPress, selected }) => (
     <TouchableOpacity onPress={() => onPress(value)}>
@@ -83,6 +53,7 @@ class InteractionsCheckout extends Component {
         openExtraTipModal: false,
         emojiTab: false,
         emoteUrl: '',
+        emotes: []
     };
 
     componentDidMount() {
@@ -90,6 +61,7 @@ class InteractionsCheckout extends Component {
         if (showAddOnsOnCheckout) {
             this.calculateCosts();
             this.fetchAddOnsCosts();
+            this.fetchStreamerEmotes();
         }
 
         this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
@@ -125,6 +97,15 @@ class InteractionsCheckout extends Component {
             this.setState({ interactionCost: !this.state.emoji ? interactionCost : this.state.emojiRainCost + interactionCost, giphyText });
         } else {
             this.setState({ minimum: 50, extraTip: 50 });
+        }
+    }
+
+    fetchStreamerEmotes = async () => {
+        const streamerId = this.props.navigation.getParam('streamerId', null);
+
+        if (streamerId) {
+            const emotesRequest = await getStreamerEmotes(this.props.twitchId, streamerId);
+            this.setState({ emotes: emotesRequest.data.emotes });
         }
     }
 
@@ -246,27 +227,35 @@ class InteractionsCheckout extends Component {
         );
     }
 
-    emoteSelectedHanler = (emote) => {
-        this.setState({
-            emoteUrl: emote.url,
-            openEmojiSelector: false,
-        });
-    }
-
     emojiSelectedHandler = (emoji) => {
+        const emojiOrEmoteSelected = this.state.emoji || this.state.emoteUrl ? true : false;
+
         this.setState({
             emoji,
+            emoteUrl: '',
             openEmojiSelector: false,
             localCosts: {
                 'emoji': this.state.emojiRainCost
             },
-            interactionCost: !this.state.emoji ? this.state.interactionCost + this.state.emojiRainCost : this.state.interactionCost
+            interactionCost: !emojiOrEmoteSelected ? this.state.interactionCost + this.state.emojiRainCost : this.state.interactionCost
+        });
+    }
+
+    emoteSelectedHandler = (emoteUrl) => {
+        const emojiOrEmoteSelected = this.state.emoji || this.state.emoteUrl ? true : false;
+
+        this.setState({
+            emoteUrl,
+            emoji: '',
+            openEmojiSelector: false,
+            interactionCost: !emojiOrEmoteSelected ? this.state.interactionCost + this.state.emojiRainCost : this.state.interactionCost
         });
     }
 
     removeEmoji = () => {
         this.setState({
             emoji: '',
+            emoteUrl: '',
             localCosts: {},
             interactionCost: this.state.interactionCost - this.state.emojiRainCost
         });
@@ -319,6 +308,7 @@ class InteractionsCheckout extends Component {
         const showAddOnsOnCheckout = this.props.navigation.getParam('showAddOnsOnCheckout', true);
         const totalCost = this.state.interactionCost + this.state.extraTip;
         const giphyText = this.state.giphyText;
+        const emojiOrEmoteSelected = this.state.emoji || this.state.emoteUrl ? true : false;
 
         return (
             <View style={styles.container}>
@@ -415,21 +405,23 @@ class InteractionsCheckout extends Component {
                                                 onPress={() => this.setState({ openEmojiSelector: true })}
                                                 style={styles.AddonContainer}>
                                                 <ImageBackground
-                                                    source={this.state.emoji ? images.png.InteractionGradient1.img : images.png.InteractionGradient3.img}
+                                                    source={emojiOrEmoteSelected ? images.png.InteractionGradient1.img : images.png.InteractionGradient3.img}
                                                     style={styles.checkoutAddonImageContainer}
                                                 >
                                                     <ImageBackground source={images.gif.emojiRaid.img}
                                                         style={styles.checkoutAddonImageContainer}>
-                                                        {this.state.emoji !== '' &&
+                                                        {emojiOrEmoteSelected &&
                                                             <TouchableOpacity onPress={this.removeEmoji} style={styles.deleteAddOnIconContainer}>
                                                                 <images.svg.deleteIcon />
                                                             </TouchableOpacity>
                                                         }
-                                                        {this.state.emoteUrl === '' ? <Text style={styles.addonEmojiText}>
-                                                            {this.state.emoji || '🤡'}
-                                                        </Text>
+                                                        {!this.state.emoteUrl ?
+                                                            <Text style={styles.addonEmojiText}>
+                                                                {this.state.emoji || '🤡'}
+                                                            </Text>
                                                             :
-                                                            <Image source={{ uri: this.state.emoteUrl }} style={{ aspectRatio: 1, height: 26 }} />}
+                                                            <Image source={{ uri: this.state.emoteUrl }} style={{ aspectRatio: 1, height: 26 }} />
+                                                        }
                                                         <Text style={styles.addonText}>
                                                             Emoji raid
                                                         </Text>
@@ -642,9 +634,10 @@ class InteractionsCheckout extends Component {
                                 />
                                 :
                                 <EmoteSelector
-                                    data={EmotesData}
-                                    onEmoteSelect={this.emoteSelectedHanler}
-                                />}
+                                    data={this.state.emotes}
+                                    onEmoteSelect={this.emoteSelectedHandler}
+                                />
+                            }
                         </View>
                     </ScrollView>
                     <View style={{

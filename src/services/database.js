@@ -60,6 +60,7 @@ const reactionsSamplesRef = database.ref('/ReactionsSamples');
 const usersReactionsCountRef = database.ref('/UsersReactionsCount');
 const giphyTextRequestsRef = database.ref('/GiphyTextRequests');
 const voiceBotAvailableVoicesRef = database.ref('/VoiceBotAvailableVoices');
+const streamersBanListsRef = database.ref('/StreamersBanLists');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1954,4 +1955,12 @@ export async function removeGiphyTextRequests(uid) {
  */
 export async function getBotAvailableVoices() {
     return await voiceBotAvailableVoicesRef.once('value');
+}
+
+// -----------------------------------------------
+// Streamers Ban Lists
+// -----------------------------------------------
+
+export async function isUserBannedWithStreamer(userTwitchId, streamerUid) {
+    return await streamersBanListsRef.child(streamerUid).child(userTwitchId).once('value');
 }

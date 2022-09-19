@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -9,6 +10,7 @@ import { translate } from '../../utilities/i18';
 import DeckButton from '../../components/DeckButton/DeckButton';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { trackOnSegment } from '../../services/statistics';
+import { getUserToStreamerData } from '../../actions/userToStreamerRelationActions';
 
 class InteractionsPersonalize extends Component {
     state = {
@@ -58,6 +60,9 @@ class InteractionsPersonalize extends Component {
             MediaType: mediaType
         });
 
+        const streamerId = this.props.navigation.getParam('streamerId', null);
+        this.props.getUserStreamerRelationData(this.props.twitchId, streamerId);
+
         if (mediaType === MEME) {
             this.props.navigation.navigate('InteractionsMemeSelector', {
                 mediaType,
@@ -83,6 +88,9 @@ class InteractionsPersonalize extends Component {
             MediaType: 'TTS'
         });
 
+        const streamerId = this.props.navigation.getParam('streamerId', null);
+        this.props.getUserStreamerRelationData(this.props.twitchId, streamerId);
+
         const costsObject = this.props.navigation.getParam('costs', {});
         this.props.navigation.navigate('InteractionsTTS', {
             ...this.props.navigation.state.params,
@@ -90,16 +98,6 @@ class InteractionsPersonalize extends Component {
                 [TTS]: this.state[TTS],
                 ...costsObject
             }
-        });
-    }
-
-    justSendQoins = () => {
-        trackOnSegment('Only Send Qoins');
-
-        // Send to only Qoins donation screen
-        this.props.navigation.navigate('InteractionsCheckout', {
-            ...this.props.navigation.state.params,
-            onlyQoins: true
         });
     }
 
@@ -220,23 +218,23 @@ class InteractionsPersonalize extends Component {
                             </TouchableOpacity>
                         }
                         <View style={{ height: heightPercentageToPx(6.15) }} />
-                        {/* <View style={styles.onlySendQoinsContainer}>
-                        <TouchableOpacity style={styles.onlySendQoinsTouchable}
-                            onPress={this.justSendQoins}>
-                            <Text style={[styles.semitransparentText, styles.onlySendQoinsText]}>
-                                {`${translate('interactions.personalize.onlySend')} `}
-                                <Text style={styles.whiteText}>
-                                    Qoins
-                                </Text>
-                            </Text>
-                        </TouchableOpacity>
-                    </View> */}
                     </ScrollView>
                 </View>
             </View>
         );
     }
-
 }
 
-export default InteractionsPersonalize;
+function mapStateToProps(state) {
+    return {
+        twitchId: state.userReducer.user.twitchId
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getUserStreamerRelationData: (uid, streamerUid) => getUserToStreamerData(uid, streamerUid)(dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InteractionsPersonalize);

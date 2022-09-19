@@ -6,7 +6,7 @@ import { GiphyMediaView } from '@giphy/react-native-sdk';
 import { translate } from '../../../utilities/i18';
 import styles from '../style';
 import { heightPercentageToPx, widthPercentageToPx } from '../../../utilities/iosAndroidDim';
-import { getMediaTypeCost, sendCheers, sendReaction } from '../../../services/database';
+import { getMediaTypeCost, isUserBannedWithStreamer, sendCheers, sendReaction } from '../../../services/database';
 import LinkTwitchAccountModal from '../../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { isUserLogged } from '../../../services/auth';
 import { CUSTOM_TTS_VOICE, EMOJI, EMOTE, GIPHY_CLIPS, GIPHY_TEXT, MEME } from '../../../utilities/Constants';
@@ -103,8 +103,8 @@ class PrepaidInteractionsCheckout extends Component {
         const streamerId = this.props.navigation.getParam('streamerId', null);
 
         if (streamerId) {
-            const emotesRequest = await getStreamerEmotes(this.props.twitchId, streamerId);
-            this.setState({ emotes: emotesRequest.data ? emotesRequest.data.emotes : null });
+            const emotesRequest = await getStreamerEmotes(streamerId);
+            this.setState({ emotes: emotesRequest.data ? emotesRequest.data : null });
         }
     }
 
@@ -120,128 +120,134 @@ class PrepaidInteractionsCheckout extends Component {
 
     onSendInteraction = async () => {
         if (!this.state.sendingInteraction) {
-            this.setState({ sendingInteraction: true }, () => {
+            this.setState({ sendingInteraction: true }, async () => {
                 if (isUserLogged()) {
                     if (this.props.twitchId && this.props.twitchUserName) {
-                        const totalCost = this.state.interactionCost + this.state.extraTip;
-                        if (totalCost <= this.props.qoins) {
-                            const streamerId = this.props.navigation.getParam('streamerId', '');
-                            const streamerName = this.props.navigation.getParam('displayName', '');
-                            const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
-                            const mediaType = this.props.navigation.getParam('mediaType');
-                            const message = this.props.navigation.getParam('message', null);
-                            const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
-                            const costs = this.props.navigation.getParam('costs', {});
-                            const giphyTextSelectedFirst = this.props.navigation.getParam('giphyTextSelectedFirst', false);
 
-                            let media = null;
-                            let messageExtraData = null;
+                        const streamerId = this.props.navigation.getParam('streamerId', '');
+                        const isUserBanned = await isUserBannedWithStreamer(this.props.twitchId, streamerId);
+                        if (!isUserBanned.exists()) {
 
-                            if (selectedMedia) {
-                                if (selectedMedia.data && selectedMedia.data.images && selectedMedia.data.images.original) {
-                                    media = {
-                                        id: selectedMedia.data.id,
-                                        ...selectedMedia.data.images.original,
-                                        type: mediaType
-                                    };
-                                } else if (selectedMedia.original) {
-                                    media = {
-                                        ...selectedMedia.original,
-                                        type: mediaType
-                                    };
+                            const totalCost = this.state.interactionCost + this.state.extraTip;
+                            if (totalCost <= this.props.qoins) {
+                                const streamerId = this.props.navigation.getParam('streamerId', '');
+                                const streamerName = this.props.navigation.getParam('displayName', '');
+                                const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
+                                const mediaType = this.props.navigation.getParam('mediaType');
+                                const message = this.props.navigation.getParam('message', null);
+                                const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
+                                const costs = this.props.navigation.getParam('costs', {});
+                                const giphyTextSelectedFirst = this.props.navigation.getParam('giphyTextSelectedFirst', false);
+
+                                let media = null;
+                                let messageExtraData = null;
+
+                                if (selectedMedia) {
+                                    if (selectedMedia.data && selectedMedia.data.images && selectedMedia.data.images.original) {
+                                        media = {
+                                            id: selectedMedia.data.id,
+                                            ...selectedMedia.data.images.original,
+                                            type: mediaType
+                                        };
+                                    } else if (selectedMedia.original) {
+                                        media = {
+                                            ...selectedMedia.original,
+                                            type: mediaType
+                                        };
+                                    }
                                 }
-                            }
 
-                            if (message && ((costs[CUSTOM_TTS_VOICE] && messageVoiceData) || this.state.giphyText)) {
-                                messageExtraData = {
-                                    ...messageVoiceData,
-                                    giphyText: this.state.giphyText ? { ...this.state.giphyText.original, id: this.state.giphyText.id } : {}
+                                if (message && ((costs[CUSTOM_TTS_VOICE] && messageVoiceData) || this.state.giphyText)) {
+                                    messageExtraData = {
+                                        ...messageVoiceData,
+                                        giphyText: this.state.giphyText ? { ...this.state.giphyText.original, id: this.state.giphyText.id } : {}
+                                    }
                                 }
-                            }
 
-                            /**
-                             * As today the user can only choose either emoji or emote, this can change
-                             * later that´s why we have an if instead of an else if here
-                             */
-                            const emojiArray = [];
-                            if (this.state.emoji) {
-                                emojiArray.push({ type: EMOJI, element: this.state.emoji });
-                            }
+                                /**
+                                 * As today the user can only choose either emoji or emote, this can change
+                                 * later that´s why we have an if instead of an else if here
+                                 */
+                                const emojiArray = [];
+                                if (this.state.emoji) {
+                                    emojiArray.push({ type: EMOJI, element: this.state.emoji });
+                                }
 
-                            if (this.state.emoteUrl) {
-                                emojiArray.push({ type: EMOTE, element: this.state.emoteUrl });
-                            }
+                                if (this.state.emoteUrl) {
+                                    emojiArray.push({ type: EMOTE, element: this.state.emoteUrl });
+                                }
 
-                            /**
-                             * Clips and direct selection of custom TTS must not take the pre paid reaction
-                             * they must just take the Qoins from the user
-                             */
-                            if (mediaType !== GIPHY_CLIPS && !giphyTextSelectedFirst) {
-                                sendReaction(
-                                    this.props.uid,
-                                    this.props.userName,
-                                    this.props.twitchUserName,
-                                    this.props.photoUrl,
-                                    streamerId,
-                                    streamerName,
-                                    media,
-                                    message,
-                                    messageExtraData,
-                                    // Overlay expects an array of emojis but app only supports one emoji for now
-                                    emojiArray,
-                                    totalCost,
-                                    () => {
-                                        trackOnSegment('Pre Paid Interaction Sent', {
-                                            MessageLength: message ? message.length : null,
-                                            messageExtraData,
-                                            Media: media ? true : false,
-                                            ExtraTip: this.state.extraTip,
-                                            TotalQoins: totalCost
-                                        });
+                                /**
+                                 * Clips and direct selection of custom TTS must not take the pre paid reaction
+                                 * they must just take the Qoins from the user
+                                 */
+                                if (mediaType !== GIPHY_CLIPS && !giphyTextSelectedFirst) {
+                                    sendReaction(
+                                        this.props.uid,
+                                        this.props.userName,
+                                        this.props.twitchUserName,
+                                        this.props.photoUrl,
+                                        streamerId,
+                                        streamerName,
+                                        media,
+                                        message,
+                                        messageExtraData,
+                                        // Overlay expects an array of emojis but app only supports one emoji for now
+                                        emojiArray,
+                                        totalCost,
+                                        () => {
+                                            trackOnSegment('Pre Paid Interaction Sent', {
+                                                MessageLength: message ? message.length : null,
+                                                messageExtraData,
+                                                Media: media ? true : false,
+                                                ExtraTip: this.state.extraTip,
+                                                TotalQoins: totalCost
+                                            });
 
-                                        this.props.navigation.navigate('PrepaidInteractionsSent', {
-                                            ...this.props.navigation.state.params,
-                                            donationTotal: totalCost,
-                                        });
-                                    },
-                                    () => this.setState({ sendingInteraction: false })
-                                );
+                                            this.props.navigation.navigate('PrepaidInteractionsSent', {
+                                                ...this.props.navigation.state.params,
+                                                donationTotal: totalCost,
+                                            });
+                                        },
+                                        () => this.setState({ sendingInteraction: false })
+                                    );
+                                } else {
+                                    sendCheers(
+                                        totalCost,
+                                        media,
+                                        message,
+                                        messageExtraData,
+                                        // Overlay expects an array of emojis but app only supports one emoji for now
+                                        emojiArray,
+                                        (new Date()).getTime(),
+                                        streamerName,
+                                        this.props.uid,
+                                        this.props.userName,
+                                        this.props.twitchUserName,
+                                        this.props.photoUrl,
+                                        streamerId,
+                                        () => {
+                                            trackOnSegment('Interaction Sent', {
+                                                MessageLength: message ? message.length : null,
+                                                messageExtraData,
+                                                Media: media ? true : false,
+                                                ExtraTip: this.state.extraTip,
+                                                TotalQoins: totalCost
+                                            });
+
+                                            this.props.navigation.navigate('InteractionsSent', {
+                                                ...this.props.navigation.state.params,
+                                                donationTotal: totalCost,
+                                            });
+                                        },
+                                        () => this.setState({ sendingInteraction: false })
+                                    )
+                                }
                             } else {
-                                sendCheers(
-                                    totalCost,
-                                    media,
-                                    message,
-                                    messageExtraData,
-                                    // Overlay expects an array of emojis but app only supports one emoji for now
-                                    emojiArray,
-                                    (new Date()).getTime(),
-                                    streamerName,
-                                    this.props.uid,
-                                    this.props.userName,
-                                    this.props.twitchUserName,
-                                    this.props.photoUrl,
-                                    streamerId,
-                                    () => {
-                                        trackOnSegment('Interaction Sent', {
-                                            MessageLength: message ? message.length : null,
-                                            messageExtraData,
-                                            Media: media ? true : false,
-                                            ExtraTip: this.state.extraTip,
-                                            TotalQoins: totalCost
-                                        });
-
-                                        this.props.navigation.navigate('InteractionsSent', {
-                                            ...this.props.navigation.state.params,
-                                            donationTotal: totalCost,
-                                        });
-                                    },
-                                    () => this.setState({ sendingInteraction: false })
-                                )
+                                this.setState({ sendingInteraction: false });
+                                // After a successful buy try to send the interaction again
+                                this.props.navigation.navigate('BuyQoins', { onSuccessfulBuy: this.onSendInteraction });
                             }
-                        } else {
-                            this.setState({ sendingInteraction: false });
-                            // After a successful buy try to send the interaction again
-                            this.props.navigation.navigate('BuyQoins', { onSuccessfulBuy: this.onSendInteraction });
                         }
                     } else {
                         this.setState({ openLinkWitTwitchModal: true, sendingInteraction: false });
@@ -351,6 +357,7 @@ class PrepaidInteractionsCheckout extends Component {
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
         const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
         const showAddOnsOnCheckout = this.props.navigation.getParam('showAddOnsOnCheckout', true);
+        const streamerId = this.props.navigation.getParam('streamerId', null);
         const totalCost = this.state.interactionCost + this.state.extraTip;
         const giphyText = this.state.giphyText;
         const emojiOrEmoteSelected = this.state.emoji || this.state.emoteUrl ? true : false;
@@ -663,9 +670,10 @@ class PrepaidInteractionsCheckout extends Component {
                                     showHistory={false}
                                 />
                                 :
-                                <EmoteSelector
+                                <EmoteSelector emotesStreamerUid={streamerId}
                                     data={this.state.emotes}
                                     onEmoteSelect={this.emoteSelectedHandler}
+                                    {...this.props.userToStreamerRelation}
                                 />
                             }
                         </View>
@@ -693,6 +701,7 @@ function mapStateToProps(state) {
         photoUrl: state.userReducer.user.photoUrl,
         qoins: state.userReducer.user.credits,
         twitchId: state.userReducer.user.twitchId,
+        userToStreamerRelation: state.userToStreamerRelationReducer
     };
 }
 

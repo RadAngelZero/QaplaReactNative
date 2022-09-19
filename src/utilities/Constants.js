@@ -53,6 +53,9 @@ export const SET_USER_IMAGE = 'SET_USER_IMAGE';
 // Purchases reducer
 export const ON_PURCHASE_FINISHED = 'ON_PURCHASE_FINISHED';
 
+// User To Streamer Relation Reducer
+export const LOAD_TWITCH_RELATION_DATA = 'LOAD_TWITCH_RELATION_DATA';
+
 // Crear Reta Button in PublicMatchesFeedScreen.js
 export const HIGHLIGHT_1_CREATE_MATCH = 'HIGHLIGHT_1_CREATE_MATCH';
 // Crear Reta Button in PublicMatchesFeedScreen.js Flag

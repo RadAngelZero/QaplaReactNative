@@ -28,10 +28,39 @@ class EmoteSelector extends Component {
     }
 
     renderEmoteSection = ({ item, section }) => {
+        let locked = false;
+
+        /**
+         * As the info about followage and subscription is loaded asynchronously we compare the uid from the screen (emotesStreamerUid)
+         * with the redux info loaded of the streamer (streamerUid) to prevent the use of emotes. When the info changes this will be
+         * executed again so the locked flag will be loaded correctly
+         */
+        const isInfoOfThisStreamer = this.props.emotesStreamerUid === this.props.streamerUid;
+        if (isInfoOfThisStreamer) {
+            switch (section.key) {
+                case 'follower':
+                    locked = !this.props.isFollower;
+                    break;
+                case 'subTier1':
+                    locked = !this.props.isSubscribed;
+                    break;
+                case 'subTier2':
+                    locked = !this.props.isSubscribed || this.props.subscriptionTier < 2000;
+                    break;
+                case 'subTier3':
+                    locked = !this.props.isSubscribed || this.props.subscriptionTier < 3000;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            locked = true;
+        }
+
         return (
             <FlatList data={item}
                 keyExtractor={item.id}
-                renderItem={({ item }) => this.renderEmote(item, section.locked)}
+                renderItem={({ item }) => this.renderEmote(item, locked)}
                 numColumns={5} />
     )};
 

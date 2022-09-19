@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
@@ -7,7 +7,14 @@ import StreamerCardsList from '../../components/StreamerCardsList/StreamerCardsL
 import { getSingleStreamerData } from '../../actions/streamersActions';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT, STREAMERS_BLACKLIST, TWITCH_AFFILIATE, TWITCH_PARTNER } from '../../utilities/Constants';
 
+import images from '../../../assets/images';
+
 class FollowingStreamersScreen extends Component {
+
+    state = {
+        streamerToSearch: '',
+    }
+
     loadMoreStreamers = () => {
         const streamersData = this.formatStreamers();
         const streamersAlreadyLoaded = [];
@@ -84,10 +91,25 @@ class FollowingStreamersScreen extends Component {
         this.props.navigation.navigate('StreamerProfile', { streamerData, comesFromFollowingList: true });
     }
 
+    searchHandler = (streamerToSearch) => {
+        this.setState({ streamerToSearch: streamerToSearch });
+    }
+
     render() {
         const streamersData = this.formatStreamers();
         return (
             <View style={styles.container}>
+                <View style={[styles.searchBar, styles.streamerSearchBar]}>
+                    <View style={{ opacity: 0.4 }}>
+                        <images.svg.searchStreamerIcon />
+                    </View>
+                    <TextInput
+                        style={styles.gridSearchBarTextInput}
+                        value={this.state.streamerToSearch}
+                        placeholder={'Search by name'}
+                        placeholderTextColor={'rgba(255, 255, 255, 0.4)'}
+                        onChangeText={this.searchHandler} />
+                </View>
                 <StreamerCardsList streamersData={streamersData}
                     onEndReached={this.loadMoreStreamers}
                     onCardPress={this.goToStreamerProfile} />

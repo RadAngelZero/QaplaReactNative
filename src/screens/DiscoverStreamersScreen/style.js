@@ -22,14 +22,7 @@ export default styles = StyleSheet.create({
         backgroundColor: '#141539',
     },
     gridSearchBarTextInput: {
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+        flex: 1,
         color: '#fff',
         fontSize: 16,
         fontWeight: '400',

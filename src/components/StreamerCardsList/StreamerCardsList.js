@@ -23,7 +23,7 @@ class StreamerCardsList extends Component {
                 onScrollBeginDrag={() => { if (this.props.dynamicSeparation) { this.setState({ scrolled: true }); } }}
                 onMomentumScrollEnd={(e) => { if (this.props.dynamicSeparation) { this.setState({ scrolled: e.nativeEvent.contentOffset.x >= 20 }); } }}
                 horizontal={this.props.horizontal}
-                style={{ paddingHorizontal: widthPercentageToPx(getPercentWidth(16)) }}
+                style={{ paddingHorizontal: widthPercentageToPx(getPercentWidth(16)), marginTop: 32 }}
                 onEndReached={this.props.onEndReached}
                 onEndReachedThreshold={0.25}
                 initialNumToRender={4}

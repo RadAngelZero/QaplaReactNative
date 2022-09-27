@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Modal, TouchableOpacity, ScrollView, Image, Text, Switch, Linking, Alert } from 'react-native';
+import { View, TouchableOpacity, ScrollView, Image, Text, Switch, Linking, Alert } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
@@ -8,9 +8,9 @@ import images from '../../../assets/images';
 import { styles } from './style';
 import { signOut } from '../../services/auth';
 import { trackOnSegment } from '../../services/statistics';
-import { deleteUserAccount } from '../../services/functions';
+import { deleteUserAccount, getTwitchDataCloudFunction } from '../../services/functions';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
-import { getQlanData, updateNotificationSettings } from '../../services/database';
+import { getQlanData, updateNotificationSettings, updateUserProfileImg } from '../../services/database';
 import { unsubscribeUserFromTopic } from '../../services/messaging';
 import { messaging } from '../../utilities/firebase';
 import { retrieveData, storeData } from '../../utilities/persistance';
@@ -161,7 +161,6 @@ class UserProfileModal extends Component {
         if (this.props.qlanId) {
             const qlanData = await getQlanData(this.props.qlanId);
 
-            console.log(qlanData.val());
             this.setState({ qlanData: { ...qlanData.val() } });
         }
     }
@@ -176,13 +175,17 @@ class UserProfileModal extends Component {
         });
     }
 
-    refreshTwitchData = () => {
-        console.log('new Twitch data');
+    refreshTwitchData = async () => {
+        const user = await getTwitchDataCloudFunction(this.props.twitchId);
+        if (user.data) {
+            updateUserProfileImg(this.props.uid, user.data.profile_image_url);
+            this.setState({ userImage: { uri: true, img: user.data.profile_image_url } });
+        }
     }
 
     toolTipGoToTwitch = () => {
         this.setState({ updateProfileToolTip: false });
-        console.log('open twitch');
+        Linking.openURL('https://www.twitch.tv/settings/profile');
     }
 
     render() {
@@ -199,7 +202,7 @@ class UserProfileModal extends Component {
                         blurType="dark"
                         reducedTransparencyFallbackColor="black" />
                     <TouchableOpacity
-                        onPress={this.props.onClose}
+                        onPress={() => this.props.navigation.goBack()}
                         style={styles.closeIcon}
                     >
                         <images.svg.closeIcon />

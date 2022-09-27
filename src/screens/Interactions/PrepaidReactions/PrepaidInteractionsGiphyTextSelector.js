@@ -8,6 +8,7 @@ import styles from './../style';
 import { getScreenSizeMultiplier, widthPercentageToPx } from '../../../utilities/iosAndroidDim';
 import { listenGiphyTextSearch, removeGiphyTextRequests } from '../../../services/database';
 import { GIPHY_TEXT_GENERATOR_URL } from '../../../utilities/Constants';
+import images from '../../../../assets/images';
 
 class PrepaidInteractionsGiphyTextSelector extends Component {
     state = {
@@ -93,6 +94,7 @@ class PrepaidInteractionsGiphyTextSelector extends Component {
             <View style={styles.container}>
                 <View style={styles.memesContainer} >
                     <View style={styles.gridMemeContainer}>
+                        <Image source={images.png.PoweredbyGiphyDark.img} style={{ alignSelf: 'center', marginBottom: 16, marginTop: 24 }} />
                         {!this.state.fetchGiphyText ?
                             <FlatList data={this.state.media}
                                 numColumns={2}

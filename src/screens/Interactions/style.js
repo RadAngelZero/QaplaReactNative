@@ -180,6 +180,7 @@ export default styles = StyleSheet.create({
         overflow: 'hidden',
     },
     gridMemeContainer: {
+        flexDirection: 'column',
         flex: 1,
         width: '100%',
         alignSelf: 'center',

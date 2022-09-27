@@ -170,11 +170,11 @@ class PrepaidInteractionsCheckout extends Component {
                                  */
                                 const emojiArray = [];
                                 if (this.state.emoji) {
-                                    emojiArray.push({ type: EMOJI, element: this.state.emoji });
+                                    emojiArray.push(this.state.emoji);
                                 }
 
                                 if (this.state.emoteUrl) {
-                                    emojiArray.push({ type: EMOTE, element: this.state.emoteUrl });
+                                    emojiArray.push(this.state.emoteUrl);
                                 }
 
                                 /**
@@ -193,7 +193,10 @@ class PrepaidInteractionsCheckout extends Component {
                                         message,
                                         messageExtraData,
                                         // Overlay expects an array of emojis but app only supports one emoji for now
-                                        emojiArray,
+                                        {
+                                            type: this.state.emoji ? EMOJI : (this.state.emoteUrl ? EMOTE : null),
+                                            emojis: emojiArray
+                                        },
                                         totalCost,
                                         () => {
                                             trackOnSegment('Pre Paid Interaction Sent', {
@@ -218,7 +221,10 @@ class PrepaidInteractionsCheckout extends Component {
                                         message,
                                         messageExtraData,
                                         // Overlay expects an array of emojis but app only supports one emoji for now
-                                        emojiArray,
+                                        {
+                                            type: this.state.emoji ? EMOJI : (this.state.emoteUrl ? EMOTE : null),
+                                            emojis: emojiArray
+                                        },
                                         (new Date()).getTime(),
                                         streamerName,
                                         this.props.uid,
@@ -282,6 +288,7 @@ class PrepaidInteractionsCheckout extends Component {
 
         this.setState({
             emoji,
+            emoteUrl: '',
             openEmojiSelector: false,
             localCosts: {
                 'emoji': this.state.emojiRainCost
@@ -295,6 +302,7 @@ class PrepaidInteractionsCheckout extends Component {
 
         this.setState({
             emoteUrl,
+            emoji: '',
             localCosts: {
                 'emoji': this.state.emojiRainCost
             },
@@ -678,6 +686,52 @@ class PrepaidInteractionsCheckout extends Component {
                             }
                         </View>
                     </ScrollView>
+                    <View style={{
+                        backgroundColor: '#141539',
+                        height: 75,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                        <TouchableOpacity style={{
+                            backgroundColor: !this.state.emojiTab ? '#29326B' : '#0000',
+                            paddingHorizontal: 13,
+                            paddingVertical: 6,
+                            borderRadius: 6,
+                            marginHorizontal: 4,
+                        }}
+                            disabled={!this.state.emojiTab}
+                            onPress={() => this.setState({ emojiTab: false })}
+                        >
+                            <Text style={{
+                                color: !this.state.emojiTab ? '#fff' : '#FFFFFF99',
+                                fontSize: 17,
+                                fontWeight: '600',
+                                lineHeight: 22,
+                            }}>
+                                {`Emotes`}
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{
+                            backgroundColor: this.state.emojiTab ? '#29326B' : '#0000',
+                            paddingHorizontal: 13,
+                            paddingVertical: 6,
+                            borderRadius: 6,
+                        }}
+                            disabled={this.state.emojiTab}
+                            onPress={() => this.setState({ emojiTab: true })}
+                        >
+                            <Text style={{
+                                color: this.state.emojiTab ? '#fff' : '#FFFFFF99',
+                                fontSize: 17,
+                                fontWeight: '600',
+                                lineHeight: 22,
+                                marginHorizontal: 4,
+                            }}>
+                                {`Emojis`}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </Modal>
                 <NavigationEvents onWillFocus={this.calculateCosts} />
                 <LinkTwitchAccountModal

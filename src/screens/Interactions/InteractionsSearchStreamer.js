@@ -62,7 +62,7 @@ class InteractionsSearchStreamer extends Component {
     }
 
     renderItem = ({ item }) => {
-        if (!STREAMERS_BLACKLIST.includes(item.streamerId) && item.broadcasterType === TWITCH_PARTNER || item.broadcasterType === TWITCH_AFFILIATE) {
+        if (true) {
             return (
                 <Item
                     streamerName={item.displayName}

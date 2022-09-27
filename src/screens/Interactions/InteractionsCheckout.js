@@ -169,11 +169,11 @@ class InteractionsCheckout extends Component {
                                  */
                                 const emojiArray = [];
                                 if (this.state.emoji) {
-                                    emojiArray.push({ type: EMOJI, element: this.state.emoji });
+                                    emojiArray.push(this.state.emoji);
                                 }
 
                                 if (this.state.emoteUrl) {
-                                    emojiArray.push({ type: EMOTE, element: this.state.emoteUrl });
+                                    emojiArray.push(this.state.emoteUrl);
                                 }
 
                                 sendCheers(
@@ -182,7 +182,10 @@ class InteractionsCheckout extends Component {
                                     message,
                                     messageExtraData,
                                     // Overlay expects an array of emojis but app only supports one emoji for now
-                                    emojiArray,
+                                    {
+                                        type: this.state.emoji ? EMOJI : (this.state.emoteUrl ? EMOTE : null),
+                                        emojis: emojiArray
+                                    },
                                     (new Date()).getTime(),
                                     streamerName,
                                     this.props.uid,

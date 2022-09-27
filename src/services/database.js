@@ -1325,7 +1325,9 @@ export async function getAllStreamers() {
  * @param {string} messageExtraData.voiceAPIName Google Text to speech API voice for the voice bot
  * @param {object} messageExtraData.giphyText Object with Giphy Text data
  * @param {Object | undefined} messageExtraData.giphyText Giphy text object
- * @param {Array<string>} emojis Emojis for emoji rain
+ * @param {Object} emojiRain Emoji/Emote data for rain
+ * @param {("emoji" | "emote")} emojiRain.type Type of rain (emoji or emote)
+ * @param {Array<string>} emojiRain.emojis Array of strings with emojis (as text) or emotes (as urls)
  * @param {number} timeStamp Timestamp of the moment when the donation is sent
  * @param {string} streamerName Name of the streamer
  * @param {string} uid User identifier
@@ -1336,7 +1338,7 @@ export async function getAllStreamers() {
  * @param {function} onSuccess Function to call once the cheer is sent
  * @param {function} onError Function to call on any possible error
  */
-export function sendCheers(amountQoins, media, message, messageExtraData, emojis, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID, onSuccess, onError) {
+export function sendCheers(amountQoins, media, message, messageExtraData, emojiRain, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID, onSuccess, onError) {
     usersRef.child(uid).child('credits').transaction((credits) => {
         if (credits) {
             credits -= amountQoins;
@@ -1365,9 +1367,7 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojis
                         media,
                         message,
                         messageExtraData,
-                        emojiRain: {
-                            emojis,
-                        },
+                        emojiRain,
                         timestamp,
                         uid,
                         read: false,
@@ -1414,12 +1414,14 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojis
  * @param {string} messageExtraData.voiceAPIName Google Text to speech API voice for the voice bot
  * @param {boolean} messageExtraData.isGiphyText True if contains giphy Text
  * @param {Object | undefined} messageExtraData.giphyText Giphy text object
- * @param {Array<string>} emojis Emojis for emoji rain
+ * @param {Object} emojiRain Emoji/Emote data for rain
+ * @param {("emoji" | "emote")} emojiRain.type Type of rain (emoji or emote)
+ * @param {Array<string>} emojiRain.emojis Array of strings with emojis (as text) or emotes (as urls)
  * @param {number} qoinsToRemove Amount of donated Qoins
  * @param {function} onSuccess Function to call once the cheer is sent
  * @param {function} onError Function to call on any possible error
  */
-export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojis, qoinsToRemove, onSuccess, onError) {
+export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, onSuccess, onError) {
     let qoinsTaken = qoinsToRemove ? false : true;
     if (qoinsToRemove) {
         qoinsTaken = (await usersRef.child(uid).child('credits').transaction((qoins) => {
@@ -1451,9 +1453,7 @@ export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, 
                 media,
                 message,
                 messageExtraData,
-                emojiRain: {
-                    emojis,
-                },
+                emojiRain,
                 timestamp,
                 uid,
                 read: false,

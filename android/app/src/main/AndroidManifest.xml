@@ -63,6 +63,8 @@
           <category android:name="android.intent.category.BROWSABLE" />
           <data android:scheme="http" android:host="qapla.app.link" />
           <data android:scheme="https" android:host="qapla.app.link" />
+          <data android:scheme="http" android:host="myqap.la" />
+          <data android:scheme="https" android:host="myqap.la" />
           <!-- qapla-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website.  -->
           <data android:scheme="http" android:host="qapla-alternate.app.link" />
           <data android:scheme="https" android:host="qapla-alternate.app.link" />

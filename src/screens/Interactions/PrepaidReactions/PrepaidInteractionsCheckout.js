@@ -157,7 +157,7 @@ class PrepaidInteractionsCheckout extends Component {
                                     }
                                 }
 
-                                if (message && ((costs[CUSTOM_TTS_VOICE] && messageVoiceData) || this.state.giphyText)) {
+                                if (message && (messageVoiceData || this.state.giphyText)) {
                                     messageExtraData = {
                                         ...messageVoiceData,
                                         giphyText: this.state.giphyText ? { ...this.state.giphyText.original, id: this.state.giphyText.id } : {}
@@ -182,7 +182,8 @@ class PrepaidInteractionsCheckout extends Component {
                                  * they must just take the Qoins from the user
                                  */
                                 if (mediaType !== GIPHY_CLIPS && !giphyTextSelectedFirst) {
-                                    sendReaction(
+                                    console.log('Send R');
+                                    /* sendReaction(
                                         this.props.uid,
                                         this.props.userName,
                                         this.props.twitchUserName,
@@ -213,9 +214,10 @@ class PrepaidInteractionsCheckout extends Component {
                                             });
                                         },
                                         () => this.setState({ sendingInteraction: false })
-                                    );
+                                    ); */
                                 } else {
-                                    sendCheers(
+                                    console.log('Send C');
+                                    /* sendCheers(
                                         totalCost,
                                         media,
                                         message,
@@ -247,7 +249,7 @@ class PrepaidInteractionsCheckout extends Component {
                                             });
                                         },
                                         () => this.setState({ sendingInteraction: false })
-                                    )
+                                    ) */
                                 }
                             } else {
                                 this.setState({ sendingInteraction: false });

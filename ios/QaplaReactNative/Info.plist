@@ -123,6 +123,7 @@
 	<array>
 		<string>qapla.app.link</string>
 		<string>qapla-alternate.app.link</string>
+		<string>myqap.la</string>
 	</array>
 </dict>
 </plist>

@@ -156,10 +156,10 @@ class InteractionsCheckout extends Component {
                                     }
                                 }
 
-                                if (message && ((costs[CUSTOM_TTS_VOICE] && messageVoiceData) || this.state.giphyText)) {
-                                    messageExtraData = {
-                                        ...messageVoiceData,
-                                        giphyText: this.state.giphyText ? { ...this.state.giphyText.original, id: this.state.giphyText.id } : {}
+                                if (message && (messageVoiceData || this.state.giphyText)) {
+                                        messageExtraData = {
+                                            ...messageVoiceData,
+                                            giphyText: this.state.giphyText ? { ...this.state.giphyText.original, id: this.state.giphyText.id } : {}
                                     }
                                 }
 
@@ -176,7 +176,9 @@ class InteractionsCheckout extends Component {
                                     emojiArray.push(this.state.emoteUrl);
                                 }
 
-                                sendCheers(
+                                console.log('Send C');
+
+                                /* sendCheers(
                                     totalCost,
                                     media,
                                     message,
@@ -208,7 +210,7 @@ class InteractionsCheckout extends Component {
                                         });
                                     },
                                     () => this.setState({ sendingInteraction: false })
-                                );
+                                ); */
                             } else {
                                 this.setState({ sendingInteraction: false });
                                 // After a successful buy try to send the interaction again

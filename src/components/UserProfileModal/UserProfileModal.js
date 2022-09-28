@@ -249,7 +249,7 @@ class UserProfileModal extends Component {
 
                                                     elevation: 22,
                                                 }}
-                                                onPress={this.toolTipGoToTwitch}>
+                                                    onPress={this.toolTipGoToTwitch}>
                                                     <Text style={{
                                                         color: '#fff',
                                                         fontSize: 17,
@@ -275,9 +275,9 @@ class UserProfileModal extends Component {
                                         }}
                                         backgroundColor="#0000"
                                     >
-                                    <Image
-                                        source={this.props.photoUrl ? { uri: this.props.photoUrl } : (this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img)}
-                                        style={styles.userImage} />
+                                        <Image
+                                            source={this.props.photoUrl ? { uri: this.props.photoUrl } : (this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img)}
+                                            style={styles.userImage} />
                                     </Tooltip>
                                     {!this.state.updatingProfile &&
                                         <Image

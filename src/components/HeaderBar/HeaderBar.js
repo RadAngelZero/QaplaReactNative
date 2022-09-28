@@ -3,26 +3,20 @@ import {
     SafeAreaView,
     View,
     Linking,
-    Image
+    Image,
+    TouchableOpacity
 } from 'react-native';
-import { Svg, Circle } from 'react-native-svg';
 import { styles } from './style';
 import { connect } from 'react-redux';
 
 import images from './../../../assets/images';
 
-import HighlightModal from '../HighlightModal/HighlightModal';
-
 import { storeData, retrieveData } from '../../utilities/persistance';
-import { HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';
-import { translate } from '../../utilities/i18';
+import { defaultUserImages, HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';;
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
-import QaplaText from '../QaplaText/QaplaText';
-import EditProfileImgBadge from '../EditProfileImgBadge/EditProfileImgBadge';
 
-const NotificationIcon = images.svg.notificationIcon;
-const DiscordIcon = images.svg.discordIcon;
-const SettingsIcon = images.svg.settingsIcon;
+const SupportIcon = images.svg.supportIcon;
+const UserProfileIcon = images.svg.userProfile
 const DuotoneDefaultIcon = images.svg.duotoneDefault;
 const DuotoneActiveIcon = images.svg.duotoneActive;
 
@@ -31,12 +25,15 @@ class HeaderBar extends Component {
         super(props);
 
         this.state = {
-            showHg2Modal: false
+            showHg2Modal: false,
+            showProfile: false,
+            userImage: { uri: true, img: this.props.photoUrl }
         };
     }
 
     componentDidMount() {
         this.checkHighlightsFlags();
+        this.setUserDefaultImage();
     }
 
     shouldComponentUpdate(nextProp, nextState) {
@@ -50,6 +47,20 @@ class HeaderBar extends Component {
         return true;
     }
 
+    setUserDefaultImage = async () => {
+        if (!this.props.photoUrl) {
+            let userImageIndex = await retrieveData('default-user-image');
+
+            if (!userImageIndex) {
+                userImageIndex = Math.floor(Math.random() * defaultUserImages.length);
+
+                storeData('default-user-image', `${userImageIndex}`);
+            }
+
+            this.setState({ userImage: { uri: false, img: defaultUserImages[userImageIndex].img } });
+        }
+    }
+
     /**
      * @description
      * Perform a serie of function calls after match creation button is pressed.
@@ -57,7 +68,7 @@ class HeaderBar extends Component {
     onActivityPressBttn = () => {
 
         // If showHg1Modal is enabled then
-        if (this.state.showHg2Modal){
+        if (this.state.showHg2Modal) {
 
             // Mark the HIGHLIGHT_1_CREATE_MATCH flag, that means, that it has been used
             // and it should not show up again.
@@ -105,8 +116,8 @@ class HeaderBar extends Component {
 
             }
         } catch (error) {
-          // Error retrieving flag data
-          console.log("[HeaderBar] {checkHighlightsFlags} - error retrieving flag data : " + value);
+            // Error retrieving flag data
+            console.log("[HeaderBar] {checkHighlightsFlags} - error retrieving flag data : " + value);
         }
     }
 
@@ -166,67 +177,67 @@ class HeaderBar extends Component {
         });
     }
 
+    onOpenProfile = () => {
+        if (this.props.uid) {
+            this.props.navigation.navigate('UserProfileModal');
+        } else {
+            this.props.navigation.navigate('Auth', {
+                onSuccessSignIn: () => this.props.navigation.navigate('UserProfileModal')
+            });
+        }
+    }
+
     render() {
         if (this.props.currentScreenId !== 'StreamerProfile') {
-        return (
-            <SafeAreaView style={styles.sfvContainer} testID='container'>
-                <View style={styles.topNavBarView}>
-                    {this.props.currentScreenId !== 'Profile' ?
+            return (
+                <SafeAreaView style={styles.sfvContainer} testID='container'>
+                    <View style={styles.topNavBarView}>
                         <View>
                             <Image
                                 source={images.png.qaplaHeaderIcon.img}
-                                style={styles.qaplaImage}/>
+                                style={styles.qaplaImage} />
                         </View>
-                        :
-                        <View style={styles.profileImageContainer}>
-                            {this.props.userName && this.props.userName.length <= 14 ?
-                            <QaplaText style={styles.userName}>
-                                    Hi! {this.props.userName && this.props.userName}
-                            </QaplaText>
-                            :
-                            <QaplaText style={styles.userName}>
-                                {`${this.props.userName ? this.props.userName.substring(0, 14) : ''}...`}
-                            </QaplaText>
+                        <View style={styles.iconsContainer}>
+                            {this.state.userImage &&
+                                <TouchableOpacity
+                                    onPress={this.onOpenProfile}
+                                    style={{
+                                        width: 30,
+                                        height: 30,
+                                        overflow: 'hidden',
+                                    }}>
+                                    <UserProfileIcon height={30} width={30} />
+                                </TouchableOpacity>
                             }
-                        </View>
-                    }
-                    <View style={styles.iconsContainer}>
-                        <QaplaIcon onPress={this.onActivityPressBttn} touchableStyle={styles.leftIconTouchableStyle}>
-                            {this.userHaveUnreadActivity() ?
-                                <DuotoneActiveIcon height={32} width={32} />
-                            :
-                                <DuotoneDefaultIcon height={32} width={32} />
-                            }
-                        </QaplaIcon>
-                        {this.props.currentScreenId !== 'Profile' &&
+                            <QaplaIcon onPress={this.onActivityPressBttn} touchableStyle={styles.leftIconTouchableStyle}>
+                                {this.userHaveUnreadActivity() ?
+                                    <DuotoneActiveIcon height={30} width={30} />
+                                    :
+                                    <DuotoneDefaultIcon height={30} width={30} />
+                                }
+                            </QaplaIcon>
+                            {this.props.currentScreenId !== 'Profile' &&
                                 <QaplaIcon onPress={this.sendToDiscord} touchableStyle={styles.rightIconTouchableStyle}>
-                                    <DiscordIcon
-                                        height={32}
-                                        width={32}
+                                    <SupportIcon
+                                        height={30}
+                                        width={30}
                                         fill='#FFF' />
                                 </QaplaIcon>
-                        }
-                        {this.props.currentScreenId === 'Profile' &&
-                            <QaplaIcon onPress={this.goToUserProfile} touchableStyle={styles.rightIconTouchableStyle}>
-                                <SettingsIcon
-                                    height={28}
-                                    width={28}
-                                    fill='#FFF' />
-                            </QaplaIcon>
-                        }
+                            }
+                        </View>
                     </View>
-                </View>
-            </SafeAreaView>
-        );
+                </SafeAreaView >
+            );
         }
-
         return null;
     }
 }
 
 function mapStateToProps(state) {
     return {
+        uid: state.userReducer.user.id,
         hg1CreateMatch: state.highlightsReducer.hg1CreateMatch,
+        photoUrl: state.userReducer.user.photoUrl,
         currentScreenId: state.screensReducer.currentScreenId,
         activity: state.userReducer.user.activity,
         matchNotifications: state.userReducer.user.notificationMatch,

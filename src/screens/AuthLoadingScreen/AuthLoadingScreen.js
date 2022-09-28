@@ -149,23 +149,7 @@ class AuthLoadingScreen extends Component {
              * screen, no to the place that we need
              */
             if (!this.state.linkOnProgress && this.state.firstLoad) {
-                const isTutorialDone = await retrieveData('new-tutorial-done');
-                if (isTutorialDone) {
-                    removeDataItem('new-tutorial-done');
-                }
-
-                this.setState({ firstLoad: false });
-
-                const isNewTutorialDone = await retrieveData('2021-tutorial-done');
-
-                if (isNewTutorialDone) {
-                    removeDataItem('event-remember-date');
-
-                    return this.props.navigation.navigate('Explore');
-                }
-                else {
-                    return this.props.navigation.navigate('onBoarding');
-                }
+                return this.props.navigation.navigate('Explore');
             }
         });
 
@@ -256,6 +240,8 @@ class AuthLoadingScreen extends Component {
         const profile = await getStreamerPublicProfile(streamerId);
         if (profile.exists()) {
             this.props.navigation.navigate('StreamerProfile', { streamerData: { ...profile.val(), streamerId } });
+        } else {
+            this.setState({ linkOnProgress: false });
         }
     }
 

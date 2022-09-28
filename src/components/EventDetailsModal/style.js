@@ -525,6 +525,7 @@ export default styles = StyleSheet.create({
         letterSpacing: 0.3499999940395355,
         marginTop: heightPercentageToPx(-0.49),
         marginLeft: widthPercentageToPx(2.13),
+        width: '100%'
     },
     detailsShareContainerMarginTop: {
         marginTop: heightPercentageToPx(5.97),

@@ -10,9 +10,10 @@
 	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:qapla.page.link</string>
 		<string>applinks:qapla.app.link</string>
 		<string>applinks:qapla-alternate.app.link</string>
+		<string>applinks:myqap.la</string>
+		<string>applinks:qapla.page.link</string>
 	</array>
 </dict>
 </plist>

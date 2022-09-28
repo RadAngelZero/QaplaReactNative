@@ -7,10 +7,12 @@ import images from '../../../assets/images';
 
 class PersonalizeInteractionHeader extends Component {
     render() {
+        const isStreaming = this.props.navigation.getParam('isStreaming', false);
+
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.mainContainer}>
-                    {this.props.currentScreen !== 'InteractionsSent' &&
+                    {(this.props.currentScreen !== 'InteractionsSent' && this.props.currentScreen !== 'PrepaidInteractionsSent') &&
                         <>
                             <TouchableOpacity
                                 style={styles.backButtonContainer}
@@ -25,7 +27,7 @@ class PersonalizeInteractionHeader extends Component {
                                 <Text style={styles.streamerName}>
                                     {this.props.navigation.getParam('displayName', '')}
                                 </Text>
-                                {this.props.navigation.getParam('isStreaming', false) &&
+                                {isStreaming === 'true' &&
                                     <View style={styles.streamerLive} />
                                 }
                             </View>

@@ -18,7 +18,6 @@ import AlreadyChoosedClipIcon from './icons/video-clip-check.svg';
 import VerifyIcon from './icons/verificado.svg';
 import SupportIcon from './icons/support.svg';
 import DiscordIcon from './icons/discord.svg';
-import SettingsIcon from './icons/settings.svg';
 import EditIcon from './icons/edit.svg';
 import NoVerifiedIcon from './icons/sin-verificar.svg';
 import GoogleIcon from './icons/google-logo.svg';
@@ -107,8 +106,17 @@ import ShareArrow from './icons/ShareArrow.svg';
 import TickOk from './icons/TickOk.svg';
 import ShareArrowTransparent from './icons/ShareButtonTransparent.svg';
 import TickSquareTransparent from './icons/TickSquareTransparent.svg';
-
-
+import VolumeUp from './icons/VolumeUp.svg';
+import EditSimple from './icons/EditSimple.svg';
+import CheckCircle from './icons/CheckCircle.svg';
+import ArrowDownWhite from './icons/arrowDownWhite.svg';
+import PlusIcon from './icons/PlusIcon.svg';
+import Interactions from './icons/interactions.svg';
+import DeleteIcon from './icons/Delete.svg';
+import EditQreatorCodeIcon from './icons/EditQreatorCode.svg';
+import InteractionsNumberIcon from './icons/interactionsNumber.svg';
+import UserProfile from './icons/UserProfile.svg';
+import Lock from './icons/Lock.svg';
 
 // Images
 const images = {
@@ -188,26 +196,6 @@ const images = {
 			img: require('./images/pic-twinkle.jpg'),
 			uri: '@assets/images/pic-twinkle.jpg'
 		},
-		onboardingIllustration1: {
-			img: require('./images/Onboarding_Illustration.png'),
-			uri: '@assets/images/Onboarding_Illustration.png'
-		},
-		onboardingIllustration2: {
-			img: require('./images/Onboarding_Illustration-2.png'),
-			uri: '@assets/images/Onboarding_Illustration-2.png'
-		},
-		onboardingIllustration3: {
-			img: require('./images/Onboarding_Illustration-3.png'),
-			uri: '@assets/images/Onboarding_Illustration-3.png'
-		},
-		onboardingIllustration4: {
-			img: require('./images/Onboarding_Illustration-4.png'),
-			uri: '@assets/images/Onboarding_Illustration-4.png'
-		},
-		onboardingIllustration5: {
-			img: require('./images/Onboarding_Illustration-5.png'),
-			uri: '@assets/images/Onboarding_Illustration-5.png'
-		},
 		notEnoughQoins: {
 			img: require('./images/NotEnoughQoins.png'),
 			uri: '@assets/images/NotEnoughQoins.png'
@@ -252,6 +240,10 @@ const images = {
 			img: require('./images/PoweredbyGiphy.png'),
 			uri: '@assets/images/PoweredbyGiphy.png'
 		},
+		PoweredbyGiphyDark: {
+			img: require('./images/PoweredbyGiphyDark.png'),
+			uri: '@assets/images/PoweredbyGiphyDark.png',
+		},
 	},
 	svg: {
 		googleIcon: GoogleIcon,
@@ -274,7 +266,6 @@ const images = {
 		verifyIcon: VerifyIcon,
 		supportIcon: SupportIcon,
 		discordIcon: DiscordIcon,
-		settingsIcon: SettingsIcon,
 		editIcon: EditIcon,
 		noVerifiedIcon: NoVerifiedIcon,
 		qoinFlipIcon: QoinFlipIcon,
@@ -347,6 +338,7 @@ const images = {
 		appleAuth: AppleAuth,
 		googleAuth: GoogleAuth,
 		emailAuth: EmailAuth,
+		interactions: Interactions,
 		interactionsIcon: InteractionsIcon,
 		searchStreamerIcon: SearchStreamerIcon,
 		questionMark: QuestionMark,
@@ -361,7 +353,17 @@ const images = {
 		shareArrow: ShareArrow,
 		tickOk: TickOk,
 		shareArrowTransparent: ShareArrowTransparent,
-		tickOkTransparent: TickSquareTransparent
+		tickOkTransparent: TickSquareTransparent,
+		volumeUp: VolumeUp,
+		editSimple: EditSimple,
+		checkCircle: CheckCircle,
+		arrowDownWhite: ArrowDownWhite,
+		plusIcon: PlusIcon,
+		deleteIcon: DeleteIcon,
+		editQreatorCodeIcon: EditQreatorCodeIcon,
+		interactionsNumberIcon: InteractionsNumberIcon,
+		userProfile: UserProfile,
+		lock: Lock,
 	},
 	gif: {
 		loadingStreamers: {
@@ -403,6 +405,18 @@ const images = {
 		paymentSuccessful: {
 			img: require('./gifs/paymentSuccessful.gif'),
 			uri: '@assets/gifs/paymentSuccessful.gif',
+		},
+		maxChars: {
+			img: require('./gifs/maxChars.gif')
+		},
+		makeItPop: {
+			img: require('./gifs/makeItPop.gif')
+		},
+		slaaay: {
+			img: require('./gifs/slaaay.gif')
+		},
+		emojiRaid: {
+			img: require('./gifs/emojiRaid.gif')
 		}
 	},
 };

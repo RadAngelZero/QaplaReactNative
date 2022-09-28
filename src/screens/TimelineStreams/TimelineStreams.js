@@ -3,8 +3,6 @@ import { Alert, Linking, ScrollView, Text, FlatList, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import LevelInformationModal from '../../components/LevelInformationModal/LevelInformationModal';
-import { retrieveData, storeData } from '../../utilities/persistance';
 import FeaturedStreamsList from '../../components/FeaturedStreamsList/FeaturedStreamsList';
 import StreamsList from '../../components/StreamsList/StreamsList';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
@@ -14,11 +12,11 @@ import { getStreamById, getStreamerName, getStreamerPublicProfile, isUserPartici
 import { translate } from '../../utilities/i18';
 import Randomstreamerslist from '../../components/RandomStreamersList/RandomStreamersList';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT } from '../../utilities/Constants';
+import InteractionsShortcut from '../../components/InteractionsShortcut/InteractionsShortcut';
 
 export class TimelineStreams extends Component {
     listsToRender = [0, 1, 2, 3, 4, 5, 6];
     state = {
-        openLevelInformationModal: false,
         openEventDetailsModal: false,
         selectedStream: null,
         deepLinkId: ''
@@ -27,8 +25,6 @@ export class TimelineStreams extends Component {
     componentDidMount() {
         this.props.navigation.addListener('willFocus', this.checkStreamDeepLinkData);
         this.checkStreamDeepLinkData();
-
-        this.checkLevelModalStatus();
     }
 
     checkStreamDeepLinkData = async () => {
@@ -47,14 +43,6 @@ export class TimelineStreams extends Component {
                 const isUserAParticipant = this.props.uid ? await isUserParticipantOnEvent(this.props.uid, streamId) : false;
                 this.setState({ deepLinkId: streamId, selectedStream: { ...streamData.val(), isUserAParticipant, id: streamId } }, () => this.setState({ openEventDetailsModal: true }));
             }
-        }
-    }
-
-    checkLevelModalStatus = async () => {
-        const isLevelModalViewed = await retrieveData('level-modal-viewed');
-        if (!isLevelModalViewed) {
-            this.setState({ openLevelInformationModal: true });
-            storeData('level-modal-viewed', 'true');
         }
     }
 
@@ -111,6 +99,12 @@ export class TimelineStreams extends Component {
                     onCardPress={this.onStreamPress}
                     onStreamerProfileButtonPress={this.onStreamerProfileButtonPress} />
                 <View style={{ height: 25 }} />
+                <View style={{
+                    alignSelf: 'center'
+                }}>
+                    <InteractionsShortcut onPress={() => this.props.navigation.navigate('InteractionsFeed')} />
+                </View>
+                <View style={{ height: 25 }} />
                 <StreamLiveList
                     uid={this.props.uid}
                     onStreamerProfileButtonPress={this.onStreamerProfileButtonPress}
@@ -128,7 +122,7 @@ export class TimelineStreams extends Component {
                     {translate('TimelineStreams.qreators')}
                 </Text>
                 <Randomstreamerslist uid={this.props.uid} navigate={this.props.navigation.navigate} />
-                <FlatList initialNumToRender={2}
+                <FlatList initialNumToRender={this.listsToRender.length}
                     data={this.listsToRender}
                     keyExtractor={(item) => item}
                     renderItem={({ item, index }) => (
@@ -144,8 +138,6 @@ export class TimelineStreams extends Component {
                 <EventDetailsModal open={this.state.openEventDetailsModal}
                     onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
                     stream={this.state.selectedStream} />
-                <LevelInformationModal open={this.state.openLevelInformationModal}
-                    onClose={() => this.setState({ openLevelInformationModal: false })} />
             </ScrollView>
         );
     }

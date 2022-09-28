@@ -17,7 +17,8 @@ import {
     getRecentStreamersDonations,
     getStreamerPublicData,
     getStreamerPublicProfile,
-    getUserFavsStreamers
+    getUserFavsStreamers,
+    getUserReactionsCount
 } from '../../services/database';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { trackOnSegment } from '../../services/statistics';
@@ -43,24 +44,22 @@ export class InteractionsFeed extends Component {
             .map((streamerId) => ({ streamerId, ...liveStreamers.val()[streamerId]}) );
 
         if (this.props.uid) {
-            const favStreamersSnap = await getUserFavsStreamers(this.props.uid, 10);
-            const favsNoLive = [];
+            const favStreamersSnap = await getUserFavsStreamers(this.props.uid, 5);
+            const favsWithoutData = [];
             favStreamersSnap.forEach((fav) => {
-                if (!liveStreamers.val()[fav.key]) {
-                    favsNoLive.push({ streamerId: fav.key, ...favStreamersSnap.val()[fav.key] });
-                }
+                favsWithoutData.push({ streamerId: fav.key, ...favStreamersSnap.val()[fav.key] });
             });
 
             const favStreamers = [];
-            for (let i = 0; i < favsNoLive.length; i++) {
+            for (let i = 0; i < favsWithoutData.length; i++) {
                 if (favStreamers.length < MAXIM_CARDS_LENGTH) {
-                    const fav = favsNoLive[i];
+                    const fav = favsWithoutData[i];
                     const streamerProfile = await getStreamerPublicProfile(fav.streamerId);
                     if (streamerProfile.exists() && (streamerProfile.val().broadcasterType === TWITCH_PARTNER || streamerProfile.val().broadcasterType === TWITCH_AFFILIATE)) {
                         favStreamers.push({ streamerId: fav.streamerId, ...streamerProfile.val() });
                     } else {
                         const streamerData = await getStreamerPublicData(fav.streamerId);
-                        if (streamerData.exists() && streamerData.val().broadcasterType === TWITCH_PARTNER || streamerData.val().broadcasterType === TWITCH_AFFILIATE) {
+                        if (streamerData.exists() && (streamerData.val().broadcasterType === TWITCH_PARTNER || streamerData.val().broadcasterType === TWITCH_AFFILIATE)) {
                             const randomBackground = Colors.streamersProfileBackgroundGradients[Math.floor(Math.random() * Colors.streamersProfileBackgroundGradients.length)]
                             favStreamers.push({ streamerId: fav.streamerId, ...streamerData.val(), backgroundGradient: randomBackground });
                         }
@@ -70,18 +69,16 @@ export class InteractionsFeed extends Component {
                 }
             }
 
-            const recentStreamersSnap = await getRecentStreamersDonations(this.props.uid, 12);
-            const recentStreamersNoLiveNoFav = [];
+            const recentStreamersSnap = await getRecentStreamersDonations(this.props.uid, 6);
+            const recentStreamersWithNoData = [];
             recentStreamersSnap.forEach((recent) => {
-                if (!liveStreamers.val()[recent.key] && !favStreamers.find((streamer) => streamer.streamerId === recent.key)) {
-                    recentStreamersNoLiveNoFav.push({ streamerId: recent.key, ...recentStreamersSnap.val()[recent.key] });
-                }
+                recentStreamersWithNoData.push({ streamerId: recent.key, ...recentStreamersSnap.val()[recent.key] });
             });
 
             const recentStreamers = [];
-            for (let i = 0; i < recentStreamersNoLiveNoFav.length; i++) {
+            for (let i = 0; i < recentStreamersWithNoData.length; i++) {
                 if (recentStreamers.length < MAXIM_CARDS_LENGTH) {
-                    const recent = recentStreamersNoLiveNoFav[i];
+                    const recent = recentStreamersWithNoData[i];
                     const streamerData = await getStreamerPublicData(recent.streamerId);
                     if (streamerData.exists() && streamerData.val().broadcasterType === TWITCH_PARTNER || streamerData.val().broadcasterType === TWITCH_AFFILIATE) {
                         recentStreamers.push({ streamerId: recent.streamerId, ...streamerData.val() });
@@ -103,13 +100,35 @@ export class InteractionsFeed extends Component {
     }
 
     onStreamerSelected = async (streamerId, displayName, photoUrl, isStreaming, type) => {
-        trackOnSegment('Streamer Selected To Send Interaction', {
-            Streamer: displayName,
-            StreamerId: streamerId,
-            Category: type
-        });
+        if (this.props.uid) {
+            const numberOfReactions = await getUserReactionsCount(this.props.uid, streamerId);
+            // We do not check this with exists() because the value can be 0, so it is easier to check if the snapshot has a valid value (not null, not undefined and greater than 0)
+            if (numberOfReactions.val()) {
+                trackOnSegment('Streamer Selected To Send Interaction', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: 'Custom Search'
+                });
 
-        return this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+                this.props.navigation.navigate('PrepaidInteractionsPersonlizeStack', { streamerId, displayName, photoUrl, isStreaming, numberOfReactions: numberOfReactions.val() });
+            } else {
+                trackOnSegment('Streamer Selected To Send Interaction', {
+                    Streamer: displayName,
+                    StreamerId: streamerId,
+                    Category: type
+                });
+
+                return this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+            }
+        } else {
+            trackOnSegment('Streamer Selected To Send Interaction', {
+                Streamer: displayName,
+                StreamerId: streamerId,
+                Category: type
+            });
+
+            return this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming });
+        }
     }
 
     renderLiveItem = ({ item, index }) => {
@@ -164,7 +183,7 @@ export class InteractionsFeed extends Component {
         if (this.state.dataFetched) {
             return (
                 <View style={styles.container}>
-                    <ScrollView style={styles.container}>
+                    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                         <View style={[styles.feedMainContainer,
                         {
                             marginTop: heightPercentageToPx(4.67) + (Platform.OS === 'ios' ? heightPercentageToPx(5.91) : 0),

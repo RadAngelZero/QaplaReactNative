@@ -39,12 +39,14 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
     },
     title: {
+        fontWeight: 'bold',
         fontSize: heightPercentageToPx(getPercentHeight(30)),
         color: '#FFF',
         textAlign: 'center',
         width: widthPercentageToPx(70),
     },
     description: {
+        fontWeight: '600',
         marginTop: heightPercentageToPx(getPercentHeight(24)),
         maxWidth: widthPercentageToPx(70),
         fontSize: heightPercentageToPx(getPercentHeight(22)),
@@ -77,6 +79,7 @@ export default styles = StyleSheet.create({
         maxWidth: widthPercentageToPx(100),
     },
     button: {
+        fontWeight: '600',
         backgroundColor: '#00FFDD',
         width: widthPercentageToPx(69.33),
         height: heightPercentageToPx(getPercentHeight(74)),
@@ -97,14 +100,16 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
     },
     buttonText: {
+        fontWeight: '600',
         fontSize: heightPercentageToPx(getPercentHeight(17)),
         textAlign: 'center',
     },
     iOSAuthOptionsContainer: {
+        marginTop: 36,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        width: widthPercentageToPx(69.33),
+        width: widthPercentageToPx(33),
         height: heightPercentageToPx(getPercentHeight(74)),
         marginBottom: 30
     },
@@ -116,12 +121,12 @@ export default styles = StyleSheet.create({
         color: '#FFF',
     },
     termsAndConditionsText: {
+        flexDirection: 'row',
         fontSize: heightPercentageToPx(getPercentHeight(14)),
-        marginTop: heightPercentageToPx(getPercentHeight(12)),
         lineHeight: heightPercentageToPx(getPercentHeight(21)),
         color: '#FFF',
         textAlignVertical: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         width: widthPercentageToPx(70),
         textAlign: 'center',
     },
@@ -214,5 +219,8 @@ export default styles = StyleSheet.create({
     twitchAuthScreenContainer: {
         width: '100%',
         height: '100%'
+    },
+    boldConfirmModalSubtitle: {
+        fontWeight: '700'
     }
 });

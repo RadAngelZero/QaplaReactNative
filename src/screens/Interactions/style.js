@@ -7,9 +7,8 @@ export default styles = StyleSheet.create({
         backgroundColor: '#0D1021',
     },
     innerConatiner: {
-        flex: 1,
         paddingHorizontal: widthPercentageToPx(4.26),
-        paddingTop: heightPercentageToPx(3.94),
+        paddingTop: heightPercentageToPx(2),
     },
     backButton: {
     },
@@ -32,6 +31,21 @@ export default styles = StyleSheet.create({
     whiteText: {
         color: '#fff',
     },
+    readyText: {
+        fontWeight: '700',
+        fontSize: 16,
+        color: '#0D1021'
+    },
+    customVoiceText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '500'
+    },
+    customVoiceCost: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '600'
+    },
     accentTextColor: {
         color: '#00FFDD',
     },
@@ -52,6 +66,10 @@ export default styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    headerMargins: {
+        marginTop: heightPercentageToPx(3.94),
+        marginBottom: heightPercentageToPx(2.95),
     },
     feedSectionHeader: {
         fontWeight: '700',
@@ -98,7 +116,6 @@ export default styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: '#141539',
         bottom: 0,
-        height: heightPercentageToPx(85),
         borderTopLeftRadius: widthPercentageToPx(10.66),
         borderTopRightRadius: widthPercentageToPx(10.66),
         width: widthPercentageToPx(100),
@@ -127,7 +144,7 @@ export default styles = StyleSheet.create({
     },
     gridSearchBar: {
         backgroundColor: '#0D1021',
-        width: widthPercentageToPx(70),
+        width: widthPercentageToPx(91.46),
     },
     streamerSearchBar: {
         backgroundColor: '#141539',
@@ -148,9 +165,9 @@ export default styles = StyleSheet.create({
     },
     gridPoweredbyGiphy: {
         flex: 1,
-        width: widthPercentageToPx(20.53),
-        maxWidth: widthPercentageToPx(20.53),
-        height: heightPercentageToPx(3.44),
+        width: widthPercentageToPx(27.66),
+        maxWidth: widthPercentageToPx(27.66),
+        height: heightPercentageToPx(1.23),
     },
     memesContainer: {
         position: 'absolute',
@@ -163,10 +180,11 @@ export default styles = StyleSheet.create({
         overflow: 'hidden',
     },
     gridMemeContainer: {
+        flexDirection: 'column',
         flex: 1,
         width: '100%',
         alignSelf: 'center',
-        // marginTop: heightPercentageToPx(1.97),
+        justifyContent: 'center',
         paddingHorizontal: widthPercentageToPx(1.6),
     },
     gridMemeSubContainer: {
@@ -203,10 +221,10 @@ export default styles = StyleSheet.create({
     gridBottomSelectionSelectorButtonText: {
         fontSize: 17,
         fontWeight: '700',
-        lineHeight: heightPercentageToPx(2.71),
+        lineHeight: heightPercentageToPx(2.21),
     },
     personalizeButtonContainer: {
-        marginTop: 18 * getScreenSizeMultiplier(),
+        marginTop: heightPercentageToPx(2.21),
     },
     personalizeButtonBackgroundImage: {
         width: widthPercentageToPx(43),
@@ -239,7 +257,7 @@ export default styles = StyleSheet.create({
         borderRadius: widthPercentageToPx(2.66),
         paddingHorizontal: widthPercentageToPx(3.46),
         paddingVertical: heightPercentageToPx(0.73),
-        marginTop: heightPercentageToPx(1.41),
+        marginBottom: heightPercentageToPx(3.07),
         shadowColor: '#000',
         shadowOffset: { width: widthPercentageToPx(1), height: heightPercentageToPx(1.23) },
         shadowOpacity: 0.5,
@@ -278,21 +296,61 @@ export default styles = StyleSheet.create({
     },
     chatBubbleContainer: {
         backgroundColor: '#141539',
-        paddingHorizontal: 24 * getScreenSizeMultiplier(),
-        paddingVertical: 16 * getScreenSizeMultiplier(),
-        borderRadius: 20 * getScreenSizeMultiplier(),
-        borderTopLeftRadius: 4 * getScreenSizeMultiplier(),
-        marginTop: 16 * getScreenSizeMultiplier(),
+        paddingHorizontal: widthPercentageToPx(6.4),
+        paddingVertical: heightPercentageToPx(1.97),
+        borderRadius: widthPercentageToPx(5.33),
+        borderTopLeftRadius: widthPercentageToPx(1.06),
+        marginTop: heightPercentageToPx(1.97),
         alignSelf: 'flex-start',
+    },
+    userChatBubbleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#3D42DF',
+        paddingHorizontal: widthPercentageToPx(6.4),
+        paddingVertical: heightPercentageToPx(1.97),
+        borderRadius: widthPercentageToPx(5.33),
+        borderTopRightRadius: widthPercentageToPx(1.06),
+        marginTop: heightPercentageToPx(1.97),
+        alignSelf: 'flex-end',
+    },
+    userChatButtonSelected: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#3D42DF',
+        paddingHorizontal: widthPercentageToPx(6.4),
+        paddingVertical: heightPercentageToPx(1.97),
+        borderRadius: widthPercentageToPx(5.33),
+        marginTop: heightPercentageToPx(1.97),
+        alignSelf: 'flex-end',
     },
     chatBubbleText: {
         fontSize: 16,
         fontWeight: '400',
-        lineHeight: 24 * getScreenSizeMultiplier(),
-        maxWidth: 250 * getScreenSizeMultiplier(),
+        lineHeight: heightPercentageToPx(2.95),
+        maxWidth: widthPercentageToPx(66.66),
     },
     chatBubbleTextAccent: {
         fontWeight: '500',
+    },
+    skipTTSContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    skipButtonContainer: {
+        marginTop: 16,
+        borderRadius: 100,
+        backgroundColor: 'rgba(64, 64, 255, 0.3)',
+    },
+    skipButtonText: {
+        marginRight: 32,
+        marginLeft: 32,
+        marginTop: 12,
+        marginBottom: 12,
+        fontSize: 17,
+        textAlign: 'center',
+        fontWeight: '600',
+        color: 'rgba(255, 255, 255, .65)'
     },
     buttonsContainer: {
         maxWidth: widthPercentageToPx(69.33),
@@ -358,7 +416,7 @@ export default styles = StyleSheet.create({
         backgroundColor: '#141539',
         borderRadius: widthPercentageToPx(4.8),
         height: heightPercentageToPx(4.92),
-        paddingHorizontal: 17 * getScreenSizeMultiplier(),
+        paddingHorizontal: widthPercentageToPx(4.53),
     },
     chatTextInput: {
         flex: 1,
@@ -417,7 +475,7 @@ export default styles = StyleSheet.create({
         lineHeight: heightPercentageToPx(3.94),
     },
     checkoutMarginDisplay: {
-        height: heightPercentageToPx(42),
+        height: heightPercentageToPx(5),
     },
     marginTop8: {
         marginTop: heightPercentageToPx(0.98),
@@ -469,4 +527,348 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(44.73),
         height: widthPercentageToPx(44.73),
     },
+    loadingDots: {
+        backgroundColor: '#3D42DF',
+        width: widthPercentageToPx(3.2),
+        height: widthPercentageToPx(3.2),
+        borderRadius: widthPercentageToPx(1.6),
+        marginHorizontal: widthPercentageToPx(1.33),
+    },
+    noMarginLeft: {
+        marginLeft: 0,
+    },
+    noMarginRight: {
+        marginRight: 0,
+    },
+    loadingDotsContainer: {
+        flexDirection: 'row',
+    },
+    transparentText: {
+        color: '#0000',
+    },
+    optionsContainer: {
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        marginTop: heightPercentageToPx(0.49),
+    },
+    optionContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: heightPercentageToPx(1.84),
+    },
+    readyButton: {
+        padding: 2,
+        borderRadius: 20,
+        backgroundColor: '#00FFDD',
+        color: '#000',
+        paddingVertical: 16,
+        paddingHorizontal: 24,
+        borderRadius: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    marginRight16: {
+        marginRight: widthPercentageToPx(4.26),
+    },
+    smallQoin: {
+        maxWidth: widthPercentageToPx(4.26),
+        maxHeight: widthPercentageToPx(4.26),
+    },
+    optionQoinsMargin: {
+        marginRight: widthPercentageToPx(1.06),
+    },
+    optionOutIconMargin: {
+        marginRight: widthPercentageToPx(4),
+    },
+    optionPriceContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: widthPercentageToPx(8.53),
+    },
+    optionOuterConainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    },
+    prepaidReactionsBody: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    prepaidReactionsCountContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#1C1E64',
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 8,
+        paddingRight: 8,
+        borderRadius: 10,
+    },
+    reactionsText: {
+        marginLeft: 8,
+        fontSize: 16,
+        fontWeight: '500',
+        color: '#FFF',
+    },
+    interactionIconMargin: {
+        borderColor: '#FFF',
+        borderWidth: 1,
+    },
+    marginTop24: {
+        marginTop: heightPercentageToPx(2.95),
+    },
+    checkoutTotalText: {
+        fontSize: 18,
+        fontWeight: '700',
+        letterSpacing: 1,
+    },
+    messageSentContainer: {
+        backgroundColor: '#4D00FB',
+        marginTop: heightPercentageToPx(0.98),
+        justifyContent: 'flex-start',
+        paddingVertical: heightPercentageToPx(1.97),
+        paddingHorizontal: widthPercentageToPx(6.4),
+        alignSelf: 'flex-start',
+        borderRadius: widthPercentageToPx(5.33),
+        zIndex: 100,
+    },
+    messageSentTextAccent: {
+        color: '#0AFFD2',
+        fontSize: 16,
+        fontWeight: '700',
+        letterSpacing: 0.3499999940395355,
+        alignSelf: 'flex-start',
+    },
+    messageSent: {
+        color: '#fff',
+        fontWeight: '500',
+    },
+    messageSentMessageContainer: {
+        backgroundColor: '#fff',
+        alignSelf: 'flex-start',
+        paddingVertical: heightPercentageToPx(1.97),
+        paddingHorizontal: widthPercentageToPx(6.4),
+        marginLeft: widthPercentageToPx(1.86),
+        borderRadius: widthPercentageToPx(5.33),
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: heightPercentageToPx(-1.97),
+    },
+    messageSentMessageText: {
+        color: '#0D1021',
+        fontSize: 16,
+        fontWeight: '700',
+    },
+    checkoutSectionHeaderText: {
+        color: '#fff',
+        fontSize: 22,
+        fontWeight: '700',
+        lineHeight: heightPercentageToPx(3.94),
+    },
+    addOnsContainer: {
+        flexDirection: 'row',
+        width: widthPercentageToPx(91.2),
+        justifyContent: 'space-between',
+        alignSelf: 'center',
+        marginTop: heightPercentageToPx(1.97),
+    },
+    AddonContainer: {
+        borderRadius: widthPercentageToPx(5.33),
+        overflow: 'hidden',
+    },
+    checkoutAddonImageContainer: {
+        flexDirection: 'column',
+        width: widthPercentageToPx(44.53),
+        height: heightPercentageToPx(16),
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        borderRadius: widthPercentageToPx(5.33),
+    },
+    addonEmojiText: {
+        fontSize: 26,
+        fontWeight: '700',
+        lineHeight: heightPercentageToPx(6.52),
+    },
+    addonText: {
+        color: '#FFF',
+        fontSize: 16,
+        fontWeight: '700',
+        lineHeight: heightPercentageToPx(2.33),
+        marginBottom: heightPercentageToPx(1.35),
+    },
+    customTTSImage: {
+        height: heightPercentageToPx(6.5),
+        width: widthPercentageToPx(40)
+    },
+    deleteAddOnIconContainer: {
+        zIndex: 9999,
+        width: 36, // 18 Icon width + 18 extra touchable area
+        height: 38, // 20 Icon height + 18 extra touchable area
+        justifyContent: 'flex-end',
+        position: 'absolute',
+        top: 2,
+        right: 2
+    },
+    checkoutAddonQoinDisplayCointainer: {
+        flexDirection: 'row',
+        backgroundColor: '#141833',
+        marginBottom: heightPercentageToPx(1.23),
+        paddingHorizontal: widthPercentageToPx(3.46),
+        paddingVertical: heightPercentageToPx(0.73),
+        alignItems: 'center',
+        borderRadius: widthPercentageToPx(2.66),
+    },
+    addonQoin: {
+        maxWidth: widthPercentageToPx(4.26),
+        maxHeight: widthPercentageToPx(4.26),
+    },
+    addonQoinText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '700',
+        lineHeight: heightPercentageToPx(2.33),
+        marginLeft: widthPercentageToPx(1.06),
+    },
+    extraTipOptionsContainer: {
+        flexDirection: 'row',
+        width: widthPercentageToPx(91.2),
+        justifyContent: 'space-between',
+        alignSelf: 'center',
+    },
+    extraTipContainer: {
+        flexDirection: 'row',
+        backgroundColor: '#141833',
+        width: widthPercentageToPx(21.33),
+        height: widthPercentageToPx(21.33),
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: widthPercentageToPx(5.33),
+    },
+    extraTipText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '700',
+        lineHeight: heightPercentageToPx(2.33),
+        marginLeft: widthPercentageToPx(1.06),
+    },
+    totalArrow: {
+        maxWidth: 32,
+        maxHeight: 32,
+        marginLeft: 8,
+    },
+    checkoutSendButton: {
+        backgroundColor: '#00FFDD',
+        marginTop: heightPercentageToPx(2.95),
+        alignItems: 'center',
+        paddingVertical: heightPercentageToPx(3.2),
+        borderRadius: widthPercentageToPx(9.86),
+    },
+    checkoutSendButtonText: {
+        color: '#000',
+        fontSize: 17,
+        fontWeight: '700',
+        lineHeight: heightPercentageToPx(2.41),
+        letterSpacing: 0.492000013589859,
+    },
+    /**
+     * PrepaidInteractionsInsertGiphyText
+     */
+     insertGiphyTextContainer: {
+        flex: 1,
+        justifyContent: 'space-between'
+    },
+    insertGiphyTextHeader: {
+        marginTop: 32,
+        marginLeft: 16
+    },
+    insertGiphyTextLimit: {
+        color: '#FFF',
+        textAlign: 'center',
+        flexWrap: 'wrap',
+        fontSize: 16,
+        maxWidth: 250
+    },
+    insertGiphyTextTextInputContainer: {
+        backgroundColor: '#141539',
+        padding: 16,
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    insertGiphyTextTextInput: {
+        flex: 1,
+        backgroundColor: '#0D1021',
+        height: heightPercentageToPx(4.92),
+        paddingLeft: 16,
+        paddingRight: 8,
+        borderRadius: 18,
+        marginRight: 8,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    // InsertExtraTipModal
+    extraTipModalContainer: {
+        marginTop: heightPercentageToPx(13), // Modal must be at bottom (100 - 87 = 13)
+        height: heightPercentageToPx(87), // Size must be 87% of screen
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        backgroundColor: '#141539',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingTop: 32,
+        paddingLeft: 32,
+        paddingRight: 32,
+        paddingBottom: 48
+    },
+    extraTipModalTipContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    extraTipModalTipText: {
+        fontSize: 64,
+        fontWeight: '700',
+        color: '#FFF',
+        marginLeft: 8
+    },
+    extraTipKeyboardContainer: {
+        flexDirection: 'row'
+    },
+    extraTipKeyboardColumnWrapper: {
+        marginBottom: 24
+    },
+    extraTipKeyboardContentContainer: {
+        justifyContent: 'space-between'
+    },
+    extraTipKeyboardItemContainer: {
+        borderRadius: 100,
+        height: heightPercentageToPx(8.25),
+        width: heightPercentageToPx(8.25), // We use heightPercentageToPx because we want a circular component
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    extraTipKeyboardItemText: {
+        fontSize: 24,
+        fontWeight: '700',
+        color: '#FFF'
+    },
+    addExtraTipButton: {
+        borderRadius: 36,
+        width: widthPercentageToPx(69.33)
+    },
+    addExtraTipButtonText: {
+        textAlign: 'center',
+        marginTop: 26,
+        marginBottom: 26,
+        fontSize: 17,
+        fontWeight: '700'
+    },
+    cancelExtraTipButtonText: {
+        textAlign: 'center',
+        marginTop: 24,
+        fontSize: 17,
+        fontWeight: '700',
+        color: 'rgba(255, 255, 255, .6)',
+    }
 });

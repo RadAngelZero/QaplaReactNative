@@ -131,8 +131,8 @@ android {
         applicationId "com.qapla.gaming.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 119
-        versionName "3.8.0"
+        versionCode 126
+        versionName "4.1.0"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
         missingDimensionStrategy 'store', 'play'

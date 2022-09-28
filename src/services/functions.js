@@ -91,3 +91,31 @@ async function callCloudFunction(ctx) {
 		}
 	});
 }
+
+/**
+ * Get the streamer emotes of the given streamer
+ * @param {string} streamerUid Streamer (database) identifier
+ */
+export async function getStreamerEmotes(streamerUid) {
+	return await callCloudFunction({
+		cfName: 'getStreamerEmotes',
+		params: {
+			streamerUid
+		}
+	});
+}
+
+/**
+ * Get the user relations with streamers (follow, subscription and subscription type on Twitch)
+ * @param {string} userTwitchId User Twitch identifier
+ * @param {string} streamerUid Streamer (database) identifier
+ */
+export async function getUserToStreamerRelationData(userTwitchId, streamerUid) {
+	return await callCloudFunction({
+		cfName: 'getUserToStreamerRelationData',
+		params: {
+			userTwitchId,
+			streamerUid
+		}
+	});
+}

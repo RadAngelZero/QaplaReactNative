@@ -3,6 +3,7 @@ import { Alert, Platform, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as RNIap from 'react-native-iap';
+import { GiphySDK } from '@giphy/react-native-sdk';
 
 import Router from './src/Router';
 import { auth, notifications } from './src/utilities/firebase';
@@ -32,6 +33,9 @@ import {
 import FinishingBuyTransactionModal from './src/components/FinishingBuyTransactionModal/FinishingBuyTransactionModal';
 
 console.disableYellowBox = true;
+
+const apiKey = Platform.select({ ios: 'rzkRmwwKiG7ORdkorEeZaQYWtEH0Rc1R', android: 's9vO5AnXWPBJC4FYQJ8li4Hu4g5NbGio' });
+GiphySDK.configure({ apiKey });
 
 class App extends React.Component {
     state = {

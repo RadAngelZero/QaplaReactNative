@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
 import { HEADER_SIZE } from '../../utilities/Constants';
 import Colors from '../../utilities/Colors';
@@ -45,17 +46,22 @@ export const styles = StyleSheet.create({
         fontSize: 24
     },
     iconsContainer: {
+        flex: 1,
+        marginRight: 16,
+        maxWidth: widthPercentageToPx(30),
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     leftIconTouchableStyle: {
         justifyContent: 'center',
-        width: 40
+        width: 30,
+
     },
     rightIconTouchableStyle: {
         justifyContent: 'center',
-        width: 40,
-        marginRight: 16
+        width: 30,
+        height: 30,
     },
     unreadNotificationsIcon: {
         position: 'absolute',

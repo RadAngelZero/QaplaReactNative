@@ -114,6 +114,7 @@ export default styles = StyleSheet.create({
     },
     qoinsContainer: {
         flexDirection: 'row',
+        alignItems: 'center'
     },
     qoinsText: {
         fontSize: 30,

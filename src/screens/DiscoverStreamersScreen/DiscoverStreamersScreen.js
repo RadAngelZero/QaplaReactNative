@@ -12,7 +12,8 @@ import { searchStreamersPublicProfilesByName } from '../../services/database';
 class DiscoverStreamersScreen extends Component {
     state = {
         streamerToSearch: '',
-        requestedStreamers: []
+        requestedStreamers: [],
+        searching: false
     };
 
     searchTimeout = null;
@@ -116,7 +117,9 @@ class DiscoverStreamersScreen extends Component {
                         value={this.state.streamerToSearch}
                         placeholder={'Search by name'}
                         placeholderTextColor={'rgba(255, 255, 255, 0.4)'}
-                        onChangeText={this.searchHandler} />
+                        onChangeText={this.searchHandler}
+                        onFocus={() => this.setState({ searching: true })}
+                        onBlur={() => this.setState({ searching: false })} />
                 </View>
                 <StreamerCardsList streamersData={(this.state.requestedStreamers.length <= 0 && !this.state.streamerToSearch) ? streamersData : this.state.requestedStreamers}
                     onEndReached={this.loadMoreStreamers}
@@ -126,7 +129,9 @@ class DiscoverStreamersScreen extends Component {
                 {/**
                  * View with height is to avoid Bottom bar on content
                  */}
-                <View style={{ marginBottom: BOTTOM_NAVIGATION_BAR_HEIGHT * 1.25 }} />
+                {!this.state.searching &&
+                    <View style={{ marginBottom: BOTTOM_NAVIGATION_BAR_HEIGHT * 1.25 }} />
+                }
             </View>
         );
     }

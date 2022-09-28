@@ -3,6 +3,7 @@ import { View, TouchableOpacity, ScrollView, Image, Text, Switch, Linking, Alert
 import { BlurView } from '@react-native-community/blur';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
 import images from '../../../assets/images';
 import { styles } from './style';
@@ -17,7 +18,6 @@ import { retrieveData, storeData } from '../../utilities/persistance';
 import { defaultUserImages } from '../../utilities/Constants';
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
 import JoinQlanModal from '../JoinQlanModal/JoinQlanModal';
-import Tooltip from 'react-native-walkthrough-tooltip';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class UserProfileModal extends Component {
@@ -230,7 +230,7 @@ class UserProfileModal extends Component {
                                                     fontWeight: '700',
                                                     lineHeight: 22,
                                                 }}>
-                                                    {`Update your profile\non Twitch `}
+                                                    {translate('userProfileScreen.updateProfile')}
                                                 </Text>
                                                 <TouchableOpacity style={{
                                                     backgroundColor: '#141735',
@@ -256,7 +256,7 @@ class UserProfileModal extends Component {
                                                         fontWeight: '700',
                                                         lineHeight: 16,
                                                     }}>
-                                                        {`Go to Twitch`}
+                                                        {translate('userProfileScreen.goToTwitch')}
                                                     </Text>
                                                 </TouchableOpacity>
                                             </View>

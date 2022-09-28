@@ -145,6 +145,8 @@
     "userProfileScreen": {
         "linkAccount": "Link Twitch",
         "linked": "Linked",
+        "updateProfile": "Update your profile\non Twitch",
+        "goToTwitch": "Go to Twitch",
         "refresh": "Refresh",
         "myQoins": "My Qoins",
         "getQoins": "Get Qoins",

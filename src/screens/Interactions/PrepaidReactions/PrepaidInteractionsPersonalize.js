@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { connect } from 'react-redux';
 
 import styles from '../style';
 import images from '../../../../assets/images';
@@ -9,6 +10,7 @@ import { translate } from '../../../utilities/i18';
 import DeckButton from '../../../components/DeckButton/DeckButton';
 import { heightPercentageToPx, widthPercentageToPx } from '../../../utilities/iosAndroidDim';
 import { trackOnSegment } from '../../../services/statistics';
+import { getUserToStreamerData } from '../../../actions/userToStreamerRelationActions';
 
 class PrepaidInteractionsPersonalize extends Component {
     state = {
@@ -58,6 +60,9 @@ class PrepaidInteractionsPersonalize extends Component {
             MediaType: mediaType
         });
 
+        const streamerId = this.props.navigation.getParam('streamerId', null);
+        this.props.getUserStreamerRelationData(this.props.twitchId, streamerId);
+
         if (mediaType === MEME) {
             this.props.navigation.navigate('PrepaidInteractionsMemeSelector', {
                 mediaType,
@@ -82,6 +87,9 @@ class PrepaidInteractionsPersonalize extends Component {
         trackOnSegment('Media For Interaction Selected', {
             MediaType: 'TTS'
         });
+
+        const streamerId = this.props.navigation.getParam('streamerId', null);
+        this.props.getUserStreamerRelationData(this.props.twitchId, streamerId);
 
         this.props.navigation.navigate('PrepaidInteractionsTTS', {
             ...this.props.navigation.state.params
@@ -216,7 +224,18 @@ class PrepaidInteractionsPersonalize extends Component {
             </View>
         );
     }
-
 }
 
-export default PrepaidInteractionsPersonalize;
+function mapStateToProps(state) {
+    return {
+        twitchId: state.userReducer.user.twitchId
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getUserStreamerRelationData: (uid, streamerUid) => getUserToStreamerData(uid, streamerUid)(dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PrepaidInteractionsPersonalize);

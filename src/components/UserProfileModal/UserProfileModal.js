@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
-import { View, Modal, TouchableOpacity, ScrollView, Image, Text, Switch, Linking, Alert } from 'react-native';
+import { View, TouchableOpacity, ScrollView, Image, Text, Switch, Linking, Alert, ActivityIndicator } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
 import images from '../../../assets/images';
 import { styles } from './style';
 import { signOut } from '../../services/auth';
 import { trackOnSegment } from '../../services/statistics';
-import { deleteUserAccount } from '../../services/functions';
+import { deleteUserAccount, getTwitchDataCloudFunction } from '../../services/functions';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
-import { getQlanData, updateNotificationSettings } from '../../services/database';
+import { getQlanData, updateNotificationSettings, updateTwitchUsername, updateUserProfileImg } from '../../services/database';
 import { unsubscribeUserFromTopic } from '../../services/messaging';
 import { messaging } from '../../utilities/firebase';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import { defaultUserImages } from '../../utilities/Constants';
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
 import JoinQlanModal from '../JoinQlanModal/JoinQlanModal';
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class UserProfileModal extends Component {
     state = {
@@ -27,7 +29,9 @@ class UserProfileModal extends Component {
         showJoinQlanModal: false,
         userImage: { uri: true, img: this.props.photoUrl },
         qlanData: null,
-        userWantsToJoinAQlan: false
+        userWantsToJoinAQlan: false,
+        updateProfileToolTip: false,
+        updatingProfile: false
     }
 
     componentDidMount() {
@@ -159,7 +163,6 @@ class UserProfileModal extends Component {
         if (this.props.qlanId) {
             const qlanData = await getQlanData(this.props.qlanId);
 
-            console.log(qlanData.val());
             this.setState({ qlanData: { ...qlanData.val() } });
         }
     }
@@ -174,16 +177,30 @@ class UserProfileModal extends Component {
         });
     }
 
+    refreshTwitchData = async () => {
+        this.setState({ updatingProfile: true });
+        const user = await getTwitchDataCloudFunction(this.props.twitchId);
+        if (user.data) {
+            await updateUserProfileImg(this.props.uid, user.data.profile_image_url);
+            await updateTwitchUsername(this.props.uid, user.data.display_name);
+            this.setState({ userImage: { uri: true, img: user.data.profile_image_url } });
+        }
+
+        this.setState({ updatingProfile: false });
+    }
+
+    toolTipGoToTwitch = () => {
+        this.setState({ updateProfileToolTip: false });
+        Linking.openURL('https://www.twitch.tv/');
+    }
+
     render() {
         const twitchLinked = this.props.twitchId && this.props.twitchUsername;
 
         return (
-            <Modal
-                visible={this.props.open}
-                transparent
-                animationType='slide'
-                onRequestClose={this.props.onClose}
-            >
+            <View style={{
+                flex: 1,
+            }}>
                 <View style={styles.mainContainer}>
                     <BlurView
                         style={styles.blur}
@@ -191,7 +208,7 @@ class UserProfileModal extends Component {
                         blurType="dark"
                         reducedTransparencyFallbackColor="black" />
                     <TouchableOpacity
-                        onPress={this.props.onClose}
+                        onPress={() => this.props.navigation.goBack()}
                         style={styles.closeIcon}
                     >
                         <images.svg.closeIcon />
@@ -199,27 +216,92 @@ class UserProfileModal extends Component {
                     <ScrollView style={styles.scrollView}
                         contentContainerStyle={styles.scrollViewContentContainer}>
                         <View style={styles.topContainer}>
-                            <View style={styles.userInfoContainer}>
+                            <TouchableOpacity style={styles.userInfoContainer} onPress={() => this.setState({ updateProfileToolTip: true })}>
                                 <View style={styles.userImageContainer}>
+                                    <Tooltip
+                                        isVisible={this.state.updateProfileToolTip}
+                                        content={
+                                            <View style={{
+                                                padding: 12,
+                                            }}>
+                                                <Text style={{
+                                                    color: '#fff',
+                                                    fontSize: 17,
+                                                    fontWeight: '700',
+                                                    lineHeight: 22,
+                                                }}>
+                                                    {translate('userProfileScreen.updateProfile')}
+                                                </Text>
+                                                <TouchableOpacity style={{
+                                                    backgroundColor: '#141735',
+                                                    paddingHorizontal: 19,
+                                                    paddingVertical: 13,
+                                                    borderRadius: 50,
+                                                    marginTop: 11,
+                                                    alignSelf: 'flex-end',
+                                                    shadowColor: '#000',
+                                                    shadowOffset: {
+                                                        width: 0,
+                                                        height: 11,
+                                                    },
+                                                    shadowOpacity: 0.55,
+                                                    shadowRadius: 14.78,
+
+                                                    elevation: 22,
+                                                }}
+                                                onPress={this.toolTipGoToTwitch}>
+                                                    <Text style={{
+                                                        color: '#fff',
+                                                        fontSize: 17,
+                                                        fontWeight: '700',
+                                                        lineHeight: 16,
+                                                    }}>
+                                                        {translate('userProfileScreen.goToTwitch')}
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        }
+                                        placement="bottom"
+                                        onClose={() => this.setState({ updateProfileToolTip: false })}
+                                        arrowStyle={{ color: '#3B4BF9' }}
+                                        topAdjustment={50}
+                                        displayInsets={{
+                                            left: widthPercentageToPx(4.26),
+                                        }}
+                                        contentStyle={{
+                                            backgroundColor: '#3B4BF9',
+                                            width: 245,
+                                            borderRadius: 15,
+                                        }}
+                                        backgroundColor="#0000"
+                                    >
                                     <Image
-                                        source={this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img}
-                                        style={styles.userImage}
-                                    />
+                                        source={this.props.photoUrl ? { uri: this.props.photoUrl } : (this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img)}
+                                        style={styles.userImage} />
+                                    </Tooltip>
+                                    {!this.state.updatingProfile &&
+                                        <Image
+                                            source={this.props.photoUrl ? { uri: this.props.photoUrl } : (this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img)}
+                                            style={styles.userImage} />
+                                    }
                                 </View>
-                                <Text style={styles.userUsername}
-                                numberOfLines={1}
-                                >
-                                    {this.props.username}
-                                </Text>
-                            </View>
-                            <TouchableOpacity
-                                onPress={() => this.setState({ showLinkWithTwitchModal: true })}
-                                disabled={twitchLinked}
+                                {!this.state.updatingProfile &&
+                                    <Text style={styles.userUsername}
+                                        numberOfLines={1}>
+                                        {this.props.twitchUsername ? this.props.twitchUsername : this.props.username}
+                                    </Text>
+                                }
+                                {this.state.updatingProfile &&
+                                    <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
+                                }
+                            </TouchableOpacity>
+                            <TouchableOpacity disabled={this.state.updatingProfile}
+                                onPress={() => twitchLinked ? this.refreshTwitchData() : this.setState({ showLinkWithTwitchModal: true })}
                                 style={twitchLinked ? styles.twitchLinkedButton : styles.twitchLinkButton}>
                                 <images.svg.twitchIcon style={styles.twitchIcon} />
                                 <Text style={styles.twitchLinkedText}>
                                     {twitchLinked ?
-                                        translate('userProfileScreen.linked')
+                                        translate('userProfileScreen.refresh')
                                         :
                                         translate('userProfileScreen.linkAccount')
                                     }
@@ -349,8 +431,8 @@ class UserProfileModal extends Component {
                             </Text>
                         </TouchableOpacity>
                         <View style={styles.bottomSeparation} />
-                    </ScrollView>
-                </View>
+                    </ScrollView >
+                </View >
                 <LinkTwitchAccountModal open={this.state.showLinkWithTwitchModal}
                     onClose={() => this.setState({ showLinkWithTwitchModal: false })}
                     onLinkSuccessful={this.state.userWantsToJoinAQlan ? this.openJoinQlanModal : null}
@@ -362,7 +444,7 @@ class UserProfileModal extends Component {
                     userName={this.props.username}
                     twitchUsername={this.props.twitchUsername}
                     onSuccess={this.getUserQlanData} />
-            </Modal>
+            </View >
         );
     }
 }

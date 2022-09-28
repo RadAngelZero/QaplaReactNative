@@ -53,6 +53,9 @@ export const SET_USER_IMAGE = 'SET_USER_IMAGE';
 // Purchases reducer
 export const ON_PURCHASE_FINISHED = 'ON_PURCHASE_FINISHED';
 
+// User To Streamer Relation Reducer
+export const LOAD_TWITCH_RELATION_DATA = 'LOAD_TWITCH_RELATION_DATA';
+
 // Crear Reta Button in PublicMatchesFeedScreen.js
 export const HIGHLIGHT_1_CREATE_MATCH = 'HIGHLIGHT_1_CREATE_MATCH';
 // Crear Reta Button in PublicMatchesFeedScreen.js Flag
@@ -170,10 +173,11 @@ export const QOINS = 'qoins';
 // Media types for cheers
 export const MEME = 'meme';
 export const EMOJI = 'emoji';
+export const EMOTE = 'emote';
 export const TTS = 'tts';
 export const CUSTOM_TTS_VOICE = 'customTTSVoice';
 
-export const STREAMERS_BLACKLIST = ['141617732-catskullgamer', '683167758-catskullgg', '613408163-d_h_v_s', '698301557-QaplaGaming', '448926957-qaplita', '528477359-mariyolo1bot', '448926957-qaplita'];
+export const STREAMERS_BLACKLIST = ['141617732-catskullgamer', '683167758-catskullgg', '613408163-d_h_v_s', '698301557-QaplaGaming', '448926957-qaplita', '528477359-mariyolo1bot'];
 
 // Default image for streams where we can not load thumbnail URL
 export const DEFAULT_404_TWITCH_PREVIEW_URL = 'https://static-cdn.jtvnw.net/ttv-static/404_preview-480x270.jpg';

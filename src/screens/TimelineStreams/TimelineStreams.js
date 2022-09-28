@@ -122,7 +122,7 @@ export class TimelineStreams extends Component {
                     {translate('TimelineStreams.qreators')}
                 </Text>
                 <Randomstreamerslist uid={this.props.uid} navigate={this.props.navigation.navigate} />
-                <FlatList initialNumToRender={2}
+                <FlatList initialNumToRender={this.listsToRender.length}
                     data={this.listsToRender}
                     keyExtractor={(item) => item}
                     renderItem={({ item, index }) => (

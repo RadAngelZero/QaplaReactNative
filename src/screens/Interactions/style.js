@@ -180,6 +180,7 @@ export default styles = StyleSheet.create({
         overflow: 'hidden',
     },
     gridMemeContainer: {
+        flexDirection: 'column',
         flex: 1,
         width: '100%',
         alignSelf: 'center',
@@ -793,19 +794,18 @@ export default styles = StyleSheet.create({
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     insertGiphyTextTextInput: {
         flex: 1,
         backgroundColor: '#0D1021',
-        color: '#FFF',
-        paddingTop: 8,
-        paddingBottom: 8,
+        height: heightPercentageToPx(4.92),
         paddingLeft: 16,
         paddingRight: 8,
         borderRadius: 18,
-        fontSize: 16,
-        marginRight: 8
+        marginRight: 8,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     // InsertExtraTipModal
     extraTipModalContainer: {

@@ -388,8 +388,8 @@ const styles = StyleSheet.create({
     tabBar: {
         backgroundColor: "#141539",
         flexDirection: "row",
-        marginTop: 52,
-        marginBottom: 24,
+        marginTop: 26,
+        marginBottom: 0,
         justifyContent: 'space-between',
     },
     scrollview: {
@@ -422,5 +422,5 @@ const styles = StyleSheet.create({
         fontSize: 17,
         width: "100%",
         color: "#8F8F8F"
-    }
-})
+    },
+});

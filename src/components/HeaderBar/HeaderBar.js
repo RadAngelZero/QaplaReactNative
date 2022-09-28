@@ -14,7 +14,6 @@ import images from './../../../assets/images';
 import { storeData, retrieveData } from '../../utilities/persistance';
 import { defaultUserImages, HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';;
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
-import UserProfileModal from '../UserProfileModal/UserProfileModal';
 
 const SupportIcon = images.svg.supportIcon;
 const UserProfileIcon = images.svg.userProfile
@@ -180,10 +179,10 @@ class HeaderBar extends Component {
 
     onOpenProfile = () => {
         if (this.props.uid) {
-            this.setState({ showProfile: true });
+            this.props.navigation.navigate('UserProfileModal');
         } else {
             this.props.navigation.navigate('Auth', {
-                onSuccessSignIn: () => this.setState({ showProfile: true })
+                onSuccessSignIn: () => this.props.navigation.navigate('UserProfileModal')
             });
         }
     }
@@ -207,16 +206,7 @@ class HeaderBar extends Component {
                                         height: 30,
                                         overflow: 'hidden',
                                     }}>
-                                        <UserProfileIcon height={30} width={30} />
-                                        {/* <Image
-                                            source={this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img}
-                                            style={{
-                                                borderRadius: 16,
-                                                flex: 1,
-                                                height: undefined,
-                                                aspectRatio: 1
-                                            }}
-                                        /> */}
+                                    <UserProfileIcon height={30} width={30} />
                                 </TouchableOpacity>
                             }
                             <QaplaIcon onPress={this.onActivityPressBttn} touchableStyle={styles.leftIconTouchableStyle}>
@@ -236,10 +226,6 @@ class HeaderBar extends Component {
                             }
                         </View>
                     </View>
-                    <UserProfileModal
-                        open={this.state.showProfile}
-                        onClose={() => this.setState({ showProfile: false })}
-                    />
                 </SafeAreaView >
             );
         }

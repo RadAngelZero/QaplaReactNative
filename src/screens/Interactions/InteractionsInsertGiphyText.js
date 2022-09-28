@@ -143,9 +143,10 @@ class InteractionsInsertGiphyText extends Component {
                                         onSubmitEditing={this.sendText}
                                     />
                                     {this.state.text === '' &&
-                                    <Image source={images.png.PoweredbyGiphyDark.img} style={{
-                                        height: 10,
-                                    }}/>}
+                                        <Image source={images.png.PoweredbyGiphyDark.img} style={{
+                                            height: 10,
+                                        }}/>
+                                    }
                                 </View>
                                 <TouchableOpacity onPress={this.sendText}>
                                     <images.svg.sendChat />

@@ -128,18 +128,30 @@ class PrepaidInteractionsInsertGiphyText extends Component {
                         <Animated.View style={{
                             height: Platform.OS === 'ios' ? this.state.isKeyboardOpen.interpolate({ inputRange: [0, 1], outputRange: [this.state.keyboardHeight + 32, 64] }) : 64,
                         }}>
-                        <View style={styles.insertGiphyTextTextInputContainer}>
-                            <TextInput style={styles.insertGiphyTextTextInput}
-                                maxLength={50}
-                                onChangeText={(text) => this.setState({ text })}
-                                value={this.state.text}
-                                autoFocus
-                                onSubmitEditing={this.sendText}
-                            />
-                            <TouchableOpacity onPress={this.sendText}>
-                                <images.svg.sendChat  />
-                            </TouchableOpacity>
-                        </View>
+                            <View style={styles.insertGiphyTextTextInputContainer}>
+                                <View style={styles.insertGiphyTextTextInput}>
+                                    <TextInput
+                                        style={{
+                                            color: '#fff',
+                                            flexGrow: 1,
+                                            fontSize: 16,
+                                        }}
+                                        maxLength={50}
+                                        onChangeText={(text) => this.setState({ text })}
+                                        value={this.state.text}
+                                        autoFocus
+                                        onSubmitEditing={this.sendText}
+                                    />
+                                    {this.state.text === '' &&
+                                        <Image source={images.png.PoweredbyGiphyDark.img} style={{
+                                            height: 10,
+                                        }}/>
+                                    }
+                                </View>
+                                <TouchableOpacity onPress={this.sendText}>
+                                    <images.svg.sendChat  />
+                                </TouchableOpacity>
+                            </View>
                         </Animated.View>
                     </View>
                 </SafeAreaView>

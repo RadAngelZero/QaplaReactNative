@@ -227,7 +227,7 @@ class UserProfileModal extends Component {
                                                 <Text style={{
                                                     color: '#fff',
                                                     fontSize: 17,
-                                                    fontWeight: '500',
+                                                    fontWeight: '700',
                                                     lineHeight: 22,
                                                 }}>
                                                     {`Update your profile\non Twitch `}

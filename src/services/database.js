@@ -1588,6 +1588,14 @@ export async function getStreamerPublicProfile(streamerId) {
 }
 
 /**
+ * Returns a list of streamers based on the display name to search
+ * @param {string} displayName Display name to search
+ */
+export async function searchStreamersPublicProfilesByName(displayName) {
+    return await streamersPublicProfilesRef.orderByChild('displayNameLowerCase').startAt(displayName.toLowerCase()).endAt(displayName.toLowerCase()+'\uf8ff').once('value');
+}
+
+/**
  * Get all the streamers streaming
  */
 export async function getAllStreamersStreaming() {

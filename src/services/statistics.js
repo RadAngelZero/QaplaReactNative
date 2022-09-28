@@ -17,8 +17,7 @@ export async function initializeSegment() {
             flushAt: 5
         });
     } catch (error) {
-        console.log('On setup');
-        console.error(error);
+        console.log(error);
     }
 }
 

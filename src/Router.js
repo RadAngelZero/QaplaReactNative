@@ -536,7 +536,7 @@ const RootStackNavigator = createStackNavigator({
     screen: UserProfileModal,
     navigationOptions: {
       cardStyle: {
-        backgroundColor: 'transparent',
+        backgroundColor: '#0D1021',
       }
     },
   }

@@ -14,7 +14,6 @@ import images from './../../../assets/images';
 import { storeData, retrieveData } from '../../utilities/persistance';
 import { defaultUserImages, HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';;
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
-import UserProfileModal from '../UserProfileModal/UserProfileModal';
 
 const SupportIcon = images.svg.supportIcon;
 const UserProfileIcon = images.svg.userProfile
@@ -180,10 +179,10 @@ class HeaderBar extends Component {
 
     onOpenProfile = () => {
         if (this.props.uid) {
-            this.setState({ showProfile: true });
+            this.props.navigation.navigate('UserProfileModal');
         } else {
             this.props.navigation.navigate('Auth', {
-                onSuccessSignIn: () => this.setState({ showProfile: true })
+                onSuccessSignIn: () => this.props.navigation.navigate('UserProfileModal')
             });
         }
     }
@@ -201,7 +200,7 @@ class HeaderBar extends Component {
                         <View style={styles.iconsContainer}>
                             {this.state.userImage &&
                                 <TouchableOpacity
-                                    onPress={() => this.props.navigation.navigate('UserProfileModal')}
+                                    onPress={this.onOpenProfile}
                                     style={{
                                         width: 30,
                                         height: 30,

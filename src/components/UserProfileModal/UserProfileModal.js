@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, ScrollView, Image, Text, Switch, Linking, Alert } from 'react-native';
+import { View, TouchableOpacity, ScrollView, Image, Text, Switch, Linking, Alert, ActivityIndicator } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
@@ -10,7 +10,7 @@ import { signOut } from '../../services/auth';
 import { trackOnSegment } from '../../services/statistics';
 import { deleteUserAccount, getTwitchDataCloudFunction } from '../../services/functions';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
-import { getQlanData, updateNotificationSettings, updateUserProfileImg } from '../../services/database';
+import { getQlanData, updateNotificationSettings, updateTwitchUsername, updateUserProfileImg } from '../../services/database';
 import { unsubscribeUserFromTopic } from '../../services/messaging';
 import { messaging } from '../../utilities/firebase';
 import { retrieveData, storeData } from '../../utilities/persistance';
@@ -18,6 +18,7 @@ import { defaultUserImages } from '../../utilities/Constants';
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
 import JoinQlanModal from '../JoinQlanModal/JoinQlanModal';
 import Tooltip from 'react-native-walkthrough-tooltip';
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class UserProfileModal extends Component {
     state = {
@@ -29,7 +30,8 @@ class UserProfileModal extends Component {
         userImage: { uri: true, img: this.props.photoUrl },
         qlanData: null,
         userWantsToJoinAQlan: false,
-        updateProfileToolTip: true,
+        updateProfileToolTip: false,
+        updatingProfile: false
     }
 
     componentDidMount() {
@@ -176,16 +178,20 @@ class UserProfileModal extends Component {
     }
 
     refreshTwitchData = async () => {
+        this.setState({ updatingProfile: true });
         const user = await getTwitchDataCloudFunction(this.props.twitchId);
         if (user.data) {
-            updateUserProfileImg(this.props.uid, user.data.profile_image_url);
+            await updateUserProfileImg(this.props.uid, user.data.profile_image_url);
+            await updateTwitchUsername(this.props.uid, user.data.display_name);
             this.setState({ userImage: { uri: true, img: user.data.profile_image_url } });
         }
+
+        this.setState({ updatingProfile: false });
     }
 
     toolTipGoToTwitch = () => {
         this.setState({ updateProfileToolTip: false });
-        Linking.openURL('https://www.twitch.tv/settings/profile');
+        Linking.openURL('https://www.twitch.tv/');
     }
 
     render() {
@@ -210,7 +216,7 @@ class UserProfileModal extends Component {
                     <ScrollView style={styles.scrollView}
                         contentContainerStyle={styles.scrollViewContentContainer}>
                         <View style={styles.topContainer}>
-                            <View style={styles.userInfoContainer}>
+                            <TouchableOpacity style={styles.userInfoContainer} onPress={() => this.setState({ updateProfileToolTip: true })}>
                                 <View style={styles.userImageContainer}>
                                     <Tooltip
                                         isVisible={this.state.updateProfileToolTip}
@@ -221,7 +227,7 @@ class UserProfileModal extends Component {
                                                 <Text style={{
                                                     color: '#fff',
                                                     fontSize: 17,
-                                                    fontWeight: '600',
+                                                    fontWeight: '500',
                                                     lineHeight: 22,
                                                 }}>
                                                     {`Update your profile\non Twitch `}
@@ -260,7 +266,7 @@ class UserProfileModal extends Component {
                                         arrowStyle={{ color: '#3B4BF9' }}
                                         topAdjustment={50}
                                         displayInsets={{
-                                            left: 50,
+                                            left: widthPercentageToPx(4.26),
                                         }}
                                         contentStyle={{
                                             backgroundColor: '#3B4BF9',
@@ -269,19 +275,27 @@ class UserProfileModal extends Component {
                                         }}
                                         backgroundColor="#0000"
                                     >
-                                        <Image
-                                            source={this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img}
-                                            style={styles.userImage}
-                                        />
+                                    <Image
+                                        source={this.props.photoUrl ? { uri: this.props.photoUrl } : (this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img)}
+                                        style={styles.userImage} />
                                     </Tooltip>
+                                    {!this.state.updatingProfile &&
+                                        <Image
+                                            source={this.props.photoUrl ? { uri: this.props.photoUrl } : (this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img)}
+                                            style={styles.userImage} />
+                                    }
                                 </View>
-                                <Text style={styles.userUsername}
-                                    numberOfLines={1}
-                                >
-                                    {this.props.username}
-                                </Text>
-                            </View>
-                            <TouchableOpacity
+                                {!this.state.updatingProfile &&
+                                    <Text style={styles.userUsername}
+                                        numberOfLines={1}>
+                                        {this.props.twitchUsername ? this.props.twitchUsername : this.props.username}
+                                    </Text>
+                                }
+                                {this.state.updatingProfile &&
+                                    <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
+                                }
+                            </TouchableOpacity>
+                            <TouchableOpacity disabled={this.state.updatingProfile}
                                 onPress={() => twitchLinked ? this.refreshTwitchData() : this.setState({ showLinkWithTwitchModal: true })}
                                 style={twitchLinked ? styles.twitchLinkedButton : styles.twitchLinkButton}>
                                 <images.svg.twitchIcon style={styles.twitchIcon} />

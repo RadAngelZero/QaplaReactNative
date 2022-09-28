@@ -23,26 +23,26 @@ class InteractionsInsertGiphyText extends Component {
     state = {
         text: '',
         isKeyboardOpen: new Animated.Value(1),
-		keyboardHeight: 0
+        keyboardHeight: 0
     };
     keyboardWillShowListener;
 
     componentDidMount() {
         this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
-			this.setState({ keyboardHeight: parseInt(e.endCoordinates.height) }, () => {
-				Animated.timing(this.state.isKeyboardOpen, {
-					toValue: 0,
-					duration: 300,
-					easing: Easing.cubic,
-					useNativeDriver: false,
-				}).start();
-			});
-		})
+            this.setState({ keyboardHeight: parseInt(e.endCoordinates.height) }, () => {
+                Animated.timing(this.state.isKeyboardOpen, {
+                    toValue: 0,
+                    duration: 300,
+                    easing: Easing.cubic,
+                    useNativeDriver: false,
+                }).start();
+            });
+        })
     }
 
     componentWillUnmount() {
-		this.keyboardWillShowListener.remove();
-	}
+        this.keyboardWillShowListener.remove();
+    }
 
     hideKeyboard = () => {
         Keyboard.dismiss();
@@ -128,18 +128,28 @@ class InteractionsInsertGiphyText extends Component {
                         <Animated.View style={{
                             height: Platform.OS === 'ios' ? this.state.isKeyboardOpen.interpolate({ inputRange: [0, 1], outputRange: [this.state.keyboardHeight + 32, 64] }) : 64,
                         }}>
-                        <View style={styles.insertGiphyTextTextInputContainer}>
-                            <TextInput style={styles.insertGiphyTextTextInput}
-                                maxLength={50}
-                                onChangeText={(text) => this.setState({ text })}
-                                value={this.state.text}
-                                autoFocus
-                                onSubmitEditing={this.sendText}
-                            />
-                            <TouchableOpacity onPress={this.sendText}>
-                                <images.svg.sendChat  />
-                            </TouchableOpacity>
-                        </View>
+                            <View style={styles.insertGiphyTextTextInputContainer}>
+                                <View style={styles.insertGiphyTextTextInput}>
+                                    <TextInput
+                                        style={{
+                                            color: '#fff',
+                                            flexGrow: 1,
+                                            fontSize: 16,
+                                        }}
+                                        maxLength={50}
+                                        onChangeText={(text) => this.setState({ text })}
+                                        value={this.state.text}
+                                        autoFocus
+                                        onSubmitEditing={this.sendText}
+                                    />
+                                    <Image source={images.png.PoweredbyGiphyDark.img} style={{
+                                        height: 10,
+                                    }}/>
+                                </View>
+                                <TouchableOpacity onPress={this.sendText}>
+                                    <images.svg.sendChat />
+                                </TouchableOpacity>
+                            </View>
                         </Animated.View>
                     </View>
                 </SafeAreaView>

@@ -8,21 +8,31 @@ import {
     SectionList,
     ActivityIndicator,
 } from 'react-native';
+import images from '../../../assets/images';
 
 class EmoteSelector extends Component {
     renderEmote = (emote, locked) => {
         return (
             <TouchableOpacity key={emote.id} style={{
-                    flexBasis: '20%',
-                    aspectRatio: 1,
-                    padding: '4%',
-                }}
+                flexBasis: '20%',
+                aspectRatio: 1,
+                padding: '4%',
+            }}
                 disabled={locked}
                 onPress={() => { this.props.onEmoteSelect(emote.images.url_4x) }}>
                 <Image source={{ uri: emote.images.url_4x }}
                     style={{
                         flex: 1,
+                        // tintColor:'#ccc',
+                        opacity: locked ? 0.5 : 1,
                     }} />
+                {locked &&
+                    <images.svg.lock style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        right: 0,
+                    }} />
+                }
             </TouchableOpacity>
         );
     }
@@ -62,7 +72,8 @@ class EmoteSelector extends Component {
                 keyExtractor={item.id}
                 renderItem={({ item }) => this.renderEmote(item, locked)}
                 numColumns={5} />
-    )};
+        )
+    };
 
     render() {
         return (

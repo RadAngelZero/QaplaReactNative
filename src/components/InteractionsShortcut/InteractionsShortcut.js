@@ -8,7 +8,7 @@ import images from '../../../assets/images';
 class InteractionsShortcut extends Component {
 
     state = {
-        textRotation: 'GIF',
+        textRotation: 'GIFs',
         textRotationState: 0,
         GIFURL: '',
     }

@@ -8,7 +8,9 @@ import {
     SectionList,
     ActivityIndicator,
 } from 'react-native';
+
 import images from '../../../assets/images';
+import { translate } from '../../utilities/i18';
 
 class EmoteSelector extends Component {
     renderEmote = (emote, locked) => {
@@ -100,9 +102,10 @@ class EmoteSelector extends Component {
                                     fontSize: 16,
                                     color: 'rgba(255, 255, 255, .8)',
                                     backgroundColor: '#141539',
-                                    marginBottom: 8
+                                    marginBottom: 8,
+                                    marginTop: 24
                                 }}>
-                                    {key}
+                                    {translate(`interactions.checkout.emoteModal.${key}`)}
                                 </Text>
                                 :
                                 null

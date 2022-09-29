@@ -13,7 +13,7 @@ class InteractionsShortcut extends Component {
         GIFURL: '',
     }
 
-    texts = ['GIF', 'Meme', 'Sticker', translate('interactions.feed.modal.message')]
+    texts = ['GIFs', 'Emotes', 'TTS', 'Memes']
 
     componentDidMount() {
         getUserProfileGIFs().then((data) => {

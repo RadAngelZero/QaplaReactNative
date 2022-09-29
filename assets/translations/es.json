@@ -636,7 +636,7 @@
             "favs": "Tus favs",
             "recents": "Recientes",
             "modal": {
-                "sendA": "Envía un",
+                "sendA": "Envía",
                 "message": "Mensaje",
                 "liveToStreamer": "en vivo a un streamer",
                 "searchByName": "Busca a un streamer por su nombre"
@@ -708,7 +708,7 @@
                 "tts": "Text-to-Speech",
                 "video": "Clip",
                 "text": "TTS Personalizado",
-                "emoji": "Lluvia de emojis"
+                "emoji": "Lluvia de emotes"
             },
             "discardInteraction": "Descartar reacción",
             "areYouSure": "¿Estas seguro que deseas descartar tu reacción?",
@@ -719,7 +719,15 @@
             "other": "Otro",
             "sendInteraction": "Enviar Reacción",
             "emojiModal": {
-                "chooseAnEmoji": "Selecciona un Emoji"
+                "chooseAnEmoji": "Selecciona un Emote"
+            },
+            "emoteModal": {
+                "follower": "Seguidor",
+                "bits": "Bits",
+                "subTier1": "Sub Nivel 1",
+                "subTier2": "Sub Nivel 2",
+                "subTier3": "Sub Nivel 3",
+                "global": "Twitch Emotes"
             },
             "extraTipModal": {
                 "addTip": "Agregar extra tip",

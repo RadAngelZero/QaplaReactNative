@@ -182,8 +182,7 @@ class PrepaidInteractionsCheckout extends Component {
                                  * they must just take the Qoins from the user
                                  */
                                 if (mediaType !== GIPHY_CLIPS && !giphyTextSelectedFirst) {
-                                    console.log('Send R');
-                                    /* sendReaction(
+                                    sendReaction(
                                         this.props.uid,
                                         this.props.userName,
                                         this.props.twitchUserName,
@@ -214,10 +213,9 @@ class PrepaidInteractionsCheckout extends Component {
                                             });
                                         },
                                         () => this.setState({ sendingInteraction: false })
-                                    ); */
+                                    );
                                 } else {
-                                    console.log('Send C');
-                                    /* sendCheers(
+                                    sendCheers(
                                         totalCost,
                                         media,
                                         message,
@@ -249,7 +247,7 @@ class PrepaidInteractionsCheckout extends Component {
                                             });
                                         },
                                         () => this.setState({ sendingInteraction: false })
-                                    ) */
+                                    )
                                 }
                             } else {
                                 this.setState({ sendingInteraction: false });
@@ -463,14 +461,17 @@ class PrepaidInteractionsCheckout extends Component {
                                                             </TouchableOpacity>
                                                         }
                                                         {!this.state.emoteUrl ?
-                                                            <Text style={styles.addonEmojiText}>
-                                                                {this.state.emoji || '🤡'}
-                                                            </Text>
+                                                            this.state.emoji ?
+                                                                <Text style={styles.addonEmojiText}>
+                                                                    {this.state.emoji}
+                                                                </Text>
+                                                                :
+                                                                <Image source={images.png.CoolCat.img} style={{ aspectRatio: 1, height: 26 }} />
                                                             :
                                                             <Image source={{ uri: this.state.emoteUrl }} style={{ aspectRatio: 1, height: 26 }} />
                                                         }
                                                         <Text style={styles.addonText}>
-                                                            Emoji Raid
+                                                            Emote Raid
                                                         </Text>
                                                         <View style={styles.checkoutAddonQoinDisplayCointainer}>
                                                             <images.svg.qoin style={styles.addonQoin} />
@@ -668,7 +669,7 @@ class PrepaidInteractionsCheckout extends Component {
                             </LinearGradient>
                         </View>
                         <View style={{
-                            height: (Platform.OS === 'android' && this.state.keyboardHeight) ? this.state.keyboardHeight : heightPercentageToPx(80),
+                            height: (Platform.OS === 'android' && this.state.keyboardHeight) ? this.state.keyboardHeight : heightPercentageToPx(70),
                             backgroundColor: '#141539',
                             borderTopLeftRadius: 30,
                             borderTopRightRadius: 30,
@@ -694,6 +695,7 @@ class PrepaidInteractionsCheckout extends Component {
                         flexDirection: 'row',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        paddingBottom: 16
                     }}>
                         <TouchableOpacity style={{
                             backgroundColor: !this.state.emojiTab ? '#29326B' : '#0000',

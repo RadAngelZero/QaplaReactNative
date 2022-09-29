@@ -244,6 +244,10 @@ const images = {
 			img: require('./images/PoweredbyGiphyDark.png'),
 			uri: '@assets/images/PoweredbyGiphyDark.png',
 		},
+		CoolCat: {
+			img: require('./images/CoolCat.png'),
+			uri: '@assets/images/CoolCat.png',
+		}
 	},
 	svg: {
 		googleIcon: GoogleIcon,

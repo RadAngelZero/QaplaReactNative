@@ -176,9 +176,7 @@ class InteractionsCheckout extends Component {
                                     emojiArray.push(this.state.emoteUrl);
                                 }
 
-                                console.log('Send C');
-
-                                /* sendCheers(
+                                sendCheers(
                                     totalCost,
                                     media,
                                     message,
@@ -210,7 +208,7 @@ class InteractionsCheckout extends Component {
                                         });
                                     },
                                     () => this.setState({ sendingInteraction: false })
-                                ); */
+                                );
                             } else {
                                 this.setState({ sendingInteraction: false });
                                 // After a successful buy try to send the interaction again
@@ -435,14 +433,17 @@ class InteractionsCheckout extends Component {
                                                             </TouchableOpacity>
                                                         }
                                                         {!this.state.emoteUrl ?
-                                                            <Text style={styles.addonEmojiText}>
-                                                                {this.state.emoji || '🤡'}
-                                                            </Text>
+                                                            this.state.emoji ?
+                                                                <Text style={styles.addonEmojiText}>
+                                                                    {this.state.emoji}
+                                                                </Text>
+                                                                :
+                                                                <Image source={images.png.CoolCat.img} style={{ aspectRatio: 1, height: 26 }} />
                                                             :
                                                             <Image source={{ uri: this.state.emoteUrl }} style={{ aspectRatio: 1, height: 26 }} />
                                                         }
                                                         <Text style={styles.addonText}>
-                                                            Emoji raid
+                                                            Emote raid
                                                         </Text>
                                                         <View style={styles.checkoutAddonQoinDisplayCointainer}>
                                                             <images.svg.qoin style={styles.addonQoin} />

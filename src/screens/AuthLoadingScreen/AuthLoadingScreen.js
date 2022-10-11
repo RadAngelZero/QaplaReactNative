@@ -44,9 +44,6 @@ class AuthLoadingScreen extends Component {
     };
 
     componentDidMount() {
-        // Load highlight hg1 Modal
-        this.props.loadShowHg1Modal();
-
         // Initialize the segment SDK to collect user statistics
         initializeSegment();
 
@@ -59,11 +56,6 @@ class AuthLoadingScreen extends Component {
 
         auth.onAuthStateChanged(async (user) => {
             this.props.loadListOfGames();
-
-            /**
-             * Get the offset between the server timeStamps and the users timeStamp
-             */
-            await this.props.getServerTimeOffset();
 
             if (user) {
                 this.props.loadUserData(user.uid);
@@ -85,31 +77,11 @@ class AuthLoadingScreen extends Component {
                 if (!userName && currentScreen !== 'SignIn') {
                     return this.props.navigation.navigate('ChooseUserName');
                 } else {
-                    const userImg = await getUserProfileImgUrl(user.uid);
-                    connectUserToSendBird(user.uid, userName, userImg);
-
                     const twitchUsername = await getTwitchUserName(user.uid);
 
                     if (!this.state.isSegmentDataUpdated) {
                         setUserIdOnSegment(user.uid, user.email, userName, twitchUsername);
                         this.setState({ isSegmentDataUpdated: true });
-                    }
-
-                    /**
-                     * Here add functions to write on the user profile, we only can perform
-                     * writes on the user profile if it exists, and it only existes
-                     * if the user has a valid userName (because we create the profile after
-                     * the userName selection)
-                     */
-                    const cleanUpTopics = await retrieveData('clean-up-topics');
-
-                    /**
-                     * Temporary code to update the topics of all the users because of some bugs
-                     * finded about this
-                     */
-                    if (!cleanUpTopics) {
-                        updateUserLanguage(user.uid);
-                        storeData('clean-up-topics', 'true');
                     }
                 }
 
@@ -267,7 +239,6 @@ function mapDispatchToProps(dispatch) {
     return {
         loadUserData: (uid) => getUserNode(uid)(dispatch),
         loadListOfGames: () => getListOfGames()(dispatch),
-        loadShowHg1Modal: () => getHg1CreateMatch()(dispatch),
         getServerTimeOffset: () => getServerTimeOffset()(dispatch),
         loadFeaturedStreams: (uid) => loadFeaturedStreams(uid)(dispatch),
         loadStreamsByListIndex: (uid, index) => loadStreamsByListIndex(uid, index)(dispatch)

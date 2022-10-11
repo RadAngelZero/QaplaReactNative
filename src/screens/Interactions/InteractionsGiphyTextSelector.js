@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
+import { SafeAreaView, View, Image, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import WebView from 'react-native-webview';
 import { connect } from 'react-redux';
@@ -20,6 +20,10 @@ class InteractionsGiphyTextSelector extends Component {
         cursor: '',
         loading: false
     };
+
+    componentDidMount() {
+        this.onWillFocus();
+    }
 
     onWillFocus = async () => {
         /**
@@ -46,7 +50,12 @@ class InteractionsGiphyTextSelector extends Component {
     }
 
     renderImage = ({ item }) => {
-        const isAddOn = this.props.navigation.getParam('isAddOn', false);
+        let isAddOn = true;
+        if (this.props.navigation) {
+            isAddOn = this.props.navigation.getParam('isAddOn', false);
+        } else {
+            isAddOn = this.props.isAddOn
+        }
         const ratio = item.images.fixed_height_small.width / item.images.fixed_height_small.height;
         const giphyText = {
             original: {
@@ -60,19 +69,23 @@ class InteractionsGiphyTextSelector extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    const text = this.props.navigation.getParam('text', '');
-                    if (isAddOn) {
-                        this.props.navigation.navigate('InteractionsCheckout', {
-                            ...this.props.navigation.state.params,
-                            giphyText,
-                            message: text
-                        });
+                    if (!this.props.openAsModal) {
+                        const text = this.props.navigation.getParam('text', '');
+                        if (isAddOn) {
+                            this.props.navigation.navigate('InteractionsCheckout', {
+                                ...this.props.navigation.state.params,
+                                giphyText,
+                                message: text
+                            });
+                        } else {
+                            this.props.navigation.navigate('InteractionsConfirmSelection', {
+                                ...this.props.navigation.state.params,
+                                giphyText,
+                                message: text
+                            });
+                        }
                     } else {
-                        this.props.navigation.navigate('InteractionsConfirmSelection', {
-                            ...this.props.navigation.state.params,
-                            giphyText,
-                            message: text
-                        });
+                        this.props.onMessageSelected(giphyText);
                     }
                 }}
                 style={{
@@ -98,8 +111,25 @@ class InteractionsGiphyTextSelector extends Component {
     };
 
     render() {
+        let text = '';
+        if (this.props.navigation) {
+            text = this.props.navigation.getParam('text', '');
+        } else {
+            text = this.props.message;
+        }
+
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
+                {this.props.openAsModal &&
+                    <TouchableOpacity
+                        onPress={this.props.onClose}
+                        style={{
+                            marginBottom: 20,
+                            marginLeft: 16,
+                        }}>
+                        <images.svg.closeIcon />
+                    </TouchableOpacity>
+                }
                 <View style={styles.memesContainer} >
                     <View style={styles.gridMemeContainer}>
                         <Image source={images.png.PoweredbyGiphyDark.img} style={{ alignSelf: 'center', marginBottom: 16, marginTop: 24 }} />
@@ -116,10 +146,10 @@ class InteractionsGiphyTextSelector extends Component {
                 </View>
                 {this.state.fetchGiphyText &&
                     <WebView style={{ display: 'none', opacity: 0, zIndex: -9999 }}
-                        source={{ uri: `${GIPHY_TEXT_GENERATOR_URL}${this.props.requestId}/${this.props.navigation.getParam('text', '')}` }} />
+                        source={{ uri: `${GIPHY_TEXT_GENERATOR_URL}${this.props.requestId}/${text}` }} />
                 }
                 <NavigationEvents onWillFocus={this.onWillFocus} />
-            </View>
+            </SafeAreaView>
         );
     }
 }

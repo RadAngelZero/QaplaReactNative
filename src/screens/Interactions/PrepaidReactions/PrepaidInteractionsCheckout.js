@@ -18,6 +18,8 @@ import EmojiSelector from '../../../components/EmojiSelector/EmojiSelector';
 import InsertExtraTipModal from '../InsertExtraTipModal';
 import { getStreamerEmotes } from '../../../services/functions';
 import EmoteSelector from '../../../components/EmojiSelector/EmoteSelector';
+import PrepaidInteractionsGiphyTextSelector from './PrepaidInteractionsGiphyTextSelector';
+import PrepaidInteractionsInsertGiphyText from './PrepaidInteractionsInsertGiphyText';
 
 const ExtraTip = ({ value, onPress, selected }) => (
     <TouchableOpacity onPress={() => onPress(value)}>
@@ -44,6 +46,7 @@ class PrepaidInteractionsCheckout extends Component {
         openEmojiSelector: false,
         emoji: '',
         giphyText: null,
+        message: this.props.navigation.getParam('message', ''),
         emojiRainCost: 0,
         giphyTextCost: 0,
         localCosts: {},
@@ -52,7 +55,9 @@ class PrepaidInteractionsCheckout extends Component {
         openExtraTipModal: false,
         emojiTab: false,
         emoteUrl: '',
-        emotes: []
+        emotes: [],
+        openInsertGiphyText: false,
+        openSelectGiphyText: false
     };
 
     componentDidMount() {
@@ -134,9 +139,8 @@ class PrepaidInteractionsCheckout extends Component {
                                 const streamerName = this.props.navigation.getParam('displayName', '');
                                 const selectedMedia = this.props.navigation.getParam('selectedMedia', null);
                                 const mediaType = this.props.navigation.getParam('mediaType');
-                                const message = this.props.navigation.getParam('message', null);
+                                const message = this.state.message;
                                 const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
-                                const costs = this.props.navigation.getParam('costs', {});
                                 const giphyTextSelectedFirst = this.props.navigation.getParam('giphyTextSelectedFirst', false);
 
                                 let media = null;
@@ -247,7 +251,7 @@ class PrepaidInteractionsCheckout extends Component {
                                             });
                                         },
                                         () => this.setState({ sendingInteraction: false })
-                                    )
+                                    );
                                 }
                             } else {
                                 this.setState({ sendingInteraction: false });
@@ -291,6 +295,7 @@ class PrepaidInteractionsCheckout extends Component {
             emoteUrl: '',
             openEmojiSelector: false,
             localCosts: {
+                ...this.state.localCosts,
                 'emoji': this.state.emojiRainCost
             },
             interactionCost: !emojiOrEmoteSelected ? this.state.interactionCost + this.state.emojiRainCost : this.state.interactionCost
@@ -304,6 +309,7 @@ class PrepaidInteractionsCheckout extends Component {
             emoteUrl,
             emoji: '',
             localCosts: {
+                ...this.state.localCosts,
                 'emoji': this.state.emojiRainCost
             },
             openEmojiSelector: false,
@@ -312,55 +318,57 @@ class PrepaidInteractionsCheckout extends Component {
     }
 
     removeEmoji = () => {
+        const localCostsCopy = {...this.state.localCosts};
+        delete localCostsCopy['emoji'];
         this.setState({
             emoji: '',
             emoteUrl: '',
-            localCosts: {},
+            localCosts: localCostsCopy,
             interactionCost: this.state.interactionCost - this.state.emojiRainCost
         });
     }
 
-    removeGiphyText = () => {
+    navigateToCustomTTS = () => {
+        if (this.state.giphyTextCost) {
+            const message = this.state.message;
+
+            if (message && message.length <= 50) {
+                this.setState({ openSelectGiphyText: true });
+            } else {
+                this.setState({ openInsertGiphyText: true });
+            }
+        }
+    }
+
+    onCustomTTSAdded = (giphyText) => {
+        const giphyTextSelected = this.state.giphyText ? true : false;
+        const cost = this.state.giphyTextCost * 0.5;
         this.setState({
-            giphyText: null,
-            interactionCost: this.state.interactionCost - (this.state.giphyTextCost * .5)
+            openSelectGiphyText: false,
+            giphyText,
+            localCosts: {
+                ...this.state.localCosts,
+                [GIPHY_TEXT]: cost
+            },
+            openEmojiSelector: false,
+            interactionCost: !giphyTextSelected ? this.state.interactionCost + cost : this.state.interactionCost
         });
     }
 
-    navigateToCustomTTS = async () => {
-        const costsObject = this.props.navigation.getParam('costs', {});
-
-        if (this.state.giphyTextCost) {
-            const message = this.props.navigation.getParam('message', '');
-
-            if (message && message.length <= 50) {
-                this.props.navigation.navigate('PrepaidInteractionsGiphyTextSelector', {
-                    ...this.props.navigation.state.params,
-                    isAddOn: true,
-                    text: message,
-                    costs: {
-                        [GIPHY_TEXT]: this.state.giphyTextCost * .5, // 50% discount because they will use their prepaid interaction
-                        ...costsObject
-                    }
-                });
-            } else {
-                this.props.navigation.navigate('PrepaidInteractionsInsertGiphyText', {
-                    ...this.props.navigation.state.params,
-                    isAddOn: true,
-                    showCutTextWarning: message.length > 50,
-                    costs: {
-                        [GIPHY_TEXT]: this.state.giphyTextCost * .5, // 50% discount because they will use their prepaid interaction
-                        ...costsObject
-                    }
-                });
-            }
-        }
+    removeGiphyText = () => {
+        const localCostsCopy = {...this.state.localCosts};
+        delete localCostsCopy[GIPHY_TEXT];
+        this.setState({
+            giphyText: null,
+            localCosts: localCostsCopy,
+            interactionCost: this.state.interactionCost - (this.state.giphyTextCost * .5)
+        });
     }
 
     render() {
         const selectedMedia = this.props.navigation.getParam('selectedMedia');
         const mediaType = this.props.navigation.getParam('mediaType');
-        const message = this.props.navigation.getParam('message', '');
+        const message = this.state.message;
         const costs = this.props.navigation.getParam('costs', {});
         const onlyQoins = this.props.navigation.getParam('onlyQoins', false);
         const messageVoiceData = this.props.navigation.getParam('messageVoice', null);
@@ -736,6 +744,24 @@ class PrepaidInteractionsCheckout extends Component {
                             </Text>
                         </TouchableOpacity>
                     </View>
+                </Modal>
+                <Modal visible={this.state.openInsertGiphyText}
+                    transparent={true}>
+                    <PrepaidInteractionsInsertGiphyText showCutTextWarning={message.length > 50}
+                        onClose={() => this.setState({ openInsertGiphyText: false })}
+                        isAddOn
+                        cost={this.state.giphyTextCost * 0.5}
+                        openAsModal
+                        onMessageFinished={(message) => this.setState({ message, openInsertGiphyText: false, openSelectGiphyText: true })} />
+                </Modal>
+                <Modal visible={this.state.openSelectGiphyText}
+                    transparent={true}
+                    animationType="slide">
+                    <PrepaidInteractionsGiphyTextSelector message={this.state.message}
+                        onClose={() => this.setState({ openSelectGiphyText: false })}
+                        isAddOn
+                        openAsModal
+                        onMessageSelected={this.onCustomTTSAdded} />
                 </Modal>
                 <NavigationEvents onWillFocus={this.calculateCosts} />
                 <LinkTwitchAccountModal

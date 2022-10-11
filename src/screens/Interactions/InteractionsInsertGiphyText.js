@@ -55,21 +55,43 @@ class InteractionsInsertGiphyText extends Component {
     }
 
     sendText = () => {
-        this.hideKeyboard();
-        this.props.navigation.navigate('InteractionsGiphyTextSelector', {
-            text: this.state.text,
-            ...this.props.navigation.state.params
-        });
+        if (!this.props.openAsModal) {
+            this.hideKeyboard();
+            this.props.navigation.navigate('InteractionsGiphyTextSelector', {
+                text: this.state.text,
+                ...this.props.navigation.state.params
+            });
+        } else {
+            this.props.onMessageFinished(this.state.text);
+        }
     }
 
     render() {
-        const showCutTextWarning = this.props.navigation.getParam('showCutTextWarning', false);
-        const isAddOn = this.props.navigation.getParam('isAddOn', false);
-        const costsObject = this.props.navigation.getParam('costs', {});
+        let showCutTextWarning = false;
+        let isAddOn = true;
+        let costsObject = {};
+        if (this.props.navigation) {
+            showCutTextWarning = this.props.navigation.getParam('showCutTextWarning', false);
+            isAddOn = this.props.navigation.getParam('isAddOn', false);
+            costsObject = this.props.navigation.getParam('costs', {});
+        } else {
+            showCutTextWarning = this.props.showCutTextWarning;
+            isAddOn = this.props.isAddOn;
+        }
 
         return (
             <TouchableWithoutFeedback onPress={this.hideKeyboard}>
                 <SafeAreaView style={styles.container}>
+                    {this.props.openAsModal &&
+                        <TouchableOpacity
+                            onPress={this.props.onClose}
+                            style={{
+                                marginBottom: 20,
+                                marginLeft: 16,
+                            }}>
+                            <images.svg.backIcon />
+                        </TouchableOpacity>
+                    }
                     <View style={styles.insertGiphyTextContainer}>
                         <View style={{
                             marginTop: 24,
@@ -85,7 +107,7 @@ class InteractionsInsertGiphyText extends Component {
                             }}>
                                 {translate('interactions.insertGiphyText.useCustomTTS')}
                             </Text>
-                            {isAddOn && costsObject[GIPHY_TEXT] &&
+                            {isAddOn &&
                                 <LinearGradient
                                     colors={['#2D07FA', '#A716EE']}
                                     style={{
@@ -112,7 +134,7 @@ class InteractionsInsertGiphyText extends Component {
                                         lineHeight: 19,
                                         marginLeft: 8,
                                     }}>
-                                        {costsObject[GIPHY_TEXT]}
+                                        {costsObject && costsObject[GIPHY_TEXT] ? costsObject[GIPHY_TEXT] : this.props.cost}
                                     </Text>
                                 </LinearGradient>
                             }

@@ -30,11 +30,6 @@ export default styles = StyleSheet.create({
         paddingHorizontal: widthPercentageToPx(getPercentWidth(42)),
         paddingBottom: heightPercentageToPx(getPercentHeight(40)),
     },
-    blur: {
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-    },
     closeIcon: {
         position: 'absolute',
         width: heightPercentageToPx(getPercentHeight(45)),

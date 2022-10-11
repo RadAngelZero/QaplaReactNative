@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Modal, Image, TouchableWithoutFeedback, Text, TextInput, TouchableHighlight } from 'react-native';
-import { BlurView } from '@react-native-community/blur';
 import { translate } from '../../utilities/i18';
 
 import images from '../../../assets/images';
@@ -53,11 +52,6 @@ class JoinQlanModal extends Component {
                 onRequestClose={this.closeModal}>
                 <TouchableWithoutFeedback onPress={this.closeModal}>
                     <View style={styles.mainContainer}>
-                        <BlurView
-                            style={styles.blur}
-                            blurType="dark"
-                            blurAmount={32}
-                        />
                         <TouchableWithoutFeedback touchSoundDisabled>
                             <View style={styles.container}>
                                 {!this.state.joinedQlan &&

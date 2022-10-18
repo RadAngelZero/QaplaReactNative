@@ -57,6 +57,8 @@ import PrepaidInteractionsGiphyTextSelector from './screens/Interactions/Prepaid
 import InteractionsGiphyTextSelector from './screens/Interactions/InteractionsGiphyTextSelector';
 import InteractionsInsertGiphyText from './screens/Interactions/InteractionsInsertGiphyText';
 import UserProfileModal from './components/UserProfileModal/UserProfileModal';
+import AvatarCreatorScreen from './screens/AvatarCreatorScreen/AvatarCreatorScreen';
+import AvatarChooseAnimationScreen from './screens/AvatarChooseAnimationScreen/AvatarChooseAnimationScreen';
 
 //#region Stack Navigators
 
@@ -301,6 +303,25 @@ const PrepaidInteractionsPersonlizeStackNavigator = createStackNavigator({
   }
 });
 
+const AvatarStackNavigator = createStackNavigator({
+  AvatarCreator: {
+    screen: AvatarCreatorScreen,
+    navigationOptions: {
+      headerShown: false,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  },
+  AvatarChooseAnimationScreen: {
+    screen: AvatarChooseAnimationScreen,
+    navigationOptions: {
+      headerShown: false,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  }
+});
+
 //#endregion
 
 //#region Top Tab Navigators
@@ -525,6 +546,9 @@ const RootStackNavigator = createStackNavigator({
   },
   PrepaidInteractionsPersonlizeStack: {
     screen: PrepaidInteractionsPersonlizeStackNavigator
+  },
+  AvatarStackNavigator: {
+    screen: AvatarStackNavigator
   },
   BuyQoins: {
     screen: BuyQoins,

@@ -393,6 +393,9 @@
             "goToFirstStream": "Ir a mi primer stream"
         }
     },
+    "avatarChooseAnimationScreen": {
+        "confirmButton": "Me encanta"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Ve tus Notificaciones",

@@ -61,6 +61,8 @@ const usersReactionsCountRef = database.ref('/UsersReactionsCount');
 const giphyTextRequestsRef = database.ref('/GiphyTextRequests');
 const voiceBotAvailableVoicesRef = database.ref('/VoiceBotAvailableVoices');
 const streamersBanListsRef = database.ref('/StreamersBanLists');
+const avatarsAnimationsRef = database.ref('/AvatarsAnimations');
+const usersGreetingsRef = database.ref('/UsersGreetings');
 
 /**
  * Returns true if the user with the given uid exists
@@ -217,6 +219,33 @@ export async function getTwitchUserName(uid) {
  */
 export async function saveTwitchData(uid, twitchData) {
     await usersRef.child(uid).update(twitchData);
+}
+
+/**
+ * Saves the 3D avatar url of the user
+ * @param {string} uid User identifier
+ * @param {string} avatarUrl Avatar url
+ */
+export async function saveAvatarUrl(uid, avatarUrl) {
+    await usersRef.child(uid).child('avatarUrl').set(avatarUrl);
+}
+
+/**
+ * Saves the ready player me user identifier of the user
+ * @param {string} uid User identifier
+ * @param {string} rpmUid Ready player me user identifier
+ */
+export async function saveReadyPlayerMeUserId(uid, rpmUid) {
+    await usersRef.child(uid).child('rpmUid').set(rpmUid);
+}
+
+/**
+ * Saves the ready player me avatar identifier of the user
+ * @param {string} uid User identifier
+ * @param {string} rpmAvatarId Ready player me avatar identifier
+ */
+export async function saveReadyPlayerMeAvatarId(uid, rpmAvatarId) {
+    await usersRef.child(uid).child('rpmAvatarId').set(rpmAvatarId);
 }
 
 /**
@@ -1971,4 +2000,26 @@ export async function getBotAvailableVoices() {
 
 export async function isUserBannedWithStreamer(userTwitchId, streamerUid) {
     return await streamersBanListsRef.child(streamerUid).child(userTwitchId).once('value');
+}
+
+// -----------------------------------------------
+// Avatars Animations
+// -----------------------------------------------
+
+export async function getAvatarAnimations() {
+    return await avatarsAnimationsRef.once('value');
+}
+
+// -----------------------------------------------
+// Users Greetings
+// -----------------------------------------------
+
+/**
+ * Saves the avatar and animation ids for the user greeting
+ * @param {string} uid User identifier
+ * @param {string} avatarId Avatar identifier
+ * @param {string} animationId Animation identifier
+ */
+export async function saveUserGreetingAnimation(uid, avatarId, animationId) {
+    return await usersGreetingsRef.child(uid).update({ animation: { avatarId, animationId } });
 }

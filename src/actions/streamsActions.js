@@ -3,10 +3,7 @@ import {
     eventParticipantsRef,
     listenStreamCustomRewards,
     getStreamerStreamingStatus,
-    getStreamerThumbnailUrl,
-    getAllStreamersStreaming,
-    getRecentStreamersDonations,
-    getUserFavsStreamers
+    getStreamerThumbnailUrl
 } from '../services/database';
 import {
     CLEAN_ALL_STREAMS,
@@ -28,22 +25,8 @@ export const loadFeaturedStreams = (uid) => async (dispatch) => {
     const today = new Date();
     today.setHours(today.getHours() < 3 ? 0 : today.getHours() - 3, 0, 0, 0);
 
-    /* const streamers = await getAllStreamersStreaming();
-
-    Object.keys(streamers.val()).sort((a, b) => Number(streamers.val()[b].premium) - Number(streamers.val()[a].premium)).forEach((streamerId) => {
-        console.log(streamerId);
-    }); */
-
-    /* const al = await getRecentStreamersDonations(uid, 1);
-    console.log(al.val()); */
-
-    /* const favs = await getUserFavsStreamers(uid, 6);
-    favs.forEach((a) => {
-        console.log(a.key);
-    }); */
-
     eventsDataRef.orderByChild('featured').equalTo(true).on('child_added', (featuredStream) => {
-        const featuredStreamObject = {
+        let featuredStreamObject = {
             id: featuredStream.key,
             ...featuredStream.val(),
             isUserAParticipant: false
@@ -60,12 +43,12 @@ export const loadFeaturedStreams = (uid) => async (dispatch) => {
                         if (isStreaming) {
                             const streamerThumbnailUrl = await getStreamerThumbnailUrl(streamRewards.val().streamerUid);
 
-                            streamObject = {
+                            featuredStreamObject = {
                                 ...featuredStreamObject,
                                 thumbnailUrl: streamerThumbnailUrl.val()
                             }
                             dispatch(removeFeaturedStream(featuredStream.key));
-                            dispatch(loadLiveStream(featuredStream.key, streamObject));
+                            dispatch(loadLiveStream(featuredStream.key, featuredStreamObject));
                         }
                     }
 

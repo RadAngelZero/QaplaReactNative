@@ -393,6 +393,9 @@
             "goToFirstStream": "Go to my first stream"
         }
     },
+    "avatarChooseAnimationScreen": {
+        "confirmButton": "Love it"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Check your notifications",

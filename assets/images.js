@@ -117,6 +117,7 @@ import EditQreatorCodeIcon from './icons/EditQreatorCode.svg';
 import InteractionsNumberIcon from './icons/interactionsNumber.svg';
 import UserProfile from './icons/UserProfile.svg';
 import Lock from './icons/Lock.svg';
+import VideoCamera from './icons/videoCamera.svg';
 
 // Images
 const images = {
@@ -368,6 +369,7 @@ const images = {
 		interactionsNumberIcon: InteractionsNumberIcon,
 		userProfile: UserProfile,
 		lock: Lock,
+		videoCamera: VideoCamera
 	},
 	gif: {
 		loadingStreamers: {

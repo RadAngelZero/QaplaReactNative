@@ -2010,8 +2010,19 @@ export async function isUserBannedWithStreamer(userTwitchId, streamerUid) {
 // Avatars Animations
 // -----------------------------------------------
 
+/**
+ * Returns all the available avatar animations
+ */
 export async function getAvatarAnimations() {
     return await avatarsAnimationsRef.once('value');
+}
+
+/**
+ * Gets the aspect ratio for the camera of the given animation
+ * @param {string} animationId Animation identifier
+ */
+export async function getAvatarAnimationCameraAspectRatio(animationId) {
+    return await avatarsAnimationsRef.child(animationId).child('camera').child('aspect').once('value');
 }
 
 // -----------------------------------------------
@@ -2025,5 +2036,23 @@ export async function getAvatarAnimations() {
  * @param {string} animationId Animation identifier
  */
 export async function saveUserGreetingAnimation(uid, avatarId, animationId) {
-    return await usersGreetingsRef.child(uid).update({ animation: { avatarId, animationId } });
+    return await usersGreetingsRef.child(uid).child('animation').update({ avatarId, animationId });
+}
+
+/**
+ * Saves the TTS information for the greeting
+ * @param {string} uid User identifier
+ * @param {string} message Message to speak
+ * @param {string} language Language for the voice bot
+ */
+export async function saveUserGreetingMessage(uid, message, language) {
+    return await usersGreetingsRef.child(uid).child('TTS').update({ message, language });
+}
+
+/**
+ * Returns the animation information of the greeting of the given user
+ * @param {string} uid User identifier
+ */
+export async function getUserGreetingAnimation(uid) {
+    return await usersGreetingsRef.child(uid).child('animation').once('value');
 }

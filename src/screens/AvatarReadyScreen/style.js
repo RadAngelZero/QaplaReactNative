@@ -7,8 +7,7 @@ export default styles = StyleSheet.create({
         backgroundColor: '#00020E',
         paddingBottom: 0
     },
-    backIcon: {
-        position: 'absolute',
+    closeIcon: {
         zIndex: 9999,
         marginTop: 32,
         marginBottom: 20,
@@ -31,46 +30,38 @@ export default styles = StyleSheet.create({
         aspectRatio: 16/9,
         width: '100%'
     },
-    selectorContainer: {
+    modal: {
         position: 'absolute',
         bottom: 0,
         flex: 1,
         width: '100%',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40
     },
-    optionsContainer: {
+    modalContainer: {
         alignItems: 'center',
         width: '100%',
-        backgroundColor: '#0D1021',
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         padding: 32
     },
-    optionButtonContainer: {
-        marginRight: 8,
-        alignContent: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#141539',
-        height: 60,
-        width: 60,
-        borderRadius: 10
+    text: {
+        color: '#FFF',
+        lineHeight: 22,
+        letterSpacing: -0.41,
+        textAlign: 'center'
     },
-    optionButton: {
-        alignContent: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#141539',
-        height: 54,
-        width: 54,
-        marginLeft: 3,
-        marginRight: 3,
-        borderRadius: 8
-    },
-    optionText: {
-        fontSize: 11,
+    title: {
+        fontSize: 20,
         fontWeight: '700',
-        lineHeight: 13.13,
-        textAlign: 'center',
-        color: '#FFF'
+    },
+    description: {
+        maxWidth: '75%',
+        marginTop: 16,
+        fontSize: 18,
+        fontWeight: '600',
+        opacity: .8
     },
     confirmButton: {
         marginTop: 32,

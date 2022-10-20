@@ -4,8 +4,7 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0D1021',
-        paddingBottom: 0
+        backgroundColor: '#0D1021'
     },
     closeIcon: {
         position: 'absolute',
@@ -19,7 +18,7 @@ export default styles = StyleSheet.create({
         overflow: 'hidden'
     },
     spacing: {
-        height: heightPercentageToPx(50 - 24.63)
+        height: heightPercentageToPx(20)
     },
     avatarImage: {
         width: heightPercentageToPx(24.63),
@@ -33,49 +32,23 @@ export default styles = StyleSheet.create({
         textAlign: 'center',
         color: '#FFF'
     },
+    description: {
+        fontSize: 18,
+        fontWeight: '600',
+        lineHeight: 21.48,
+        textAlign: 'center',
+        color: 'rgba(255, 255, 255, 0.8)',
+        maxWidth: '66.66%',
+        marginTop: 12
+    },
     selectorContainer: {
-        zIndex: -9999,
-        position: 'absolute',
-        bottom: 0,
-        flex: 1,
         width: '100%',
         alignItems: 'center'
-    },
-    changeViewButton: {
-        backgroundColor: '#3B4BF9',
-        borderRadius: 100,
-        marginBottom: 16,
-        shadowColor: 'rgba(59, 75, 249, 0.65)',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
-    },
-    changeViewContainer: {
-        marginLeft: 16,
-        marginRight: 16,
-        marginTop: 8,
-        marginBottom: 8,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    changeViewText: {
-        marginLeft: 8,
-        textAlign: 'center',
-        fontSize: 16,
-        fontWeight: '700',
-        color: '#FFF'
     },
     optionsContainer: {
         alignItems: 'center',
         width: '100%',
-        backgroundColor: '#0D1021',
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
+        backgroundColor: 'transparent',
         padding: 32
     },
     optionButtonContainer: {

@@ -403,6 +403,7 @@
     },
     "avatarChooseBackgroundScreen": {
         "pickABackground": "Escoge un color de fondo",
+        "description": "Así es como te veras en tus reacciones enviadas en stream",
         "useBackground": "Usar Fondo"
     },
     "avatarChooseAnimationScreen": {

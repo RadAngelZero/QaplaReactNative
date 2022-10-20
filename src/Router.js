@@ -61,6 +61,8 @@ import AvatarCreatorScreen from './screens/AvatarCreatorScreen/AvatarCreatorScre
 import AvatarChooseAnimationScreen from './screens/AvatarChooseAnimationScreen/AvatarChooseAnimationScreen';
 import AvatarChooseBackgroundScreen from './screens/AvatarChooseBackgroundScreen/AvatarChooseBackgroundScreen';
 import AvatarOnboardingScreen from './screens/AvatarOnboardingScreen/AvatarOnboardingScreen';
+import GreetingTTSScreen from './screens/GreetingTTSScreen/GreetingTTSScreen';
+import AvatarReadyScreen from './screens/AvatarReadyScreen/AvatarReadyScreen';
 
 //#region Stack Navigators
 
@@ -332,6 +334,22 @@ const AvatarStackNavigator = createStackNavigator({
   },
   AvatarChooseAnimationScreen: {
     screen: AvatarChooseAnimationScreen,
+    navigationOptions: {
+      headerShown: false,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  },
+  AvatarChooseGreetingMessageScreen: {
+    screen: GreetingTTSScreen,
+    navigationOptions: {
+      headerShown: false,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  },
+  AvatarReadyScreen: {
+    screen: AvatarReadyScreen,
     navigationOptions: {
       headerShown: false,
       gestureDirection: 'horizontal',

@@ -45,6 +45,9 @@ class AvatarChooseBackgroundScreen extends Component {
                     <Text style={styles.instructions}>
                         {translate('avatarChooseBackgroundScreen.pickABackground')}
                     </Text>
+                    <Text style={styles.description}>
+                        {translate('avatarChooseBackgroundScreen.description')}
+                    </Text>
                 </View>
                 <View style={styles.selectorContainer}>
                     <View style={styles.optionsContainer}>

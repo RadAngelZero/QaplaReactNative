@@ -248,7 +248,10 @@ const images = {
 		CoolCat: {
 			img: require('./images/CoolCat.png'),
 			uri: '@assets/images/CoolCat.png',
-		}
+		},
+		reactionSample:  {
+			img: require('./images/ReactionSample.png')
+		},
 	},
 	svg: {
 		googleIcon: GoogleIcon,
@@ -423,6 +426,9 @@ const images = {
 		},
 		emojiRaid: {
 			img: require('./gifs/emojiRaid.gif')
+		},
+		swing: {
+			img: require('./gifs/Swing.gif')
 		}
 	},
 };

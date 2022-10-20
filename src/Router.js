@@ -59,6 +59,8 @@ import InteractionsInsertGiphyText from './screens/Interactions/InteractionsInse
 import UserProfileModal from './components/UserProfileModal/UserProfileModal';
 import AvatarCreatorScreen from './screens/AvatarCreatorScreen/AvatarCreatorScreen';
 import AvatarChooseAnimationScreen from './screens/AvatarChooseAnimationScreen/AvatarChooseAnimationScreen';
+import AvatarChooseBackgroundScreen from './screens/AvatarChooseBackgroundScreen/AvatarChooseBackgroundScreen';
+import AvatarOnboardingScreen from './screens/AvatarOnboardingScreen/AvatarOnboardingScreen';
 
 //#region Stack Navigators
 
@@ -304,8 +306,24 @@ const PrepaidInteractionsPersonlizeStackNavigator = createStackNavigator({
 });
 
 const AvatarStackNavigator = createStackNavigator({
+  AvatarOnboardingScreen: {
+    screen: AvatarOnboardingScreen,
+    navigationOptions: {
+      headerShown: false,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  },
   AvatarCreator: {
     screen: AvatarCreatorScreen,
+    navigationOptions: {
+      headerShown: false,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  },
+  AvatarChooseBackgroundScreen: {
+    screen: AvatarChooseBackgroundScreen,
     navigationOptions: {
       headerShown: false,
       gestureDirection: 'horizontal',

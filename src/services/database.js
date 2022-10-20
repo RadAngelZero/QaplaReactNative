@@ -248,6 +248,10 @@ export async function saveReadyPlayerMeAvatarId(uid, rpmAvatarId) {
     await usersRef.child(uid).child('rpmAvatarId').set(rpmAvatarId);
 }
 
+export async function saveAvatarBackground(uid, background) {
+    await usersRef.child(uid).child('avatarBackground').set(background);
+}
+
 /**
  * Update the userName of specific user only if that username is not already in use
  * @param {string} uid User identifier on the database

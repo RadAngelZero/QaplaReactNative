@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, TouchableOpacity } from 'react-native';
+import { Image, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import WebView from 'react-native-webview';
 import { connect } from 'react-redux';
 
@@ -54,7 +54,6 @@ class AvatarCreator extends Component {
     }
 
     onAvatarExported = async (data) => {
-        console.log(data);
         /**
          * data.url is always: https://models.readyplayer.me/{avatarId}.glb
          * so we extract the avatarId by doing a substring from the last '/' index + 1 and
@@ -73,13 +72,7 @@ class AvatarCreator extends Component {
         }
 
         // Navgate to other place
-        this.props.navigation.navigate('AvatarChooseAnimationScreen', { avatarId });
-        /* const avatarMetaData = await fetch(`https://api.readyplayer.me/v1/avatars/${avatarId}.json`, {
-            method: 'get'
-        });
-
-        const avatarGender = (await avatarMetaData.json()).outfitGender;
-        console.log(avatarGender); */
+        this.props.navigation.navigate('AvatarChooseBackgroundScreen', { avatarId });
     }
 
     render() {

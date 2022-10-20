@@ -55,7 +55,7 @@ class AvatarChooseAnimationScreen extends Component {
                     </View>
                 </View>
                 <TouchableOpacity
-                    onPress={this.props.onClose}
+                    onPress={() => this.props.navigation.goBack()}
                     style={styles.backIcon}>
                     <images.svg.backIcon />
                 </TouchableOpacity>

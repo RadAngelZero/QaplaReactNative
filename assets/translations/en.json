@@ -393,8 +393,20 @@
             "goToFirstStream": "Go to my first stream"
         }
     },
+    "avatarOnboardingScreen": {
+        "react": "React with personality",
+        "powerUpSub": "Power up your sub",
+        "description1": "Your avi will show on the reactions you send on stream",
+        "description2": "Say hi when you show up on streams you’re subscribed with a custom greeting",
+        "next": "Next",
+        "createMyAvatar": "Create my Avatar"
+    },
+    "avatarChooseBackgroundScreen": {
+        "pickABackground": "Pick a background color",
+        "useBackground": "Use Background"
+    },
     "avatarChooseAnimationScreen": {
-        "confirmButton": "Love it"
+        "confirmButton": "Use Animation"
     },
     "headerBar": {
         "highlightModal": {

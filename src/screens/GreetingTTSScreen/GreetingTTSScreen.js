@@ -81,11 +81,6 @@ class GreetingTTSScreen extends Component {
         return (
             <SafeAreaView style={styles.container}>
                 <ScrollView keyboardShouldPersistTaps='handled' style={{ backgroundColor: '#0D1021', }} contentContainerStyle={styles.container}>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.goBack()}
-                        style={styles.closeIcon}>
-                        <images.svg.backIcon />
-                    </TouchableOpacity>
                     <View style={[styles.innerConatiner, styles.addTTSContainer]}>
                         <View style={[styles.chatContainer, {
                             bottom: heightPercentageToPx(3) + (Platform.OS === 'ios' && this.state.keyboardOpen ? this.state.keyboardHeight : 0)
@@ -93,7 +88,10 @@ class GreetingTTSScreen extends Component {
                             <View>
                                 <View style={styles.chatBubbleContainer}>
                                     <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                        👋 <Text style={{ color: '#00FFDD' }}>Make an entrance.</Text> Say hi in your own way
+                                        <Text style={{ color: '#00FFDD' }}>
+                                            {translate('greetingTTSScreen.makeAnEntrance')}
+                                        </Text>
+                                        {translate('greetingTTSScreen.sayHi')}
                                     </Text>
                                 </View>
 
@@ -110,23 +108,23 @@ class GreetingTTSScreen extends Component {
                                     </View>
                                     <View style={styles.chatBubbleContainer}>
                                         <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                            🔥 Lit! Ready to save?
+                                            {translate('greetingTTSScreen.readyToSave')}
                                         </Text>
                                     </View>
 
                                     <View style={styles.optionsContainer}>
                                         <View style={styles.optionContainer}>
                                             <OptionButton onPress={() => this.setState({ step: 0 })}>
-                                                <images.svg.editSimple style={styles.marginRight16} />
+                                                <images.svg.editSimple style={styles.optionOutIconMargin} />
                                                 <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                    {translate('interactions.TTS.editMessage')}
+                                                    {translate('greetingTTSScreen.editMessage')}
                                                 </Text>
                                             </OptionButton>
                                         </View>
                                         <View style={styles.optionContainer}>
                                             <TouchableOpacity style={styles.readyButton} onPress={this.saveGreetingMessage}>
-                                                <Text style={[styles.readyText, styles.chatBubbleText]}>
-                                                    {translate('interactions.TTS.ready')}
+                                                <Text style={styles.readyText}>
+                                                    {translate('greetingTTSScreen.ready')}
                                                 </Text>
                                             </TouchableOpacity>
                                         </View>

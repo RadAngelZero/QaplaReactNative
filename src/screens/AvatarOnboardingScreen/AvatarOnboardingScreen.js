@@ -23,23 +23,19 @@ class AvatarOnboardingScreen extends Component {
             this.scrollView.scrollTo({ x: widthPercentageToPx(100), animated: false });
             this.setState({ step: 1 });
         } else {
-            this.props.navigation.navigate('AvatarCreator');
+            this.props.navigation.navigate('AvatarCreatorScreen');
         }
     }
 
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.goBack()}
-                    style={styles.backIcon}>
-                    <images.svg.backIcon />
-                </TouchableOpacity>
                 <ScrollView ref={(scrollView) => this.scrollView = scrollView}
                     style={styles.scrollView}
                     horizontal
                     pagingEnabled
-                    onScroll={this.handleScroll}>
+                    onScroll={this.handleScroll}
+                    scrollEventThrottle={1}>
                     <View style={styles.reactionSample}>
                         <Image source={images.png.reactionSample.img} />
                     </View>

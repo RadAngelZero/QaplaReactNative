@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Image, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import WebView from 'react-native-webview';
 import { connect } from 'react-redux';
 
 import styles from './style';
 import { saveAvatarUrl, saveReadyPlayerMeAvatarId, saveReadyPlayerMeUserId } from '../../services/database';
-import images from '../../../assets/images';
+import { retrieveData, storeData } from '../../utilities/persistance';
 
-class AvatarCreator extends Component {
+class AvatarCreatorScreen extends Component {
     webview = null;
     isSubscribed = false;
     count = 0;
@@ -71,18 +71,24 @@ class AvatarCreator extends Component {
             await saveReadyPlayerMeUserId(this.props.uid, data.userId);
         }
 
+        /**
+         * As the user probably made some changes in the avatar we assume every time that this is a new version
+         * for the 2D image of the user
+         */
+        let imageVersion = Number(await retrieveData('avatarImageVersion'));
+
+        imageVersion++;
+
+        await storeData('avatarImageVersion', imageVersion.toString());
+
+        let edit = this.props.navigation.getParam('edit', false);
         // Navgate to other place
-        this.props.navigation.navigate('AvatarChooseBackgroundScreen', { avatarId });
+        this.props.navigation.navigate('AvatarChooseBackgroundScreen', { avatarId, edit });
     }
 
     render() {
         return (
-            <SafeAreaView style={styles.container}>
-                <TouchableOpacity
-                    onPress={this.props.onClose}
-                    style={styles.closeIcon}>
-                    <images.svg.closeIcon />
-                </TouchableOpacity>
+            <View style={styles.container}>
                 <WebView ref={(webview) => this.webview = webview}
                     source={{
                         uri: 'https://qapla.readyplayer.me/avatar?frameApi',
@@ -90,7 +96,7 @@ class AvatarCreator extends Component {
                     style={styles.webView}
                     onLoad={this.subscribe}
                     onMessage={(message) => this.process(message.nativeEvent.data)} />
-            </SafeAreaView>
+            </View>
         );
     }
 }
@@ -101,4 +107,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(AvatarCreator);
+export default connect(mapStateToProps)(AvatarCreatorScreen);

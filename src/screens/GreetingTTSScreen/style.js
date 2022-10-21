@@ -36,14 +36,12 @@ export default styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#141539',
         borderRadius: 18,
-        height: heightPercentageToPx(5.25),
         paddingHorizontal: 16
     },
     chatTextInput: {
-        flex: 1,
+        paddingVertical: 4,
         fontSize: 16,
         fontWeight: '400',
-        lineHeight: 24,
     },
     chatSendIcon: {
         marginLeft: 16,
@@ -79,7 +77,7 @@ export default styles = StyleSheet.create({
         marginTop: 16
     },
     optionOutIconMargin: {
-        marginRight: 16
+        marginRight: 8
     },
     userChatBubbleContainer: {
         flexDirection: 'row',
@@ -113,4 +111,9 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+    readyText: {
+        fontWeight: '700',
+        fontSize: 16,
+        color: '#0D1021'
+    }
 });

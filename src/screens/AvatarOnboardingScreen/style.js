@@ -9,14 +9,13 @@ export default styles = StyleSheet.create({
 
         alignContent: 'center'
     },
-    backIcon: {
-        position: 'absolute',
-        top: 32,
-        left: 16
+    closeIcon: {
+        marginTop: 32,
+        marginLeft: 16
     },
     scrollView: {
         width: widthPercentageToPx(100),
-        maxHeight: heightPercentageToPx(55)
+        maxHeight: heightPercentageToPx(45)
     },
     reactionSample: {
         justifyContent: 'flex-end',
@@ -51,7 +50,7 @@ export default styles = StyleSheet.create({
     },
     modalTextContainer: {
         maxWidth: '75%',
-        height: heightPercentageToPx(20)
+        height: heightPercentageToPx(16)
     },
     modalTextTitle: {
         fontSize: 20,

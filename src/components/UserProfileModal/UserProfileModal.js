@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, ScrollView, Image, Text, Switch, Linking, Alert, ActivityIndicator } from 'react-native';
-import { BlurView } from '@react-native-community/blur';
+import { View, TouchableOpacity, ScrollView, Image, Text, Switch, Linking, Alert, ActivityIndicator, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
-import { withNavigation } from 'react-navigation';
+import { NavigationEvents, withNavigation } from 'react-navigation';
 import Tooltip from 'react-native-walkthrough-tooltip';
+import LinearGradient from 'react-native-linear-gradient';
 
 import images from '../../../assets/images';
 import { styles } from './style';
@@ -31,12 +31,21 @@ class UserProfileModal extends Component {
         qlanData: null,
         userWantsToJoinAQlan: false,
         updateProfileToolTip: false,
-        updatingProfile: false
+        updatingProfile: false,
+        profileScrollEnabled: false,
+        imageVersion: 0
     }
 
     componentDidMount() {
         this.setUserDefaultImage();
         this.getUserQlanData();
+        this.getImageVersion();
+    }
+
+    getImageVersion = async () => {
+        const imageVersion = await retrieveData('avatarImageVersion');
+
+        this.setState({ imageVersion });
     }
 
     getQoins = () => {
@@ -194,245 +203,285 @@ class UserProfileModal extends Component {
         Linking.openURL('https://www.twitch.tv/');
     }
 
-    render() {
+    renderProfile = () => {
         const twitchLinked = this.props.twitchId && this.props.twitchUsername;
 
         return (
-            <View style={{
-                flex: 1,
-            }}>
-                <View style={styles.mainContainer}>
-                    <BlurView
-                        style={styles.blur}
-                        blurAmount={5}
-                        blurType="dark"
-                        reducedTransparencyFallbackColor="black" />
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.goBack()}
-                        style={styles.closeIcon}
-                    >
-                        <images.svg.closeIcon />
-                    </TouchableOpacity>
-                    <ScrollView style={styles.scrollView}
-                        contentContainerStyle={styles.scrollViewContentContainer}>
-                        <View style={styles.topContainer}>
-                            <TouchableOpacity style={styles.userInfoContainer} onPress={() => this.setState({ updateProfileToolTip: true })}>
-                                <View style={styles.userImageContainer}>
-                                    <Tooltip
-                                        isVisible={this.state.updateProfileToolTip}
-                                        content={
-                                            <View style={{
-                                                padding: 12,
-                                            }}>
-                                                <Text style={{
-                                                    color: '#fff',
-                                                    fontSize: 17,
-                                                    fontWeight: '700',
-                                                    lineHeight: 22,
-                                                }}>
-                                                    {translate('userProfileScreen.updateProfile')}
-                                                </Text>
-                                                <TouchableOpacity style={{
-                                                    backgroundColor: '#141735',
-                                                    paddingHorizontal: 19,
-                                                    paddingVertical: 13,
-                                                    borderRadius: 50,
-                                                    marginTop: 11,
-                                                    alignSelf: 'flex-end',
-                                                    shadowColor: '#000',
-                                                    shadowOffset: {
-                                                        width: 0,
-                                                        height: 11,
-                                                    },
-                                                    shadowOpacity: 0.55,
-                                                    shadowRadius: 14.78,
-
-                                                    elevation: 22,
-                                                }}
-                                                    onPress={this.toolTipGoToTwitch}>
-                                                    <Text style={{
-                                                        color: '#fff',
-                                                        fontSize: 17,
-                                                        fontWeight: '700',
-                                                        lineHeight: 16,
-                                                    }}>
-                                                        {translate('userProfileScreen.goToTwitch')}
-                                                    </Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                        }
-                                        placement="bottom"
-                                        onClose={() => this.setState({ updateProfileToolTip: false })}
-                                        arrowStyle={{ color: '#3B4BF9' }}
-                                        topAdjustment={50}
-                                        displayInsets={{
-                                            left: widthPercentageToPx(4.26),
-                                        }}
-                                        contentStyle={{
-                                            backgroundColor: '#3B4BF9',
-                                            width: 245,
-                                            borderRadius: 15,
-                                        }}
-                                        backgroundColor="#0000"
-                                    >
-                                        <Image
-                                            source={this.props.photoUrl ? { uri: this.props.photoUrl } : (this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img)}
-                                            style={styles.userImage} />
-                                    </Tooltip>
-                                    {!this.state.updatingProfile &&
-                                        <Image
-                                            source={this.props.photoUrl ? { uri: this.props.photoUrl } : (this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img)}
-                                            style={styles.userImage} />
-                                    }
-                                </View>
-                                {!this.state.updatingProfile &&
-                                    <Text style={styles.userUsername}
-                                        numberOfLines={1}>
-                                        {this.props.twitchUsername ? this.props.twitchUsername : this.props.username}
-                                    </Text>
-                                }
-                                {this.state.updatingProfile &&
-                                    <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
-                                }
-                            </TouchableOpacity>
-                            <TouchableOpacity disabled={this.state.updatingProfile}
-                                onPress={() => twitchLinked ? this.refreshTwitchData() : this.setState({ showLinkWithTwitchModal: true })}
-                                style={twitchLinked ? styles.twitchLinkedButton : styles.twitchLinkButton}>
-                                <images.svg.twitchIcon style={styles.twitchIcon} />
-                                <Text style={styles.twitchLinkedText}>
-                                    {twitchLinked ?
-                                        translate('userProfileScreen.refresh')
-                                        :
-                                        translate('userProfileScreen.linkAccount')
-                                    }
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.qoinsContainer}>
-                            <View>
-                                <Text style={styles.myQoinsText}>
-                                    {translate('userProfileScreen.myQoins')}
-                                </Text>
-                                <View style={[styles.qoinsDisplayContainer, styles.marginTop16]}>
-                                    <images.svg.qoin style={styles.bigQoin} />
-                                    <Text style={styles.qoinsNumber}>
-                                        {this.props.qoins}
-                                    </Text>
-                                </View>
-                            </View>
-                            <TouchableOpacity
-                                onPress={this.getQoins}
-                                style={styles.getQoinsButton}>
-                                <Text style={styles.getQoinsText}>
-                                    {translate('userProfileScreen.getQoins')}
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <TouchableOpacity
-                            onPress={this.toggleSupportDisplay}
-                            style={styles.subCategoryContanier}>
-                            <View style={styles.mySupportSubContainer}>
-                                <Text style={styles.subCategoryHeaderText}>
-                                    {translate('userProfileScreen.mySupport')}
-                                </Text>
-                                <images.svg.arrowDownWhite style={{
-                                    transform: [{ rotate: !this.state.mySupportOpen ? '0deg' : '180deg' }],
-                                }} />
-                            </View>
-                            {this.state.mySupportOpen &&
-                                <View style={styles.marginTop16}>
-                                    <View style={styles.supportDataContainer}>
-                                        <images.svg.qoin style={styles.bigQoin} />
-                                        <Text style={styles.qoinsNumber}>
-                                            {this.props.qoinsDonated}
+            <View style={styles.scrollView}>
+                <View style={styles.topContainer}>
+                    <TouchableOpacity style={styles.userInfoContainer} onPress={() => this.setState({ updateProfileToolTip: true })}>
+                        <View style={styles.userImageContainer}>
+                            <Tooltip
+                                isVisible={this.state.updateProfileToolTip}
+                                content={
+                                    <View style={{
+                                        padding: 12,
+                                    }}>
+                                        <Text style={{
+                                            color: '#fff',
+                                            fontSize: 17,
+                                            fontWeight: '700',
+                                            lineHeight: 22,
+                                        }}>
+                                            {translate('userProfileScreen.updateProfile')}
                                         </Text>
+                                        <TouchableOpacity style={{
+                                            backgroundColor: '#141735',
+                                            paddingHorizontal: 19,
+                                            paddingVertical: 13,
+                                            borderRadius: 50,
+                                            marginTop: 11,
+                                            alignSelf: 'flex-end',
+                                            shadowColor: '#000',
+                                            shadowOffset: {
+                                                width: 0,
+                                                height: 11,
+                                            },
+                                            shadowOpacity: 0.55,
+                                            shadowRadius: 14.78,
+
+                                            elevation: 22,
+                                        }}
+                                            onPress={this.toolTipGoToTwitch}>
+                                            <Text style={{
+                                                color: '#fff',
+                                                fontSize: 17,
+                                                fontWeight: '700',
+                                                lineHeight: 16,
+                                            }}>
+                                                {translate('userProfileScreen.goToTwitch')}
+                                            </Text>
+                                        </TouchableOpacity>
                                     </View>
-                                    <Text style={styles.qoinsSubtext}>
-                                        {translate('userProfileScreen.totalQoinsSent')}
-                                    </Text>
-                                </View>
+                                }
+                                placement="bottom"
+                                onClose={() => this.setState({ updateProfileToolTip: false })}
+                                arrowStyle={{ color: '#3B4BF9' }}
+                                topAdjustment={50}
+                                displayInsets={{
+                                    left: widthPercentageToPx(4.26),
+                                }}
+                                contentStyle={{
+                                    backgroundColor: '#3B4BF9',
+                                    width: 245,
+                                    borderRadius: 15,
+                                }}
+                                backgroundColor="#0000"
+                            >
+                                <Image
+                                    source={this.props.photoUrl ? { uri: this.props.photoUrl } : (this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img)}
+                                    style={styles.userImage} />
+                            </Tooltip>
+                            {!this.state.updatingProfile &&
+                                <Image
+                                    source={this.props.photoUrl ? { uri: this.props.photoUrl } : (this.state.userImage.uri ? { uri: this.state.userImage.img } : this.state.userImage.img)}
+                                    style={styles.userImage} />
                             }
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={this.openJoinQlanModal}
-                            style={[styles.subCategoryContanier, styles.marginTop24, styles.mySupportSubContainer]}>
-                            <Text style={styles.subCategoryHeaderText}>
-                                {`🎁 ${this.state.qlanData ? this.state.qlanData.name : translate('userProfileScreen.addQreatorCode')}`}
+                        </View>
+                        {!this.state.updatingProfile &&
+                            <Text style={styles.userUsername}
+                                numberOfLines={1}>
+                                {this.props.twitchUsername ? this.props.twitchUsername : this.props.username}
                             </Text>
-                            {this.state.qlanData ?
-                                <images.svg.editQreatorCodeIcon />
+                        }
+                        {this.state.updatingProfile &&
+                            <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
+                        }
+                    </TouchableOpacity>
+                    <TouchableOpacity disabled={this.state.updatingProfile}
+                        onPress={() => twitchLinked ? this.refreshTwitchData() : this.setState({ showLinkWithTwitchModal: true })}
+                        style={twitchLinked ? styles.twitchLinkedButton : styles.twitchLinkButton}>
+                        <images.svg.twitchIcon style={styles.twitchIcon} />
+                        <Text style={styles.twitchLinkedText}>
+                            {twitchLinked ?
+                                translate('userProfileScreen.refresh')
                                 :
-                                <images.svg.plusIcon />
+                                translate('userProfileScreen.linkAccount')
                             }
-                        </TouchableOpacity>
-                        <View style={[styles.subCategoryContanier, styles.marginTop24]}>
-                            <Text style={styles.subCategoryHeaderText}>
-                                {translate('userProfileScreen.notifications')}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.qoinsContainer}>
+                    <View>
+                        <Text style={styles.myQoinsText}>
+                            {translate('userProfileScreen.myQoins')}
+                        </Text>
+                        <View style={[styles.qoinsDisplayContainer, styles.marginTop16]}>
+                            <images.svg.qoin style={styles.bigQoin} />
+                            <Text style={styles.qoinsNumber}>
+                                {this.props.qoins}
                             </Text>
-                            <View style={[styles.marginTop16, styles.switchGroupContainer]}>
-                                <View style={styles.switchTextMaxWidth}>
-                                    <Text style={styles.switchHeaderText}>
-                                        {translate('userProfileScreen.newStreams')}
-                                    </Text>
-                                    <Text style={styles.switchSubText}>
-                                        {translate('userProfileScreen.newStreamsDescription')}
-                                    </Text>
-                                </View>
-                                <Switch
-                                    onChange={this.toggleStreamsNotifications}
-                                    value={this.props.notificationSettings.streamersSubscriptions != null ? this.props.notificationSettings.streamersSubscriptions : true}
-                                />
-                            </View>
-                            <View style={[styles.marginTop16, styles.switchGroupContainer]}>
-                                <View style={styles.switchTextMaxWidth}>
-                                    <Text style={styles.switchHeaderText}>
-                                        {translate('userProfileScreen.scheduledStreams')}
-                                    </Text>
-                                    <Text style={styles.switchSubText}>
-                                        {translate('userProfileScreen.scheduledStreamsDescription')}
-                                    </Text>
-                                </View>
-                                <Switch
-                                    onChange={() => updateNotificationSettings(this.props.uid, 'scheduledStreams', this.props.notificationSettings.scheduledStreams != null ? !this.props.notificationSettings.scheduledStreams : false)}
-                                    value={this.props.notificationSettings.scheduledStreams != null ? this.props.notificationSettings.scheduledStreams : true}
-                                />
-                            </View>
                         </View>
-                        <View style={[styles.subCategoryContanier, styles.marginTop24]}>
-                            <TouchableOpacity
-                                onPress={this.openTermsAndConditions}
-                                style={styles.switchGroupContainer}>
-                                <Text style={[styles.subCategoryHeaderText, styles.fontSize16]}>
-                                    {translate('userProfileScreen.termsAndConditions')}
+                    </View>
+                    <TouchableOpacity
+                        onPress={this.getQoins}
+                        style={styles.getQoinsButton}>
+                        <Text style={styles.getQoinsText}>
+                            {translate('userProfileScreen.getQoins')}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity
+                    onPress={this.toggleSupportDisplay}
+                    style={styles.subCategoryContanier}>
+                    <View style={styles.mySupportSubContainer}>
+                        <Text style={styles.subCategoryHeaderText}>
+                            {translate('userProfileScreen.mySupport')}
+                        </Text>
+                        <images.svg.arrowDownWhite style={{
+                            transform: [{ rotate: !this.state.mySupportOpen ? '0deg' : '180deg' }],
+                        }} />
+                    </View>
+                    {this.state.mySupportOpen &&
+                        <View style={styles.marginTop16}>
+                            <View style={styles.supportDataContainer}>
+                                <images.svg.qoin style={styles.bigQoin} />
+                                <Text style={styles.qoinsNumber}>
+                                    {this.props.qoinsDonated}
                                 </Text>
-                                <images.svg.shareArrowTransparent style={styles.externalLinkIcon} />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={this.openPrivacy}
-                                style={[styles.marginTop16, styles.switchGroupContainer]}>
-                                <Text style={[styles.subCategoryHeaderText, styles.fontSize16]}>
-                                    {translate('userProfileScreen.privacyNotice')}
-                                </Text>
-                                <images.svg.shareArrowTransparent style={styles.externalLinkIcon} />
-                            </TouchableOpacity>
+                            </View>
+                            <Text style={styles.qoinsSubtext}>
+                                {translate('userProfileScreen.totalQoinsSent')}
+                            </Text>
                         </View>
-                        <TouchableOpacity
-                            onPress={this.closeSession}
-                            style={[styles.subCategoryContanier, styles.marginTop24]}>
-                            <Text style={styles.finalButtonsText}>
-                                {translate('userProfileScreen.logOut')}
+                    }
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={this.openJoinQlanModal}
+                    style={[styles.subCategoryContanier, styles.marginTop24, styles.mySupportSubContainer]}>
+                    <Text style={styles.subCategoryHeaderText}>
+                        {`🎁 ${this.state.qlanData ? this.state.qlanData.name : translate('userProfileScreen.addQreatorCode')}`}
+                    </Text>
+                    {this.state.qlanData ?
+                        <images.svg.editQreatorCodeIcon />
+                        :
+                        <images.svg.plusIcon />
+                    }
+                </TouchableOpacity>
+                <View style={[styles.subCategoryContanier, styles.marginTop24]}>
+                    <Text style={styles.subCategoryHeaderText}>
+                        {translate('userProfileScreen.notifications')}
+                    </Text>
+                    <View style={[styles.marginTop16, styles.switchGroupContainer]}>
+                        <View style={styles.switchTextMaxWidth}>
+                            <Text style={styles.switchHeaderText}>
+                                {translate('userProfileScreen.newStreams')}
                             </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={this.deleteAccountConfirmation}
-                            style={[styles.subCategoryContanier, styles.marginTop24]}>
-                            <Text style={[styles.finalButtonsText, styles.deleteTextColor]}>
-                                {translate('userProfileScreen.deleteAccount')}
+                            <Text style={styles.switchSubText}>
+                                {translate('userProfileScreen.newStreamsDescription')}
                             </Text>
+                        </View>
+                        <Switch
+                            onChange={this.toggleStreamsNotifications}
+                            value={this.props.notificationSettings.streamersSubscriptions != null ? this.props.notificationSettings.streamersSubscriptions : true}
+                        />
+                    </View>
+                    <View style={[styles.marginTop16, styles.switchGroupContainer]}>
+                        <View style={styles.switchTextMaxWidth}>
+                            <Text style={styles.switchHeaderText}>
+                                {translate('userProfileScreen.scheduledStreams')}
+                            </Text>
+                            <Text style={styles.switchSubText}>
+                                {translate('userProfileScreen.scheduledStreamsDescription')}
+                            </Text>
+                        </View>
+                        <Switch
+                            onChange={() => updateNotificationSettings(this.props.uid, 'scheduledStreams', this.props.notificationSettings.scheduledStreams != null ? !this.props.notificationSettings.scheduledStreams : false)}
+                            value={this.props.notificationSettings.scheduledStreams != null ? this.props.notificationSettings.scheduledStreams : true}
+                        />
+                    </View>
+                </View>
+                <View style={[styles.subCategoryContanier, styles.marginTop24]}>
+                    <TouchableOpacity
+                        onPress={this.openTermsAndConditions}
+                        style={styles.switchGroupContainer}>
+                        <Text style={[styles.subCategoryHeaderText, styles.fontSize16]}>
+                            {translate('userProfileScreen.termsAndConditions')}
+                        </Text>
+                        <images.svg.shareArrowTransparent style={styles.externalLinkIcon} />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={this.openPrivacy}
+                        style={[styles.marginTop16, styles.switchGroupContainer]}>
+                        <Text style={[styles.subCategoryHeaderText, styles.fontSize16]}>
+                            {translate('userProfileScreen.privacyNotice')}
+                        </Text>
+                        <images.svg.shareArrowTransparent style={styles.externalLinkIcon} />
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity
+                    onPress={this.closeSession}
+                    style={[styles.subCategoryContanier, styles.marginTop24]}>
+                    <Text style={styles.finalButtonsText}>
+                        {translate('userProfileScreen.logOut')}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={this.deleteAccountConfirmation}
+                    style={[styles.subCategoryContanier, styles.marginTop24]}>
+                    <Text style={[styles.finalButtonsText, styles.deleteTextColor]}>
+                        {translate('userProfileScreen.deleteAccount')}
+                    </Text>
+                </TouchableOpacity>
+                <View style={styles.bottomSeparation} />
+            </View>
+        );
+    }
+
+    render() {
+        const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${this.state.imageVersion}`;
+
+        return (
+            <View style={{ flex: 1 }}>
+                <ScrollView>
+                <View style={styles.mainContainer}>
+                    {this.props.avatarBackground ?
+                        <LinearGradient style={{ flex: 1 }}
+                            useAngle
+                            {...this.props.avatarBackground}>
+                                <Image source={{ uri: avatarImage }} style={styles.avatarImage} />
+                                <TouchableOpacity
+                                    onPress={() => this.props.navigation.goBack()}
+                                    style={styles.closeIcon}>
+                                    <images.svg.closeIcon />
+                                </TouchableOpacity>
+                                <View style={styles.editAvatarContainer}>
+                                    <TouchableOpacity
+                                        onPress={() => this.props.navigation.navigate('AvatarCreatorScreen', { edit: true })}
+                                        style={styles.editButton}>
+                                        <images.svg.editIcon style={{ marginRight: 8 }} />
+                                        <Text style={styles.createAvatarButtonText}>
+                                            {translate('userProfileScreen.editAvatar')}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                                {this.renderProfile()}
+                        </LinearGradient>
+                        :
+                        <>
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.goBack()}
+                            style={styles.closeIcon}>
+                            <images.svg.closeIcon />
                         </TouchableOpacity>
-                        <View style={styles.bottomSeparation} />
-                    </ScrollView >
-                </View >
+                        <ImageBackground source={images.png.createAvatarCover.img}
+                            style={styles.createAvatarBackgroundImage}>
+                            <View />
+                            <Text style={styles.createAvatarTitle}>
+                                {translate('userProfileScreen.yourIdentity')}
+                            </Text>
+                            <TouchableOpacity style={styles.createAvatarButton}
+                                onPress={() => this.props.navigation.navigate('AvatarStackNavigator')}>
+                                <Text style={styles.createAvatarButtonText}>
+                                    {translate('userProfileScreen.createAvatar')}
+                                </Text>
+                            </TouchableOpacity>
+                        </ImageBackground>
+                        {this.renderProfile()}
+                        </>
+                    }
+                </View>
+                </ScrollView>
                 <LinkTwitchAccountModal open={this.state.showLinkWithTwitchModal}
                     onClose={() => this.setState({ showLinkWithTwitchModal: false })}
                     onLinkSuccessful={this.state.userWantsToJoinAQlan ? this.openJoinQlanModal : null}
@@ -444,7 +493,8 @@ class UserProfileModal extends Component {
                     userName={this.props.username}
                     twitchUsername={this.props.twitchUsername}
                     onSuccess={this.getUserQlanData} />
-            </View >
+                <NavigationEvents onWillFocus={this.getImageVersion} />
+            </View>
         );
     }
 }
@@ -460,7 +510,9 @@ function mapStateToProps(state) {
         twitchUsername: state.userReducer.user.twitchUsername,
         notificationSettings: state.userReducer.user.notificationSettings || {},
         userSubscriptions: state.userReducer.user.userToStreamersSubscriptions || {},
-        qlanId: state.userReducer.user.qlanId
+        qlanId: state.userReducer.user.qlanId,
+        avatarBackground: state.userReducer.user.avatarBackground,
+        avatarId: state.userReducer.user.rpmAvatarId
     };
 }
 

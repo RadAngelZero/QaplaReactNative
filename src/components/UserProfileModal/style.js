@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx, paddingTopForAndroidDevicesWithNotch } from '../../utilities/iosAndroidDim';
-import { HEADER_SIZE } from '../../utilities/Constants';
-import Colors from '../../utilities/Colors';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export const styles = StyleSheet.create({
     marginTop16: {
@@ -13,24 +11,84 @@ export const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
     },
-    blur: {
+    avatarImage: {
         position: 'absolute',
-        width: '100%',
-        height: '100%',
+        height: heightPercentageToPx(60),
+        width: widthPercentageToPx(100)
+    },
+    createAvatarBackgroundImage: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 10,
+        },
+        shadowOpacity: 0.51,
+        shadowRadius: 13.16,
+        elevation: 20,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: heightPercentageToPx(30),
+        width: widthPercentageToPx(91),
+        paddingVertical: 24,
+        justifyContent: 'space-between'
+    },
+    createAvatarTitle: {
+        fontSize: 24,
+        fontWeight: '900',
+        letterSpacing: -0.41,
+        textAlign: 'center',
+        color: '#FFF',
+        maxWidth: widthPercentageToPx(50)
+    },
+    createAvatarButton: {
+        borderRadius: 100,
+        backgroundColor: '#00FFDD',
+        paddingHorizontal: 24,
+        paddingVertical: 16
+    },
+    createAvatarButtonText: {
+        fontSize: 16,
+        fontWeight: '700',
+        letterSpacing: -0.32,
+        color: '#0D1022'
     },
     closeIcon: {
-        marginTop: heightPercentageToPx(3.94),
-        marginLeft: widthPercentageToPx(4.26),
+        marginTop: 32,
+        marginLeft: 16,
+        marginBottom: 16
+    },
+    editAvatarContainer: {
+        // 43 is the desired size, the close icon has a margin top of 32 and a margin bottom of 16
+        height: heightPercentageToPx(43) - 32 - 16
+    },
+    editButton: {
+        alignSelf: 'center',
+        position: 'absolute',
+        bottom: 32,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+        backgroundColor: '#00FFDD',
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        flexDirection: 'row',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+
+        elevation: 8
     },
     scrollView: {
         backgroundColor: '#0D1021',
         flex: 1,
-        marginTop: heightPercentageToPx(1.47),
         borderTopLeftRadius: widthPercentageToPx(10.66),
         borderTopRightRadius: widthPercentageToPx(10.66),
         paddingHorizontal: widthPercentageToPx(4.26),
-    },
-    scrollViewContentContainer: {
         alignItems: 'center',
     },
     topContainer: {

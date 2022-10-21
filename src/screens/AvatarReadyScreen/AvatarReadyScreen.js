@@ -5,8 +5,8 @@ import WebView from 'react-native-webview';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import images from '../../../assets/images';
 import { getAvatarAnimationCameraAspectRatio, getUserGreetingAnimation } from '../../services/database';
+import { translate } from '../../utilities/i18';
 
 class AvatarReadyScreen extends Component {
     state = {
@@ -42,11 +42,6 @@ class AvatarReadyScreen extends Component {
                         </View>
                     }
                 </View>
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.dismiss()}
-                    style={styles.closeIcon}>
-                    <images.svg.closeIcon />
-                </TouchableOpacity>
                 <LinearGradient style={styles.modal}
                     useAngle
                     angle={136.25}
@@ -54,21 +49,21 @@ class AvatarReadyScreen extends Component {
                     <View style={styles.modalContainer}>
                         <View>
                             <Text style={[styles.text, styles.title]}>
-                                Your Avi is ready
+                                {translate('avatarReadyScreen.aviReady')}
                             </Text>
                             <Text style={[styles.text, styles.description]}>
-                                Say hi from the app or the Twitch extension whenever you show up on a stream
+                                {translate('avatarReadyScreen.uses')}
                             </Text>
                         </View>
                         <TouchableOpacity style={styles.confirmButton} onPress={() => this.props.navigation.navigate('SendGreetingStackNavigator')}>
                             <Text style={styles.confirmButtonText}>
-                                Send now on Stream
+                                {translate('avatarReadyScreen.sendNow')}
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{ padding: 16, marginTop: 16 }}
                             onPress={() => this.props.navigation.dismiss()}>
                             <Text style={[styles.confirmButtonText, { color: '#FFF' }]}>
-                                Back to Profile
+                                {translate('avatarReadyScreen.backToProfile')}
                             </Text>
                         </TouchableOpacity>
                     </View>

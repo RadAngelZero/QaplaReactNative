@@ -63,6 +63,7 @@ import AvatarChooseBackgroundScreen from './screens/AvatarChooseBackgroundScreen
 import AvatarOnboardingScreen from './screens/AvatarOnboardingScreen/AvatarOnboardingScreen';
 import GreetingTTSScreen from './screens/GreetingTTSScreen/GreetingTTSScreen';
 import AvatarReadyScreen from './screens/AvatarReadyScreen/AvatarReadyScreen';
+import AvatarCreationHeaderBar from './components/AvatarCreationHeaderBar/AvatarCreationHeaderBar';
 
 //#region Stack Navigators
 
@@ -311,15 +312,13 @@ const AvatarStackNavigator = createStackNavigator({
   AvatarOnboardingScreen: {
     screen: AvatarOnboardingScreen,
     navigationOptions: {
-      headerShown: false,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     }
   },
-  AvatarCreator: {
+  AvatarCreatorScreen: {
     screen: AvatarCreatorScreen,
     navigationOptions: {
-      headerShown: false,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     }
@@ -327,7 +326,6 @@ const AvatarStackNavigator = createStackNavigator({
   AvatarChooseBackgroundScreen: {
     screen: AvatarChooseBackgroundScreen,
     navigationOptions: {
-      headerShown: false,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     }
@@ -335,7 +333,6 @@ const AvatarStackNavigator = createStackNavigator({
   AvatarChooseAnimationScreen: {
     screen: AvatarChooseAnimationScreen,
     navigationOptions: {
-      headerShown: false,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     }
@@ -343,7 +340,6 @@ const AvatarStackNavigator = createStackNavigator({
   AvatarChooseGreetingMessageScreen: {
     screen: GreetingTTSScreen,
     navigationOptions: {
-      headerShown: false,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     }
@@ -351,10 +347,13 @@ const AvatarStackNavigator = createStackNavigator({
   AvatarReadyScreen: {
     screen: AvatarReadyScreen,
     navigationOptions: {
-      headerShown: false,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     }
+  }
+}, {
+  defaultNavigationOptions: {
+    header: (props) => <AvatarCreationHeaderBar {...props} />,
   }
 });
 

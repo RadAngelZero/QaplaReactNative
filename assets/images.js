@@ -252,6 +252,9 @@ const images = {
 		reactionSample:  {
 			img: require('./images/ReactionSample.png')
 		},
+		createAvatarCover: {
+			img: require('./images/CreateAvatarCover.png')
+		}
 	},
 	svg: {
 		googleIcon: GoogleIcon,
@@ -429,6 +432,9 @@ const images = {
 		},
 		swing: {
 			img: require('./gifs/Swing.gif')
+		},
+		thatsRad: {
+			img: require('./gifs/thatsRad.gif')
 		}
 	},
 };

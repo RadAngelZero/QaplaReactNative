@@ -37,6 +37,8 @@ class AvatarChooseAnimationScreen extends Component {
     saveAnimation = async () => {
         const avatarId = this.props.navigation.getParam('avatarId');
         await saveUserGreetingAnimation(this.props.uid, avatarId, this.state.currentAnimation);
+
+        this.props.navigation.navigate('AvatarChooseGreetingMessageScreen');
     }
 
     render() {
@@ -54,11 +56,6 @@ class AvatarChooseAnimationScreen extends Component {
                             style={{ display: this.state.webViewLoaded ? 'flex' : 'none' }} />
                     </View>
                 </View>
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.goBack()}
-                    style={styles.backIcon}>
-                    <images.svg.backIcon />
-                </TouchableOpacity>
                 <View style={styles.selectorContainer}>
                     <View style={styles.optionsContainer}>
                         <ScrollView horizontal>

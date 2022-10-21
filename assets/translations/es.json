@@ -143,6 +143,9 @@
         }
     },
     "userProfileScreen": {
+        "yourIdentity": "Tu identidad en stream",
+        "createAvatar": "Crea tu Avatar",
+        "editAvatar": "Editar Avatar",
         "linkAccount": "Vincular Twitch",
         "linked": "Vinculada",
         "updateProfile": "Actualiza tu perfil\nen Twitch",
@@ -404,10 +407,25 @@
     "avatarChooseBackgroundScreen": {
         "pickABackground": "Escoge un color de fondo",
         "description": "Así es como te veras en tus reacciones enviadas en stream",
-        "useBackground": "Usar Fondo"
+        "useBackground": "Usar Fondo",
+        "aviUpdated": "Avatar actualizado 💣",
+        "backToProfile": "Volver al perfil"
     },
     "avatarChooseAnimationScreen": {
         "confirmButton": "Usar Animación"
+    },
+    "avatarReadyScreen": {
+        "aviReady": "Tu Avatar esta listo",
+        "uses": "Di hola desde la app o en la extensión de Twitch cuando llegues a un stream",
+        "sendNow": "Envia ahora en Stream",
+        "backToProfile": "Volver al perfil"
+    },
+    "greetingTTSScreen": {
+        "makeAnEntrance": "👋 Haz una entrada. ",
+        "sayHi": "Di hola a tu manera",
+        "readyToSave": "🔥 ¡Genial! ¿Listo para guardar?",
+        "editMessage": "Editar mensaje",
+        "ready": "Listo"
     },
     "headerBar": {
         "highlightModal": {

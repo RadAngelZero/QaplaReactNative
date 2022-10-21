@@ -17,7 +17,6 @@ import CheckBox from '../../components/CheckBox/CheckBox';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import TermsAndConditionsModal from '../../components/TermsAndConditionsModal/TermsAndConditionsModal';
 import QaplaText from '../../components/QaplaText/QaplaText';
-import { connectUserToSendBird } from '../../services/SendBird';
 
 const SignUpControllersBackgroundImage = Images.png.signUpControllers.img;
 
@@ -50,8 +49,6 @@ class ChooseUserNameScreen extends Component {
                         const email = this.props.navigation.getParam('email', '');
 
                         await createUserProfile(this.props.uid, email, this.state.userName);
-
-                        connectUserToSendBird(this.props.uid, this.state.userName);
 
                         const originScreen = this.props.navigation.getParam('originScreen', 'Explore');
 

@@ -9,27 +9,22 @@ import {
     notifications,
     links
 } from '../../utilities/firebase';
-import { retrieveData, storeData, removeDataItem } from '../../utilities/persistance';
 import styles from './style';
 import images from '../../../assets/images';
 import { getUserNode } from '../../actions/userActions';
 import {
     getUserNameWithUID,
-    updateUserLanguage,
     getTwitchUserName,
     getStreamerPublicProfile
 } from '../../services/database';
 import { getListOfGames } from '../../actions/gamesActions';
 import { initializeSegment, setUserIdOnSegment } from '../../services/statistics';
-import { getHg1CreateMatch } from '../../actions/highlightsActions';
 import { getServerTimeOffset } from '../../actions/serverTimeOffsetActions';
 import { loadFeaturedStreams, loadStreamsByListIndex } from '../../actions/streamsActions';
 import { translate } from '../../utilities/i18';
 import { checkNotificationPermission } from '../../services/messaging';
 import remoteConf from '../../services/remoteConfig';
 import { trackOnSegment } from '../../services/statistics';
-import { connectUserToSendBird } from '../../services/SendBird';
-import { getUserProfileImgUrl } from '../../services/storage';
 
 import LoadingAnimation from '../../components/LoadingAnimation/LoadingAnimation';
 

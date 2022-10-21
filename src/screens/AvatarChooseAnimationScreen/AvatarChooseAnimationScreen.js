@@ -5,7 +5,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import images from '../../../assets/images';
 import { getAvatarAnimations, saveUserGreetingAnimation } from '../../services/database';
 import { translate } from '../../utilities/i18';
 
@@ -13,7 +12,7 @@ class AvatarChooseAnimationScreen extends Component {
     state = {
         currentAnimation: 'breakDance',
         aspect: 9/16,
-        animations: {},
+        animations: [],
         webViewLoaded: false
     };
 
@@ -22,8 +21,15 @@ class AvatarChooseAnimationScreen extends Component {
     }
 
     loadAnimations = async () => {
-        const animations = await getAvatarAnimations();
-        this.setState({ animations: animations.val() });
+        const animationsSnap = await getAvatarAnimations();
+        const animations = [];
+
+        // Put the animations in the array is not yet relevant but it will be in a near future
+        animationsSnap.forEach((animation) => {
+            animations.push({ ...animation.val(), key: animation.key });
+        });
+
+        this.setState({ animations });
     }
 
     onAnimationSelected = (animationId, animation) => {
@@ -59,18 +65,18 @@ class AvatarChooseAnimationScreen extends Component {
                 <View style={styles.selectorContainer}>
                     <View style={styles.optionsContainer}>
                         <ScrollView horizontal>
-                            {Object.keys(this.state.animations).reverse().map((animationId) => (
+                            {this.state.animations.map((animation) => (
                                 <LinearGradient start={{x: 0.0, y: 1.0}}
                                     end={{x: 1.0, y: 1.0}}
                                     useAngle
                                     angle={135}
-                                    colors={this.state.currentAnimation === animationId ? ['#FF9999', '#A87EFF'] : ['#141539', '#141539']}
+                                    colors={this.state.currentAnimation === animation.key ? ['#FF9999', '#A87EFF'] : ['#141539', '#141539']}
                                     style={styles.optionButtonContainer}>
                                     <TouchableOpacity
                                         style={styles.optionButton}
-                                        onPress={() => this.onAnimationSelected(animationId, this.state.animations[animationId])}>
+                                        onPress={() => this.onAnimationSelected(animation.key, animation)}>
                                         <Text style={styles.optionText}>
-                                            {this.state.animations[animationId].name}
+                                            {animation.name}
                                         </Text>
                                     </TouchableOpacity>
                                 </LinearGradient>

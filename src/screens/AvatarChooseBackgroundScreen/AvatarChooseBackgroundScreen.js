@@ -97,12 +97,20 @@ class AvatarChooseBackgroundScreen extends Component {
                             }
                         </LinearGradient>
                     </View>
-                    <Text style={styles.instructions}>
-                        {translate('avatarChooseBackgroundScreen.pickABackground')}
-                    </Text>
-                    <Text style={styles.description}>
-                        {translate('avatarChooseBackgroundScreen.description')}
-                    </Text>
+                    {this.state.imageLoaded ?
+                        <>
+                        <Text style={styles.instructions}>
+                            {translate('avatarChooseBackgroundScreen.pickABackground')}
+                        </Text>
+                        <Text style={styles.description}>
+                            {translate('avatarChooseBackgroundScreen.description')}
+                        </Text>
+                        </>
+                        :
+                        <Text style={[styles.description, { color: '#FFF' }]}>
+                            {translate('avatarChooseBackgroundScreen.loading')}
+                        </Text>
+                    }
                 </View>
                 <View style={styles.selectorContainer}>
                     <View style={styles.optionsContainer}>
@@ -122,7 +130,11 @@ class AvatarChooseBackgroundScreen extends Component {
                                 </TouchableOpacity>
                             ))}
                         </ScrollView>
-                        <TouchableOpacity style={styles.confirmButton} onPress={this.saveBackground}>
+                        <TouchableOpacity style={[styles.confirmButton, {
+                                opacity: this.state.imageLoaded ? 1 : .4
+                            }]}
+                            onPress={this.saveBackground}
+                            disabled={!this.state.imageLoaded}>
                             <Text style={styles.confirmButtonText}>
                                 {translate('avatarChooseBackgroundScreen.useBackground')}
                             </Text>
@@ -133,7 +145,7 @@ class AvatarChooseBackgroundScreen extends Component {
                     transparent>
                     <View style={styles.modalContainer}>
                         <View style={styles.modal}>
-                            <TouchableOpacity style={styles.closeModalIcon}>
+                            <TouchableOpacity style={styles.closeModalIcon} onPress={this.closeModal}>
                                 <images.svg.closeIcon />
                             </TouchableOpacity>
                             <Image style={styles.editedImage}

@@ -407,6 +407,7 @@
     "avatarChooseBackgroundScreen": {
         "pickABackground": "Escoge un color de fondo",
         "description": "Así es como te veras en tus reacciones enviadas en stream",
+        "loading": "Cocinando... puede tomar de 10 a 15 segundos",
         "useBackground": "Usar Fondo",
         "aviUpdated": "Avatar actualizado 💣",
         "backToProfile": "Volver al perfil"

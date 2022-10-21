@@ -407,6 +407,7 @@
     "avatarChooseBackgroundScreen": {
         "pickABackground": "Pick a background color",
         "description": "This is how you’ll look in your custom reactions on stream",
+        "loading": "We’re cooking... it might take 10 to 15 seconds",
         "useBackground": "Use Background",
         "aviUpdated": "Avi updated 💣",
         "backToProfile": "Back to profile"

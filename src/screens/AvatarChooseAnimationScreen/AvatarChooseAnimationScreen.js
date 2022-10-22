@@ -54,8 +54,7 @@ class AvatarChooseAnimationScreen extends Component {
                 <View style={styles.webViewContainer}>
                     <View style={{ width: '100%', aspectRatio: this.state.aspect }}>
                         <WebView source={{
-                                /* TODO: Replace uri with final url */
-                                uri: `http://192.168.100.108:6969/avatar/animation/${avatarId}/${this.state.currentAnimation}`
+                                uri: `https://web.qapla.gg/avatar/animation/${avatarId}/${this.state.currentAnimation}`
                             }}
                             onLoadEnd={() => this.setState({ webViewLoaded: true })}
                             style={{ display: this.state.webViewLoaded ? 'flex' : 'none' }} />

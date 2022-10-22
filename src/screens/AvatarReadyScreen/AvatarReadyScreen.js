@@ -10,7 +10,6 @@ import { translate } from '../../utilities/i18';
 
 class AvatarReadyScreen extends Component {
     state = {
-        avatarId: '',
         animationId: '',
         cameraAspectRatio: 0,
         webViewLoaded: false
@@ -33,8 +32,7 @@ class AvatarReadyScreen extends Component {
                     {this.state.cameraAspectRatio > 0 && this.state.avatarId !== '' && this.state.animationId !== '' &&
                         <View style={{ width: '100%', aspectRatio: this.state.cameraAspectRatio }}>
                             <WebView source={{
-                                    /* TODO: Replace uri with final url */
-                                    uri: `http://192.168.100.108:6969/avatar/animation/${this.state.avatarId}/${this.state.animationId}`
+                                    uri: `https://web.qapla.gg/avatar/animation/${this.props.avatarId}/${this.state.animationId}`
                                 }}
                                 onError={(e) => console.log(e)}
                                 onLoadEnd={() => this.setState({ webViewLoaded: true })}
@@ -60,7 +58,7 @@ class AvatarReadyScreen extends Component {
                                 {translate('avatarReadyScreen.sendNow')}
                             </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ padding: 16, marginTop: 16 }}
+                        <TouchableOpacity style={{ padding: 16, marginTop: 8 }}
                             onPress={() => this.props.navigation.dismiss()}>
                             <Text style={[styles.confirmButtonText, { color: '#FFF' }]}>
                                 {translate('avatarReadyScreen.backToProfile')}
@@ -75,7 +73,8 @@ class AvatarReadyScreen extends Component {
 
 function mapStateToProps(state) {
     return {
-        uid: state.userReducer.user.id
+        uid: state.userReducer.user.id,
+        avatarId: state.userReducer.user.avatarId
     };
 }
 

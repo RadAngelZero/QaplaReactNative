@@ -132,7 +132,7 @@ class GreetingSearchStreamerScreen extends Component {
             selectedStreamer: { uid: streamerId, displayName },
             isSubscribed: undefined
             }, () => {
-                if (true) {
+                if (isStreaming) {
                     /**
                      * Here we don´t want to block the process while the cloud functions gives us an answer, so we don´t use
                      * await, we use then so whenever the promise is solved we set the value in the state
@@ -162,7 +162,7 @@ class GreetingSearchStreamerScreen extends Component {
             const userGreetingData = await getUserGreetingData(this.props.uid);
             if (userGreetingData.exists()) {
                 // We already know it is not undefined but we need to know if it is true
-                if (true) {
+                if (this.state.userToStreamerRelationData.isSubscribed) {
                     const { animation: { animationId }, TTS: { message } } = userGreetingData.val();
                     const language = getLocaleLanguage();
 

@@ -62,7 +62,8 @@ class AvatarChooseAnimationScreen extends Component {
                 </View>
                 <View style={styles.selectorContainer}>
                     <View style={styles.optionsContainer}>
-                        <ScrollView horizontal>
+                        <ScrollView horizontal
+                            showsHorizontalScrollIndicator={false}>
                             {this.state.animations.map((animation) => (
                                 <LinearGradient start={{x: 0.0, y: 1.0}}
                                     end={{x: 1.0, y: 1.0}}

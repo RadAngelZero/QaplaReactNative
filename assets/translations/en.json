@@ -430,6 +430,7 @@
     },
     "greetingSearchStreamerScreen": {
         "sayHi": "👋 Pop Up",
+        "searchStreamer": "Search streamer",
         "confirmationModal": {
             "titleP1": "Pop un on ",
             "streamerName": "{{streamerName}}´s ",

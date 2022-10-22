@@ -51,16 +51,16 @@ export default styles = StyleSheet.create({
         alignContent: 'center',
         justifyContent: 'center',
         backgroundColor: '#141539',
-        height: 60,
-        width: 60,
+        height: widthPercentageToPx(16),
+        width: widthPercentageToPx(16),
         borderRadius: 10
     },
     optionButton: {
         alignContent: 'center',
         justifyContent: 'center',
         backgroundColor: '#141539',
-        height: 54,
-        width: 54,
+        height: widthPercentageToPx(14.4),
+        width: widthPercentageToPx(14.4),
         marginLeft: 3,
         marginRight: 3,
         borderRadius: 8

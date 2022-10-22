@@ -19,7 +19,7 @@ export default styles = StyleSheet.create({
     avatarImage: {
         width: heightPercentageToPx(24.63),
         height: heightPercentageToPx(24.63), // We use heightPercentageToPx because we want a image with same width and height
-        borderRadius: 100
+        borderRadius: heightPercentageToPx(100) // Needed to achieve perfect circle
     },
     instructions: {
         marginTop: 32,
@@ -52,16 +52,16 @@ export default styles = StyleSheet.create({
         alignContent: 'center',
         justifyContent: 'center',
         backgroundColor: '#141539',
-        height: 60,
-        width: 60,
+        height: widthPercentageToPx(16),
+        width: widthPercentageToPx(16),
         borderRadius: 14
     },
     optionButton: {
         alignContent: 'center',
         justifyContent: 'center',
         backgroundColor: '#141539',
-        height: 54,
-        width: 54,
+        height: widthPercentageToPx(14.4),
+        width: widthPercentageToPx(14.4),
         marginLeft: 3,
         marginRight: 3,
         borderRadius: 8

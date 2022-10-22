@@ -430,6 +430,7 @@
     },
     "greetingSearchStreamerScreen": {
         "sayHi": "👋 Di hola",
+        "searchStreamer": "Buscar streamer",
         "confirmationModal": {
             "titleP1": "Saludar en el stream de ",
             "streamerName": "{{streamerName}}",

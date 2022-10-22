@@ -84,7 +84,7 @@ class AvatarChooseBackgroundScreen extends Component {
                         <LinearGradient useAngle
                             angle={this.state.selectedColor.angle}
                             colors={this.state.selectedColor.colors}
-                            style={{ borderRadius: 100 }}>
+                            style={styles.avatarImage}>
                             {!this.state.imageLoaded &&
                                 <View style={styles.loader}>
                                     <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
@@ -114,7 +114,8 @@ class AvatarChooseBackgroundScreen extends Component {
                 </View>
                 <View style={styles.selectorContainer}>
                     <View style={styles.optionsContainer}>
-                        <ScrollView horizontal>
+                        <ScrollView horizontal
+                            showsHorizontalScrollIndicator={false}>
                             {Colors.avatarImagesBackgroundGradients.map((background, index) => (
                                 <TouchableOpacity
                                     onPress={() => this.setState({ selectedColor: background, selectedColorIndex: index })}>

@@ -39,9 +39,10 @@ export default styles = StyleSheet.create({
         paddingHorizontal: 16
     },
     chatTextInput: {
-        paddingVertical: 4,
+        paddingVertical: 8,
         fontSize: 16,
         fontWeight: '400',
+        lineHeight: 24
     },
     chatSendIcon: {
         marginLeft: 16,

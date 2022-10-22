@@ -597,6 +597,9 @@ const RootStackNavigator = createStackNavigator({
   AvatarStackNavigator: {
     screen: AvatarStackNavigator
   },
+  GreetingStackNavigator: {
+    screen: GreetingStackNavigator
+  },
   BuyQoins: {
     screen: BuyQoins,
     navigationOptions: {
@@ -627,9 +630,6 @@ const MainSwitchNavigator = createSwitchNavigator({
   SplashScreen: AuthLoadingScreen,
   App: RootStackNavigator,
   ChooseUserName: ChooseUserNameScreen,
-  GreetingStackNavigator: {
-    screen: GreetingStackNavigator
-  },
   LinkBroken: LinkBrokenScreen,
 });
 

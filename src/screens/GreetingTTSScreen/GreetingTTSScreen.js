@@ -152,8 +152,8 @@ class GreetingTTSScreen extends Component {
                                 <View style={styles.chatBottomContainer}>
                                     <View style={styles.chatInputContainer}>
                                         <TextInput style={[styles.chatTextInput, {
-                                            color: this.state.tooMuch ? '#f66' : '#fff',
-                                        }]}
+                                                color: this.state.tooMuch ? '#f66' : '#fff'
+                                            }]}
                                             onChangeText={this.changeTextHandler}
                                             value={this.state.message}
                                             autoFocus

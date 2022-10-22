@@ -236,6 +236,8 @@ class GreetingSearchStreamerScreen extends Component {
                                 <images.svg.searchStreamerIcon style={styles.searchIcon} />
                             </View>
                             <TextInput autoFocus
+                                placeholder={translate('greetingSearchStreamerScreen.searchStreamer')}
+                                placeholderTextColor='rgba(255, 255, 255, .4)'
                                 style={styles.gridSearchBarTextInput}
                                 value={this.state.search}
                                 onChangeText={(this.searchHandler)} />

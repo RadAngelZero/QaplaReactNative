@@ -63,6 +63,8 @@ const voiceBotAvailableVoicesRef = database.ref('/VoiceBotAvailableVoices');
 const streamersBanListsRef = database.ref('/StreamersBanLists');
 const avatarsAnimationsRef = database.ref('/AvatarsAnimations');
 const usersGreetingsRef = database.ref('/UsersGreetings');
+const streamsGreetingsRef = database.ref('/StreamsGreetings');
+const gifsLibrariesRef = database.ref('/GifsLibraries');
 
 /**
  * Returns true if the user with the given uid exists
@@ -244,8 +246,8 @@ export async function saveReadyPlayerMeUserId(uid, rpmUid) {
  * @param {string} uid User identifier
  * @param {string} rpmAvatarId Ready player me avatar identifier
  */
-export async function saveReadyPlayerMeAvatarId(uid, rpmAvatarId) {
-    await usersRef.child(uid).child('rpmAvatarId').set(rpmAvatarId);
+export async function saveAvatarId(uid, rpmAvatarId) {
+    await usersRef.child(uid).child('avatarId').set(rpmAvatarId);
 }
 
 export async function saveAvatarBackground(uid, background) {
@@ -2032,21 +2034,19 @@ export async function getAvatarAnimationCameraAspectRatio(animationId) {
 /**
  * Saves the avatar and animation ids for the user greeting
  * @param {string} uid User identifier
- * @param {string} avatarId Avatar identifier
  * @param {string} animationId Animation identifier
  */
-export async function saveUserGreetingAnimation(uid, avatarId, animationId) {
-    return await usersGreetingsRef.child(uid).child('animation').update({ avatarId, animationId });
+export async function saveUserGreetingAnimation(uid, animationId) {
+    return await usersGreetingsRef.child(uid).child('animation').update({ animationId });
 }
 
 /**
  * Saves the TTS information for the greeting
  * @param {string} uid User identifier
  * @param {string} message Message to speak
- * @param {string} language Language for the voice bot
  */
-export async function saveUserGreetingMessage(uid, message, language) {
-    return await usersGreetingsRef.child(uid).child('TTS').update({ message, language });
+export async function saveUserGreetingMessage(uid, message) {
+    return await usersGreetingsRef.child(uid).child('TTS').update({ message });
 }
 
 /**
@@ -2055,4 +2055,35 @@ export async function saveUserGreetingMessage(uid, message, language) {
  */
 export async function getUserGreetingAnimation(uid) {
     return await usersGreetingsRef.child(uid).child('animation').once('value');
+}
+
+export async function getUserGreetingData(uid) {
+    return await usersGreetingsRef.child(uid).once('value');
+}
+
+// -----------------------------------------------
+// Streams Greetings
+// -----------------------------------------------
+
+export async function writeStreamGreeting(uid, streamerUid, avatarId, animationId, message, messageLanguage) {
+    return await streamsGreetingsRef.child(streamerUid).child(uid).set({
+        avatarId,
+        animationId,
+        message,
+        messageLanguage
+    });
+}
+
+// -----------------------------------------------
+// Gifs Libraries
+// -----------------------------------------------
+
+/**
+ * Returns a random gif from the library of Streamer Offline gifs
+ */
+export async function getRandomStreamerOfflineGif() {
+    const length = await gifsLibrariesRef.child('StreamerOffline').child('length').once('value');
+
+    const index = Math.floor(Math.random() * length.val());
+    return await gifsLibrariesRef.child('StreamerOffline').child('gifs').child(index).once('value');
 }

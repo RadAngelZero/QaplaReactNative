@@ -71,8 +71,7 @@ class GreetingTTSScreen extends Component {
     }
 
     saveGreetingMessage = async () => {
-        const userLanguage = getLocaleLanguage();
-        await saveUserGreetingMessage(this.props.uid, this.state.message, userLanguage);
+        await saveUserGreetingMessage(this.props.uid, this.state.message);
 
         this.props.navigation.navigate('AvatarReadyScreen');
     }

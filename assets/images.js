@@ -254,6 +254,9 @@ const images = {
 		},
 		createAvatarCover: {
 			img: require('./images/CreateAvatarCover.png')
+		},
+		warningCircle: {
+			img: require('./images/WarningCircle.png')
 		}
 	},
 	svg: {

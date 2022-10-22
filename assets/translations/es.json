@@ -428,6 +428,38 @@
         "editMessage": "Editar mensaje",
         "ready": "Listo"
     },
+    "greetingSearchStreamerScreen": {
+        "sayHi": "👋 Di hola",
+        "confirmationModal": {
+            "titleP1": "Saludar en el stream de ",
+            "streamerName": "{{streamerName}}",
+            "titleP2": "",
+            "sendAviNow": "Enviar Avatar"
+        },
+        "streamerOfflineModal": {
+            "title": "Streamer Offline",
+            "descriptionP1": "Te notificaremos cuando sera el siguiente stream de ",
+            "streamerName": "{{streamerName}} ",
+            "descriptionP2": "👇",
+            "follow": "Seguir Streamer"
+        },
+        "notASubModal": {
+            "title": "No eres sub 🫣",
+            "descriptionP1": "Los saludos estan disponibles para suscriptores del canal. ",
+            "descriptionP2": "¡Suscribete para saludar!",
+            "subscribe": "Suscribirse al canal"
+        },
+        "greetingAlreadySentModal": {
+            "title": "Ya saludaste hoy 🫢",
+            "descriptionP1": "Saluda una vez por stream. ",
+            "descriptionP2": "Es una manera de decir hola cuando llegas",
+            "goToStream": "Ir al stream"
+        },
+        "sentModal": {
+            "title": "Boom. Enviado.",
+            "goToStream": "Ir al stream"
+        }
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Ve tus Notificaciones",

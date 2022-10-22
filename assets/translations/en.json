@@ -428,6 +428,38 @@
         "editMessage": "Edit message",
         "ready": "Ready"
     },
+    "greetingSearchStreamerScreen": {
+        "sayHi": "👋 Pop Up",
+        "confirmationModal": {
+            "titleP1": "Pop un on ",
+            "streamerName": "{{streamerName}}´s ",
+            "titleP2": "stream",
+            "sendAviNow": "Send Avi now"
+        },
+        "streamerOfflineModal": {
+            "title": "Streamer Offline",
+            "descriptionP1": "We’ll notify you when ",
+            "streamerName": "{{streamerName}}´s ",
+            "descriptionP2": "next stream will be 👇",
+            "follow": "Follow Streamer"
+        },
+        "notASubModal": {
+            "title": "You’re not a sub 🫣",
+            "descriptionP1": "Pop ups are available for channel suscribers. ",
+            "descriptionP2": "Sucribe to pop up!",
+            "subscribe": "Suscribe to channel"
+        },
+        "greetingAlreadySentModal": {
+            "title": "You already poped up 🫢",
+            "descriptionP1": "Pop ups work once per stream. ",
+            "descriptionP2": "It’s a way to say hi when you show up",
+            "goToStream": "Go to stream"
+        },
+        "sentModal": {
+            "title": "Boom. Sent.",
+            "goToStream": "Go to stream"
+        }
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Check your notifications",

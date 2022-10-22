@@ -55,7 +55,7 @@ class AvatarReadyScreen extends Component {
                                 {translate('avatarReadyScreen.uses')}
                             </Text>
                         </View>
-                        <TouchableOpacity style={styles.confirmButton} onPress={() => this.props.navigation.navigate('SendGreetingStackNavigator')}>
+                        <TouchableOpacity style={styles.confirmButton} onPress={() => this.props.navigation.navigate('GreetingStackNavigator')}>
                             <Text style={styles.confirmButtonText}>
                                 {translate('avatarReadyScreen.sendNow')}
                             </Text>

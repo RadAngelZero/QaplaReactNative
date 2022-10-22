@@ -512,7 +512,7 @@ function mapStateToProps(state) {
         userSubscriptions: state.userReducer.user.userToStreamersSubscriptions || {},
         qlanId: state.userReducer.user.qlanId,
         avatarBackground: state.userReducer.user.avatarBackground,
-        avatarId: state.userReducer.user.rpmAvatarId
+        avatarId: state.userReducer.user.avatarId
     };
 }
 

@@ -64,6 +64,7 @@ import AvatarOnboardingScreen from './screens/AvatarOnboardingScreen/AvatarOnboa
 import GreetingTTSScreen from './screens/GreetingTTSScreen/GreetingTTSScreen';
 import AvatarReadyScreen from './screens/AvatarReadyScreen/AvatarReadyScreen';
 import AvatarCreationHeaderBar from './components/AvatarCreationHeaderBar/AvatarCreationHeaderBar';
+import GreetingSearchStreamerScreen from './screens/GreetingSearchStreamerScreen/GreetingSearchStreamerScreen';
 
 //#region Stack Navigators
 
@@ -357,6 +358,17 @@ const AvatarStackNavigator = createStackNavigator({
   }
 });
 
+const GreetingStackNavigator = createStackNavigator({
+  GreetingSearchStreamerScreen: {
+    screen: GreetingSearchStreamerScreen,
+    navigationOptions: {
+      headerShown: false,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  }
+});
+
 //#endregion
 
 //#region Top Tab Navigators
@@ -615,6 +627,9 @@ const MainSwitchNavigator = createSwitchNavigator({
   SplashScreen: AuthLoadingScreen,
   App: RootStackNavigator,
   ChooseUserName: ChooseUserNameScreen,
+  GreetingStackNavigator: {
+    screen: GreetingStackNavigator
+  },
   LinkBroken: LinkBrokenScreen,
 });
 

@@ -4,7 +4,7 @@ import WebView from 'react-native-webview';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import { saveAvatarUrl, saveReadyPlayerMeAvatarId, saveReadyPlayerMeUserId } from '../../services/database';
+import { saveAvatarUrl, saveAvatarId, saveReadyPlayerMeUserId } from '../../services/database';
 import { retrieveData, storeData } from '../../utilities/persistance';
 
 class AvatarCreatorScreen extends Component {
@@ -63,7 +63,7 @@ class AvatarCreatorScreen extends Component {
          */
         const avatarId = data.url.substring(data.url.lastIndexOf('/') + 1).replace('.glb', '');
 
-        await saveReadyPlayerMeAvatarId(this.props.uid, avatarId);
+        await saveAvatarId(this.props.uid, avatarId);
 
         // Save url and user id
         await saveAvatarUrl(this.props.uid, `https://api.readyplayer.me/v1/avatars/${avatarId}.glb`);

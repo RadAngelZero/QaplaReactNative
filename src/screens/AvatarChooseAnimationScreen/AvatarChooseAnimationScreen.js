@@ -41,8 +41,7 @@ class AvatarChooseAnimationScreen extends Component {
     }
 
     saveAnimation = async () => {
-        const avatarId = this.props.navigation.getParam('avatarId');
-        await saveUserGreetingAnimation(this.props.uid, avatarId, this.state.currentAnimation);
+        await saveUserGreetingAnimation(this.props.uid, this.state.currentAnimation);
 
         this.props.navigation.navigate('AvatarChooseGreetingMessageScreen');
     }

@@ -50,7 +50,7 @@ class AvatarChooseBackgroundScreen extends Component {
          * It takes a while to generate the image for ready player me, so we fetch here the image to prevent a
          * timeout in the Image component
          */
-        const image = `https://api.readyplayer.me/v1/avatars/${avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${this.state.imageVersion}`;
+        const image = `https://api.readyplayer.me/v1/avatars/${avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${imageVersion}`;
         await fetch(image);
 
         this.setState({ imageVersion });
@@ -91,7 +91,7 @@ class AvatarChooseBackgroundScreen extends Component {
                                 </View>
                             }
                             {this.state.imageVersion !== null &&
-                                <Image style={[styles.avatarImage, { display: this.state.imageLoaded ? 'flex' : 'none' }]}
+                                <Image style={[styles.avatarImage]}
                                     source={{ uri: image }}
                                     onLoadEnd={() => this.setState({ imageLoaded: true })} />
                             }

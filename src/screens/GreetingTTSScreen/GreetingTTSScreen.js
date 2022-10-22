@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Keyboard, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
 import styles from './style';
 import images from '../../../assets/images';
-import { getLocaleLanguage, translate } from '../../utilities/i18';
+import { translate } from '../../utilities/i18';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import remoteConfig from '../../services/remoteConfig';
 import { saveUserGreetingMessage } from '../../services/database';
@@ -50,6 +50,23 @@ class GreetingTTSScreen extends Component {
 
     componentDidMount() {
         this.fetchMaxLengthForMessage();
+        this.keyboardDidShowSubscription = Keyboard.addListener(
+            'keyboardDidShow',
+            (e) => {
+                this.setState({ keyboardOpen: true, keyboardHeight: e.endCoordinates.height });
+            },
+        );
+        this.keyboardDidHideSubscription = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                this.setState({ keyboardOpen: false });
+            },
+        );
+    }
+
+    componentWillUnmount() {
+        this.keyboardDidShowSubscription.remove();
+        this.keyboardDidHideSubscription.remove();
     }
 
     fetchMaxLengthForMessage = async () => {
@@ -82,7 +99,7 @@ class GreetingTTSScreen extends Component {
                 <ScrollView keyboardShouldPersistTaps='handled' style={{ backgroundColor: '#0D1021', }} contentContainerStyle={styles.container}>
                     <View style={[styles.innerConatiner, styles.addTTSContainer]}>
                         <View style={[styles.chatContainer, {
-                            bottom: heightPercentageToPx(3) + (Platform.OS === 'ios' && this.state.keyboardOpen ? this.state.keyboardHeight : 0)
+                            bottom: !this.state.keyboardOpen ? heightPercentageToPx(3) : (Platform.OS === 'ios' && this.state.keyboardOpen ? this.state.keyboardHeight : 0)
                         }]}>
                             <View>
                                 <View style={styles.chatBubbleContainer}>

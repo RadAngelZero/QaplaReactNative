@@ -2065,12 +2065,24 @@ export async function getUserGreetingData(uid) {
 // Streams Greetings
 // -----------------------------------------------
 
-export async function writeStreamGreeting(uid, streamerUid, avatarId, animationId, message, messageLanguage) {
+/**
+ * Saves the greeting of the user for the given streamer
+ * @param {string} uid User identifier
+ * @param {string} streamerUid Streamer identifier
+ * @param {string} avatarId Avatar identifier
+ * @param {string} animationId Animation identifier
+ * @param {string} message Message for TTS
+ * @param {string} twitchUsername Twitch user name
+ * @param {string} messageLanguage Language for the message to be spoken
+ */
+export async function writeStreamGreeting(uid, streamerUid, avatarId, animationId, message, twitchUsername, messageLanguage) {
     return await streamsGreetingsRef.child(streamerUid).child(uid).set({
         avatarId,
         animationId,
         message,
-        messageLanguage
+        twitchUsername,
+        messageLanguage,
+        timestamp: (new Date()).getTime()
     });
 }
 

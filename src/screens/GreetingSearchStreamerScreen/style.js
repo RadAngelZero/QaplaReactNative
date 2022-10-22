@@ -12,6 +12,7 @@ export default styles = StyleSheet.create({
         alignItems: 'center'
     },
     searchBarContainer: {
+        marginTop: 8,
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 16

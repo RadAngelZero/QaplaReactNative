@@ -127,12 +127,11 @@ class GreetingSearchStreamerScreen extends Component {
     }
 
     onStreamerSelected = (streamerId, displayName, isStreaming) => {
-        this.setState({
-            openConfirmationModal: true,
-            selectedStreamer: { uid: streamerId, displayName },
-            isSubscribed: undefined
-            }, () => {
-                if (isStreaming) {
+        if (isStreaming) {
+            this.setState({
+                openConfirmationModal: true,
+                selectedStreamer: { uid: streamerId, displayName }
+                }, () => {
                     /**
                      * Here we don´t want to block the process while the cloud functions gives us an answer, so we don´t use
                      * await, we use then so whenever the promise is solved we set the value in the state
@@ -143,11 +142,11 @@ class GreetingSearchStreamerScreen extends Component {
                             userToStreamerRelationData: { streamerUid: streamerId, isSubscribed: relation.data.isSubscribed }
                         });
                     });
-                } else {
-                    this.setState({ openStreamerOfflineModal: true });
                 }
-            }
-        );
+            );
+        } else {
+            this.setState({ openStreamerOfflineModal: true, selectedStreamer: { uid: streamerId, displayName } });
+        }
     }
 
     sendGreeting = async () => {
@@ -177,15 +176,16 @@ class GreetingSearchStreamerScreen extends Component {
                             this.props.avatarId,
                             animationId,
                             message,
+                            this.props.twitchUsername,
                             language
                         );
 
                         this.setState({ userWantToSendGreeting: false, openSentModal: true, openConfirmationModal: false });
                     } catch (error) {
-                        this.setState({ openGreetingAlreadySentModal: true });
+                        this.setState({ openConfirmationModal: false, openGreetingAlreadySentModal: true });
                     }
                 } else {
-                    this.setState({ openNotASubModal: true });
+                    this.setState({ openConfirmationModal: false, openNotASubModal: true });
                 }
             }
         } else {
@@ -364,6 +364,7 @@ function mapStateToProps(state) {
     return {
         uid: state.userReducer.user.id,
         twitchId: state.userReducer.user.twitchId,
+        twitchUsername: state.userReducer.user.twitchUsername,
         avatarId: state.userReducer.user.avatarId,
         previousScreen: state.screensReducer.previousScreenId
     };

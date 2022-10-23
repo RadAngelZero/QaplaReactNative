@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Modal, Image, TouchableWithoutFeedback, Text, TextInput, TouchableHighlight } from 'react-native';
+import { View, Modal, Image, TouchableWithoutFeedback, Text, TextInput, TouchableHighlight, Keyboard } from 'react-native';
 import { translate } from '../../utilities/i18';
 
 import images from '../../../assets/images';
@@ -47,12 +47,12 @@ class JoinQlanModal extends Component {
         return (
             <Modal
                 visible={this.props.open}
-                animationType="slide"
+                animationType='fade'
                 transparent={true}
                 onRequestClose={this.closeModal}>
                 <TouchableWithoutFeedback onPress={this.closeModal}>
                     <View style={styles.mainContainer}>
-                        <TouchableWithoutFeedback touchSoundDisabled>
+                        <TouchableWithoutFeedback touchSoundDisabled onPress={() => Keyboard.dismiss()}>
                             <View style={styles.container}>
                                 {!this.state.joinedQlan &&
                                     <>

@@ -196,7 +196,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#3B4BF9',
         paddingHorizontal: widthPercentageToPx(6.4),
         paddingVertical: heightPercentageToPx(1.47),
-        borderRadius: 20,
+        borderRadius: 100,
     },
     getQoinsText: {
         color: '#fff',

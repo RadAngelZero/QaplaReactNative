@@ -6,11 +6,6 @@ export default styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#0D1021'
     },
-    closeIcon: {
-        position: 'absolute',
-        top: 32,
-        left: 16
-    },
     innerConatiner: {
         paddingHorizontal: widthPercentageToPx(4.26),
         paddingTop: heightPercentageToPx(2),
@@ -116,5 +111,36 @@ export default styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 16,
         color: '#0D1021'
+    },
+    closeModalIcon: {
+        position: 'absolute',
+        top: 16,
+        right: 16
+    },
+    editedImage: {
+        width: widthPercentageToPx(50),
+        height: heightPercentageToPx(14.5)
+    },
+    modalTitle: {
+        marginTop: 32,
+        fontSize: 24,
+        fontWeight: '700',
+        letterSpacing: -0.72,
+        textAlign: 'center',
+        color: '#FFF'
+    },
+    modalButton: {
+        marginTop: 32,
+        paddingVertical: 26,
+        width: '100%',
+        backgroundColor: '#3B4BF9',
+        borderRadius: 40
+    },
+    modalButtonText: {
+        fontSize: 17,
+        fontWeight: '700',
+        letterSpacing: .49,
+        textAlign: 'center',
+        color: '#FFF'
     }
 });

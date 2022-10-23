@@ -155,6 +155,7 @@
         "getQoins": "Más Qoins",
         "mySupport": "💜 Mi apoyo",
         "totalQoinsSent": "Total de Qoins donados",
+        "updatePopUp": "👋 Actualizar saludo",
         "addQreatorCode": "Agregar código de Qreador",
         "notifications": "Notificaciones",
         "newStreams": "Nuevos streams",
@@ -426,7 +427,9 @@
         "sayHi": "Di hola a tu manera",
         "readyToSave": "🔥 ¡Genial! ¿Listo para guardar?",
         "editMessage": "Editar mensaje",
-        "ready": "Listo"
+        "ready": "Listo",
+        "popupUpdated": "Saludo actualizado 💣",
+        "backToProfile": "Volver al perfil"
     },
     "greetingSearchStreamerScreen": {
         "sayHi": "👋 Di hola",

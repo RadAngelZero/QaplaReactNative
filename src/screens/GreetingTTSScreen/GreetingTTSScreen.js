@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Keyboard, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, Keyboard, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
@@ -9,6 +9,7 @@ import { translate } from '../../utilities/i18';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import remoteConfig from '../../services/remoteConfig';
 import { saveUserGreetingMessage } from '../../services/database';
+import ModalWithOverlay from '../../components/ModalWithOverlay/ModalWithOverlay';
 
 class OptionButton extends Component {
     render() {
@@ -45,7 +46,8 @@ class GreetingTTSScreen extends Component {
         keyboardOpen: false,
         keyboardHeight: 0,
         message: '',
-        maxLength: 40
+        maxLength: 40,
+        openSuccessEditionModal: false
     };
 
     componentDidMount() {
@@ -90,7 +92,17 @@ class GreetingTTSScreen extends Component {
     saveGreetingMessage = async () => {
         await saveUserGreetingMessage(this.props.uid, this.state.message);
 
-        this.props.navigation.navigate('AvatarReadyScreen');
+        if (!this.props.navigation.getParam('edit', false)) {
+            this.props.navigation.navigate('AvatarReadyScreen');
+        } else {
+            this.setState({ openSuccessEditionModal: true });
+        }
+    }
+
+    closeModal = () => {
+        this.setState({ openSuccessEditionModal: false }, () => {
+            this.props.navigation.dismiss();
+        });
     }
 
     render() {
@@ -175,6 +187,22 @@ class GreetingTTSScreen extends Component {
                         </View>
                     </View>
                 </ScrollView>
+                <ModalWithOverlay open={this.state.openSuccessEditionModal}
+                    onClose={this.closeModal}>
+                    <TouchableOpacity style={styles.closeModalIcon} onPress={this.closeModal}>
+                        <images.svg.closeIcon />
+                    </TouchableOpacity>
+                    <Image style={styles.editedImage}
+                        source={images.gif.thatsRad.img} />
+                    <Text style={styles.modalTitle}>
+                        {translate('greetingTTSScreen.popupUpdated')}
+                    </Text>
+                    <TouchableOpacity style={styles.modalButton} onPress={this.closeModal}>
+                        <Text style={styles.modalButtonText}>
+                            {translate('greetingTTSScreen.backToProfile')}
+                        </Text>
+                    </TouchableOpacity>
+                </ModalWithOverlay>
             </SafeAreaView>
         );
     }

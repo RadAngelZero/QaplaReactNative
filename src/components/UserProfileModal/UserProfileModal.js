@@ -11,7 +11,13 @@ import { signOut } from '../../services/auth';
 import { trackOnSegment } from '../../services/statistics';
 import { deleteUserAccount, getTwitchDataCloudFunction } from '../../services/functions';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
-import { getQlanData, updateNotificationSettings, updateTwitchUsername, updateUserProfileImg } from '../../services/database';
+import {
+    getQlanData,
+    updateNotificationSettings,
+    updateTwitchUsername,
+    updateUserProfileImg,
+    getUserGreetingData
+} from '../../services/database';
 import { unsubscribeUserFromTopic } from '../../services/messaging';
 import { messaging } from '../../utilities/firebase';
 import { retrieveData, storeData } from '../../utilities/persistance';
@@ -33,13 +39,15 @@ class UserProfileModal extends Component {
         updateProfileToolTip: false,
         updatingProfile: false,
         profileScrollEnabled: false,
-        imageVersion: 0
+        imageVersion: 0,
+        greeting: null
     }
 
     componentDidMount() {
         this.setUserDefaultImage();
         this.getUserQlanData();
         this.getImageVersion();
+        this.getUserGreeting();
     }
 
     getImageVersion = async () => {
@@ -166,6 +174,11 @@ class UserProfileModal extends Component {
         }
 
         updateNotificationSettings(this.props.uid, 'streamersSubscriptions', enableNotifications);
+    }
+
+    getUserGreeting = async () => {
+        const greeting = await getUserGreetingData(this.props.uid);
+        this.setState({ greeting: greeting.val() });
     }
 
     getUserQlanData = async () => {
@@ -346,6 +359,15 @@ class UserProfileModal extends Component {
                         </View>
                     }
                 </TouchableOpacity>
+                {this.state.greeting &&
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AvatarChooseAnimationScreen', { edit: true })}
+                        style={[styles.subCategoryContanier, styles.marginTop24, styles.mySupportSubContainer]}>
+                        <Text style={styles.subCategoryHeaderText}>
+                            {translate('userProfileScreen.updatePopUp')}
+                        </Text>
+                        <images.svg.editSquare />
+                    </TouchableOpacity>
+                }
                 <TouchableOpacity
                     onPress={this.openJoinQlanModal}
                     style={[styles.subCategoryContanier, styles.marginTop24, styles.mySupportSubContainer]}>
@@ -353,7 +375,7 @@ class UserProfileModal extends Component {
                         {`🎁 ${this.state.qlanData ? this.state.qlanData.name : translate('userProfileScreen.addQreatorCode')}`}
                     </Text>
                     {this.state.qlanData ?
-                        <images.svg.editQreatorCodeIcon />
+                        <images.svg.editSquare />
                         :
                         <images.svg.plusIcon />
                     }

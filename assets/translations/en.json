@@ -155,6 +155,7 @@
         "getQoins": "Get Qoins",
         "mySupport": "💜 My support",
         "totalQoinsSent": "Total Qoins sent",
+        "updatePopUp": "👋 Update Pop Up",
         "addQreatorCode": "Add a Qreator Code",
         "notifications": "Notifications",
         "newStreams": "New streams",
@@ -426,7 +427,9 @@
         "sayHi": "Say hi in your own way",
         "readyToSave": "🔥 Lit! Ready to save?",
         "editMessage": "Edit message",
-        "ready": "Ready"
+        "ready": "Ready",
+        "popupUpdated": "Pop up updated 💣",
+        "backToProfile": "Back to profile"
     },
     "greetingSearchStreamerScreen": {
         "sayHi": "👋 Pop Up",

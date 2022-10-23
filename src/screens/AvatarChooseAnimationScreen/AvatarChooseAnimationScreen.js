@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import { getAvatarAnimations, saveUserGreetingAnimation } from '../../services/database';
+import { getAvatarAnimationCameraAspectRatio, getAvatarAnimations, getUserGreetingAnimation, saveUserGreetingAnimation } from '../../services/database';
 import { translate } from '../../utilities/i18';
 
 class AvatarChooseAnimationScreen extends Component {
@@ -18,6 +18,10 @@ class AvatarChooseAnimationScreen extends Component {
 
     componentDidMount() {
         this.loadAnimations();
+        const edit = this.props.navigation.getParam('edit', false);
+        if (edit) {
+            this.loadUserAnimation();
+        }
     }
 
     loadAnimations = async () => {
@@ -32,6 +36,16 @@ class AvatarChooseAnimationScreen extends Component {
         this.setState({ animations });
     }
 
+    loadUserAnimation = async () => {
+        const userAnimation = await getUserGreetingAnimation(this.props.uid);
+        const aspectRatio = await getAvatarAnimationCameraAspectRatio(userAnimation.val().animationId);
+
+        this.setState({
+            aspect: aspectRatio.val(),
+            currentAnimation: userAnimation.val().animationId
+        });
+    }
+
     onAnimationSelected = (animationId, animation) => {
         this.setState({ currentAnimation: animationId, webViewLoaded: false }, () => {
             setTimeout(() => {
@@ -43,7 +57,8 @@ class AvatarChooseAnimationScreen extends Component {
     saveAnimation = async () => {
         await saveUserGreetingAnimation(this.props.uid, this.state.currentAnimation);
 
-        this.props.navigation.navigate('AvatarChooseGreetingMessageScreen');
+        const edit = this.props.navigation.getParam('edit', false);
+        this.props.navigation.navigate('AvatarChooseGreetingMessageScreen', { edit });
     }
 
     render() {

@@ -7,7 +7,20 @@ import images from '../../../assets/images';
 
 class AvatarCreationHeaderBar extends Component {
     render() {
-        let closeIcon = this.props.currentScreen === 'AvatarOnboardingScreen' || this.props.currentScreen === 'AvatarCreatorScreen' || this.props.currentScreen === 'AvatarReadyScreen' || this.props.currentScreen === 'AvatarEditScreen';
+        let edit = this.props.navigation.getParam('edit', false);
+        let closeIcon =
+            this.props.currentScreen === 'AvatarOnboardingScreen'
+            ||
+            this.props.currentScreen === 'AvatarCreatorScreen'
+            ||
+            this.props.currentScreen === 'AvatarReadyScreen'
+            ||
+            this.props.currentScreen === 'AvatarEditScreen'
+            ||
+            (edit
+                &&
+                this.props.currentScreen === 'AvatarChooseAnimationScreen'
+            );
         let darkScreen = this.props.currentScreen === 'AvatarChooseAnimationScreen' || this.props.currentScreen === 'AvatarReadyScreen';
 
         return (

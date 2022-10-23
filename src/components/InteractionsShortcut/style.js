@@ -2,22 +2,18 @@ import { StyleSheet } from 'react-native';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
-    mainContainer: {
-        width: widthPercentageToPx(44.26),
-        height: heightPercentageToPx(24.63),
-    },
     bigMainContainer: {
         width: widthPercentageToPx(91.46),
         height: heightPercentageToPx(19.95),
     },
     imageBackground: {
         flex: 1,
-        borderRadius: widthPercentageToPx(5.33),
+        borderRadius: 20,
         overflow: 'hidden',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: widthPercentageToPx(6.4),
+        paddingHorizontal: 24,
     },
     iconTooltipPos: {
         position: 'absolute',
@@ -31,20 +27,12 @@ export default styles = StyleSheet.create({
         minHeight: widthPercentageToPx(6.4),
     },
     gif: {
-        // backgroundColor: '#f0f',
-        // position: 'absolute',
         width: widthPercentageToPx(29.33),
         height: widthPercentageToPx(29.33),
     },
     textContainer: {
-        // position: 'absolute',
-    },
-    textHeader: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '700',
-        lineHeight: heightPercentageToPx(2.33),
-        letterSpacing: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
     },
     bigTextHeader: {
         color: '#fff',
@@ -57,26 +45,25 @@ export default styles = StyleSheet.create({
         color: '#00FFDD',
     },
     textSubtitle: {
-        fontSize: 12,
+        color: '#fff',
+        fontSize: 14,
         fontWeight: '500',
-        lineHeight: heightPercentageToPx(1.72),
-        letterSpacing: widthPercentageToPx(-0.1),
-        marginTop: heightPercentageToPx(0.86),
+        lineHeight: 16.71,
+        marginTop: 3,
     },
     button: {
         backgroundColor: '#00FEDF',
-        // position: 'absolute',
         alignSelf: 'center',
-        paddingHorizontal: widthPercentageToPx(6.93),
-        paddingVertical: heightPercentageToPx(1.47),
-        borderRadius: widthPercentageToPx(4.93),
-        marginTop: heightPercentageToPx(1.97),
+        paddingHorizontal: 26,
+        paddingVertical: 12,
+        borderRadius: 100,
+        marginTop: 16,
     },
     buttonText: {
         color: '#0D1021',
         fontSize: 16,
         fontWeight: '700',
-        lineHeight: heightPercentageToPx(2.7),
+        lineHeight: 22,
         letterSpacing: -0.40799999237060547,
     },
 });

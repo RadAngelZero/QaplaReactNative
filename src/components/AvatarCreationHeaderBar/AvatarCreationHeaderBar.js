@@ -25,7 +25,7 @@ class AvatarCreationHeaderBar extends Component {
 
         return (
             <SafeAreaView style={{
-                backgroundColor: darkScreen ? '#00020E' : '#0D1021'
+                backgroundColor: darkScreen ? 'transparent' : '#0D1021'
             }}>
                 <View style={styles.mainContainer}>
                     <TouchableOpacity

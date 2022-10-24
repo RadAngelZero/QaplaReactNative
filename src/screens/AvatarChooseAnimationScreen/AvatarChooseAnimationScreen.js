@@ -62,7 +62,11 @@ class AvatarChooseAnimationScreen extends Component {
     }
 
     render() {
-        const avatarId = this.props.navigation.getParam('avatarId');
+        /**
+         * When creating avatar we send the avatarId from navigation props, when editing animation (the user already have an
+         * avatar) we take the avatarId from props (user reducer)
+         */
+        const avatarId = this.props.navigation.getParam('avatarId', this.props.avatarId);
 
         return (
             <SafeAreaView style={styles.container}>
@@ -110,7 +114,8 @@ class AvatarChooseAnimationScreen extends Component {
 
 function mapStateToProps(state) {
     return {
-        uid: state.userReducer.user.id
+        uid: state.userReducer.user.id,
+        avatarId: state.userReducer.user.avatarId
     };
 }
 

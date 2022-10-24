@@ -2099,3 +2099,13 @@ export async function getRandomStreamerOfflineGif() {
     const index = Math.floor(Math.random() * length.val());
     return await gifsLibrariesRef.child('StreamerOffline').child('gifs').child(index).once('value');
 }
+
+/**
+ * Returns a random gif from the library of Avatar animation gifs
+ */
+export async function getRandomAvatarAnimationGif() {
+    const length = await gifsLibrariesRef.child('AvatarAnimation').child('length').once('value');
+
+    const index = Math.floor(Math.random() * length.val());
+    return await gifsLibrariesRef.child('AvatarAnimation').child('gifs').child(index).once('value');
+}

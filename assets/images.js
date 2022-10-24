@@ -258,6 +258,9 @@ const images = {
 		},
 		warningCircle: {
 			img: require('./images/WarningCircle.png')
+		},
+		popUpBackground: {
+			img: require('./images/PopUpBackground.png')
 		}
 	},
 	svg: {

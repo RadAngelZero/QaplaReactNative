@@ -45,10 +45,7 @@ class InteractionsShortcut extends Component {
                     style={styles.imageBackground}
                     source={images.png.InteractionGradient1.img}
                 >
-                    <View style={[styles.textContainer, {
-                        justifyContent: 'flex-start',
-                        alignItems: 'flex-start',
-                    }]}>
+                    <View style={styles.textContainer}>
                         <View >
                             <Text style={styles.bigTextHeader}>
                                 {`${translate('interactions.feed.modal.sendA')} `}
@@ -56,7 +53,7 @@ class InteractionsShortcut extends Component {
                                     {this.state.textRotation}
                                 </Text>
                             </Text>
-                            <Text style={[styles.textHeader, styles.textSubtitle]}>
+                            <Text style={styles.textSubtitle}>
                                 {translate('interactionsShortcut.liveToYourStreamer')}
                             </Text>
                         </View>
@@ -71,7 +68,7 @@ class InteractionsShortcut extends Component {
                         source={{ uri: this.state.GIFURL }}
                         resizeMode={'contain'}
                     />
-                </ImageBackground >
+                </ImageBackground>
             </View >
         );
     }

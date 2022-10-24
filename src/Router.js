@@ -334,6 +334,7 @@ const AvatarStackNavigator = createStackNavigator({
   AvatarChooseAnimationScreen: {
     screen: AvatarChooseAnimationScreen,
     navigationOptions: {
+      headerTransparent: true,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     }

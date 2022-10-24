@@ -58,7 +58,6 @@ class UserProfileModal extends Component {
 
     getQoins = () => {
         this.props.navigation.navigate('BuyQoins');
-        this.props.onClose();
     }
 
     setUserDefaultImage = async () => {

@@ -832,5 +832,10 @@
     "interactionsShortcut": {
         "liveToYourStreamer": "on-screen to your streamer",
         "send": "Send Reaction"
+    },
+    "greetingsShortcut": {
+        "showUp": "Show up with style 👋",
+        "usingAvi": "using your animated avi",
+        "popUp": "Pop Up on stream"
     }
 }

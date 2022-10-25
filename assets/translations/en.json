@@ -592,7 +592,7 @@
         "skip": "Skip",
         "linkAccount": "Link your account",
         "descriptionQreatorCode": "to use your Qreator Code and get your referral tokens 🙌",
-        "description": "🌱 Mine tokens in real-time using your channel points on  Twitch.",
+        "description": "👻 Show up on stream with your Twitch identity.",
         "linkButton": "Link account",
         "rejectTrakingTitle": "Allow Qapla to Request to Track to link your Twitch",
         "rejectTrakingMessage": "We use the data exclusively to connect your accounts",
@@ -601,9 +601,9 @@
     },
     "skipLinkTwitchAccount": {
         "important": "Important",
-        "reminder": "Friendly reminder: You won´t get any tokens in Qapla if your accounts aren’t linked.",
+        "reminder": "You won’t be able to interact on stream if your accounts are not linked",
         "reminderQreatorCode": "Friendly reminder: To unlock full-benefits on Qapla, you must have a linked Twitch account.",
-        "description": "No worries. You can link your account later from your profile 😉",
+        "description": "But no worries. You can link your account later from your profile 😉",
         "continue": "I wish to continue"
     },
     "sendCheersModal": {

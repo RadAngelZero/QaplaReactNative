@@ -9,6 +9,7 @@ import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { connect } from 'react-redux';
 import { getUserToStreamerRelationData } from '../../services/functions';
 import ModalWithOverlay from '../../components/ModalWithOverlay/ModalWithOverlay';
+import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
 
 const Item = ({ streamerName, streamerImg, isStreaming, streamerId, onPress }) => (
     <TouchableOpacity onPress={() => onPress(streamerId, streamerName, isStreaming)}
@@ -79,7 +80,9 @@ class GreetingSearchStreamerScreen extends Component {
             isSubscribed: undefined
         },
         userWantToSendGreeting: false,
-        fallbackGifUrl: ''
+        fallbackGifUrl: '',
+        openLinkWitTwitchModal: false,
+        onLinkSuccessful: () => {}
     };
 
     componentDidMount() {
@@ -127,25 +130,29 @@ class GreetingSearchStreamerScreen extends Component {
     }
 
     onStreamerSelected = (streamerId, displayName, isStreaming) => {
-        if (isStreaming) {
-            this.setState({
-                openConfirmationModal: true,
-                selectedStreamer: { uid: streamerId, displayName }
-                }, () => {
-                    /**
-                     * Here we don´t want to block the process while the cloud functions gives us an answer, so we don´t use
-                     * await, we use then so whenever the promise is solved we set the value in the state
-                     */
-                    const relationDataPromise = getUserToStreamerRelationData(this.props.twitchId, streamerId);
-                    relationDataPromise.then((relation) => {
-                        this.setState({
-                            userToStreamerRelationData: { streamerUid: streamerId, isSubscribed: relation.data.isSubscribed }
+        if (this.props.twitchUsername) {
+            if (isStreaming) {
+                this.setState({
+                    openConfirmationModal: true,
+                    selectedStreamer: { uid: streamerId, displayName }
+                    }, () => {
+                        /**
+                         * Here we don´t want to block the process while the cloud functions gives us an answer, so we don´t use
+                         * await, we use then so whenever the promise is solved we set the value in the state
+                         */
+                        const relationDataPromise = getUserToStreamerRelationData(this.props.twitchId, streamerId);
+                        relationDataPromise.then((relation) => {
+                            this.setState({
+                                userToStreamerRelationData: { streamerUid: streamerId, isSubscribed: relation.data.isSubscribed }
+                            });
                         });
-                    });
-                }
-            );
+                    }
+                );
+            } else {
+                this.setState({ openStreamerOfflineModal: true, selectedStreamer: { uid: streamerId, displayName } });
+            }
         } else {
-            this.setState({ openStreamerOfflineModal: true, selectedStreamer: { uid: streamerId, displayName } });
+            this.setState({ openLinkWitTwitchModal: true, onLinkSuccessful: () => this.onStreamerSelected(streamerId, displayName, isStreaming) });
         }
     }
 
@@ -356,6 +363,11 @@ class GreetingSearchStreamerScreen extends Component {
                         </Text>
                     </TouchableOpacity>
                 </ModalWithOverlay>
+                <LinkTwitchAccountModal
+                    open={this.state.openLinkWitTwitchModal}
+                    onClose={() => this.setState({ openLinkWitTwitchModal: false })}
+                    onLinkSuccessful={this.state.onLinkSuccessful}
+                    linkingWithQreatorCode={false} />
             </SafeAreaView>
         );
     }

@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     mainContainer: {
         width: widthPercentageToPx(91.46),
-        height: heightPercentageToPx(48.77)
+        height: undefined,
+        aspectRatio: .8695
     },
     imageBackground: {
         flex: 1,
@@ -20,7 +21,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         paddingVertical: 34,
-        resizeMode: 'contain'
+        resizeMode: 'cover'
     },
     title: {
         width: '80%',

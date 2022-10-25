@@ -108,7 +108,7 @@ export class TimelineStreams extends Component {
                 <View style={{
                     alignSelf: 'center'
                 }}>
-                    <GreetingsShortcut onPress={() => this.props.navigation.navigate('InteractionsFeed')} />
+                    <GreetingsShortcut />
                 </View>
                 <View style={{ height: 25 }} />
                 <StreamLiveList

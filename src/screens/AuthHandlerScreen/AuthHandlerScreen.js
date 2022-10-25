@@ -92,11 +92,7 @@ class AuthHandlerScreen extends Component {
             const onSuccessCallback = this.props.navigation.getParam('onSuccessSignIn', () => { });
             onSuccessCallback(user.user.uid);
 
-            if (isNewUser) {
-                this.setState({ currentStep: 3 });
-            } else {
-                this.props.navigation.navigate(this.props.originScreen);
-            }
+            this.props.navigation.navigate(this.props.originScreen);
         })
     }
 
@@ -250,7 +246,7 @@ class AuthHandlerScreen extends Component {
                 if (this.state.username !== '' && await validateUserName(this.state.username)) {
                     await createUserProfile(this.state.uid, this.state.email, this.state.username);
 
-                    this.setState({ currentStep: 3 });
+                    this.props.navigation.navigate(this.props.originScreen);
                 } else {
                     this.setState({
                         showUsernameErrorMessage: true,

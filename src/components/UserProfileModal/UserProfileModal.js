@@ -93,7 +93,6 @@ class UserProfileModal extends Component {
 
     closeSession = async () => {
         await signOut();
-        this.props.onClose();
     }
 
     deleteAccountConfirmation = () => {

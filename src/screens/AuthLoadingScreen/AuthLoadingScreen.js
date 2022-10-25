@@ -69,7 +69,7 @@ class AuthLoadingScreen extends Component {
                  */
                 const currentScreen = store.getState().screensReducer.currentScreenId;
 
-                if (!userName && currentScreen !== 'SignIn') {
+                if (!userName && currentScreen === 'none') {
                     return this.props.navigation.navigate('ChooseUserName');
                 } else {
                     const twitchUsername = await getTwitchUserName(user.uid);

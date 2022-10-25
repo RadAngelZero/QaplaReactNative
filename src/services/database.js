@@ -1370,10 +1370,14 @@ export async function getAllStreamers() {
  * @param {string} twitchUserName Username of Twitch
  * @param {string} userPhotoURL URL of the user profile photo
  * @param {string} streamerID Streamer uid
+ * @param {string | null} avatarId User Avatar identifier
+ * @param {object | null} avatarBackground Avatar linear gradient background data
+ * @param {number} avatarBackground.angle Avatar gradient angle
+ * @param {Array<string>} avatarBackground.colors Array of colors for gradient background
  * @param {function} onSuccess Function to call once the cheer is sent
  * @param {function} onError Function to call on any possible error
  */
-export function sendCheers(amountQoins, media, message, messageExtraData, emojiRain, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID, onSuccess, onError) {
+export function sendCheers(amountQoins, media, message, messageExtraData, emojiRain, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID, avatarId, avatarBackground, onSuccess, onError) {
     usersRef.child(uid).child('credits').transaction((credits) => {
         if (credits) {
             credits -= amountQoins;
@@ -1398,6 +1402,10 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojiR
                     });
                 } else if (streamerQoinsCommitted) {
                     const donationRef = streamersDonationsRef.child(streamerID).push({
+                        avatar: {
+                            avatarId,
+                            avatarBackground
+                        },
                         amountQoins,
                         media,
                         message,
@@ -1453,10 +1461,14 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojiR
  * @param {("emoji" | "emote")} emojiRain.type Type of rain (emoji or emote)
  * @param {Array<string>} emojiRain.emojis Array of strings with emojis (as text) or emotes (as urls)
  * @param {number} qoinsToRemove Amount of donated Qoins
+ * @param {string | null} avatarId User Avatar identifier
+ * @param {object | null} avatarBackground Avatar linear gradient background data
+ * @param {number} avatarBackground.angle Avatar gradient angle
+ * @param {Array<string>} avatarBackground.colors Array of colors for gradient background
  * @param {function} onSuccess Function to call once the cheer is sent
  * @param {function} onError Function to call on any possible error
  */
-export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, onSuccess, onError) {
+export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, avatarId, avatarBackground, onSuccess, onError) {
     let qoinsTaken = qoinsToRemove ? false : true;
     if (qoinsToRemove) {
         qoinsTaken = (await usersRef.child(uid).child('credits').transaction((qoins) => {
@@ -1484,6 +1496,10 @@ export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, 
         if (reactionTaken) {
             const timestamp = (new Date()).getTime();
             const donationRef = streamersDonationsRef.child(streamerUid).push({
+                avatar: {
+                    avatarId,
+                    avatarBackground
+                },
                 amountQoins: qoinsToRemove,
                 media,
                 message,
@@ -2076,13 +2092,14 @@ export async function getUserGreetingData(uid) {
  * @param {string} messageLanguage Language for the message to be spoken
  */
 export async function writeStreamGreeting(uid, streamerUid, avatarId, animationId, message, twitchUsername, messageLanguage) {
-    return await streamsGreetingsRef.child(streamerUid).child(uid).set({
+    return await streamsGreetingsRef.child(streamerUid).child(uid).update({
         avatarId,
         animationId,
         message,
         twitchUsername,
         messageLanguage,
-        timestamp: (new Date()).getTime()
+        timestamp: (new Date()).getTime(),
+        read: false
     });
 }
 

@@ -349,6 +349,7 @@ const AvatarStackNavigator = createStackNavigator({
   AvatarReadyScreen: {
     screen: AvatarReadyScreen,
     navigationOptions: {
+      headerTransparent: true,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
     }

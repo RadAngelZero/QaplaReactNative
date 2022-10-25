@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import images from './../../../assets/images';
 import { translate } from '../../utilities/i18';
-import { getRandomAvatarAnimationGif, getUserGreetingData } from '../../services/database';
+import { getRandomAvatarAnimationGif } from '../../services/database';
 
 class GreetingsShortcut extends Component {
     state = {
@@ -15,18 +15,24 @@ class GreetingsShortcut extends Component {
     };
 
     componentDidMount() {
-        this.getUserGreeting();
         this.getRandomGif();
-    }
-
-    getUserGreeting = async () => {
-        const greeting = await getUserGreetingData(this.props.uid);
-        this.setState({ greeting: greeting.val() });
     }
 
     getRandomGif = async () => {
         const gif = await getRandomAvatarAnimationGif();
         this.setState({ gif: gif.val() });
+    }
+
+    redirectOnPress = () => {
+        if (this.props.uid) {
+            if (this.props.greeting) {
+                return this.props.navigation.navigate('GreetingStackNavigator');
+            }
+
+            return this.props.navigation.navigate('AvatarStackNavigator');
+        } else {
+            return this.props.navigation.navigate('Auth');
+        }
     }
 
     render() {
@@ -45,8 +51,8 @@ class GreetingsShortcut extends Component {
                             </Text>
                         </View>
                         <TouchableOpacity style={styles.button}
-                            disabled={this.state.greeting === undefined}
-                            onPress={() => this.state.greeting ? this.props.navigation.navigate('GreetingStackNavigator') : this.props.navigation.navigate('AvatarStackNavigator')}>
+                            disabled={this.props.greeting === undefined}
+                            onPress={this.redirectOnPress}>
                             <Text style={styles.buttonText}>
                                 {translate('greetingsShortcut.popUp')}
                             </Text>

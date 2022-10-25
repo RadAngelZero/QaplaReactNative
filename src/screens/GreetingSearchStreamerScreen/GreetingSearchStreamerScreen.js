@@ -219,8 +219,7 @@ class GreetingSearchStreamerScreen extends Component {
     }
 
     exitProcess = () => {
-        const screen = this.props.previousScreen !== 'AvatarReadyScreen' ? this.props.previousScreen : 'UserProfileModal';
-        this.props.navigation.navigate(screen);
+        this.props.navigation.dismiss();
     }
 
     render() {

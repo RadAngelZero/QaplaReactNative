@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, ScrollView, Image, Text, Switch, Linking, Alert, ActivityIndicator, ImageBackground } from 'react-native';
+import { View, TouchableOpacity, ScrollView, Image, Text, Switch, Linking, Alert, ActivityIndicator, ImageBackground, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationEvents, withNavigation } from 'react-navigation';
 import Tooltip from 'react-native-walkthrough-tooltip';
@@ -453,11 +453,11 @@ class UserProfileModal extends Component {
         const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${this.state.imageVersion}`;
 
         return (
-            <View style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1 }}>
                 <ScrollView>
                 <View style={styles.mainContainer}>
                     {this.props.avatarBackground ?
-                        <LinearGradient style={{ flex: 1 }}
+                        <LinearGradient style={{ flex: 1, borderRadius: 40 }}
                             useAngle
                             {...this.props.avatarBackground}>
                                 <Image source={{ uri: avatarImage }} style={styles.avatarImage} />
@@ -515,7 +515,7 @@ class UserProfileModal extends Component {
                     twitchUsername={this.props.twitchUsername}
                     onSuccess={this.getUserQlanData} />
                 <NavigationEvents onWillFocus={this.getImageVersion} />
-            </View>
+            </SafeAreaView>
         );
     }
 }

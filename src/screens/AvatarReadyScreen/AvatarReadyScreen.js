@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import styles from './style';
 import { getAvatarAnimationCameraAspectRatio, getUserGreetingAnimation } from '../../services/database';
 import { translate } from '../../utilities/i18';
+import { NavigationEvents } from 'react-navigation';
 
 class AvatarReadyScreen extends Component {
     state = {
@@ -66,6 +67,7 @@ class AvatarReadyScreen extends Component {
                         </TouchableOpacity>
                     </View>
                 </LinearGradient>
+                <NavigationEvents onWillFocus={() => this.props.currentScreen === 'GreetingSearchStreamerScreen' ? this.props.navigation.dismiss() : null} />
             </SafeAreaView>
         );
     }
@@ -74,7 +76,8 @@ class AvatarReadyScreen extends Component {
 function mapStateToProps(state) {
     return {
         uid: state.userReducer.user.id,
-        avatarId: state.userReducer.user.avatarId
+        avatarId: state.userReducer.user.avatarId,
+        currentScreen: state.screensReducer.currentScreenId
     };
 }
 

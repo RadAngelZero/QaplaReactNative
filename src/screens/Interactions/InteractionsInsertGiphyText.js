@@ -155,8 +155,10 @@ class InteractionsInsertGiphyText extends Component {
                                     <TextInput
                                         style={{
                                             color: '#fff',
-                                            flexGrow: 1,
+                                            flex: 1,
                                             fontSize: 16,
+                                            padding: 0,
+                                            paddingVertical: 8
                                         }}
                                         maxLength={50}
                                         onChangeText={(text) => this.setState({ text })}

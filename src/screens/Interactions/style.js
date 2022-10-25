@@ -798,7 +798,6 @@ export default styles = StyleSheet.create({
     insertGiphyTextTextInput: {
         flex: 1,
         backgroundColor: '#0D1021',
-        height: heightPercentageToPx(4.92),
         paddingLeft: 16,
         paddingRight: 8,
         borderRadius: 18,

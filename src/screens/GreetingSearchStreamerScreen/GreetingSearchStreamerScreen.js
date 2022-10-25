@@ -182,10 +182,10 @@ class GreetingSearchStreamerScreen extends Component {
 
                         this.setState({ userWantToSendGreeting: false, openSentModal: true, openConfirmationModal: false });
                     } catch (error) {
-                        this.setState({ openConfirmationModal: false, openGreetingAlreadySentModal: true });
+                        this.setState({ userWantToSendGreeting: false, openConfirmationModal: false, openGreetingAlreadySentModal: true });
                     }
                 } else {
-                    this.setState({ openConfirmationModal: false, openNotASubModal: true });
+                    this.setState({ userWantToSendGreeting: false, openConfirmationModal: false, openNotASubModal: true });
                 }
             }
         } else {

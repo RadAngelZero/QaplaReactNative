@@ -4,7 +4,7 @@ import { ActivityIndicator, FlatList, Image, Linking, SafeAreaView, Text, TextIn
 import styles from './style';
 import images from '../../../assets/images';
 import { getRandomStreamerOfflineGif, getStreamersByName, getUserGreetingData, writeStreamGreeting } from '../../services/database';
-import { STREAMERS_BLACKLIST, TWITCH_AFFILIATE, TWITCH_PARTNER } from '../../utilities/Constants';
+import { TWITCH_AFFILIATE, TWITCH_PARTNER } from '../../utilities/Constants';
 import { getLocaleLanguage, translate } from '../../utilities/i18';
 import { connect } from 'react-redux';
 import { getUserToStreamerRelationData } from '../../services/functions';
@@ -112,7 +112,7 @@ class GreetingSearchStreamerScreen extends Component {
     }
 
     renderItem = ({ item, index }) => {
-        if (!STREAMERS_BLACKLIST.includes(item.streamerId) && item.broadcasterType === TWITCH_PARTNER || item.broadcasterType === TWITCH_AFFILIATE) {
+        if (item.broadcasterType === TWITCH_PARTNER || item.broadcasterType === TWITCH_AFFILIATE) {
             return (
                 <Item index={index}
                     streamerName={item.displayName}

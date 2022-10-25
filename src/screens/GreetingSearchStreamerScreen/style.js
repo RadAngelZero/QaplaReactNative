@@ -37,7 +37,6 @@ export default styles = StyleSheet.create({
         textAlignVertical: 'center',
         marginLeft: 8,
         paddingVertical: 8,
-        lineHeight: 24
     },
     resultsList: {
         marginTop: 18,

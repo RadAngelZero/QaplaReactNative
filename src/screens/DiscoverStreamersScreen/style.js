@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import Colors from '../../utilities/Colors';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
@@ -9,12 +9,11 @@ export default styles = StyleSheet.create({
         backgroundColor: Colors.backgroundColor
     },
     searchBar: {
-        height: heightPercentageToPx(4.92),
         width: widthPercentageToPx(91.46),
         flexDirection: 'row',
         marginRight: 10,
         borderRadius: 50,
-        paddingHorizontal: widthPercentageToPx(4.8),
+        paddingHorizontal: 16,
         alignSelf: 'center',
         alignItems: 'center',
     },
@@ -28,6 +27,7 @@ export default styles = StyleSheet.create({
         fontWeight: '400',
         letterSpacing: 1,
         textAlignVertical: 'center',
-        paddingLeft: 12
+        marginLeft: 8,
+        paddingVertical: 8
     },
 });

@@ -250,6 +250,13 @@ export async function saveAvatarId(uid, rpmAvatarId) {
     await usersRef.child(uid).child('avatarId').set(rpmAvatarId);
 }
 
+/**
+ * Saves the avatar background
+ * @param {string} uid User identifier
+ * @param {Object} background Object describing gradient background for the avatar image
+ * @param {number} background.angle Avatar gradient angle
+ * @param {Array<string>} background.colors Array of colors for gradient background
+ */
 export async function saveAvatarBackground(uid, background) {
     await usersRef.child(uid).child('avatarBackground').set(background);
 }
@@ -2073,6 +2080,10 @@ export async function getUserGreetingAnimation(uid) {
     return await usersGreetingsRef.child(uid).child('animation').once('value');
 }
 
+/**
+ * Gets all the information about the user greeting of the given user
+ * @param {string} uid User identifier
+ */
 export async function getUserGreetingData(uid) {
     return await usersGreetingsRef.child(uid).once('value');
 }

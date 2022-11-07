@@ -197,6 +197,8 @@ class InteractionsCheckout extends Component {
                                     this.props.twitchUserName,
                                     this.props.photoUrl,
                                     streamerId,
+                                    this.props.avatarId,
+                                    this.props.avatarBackground,
                                     () => {
                                         trackOnSegment('Interaction Sent', {
                                             MessageLength: message ? message.length : null,
@@ -759,7 +761,9 @@ function mapStateToProps(state) {
         photoUrl: state.userReducer.user.photoUrl,
         qoins: state.userReducer.user.credits,
         twitchId: state.userReducer.user.twitchId,
-        userToStreamerRelation: state.userToStreamerRelationReducer
+        userToStreamerRelation: state.userToStreamerRelationReducer,
+        avatarId: state.userReducer.user.avatarId,
+        avatarBackground: state.userReducer.user.avatarBackground
     };
 }
 

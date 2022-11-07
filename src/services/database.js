@@ -61,6 +61,10 @@ const usersReactionsCountRef = database.ref('/UsersReactionsCount');
 const giphyTextRequestsRef = database.ref('/GiphyTextRequests');
 const voiceBotAvailableVoicesRef = database.ref('/VoiceBotAvailableVoices');
 const streamersBanListsRef = database.ref('/StreamersBanLists');
+const avatarsAnimationsRef = database.ref('/AvatarsAnimations');
+const usersGreetingsRef = database.ref('/UsersGreetings');
+const streamsGreetingsRef = database.ref('/StreamsGreetings');
+const gifsLibrariesRef = database.ref('/GifsLibraries');
 
 /**
  * Returns true if the user with the given uid exists
@@ -217,6 +221,44 @@ export async function getTwitchUserName(uid) {
  */
 export async function saveTwitchData(uid, twitchData) {
     await usersRef.child(uid).update(twitchData);
+}
+
+/**
+ * Saves the 3D avatar url of the user
+ * @param {string} uid User identifier
+ * @param {string} avatarUrl Avatar url
+ */
+export async function saveAvatarUrl(uid, avatarUrl) {
+    await usersRef.child(uid).child('avatarUrl').set(avatarUrl);
+}
+
+/**
+ * Saves the ready player me user identifier of the user
+ * @param {string} uid User identifier
+ * @param {string} rpmUid Ready player me user identifier
+ */
+export async function saveReadyPlayerMeUserId(uid, rpmUid) {
+    await usersRef.child(uid).child('rpmUid').set(rpmUid);
+}
+
+/**
+ * Saves the ready player me avatar identifier of the user
+ * @param {string} uid User identifier
+ * @param {string} rpmAvatarId Ready player me avatar identifier
+ */
+export async function saveAvatarId(uid, rpmAvatarId) {
+    await usersRef.child(uid).child('avatarId').set(rpmAvatarId);
+}
+
+/**
+ * Saves the avatar background
+ * @param {string} uid User identifier
+ * @param {Object} background Object describing gradient background for the avatar image
+ * @param {number} background.angle Avatar gradient angle
+ * @param {Array<string>} background.colors Array of colors for gradient background
+ */
+export async function saveAvatarBackground(uid, background) {
+    await usersRef.child(uid).child('avatarBackground').set(background);
 }
 
 /**
@@ -1335,10 +1377,14 @@ export async function getAllStreamers() {
  * @param {string} twitchUserName Username of Twitch
  * @param {string} userPhotoURL URL of the user profile photo
  * @param {string} streamerID Streamer uid
+ * @param {string | null} avatarId User Avatar identifier
+ * @param {object | null} avatarBackground Avatar linear gradient background data
+ * @param {number} avatarBackground.angle Avatar gradient angle
+ * @param {Array<string>} avatarBackground.colors Array of colors for gradient background
  * @param {function} onSuccess Function to call once the cheer is sent
  * @param {function} onError Function to call on any possible error
  */
-export function sendCheers(amountQoins, media, message, messageExtraData, emojiRain, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID, onSuccess, onError) {
+export function sendCheers(amountQoins, media, message, messageExtraData, emojiRain, timestamp, streamerName, uid, userName, twitchUserName, userPhotoURL, streamerID, avatarId, avatarBackground, onSuccess, onError) {
     usersRef.child(uid).child('credits').transaction((credits) => {
         if (credits) {
             credits -= amountQoins;
@@ -1363,6 +1409,10 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojiR
                     });
                 } else if (streamerQoinsCommitted) {
                     const donationRef = streamersDonationsRef.child(streamerID).push({
+                        avatar: {
+                            avatarId,
+                            avatarBackground
+                        },
                         amountQoins,
                         media,
                         message,
@@ -1418,10 +1468,14 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojiR
  * @param {("emoji" | "emote")} emojiRain.type Type of rain (emoji or emote)
  * @param {Array<string>} emojiRain.emojis Array of strings with emojis (as text) or emotes (as urls)
  * @param {number} qoinsToRemove Amount of donated Qoins
+ * @param {string | null} avatarId User Avatar identifier
+ * @param {object | null} avatarBackground Avatar linear gradient background data
+ * @param {number} avatarBackground.angle Avatar gradient angle
+ * @param {Array<string>} avatarBackground.colors Array of colors for gradient background
  * @param {function} onSuccess Function to call once the cheer is sent
  * @param {function} onError Function to call on any possible error
  */
-export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, onSuccess, onError) {
+export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, avatarId, avatarBackground, onSuccess, onError) {
     let qoinsTaken = qoinsToRemove ? false : true;
     if (qoinsToRemove) {
         qoinsTaken = (await usersRef.child(uid).child('credits').transaction((qoins) => {
@@ -1449,6 +1503,10 @@ export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, 
         if (reactionTaken) {
             const timestamp = (new Date()).getTime();
             const donationRef = streamersDonationsRef.child(streamerUid).push({
+                avatar: {
+                    avatarId,
+                    avatarBackground
+                },
                 amountQoins: qoinsToRemove,
                 media,
                 message,
@@ -1971,4 +2029,111 @@ export async function getBotAvailableVoices() {
 
 export async function isUserBannedWithStreamer(userTwitchId, streamerUid) {
     return await streamersBanListsRef.child(streamerUid).child(userTwitchId).once('value');
+}
+
+// -----------------------------------------------
+// Avatars Animations
+// -----------------------------------------------
+
+/**
+ * Returns all the available avatar animations
+ */
+export async function getAvatarAnimations() {
+    return await avatarsAnimationsRef.once('value');
+}
+
+/**
+ * Gets the aspect ratio for the camera of the given animation
+ * @param {string} animationId Animation identifier
+ */
+export async function getAvatarAnimationCameraAspectRatio(animationId) {
+    return await avatarsAnimationsRef.child(animationId).child('camera').child('aspect').once('value');
+}
+
+// -----------------------------------------------
+// Users Greetings
+// -----------------------------------------------
+
+/**
+ * Saves the avatar and animation ids for the user greeting
+ * @param {string} uid User identifier
+ * @param {string} animationId Animation identifier
+ */
+export async function saveUserGreetingAnimation(uid, animationId) {
+    return await usersGreetingsRef.child(uid).child('animation').update({ animationId });
+}
+
+/**
+ * Saves the TTS information for the greeting
+ * @param {string} uid User identifier
+ * @param {string} message Message to speak
+ */
+export async function saveUserGreetingMessage(uid, message) {
+    return await usersGreetingsRef.child(uid).child('TTS').update({ message });
+}
+
+/**
+ * Returns the animation information of the greeting of the given user
+ * @param {string} uid User identifier
+ */
+export async function getUserGreetingAnimation(uid) {
+    return await usersGreetingsRef.child(uid).child('animation').once('value');
+}
+
+/**
+ * Gets all the information about the user greeting of the given user
+ * @param {string} uid User identifier
+ */
+export async function getUserGreetingData(uid) {
+    return await usersGreetingsRef.child(uid).once('value');
+}
+
+// -----------------------------------------------
+// Streams Greetings
+// -----------------------------------------------
+
+/**
+ * Saves the greeting of the user for the given streamer
+ * @param {string} uid User identifier
+ * @param {string} streamerUid Streamer identifier
+ * @param {string} avatarId Avatar identifier
+ * @param {string} animationId Animation identifier
+ * @param {string} message Message for TTS
+ * @param {string} twitchUsername Twitch user name
+ * @param {string} messageLanguage Language for the message to be spoken
+ */
+export async function writeStreamGreeting(uid, streamerUid, avatarId, animationId, message, twitchUsername, messageLanguage) {
+    return await streamsGreetingsRef.child(streamerUid).child(uid).update({
+        avatarId,
+        animationId,
+        message,
+        twitchUsername,
+        messageLanguage,
+        timestamp: (new Date()).getTime(),
+        read: false
+    });
+}
+
+// -----------------------------------------------
+// Gifs Libraries
+// -----------------------------------------------
+
+/**
+ * Returns a random gif from the library of Streamer Offline gifs
+ */
+export async function getRandomStreamerOfflineGif() {
+    const length = await gifsLibrariesRef.child('StreamerOffline').child('length').once('value');
+
+    const index = Math.floor(Math.random() * length.val());
+    return await gifsLibrariesRef.child('StreamerOffline').child('gifs').child(index).once('value');
+}
+
+/**
+ * Returns a random gif from the library of Avatar animation gifs
+ */
+export async function getRandomAvatarAnimationGif() {
+    const length = await gifsLibrariesRef.child('AvatarAnimation').child('length').once('value');
+
+    const index = Math.floor(Math.random() * length.val());
+    return await gifsLibrariesRef.child('AvatarAnimation').child('gifs').child(index).once('value');
 }

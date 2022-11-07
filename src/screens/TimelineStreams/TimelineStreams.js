@@ -8,23 +8,36 @@ import StreamsList from '../../components/StreamsList/StreamsList';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 import { trackOnSegment } from '../../services/statistics';
 import StreamLiveList from '../../components/StreamLiveList/StreamLiveList';
-import { getStreamById, getStreamerName, getStreamerPublicProfile, isUserParticipantOnEvent } from '../../services/database';
+import { getStreamById, getStreamerName, getStreamerPublicProfile, getUserGreetingData, isUserParticipantOnEvent } from '../../services/database';
 import { translate } from '../../utilities/i18';
 import Randomstreamerslist from '../../components/RandomStreamersList/RandomStreamersList';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT } from '../../utilities/Constants';
 import InteractionsShortcut from '../../components/InteractionsShortcut/InteractionsShortcut';
+import GreetingsShortcut from '../../components/GreetingsShortcut/GreetingsShortcut';
+import { NavigationEvents } from 'react-navigation';
 
 export class TimelineStreams extends Component {
     listsToRender = [0, 1, 2, 3, 4, 5, 6];
     state = {
         openEventDetailsModal: false,
         selectedStream: null,
-        deepLinkId: ''
+        deepLinkId: '',
+        greeting: undefined
     };
 
     componentDidMount() {
         this.props.navigation.addListener('willFocus', this.checkStreamDeepLinkData);
         this.checkStreamDeepLinkData();
+        this.getUserGreeting();
+    }
+
+    getUserGreeting = async () => {
+        const greeting = await getUserGreetingData(this.props.uid);
+        if (greeting.exists() && greeting.val().TTS && greeting.val().animation) {
+            this.setState({ greeting: greeting.val() });
+        } else {
+            this.setState({ greeting: null });
+        }
     }
 
     checkStreamDeepLinkData = async () => {
@@ -98,11 +111,16 @@ export class TimelineStreams extends Component {
                 <FeaturedStreamsList uid={this.props.uid}
                     onCardPress={this.onStreamPress}
                     onStreamerProfileButtonPress={this.onStreamerProfileButtonPress} />
-                <View style={{ height: 25 }} />
                 <View style={{
                     alignSelf: 'center'
                 }}>
                     <InteractionsShortcut onPress={() => this.props.navigation.navigate('InteractionsFeed')} />
+                </View>
+                <View style={{ height: 40 }} />
+                <View style={{
+                    alignSelf: 'center'
+                }}>
+                    <GreetingsShortcut greeting={this.state.greeting} />
                 </View>
                 <View style={{ height: 25 }} />
                 <StreamLiveList
@@ -138,6 +156,7 @@ export class TimelineStreams extends Component {
                 <EventDetailsModal open={this.state.openEventDetailsModal}
                     onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
                     stream={this.state.selectedStream} />
+                <NavigationEvents onWillFocus={this.getUserGreeting} />
             </ScrollView>
         );
     }

@@ -136,9 +136,8 @@ export default styles = StyleSheet.create({
     },
     searchBar: {
         flexDirection: 'row',
-        height: heightPercentageToPx(4.92),
         borderRadius: widthPercentageToPx(13.33),
-        paddingHorizontal: widthPercentageToPx(4.8),
+        paddingHorizontal: 16,
         alignSelf: 'center',
         alignItems: 'center',
     },
@@ -161,7 +160,8 @@ export default styles = StyleSheet.create({
         fontWeight: '400',
         letterSpacing: 1,
         textAlignVertical: 'center',
-        marginLeft: widthPercentageToPx(2.66),
+        paddingVertical: 8,
+        marginLeft: 8,
     },
     gridPoweredbyGiphy: {
         flex: 1,
@@ -414,15 +414,14 @@ export default styles = StyleSheet.create({
     chatInputContainer: {
         flex: 1,
         backgroundColor: '#141539',
-        borderRadius: widthPercentageToPx(4.8),
-        height: heightPercentageToPx(4.92),
-        paddingHorizontal: widthPercentageToPx(4.53),
+        borderRadius: 50,
+        paddingHorizontal: 16
     },
     chatTextInput: {
         flex: 1,
         fontSize: 16,
         fontWeight: '400',
-        lineHeight: heightPercentageToPx(2.95),
+        paddingVertical: heightPercentageToPx(1),
     },
     chatSendIcon: {
         marginLeft: widthPercentageToPx(4.26),
@@ -799,7 +798,6 @@ export default styles = StyleSheet.create({
     insertGiphyTextTextInput: {
         flex: 1,
         backgroundColor: '#0D1021',
-        height: heightPercentageToPx(4.92),
         paddingLeft: 16,
         paddingRight: 8,
         borderRadius: 18,

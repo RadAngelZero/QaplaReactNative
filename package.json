@@ -1,6 +1,6 @@
 {
   "name": "Qapla-React-Native",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "private": true,
   "scripts": {
     "android": "cd android && gradlew clean && cd .. && react-native run-android",
@@ -45,8 +45,7 @@
     "react-redux": "7.1.1",
     "reanimated-bottom-sheet": "1.0.0-alpha.22",
     "redux": "4.0.4",
-    "redux-thunk": "2.3.0",
-    "sendbird": "3.0.125"
+    "redux-thunk": "2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

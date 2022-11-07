@@ -143,6 +143,9 @@
         }
     },
     "userProfileScreen": {
+        "yourIdentity": "Your identity on stream",
+        "createAvatar": "Create your Avatar",
+        "editAvatar": "Edit Avatar",
         "linkAccount": "Link Twitch",
         "linked": "Linked",
         "updateProfile": "Update your profile\non Twitch",
@@ -152,6 +155,7 @@
         "getQoins": "Get Qoins",
         "mySupport": "💜 My support",
         "totalQoinsSent": "Total Qoins sent",
+        "updatePopUp": "👋 Update Pop Up",
         "addQreatorCode": "Add a Qreator Code",
         "notifications": "Notifications",
         "newStreams": "New streams",
@@ -393,6 +397,73 @@
             "goToFirstStream": "Go to my first stream"
         }
     },
+    "avatarOnboardingScreen": {
+        "react": "React with personality",
+        "powerUpSub": "Power up your sub",
+        "description1": "Your avi will show on the reactions you send on stream",
+        "description2": "Say hi when you show up on streams you’re subscribed with a custom greeting",
+        "next": "Next",
+        "createMyAvatar": "Create my Avatar"
+    },
+    "avatarChooseBackgroundScreen": {
+        "pickABackground": "Pick a background color",
+        "description": "This is how you’ll look in your custom reactions on stream",
+        "loading": "We’re cooking... it might take 10 to 15 seconds",
+        "useBackground": "Use Background",
+        "aviUpdated": "Avi updated 💣",
+        "backToProfile": "Back to profile"
+    },
+    "avatarChooseAnimationScreen": {
+        "confirmButton": "Use Animation"
+    },
+    "avatarReadyScreen": {
+        "aviReady": "Your Avi is ready",
+        "uses": "Say hi from the app or the Twitch extension whenever you show up on a stream",
+        "sendNow": "Send now on Stream",
+        "backToProfile": "Back to profile"
+    },
+    "greetingTTSScreen": {
+        "makeAnEntrance": "👋 Make an entrance. ",
+        "sayHi": "Say hi in your own way",
+        "readyToSave": "🔥 Lit! Ready to save?",
+        "editMessage": "Edit message",
+        "ready": "Ready",
+        "popupUpdated": "Pop up updated 💣",
+        "backToProfile": "Back to profile"
+    },
+    "greetingSearchStreamerScreen": {
+        "sayHi": "👋 Pop Up",
+        "searchStreamer": "Search streamer",
+        "confirmationModal": {
+            "titleP1": "Pop un on ",
+            "streamerName": "{{streamerName}}´s ",
+            "titleP2": "stream",
+            "sendAviNow": "Send Avi now"
+        },
+        "streamerOfflineModal": {
+            "title": "Streamer Offline",
+            "descriptionP1": "We’ll notify you when ",
+            "streamerName": "{{streamerName}}´s ",
+            "descriptionP2": "next stream will be 👇",
+            "follow": "Follow Streamer"
+        },
+        "notASubModal": {
+            "title": "You’re not a sub 🫣",
+            "descriptionP1": "Pop ups are available for channel suscribers. ",
+            "descriptionP2": "Sucribe to pop up!",
+            "subscribe": "Suscribe to channel"
+        },
+        "greetingAlreadySentModal": {
+            "title": "You already poped up 🫢",
+            "descriptionP1": "Pop ups work once per stream. ",
+            "descriptionP2": "It’s a way to say hi when you show up",
+            "goToStream": "Go to stream"
+        },
+        "sentModal": {
+            "title": "Boom. Sent.",
+            "goToStream": "Go to stream"
+        }
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Check your notifications",
@@ -521,7 +592,7 @@
         "skip": "Skip",
         "linkAccount": "Link your account",
         "descriptionQreatorCode": "to use your Qreator Code and get your referral tokens 🙌",
-        "description": "🌱 Mine tokens in real-time using your channel points on  Twitch.",
+        "description": "👻 Show up on stream with your Twitch identity.",
         "linkButton": "Link account",
         "rejectTrakingTitle": "Allow Qapla to Request to Track to link your Twitch",
         "rejectTrakingMessage": "We use the data exclusively to connect your accounts",
@@ -530,9 +601,9 @@
     },
     "skipLinkTwitchAccount": {
         "important": "Important",
-        "reminder": "Friendly reminder: You won´t get any tokens in Qapla if your accounts aren’t linked.",
+        "reminder": "You won’t be able to interact on stream if your accounts are not linked",
         "reminderQreatorCode": "Friendly reminder: To unlock full-benefits on Qapla, you must have a linked Twitch account.",
-        "description": "No worries. You can link your account later from your profile 😉",
+        "description": "But no worries. You can link your account later from your profile 😉",
         "continue": "I wish to continue"
     },
     "sendCheersModal": {
@@ -761,5 +832,10 @@
     "interactionsShortcut": {
         "liveToYourStreamer": "on-screen to your streamer",
         "send": "Send Reaction"
+    },
+    "greetingsShortcut": {
+        "showUp": "Show up with style 👋",
+        "usingAvi": "using your animated avi",
+        "popUp": "Pop Up on stream"
     }
 }

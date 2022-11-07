@@ -10,6 +10,7 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         width: widthPercentageToPx(100),
         height: heightPercentageToPx(100),
+        backgroundColor: 'rgba(0, 0, 0, .4)'
     },
     container: {
         width: widthPercentageToPx(92),

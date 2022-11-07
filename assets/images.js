@@ -117,6 +117,8 @@ import EditQreatorCodeIcon from './icons/EditQreatorCode.svg';
 import InteractionsNumberIcon from './icons/interactionsNumber.svg';
 import UserProfile from './icons/UserProfile.svg';
 import Lock from './icons/Lock.svg';
+import VideoCamera from './icons/videoCamera.svg';
+import EditSquare from './icons/EditSquare.svg';
 
 // Images
 const images = {
@@ -247,6 +249,18 @@ const images = {
 		CoolCat: {
 			img: require('./images/CoolCat.png'),
 			uri: '@assets/images/CoolCat.png',
+		},
+		reactionSample:  {
+			img: require('./images/ReactionSample.png')
+		},
+		createAvatarCover: {
+			img: require('./images/CreateAvatarCover.png')
+		},
+		warningCircle: {
+			img: require('./images/WarningCircle.png')
+		},
+		popUpBackground: {
+			img: require('./images/PopUpBackground.png')
 		}
 	},
 	svg: {
@@ -368,6 +382,8 @@ const images = {
 		interactionsNumberIcon: InteractionsNumberIcon,
 		userProfile: UserProfile,
 		lock: Lock,
+		videoCamera: VideoCamera,
+		editSquare: EditSquare
 	},
 	gif: {
 		loadingStreamers: {
@@ -421,6 +437,12 @@ const images = {
 		},
 		emojiRaid: {
 			img: require('./gifs/emojiRaid.gif')
+		},
+		swing: {
+			img: require('./gifs/Swing.gif')
+		},
+		thatsRad: {
+			img: require('./gifs/thatsRad.gif')
 		}
 	},
 };

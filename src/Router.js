@@ -57,6 +57,14 @@ import PrepaidInteractionsGiphyTextSelector from './screens/Interactions/Prepaid
 import InteractionsGiphyTextSelector from './screens/Interactions/InteractionsGiphyTextSelector';
 import InteractionsInsertGiphyText from './screens/Interactions/InteractionsInsertGiphyText';
 import UserProfileModal from './components/UserProfileModal/UserProfileModal';
+import AvatarCreatorScreen from './screens/AvatarCreatorScreen/AvatarCreatorScreen';
+import AvatarChooseAnimationScreen from './screens/AvatarChooseAnimationScreen/AvatarChooseAnimationScreen';
+import AvatarChooseBackgroundScreen from './screens/AvatarChooseBackgroundScreen/AvatarChooseBackgroundScreen';
+import AvatarOnboardingScreen from './screens/AvatarOnboardingScreen/AvatarOnboardingScreen';
+import GreetingTTSScreen from './screens/GreetingTTSScreen/GreetingTTSScreen';
+import AvatarReadyScreen from './screens/AvatarReadyScreen/AvatarReadyScreen';
+import AvatarCreationHeaderBar from './components/AvatarCreationHeaderBar/AvatarCreationHeaderBar';
+import GreetingSearchStreamerScreen from './screens/GreetingSearchStreamerScreen/GreetingSearchStreamerScreen';
 
 //#region Stack Navigators
 
@@ -301,6 +309,68 @@ const PrepaidInteractionsPersonlizeStackNavigator = createStackNavigator({
   }
 });
 
+const AvatarStackNavigator = createStackNavigator({
+  AvatarOnboardingScreen: {
+    screen: AvatarOnboardingScreen,
+    navigationOptions: {
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  },
+  AvatarCreatorScreen: {
+    screen: AvatarCreatorScreen,
+    navigationOptions: {
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  },
+  AvatarChooseBackgroundScreen: {
+    screen: AvatarChooseBackgroundScreen,
+    navigationOptions: {
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  },
+  AvatarChooseAnimationScreen: {
+    screen: AvatarChooseAnimationScreen,
+    navigationOptions: {
+      headerTransparent: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  },
+  AvatarChooseGreetingMessageScreen: {
+    screen: GreetingTTSScreen,
+    navigationOptions: {
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  },
+  AvatarReadyScreen: {
+    screen: AvatarReadyScreen,
+    navigationOptions: {
+      headerTransparent: true,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  }
+}, {
+  defaultNavigationOptions: {
+    header: (props) => <AvatarCreationHeaderBar {...props} />,
+  }
+});
+
+const GreetingStackNavigator = createStackNavigator({
+  GreetingSearchStreamerScreen: {
+    screen: GreetingSearchStreamerScreen,
+    navigationOptions: {
+      headerShown: false,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    }
+  }
+});
+
 //#endregion
 
 //#region Top Tab Navigators
@@ -525,6 +595,12 @@ const RootStackNavigator = createStackNavigator({
   },
   PrepaidInteractionsPersonlizeStack: {
     screen: PrepaidInteractionsPersonlizeStackNavigator
+  },
+  AvatarStackNavigator: {
+    screen: AvatarStackNavigator
+  },
+  GreetingStackNavigator: {
+    screen: GreetingStackNavigator
   },
   BuyQoins: {
     screen: BuyQoins,

@@ -4,9 +4,6 @@ import images from '../../assets/images';
 // Segment key
 export const SEGMENT_KEY = 'fCfir8yrQiZRVrpuwLHYRePN68SqW8AS';
 
-// SendBird key
-export const SENDBIRD_KEY = '7E54A9F8-DCE3-420E-8DC8-D3E8B081A2B0';
-
 // Giphy API hey
 export const GIPHY_KEY = 'VDvH7301JvDdgFGQY41bv0Sr8zl5v4In';
 

@@ -119,6 +119,10 @@ import UserProfile from './icons/UserProfile.svg';
 import Lock from './icons/Lock.svg';
 import VideoCamera from './icons/videoCamera.svg';
 import EditSquare from './icons/EditSquare.svg';
+import SwapRectangle from './icons/SwapRectangle.svg';
+import PlusCircle from './icons/plusCircle.svg';
+import Avatar from './icons/Avatar.svg';
+import GiphyText from './icons/GiphyText.svg';
 
 // Images
 const images = {
@@ -383,7 +387,11 @@ const images = {
 		userProfile: UserProfile,
 		lock: Lock,
 		videoCamera: VideoCamera,
-		editSquare: EditSquare
+		editSquare: EditSquare,
+		swapRectangle: SwapRectangle,
+		plusCircle: PlusCircle,
+		avatar: Avatar,
+		giphyText: GiphyText
 	},
 	gif: {
 		loadingStreamers: {

@@ -116,7 +116,9 @@ class AuthLoadingScreen extends Component {
              * screen, no to the place that we need
              */
             if (!this.state.linkOnProgress && this.state.firstLoad) {
-                return this.props.navigation.navigate('Explore');
+                return this.props.navigation.navigate('TweetReaction', {
+                    streamerUid: '134581897-amatesaurius'
+                });
             }
         });
 

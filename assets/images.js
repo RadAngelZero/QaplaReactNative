@@ -123,6 +123,7 @@ import SwapRectangle from './icons/SwapRectangle.svg';
 import PlusCircle from './icons/plusCircle.svg';
 import Avatar from './icons/Avatar.svg';
 import GiphyText from './icons/GiphyText.svg';
+import EditCircle from './icons/EditCircle.svg';
 
 // Images
 const images = {
@@ -391,7 +392,8 @@ const images = {
 		swapRectangle: SwapRectangle,
 		plusCircle: PlusCircle,
 		avatar: Avatar,
-		giphyText: GiphyText
+		giphyText: GiphyText,
+		editCircle: EditCircle
 	},
 	gif: {
 		loadingStreamers: {

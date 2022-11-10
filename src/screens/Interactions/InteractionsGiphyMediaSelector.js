@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, TextInput, Keyboard, Platform, ScrollView } from 'react-native';
+import { View, Image, TextInput, Keyboard, Platform, ScrollView } from 'react-native';
 import {
     GiphyContent,
     GiphyGridView,
     GiphyRating,
 } from '@giphy/react-native-sdk';
-import { connect } from 'react-redux';
 
 import styles from './style';
 import images from '../../../assets/images';
-import { GIPHY_GIFS, GIPHY_STICKERS } from '../../utilities/Constants';
+import { GIPHY_STICKERS } from '../../utilities/Constants';
 import { translate } from '../../utilities/i18';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
@@ -36,44 +35,12 @@ class InteractionsGiphyMediaSelector extends Component {
         this.keyboardWillShowListener.remove();
     }
 
-    searchHandler = (e) => {
-        this.setState({ searchQuery: e.nativeEvent.text });
+    searchHandler = (searchQuery) => {
+        this.setState({ searchQuery });
     }
 
-    renderImage = ({ item }) => {
-        if (item.images.fixed_height_small) {
-            const ratio = item.images.fixed_height_small.width / item.images.fixed_height_small.height;
-            const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
-            return (
-                <TouchableOpacity
-                    onPress={() => {
-                        this.props.navigation.navigate('InteractionsConfirmSelection', {
-                            selectedMedia: item.images,
-                            mediaType,
-                            ...this.props.navigation.state.params
-                        });
-                    }}
-                    style={[styles.gridElementContainer, {
-                        backgroundColor: mediaType !== GIPHY_STICKERS ? '#202152' : 'transparent'
-                    }]}
-                >
-                    <Image
-                        source={{ uri: item.images.fixed_height_small.url }}
-                        style={[
-                            {
-                                aspectRatio: ratio,
-                                minWidth: '100%',
-                            },
-                        ]}
-                        resizeMode="cover"
-                    />
-                </TouchableOpacity>
-            );
-        }
-    };
-
     render() {
-        const mediaType = this.props.navigation.getParam('mediaType', GIPHY_GIFS);
+        const mediaType = this.props.mediaType;
 
         return (
             <View style={styles.container}>
@@ -81,13 +48,14 @@ class InteractionsGiphyMediaSelector extends Component {
                     height: (Platform.OS === 'android' && this.state.keyboardHeight) ? this.state.keyboardHeight : heightPercentageToPx(85)
                 }]} >
                     <View style={styles.gridSearchBarContainer}>
+                        <images.svg.closeIcon />
                         <View style={[styles.searchBar, styles.gridSearchBar]}>
                             <View style={{ opacity: 0.4 }}>
                                 <images.svg.searchStreamerIcon style={styles.searchIcon} />
                             </View>
                             <TextInput
                                 value={this.state.searchQuery}
-                                onChange={this.searchHandler}
+                                onChangeText={this.searchHandler}
                                 style={styles.gridSearchBarTextInput}
                                 placeholder={`${translate('interactions.visual.searchOn')} Giphy`}
                                 placeholderTextColor={'#fff3'}
@@ -159,10 +127,4 @@ class InteractionsGiphyMediaSelector extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        giphyId: state.userReducer.user.giphyId
-    };
-}
-
-export default connect(mapStateToProps)(InteractionsGiphyMediaSelector);
+export default InteractionsGiphyMediaSelector;

@@ -124,8 +124,8 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         height: heightPercentageToPx(4.92),
-        marginTop: heightPercentageToPx(1.97),
-        paddingHorizontal: widthPercentageToPx(4.26),
+        marginTop: 16,
+        paddingHorizontal: 16,
         justifyContent: 'space-between',
     },
     gridElementContainer: {
@@ -143,7 +143,7 @@ export default styles = StyleSheet.create({
     },
     gridSearchBar: {
         backgroundColor: '#0D1021',
-        width: widthPercentageToPx(91.46),
+        width: widthPercentageToPx(80),
     },
     streamerSearchBar: {
         backgroundColor: '#141539',
@@ -165,8 +165,8 @@ export default styles = StyleSheet.create({
     },
     gridPoweredbyGiphy: {
         flex: 1,
-        width: widthPercentageToPx(27.66),
-        maxWidth: widthPercentageToPx(27.66),
+        width: widthPercentageToPx(25.5),
+        maxWidth: widthPercentageToPx(25.5),
         height: heightPercentageToPx(1.23),
     },
     memesContainer: {

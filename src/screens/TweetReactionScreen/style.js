@@ -4,7 +4,7 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0D1021',
+        backgroundColor: '#0D1021'
     },
     headerBar: {
         flexDirection: 'row',
@@ -35,11 +35,9 @@ export default styles = StyleSheet.create({
         color: '#0D1021'
     },
     ttsContainer: {
-        flex: 1,
         flexDirection: 'row',
         marginLeft: 16,
-        width: widthPercentageToPx(20),
-        height: widthPercentageToPx(20)
+        width: widthPercentageToPx(20)
     },
     avatarImage: {
         borderRadius: heightPercentageToPx(100),
@@ -65,18 +63,31 @@ export default styles = StyleSheet.create({
         lineHeight: 12,
         color: '#7BB0FF'
     },
+    mediaContainer: {
+        flex: 1,
+        alignItems: 'center',
+        marginTop: 8
+    },
+    removeImageIcon: {
+        position: 'absolute',
+        top: 8,
+        right: 8
+    },
+    streamerAndExtraTipsContainer: {
+        overflow: 'hidden',
+        paddingHorizontal: 16
+    },
     streamerContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        marginLeft: 16
+        alignItems: 'flex-end'
     },
     streamerAvatar: {
         marginLeft: 8,
         marginRight: 8,
         height: 32,
         width: 32,
-        borderRadius: heightPercentageToPx(100)
+        borderRadius: 1000
     },
     costContainer: {
         backgroundColor: '#1C1E64',
@@ -93,10 +104,36 @@ export default styles = StyleSheet.create({
         letterSpacing: .5,
         color: '#FFF'
     },
-    mediaSelector: {
-        marginTop: 16,
+    extraTipButtonsContainer: {
+        paddingTop: 16,
+        paddingBottom: 16,
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
+    },
+    extraTipOptionButtonContainer: {
+        height: widthPercentageToPx(21.33),
+        width: widthPercentageToPx(21.33),
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    extraTipOptionButton: {
+        height: widthPercentageToPx(19.66),
+        width: widthPercentageToPx(19.66),
+        borderRadius: 18,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    extraTipOptionButtonText: {
+        marginLeft: 4,
+        fontSize: 16,
+        fontWeight: '700',
+        color: '#FFF'
+    },
+    mediaSelector: {
+        flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 16,
         paddingVertical: 12,
@@ -110,7 +147,9 @@ export default styles = StyleSheet.create({
          * (we want to show half icon to give a visual hint to the user, so he know he can scroll
          * through options)
          */
-        maxWidth: widthPercentageToPx(100) <= 360 ? 216 : 264
+        maxWidth: widthPercentageToPx(100) <= 360 ? 216 : 264,
+        height: '100%',
+        marginRight: 30
     },
     mediaOptionContainer: {
         paddingHorizontal: 12
@@ -119,10 +158,8 @@ export default styles = StyleSheet.create({
         opacity: 0.4
     },
     extraTipButton: {
-        marginLeft: 30,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#3B4BF9',
         borderRadius: 20,
         paddingHorizontal: 16,
         paddingVertical: 8

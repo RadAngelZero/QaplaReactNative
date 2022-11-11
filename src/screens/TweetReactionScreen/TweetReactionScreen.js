@@ -35,6 +35,7 @@ import {
     TTS
 } from '../../utilities/Constants';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { getStreamerProfilePhotoUrl } from '../../services/storage';
 
 // For animations on android
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -245,7 +246,8 @@ class TweetReactionScreen extends Component {
         openTipMenu: false,
         extraTipIconRotation: new Animated.Value(0),
         editingTip: false,
-        keyboardHeight: 0
+        keyboardHeight: 0,
+        streamerImageUrl: this.props.streamerImage
     };
 
     componentDidMount() {
@@ -309,6 +311,14 @@ class TweetReactionScreen extends Component {
         }
     }
 
+    getStreamerFallbackImage = async () => {
+        try {
+            this.setState({ streamerImageUrl: await getStreamerProfilePhotoUrl(this.props.streamerUid) });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     render() {
         const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent`;
         const noEnabledOptions = allMediaOptionsTypes.filter((type) => !this.props.mediaSelectorBarOptions.includes(type));
@@ -320,7 +330,8 @@ class TweetReactionScreen extends Component {
                 // Android handles this behavior by himself
                 enabled={Platform.OS === 'ios'}
                 style={{ flex: 1 }}>
-                <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}
+                    touchSoundDisabled>
                     <SafeAreaView style={styles.container}>
                         <View style={styles.headerBar}>
                             <TouchableOpacity style={styles.textButton}>
@@ -423,9 +434,14 @@ class TweetReactionScreen extends Component {
                                         <TouchableOpacity>
                                             <images.svg.swapRectangle />
                                         </TouchableOpacity>
-                                        <Image source={{
-                                            uri: this.props.streamerImage
-                                        }} style={styles.streamerAvatar} />
+                                        <Image source={this.state.streamerImageUrl ? {
+                                                    uri: this.state.streamerImageUrl
+                                                }
+                                                :
+                                                null
+                                            }
+                                            onError={this.getStreamerFallbackImage}
+                                            style={styles.streamerAvatar} />
                                         <View style={styles.costContainer}>
                                             {this.props.qoins ?
                                                 <>
@@ -557,6 +573,7 @@ TweetReactionScreen.propTypes = {
     sending: PropTypes.bool,
     extraTip: PropTypes.number,
     randomEmoteUrl: PropTypes.string,
+    streamerUid: PropTypes.string,
 
     // Required fields
     //Options for media selector bar

@@ -117,7 +117,7 @@ class AuthLoadingScreen extends Component {
              */
             if (!this.state.linkOnProgress && this.state.firstLoad) {
                 return this.props.navigation.navigate('TweetReaction', {
-                    streamerUid: '134581897-amatesaurius'
+                    streamerUid: '213807528-mr_yuboto'
                 });
             }
         });

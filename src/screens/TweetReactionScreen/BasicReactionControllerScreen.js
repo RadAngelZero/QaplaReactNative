@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import TweetReactionScreen from './TweetReactionScreen';
 import { getStreamerEmotes, getUserToStreamerRelationData } from '../../services/functions';
 import { GIPHY_GIFS, GIPHY_STICKERS, MEME } from '../../utilities/Constants';
 import GiphyMediaSelectorModal from '../../components/GiphyMediaSelectorModal/GiphyMediaSelectorModal';
 import QaplaMemeSelectorModal from '../../components/QaplaMemeSelectorModal/QaplaMemeSelectorModal';
+import { isUserBannedWithStreamer, sendReaction } from '../../services/database';
+import { retrieveData, storeData } from '../../utilities/persistance';
+import { isUserLogged } from '../../services/auth';
+import { trackOnSegment } from '../../services/statistics';
+import SentModal from '../../components/SentModal/SentModal';
 
 class BasicReactionControllerScreen extends Component {
     state = {
@@ -18,7 +24,8 @@ class BasicReactionControllerScreen extends Component {
         modalMediaType: GIPHY_GIFS,
         mediaType: GIPHY_GIFS,
         selectedMedia: null,
-        extraTip: 0
+        extraTip: 0,
+        openSentModal: false
     };
 
     componentDidMount() {
@@ -53,7 +60,71 @@ class BasicReactionControllerScreen extends Component {
 
     onSendReaction = () => {
         if (!this.state.sending) {
-            this.setState({ sending: true });
+            this.setState({ sending: true }, async () => {
+                /**
+                 * No authenticated users have one reaction for free
+                 */
+                const freeReactionsSent = await retrieveData('freeReactionsSent');
+
+                /**
+                 * If the user is authenticaed or he has no already used their free reaction
+                 */
+                if (this.props.uid || !freeReactionsSent) {
+
+                    const streamerUid = this.props.navigation.getParam('streamerUid', null);
+                    const isUserBanned = await isUserBannedWithStreamer(this.props.twitchId, streamerUid);
+                    if (!isUserBanned.exists()) {
+
+                        if (this.state.extraTip <= this.props.qoins) {
+                            const streamerName = this.props.navigation.getParam('displayName', '');
+
+                            sendReaction(
+                                this.props.uid ?? 'Anonymus',
+                                this.props.userName ?? 'Anonymus',
+                                this.props.twitchUserName ?? 'Anonymus',
+                                this.props.photoUrl,
+                                streamerUid,
+                                streamerName,
+                                this.state.selectedMedia ?
+                                    {
+                                        ...this.state.selectedMedia.data.images.original,
+                                        type: this.state.mediaType
+                                    }
+                                    :
+                                    {},
+                                this.state.message,
+                                {}, // No extra data
+                                {}, // No emote/emoji rain
+                                this.state.extraTip,
+                                this.props.avatarId,
+                                this.props.avatarBackground,
+                                () => {
+                                    trackOnSegment('Pre Paid Interaction Sent', {
+                                        MessageLength: this.state.message ? this.state.message.length : null,
+                                        MediaType: this.state.mediaType,
+                                        Media: this.state.selectedMedia ? true : false,
+                                        ExtraTip: this.state.extraTip
+                                    });
+
+                                    if (!this.props.uid) {
+                                        storeData('freeReactionsSent', 'true');
+                                    }
+
+                                    this.setState({ openSentModal: true });
+                                },
+                                () => this.setState({ sending: false })
+                            );
+                        } else {
+                            this.setState({ sending: false });
+                            // After a successful buy try to send the interaction again
+                            this.props.navigation.navigate('BuyQoins', { onSuccessfulBuy: this.onSendInteraction });
+                        }
+                    }
+                } else {
+                    this.setState({ sending: false });
+                    this.props.navigation.navigate('SignIn');
+                }
+            });
         }
     }
 
@@ -81,6 +152,10 @@ class BasicReactionControllerScreen extends Component {
     }
 
     render() {
+        const streamerImage = this.props.navigation.getParam('streamerImage', 'https://static-cdn.jtvnw.net/jtv_user_pictures/aefc7460-f43e-4491-9658-74b80bf006c9-profile_image-300x300.png');
+        const stramerName = this.props.navigation.getParam('stramerName', 'mr_yuboto');
+        const streamerUid = this.props.navigation.getParam('streamerUid', null);
+
         return (
             <>
             <TweetReactionScreen onSend={this.onSendReaction}
@@ -99,7 +174,8 @@ class BasicReactionControllerScreen extends Component {
                 cleanSelectedMedia={() => this.setState({ selectedMedia: null })}
                 extraTip={this.state.extraTip}
                 setExtraTip={(extraTip) => this.setState({ extraTip })}
-                streamerImage='https://static-cdn.jtvnw.net/jtv_user_pictures/d5316bfd-54d9-4de8-ac24-3f62292527c1-profile_image-300x300.png' />
+                streamerImage={streamerImage ?? ''}
+                streamerUid={streamerUid} />
             <GiphyMediaSelectorModal open={this.state.openGiphyModal}
                 onClose={() => this.setState({ openGiphyModal: false })}
                 mediaType={this.state.modalMediaType}
@@ -107,9 +183,25 @@ class BasicReactionControllerScreen extends Component {
             <QaplaMemeSelectorModal open={this.state.openMemeModal}
                 onClose={() => this.setState({ openMemeModal: false })}
                 onMediaSelect={this.onMediaSelect} />
+            <SentModal open={this.state.openSentModal}
+                onClose={() => this.setState({ openSentModal: false })}
+                displayName={stramerName} />
             </>
         );
     }
 }
 
-export default BasicReactionControllerScreen;
+function mapStateToProps(state) {
+    return {
+        uid: state.userReducer.user.id,
+        avatarBackground: state.userReducer.user.avatarBackground,
+        avatarId: state.userReducer.user.avatarId,
+        userName: state.userReducer.user.userName,
+        twitchUserName: state.userReducer.user.twitchUsername,
+        photoUrl: state.userReducer.user.photoUrl,
+        qoins: state.userReducer.user.credits,
+        twitchId: state.userReducer.user.twitchId
+    };
+}
+
+export default connect(mapStateToProps)(BasicReactionControllerScreen);

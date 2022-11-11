@@ -7,7 +7,8 @@ import {
     Platform,
     ScrollView,
     Modal,
-    TouchableOpacity
+    TouchableOpacity,
+    ImageBackground
 } from 'react-native';
 import {
     GiphyContent,
@@ -54,7 +55,8 @@ class GiphyMediaSelectorModal extends Component {
         return (
             <Modal visible={this.props.open}
                 onRequestClose={this.props.onClose}
-                animationType='slide'>
+                animationType='slide'
+                transparent>
                 <View style={styles.container}>
                     <ScrollView keyboardShouldPersistTaps='never' contentContainerStyle={[styles.gridMainContainer, {
                         height: (Platform.OS === 'android' && this.state.keyboardHeight) ? this.state.keyboardHeight : heightPercentageToPx(85)
@@ -97,7 +99,7 @@ class GiphyMediaSelectorModal extends Component {
                                 showCheckeredBackground={false}
                                 spanCount={mediaType === GIPHY_STICKERS ? 3 : 2}
                                 style={{ flex: 1 }}
-                                onMediaSelect={(e) => this.props.onMediaSelect(e.nativeEvent.media)}
+                                onMediaSelect={(e) => this.props.onMediaSelect(e.nativeEvent.media, mediaType)}
                             />
                         </View>
                     </ScrollView>

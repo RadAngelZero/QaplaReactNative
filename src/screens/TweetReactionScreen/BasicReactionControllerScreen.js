@@ -15,6 +15,7 @@ class BasicReactionControllerScreen extends Component {
         userSubscriptionTier: undefined,
         openGiphyModal: false,
         openMemeModal: false,
+        modalMediaType: GIPHY_GIFS,
         mediaType: GIPHY_GIFS,
         selectedMedia: null,
         extraTip: 0
@@ -56,29 +57,26 @@ class BasicReactionControllerScreen extends Component {
         }
     }
 
-    onMediaOptionPress = (type) => {
-        switch (type) {
+    onMediaOptionPress = (mediaType) => {
+        switch (mediaType) {
             case GIPHY_GIFS:
             case GIPHY_STICKERS:
-                this.setState({ openGiphyModal: true, mediaType: type });
+                this.setState({ openGiphyModal: true, modalMediaType: mediaType });
                 break;
             case MEME:
-                this.setState({ openMemeModal: true, mediaType: type });
+                this.setState({ openMemeModal: true, modalMediaType: mediaType });
                 break;
             default:
                 break;
         }
     }
 
-    onDisabledMediaOptionPress = (type) => {
-        console.log('dis', type);
-    }
-
-    onMediaSelect = (selectedMedia) => {
+    onMediaSelect = (selectedMedia, mediaType) => {
         this.setState({
             openMemeModal: false,
             openGiphyModal: false,
-            selectedMedia
+            selectedMedia,
+            mediaType
         });
     }
 
@@ -86,6 +84,7 @@ class BasicReactionControllerScreen extends Component {
         return (
             <>
             <TweetReactionScreen onSend={this.onSendReaction}
+                sending={this.state.sending}
                 mediaSelectorBarOptions={[
                     GIPHY_GIFS,
                     GIPHY_STICKERS,
@@ -94,7 +93,6 @@ class BasicReactionControllerScreen extends Component {
                 message={this.state.message}
                 onMessageChanged={(message) => this.setState({ message })}
                 onMediaOptionPress={this.onMediaOptionPress}
-                onDisabledMediaOptionPress={this.onDisabledMediaOptionPress}
                 randomEmoteUrl={this.state.randomEmoteUrl}
                 mediaType={this.state.mediaType}
                 selectedMedia={this.state.selectedMedia}
@@ -104,7 +102,7 @@ class BasicReactionControllerScreen extends Component {
                 streamerImage='https://static-cdn.jtvnw.net/jtv_user_pictures/d5316bfd-54d9-4de8-ac24-3f62292527c1-profile_image-300x300.png' />
             <GiphyMediaSelectorModal open={this.state.openGiphyModal}
                 onClose={() => this.setState({ openGiphyModal: false })}
-                mediaType={this.state.mediaType}
+                mediaType={this.state.modalMediaType}
                 onMediaSelect={this.onMediaSelect} />
             <QaplaMemeSelectorModal open={this.state.openMemeModal}
                 onClose={() => this.setState({ openMemeModal: false })}

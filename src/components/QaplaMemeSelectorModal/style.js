@@ -4,7 +4,7 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0D1021',
+        backgroundColor: 'rgba(0, 0, 0, .5)',
     },
     memesContainer: {
         position: 'absolute',

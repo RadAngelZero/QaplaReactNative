@@ -4,7 +4,7 @@ import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } fr
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0D1021',
+        backgroundColor: 'rgba(0, 0, 0, .5)',
     },
     gridMainContainer: {
         position: 'absolute',

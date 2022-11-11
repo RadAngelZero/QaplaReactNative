@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import {
     ActivityIndicator,
     Image,
@@ -19,6 +19,7 @@ import {
     UIManager
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Tooltip from 'react-native-walkthrough-tooltip';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -50,13 +51,34 @@ const allMediaOptionsTypes = [
     TTS
 ];
 
-const mediaOptionsIcons = {
-    [GIPHY_GIFS]: images.svg.interactionsGIF,
-    [GIPHY_STICKERS]: images.svg.interactionsSticker,
-    [MEME]: images.svg.interactionsMemes,
-    [AVATAR]: images.svg.avatar,
-    [GIPHY_TEXT]: images.svg.giphyText,
-    [TTS]: images.svg.volumeUp
+const mediaOptionsData = {
+    [GIPHY_GIFS]: {
+        Icon: images.svg.interactionsGIF,
+        label: 'Gif'
+    },
+    [GIPHY_STICKERS]: {
+        Icon: images.svg.interactionsSticker,
+        label: 'Sticker'
+    },
+    [MEME]: {
+        Icon: images.svg.interactionsMemes,
+        label: 'Meme'
+    },
+    [EMOTE]: {
+        label: 'Emotes Animations'
+    },
+    [AVATAR]: {
+        Icon: images.svg.avatar,
+        label: 'Animated Avatar'
+    },
+    [GIPHY_TEXT]: {
+        Icon: images.svg.giphyText,
+        label: '3D Text'
+    },
+    [TTS]: {
+        Icon: images.svg.volumeUp,
+        label: 'TTS Bot Voice'
+    }
 };
 
 const excludingOptions = {
@@ -74,55 +96,132 @@ const excludingOptions = {
     },
 };
 
-const MediaOption = ({ type, disabled = false, onPress, isSelected, emoteUrl = null }) => {
-    const openTooltip = () => {
-        console.log('Tooltip');
+const MediaOptionTooltip = ({ children, open, onClose, label, highlightedText, cost, keyboardHeight, buttonText, buttonAction }) => {
+    return (
+        <Tooltip
+            isVisible={open}
+            content={
+                <View style={styles.tooltipContainer}>
+                    <View style={styles.tooltipTextAndIconContainer}>
+                        <Text style={[styles.tooltipLabelText, { maxWidth: '80%' }]}>
+                            {label}
+                            <Text style={styles.tooltipHighlihgtedText}>
+                                {highlightedText}
+                            </Text>
+                        </Text>
+                        <TouchableOpacity onPress={onClose}>
+                            <images.svg.closeIcon />
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity style={styles.tooltipButtonContainer}
+                        onPress={buttonAction}>
+                        <Text style={styles.tooltipLabelText}>
+                            {buttonText}
+                        </Text>
+                        {cost &&
+                            <>
+                            <Text style={[styles.tooltipLabelText, styles.tooltipHighlihgtedText, { marginLeft: 8, marginRight: 4 }]}>
+                                {cost}
+                            </Text>
+                            <images.svg.qoin height={16} width={16} />
+                            </>
+                        }
+                        <images.svg.rightArrow height={16} width={8.8} style={{ marginLeft: 8 }} />
+                    </TouchableOpacity>
+                </View>
+            }
+            placement='top'
+            onClose={onClose}
+            arrowStyle={styles.tooltipArrowStyle}
+            arrowSize={styles.tooltipArrowSize}
+            displayInsets={{
+                left: 0,
+                right: 0
+            }}
+            topAdjustment={keyboardHeight}
+            childContentSpacing={20}
+            contentStyle={styles.tooltipContentStyle}
+            backgroundColor='transparent'>
+            {children}
+        </Tooltip>
+    );
+}
+
+const MediaOption = ({ type, disabled = false, excluded = false, onPress, isSelected, emoteUrl = null, keyboardHeight, cost, onUpgradeReaction }) => {
+    const [openTooltip, setOpenTooltip] = useState(false);
+
+    const buttonAction = () => {
+        setOpenTooltip(false);
+        if (excluded) {
+            onPress(type);
+        } else {
+            onUpgradeReaction();
+        }
     }
 
-    // Types come from database, to prevent any problem we don't render the option if we can not find their icon
-    if (type === EMOTE) {
-        return (
-            <TouchableOpacity onPress={() => !disabled ? onPress(type) : openTooltip()}
-                style={styles.mediaOptionContainer}
-                activeOpacity={disabled ? 1 : .2}>
-                <View style={disabled ? styles.mediaOptionDisabled : {}}>
-                    {emoteUrl ?
-                        <Image source={emoteUrl ? { uri: emoteUrl } : null}
-                            style={{ height: 24, width: 24 }} />
-                        :
-                        <ActivityIndicator size='small' color='rgb(61, 249, 223)'
-                            style={{ height: 24, width: 24 }} />
-                    }
-                </View>
-            </TouchableOpacity>
-        );
-    } else {
-        const Icon = mediaOptionsIcons[type];
+    let excludedLabels = [];
+    let excludedString = '';
+    if (excluded) {
+        // The currently selected option
+        excludedLabels.push(mediaOptionsData[type].label);
 
-        if (Icon) {
-            return (
-                <TouchableOpacity onPress={() => !disabled ? onPress(type) : openTooltip()}
+        // The label of any option excluded by the current selection
+        Object.keys(excludingOptions[type]).forEach((optionKey) => {
+            excludedLabels.push(mediaOptionsData[optionKey].label);
+        });
+
+        // Sort strings by length
+        excludedLabels.sort((a, b) => a.length - b.length);
+
+        // Create the final string to show on UI
+        excludedLabels.forEach((label, index) => {
+            excludedString += `${index < excludedLabels.length - 1 ? ' ' : ' or '}${label}${index < excludedLabels.length - 2 ? ', ' : ''}`;
+        });
+    }
+    const mediaOptionData = mediaOptionsData[type];
+
+    // Types come from database, to prevent any problem we don't render the option if we can not find their data
+    if (mediaOptionData) {
+        return (
+            <MediaOptionTooltip open={openTooltip}
+                highlightedText={excluded ? excludedString : mediaOptionData.label}
+                label={excluded ? '😯 You can only use one ' : '👀 Upgrade your reaction to use '}
+                buttonText={excluded ? `Use ${mediaOptionData.label}` : 'Upgrade Reaction'}
+                buttonAction={buttonAction}
+                onClose={() => setOpenTooltip(false)}
+                keyboardHeight={keyboardHeight}
+                cost={cost}>
+                <TouchableOpacity onPress={() => !disabled && !excluded ? onPress(type) : setOpenTooltip(true)}
                     style={styles.mediaOptionContainer}
-                    activeOpacity={disabled ? 1 : .2}>
-                    <View style={disabled ? styles.mediaOptionDisabled : {}}>
+                    activeOpacity={disabled || excluded ? 1 : .2}>
+                    <View style={disabled || excluded ? styles.mediaOptionDisabled : {}}>
                         {isSelected &&
                             <View style={{ position: 'absolute', top: -6, right: -6, zIndex: 9999 }}>
                                 <images.svg.checkCircle />
                             </View>
                         }
-                        <Icon height={24} width={24} />
+                        {type === EMOTE ?
+                            emoteUrl ?
+                                <Image source={emoteUrl ? { uri: emoteUrl } : null}
+                                    style={{ height: 24, width: 24 }} />
+                                :
+                                <ActivityIndicator size='small' color='rgb(61, 249, 223)'
+                                    style={{ height: 24, width: 24 }} />
+                            :
+                            <mediaOptionData.Icon height={24} width={24} />
+                        }
                     </View>
                 </TouchableOpacity>
-            );
-        }
-
-        return null;
+            </MediaOptionTooltip>
+        );
     }
+
+    return null;
 }
 
 const ExtraTipOption = ({ label, onPress, selected }) => {
     return (
-        <TouchableOpacity onPress={() => onPress()}>
+        <TouchableOpacity onPress={onPress}>
             <LinearGradient useAngle
                 angle={135}
                 angleCenter={{ x: .6, y: .6 }}
@@ -143,16 +242,26 @@ const ExtraTipOption = ({ label, onPress, selected }) => {
 
 class TweetReactionScreen extends Component {
     state = {
-        hideScrollView: false,
+        openTipMenu: false,
         extraTipIconRotation: new Animated.Value(0),
-        editingTip: false
+        editingTip: false,
+        keyboardHeight: 0
     };
 
+    componentDidMount() {
+        this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+			this.setState({ keyboardHeight: e.endCoordinates.height });
+		});
+		this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', () => {
+			this.setState({ keyboardHeight: 0 });
+		});
+    }
+
     executeExtraTipAnimation = () => {
-        if (!this.state.hideScrollView) {
+        if (!this.state.openTipMenu) {
             LayoutAnimation.linear();
 
-            this.setState({ hideScrollView: true });
+            this.setState({ openTipMenu: true });
 
             Animated.timing(
             this.state.extraTipIconRotation,
@@ -166,7 +275,7 @@ class TweetReactionScreen extends Component {
         } else {
             LayoutAnimation.linear();
 
-            this.setState({ hideScrollView: false });
+            this.setState({ openTipMenu: false });
 
             Animated.timing(
             this.state.extraTipIconRotation,
@@ -182,7 +291,7 @@ class TweetReactionScreen extends Component {
 
     tipButtonHandler = () => {
         this.executeExtraTipAnimation();
-        if (this.state.hideScrollView) {
+        if (this.state.openTipMenu) {
             this.props.setExtraTip(0);
         }
     }
@@ -192,9 +301,19 @@ class TweetReactionScreen extends Component {
         this.executeExtraTipAnimation();
     }
 
+    toggleKeyboard = () => {
+        if (this.textInput.isFocused()) {
+            this.textInput.blur();
+        } else {
+            this.textInput.focus();
+        }
+    }
+
     render() {
         const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent`;
         const noEnabledOptions = allMediaOptionsTypes.filter((type) => !this.props.mediaSelectorBarOptions.includes(type));
+
+        const sendButtonDisabled = (!this.props.message && !this.props.selectedMedia) || this.props.sending;
 
         return (
             <KeyboardAvoidingView behavior='padding'
@@ -210,7 +329,8 @@ class TweetReactionScreen extends Component {
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={this.props.onSend}
-                                style={styles.containedButton}>
+                                disabled={sendButtonDisabled}
+                                style={[styles.containedButton, sendButtonDisabled ? styles.containedButtonDisabled : {}]}>
                                 <Text style={styles.containedButtonText}>
                                     Send
                                 </Text>
@@ -229,6 +349,7 @@ class TweetReactionScreen extends Component {
                             }
                             <View style={styles.ttsInputContainer}>
                                 <TextInput style={styles.ttsTextInput}
+                                    ref={(textInput) => this.textInput = textInput}
                                     autoFocus
                                     placeholder='Type to create TTS'
                                     placeholderTextColor='#C2C2C2'
@@ -276,6 +397,11 @@ class TweetReactionScreen extends Component {
                             <Animated.View style={{
                                 height: this.state.extraTipIconRotation.interpolate({
                                     inputRange: [0, 1],
+                                    /**
+                                     * 64 = height of streamerContainer and their margins
+                                     * widthPercentageToPx(21.33) + 32 = height of extraTipButtonsContainer and
+                                     * their paddings and margins
+                                     */
                                     outputRange: [64, widthPercentageToPx(21.33) + 32]
                                 })
                             }}>
@@ -292,11 +418,7 @@ class TweetReactionScreen extends Component {
                                         marginTop: this.state.extraTipIconRotation.interpolate({
                                             inputRange: [0, 1],
                                             outputRange: [16, 0]
-                                        }),
-                                        marginBottom: this.state.extraTipIconRotation.interpolate({
-                                            inputRange: [0, 1],
-                                            outputRange: [16, 0]
-                                        }),
+                                        })
                                     }]}>
                                         <TouchableOpacity>
                                             <images.svg.swapRectangle />
@@ -321,7 +443,11 @@ class TweetReactionScreen extends Component {
                                                 </>
                                             }
                                         </View>
-                                        <View style={{ flex: 1 }} />
+                                        <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                                            <TouchableOpacity onPress={this.toggleKeyboard}>
+                                                <images.svg.showKeyboard />
+                                            </TouchableOpacity>
+                                        </View>
                                     </Animated.View>
                                     <View style={styles.extraTipButtonsContainer}>
                                         <ExtraTipOption label={200}
@@ -341,7 +467,7 @@ class TweetReactionScreen extends Component {
                             </Animated.View>
                         </View>
                         <View style={styles.mediaSelector}>
-                            {!this.state.hideScrollView &&
+                            {!this.state.openTipMenu &&
                                 <ScrollView horizontal
                                     // Prop to allow users to press buttons inside scroll view even if keyboard is open
                                     keyboardShouldPersistTaps='handled'
@@ -351,33 +477,29 @@ class TweetReactionScreen extends Component {
                                     {this.props.mediaSelectorBarOptions.map((mediaType) => (
                                         <MediaOption key={mediaType}
                                             type={mediaType}
+                                            excluded={this.props.selectedMedia && excludingOptions[this.props.mediaType] && excludingOptions[this.props.mediaType][mediaType]}
                                             onPress={this.props.onMediaOptionPress}
-                                            disabled={this.props.selectedMedia && excludingOptions[this.props.mediaType] && excludingOptions[this.props.mediaType][mediaType]}
                                             isSelected={this.props.selectedMedia && this.props.mediaType === mediaType}
-                                            emoteUrl={this.props.randomEmoteUrl} />
+                                            emoteUrl={this.props.randomEmoteUrl}
+                                            keyboardHeight={this.state.keyboardHeight} />
                                         ))
                                     }
                                     {noEnabledOptions.map((mediaType) => (
                                         <MediaOption key={mediaType}
                                             type={mediaType}
                                             disabled
-                                            onPress={this.props.onDisabledMediaOptionPress}
-                                            emoteUrl={this.props.randomEmoteUrl} />
+                                            cost={800}
+                                            emoteUrl={this.props.randomEmoteUrl}
+                                            keyboardHeight={this.state.keyboardHeight} />
                                     ))}
                                 </ScrollView>
                             }
                             <TouchableOpacity onPress={this.tipButtonHandler}>
-                            <LinearGradient useAngle
-                                angle={135}
-                                angleCenter={{ x: .6, y: .6 }}
-                                colors={!this.state.hideScrollView && this.props.extraTip ?['#3C00FF', '#AA00F8'] : ['#3B4BF9', '#3B4BF9']}
-                                style={styles.extraTipButton}>
-                                {/* <Animated.View style={[styles.extraTipButton, {
-                                    backgroundColor: this.state.extraTipIconRotation.interpolate({
-                                        inputRange: [0, 1],
-                                        outputRange: [this.props.extraTip ? '#A716EE' : '#3B4BF9', '#3B4BF9']
-                                    })
-                                }]}> */}
+                                <LinearGradient useAngle
+                                    angle={135}
+                                    angleCenter={{ x: .6, y: .6 }}
+                                    colors={!this.state.openTipMenu && this.props.extraTip ?['#3C00FF', '#AA00F8'] : ['#3B4BF9', '#3B4BF9']}
+                                    style={styles.extraTipButton}>
                                     <Animated.View style={{
                                         transform: [{ rotate: this.state.extraTipIconRotation.interpolate({
                                                 inputRange: [0, 1],
@@ -385,26 +507,25 @@ class TweetReactionScreen extends Component {
                                             })
                                         }]
                                     }}>
-                                    {!this.state.hideScrollView && this.props.extraTip !== 0 ?
+                                    {!this.state.openTipMenu && this.props.extraTip !== 0 ?
                                         <images.svg.editCircle height={24} width={24} />
                                         :
                                         <images.svg.plusCircle height={24} width={24} />
                                     }
                                     </Animated.View>
                                     <Text style={styles.extraTipButtonText}>
-                                        {!this.state.hideScrollView && this.props.extraTip ?
+                                        {!this.state.openTipMenu && this.props.extraTip ?
                                             this.props.extraTip.toLocaleString()
                                             :
-                                                this.state.hideScrollView ?
+                                                this.state.openTipMenu ?
                                                     'No Tip'
                                                     :
                                                     'Tip'
                                         }
                                     </Text>
-                                    {!this.state.hideScrollView && this.props.extraTip !== 0 &&
+                                    {!this.state.openTipMenu && this.props.extraTip !== 0 &&
                                         <images.svg.qoin style={{ marginLeft: 4 }} height={24} width={24} />
                                     }
-                                {/* </Animated.View> */}
                                 </LinearGradient>
                             </TouchableOpacity>
                         </View>
@@ -420,23 +541,30 @@ TweetReactionScreen.propTypes = {
     cost: PropTypes.number,
     message: PropTypes.string,
     selectedMedia: PropTypes.shape({
-        original: PropTypes.shape({
-            height: PropTypes.number.isRequired,
-            id: PropTypes.string.isRequired,
-            url: PropTypes.string.isRequired,
-            width: PropTypes.number.isRequired
-        })
+        aspectRatio: PropTypes.number,
+        data: {
+            images: {
+                original: PropTypes.shape({
+                    height: PropTypes.number,
+                    id: PropTypes.string,
+                    url: PropTypes.string,
+                    width: PropTypes.number
+                })
+            }
+        }
     }),
+    mediaType: PropTypes.string,
+    sending: PropTypes.bool,
     extraTip: PropTypes.number,
-
-    //Options for media selector bar
-    mediaSelectorBarOptions: PropTypes.arrayOf(PropTypes.string.isRequired),
+    randomEmoteUrl: PropTypes.string,
 
     // Required fields
+    //Options for media selector bar
+    mediaSelectorBarOptions: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+
     streamerImage: PropTypes.string.isRequired,
     onMessageChanged: PropTypes.func.isRequired,
     onMediaOptionPress: PropTypes.func.isRequired,
-    onDisabledMediaOptionPress: PropTypes.func.isRequired,
     cleanSelectedMedia: PropTypes.func.isRequired,
     setExtraTip: PropTypes.func.isRequired,
     onSend: PropTypes.func.isRequired

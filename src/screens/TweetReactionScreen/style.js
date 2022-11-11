@@ -28,6 +28,9 @@ export default styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: '#00FFDD'
     },
+    containedButtonDisabled: {
+        opacity: 0.4
+    },
     containedButtonText: {
         fontSize: 16,
         fontWeight: '700',
@@ -78,6 +81,7 @@ export default styles = StyleSheet.create({
         paddingHorizontal: 16
     },
     streamerContainer: {
+        marginBottom: 16,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-end'
@@ -105,7 +109,6 @@ export default styles = StyleSheet.create({
         color: '#FFF'
     },
     extraTipButtonsContainer: {
-        paddingTop: 16,
         paddingBottom: 16,
         flexDirection: 'row',
         justifyContent: 'space-between'
@@ -150,6 +153,57 @@ export default styles = StyleSheet.create({
         maxWidth: widthPercentageToPx(100) <= 360 ? 216 : 264,
         height: '100%',
         marginRight: 30
+    },
+    tooltipContainer: {
+        minHeight: 150,
+        padding: 16,
+        flex: 1,
+        justifyContent: 'space-between'
+    },
+    tooltipTextAndIconContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start'
+    },
+    tooltipLabelText: {
+        fontSize: 16,
+        fontWeight: '700',
+        lineHeight: 19,
+        color: '#FFF'
+    },
+    tooltipHighlihgtedText: {
+        color: '#00FFDD'
+    },
+    tooltipButtonContainer: {
+        flexDirection: 'row',
+        backgroundColor: '#141735',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 19,
+        paddingVertical: 13,
+        borderRadius: 50,
+        marginTop: 11,
+        alignSelf: 'flex-end',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 11,
+        },
+        shadowOpacity: 0.55,
+        shadowRadius: 14.78,
+        elevation: 22
+    },
+    tooltipArrowStyle: {
+        color: '#3B4BF9'
+    },
+    tooltipArrowSize: {
+        height: 14,
+        width: 30
+    },
+    tooltipContentStyle: {
+        backgroundColor: '#3B4BF9',
+        width: widthPercentageToPx(83.75),
+        borderRadius: 15
     },
     mediaOptionContainer: {
         paddingHorizontal: 12

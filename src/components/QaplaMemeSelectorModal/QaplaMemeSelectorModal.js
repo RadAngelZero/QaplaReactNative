@@ -5,6 +5,7 @@ import styles from './style';
 import RadMasonry from '../../components/RadMasonry/RadMasonry';
 import { getMemesLibrary } from '../../services/database';
 import images from './../../../assets/images';
+import { MEME } from '../../utilities/Constants';
 
 class QaplaMemeSelectorModal extends Component {
     state = {
@@ -53,7 +54,7 @@ class QaplaMemeSelectorModal extends Component {
 
         return (
             <TouchableOpacity
-                onPress={() => this.props.onMediaSelect(selectedMedia)}
+                onPress={() => this.props.onMediaSelect(selectedMedia, MEME)}
                 style={{
                     borderRadius: 10,
                     marginBottom: 8,
@@ -81,7 +82,8 @@ class QaplaMemeSelectorModal extends Component {
         return (
             <Modal visible={this.props.open}
                 onRequestClose={this.props.onClose}
-                animationType='slide'>
+                animationType='slide'
+                transparent>
                 <View style={styles.container}>
                     <View style={styles.memesContainer}>
                         <View style={styles.gridSearchBarContainer}>

@@ -124,6 +124,7 @@ import PlusCircle from './icons/plusCircle.svg';
 import Avatar from './icons/Avatar.svg';
 import GiphyText from './icons/GiphyText.svg';
 import EditCircle from './icons/EditCircle.svg';
+import ShowKeyboard from './icons/ShowKeyboard.svg';
 
 // Images
 const images = {
@@ -393,7 +394,8 @@ const images = {
 		plusCircle: PlusCircle,
 		avatar: Avatar,
 		giphyText: GiphyText,
-		editCircle: EditCircle
+		editCircle: EditCircle,
+		showKeyboard: ShowKeyboard
 	},
 	gif: {
 		loadingStreamers: {

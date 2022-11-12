@@ -313,7 +313,6 @@ class TweetReactionScreen extends Component {
 
     getStreamerFallbackImage = async () => {
         try {
-            console.log('Fallback');
             this.setState({ streamerFallbackImageUrl: await getStreamerProfilePhotoUrl(this.props.streamerUid) });
         } catch (error) {
             console.log(error);
@@ -433,7 +432,7 @@ class TweetReactionScreen extends Component {
                                             outputRange: [16, 0]
                                         })
                                     }]}>
-                                        <TouchableOpacity>
+                                        <TouchableOpacity onPress={this.props.onOpenSearchStreamerModal}>
                                             <images.svg.swapRectangle />
                                         </TouchableOpacity>
                                         <Image source={
@@ -603,6 +602,7 @@ TweetReactionScreen.propTypes = {
     onMediaOptionPress: PropTypes.func.isRequired,
     cleanSelectedMedia: PropTypes.func.isRequired,
     setExtraTip: PropTypes.func.isRequired,
+    onOpenSearchStreamerModal: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSend: PropTypes.func.isRequired
 };

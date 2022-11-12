@@ -10,6 +10,7 @@ import { getRecentStreamersDonations, getStreamerPublicData, getUserReactionsCou
 import { retrieveData, storeData } from '../../utilities/persistance';
 import { trackOnSegment } from '../../services/statistics';
 import SentModal from '../../components/SentModal/SentModal';
+import ChooseStreamerModal from '../../components/ChooseStreamerModal/ChooseStreamerModal';
 
 class BasicReactionControllerScreen extends Component {
     state = {
@@ -29,8 +30,9 @@ class BasicReactionControllerScreen extends Component {
         streamerData: {
             streamerUid: '',
             streamerImage: '',
-            stramerName: ''
-        }
+            streamerName: ''
+        },
+        openSearchStreamerModal: false
     };
 
     componentDidMount() {
@@ -39,9 +41,9 @@ class BasicReactionControllerScreen extends Component {
 
     fetchInitialData = async () => {
         await this.fetchStreamerData(() => {
-            /* this.fetchUserSubscription();
+            this.fetchUserSubscription();
             this.fetchStreamerEmotes();
-            this.fetchNumberOfReactions(); */
+            this.fetchNumberOfReactions();
         });
     }
 
@@ -50,12 +52,12 @@ class BasicReactionControllerScreen extends Component {
         const streamerUid = this.props.navigation.getParam('streamerUid', null);
         if (streamerUid) {
             const streamerImage = this.props.navigation.getParam('streamerImage', 'https://static-cdn.jtvnw.net/jtv_user_pictures/aefc7460-f43e-4491-9658-74b80bf006c9-profile_image-300x300.png');
-            const stramerName = this.props.navigation.getParam('stramerName', 'mr_yuboto');
+            const streamerName = this.props.navigation.getParam('streamerName', 'mr_yuboto');
             this.setState({
                 streamerData: {
                     streamerUid,
                     streamerImage,
-                    stramerName
+                    streamerName
                 }
             }, onFinished);
         } else {
@@ -70,7 +72,7 @@ class BasicReactionControllerScreen extends Component {
                         streamerData: {
                             streamerUid: streamerKey,
                             streamerImage: streamerData.val().photoUrl,
-                            stramerName: streamerData.val().displayName
+                            streamerName: streamerData.val().displayName
                         }
                     }, onFinished);
                 }
@@ -140,7 +142,7 @@ class BasicReactionControllerScreen extends Component {
                                 this.props.twitchUserName ?? '',
                                 this.props.photoUrl ?? '',
                                 this.state.streamerData.streamerUid,
-                                this.state.streamerData.stramerName,
+                                this.state.streamerData.streamerName,
                                 this.state.selectedMedia ?
                                     {
                                         ...this.state.selectedMedia.data.images.original,
@@ -161,7 +163,7 @@ class BasicReactionControllerScreen extends Component {
                                         Media: this.state.selectedMedia ? true : false,
                                         ExtraTip: this.state.extraTip,
                                         StreamerUid: this.state.streamerData.streamerUid,
-                                        StreamerName: this.state.streamerData.stramerName,
+                                        StreamerName: this.state.streamerData.streamerName,
                                         freeReaction: !freeReactionsSent
                                     });
 
@@ -215,6 +217,15 @@ class BasicReactionControllerScreen extends Component {
         });
     }
 
+    onStreamerPress = (streamerData) => {
+        this.setState({ streamerData }, () => {
+            this.fetchUserSubscription();
+            this.fetchStreamerEmotes();
+            this.fetchNumberOfReactions();
+        });
+        this.setState({ openSearchStreamerModal: false });
+    }
+
     render() {
         return (
             <>
@@ -237,7 +248,8 @@ class BasicReactionControllerScreen extends Component {
                 setExtraTip={(extraTip) => this.setState({ extraTip })}
                 streamerImage={this.state.streamerData.streamerImage}
                 streamerUid={this.state.streamerData.streamerUid}
-                onCancel={() => this.props.navigation.dismiss()} />
+                onCancel={() => this.props.navigation.dismiss()}
+                onOpenSearchStreamerModal={() => this.setState({ openSearchStreamerModal: true })} />
             <GiphyMediaSelectorModal open={this.state.openGiphyModal}
                 onClose={() => this.setState({ openGiphyModal: false })}
                 mediaType={this.state.modalMediaType}
@@ -247,7 +259,15 @@ class BasicReactionControllerScreen extends Component {
                 onMediaSelect={this.onMediaSelect} />
             <SentModal open={this.state.openSentModal}
                 onClose={() => this.setState({ openSentModal: false })}
-                displayName={this.state.streamerData.stramerName} />
+                displayName={this.state.streamerData.streamerName} />
+            <ChooseStreamerModal open={this.state.openSearchStreamerModal}
+                onClose={() => this.setState({ openSearchStreamerModal: false })}
+                selectedStreamer={{
+                    ...this.state.streamerData,
+                    numberOfReactions: this.state.numberOfReactions
+                }}
+                uid={this.props.uid}
+                onStreamerPress={this.onStreamerPress} />
             </>
         );
     }

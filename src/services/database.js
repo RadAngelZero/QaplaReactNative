@@ -1477,7 +1477,7 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojiR
  */
 export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, avatarId, avatarBackground, onSuccess, onError) {
     let qoinsTaken = qoinsToRemove ? false : true;
-    if (qoinsToRemove) {
+    if (qoinsToRemove && uid !== 'Anonymus') {
         qoinsTaken = (await usersRef.child(uid).child('credits').transaction((qoins) => {
             if (qoins - qoinsToRemove >= 0) {
                 return qoins - qoinsToRemove;
@@ -1496,9 +1496,14 @@ export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, 
     }
 
     if (qoinsTaken) {
-        const reactionTaken = (await usersReactionsCountRef.child(uid).child(streamerUid).transaction((reactionsCount) => {
-            return reactionsCount - 1;
-        })).committed;
+        let reactionTaken = false;
+        if (uid !== 'Anonymus') {
+            reactionTaken = (await usersReactionsCountRef.child(uid).child(streamerUid).transaction((reactionsCount) => {
+                return reactionsCount - 1;
+            })).committed;
+        } else {
+            reactionTaken = true;
+        }
 
         if (reactionTaken) {
             const timestamp = (new Date()).getTime();

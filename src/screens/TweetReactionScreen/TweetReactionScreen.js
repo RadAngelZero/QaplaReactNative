@@ -334,7 +334,8 @@ class TweetReactionScreen extends Component {
                     touchSoundDisabled>
                     <SafeAreaView style={styles.container}>
                         <View style={styles.headerBar}>
-                            <TouchableOpacity style={styles.textButton}>
+                            <TouchableOpacity style={styles.textButton}
+                                onPress={this.props.onCancel}>
                                 <Text style={styles.textButtonText}>
                                     Cancel
                                 </Text>
@@ -447,14 +448,22 @@ class TweetReactionScreen extends Component {
                                                 <>
                                                 <images.svg.qoin height={16} width={16} />
                                                 <Text style={styles.costText}>
-                                                    {this.props.cost}
+                                                    {this.props.cost ?
+                                                        this.props.cost
+                                                        :
+                                                        null
+                                                    }
                                                 </Text>
                                                 </>
                                             :
                                                 <>
                                                 <images.svg.interactionsNumberIcon  />
                                                 <Text style={styles.costText}>
-                                                    5 reactions
+                                                    {this.props.numberOfReactions !== undefined ?
+                                                        `${this.props.numberOfReactions.toLocaleString()} reactions`
+                                                        :
+                                                        null
+                                                    }
                                                 </Text>
                                                 </>
                                             }
@@ -555,6 +564,7 @@ class TweetReactionScreen extends Component {
 TweetReactionScreen.propTypes = {
     qoins: PropTypes.bool,
     cost: PropTypes.number,
+    numberOfReactions: PropTypes.number,
     message: PropTypes.string,
     selectedMedia: PropTypes.shape({
         aspectRatio: PropTypes.number,
@@ -584,6 +594,7 @@ TweetReactionScreen.propTypes = {
     onMediaOptionPress: PropTypes.func.isRequired,
     cleanSelectedMedia: PropTypes.func.isRequired,
     setExtraTip: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
     onSend: PropTypes.func.isRequired
 };
 

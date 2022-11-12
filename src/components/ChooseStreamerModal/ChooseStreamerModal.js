@@ -168,7 +168,7 @@ class ChooseStreamerModal extends Component {
                     style={{ flex: 1 }}>
                     <View style={styles.container}>
                         <View style={[styles.gridMainContainer, {
-                            height: heightPercentageToPx(50) + this.state.keyboardHeight
+                            height: Platform.OS === 'ios' ? heightPercentageToPx(50) + this.state.keyboardHeight : heightPercentageToPx(50)
                         }]}>
                             <View style={styles.gridSearchBarContainer}>
                                 <TouchableOpacity onPress={this.props.onClose}>

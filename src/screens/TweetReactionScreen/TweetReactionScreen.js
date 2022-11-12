@@ -247,7 +247,7 @@ class TweetReactionScreen extends Component {
         extraTipIconRotation: new Animated.Value(0),
         editingTip: false,
         keyboardHeight: 0,
-        streamerImageUrl: this.props.streamerImage
+        streamerFallbackImageUrl: ''
     };
 
     componentDidMount() {
@@ -313,7 +313,8 @@ class TweetReactionScreen extends Component {
 
     getStreamerFallbackImage = async () => {
         try {
-            this.setState({ streamerImageUrl: await getStreamerProfilePhotoUrl(this.props.streamerUid) });
+            console.log('Fallback');
+            this.setState({ streamerFallbackImageUrl: await getStreamerProfilePhotoUrl(this.props.streamerUid) });
         } catch (error) {
             console.log(error);
         }
@@ -435,8 +436,16 @@ class TweetReactionScreen extends Component {
                                         <TouchableOpacity>
                                             <images.svg.swapRectangle />
                                         </TouchableOpacity>
-                                        <Image source={this.state.streamerImageUrl ? {
-                                                    uri: this.state.streamerImageUrl
+                                        <Image source={
+                                                this.props.streamerImage ? {
+                                                    /**
+                                                     * streamerFallbackImageUrl is always empty unless an error
+                                                     * loading the original image happen
+                                                     */
+                                                    uri: this.state.streamerFallbackImageUrl ?
+                                                        this.state.streamerFallbackImageUrl
+                                                        :
+                                                        this.props.streamerImage
                                                 }
                                                 :
                                                 null

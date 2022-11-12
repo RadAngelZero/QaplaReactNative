@@ -141,8 +141,12 @@ class BasicReactionControllerScreen extends Component {
                         } else {
                             this.setState({ sending: false });
 
-                            // After a successful buy try to send the reaction again
-                            this.props.navigation.navigate('BuyQoins', { onSuccessfulBuy: this.onSendReaction });
+                            if (!this.props.uid) {
+                                this.props.navigation.navigate('SignIn');
+                            } else {
+                                // After a successful buy try to send the reaction again
+                                this.props.navigation.navigate('BuyQoins', { onSuccessfulBuy: this.onSendReaction });
+                            }
                         }
                     }
                 } else {

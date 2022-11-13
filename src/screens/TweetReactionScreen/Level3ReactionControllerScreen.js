@@ -21,7 +21,6 @@ class Level3ReactionControllerScreen extends Component {
         sending: false,
         message: '',
         randomEmoteUrl: '',
-        userSubscriptionTier: undefined,
         openGiphyModal: false,
         openMemeModal: false,
         modalMediaType: GIPHY_GIFS,
@@ -120,7 +119,7 @@ class Level3ReactionControllerScreen extends Component {
     }
 
     fetchReactionCost = async () => {
-        const costSnapshot = await getStreamerReactionPrice(this.state.streamerData.streamerUid, 'level2');
+        const costSnapshot = await getStreamerReactionPrice(this.state.streamerData.streamerUid, 'level3');
         const cost = costSnapshot.val() ?? 500;
         if (this.props.uid) {
             const freeReactionsSent = await retrieveData('freeReactionsSent');

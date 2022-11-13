@@ -20,7 +20,6 @@ class Level2ReactionControllerScreen extends Component {
         sending: false,
         message: '',
         randomEmoteUrl: '',
-        userSubscriptionTier: undefined,
         openGiphyModal: false,
         openMemeModal: false,
         modalMediaType: GIPHY_GIFS,

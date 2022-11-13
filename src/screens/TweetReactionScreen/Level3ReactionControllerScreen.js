@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import TweetReactionScreen from './TweetReactionScreen';
-import { getStreamerEmotes } from '../../services/functions';
+import { getStreamerEmotes, getUserToStreamerRelationData } from '../../services/functions';
 import { GIPHY_GIFS, GIPHY_STICKERS, MEME } from '../../utilities/Constants';
 import GiphyMediaSelectorModal from '../../components/GiphyMediaSelectorModal/GiphyMediaSelectorModal';
 import QaplaMemeSelectorModal from '../../components/QaplaMemeSelectorModal/QaplaMemeSelectorModal';
@@ -12,11 +12,13 @@ import { trackOnSegment } from '../../services/statistics';
 import SentModal from '../../components/SentModal/SentModal';
 import ChooseStreamerModal from '../../components/ChooseStreamerModal/ChooseStreamerModal';
 
-class BasicReactionControllerScreen extends Component {
+class Level3ReactionControllerScreen extends Component {
     state = {
         sending: false,
         message: '',
+        emotes: [],
         randomEmoteUrl: '',
+        userSubscriptionTier: undefined,
         openGiphyModal: false,
         openMemeModal: false,
         modalMediaType: GIPHY_GIFS,
@@ -39,8 +41,9 @@ class BasicReactionControllerScreen extends Component {
 
     fetchInitialData = async () => {
         await this.fetchStreamerData(() => {
+            /* this.fetchUserSubscription();
             this.fetchStreamerEmotes();
-            this.fetchNumberOfReactions();
+            this.fetchNumberOfReactions(); */
         });
     }
 
@@ -48,8 +51,8 @@ class BasicReactionControllerScreen extends Component {
         // User may come from a profile, with the data already loaded
         const streamerUid = this.props.navigation.getParam('streamerUid', null);
         if (streamerUid) {
-            const streamerImage = this.props.navigation.getParam('streamerImage', '');
-            const streamerName = this.props.navigation.getParam('streamerName', '');
+            const streamerImage = this.props.navigation.getParam('streamerImage', 'https://static-cdn.jtvnw.net/jtv_user_pictures/aefc7460-f43e-4491-9658-74b80bf006c9-profile_image-300x300.png');
+            const streamerName = this.props.navigation.getParam('streamerName', 'mr_yuboto');
             this.setState({
                 streamerData: {
                     streamerUid,
@@ -88,7 +91,14 @@ class BasicReactionControllerScreen extends Component {
 
                 this.setState({ randomEmoteUrl: array.data[0][randomNumber].images.url_1x });
             }
+
+            this.setState({ emotes });
         }
+    }
+
+    fetchUserSubscription = async () => {
+        const relationData = await getUserToStreamerRelationData(this.props.twitchId, this.state.streamerData.streamerUid);
+        this.setState({ userSubscriptionTier: relationData.data ? relationData.data.subscriptionTier : null });
     }
 
     fetchNumberOfReactions = async () => {
@@ -146,7 +156,6 @@ class BasicReactionControllerScreen extends Component {
                                 this.state.extraTip,
                                 this.props.avatarId,
                                 this.props.avatarBackground,
-                                null,
                                 () => {
                                     trackOnSegment('Pre Paid Interaction Sent', {
                                         MessageLength: this.state.message ? this.state.message.length : null,
@@ -155,7 +164,7 @@ class BasicReactionControllerScreen extends Component {
                                         ExtraTip: this.state.extraTip,
                                         StreamerUid: this.state.streamerData.streamerUid,
                                         StreamerName: this.state.streamerData.streamerName,
-                                        FreeReaction: !freeReactionsSent
+                                        freeReaction: !freeReactionsSent
                                     });
 
                                     if (!this.props.uid) {
@@ -210,6 +219,7 @@ class BasicReactionControllerScreen extends Component {
 
     onStreamerPress = (streamerData) => {
         this.setState({ streamerData }, () => {
+            this.fetchUserSubscription();
             this.fetchStreamerEmotes();
             this.fetchNumberOfReactions();
         });
@@ -276,4 +286,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(BasicReactionControllerScreen);
+export default connect(mapStateToProps)(Level3ReactionControllerScreen);

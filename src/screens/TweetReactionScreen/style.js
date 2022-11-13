@@ -39,6 +39,7 @@ export default styles = StyleSheet.create({
     },
     ttsContainer: {
         flexDirection: 'row',
+        alignItems: 'center',
         marginLeft: 16,
         width: widthPercentageToPx(20)
     },
@@ -65,6 +66,51 @@ export default styles = StyleSheet.create({
         fontWeight: '400',
         lineHeight: 12,
         color: '#7BB0FF'
+    },
+    custom3DTextContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    custom3DText: {
+        width: widthPercentageToPx(60)
+    },
+    edit3DText: {
+        marginRight: 12
+    },
+    pillsScrollView: {
+        marginTop: 24,
+        marginBottom: 8,
+        height: 46 // Pill size
+    },
+    pillsScrollViewContainer: {
+        // Width of avatar image + paddings and margins
+        width: widthPercentageToPx(11) + 8 + 16
+    },
+    avatarOnContainer: {
+        borderRadius: 10000,
+        padding: 3
+    },
+    avatarOn: {
+        backgroundColor: '#0D1021',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingRight: 0,
+        paddingLeft: 16,
+        borderRadius: 998
+    },
+    avatarOnText: {
+        marginLeft: 8,
+        fontSize: 13,
+        fontWeight: '700',
+        color: '#FFF'
+    },
+    avatarOnRemoveIcon: {
+        paddingLeft: 8,
+        paddingRight: 8
     },
     mediaContainer: {
         flex: 1,

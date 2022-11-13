@@ -16,8 +16,10 @@ import {
     LayoutAnimation,
     Animated,
     Easing,
-    UIManager
+    UIManager,
+    FlatList
 } from 'react-native';
+import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import PropTypes from 'prop-types';
@@ -319,11 +321,41 @@ class TweetReactionScreen extends Component {
         }
     }
 
+    isMediaOptionSelected = (mediaType) => {
+        switch (mediaType) {
+            case GIPHY_GIFS:
+            case GIPHY_STICKERS:
+            case MEME:
+                return this.props.selectedMedia && this.props.mediaType === mediaType;
+            case AVATAR:
+                return Boolean(this.props.avatarReaction).valueOf();
+            case GIPHY_TEXT:
+                return Boolean(this.props.custom3DText).valueOf();
+            case TTS:
+                return Boolean(this.props.voiceBot).valueOf()
+            default:
+                return false;
+        }
+    }
+
     render() {
         const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent`;
         const noEnabledOptions = allMediaOptionsTypes.filter((type) => !this.props.mediaSelectorBarOptions.includes(type));
 
         const sendButtonDisabled = (!this.props.message && !this.props.selectedMedia) || this.props.sending;
+
+        let pills = [
+            this.props.voiceBot,
+            this.props.avatarReaction
+        ];
+
+        pills = pills.filter((item) => item).sort((a, b) => {
+            return b?.timestamp - a?.timestamp;
+        });
+
+        pills.forEach((item) => {
+            item.Icon = mediaOptionsData[item.type].Icon;
+        });
 
         return (
             <KeyboardAvoidingView behavior='padding'
@@ -360,25 +392,83 @@ class TweetReactionScreen extends Component {
                                 <Image style={styles.avatarImage} source={{ uri: this.props.userPhotoUrl }} />
                             }
                             <View style={styles.ttsInputContainer}>
-                                <TextInput style={styles.ttsTextInput}
-                                    ref={(textInput) => this.textInput = textInput}
-                                    autoFocus
-                                    placeholder='Type to create TTS'
-                                    placeholderTextColor='#C2C2C2'
-                                    selectionColor='#00FFDD'
-                                    maxLength={50}
-                                    returnKeyType='send'
-                                    multiline
-                                    blurOnSubmit
-                                    value={this.props.message}
-                                    onChangeText={this.props.onMessageChanged} />
-                                {!this.props.message &&
-                                    <Text style={styles.optional}>
-                                        Optional
-                                    </Text>
+                                {!this.props.custom3DText ?
+                                    <>
+                                    <TextInput style={styles.ttsTextInput}
+                                        ref={(textInput) => this.textInput = textInput}
+                                        autoFocus
+                                        placeholder='Type to create TTS'
+                                        placeholderTextColor='#C2C2C2'
+                                        selectionColor='#00FFDD'
+                                        maxLength={100}
+                                        returnKeyType='send'
+                                        multiline
+                                        blurOnSubmit
+                                        value={this.props.message}
+                                        onChangeText={this.props.onMessageChanged} />
+                                    {!this.props.message &&
+                                        <Text style={styles.optional}>
+                                            Optional
+                                        </Text>
+                                    }
+                                    </>
+                                    :
+                                    <View style={styles.custom3DTextContainer}>
+                                        <Image source={{ uri: this.props.custom3DText.original.url }}
+                                            style={[styles.custom3DText, {
+                                                aspectRatio: this.props.custom3DText.original.width / this.props.custom3DText.original.height
+                                            }]} />
+                                        <TouchableOpacity style={styles.edit3DText}
+                                            onPress={() => this.props.onMediaOptionPress(GIPHY_TEXT)}>
+                                            <images.svg.editCircle width={24} height={24} />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={this.props.onRemoveCustom3DText}>
+                                            <images.svg.closeIcon width={24} height={24} />
+                                        </TouchableOpacity>
+                                    </View>
                                 }
                             </View>
                         </View>
+                        {pills.length > 0 &&
+                            <View style={styles.pillsScrollView}>
+                                <FlatList horizontal
+                                    showsHorizontalScrollIndicator={false}
+                                    data={pills}
+                                    ListHeaderComponent={() => <View style={styles.pillsScrollViewContainer} />}
+                                    ItemSeparatorComponent={() => <View style={{ width: 8 }} />}
+                                    renderItem={({ item }) => (
+                                        <LinearGradient start={{x: 0.0, y: 1.0}}
+                                            end={{x: 1.0, y: 1.0}}
+                                            useAngle
+                                            angle={135}
+                                            colors={['#9D7EFF', '#9DEDFF']}
+                                            style={styles.avatarOnContainer}
+                                            key={item.title}>
+                                            <View style={styles.avatarOn}>
+                                                <item.Icon />
+                                                <MaskedView maskElement={
+                                                    <Text style={styles.avatarOnText}>
+                                                        {item.title}
+                                                    </Text>
+                                                }>
+                                                    <LinearGradient
+                                                        colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
+                                                        useAngle
+                                                        angle={227}>
+                                                        <Text style={[styles.avatarOnText, { opacity: 0 }]}>
+                                                            {item.title}
+                                                        </Text>
+                                                    </LinearGradient>
+                                                </MaskedView>
+                                                <TouchableOpacity style={styles.avatarOnRemoveIcon}
+                                                    onPress={item.onRemove}>
+                                                    <images.svg.closeIcon height={24} width={24} />
+                                                </TouchableOpacity>
+                                            </View>
+                                        </LinearGradient>
+                                    )} />
+                            </View>
+                        }
                         <View style={styles.mediaContainer}>
                             {this.props.selectedMedia &&
                                 <ImageBackground style={
@@ -453,16 +543,32 @@ class TweetReactionScreen extends Component {
                                             style={styles.streamerAvatar} />
                                         <View style={styles.costContainer}>
                                             {this.props.qoins ?
-                                                <>
-                                                <images.svg.qoin height={16} width={16} />
-                                                <Text style={styles.costText}>
-                                                    {this.props.cost ?
-                                                        this.props.cost
-                                                        :
-                                                        null
-                                                    }
-                                                </Text>
-                                                </>
+                                                this.props.cost !== undefined &&
+                                                    <>
+                                                    <images.svg.qoin height={16} width={16} />
+                                                    <MaskedView maskElement={
+                                                        <Text style={[
+                                                            styles.tooltipLabelText,
+                                                            styles.tooltipHighlihgtedText,
+                                                            { marginLeft: 8, marginRight: 4 }
+                                                        ]}>
+                                                            {this.props.cost}
+                                                        </Text>
+                                                    }>
+                                                        <LinearGradient
+                                                            colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
+                                                            useAngle
+                                                            angle={227}>
+                                                            <Text style={[
+                                                                styles.tooltipLabelText,
+                                                                styles.tooltipHighlihgtedText,
+                                                                { marginLeft: 8, marginRight: 4, opacity: 0 }
+                                                            ]}>
+                                                                {this.props.cost}
+                                                            </Text>
+                                                        </LinearGradient>
+                                                    </MaskedView>
+                                                    </>
                                             :
                                                 <>
                                                 <images.svg.interactionsNumberIcon  />
@@ -512,7 +618,7 @@ class TweetReactionScreen extends Component {
                                             type={mediaType}
                                             excluded={this.props.selectedMedia && excludingOptions[this.props.mediaType] && excludingOptions[this.props.mediaType][mediaType]}
                                             onPress={this.props.onMediaOptionPress}
-                                            isSelected={this.props.selectedMedia && this.props.mediaType === mediaType}
+                                            isSelected={this.isMediaOptionSelected(mediaType)}
                                             emoteUrl={this.props.randomEmoteUrl}
                                             keyboardHeight={this.state.keyboardHeight} />
                                         ))
@@ -592,6 +698,15 @@ TweetReactionScreen.propTypes = {
     extraTip: PropTypes.number,
     randomEmoteUrl: PropTypes.string,
     streamerUid: PropTypes.string,
+    avatarReaction: PropTypes.string,
+    custom3DText: PropTypes.shape({
+        original: PropTypes.shape({
+            height: PropTypes.number,
+            url: PropTypes.string,
+            width: PropTypes.number
+        })
+    }),
+    voiceBot: PropTypes.string,
 
     // Required fields
     //Options for media selector bar
@@ -603,6 +718,9 @@ TweetReactionScreen.propTypes = {
     cleanSelectedMedia: PropTypes.func.isRequired,
     setExtraTip: PropTypes.func.isRequired,
     onOpenSearchStreamerModal: PropTypes.func.isRequired,
+    onRemoveAvatarReaction: PropTypes.func.isRequired,
+    onRemoveCustom3DText: PropTypes.func.isRequired,
+    onRemoveVoiceBot: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSend: PropTypes.func.isRequired
 };

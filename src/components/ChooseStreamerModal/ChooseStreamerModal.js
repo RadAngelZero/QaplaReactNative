@@ -71,7 +71,7 @@ const StreamerItem = ({ uid, streamerUid, streamerImage, streamerName, selected,
 }
 
 class ChooseStreamerModal extends Component {
-    state={
+    state = {
         searchQuery: '',
         recentStreamers: [],
         requestedStreamers: [],

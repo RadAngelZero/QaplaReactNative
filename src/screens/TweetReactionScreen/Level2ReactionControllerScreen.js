@@ -3,20 +3,24 @@ import { connect } from 'react-redux';
 
 import TweetReactionScreen from './TweetReactionScreen';
 import { getStreamerEmotes } from '../../services/functions';
-import { GIPHY_GIFS, GIPHY_STICKERS, MEME } from '../../utilities/Constants';
+import { AVATAR, GIPHY_GIFS, GIPHY_STICKERS, GIPHY_TEXT, MEME, TTS } from '../../utilities/Constants';
 import GiphyMediaSelectorModal from '../../components/GiphyMediaSelectorModal/GiphyMediaSelectorModal';
 import QaplaMemeSelectorModal from '../../components/QaplaMemeSelectorModal/QaplaMemeSelectorModal';
-import { getRecentStreamersDonations, getStreamerPublicData, getUserReactionsCount, isUserBannedWithStreamer, sendReaction } from '../../services/database';
+import { getRecentStreamersDonations, getStreamerPublicData, getStreamerReactionPrice, isUserBannedWithStreamer, sendReaction } from '../../services/database';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import { trackOnSegment } from '../../services/statistics';
 import SentModal from '../../components/SentModal/SentModal';
 import ChooseStreamerModal from '../../components/ChooseStreamerModal/ChooseStreamerModal';
+import AvatarReactionModal from '../../components/AvatarReactionModal/AvatarReactionModal';
+import Create3DTextModal from '../../components/Create3DTextModal/Create3DTextModal';
+import ChooseBotVoiceModal from '../../components/ChooseBotVoiceModal/ChooseBotVoiceModal';
 
-class BasicReactionControllerScreen extends Component {
+class Level2ReactionControllerScreen extends Component {
     state = {
         sending: false,
         message: '',
         randomEmoteUrl: '',
+        userSubscriptionTier: undefined,
         openGiphyModal: false,
         openMemeModal: false,
         modalMediaType: GIPHY_GIFS,
@@ -30,7 +34,14 @@ class BasicReactionControllerScreen extends Component {
             streamerImage: '',
             streamerName: ''
         },
-        openSearchStreamerModal: false
+        openSearchStreamerModal: false,
+        openAvatarModal: false,
+        avatarReaction: null,
+        open3DTextModal: false,
+        custom3DText: null,
+        openBotVoiceModal: false,
+        selectedVoiceBot: null,
+        cost: undefined
     };
 
     componentDidMount() {
@@ -40,7 +51,7 @@ class BasicReactionControllerScreen extends Component {
     fetchInitialData = async () => {
         await this.fetchStreamerData(() => {
             this.fetchStreamerEmotes();
-            this.fetchNumberOfReactions();
+            this.fetchReactionCost();
         });
     }
 
@@ -48,8 +59,8 @@ class BasicReactionControllerScreen extends Component {
         // User may come from a profile, with the data already loaded
         const streamerUid = this.props.navigation.getParam('streamerUid', null);
         if (streamerUid) {
-            const streamerImage = this.props.navigation.getParam('streamerImage', '');
-            const streamerName = this.props.navigation.getParam('streamerName', '');
+            const streamerImage = this.props.navigation.getParam('streamerImage', 'https://static-cdn.jtvnw.net/jtv_user_pictures/aefc7460-f43e-4491-9658-74b80bf006c9-profile_image-300x300.png');
+            const streamerName = this.props.navigation.getParam('streamerName', 'mr_yuboto');
             this.setState({
                 streamerData: {
                     streamerUid,
@@ -91,23 +102,20 @@ class BasicReactionControllerScreen extends Component {
         }
     }
 
-    fetchNumberOfReactions = async () => {
+    fetchReactionCost = async () => {
+        const costSnapshot = await getStreamerReactionPrice(this.state.streamerData.streamerUid, 'level2');
+        const cost = costSnapshot.val() ?? 500;
         if (this.props.uid) {
-            const numberOfReactions = await getUserReactionsCount(this.props.uid, this.state.streamerData.streamerUid);
-            if (numberOfReactions.val()) {
-                this.setState({ numberOfReactions: numberOfReactions.val() });
+            const freeReactionsSent = await retrieveData('freeReactionsSent');
+            if (!freeReactionsSent) {
+                const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid);
+                this.setState({ cost: hasUserReactedBefore.exists() ? cost : 0 });
             } else {
-                const freeReactionsSent = await retrieveData('freeReactionsSent');
-                if (!freeReactionsSent) {
-                    const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid);
-                    this.setState({ numberOfReactions: hasUserReactedBefore.exists() ? 0 : 1 });
-                } else {
-                    this.setState({ numberOfReactions: 0 });
-                }
+                this.setState({ cost });
             }
         } else {
             const freeReactionsSent = await retrieveData('freeReactionsSent');
-            this.setState({ numberOfReactions: !freeReactionsSent ? 1 : 0 });
+            this.setState({ cost: !freeReactionsSent ? 0 : cost });
         }
     }
 
@@ -119,12 +127,26 @@ class BasicReactionControllerScreen extends Component {
                  */
                 const freeReactionsSent = await retrieveData('freeReactionsSent');
 
-                if (this.state.numberOfReactions) {
+                const userQoins = this.props.qoins ?? 0;
+                if (this.state.cost <= userQoins) {
                     const isUserBanned = await isUserBannedWithStreamer(this.props.twitchId, this.state.streamerData.streamerUid);
                     if (!isUserBanned.exists()) {
 
-                        const userQoins = this.props.qoins ?? 0;
-                        if (this.state.extraTip <= userQoins) {
+                        const totalCost = this.state.cost + this.state.extraTip;
+                        if (totalCost <= userQoins) {
+
+                            let messageExtraData = this.state.selectedVoiceBot ?
+                                {
+                                    voiceAPIName: this.state.selectedVoiceBot.voiceAPIName,
+                                    voiceName: this.state.selectedVoiceBot.key
+                                }
+                                :
+                                {};
+
+                            messageExtraData.giphyText = this.state.custom3DText ?
+                                this.state.custom3DText.original
+                                :
+                                {};
 
                             sendReaction(
                                 this.props.uid ?? 'Anonymus',
@@ -141,21 +163,23 @@ class BasicReactionControllerScreen extends Component {
                                     :
                                     {},
                                 this.state.message,
-                                {}, // No extra data
+                                messageExtraData, // No extra data
                                 {}, // No emote/emoji rain
-                                this.state.extraTip,
+                                totalCost,
                                 this.props.avatarId,
                                 this.props.avatarBackground,
-                                null,
+                                this.state.avatarReaction.id,
                                 () => {
-                                    trackOnSegment('Pre Paid Interaction Sent', {
+                                    trackOnSegment('Level 2 Interaction Sent', {
                                         MessageLength: this.state.message ? this.state.message.length : null,
                                         MediaType: this.state.mediaType,
                                         Media: this.state.selectedMedia ? true : false,
                                         ExtraTip: this.state.extraTip,
                                         StreamerUid: this.state.streamerData.streamerUid,
                                         StreamerName: this.state.streamerData.streamerName,
-                                        FreeReaction: !freeReactionsSent
+                                        FreeReaction: !freeReactionsSent,
+                                        BotVoice: this.state.selectedVoiceBot ? this.state.selectedVoiceBot.key : 'Default',
+                                        Custom3DText: this.state.custom3DText ? true : false
                                     });
 
                                     if (!this.props.uid) {
@@ -164,7 +188,8 @@ class BasicReactionControllerScreen extends Component {
 
                                     this.setState({ openSentModal: true });
                                 },
-                                () => this.setState({ sending: false })
+                                () => this.setState({ sending: false }),
+                                false
                             );
                         } else {
                             this.setState({ sending: false });
@@ -194,6 +219,15 @@ class BasicReactionControllerScreen extends Component {
             case MEME:
                 this.setState({ openMemeModal: true, modalMediaType: mediaType });
                 break;
+            case AVATAR:
+                this.setState({ openAvatarModal: true });
+                break;
+            case GIPHY_TEXT:
+                this.setState({ open3DTextModal: true });
+                break;
+            case TTS:
+                this.setState({ openBotVoiceModal: true });
+                break
             default:
                 break;
         }
@@ -211,9 +245,37 @@ class BasicReactionControllerScreen extends Component {
     onStreamerPress = (streamerData) => {
         this.setState({ streamerData }, () => {
             this.fetchStreamerEmotes();
-            this.fetchNumberOfReactions();
+            this.fetchReactionCost();
         });
         this.setState({ openSearchStreamerModal: false });
+    }
+
+    onAvatarReactionSelected = (avatarReactionId) => {
+        this.setState({ avatarReaction: {
+                id: avatarReactionId,
+                timestamp: new Date().getTime(),
+                title: 'Avatar On',
+                type: AVATAR,
+                onRemove: () => this.setState({ avatarReaction: null })
+            },
+            openAvatarModal: false
+        });
+    }
+
+    on3DTextSelected = (message, custom3DText) => {
+        this.setState({ message, custom3DText, open3DTextModal: false });
+    }
+
+    onVoiceSelected = (selectedVoiceBot) => {
+        this.setState({ selectedVoiceBot: {
+                ...selectedVoiceBot,
+                title: selectedVoiceBot.key,
+                type: TTS,
+                onRemove: () => this.setState({ selectedVoiceBot: null }),
+                timestamp: new Date().getTime()
+            },
+            openBotVoiceModal: false
+        });
     }
 
     render() {
@@ -221,12 +283,21 @@ class BasicReactionControllerScreen extends Component {
             <>
             <TweetReactionScreen onSend={this.onSendReaction}
                 sending={this.state.sending}
+                qoins
+                cost={this.state.cost}
                 mediaSelectorBarOptions={[
+                    GIPHY_TEXT,
+                    TTS,
+                    AVATAR,
                     GIPHY_GIFS,
                     GIPHY_STICKERS,
                     MEME
                 ]}
                 numberOfReactions={this.state.numberOfReactions}
+                avatarReaction={this.state.avatarReaction}
+                custom3DText={this.state.custom3DText}
+                onRemoveCustom3DText={() => this.setState({ custom3DText: null })}
+                voiceBot={this.state.selectedVoiceBot}
                 message={this.state.message}
                 onMessageChanged={(message) => this.setState({ message })}
                 onMediaOptionPress={this.onMediaOptionPress}
@@ -258,6 +329,18 @@ class BasicReactionControllerScreen extends Component {
                 }}
                 uid={this.props.uid}
                 onStreamerPress={this.onStreamerPress} />
+            <AvatarReactionModal open={this.state.openAvatarModal}
+                onClose={() => this.setState({ openAvatarModal: false })}
+                avatarId={this.props.avatarId}
+                onReactionSelected={this.onAvatarReactionSelected} />
+            <Create3DTextModal open={this.state.open3DTextModal}
+                onClose={() => this.setState({ open3DTextModal: false })}
+                defaultMessage={this.state.message}
+                on3DTextSelected={this.on3DTextSelected} />
+            <ChooseBotVoiceModal open={this.state.openBotVoiceModal}
+                onClose={() => this.setState({ openBotVoiceModal: false })}
+                currentVoice={this.state.selectedVoiceBot}
+                onVoiceSelected={this.onVoiceSelected} />
             </>
         );
     }
@@ -276,4 +359,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(BasicReactionControllerScreen);
+export default connect(mapStateToProps)(Level2ReactionControllerScreen);

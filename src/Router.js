@@ -66,6 +66,7 @@ import AvatarReadyScreen from './screens/AvatarReadyScreen/AvatarReadyScreen';
 import AvatarCreationHeaderBar from './components/AvatarCreationHeaderBar/AvatarCreationHeaderBar';
 import GreetingSearchStreamerScreen from './screens/GreetingSearchStreamerScreen/GreetingSearchStreamerScreen';
 import BasicReactionControllerScreen from './screens/TweetReactionScreen/BasicReactionControllerScreen';
+import Level2ReactionControllerScreen from './screens/TweetReactionScreen/Level2ReactionControllerScreen';
 
 //#region Stack Navigators
 
@@ -590,7 +591,6 @@ const RootStackNavigator = createStackNavigator({
     },
   },
   Auth: AuthStackNavigator,
-  TweetReaction: BasicReactionControllerScreen,
   InteractionsStack: InteractionsStackNavigator,
   InteractionsPersonlizeStack: {
     screen: InteractionsPersonlizeStackNavigator,

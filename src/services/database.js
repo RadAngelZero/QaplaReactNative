@@ -65,6 +65,7 @@ const avatarsAnimationsRef = database.ref('/AvatarsAnimations');
 const usersGreetingsRef = database.ref('/UsersGreetings');
 const streamsGreetingsRef = database.ref('/StreamsGreetings');
 const gifsLibrariesRef = database.ref('/GifsLibraries');
+const reactionsPricesRef = database.ref('/ReactionsPrices');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1449,7 +1450,7 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojiR
 }
 
 /**
- * Store cheers on the database at StreamersDonations node and remove pre paid interaction (and Qoins if necessary)
+ * Store cheers on the database at StreamersDonations node and remove channel points reactions and Qoins if necessary
  * @param {string} uid User identifier
  * @param {string} userName Qapla username
  * @param {string} twitchUserName Username of Twitch
@@ -1470,12 +1471,14 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojiR
  * @param {number} qoinsToRemove Amount of donated Qoins
  * @param {string | null} avatarId User Avatar identifier
  * @param {object | null} avatarBackground Avatar linear gradient background data
+ * @param {string | null} avatarAnimationId Avatar animation to show with reaction
  * @param {number} avatarBackground.angle Avatar gradient angle
  * @param {Array<string>} avatarBackground.colors Array of colors for gradient background
  * @param {function} onSuccess Function to call once the cheer is sent
  * @param {function} onError Function to call on any possible error
+ * @param {boolean} removeReaction Flag to remove (or not) a reaction from channel points reaction count
  */
-export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, avatarId, avatarBackground, onSuccess, onError) {
+export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, avatarId, avatarBackground, avatarAnimationId, onSuccess, onError, removeReaction = true) {
     let qoinsTaken = qoinsToRemove ? false : true;
     if (qoinsToRemove && uid !== 'Anonymus') {
         qoinsTaken = (await usersRef.child(uid).child('credits').transaction((qoins) => {
@@ -1497,7 +1500,7 @@ export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, 
 
     if (qoinsTaken) {
         let reactionTaken = false;
-        if (uid !== 'Anonymus') {
+        if (uid !== 'Anonymus' && removeReaction) {
             reactionTaken = (await usersReactionsCountRef.child(uid).child(streamerUid).transaction((reactionsCount) => {
                 return reactionsCount - 1;
             })).committed;
@@ -1510,7 +1513,8 @@ export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, 
             const donationRef = streamersDonationsRef.child(streamerUid).push({
                 avatar: {
                     avatarId,
-                    avatarBackground
+                    avatarBackground,
+                    avatarAnimationId
                 },
                 amountQoins: qoinsToRemove,
                 media,
@@ -2141,4 +2145,17 @@ export async function getRandomAvatarAnimationGif() {
 
     const index = Math.floor(Math.random() * length.val());
     return await gifsLibrariesRef.child('AvatarAnimation').child('gifs').child(index).once('value');
+}
+
+// -----------------------------------------------
+// Reactions Prices
+// -----------------------------------------------
+
+/**
+ * Gets the price (in Qoins) of the given reaction level
+ * @param {string} streamerUid Streamer identifier
+ * @param {string} reactionLevel Name of reaction level
+ */
+export async function getStreamerReactionPrice(streamerUid, reactionLevel) {
+    return await reactionsPricesRef.child(streamerUid).child(reactionLevel).once('value');
 }

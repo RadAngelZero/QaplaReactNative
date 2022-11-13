@@ -84,8 +84,8 @@ export default styles = StyleSheet.create({
         height: 46 // Pill size
     },
     pillsScrollViewContainer: {
-        // Width of avatar image + paddings and margins
-        width: widthPercentageToPx(11) + 8 + 16
+        paddingRight: 16,
+        width: widthPercentageToPx(11) + 8 + 16 // Width of avatar image + paddings and margins
     },
     avatarOnContainer: {
         borderRadius: 10000,

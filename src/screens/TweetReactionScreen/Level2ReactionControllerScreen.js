@@ -59,8 +59,8 @@ class Level2ReactionControllerScreen extends Component {
         // User may come from a profile, with the data already loaded
         const streamerUid = this.props.navigation.getParam('streamerUid', null);
         if (streamerUid) {
-            const streamerImage = this.props.navigation.getParam('streamerImage', 'https://static-cdn.jtvnw.net/jtv_user_pictures/aefc7460-f43e-4491-9658-74b80bf006c9-profile_image-300x300.png');
-            const streamerName = this.props.navigation.getParam('streamerName', 'mr_yuboto');
+            const streamerImage = this.props.navigation.getParam('streamerImage', '');
+            const streamerName = this.props.navigation.getParam('streamerName', '');
             this.setState({
                 streamerData: {
                     streamerUid,
@@ -163,12 +163,12 @@ class Level2ReactionControllerScreen extends Component {
                                     :
                                     {},
                                 this.state.message,
-                                messageExtraData, // No extra data
+                                messageExtraData,
                                 {}, // No emote/emoji rain
                                 totalCost,
                                 this.props.avatarId,
                                 this.props.avatarBackground,
-                                this.state.avatarReaction.id,
+                                this.state.avatarReaction?.id,
                                 () => {
                                     trackOnSegment('Level 2 Interaction Sent', {
                                         MessageLength: this.state.message ? this.state.message.length : null,

@@ -67,6 +67,7 @@ import AvatarCreationHeaderBar from './components/AvatarCreationHeaderBar/Avatar
 import GreetingSearchStreamerScreen from './screens/GreetingSearchStreamerScreen/GreetingSearchStreamerScreen';
 import BasicReactionControllerScreen from './screens/TweetReactionScreen/BasicReactionControllerScreen';
 import Level2ReactionControllerScreen from './screens/TweetReactionScreen/Level2ReactionControllerScreen';
+import Level3ReactionControllerScreen from './screens/TweetReactionScreen/Level3ReactionControllerScreen';
 
 //#region Stack Navigators
 

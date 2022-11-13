@@ -69,7 +69,7 @@ class GiphyMediaSelectorModal extends Component {
                                 <View style={{ opacity: 0.4 }}>
                                     <images.svg.searchStreamerIcon style={styles.searchIcon} />
                                 </View>
-                                <TextInput
+                                <TextInput autoFocus
                                     value={this.state.searchQuery}
                                     onChangeText={this.searchHandler}
                                     style={styles.gridSearchBarTextInput}

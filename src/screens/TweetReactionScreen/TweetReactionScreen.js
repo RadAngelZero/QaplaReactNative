@@ -332,7 +332,9 @@ class TweetReactionScreen extends Component {
             case GIPHY_TEXT:
                 return Boolean(this.props.custom3DText).valueOf();
             case TTS:
-                return Boolean(this.props.voiceBot).valueOf()
+                return Boolean(this.props.voiceBot).valueOf();
+            case EMOTE:
+                return Boolean(this.props.emoteRaid).valueOf()
             default:
                 return false;
         }
@@ -346,7 +348,8 @@ class TweetReactionScreen extends Component {
 
         let pills = [
             this.props.voiceBot,
-            this.props.avatarReaction
+            this.props.avatarReaction,
+            this.props.emoteRaid
         ];
 
         pills = pills.filter((item) => item).sort((a, b) => {
@@ -433,39 +436,54 @@ class TweetReactionScreen extends Component {
                             <View style={styles.pillsScrollView}>
                                 <FlatList horizontal
                                     showsHorizontalScrollIndicator={false}
+                                    keyboardShouldPersistTaps='handled'
                                     data={pills}
                                     ListHeaderComponent={() => <View style={styles.pillsScrollViewContainer} />}
                                     ItemSeparatorComponent={() => <View style={{ width: 8 }} />}
+                                    ListFooterComponent={() => <View style={{ width: 16 }} />}
                                     renderItem={({ item }) => (
-                                        <LinearGradient start={{x: 0.0, y: 1.0}}
-                                            end={{x: 1.0, y: 1.0}}
-                                            useAngle
-                                            angle={135}
-                                            colors={['#9D7EFF', '#9DEDFF']}
-                                            style={styles.avatarOnContainer}
-                                            key={item.title}>
-                                            <View style={styles.avatarOn}>
-                                                <item.Icon />
-                                                <MaskedView maskElement={
-                                                    <Text style={styles.avatarOnText}>
-                                                        {item.title}
-                                                    </Text>
-                                                }>
-                                                    <LinearGradient
-                                                        colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
-                                                        useAngle
-                                                        angle={227}>
-                                                        <Text style={[styles.avatarOnText, { opacity: 0 }]}>
+                                        // TouchableWithoutFeedback solves scroll bug
+                                        <TouchableWithoutFeedback touchSoundDisabled>
+                                            <LinearGradient start={{x: 0.0, y: 1.0}}
+                                                end={{x: 1.0, y: 1.0}}
+                                                useAngle
+                                                angle={135}
+                                                colors={['#9D7EFF', '#9DEDFF']}
+                                                style={styles.avatarOnContainer}
+                                                key={item.title}>
+                                                <View style={styles.avatarOn}>
+                                                    {item.Icon ?
+                                                        <item.Icon />
+                                                        :
+                                                        <Image source={{
+                                                                uri: item.url
+                                                            }}
+                                                            style={{
+                                                                height: 24,
+                                                                width: 24
+                                                            }} />
+                                                    }
+                                                    <MaskedView maskElement={
+                                                        <Text style={styles.avatarOnText}>
                                                             {item.title}
                                                         </Text>
-                                                    </LinearGradient>
-                                                </MaskedView>
-                                                <TouchableOpacity style={styles.avatarOnRemoveIcon}
-                                                    onPress={item.onRemove}>
-                                                    <images.svg.closeIcon height={24} width={24} />
-                                                </TouchableOpacity>
-                                            </View>
-                                        </LinearGradient>
+                                                    }>
+                                                        <LinearGradient
+                                                            colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
+                                                            useAngle
+                                                            angle={227}>
+                                                            <Text style={[styles.avatarOnText, { opacity: 0 }]}>
+                                                                {item.title}
+                                                            </Text>
+                                                        </LinearGradient>
+                                                    </MaskedView>
+                                                    <TouchableOpacity style={styles.avatarOnRemoveIcon}
+                                                        onPress={item.onRemove}>
+                                                        <images.svg.closeIcon height={24} width={24} />
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </LinearGradient>
+                                        </TouchableWithoutFeedback>
                                     )} />
                             </View>
                         }
@@ -476,7 +494,7 @@ class TweetReactionScreen extends Component {
                                             {
                                                 overflow: 'hidden',
                                                 borderRadius: 10,
-                                                width: widthPercentageToPx(60),
+                                                width: widthPercentageToPx(80),
                                                 aspectRatio: this.props.selectedMedia.aspectRatio
                                             }
                                             :
@@ -653,13 +671,13 @@ class TweetReactionScreen extends Component {
                                     }
                                     </Animated.View>
                                     <Text style={styles.extraTipButtonText}>
-                                        {!this.state.openTipMenu && this.props.extraTip ?
-                                            this.props.extraTip.toLocaleString()
-                                            :
-                                                this.state.openTipMenu ?
-                                                    'No Tip'
-                                                    :
-                                                    'Tip'
+                                    {!this.state.openTipMenu && this.props.extraTip ?
+                                        this.props.extraTip.toLocaleString()
+                                        :
+                                            this.state.openTipMenu ?
+                                                'No Tip'
+                                                :
+                                                'Tip'
                                         }
                                     </Text>
                                     {!this.state.openTipMenu && this.props.extraTip !== 0 &&
@@ -698,7 +716,12 @@ TweetReactionScreen.propTypes = {
     extraTip: PropTypes.number,
     randomEmoteUrl: PropTypes.string,
     streamerUid: PropTypes.string,
-    avatarReaction: PropTypes.string,
+    avatarReaction: PropTypes.shape({
+        title: PropTypes.string,
+        type: PropTypes.oneOf(AVATAR),
+        onRemove: PropTypes.func,
+        timestamp: PropTypes.number
+    }),
     custom3DText: PropTypes.shape({
         original: PropTypes.shape({
             height: PropTypes.number,
@@ -706,7 +729,19 @@ TweetReactionScreen.propTypes = {
             width: PropTypes.number
         })
     }),
-    voiceBot: PropTypes.string,
+    voiceBot: PropTypes.shape({
+        title: PropTypes.string,
+        type: PropTypes.oneOf(TTS),
+        onRemove: PropTypes.func,
+        timestamp: PropTypes.number
+    }),
+    emoteRaid: PropTypes.shape({
+        url: PropTypes.string,
+        title: PropTypes.string,
+        type: PropTypes.oneOf(EMOTE),
+        onRemove: PropTypes.func,
+        timestamp: PropTypes.number
+    }),
 
     // Required fields
     //Options for media selector bar

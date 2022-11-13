@@ -46,14 +46,7 @@ class UserProfileModal extends Component {
     componentDidMount() {
         this.setUserDefaultImage();
         this.getUserQlanData();
-        this.getImageVersion();
         this.getUserGreeting();
-    }
-
-    getImageVersion = async () => {
-        const imageVersion = await retrieveData('avatarImageVersion');
-
-        this.setState({ imageVersion });
     }
 
     getQoins = () => {
@@ -449,7 +442,7 @@ class UserProfileModal extends Component {
     }
 
     render() {
-        const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${this.state.imageVersion}`;
+        const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent`;
 
         return (
             <SafeAreaView style={{ flex: 1 }}>
@@ -513,7 +506,6 @@ class UserProfileModal extends Component {
                     userName={this.props.username}
                     twitchUsername={this.props.twitchUsername}
                     onSuccess={this.getUserQlanData} />
-                <NavigationEvents onWillFocus={this.getImageVersion} />
             </SafeAreaView>
         );
     }

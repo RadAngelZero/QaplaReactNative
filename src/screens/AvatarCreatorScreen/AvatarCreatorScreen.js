@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import styles from './style';
 import { saveAvatarUrl, saveAvatarId, saveReadyPlayerMeUserId } from '../../services/database';
-import { retrieveData, storeData } from '../../utilities/persistance';
 
 class AvatarCreatorScreen extends Component {
     webview = null;
@@ -70,16 +69,6 @@ class AvatarCreatorScreen extends Component {
         if (data.userId) {
             await saveReadyPlayerMeUserId(this.props.uid, data.userId);
         }
-
-        /**
-         * As the user probably made some changes in the avatar we assume every time that this is a new version
-         * for the 2D image of the user
-         */
-        let imageVersion = Number(await retrieveData('avatarImageVersion'));
-
-        imageVersion++;
-
-        await storeData('avatarImageVersion', imageVersion.toString());
 
         let edit = this.props.navigation.getParam('edit', false);
         // Navgate to other place

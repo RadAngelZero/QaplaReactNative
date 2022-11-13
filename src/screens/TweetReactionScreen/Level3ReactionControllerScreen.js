@@ -94,19 +94,21 @@ class Level3ReactionControllerScreen extends Component {
         }
     }
 
-    fetchStreamerEmotes = async () => {
+    fetchStreamerEmotes = () => {
         if (this.state.streamerData.streamerUid) {
-            const emotesRequest = await getStreamerEmotes(this.state.streamerData.streamerUid);
-            const emotes = emotesRequest.data ? emotesRequest.data : null;
-            if (emotes) {
-                // Find the first array who has more than 0 elements
-                const array = emotes.find((typeOfEmote) => typeOfEmote.data[0].length > 0);
-                const randomNumber = Math.floor(Math.random() * array.data[0].length);
+            this.setState({ emotes: [] }, async () => {
+                const emotesRequest = await getStreamerEmotes(this.state.streamerData.streamerUid);
+                const emotes = emotesRequest.data ? emotesRequest.data : null;
+                if (emotes) {
+                    // Find the first array who has more than 0 elements
+                    const array = emotes.find((typeOfEmote) => typeOfEmote.data[0].length > 0);
+                    const randomNumber = Math.floor(Math.random() * array.data[0].length);
 
-                this.setState({ randomEmoteUrl: array.data[0][randomNumber].images.url_1x });
-            }
+                    this.setState({ randomEmoteUrl: array.data[0][randomNumber].images.url_1x });
+                }
 
-            this.setState({ emotes });
+                this.setState({ emotes });
+            });
         }
     }
 

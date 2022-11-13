@@ -38,8 +38,7 @@ class GreetingsShortcut extends Component {
     render() {
         return (
             <View style={styles.mainContainer}>
-                <ImageBackground style={styles.imageBackground}
-                    source={images.png.popUpBackground.img}>
+                <View style={styles.imageBackground}>
                     <ImageBackground style={styles.backgroundGif}
                         source={this.state.gif ? { uri: this.state.gif } : null}>
                         <View>
@@ -58,7 +57,7 @@ class GreetingsShortcut extends Component {
                             </Text>
                         </TouchableOpacity>
                     </ImageBackground>
-                </ImageBackground>
+                </View>
             </View>
         );
     }

@@ -28,6 +28,17 @@ export default styles = StyleSheet.create({
         fontWeight: '500',
         color: '#FFF'
     },
+    emoteRainGifContainer: {
+        borderRadius: 25,
+        overflow: 'hidden',
+        marginTop: 32
+    },
+    emoteRainGif: {
+        overflow: 'hidden',
+        borderRadius: 25,
+        width: widthPercentageToPx(91.46),
+        height: heightPercentageToPx(23.77)
+    },
     emotesContainer: {
         flexDirection: 'column',
         marginBottom: 8,

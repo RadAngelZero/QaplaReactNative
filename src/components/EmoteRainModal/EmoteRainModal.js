@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Keyboard, Modal, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, Text, TouchableOpacity, View } from 'react-native';
 
 import styles from './style';
 import images from '../../../assets/images';
@@ -26,6 +26,12 @@ class EmoteRainModal extends Component {
                             <View style={[styles.closeIcon, { opacity: 0 }]}>
                                 <images.svg.closeIcon />
                             </View>
+                        </View>
+                        <View style={styles.emoteRainGifContainer}>
+                            <Image source={{
+                                uri: 'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/AppGifs%2Femote-raid.gif?alt=media&token=6738263c-df25-440e-802d-56d93f0e9c26'
+                            }}
+                            style={styles.emoteRainGif} />
                         </View>
                         <View style={styles.emotesContainer}>
                             <EmoteSelector data={this.props.emotes}

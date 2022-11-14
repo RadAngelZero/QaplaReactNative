@@ -500,24 +500,18 @@ class TweetReactionScreen extends Component {
                                     )} />
                             </View>
                         }
-                        <View style={styles.mediaContainer}>
+                        <View style={[styles.mediaContainer,
+                        {
+                            width: this.props.selectedMedia && this.props.selectedMedia.aspectRatio > 1 ? '80%' : '60%'
+                        }
+                        ]}>
                             {this.props.selectedMedia &&
-                                <ImageBackground style={
-                                        this.props.selectedMedia.aspectRatio > 1 ?
-                                            {
-                                                overflow: 'hidden',
-                                                borderRadius: 10,
-                                                width: widthPercentageToPx(80),
-                                                aspectRatio: this.props.selectedMedia.aspectRatio
-                                            }
-                                            :
-                                            {
-                                                overflow: 'hidden',
-                                                borderRadius: 10,
-                                                height: heightPercentageToPx(40),
-                                                aspectRatio: this.props.selectedMedia.aspectRatio
-                                            }
-                                    }
+                                <ImageBackground style={{
+                                        overflow: 'hidden',
+                                        borderRadius: 10,
+                                        width: '100%',
+                                        aspectRatio: this.props.selectedMedia.aspectRatio
+                                    }}
                                     source={{ uri: this.props.selectedMedia.data.images.original.url }}>
                                     <TouchableOpacity style={styles.removeImageIcon}
                                         onPress={this.props.cleanSelectedMedia}>
@@ -568,37 +562,40 @@ class TweetReactionScreen extends Component {
                                                         this.props.streamerImage
                                                 }
                                                 :
-                                                null
+                                                {
+                                                    uri: 'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/AppImages%2FDefaultStreamerProfilePic.png?alt=media&token=7944f317-8f4d-4aa2-bb4b-d1f454819695'
+                                                }
                                             }
                                             onError={this.getStreamerFallbackImage}
                                             style={styles.streamerAvatar} />
                                         <View style={styles.costContainer}>
                                             {this.props.qoins ?
-                                                this.props.cost !== undefined &&
                                                     <>
                                                     <images.svg.qoin height={16} width={16} />
-                                                    <MaskedView maskElement={
-                                                        <Text style={[
-                                                            styles.tooltipLabelText,
-                                                            styles.tooltipHighlihgtedText,
-                                                            { marginLeft: 8, marginRight: 4 }
-                                                        ]}>
-                                                            {this.props.cost}
-                                                        </Text>
-                                                    }>
-                                                        <LinearGradient
-                                                            colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
-                                                            useAngle
-                                                            angle={227}>
+                                                    {this.props.cost !== undefined &&
+                                                        <MaskedView maskElement={
                                                             <Text style={[
                                                                 styles.tooltipLabelText,
                                                                 styles.tooltipHighlihgtedText,
-                                                                { marginLeft: 8, marginRight: 4, opacity: 0 }
+                                                                { marginLeft: 8, marginRight: 4 }
                                                             ]}>
                                                                 {this.props.cost}
                                                             </Text>
-                                                        </LinearGradient>
-                                                    </MaskedView>
+                                                        }>
+                                                            <LinearGradient
+                                                                colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
+                                                                useAngle
+                                                                angle={227}>
+                                                                <Text style={[
+                                                                    styles.tooltipLabelText,
+                                                                    styles.tooltipHighlihgtedText,
+                                                                    { marginLeft: 8, marginRight: 4, opacity: 0 }
+                                                                ]}>
+                                                                    {this.props.cost}
+                                                                </Text>
+                                                            </LinearGradient>
+                                                        </MaskedView>
+                                                    }
                                                     </>
                                             :
                                                 <>

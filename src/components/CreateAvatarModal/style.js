@@ -9,11 +9,16 @@ export default styles = StyleSheet.create({
     },
     mainContainer: {
         position: 'absolute',
-        backgroundColor: '#141539',
+        backgroundColor: '#0D1021',
         bottom: 0,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         width: widthPercentageToPx(100),
         height: heightPercentageToPx(90.5)
+    },
+    closeIcon: {
+        marginTop: 16,
+        marginBottom: 8,
+        marginLeft: 16
     }
 });

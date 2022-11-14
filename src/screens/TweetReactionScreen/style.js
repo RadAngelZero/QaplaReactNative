@@ -80,8 +80,7 @@ export default styles = StyleSheet.create({
         marginRight: 12
     },
     pillsScrollView: {
-        marginTop: 24,
-        marginBottom: 8,
+        marginTop: 16,
         height: 46 // Pill size
     },
     pillsScrollViewContainer: {
@@ -116,7 +115,7 @@ export default styles = StyleSheet.create({
     mediaContainer: {
         flex: 1,
         alignItems: 'flex-start',
-        marginTop: 8,
+        marginTop: 16,
         paddingLeft: widthPercentageToPx(11) + 8 + 16
     },
     removeImageIcon: {
@@ -132,7 +131,7 @@ export default styles = StyleSheet.create({
         marginBottom: 16,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-end'
+        alignItems: 'center'
     },
     streamerAvatar: {
         marginLeft: 8,

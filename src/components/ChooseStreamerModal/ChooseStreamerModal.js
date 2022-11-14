@@ -201,9 +201,11 @@ class ChooseStreamerModal extends Component {
                                             onStreamerPress={this.props.onStreamerPress}
                                             {...this.props.selectedStreamer}
                                             uid={this.props.uid} />
-                                        <Text style={styles.recents}>
-                                            Recents
-                                        </Text>
+                                        {this.state.recentStreamers.length > 0 &&
+                                            <Text style={styles.recents}>
+                                                Recents
+                                            </Text>
+                                        }
                                         <FlatList ListHeaderComponent={() => <View style={{ height: 24 }} />}
                                             ItemSeparatorComponent={() => <View style={{ height: 24 }} />}
                                             ListFooterComponent={() => <View style={{ height: 144 }} />}

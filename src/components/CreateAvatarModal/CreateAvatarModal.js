@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Modal, View } from 'react-native';
+import { Modal, TouchableOpacity, View } from 'react-native';
 import WebView from 'react-native-webview';
 
 import styles from './style';
+import images from './../../../assets/images';
 import { retrieveData, storeData } from '../../utilities/persistance';
 
 class CreateAvatarModal extends Component {
@@ -88,6 +89,10 @@ class CreateAvatarModal extends Component {
                 transparent>
                 <View style={styles.container}>
                     <View style={styles.mainContainer}>
+                        <TouchableOpacity style={styles.closeIcon}
+                            onPress={this.props.onClose}>
+                            <images.svg.closeIcon />
+                        </TouchableOpacity>
                         <WebView ref={(webview) => this.webview = webview}
                             source={{
                                 uri: 'https://qapla.readyplayer.me/avatar?frameApi',

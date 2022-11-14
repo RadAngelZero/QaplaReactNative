@@ -403,7 +403,11 @@ class TweetReactionScreen extends Component {
                                 </LinearGradient>
                                 :
                                 this.state.imageVersion ?
-                                    <Image style={styles.avatarImage} source={{ uri: this.props.userPhotoUrl }} />
+                                        <Image style={styles.avatarImage} source={this.props.photoUrl ?
+                                            { uri: this.props.userPhotoUrl }
+                                            :
+                                            images.png.defaultReactionProfilePic.img
+                                        } />
                                     :
                                     null
                             }
@@ -562,9 +566,7 @@ class TweetReactionScreen extends Component {
                                                         this.props.streamerImage
                                                 }
                                                 :
-                                                {
-                                                    uri: 'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/AppImages%2FDefaultStreamerProfilePic.png?alt=media&token=7944f317-8f4d-4aa2-bb4b-d1f454819695'
-                                                }
+                                                images.png.defaultReactionProfilePic.img
                                             }
                                             onError={this.getStreamerFallbackImage}
                                             style={styles.streamerAvatar} />

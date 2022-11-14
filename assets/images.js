@@ -268,6 +268,9 @@ const images = {
 		},
 		popUpBackground: {
 			img: require('./images/PopUpBackground.png')
+		},
+		defaultReactionProfilePic: {
+			img: require('./images/DefaultReactionProfilePic.png')
 		}
 	},
 	svg: {

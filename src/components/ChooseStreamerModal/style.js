@@ -57,6 +57,19 @@ export default styles = StyleSheet.create({
         letterSpacing: .5,
         color: '#C2C2C2'
     },
+    noContentGifContainer: {
+        alignItems: 'center'
+    },
+    noContentGif: {
+        height: heightPercentageToPx(18.5)
+    },
+    noContentText: {
+        marginTop: 32,
+        fontSize: 18,
+        lineHeight: 21.48,
+        textAlign: 'center',
+        color: '#FFF'
+    },
     streamerContainer: {
         width: '100%',
         flexDirection: 'row',

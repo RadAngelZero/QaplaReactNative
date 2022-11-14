@@ -2147,6 +2147,26 @@ export async function getRandomAvatarAnimationGif() {
     return await gifsLibrariesRef.child('AvatarAnimation').child('gifs').child(index).once('value');
 }
 
+/**
+ * Returns a random gif from the library of Search Streamer animation gifs
+ */
+export async function getRandomSearchStreamerGif() {
+    const length = await gifsLibrariesRef.child('SearchStreamer').child('length').once('value');
+
+    const index = Math.floor(Math.random() * length.val());
+    return await gifsLibrariesRef.child('SearchStreamer').child('gifs').child(index).once('value');
+}
+
+/**
+ * Returns a random gif from the library of Sign Up animation gifs
+ */
+export async function getRandomSignUpGif() {
+    const length = await gifsLibrariesRef.child('SignUp').child('length').once('value');
+
+    const index = Math.floor(Math.random() * length.val());
+    return await gifsLibrariesRef.child('SignUp').child('gifs').child(index).once('value');
+}
+
 // -----------------------------------------------
 // Reactions Prices
 // -----------------------------------------------

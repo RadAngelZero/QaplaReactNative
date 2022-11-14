@@ -3,7 +3,7 @@ import { ActivityIndicator, FlatList, Image, Keyboard, KeyboardAvoidingView, Mod
 
 import styles from './style';
 import images from './../../../assets/images';
-import { getRecentStreamersDonations, getStreamerPublicData, getStreamersByName, getUserReactionsCount } from '../../services/database';
+import { getRandomSearchStreamerGif, getRecentStreamersDonations, getStreamerPublicData, getStreamersByName, getUserReactionsCount } from '../../services/database';
 import { TWITCH_AFFILIATE, TWITCH_PARTNER } from '../../utilities/Constants';
 import { getStreamerProfilePhotoUrl } from '../../services/storage';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
@@ -79,7 +79,9 @@ class ChooseStreamerModal extends Component {
         searchQuery: '',
         recentStreamers: [],
         requestedStreamers: [],
-        keyboardHeight: 0
+        keyboardHeight: 0,
+        gif: null,
+        gifAspectRatio: 1
     };
 
     searchTimeout = null;
@@ -96,6 +98,24 @@ class ChooseStreamerModal extends Component {
     componentWillUnmount() {
         this.keyboardWillHideListener.remove();
         this.keyboardWillShowListener.remove();
+    }
+
+    onModalOpen = async () => {
+        await this.getRecentStreamers();
+        if (this.state.recentStreamers.length <= 0 && this.props.selectedStreamer.streamerUid === '') {
+            this.getRandomGif();
+        }
+    }
+
+    getRandomGif = async () => {
+        const gif = await getRandomSearchStreamerGif();
+
+        Image.getSize(gif.val(), (width, height) => {
+            const aspectRatio = width / height;
+            this.setState({ gifAspectRatio: aspectRatio });
+        });
+
+        this.setState({ gif: gif.val() });
     }
 
     getRecentStreamers = async () => {
@@ -165,7 +185,7 @@ class ChooseStreamerModal extends Component {
             <Modal visible={this.props.open}
                 onRequestClose={this.props.onClose}
                 animationType='slide'
-                onShow={this.getRecentStreamers}
+                onShow={this.onModalOpen}
                 onDismiss={() => this.setState({ recentStreamers: [], searchQuery: '' })}
                 transparent>
                 <KeyboardAvoidingView behavior='padding'
@@ -195,12 +215,14 @@ class ChooseStreamerModal extends Component {
                             </View>
                             <View style={styles.listContainer}>
                                 {this.state.searchQuery === '' ?
-                                    this.props.selectedStreamer.streamerUid !== '' ?
+                                    this.state.recentStreamers.length > 0 || this.props.selectedStreamer.streamerUid !== '' ?
                                         <>
-                                        <StreamerItem selected
-                                            onStreamerPress={this.props.onStreamerPress}
-                                            {...this.props.selectedStreamer}
-                                            uid={this.props.uid} />
+                                        {this.props.selectedStreamer.streamerUid !== '' &&
+                                            <StreamerItem selected
+                                                onStreamerPress={this.props.onStreamerPress}
+                                                {...this.props.selectedStreamer}
+                                                uid={this.props.uid} />
+                                        }
                                         {this.state.recentStreamers.length > 0 &&
                                             <Text style={styles.recents}>
                                                 Recents
@@ -216,7 +238,17 @@ class ChooseStreamerModal extends Component {
                                             renderItem={this.renderStreamer} />
                                         </>
                                         :
-                                        null
+                                        <View style={styles.noContentGifContainer}>
+                                            <Image style={[styles.noContentGif, {
+                                                aspectRatio: this.state.gifAspectRatio
+                                            }]}
+                                                source={{
+                                                    uri: this.state.gif
+                                                }} />
+                                            <Text style={styles.noContentText}>
+                                                Who’s the reaction for? Find your streamer 🫶
+                                            </Text>
+                                        </View>
                                     :
                                     <FlatList ItemSeparatorComponent={() => <View style={{ height: 24 }} />}
                                         ListFooterComponent={() => <View style={{ height: 48 }} />}

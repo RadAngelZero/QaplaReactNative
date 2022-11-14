@@ -312,6 +312,16 @@ const PrepaidInteractionsPersonlizeStackNavigator = createStackNavigator({
   }
 });
 
+const ReactionsStackNavigator = createStackNavigator({
+  BasicReaction: BasicReactionControllerScreen,
+  Level2Reaction: Level2ReactionControllerScreen,
+  Level3Reaction: Level3ReactionControllerScreen
+}, {
+  defaultNavigationOptions: {
+    header: null
+  }
+});
+
 const AvatarStackNavigator = createStackNavigator({
   AvatarOnboardingScreen: {
     screen: AvatarOnboardingScreen,
@@ -592,6 +602,7 @@ const RootStackNavigator = createStackNavigator({
     },
   },
   Auth: AuthStackNavigator,
+  ReactionsStack: ReactionsStackNavigator,
   InteractionsStack: InteractionsStackNavigator,
   InteractionsPersonlizeStack: {
     screen: InteractionsPersonlizeStackNavigator,

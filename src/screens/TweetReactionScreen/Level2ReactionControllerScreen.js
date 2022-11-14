@@ -308,7 +308,7 @@ class Level2ReactionControllerScreen extends Component {
                 setExtraTip={(extraTip) => this.setState({ extraTip })}
                 streamerImage={this.state.streamerData.streamerImage}
                 streamerUid={this.state.streamerData.streamerUid}
-                onCancel={() => this.props.navigation.dismiss()}
+                onCancel={() => this.props.navigation.popToTop()}
                 onOpenSearchStreamerModal={() => this.setState({ openSearchStreamerModal: true })} />
             <GiphyMediaSelectorModal open={this.state.openGiphyModal}
                 onClose={() => this.setState({ openGiphyModal: false })}

@@ -6,8 +6,8 @@ import { getStreamerEmotes, getUserToStreamerRelationData } from '../../services
 import { AVATAR, EMOTE, GIPHY_GIFS, GIPHY_STICKERS, GIPHY_TEXT, MEME, TTS } from '../../utilities/Constants';
 import GiphyMediaSelectorModal from '../../components/GiphyMediaSelectorModal/GiphyMediaSelectorModal';
 import QaplaMemeSelectorModal from '../../components/QaplaMemeSelectorModal/QaplaMemeSelectorModal';
-import { getRecentStreamersDonations, getStreamerPublicData, getStreamerReactionPrice, isUserBannedWithStreamer, sendReaction } from '../../services/database';
-import { retrieveData, storeData } from '../../utilities/persistance';
+import { getRecentStreamersDonations, getStreamerPublicData, getStreamerReactionPrice, isUserBannedWithStreamer, saveAvatarId, saveAvatarUrl, saveReadyPlayerMeUserId, sendReaction } from '../../services/database';
+import { removeDataItem, retrieveData, storeData } from '../../utilities/persistance';
 import { trackOnSegment } from '../../services/statistics';
 import SentModal from '../../components/SentModal/SentModal';
 import ChooseStreamerModal from '../../components/ChooseStreamerModal/ChooseStreamerModal';
@@ -15,6 +15,7 @@ import AvatarReactionModal from '../../components/AvatarReactionModal/AvatarReac
 import Create3DTextModal from '../../components/Create3DTextModal/Create3DTextModal';
 import ChooseBotVoiceModal from '../../components/ChooseBotVoiceModal/ChooseBotVoiceModal';
 import EmoteRainModal from '../../components/EmoteRainModal/EmoteRainModal';
+import CreateAvatarModal from '../../components/CreateAvatarModal/CreateAvatarModal';
 
 class Level3ReactionControllerScreen extends Component {
     state = {
@@ -45,7 +46,9 @@ class Level3ReactionControllerScreen extends Component {
         emotes: [],
         userToStreamerRelationData: undefined,
         openEmoteModal: false,
-        selectedEmote: null
+        selectedEmote: null,
+        openCreateAvatarModal: false,
+        avatarId: this.props.avatarId
     };
 
     componentDidMount() {
@@ -136,6 +139,10 @@ class Level3ReactionControllerScreen extends Component {
     }
 
     onSendReaction = () => {
+        if (this.state.streamerData.streamerUid === '') {
+            return this.setState({ openSearchStreamerModal: true });
+        }
+
         if (!this.state.sending) {
             this.setState({ sending: true }, async () => {
                 /**
@@ -191,7 +198,7 @@ class Level3ReactionControllerScreen extends Component {
                                     emojis: emoteArray
                                 },
                                 totalCost,
-                                this.props.avatarId,
+                                this.state.avatarId,
                                 this.props.avatarBackground,
                                 this.state.avatarReaction?.id,
                                 () => {
@@ -246,7 +253,11 @@ class Level3ReactionControllerScreen extends Component {
                 this.setState({ openMemeModal: true, modalMediaType: mediaType });
                 break;
             case AVATAR:
-                this.setState({ openAvatarModal: true });
+                if (this.state.avatarId) {
+                    this.setState({ openAvatarModal: true });
+                } else {
+                    this.setState({ openCreateAvatarModal: true });
+                }
                 break;
             case GIPHY_TEXT:
                 this.setState({ open3DTextModal: true });
@@ -255,7 +266,11 @@ class Level3ReactionControllerScreen extends Component {
                 this.setState({ openBotVoiceModal: true });
                 break
             case EMOTE:
-                this.setState({ openEmoteModal: true });
+                if (this.state.streamerData.streamerUid !== '') {
+                    this.setState({ openEmoteModal: true });
+                } else {
+                    this.setState({ openSearchStreamerModal: true });
+                }
                 break;
             default:
                 break;
@@ -320,6 +335,18 @@ class Level3ReactionControllerScreen extends Component {
         });
     }
 
+    onAvatarCreated = async (avatarId, rpmUid) => {
+        if (this.props.uid) {
+            await saveAvatarId(this.props.uid, avatarId);
+            await saveAvatarUrl(this.props.uid, `https://api.readyplayer.me/v1/avatars/${avatarId}.glb`);
+            if (rpmUid) {
+                await saveReadyPlayerMeUserId(this.props.uid, rpmUid);
+            }
+        }
+
+        this.setState({ avatarId, openCreateAvatarModal: false, openAvatarModal: true });
+    }
+
     render() {
         return (
             <>
@@ -375,7 +402,7 @@ class Level3ReactionControllerScreen extends Component {
                 onStreamerPress={this.onStreamerPress} />
             <AvatarReactionModal open={this.state.openAvatarModal}
                 onClose={() => this.setState({ openAvatarModal: false })}
-                avatarId={this.props.avatarId}
+                avatarId={this.state.avatarId}
                 onReactionSelected={this.onAvatarReactionSelected} />
             <Create3DTextModal open={this.state.open3DTextModal}
                 onClose={() => this.setState({ open3DTextModal: false })}
@@ -390,6 +417,9 @@ class Level3ReactionControllerScreen extends Component {
                 emotes={this.state.emotes}
                 onEmoteSelected={this.onEmoteSelected}
                 userToStreamerRelation={this.state.userToStreamerRelationData} />
+            <CreateAvatarModal open={this.state.openCreateAvatarModal}
+                onClose={() => this.setState({ openCreateAvatarModal: false })}
+                onAvatarCreated={this.onAvatarCreated} />
             </>
         );
     }

@@ -38,6 +38,7 @@ import {
 } from '../../utilities/Constants';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { getStreamerProfilePhotoUrl } from '../../services/storage';
+import { retrieveData } from '../../utilities/persistance';
 
 // For animations on android
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -249,16 +250,25 @@ class TweetReactionScreen extends Component {
         extraTipIconRotation: new Animated.Value(0),
         editingTip: false,
         keyboardHeight: 0,
-        streamerFallbackImageUrl: ''
+        streamerFallbackImageUrl: '',
+        imageVersion: 0
     };
 
     componentDidMount() {
+        this.getImageVersion();
+
         this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
 			this.setState({ keyboardHeight: e.endCoordinates.height });
 		});
 		this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', () => {
 			this.setState({ keyboardHeight: 0 });
 		});
+    }
+
+    getImageVersion = async () => {
+        const imageVersion = await retrieveData('avatarImageVersion');
+
+        this.setState({ imageVersion });
     }
 
     executeExtraTipAnimation = () => {
@@ -341,7 +351,7 @@ class TweetReactionScreen extends Component {
     }
 
     render() {
-        const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent`;
+        const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${this.state.imageVersion}`;
         const noEnabledOptions = allMediaOptionsTypes.filter((type) => !this.props.mediaSelectorBarOptions.includes(type));
 
         const sendButtonDisabled = (!this.props.message && !this.props.selectedMedia) || this.props.sending;
@@ -392,7 +402,10 @@ class TweetReactionScreen extends Component {
                                     }} />
                                 </LinearGradient>
                                 :
-                                <Image style={styles.avatarImage} source={{ uri: this.props.userPhotoUrl }} />
+                                this.state.imageVersion ?
+                                    <Image style={styles.avatarImage} source={{ uri: this.props.userPhotoUrl }} />
+                                    :
+                                    null
                             }
                             <View style={styles.ttsInputContainer}>
                                 {!this.props.custom3DText ?
@@ -688,6 +701,7 @@ class TweetReactionScreen extends Component {
                         </View>
                     </SafeAreaView>
                 </TouchableWithoutFeedback>
+                <SafeAreaView style={{ flex: 0, backgroundColor: '#141539' }} />
             </KeyboardAvoidingView>
         );
     }

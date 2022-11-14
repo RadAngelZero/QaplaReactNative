@@ -56,13 +56,14 @@ export default styles = StyleSheet.create({
     },
     ttsTextInput: {
         color: '#FFF',
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: '400',
         textAlignVertical: 'top',
         padding: 0
     },
     optional: {
-        fontSize: 10,
+        paddingTop: 4,
+        fontSize: 14,
         fontWeight: '400',
         lineHeight: 12,
         color: '#7BB0FF'
@@ -114,8 +115,9 @@ export default styles = StyleSheet.create({
     },
     mediaContainer: {
         flex: 1,
-        alignItems: 'center',
-        marginTop: 8
+        alignItems: 'flex-start',
+        marginTop: 8,
+        paddingLeft: widthPercentageToPx(11) + 8 + 16
     },
     removeImageIcon: {
         position: 'absolute',

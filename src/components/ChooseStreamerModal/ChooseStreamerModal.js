@@ -14,8 +14,12 @@ const StreamerItem = ({ uid, streamerUid, streamerImage, streamerName, selected,
 
     useEffect(() => {
         async function getReactions() {
-            const reactions = await getUserReactionsCount(uid, streamerUid);
-            setNumberOfReactions(reactions.val() ?? 0);
+            if (uid) {
+                const reactions = await getUserReactionsCount(uid, streamerUid);
+                setNumberOfReactions(reactions.val() ?? 0);
+            } else {
+                setNumberOfReactions(0);
+            }
         }
 
         if (!selected) {
@@ -95,30 +99,32 @@ class ChooseStreamerModal extends Component {
     }
 
     getRecentStreamers = async () => {
-        const streamers = await getRecentStreamersDonations(this.props.uid, 5);
-        const recentStreamersKeys = [];
-        streamers.forEach((streamer) => {
-            if (!this.props.selectedStreamer || streamer.key !== this.props.selectedStreamer.streamerUid) {
-                recentStreamersKeys.push(streamer.key);
+        if (this.props.uid) {
+            const streamers = await getRecentStreamersDonations(this.props.uid, 5);
+            const recentStreamersKeys = [];
+            streamers.forEach((streamer) => {
+                if (!this.props.selectedStreamer || streamer.key !== this.props.selectedStreamer.streamerUid) {
+                    recentStreamersKeys.push(streamer.key);
+                }
+            });
+
+            const recentStreamers = [];
+
+            for (let i = 0; i < recentStreamersKeys.length; i++) {
+                const streamerKey = recentStreamersKeys[i];
+                const streamerData = await getStreamerPublicData(streamerKey);
+
+                if (streamerData.exists()) {
+                    recentStreamers.push({
+                        streamerUid: streamerKey,
+                        streamerImage: streamerData.val().photoUrl,
+                        streamerName: streamerData.val().displayName
+                    });
+                }
             }
-        });
 
-        const recentStreamers = [];
-
-        for (let i = 0; i < recentStreamersKeys.length; i++) {
-            const streamerKey = recentStreamersKeys[i];
-            const streamerData = await getStreamerPublicData(streamerKey);
-
-            if (streamerData.exists()) {
-                recentStreamers.push({
-                    streamerUid: streamerKey,
-                    streamerImage: streamerData.val().photoUrl,
-                    streamerName: streamerData.val().displayName
-                });
-            }
+            this.setState({ recentStreamers });
         }
-
-        this.setState({ recentStreamers });
     }
 
     searchHandler = (searchQuery) => {
@@ -189,23 +195,26 @@ class ChooseStreamerModal extends Component {
                             </View>
                             <View style={styles.listContainer}>
                                 {this.state.searchQuery === '' ?
-                                    <>
-                                    <StreamerItem selected
-                                        onStreamerPress={this.props.onStreamerPress}
-                                        {...this.props.selectedStreamer}
-                                        uid={this.props.uid} />
-                                    <Text style={styles.recents}>
-                                        Recents
-                                    </Text>
-                                    <FlatList ListHeaderComponent={() => <View style={{ height: 24 }} />}
-                                        ItemSeparatorComponent={() => <View style={{ height: 24 }} />}
-                                        ListFooterComponent={() => <View style={{ height: 144 }} />}
-                                        keyboardShouldPersistTaps='handled'
-                                        keyboardDismissMode='none'
-                                        keyExtractor={(item) => item.streamerUid}
-                                        data={this.state.recentStreamers}
-                                        renderItem={this.renderStreamer} />
-                                    </>
+                                    this.props.selectedStreamer.streamerUid !== '' ?
+                                        <>
+                                        <StreamerItem selected
+                                            onStreamerPress={this.props.onStreamerPress}
+                                            {...this.props.selectedStreamer}
+                                            uid={this.props.uid} />
+                                        <Text style={styles.recents}>
+                                            Recents
+                                        </Text>
+                                        <FlatList ListHeaderComponent={() => <View style={{ height: 24 }} />}
+                                            ItemSeparatorComponent={() => <View style={{ height: 24 }} />}
+                                            ListFooterComponent={() => <View style={{ height: 144 }} />}
+                                            keyboardShouldPersistTaps='handled'
+                                            keyboardDismissMode='none'
+                                            keyExtractor={(item) => item.streamerUid}
+                                            data={this.state.recentStreamers}
+                                            renderItem={this.renderStreamer} />
+                                        </>
+                                        :
+                                        null
                                     :
                                     <FlatList ItemSeparatorComponent={() => <View style={{ height: 24 }} />}
                                         ListFooterComponent={() => <View style={{ height: 48 }} />}

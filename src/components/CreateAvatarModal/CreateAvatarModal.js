@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { Modal, View } from 'react-native';
 import WebView from 'react-native-webview';
-import { connect } from 'react-redux';
 
 import styles from './style';
-import { saveAvatarUrl, saveAvatarId, saveReadyPlayerMeUserId } from '../../services/database';
 import { retrieveData, storeData } from '../../utilities/persistance';
 
-class AvatarCreatorScreen extends Component {
+class CreateAvatarModal extends Component {
     webview = null;
     isSubscribed = false;
     count = 0;
@@ -63,12 +61,10 @@ class AvatarCreatorScreen extends Component {
          */
         const avatarId = data.url.substring(data.url.lastIndexOf('/') + 1).replace('.glb', '');
 
-        await saveAvatarId(this.props.uid, avatarId);
+        await storeData('avatarId', avatarId);
 
-        // Save url and user id
-        await saveAvatarUrl(this.props.uid, `https://api.readyplayer.me/v1/avatars/${avatarId}.glb`);
         if (data.userId) {
-            await saveReadyPlayerMeUserId(this.props.uid, data.userId);
+            await storeData('rpmUid', data.userId);
         }
 
         /**
@@ -81,30 +77,29 @@ class AvatarCreatorScreen extends Component {
 
         await storeData('avatarImageVersion', imageVersion.toString());
 
-        let edit = this.props.navigation.getParam('edit', false);
-        // Navgate to other place
-        this.props.navigation.navigate('AvatarChooseBackgroundScreen', { avatarId, edit });
+        this.props.onAvatarCreated(avatarId, data.userId);
     }
 
     render() {
         return (
-            <View style={styles.container}>
-                <WebView ref={(webview) => this.webview = webview}
-                    source={{
-                        uri: 'https://qapla.readyplayer.me/avatar?frameApi',
-                    }}
-                    style={styles.webView}
-                    onLoad={this.subscribe}
-                    onMessage={(message) => this.process(message.nativeEvent.data)} />
-            </View>
+            <Modal visible={this.props.open}
+                onRequestClose={this.props.onClose}
+                animationType='slide'
+                transparent>
+                <View style={styles.container}>
+                    <View style={styles.mainContainer}>
+                        <WebView ref={(webview) => this.webview = webview}
+                            source={{
+                                uri: 'https://qapla.readyplayer.me/avatar?frameApi',
+                            }}
+                            style={styles.webView}
+                            onLoad={this.subscribe}
+                            onMessage={(message) => this.process(message.nativeEvent.data)} />
+                    </View>
+                </View>
+            </Modal>
         );
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        uid: state.userReducer.user.id
-    };
-}
-
-export default connect(mapStateToProps)(AvatarCreatorScreen);
+export default CreateAvatarModal;

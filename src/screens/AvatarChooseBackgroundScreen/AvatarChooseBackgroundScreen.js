@@ -8,6 +8,7 @@ import { translate } from '../../utilities/i18';
 import Colors from '../../utilities/Colors';
 import { saveAvatarBackground } from '../../services/database';
 import images from '../../../assets/images';
+import { retrieveData } from '../../utilities/persistance';
 
 class AvatarChooseBackgroundScreen extends Component {
     state = {
@@ -15,13 +16,12 @@ class AvatarChooseBackgroundScreen extends Component {
         selectedColorIndex: 0,
         openSuccessEditionModal: false,
         imageLoaded: false,
-        imageVersion: null,
-        imagePreFetched: false
+        imageVersion: null
     };
 
     componentDidMount() {
         this.getColorIndex();
-        this.preFetch();
+        this.getImageVersion();
     }
 
     getColorIndex = () => {
@@ -38,7 +38,8 @@ class AvatarChooseBackgroundScreen extends Component {
         this.setState({ selectedColorIndex });
     }
 
-    preFetch = async () => {
+    getImageVersion = async () => {
+        let imageVersion = Number(await retrieveData('avatarImageVersion'));
         let avatarId = this.props.navigation.getParam('avatarId');
 
         /**
@@ -49,10 +50,10 @@ class AvatarChooseBackgroundScreen extends Component {
          * It takes a while to generate the image for ready player me, so we fetch here the image to prevent a
          * timeout in the Image component
          */
-        const image = `https://api.readyplayer.me/v1/avatars/${avatarId}.png?scene=fullbody-portrait-v1-transparent`;
+        const image = `https://api.readyplayer.me/v1/avatars/${avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${imageVersion}`;
         await fetch(image);
 
-        this.setState({ imagePreFetched: true });
+        this.setState({ imageVersion });
     }
 
     saveBackground = async () => {
@@ -74,7 +75,7 @@ class AvatarChooseBackgroundScreen extends Component {
 
     render() {
         let avatarId = this.props.navigation.getParam('avatarId');
-        const image = `https://api.readyplayer.me/v1/avatars/${avatarId}.png?scene=fullbody-portrait-v1-transparent`;
+        const image = `https://api.readyplayer.me/v1/avatars/${avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${this.state.imageVersion}`;
 
         return (
             <SafeAreaView style={styles.container}>
@@ -89,7 +90,7 @@ class AvatarChooseBackgroundScreen extends Component {
                                     <ActivityIndicator size='large' color='rgb(61, 249, 223)' />
                                 </View>
                             }
-                            {this.state.imagePreFetched &&
+                            {this.state.imageVersion !== null &&
                                 <Image style={[styles.avatarImage]}
                                     source={{ uri: image }}
                                     onLoadEnd={() => this.setState({ imageLoaded: true })} />

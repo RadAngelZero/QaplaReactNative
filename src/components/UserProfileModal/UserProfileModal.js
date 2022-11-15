@@ -93,6 +93,12 @@ class UserProfileModal extends Component {
 
     closeSession = async () => {
         await signOut();
+        this.props.navigation.reset({
+            index: 0,
+            actions: [
+                this.props.navigation.navigate('Explore')
+            ]
+        });
     }
 
     deleteAccountConfirmation = () => {

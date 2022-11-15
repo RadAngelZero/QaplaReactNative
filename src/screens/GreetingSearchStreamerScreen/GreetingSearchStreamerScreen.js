@@ -132,7 +132,7 @@ class GreetingSearchStreamerScreen extends Component {
 
     onStreamerSelected = (streamerId, displayName, isStreaming) => {
         if (this.props.twitchUsername) {
-            if (true) {
+            if (isStreaming) {
                 this.setState({
                     openConfirmationModal: true,
                     selectedStreamer: { uid: streamerId, displayName }
@@ -169,7 +169,7 @@ class GreetingSearchStreamerScreen extends Component {
             const userGreetingData = await getUserGreetingData(this.props.uid);
             if (userGreetingData.exists()) {
                 // We already know it is not undefined but we need to know if it is true
-                if (true) {
+                if (this.state.userToStreamerRelationData.isSubscribed) {
                     const { animation: { animationId }, TTS: { message } } = userGreetingData.val();
                     const language = getLocaleLanguage();
 
@@ -230,7 +230,7 @@ class GreetingSearchStreamerScreen extends Component {
         this.props.navigation.dismiss();
     }
 
-    sendReactions= () => {
+    sendReactions = () => {
         this.setState({ openSentModal: false });
         this.props.navigation.reset({
             index: 0,

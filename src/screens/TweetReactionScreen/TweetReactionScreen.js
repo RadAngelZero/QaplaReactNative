@@ -58,30 +58,37 @@ const allMediaOptionsTypes = [
 const mediaOptionsData = {
     [GIPHY_GIFS]: {
         Icon: images.svg.interactionsGIF,
-        label: 'Gif'
+        label: 'Gif',
+        level: 1
     },
     [GIPHY_STICKERS]: {
         Icon: images.svg.interactionsSticker,
-        label: 'Sticker'
+        label: 'Sticker',
+        level: 1
     },
     [MEME]: {
         Icon: images.svg.interactionsMemes,
-        label: 'Meme'
+        label: 'Meme',
+        level: 1
     },
     [EMOTE]: {
-        label: 'Emotes Animations'
+        label: 'Emotes Animations',
+        level: 3
     },
     [AVATAR]: {
         Icon: images.svg.avatar,
-        label: 'Animated Avatar'
+        label: 'Animated Avatar',
+        level: 2
     },
     [GIPHY_TEXT]: {
         Icon: images.svg.giphyText,
-        label: '3D Text'
+        label: '3D Text',
+        level: 2
     },
     [TTS]: {
         Icon: images.svg.volumeUp,
-        label: 'TTS Bot Voice'
+        label: 'TTS Bot Voice',
+        level: 2
     }
 };
 
@@ -159,7 +166,7 @@ const MediaOption = ({ type, disabled = false, excluded = false, onPress, isSele
         if (excluded) {
             onPress(type);
         } else {
-            onUpgradeReaction();
+            onUpgradeReaction(mediaOptionsData[type].level, type);
         }
     }
 
@@ -354,7 +361,7 @@ class TweetReactionScreen extends Component {
         const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${this.state.imageVersion}`;
         const noEnabledOptions = allMediaOptionsTypes.filter((type) => !this.props.mediaSelectorBarOptions.includes(type));
 
-        const sendButtonDisabled = (!this.props.message && !this.props.selectedMedia) || this.props.sending;
+        const sendButtonDisabled = (!this.props.message && !this.props.selectedMedia) || this.props.currentReactioncost === undefined || this.props.sending;
 
         let pills = [
             this.props.voiceBot,
@@ -574,14 +581,14 @@ class TweetReactionScreen extends Component {
                                             {this.props.qoins ?
                                                     <>
                                                     <images.svg.qoin height={16} width={16} />
-                                                    {this.props.cost !== undefined &&
+                                                    {this.props.currentReactioncost !== undefined ?
                                                         <MaskedView maskElement={
                                                             <Text style={[
                                                                 styles.tooltipLabelText,
                                                                 styles.tooltipHighlihgtedText,
                                                                 { marginLeft: 8, marginRight: 4 }
                                                             ]}>
-                                                                {this.props.cost}
+                                                                {this.props.currentReactioncost}
                                                             </Text>
                                                         }>
                                                             <LinearGradient
@@ -593,10 +600,13 @@ class TweetReactionScreen extends Component {
                                                                     styles.tooltipHighlihgtedText,
                                                                     { marginLeft: 8, marginRight: 4, opacity: 0 }
                                                                 ]}>
-                                                                    {this.props.cost}
+                                                                    {this.props.currentReactioncost}
                                                                 </Text>
                                                             </LinearGradient>
                                                         </MaskedView>
+                                                        :
+                                                        <ActivityIndicator size='small' color='rgb(61, 249, 223)'
+                                                            style={{marginLeft: 8, height: 16, width: 16 }} />
                                                     }
                                                     </>
                                             :
@@ -657,9 +667,10 @@ class TweetReactionScreen extends Component {
                                         <MediaOption key={mediaType}
                                             type={mediaType}
                                             disabled
-                                            cost={800}
+                                            cost={this.props.costsPerReactionLevel[mediaOptionsData[mediaType].level - 1]}
                                             emoteUrl={this.props.randomEmoteUrl}
-                                            keyboardHeight={this.state.keyboardHeight} />
+                                            keyboardHeight={this.state.keyboardHeight}
+                                            onUpgradeReaction={this.props.onUpgradeReaction} />
                                     ))}
                                 </ScrollView>
                             }
@@ -682,18 +693,34 @@ class TweetReactionScreen extends Component {
                                         <images.svg.plusCircle height={24} width={24} />
                                     }
                                     </Animated.View>
-                                    <Text style={styles.extraTipButtonText}>
                                     {!this.state.openTipMenu && this.props.extraTip ?
-                                        this.props.extraTip.toLocaleString()
+                                        <MaskedView maskElement={
+                                            <Text style={styles.extraTipButtonText}>
+                                                {this.props.extraTip.toLocaleString()}
+                                            </Text>
+                                        }>
+                                            <LinearGradient
+                                                colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
+                                                useAngle
+                                                angle={227}>
+                                                <Text style={[styles.extraTipButtonText, { opacity: 0 }]}>
+                                                    {this.props.extraTip.toLocaleString()}
+                                                </Text>
+                                            </LinearGradient>
+                                        </MaskedView>
                                         :
-                                            this.state.openTipMenu ?
-                                                'No Tip'
-                                                :
+                                        null
+                                    }
+                                    <Text style={styles.extraTipButtonText}>
+                                    {this.state.openTipMenu ?
+                                            'No Tip'
+                                            :
+                                            this.props.extraTip === 0 &&
                                                 'Tip'
-                                        }
+                                    }
                                     </Text>
                                     {!this.state.openTipMenu && this.props.extraTip !== 0 &&
-                                        <images.svg.qoin style={{ marginLeft: 4 }} height={24} width={24} />
+                                        <images.svg.qoin height={24} width={24} />
                                     }
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -708,7 +735,8 @@ class TweetReactionScreen extends Component {
 
 TweetReactionScreen.propTypes = {
     qoins: PropTypes.bool,
-    cost: PropTypes.number,
+    currentReactioncost: PropTypes.number,
+    costsPerReactionLevel: PropTypes.arrayOf(PropTypes.number),
     numberOfReactions: PropTypes.number,
     message: PropTypes.string,
     selectedMedia: PropTypes.shape({
@@ -769,6 +797,7 @@ TweetReactionScreen.propTypes = {
     onRemoveAvatarReaction: PropTypes.func.isRequired,
     onRemoveCustom3DText: PropTypes.func.isRequired,
     onRemoveVoiceBot: PropTypes.func.isRequired,
+    onUpgradeReaction: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSend: PropTypes.func.isRequired
 };

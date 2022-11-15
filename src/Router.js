@@ -65,9 +65,7 @@ import GreetingTTSScreen from './screens/GreetingTTSScreen/GreetingTTSScreen';
 import AvatarReadyScreen from './screens/AvatarReadyScreen/AvatarReadyScreen';
 import AvatarCreationHeaderBar from './components/AvatarCreationHeaderBar/AvatarCreationHeaderBar';
 import GreetingSearchStreamerScreen from './screens/GreetingSearchStreamerScreen/GreetingSearchStreamerScreen';
-import BasicReactionControllerScreen from './screens/TweetReactionScreen/BasicReactionControllerScreen';
-import Level2ReactionControllerScreen from './screens/TweetReactionScreen/Level2ReactionControllerScreen';
-import Level3ReactionControllerScreen from './screens/TweetReactionScreen/Level3ReactionControllerScreen';
+import TweetReactionControllerScreen from './screens/TweetReactionScreen/TweetReactionControllerScreen';
 
 //#region Stack Navigators
 
@@ -313,9 +311,7 @@ const PrepaidInteractionsPersonlizeStackNavigator = createStackNavigator({
 });
 
 const ReactionsStackNavigator = createStackNavigator({
-  BasicReaction: BasicReactionControllerScreen,
-  Level2Reaction: Level2ReactionControllerScreen,
-  Level3Reaction: Level3ReactionControllerScreen
+  TweetReaction: TweetReactionControllerScreen
 }, {
   defaultNavigationOptions: {
     header: null

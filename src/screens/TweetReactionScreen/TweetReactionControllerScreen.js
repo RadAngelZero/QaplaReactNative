@@ -6,8 +6,18 @@ import { getStreamerEmotes, getUserToStreamerRelationData } from '../../services
 import { AVATAR, EMOTE, GIPHY_GIFS, GIPHY_STICKERS, GIPHY_TEXT, MEME, TTS } from '../../utilities/Constants';
 import GiphyMediaSelectorModal from '../../components/GiphyMediaSelectorModal/GiphyMediaSelectorModal';
 import QaplaMemeSelectorModal from '../../components/QaplaMemeSelectorModal/QaplaMemeSelectorModal';
-import { getRecentStreamersDonations, getStreamerPublicData, getStreamerReactionPrice, isUserBannedWithStreamer, saveAvatarId, saveAvatarUrl, saveReadyPlayerMeUserId, sendReaction } from '../../services/database';
-import { removeDataItem, retrieveData, storeData } from '../../utilities/persistance';
+import {
+    getRecentStreamersDonations,
+    getStreamerPublicData,
+    getStreamerReactionPrice,
+    getUserReactionsCount,
+    isUserBannedWithStreamer,
+    saveAvatarId,
+    saveAvatarUrl,
+    saveReadyPlayerMeUserId,
+    sendReaction
+} from '../../services/database';
+import { retrieveData, storeData } from '../../utilities/persistance';
 import { trackOnSegment } from '../../services/statistics';
 import SentModal from '../../components/SentModal/SentModal';
 import ChooseStreamerModal from '../../components/ChooseStreamerModal/ChooseStreamerModal';
@@ -17,7 +27,7 @@ import ChooseBotVoiceModal from '../../components/ChooseBotVoiceModal/ChooseBotV
 import EmoteRainModal from '../../components/EmoteRainModal/EmoteRainModal';
 import CreateAvatarModal from '../../components/CreateAvatarModal/CreateAvatarModal';
 
-class Level3ReactionControllerScreen extends Component {
+class TweetReactionControllerScreen extends Component {
     state = {
         sending: false,
         message: '',
@@ -28,6 +38,7 @@ class Level3ReactionControllerScreen extends Component {
         mediaType: GIPHY_GIFS,
         selectedMedia: null,
         extraTip: 0,
+        numberOfReactions: 0,
         openSentModal: false,
         numberOfReactions: undefined,
         streamerData: {
@@ -42,13 +53,18 @@ class Level3ReactionControllerScreen extends Component {
         custom3DText: null,
         openBotVoiceModal: false,
         selectedVoiceBot: null,
-        cost: undefined,
+        costs: [
+            0,
+            undefined,
+            undefined
+        ],
         emotes: [],
         userToStreamerRelationData: undefined,
         openEmoteModal: false,
         selectedEmote: null,
         openCreateAvatarModal: false,
-        avatarId: this.props.avatarId
+        avatarId: this.props.avatarId,
+        reactionLevel: this.props.level
     };
 
     componentDidMount() {
@@ -59,7 +75,8 @@ class Level3ReactionControllerScreen extends Component {
         await this.fetchStreamerData(() => {
             this.fetchUserSubscription();
             this.fetchStreamerEmotes();
-            this.fetchReactionCost();
+            this.fetchReactionsCosts();
+            this.fetchNumberOfReactions();
         });
     }
 
@@ -121,20 +138,45 @@ class Level3ReactionControllerScreen extends Component {
         }
     }
 
-    fetchReactionCost = async () => {
-        const costSnapshot = await getStreamerReactionPrice(this.state.streamerData.streamerUid, 'level3');
-        const cost = costSnapshot.val() ?? 500;
-        if (this.props.uid) {
-            const freeReactionsSent = await retrieveData('freeReactionsSent');
-            if (!freeReactionsSent) {
-                const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid);
-                this.setState({ cost: hasUserReactedBefore.exists() ? cost : 0 });
+    fetchReactionsCosts = async () => {
+        let costs = [0];
+        for (let i = 2; i <= 3; i++) {
+            const costSnapshot = await getStreamerReactionPrice(this.state.streamerData.streamerUid, `level${i}`);
+            const cost = costSnapshot.val() ?? (i === 2 ? 500 : 800);
+            if (this.props.uid) {
+                const freeReactionsSent = await retrieveData('freeReactionsSent');
+                if (!freeReactionsSent) {
+                    const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid);
+                    costs.push(hasUserReactedBefore.exists() ? cost : 0);
+                } else {
+                    costs.push(cost);
+                }
             } else {
-                this.setState({ cost });
+                const freeReactionsSent = await retrieveData('freeReactionsSent');
+                costs.push(!freeReactionsSent ? 0 : cost);
+            }
+        }
+
+        this.setState({ costs });
+    }
+
+    fetchNumberOfReactions = async () => {
+        if (this.props.uid) {
+            const numberOfReactions = await getUserReactionsCount(this.props.uid, this.state.streamerData.streamerUid);
+            if (numberOfReactions.val()) {
+                this.setState({ numberOfReactions: numberOfReactions.val() });
+            } else {
+                const freeReactionsSent = await retrieveData('freeReactionsSent');
+                if (!freeReactionsSent) {
+                    const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid, 1);
+                    this.setState({ numberOfReactions: hasUserReactedBefore.exists() ? 0 : 1 });
+                } else {
+                    this.setState({ numberOfReactions: 0 });
+                }
             }
         } else {
             const freeReactionsSent = await retrieveData('freeReactionsSent');
-            this.setState({ cost: !freeReactionsSent ? 0 : cost });
+            this.setState({ numberOfReactions: !freeReactionsSent ? 1 : 0 });
         }
     }
 
@@ -287,10 +329,11 @@ class Level3ReactionControllerScreen extends Component {
     }
 
     onStreamerPress = (streamerData) => {
-        this.setState({ streamerData }, () => {
+        this.setState({ streamerData, costs: [0, undefined, undefined], selectedEmote: null }, () => {
             this.fetchUserSubscription();
             this.fetchStreamerEmotes();
-            this.fetchReactionCost();
+            this.fetchReactionsCosts();
+            this.fetchNumberOfReactions();
         });
         this.setState({ openSearchStreamerModal: false });
     }
@@ -347,14 +390,36 @@ class Level3ReactionControllerScreen extends Component {
         this.setState({ avatarId, openCreateAvatarModal: false, openAvatarModal: true });
     }
 
+    onUpgradeReaction = (reactionLevel, mediaUnlocked) => {
+        const costs = [...this.state.costs];
+        this.onMediaOptionPress(mediaUnlocked);
+        this.setState({ reactionLevel, costs: [0, undefined, undefined] }, () => {
+            this.setState({ costs });
+        });
+    }
+
     render() {
-        return (
-            <>
-            <TweetReactionScreen onSend={this.onSendReaction}
-                sending={this.state.sending}
-                qoins
-                cost={this.state.cost}
-                mediaSelectorBarOptions={[
+        let availableContent = [];
+        switch (this.state.reactionLevel) {
+            case 1:
+                availableContent = [
+                    GIPHY_GIFS,
+                    GIPHY_STICKERS,
+                    MEME
+                ];
+                break;
+            case 2:
+                availableContent = [
+                    GIPHY_TEXT,
+                    TTS,
+                    AVATAR,
+                    GIPHY_GIFS,
+                    GIPHY_STICKERS,
+                    MEME
+                ];
+                break;
+            case 3:
+                availableContent = [
                     EMOTE,
                     GIPHY_TEXT,
                     TTS,
@@ -362,7 +427,25 @@ class Level3ReactionControllerScreen extends Component {
                     GIPHY_GIFS,
                     GIPHY_STICKERS,
                     MEME
-                ]}
+                ];
+                break;
+            default:
+                availableContent = [
+                    GIPHY_GIFS,
+                    GIPHY_STICKERS,
+                    MEME
+                ];
+                break;
+        }
+
+        return (
+            <>
+            <TweetReactionScreen onSend={this.onSendReaction}
+                sending={this.state.sending}
+                qoins={this.state.reactionLevel !== 1}
+                currentReactioncost={this.state.costs[this.state.reactionLevel - 1]}
+                costsPerReactionLevel={this.state.costs}
+                mediaSelectorBarOptions={availableContent}
                 numberOfReactions={this.state.numberOfReactions}
                 avatarReaction={this.state.avatarReaction}
                 custom3DText={this.state.custom3DText}
@@ -377,11 +460,17 @@ class Level3ReactionControllerScreen extends Component {
                 selectedMedia={this.state.selectedMedia}
                 cleanSelectedMedia={() => this.setState({ selectedMedia: null })}
                 extraTip={this.state.extraTip}
-                setExtraTip={(extraTip) => this.setState({ extraTip: 0 }, () => this.setState({ extraTip }))}
+                setExtraTip={(extraTip) => this.setState({ extraTip: undefined }, () =>
+                    // setTimeout 0 to trick the MaskedView on Android
+                    setTimeout(() => {
+                        this.setState({ extraTip })
+                    }, 0)
+                )}
                 streamerImage={this.state.streamerData.streamerImage}
                 streamerUid={this.state.streamerData.streamerUid}
                 onCancel={() => this.props.navigation.popToTop()}
-                onOpenSearchStreamerModal={() => this.setState({ openSearchStreamerModal: true })} />
+                onOpenSearchStreamerModal={() => this.setState({ openSearchStreamerModal: true })}
+                onUpgradeReaction={this.onUpgradeReaction} />
             <GiphyMediaSelectorModal open={this.state.openGiphyModal}
                 onClose={() => this.setState({ openGiphyModal: false })}
                 mediaType={this.state.modalMediaType}
@@ -425,6 +514,10 @@ class Level3ReactionControllerScreen extends Component {
     }
 }
 
+TweetReactionControllerScreen.defaultProps = {
+    level: 1
+};
+
 function mapStateToProps(state) {
     return {
         uid: state.userReducer.user.id,
@@ -438,4 +531,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Level3ReactionControllerScreen);
+export default connect(mapStateToProps)(TweetReactionControllerScreen);

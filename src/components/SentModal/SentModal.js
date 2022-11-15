@@ -7,10 +7,6 @@ import images from '../../../assets/images';
 import styles from './style';
 
 class SentModal extends Component {
-    sendMoreReactions = () => {
-        console.log('Send to send reactions');
-    }
-
     render() {
         return (
             <ModalWithOverlay open={this.props.open}
@@ -24,7 +20,7 @@ class SentModal extends Component {
                     Watch now on stream
                 </Text>
                 <TouchableOpacity style={styles.modalButton}
-                    onPress={this.sendMoreReactions}>
+                    onPress={this.props.sendMoreReactions}>
                     <Text style={styles.modalButtonText}>
                         Send more reactions
                     </Text>

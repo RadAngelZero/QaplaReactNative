@@ -65,7 +65,7 @@ class TweetReactionControllerScreen extends Component {
         selectedEmote: null,
         openCreateAvatarModal: false,
         avatarId: this.props.avatarId,
-        reactionLevel: this.props.level,
+        reactionLevel: this.props.navigation.getParam('reactionLevel', 1),
         openSignUpModal: false,
         openEmotesAfterStreamerSelected: false
     };
@@ -267,7 +267,7 @@ class TweetReactionControllerScreen extends Component {
                                     this.setState({ openSentModal: true });
                                 },
                                 () => this.setState({ sending: false }),
-                                false
+                                this.state.reactionLevel === 1
                             );
                         } else {
                             this.setState({ sending: false });
@@ -415,7 +415,7 @@ class TweetReactionControllerScreen extends Component {
         if (!this.props.uid) {
             this.setState({ openSignUpModal: true });
         } else {
-            // Send to send more reactions
+            this.props.navigation.popToTop();
         }
 
         this.setState({ openSentModal: false });
@@ -530,7 +530,8 @@ class TweetReactionControllerScreen extends Component {
                 onClose={() => this.setState({ openCreateAvatarModal: false })}
                 onAvatarCreated={this.onAvatarCreated} />
             <SentModal open={this.state.openSentModal}
-                onClose={this.onCloseSentModal} />
+                onClose={this.onCloseSentModal}
+                sendMoreReactions={this.onCloseSentModal} />
             <SignUpModal open={this.state.openSignUpModal}
                 onClose={() => this.setState({ openSignUpModal: false })}
                 title='Cool! isn’t it? 👀'

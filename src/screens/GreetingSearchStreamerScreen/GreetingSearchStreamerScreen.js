@@ -132,7 +132,7 @@ class GreetingSearchStreamerScreen extends Component {
 
     onStreamerSelected = (streamerId, displayName, isStreaming) => {
         if (this.props.twitchUsername) {
-            if (isStreaming) {
+            if (true) {
                 this.setState({
                     openConfirmationModal: true,
                     selectedStreamer: { uid: streamerId, displayName }
@@ -169,7 +169,7 @@ class GreetingSearchStreamerScreen extends Component {
             const userGreetingData = await getUserGreetingData(this.props.uid);
             if (userGreetingData.exists()) {
                 // We already know it is not undefined but we need to know if it is true
-                if (this.state.userToStreamerRelationData.isSubscribed) {
+                if (true) {
                     const { animation: { animationId }, TTS: { message } } = userGreetingData.val();
                     const language = getLocaleLanguage();
 
@@ -228,6 +228,17 @@ class GreetingSearchStreamerScreen extends Component {
 
     exitProcess = () => {
         this.props.navigation.dismiss();
+    }
+
+    sendReactions= () => {
+        this.setState({ openSentModal: false });
+        this.props.navigation.reset({
+            index: 0,
+            actions: [
+                this.props.navigation.navigate('Explore'),
+                this.props.navigation.navigate('ReactionTypesScreen')
+            ]
+        });
     }
 
     render() {
@@ -350,7 +361,8 @@ class GreetingSearchStreamerScreen extends Component {
                 </ModalWithOverlay>
 
                 <SentModal open={this.state.openSentModal}
-                    onClose={this.closeModalsAndGoToProfile} />
+                    onClose={this.closeModalsAndGoToProfile}
+                    sendMoreReactions={this.sendReactions} />
 
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}

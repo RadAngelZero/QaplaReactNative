@@ -66,6 +66,7 @@ import AvatarReadyScreen from './screens/AvatarReadyScreen/AvatarReadyScreen';
 import AvatarCreationHeaderBar from './components/AvatarCreationHeaderBar/AvatarCreationHeaderBar';
 import GreetingSearchStreamerScreen from './screens/GreetingSearchStreamerScreen/GreetingSearchStreamerScreen';
 import TweetReactionControllerScreen from './screens/TweetReactionScreen/TweetReactionControllerScreen';
+import ReactionTypesScreen from './screens/ReactionTypesScreen/ReactionTypesScreen';
 
 //#region Stack Navigators
 
@@ -311,7 +312,8 @@ const PrepaidInteractionsPersonlizeStackNavigator = createStackNavigator({
 });
 
 const ReactionsStackNavigator = createStackNavigator({
-  TweetReaction: TweetReactionControllerScreen
+  ReactionTypesScreen,
+  TweetReactionScreen: TweetReactionControllerScreen
 }, {
   defaultNavigationOptions: {
     header: null

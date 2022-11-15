@@ -239,15 +239,19 @@ class ChooseStreamerModal extends Component {
                                         </>
                                         :
                                         <View style={styles.noContentGifContainer}>
+                                            <>
                                             <Image style={[styles.noContentGif, {
-                                                aspectRatio: this.state.gifAspectRatio
-                                            }]}
-                                                source={{
-                                                    uri: this.state.gif
-                                                }} />
+                                                    aspectRatio: this.state.gifAspectRatio
+                                                }]}
+                                                source={this.state.gif ?
+                                                    { uri: this.state.gif}
+                                                    :
+                                                    null
+                                                } />
                                             <Text style={styles.noContentText}>
                                                 Who’s the reaction for? Find your streamer 🫶
                                             </Text>
+                                            </>
                                         </View>
                                     :
                                     <FlatList ItemSeparatorComponent={() => <View style={{ height: 24 }} />}

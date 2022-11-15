@@ -129,7 +129,7 @@ const MediaOptionTooltip = ({ children, open, onClose, label, highlightedText, c
                         <Text style={styles.tooltipLabelText}>
                             {buttonText}
                         </Text>
-                        {cost &&
+                        {cost !== undefined &&
                             <>
                             <Text style={[styles.tooltipLabelText, styles.tooltipHighlihgtedText, { marginLeft: 8, marginRight: 4 }]}>
                                 {cost}
@@ -275,7 +275,7 @@ class TweetReactionScreen extends Component {
     getImageVersion = async () => {
         const imageVersion = await retrieveData('avatarImageVersion');
 
-        this.setState({ imageVersion });
+        this.setState({ imageVersion: imageVersion ?? 1 });
     }
 
     executeExtraTipAnimation = () => {
@@ -404,19 +404,20 @@ class TweetReactionScreen extends Component {
                             {this.props.avatarId && this.props.avatarBackground ?
                                 <LinearGradient style={styles.avatarImage} useAngle
                                         {...this.props.avatarBackground}>
-                                    <Image style={styles.avatarImage} source={{
-                                        uri: avatarImage
-                                    }} />
+                                    {this.state.imageVersion ?
+                                        <Image style={styles.avatarImage} source={{
+                                            uri: avatarImage
+                                        }} />
+                                    :
+                                        null
+                                    }
                                 </LinearGradient>
                                 :
-                                this.state.imageVersion ?
-                                        <Image style={styles.avatarImage} source={this.props.photoUrl ?
-                                            { uri: this.props.userPhotoUrl }
-                                            :
-                                            images.png.defaultReactionProfilePic.img
-                                        } />
+                                <Image style={styles.avatarImage} source={this.props.userPhotoUrl ?
+                                    { uri: this.props.userPhotoUrl }
                                     :
-                                    null
+                                    images.png.defaultReactionProfilePic.img
+                                } />
                             }
                             <View style={styles.ttsInputContainer}>
                                 {!this.props.custom3DText ?

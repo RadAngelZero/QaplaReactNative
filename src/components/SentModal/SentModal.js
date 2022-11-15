@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Linking, Text, TouchableOpacity } from 'react-native';
+import { Image, Text, TouchableOpacity } from 'react-native';
 
 import ModalWithOverlay from '../ModalWithOverlay/ModalWithOverlay';
 import { translate } from '../../utilities/i18';
@@ -7,8 +7,8 @@ import images from '../../../assets/images';
 import styles from './style';
 
 class SentModal extends Component {
-    openSelectedStreamerTwitchChannel = () => {
-        Linking.openURL(`https://twitch.tv/${this.props.displayName.toLowerCase()}`);
+    sendMoreReactions = () => {
+        console.log('Send to send reactions');
     }
 
     render() {
@@ -17,13 +17,16 @@ class SentModal extends Component {
                 onClose={this.props.onClose}>
                 <Image style={styles.successImage}
                     source={images.png.checkCircleGlow.img} />
-                <Text style={styles.modalsTitle}>
+                <Text style={styles.modalTitle}>
                     {translate('greetingSearchStreamerScreen.sentModal.title')}
                 </Text>
+                <Text style={styles.modalSubtitle}>
+                    Watch now on stream
+                </Text>
                 <TouchableOpacity style={styles.modalButton}
-                    onPress={this.openSelectedStreamerTwitchChannel}>
+                    onPress={this.sendMoreReactions}>
                     <Text style={styles.modalButtonText}>
-                        {translate('greetingSearchStreamerScreen.sentModal.goToStream')}
+                        Send more reactions
                     </Text>
                 </TouchableOpacity>
             </ModalWithOverlay>

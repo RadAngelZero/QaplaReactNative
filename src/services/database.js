@@ -216,6 +216,14 @@ export async function getTwitchUserName(uid) {
 }
 
 /**
+ * Gets the user with their linked twitchId
+ * @param {string} twitchId Twitch identifier
+ */
+export async function getUserWithTwitchId(twitchId) {
+    return await usersRef.orderByChild('twitchId').equalTo(twitchId).once('value');
+}
+
+/**
  * Save the twitch acces token on the user profile
  * @param {string} uid User identifier
  * @param {string} accesToken Twitch access token

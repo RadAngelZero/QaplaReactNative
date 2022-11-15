@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { getUserToStreamerRelationData } from '../../services/functions';
 import ModalWithOverlay from '../../components/ModalWithOverlay/ModalWithOverlay';
 import LinkTwitchAccountModal from '../../components/LinkTwitchAccountModal/LinkTwitchAccountModal';
+import SentModal from '../../components/SentModal/SentModal';
 
 const Item = ({ streamerName, streamerImg, isStreaming, streamerId, onPress }) => (
     <TouchableOpacity onPress={() => onPress(streamerId, streamerName, isStreaming)}
@@ -348,21 +349,9 @@ class GreetingSearchStreamerScreen extends Component {
                     </TouchableOpacity>
                 </ModalWithOverlay>
 
-                {/* Sent Modal */}
-                <ModalWithOverlay open={this.state.openSentModal}
-                    onClose={this.closeModalsAndGoToProfile}>
-                    <Image style={styles.successImage}
-                        source={images.png.checkCircleGlow.img} />
-                    <Text style={styles.modalsTitle}>
-                        {translate('greetingSearchStreamerScreen.sentModal.title')}
-                    </Text>
-                    <TouchableOpacity style={styles.modalButton}
-                        onPress={this.openSelectedStreamerTwitchChannel}>
-                        <Text style={styles.modalButtonText}>
-                            {translate('greetingSearchStreamerScreen.sentModal.goToStream')}
-                        </Text>
-                    </TouchableOpacity>
-                </ModalWithOverlay>
+                <SentModal open={this.state.openSentModal}
+                    onClose={this.closeModalsAndGoToProfile} />
+
                 <LinkTwitchAccountModal
                     open={this.state.openLinkWitTwitchModal}
                     onClose={() => this.setState({ openLinkWitTwitchModal: false })}

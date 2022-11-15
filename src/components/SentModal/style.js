@@ -6,11 +6,16 @@ export default styles = StyleSheet.create({
         height: widthPercentageToPx(40),
         width: widthPercentageToPx(40) // widthPercentageToPx used because we want a square image
     },
-    modalsTitle: {
+    modalTitle: {
         fontSize: 24,
         fontWeight: '700',
         letterSpacing: -.72,
         textAlign: 'center',
+        color: '#FFF'
+    },
+    modalSubtitle: {
+        fontSize: 16,
+        marginTop: 8,
         color: '#FFF'
     },
     modalButton: {

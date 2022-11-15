@@ -110,7 +110,6 @@ class Create3DTextModal extends Component {
         const text = this.state.textToGenerate ? this.state.textToGenerate : 'sample';
 
         return (
-            <>
             <Modal visible={this.props.open}
                 onRequestClose={this.props.onClose}
                 animationType='slide'
@@ -156,7 +155,6 @@ class Create3DTextModal extends Component {
                     </View>
                 </View>
             </Modal>
-            </>
         );
     }
 }

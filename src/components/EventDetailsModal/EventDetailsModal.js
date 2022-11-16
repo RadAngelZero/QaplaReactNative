@@ -27,6 +27,7 @@ import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
 import { translate, getLocaleLanguage } from '../../utilities/i18';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { copyDataToClipboard } from '../../utilities/utils';
+import SignUpModal from '../SignUpModal/SignUpModal';
 
 class EventDetailsModal extends Component {
     state = {
@@ -40,7 +41,8 @@ class EventDetailsModal extends Component {
         streamTitle: '',
         twitchURLCopied: false,
         qaplaLevels: [],
-        qoinsToGive: 0
+        qoinsToGive: 0,
+        openSignUpModal: false
     };
 
     userLanguage = getLocaleLanguage();
@@ -80,6 +82,7 @@ class EventDetailsModal extends Component {
     goToNextRegistrationStep = async () => {
         if (this.state.eventRegistrationStep === 0) {
             if (isUserLogged()) {
+                this.setState({ openSignUpModal: false });
                 //Check if the user have linked their Twitch account
                 if (await userHaveTwitchId(this.props.uid)) {
                     this.registerTwitchUser();
@@ -87,8 +90,7 @@ class EventDetailsModal extends Component {
                     this.setState({ showLinkWitTwitchModal: true });
                 }
             } else {
-                this.props.navigation.navigate('SignIn', { streamer: this.props.stream.streamerName });
-                this.closeModal();
+                this.setState({ openSignUpModal: true });
             }
         } else {
             this.setState({ eventRegistrationStep: 2 });
@@ -320,6 +322,14 @@ class EventDetailsModal extends Component {
                         cancelButton={false}
                         accept={this.cancelRegistration}
                         body={translate('eventDetailsModal.notEnoughQoinsDialogBody', { eventEntry: this.props.stream.eventEntry, qoins: this.props.qoins })} />
+                    <SignUpModal open={this.state.openSignUpModal}
+                        onClose={() => this.setState({ openSignUpModal: false })}
+                        title='Add stream to schedule'
+                        benefits={[
+                            '🚨️ Always know when a stream is reschedule or canceled',
+                            '⏰ Never miss a stream! We’ll remind you of upcoming streams'
+                        ]}
+                        onSignUpSuccess={this.goToNextRegistrationStep} />
                 </Modal>
             );
         }

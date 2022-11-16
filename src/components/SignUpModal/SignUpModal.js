@@ -6,10 +6,11 @@ import appleAuth from '@invertase/react-native-apple-authentication';
 import styles from './style';
 import images from './../../../assets/images';
 import LinearGradient from 'react-native-linear-gradient';
-import { createUserName, createUserProfile, getRandomGifByLibrary, updateUserLoggedStatus, userHaveTwitchId } from '../../services/database';
+import { createUserName, createUserProfile, getRandomGifByLibrary, saveAvatarId, saveAvatarUrl, saveReadyPlayerMeUserId, updateUserLoggedStatus, userHaveTwitchId } from '../../services/database';
 import { setupGoogleSignin, signInWithApple, signInWithGoogle } from '../../services/auth';
 import TwitchAuthScreen from '../../screens/TwitchAuthScreen/TwitchAuthScreen';
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
+import { retrieveData } from '../../utilities/persistance';
 
 class SignUpModal extends Component {
     state = {
@@ -37,9 +38,21 @@ class SignUpModal extends Component {
 
     successfulSignIn = async (user) => {
         if (user.additionalUserInfo.isNewUser) {
+            await createUserProfile(user.user.uid, user.user.email, '');
             if (user.user.providerData && user.user.providerData[0] && user.user.providerData[0].displayName) {
                 createUserName(user.user.uid, user.user.providerData[0].displayName);
             }
+            const avatarId = await retrieveData('avatarId');
+            if (avatarId) {
+                saveAvatarId(user.user.uid, avatarId);
+                saveAvatarUrl(user.user.uid, `https://api.readyplayer.me/v1/avatars/${avatarId}.glb`);
+            }
+
+            const rpmUid = await retrieveData('rpmUid');
+            if (rpmUid) {
+                saveReadyPlayerMeUserId(user.user.uid, rpmUid);
+            }
+
             this.setState({ showLinkWitTwitchModal: true });
         } else {
             updateUserLoggedStatus(true, user.user.uid);
@@ -61,6 +74,16 @@ class SignUpModal extends Component {
         this.setState({ uid: user.user.uid, email: user.user.email }, async () => {
             if (isNewUser) {
                 await createUserProfile(user.user.uid, user.user.email, user.user.displayName);
+                const avatarId = await retrieveData('avatarId');
+                if (avatarId) {
+                    saveAvatarId(user.user.uid, avatarId);
+                    saveAvatarUrl(user.user.uid, `https://api.readyplayer.me/v1/avatars/${avatarId}.glb`);
+                }
+
+                const rpmUid = await retrieveData('rpmUid');
+                if (rpmUid) {
+                    saveReadyPlayerMeUserId(user.user.uid, rpmUid);
+                }
             }
 
             updateUserLoggedStatus(true, user.user.uid);

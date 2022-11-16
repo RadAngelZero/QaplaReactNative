@@ -258,7 +258,8 @@ class TweetReactionScreen extends Component {
         editingTip: false,
         keyboardHeight: 0,
         streamerFallbackImageUrl: '',
-        imageVersion: 0
+        imageVersion: 0,
+        openExtraTipTooltip: false
     };
 
     componentDidMount() {
@@ -583,6 +584,30 @@ class TweetReactionScreen extends Component {
                                                     <>
                                                     <images.svg.qoin height={16} width={16} />
                                                     {this.props.currentReactioncost !== undefined ?
+                                                        this.props.currentReactioncost === 0 ?
+                                                            <MaskedView maskElement={
+                                                                <Text style={[
+                                                                    styles.tooltipLabelText,
+                                                                    styles.tooltipHighlihgtedText,
+                                                                    { marginLeft: 8, marginRight: 4 }
+                                                                ]}>
+                                                                    Free
+                                                                </Text>
+                                                            }>
+                                                                <LinearGradient
+                                                                    colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
+                                                                    useAngle
+                                                                    angle={227}>
+                                                                    <Text style={[
+                                                                        styles.tooltipLabelText,
+                                                                        styles.tooltipHighlihgtedText,
+                                                                        { marginLeft: 8, marginRight: 4, opacity: 0 }
+                                                                    ]}>
+                                                                        Free
+                                                                    </Text>
+                                                                </LinearGradient>
+                                                            </MaskedView>
+                                                        :
                                                         <MaskedView maskElement={
                                                             <Text style={[
                                                                 styles.tooltipLabelText,
@@ -675,56 +700,91 @@ class TweetReactionScreen extends Component {
                                     ))}
                                 </ScrollView>
                             }
-                            <TouchableOpacity onPress={this.tipButtonHandler}>
-                                <LinearGradient useAngle
-                                    angle={135}
-                                    angleCenter={{ x: .6, y: .6 }}
-                                    colors={!this.state.openTipMenu && this.props.extraTip ?['#3C00FF', '#AA00F8'] : ['#3B4BF9', '#3B4BF9']}
-                                    style={styles.extraTipButton}>
-                                    <Animated.View style={{
-                                        transform: [{ rotate: this.state.extraTipIconRotation.interpolate({
-                                                inputRange: [0, 1],
-                                                outputRange: ['0deg', '45deg']
-                                            })
-                                        }]
-                                    }}>
-                                    {!this.state.openTipMenu && this.props.extraTip !== 0 ?
-                                        <images.svg.editCircle height={24} width={24} />
-                                        :
-                                        <images.svg.plusCircle height={24} width={24} />
-                                    }
-                                    </Animated.View>
-                                    {!this.state.openTipMenu && this.props.extraTip ?
-                                        <MaskedView maskElement={
-                                            <Text style={styles.extraTipButtonText}>
-                                                {this.props.extraTip.toLocaleString()}
+                            <Tooltip
+                                isVisible={this.state.openExtraTipTooltip}
+                                content={
+                                    <View style={[styles.tooltipContainer, {
+                                            minHeight: undefined
+                                        }]}>
+                                        <View style={styles.tooltipTextAndIconContainer}>
+                                            <Text style={[styles.tooltipLabelText, { maxWidth: '80%' }]}>
+                                                <Text style={styles.tooltipHighlihgtedText}>
+                                                    Your first reaction it´s free! 
+                                                </Text>
+                                                After signing up you can support streamers using Qoins
                                             </Text>
-                                        }>
-                                            <LinearGradient
-                                                colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
-                                                useAngle
-                                                angle={227}>
-                                                <Text style={[styles.extraTipButtonText, { opacity: 0 }]}>
+                                            <TouchableOpacity onPress={() => this.setState({ openExtraTipTooltip: false })}>
+                                                <images.svg.closeIcon />
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                }
+                                placement='top'
+                                onClose={() => this.setState({ openExtraTipTooltip: false })}
+                                arrowStyle={styles.tooltipArrowStyle}
+                                arrowSize={styles.tooltipArrowSize}
+                                displayInsets={{
+                                    // To get a perfect 16 padding every time
+                                    left: widthPercentageToPx(34.67) - 16,
+                                    right: 0
+                                }}
+                                topAdjustment={this.state.keyboardHeight}
+                                childContentSpacing={20}
+                                contentStyle={styles.extraTipTooltipContentStyle}
+                                backgroundColor='transparent'>
+                                <TouchableOpacity onPress={() => this.props.disableExtraTip ? this.setState({ openExtraTipTooltip: true }) : this.tipButtonHandler()}>
+                                    <LinearGradient useAngle
+                                        angle={135}
+                                        angleCenter={{ x: .6, y: .6 }}
+                                        colors={!this.state.openTipMenu && this.props.extraTip ?['#3C00FF', '#AA00F8'] : ['#3B4BF9', '#3B4BF9']}
+                                        style={[styles.extraTipButton,
+                                            this.props.disableExtraTip ? styles.mediaOptionDisabled : {}
+                                        ]}>
+                                        <Animated.View style={{
+                                            transform: [{ rotate: this.state.extraTipIconRotation.interpolate({
+                                                    inputRange: [0, 1],
+                                                    outputRange: ['0deg', '45deg']
+                                                })
+                                            }]
+                                        }}>
+                                        {!this.state.openTipMenu && this.props.extraTip !== 0 ?
+                                            <images.svg.editCircle height={24} width={24} />
+                                            :
+                                            <images.svg.plusCircle height={24} width={24} />
+                                        }
+                                        </Animated.View>
+                                        {!this.state.openTipMenu && this.props.extraTip ?
+                                            <MaskedView maskElement={
+                                                <Text style={styles.extraTipButtonText}>
                                                     {this.props.extraTip.toLocaleString()}
                                                 </Text>
-                                            </LinearGradient>
-                                        </MaskedView>
-                                        :
-                                        null
-                                    }
-                                    <Text style={styles.extraTipButtonText}>
-                                    {this.state.openTipMenu ?
-                                            'No Tip'
+                                            }>
+                                                <LinearGradient
+                                                    colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
+                                                    useAngle
+                                                    angle={227}>
+                                                    <Text style={[styles.extraTipButtonText, { opacity: 0 }]}>
+                                                        {this.props.extraTip.toLocaleString()}
+                                                    </Text>
+                                                </LinearGradient>
+                                            </MaskedView>
                                             :
-                                            this.props.extraTip === 0 &&
-                                                'Tip'
-                                    }
-                                    </Text>
-                                    {!this.state.openTipMenu && this.props.extraTip !== 0 &&
-                                        <images.svg.qoin height={24} width={24} />
-                                    }
-                                </LinearGradient>
-                            </TouchableOpacity>
+                                            null
+                                        }
+                                        <Text style={styles.extraTipButtonText}>
+                                        {this.state.openTipMenu ?
+                                                'No Tip'
+                                                :
+                                                this.props.extraTip === 0 &&
+                                                    'Tip'
+                                        }
+                                        </Text>
+                                        {!this.state.openTipMenu && this.props.extraTip !== 0 &&
+                                            <images.svg.qoin height={24} width={24} />
+                                        }
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                            </Tooltip>
                         </View>
                     </SafeAreaView>
                 </TouchableWithoutFeedback>
@@ -784,6 +844,7 @@ TweetReactionScreen.propTypes = {
         onRemove: PropTypes.func,
         timestamp: PropTypes.number
     }),
+    disableExtraTip: PropTypes.bool,
 
     // Required fields
     //Options for media selector bar

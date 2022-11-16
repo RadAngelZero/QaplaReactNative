@@ -5,7 +5,7 @@ import appleAuth from '@invertase/react-native-apple-authentication';
 import styles from './style';
 import images from './../../../assets/images';
 import LinearGradient from 'react-native-linear-gradient';
-import { createUserName, createUserProfile, getRandomSignUpGif, updateUserLoggedStatus, userHaveTwitchId } from '../../services/database';
+import { createUserName, createUserProfile, getRandomGifByLibrary, getRandomSignUpGif, updateUserLoggedStatus, userHaveTwitchId } from '../../services/database';
 import { setupGoogleSignin, signInWithApple, signInWithGoogle } from '../../services/auth';
 import TwitchAuthScreen from '../../screens/TwitchAuthScreen/TwitchAuthScreen';
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
@@ -20,11 +20,10 @@ class SignUpModal extends Component {
 
     componentDidMount() {
         setupGoogleSignin();
-        this.getGif();
     }
 
     getGif = async () => {
-        const gif = await getRandomSignUpGif();
+        const gif = await getRandomGifByLibrary(this.props.gifLibrary);
         Image.getSize(gif.val(), (width, height) => {
             this.setState({ gif: gif.val(), gifAspectRatio: width / height });
         });
@@ -86,6 +85,7 @@ class SignUpModal extends Component {
             <Modal visible={this.props.open}
                 onRequestClose={this.props.onClose}
                 animationType='slide'
+                onShow={this.getGif}
                 transparent>
                 <ScrollView contentContainerStyle={styles.container}
                     keyboardShouldPersistTaps='handled'>
@@ -164,10 +164,16 @@ class SignUpModal extends Component {
                 </ScrollView>
                 <LinkTwitchAccountModal open={this.state.showLinkWitTwitchModal}
                     onClose={this.closeTwitchLinkModal}
-                    onLinkSuccessful={this.props.onSignUpSuccess} />
+                    onLinkSuccessful={this.props.onSignUpSuccess}
+                    // User is now logged, even if he does not link their Twitch account
+                    onSkipTwitchLink={this.props.onSignUpSuccess} />
             </Modal>
         );
     }
 }
+
+SignUpModal.defaultProps = {
+    gifLibrary: 'SignUp'
+};
 
 export default SignUpModal;

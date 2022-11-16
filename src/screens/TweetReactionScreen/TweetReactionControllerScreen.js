@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Modal } from 'react-native';
 import { connect } from 'react-redux';
 
 import TweetReactionScreen from './TweetReactionScreen';
@@ -27,6 +28,7 @@ import ChooseBotVoiceModal from '../../components/ChooseBotVoiceModal/ChooseBotV
 import EmoteRainModal from '../../components/EmoteRainModal/EmoteRainModal';
 import CreateAvatarModal from '../../components/CreateAvatarModal/CreateAvatarModal';
 import SignUpModal from '../../components/SignUpModal/SignUpModal';
+import BuyQoins from '../BuyQoins/BuyQoins';
 
 class TweetReactionControllerScreen extends Component {
     state = {
@@ -67,7 +69,12 @@ class TweetReactionControllerScreen extends Component {
         avatarId: this.props.avatarId,
         reactionLevel: this.props.navigation.getParam('reactionLevel', 1),
         openSignUpModal: false,
-        openEmotesAfterStreamerSelected: false
+        openEmotesAfterStreamerSelected: false,
+        openBuyQoinsModal: false,
+        userNeedsQoinsToSend: false,
+        sendAfterChoosingStreamer: false,
+        disableExtraTip: false,
+        freeReactionsSent: false
     };
 
     componentDidMount() {
@@ -75,6 +82,12 @@ class TweetReactionControllerScreen extends Component {
     }
 
     fetchInitialData = async () => {
+        const freeReactionsSent = await retrieveData('freeReactionsSent');
+        this.setState({ freeReactionsSent }, () => {
+            if (freeReactionsSent && !this.props.uid) {
+                this.setState({ openSignUpModal: true });
+            }
+        });
         await this.fetchStreamerData(() => {
             this.fetchUserSubscription();
             this.fetchStreamerEmotes();
@@ -143,24 +156,26 @@ class TweetReactionControllerScreen extends Component {
 
     fetchReactionsCosts = async () => {
         let costs = [0];
+        let disableExtraTip = false;
         for (let i = 2; i <= 3; i++) {
             const costSnapshot = await getStreamerReactionPrice(this.state.streamerData.streamerUid, `level${i}`);
             const cost = costSnapshot.val() ?? (i === 2 ? 500 : 800);
             if (this.props.uid) {
-                const freeReactionsSent = await retrieveData('freeReactionsSent');
-                if (!freeReactionsSent) {
+                if (!this.state.freeReactionsSent) {
                     const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid);
                     costs.push(hasUserReactedBefore.exists() ? cost : 0);
+                    disableExtraTip = hasUserReactedBefore.exists();
                 } else {
                     costs.push(cost);
+                    disableExtraTip = false;
                 }
             } else {
-                const freeReactionsSent = await retrieveData('freeReactionsSent');
-                costs.push(!freeReactionsSent ? 0 : cost);
+                costs.push(!this.state.freeReactionsSent ? 0 : cost);
+                disableExtraTip = !this.state.freeReactionsSent;
             }
         }
 
-        this.setState({ costs });
+        this.setState({ costs, disableExtraTip });
     }
 
     fetchNumberOfReactions = async () => {
@@ -169,8 +184,7 @@ class TweetReactionControllerScreen extends Component {
             if (numberOfReactions.val()) {
                 this.setState({ numberOfReactions: numberOfReactions.val() });
             } else {
-                const freeReactionsSent = await retrieveData('freeReactionsSent');
-                if (!freeReactionsSent) {
+                if (!this.state.freeReactionsSent) {
                     const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid, 1);
                     this.setState({ numberOfReactions: hasUserReactedBefore.exists() ? 0 : 1 });
                 } else {
@@ -178,31 +192,25 @@ class TweetReactionControllerScreen extends Component {
                 }
             }
         } else {
-            const freeReactionsSent = await retrieveData('freeReactionsSent');
-            this.setState({ numberOfReactions: !freeReactionsSent ? 1 : 0 });
+            this.setState({ numberOfReactions: !this.state.freeReactionsSent ? 1 : 0 });
         }
     }
 
     onSendReaction = () => {
         if (this.state.streamerData.streamerUid === '') {
-            return this.setState({ openSearchStreamerModal: true });
+            return this.setState({ openSearchStreamerModal: true, sendAfterChoosingStreamer: true });
         }
 
         if (!this.state.sending) {
             this.setState({ sending: true }, async () => {
-                /**
-                 * New users have one reaction for free
-                 */
-                const freeReactionsSent = await retrieveData('freeReactionsSent');
-
                 const userQoins = this.props.qoins ?? 0;
-                if (this.state.costs[this.state.reactionLevel - 1] <= userQoins) {
+                const totalCost = this.state.costs[this.state.reactionLevel - 1] + this.state.extraTip;
+                if (totalCost <= userQoins) {
                     const isUserBanned = await isUserBannedWithStreamer(this.props.twitchId, this.state.streamerData.streamerUid);
                     if (!isUserBanned.exists()) {
 
-                        const totalCost = this.state.costs[this.state.reactionLevel - 1] + this.state.extraTip;
-                        if (totalCost <= userQoins) {
-
+                        const useChannelPointReaction = this.state.reactionLevel === 1;
+                        if (!useChannelPointReaction || useChannelPointReaction && this.state.numberOfReactions >= 1) {
                             let messageExtraData = this.state.selectedVoiceBot ?
                                 {
                                     voiceAPIName: this.state.selectedVoiceBot.voiceAPIName,
@@ -222,10 +230,16 @@ class TweetReactionControllerScreen extends Component {
                                 emoteArray.push(this.state.selectedEmote.url);
                             }
 
+                            let nameToShowOnReaction = this.props.twitchUserName ?? '';
+
+                            if (!nameToShowOnReaction && this.props.uid) {
+                                nameToShowOnReaction = this.props.userName;
+                            }
+
                             sendReaction(
                                 this.props.uid ?? 'Anonymus',
                                 this.props.userName ?? '',
-                                this.props.twitchUserName ?? '',
+                                nameToShowOnReaction,
                                 this.props.photoUrl ?? '',
                                 this.state.streamerData.streamerUid,
                                 this.state.streamerData.streamerName,
@@ -247,42 +261,36 @@ class TweetReactionControllerScreen extends Component {
                                 this.props.avatarBackground,
                                 this.state.avatarReaction?.id,
                                 () => {
-                                    trackOnSegment('Level 3 Interaction Sent', {
+                                    trackOnSegment('Reaction Sent', {
                                         MessageLength: this.state.message ? this.state.message.length : null,
                                         MediaType: this.state.mediaType,
                                         Media: this.state.selectedMedia ? true : false,
                                         ExtraTip: this.state.extraTip,
                                         StreamerUid: this.state.streamerData.streamerUid,
                                         StreamerName: this.state.streamerData.streamerName,
-                                        FreeReaction: !freeReactionsSent,
+                                        FreeReaction: !this.state.freeReactionsSent,
                                         BotVoice: this.state.selectedVoiceBot ? this.state.selectedVoiceBot.key : 'Default',
                                         Custom3DText: this.state.custom3DText ? true : false,
-                                        EmoteRaid: emoteArray.length > 0
+                                        EmoteRaid: emoteArray.length > 0,
+                                        ReactionLevel: this.state.reactionLevel
                                     });
 
-                                    if (!freeReactionsSent) {
+                                    if (!this.state.freeReactionsSent) {
                                         storeData('freeReactionsSent', 'true');
                                     }
 
                                     this.setState({ openSentModal: true });
                                 },
                                 () => this.setState({ sending: false }),
-                                this.state.reactionLevel === 1
+                                useChannelPointReaction
                             );
                         } else {
+                            console.log('No puntos de canal Compadre');
                             this.setState({ sending: false });
-
-                            if (!this.props.uid) {
-                                this.props.navigation.navigate('SignIn');
-                            } else {
-                                // After a successful buy try to send the reaction again
-                                this.props.navigation.navigate('BuyQoins', { onSuccessfulBuy: this.onSendReaction });
-                            }
                         }
                     }
                 } else {
-                    this.setState({ sending: false });
-                    this.props.navigation.navigate('SignIn');
+                    this.setState({ openBuyQoinsModal: true, sending: false, userNeedsQoinsToSend: true });
                 }
             });
         }
@@ -332,11 +340,14 @@ class TweetReactionControllerScreen extends Component {
     }
 
     onStreamerPress = (streamerData) => {
-        this.setState({ streamerData, costs: [0, undefined, undefined], selectedEmote: null }, () => {
+        this.setState({ streamerData, costs: [0, undefined, undefined], selectedEmote: null }, async () => {
             this.fetchUserSubscription();
             this.fetchStreamerEmotes();
-            this.fetchReactionsCosts();
-            this.fetchNumberOfReactions();
+            await this.fetchReactionsCosts();
+            await this.fetchNumberOfReactions();
+            if (this.state.sendAfterChoosingStreamer) {
+                this.onSendReaction();
+            }
         });
 
         if (this.state.openEmotesAfterStreamerSelected) {
@@ -409,16 +420,43 @@ class TweetReactionControllerScreen extends Component {
     onSignUpSuccess = () => {
         this.fetchInitialData();
         this.setState({ openSignUpModal: false });
+
+        this.props.navigation.dismiss();
     }
 
     onCloseSentModal = () => {
         if (!this.props.uid) {
             this.setState({ openSignUpModal: true });
         } else {
-            this.props.navigation.popToTop();
+            this.props.navigation.replace('TweetReactionScreen');
         }
 
         this.setState({ openSentModal: false });
+    }
+
+    onCloseSignUpModal = () => {
+        this.props.navigation.dismiss();
+        this.setState({ openSignUpModal: false });
+    }
+
+    setExtraTip = (extraTip) => {
+        this.setState({ extraTip: undefined }, () => {
+            // setTimeout 0 to trick the MaskedView on Android
+            setTimeout(() => {
+                this.setState({ extraTip });
+            }, 0);
+        });
+    }
+
+    onBuySuccessful = () => {
+        this.setState({ openBuyQoinsModal: false }, () => {
+            if (this.state.userNeedsQoinsToSend) {
+                const totalCost = this.state.costs[this.state.reactionLevel - 1] + this.state.extraTip;
+                if (totalCost <= this.props.qoins) {
+                    this.onSendReaction();
+                }
+            }
+        });
     }
 
     render() {
@@ -475,6 +513,7 @@ class TweetReactionControllerScreen extends Component {
                 onRemoveCustom3DText={() => this.setState({ custom3DText: null })}
                 voiceBot={this.state.selectedVoiceBot}
                 emoteRaid={this.state.selectedEmote}
+                disableExtraTip={this.state.disableExtraTip}
                 message={this.state.message}
                 onMessageChanged={(message) => this.setState({ message })}
                 onMediaOptionPress={this.onMediaOptionPress}
@@ -483,15 +522,10 @@ class TweetReactionControllerScreen extends Component {
                 selectedMedia={this.state.selectedMedia}
                 cleanSelectedMedia={() => this.setState({ selectedMedia: null })}
                 extraTip={this.state.extraTip}
-                setExtraTip={(extraTip) => this.setState({ extraTip: undefined }, () =>
-                    // setTimeout 0 to trick the MaskedView on Android
-                    setTimeout(() => {
-                        this.setState({ extraTip })
-                    }, 0)
-                )}
+                setExtraTip={this.setExtraTip}
                 streamerImage={this.state.streamerData.streamerImage}
                 streamerUid={this.state.streamerData.streamerUid}
-                onCancel={() => this.props.navigation.popToTop()}
+                onCancel={() => this.props.navigation.dismiss()}
                 onOpenSearchStreamerModal={() => this.setState({ openSearchStreamerModal: true })}
                 onUpgradeReaction={this.onUpgradeReaction} />
             <GiphyMediaSelectorModal open={this.state.openGiphyModal}
@@ -502,7 +536,7 @@ class TweetReactionControllerScreen extends Component {
                 onClose={() => this.setState({ openMemeModal: false })}
                 onMediaSelect={this.onMediaSelect} />
             <ChooseStreamerModal open={this.state.openSearchStreamerModal}
-                onClose={() => this.setState({ openSearchStreamerModal: false })}
+                onClose={() => this.setState({ openSearchStreamerModal: false, sendAfterChoosingStreamer: false })}
                 selectedStreamer={{
                     ...this.state.streamerData,
                     numberOfReactions: this.state.numberOfReactions
@@ -533,22 +567,24 @@ class TweetReactionControllerScreen extends Component {
                 onClose={this.onCloseSentModal}
                 sendMoreReactions={this.onCloseSentModal} />
             <SignUpModal open={this.state.openSignUpModal}
-                onClose={() => this.setState({ openSignUpModal: false })}
-                title='Cool! isn’t it? 👀'
+                onClose={this.onCloseSignUpModal}
+                title={this.state.freeReactionsSent ? 'Kepp reacting on stream' : 'Cool! isn’t it? 👀'}
                 benefits={[
                     '⚡️ Use channel points to send custom memes',
-                    '👽 Create your custom avatar',
-                    '🔥 Upgrade your memes'
+                    '🔥 Upgrade your memes',
+                    '🌱 Support your fave streamers'
                 ]}
-                onSignUpSuccess={this.onSignUpSuccess} />
+                onSignUpSuccess={this.onSignUpSuccess}
+                gifLibrary={this.state.freeReactionsSent ? 'ReturningUser' : 'SignUp'} />
+            <Modal visible={this.state.openBuyQoinsModal}
+                onRequestClose={() => this.setState({ openBuyQoinsModal: false })}>
+                <BuyQoins onSuccess={this.onBuySuccessful}
+                    onClose={() => this.setState({ openBuyQoinsModal: false })} />
+            </Modal>
             </>
         );
     }
 }
-
-TweetReactionControllerScreen.defaultProps = {
-    level: 1
-};
 
 function mapStateToProps(state) {
     return {

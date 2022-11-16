@@ -2175,6 +2175,13 @@ export async function getRandomSignUpGif() {
     return await gifsLibrariesRef.child('SignUp').child('gifs').child(index).once('value');
 }
 
+export async function getRandomGifByLibrary(libraryName) {
+    const length = await gifsLibrariesRef.child(libraryName).child('length').once('value');
+
+    const index = Math.floor(Math.random() * length.val());
+    return await gifsLibrariesRef.child(libraryName).child('gifs').child(index).once('value');
+}
+
 // -----------------------------------------------
 // Reactions Prices
 // -----------------------------------------------

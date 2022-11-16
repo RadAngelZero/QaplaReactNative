@@ -312,7 +312,6 @@ const PrepaidInteractionsPersonlizeStackNavigator = createStackNavigator({
 });
 
 const ReactionsStackNavigator = createStackNavigator({
-  ReactionTypesScreen,
   TweetReactionScreen: TweetReactionControllerScreen
 }, {
   defaultNavigationOptions: {

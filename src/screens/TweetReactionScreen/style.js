@@ -252,6 +252,11 @@ export default styles = StyleSheet.create({
         width: widthPercentageToPx(83.75),
         borderRadius: 15
     },
+    extraTipTooltipContentStyle: {
+        backgroundColor: '#3B4BF9',
+        width: widthPercentageToPx(65.33),
+        borderRadius: 15
+    },
     mediaOptionContainer: {
         paddingHorizontal: 12
     },

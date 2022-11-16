@@ -114,7 +114,7 @@ export class TimelineStreams extends Component {
                 <View style={{
                     alignSelf: 'center'
                 }}>
-                    <InteractionsShortcut onPress={() => this.props.navigation.navigate('InteractionsFeed')} />
+                    <InteractionsShortcut onPress={() => this.props.navigation.navigate('TweetReactionScreen')} />
                 </View>
                 <View style={{ height: 40 }} />
                 <View style={{

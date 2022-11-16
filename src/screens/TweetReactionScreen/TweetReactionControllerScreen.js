@@ -459,7 +459,10 @@ class TweetReactionControllerScreen extends Component {
     }
 
     onCloseSignUpModal = () => {
-        this.props.navigation.dismiss();
+        if (!this.state.freeReactionsSent) {
+            this.props.navigation.dismiss();
+        }
+
         this.setState({ openSignUpModal: false });
     }
 

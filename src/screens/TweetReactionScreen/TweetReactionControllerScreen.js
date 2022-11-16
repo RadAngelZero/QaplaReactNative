@@ -11,6 +11,7 @@ import {
     getRecentStreamersDonations,
     getStreamerPublicData,
     getStreamerReactionPrice,
+    getStreamerStreamingStatus,
     getUserReactionsCount,
     isUserBannedWithStreamer,
     saveAvatarId,
@@ -29,6 +30,7 @@ import EmoteRainModal from '../../components/EmoteRainModal/EmoteRainModal';
 import CreateAvatarModal from '../../components/CreateAvatarModal/CreateAvatarModal';
 import SignUpModal from '../../components/SignUpModal/SignUpModal';
 import BuyQoins from '../BuyQoins/BuyQoins';
+import StreamerOfflineModal from '../../components/StreamerOfflineModal/StreamerOfflineModal';
 
 class TweetReactionControllerScreen extends Component {
     state = {
@@ -74,7 +76,8 @@ class TweetReactionControllerScreen extends Component {
         userNeedsQoinsToSend: false,
         sendAfterChoosingStreamer: false,
         disableExtraTip: false,
-        freeReactionsSent: false
+        freeReactionsSent: false,
+        openStreamerOfflineModal: false
     };
 
     componentDidMount() {
@@ -165,6 +168,9 @@ class TweetReactionControllerScreen extends Component {
                     const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid);
                     costs.push(hasUserReactedBefore.exists() ? cost : 0);
                     disableExtraTip = hasUserReactedBefore.exists();
+                    if (!hasUserReactedBefore.exists()) {
+                        this.setState({ reactionLevel: 3 });
+                    }
                 } else {
                     costs.push(cost);
                     disableExtraTip = false;
@@ -172,6 +178,9 @@ class TweetReactionControllerScreen extends Component {
             } else {
                 costs.push(!this.state.freeReactionsSent ? 0 : cost);
                 disableExtraTip = !this.state.freeReactionsSent;
+                if (!this.state.freeReactionsSent) {
+                    this.setState({ reactionLevel: 3 });
+                }
             }
         }
 
@@ -203,94 +212,99 @@ class TweetReactionControllerScreen extends Component {
 
         if (!this.state.sending) {
             this.setState({ sending: true }, async () => {
-                const userQoins = this.props.qoins ?? 0;
-                const totalCost = this.state.costs[this.state.reactionLevel - 1] + this.state.extraTip;
-                if (totalCost <= userQoins) {
-                    const isUserBanned = await isUserBannedWithStreamer(this.props.twitchId, this.state.streamerData.streamerUid);
-                    if (!isUserBanned.exists()) {
+                const isStreaming = await getStreamerStreamingStatus(this.state.streamerData.streamerUid);
+                if (isStreaming) {
+                    const userQoins = this.props.qoins ?? 0;
+                    const totalCost = this.state.costs[this.state.reactionLevel - 1] + this.state.extraTip;
+                    if (totalCost <= userQoins) {
+                        const isUserBanned = await isUserBannedWithStreamer(this.props.twitchId, this.state.streamerData.streamerUid);
+                        if (!isUserBanned.exists()) {
 
-                        const useChannelPointReaction = this.state.reactionLevel === 1;
-                        if (!useChannelPointReaction || useChannelPointReaction && this.state.numberOfReactions >= 1) {
-                            let messageExtraData = this.state.selectedVoiceBot ?
-                                {
-                                    voiceAPIName: this.state.selectedVoiceBot.voiceAPIName,
-                                    voiceName: this.state.selectedVoiceBot.key
-                                }
-                                :
-                                {};
-
-                            messageExtraData.giphyText = this.state.custom3DText ?
-                                this.state.custom3DText.original
-                                :
-                                {};
-
-                            const emoteArray = [];
-
-                            if (this.state.selectedEmote) {
-                                emoteArray.push(this.state.selectedEmote.url);
-                            }
-
-                            let nameToShowOnReaction = this.props.twitchUserName ?? '';
-
-                            if (!nameToShowOnReaction && this.props.uid) {
-                                nameToShowOnReaction = this.props.userName;
-                            }
-
-                            sendReaction(
-                                this.props.uid ?? 'Anonymus',
-                                this.props.userName ?? '',
-                                nameToShowOnReaction,
-                                this.props.photoUrl ?? '',
-                                this.state.streamerData.streamerUid,
-                                this.state.streamerData.streamerName,
-                                this.state.selectedMedia ?
+                            const useChannelPointReaction = this.state.reactionLevel === 1;
+                            if (!useChannelPointReaction || useChannelPointReaction && this.state.numberOfReactions >= 1) {
+                                let messageExtraData = this.state.selectedVoiceBot ?
                                     {
-                                        ...this.state.selectedMedia.data.images.original,
-                                        type: this.state.mediaType
+                                        voiceAPIName: this.state.selectedVoiceBot.voiceAPIName,
+                                        voiceName: this.state.selectedVoiceBot.key
                                     }
                                     :
-                                    {},
-                                this.state.message,
-                                messageExtraData,
-                                {
-                                    type: EMOTE,
-                                    emojis: emoteArray
-                                },
-                                totalCost,
-                                this.state.avatarId,
-                                this.props.avatarBackground,
-                                this.state.avatarReaction?.id,
-                                () => {
-                                    trackOnSegment('Reaction Sent', {
-                                        MessageLength: this.state.message ? this.state.message.length : null,
-                                        MediaType: this.state.mediaType,
-                                        Media: this.state.selectedMedia ? true : false,
-                                        ExtraTip: this.state.extraTip,
-                                        StreamerUid: this.state.streamerData.streamerUid,
-                                        StreamerName: this.state.streamerData.streamerName,
-                                        FreeReaction: !this.state.freeReactionsSent,
-                                        BotVoice: this.state.selectedVoiceBot ? this.state.selectedVoiceBot.key : 'Default',
-                                        Custom3DText: this.state.custom3DText ? true : false,
-                                        EmoteRaid: emoteArray.length > 0,
-                                        ReactionLevel: this.state.reactionLevel
-                                    });
+                                    {};
 
-                                    if (!this.state.freeReactionsSent) {
-                                        storeData('freeReactionsSent', 'true');
-                                    }
+                                messageExtraData.giphyText = this.state.custom3DText ?
+                                    this.state.custom3DText.original
+                                    :
+                                    {};
 
-                                    this.setState({ openSentModal: true });
-                                },
-                                () => this.setState({ sending: false }),
-                                useChannelPointReaction
-                            );
-                        } else {
-                            console.log('No puntos de canal Compadre');
-                            this.setState({ sending: false });
+                                const emoteArray = [];
+
+                                if (this.state.selectedEmote) {
+                                    emoteArray.push(this.state.selectedEmote.url);
+                                }
+
+                                let nameToShowOnReaction = this.props.twitchUserName ?? '';
+
+                                if (!nameToShowOnReaction && this.props.uid) {
+                                    nameToShowOnReaction = this.props.userName;
+                                }
+
+                                sendReaction(
+                                    this.props.uid ?? 'Anonymus',
+                                    this.props.userName ?? '',
+                                    nameToShowOnReaction,
+                                    this.props.photoUrl ?? '',
+                                    this.state.streamerData.streamerUid,
+                                    this.state.streamerData.streamerName,
+                                    this.state.selectedMedia ?
+                                        {
+                                            ...this.state.selectedMedia.data.images.original,
+                                            type: this.state.mediaType
+                                        }
+                                        :
+                                        {},
+                                    this.state.message,
+                                    messageExtraData,
+                                    {
+                                        type: EMOTE,
+                                        emojis: emoteArray
+                                    },
+                                    totalCost,
+                                    this.state.avatarId,
+                                    this.props.avatarBackground,
+                                    this.state.avatarReaction?.id,
+                                    () => {
+                                        trackOnSegment('Reaction Sent', {
+                                            MessageLength: this.state.message ? this.state.message.length : null,
+                                            MediaType: this.state.mediaType,
+                                            Media: this.state.selectedMedia ? true : false,
+                                            ExtraTip: this.state.extraTip,
+                                            StreamerUid: this.state.streamerData.streamerUid,
+                                            StreamerName: this.state.streamerData.streamerName,
+                                            FreeReaction: !this.state.freeReactionsSent,
+                                            BotVoice: this.state.selectedVoiceBot ? this.state.selectedVoiceBot.key : 'Default',
+                                            Custom3DText: this.state.custom3DText ? true : false,
+                                            EmoteRaid: emoteArray.length > 0,
+                                            ReactionLevel: this.state.reactionLevel
+                                        });
+
+                                        if (!this.state.freeReactionsSent) {
+                                            storeData('freeReactionsSent', 'true');
+                                        }
+
+                                        this.setState({ openSentModal: true });
+                                    },
+                                    () => this.setState({ sending: false }),
+                                    useChannelPointReaction
+                                );
+                            } else {
+                                console.log('No puntos de canal Compadre');
+                                this.setState({ sending: false });
+                            }
                         }
+                    } else {
+                        this.setState({ openBuyQoinsModal: true, sending: false, userNeedsQoinsToSend: true });
                     }
                 } else {
-                    this.setState({ openBuyQoinsModal: true, sending: false, userNeedsQoinsToSend: true });
+                    this.setState({ sending: false, openStreamerOfflineModal: true });
                 }
             });
         }
@@ -563,6 +577,10 @@ class TweetReactionControllerScreen extends Component {
             <CreateAvatarModal open={this.state.openCreateAvatarModal}
                 onClose={() => this.setState({ openCreateAvatarModal: false })}
                 onAvatarCreated={this.onAvatarCreated} />
+            <StreamerOfflineModal open={this.state.openStreamerOfflineModal}
+                onClose={() => this.setState({ openStreamerOfflineModal: false })}
+                streamerUid={this.state.streamerData.streamerUid}
+                streamerDisplayName={this.state.streamerData.streamerName} />
             <SentModal open={this.state.openSentModal}
                 onClose={this.onCloseSentModal}
                 sendMoreReactions={this.onCloseSentModal} />
@@ -577,7 +595,8 @@ class TweetReactionControllerScreen extends Component {
                 onSignUpSuccess={this.onSignUpSuccess}
                 gifLibrary={this.state.freeReactionsSent ? 'ReturningUser' : 'SignUp'} />
             <Modal visible={this.state.openBuyQoinsModal}
-                onRequestClose={() => this.setState({ openBuyQoinsModal: false })}>
+                onRequestClose={() => this.setState({ openBuyQoinsModal: false })}
+                animationType='slide'>
                 <BuyQoins onSuccess={this.onBuySuccessful}
                     onClose={() => this.setState({ openBuyQoinsModal: false })} />
             </Modal>

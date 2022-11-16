@@ -9,6 +9,8 @@ class ModalWithOverlay extends Component {
         return (
             <Modal visible={this.props.open}
                 onRequestClose={this.props.onClose}
+                onShow={this.props.onShow}
+                animationType='slide'
                 transparent>
                 <View style={styles.modalContainer}>
                     <View style={styles.modal}>
@@ -22,5 +24,9 @@ class ModalWithOverlay extends Component {
         );
     }
 }
+
+ModalWithOverlay.defaultProps = {
+    onShow: () => {}
+};
 
 export default ModalWithOverlay;

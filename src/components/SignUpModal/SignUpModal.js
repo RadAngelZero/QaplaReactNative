@@ -5,7 +5,7 @@ import appleAuth from '@invertase/react-native-apple-authentication';
 import styles from './style';
 import images from './../../../assets/images';
 import LinearGradient from 'react-native-linear-gradient';
-import { createUserName, createUserProfile, getRandomGifByLibrary, getRandomSignUpGif, updateUserLoggedStatus, userHaveTwitchId } from '../../services/database';
+import { createUserName, createUserProfile, getRandomGifByLibrary, updateUserLoggedStatus, userHaveTwitchId } from '../../services/database';
 import { setupGoogleSignin, signInWithApple, signInWithGoogle } from '../../services/auth';
 import TwitchAuthScreen from '../../screens/TwitchAuthScreen/TwitchAuthScreen';
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';

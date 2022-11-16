@@ -14,6 +14,7 @@ import images from './../../../assets/images';
 import { storeData, retrieveData } from '../../utilities/persistance';
 import { defaultUserImages, HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';;
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
+import SignUpModal from '../SignUpModal/SignUpModal';
 
 const SupportIcon = images.svg.supportIcon;
 const UserProfileIcon = images.svg.userProfile
@@ -27,7 +28,8 @@ class HeaderBar extends Component {
         this.state = {
             showHg2Modal: false,
             showProfile: false,
-            userImage: { uri: true, img: this.props.photoUrl }
+            userImage: { uri: true, img: this.props.photoUrl },
+            openProfileModal: false
         };
     }
 
@@ -181,10 +183,13 @@ class HeaderBar extends Component {
         if (this.props.uid) {
             this.props.navigation.navigate('UserProfileModal');
         } else {
-            this.props.navigation.navigate('Auth', {
-                onSuccessSignIn: () => this.props.navigation.navigate('UserProfileModal')
-            });
+            this.setState({ openProfileModal: true });
         }
+    }
+
+    onSignUpSuccess = () => {
+        this.props.navigation.navigate('UserProfileModal');
+        this.setState({ openProfileModal: false });
     }
 
     render() {
@@ -226,7 +231,16 @@ class HeaderBar extends Component {
                             }
                         </View>
                     </View>
-                </SafeAreaView >
+                    <SignUpModal open={this.state.openProfileModal}
+                        onClose={() => this.setState({ openProfileModal: false })}
+                        title='Send memes on stream'
+                        benefits={[
+                            '⚡️ React on stream sending custom memes',
+                            '👽 Custom animated avatar for your reactions',
+                            '🌱 Support your fave streamers'
+                        ]}
+                        onSignUpSuccess={this.onSignUpSuccess} />
+                </SafeAreaView>
             );
         }
         return null;

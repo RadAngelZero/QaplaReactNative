@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import PropTypes from 'prop-types';
 import appleAuth from '@invertase/react-native-apple-authentication';
 
 import styles from './style';
@@ -170,6 +171,16 @@ class SignUpModal extends Component {
             </Modal>
         );
     }
+}
+
+SignUpModal.propTypes = {
+    gifLibrary: PropTypes.string,
+
+    open: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    benefits: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onSignUpSuccess: PropTypes.func.isRequired,
 }
 
 SignUpModal.defaultProps = {

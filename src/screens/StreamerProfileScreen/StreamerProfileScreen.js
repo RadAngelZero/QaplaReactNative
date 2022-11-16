@@ -14,6 +14,7 @@ import { getLocaleLanguage, translate } from './../../utilities/i18';
 import styles from './style';
 import InteractionsShortcut from '../../components/InteractionsShortcut/InteractionsShortcut';
 import { trackOnSegment } from '../../services/statistics';
+import SignUpModal from '../../components/SignUpModal/SignUpModal';
 
 const socialMediaIcons = {
     Twitch: Images.svg.twitchLight,
@@ -45,7 +46,8 @@ class StreamerProfileScreen extends Component {
         openEventDetailsModal: false,
         selectedStream: null,
         interactButtonAnimation: new Animated.Value(0),
-        showInteractModule: false
+        showInteractModule: false,
+        openSignUpModal: false
     };
 
     componentDidMount() {
@@ -139,12 +141,10 @@ class StreamerProfileScreen extends Component {
 
     followStreamer = async () => {
         if (this.props.uid) {
+            this.setState({ openSignUpModal: false });
             this.subscribeUserToStreamer(this.props.uid);
         } else {
-            this.props.navigation.navigate('SignIn', {
-                onSuccessSignIn: async (uid) => this.subscribeUserToStreamer(uid)
-            }
-            );
+            this.setState({ openSignUpModal: true });
         }
     }
 
@@ -506,6 +506,15 @@ class StreamerProfileScreen extends Component {
                 <EventDetailsModal open={this.state.openEventDetailsModal}
                     onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
                     stream={this.state.selectedStream} />
+                <SignUpModal open={this.state.openSignUpModal}
+                    onClose={() => this.setState({ openSignUpModal: false })}
+                    title='Never miss a stream!'
+                    benefits={[
+                        '🗓️️ Always know when your streamer schedules a stream',
+                        '🚨️ Always know when a stream is reschedule or canceled'
+                    ]}
+                    onSignUpSuccess={this.followStreamer}
+                    gifLibrary='JoinStream' />
             </View>
         );
     }

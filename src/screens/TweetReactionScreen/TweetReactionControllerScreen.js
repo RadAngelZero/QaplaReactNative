@@ -435,10 +435,20 @@ class TweetReactionControllerScreen extends Component {
         this.fetchInitialData();
         this.setState({ openSignUpModal: false });
 
-        this.props.navigation.dismiss();
+        this.props.navigation.replace('TweetReactionScreen');
     }
 
     onCloseSentModal = () => {
+        if (!this.props.uid) {
+            this.setState({ openSignUpModal: true });
+        } else {
+            this.props.navigation.dismiss();
+        }
+
+        this.setState({ openSentModal: false });
+    }
+
+    onSendMoreRections = () => {
         if (!this.props.uid) {
             this.setState({ openSignUpModal: true });
         } else {
@@ -583,7 +593,7 @@ class TweetReactionControllerScreen extends Component {
                 streamerDisplayName={this.state.streamerData.streamerName} />
             <SentModal open={this.state.openSentModal}
                 onClose={this.onCloseSentModal}
-                sendMoreReactions={this.onCloseSentModal} />
+                sendMoreReactions={this.onSendMoreRections} />
             <SignUpModal open={this.state.openSignUpModal}
                 onClose={this.onCloseSignUpModal}
                 title={this.state.freeReactionsSent ? 'Kepp reacting on stream' : 'Cool! isn’t it? 👀'}

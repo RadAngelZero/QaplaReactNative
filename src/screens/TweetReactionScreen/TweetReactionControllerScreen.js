@@ -70,7 +70,7 @@ class TweetReactionControllerScreen extends Component {
         selectedEmote: null,
         openCreateAvatarModal: false,
         avatarId: this.props.avatarId,
-        reactionLevel: this.props.navigation.getParam('reactionLevel', 1),
+        reactionLevel: 1,
         openSignUpModal: false,
         openEmotesAfterStreamerSelected: false,
         openBuyQoinsModal: false,
@@ -84,6 +84,7 @@ class TweetReactionControllerScreen extends Component {
 
     componentDidMount() {
         this.fetchInitialData();
+        this.setLastReactionLevel();
     }
 
     fetchInitialData = async () => {
@@ -99,6 +100,18 @@ class TweetReactionControllerScreen extends Component {
             this.fetchReactionsCosts();
             this.fetchNumberOfReactions();
         });
+    }
+
+    setLastReactionLevel = async () => {
+        const freeReactionsSent = await retrieveData('freeReactionsSent');
+        if (freeReactionsSent) {
+            const lastReactionLevel = await retrieveData('lastReactionLevel');
+            if (lastReactionLevel) {
+                this.setState({ reactionLevel: parseInt(lastReactionLevel) });
+            } else {
+                this.setState({ openReactionLevelModal: true });
+            }
+        }
     }
 
     fetchStreamerData = async (onFinished) => {
@@ -305,6 +318,8 @@ class TweetReactionControllerScreen extends Component {
                                         if (!this.state.freeReactionsSent) {
                                             storeData('freeReactionsSent', 'true');
                                             storeData('lastStreamer', this.state.streamerData.streamerUid);
+                                        } else {
+                                            storeData('lastReactionLevel', this.state.reactionLevel);
                                         }
 
                                         this.setState({ openSentModal: true });

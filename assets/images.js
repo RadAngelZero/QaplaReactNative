@@ -272,6 +272,9 @@ const images = {
 		},
 		defaultReactionProfilePic: {
 			img: require('./images/DefaultReactionProfilePic.png')
+		},
+		channelPoints: {
+			img: require('./images/ChannelPoints.png')
 		}
 	},
 	svg: {

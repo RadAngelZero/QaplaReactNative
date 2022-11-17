@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal } from 'react-native';
+import { Linking, Modal } from 'react-native';
 import { connect } from 'react-redux';
 
 import TweetReactionScreen from './TweetReactionScreen';
@@ -20,7 +20,7 @@ import {
     saveReadyPlayerMeUserId,
     sendReaction
 } from '../../services/database';
-import { removeDataItem, retrieveData, storeData } from '../../utilities/persistance';
+import { retrieveData, storeData } from '../../utilities/persistance';
 import { trackOnSegment } from '../../services/statistics';
 import SentModal from '../../components/SentModal/SentModal';
 import ChooseStreamerModal from '../../components/ChooseStreamerModal/ChooseStreamerModal';
@@ -33,6 +33,7 @@ import SignUpModal from '../../components/SignUpModal/SignUpModal';
 import BuyQoins from '../BuyQoins/BuyQoins';
 import StreamerOfflineModal from '../../components/StreamerOfflineModal/StreamerOfflineModal';
 import ReactionTypeModal from '../../components/ReactionTypeModal/ReactionTypeModal';
+import NoReactionsModal from '../../components/NoReactionsModal/NoReactionsModal';
 
 class TweetReactionControllerScreen extends Component {
     state = {
@@ -81,7 +82,8 @@ class TweetReactionControllerScreen extends Component {
         freeReactionsSent: false,
         openStreamerOfflineModal: false,
         openReactionLevelModal: false,
-        tutorialDone: true
+        tutorialDone: true,
+        openNoReactionsModal: false
     };
 
     componentDidMount() {
@@ -228,16 +230,16 @@ class TweetReactionControllerScreen extends Component {
         if (this.props.uid) {
             // Listen in real time for number of reactions
             listenToUserReactionsCount(this.props.uid, this.state.streamerData.streamerUid ?? 'undefined', (numberOfReactions) => {
-                if (numberOfReactions.val()) {
+                if (numberOfReactions.exists()) {
                     this.setState({ numberOfReactions: numberOfReactions.val() });
                 } else {
                     if (!this.state.freeReactionsSent) {
-                        async function checkFreeReaction() {
-                            const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid, 1);
-                            this.setState({ numberOfReactions: hasUserReactedBefore.exists() ? 0 : 1 });
+                        async function checkFreeReaction(uid, setNumber) {
+                            const hasUserReactedBefore = await getRecentStreamersDonations(uid, 1);
+                            setNumber(hasUserReactedBefore.exists() ? 0 : 1);
                         }
 
-                        checkFreeReaction();
+                        checkFreeReaction(this.props.uid, (numberOfReactions) => this.setState({ numberOfReactions}));
                     } else {
                         this.setState({ numberOfReactions: 0 });
                     }
@@ -342,8 +344,7 @@ class TweetReactionControllerScreen extends Component {
                                     useChannelPointReaction
                                 );
                             } else {
-                                console.log('No puntos de canal Compadre');
-                                this.setState({ sending: false });
+                                this.setState({ sending: false, openNoReactionsModal: true });
                             }
                         }
                     } else {
@@ -561,6 +562,15 @@ class TweetReactionControllerScreen extends Component {
         }
     }
 
+    changeReactionLevelAndSend = (reactionLevel) => {
+        this.setState({ openNoReactionsModal: false, reactionLevel });
+    }
+
+    getRewardOnTwitch = () => {
+        Linking.openURL(`https://twitch.tv/${this.state.streamerData.streamerName.toLowerCase()}`);
+        this.setState({ openNoReactionsModal: false });
+    }
+
     render() {
         let availableContent = [];
         switch (this.state.reactionLevel) {
@@ -677,6 +687,11 @@ class TweetReactionControllerScreen extends Component {
                 onClose={() => this.setState({ openStreamerOfflineModal: false })}
                 streamerUid={this.state.streamerData.streamerUid}
                 streamerDisplayName={this.state.streamerData.streamerName} />
+            <NoReactionsModal open={this.state.openNoReactionsModal}
+                onClose={() => this.setState({ openNoReactionsModal: false })}
+                upgradeCost={this.state.costs[1]}
+                onUpgradeReaction={this.changeReactionLevelAndSend}
+                onGetReward={this.getRewardOnTwitch} />
             <SentModal open={this.state.openSentModal}
                 onClose={this.onCloseSentModal}
                 sendMoreReactions={this.onSendMoreRections} />

@@ -28,7 +28,7 @@ class ReactionTypeModal extends Component {
                                 <images.svg.closeIcon />
                             </TouchableOpacity>
                             <Text style={styles.title}>
-                                Choose your reaction
+                                Select Reaction Tier
                             </Text>
                             {/* Trick to center text */}
                             <View style={[styles.closeIcon, { opacity: 0 }]}>

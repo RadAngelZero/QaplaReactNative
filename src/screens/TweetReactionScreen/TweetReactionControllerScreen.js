@@ -12,14 +12,15 @@ import {
     getStreamerPublicData,
     getStreamerReactionPrice,
     getStreamerStreamingStatus,
-    getUserReactionsCount,
     isUserBannedWithStreamer,
+    listenToUserReactionsCount,
+    removeListenerFromReactionsCount,
     saveAvatarId,
     saveAvatarUrl,
     saveReadyPlayerMeUserId,
     sendReaction
 } from '../../services/database';
-import { retrieveData, storeData } from '../../utilities/persistance';
+import { removeDataItem, retrieveData, storeData } from '../../utilities/persistance';
 import { trackOnSegment } from '../../services/statistics';
 import SentModal from '../../components/SentModal/SentModal';
 import ChooseStreamerModal from '../../components/ChooseStreamerModal/ChooseStreamerModal';
@@ -88,6 +89,12 @@ class TweetReactionControllerScreen extends Component {
         this.setLastReactionLevel();
     }
 
+    componentWillUnmount() {
+        if (this.props.uid, this.state.streamerData.streamerUid) {
+            removeListenerFromReactionsCount(this.props.uid, this.state.streamerData.streamerUid);
+        }
+    }
+
     fetchInitialData = async () => {
         const freeReactionsSent = await retrieveData('freeReactionsSent');
         this.setState({ freeReactionsSent }, () => {
@@ -99,7 +106,7 @@ class TweetReactionControllerScreen extends Component {
             this.fetchUserSubscription();
             this.fetchStreamerEmotes();
             this.fetchReactionsCosts();
-            this.fetchNumberOfReactions();
+            this.listenNumberOfReactions();
         });
     }
 
@@ -217,19 +224,25 @@ class TweetReactionControllerScreen extends Component {
         this.setState({ costs, disableExtraTip });
     }
 
-    fetchNumberOfReactions = async () => {
+    listenNumberOfReactions = async () => {
         if (this.props.uid) {
-            const numberOfReactions = await getUserReactionsCount(this.props.uid, this.state.streamerData.streamerUid);
-            if (numberOfReactions.val()) {
-                this.setState({ numberOfReactions: numberOfReactions.val() });
-            } else {
-                if (!this.state.freeReactionsSent) {
-                    const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid, 1);
-                    this.setState({ numberOfReactions: hasUserReactedBefore.exists() ? 0 : 1 });
+            // Listen in real time for number of reactions
+            listenToUserReactionsCount(this.props.uid, this.state.streamerData.streamerUid ?? 'undefined', (numberOfReactions) => {
+                if (numberOfReactions.val()) {
+                    this.setState({ numberOfReactions: numberOfReactions.val() });
                 } else {
-                    this.setState({ numberOfReactions: 0 });
+                    if (!this.state.freeReactionsSent) {
+                        async function checkFreeReaction() {
+                            const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid, 1);
+                            this.setState({ numberOfReactions: hasUserReactedBefore.exists() ? 0 : 1 });
+                        }
+
+                        checkFreeReaction();
+                    } else {
+                        this.setState({ numberOfReactions: 0 });
+                    }
                 }
-            }
+            });
         } else {
             this.setState({ numberOfReactions: !this.state.freeReactionsSent ? 1 : 0 });
         }
@@ -387,11 +400,15 @@ class TweetReactionControllerScreen extends Component {
     }
 
     onStreamerPress = (streamerData) => {
+        // If listening to streamer count, remove listener
+        if (this.props.uid && this.state.streamerData.streamerUid) {
+            removeListenerFromReactionsCount(this.props.uid, this.state.streamerData.streamerUid);
+        }
         this.setState({ streamerData, costs: [0, undefined, undefined], selectedEmote: null }, async () => {
             this.fetchUserSubscription();
             this.fetchStreamerEmotes();
             await this.fetchReactionsCosts();
-            await this.fetchNumberOfReactions();
+            this.listenNumberOfReactions();
             if (this.state.sendAfterChoosingStreamer) {
                 this.onSendReaction();
             }

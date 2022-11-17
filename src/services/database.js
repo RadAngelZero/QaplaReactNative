@@ -2002,6 +2002,26 @@ export async function getUserReactionsCount(uid, streamerUid) {
 }
 
 /**
+ * Listen and execute a callback every time the reaction count node is updated
+ * @param {string} uid User identifier
+ * @param {string} streamerUid Steamer identifier
+ * @param {function} callback Handler for database values
+ */
+export function listenToUserReactionsCount(uid, streamerUid, callback) {
+    return usersReactionsCountRef.child(uid).child(streamerUid).on('value', callback);
+}
+
+/**
+ * Remove listener from reactions count
+ * @param {string} uid User identifier
+ * @param {string} streamerUid Steamer identifier
+ * @param {function} callback Handler for database values
+ */
+export function removeListenerFromReactionsCount(uid, streamerUid) {
+    return usersReactionsCountRef.child(uid).child(streamerUid).off('value');
+}
+
+/**
  * Listen for changes on the Giphy Text Request node
  * @param {string} uid User identifier
  * @param {RNFirebase.database.QuerySuccessCallback} callback Function called to handle firebase data

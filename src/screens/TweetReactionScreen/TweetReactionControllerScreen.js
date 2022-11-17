@@ -104,7 +104,7 @@ class TweetReactionControllerScreen extends Component {
 
     setLastReactionLevel = async () => {
         const freeReactionsSent = await retrieveData('freeReactionsSent');
-        if (freeReactionsSent) {
+        if (freeReactionsSent && this.props.uid) {
             const lastReactionLevel = await retrieveData('lastReactionLevel');
             if (lastReactionLevel) {
                 this.setState({ reactionLevel: parseInt(lastReactionLevel) });
@@ -319,7 +319,7 @@ class TweetReactionControllerScreen extends Component {
                                             storeData('freeReactionsSent', 'true');
                                             storeData('lastStreamer', this.state.streamerData.streamerUid);
                                         } else {
-                                            storeData('lastReactionLevel', this.state.reactionLevel);
+                                            storeData('lastReactionLevel', this.state.reactionLevel.toString());
                                         }
 
                                         this.setState({ openSentModal: true });
@@ -467,7 +467,11 @@ class TweetReactionControllerScreen extends Component {
         this.fetchInitialData();
         this.setState({ openSignUpModal: false });
 
-        this.props.navigation.replace('TweetReactionScreen');
+        if (this.state.freeReactionsSent) {
+            this.setLastReactionLevel();
+        } else {
+            this.props.navigation.replace('TweetReactionScreen');
+        }
     }
 
     onCloseSentModal = () => {

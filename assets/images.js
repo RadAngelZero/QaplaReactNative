@@ -126,6 +126,7 @@ import GiphyText from './icons/GiphyText.svg';
 import EditCircle from './icons/EditCircle.svg';
 import ShowKeyboard from './icons/ShowKeyboard.svg';
 import CheckCircleWhite from './icons/CheckCircleWhite.svg';
+import ArrowTopCircle from './icons/arrowTopCircle.svg';
 
 // Images
 const images = {
@@ -400,7 +401,8 @@ const images = {
 		giphyText: GiphyText,
 		editCircle: EditCircle,
 		showKeyboard: ShowKeyboard,
-		checkCircleWhite: CheckCircleWhite
+		checkCircleWhite: CheckCircleWhite,
+		arrowTopCircle: ArrowTopCircle
 	},
 	gif: {
 		loadingStreamers: {

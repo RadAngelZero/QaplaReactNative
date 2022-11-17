@@ -31,6 +31,7 @@ import CreateAvatarModal from '../../components/CreateAvatarModal/CreateAvatarMo
 import SignUpModal from '../../components/SignUpModal/SignUpModal';
 import BuyQoins from '../BuyQoins/BuyQoins';
 import StreamerOfflineModal from '../../components/StreamerOfflineModal/StreamerOfflineModal';
+import ReactionTypeModal from '../../components/ReactionTypeModal/ReactionTypeModal';
 
 class TweetReactionControllerScreen extends Component {
     state = {
@@ -77,7 +78,8 @@ class TweetReactionControllerScreen extends Component {
         sendAfterChoosingStreamer: false,
         disableExtraTip: false,
         freeReactionsSent: false,
-        openStreamerOfflineModal: false
+        openStreamerOfflineModal: false,
+        openReactionLevelModal: false
     };
 
     componentDidMount() {
@@ -126,6 +128,20 @@ class TweetReactionControllerScreen extends Component {
                         streamerName: streamerData.val().displayName
                     }
                 }, onFinished);
+            } else {
+                const lastStreamer = await retrieveData('lastStreamer');
+                if (lastStreamer) {
+                    const streamerData = await getStreamerPublicData(lastStreamer);
+                    this.setState({
+                        streamerData: {
+                            streamerUid: lastStreamer,
+                            streamerImage: streamerData.val().photoUrl,
+                            streamerName: streamerData.val().displayName
+                        }
+                    }, onFinished);
+                } else {
+                    onFinished();
+                }
             }
         } else {
             onFinished();
@@ -288,6 +304,7 @@ class TweetReactionControllerScreen extends Component {
 
                                         if (!this.state.freeReactionsSent) {
                                             storeData('freeReactionsSent', 'true');
+                                            storeData('lastStreamer', this.state.streamerData.streamerUid);
                                         }
 
                                         this.setState({ openSentModal: true });
@@ -540,6 +557,7 @@ class TweetReactionControllerScreen extends Component {
                 onRemoveCustom3DText={() => this.setState({ custom3DText: null })}
                 voiceBot={this.state.selectedVoiceBot}
                 emoteRaid={this.state.selectedEmote}
+                onChangeReactionLevel={() => this.setState({ openReactionLevelModal: true })}
                 disableExtraTip={this.state.disableExtraTip}
                 message={this.state.message}
                 onMessageChanged={(message) => this.setState({ message })}
@@ -590,6 +608,11 @@ class TweetReactionControllerScreen extends Component {
             <CreateAvatarModal open={this.state.openCreateAvatarModal}
                 onClose={() => this.setState({ openCreateAvatarModal: false })}
                 onAvatarCreated={this.onAvatarCreated} />
+            <ReactionTypeModal open={this.state.openReactionLevelModal}
+                onClose={() => this.setState({ openReactionLevelModal: false })}
+                changeReactionLevel={(reactionLevel) => this.setState({ reactionLevel })}
+                costs={this.state.costs}
+                randomEmoteUrl={this.state.randomEmoteUrl} />
             <StreamerOfflineModal open={this.state.openStreamerOfflineModal}
                 onClose={() => this.setState({ openStreamerOfflineModal: false })}
                 streamerUid={this.state.streamerData.streamerUid}

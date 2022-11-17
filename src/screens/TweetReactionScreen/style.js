@@ -146,7 +146,8 @@ export default styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingVertical: 6,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     costText: {
         marginLeft: 6,

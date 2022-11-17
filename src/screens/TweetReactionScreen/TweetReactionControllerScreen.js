@@ -79,7 +79,8 @@ class TweetReactionControllerScreen extends Component {
         disableExtraTip: false,
         freeReactionsSent: false,
         openStreamerOfflineModal: false,
-        openReactionLevelModal: false
+        openReactionLevelModal: false,
+        tutorialDone: true
     };
 
     componentDidMount() {
@@ -522,6 +523,27 @@ class TweetReactionControllerScreen extends Component {
         });
     }
 
+    onChangeReactionLevel = async (reactionLevel) => {
+        this.setState({ reactionLevel });
+        const tutorialDone = await retrieveData('tutorialDone');
+        if (!tutorialDone) {
+            this.setState({ tutorialDone: false });
+        }
+    }
+
+    onClosingTutorial = () => {
+        this.setState({ tutorialDone: true });
+        storeData('tutorialDone', 'true');
+    }
+
+    onCloseReactionLevelModal = async () => {
+        this.setState({ openReactionLevelModal: false });
+        const tutorialDone = await retrieveData('tutorialDone');
+        if (!tutorialDone) {
+            this.setState({ tutorialDone: false });
+        }
+    }
+
     render() {
         let availableContent = [];
         switch (this.state.reactionLevel) {
@@ -576,7 +598,9 @@ class TweetReactionControllerScreen extends Component {
                 onRemoveCustom3DText={() => this.setState({ custom3DText: null })}
                 voiceBot={this.state.selectedVoiceBot}
                 emoteRaid={this.state.selectedEmote}
+                openTutorial={!this.state.tutorialDone}
                 onChangeReactionLevel={() => this.setState({ openReactionLevelModal: true })}
+                onClosingTutorial={this.onClosingTutorial}
                 disableExtraTip={this.state.disableExtraTip}
                 message={this.state.message}
                 onMessageChanged={(message) => this.setState({ message })}
@@ -628,8 +652,8 @@ class TweetReactionControllerScreen extends Component {
                 onClose={() => this.setState({ openCreateAvatarModal: false })}
                 onAvatarCreated={this.onAvatarCreated} />
             <ReactionTypeModal open={this.state.openReactionLevelModal}
-                onClose={() => this.setState({ openReactionLevelModal: false })}
-                changeReactionLevel={(reactionLevel) => this.setState({ reactionLevel })}
+                onClose={this.onCloseReactionLevelModal}
+                changeReactionLevel={this.onChangeReactionLevel}
                 costs={this.state.costs}
                 randomEmoteUrl={this.state.randomEmoteUrl} />
             <StreamerOfflineModal open={this.state.openStreamerOfflineModal}

@@ -581,7 +581,7 @@ class TweetReactionScreen extends Component {
                                             onError={this.getStreamerFallbackImage}
                                             style={styles.streamerAvatar} />
                                         <Tooltip
-                                            isVisible={this.state.openReactionTypeTooltip}
+                                            isVisible={this.props.openTutorial}
                                             content={
                                                 <View style={[styles.tooltipContainer, {
                                                         minHeight: undefined
@@ -594,14 +594,14 @@ class TweetReactionScreen extends Component {
                                                             </Text>
                                                             your reaction here 👇 
                                                         </Text>
-                                                        <TouchableOpacity onPress={() => this.setState({ openReactionTypeTooltip: false })}>
+                                                        <TouchableOpacity onPress={this.props.onClosingTutorial}>
                                                             <images.svg.closeIcon />
                                                         </TouchableOpacity>
                                                     </View>
                                                 </View>
                                             }
                                             placement='top'
-                                            onClose={() => this.setState({ openReactionTypeTooltip: false })}
+                                            onClose={this.props.onClosingTutorial}
                                             arrowStyle={styles.tooltipArrowStyle}
                                             arrowSize={styles.tooltipArrowSize}
                                             displayInsets={{
@@ -880,6 +880,7 @@ TweetReactionScreen.propTypes = {
         timestamp: PropTypes.number
     }),
     disableExtraTip: PropTypes.bool,
+    openTutorial: PropTypes.bool,
 
     // Required fields
     //Options for media selector bar
@@ -896,6 +897,7 @@ TweetReactionScreen.propTypes = {
     onRemoveVoiceBot: PropTypes.func.isRequired,
     onUpgradeReaction: PropTypes.func.isRequired,
     onChangeReactionLevel: PropTypes.func.isRequired,
+    onClosingTutorial: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSend: PropTypes.func.isRequired
 };

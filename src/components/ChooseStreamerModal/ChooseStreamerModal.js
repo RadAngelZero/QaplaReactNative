@@ -209,8 +209,8 @@ class ChooseStreamerModal extends Component {
                                         onChangeText={this.searchHandler}
                                         style={styles.gridSearchBarTextInput}
                                         placeholder={`Search by name`}
-                                        placeholderTextColor={'#fff3'}
-                                    />
+                                        placeholderTextColor='#fff3'
+                                        keyboardAppearance='dark' />
                                 </View>
                             </View>
                             <View style={styles.listContainer}>

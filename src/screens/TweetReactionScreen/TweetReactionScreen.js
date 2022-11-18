@@ -435,7 +435,8 @@ class TweetReactionScreen extends Component {
                                         multiline
                                         blurOnSubmit
                                         value={this.props.message}
-                                        onChangeText={this.props.onMessageChanged} />
+                                        onChangeText={this.props.onMessageChanged}
+                                        keyboardAppearance='dark' />
                                     {!this.props.message &&
                                         <Text style={styles.optional}>
                                             Optional

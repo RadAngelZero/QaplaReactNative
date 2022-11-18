@@ -133,7 +133,7 @@ class Create3DTextModal extends Component {
                                     style={styles.gridSearchBarTextInput}
                                     placeholder='Type to create'
                                     placeholderTextColor='#fff3'
-                                />
+                                    keyboardAppearance='dark' />
                             </View>
                         </View>
                         <View style={styles.listContainer}>

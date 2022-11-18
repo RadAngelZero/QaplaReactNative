@@ -74,8 +74,8 @@ class GiphyMediaSelectorModal extends Component {
                                     onChangeText={this.searchHandler}
                                     style={styles.gridSearchBarTextInput}
                                     placeholder={`${translate('interactions.visual.searchOn')} Giphy`}
-                                    placeholderTextColor={'#fff3'}
-                                />
+                                    placeholderTextColor='#fff3'
+                                    keyboardAppearance='dark' />
                                 {this.state.searchQuery === '' &&
                                     <Image source={images.png.PoweredbyGiphyDark.img} style={styles.gridPoweredbyGiphy} />
                                 }

@@ -5,8 +5,25 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './style';
 import images from './../../../assets/images';
+import { getRandomGifByLibrary } from '../../services/database';
 
 class ReactionTypeModal extends Component {
+    state = {
+        level1Gif: undefined,
+        level2Gif: undefined,
+        level3Gif: undefined
+    };
+
+    loadGifs = async () => {
+        const level1Gif = await getRandomGifByLibrary('ChannelPointsReactions');
+        const level2Gif = await getRandomGifByLibrary('level2Reactions');
+        const level3Gif = await getRandomGifByLibrary('level3Reactions');
+        this.setState({
+            level1Gif: level1Gif.val(),
+            level2Gif: level2Gif.val(),
+            level3Gif: level3Gif.val()
+        });
+    }
 
     changeReactionLevel = (level) => {
         this.props.changeReactionLevel(level);
@@ -17,7 +34,8 @@ class ReactionTypeModal extends Component {
         return (
             <Modal visible={this.props.open}
                 onRequestClose={this.props.onClose}
-                onShow={() => this.setState({ selectedVoice: this.props.currentVoice ? this.props.currentVoice.key : null })}
+                onShow={this.loadGifs}
+                onDismiss={() => this.setState({ level1Gif: undefined, level2Gif: undefined, level3Gif: undefined })}
                 animationType='slide'
                 transparent>
                 <View style={styles.container}>
@@ -38,9 +56,13 @@ class ReactionTypeModal extends Component {
                         <View style={styles.reactionsContainer}>
                             <TouchableOpacity style={styles.reactionType}
                                 onPress={() => this.changeReactionLevel(1)}>
-                                <ImageBackground source={{
-                                    uri: ''
-                                }} style={styles.reactionTypeContent}>
+                                <ImageBackground source={this.state.level1Gif ? {
+                                            uri: this.state.level1Gif
+                                        }
+                                        :
+                                        null
+                                    }
+                                    style={styles.reactionTypeContent}>
                                 <View style={styles.descriptionContainer}>
                                     <View style={styles.perksContainer}>
                                         <images.svg.interactionsGIF height={24} width={24} style={{ marginRight: 16 }} />
@@ -74,49 +96,59 @@ class ReactionTypeModal extends Component {
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.reactionType}
                                 onPress={() => this.changeReactionLevel(2)}>
-                                <ImageBackground source={{
-                                    uri: ''
-                                }} style={styles.reactionTypeContent}>
-                                <View style={styles.descriptionContainer}>
-                                    <View style={styles.perksContainer}>
-                                        <images.svg.avatar height={24} width={24} style={{ marginRight: 16 }} />
-                                        <images.svg.giphyText height={24} width={24} style={{ marginRight: 16 }} />
-                                        <images.svg.volumeUp height={24} width={24} />
+                                <ImageBackground source={this.state.level2Gif ? {
+                                            uri: this.state.level2Gif
+                                        }
+                                        :
+                                        null
+                                    }
+                                    style={styles.reactionTypeContent}>
+                                    <View style={styles.descriptionContainer}>
+                                        <View style={styles.perksContainer}>
+                                            <images.svg.arrowTopCircle height={24} width={24} style={{ marginRight: 16 }} />
+                                            <images.svg.avatar height={24} width={24} style={{ marginRight: 16 }} />
+                                            <images.svg.giphyText height={24} width={24} style={{ marginRight: 16 }} />
+                                            <images.svg.volumeUp height={24} width={24} />
+                                        </View>
+                                        <Text style={styles.reactionTitle}>
+                                            + Avatar, 3D Text
+                                        </Text>
                                     </View>
-                                    <Text style={styles.reactionTitle}>
-                                        + Avatar, 3D Text
-                                    </Text>
-                                </View>
-                                <View style={styles.priceContainer}>
-                                    <View style={styles.price}>
-                                        <images.svg.qoin height={16} width={16} />
-                                        {this.props.costs[1] !== undefined &&
-                                            <MaskedView maskElement={
-                                                <Text style={styles.priceNumber}>
-                                                    {this.props.costs[1]}
-                                                </Text>
-                                            }>
-                                                <LinearGradient
-                                                    colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
-                                                    useAngle
-                                                    angle={227}>
-                                                    <Text style={[styles.priceNumber, { opacity: 0 }]}>
+                                    <View style={styles.priceContainer}>
+                                        <View style={styles.price}>
+                                            <images.svg.qoin height={16} width={16} />
+                                            {this.props.costs[1] !== undefined &&
+                                                <MaskedView maskElement={
+                                                    <Text style={styles.priceNumber}>
                                                         {this.props.costs[1]}
                                                     </Text>
-                                                </LinearGradient>
-                                            </MaskedView>
-                                        }
+                                                }>
+                                                    <LinearGradient
+                                                        colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
+                                                        useAngle
+                                                        angle={227}>
+                                                        <Text style={[styles.priceNumber, { opacity: 0 }]}>
+                                                            {this.props.costs[1]}
+                                                        </Text>
+                                                    </LinearGradient>
+                                                </MaskedView>
+                                            }
+                                        </View>
                                     </View>
-                                </View>
                                 </ImageBackground>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.reactionType}
                                 onPress={() => this.changeReactionLevel(3)}>
-                                <ImageBackground source={{
-                                    uri: ''
-                                }} style={styles.reactionTypeContent}>
+                                <ImageBackground source={this.state.level3Gif ? {
+                                            uri: this.state.level3Gif
+                                        }
+                                        :
+                                        null
+                                    }
+                                    style={styles.reactionTypeContent}>
                                 <View style={styles.descriptionContainer}>
                                     <View style={styles.perksContainer}>
+                                        <images.svg.arrowTopCircle height={24} width={24} style={{ marginRight: 16 }} />
                                         <Image source={{
                                                 uri: this.props.randomEmoteUrl
                                             }}

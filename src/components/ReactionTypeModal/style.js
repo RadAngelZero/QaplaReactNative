@@ -36,22 +36,21 @@ export default styles = StyleSheet.create({
         marginTop: 24,
         width: widthPercentageToPx(91.46),
         height: heightPercentageToPx(19.95),
-        padding: 24,
-        backgroundColor: 'rgba(255, 255, 255, .2)',
+        backgroundColor: '#141539',
         borderRadius: 25,
         overflow: 'hidden'
     },
     reactionTypeContent: {
-        flexDirection: 'row'
+        flex: 1,
+        flexDirection: 'row',
+        padding: 24
     },
     descriptionContainer: {
-        height: '100%',
-        justifyContent: 'flex-end'
+        justifyContent: 'space-between'
     },
     perksContainer: {
         flexDirection: 'row',
-        alignItems: 'flex-end',
-        marginBottom: 32
+        alignItems: 'flex-end'
     },
     reactionTitle: {
         fontSize: 16,

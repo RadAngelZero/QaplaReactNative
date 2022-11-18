@@ -120,7 +120,11 @@ class ReactionTypeModal extends Component {
                                             {this.props.costs[1] !== undefined &&
                                                 <MaskedView maskElement={
                                                     <Text style={styles.priceNumber}>
-                                                        {this.props.costs[1]}
+                                                        {this.props.costs[1] ?
+                                                            this.props.costs[1]
+                                                            :
+                                                            'Free'
+                                                        }
                                                     </Text>
                                                 }>
                                                     <LinearGradient
@@ -128,7 +132,11 @@ class ReactionTypeModal extends Component {
                                                         useAngle
                                                         angle={227}>
                                                         <Text style={[styles.priceNumber, { opacity: 0 }]}>
-                                                            {this.props.costs[1]}
+                                                            {this.props.costs[1] ?
+                                                                this.props.costs[1]
+                                                                :
+                                                                'Free'
+                                                            }
                                                         </Text>
                                                     </LinearGradient>
                                                 </MaskedView>
@@ -164,7 +172,11 @@ class ReactionTypeModal extends Component {
                                         {this.props.costs[2] !== undefined &&
                                             <MaskedView maskElement={
                                                 <Text style={styles.priceNumber}>
-                                                    {this.props.costs[2]}
+                                                    {this.props.costs[2] ?
+                                                        this.props.costs[2]
+                                                        :
+                                                        'Free'
+                                                    }
                                                 </Text>
                                             }>
                                                 <LinearGradient
@@ -172,7 +184,11 @@ class ReactionTypeModal extends Component {
                                                     useAngle
                                                     angle={227}>
                                                     <Text style={[styles.priceNumber, { opacity: 0 }]}>
-                                                        {this.props.costs[2]}
+                                                        {this.props.costs[2] ?
+                                                            this.props.costs[2]
+                                                            :
+                                                            'Free'
+                                                        }
                                                     </Text>
                                                 </LinearGradient>
                                             </MaskedView>

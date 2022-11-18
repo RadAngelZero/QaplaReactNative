@@ -9,7 +9,7 @@ export default styles = StyleSheet.create({
     },
     mainContainer: {
         position: 'absolute',
-        backgroundColor: 'transparent',
+        backgroundColor: '#141539',
         bottom: 0,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
@@ -17,7 +17,9 @@ export default styles = StyleSheet.create({
         height: heightPercentageToPx(89.5)
     },
     webViewContainer: {
-        backgroundColor: 'transparent',
+        backgroundColor: '#141539',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
         position: 'absolute',
         width: '100%',
         height: '100%',

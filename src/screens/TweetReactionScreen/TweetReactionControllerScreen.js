@@ -20,7 +20,7 @@ import {
     saveReadyPlayerMeUserId,
     sendReaction
 } from '../../services/database';
-import { retrieveData, storeData } from '../../utilities/persistance';
+import { removeDataItem, retrieveData, storeData } from '../../utilities/persistance';
 import { trackOnSegment } from '../../services/statistics';
 import SentModal from '../../components/SentModal/SentModal';
 import ChooseStreamerModal from '../../components/ChooseStreamerModal/ChooseStreamerModal';
@@ -206,7 +206,7 @@ class TweetReactionControllerScreen extends Component {
                 if (!this.state.freeReactionsSent) {
                     const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid);
                     costs.push(hasUserReactedBefore.exists() ? cost : 0);
-                    disableExtraTip = hasUserReactedBefore.exists();
+                    disableExtraTip = !hasUserReactedBefore.exists();
                     if (!hasUserReactedBefore.exists()) {
                         this.setState({ reactionLevel: 3 });
                     }

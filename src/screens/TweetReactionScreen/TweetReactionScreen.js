@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import {
     ActivityIndicator,
     Image,
@@ -107,123 +107,130 @@ const excludingOptions = {
     },
 };
 
-const MediaOptionTooltip = ({ children, open, onClose, label, highlightedText, cost, keyboardHeight, buttonText, buttonAction }) => {
+/**
+ * We have two modals here because a limitation with tooltip, the next props are just for one of those modals
+ * label, highlightedText, cost, mediaTooltipOffset, buttonText, buttonAction
+ */
+const MediaOptionTooltip = ({ children, open, onClose, label, highlightedText, cost, mediaTooltipOffset, buttonText, buttonAction, extraTipTooltip }) => {
+    if (!extraTipTooltip) {
+        return (
+            <Tooltip showChildInTooltip={false}
+                useReactNativeModal={false}
+                isVisible={open}
+                content={
+                    <View style={styles.tooltipContainer}>
+                        <View style={styles.tooltipTextAndIconContainer}>
+                            <Text style={[styles.tooltipLabelText, { maxWidth: '80%' }]}>
+                                {label}
+                                <Text style={styles.tooltipHighlihgtedText}>
+                                    {highlightedText}
+                                </Text>
+                            </Text>
+                            <TouchableOpacity onPress={onClose}>
+                                <images.svg.closeIcon />
+                            </TouchableOpacity>
+                        </View>
+                        <TouchableOpacity style={styles.tooltipButtonContainer}
+                            onPress={buttonAction}>
+                            <Text style={styles.tooltipLabelText}>
+                                {buttonText}
+                            </Text>
+                            {cost !== undefined &&
+                                <>
+                                <Text style={[styles.tooltipLabelText, styles.tooltipHighlihgtedText, { marginLeft: 8, marginRight: 4 }]}>
+                                    {cost}
+                                </Text>
+                                <images.svg.qoin height={16} width={16} />
+                                </>
+                            }
+                            <images.svg.rightArrow height={16} width={8.8} style={{ marginLeft: 8 }} />
+                        </TouchableOpacity>
+                    </View>
+                }
+                placement='top'
+                onClose={onClose}
+                arrowStyle={[styles.tooltipArrowStyle, {
+                    left: mediaTooltipOffset
+                }]}
+                arrowSize={styles.tooltipArrowSize}
+                displayInsets={{
+                    left: 0,
+                    right: 0
+                }}
+                contentStyle={styles.tooltipContentStyle}
+                backgroundColor='transparent'>
+                {children}
+            </Tooltip>
+        );
+    }
+
     return (
-        <Tooltip
+        <Tooltip showChildInTooltip={false}
+            useReactNativeModal={false}
             isVisible={open}
             content={
-                <View style={styles.tooltipContainer}>
+                <View style={[styles.tooltipContainer, {
+                        minHeight: undefined
+                    }]}>
                     <View style={styles.tooltipTextAndIconContainer}>
                         <Text style={[styles.tooltipLabelText, { maxWidth: '80%' }]}>
-                            {label}
                             <Text style={styles.tooltipHighlihgtedText}>
-                                {highlightedText}
+                                Your first reaction it´s free! 
                             </Text>
+                            After signing up you can support streamers using Qoins
                         </Text>
                         <TouchableOpacity onPress={onClose}>
                             <images.svg.closeIcon />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.tooltipButtonContainer}
-                        onPress={buttonAction}>
-                        <Text style={styles.tooltipLabelText}>
-                            {buttonText}
-                        </Text>
-                        {cost !== undefined &&
-                            <>
-                            <Text style={[styles.tooltipLabelText, styles.tooltipHighlihgtedText, { marginLeft: 8, marginRight: 4 }]}>
-                                {cost}
-                            </Text>
-                            <images.svg.qoin height={16} width={16} />
-                            </>
-                        }
-                        <images.svg.rightArrow height={16} width={8.8} style={{ marginLeft: 8 }} />
-                    </TouchableOpacity>
                 </View>
             }
             placement='top'
             onClose={onClose}
-            arrowStyle={styles.tooltipArrowStyle}
+            arrowStyle={[styles.tooltipArrowStyle, {
+                left: undefined,
+                right: 40
+            }]}
             arrowSize={styles.tooltipArrowSize}
             displayInsets={{
-                left: 0,
+                // To get a perfect 16 padding every time
+                left: widthPercentageToPx(34.67) - 16,
                 right: 0
             }}
-            topAdjustment={keyboardHeight}
-            childContentSpacing={20}
-            contentStyle={styles.tooltipContentStyle}
+            contentStyle={styles.extraTipTooltipContentStyle}
             backgroundColor='transparent'>
             {children}
         </Tooltip>
     );
 }
 
-const MediaOption = ({ type, disabled = false, excluded = false, onPress, isSelected, emoteUrl = null, keyboardHeight, cost, onUpgradeReaction }) => {
-    const [openTooltip, setOpenTooltip] = useState(false);
-
-    const buttonAction = () => {
-        setOpenTooltip(false);
-        if (excluded) {
-            onPress(type);
-        } else {
-            onUpgradeReaction(mediaOptionsData[type].level, type);
-        }
-    }
-
-    let excludedLabels = [];
-    let excludedString = '';
-    if (excluded) {
-        // The currently selected option
-        excludedLabels.push(mediaOptionsData[type].label);
-
-        // The label of any option excluded by the current selection
-        Object.keys(excludingOptions[type]).forEach((optionKey) => {
-            excludedLabels.push(mediaOptionsData[optionKey].label);
-        });
-
-        // Sort strings by length
-        excludedLabels.sort((a, b) => a.length - b.length);
-
-        // Create the final string to show on UI
-        excludedLabels.forEach((label, index) => {
-            excludedString += `${index < excludedLabels.length - 1 ? ' ' : ' or '}${label}${index < excludedLabels.length - 2 ? ', ' : ''}`;
-        });
-    }
+const MediaOption = ({ type, disabled = false, excluded = false, onPress, isSelected, emoteUrl = null, onOpenTooltip }) => {
     const mediaOptionData = mediaOptionsData[type];
 
     // Types come from database, to prevent any problem we don't render the option if we can not find their data
     if (mediaOptionData) {
         return (
-            <MediaOptionTooltip open={openTooltip}
-                highlightedText={excluded ? excludedString : mediaOptionData.label}
-                label={excluded ? '😯 You can only use one ' : '👀 Upgrade your reaction to use '}
-                buttonText={excluded ? `Use ${mediaOptionData.label}` : 'Upgrade Reaction'}
-                buttonAction={buttonAction}
-                onClose={() => setOpenTooltip(false)}
-                keyboardHeight={keyboardHeight}
-                cost={cost}>
-                <TouchableOpacity onPress={() => !disabled && !excluded ? onPress(type) : setOpenTooltip(true)}
-                    style={styles.mediaOptionContainer}
-                    activeOpacity={disabled || excluded ? 1 : .2}>
-                    <View style={disabled || excluded ? styles.mediaOptionDisabled : {}}>
-                        {isSelected &&
-                            <View style={{ position: 'absolute', top: -6, right: -6, zIndex: 9999 }}>
-                                <images.svg.checkCircle />
-                            </View>
-                        }
-                        {type === EMOTE ?
-                            emoteUrl ?
-                                <Image source={emoteUrl ? { uri: emoteUrl } : null}
-                                    style={{ height: 24, width: 24 }} />
-                                :
-                                <ActivityIndicator size='small' color='rgb(61, 249, 223)'
-                                    style={{ height: 24, width: 24 }} />
+            <TouchableOpacity onPress={(e) => !disabled && !excluded ? onPress(type) : onOpenTooltip(e)}
+                style={styles.mediaOptionContainer}
+                activeOpacity={disabled || excluded ? 1 : .2}>
+                <View style={disabled || excluded ? styles.mediaOptionDisabled : {}}>
+                    {isSelected &&
+                        <View style={{ position: 'absolute', top: -6, right: -6, zIndex: 9999 }}>
+                            <images.svg.checkCircle />
+                        </View>
+                    }
+                    {type === EMOTE ?
+                        emoteUrl ?
+                            <Image source={emoteUrl ? { uri: emoteUrl } : null}
+                                style={{ height: 24, width: 24 }} />
                             :
-                            <mediaOptionData.Icon height={24} width={24} />
-                        }
-                    </View>
-                </TouchableOpacity>
-            </MediaOptionTooltip>
+                            <ActivityIndicator size='small' color='rgb(61, 249, 223)'
+                                style={{ height: 24, width: 24 }} />
+                        :
+                        <mediaOptionData.Icon height={24} width={24} />
+                    }
+                </View>
+            </TouchableOpacity>
         );
     }
 
@@ -256,11 +263,14 @@ class TweetReactionScreen extends Component {
         openTipMenu: false,
         extraTipIconRotation: new Animated.Value(0),
         editingTip: false,
-        keyboardHeight: 0,
         streamerFallbackImageUrl: '',
         imageVersion: 0,
         openExtraTipTooltip: false,
-        openReactionTypeTooltip: false
+        openReactionTypeTooltip: false,
+        selectedTooltipType: '',
+        openMediaTooltip: false,
+        mediaTooltipOffset: 0,
+        tutorialTooltipOffset: 0
     };
 
     componentDidMount() {
@@ -359,6 +369,23 @@ class TweetReactionScreen extends Component {
         }
     }
 
+    openTooltip = (e, mediaType) => {
+        this.setState({ openMediaTooltip: true, selectedTooltipType: mediaType, mediaTooltipOffset: e.nativeEvent.pageX - 30 - 24 });
+    }
+
+    openExtraTipTooltip = (e) => {
+        this.setState({ openExtraTipTooltip: true, mediaTooltipOffset: this.state.extraTipTooltipOffset - 40 })
+    }
+
+    buttonAction = () => {
+        this.setState({ openTooltip: false });
+        if (this.props.selectedMedia && excludingOptions[this.props.mediaType] && excludingOptions[this.props.mediaType][this.state.selectedTooltipType]) {
+            this.props.onMediaOptionPress(this.state.selectedTooltipType);
+        } else {
+            this.props.onUpgradeReaction(mediaOptionsData[this.state.selectedTooltipType].level, this.state.selectedTooltipType);
+        }
+    }
+
     render() {
         const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${this.state.imageVersion}`;
         const noEnabledOptions = allMediaOptionsTypes.filter((type) => !this.props.mediaSelectorBarOptions.includes(type));
@@ -378,6 +405,27 @@ class TweetReactionScreen extends Component {
         pills.forEach((item) => {
             item.Icon = mediaOptionsData[item.type].Icon;
         });
+
+        let excluded = this.props.selectedMedia && excludingOptions[this.props.mediaType] && excludingOptions[this.props.mediaType][this.state.selectedTooltipType];
+        let excludedLabels = [];
+        let excludedString = '';
+        if (this.state.selectedTooltipType !== '' && excluded) {
+            // The currently selected option
+            excludedLabels.push(mediaOptionsData[this.state.selectedTooltipType].label);
+
+            // The label of any option excluded by the current selection
+            Object.keys(excludingOptions[this.state.selectedTooltipType]).forEach((optionKey) => {
+                excludedLabels.push(mediaOptionsData[optionKey].label);
+            });
+
+            // Sort strings by length
+            excludedLabels.sort((a, b) => a.length - b.length);
+
+            // Create the final string to show on UI
+            excludedLabels.forEach((label, index) => {
+                excludedString += `${index < excludedLabels.length - 1 ? ' ' : ' or '}${label}${index < excludedLabels.length - 2 ? ', ' : ''}`;
+            });
+        }
 
         return (
             <KeyboardAvoidingView behavior='padding'
@@ -535,97 +583,119 @@ class TweetReactionScreen extends Component {
                                 </ImageBackground>
                             }
                         </View>
-                        <View style={styles.streamerAndExtraTipsContainer}>
-                            <Animated.View style={{
-                                height: this.state.extraTipIconRotation.interpolate({
-                                    inputRange: [0, 1],
-                                    /**
-                                     * 64 = height of streamerContainer and their margins
-                                     * widthPercentageToPx(21.33) + 32 = height of extraTipButtonsContainer and
-                                     * their paddings and margins
-                                     */
-                                    outputRange: [64, widthPercentageToPx(21.33) + 32]
-                                })
-                            }}>
-                                <View style={{ backgroundColor: '#0D1021', }}>
-                                    <Animated.View style={[styles.streamerContainer, {
-                                        opacity: this.state.extraTipIconRotation.interpolate({
-                                            inputRange: [0, .5],
-                                            outputRange: [1, 0]
-                                        }),
-                                        height: this.state.extraTipIconRotation.interpolate({
-                                            inputRange: [0, 1],
-                                            outputRange: [32, 0]
-                                        }),
-                                        marginTop: this.state.extraTipIconRotation.interpolate({
-                                            inputRange: [0, 1],
-                                            outputRange: [16, 0]
-                                        })
+                        <Tooltip useReactNativeModal={false}
+                            showChildInTooltip={false}
+                            isVisible={this.props.openTutorial}
+                            content={
+                                <View style={[styles.tooltipContainer, {
+                                        minHeight: undefined
                                     }]}>
-                                        <TouchableOpacity onPress={this.props.onOpenSearchStreamerModal}>
-                                            <images.svg.swapRectangle />
+                                    <View style={styles.tooltipTextAndIconContainer}>
+                                        <Text style={[styles.tooltipLabelText, { maxWidth: '80%' }]}>
+                                            You can always 
+                                            <Text style={styles.tooltipHighlihgtedText}>
+                                                upgrade or downgrade 
+                                            </Text>
+                                            your reaction here 👇 
+                                        </Text>
+                                        <TouchableOpacity onPress={this.props.onClosingTutorial}>
+                                            <images.svg.closeIcon />
                                         </TouchableOpacity>
-                                        <Image source={
-                                                this.props.streamerImage ? {
-                                                    /**
-                                                     * streamerFallbackImageUrl is always empty unless an error
-                                                     * loading the original image happen
-                                                     */
-                                                    uri: this.state.streamerFallbackImageUrl ?
-                                                        this.state.streamerFallbackImageUrl
-                                                        :
-                                                        this.props.streamerImage
+                                    </View>
+                                </View>
+                            }
+                            placement='top'
+                            onClose={this.props.onClosingTutorial}
+                            arrowStyle={[styles.tooltipArrowStyle, {
+                                left: this.state.tutorialTooltipOffset
+                            }]}
+                            arrowSize={styles.tooltipArrowSize}
+                            contentStyle={styles.extraTipTooltipContentStyle}
+                            backgroundColor='transparent'>
+                            <View style={styles.streamerAndExtraTipsContainer}>
+                                <Animated.View style={{
+                                    height: this.state.extraTipIconRotation.interpolate({
+                                        inputRange: [0, 1],
+                                        /**
+                                         * 64 = height of streamerContainer and their margins
+                                         * widthPercentageToPx(21.33) + 32 = height of extraTipButtonsContainer and
+                                         * their paddings and margins
+                                         */
+                                        outputRange: [64, widthPercentageToPx(21.33) + 32]
+                                    })
+                                }}>
+                                    <View style={{ backgroundColor: '#0D1021' }}>
+                                        <Animated.View style={[styles.streamerContainer, {
+                                            opacity: this.state.extraTipIconRotation.interpolate({
+                                                inputRange: [0, .5],
+                                                outputRange: [1, 0]
+                                            }),
+                                            height: this.state.extraTipIconRotation.interpolate({
+                                                inputRange: [0, 1],
+                                                outputRange: [32, 0]
+                                            }),
+                                            marginTop: this.state.extraTipIconRotation.interpolate({
+                                                inputRange: [0, 1],
+                                                outputRange: [16, 0]
+                                            })
+                                        }]}>
+                                            <TouchableOpacity onPress={this.props.onOpenSearchStreamerModal}>
+                                                <images.svg.swapRectangle />
+                                            </TouchableOpacity>
+                                            <Image source={
+                                                    this.props.streamerImage ? {
+                                                        /**
+                                                         * streamerFallbackImageUrl is always empty unless an error
+                                                         * loading the original image happen
+                                                         */
+                                                        uri: this.state.streamerFallbackImageUrl ?
+                                                            this.state.streamerFallbackImageUrl
+                                                            :
+                                                            this.props.streamerImage
+                                                    }
+                                                    :
+                                                    images.png.defaultReactionProfilePic.img
                                                 }
-                                                :
-                                                images.png.defaultReactionProfilePic.img
-                                            }
-                                            onError={this.getStreamerFallbackImage}
-                                            style={styles.streamerAvatar} />
-                                        <Tooltip
-                                            isVisible={this.props.openTutorial}
-                                            content={
-                                                <View style={[styles.tooltipContainer, {
-                                                        minHeight: undefined
-                                                    }]}>
-                                                    <View style={styles.tooltipTextAndIconContainer}>
-                                                        <Text style={[styles.tooltipLabelText, { maxWidth: '80%' }]}>
-                                                            You can always 
-                                                            <Text style={styles.tooltipHighlihgtedText}>
-                                                                upgrade or downgrade 
-                                                            </Text>
-                                                            your reaction here 👇 
-                                                        </Text>
-                                                        <TouchableOpacity onPress={this.props.onClosingTutorial}>
-                                                            <images.svg.closeIcon />
-                                                        </TouchableOpacity>
-                                                    </View>
-                                                </View>
-                                            }
-                                            placement='top'
-                                            onClose={this.props.onClosingTutorial}
-                                            arrowStyle={styles.tooltipArrowStyle}
-                                            arrowSize={styles.tooltipArrowSize}
-                                            displayInsets={{
-                                                left: 0,
-                                                right: 0
-                                            }}
-                                            topAdjustment={this.state.keyboardHeight}
-                                            childContentSpacing={20}
-                                            contentStyle={styles.extraTipTooltipContentStyle}
-                                            backgroundColor='transparent'>
-                                            <TouchableOpacity style={styles.costContainer} onPress={this.props.onChangeReactionLevel}>
-                                                {this.props.qoins ?
-                                                        <>
-                                                        <images.svg.qoin height={12} width={12} />
-                                                        {this.props.currentReactioncost !== undefined ?
-                                                            this.props.currentReactioncost === 0 ?
+                                                onError={this.getStreamerFallbackImage}
+                                                style={styles.streamerAvatar} />
+                                                <TouchableOpacity style={styles.costContainer}
+                                                    onPress={this.props.onChangeReactionLevel}
+                                                    onLayout={(e) => this.setState({ tutorialTooltipOffset: e.nativeEvent.layout.x - e.nativeEvent.layout.x / 2 })}>
+                                                    {this.props.qoins ?
+                                                            <>
+                                                            <images.svg.qoin height={12} width={12} />
+                                                            {this.props.currentReactioncost !== undefined ?
+                                                                this.props.currentReactioncost === 0 ?
+                                                                    <MaskedView maskElement={
+                                                                        <Text style={[
+                                                                            styles.tooltipLabelText,
+                                                                            styles.tooltipHighlihgtedText,
+                                                                            { marginLeft: 8, marginRight: 4 }
+                                                                        ]}>
+                                                                            Free
+                                                                        </Text>
+                                                                    }>
+                                                                        <LinearGradient
+                                                                            colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
+                                                                            useAngle
+                                                                            angle={227}>
+                                                                            <Text style={[
+                                                                                styles.tooltipLabelText,
+                                                                                styles.tooltipHighlihgtedText,
+                                                                                { marginLeft: 8, marginRight: 4, opacity: 0 }
+                                                                            ]}>
+                                                                                Free
+                                                                            </Text>
+                                                                        </LinearGradient>
+                                                                    </MaskedView>
+                                                                :
                                                                 <MaskedView maskElement={
                                                                     <Text style={[
                                                                         styles.tooltipLabelText,
                                                                         styles.tooltipHighlihgtedText,
                                                                         { marginLeft: 8, marginRight: 4 }
                                                                     ]}>
-                                                                        Free
+                                                                        {this.props.currentReactioncost}
                                                                     </Text>
                                                                 }>
                                                                     <LinearGradient
@@ -637,138 +707,92 @@ class TweetReactionScreen extends Component {
                                                                             styles.tooltipHighlihgtedText,
                                                                             { marginLeft: 8, marginRight: 4, opacity: 0 }
                                                                         ]}>
-                                                                            Free
+                                                                            {this.props.currentReactioncost}
                                                                         </Text>
                                                                     </LinearGradient>
                                                                 </MaskedView>
-                                                            :
-                                                            <MaskedView maskElement={
-                                                                <Text style={[
-                                                                    styles.tooltipLabelText,
-                                                                    styles.tooltipHighlihgtedText,
-                                                                    { marginLeft: 8, marginRight: 4 }
-                                                                ]}>
-                                                                    {this.props.currentReactioncost}
-                                                                </Text>
-                                                            }>
-                                                                <LinearGradient
-                                                                    colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
-                                                                    useAngle
-                                                                    angle={227}>
-                                                                    <Text style={[
-                                                                        styles.tooltipLabelText,
-                                                                        styles.tooltipHighlihgtedText,
-                                                                        { marginLeft: 8, marginRight: 4, opacity: 0 }
-                                                                    ]}>
-                                                                        {this.props.currentReactioncost}
-                                                                    </Text>
-                                                                </LinearGradient>
-                                                            </MaskedView>
-                                                            :
-                                                            <ActivityIndicator size='small' color='rgb(61, 249, 223)'
-                                                                style={{marginLeft: 8, height: 12, width: 12 }} />
-                                                        }
+                                                                :
+                                                                <ActivityIndicator size='small' color='rgb(61, 249, 223)'
+                                                                    style={{marginLeft: 8, height: 12, width: 12 }} />
+                                                            }
+                                                            </>
+                                                    :
+                                                        <>
+                                                        <images.svg.interactionsNumberIcon height={12} width={12}  />
+                                                        <Text style={styles.costText}>
+                                                            {this.props.numberOfReactions !== undefined ?
+                                                                `${this.props.numberOfReactions.toLocaleString()} Reactions`
+                                                                :
+                                                                null
+                                                            }
+                                                        </Text>
                                                         </>
-                                                :
-                                                    <>
-                                                    <images.svg.interactionsNumberIcon height={12} width={12}  />
-                                                    <Text style={styles.costText}>
-                                                        {this.props.numberOfReactions !== undefined ?
-                                                            `${this.props.numberOfReactions.toLocaleString()} Reactions`
-                                                            :
-                                                            null
-                                                        }
-                                                    </Text>
-                                                    </>
-                                                }
-                                                <images.svg.arrowTopCircle style={{ marginLeft: 6 }} />
-                                            </TouchableOpacity>
-                                        </Tooltip>
-                                        <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                                            <TouchableOpacity onPress={this.toggleKeyboard}>
-                                                <images.svg.showKeyboard />
-                                            </TouchableOpacity>
-                                        </View>
-                                    </Animated.View>
-                                    <View style={styles.extraTipButtonsContainer}>
-                                        <ExtraTipOption label={200}
-                                            onPress={() => this.setSelectedTip(200)}
-                                            selected={this.props.extraTip === 200} />
-                                        <ExtraTipOption label={500}
-                                            onPress={() => this.setSelectedTip(500)}
-                                            selected={this.props.extraTip === 500} />
-                                        <ExtraTipOption label={1000}
-                                            onPress={() => this.setSelectedTip(1000)}
-                                            selected={this.props.extraTip === 1000} />
-                                        <ExtraTipOption label={4000}
-                                            onPress={() => this.setSelectedTip(4000)}
-                                            selected={this.props.extraTip === 4000} />
-                                    </View>
-                                </View>
-                            </Animated.View>
-                        </View>
-                        <View style={styles.mediaSelector}>
-                            {!this.state.openTipMenu &&
-                                <ScrollView horizontal
-                                    // Prop to allow users to press buttons inside scroll view even if keyboard is open
-                                    keyboardShouldPersistTaps='handled'
-                                    showsHorizontalScrollIndicator={false}
-                                    style={styles.mediaSelectorScrollView}
-                                    contentContainerStyle={{ alignItems: 'center' }}>
-                                    {this.props.mediaSelectorBarOptions.map((mediaType) => (
-                                        <MediaOption key={mediaType}
-                                            type={mediaType}
-                                            excluded={this.props.selectedMedia && excludingOptions[this.props.mediaType] && excludingOptions[this.props.mediaType][mediaType]}
-                                            onPress={this.props.onMediaOptionPress}
-                                            isSelected={this.isMediaOptionSelected(mediaType)}
-                                            emoteUrl={this.props.randomEmoteUrl}
-                                            keyboardHeight={this.state.keyboardHeight} />
-                                        ))
-                                    }
-                                    {noEnabledOptions.map((mediaType) => (
-                                        <MediaOption key={mediaType}
-                                            type={mediaType}
-                                            disabled
-                                            cost={this.props.costsPerReactionLevel[mediaOptionsData[mediaType].level - 1]}
-                                            emoteUrl={this.props.randomEmoteUrl}
-                                            keyboardHeight={this.state.keyboardHeight}
-                                            onUpgradeReaction={this.props.onUpgradeReaction} />
-                                    ))}
-                                </ScrollView>
-                            }
-                            <Tooltip
-                                isVisible={this.state.openExtraTipTooltip}
-                                content={
-                                    <View style={[styles.tooltipContainer, {
-                                            minHeight: undefined
-                                        }]}>
-                                        <View style={styles.tooltipTextAndIconContainer}>
-                                            <Text style={[styles.tooltipLabelText, { maxWidth: '80%' }]}>
-                                                <Text style={styles.tooltipHighlihgtedText}>
-                                                    Your first reaction it´s free! 
-                                                </Text>
-                                                After signing up you can support streamers using Qoins
-                                            </Text>
-                                            <TouchableOpacity onPress={() => this.setState({ openExtraTipTooltip: false })}>
-                                                <images.svg.closeIcon />
-                                            </TouchableOpacity>
+                                                    }
+                                                    <images.svg.arrowTopCircle style={{ marginLeft: 6 }} />
+                                                </TouchableOpacity>
+                                            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                                                <TouchableOpacity onPress={this.toggleKeyboard}>
+                                                    <images.svg.showKeyboard />
+                                                </TouchableOpacity>
+                                            </View>
+                                        </Animated.View>
+                                        <View style={styles.extraTipButtonsContainer}>
+                                            <ExtraTipOption label={200}
+                                                onPress={() => this.setSelectedTip(200)}
+                                                selected={this.props.extraTip === 200} />
+                                            <ExtraTipOption label={500}
+                                                onPress={() => this.setSelectedTip(500)}
+                                                selected={this.props.extraTip === 500} />
+                                            <ExtraTipOption label={1000}
+                                                onPress={() => this.setSelectedTip(1000)}
+                                                selected={this.props.extraTip === 1000} />
+                                            <ExtraTipOption label={4000}
+                                                onPress={() => this.setSelectedTip(4000)}
+                                                selected={this.props.extraTip === 4000} />
                                         </View>
                                     </View>
+                                </Animated.View>
+                            </View>
+                        </Tooltip>
+                        <MediaOptionTooltip open={this.state.openMediaTooltip || this.state.openExtraTipTooltip}
+                            highlightedText={excluded ? excludedString : this.state.selectedTooltipType ? mediaOptionsData[this.state.selectedTooltipType].label : ''}
+                            label={excluded ? '😯 You can only use one ' : '👀 Upgrade your reaction to use '}
+                            buttonText={excluded ? `Use ${this.state.selectedTooltipType ? mediaOptionsData[this.state.selectedTooltipType].label : ''}` : 'Upgrade Reaction'}
+                            buttonAction={this.buttonAction}
+                            onClose={() => this.setState({ openMediaTooltip: false, openExtraTipTooltip: false })}
+                            cost={this.state.selectedTooltipType ? this.props.costsPerReactionLevel[mediaOptionsData[this.state.selectedTooltipType].level - 1] : 0}
+                            mediaTooltipOffset={this.state.mediaTooltipOffset}
+                            extraTipTooltip={this.state.openExtraTipTooltip}>
+                            <View style={styles.mediaSelector}>
+                                {!this.state.openTipMenu &&
+                                    <ScrollView horizontal
+                                        // Prop to allow users to press buttons inside scroll view even if keyboard is open
+                                        keyboardShouldPersistTaps='handled'
+                                        showsHorizontalScrollIndicator={false}
+                                        style={styles.mediaSelectorScrollView}
+                                        contentContainerStyle={{ alignItems: 'center' }}>
+                                        {this.props.mediaSelectorBarOptions.map((mediaType) => (
+                                            <MediaOption key={mediaType}
+                                                type={mediaType}
+                                                excluded={this.props.selectedMedia && excludingOptions[this.props.mediaType] && excludingOptions[this.props.mediaType][mediaType]}
+                                                onPress={this.props.onMediaOptionPress}
+                                                isSelected={this.isMediaOptionSelected(mediaType)}
+                                                emoteUrl={this.props.randomEmoteUrl}
+                                                onOpenTooltip={(e) => this.openTooltip(e, mediaType)} />
+                                            ))
+                                        }
+                                        {noEnabledOptions.map((mediaType) => (
+                                            <MediaOption key={mediaType}
+                                                type={mediaType}
+                                                disabled
+                                                emoteUrl={this.props.randomEmoteUrl}
+                                                onUpgradeReaction={this.props.onUpgradeReaction}
+                                                onOpenTooltip={(e) => this.openTooltip(e, mediaType)} />
+                                        ))}
+                                    </ScrollView>
                                 }
-                                placement='top'
-                                onClose={() => this.setState({ openExtraTipTooltip: false })}
-                                arrowStyle={styles.tooltipArrowStyle}
-                                arrowSize={styles.tooltipArrowSize}
-                                displayInsets={{
-                                    // To get a perfect 16 padding every time
-                                    left: widthPercentageToPx(34.67) - 16,
-                                    right: 0
-                                }}
-                                topAdjustment={this.state.keyboardHeight}
-                                childContentSpacing={20}
-                                contentStyle={styles.extraTipTooltipContentStyle}
-                                backgroundColor='transparent'>
-                                <TouchableOpacity onPress={() => this.props.disableExtraTip ? this.setState({ openExtraTipTooltip: true }) : this.tipButtonHandler()}>
+                                <TouchableOpacity onPress={(e) => this.props.disableExtraTip ? this.openExtraTipTooltip(e) : this.tipButtonHandler()}
+                                    onLayout={(e) => this.setState({ extraTipTooltipOffset: e.nativeEvent.layout.x })}>
                                     <LinearGradient useAngle
                                         angle={135}
                                         angleCenter={{ x: .6, y: .6 }}
@@ -820,8 +844,8 @@ class TweetReactionScreen extends Component {
                                         }
                                     </LinearGradient>
                                 </TouchableOpacity>
-                            </Tooltip>
-                        </View>
+                            </View>
+                        </MediaOptionTooltip>
                     </SafeAreaView>
                 </TouchableWithoutFeedback>
                 <SafeAreaView style={{ flex: 0, backgroundColor: '#141539' }} />

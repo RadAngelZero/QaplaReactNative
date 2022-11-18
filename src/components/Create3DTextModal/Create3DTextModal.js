@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, FlatList, Image, Keyboard, LayoutAnimation, Modal, Platform, TextInput, TouchableOpacity, UIManager, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Keyboard, Modal, Platform, TextInput, TouchableOpacity, View } from 'react-native';
 import WebView from 'react-native-webview';
 import { connect } from 'react-redux';
 
@@ -8,11 +8,6 @@ import images from './../../../assets/images';
 import { getGiphyTextRequestKey, listenGiphyTextSearch, removeGiphyTextRequests, stopListeningGiphyTextSearch } from '../../services/database';
 import { GIPHY_TEXT_GENERATOR_URL } from '../../utilities/Constants';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
-
-// For animations on android
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-    UIManager.setLayoutAnimationEnabledExperimental(true);
-}
 
 class Create3DTextModal extends Component {
     state = {
@@ -27,7 +22,6 @@ class Create3DTextModal extends Component {
 
     componentDidMount() {
         this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
-            LayoutAnimation.linear();
 			this.setState({ keyboardHeight: parseInt(e.endCoordinates.height) });
 		});
 		this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', () => {

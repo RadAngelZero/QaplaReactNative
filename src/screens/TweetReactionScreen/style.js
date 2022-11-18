@@ -124,6 +124,7 @@ export default styles = StyleSheet.create({
         right: 8
     },
     streamerAndExtraTipsContainer: {
+        width: widthPercentageToPx(100),
         overflow: 'hidden',
         paddingHorizontal: 16
     },

@@ -153,7 +153,7 @@ export default styles = StyleSheet.create({
     costText: {
         marginLeft: 6,
         fontSize: 14,
-        fontWeight: '700',
+        fontWeight: '500',
         letterSpacing: .5,
         color: '#FFF'
     },

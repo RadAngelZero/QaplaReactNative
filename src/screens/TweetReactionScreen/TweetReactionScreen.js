@@ -668,7 +668,7 @@ class TweetReactionScreen extends Component {
                                                             {this.props.currentReactioncost !== undefined ?
                                                                 this.props.currentReactioncost === 0 ?
                                                                     <MaskedView maskElement={
-                                                                        <Text style={[styles.costText, { marginLeft: 8, marginRight: 4 }]}>
+                                                                        <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, fontWeight: '700' }]}>
                                                                             Free
                                                                         </Text>
                                                                     }>
@@ -676,14 +676,14 @@ class TweetReactionScreen extends Component {
                                                                             colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
                                                                             useAngle
                                                                             angle={227}>
-                                                                            <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, opacity: 0 }]}>
+                                                                            <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, fontWeight: '700', opacity: 0 }]}>
                                                                                 Free
                                                                             </Text>
                                                                         </LinearGradient>
                                                                     </MaskedView>
                                                                 :
                                                                 <MaskedView maskElement={
-                                                                    <Text style={[styles.costText, { marginLeft: 8, marginRight: 4 }]}>
+                                                                    <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, fontWeight: '700' }]}>
                                                                         {this.props.currentReactioncost}
                                                                     </Text>
                                                                 }>
@@ -691,7 +691,7 @@ class TweetReactionScreen extends Component {
                                                                         colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
                                                                         useAngle
                                                                         angle={227}>
-                                                                        <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, opacity: 0 }
+                                                                        <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, fontWeight: '700', opacity: 0 }
                                                                         ]}>
                                                                             {this.props.currentReactioncost}
                                                                         </Text>

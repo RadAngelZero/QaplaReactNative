@@ -49,7 +49,7 @@ const StreamerItem = ({ uid, streamerUid, streamerImage, streamerName, selected,
                     onError={getStreamerFallbackImage} />
                 {selected &&
                     <View style={{ position: 'absolute', bottom: 0, left: 32, zIndex: 9999 }}>
-                        <images.svg.checkCircle />
+                        <images.svg.checkCircle height={20} width={20} />
                     </View>
                 }
                 <Text style={styles.streamerName} numberOfLines={1}>
@@ -198,7 +198,7 @@ class ChooseStreamerModal extends Component {
                         }]}>
                             <View style={styles.gridSearchBarContainer}>
                                 <TouchableOpacity onPress={this.props.onClose}>
-                                    <images.svg.closeIcon />
+                                    <images.svg.closeIcon style={styles.closeIcon} />
                                 </TouchableOpacity>
                                 <View style={[styles.searchBar, styles.gridSearchBar]}>
                                     <View style={{ opacity: 0.4 }}>

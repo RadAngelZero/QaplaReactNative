@@ -19,6 +19,14 @@ export default styles = StyleSheet.create({
     closeIcon: {
         marginTop: 16,
         marginBottom: 8,
-        marginLeft: 16
+        marginLeft: 16,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
     }
 });

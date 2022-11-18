@@ -22,10 +22,20 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center'
     },
+    closeIcon: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
     title: {
         alignSelf: 'center',
         fontSize: 18,
-        fontWeight: '500',
+        fontWeight: '700',
         color: '#FFF'
     },
     emoteRainGifContainer: {

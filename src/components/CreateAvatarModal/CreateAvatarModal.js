@@ -89,9 +89,9 @@ class CreateAvatarModal extends Component {
                 transparent>
                 <View style={styles.container}>
                     <View style={styles.mainContainer}>
-                        <TouchableOpacity style={styles.closeIcon}
+                        <TouchableOpacity
                             onPress={this.props.onClose}>
-                            <images.svg.closeIcon />
+                            <images.svg.closeIcon style={styles.closeIcon} />
                         </TouchableOpacity>
                         <WebView ref={(webview) => this.webview = webview}
                             source={{

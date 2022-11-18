@@ -617,11 +617,11 @@ class TweetReactionScreen extends Component {
                                     height: this.state.extraTipIconRotation.interpolate({
                                         inputRange: [0, 1],
                                         /**
-                                         * 64 = height of streamerContainer and their margins
+                                         * 72 = height of streamerContainer and their margins
                                          * widthPercentageToPx(21.33) + 32 = height of extraTipButtonsContainer and
                                          * their paddings and margins
                                          */
-                                        outputRange: [64, widthPercentageToPx(21.33) + 32]
+                                        outputRange: [72, widthPercentageToPx(21.33) + 36]
                                     })
                                 }}>
                                     <View style={{ backgroundColor: '#0D1021' }}>
@@ -639,8 +639,9 @@ class TweetReactionScreen extends Component {
                                                 outputRange: [16, 0]
                                             })
                                         }]}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                             <TouchableOpacity onPress={this.props.onOpenSearchStreamerModal}>
-                                                <images.svg.swapRectangle />
+                                                <images.svg.swapRectangle height={24} width={24} />
                                             </TouchableOpacity>
                                             <Image source={
                                                     this.props.streamerImage ? {
@@ -663,15 +664,11 @@ class TweetReactionScreen extends Component {
                                                     onLayout={(e) => this.setState({ tutorialTooltipOffset: e.nativeEvent.layout.x - e.nativeEvent.layout.x / 2 })}>
                                                     {this.props.qoins ?
                                                             <>
-                                                            <images.svg.qoin height={12} width={12} />
+                                                            <images.svg.qoin height={16} width={16} />
                                                             {this.props.currentReactioncost !== undefined ?
                                                                 this.props.currentReactioncost === 0 ?
                                                                     <MaskedView maskElement={
-                                                                        <Text style={[
-                                                                            styles.tooltipLabelText,
-                                                                            styles.tooltipHighlihgtedText,
-                                                                            { marginLeft: 8, marginRight: 4 }
-                                                                        ]}>
+                                                                        <Text style={[styles.costText, { marginLeft: 8, marginRight: 4 }]}>
                                                                             Free
                                                                         </Text>
                                                                     }>
@@ -679,22 +676,14 @@ class TweetReactionScreen extends Component {
                                                                             colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
                                                                             useAngle
                                                                             angle={227}>
-                                                                            <Text style={[
-                                                                                styles.tooltipLabelText,
-                                                                                styles.tooltipHighlihgtedText,
-                                                                                { marginLeft: 8, marginRight: 4, opacity: 0 }
-                                                                            ]}>
+                                                                            <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, opacity: 0 }]}>
                                                                                 Free
                                                                             </Text>
                                                                         </LinearGradient>
                                                                     </MaskedView>
                                                                 :
                                                                 <MaskedView maskElement={
-                                                                    <Text style={[
-                                                                        styles.tooltipLabelText,
-                                                                        styles.tooltipHighlihgtedText,
-                                                                        { marginLeft: 8, marginRight: 4 }
-                                                                    ]}>
+                                                                    <Text style={[styles.costText, { marginLeft: 8, marginRight: 4 }]}>
                                                                         {this.props.currentReactioncost}
                                                                     </Text>
                                                                 }>
@@ -702,10 +691,7 @@ class TweetReactionScreen extends Component {
                                                                         colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
                                                                         useAngle
                                                                         angle={227}>
-                                                                        <Text style={[
-                                                                            styles.tooltipLabelText,
-                                                                            styles.tooltipHighlihgtedText,
-                                                                            { marginLeft: 8, marginRight: 4, opacity: 0 }
+                                                                        <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, opacity: 0 }
                                                                         ]}>
                                                                             {this.props.currentReactioncost}
                                                                         </Text>
@@ -718,7 +704,7 @@ class TweetReactionScreen extends Component {
                                                             </>
                                                     :
                                                         <>
-                                                        <images.svg.interactionsNumberIcon height={12} width={12}  />
+                                                        <images.svg.interactionsNumberIcon height={16} width={16}  />
                                                         <Text style={styles.costText}>
                                                             {this.props.numberOfReactions !== undefined ?
                                                                 `${this.props.numberOfReactions.toLocaleString()} Reactions`
@@ -728,8 +714,9 @@ class TweetReactionScreen extends Component {
                                                         </Text>
                                                         </>
                                                     }
-                                                    <images.svg.arrowTopCircle style={{ marginLeft: 6 }} />
+                                                    <images.svg.arrowTopCircle height={16} width={16} style={{ marginLeft: 6 }} />
                                                 </TouchableOpacity>
+                                            </View>
                                             <View style={{ flex: 1, alignItems: 'flex-end' }}>
                                                 <TouchableOpacity onPress={this.toggleKeyboard}>
                                                     <images.svg.showKeyboard />

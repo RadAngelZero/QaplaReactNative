@@ -41,13 +41,23 @@ class ReactionTypeModal extends Component {
                 <View style={styles.container}>
                     <View style={styles.mainContainer}>
                         <View style={styles.titleRow}>
-                            <TouchableOpacity onPress={this.props.onClose}
-                                style={styles.closeIcon}>
-                                <images.svg.closeIcon />
+                            <TouchableOpacity onPress={this.props.onClose}>
+                                <images.svg.closeIcon style={styles.closeIcon} />
                             </TouchableOpacity>
-                            <Text style={styles.title}>
-                                Select Reaction Tier
-                            </Text>
+                            <MaskedView maskElement={
+                                <Text style={styles.title}>
+                                    Select Reaction Tier
+                                </Text>
+                            }>
+                                <LinearGradient
+                                    colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
+                                    useAngle
+                                    angle={227}>
+                                    <Text style={[styles.title, { opacity: 0 }]}>
+                                    Select Reaction Tier
+                                    </Text>
+                                </LinearGradient>
+                            </MaskedView>
                             {/* Trick to center text */}
                             <View style={[styles.closeIcon, { opacity: 0 }]}>
                                 <images.svg.closeIcon />
@@ -70,7 +80,7 @@ class ReactionTypeModal extends Component {
                                         <images.svg.interactionsMemes height={24} width={24} />
                                     </View>
                                     <Text style={styles.reactionTitle}>
-                                        Use channel points
+                                        Memes + TTS
                                     </Text>
                                 </View>
                                 <View style={styles.priceContainer}>
@@ -116,7 +126,7 @@ class ReactionTypeModal extends Component {
                                     </View>
                                     <View style={styles.priceContainer}>
                                         <View style={styles.price}>
-                                            <images.svg.qoin height={16} width={16} />
+                                            <images.svg.qoin height={24} width={24} />
                                             {this.props.costs[1] !== undefined &&
                                                 <MaskedView maskElement={
                                                     <Text style={styles.priceNumber}>
@@ -168,7 +178,7 @@ class ReactionTypeModal extends Component {
                                 </View>
                                 <View style={styles.priceContainer}>
                                     <View style={styles.price}>
-                                        <images.svg.qoin height={16} width={16} />
+                                        <images.svg.qoin height={24} width={24} />
                                         {this.props.costs[2] !== undefined &&
                                             <MaskedView maskElement={
                                                 <Text style={styles.priceNumber}>

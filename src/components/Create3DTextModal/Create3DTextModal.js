@@ -115,7 +115,7 @@ class Create3DTextModal extends Component {
                     }]}>
                         <View style={styles.gridSearchBarContainer}>
                             <TouchableOpacity onPress={this.props.onClose}>
-                                <images.svg.closeIcon />
+                                <images.svg.closeIcon style={styles.closeIcon} />
                             </TouchableOpacity>
                             <View style={[styles.searchBar, styles.gridSearchBar]}>
                                 <View style={{ opacity: 0.4 }}>

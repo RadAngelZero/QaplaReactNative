@@ -35,5 +35,16 @@ export default styles = StyleSheet.create({
         marginTop: 16,
         paddingHorizontal: 16,
         justifyContent: 'space-between',
-    }
+    },
+    closeIcon: {
+        marginRight: 16,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
 });

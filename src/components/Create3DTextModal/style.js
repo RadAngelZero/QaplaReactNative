@@ -25,6 +25,17 @@ export default styles = StyleSheet.create({
         paddingHorizontal: 16,
         justifyContent: 'space-between',
     },
+    closeIcon: {
+        marginRight: 16,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
     searchBar: {
         flexDirection: 'row',
         borderRadius: 50,
@@ -34,7 +45,7 @@ export default styles = StyleSheet.create({
     },
     gridSearchBar: {
         backgroundColor: '#0D1021',
-        width: widthPercentageToPx(80),
+        width: widthPercentageToPx(80) - 16,
     },
     gridSearchBarTextInput: {
         flex: 1,

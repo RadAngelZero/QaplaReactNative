@@ -25,6 +25,16 @@ export default styles = StyleSheet.create({
         paddingHorizontal: 16,
         justifyContent: 'space-between',
     },
+    closeIcon: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
     signUpContainer: {
         alignItems: 'center',
         marginTop: 4

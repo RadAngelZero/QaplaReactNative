@@ -27,9 +27,8 @@ class EmoteRainModal extends Component {
                 <View style={styles.container}>
                     <View style={styles.mainContainer}>
                         <View style={styles.titleRow}>
-                            <TouchableOpacity onPress={this.props.onClose}
-                                style={styles.closeIcon}>
-                                <images.svg.closeIcon />
+                            <TouchableOpacity onPress={this.props.onClose}>
+                                <images.svg.closeIcon style={styles.closeIcon} />
                             </TouchableOpacity>
                             <Text style={styles.title}>
                                 Let it rain 👇

@@ -88,7 +88,7 @@ class QaplaMemeSelectorModal extends Component {
                     <View style={styles.memesContainer}>
                         <View style={styles.gridSearchBarContainer}>
                             <TouchableOpacity onPress={this.props.onClose}>
-                                <images.svg.closeIcon />
+                                <images.svg.closeIcon style={styles.closeIcon} />
                             </TouchableOpacity>
                         </View>
                         <View style={styles.gridMemeContainer}>

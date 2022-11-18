@@ -61,7 +61,7 @@ class AvatarReactionModal extends Component {
                                     left: 16
                                 }}
                                     onPress={this.props.onClose}>
-                                    <images.svg.closeIcon />
+                                    <images.svg.closeIcon style={styles.closeIcon} />
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.selectorContainer}>

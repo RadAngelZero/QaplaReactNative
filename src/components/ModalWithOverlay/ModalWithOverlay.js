@@ -15,7 +15,7 @@ class ModalWithOverlay extends Component {
                 <View style={styles.modalContainer}>
                     <View style={styles.modal}>
                         <TouchableOpacity style={styles.closeModalIcon} onPress={this.props.onClose}>
-                            <images.svg.closeIcon />
+                            <images.svg.closeIcon style={styles.closeIcon} />
                         </TouchableOpacity>
                         {this.props.children}
                     </View>

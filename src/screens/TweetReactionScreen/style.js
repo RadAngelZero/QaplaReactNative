@@ -11,7 +11,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 16,
-        paddingVertical: 24
+        paddingBottom: 24
     },
     textButton: {
         padding: 4
@@ -65,7 +65,7 @@ export default styles = StyleSheet.create({
         paddingTop: 4,
         fontSize: 14,
         fontWeight: '400',
-        lineHeight: 12,
+        lineHeight: 16.71,
         color: '#7BB0FF'
     },
     custom3DTextContainer: {
@@ -129,10 +129,10 @@ export default styles = StyleSheet.create({
         paddingHorizontal: 16
     },
     streamerContainer: {
-        marginBottom: 16,
+        marginBottom: 24,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'flex-end'
     },
     streamerAvatar: {
         marginLeft: 8,
@@ -205,7 +205,7 @@ export default styles = StyleSheet.create({
     },
     tooltipContainer: {
         minHeight: 150,
-        padding: 16,
+        padding: 8,
         flex: 1,
         justifyContent: 'space-between'
     },
@@ -228,19 +228,20 @@ export default styles = StyleSheet.create({
         backgroundColor: '#141735',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 19,
-        paddingVertical: 13,
+        paddingHorizontal: 24,
+        paddingVertical: 12,
         borderRadius: 50,
         marginTop: 11,
         alignSelf: 'flex-end',
-        shadowColor: '#000',
+        shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 11,
+            height: 2,
         },
-        shadowOpacity: 0.55,
-        shadowRadius: 14.78,
-        elevation: 22
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+
     },
     tooltipArrowStyle: {
         color: '#3B4BF9'

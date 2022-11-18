@@ -124,7 +124,7 @@ class SignUpModal extends Component {
                             <>
                             <View style={styles.closeIconContainer}>
                                 <TouchableOpacity onPress={this.props.onClose}>
-                                    <images.svg.closeIcon />
+                                    <images.svg.closeIcon style={styles.closeIcon} />
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.signUpContainer}>

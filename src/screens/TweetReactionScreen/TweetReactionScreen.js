@@ -189,7 +189,7 @@ const MediaOptionTooltip = ({ children, open, onClose, label, highlightedText, c
             onClose={onClose}
             arrowStyle={[styles.tooltipArrowStyle, {
                 left: undefined,
-                right: 40
+                right: 32
             }]}
             arrowSize={styles.tooltipArrowSize}
             displayInsets={{

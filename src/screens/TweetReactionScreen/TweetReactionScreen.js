@@ -373,8 +373,8 @@ class TweetReactionScreen extends Component {
         this.setState({ openMediaTooltip: true, selectedTooltipType: mediaType, mediaTooltipOffset: e.nativeEvent.pageX - 30 - 24 });
     }
 
-    openExtraTipTooltip = (e) => {
-        this.setState({ openExtraTipTooltip: true, mediaTooltipOffset: this.state.extraTipTooltipOffset - 40 })
+    openExtraTipTooltip = () => {
+        this.setState({ openExtraTipTooltip: true });
     }
 
     buttonAction = () => {
@@ -791,7 +791,7 @@ class TweetReactionScreen extends Component {
                                         ))}
                                     </ScrollView>
                                 }
-                                <TouchableOpacity onPress={(e) => this.props.disableExtraTip ? this.openExtraTipTooltip(e) : this.tipButtonHandler()}
+                                <TouchableOpacity onPress={() => this.props.disableExtraTip ? this.openExtraTipTooltip() : this.tipButtonHandler()}
                                     onLayout={(e) => this.setState({ extraTipTooltipOffset: e.nativeEvent.layout.x })}>
                                     <LinearGradient useAngle
                                         angle={135}

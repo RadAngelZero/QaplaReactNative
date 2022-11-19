@@ -270,11 +270,24 @@ class TweetReactionScreen extends Component {
         selectedTooltipType: '',
         openMediaTooltip: false,
         mediaTooltipOffset: 0,
-        tutorialTooltipOffset: 0
+        tutorialTooltipOffset: 0,
+        keyboardOpen: false
     };
 
     componentDidMount() {
         this.getImageVersion();
+
+        this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+			this.setState({ keyboardOpen: true });
+		});
+		this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', () => {
+			this.setState({ keyboardOpen: false });
+		});
+    }
+
+    componentWillUnmount() {
+        this.keyboardWillHideListener.remove();
+        this.keyboardWillShowListener.remove();
     }
 
     getImageVersion = async () => {
@@ -711,7 +724,7 @@ class TweetReactionScreen extends Component {
                                                 </TouchableOpacity>
                                             </View>
                                             <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                                                {this.textInput && this.textInput.isFocused() ?
+                                                {this.state.keyboardOpen ?
                                                     <TouchableOpacity onPress={this.toggleKeyboard}>
                                                         <images.svg.hideKeyboard />
                                                     </TouchableOpacity>

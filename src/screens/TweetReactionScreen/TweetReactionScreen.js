@@ -270,19 +270,11 @@ class TweetReactionScreen extends Component {
         selectedTooltipType: '',
         openMediaTooltip: false,
         mediaTooltipOffset: 0,
-        tutorialTooltipOffset: 0,
-        keyboardOpen: false
+        tutorialTooltipOffset: 0
     };
 
     componentDidMount() {
         this.getImageVersion();
-
-        this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
-			this.setState({ keyboardHeight: e.endCoordinates.height });
-		});
-		this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', () => {
-			this.setState({ keyboardHeight: 0 });
-		});
     }
 
     getImageVersion = async () => {

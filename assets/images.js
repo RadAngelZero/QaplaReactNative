@@ -125,6 +125,7 @@ import Avatar from './icons/Avatar.svg';
 import GiphyText from './icons/GiphyText.svg';
 import EditCircle from './icons/EditCircle.svg';
 import ShowKeyboard from './icons/ShowKeyboard.svg';
+import HideKeyboard from './icons/hideKeyboard.svg';
 import CheckCircleWhite from './icons/CheckCircleWhite.svg';
 import ArrowTopCircle from './icons/arrowTopCircle.svg';
 
@@ -404,6 +405,7 @@ const images = {
 		giphyText: GiphyText,
 		editCircle: EditCircle,
 		showKeyboard: ShowKeyboard,
+		hideKeyboard: HideKeyboard,
 		checkCircleWhite: CheckCircleWhite,
 		arrowTopCircle: ArrowTopCircle
 	},

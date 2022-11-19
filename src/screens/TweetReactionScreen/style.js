@@ -142,10 +142,10 @@ export default styles = StyleSheet.create({
         borderRadius: 1000
     },
     costContainer: {
+        height: 32,
         backgroundColor: '#1C1E64',
         borderRadius: 10,
         paddingHorizontal: 16,
-        paddingVertical: 6,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'

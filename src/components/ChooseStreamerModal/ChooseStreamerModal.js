@@ -249,7 +249,7 @@ class ChooseStreamerModal extends Component {
                                                     null
                                                 } />
                                             <Text style={styles.noContentText}>
-                                                Who’s the reaction for? Find your streamer 🫶
+                                                Who’s the reaction for?{'\n'}Find your streamer 🫶
                                             </Text>
                                             </>
                                         </View>

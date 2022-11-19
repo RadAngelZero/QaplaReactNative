@@ -121,7 +121,7 @@ class ReactionTypeModal extends Component {
                                             <images.svg.volumeUp height={24} width={24} />
                                         </View>
                                         <Text style={styles.reactionTitle}>
-                                            + Avatar, 3D Text
+                                            + Avatar{'\n'}3D Text, TTS Voice
                                         </Text>
                                     </View>
                                     <View style={styles.priceContainer}>

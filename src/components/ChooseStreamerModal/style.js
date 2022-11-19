@@ -77,6 +77,7 @@ export default styles = StyleSheet.create({
     noContentText: {
         marginTop: 32,
         fontSize: 18,
+        fontWeight: '700',
         lineHeight: 21.48,
         textAlign: 'center',
         color: '#FFF'

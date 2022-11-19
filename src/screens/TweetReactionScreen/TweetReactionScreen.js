@@ -270,7 +270,8 @@ class TweetReactionScreen extends Component {
         selectedTooltipType: '',
         openMediaTooltip: false,
         mediaTooltipOffset: 0,
-        tutorialTooltipOffset: 0
+        tutorialTooltipOffset: 0,
+        keyboardOpen: false
     };
 
     componentDidMount() {
@@ -431,7 +432,7 @@ class TweetReactionScreen extends Component {
             <KeyboardAvoidingView behavior='padding'
                 // Android handles this behavior by himself
                 enabled={Platform.OS === 'ios'}
-                style={{ flex: 1 }}>
+                style={{ flex: 1, backgroundColor: '#0D1021' }}>
                 <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}
                     touchSoundDisabled>
                     <SafeAreaView style={styles.container}>
@@ -718,9 +719,15 @@ class TweetReactionScreen extends Component {
                                                 </TouchableOpacity>
                                             </View>
                                             <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                                                <TouchableOpacity onPress={this.toggleKeyboard}>
-                                                    <images.svg.showKeyboard />
-                                                </TouchableOpacity>
+                                                {this.textInput && this.textInput.isFocused() ?
+                                                    <TouchableOpacity onPress={this.toggleKeyboard}>
+                                                        <images.svg.hideKeyboard />
+                                                    </TouchableOpacity>
+                                                :
+                                                    <TouchableOpacity onPress={this.toggleKeyboard}>
+                                                        <images.svg.showKeyboard />
+                                                    </TouchableOpacity>
+                                                }
                                             </View>
                                         </Animated.View>
                                         <View style={styles.extraTipButtonsContainer}>

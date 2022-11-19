@@ -135,7 +135,7 @@ const MediaOptionTooltip = ({ children, open, onClose, label, highlightedText, c
                             <Text style={styles.tooltipLabelText}>
                                 {buttonText}
                             </Text>
-                            {cost !== undefined &&
+                            {cost !== undefined && cost !== 0 &&
                                 <>
                                 <Text style={[styles.tooltipLabelText, styles.tooltipHighlihgtedText, { marginLeft: 8, marginRight: 4 }]}>
                                     {cost}
@@ -378,7 +378,7 @@ class TweetReactionScreen extends Component {
     }
 
     buttonAction = () => {
-        this.setState({ openTooltip: false });
+        this.setState({ openExtraTipTooltip: false, openMediaTooltip });
         if (this.props.selectedMedia && excludingOptions[this.props.mediaType] && excludingOptions[this.props.mediaType][this.state.selectedTooltipType]) {
             this.props.onMediaOptionPress(this.state.selectedTooltipType);
         } else {

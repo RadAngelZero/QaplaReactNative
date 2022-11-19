@@ -378,7 +378,7 @@ class TweetReactionScreen extends Component {
     }
 
     buttonAction = () => {
-        this.setState({ openExtraTipTooltip: false, openMediaTooltip });
+        this.setState({ openExtraTipTooltip: false, openMediaTooltip: false });
         if (this.props.selectedMedia && excludingOptions[this.props.mediaType] && excludingOptions[this.props.mediaType][this.state.selectedTooltipType]) {
             this.props.onMediaOptionPress(this.state.selectedTooltipType);
         } else {

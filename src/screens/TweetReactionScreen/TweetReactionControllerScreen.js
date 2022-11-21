@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import TweetReactionScreen from './TweetReactionScreen';
 import { getStreamerEmotes, getUserToStreamerRelationData } from '../../services/functions';
-import { AVATAR, EMOTE, GIPHY_GIFS, GIPHY_STICKERS, GIPHY_TEXT, MEME, TTS } from '../../utilities/Constants';
+import { AVATAR, defaultUserImages, EMOTE, GIPHY_GIFS, GIPHY_STICKERS, GIPHY_TEXT, MEME, TTS } from '../../utilities/Constants';
 import GiphyMediaSelectorModal from '../../components/GiphyMediaSelectorModal/GiphyMediaSelectorModal';
 import QaplaMemeSelectorModal from '../../components/QaplaMemeSelectorModal/QaplaMemeSelectorModal';
 import {
@@ -18,9 +18,10 @@ import {
     saveAvatarId,
     saveAvatarUrl,
     saveReadyPlayerMeUserId,
-    sendReaction
+    sendReaction,
+    updateUserProfileImg
 } from '../../services/database';
-import { removeDataItem, retrieveData, storeData } from '../../utilities/persistance';
+import { retrieveData, storeData } from '../../utilities/persistance';
 import { trackOnSegment } from '../../services/statistics';
 import SentModal from '../../components/SentModal/SentModal';
 import ChooseStreamerModal from '../../components/ChooseStreamerModal/ChooseStreamerModal';
@@ -89,12 +90,21 @@ class TweetReactionControllerScreen extends Component {
     componentDidMount() {
         this.fetchInitialData();
         this.setLastReactionLevel();
+        if (this.props.uid && !this.props.photoUrl) {
+            this.setUserDefaultImage();
+        }
     }
 
     componentWillUnmount() {
         if (this.props.uid, this.state.streamerData.streamerUid) {
             removeListenerFromReactionsCount(this.props.uid, this.state.streamerData.streamerUid);
         }
+    }
+
+    setUserDefaultImage = async () => {
+        let userImageIndex = userImageIndex = Math.floor(Math.random() * defaultUserImages.length);
+
+        updateUserProfileImg(this.props.uid, defaultUserImages[userImageIndex]);
     }
 
     fetchInitialData = async () => {

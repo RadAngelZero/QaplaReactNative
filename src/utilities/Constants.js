@@ -1,5 +1,4 @@
 import { heightPercentageToPx } from './iosAndroidDim';
-import images from '../../assets/images';
 
 // Segment key
 export const SEGMENT_KEY = 'fCfir8yrQiZRVrpuwLHYRePN68SqW8AS';
@@ -155,12 +154,12 @@ export const BOTTOM_NAVIGATION_BAR_HEIGHT = 75;
 
 // Default user images
 export const defaultUserImages = [
-	images.png.profileImagePlaceholder1,
-	images.png.profileImagePlaceholder2,
-	images.png.profileImagePlaceholder3,
-	images.png.profileImagePlaceholder4,
-	images.png.profileImagePlaceholder5,
-	images.png.profileImagePlaceholder6,
+	'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/DefaultUsersImages%2Fpic-big-eyes.jpg?alt=media&token=40903ec7-bb87-4b03-88c4-f1b3b37f235f',
+	'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/DefaultUsersImages%2Fpic-big-smile.jpg?alt=media&token=ab741fce-acd8-412c-a6b4-cb211b7db11d',
+	'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/DefaultUsersImages%2Fpic-green-glasses.jpg?alt=media&token=04024f24-cb24-4eff-b017-062353948bbc',
+	'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/DefaultUsersImages%2Fpic-one-eye-hat.jpg?alt=media&token=d6979c4f-def1-448f-831a-1ff96ada5a93',
+	'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/DefaultUsersImages%2Fpic-one-eye.jpg?alt=media&token=9970f8a5-915c-4d1b-9577-2b7a8feacff9',
+	'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/DefaultUsersImages%2Fpic-twinkle.jpg?alt=media&token=376b3079-87a2-431f-a53a-15980174c41d'
 ];
 
 // Activity types

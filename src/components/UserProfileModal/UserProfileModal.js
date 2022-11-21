@@ -62,15 +62,9 @@ class UserProfileModal extends Component {
 
     setUserDefaultImage = async () => {
         if (!this.props.photoUrl) {
-            let userImageIndex = await retrieveData('default-user-image');
+            let userImageIndex = userImageIndex = Math.floor(Math.random() * defaultUserImages.length);
 
-            if (!userImageIndex) {
-                userImageIndex = Math.floor(Math.random() * defaultUserImages.length);
-
-                storeData('default-user-image', `${userImageIndex}`);
-            }
-
-            this.setState({ userImage: { uri: false, img: defaultUserImages[userImageIndex].img } });
+            updateUserProfileImg(this.props.uid, defaultUserImages[userImageIndex]);
         }
     }
 

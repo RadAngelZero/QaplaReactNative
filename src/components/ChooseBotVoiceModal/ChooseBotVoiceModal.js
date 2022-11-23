@@ -5,6 +5,7 @@ import styles from './style';
 import images from './../../../assets/images';
 import LinearGradient from 'react-native-linear-gradient';
 import { getBotAvailableVoices } from '../../services/database';
+import { translate } from '../../utilities/i18';
 
 const BotVoice = ({ label, selected, onPress }) => {
     return (
@@ -80,7 +81,7 @@ class ChooseBotVoiceModal extends Component {
                                 <images.svg.closeIcon style={styles.closeIcon} />
                             </TouchableOpacity>
                             <Text style={styles.title}>
-                                Choose a TTS Bot Voice
+                                {translate('chooseBotVoiceModal.chooseVoice')}
                             </Text>
                             {/* Trick to center text */}
                             <View style={[styles.closeIcon, { opacity: 0 }]}>

@@ -707,6 +707,22 @@
         "recents": "Recents",
         "whosTheReactionFor": "Who’s the reaction for?\nFind your streamer 🫶"
     },
+    "avatarReactionModal": {
+        "confirm": "Confirm"
+    },
+    "create3DTextModal": {
+        "typeToCreate": "Type to create"
+    },
+    "chooseBotVoiceModal": {
+        "chooseVoice": "Choose a TTS Bot Voice"
+    },
+    "reactionTypeModal": {
+        "selectTier": "Select Reaction Tier",
+        "level1": "Memes + TTS",
+        "level2": "+ Avatar\n3D Text, TTS Voice",
+        "level3": "+ Emote Animation",
+        "free": "Free"
+    },
     "streamerCard": {
         "viewMore": "View more"
     },

@@ -711,6 +711,22 @@
         "recents": "Recientes",
         "whosTheReactionFor": "¿Para quien es la reacción?\nEncuentra a tustreamer 🫶"
     },
+    "avatarReactionModal": {
+        "confirm": "Confirmar"
+    },
+    "create3DTextModal": {
+        "typeToCreate": "Escribe para crear"
+    },
+    "chooseBotVoiceModal": {
+        "chooseVoice": "Escoge voz para el TTS"
+    },
+    "reactionTypeModal": {
+        "selectTier": "Selecciona nivel de reacción",
+        "level1": "Memes + TTS",
+        "level2": "+ Avatar\nTexto 3D, voz de TTS",
+        "level3": "+ Animación de Emote",
+        "free": "Gratis"
+    },
     "streamerCard": {
         "viewMore": "Ver más"
     },

@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import styles from './style';
 import images from './../../../assets/images';
 import { getRandomGifByLibrary } from '../../services/database';
+import { translate } from '../../utilities/i18';
 
 class ReactionTypeModal extends Component {
     state = {
@@ -46,7 +47,7 @@ class ReactionTypeModal extends Component {
                             </TouchableOpacity>
                             <MaskedView maskElement={
                                 <Text style={styles.title}>
-                                    Select Reaction Tier
+                                    {translate('reactionTypeModal.selectTier')}
                                 </Text>
                             }>
                                 <LinearGradient
@@ -54,7 +55,7 @@ class ReactionTypeModal extends Component {
                                     useAngle
                                     angle={227}>
                                     <Text style={[styles.title, { opacity: 0 }]}>
-                                    Select Reaction Tier
+                                        {translate('reactionTypeModal.selectTier')}
                                     </Text>
                                 </LinearGradient>
                             </MaskedView>
@@ -80,7 +81,7 @@ class ReactionTypeModal extends Component {
                                         <images.svg.interactionsMemes height={24} width={24} />
                                     </View>
                                     <Text style={styles.reactionTitle}>
-                                        Memes + TTS
+                                        {translate('reactionTypeModal.level1')}
                                     </Text>
                                 </View>
                                 <View style={styles.priceContainer}>
@@ -121,7 +122,7 @@ class ReactionTypeModal extends Component {
                                             <images.svg.volumeUp height={24} width={24} />
                                         </View>
                                         <Text style={styles.reactionTitle}>
-                                            + Avatar{'\n'}3D Text, TTS Voice
+                                            {translate('reactionTypeModal.level2')}
                                         </Text>
                                     </View>
                                     <View style={styles.priceContainer}>
@@ -133,7 +134,7 @@ class ReactionTypeModal extends Component {
                                                         {this.props.costs[1] ?
                                                             this.props.costs[1]
                                                             :
-                                                            'Free'
+                                                            translate('reactionTypeModal.free')
                                                         }
                                                     </Text>
                                                 }>
@@ -145,7 +146,7 @@ class ReactionTypeModal extends Component {
                                                             {this.props.costs[1] ?
                                                                 this.props.costs[1]
                                                                 :
-                                                                'Free'
+                                                                translate('reactionTypeModal.free')
                                                             }
                                                         </Text>
                                                     </LinearGradient>
@@ -173,7 +174,7 @@ class ReactionTypeModal extends Component {
                                             style={{ height: 24, width: 24 }} />
                                     </View>
                                     <Text style={styles.reactionTitle}>
-                                        + Emote Animation
+                                        {translate('reactionTypeModal.level3')}
                                     </Text>
                                 </View>
                                 <View style={styles.priceContainer}>
@@ -185,7 +186,7 @@ class ReactionTypeModal extends Component {
                                                     {this.props.costs[2] ?
                                                         this.props.costs[2]
                                                         :
-                                                        'Free'
+                                                        translate('reactionTypeModal.free')
                                                     }
                                                 </Text>
                                             }>
@@ -197,7 +198,7 @@ class ReactionTypeModal extends Component {
                                                         {this.props.costs[2] ?
                                                             this.props.costs[2]
                                                             :
-                                                            'Free'
+                                                            translate('reactionTypeModal.free')
                                                         }
                                                     </Text>
                                                 </LinearGradient>

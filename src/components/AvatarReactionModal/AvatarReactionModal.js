@@ -6,6 +6,7 @@ import styles from './style';
 import images from './../../../assets/images';
 import LinearGradient from 'react-native-linear-gradient';
 import { getAvatarAnimations } from '../../services/database';
+import { translate } from '../../utilities/i18';
 
 class AvatarReactionModal extends Component {
     state = {
@@ -89,7 +90,7 @@ class AvatarReactionModal extends Component {
                                     <TouchableOpacity style={styles.confirmButton}
                                         onPress={() => this.props.onReactionSelected(this.state.currentAnimation)}>
                                         <Text style={styles.confirmButtonText}>
-                                            Confirm
+                                            {translate('avatarReactionModal.confirm')}
                                         </Text>
                                     </TouchableOpacity>
                                 </View>

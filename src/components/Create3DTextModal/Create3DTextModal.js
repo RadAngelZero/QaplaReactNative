@@ -8,6 +8,7 @@ import images from './../../../assets/images';
 import { getGiphyTextRequestKey, listenGiphyTextSearch, removeGiphyTextRequests, stopListeningGiphyTextSearch } from '../../services/database';
 import { GIPHY_TEXT_GENERATOR_URL } from '../../utilities/Constants';
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { translate } from '../../utilities/i18';
 
 class Create3DTextModal extends Component {
     state = {
@@ -125,7 +126,7 @@ class Create3DTextModal extends Component {
                                     value={this.state.searchQuery}
                                     onChangeText={this.searchHandler}
                                     style={styles.gridSearchBarTextInput}
-                                    placeholder='Type to create'
+                                    placeholder={translate('create3DTextModal.typeToCreate')}
                                     placeholderTextColor='#fff3'
                                     keyboardAppearance='dark' />
                             </View>

@@ -4,6 +4,7 @@ import images from '../../../assets/images';
 
 import styles from './style';
 import ModalWithOverlay from '../ModalWithOverlay/ModalWithOverlay';
+import { translate } from '../../utilities/i18';
 
 class NoReactionsModal extends Component {
     render() {
@@ -13,23 +14,23 @@ class NoReactionsModal extends Component {
                 <View style={styles.contentContainer}>
                     <Image source={images.png.channelPoints.img} />
                     <Text style={styles.title}>
-                        You don´t have reactions
+                        {translate('noReactionsModal.noReactionsP1')}
                     </Text>
                     <Text style={styles.instructions}>
                         <Text style={[styles.instructions, styles.bold]}>
-                            Get a Qapla Reaction Reward
+                            {translate('noReactionsModal.noReactionsP2')}
                         </Text>
-                        on Twitch,
+                        {translate('noReactionsModal.noReactionsP3')}
                         <Text style={[styles.instructions, styles.bold]}>
-                            or upgrade your reaction
+                            {translate('noReactionsModal.noReactionsP4')}
                         </Text>
-                        to send your alert with Qoins
+                        {translate('noReactionsModal.noReactionsP5')}
                     </Text>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity style={styles.upgradeButton}
                             onPress={() => this.props.onUpgradeReaction(2)}>
                             <Text style={styles.upgradeButtonText}>
-                                Upgrade for
+                                {translate('noReactionsModal.upgradeFor')}
                             </Text>
                             <Text style={[styles.upgradeButtonText, { color: '#00FFDD' }]}>
                                 {this.props.upgradeCost}
@@ -41,7 +42,7 @@ class NoReactionsModal extends Component {
                         <TouchableOpacity style={styles.secondButton}
                             onPress={this.props.onGetReward}>
                             <Text style={styles.secondButtonText}>
-                                Get Channel Reward
+                                {translate('noReactionsModal.getReward')}
                             </Text>
                         </TouchableOpacity>
                     </View>

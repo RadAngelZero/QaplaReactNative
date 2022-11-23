@@ -727,6 +727,15 @@
         "level3": "+ Animación de Emote",
         "free": "Gratis"
     },
+    "noReactionsModal": {
+        "noReactionsP1": "No tienes reacciones",
+        "noReactionsP2": "Canjea la recompensa \"Qapla Reaction\" ",
+        "noReactionsP3": "en Twitch, ",
+        "noReactionsP4": "o actualiza tu reacción ",
+        "noReactionsP5": "para enviar tu alerta con Qoins",
+        "upgradeFor": "Actualizar por",
+        "getReward": "Canjear Recompensa"
+    },
     "streamerCard": {
         "viewMore": "Ver más"
     },

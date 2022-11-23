@@ -83,7 +83,8 @@ class GreetingsShortcut extends Component {
                         translate('signUpModalGreetingsShortcut.benefit1'),
                         translate('signUpModalGreetingsShortcut.benefit2')
                     ]}
-                    onSignUpSuccess={this.onSignUpSuccess} />
+                    onSignUpSuccess={this.onSignUpSuccess}
+                    gifLibrary='CreateAvatar' />
             </View>
         );
     }

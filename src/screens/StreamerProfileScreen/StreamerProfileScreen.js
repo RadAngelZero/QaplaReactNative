@@ -508,10 +508,10 @@ class StreamerProfileScreen extends Component {
                     stream={this.state.selectedStream} />
                 <SignUpModal open={this.state.openSignUpModal}
                     onClose={() => this.setState({ openSignUpModal: false })}
-                    title='Never miss a stream!'
+                    title={translate('signUpModalStreamerProfileScreen.title')}
                     benefits={[
-                        '🗓️️ Always know when your streamer schedules a stream',
-                        '🚨️ Always know when a stream is reschedule or canceled'
+                        translate('signUpModalStreamerProfileScreen.benefit1'),
+                        translate('signUpModalStreamerProfileScreen.benefit2')
                     ]}
                     onSignUpSuccess={this.followStreamer}
                     gifLibrary='JoinStream' />

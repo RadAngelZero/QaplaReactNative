@@ -15,6 +15,7 @@ import { storeData, retrieveData } from '../../utilities/persistance';
 import { defaultUserImages, HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';;
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
 import SignUpModal from '../SignUpModal/SignUpModal';
+import { translate } from '../../utilities/i18';
 
 const SupportIcon = images.svg.supportIcon;
 const UserProfileIcon = images.svg.userProfile
@@ -233,11 +234,11 @@ class HeaderBar extends Component {
                     </View>
                     <SignUpModal open={this.state.openProfileModal}
                         onClose={() => this.setState({ openProfileModal: false })}
-                        title='Send memes on stream'
+                        title={translate('signUpModalHeaderBar.title')}
                         benefits={[
-                            '⚡️ React on stream sending custom memes',
-                            '👽 Custom animated avatar for your reactions',
-                            '🌱 Support your fave streamers'
+                            translate('signUpModalHeaderBar.benefit1'),
+                            translate('signUpModalHeaderBar.benefit2'),
+                            translate('signUpModalHeaderBar.benefit3')
                         ]}
                         onSignUpSuccess={this.onSignUpSuccess} />
                 </SafeAreaView>

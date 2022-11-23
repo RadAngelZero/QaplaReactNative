@@ -753,6 +753,27 @@
         "benefit2": "🔥 Mejora tus memes",
         "benefit3": "🌱 Apoya a tus streamers favoritos"
     },
+    "signUpModalStreamerProfileScreen": {
+        "title": "¡Nunca te pierdas un stream!",
+        "benefit1": "🗓️️ Siempre enterate cuando tu streamer agenda un stream",
+        "benefit2": "🚨️ Enterate cuando un stream cambia de hora o es cancelado"
+    },
+    "signUpEventDetailsModal": {
+        "title": "Agrega streams a tu agenda",
+        "benefit1": "🚨️ Siempre enterate cuando un stream sea reprogramado o cancelado",
+        "benefit2": "⏰ ¡Nunca te pierdas un stream! Te recordaremos sobre los próximo streams"
+    },
+    "signUpModalGreetingsShortcut": {
+        "title": "Tu identidad stream",
+        "benefit1": "👽️ Crea un avatar animado personalizado para usar en stream",
+        "benefit2": "👋 Saluda al llegar a un stream usando tu avatar"
+    },
+    "signUpModalHeaderBar": {
+        "title": "Envia memes en stream",
+        "benefit1": "⚡️ Reacciona en stream con memes personalizados",
+        "benefit2": "👽 Avatar animado personalizado para tus reacciones",
+        "benefit3": "🌱 Apoya a tus streamers favoritos"
+    },
     "streamerCard": {
         "viewMore": "Ver más"
     },

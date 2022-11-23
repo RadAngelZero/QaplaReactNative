@@ -78,11 +78,10 @@ class GreetingsShortcut extends Component {
                 </View>
                 <SignUpModal open={this.state.openSignUpModal}
                     onClose={() => this.setState({ openSignUpModal: false })}
-                    title='Undefined'
+                    title={translate('signUpModalGreetingsShortcut.title')}
                     benefits={[
-                        '👽 Custom animated avatar for your reactions',
-                        '⚡️ React on stream sending custom memes',
-                        '🌱 Support your fave streamers'
+                        translate('signUpModalGreetingsShortcut.benefit1'),
+                        translate('signUpModalGreetingsShortcut.benefit2')
                     ]}
                     onSignUpSuccess={this.onSignUpSuccess} />
             </View>

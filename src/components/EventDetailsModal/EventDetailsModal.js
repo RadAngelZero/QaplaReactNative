@@ -324,10 +324,10 @@ class EventDetailsModal extends Component {
                         body={translate('eventDetailsModal.notEnoughQoinsDialogBody', { eventEntry: this.props.stream.eventEntry, qoins: this.props.qoins })} />
                     <SignUpModal open={this.state.openSignUpModal}
                         onClose={() => this.setState({ openSignUpModal: false })}
-                        title='Add stream to schedule'
+                        title={translate('signUpEventDetailsModal.title')}
                         benefits={[
-                            '🚨️ Always know when a stream is reschedule or canceled',
-                            '⏰ Never miss a stream! We’ll remind you of upcoming streams'
+                            translate('signUpEventDetailsModal.benefit1'),
+                            translate('signUpEventDetailsModal.benefit2')
                         ]}
                         onSignUpSuccess={this.goToNextRegistrationStep} />
                 </Modal>

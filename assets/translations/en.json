@@ -702,6 +702,11 @@
         "description": "Your cheers are sent in real-time, and your messages appear live on their Twitch channel",
         "sendCheers": "Send Cheers"
     },
+    "chooseStreamerModal": {
+        "search": "Search by name",
+        "recents": "Recents",
+        "whosTheReactionFor": "Who’s the reaction for?\nFind your streamer 🫶"
+    },
     "streamerCard": {
         "viewMore": "View more"
     },

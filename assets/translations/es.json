@@ -706,6 +706,11 @@
         "description": "Tus cheers son enviados al instante y tus mensajes aparecen en vivo durante sus directos en Twitch.",
         "sendCheers": "Enviar Cheers"
     },
+    "chooseStreamerModal": {
+        "search": "Busca por nombre",
+        "recents": "Recientes",
+        "whosTheReactionFor": "¿Para quien es la reacción?\nEncuentra a tustreamer 🫶"
+    },
     "streamerCard": {
         "viewMore": "Ver más"
     },

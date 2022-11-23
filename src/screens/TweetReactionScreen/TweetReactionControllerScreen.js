@@ -239,7 +239,7 @@ class TweetReactionControllerScreen extends Component {
     listenNumberOfReactions = async () => {
         if (this.props.uid) {
             // Listen in real time for number of reactions
-            listenToUserReactionsCount(this.props.uid, this.state.streamerData.streamerUid ?? 'undefined', (numberOfReactions) => {
+            listenToUserReactionsCount(this.props.uid, this.state.streamerData.streamerUid ? this.state.streamerData.streamerUid : 'a', (numberOfReactions) => {
                 if (numberOfReactions.exists()) {
                     this.setState({ numberOfReactions: numberOfReactions.val() });
                 } else {

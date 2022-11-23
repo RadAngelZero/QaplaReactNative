@@ -7,6 +7,7 @@ import { getRandomSearchStreamerGif, getRecentStreamersDonations, getStreamerPub
 import { TWITCH_AFFILIATE, TWITCH_PARTNER } from '../../utilities/Constants';
 import { getStreamerProfilePhotoUrl } from '../../services/storage';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { translate } from '../../utilities/i18';
 
 const StreamerItem = ({ uid, streamerUid, streamerImage, streamerName, selected, onStreamerPress }) => {
     const [numberOfReactions, setNumberOfReactions] = useState(undefined);
@@ -208,7 +209,7 @@ class ChooseStreamerModal extends Component {
                                         value={this.state.searchQuery}
                                         onChangeText={this.searchHandler}
                                         style={styles.gridSearchBarTextInput}
-                                        placeholder={`Search by name`}
+                                        placeholder={translate('chooseStreamerModal.search')}
                                         placeholderTextColor='#fff3'
                                         keyboardAppearance='dark' />
                                 </View>
@@ -225,7 +226,7 @@ class ChooseStreamerModal extends Component {
                                         }
                                         {this.state.recentStreamers.length > 0 &&
                                             <Text style={styles.recents}>
-                                                Recents
+                                                {translate('chooseStreamerModal.recents')}
                                             </Text>
                                         }
                                         <FlatList ListHeaderComponent={() => <View style={{ height: 24 }} />}
@@ -249,7 +250,7 @@ class ChooseStreamerModal extends Component {
                                                     null
                                                 } />
                                             <Text style={styles.noContentText}>
-                                                Who’s the reaction for?{'\n'}Find your streamer 🫶
+                                                {translate('chooseStreamerModal.whosTheReactionFor')}
                                             </Text>
                                             </>
                                         </View>

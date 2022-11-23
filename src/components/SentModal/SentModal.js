@@ -14,15 +14,15 @@ class SentModal extends Component {
                 <Image style={styles.successImage}
                     source={images.png.checkCircleGlow.img} />
                 <Text style={styles.modalTitle}>
-                    {translate('greetingSearchStreamerScreen.sentModal.title')}
+                    {translate('sentModal.title')}
                 </Text>
                 <Text style={styles.modalSubtitle}>
-                    Watch now on stream
+                    {translate('sentModal.watchOnStream')}
                 </Text>
                 <TouchableOpacity style={styles.modalButton}
                     onPress={this.props.sendMoreReactions}>
                     <Text style={styles.modalButtonText}>
-                        Send more reactions
+                        {translate('sentModal.sendMoreReactions')}
                     </Text>
                 </TouchableOpacity>
             </ModalWithOverlay>

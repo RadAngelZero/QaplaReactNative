@@ -736,6 +736,23 @@
         "upgradeFor": "Actualizar por",
         "getReward": "Canjear Recompensa"
     },
+    "sentModal": {
+        "title": "Boom. Enviado.",
+        "watchOnStream": "Ver en stream",
+        "sendMoreReactions": "Enviar más reacciones"
+    },
+    "signUpModal": {
+        "continueWithApple": "Continuar con Apple",
+        "continueWithGoogle": "Continuar con Google",
+        "continueWithTwitch": "Continuar con Twitch"
+    },
+    "signUpModalTweetReactionScreen": {
+        "keepReacting": "Sigue reaccionando en stream",
+        "coolRight": "¡Genial! ¿No crees? 👀",
+        "benefit1": "⚡️ Usa puntos de canal para enviar memes",
+        "benefit2": "🔥 Mejora tus memes",
+        "benefit3": "🌱 Apoya a tus streamers favoritos"
+    },
     "streamerCard": {
         "viewMore": "Ver más"
     },

@@ -35,6 +35,7 @@ import BuyQoins from '../BuyQoins/BuyQoins';
 import StreamerOfflineModal from '../../components/StreamerOfflineModal/StreamerOfflineModal';
 import ReactionTypeModal from '../../components/ReactionTypeModal/ReactionTypeModal';
 import NoReactionsModal from '../../components/NoReactionsModal/NoReactionsModal';
+import { translate } from '../../utilities/i18';
 
 class TweetReactionControllerScreen extends Component {
     state = {
@@ -707,11 +708,15 @@ class TweetReactionControllerScreen extends Component {
                 sendMoreReactions={this.onSendMoreRections} />
             <SignUpModal open={this.state.openSignUpModal}
                 onClose={this.onCloseSignUpModal}
-                title={this.state.freeReactionsSent ? 'Kepp reacting on stream' : 'Cool! isn’t it? 👀'}
+                title={this.state.freeReactionsSent ?
+                        translate('signUpModalTweetReactionScreen.keepReacting')
+                        :
+                        translate('signUpModalTweetReactionScreen.coolRight')
+                    }
                 benefits={[
-                    '⚡️ Use channel points to send custom memes',
-                    '🔥 Upgrade your memes',
-                    '🌱 Support your fave streamers'
+                    translate('signUpModalTweetReactionScreen.benefit1'),
+                    translate('signUpModalTweetReactionScreen.benefit2'),
+                    translate('signUpModalTweetReactionScreen.benefit3')
                 ]}
                 onSignUpSuccess={this.onSignUpSuccess}
                 gifLibrary={this.state.freeReactionsSent ? 'ReturningUser' : 'SignUp'} />

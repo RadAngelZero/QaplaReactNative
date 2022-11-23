@@ -11,6 +11,7 @@ import { setupGoogleSignin, signInWithApple, signInWithGoogle } from '../../serv
 import TwitchAuthScreen from '../../screens/TwitchAuthScreen/TwitchAuthScreen';
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { retrieveData } from '../../utilities/persistance';
+import { translate } from '../../utilities/i18';
 
 class SignUpModal extends Component {
     state = {
@@ -157,7 +158,7 @@ class SignUpModal extends Component {
                                             {/* Padding not necessary because icon already include it */}
                                             <images.svg.appleAuth />
                                             <Text style={styles.appleSignUpText}>
-                                                Continue with Apple
+                                                {translate('signUpModal.continueWithApple')}
                                             </Text>
                                         </TouchableOpacity>
                                         :
@@ -167,7 +168,7 @@ class SignUpModal extends Component {
                                                 <images.svg.googleIcon />
                                             </View>
                                             <Text style={styles.appleSignUpText}>
-                                                Continue with Google
+                                                {translate('signUpModal.continueWithGoogle')}
                                             </Text>
                                         </TouchableOpacity>
                                     }
@@ -177,7 +178,7 @@ class SignUpModal extends Component {
                                             <images.svg.twitchDark />
                                         </View>
                                         <Text style={styles.twitchSignUpText}>
-                                            Continue with Twitch
+                                            {translate('signUpModal.continueWithTwitch')}
                                         </Text>
                                     </TouchableOpacity>
                                 </View>

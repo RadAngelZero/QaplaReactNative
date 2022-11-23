@@ -730,7 +730,24 @@
         "noReactionsP4": "or upgrade your reaction ",
         "noReactionsP5": "to send your alert with Qoins",
         "upgradeFor": "Upgrade for",
-        "getReward": "Get Channel Reward"
+        "getReward": "Get Channel Reward",
+    },
+    "sentModal": {
+        "title": "Boom. Sent.",
+        "watchOnStream": "Watch now on stream",
+        "sendMoreReactions": "Send more reactions"
+    },
+    "signUpModal": {
+        "continueWithApple": "Continue with Apple",
+        "continueWithGoogle": "Continue with Google",
+        "continueWithTwitch": "Continue with Twitch"
+    },
+    "signUpModalTweetReactionScreen": {
+        "keepReacting": "Kepp reacting on stream",
+        "coolRight": "Cool! isn’t it? 👀",
+        "benefit1": "⚡️ Use channel points to send custom memes",
+        "benefit2": "🔥 Upgrade your memes",
+        "benefit3": "🌱 Support your fave streamers"
     },
     "streamerCard": {
         "viewMore": "View more"

@@ -39,6 +39,7 @@ import {
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { getStreamerProfilePhotoUrl } from '../../services/storage';
 import { retrieveData } from '../../utilities/persistance';
+import { translate } from '../../utilities/i18';
 
 // For animations on android
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -58,36 +59,36 @@ const allMediaOptionsTypes = [
 const mediaOptionsData = {
     [GIPHY_GIFS]: {
         Icon: images.svg.interactionsGIF,
-        label: 'Gif',
+        label: translate('tweetReactionScreen.gif'),
         level: 1
     },
     [GIPHY_STICKERS]: {
         Icon: images.svg.interactionsSticker,
-        label: 'Sticker',
+        label: translate('tweetReactionScreen.sticker'),
         level: 1
     },
     [MEME]: {
         Icon: images.svg.interactionsMemes,
-        label: 'Meme',
+        label: translate('tweetReactionScreen.meme'),
         level: 1
     },
     [EMOTE]: {
-        label: 'Emotes Animations',
+        label: translate('tweetReactionScreen.emote'),
         level: 3
     },
     [AVATAR]: {
         Icon: images.svg.avatar,
-        label: 'Animated Avatar',
+        label: translate('tweetReactionScreen.avatar'),
         level: 2
     },
     [GIPHY_TEXT]: {
         Icon: images.svg.giphyText,
-        label: '3D Text',
+        label: translate('tweetReactionScreen.text3D'),
         level: 2
     },
     [TTS]: {
         Icon: images.svg.volumeUp,
-        label: 'TTS Bot Voice',
+        label: translate('tweetReactionScreen.botVoice'),
         level: 2
     }
 };
@@ -175,9 +176,9 @@ const MediaOptionTooltip = ({ children, open, onClose, label, highlightedText, c
                     <View style={styles.tooltipTextAndIconContainer}>
                         <Text style={[styles.tooltipLabelText, { maxWidth: '80%' }]}>
                             <Text style={styles.tooltipHighlihgtedText}>
-                                Your first reaction it´s free! 
+                                {translate('tweetReactionScreen.firstReactionFree')}
                             </Text>
-                            After signing up you can support streamers using Qoins
+                            {translate('tweetReactionScreen.afterSignUp')}
                         </Text>
                         <TouchableOpacity onPress={onClose}>
                             <images.svg.closeIcon />
@@ -429,7 +430,7 @@ class TweetReactionScreen extends Component {
 
             // Create the final string to show on UI
             excludedLabels.forEach((label, index) => {
-                excludedString += `${index < excludedLabels.length - 1 ? ' ' : ' or '}${label}${index < excludedLabels.length - 2 ? ', ' : ''}`;
+                excludedString += `${index < excludedLabels.length - 1 ? ' ' : ` ${translate('tweetReactionScreen.or')} `}${label}${index < excludedLabels.length - 2 ? ', ' : ''}`;
             });
         }
 
@@ -445,14 +446,14 @@ class TweetReactionScreen extends Component {
                             <TouchableOpacity style={styles.textButton}
                                 onPress={this.props.onCancel}>
                                 <Text style={styles.textButtonText}>
-                                    Cancel
+                                    {translate('tweetReactionScreen.cancel')}
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={this.props.onSend}
                                 disabled={sendButtonDisabled}
                                 style={[styles.containedButton, sendButtonDisabled ? styles.containedButtonDisabled : {}]}>
                                 <Text style={styles.containedButtonText}>
-                                    Send
+                                    {translate('tweetReactionScreen.send')}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -481,7 +482,7 @@ class TweetReactionScreen extends Component {
                                     <TextInput style={styles.ttsTextInput}
                                         ref={(textInput) => this.textInput = textInput}
                                         autoFocus
-                                        placeholder='Type to create TTS'
+                                        placeholder= {translate('tweetReactionScreen.typeToCreateTTS')}
                                         placeholderTextColor='#C2C2C2'
                                         selectionColor='#00FFDD'
                                         maxLength={100}
@@ -493,7 +494,7 @@ class TweetReactionScreen extends Component {
                                         keyboardAppearance='dark' />
                                     {!this.props.message &&
                                         <Text style={styles.optional}>
-                                            Optional
+                                            {translate('tweetReactionScreen.optional')}
                                         </Text>
                                     }
                                     </>
@@ -598,11 +599,11 @@ class TweetReactionScreen extends Component {
                                     }]}>
                                     <View style={styles.tooltipTextAndIconContainer}>
                                         <Text style={[styles.tooltipLabelText, { maxWidth: '80%' }]}>
-                                            You can always 
+                                            {translate('tweetReactionScreen.upgradeTooltipP1')}
                                             <Text style={styles.tooltipHighlihgtedText}>
-                                                upgrade or downgrade 
+                                                {translate('tweetReactionScreen.upgradeTooltipP2')}
                                             </Text>
-                                            your reaction here 👇 
+                                            {translate('tweetReactionScreen.upgradeTooltipP3')}
                                         </Text>
                                         <TouchableOpacity onPress={this.props.onClosingTutorial}>
                                             <images.svg.closeIcon />
@@ -675,7 +676,7 @@ class TweetReactionScreen extends Component {
                                                                 this.props.currentReactioncost === 0 ?
                                                                     <MaskedView maskElement={
                                                                         <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, fontWeight: '700' }]}>
-                                                                            Free
+                                                                            {translate('tweetReactionScreen.free')}
                                                                         </Text>
                                                                     }>
                                                                         <LinearGradient
@@ -683,7 +684,7 @@ class TweetReactionScreen extends Component {
                                                                             useAngle
                                                                             angle={227}>
                                                                             <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, fontWeight: '700', opacity: 0 }]}>
-                                                                                Free
+                                                                                {translate('tweetReactionScreen.free')}
                                                                             </Text>
                                                                         </LinearGradient>
                                                                     </MaskedView>
@@ -713,7 +714,7 @@ class TweetReactionScreen extends Component {
                                                         <images.svg.interactionsNumberIcon height={16} width={16}  />
                                                         <Text style={styles.costText}>
                                                             {this.props.numberOfReactions !== undefined ?
-                                                                `${this.props.numberOfReactions.toLocaleString()} Reactions`
+                                                                translate('tweetReactionScreen.numberOfReactions', { numberOfReactions: this.props.numberOfReactions.toLocaleString() })
                                                                 :
                                                                 null
                                                             }
@@ -755,7 +756,8 @@ class TweetReactionScreen extends Component {
                         </Tooltip>
                         <MediaOptionTooltip open={this.state.openMediaTooltip || this.state.openExtraTipTooltip}
                             highlightedText={excluded ? excludedString : this.state.selectedTooltipType ? mediaOptionsData[this.state.selectedTooltipType].label : ''}
-                            label={excluded ? '😯 You can only use one ' : '👀 Upgrade your reaction to use '}
+                            // label={excluded ? '' : ''}
+                            label={excluded ? translate('tweetReactionScreen.youCanOnlyUseOne') : translate('tweetReactionScreen.upgradeToUse')}
                             buttonText={excluded ? `Use ${this.state.selectedTooltipType ? mediaOptionsData[this.state.selectedTooltipType].label : ''}` : 'Upgrade Reaction'}
                             buttonAction={this.buttonAction}
                             onClose={() => this.setState({ openMediaTooltip: false, openExtraTipTooltip: false })}
@@ -832,10 +834,10 @@ class TweetReactionScreen extends Component {
                                         }
                                         <Text style={styles.extraTipButtonText}>
                                         {this.state.openTipMenu ?
-                                                'No Tip'
+                                                translate('tweetReactionScreen.noTip')
                                                 :
                                                 this.props.extraTip === 0 &&
-                                                    'Tip'
+                                                    translate('tweetReactionScreen.tip')
                                         }
                                         </Text>
                                         {!this.state.openTipMenu && this.props.extraTip !== 0 &&

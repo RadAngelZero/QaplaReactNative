@@ -464,6 +464,31 @@
             "goToStream": "Ir al stream"
         }
     },
+    "tweetReactionScreen": {
+        "gif": "Gif",
+        "sticker": "Sticker",
+        "meme": "Meme",
+        "emote": "Animaciones de Emotes",
+        "avatar": "Avatar Animado",
+        "text3D": "Text 3D",
+        "botVoice": "Voz de bot para TTS",
+        "firstReactionFree": "¡Tu primera reacción es gratis! ",
+        "afterSignUp": "Después de registrarte puedes apoyar streamers usando tus Qoins",
+        "or": "o",
+        "cancel": "Cancelar",
+        "send": "Enviar",
+        "typeToCreateTTS": "Escribe para crear tu TTS",
+        "optional": "Opcional",
+        "upgradeTooltipP1": "Siempre puedes ",
+        "upgradeTooltipP2": "subir o bajar de nivel ",
+        "upgradeTooltipP3": "tu reacción aquí 👇",
+        "free": "Gratis",
+        "numberOfReactions": "%{numberOfReactions} Reacciones",
+        "youCanOnlyUseOne": "😯 Solo puedes usar uno",
+        "upgradeToUse": "👀 Sube de nivel tu tu reacción para usar ",
+        "noTip": "No Tip",
+        "tip": "Tip"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Ve tus Notificaciones",

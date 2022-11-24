@@ -10,7 +10,7 @@ import { WebView } from 'react-native-webview';
 import styles from './style';
 import { TWITCH_CLIENT_ID, TWITCH_REDIRECT_URI } from '../../utilities/Constants';
 import { getTwitchUserData } from '../../services/twitch';
-import { saveTwitchData, isNewTwitchId, uidExists } from '../../services/database';
+import { saveTwitchData, isNewTwitchId, uidExists, getUserWithTwitchId } from '../../services/database';
 import { connect } from 'react-redux';
 import { generateAuthTokenForTwitchSignIn } from '../../services/functions';
 import { auth } from '../../utilities/firebase';
@@ -59,11 +59,23 @@ class TwitchAuthScreen extends Component {
                 }
                 // If no uid we assume a user is trying to signin/signup with Twitch from the auth
             } else {
-                const qaplaCustomAuthToken = await generateAuthTokenForTwitchSignIn(data.id, data.display_name, data.email);
-                if (qaplaCustomAuthToken.data && qaplaCustomAuthToken.data.token) {
-
-                    // Uid´s of users created with Twitch accounts are their Twitch id´s
-                    if (await uidExists(data.id)) {
+                // Uid´s of users created with Twitch accounts are their Twitch id´s
+                if (await uidExists(data.id)) {
+                    const qaplaCustomAuthToken = await generateAuthTokenForTwitchSignIn(data.id, data.display_name);
+                    const user = await auth.signInWithCustomToken(qaplaCustomAuthToken.data.token);
+                    await saveTwitchData(user.user.uid, {
+                        photoUrl: data.profile_image_url,
+                        twitchAccessToken: access_token,
+                        twitchId: data.id,
+                        twitchUsername: data.display_name
+                    });
+                    if (this.props.onAuthSuccessful) {
+                        this.props.onAuthSuccessful(user, false);
+                    }
+                } else {
+                    // If the twitchId is not linked to other Qapla account
+                    if (await isNewTwitchId(data.id)) {
+                        const qaplaCustomAuthToken = await generateAuthTokenForTwitchSignIn(data.id, data.display_name);
                         const user = await auth.signInWithCustomToken(qaplaCustomAuthToken.data.token);
                         await saveTwitchData(user.user.uid, {
                             photoUrl: data.profile_image_url,
@@ -71,27 +83,31 @@ class TwitchAuthScreen extends Component {
                             twitchId: data.id,
                             twitchUsername: data.display_name
                         });
+
                         if (this.props.onAuthSuccessful) {
-                            this.props.onAuthSuccessful(user, false);
+                            this.props.onAuthSuccessful(user, true);
                         }
                     } else {
-                        // If the twitchId is not linked to other Qapla account
-                        if (await isNewTwitchId(data.id)) {
-                            const user = await auth.signInWithCustomToken(qaplaCustomAuthToken.data.token);
-                            await saveTwitchData(user.user.uid, {
-                                photoUrl: data.profile_image_url,
-                                twitchAccessToken: access_token,
-                                twitchId: data.id,
-                                twitchUsername: data.display_name
-                            });
-                            if (this.props.onAuthSuccessful) {
-                                this.props.onAuthSuccessful(user, true);
-                            }
-                        } else {
-                            Alert.alert('Error', 'Twitch account already linked with other Qapla account',
-                            [
-                                { text: "OK", onPress: this.props.onFail }
-                            ]);
+                        /**
+                         * User may have use another provider to create their account, but we can require
+                         * a custom token knowing their uid
+                         */
+                        const existentUser = await getUserWithTwitchId(data.id);
+                        let userUid = '';
+                        existentUser.forEach((user) => {
+                            userUid = user.key;
+                        });
+                        const customAuthToken = await generateAuthTokenForTwitchSignIn(userUid, data.display_name);
+                        const user = await auth.signInWithCustomToken(customAuthToken.data.token);
+                        await saveTwitchData(user.user.uid, {
+                            photoUrl: data.profile_image_url,
+                            twitchAccessToken: access_token,
+                            twitchId: data.id,
+                            twitchUsername: data.display_name
+                        });
+
+                        if (this.props.onAuthSuccessful) {
+                            this.props.onAuthSuccessful(user, true);
                         }
                     }
                 }

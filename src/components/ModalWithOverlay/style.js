@@ -22,5 +22,15 @@ export default styles = StyleSheet.create({
         position: 'absolute',
         top: 16,
         right: 16
+    },
+    closeIcon: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
     }
 });

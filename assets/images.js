@@ -123,6 +123,11 @@ import SwapRectangle from './icons/SwapRectangle.svg';
 import PlusCircle from './icons/plusCircle.svg';
 import Avatar from './icons/Avatar.svg';
 import GiphyText from './icons/GiphyText.svg';
+import EditCircle from './icons/EditCircle.svg';
+import ShowKeyboard from './icons/ShowKeyboard.svg';
+import HideKeyboard from './icons/hideKeyboard.svg';
+import CheckCircleWhite from './icons/CheckCircleWhite.svg';
+import ArrowTopCircle from './icons/arrowTopCircle.svg';
 
 // Images
 const images = {
@@ -265,6 +270,12 @@ const images = {
 		},
 		popUpBackground: {
 			img: require('./images/PopUpBackground.png')
+		},
+		defaultReactionProfilePic: {
+			img: require('./images/DefaultReactionProfilePic.png')
+		},
+		channelPoints: {
+			img: require('./images/ChannelPoints.png')
 		}
 	},
 	svg: {
@@ -391,7 +402,12 @@ const images = {
 		swapRectangle: SwapRectangle,
 		plusCircle: PlusCircle,
 		avatar: Avatar,
-		giphyText: GiphyText
+		giphyText: GiphyText,
+		editCircle: EditCircle,
+		showKeyboard: ShowKeyboard,
+		hideKeyboard: HideKeyboard,
+		checkCircleWhite: CheckCircleWhite,
+		arrowTopCircle: ArrowTopCircle
 	},
 	gif: {
 		loadingStreamers: {

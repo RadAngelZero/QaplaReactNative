@@ -4,18 +4,30 @@ import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import styles from './style';
-import images from './../../../assets/images';
 import { translate } from '../../utilities/i18';
-import { getRandomAvatarAnimationGif } from '../../services/database';
+import { getRandomAvatarAnimationGif, getUserGreetingData } from '../../services/database';
+import SignUpModal from '../SignUpModal/SignUpModal';
 
 class GreetingsShortcut extends Component {
     state = {
         greeting: undefined,
-        gif: ''
+        gif: '',
+        openSignUpModal: false,
+        greeting: undefined
     };
 
     componentDidMount() {
         this.getRandomGif();
+        this.getUserGreeting();
+    }
+
+    getUserGreeting = async () => {
+        const greeting = await getUserGreetingData(this.props.uid);
+        if (greeting.exists() && greeting.val().TTS && greeting.val().animation) {
+            this.setState({ greeting: greeting.val() });
+        } else {
+            this.setState({ greeting: null });
+        }
     }
 
     getRandomGif = async () => {
@@ -25,21 +37,26 @@ class GreetingsShortcut extends Component {
 
     redirectOnPress = () => {
         if (this.props.uid) {
-            if (this.props.greeting) {
+            this.setState({ openSignUpModal: false });
+            if (this.state.greeting) {
                 return this.props.navigation.navigate('GreetingStackNavigator');
             }
 
             return this.props.navigation.navigate('AvatarStackNavigator');
         } else {
-            return this.props.navigation.navigate('Auth');
+            this.setState({ openSignUpModal: true });
         }
+    }
+
+    onSignUpSuccess = async () => {
+        await this.getUserGreeting();
+        this.redirectOnPress();
     }
 
     render() {
         return (
             <View style={styles.mainContainer}>
-                <ImageBackground style={styles.imageBackground}
-                    source={images.png.popUpBackground.img}>
+                <View style={styles.imageBackground}>
                     <ImageBackground style={styles.backgroundGif}
                         source={this.state.gif ? { uri: this.state.gif } : null}>
                         <View>
@@ -51,14 +68,23 @@ class GreetingsShortcut extends Component {
                             </Text>
                         </View>
                         <TouchableOpacity style={styles.button}
-                            disabled={this.props.greeting === undefined}
+                            disabled={this.state.greeting === undefined}
                             onPress={this.redirectOnPress}>
                             <Text style={styles.buttonText}>
                                 {translate('greetingsShortcut.popUp')}
                             </Text>
                         </TouchableOpacity>
                     </ImageBackground>
-                </ImageBackground>
+                </View>
+                <SignUpModal open={this.state.openSignUpModal}
+                    onClose={() => this.setState({ openSignUpModal: false })}
+                    title={translate('signUpModalGreetingsShortcut.title')}
+                    benefits={[
+                        translate('signUpModalGreetingsShortcut.benefit1'),
+                        translate('signUpModalGreetingsShortcut.benefit2')
+                    ]}
+                    onSignUpSuccess={this.onSignUpSuccess}
+                    gifLibrary='CreateAvatar' />
             </View>
         );
     }

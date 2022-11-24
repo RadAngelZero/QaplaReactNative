@@ -63,21 +63,11 @@ class AuthLoadingScreen extends Component {
                 // user is redirected to ChooUserName where they will create their profile.
                 const userName = await getUserNameWithUID(user.uid);
 
-                /**
-                 * Get the name of the current screen directly from redux store in order to get
-                 * the real last screenId
-                 */
-                const currentScreen = store.getState().screensReducer.currentScreenId;
+                const twitchUsername = await getTwitchUserName(user.uid);
 
-                if (!userName && currentScreen === 'none') {
-                    return this.props.navigation.navigate('ChooseUserName');
-                } else {
-                    const twitchUsername = await getTwitchUserName(user.uid);
-
-                    if (!this.state.isSegmentDataUpdated) {
-                        setUserIdOnSegment(user.uid, user.email, userName, twitchUsername);
-                        this.setState({ isSegmentDataUpdated: true });
-                    }
+                if (!this.state.isSegmentDataUpdated) {
+                    setUserIdOnSegment(user.uid, user.email, userName ?? '', twitchUsername);
+                    this.setState({ isSegmentDataUpdated: true });
                 }
 
                 await checkNotificationPermission(user.uid);
@@ -116,7 +106,9 @@ class AuthLoadingScreen extends Component {
              * screen, no to the place that we need
              */
             if (!this.state.linkOnProgress && this.state.firstLoad) {
-                return this.props.navigation.navigate('Explore');
+                return this.setState({ firstLoad: false }, () => {
+                     this.props.navigation.navigate('Explore');
+                });
             }
         });
 

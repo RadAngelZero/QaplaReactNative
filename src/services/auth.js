@@ -51,7 +51,7 @@ export async function signInWithApple() {
         }
 
     } catch (error) {
-        console.error(error);
+        console.log(error);
     }
 }
 

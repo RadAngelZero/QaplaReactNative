@@ -13,6 +13,7 @@ export default styles = StyleSheet.create({
         borderRadius: 20,
         overflow: 'hidden',
         justifyContent: 'flex-end',
+        backgroundColor: '#141833'
     },
     backgroundGif: {
         flex: 1,

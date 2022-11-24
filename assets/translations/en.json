@@ -464,6 +464,31 @@
             "goToStream": "Go to stream"
         }
     },
+    "tweetReactionScreen": {
+        "gif": "Gif",
+        "sticker": "Sticker",
+        "meme": "Meme",
+        "emote": "Emotes Animations",
+        "avatar": "Animated Avatar",
+        "text3D": "3D Text",
+        "botVoice": "TTS Bot Voice",
+        "firstReactionFree": "Your first reaction it´s free! ",
+        "afterSignUp": "After signing up you can support streamers using Qoins",
+        "or": "or",
+        "cancel": "Cancel",
+        "send": "Send",
+        "typeToCreateTTS": "Type to create TTS",
+        "optional": "Optional",
+        "upgradeTooltipP1": "You can always ",
+        "upgradeTooltipP2": "upgrade or downgrade ",
+        "upgradeTooltipP3": "your reaction here 👇",
+        "free": "Free",
+        "numberOfReactions": "%{numberOfReactions} Reactions",
+        "youCanOnlyUseOne": "😯 You can only use one",
+        "upgradeToUse": "👀 Upgrade your reaction to use ",
+        "noTip": "No Tip",
+        "tip": "Tip"
+    },
     "headerBar": {
         "highlightModal": {
             "header": "Check your notifications",
@@ -676,6 +701,74 @@
         "supportTo": "⚡️ Send a live reaction to ",
         "description": "Your cheers are sent in real-time, and your messages appear live on their Twitch channel",
         "sendCheers": "Send Cheers"
+    },
+    "chooseStreamerModal": {
+        "search": "Search by name",
+        "recents": "Recents",
+        "whosTheReactionFor": "Who’s the reaction for?\nFind your streamer 🫶"
+    },
+    "avatarReactionModal": {
+        "confirm": "Confirm"
+    },
+    "create3DTextModal": {
+        "typeToCreate": "Type to create"
+    },
+    "chooseBotVoiceModal": {
+        "chooseVoice": "Choose a TTS Bot Voice"
+    },
+    "reactionTypeModal": {
+        "selectTier": "Select Reaction Tier",
+        "level1": "Memes + TTS",
+        "level2": "+ Avatar\n3D Text, TTS Voice",
+        "level3": "+ Emote Animation",
+        "free": "Free"
+    },
+    "noReactionsModal": {
+        "noReactionsP1": "You don´t have reactions",
+        "noReactionsP2": "Get a Qapla Reaction Reward ",
+        "noReactionsP3": "on Twitch, ",
+        "noReactionsP4": "or upgrade your reaction ",
+        "noReactionsP5": "to send your alert with Qoins",
+        "upgradeFor": "Upgrade for",
+        "getReward": "Get Channel Reward",
+    },
+    "sentModal": {
+        "title": "Boom. Sent.",
+        "watchOnStream": "Watch now on stream",
+        "sendMoreReactions": "Send more reactions"
+    },
+    "signUpModal": {
+        "continueWithApple": "Continue with Apple",
+        "continueWithGoogle": "Continue with Google",
+        "continueWithTwitch": "Continue with Twitch"
+    },
+    "signUpModalTweetReactionScreen": {
+        "keepReacting": "Kepp reacting on stream",
+        "coolRight": "Cool! isn’t it? 👀",
+        "benefit1": "⚡️ Use channel points to send custom memes",
+        "benefit2": "🔥 Upgrade your memes",
+        "benefit3": "🌱 Support your fave streamers"
+    },
+    "signUpModalStreamerProfileScreen": {
+        "title": "Never miss a stream!",
+        "benefit1": "🗓️️ Always know when your streamer schedules a stream",
+        "benefit2": "🚨️ Always know when a stream is reschedule or canceled"
+    },
+    "signUpEventDetailsModal": {
+        "title": "Add stream to schedule",
+        "benefit1": "🚨️ Always know when a stream is reschedule or canceled",
+        "benefit2": "⏰ Never miss a stream! We’ll remind you of upcoming streams"
+    },
+    "signUpModalGreetingsShortcut": {
+        "title": "Your identity on stream",
+        "benefit1": "👽️ Create a custom animated avatar to use on stream",
+        "benefit2": "👋 Popup on stream using your avatar when arriving to a stream"
+    },
+    "signUpModalHeaderBar": {
+        "title": "Send memes on stream",
+        "benefit1": "⚡️ React on stream sending custom memes",
+        "benefit2": "👽 Custom animated avatar for your reactions",
+        "benefit3": "🌱 Support your fave streamers"
     },
     "streamerCard": {
         "viewMore": "View more"

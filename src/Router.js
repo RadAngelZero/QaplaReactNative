@@ -30,32 +30,8 @@ import FollowingStreamersScreen from './screens/FollowingStreamersScreen/Followi
 import WriteCheerMessageScreen from './screens/WriteCheerMessageScreen/WriteCheerMessageScreen';
 import CheersSentScreen from './screens/CheersSentScreen/CheersSentScreen';
 import MyStreamsScreen from './screens/MyStreamsScreen/MyStreamsScreen';
-import InteractionsFeed from './screens/Interactions/InteractionsFeed';
 import { BOTTOM_NAVIGATION_BAR_HEIGHT } from './utilities/Constants';
-import InteractionsSearchStreamer from './screens/Interactions/InteractionsSearchStreamer';
-import InteractionsPersonalize from './screens/Interactions/InteractionsPersonalize';
-import InteractionsGiphyMediaSelector from './screens/Interactions/InteractionsGiphyMediaSelector';
-import PersonalizeInteractionHeader from './components/PersonalizeInteractionHeader/PersonalizeInteractionHeader';
-import InteractionsConfirmSelection from './screens/Interactions/InteractionsConfirmSelection';
-import InteractionsAddTTS from './screens/Interactions/InteractionsAddTTS';
-import InteractionsTTS from './screens/Interactions/InteractionsTTS';
-import InteractionsCheckout from './screens/Interactions/InteractionsCheckout';
-import InteractionsMemeSelector from './screens/Interactions/InteractionsMemeSelector';
 import BuyQoins from './screens/BuyQoins/BuyQoins';
-import InteractionsSent from './screens/Interactions/InteractionsSent';
-import InteractionsAddVisual from './screens/Interactions/InteractionsAddVisual';
-import PrepaidInteractionsPersonalize from './screens/Interactions/PrepaidReactions/PrepaidInteractionsPersonalize';
-import PrepaidInteractionsGiphyMediaSelector from './screens/Interactions/PrepaidReactions/PrepaidInteractionsGiphyMediaSelector';
-import PrepaidInteractionsMemeSelector from './screens/Interactions/PrepaidReactions/PrepaidInteractionsMemeSelector';
-import PrepaidInteractionsConfirmSelection from './screens/Interactions/PrepaidReactions/PrepaidInteractionsConfirmSelection';
-import PrepaidInteractionsTTS from './screens/Interactions/PrepaidReactions/PrepaidInteractionsTTS';
-import PrepaidInteractionsAddVisual from './screens/Interactions/PrepaidReactions/PrepaidInteractionsAddVisual';
-import PrepaidInteractionsCheckout from './screens/Interactions/PrepaidReactions/PrepaidInteractionsCheckout';
-import PrepaidInteractionsSent from './screens/Interactions/PrepaidReactions/PrepaidInteractionsSent';
-import PrepaidInteractionsInsertGiphyText from './screens/Interactions/PrepaidReactions/PrepaidInteractionsInsertGiphyText';
-import PrepaidInteractionsGiphyTextSelector from './screens/Interactions/PrepaidReactions/PrepaidInteractionsGiphyTextSelector';
-import InteractionsGiphyTextSelector from './screens/Interactions/InteractionsGiphyTextSelector';
-import InteractionsInsertGiphyText from './screens/Interactions/InteractionsInsertGiphyText';
 import UserProfileModal from './components/UserProfileModal/UserProfileModal';
 import AvatarCreatorScreen from './screens/AvatarCreatorScreen/AvatarCreatorScreen';
 import AvatarChooseAnimationScreen from './screens/AvatarChooseAnimationScreen/AvatarChooseAnimationScreen';
@@ -65,6 +41,7 @@ import GreetingTTSScreen from './screens/GreetingTTSScreen/GreetingTTSScreen';
 import AvatarReadyScreen from './screens/AvatarReadyScreen/AvatarReadyScreen';
 import AvatarCreationHeaderBar from './components/AvatarCreationHeaderBar/AvatarCreationHeaderBar';
 import GreetingSearchStreamerScreen from './screens/GreetingSearchStreamerScreen/GreetingSearchStreamerScreen';
+import TweetReactionControllerScreen from './screens/TweetReactionScreen/TweetReactionControllerScreen';
 
 //#region Stack Navigators
 
@@ -111,201 +88,11 @@ const StreamerProfileStackNavigator = createStackNavigator({
   },
 });
 
-const InteractionsStackNavigator = createStackNavigator({
-  InteractionsFeed: {
-    screen: InteractionsFeed,
-    navigationOptions: {
-      headerShown: false,
-      animationEnabled: false,
-    },
-  },
-  InteractionsSearchStreamer: {
-    screen: InteractionsSearchStreamer,
-    navigationOptions: {
-      headerShown: false,
-      // animationEnabled:false,
-    },
-  },
-});
-
-const InteractionsPersonlizeStackNavigator = createStackNavigator({
-  InteractionsPersonalize: {
-    screen: InteractionsPersonalize,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  InteractionsGiphyMediaSelector: {
-    screen: InteractionsGiphyMediaSelector,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  InteractionsMemeSelector: {
-    screen: InteractionsMemeSelector,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  InteractionsConfirmSelection: {
-    screen: InteractionsConfirmSelection,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  InteractionsAddTTS: {
-    screen: InteractionsAddTTS,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  InteractionsTTS: {
-    screen: InteractionsTTS,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  InteractionsAddVisual: {
-    screen: InteractionsAddVisual,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  InteractionsInsertGiphyText: {
-    screen: InteractionsInsertGiphyText,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  InteractionsGiphyTextSelector: {
-    screen: InteractionsGiphyTextSelector,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  InteractionsCheckout: {
-    screen: InteractionsCheckout,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  InteractionsSent: {
-    screen: InteractionsSent,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
+const ReactionsStackNavigator = createStackNavigator({
+  TweetReactionScreen: TweetReactionControllerScreen
 }, {
   defaultNavigationOptions: {
-    header: (props) => <PersonalizeInteractionHeader {...props} />,
-  }
-});
-const PrepaidInteractionsPersonlizeStackNavigator = createStackNavigator({
-  PrepaidInteractionsPersonalize: {
-    screen: PrepaidInteractionsPersonalize,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  PrepaidInteractionsGiphyMediaSelector: {
-    screen: PrepaidInteractionsGiphyMediaSelector,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  PrepaidInteractionsMemeSelector: {
-    screen: PrepaidInteractionsMemeSelector,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  PrepaidInteractionsConfirmSelection: {
-    screen: PrepaidInteractionsConfirmSelection,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  PrepaidInteractionsTTS: {
-    screen: PrepaidInteractionsTTS,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  PrepaidInteractionsAddVisual: {
-    screen: PrepaidInteractionsAddVisual,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  PrepaidInteractionsInsertGiphyText: {
-    screen: PrepaidInteractionsInsertGiphyText,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  PrepaidInteractionsGiphyTextSelector: {
-    screen: PrepaidInteractionsGiphyTextSelector,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  PrepaidInteractionsCheckout: {
-    screen: PrepaidInteractionsCheckout,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-  PrepaidInteractionsSent: {
-    screen: PrepaidInteractionsSent,
-    navigationOptions: {
-      headerShown: true,
-      gestureDirection: 'horizontal',
-      ...TransitionPresets.SlideFromRightIOS,
-    },
-  },
-}, {
-  defaultNavigationOptions: {
-    header: (props) => <PersonalizeInteractionHeader {...props} />,
+    header: null
   }
 });
 
@@ -485,7 +272,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
         <></>
       ),
       tabBarOnPress: ({ navigation, defaultHandler }) => {
-        navigation.navigate('InteractionsStack');
+        navigation.navigate('TweetReactionScreen');
       },
     },
   },
@@ -589,13 +376,7 @@ const RootStackNavigator = createStackNavigator({
     },
   },
   Auth: AuthStackNavigator,
-  InteractionsStack: InteractionsStackNavigator,
-  InteractionsPersonlizeStack: {
-    screen: InteractionsPersonlizeStackNavigator,
-  },
-  PrepaidInteractionsPersonlizeStack: {
-    screen: PrepaidInteractionsPersonlizeStackNavigator
-  },
+  ReactionsStack: ReactionsStackNavigator,
   AvatarStackNavigator: {
     screen: AvatarStackNavigator
   },

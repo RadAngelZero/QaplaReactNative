@@ -96,12 +96,6 @@ class TweetReactionControllerScreen extends Component {
         }
     }
 
-    componentWillUnmount() {
-        if (this.props.uid, this.state.streamerData.streamerUid) {
-            removeListenerFromReactionsCount(this.props.uid, this.state.streamerData.streamerUid);
-        }
-    }
-
     setUserDefaultImage = async () => {
         let userImageIndex = userImageIndex = Math.floor(Math.random() * defaultUserImages.length);
 

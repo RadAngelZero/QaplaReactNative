@@ -342,10 +342,12 @@ class TweetReactionScreen extends Component {
     }
 
     toggleKeyboard = () => {
-        if (this.textInput.isFocused()) {
-            this.textInput.blur();
-        } else {
-            this.textInput.focus();
+        if (this.textInput) {
+            if (this.textInput.isFocused()) {
+                this.textInput.blur();
+            } else {
+                this.textInput.focus();
+            }
         }
     }
 
@@ -724,17 +726,19 @@ class TweetReactionScreen extends Component {
                                                     <images.svg.arrowTopCircle height={16} width={16} style={{ marginLeft: 6 }} />
                                                 </TouchableOpacity>
                                             </View>
-                                            <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                                                {this.state.keyboardOpen ?
-                                                    <TouchableOpacity onPress={this.toggleKeyboard}>
-                                                        <images.svg.hideKeyboard />
-                                                    </TouchableOpacity>
-                                                :
-                                                    <TouchableOpacity onPress={this.toggleKeyboard}>
-                                                        <images.svg.showKeyboard />
-                                                    </TouchableOpacity>
-                                                }
-                                            </View>
+                                            {!this.props.custom3DText &&
+                                                <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                                                    {this.state.keyboardOpen ?
+                                                        <TouchableOpacity onPress={this.toggleKeyboard}>
+                                                            <images.svg.hideKeyboard />
+                                                        </TouchableOpacity>
+                                                    :
+                                                        <TouchableOpacity onPress={this.toggleKeyboard}>
+                                                            <images.svg.showKeyboard />
+                                                        </TouchableOpacity>
+                                                    }
+                                                </View>
+                                            }
                                         </Animated.View>
                                         <View style={styles.extraTipButtonsContainer}>
                                             <ExtraTipOption label={200}

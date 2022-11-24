@@ -13,9 +13,7 @@ export default styles = StyleSheet.create({
         bottom: 0,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        width: widthPercentageToPx(100),
-        height: heightPercentageToPx(90)
-
+        width: widthPercentageToPx(100)
     },
     closeIconContainer: {
         flexDirection: 'row',

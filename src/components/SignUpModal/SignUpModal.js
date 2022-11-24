@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Keyboard, Modal, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import PropTypes from 'prop-types';
 import appleAuth from '@invertase/react-native-apple-authentication';
 
@@ -12,17 +12,31 @@ import TwitchAuthScreen from '../../screens/TwitchAuthScreen/TwitchAuthScreen';
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
 import { retrieveData } from '../../utilities/persistance';
 import { translate } from '../../utilities/i18';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class SignUpModal extends Component {
     state = {
         gif: null,
         gifAspectRatio: 1,
         linkingWithTwitch: false,
-        showLinkWitTwitchModal: false
+        showLinkWitTwitchModal: false,
+        keyboardHeight: 0
     };
 
     componentDidMount() {
         setupGoogleSignin();
+
+        this.keyboardWillShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+			this.setState({ keyboardHeight: e.endCoordinates.height });
+		});
+		this.keyboardWillHideListener = Keyboard.addListener('keyboardDidHide', () => {
+			this.setState({ keyboardHeight: 0 });
+		});
+    }
+
+    componentWillUnmount() {
+        this.keyboardWillHideListener.remove();
+        this.keyboardWillShowListener.remove();
     }
 
     getGif = async () => {
@@ -117,7 +131,9 @@ class SignUpModal extends Component {
                     <LinearGradient useAngle
                         angle={135.64}
                         colors={['#A716EE', '#2C07FA']}
-                        style={styles.mainContainer}>
+                        style={[styles.mainContainer, {
+                            height: Platform.OS === 'android' && this.state.keyboardHeight > 0 ? heightPercentageToPx(90) - this.state.keyboardHeight : heightPercentageToPx(90)
+                        }]}>
                         {this.state.linkingWithTwitch ?
                             <TwitchAuthScreen onAuthSuccessful={this.successfulTwitchSignIn}
                                 onFail={() => this.setState({ linkingWithTwitch: false })} />

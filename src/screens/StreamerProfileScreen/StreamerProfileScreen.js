@@ -277,8 +277,8 @@ class StreamerProfileScreen extends Component {
         const { streamerId, displayName, photoUrl } = this.state.streamerData;
         this.props.navigation.navigate('TweetReactionScreen', {
             streamerUid: streamerId,
-            streamerImage: displayName,
-            streamerName: photoUrl
+            streamerName: displayName,
+            streamerImage: photoUrl
         });
 
         trackOnSegment('Streamer Selected To Send Interaction From Streamer Profile', {

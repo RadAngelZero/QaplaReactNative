@@ -65,6 +65,8 @@ import GreetingTTSScreen from './screens/GreetingTTSScreen/GreetingTTSScreen';
 import AvatarReadyScreen from './screens/AvatarReadyScreen/AvatarReadyScreen';
 import AvatarCreationHeaderBar from './components/AvatarCreationHeaderBar/AvatarCreationHeaderBar';
 import GreetingSearchStreamerScreen from './screens/GreetingSearchStreamerScreen/GreetingSearchStreamerScreen';
+import UploadContent from './screens/UploadContent/UploadContent';
+import AddTags from './screens/UploadContent/AddTags';
 
 //#region Stack Navigators
 
@@ -483,7 +485,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
     },
   },
   Upload: {
-    screen: CommunityTopTabNavigator,
+    screen: UploadContent,
     navigationOptions: {
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
@@ -497,15 +499,15 @@ const MainBottomTabNavigator = createBottomTabNavigator({
           height: 48,
           width: '100%',
         }}>
-          <Svg width="25px" height="24.69px" viewBox="0 0 25 26">
+          <Svg width="30px" height="30px" viewBox="0 0 30 30">
             <G id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <G id="Profile" transform="translate(-175.000000, -745.000000)">
                 <G id="Bottom-Nav-Bar" transform="translate(0.000000, 731.000000)">
                   <G id="Community" transform="translate(125.000000, 12.000000)">
                     <G id="chat" transform="translate(48.000000, 0.000000)">
                       <G id="Comment" transform="translate(2.500000, 2.500000)">
-                        <Path fill={tintColor} d="M4.99346 1.11165C2.8809 1.4331 1.20706 2.9811 0.844325 5.08696C0.591513 6.55465 0.375 8.41906 0.375 10.5C0.375 12.5809 0.591513 14.4454 0.844325 15.913C1.1557 17.7207 2.4332 19.1174 4.125 19.68V23.9345C4.125 24.9024 5.17764 25.503 6.01091 25.0106L13.6551 20.4936C16.423 20.4482 18.9048 20.1701 20.7565 19.8884C22.8691 19.5669 24.543 18.0189 24.9056 15.913C25.1585 14.4454 25.375 12.5809 25.375 10.5C25.375 8.41906 25.1585 6.55465 24.9056 5.08696C24.543 2.9811 22.8691 1.4331 20.7565 1.11165C18.7324 0.803662 15.9555 0.5 12.875 0.5C9.79449 0.5 7.01764 0.803662 4.99346 1.11165Z" id="Path" />
-                        <Path fill={focused ? '#4040FF' : '#FFF'} d="M19.7069 9.47228C19.0348 9.05106 18.1434 9.24615 17.7158 9.90813C17.698 9.93555 15.9031 12.6592 12.875 12.6592C9.84694 12.6592 8.05202 9.93555 8.03421 9.90813C7.60658 9.24622 6.71518 9.05113 6.04315 9.47228C5.37112 9.8935 5.17302 10.7715 5.60066 11.4332C5.70796 11.5992 8.28127 15.5 12.875 15.5C17.4687 15.5 20.042 11.5993 20.1493 11.4332C20.577 10.7713 20.3789 9.8935 19.7069 9.47228Z" id="Shape" />
+                        <Path fill={tintColor} d="M15 3C9.1846 3 4.48492 7.78872 4.22417 13.743C1.74181 14.7333 0 17.2378 0 20.1459C0 23.9037 2.91675 27 6.57447 27H22.0213C26.4545 27 30 23.2455 30 18.6757C30 15.3326 28.1081 12.435 25.359 11.1127C24.0574 6.4423 19.9278 3 15 3Z" />
+                        <Path fill={focused ? '#4040FF' : '#FFF'} fill-rule="evenodd" clip-rule="evenodd" d="M14.2756 10.9813C14.7093 10.6729 15.2907 10.6729 15.7244 10.9813L20.0994 14.0924C20.662 14.4925 20.7938 15.2729 20.3937 15.8355C19.9936 16.3981 19.2132 16.5299 18.6506 16.1298L16.25 14.4227V20C16.25 20.6904 15.6904 21.25 15 21.25C14.3097 21.25 13.75 20.6904 13.75 20V14.4227L11.3494 16.1298C10.7868 16.5299 10.0064 16.3981 9.60631 15.8355C9.20624 15.2729 9.33799 14.4925 9.9006 14.0924L14.2756 10.9813Z" />
                       </G>
                     </G>
                   </G>
@@ -538,7 +540,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
           // shadowOffset: { height: 60, width: 60 },
           // elevation: 20
         }}>
-          <images.svg.interactionsNumberIcon style={{transform: [{ scale: 1.5 }],}} />
+          <images.svg.interactionsNumberIcon style={{ transform: [{ scale: 1.5 }], }} />
         </View>
       ),
       tabBarOnPress: ({ navigation, defaultHandler }) => {
@@ -575,6 +577,19 @@ const MainBottomTabNavigator = createBottomTabNavigator({
 
 //#endregion
 
+//#region Upload Content Stack Navigator
+
+const UploadContentNavigator = createStackNavigator({
+  AddTags: {
+    screen: AddTags,
+    navigationOptions: {
+      headerShown: false,
+      gestureDirection: 'horizontal',
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  },
+});
+
 //#region Root Stack Navigator
 
 const RootStackNavigator = createStackNavigator({
@@ -584,6 +599,7 @@ const RootStackNavigator = createStackNavigator({
       header: (props) => <HeaderBar {...props} />
     },
   },
+  UploadContent: UploadContentNavigator,
   Activity: {
     screen: ActivityScreen,
     navigationOptions: {

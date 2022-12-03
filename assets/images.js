@@ -123,6 +123,8 @@ import SwapRectangle from './icons/SwapRectangle.svg';
 import PlusCircle from './icons/plusCircle.svg';
 import Avatar from './icons/Avatar.svg';
 import GiphyText from './icons/GiphyText.svg';
+import FileUpload from './icons/FileUpload.svg';
+import Tag from './icons/Tag.svg';
 
 // Images
 const images = {
@@ -214,6 +216,10 @@ const images = {
 			img: require('./icons/CheckCircleGlow.png'),
 			uri: '@assets/icons/CheckCircleGlow.png'
 		},
+		infoCircleGlow: {
+			img: require('./icons/InfoCircleGlow.png'),
+			uri: '@assets/icons/InfoCircleGlow.png'
+		},
 		joinQlanGlow: {
 			img: require('./icons/JoinQlanGlow.png'),
 			uri: '@assets/icons/JoinQlanGlow.png'
@@ -265,7 +271,7 @@ const images = {
 		},
 		popUpBackground: {
 			img: require('./images/PopUpBackground.png')
-		}
+		},
 	},
 	svg: {
 		googleIcon: GoogleIcon,
@@ -391,7 +397,9 @@ const images = {
 		swapRectangle: SwapRectangle,
 		plusCircle: PlusCircle,
 		avatar: Avatar,
-		giphyText: GiphyText
+		giphyText: GiphyText,
+		fileUpload: FileUpload,
+		tag: Tag,
 	},
 	gif: {
 		loadingStreamers: {

@@ -4,14 +4,14 @@ import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAn
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0D1021',
+        backgroundColor: '#0D1021'
     },
     headerBar: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 16,
-        paddingVertical: 24
+        paddingBottom: 24
     },
     textButton: {
         padding: 4
@@ -28,6 +28,9 @@ export default styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: '#00FFDD'
     },
+    containedButtonDisabled: {
+        opacity: 0.4
+    },
     containedButtonText: {
         fontSize: 16,
         fontWeight: '700',
@@ -35,11 +38,10 @@ export default styles = StyleSheet.create({
         color: '#0D1021'
     },
     ttsContainer: {
-        flex: 1,
         flexDirection: 'row',
+        alignItems: 'center',
         marginLeft: 16,
-        width: widthPercentageToPx(20),
-        height: widthPercentageToPx(20)
+        width: widthPercentageToPx(20)
     },
     avatarImage: {
         borderRadius: heightPercentageToPx(100),
@@ -54,49 +56,136 @@ export default styles = StyleSheet.create({
     },
     ttsTextInput: {
         color: '#FFF',
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: '400',
         textAlignVertical: 'top',
         padding: 0
     },
     optional: {
-        fontSize: 10,
+        paddingTop: 4,
+        fontSize: 14,
         fontWeight: '400',
-        lineHeight: 12,
+        lineHeight: 16.71,
         color: '#7BB0FF'
     },
-    streamerContainer: {
+    custom3DTextContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    custom3DText: {
+        width: widthPercentageToPx(60)
+    },
+    edit3DText: {
+        marginRight: 12
+    },
+    pillsScrollView: {
+        marginTop: 16,
+        height: 46 // Pill size
+    },
+    pillsScrollViewContainer: {
+        paddingRight: 16,
+        width: widthPercentageToPx(11) + 8 + 16 // Width of avatar image + paddings and margins
+    },
+    avatarOnContainer: {
+        borderRadius: 10000,
+        padding: 3
+    },
+    avatarOn: {
+        backgroundColor: '#0D1021',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginLeft: 16
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingRight: 0,
+        paddingLeft: 16,
+        borderRadius: 998
+    },
+    avatarOnText: {
+        marginLeft: 8,
+        fontSize: 13,
+        fontWeight: '700',
+        color: '#FFF'
+    },
+    avatarOnRemoveIcon: {
+        paddingLeft: 8,
+        paddingRight: 8
+    },
+    mediaContainer: {
+        flex: 1,
+        alignItems: 'flex-start',
+        marginTop: 16,
+        paddingLeft: widthPercentageToPx(11) + 8 + 16
+    },
+    removeImageIcon: {
+        position: 'absolute',
+        top: 8,
+        right: 8
+    },
+    streamerAndExtraTipsContainer: {
+        width: widthPercentageToPx(100),
+        overflow: 'hidden',
+        paddingHorizontal: 16
+    },
+    streamerContainer: {
+        marginBottom: 24,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end'
     },
     streamerAvatar: {
         marginLeft: 8,
         marginRight: 8,
         height: 32,
         width: 32,
-        borderRadius: heightPercentageToPx(100)
+        borderRadius: 1000
     },
     costContainer: {
+        height: 32,
         backgroundColor: '#1C1E64',
         borderRadius: 10,
         paddingHorizontal: 16,
-        paddingVertical: 6,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     costText: {
         marginLeft: 6,
         fontSize: 14,
-        fontWeight: '700',
+        fontWeight: '500',
         letterSpacing: .5,
         color: '#FFF'
     },
-    mediaSelector: {
-        marginTop: 16,
+    extraTipButtonsContainer: {
+        paddingBottom: 16,
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
+    },
+    extraTipOptionButtonContainer: {
+        height: widthPercentageToPx(21.33),
+        width: widthPercentageToPx(21.33),
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    extraTipOptionButton: {
+        height: widthPercentageToPx(19.66),
+        width: widthPercentageToPx(19.66),
+        borderRadius: 18,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    extraTipOptionButtonText: {
+        marginLeft: 4,
+        fontSize: 16,
+        fontWeight: '700',
+        color: '#FFF'
+    },
+    mediaSelector: {
+        flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 16,
         paddingVertical: 12,
@@ -110,7 +199,66 @@ export default styles = StyleSheet.create({
          * (we want to show half icon to give a visual hint to the user, so he know he can scroll
          * through options)
          */
-        maxWidth: widthPercentageToPx(100) <= 360 ? 216 : 264
+        maxWidth: widthPercentageToPx(100) <= 360 ? 216 : 264,
+        height: '100%',
+        marginRight: 30
+    },
+    tooltipContainer: {
+        minHeight: 150,
+        padding: 8,
+        flex: 1,
+        justifyContent: 'space-between'
+    },
+    tooltipTextAndIconContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start'
+    },
+    tooltipLabelText: {
+        fontSize: 16,
+        fontWeight: '700',
+        lineHeight: 19,
+        color: '#FFF'
+    },
+    tooltipHighlihgtedText: {
+        color: '#00FFDD'
+    },
+    tooltipButtonContainer: {
+        flexDirection: 'row',
+        backgroundColor: '#141735',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 24,
+        paddingVertical: 12,
+        borderRadius: 50,
+        marginTop: 11,
+        alignSelf: 'flex-end',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+
+    },
+    tooltipArrowStyle: {
+        color: '#3B4BF9'
+    },
+    tooltipArrowSize: {
+        height: 14,
+        width: 30
+    },
+    tooltipContentStyle: {
+        backgroundColor: '#3B4BF9',
+        width: widthPercentageToPx(83.75),
+        borderRadius: 15
+    },
+    extraTipTooltipContentStyle: {
+        backgroundColor: '#3B4BF9',
+        width: widthPercentageToPx(65.33),
+        borderRadius: 15
     },
     mediaOptionContainer: {
         paddingHorizontal: 12
@@ -119,10 +267,8 @@ export default styles = StyleSheet.create({
         opacity: 0.4
     },
     extraTipButton: {
-        marginLeft: 30,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#3B4BF9',
         borderRadius: 20,
         paddingHorizontal: 16,
         paddingVertical: 8

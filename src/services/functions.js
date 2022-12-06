@@ -37,15 +37,13 @@ export async function getTwitchDataCloudFunction(userTwitchId) {
  * Generate an auth token for the user to signIn with Twitch (custom auth)
  * @param {string} userTwitchId Twitch Id of the user
  * @param {string} displayName Twitch username of the user
- * @param {string} email Twitch email of the user
  */
-export async function generateAuthTokenForTwitchSignIn(userTwitchId, displayName, email) {
+export async function generateAuthTokenForTwitchSignIn(userTwitchId, displayName) {
 	return await callCloudFunction({
 		cfName: 'appTwitchSignin',
 		params: {
 			uid: userTwitchId,
-			displayName,
-			email
+			displayName
 		}
 	});
 }

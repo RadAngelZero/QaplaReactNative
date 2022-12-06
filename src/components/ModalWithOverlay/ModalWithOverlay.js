@@ -9,11 +9,13 @@ class ModalWithOverlay extends Component {
         return (
             <Modal visible={this.props.open}
                 onRequestClose={this.props.onClose}
+                onShow={this.props.onShow}
+                animationType='slide'
                 transparent>
                 <View style={styles.modalContainer}>
                     <View style={styles.modal}>
                         <TouchableOpacity style={styles.closeModalIcon} onPress={this.props.onClose}>
-                            <images.svg.closeIcon />
+                            <images.svg.closeIcon style={styles.closeIcon} />
                         </TouchableOpacity>
                         {this.props.children}
                     </View>
@@ -22,5 +24,9 @@ class ModalWithOverlay extends Component {
         );
     }
 }
+
+ModalWithOverlay.defaultProps = {
+    onShow: () => {}
+};
 
 export default ModalWithOverlay;

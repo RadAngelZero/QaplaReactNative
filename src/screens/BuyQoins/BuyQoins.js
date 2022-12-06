@@ -46,7 +46,11 @@ class BuyQoins extends Component {
         if (isUserLogged()) {
             trackOnSegment('Purchase Attempt');
             try {
-                this.props.setOnFinishPurchase(this.props.navigation.getParam('onSuccessfulBuy', () => { }));
+                if (this.props.navigation) {
+                    this.props.setOnFinishPurchase(this.props.navigation.getParam('onSuccessfulBuy', () => { }));
+                } else {
+                    this.props.setOnFinishPurchase(this.props.onSuccess);
+                }
                 await RNIap.requestPurchase(sku, false);
             } catch (err) {
                 console.warn(err.code, err.message);
@@ -189,7 +193,7 @@ class BuyQoins extends Component {
                     }
                 </View>
                 <TouchableOpacity
-                    onPress={() => this.props.navigation.goBack()}
+                    onPress={() => this.props.navigation ? this.props.navigation.goBack() : this.props.onClose()}
                     style={styles.closeIconContainer}>
                     <images.svg.closeIcon />
                 </TouchableOpacity>

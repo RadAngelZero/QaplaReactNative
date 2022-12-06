@@ -125,6 +125,11 @@ import Avatar from './icons/Avatar.svg';
 import GiphyText from './icons/GiphyText.svg';
 import FileUpload from './icons/FileUpload.svg';
 import Tag from './icons/Tag.svg';
+import EditCircle from './icons/EditCircle.svg';
+import ShowKeyboard from './icons/ShowKeyboard.svg';
+import HideKeyboard from './icons/hideKeyboard.svg';
+import CheckCircleWhite from './icons/CheckCircleWhite.svg';
+import ArrowTopCircle from './icons/arrowTopCircle.svg';
 
 // Images
 const images = {
@@ -272,6 +277,12 @@ const images = {
 		popUpBackground: {
 			img: require('./images/PopUpBackground.png')
 		},
+		defaultReactionProfilePic: {
+			img: require('./images/DefaultReactionProfilePic.png')
+		},
+		channelPoints: {
+			img: require('./images/ChannelPoints.png')
+		}
 	},
 	svg: {
 		googleIcon: GoogleIcon,
@@ -400,6 +411,11 @@ const images = {
 		giphyText: GiphyText,
 		fileUpload: FileUpload,
 		tag: Tag,
+		editCircle: EditCircle,
+		showKeyboard: ShowKeyboard,
+		hideKeyboard: HideKeyboard,
+		checkCircleWhite: CheckCircleWhite,
+		arrowTopCircle: ArrowTopCircle
 	},
 	gif: {
 		loadingStreamers: {

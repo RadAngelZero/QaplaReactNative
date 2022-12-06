@@ -42,31 +42,21 @@ class EmoteSelector extends Component {
     renderEmoteSection = ({ item, section }) => {
         let locked = false;
 
-        /**
-         * As the info about followage and subscription is loaded asynchronously we compare the uid from the screen (emotesStreamerUid)
-         * with the redux info loaded of the streamer (streamerUid) to prevent the use of emotes. When the info changes this will be
-         * executed again so the locked flag will be loaded correctly
-         */
-        const isInfoOfThisStreamer = this.props.emotesStreamerUid === this.props.streamerUid;
-        if (isInfoOfThisStreamer) {
-            switch (section.key) {
-                case 'follower':
-                    locked = !this.props.isFollower;
-                    break;
-                case 'subTier1':
-                    locked = !this.props.isSubscribed;
-                    break;
-                case 'subTier2':
-                    locked = !this.props.isSubscribed || this.props.subscriptionTier < 2000;
-                    break;
-                case 'subTier3':
-                    locked = !this.props.isSubscribed || this.props.subscriptionTier < 3000;
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            locked = true;
+        switch (section.key) {
+            case 'follower':
+                locked = !this.props.isFollower;
+                break;
+            case 'subTier1':
+                locked = !this.props.isSubscribed;
+                break;
+            case 'subTier2':
+                locked = !this.props.isSubscribed || this.props.subscriptionTier < 2000;
+                break;
+            case 'subTier3':
+                locked = !this.props.isSubscribed || this.props.subscriptionTier < 3000;
+                break;
+            default:
+                break;
         }
 
         return (
@@ -82,7 +72,6 @@ class EmoteSelector extends Component {
             <View style={{
                 flex: 1,
                 paddingTop: 16,
-                paddingHorizontal: 16,
                 alignContent: 'center',
                 justifyContent: 'center'
             }}>
@@ -94,6 +83,7 @@ class EmoteSelector extends Component {
                 {this.props.data && this.props.data.length > 0 ?
                     <SectionList sections={this.props.data}
                         keyExtractor={(item) => item.key}
+                        keyboardShouldPersistTaps='handled'
                         renderItem={this.renderEmoteSection}
                         renderSectionHeader={({ section: { key, data } }) => (
                             data && data[0] && data[0].length > 0 ?
@@ -103,7 +93,7 @@ class EmoteSelector extends Component {
                                     color: 'rgba(255, 255, 255, .8)',
                                     backgroundColor: '#141539',
                                     marginBottom: 8,
-                                    marginTop: 24
+                                    paddingTop: 24
                                 }}>
                                     {translate(`interactions.checkout.emoteModal.${key}`)}
                                 </Text>

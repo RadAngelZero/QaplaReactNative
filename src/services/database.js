@@ -65,6 +65,7 @@ const avatarsAnimationsRef = database.ref('/AvatarsAnimations');
 const usersGreetingsRef = database.ref('/UsersGreetings');
 const streamsGreetingsRef = database.ref('/StreamsGreetings');
 const gifsLibrariesRef = database.ref('/GifsLibraries');
+const reactionsPricesRef = database.ref('/ReactionsPrices');
 
 /**
  * Returns true if the user with the given uid exists
@@ -212,6 +213,14 @@ export async function getTwitchUserName(uid) {
  */
  export async function isNewTwitchId(twitchId) {
     return !(await usersRef.orderByChild('twitchId').equalTo(twitchId).once('value')).exists();
+}
+
+/**
+ * Gets the user with their linked twitchId
+ * @param {string} twitchId Twitch identifier
+ */
+export async function getUserWithTwitchId(twitchId) {
+    return await usersRef.orderByChild('twitchId').equalTo(twitchId).once('value');
 }
 
 /**
@@ -1449,7 +1458,7 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojiR
 }
 
 /**
- * Store cheers on the database at StreamersDonations node and remove pre paid interaction (and Qoins if necessary)
+ * Store cheers on the database at StreamersDonations node and remove channel points reactions and Qoins if necessary
  * @param {string} uid User identifier
  * @param {string} userName Qapla username
  * @param {string} twitchUserName Username of Twitch
@@ -1470,14 +1479,16 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojiR
  * @param {number} qoinsToRemove Amount of donated Qoins
  * @param {string | null} avatarId User Avatar identifier
  * @param {object | null} avatarBackground Avatar linear gradient background data
+ * @param {string | null} avatarAnimationId Avatar animation to show with reaction
  * @param {number} avatarBackground.angle Avatar gradient angle
  * @param {Array<string>} avatarBackground.colors Array of colors for gradient background
  * @param {function} onSuccess Function to call once the cheer is sent
  * @param {function} onError Function to call on any possible error
+ * @param {boolean} removeReaction Flag to remove (or not) a reaction from channel points reaction count
  */
-export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, avatarId, avatarBackground, onSuccess, onError) {
+export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, avatarId, avatarBackground, avatarAnimationId, onSuccess, onError, removeReaction = true) {
     let qoinsTaken = qoinsToRemove ? false : true;
-    if (qoinsToRemove) {
+    if (qoinsToRemove && uid !== 'Anonymus') {
         qoinsTaken = (await usersRef.child(uid).child('credits').transaction((qoins) => {
             if (qoins - qoinsToRemove >= 0) {
                 return qoins - qoinsToRemove;
@@ -1496,16 +1507,22 @@ export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, 
     }
 
     if (qoinsTaken) {
-        const reactionTaken = (await usersReactionsCountRef.child(uid).child(streamerUid).transaction((reactionsCount) => {
-            return reactionsCount - 1;
-        })).committed;
+        let reactionTaken = false;
+        if (uid !== 'Anonymus' && removeReaction) {
+            reactionTaken = (await usersReactionsCountRef.child(uid).child(streamerUid).transaction((reactionsCount) => {
+                return reactionsCount - 1;
+            })).committed;
+        } else {
+            reactionTaken = true;
+        }
 
         if (reactionTaken) {
             const timestamp = (new Date()).getTime();
             const donationRef = streamersDonationsRef.child(streamerUid).push({
                 avatar: {
                     avatarId,
-                    avatarBackground
+                    avatarBackground,
+                    avatarAnimationId
                 },
                 amountQoins: qoinsToRemove,
                 media,
@@ -1985,6 +2002,26 @@ export async function getUserReactionsCount(uid, streamerUid) {
 }
 
 /**
+ * Listen and execute a callback every time the reaction count node is updated
+ * @param {string} uid User identifier
+ * @param {string} streamerUid Steamer identifier
+ * @param {function} callback Handler for database values
+ */
+export function listenToUserReactionsCount(uid, streamerUid, callback) {
+    return usersReactionsCountRef.child(uid).child(streamerUid).on('value', callback);
+}
+
+/**
+ * Remove listener from reactions count
+ * @param {string} uid User identifier
+ * @param {string} streamerUid Steamer identifier
+ * @param {function} callback Handler for database values
+ */
+export function removeListenerFromReactionsCount(uid, streamerUid) {
+    return usersReactionsCountRef.child(uid).child(streamerUid).off('value');
+}
+
+/**
  * Listen for changes on the Giphy Text Request node
  * @param {string} uid User identifier
  * @param {RNFirebase.database.QuerySuccessCallback} callback Function called to handle firebase data
@@ -2136,4 +2173,44 @@ export async function getRandomAvatarAnimationGif() {
 
     const index = Math.floor(Math.random() * length.val());
     return await gifsLibrariesRef.child('AvatarAnimation').child('gifs').child(index).once('value');
+}
+
+/**
+ * Returns a random gif from the library of Search Streamer animation gifs
+ */
+export async function getRandomSearchStreamerGif() {
+    const length = await gifsLibrariesRef.child('SearchStreamer').child('length').once('value');
+
+    const index = Math.floor(Math.random() * length.val());
+    return await gifsLibrariesRef.child('SearchStreamer').child('gifs').child(index).once('value');
+}
+
+/**
+ * Returns a random gif from the library of Sign Up animation gifs
+ */
+export async function getRandomSignUpGif() {
+    const length = await gifsLibrariesRef.child('SignUp').child('length').once('value');
+
+    const index = Math.floor(Math.random() * length.val());
+    return await gifsLibrariesRef.child('SignUp').child('gifs').child(index).once('value');
+}
+
+export async function getRandomGifByLibrary(libraryName) {
+    const length = await gifsLibrariesRef.child(libraryName).child('length').once('value');
+
+    const index = Math.floor(Math.random() * length.val());
+    return await gifsLibrariesRef.child(libraryName).child('gifs').child(index).once('value');
+}
+
+// -----------------------------------------------
+// Reactions Prices
+// -----------------------------------------------
+
+/**
+ * Gets the price (in Qoins) of the given reaction level
+ * @param {string} streamerUid Streamer identifier
+ * @param {string} reactionLevel Name of reaction level
+ */
+export async function getStreamerReactionPrice(streamerUid, reactionLevel) {
+    return await reactionsPricesRef.child(streamerUid).child(reactionLevel).once('value');
 }

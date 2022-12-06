@@ -7,13 +7,14 @@ import Images from '../../../assets/images';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 import QaplaChip from '../../components/QaplaChip/QaplaChip';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
-import { getStreamerPublicProfile, getStreamerSocialLinks, getStreamerStreamingStatus, getUserReactionsCount, streamersHasOverlayActive, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile } from '../../services/database';
+import { getStreamerPublicProfile, getStreamerSocialLinks, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile } from '../../services/database';
 import { getStreamerProfilePhotoUrl } from '../../services/storage';
 import { copyDataToClipboard } from '../../utilities/utils';
 import { getLocaleLanguage, translate } from './../../utilities/i18';
 import styles from './style';
 import InteractionsShortcut from '../../components/InteractionsShortcut/InteractionsShortcut';
 import { trackOnSegment } from '../../services/statistics';
+import SignUpModal from '../../components/SignUpModal/SignUpModal';
 
 const socialMediaIcons = {
     Twitch: Images.svg.twitchLight,
@@ -45,7 +46,7 @@ class StreamerProfileScreen extends Component {
         openEventDetailsModal: false,
         selectedStream: null,
         interactButtonAnimation: new Animated.Value(0),
-        showInteractModule: false
+        openSignUpModal: false
     };
 
     componentDidMount() {
@@ -97,10 +98,6 @@ class StreamerProfileScreen extends Component {
 
         streamerEvents.sort((a, b) => a.timestamp - b.timestamp);
 
-        const isStreaming = await getStreamerStreamingStatus(streamerId);
-        const hasActiveOverlay = await streamersHasOverlayActive(streamerId);
-        this.setState({ showInteractModule: isStreaming && hasActiveOverlay.exists() && hasActiveOverlay.val() });
-
         // Only show the 2 most upcoming streams
         this.setState({ nextStreams: streamerEvents.slice(0, 2) });
     }
@@ -139,12 +136,10 @@ class StreamerProfileScreen extends Component {
 
     followStreamer = async () => {
         if (this.props.uid) {
+            this.setState({ openSignUpModal: false });
             this.subscribeUserToStreamer(this.props.uid);
         } else {
-            this.props.navigation.navigate('SignIn', {
-                onSuccessSignIn: async (uid) => this.subscribeUserToStreamer(uid)
-            }
-            );
+            this.setState({ openSignUpModal: true });
         }
     }
 
@@ -279,36 +274,17 @@ class StreamerProfileScreen extends Component {
     }
 
     onInteractionShorcut = async () => {
-        if (this.props.uid) {
-            const { streamerId, displayName, photoUrl, isStreaming } = this.state.streamerData;
-            const numberOfReactions = await getUserReactionsCount(this.props.uid, streamerId);
-            // We do not check this with exists() because the value can be 0, so it is easier to check if the snapshot has a valid value (not null, not undefined and greater than 0)
-            if (numberOfReactions.val()) {
-                trackOnSegment('Streamer Selected To Send Interaction From Streamer Profile', {
-                    Streamer: displayName,
-                    StreamerId: streamerId,
-                    Category: 'Custom Search'
-                });
+        const { streamerId, displayName, photoUrl } = this.state.streamerData;
+        this.props.navigation.navigate('TweetReactionScreen', {
+            streamerUid: streamerId,
+            streamerName: displayName,
+            streamerImage: photoUrl
+        });
 
-                this.props.navigation.navigate('PrepaidInteractionsPersonlizeStack', { streamerId, displayName, photoUrl, isStreaming: true, numberOfReactions: numberOfReactions.val() });
-            } else {
-                trackOnSegment('Streamer Selected To Send Interaction From Streamer Profile', {
-                    Streamer: displayName,
-                    StreamerId: streamerId,
-                    Category: 'Custom Search'
-                });
-
-                this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming: true });
-            }
-        } else {
-            trackOnSegment('Streamer Selected To Send Interaction From Streamer Profile', {
-                Streamer: displayName,
-                StreamerId: streamerId,
-                Category: 'Custom Search'
-            });
-
-            this.props.navigation.navigate('InteractionsPersonalize', { streamerId, displayName, photoUrl, isStreaming: true });
-        }
+        trackOnSegment('Streamer Selected To Send Interaction From Streamer Profile', {
+            Streamer: displayName,
+            StreamerId: streamerId
+        });
     }
 
     render() {
@@ -445,13 +421,11 @@ class StreamerProfileScreen extends Component {
                                     ))}
                                 </View>
                             }
-                            {this.state.showInteractModule &&
-                                <View style={{
-                                    marginTop: 30,
-                                }}>
-                                    <InteractionsShortcut onPress={this.onInteractionShorcut} />
-                                </View>
-                            }
+                            <View style={{
+                                marginTop: 30,
+                            }}>
+                                <InteractionsShortcut onPress={this.onInteractionShorcut} />
+                            </View>
                             {this.state.socialLinks && this.state.socialLinks.length > 0 &&
                                 <View style={styles.streamerCommunityContainer}>
                                     <Text style={styles.sectionTitle}>
@@ -506,6 +480,15 @@ class StreamerProfileScreen extends Component {
                 <EventDetailsModal open={this.state.openEventDetailsModal}
                     onClose={() => this.setState({ openEventDetailsModal: false, selectedStream: null })}
                     stream={this.state.selectedStream} />
+                <SignUpModal open={this.state.openSignUpModal}
+                    onClose={() => this.setState({ openSignUpModal: false })}
+                    title={translate('signUpModalStreamerProfileScreen.title')}
+                    benefits={[
+                        translate('signUpModalStreamerProfileScreen.benefit1'),
+                        translate('signUpModalStreamerProfileScreen.benefit2')
+                    ]}
+                    onSignUpSuccess={this.followStreamer}
+                    gifLibrary='JoinStream' />
             </View>
         );
     }

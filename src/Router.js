@@ -93,7 +93,7 @@ const StreamerProfileStackNavigator = createStackNavigator({
 
 const ReactionsStackNavigator = createStackNavigator({
   TweetReactionScreen: TweetReactionControllerScreen
-  }, {
+}, {
   defaultNavigationOptions: {
     header: null,
   },
@@ -385,8 +385,13 @@ const RootStackNavigator = createStackNavigator({
   MainBottomNavigator: {
     screen: MainBottomTabNavigator,
     navigationOptions: {
-      header: (props) => {props.navigation.state.routeName !== 'UserProfile' &&
-      <HeaderBar {...props} />}
+      header: (props) => {
+        if (props.navigation.state.index === 0) {
+          return <></>;
+        } else {
+          return <HeaderBar {...props} />;
+        }
+      },
     },
   },
   UploadContent: UploadContentNavigator,
@@ -424,6 +429,14 @@ const RootStackNavigator = createStackNavigator({
       headerShown: false,
     },
   },
+  UserProfileModal: {
+    screen: UserProfileModal,
+    navigationOptions: {
+      cardStyle: {
+        backgroundColor: '#0D1021',
+      },
+    },
+  }
 }, {
   headerMode: 'screen',
   defaultNavigationOptions: {

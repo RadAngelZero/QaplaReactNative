@@ -40,13 +40,13 @@ class UserProfileModal extends Component {
         updatingProfile: false,
         profileScrollEnabled: false,
         imageVersion: 0,
-        greeting: null
+        greeting: null,
     }
 
     componentDidMount() {
         if (!this.props.uid) {
             return this.props.navigation.navigate('Auth', {
-                onSuccessSignIn: () => this.props.navigation.navigate('UserProfileModal'),
+                onSuccessSignIn: () => this.props.navigation.navigate('UserProfile'),
             });
         }
         this.setUserDefaultImage();
@@ -457,19 +457,15 @@ class UserProfileModal extends Component {
         const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${this.state.imageVersion}`;
 
         return (
-            <SafeAreaView style={{ flex: 1 }}>
-                <ScrollView>
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#0D1021' }}>
+                <ScrollView style={{
+                }}>
                     <View style={styles.mainContainer}>
                         {this.props.avatarBackground ?
-                            <LinearGradient style={{ flex: 1, borderRadius: 40 }}
+                            <LinearGradient style={{ flex: 1 }}
                                 useAngle
                                 {...this.props.avatarBackground}>
                                 <Image source={{ uri: avatarImage }} style={styles.avatarImage} />
-                                <TouchableOpacity
-                                    onPress={() => this.props.navigation.goBack()}
-                                    style={styles.closeIcon}>
-                                    <images.svg.closeIcon />
-                                </TouchableOpacity>
                                 <View style={styles.editAvatarContainer}>
                                     <TouchableOpacity
                                         onPress={() => this.props.navigation.navigate('AvatarCreatorScreen', { edit: true })}
@@ -483,14 +479,17 @@ class UserProfileModal extends Component {
                                 {this.renderProfile()}
                             </LinearGradient>
                             :
-                            <>
-                                <TouchableOpacity
-                                    onPress={() => this.props.navigation.goBack()}
-                                    style={styles.closeIcon}>
-                                    <images.svg.closeIcon />
-                                </TouchableOpacity>
+                            <View>
                                 <ImageBackground source={images.png.createAvatarCover.img}
-                                    style={styles.createAvatarBackgroundImage}>
+                                    style={styles.createAvatarBackgroundImage}
+                                    imageStyle={{
+                                        marginLeft: 16,
+                                        justifyContent: 'center',
+                                        alignSelf: 'center',
+                                        borderRadius: 30,
+                                    }}
+                                    resizeMode='cover'
+                                >
                                     <View />
                                     <Text style={styles.createAvatarTitle}>
                                         {translate('userProfileScreen.yourIdentity')}
@@ -503,9 +502,10 @@ class UserProfileModal extends Component {
                                     </TouchableOpacity>
                                 </ImageBackground>
                                 {this.renderProfile()}
-                            </>
+                            </View>
                         }
                     </View>
+                    <View style={{ height: 84 }} />
                 </ScrollView>
                 <LinkTwitchAccountModal open={this.state.showLinkWithTwitchModal}
                     onClose={() => this.setState({ showLinkWithTwitchModal: false })}

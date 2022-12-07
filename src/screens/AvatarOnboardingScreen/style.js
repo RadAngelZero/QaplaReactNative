@@ -14,8 +14,8 @@ export default styles = StyleSheet.create({
         marginLeft: 16
     },
     scrollView: {
-        width: widthPercentageToPx(100),
-        maxHeight: heightPercentageToPx(45)
+        width: '100%',
+        maxHeight: heightPercentageToPx(45),
     },
     reactionSample: {
         justifyContent: 'flex-end',
@@ -28,6 +28,7 @@ export default styles = StyleSheet.create({
         maxWidth: widthPercentageToPx(94)
     },
     stepsContainer: {
+        marginTop: '-6%',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
@@ -39,6 +40,7 @@ export default styles = StyleSheet.create({
         width: 8
     },
     modal: {
+        height: 270,
         paddingTop: 32,
         paddingBottom: 32,
         position: 'absolute',
@@ -46,7 +48,7 @@ export default styles = StyleSheet.create({
         bottom: 0,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
-        width: '100%'
+        width: '100%',
     },
     modalTextContainer: {
         maxWidth: '75%',
@@ -71,9 +73,9 @@ export default styles = StyleSheet.create({
     button: {
         borderRadius: 40,
         backgroundColor: '#00FFDD',
-        paddingTop: 26,
-        paddingBottom: 26,
-        width: '66%'
+        paddingVertical: 26,
+        width: '66%',
+        marginTop: 'auto',
     },
     buttonText: {
         fontSize: 17,

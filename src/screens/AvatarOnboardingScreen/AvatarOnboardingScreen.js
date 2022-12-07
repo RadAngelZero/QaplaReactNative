@@ -9,7 +9,7 @@ import { translate } from '../../utilities/i18';
 
 class AvatarOnboardingScreen extends Component {
     state = {
-        step: 0
+        step: 0,
     };
 
     scrollView = null;
@@ -34,6 +34,7 @@ class AvatarOnboardingScreen extends Component {
                     style={styles.scrollView}
                     horizontal
                     pagingEnabled
+                    showsHorizontalScrollIndicator={false}
                     onScroll={this.handleScroll}
                     scrollEventThrottle={1}>
                     <View style={styles.reactionSample}>

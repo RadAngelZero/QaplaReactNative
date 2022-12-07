@@ -125,47 +125,49 @@ class GreetingTTSScreen extends Component {
 
                                 {this.state.step === 1 &&
                                     <>
-                                    <View style={styles.optionOuterConainer}>
-                                        {this.state.editMessage &&
-                                            <images.svg.editSimple style={[styles.marginTop16, styles.optionOutIconMargin]} />}
-                                        <View style={styles.userChatBubbleContainer}>
+                                        <View style={styles.optionOuterConainer}>
+                                            {this.state.editMessage &&
+                                                <images.svg.editSimple style={[styles.marginTop16, styles.optionOutIconMargin]} />}
+                                            <View style={styles.userChatBubbleContainer}>
+                                                <Text style={[styles.whiteText, styles.chatBubbleText]}>
+                                                    {this.state.message}
+                                                </Text>
+                                            </View>
+                                        </View>
+                                        <View style={styles.chatBubbleContainer}>
                                             <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                {this.state.message}
+                                                {translate('greetingTTSScreen.readyToSave')}
                                             </Text>
                                         </View>
-                                    </View>
-                                    <View style={styles.chatBubbleContainer}>
-                                        <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                            {translate('greetingTTSScreen.readyToSave')}
-                                        </Text>
-                                    </View>
 
-                                    <View style={styles.optionsContainer}>
-                                        <View style={styles.optionContainer}>
-                                            <OptionButton onPress={() => this.setState({ step: 0 })}>
-                                                <images.svg.editSimple style={styles.optionOutIconMargin} />
-                                                <Text style={[styles.whiteText, styles.chatBubbleText]}>
-                                                    {translate('greetingTTSScreen.editMessage')}
-                                                </Text>
-                                            </OptionButton>
+                                        <View style={styles.optionsContainer}>
+                                            <View style={styles.optionContainer}>
+                                                <OptionButton onPress={() => this.setState({ step: 0 })}>
+                                                    <images.svg.editSimple style={styles.optionOutIconMargin} />
+                                                    <Text style={[styles.whiteText, styles.chatBubbleText]}>
+                                                        {translate('greetingTTSScreen.editMessage')}
+                                                    </Text>
+                                                </OptionButton>
+                                            </View>
+                                            <View style={styles.optionContainer}>
+                                                <TouchableOpacity style={styles.readyButton} onPress={this.saveGreetingMessage}>
+                                                    <Text style={styles.readyText}>
+                                                        {translate('greetingTTSScreen.ready')}
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            </View>
                                         </View>
-                                        <View style={styles.optionContainer}>
-                                            <TouchableOpacity style={styles.readyButton} onPress={this.saveGreetingMessage}>
-                                                <Text style={styles.readyText}>
-                                                    {translate('greetingTTSScreen.ready')}
-                                                </Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
                                     </>
                                 }
                             </View>
                             {(this.state.step < 1 || this.state.editMessage) &&
-                                <View style={styles.chatBottomContainer}>
+                                <View style={[styles.chatBottomContainer, {
+                                    paddingBottom: this.state.keyboardOpen ? 16 : 0,
+                                }]}>
                                     <View style={styles.chatInputContainer}>
                                         <TextInput style={[styles.chatTextInput, {
-                                                color: this.state.tooMuch ? '#f66' : '#fff'
-                                            }]}
+                                            color: this.state.tooMuch ? '#f66' : '#fff'
+                                        }]}
                                             onChangeText={this.changeTextHandler}
                                             value={this.state.message}
                                             autoFocus

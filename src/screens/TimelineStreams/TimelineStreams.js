@@ -139,6 +139,8 @@ export class TimelineStreams extends Component {
                         paddingHorizontal: 16,
                         paddingVertical: 12,
                         borderRadius: 100,
+                        justifyContent: 'center',
+                        alignItems: 'center',
                     }}
                     onPress={() => this.props.navigation.navigate('Community')}
                     >

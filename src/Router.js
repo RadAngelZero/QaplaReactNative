@@ -217,31 +217,36 @@ const MainBottomTabNavigator = createBottomTabNavigator({
           borderBottomLeftRadius: 100,
           alignItems: 'center',
         }}>
-          <Svg width="32px" height="32px" viewBox="0 0 32 32">
-            <G id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <G id="Profile" transform="translate(-48.000000, -744.000000)">
-                <G id="Bottom-Nav-Bar" transform="translate(0.000000, 731.000000)">
-                  <G id="Events" transform="translate(0.000000, 12.000000)">
-                    <G id="controller-play" transform="translate(48.000000, 0.000000)">
-                      <G id="Controller" transform="translate(0.000000, 2.250000)">
-                        <Rect stroke={tintColor} x="1" y="1" width="30" height="30" rx="12.4333" stroke-width="2" />
-                      </G>
-                    </G>
-                  </G>
-                </G>
-              </G>
-            </G>
-          </Svg>
-          <Image
-            style={{
-              position: 'absolute',
-              width: 24,
-              height: 24,
-              borderRadius: 10,
-            }}
-            source={{ uri: 'https://static-cdn.jtvnw.net/jtv_user_pictures/23ee9d3c-1491-46f2-893f-4a5395eeafac-profile_image-70x70.png' }}
-          />
+          <View style={{
+            width: 32,
+            height: 32,
+            backgroundColor: tintColor,
+            borderRadius: 13,
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'hidden',
+          }}>
+            <View style={{
+            width: 28,
+            height: 28,
+            backgroundColor:'#141833',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 11.2,
+            }}>
+              <Image
+                style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: 9.8,
+                }}
+                source={{ uri: 'https://static-cdn.jtvnw.net/jtv_user_pictures/23ee9d3c-1491-46f2-893f-4a5395eeafac-profile_image-70x70.png' }}
+                resizeMode='cover'
+              />
+            </View>
+          </View>
         </View>
+
       ),
     },
   },

@@ -205,9 +205,6 @@ const MainBottomTabNavigator = createBottomTabNavigator({
   UserProfile: {
     screen: UserProfileModal,
     navigationOptions: {
-      tabBarOnPress: ({ navigation, defaultHandler }) => {
-        navigation.navigate('UserProfileModal');
-      },
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
         <View style={{
@@ -388,7 +385,8 @@ const RootStackNavigator = createStackNavigator({
   MainBottomNavigator: {
     screen: MainBottomTabNavigator,
     navigationOptions: {
-      header: (props) => <HeaderBar {...props} />
+      header: (props) => {props.navigation.state.routeName !== 'UserProfile' &&
+      <HeaderBar {...props} />}
     },
   },
   UploadContent: UploadContentNavigator,
@@ -426,14 +424,6 @@ const RootStackNavigator = createStackNavigator({
       headerShown: false,
     },
   },
-  UserProfileModal: {
-    screen: UserProfileModal,
-    navigationOptions: {
-      cardStyle: {
-        backgroundColor: '#0D1021',
-      },
-    },
-  }
 }, {
   headerMode: 'screen',
   defaultNavigationOptions: {

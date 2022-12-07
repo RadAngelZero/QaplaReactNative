@@ -6,6 +6,7 @@ import styles from './style';
 import Images from '../../../assets/images';
 import QaplaChip from '../QaplaChip/QaplaChip';
 import { getStreamerProfilePhotoUrl } from '../../services/storage';
+import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 const FounderBadge = Images.svg.founderBadge;
 
@@ -26,7 +27,10 @@ class StreamerCard extends React.PureComponent {
 
     render() {
         return (
-            <TouchableOpacity style={[styles.card, { height: this.props.horizontal ? '93.4%' : 'auto' }]}
+            <TouchableOpacity style={[styles.card, {
+                height: this.props.horizontal ? 396 : 'auto',
+                width: this.props.horizontal ? 342 : '100%',
+            }]}
                 onPress={this.props.onPress}>
                 {this.props.backgroundUrl ?
                     <Image style={styles.coverImage}

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Alert, Linking, ScrollView, Text, FlatList, View } from 'react-native';
+import { Alert, Linking, ScrollView, Text, FlatList, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './style';
+import images from '../../../assets/images';
 import FeaturedStreamsList from '../../components/FeaturedStreamsList/FeaturedStreamsList';
 import StreamsList from '../../components/StreamsList/StreamsList';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
@@ -115,18 +116,45 @@ export class TimelineStreams extends Component {
                     uid={this.props.uid}
                     onStreamerProfileButtonPress={this.onStreamerProfileButtonPress}
                     horizontal />
-                <Text style={{
-                    fontSize: 22,
-                    fontWeight: '700',
-                    lineHeight: 28,
-                    letterSpacing: 1,
-                    textAlign: 'left',
-                    color: '#fff',
-                    marginBottom: 30,
-                    marginLeft: 16
+                <View style={{
+                    justifyContent: 'space-between',
+                    flexDirection: 'row',
+                    paddingHorizontal: 16,
+                    alignItems: 'center',
+                    marginBottom: 24,
                 }}>
-                    {translate('TimelineStreams.qreators')}
-                </Text>
+                    <Text style={{
+                        fontSize: 22,
+                        fontWeight: '700',
+                        lineHeight: 28,
+                        letterSpacing: 1,
+                        textAlign: 'left',
+                        color: '#fff',
+                    }}>
+                        {translate('TimelineStreams.qreators')}
+                    </Text>
+                    <TouchableOpacity style={{
+                        backgroundColor: '#3B4BF9',
+                        flexDirection: 'row',
+                        paddingHorizontal: 16,
+                        paddingVertical: 12,
+                        borderRadius: 100,
+                    }}
+                    onPress={() => this.props.navigation.navigate('Community')}
+                    >
+                        <images.svg.searchStreamerIcon style={{
+                            transform: [{ scale: 0.8 }],
+                        }} />
+                        <Text style={{
+                            color: '#fff',
+                            marginLeft: 4,
+                            fontSize: 12,
+                            fontWeight: '700',
+                        }}>
+                            {`Explore All`}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
                 <Randomstreamerslist uid={this.props.uid} navigate={this.props.navigation.navigate} />
                 <FlatList initialNumToRender={this.listsToRender.length}
                     data={this.listsToRender}

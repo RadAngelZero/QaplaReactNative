@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import { createAppContainer, createSwitchNavigator, NavigationActions } from 'react-navigation';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator, createBottomTabNavigator } from 'react-navigation-tabs';
-import Svg, { G, Path, Ellipse } from 'react-native-svg';
+import Svg, { G, Path, Ellipse, Rect } from 'react-native-svg';
 import { connect } from 'react-redux';
 
 import { setCurrentScreenId, setPreviousScreenId } from './actions/screensActions';
@@ -43,6 +43,7 @@ import AvatarCreationHeaderBar from './components/AvatarCreationHeaderBar/Avatar
 import GreetingSearchStreamerScreen from './screens/GreetingSearchStreamerScreen/GreetingSearchStreamerScreen';
 import UploadContent from './screens/UploadContent/UploadContent';
 import AddTags from './screens/UploadContent/AddTags';
+import CommunityHeader from './components/CommunityHeader/CommunityHeader';
 import TweetReactionControllerScreen from './screens/TweetReactionScreen/TweetReactionControllerScreen';
 
 //#region Stack Navigators
@@ -92,10 +93,10 @@ const StreamerProfileStackNavigator = createStackNavigator({
 
 const ReactionsStackNavigator = createStackNavigator({
   TweetReactionScreen: TweetReactionControllerScreen
-}, {
+  }, {
   defaultNavigationOptions: {
-    header: null
-  }
+    header: null,
+  },
 });
 
 const AvatarStackNavigator = createStackNavigator({
@@ -104,21 +105,21 @@ const AvatarStackNavigator = createStackNavigator({
     navigationOptions: {
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
-    }
+    },
   },
   AvatarCreatorScreen: {
     screen: AvatarCreatorScreen,
     navigationOptions: {
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
-    }
+    },
   },
   AvatarChooseBackgroundScreen: {
     screen: AvatarChooseBackgroundScreen,
     navigationOptions: {
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
-    }
+    },
   },
   AvatarChooseAnimationScreen: {
     screen: AvatarChooseAnimationScreen,
@@ -126,14 +127,14 @@ const AvatarStackNavigator = createStackNavigator({
       headerTransparent: true,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
-    }
+    },
   },
   AvatarChooseGreetingMessageScreen: {
     screen: GreetingTTSScreen,
     navigationOptions: {
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
-    }
+    },
   },
   AvatarReadyScreen: {
     screen: AvatarReadyScreen,
@@ -141,12 +142,12 @@ const AvatarStackNavigator = createStackNavigator({
       headerTransparent: true,
       gestureDirection: 'horizontal',
       ...TransitionPresets.SlideFromRightIOS,
-    }
-  }
+    },
+  },
 }, {
   defaultNavigationOptions: {
     header: (props) => <AvatarCreationHeaderBar {...props} />,
-  }
+  },
 });
 
 const GreetingStackNavigator = createStackNavigator({
@@ -167,10 +168,10 @@ const GreetingStackNavigator = createStackNavigator({
 const StreamsTopTabNavigator = createMaterialTopTabNavigator(
   {
     Timeline: {
-      screen: TimelineStreams
+      screen: TimelineStreams,
     },
     MyStreams: {
-      screen: MyStreamsScreen
+      screen: MyStreamsScreen,
     },
   },
   {
@@ -183,16 +184,16 @@ const StreamsTopTabNavigator = createMaterialTopTabNavigator(
 const CommunityTopTabNavigator = createMaterialTopTabNavigator(
   {
     Discover: {
-      screen: DiscoverStreamersScreen
+      screen: DiscoverStreamersScreen,
     },
     Following: {
-      screen: FollowingStreamersScreen
+      screen: FollowingStreamersScreen,
     },
   },
   {
     initialRouteName: 'Discover',
     lazy: true,
-    tabBarComponent: (props) => <QaplaTabBar {...props} />
+    tabBarComponent: (props) => <QaplaTabBar {...props} />,
   },
 );
 
@@ -201,6 +202,52 @@ const CommunityTopTabNavigator = createMaterialTopTabNavigator(
 //#region Bottom Tab Navigator
 
 const MainBottomTabNavigator = createBottomTabNavigator({
+  UserProfile: {
+    screen: UserProfileModal,
+    navigationOptions: {
+      tabBarOnPress: ({ navigation, defaultHandler }) => {
+        navigation.navigate('UserProfileModal');
+      },
+      tabBarButtonComponent: TouchableOpacity,
+      tabBarIcon: ({ tintColor, focused }) => (
+        <View style={{
+          transform: [{ scale: 1 }],
+          backgroundColor: '#141833',
+          height: 48,
+          width: '100%',
+          justifyContent: 'center',
+          borderTopLeftRadius: 100,
+          borderBottomLeftRadius: 100,
+          alignItems: 'center',
+        }}>
+          <Svg width="32px" height="32px" viewBox="0 0 32 32">
+            <G id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <G id="Profile" transform="translate(-48.000000, -744.000000)">
+                <G id="Bottom-Nav-Bar" transform="translate(0.000000, 731.000000)">
+                  <G id="Events" transform="translate(0.000000, 12.000000)">
+                    <G id="controller-play" transform="translate(48.000000, 0.000000)">
+                      <G id="Controller" transform="translate(0.000000, 2.250000)">
+                        <Rect stroke={tintColor} x="1" y="1" width="30" height="30" rx="12.4333" stroke-width="2" />
+                      </G>
+                    </G>
+                  </G>
+                </G>
+              </G>
+            </G>
+          </Svg>
+          <Image
+            style={{
+              position: 'absolute',
+              width: 24,
+              height: 24,
+              borderRadius: 10,
+            }}
+            source={{ uri: 'https://static-cdn.jtvnw.net/jtv_user_pictures/23ee9d3c-1491-46f2-893f-4a5395eeafac-profile_image-70x70.png' }}
+          />
+        </View>
+      ),
+    },
+  },
   Explore: {
     screen: StreamsTopTabNavigator,
     navigationOptions: {
@@ -213,8 +260,6 @@ const MainBottomTabNavigator = createBottomTabNavigator({
           height: 48,
           width: '100%',
           justifyContent: 'center',
-          borderTopLeftRadius: 100,
-          borderBottomLeftRadius: 100,
           alignItems: 'center',
         }}>
           <Svg width="30px" height="30px" viewBox="0 0 30 33">
@@ -227,39 +272,6 @@ const MainBottomTabNavigator = createBottomTabNavigator({
                         <Path fill={tintColor} fill-rule="evenodd" clip-rule="evenodd" d="M26.761 7.33528C25.9678 7.21597 24.8851 7.27255 23.5618 7.53688C23.0541 7.6383 22.5603 7.30891 22.4589 6.80117C22.3574 6.29344 22.6868 5.79962 23.1946 5.6982C24.6312 5.41124 25.9504 5.31728 27.0399 5.48113C28.1173 5.64317 29.1324 6.08769 29.6771 7.03124C30.2217 7.97449 30.0994 9.07547 29.7013 10.0892C29.2989 11.1143 28.5584 12.2094 27.5922 13.3097C25.6122 15.5644 22.5318 18.0126 18.8436 20.142C15.1934 22.2495 11.5711 23.6848 8.645 24.2836C7.18702 24.582 5.84847 24.6839 4.74407 24.5239C3.65299 24.3659 2.62296 23.922 2.07259 22.9687C1.528 22.0255 1.65036 20.9245 2.0484 19.9107C2.4509 18.8856 3.1914 17.7905 4.15761 16.6902C4.49926 16.3012 5.0916 16.2627 5.48066 16.6044C5.86971 16.946 5.90814 17.5384 5.5665 17.9274C4.67654 18.9409 4.08671 19.8497 3.79369 20.596C3.49622 21.3536 3.55788 21.7913 3.69639 22.0312C3.83638 22.2737 4.19103 22.5492 5.01284 22.6683C5.82133 22.7854 6.92388 22.722 8.2691 22.4467C10.9494 21.8982 14.3819 20.5529 17.9061 18.5182C21.4677 16.4619 24.3721 14.135 26.1833 12.0725C27.0732 11.0591 27.663 10.1502 27.9561 9.40395C28.2535 8.64637 28.1919 8.20865 28.0533 7.96874C27.9148 7.72876 27.5664 7.4564 26.761 7.33528Z" />
                         <Path fill={tintColor} fill-rule="evenodd" clip-rule="evenodd" d="M3.875 15C3.875 8.37258 9.24758 3 15.875 3C21.5677 3 26.3345 6.96395 27.5659 12.2822C27.3981 12.4975 27.2132 12.7207 27.0107 12.9513C25.2502 14.9562 22.3986 17.2467 18.8749 19.2811C15.3885 21.294 12.013 22.6122 9.40639 23.1456C8.60101 23.3104 7.9011 23.3936 7.31417 23.4091C5.18704 21.2438 3.875 18.2751 3.875 15ZM10.8417 25.8965C12.3724 26.6048 14.0775 27 15.875 27C22.008 27 27.0664 22.3991 27.787 16.4606C25.8418 18.3094 23.2898 20.1963 20.3749 21.8792C17.022 23.815 13.6762 25.1996 10.8417 25.8965Z" />
                         <Ellipse fill={focused ? '#4040FF' : '#FFF'} cx="10.25" cy="15.625" rx="3.125" ry="3.125" />
-                      </G>
-                    </G>
-                  </G>
-                </G>
-              </G>
-            </G>
-          </Svg>
-        </View>
-      ),
-    },
-  },
-  Community: {
-    screen: CommunityTopTabNavigator,
-    navigationOptions: {
-      tabBarButtonComponent: TouchableOpacity,
-      tabBarIcon: ({ tintColor, focused }) => (
-        <View style={{
-          transform: [{ scale: 1 }],
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#141833',
-          height: 48,
-          width: '100%',
-        }}>
-          <Svg width="25px" height="24.69px" viewBox="0 0 25 26">
-            <G id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <G id="Profile" transform="translate(-175.000000, -745.000000)">
-                <G id="Bottom-Nav-Bar" transform="translate(0.000000, 731.000000)">
-                  <G id="Community" transform="translate(125.000000, 12.000000)">
-                    <G id="chat" transform="translate(48.000000, 0.000000)">
-                      <G id="Comment" transform="translate(2.500000, 2.500000)">
-                        <Path fill={tintColor} d="M4.99346 1.11165C2.8809 1.4331 1.20706 2.9811 0.844325 5.08696C0.591513 6.55465 0.375 8.41906 0.375 10.5C0.375 12.5809 0.591513 14.4454 0.844325 15.913C1.1557 17.7207 2.4332 19.1174 4.125 19.68V23.9345C4.125 24.9024 5.17764 25.503 6.01091 25.0106L13.6551 20.4936C16.423 20.4482 18.9048 20.1701 20.7565 19.8884C22.8691 19.5669 24.543 18.0189 24.9056 15.913C25.1585 14.4454 25.375 12.5809 25.375 10.5C25.375 8.41906 25.1585 6.55465 24.9056 5.08696C24.543 2.9811 22.8691 1.4331 20.7565 1.11165C18.7324 0.803662 15.9555 0.5 12.875 0.5C9.79449 0.5 7.01764 0.803662 4.99346 1.11165Z" id="Path" />
-                        <Path fill={focused ? '#4040FF' : '#FFF'} d="M19.7069 9.47228C19.0348 9.05106 18.1434 9.24615 17.7158 9.90813C17.698 9.93555 15.9031 12.6592 12.875 12.6592C9.84694 12.6592 8.05202 9.93555 8.03421 9.90813C7.60658 9.24622 6.71518 9.05113 6.04315 9.47228C5.37112 9.8935 5.17302 10.7715 5.60066 11.4332C5.70796 11.5992 8.28127 15.5 12.875 15.5C17.4687 15.5 20.042 11.5993 20.1493 11.4332C20.577 10.7713 20.3789 9.8935 19.7069 9.47228Z" id="Shape" />
                       </G>
                     </G>
                   </G>
@@ -312,9 +324,6 @@ const MainBottomTabNavigator = createBottomTabNavigator({
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
         <View style={{
-          // display: 'flex',
-          // marginTop: -6,
-          // paddingTop: 2,
           marginLeft: 16,
           transform: [{ scale: 1 }],
           width: 48,
@@ -323,9 +332,6 @@ const MainBottomTabNavigator = createBottomTabNavigator({
           justifyContent: 'center',
           alignItems: 'center',
           borderRadius: 100,
-          // shadowColor: "#fff",
-          // shadowOffset: { height: 60, width: 60 },
-          // elevation: 20
         }}>
           <images.svg.interactionsNumberIcon style={{ transform: [{ scale: 1.5 }], }} />
         </View>
@@ -342,7 +348,6 @@ const MainBottomTabNavigator = createBottomTabNavigator({
       position: 'absolute',
       padding: 0,
       paddingHorizontal: '6%',
-      // height: BOTTOM_NAVIGATION_BAR_HEIGHT,
       height: 88,
       paddingBottom: 10,
       margin: 0,
@@ -393,6 +398,14 @@ const RootStackNavigator = createStackNavigator({
       headerShown: false,
     },
   },
+  Community: {
+    screen: CommunityTopTabNavigator,
+    navigationOptions: (props) => {
+      return {
+        header: <CommunityHeader {...props} />,
+      }
+    },
+  },
   StreamerProfile: {
     screen: StreamerProfileStackNavigator,
     navigationOptions: {
@@ -418,7 +431,7 @@ const RootStackNavigator = createStackNavigator({
     navigationOptions: {
       cardStyle: {
         backgroundColor: '#0D1021',
-      }
+      },
     },
   }
 }, {
@@ -426,7 +439,7 @@ const RootStackNavigator = createStackNavigator({
   defaultNavigationOptions: {
     header: null,
     headerVisible: false,
-  }
+  },
 });
 
 //#endregion

@@ -204,17 +204,6 @@ class HeaderBar extends Component {
                                 style={styles.qaplaImage} />
                         </View>
                         <View style={styles.iconsContainer}>
-                            {this.state.userImage &&
-                                <TouchableOpacity
-                                    onPress={this.onOpenProfile}
-                                    style={{
-                                        width: 30,
-                                        height: 30,
-                                        overflow: 'hidden',
-                                    }}>
-                                    <UserProfileIcon height={30} width={30} />
-                                </TouchableOpacity>
-                            }
                             <QaplaIcon onPress={this.onActivityPressBttn} touchableStyle={styles.leftIconTouchableStyle}>
                                 {this.userHaveUnreadActivity() ?
                                     <DuotoneActiveIcon height={30} width={30} />

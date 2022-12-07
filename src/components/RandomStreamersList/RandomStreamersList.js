@@ -56,9 +56,9 @@ class Randomstreamerslist extends Component {
     }
 
     renderCard = ({ item }) => (
-        <View style={{ marginRight: this.state.scrolled ? widthPercentageToPx(8) : widthPercentageToPx(2.67) }}>
+        <View style={{ marginRight: this.state.scrolled ? 16 : 8 }}>
             <StreamerCard {...item}
-                onPress={() => this.props.navigate('StreamerProfile', item)} />
+                onPress={() => this.props.navigate('StreamerProfile', item)} horizontal />
         </View>
     );
 

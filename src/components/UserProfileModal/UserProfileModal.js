@@ -44,6 +44,11 @@ class UserProfileModal extends Component {
     }
 
     componentDidMount() {
+        if (!this.props.uid) {
+            return this.props.navigation.navigate('Auth', {
+                onSuccessSignIn: () => this.props.navigation.navigate('UserProfileModal'),
+            });
+        }
         this.setUserDefaultImage();
         this.getUserQlanData();
         this.getImageVersion();
@@ -454,11 +459,11 @@ class UserProfileModal extends Component {
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <ScrollView>
-                <View style={styles.mainContainer}>
-                    {this.props.avatarBackground ?
-                        <LinearGradient style={{ flex: 1, borderRadius: 40 }}
-                            useAngle
-                            {...this.props.avatarBackground}>
+                    <View style={styles.mainContainer}>
+                        {this.props.avatarBackground ?
+                            <LinearGradient style={{ flex: 1, borderRadius: 40 }}
+                                useAngle
+                                {...this.props.avatarBackground}>
                                 <Image source={{ uri: avatarImage }} style={styles.avatarImage} />
                                 <TouchableOpacity
                                     onPress={() => this.props.navigation.goBack()}
@@ -476,31 +481,31 @@ class UserProfileModal extends Component {
                                     </TouchableOpacity>
                                 </View>
                                 {this.renderProfile()}
-                        </LinearGradient>
-                        :
-                        <>
-                        <TouchableOpacity
-                            onPress={() => this.props.navigation.goBack()}
-                            style={styles.closeIcon}>
-                            <images.svg.closeIcon />
-                        </TouchableOpacity>
-                        <ImageBackground source={images.png.createAvatarCover.img}
-                            style={styles.createAvatarBackgroundImage}>
-                            <View />
-                            <Text style={styles.createAvatarTitle}>
-                                {translate('userProfileScreen.yourIdentity')}
-                            </Text>
-                            <TouchableOpacity style={styles.createAvatarButton}
-                                onPress={() => this.props.navigation.navigate('AvatarStackNavigator')}>
-                                <Text style={styles.createAvatarButtonText}>
-                                    {translate('userProfileScreen.createAvatar')}
-                                </Text>
-                            </TouchableOpacity>
-                        </ImageBackground>
-                        {this.renderProfile()}
-                        </>
-                    }
-                </View>
+                            </LinearGradient>
+                            :
+                            <>
+                                <TouchableOpacity
+                                    onPress={() => this.props.navigation.goBack()}
+                                    style={styles.closeIcon}>
+                                    <images.svg.closeIcon />
+                                </TouchableOpacity>
+                                <ImageBackground source={images.png.createAvatarCover.img}
+                                    style={styles.createAvatarBackgroundImage}>
+                                    <View />
+                                    <Text style={styles.createAvatarTitle}>
+                                        {translate('userProfileScreen.yourIdentity')}
+                                    </Text>
+                                    <TouchableOpacity style={styles.createAvatarButton}
+                                        onPress={() => this.props.navigation.navigate('AvatarStackNavigator')}>
+                                        <Text style={styles.createAvatarButtonText}>
+                                            {translate('userProfileScreen.createAvatar')}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </ImageBackground>
+                                {this.renderProfile()}
+                            </>
+                        }
+                    </View>
                 </ScrollView>
                 <LinkTwitchAccountModal open={this.state.showLinkWithTwitchModal}
                     onClose={() => this.setState({ showLinkWithTwitchModal: false })}

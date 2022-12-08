@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { translate } from '../../utilities/i18';
-import { launchImageLibrary } from 'react-native-image-picker';
 
 import styles from './style';
 import images from '../../../assets/images';

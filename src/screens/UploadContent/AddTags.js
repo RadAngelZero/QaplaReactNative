@@ -63,7 +63,6 @@ class AddTags extends Component {
 
         if (result.assets && result.assets[0]) {
             const selectedMedia = result.assets[0];
-            console.log(selectedMedia);
 
             if (selectedMedia.fileSize > 5000000) {
                 this.setState({ uploadStatusModalOpen: true, uploadStatus: 1 });

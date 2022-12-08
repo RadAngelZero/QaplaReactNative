@@ -70,7 +70,7 @@ class AvatarChooseBackgroundScreen extends Component {
 
     closeModal = () => {
         this.setState({ openSuccessEditionModal: false });
-        this.props.navigation.navigate('UserProfileModal');
+        this.props.navigation.navigate('UserProfile');
     }
 
     render() {

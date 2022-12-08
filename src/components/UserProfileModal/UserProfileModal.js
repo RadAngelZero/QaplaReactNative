@@ -20,11 +20,12 @@ import {
 } from '../../services/database';
 import { unsubscribeUserFromTopic } from '../../services/messaging';
 import { messaging } from '../../utilities/firebase';
-import { retrieveData, storeData } from '../../utilities/persistance';
+import { retrieveData } from '../../utilities/persistance';
 import { defaultUserImages } from '../../utilities/Constants';
 import LinkTwitchAccountModal from '../LinkTwitchAccountModal/LinkTwitchAccountModal';
 import JoinQlanModal from '../JoinQlanModal/JoinQlanModal';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import Colors from '../../utilities/Colors';
 
 class UserProfileModal extends Component {
     state = {
@@ -49,6 +50,7 @@ class UserProfileModal extends Component {
                 onSuccessSignIn: () => this.props.navigation.navigate('UserProfile'),
             });
         }
+
         this.setUserDefaultImage();
         this.getUserQlanData();
         this.getImageVersion();
@@ -461,10 +463,10 @@ class UserProfileModal extends Component {
                 <ScrollView style={{
                 }}>
                     <View style={styles.mainContainer}>
-                        {this.props.avatarBackground ?
+                        {this.props.avatarId ?
                             <LinearGradient style={{ flex: 1 }}
                                 useAngle
-                                {...this.props.avatarBackground}>
+                                {...(this.props.avatarBackground ? this.props.avatarBackground : Colors.avatarImagesBackgroundGradients[0])}>
                                 <Image source={{ uri: avatarImage }} style={styles.avatarImage} />
                                 <View style={styles.editAvatarContainer}>
                                     <TouchableOpacity

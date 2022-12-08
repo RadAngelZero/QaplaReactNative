@@ -4,7 +4,7 @@ import { Image, TouchableOpacity, View } from 'react-native';
 import { createAppContainer, createSwitchNavigator, NavigationActions } from 'react-navigation';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator, createBottomTabNavigator } from 'react-navigation-tabs';
-import Svg, { G, Path, Ellipse, Rect } from 'react-native-svg';
+import Svg, { G, Path, Ellipse } from 'react-native-svg';
 import { connect } from 'react-redux';
 
 import { setCurrentScreenId, setPreviousScreenId } from './actions/screensActions';
@@ -18,19 +18,15 @@ import images from '../assets/images';
 // Components
 import HeaderBar from './components/HeaderBar/HeaderBar';
 import TopNavOptions from './components/TopNavOptions/TopNavOptions';
-import { translate } from './utilities/i18';
-import QaplaText from './components/QaplaText/QaplaText';
 import DiscoverStreamersScreen from './screens/DiscoverStreamersScreen/DiscoverStreamersScreen';
 import TwitchAuthScreen from './screens/TwitchAuthScreen/TwitchAuthScreen';
 import ActivityScreen from './screens/ActivityScreen/ActivityScreen';
 import QaplaTabBar from './components/QaplaTabBar/QaplaTabBar';
 import StreamerProfileScreen from './screens/StreamerProfileScreen/StreamerProfileScreen';
-import AuthHandlerScreen from './screens/AuthHandlerScreen/AuthHandlerScreen';
 import FollowingStreamersScreen from './screens/FollowingStreamersScreen/FollowingStreamersScreen';
 import WriteCheerMessageScreen from './screens/WriteCheerMessageScreen/WriteCheerMessageScreen';
 import CheersSentScreen from './screens/CheersSentScreen/CheersSentScreen';
 import MyStreamsScreen from './screens/MyStreamsScreen/MyStreamsScreen';
-import { BOTTOM_NAVIGATION_BAR_HEIGHT } from './utilities/Constants';
 import BuyQoins from './screens/BuyQoins/BuyQoins';
 import UserProfileModal from './components/UserProfileModal/UserProfileModal';
 import AvatarCreatorScreen from './screens/AvatarCreatorScreen/AvatarCreatorScreen';
@@ -45,16 +41,11 @@ import UploadContent from './screens/UploadContent/UploadContent';
 import AddTags from './screens/UploadContent/AddTags';
 import CommunityHeader from './components/CommunityHeader/CommunityHeader';
 import TweetReactionControllerScreen from './screens/TweetReactionScreen/TweetReactionControllerScreen';
+import BottomBarProfileIcon from './components/BottomBarProfileIcon/BottomBarProfileIcon';
 
 //#region Stack Navigators
 
 const AuthStackNavigator = createStackNavigator({
-  SignIn: {
-    screen: AuthHandlerScreen,
-    navigationOptions: {
-      headerShown: false
-    }
-  },
   TwitchLogIn: {
     screen: TwitchAuthScreen,
     navigationOptions: {
@@ -205,49 +196,9 @@ const MainBottomTabNavigator = createBottomTabNavigator({
   UserProfile: {
     screen: UserProfileModal,
     navigationOptions: {
+      tabBarOnPress: (props) => { console.log(props); return null },
       tabBarButtonComponent: TouchableOpacity,
-      tabBarIcon: ({ tintColor, focused }) => (
-        <View style={{
-          transform: [{ scale: 1 }],
-          backgroundColor: '#141833',
-          height: 48,
-          width: '100%',
-          justifyContent: 'center',
-          borderTopLeftRadius: 100,
-          borderBottomLeftRadius: 100,
-          alignItems: 'center',
-        }}>
-          <View style={{
-            width: 32,
-            height: 32,
-            backgroundColor: tintColor,
-            borderRadius: 13,
-            justifyContent: 'center',
-            alignItems: 'center',
-            overflow: 'hidden',
-          }}>
-            <View style={{
-            width: 28,
-            height: 28,
-            backgroundColor:'#141833',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 11.2,
-            }}>
-              <Image
-                style={{
-                  width: 24,
-                  height: 24,
-                  borderRadius: 9.8,
-                }}
-                source={{ uri: 'https://static-cdn.jtvnw.net/jtv_user_pictures/23ee9d3c-1491-46f2-893f-4a5395eeafac-profile_image-70x70.png' }}
-                resizeMode='cover'
-              />
-            </View>
-          </View>
-        </View>
-
-      ),
+      tabBarIcon: ({ tintColor, focused }) => <BottomBarProfileIcon tintColor={tintColor} focused={focused} />,
     },
   },
   Explore: {
@@ -339,7 +290,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
         </View>
       ),
       tabBarOnPress: ({ navigation, defaultHandler }) => {
-        navigation.navigate('InteractionsStack');
+        navigation.navigate('TweetReactionScreen');
       },
     },
   },
@@ -434,14 +385,6 @@ const RootStackNavigator = createStackNavigator({
       headerShown: false,
     },
   },
-  UserProfileModal: {
-    screen: UserProfileModal,
-    navigationOptions: {
-      cardStyle: {
-        backgroundColor: '#0D1021',
-      },
-    },
-  }
 }, {
   headerMode: 'screen',
   defaultNavigationOptions: {

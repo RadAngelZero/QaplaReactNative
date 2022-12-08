@@ -27,6 +27,7 @@ class AddTags extends Component {
         imageHeight: 1,
         fileSize: 0
     };
+    tagsInputRef = null;
 
     componentDidMount() {
         this.getImage();
@@ -66,6 +67,10 @@ class AddTags extends Component {
 
             if (selectedMedia.fileSize > 5000000) {
                 this.setState({ uploadStatusModalOpen: true, uploadStatus: 1 });
+            }
+
+            if (this.tagsInputRef) {
+                this.tagsInputRef.focus();
             }
 
             return this.setState({
@@ -271,7 +276,7 @@ class AddTags extends Component {
                             />
                         </View>
                         <View style={styles.textInputContainer}>
-                            <TextInput
+                            <TextInput ref={(tagsInputRef) => this.tagsInputRef = tagsInputRef}
                                 autoFocus
                                 placeholder='Type to add tags'
                                 placeholderTextColor={'#FFFFFF66'}

@@ -136,7 +136,6 @@ class BottomBarProfileIcon extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state.userReducer.user.id);
     return {
         uid: state.userReducer.user.id,
         photoUrl: state.userReducer.user.photoUrl,

@@ -950,19 +950,22 @@
                 "0": "Bum. Subido.",
                 "1": "El archivo es muy poderoso",
                 "2": "Tu archivo fue rechazado",
-                "3": "Parece que hubo un problema\nPor favor intenta de nuevo"
+                "3": "Parece que hubo un problema\nPor favor intenta de nuevo",
+                "4": "Solo JPEG y PNG"
             },
             "subtitle": {
                 "0": "Revisaremos tu contenido\nte haremos saber cuando este disponible para usarlo\n\nPuede tomar hasta 24 horas",
                 "1": "El tamaño maximo de archivo es 5MB",
                 "2": "Contenido sexual o violento explicito infringe nuestras normas de la comunidad",
-                "3": "Si el problema persiste intenta de nuevo luego o contacta nuestro soporte en Discord 🙏"
+                "3": "Si el problema persiste intenta de nuevo luego o contacta nuestro soporte en Discord 🙏",
+                "4": "Actualmente solo soportamos imagenes en formato JPEG y PNG"
             },
             "buttonText": {
                 "0": "Volver al inicio",
                 "1": "Subir un archivo mas pequeño",
                 "2": "Subir otro archivo",
-                "3": "Intentar de nuevo"
+                "3": "Intentar de nuevo",
+                "4": "Subir otro archivo"
             }
         }
     }

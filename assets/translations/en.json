@@ -951,19 +951,22 @@
                 "0": "Boom. Uploaded.",
                 "1": "File is too powerful",
                 "2": "Your file was rejected",
-                "3": "Something went wrong\nPlease try again"
+                "3": "Something went wrong\nPlease try again",
+                "4": "JPEG and PNG only"
             },
             "subtitle": {
                 "0": "We’ll review your content and let\nyou know when available to use\n\nIt might take up to 24 hours",
                 "1": "Max file size is 5MB",
                 "2": "Explicit sexual or violent content infringes our community gudilines",
-                "3": "If the problem persists try again later or contact support on Discord 🙏"
+                "3": "If the problem persists try again later or contact support on Discord 🙏",
+                "4": "We are currently supporting only static JPEG and PNG images"
             },
             "buttonText": {
                 "0": "Back to Home",
                 "1": "Upload a smaller file",
                 "2": "Upload another file",
-                "3": "Try Again"
+                "3": "Try Again",
+                "4": "Upload another file"
             }
         }
     }

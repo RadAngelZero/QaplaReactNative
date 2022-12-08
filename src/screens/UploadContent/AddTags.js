@@ -10,6 +10,7 @@ import { uploadMemeToModeration } from '../../services/storage';
 import { getModerationKey, saveMemeModerationRequest } from '../../services/database';
 import { imageContentModeration } from '../../services/functions';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { VALID_MEMES_TYPES } from '../../utilities/Constants';
 
 class AddTags extends Component {
     state = {
@@ -36,9 +37,9 @@ class AddTags extends Component {
             'keyboardDidShow',
             (e) => {
                 this.setState({ keyboardOpen: true, keyboardHeight: e.endCoordinates.height });
-                setTimeout(() => {
+                if (this.scrollModal) {
                     this.scrollModal.scrollTo({ x: 0, y: this.state.keyboardHeight / 2, animated: true });
-                }, 10);
+                }
             },
         );
         this.keyboardDidHideSubscription = Keyboard.addListener(
@@ -57,7 +58,7 @@ class AddTags extends Component {
 
     getImage = async () => {
         const result = await launchImageLibrary({
-            mediaType: 'photo',
+            mediaType: 'mixed',
             includeExtra: true,
             includeBase64: false
         });
@@ -65,8 +66,12 @@ class AddTags extends Component {
         if (result.assets && result.assets[0]) {
             const selectedMedia = result.assets[0];
 
+            if (!VALID_MEMES_TYPES.includes(selectedMedia.type)) {
+                return this.setState({ uploadStatusModalOpen: true, uploadStatus: 4 });
+            }
+
             if (selectedMedia.fileSize > 5000000) {
-                this.setState({ uploadStatusModalOpen: true, uploadStatus: 1 });
+                return this.setState({ uploadStatusModalOpen: true, uploadStatus: 1 });
             }
 
             if (this.tagsInputRef) {
@@ -233,6 +238,7 @@ class AddTags extends Component {
                 return this.props.navigation.navigate('Explore');
             case 1:
             case 2:
+            case 4:
                 return this.props.navigation.navigate('Upload');
             default:
                 break;

@@ -2220,10 +2220,23 @@ export async function getStreamerReactionPrice(streamerUid, reactionLevel) {
 // Memes Moderation
 // -----------------------------------------------
 
+/**
+ * Returns a valid firebase key for a Moderation request
+ */
 export async function getModerationKey() {
     return memesModerationRef.push().key;
 }
 
+/**
+ * Saves a request with their data to be approved by moderators
+ * @param {string} requestId Request identifier
+ * @param {string} uid User identifier
+ * @param {string} imageUrl Image url (meme)
+ * @param {number} width Width of image
+ * @param {number} height Height of image
+ * @param {string} mediaType Type of media ('image' is only value valid for now)
+ * @param {Array<string>} tags Tags of the image
+ */
 export async function saveMemeModerationRequest(requestId, uid, imageUrl, width, height, mediaType, tags) {
     return memesModerationRef.child(requestId).set({
         uid,

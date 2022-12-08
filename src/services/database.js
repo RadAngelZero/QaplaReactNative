@@ -66,6 +66,7 @@ const usersGreetingsRef = database.ref('/UsersGreetings');
 const streamsGreetingsRef = database.ref('/StreamsGreetings');
 const gifsLibrariesRef = database.ref('/GifsLibraries');
 const reactionsPricesRef = database.ref('/ReactionsPrices');
+const memesModerationRef = database.ref('/MemesModeration');
 
 /**
  * Returns true if the user with the given uid exists
@@ -2213,4 +2214,23 @@ export async function getRandomGifByLibrary(libraryName) {
  */
 export async function getStreamerReactionPrice(streamerUid, reactionLevel) {
     return await reactionsPricesRef.child(streamerUid).child(reactionLevel).once('value');
+}
+
+// -----------------------------------------------
+// Memes Moderation
+// -----------------------------------------------
+
+export async function getModerationKey() {
+    return memesModerationRef.push().key;
+}
+
+export async function saveMemeModerationRequest(requestId, uid, imageUrl, width, height, mediaType, tags) {
+    return memesModerationRef.child(requestId).set({
+        uid,
+        imageUrl,
+        width,
+        height,
+        mediaType,
+        tags
+    });
 }

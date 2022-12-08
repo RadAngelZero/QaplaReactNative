@@ -1,43 +1,35 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Button, FlatList, Image, Keyboard, Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
-import { translate } from '../../utilities/i18';
-
-import styles from './style';
-
-import images from '../../../assets/images';
+import { ActivityIndicator, FlatList, Image, Keyboard, Modal, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import { translate } from '../../utilities/i18';
+import styles from './style';
+import images from '../../../assets/images';
 import Chip from '../../components/Chip/Chip';
+import { uploadMemeToModeration } from '../../services/storage';
+import { getModerationKey, saveMemeModerationRequest } from '../../services/database';
+import { imageContentModeration } from '../../services/functions';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 class AddTags extends Component {
-
     state = {
         keyboardHeight: 0,
-        imagePath: 'https://media.giphy.com/media/vapO47YjBqpqAdNoAl/giphy.gif',
         aspectRatio: 0,
         keyboardOpen: false,
         tagInput: '',
-        suggestTags: [
-            {
-                title: 'Test1',
-            },
-            {
-                title: 'Test2',
-            },
-            {
-                title: 'Test3',
-            },
-        ],
+        suggestTags: [],
         tags: [],
         uploadingModalOpen: false,
         uploadStatusModalOpen: false,
         uploadStatus: 0,
-    }
+        imagePath: '',
+        imageWidth: 1,
+        imageHeight: 1,
+        fileSize: 0
+    };
 
     componentDidMount() {
-        Image.getSize(this.state.imagePath, (width, height) => {
-            this.setState({ aspectRatio: width / height });
-        });
+        this.getImage();
 
         this.keyboardDidShowSubscription = Keyboard.addListener(
             'keyboardDidShow',
@@ -57,56 +49,95 @@ class AddTags extends Component {
         );
     }
 
-    componentDidUpdate() {
-
-    }
-
     componentWillUnmount() {
         this.keyboardDidShowSubscription.remove();
         this.keyboardDidHideSubscription.remove();
     }
 
-    askForSuggestions = (textInput) => {
-        this.fetchTimeout = setTimeout(() => {
-            let duplicated = false;
-            let suggestionsArr = [{ title: textInput }];
-            let fetchedSuggestionsArr = [];
-            let newSuggestionsArr = [];
-            fetchedSuggestionsArr = [
-                {
-                    title: 'Test1',
-                },
-                {
-                    title: 'Test2',
-                },
-                {
-                    title: 'Test3',
-                },
-            ];
-            fetchedSuggestionsArr.map((e, index) => {
-                if (e.title.toLowerCase() === textInput.toLowerCase()) {
-                    duplicated = true;
-                    if (index !== 0) {
-                        fetchedSuggestionsArr.splice(index, index);
-                        fetchedSuggestionsArr.unshift(e);
-                    }
-                }
-            });
-            if (!duplicated) {
-                newSuggestionsArr = suggestionsArr.concat(fetchedSuggestionsArr);
-            } else {
-                newSuggestionsArr = fetchedSuggestionsArr;
+    getImage = async () => {
+        const result = await launchImageLibrary({
+            mediaType: 'photo',
+            includeExtra: true,
+            includeBase64: false
+        });
+
+        if (result.assets && result.assets[0]) {
+            const selectedMedia = result.assets[0];
+            console.log(selectedMedia);
+
+            if (selectedMedia.fileSize > 5000000) {
+                this.setState({ uploadStatusModalOpen: true, uploadStatus: 1 });
             }
-            this.setState({
-                suggestTags: newSuggestionsArr,
+
+            return this.setState({
+                imagePath: selectedMedia.uri,
+                imageHeight: selectedMedia.height,
+                imageWidth: selectedMedia.width,
             });
-        }, 500);
+        } else {
+            this.props.navigation.dismiss();
+        }
+    }
+
+    askForSuggestions = (textInput) => {
+        this.fetchTimeout = setTimeout(async () => {
+            try {
+                const searchResults = await fetch('https://elastic-qapla-test.es.us-central1.gcp.cloud.es.io/_search', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        suggest: {
+                            suggestions: {
+                                text: textInput,
+                                completion: {
+                                    size: 8,
+                                    field: 'suggest'
+                                }
+                            }
+                        }
+                    }),
+                    headers: {
+                        Authorization: 'ApiKey LTcySTdZUUJkWXF3Y2NXZ0o4eUU6QU54aXRWWUlUdkNqdEdKMm5TOHhndw==',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (searchResults.status === 200) {
+                    const searchResult = await searchResults.json();
+                    let duplicated = false;
+                    const suggestionsArr = [textInput];
+                    const fetchedSuggestionsArr = searchResult.suggest.suggestions[0].options.map((tag) => tag.text);
+                    let suggestTags = [];
+
+                    fetchedSuggestionsArr.forEach((tag, index) => {
+                        if (tag.toLowerCase() === textInput.toLowerCase()) {
+                            duplicated = true;
+                            if (index !== 0) {
+                                fetchedSuggestionsArr.splice(index, 1);
+                                fetchedSuggestionsArr.unshift(tag);
+                            }
+                        }
+                    });
+
+                    if (!duplicated) {
+                        suggestTags = suggestionsArr.concat(fetchedSuggestionsArr);
+                    } else {
+                        suggestTags = fetchedSuggestionsArr;
+                    }
+
+                    this.setState({ suggestTags });
+                } else if (searchResults.status === 401) {
+                    console.log('Invalid token');
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }, 250);
     }
 
     handleTagInput = (e) => {
         clearTimeout(this.fetchTimeout);
         let newArr = [];
-        newArr.unshift({ title: e.nativeEvent.text });
+        newArr.unshift(e.nativeEvent.text);
         this.askForSuggestions(e.nativeEvent.text);
         this.setState({ tagInput: e.nativeEvent.text, suggestTags: newArr });
     }
@@ -115,60 +146,108 @@ class AddTags extends Component {
         if (this.state.tagInput === '') {
             let newTagsArr = [...this.state.tags];
             newTagsArr.splice(index, 1);
+
             return this.setState({ tags: newTagsArr });;
         }
+
         let newTagsArr = [...this.state.tags];
-        newTagsArr.unshift({ title });
+        newTagsArr.unshift(title);
         this.setState({ tags: newTagsArr, suggestTags: [], tagInput: '' });
     }
 
-    uploadHandle = () => {
+    uploadHandle = async () => {
         this.setState({ uploadingModalOpen: true });
-        this.uploadTimeout = setTimeout(() => {
+        try {
+            const moderationRequestKey = await getModerationKey();
+            const image = await uploadMemeToModeration(moderationRequestKey, this.state.imagePath);
+
+            if (image && image.downloadURL) {
+                const imageAnalysisResult = await imageContentModeration(moderationRequestKey, image.downloadURL);
+                if (imageAnalysisResult.data && imageAnalysisResult.data.accepted) {
+                    let tags = [...this.state.tags];
+                    if (imageAnalysisResult.data.tags) {
+                        const imageAnalysisResultTags = imageAnalysisResult.data.tags.map((tagObject) => tagObject.description);
+                        tags = tags.concat(imageAnalysisResultTags);
+                    }
+
+                    await saveMemeModerationRequest(
+                        moderationRequestKey,
+                        this.props.uid,
+                        image.downloadURL,
+                        this.state.imageWidth,
+                        this.state.imageHeight,
+                        'image',
+                        tags
+                    );
+
+                    this.setState({
+                        uploadingModalOpen: false,
+                        uploadStatusModalOpen: true,
+                        uploadStatus: 0 // 0 = ok | 1 = file size | 2 = rejected | 3 = error
+                    });
+                } else {
+                    this.setState({
+                        uploadingModalOpen: false,
+                        uploadStatusModalOpen: true,
+                        uploadStatus: 2 // 0 = ok | 1 = file size | 2 = rejected | 3 = error
+                    });
+                }
+
+            } else {
+                this.setState({
+                    uploadingModalOpen: false,
+                    uploadStatusModalOpen: true,
+                    uploadStatus: 3 // 0 = ok | 1 = file size | 2 = rejected | 3 = error
+                });
+            }
+        } catch (error) {
             this.setState({
+                uploadingModalOpen: false,
                 uploadStatusModalOpen: true,
-                uploadStatus: 0, // 0 = ok | 1 = file size | 2 = rejected | 3 = error
+                uploadStatus: 3 // 0 = ok | 1 = file size | 2 = rejected | 3 = error
             });
-        }, 1000);
+        }
     }
 
     handleCloseButton = () => {
-        console.log('close press');
         if (this.state.uploadStatusModalOpen) {
             return this.handleFinalCardButton();
         }
+
         if (this.state.uploadingModalOpen) {
-            console.log('cancel upload');
-            clearTimeout(this.uploadTimeout);
+
             return this.setState({ uploadingModalOpen: false });
         }
-        this.props.navigation.navigate('Upload');
+
+        return this.props.navigation.navigate('Upload');
     }
 
     handleFinalCardButton = () => {
+        this.setState({ uploadingModalOpen: false, uploadStatusModalOpen: false });
         switch (this.state.uploadStatus) {
             case 0:
                 return this.props.navigation.navigate('Explore');
             case 1:
             case 2:
                 return this.props.navigation.navigate('Upload');
-            case 3:
-                return this.setState({ uploadingModalOpen: false, uploadStatusModalOpen: false });
+            default:
+                break;
         }
     }
 
     renderChip = ({ item, index }) => (
         <Chip
-            title={item.title}
+            title={item}
             last={index === (this.state.tagInput === '' ? this.state.tags.length - 1 : this.state.suggestTags.length - 1)}
             active={this.state.tagInput === '' || index === 0}
-            onPress={(e) => this.handleTagPress(item.title, index)}
+            onPress={(e) => this.handleTagPress(item, index)}
         />
     )
 
     render() {
         return (
-            <View style={styles.modalContainer}>
+            <>
+            <SafeAreaView style={styles.modalContainer}>
                 <View style={{ flex: 1 }} />
                 <View style={styles.addTagModal}>
                     <View style={styles.addTagHeader}>
@@ -181,13 +260,12 @@ class AddTags extends Component {
                     </View>
                     <ScrollView
                         ref={ref => { this.scrollModal = ref; }}
-                        keyboardShouldPersistTaps='handled'
-                        style={{}}>
+                        keyboardShouldPersistTaps='handled'>
                         <View style={styles.scrollView}>
                             <Image
                                 style={{
                                     flex: 1,
-                                    aspectRatio: this.state.aspectRatio,
+                                    aspectRatio: this.state.imageWidth / this.state.imageHeight,
                                 }}
                                 source={{ uri: this.state.imagePath }}
                                 resizeMode='contain'
@@ -219,7 +297,7 @@ class AddTags extends Component {
                                         horizontal
                                         data={this.state.suggestTags}
                                         renderItem={this.renderChip}
-                                        keyExtractor={item => item.title}
+                                        keyExtractor={item => item}
                                         style={styles.chipList}
                                         showsHorizontalScrollIndicator={false}
                                     />
@@ -238,7 +316,7 @@ class AddTags extends Component {
                                             horizontal
                                             data={this.state.tags}
                                             renderItem={this.renderChip}
-                                            keyExtractor={item => item.title}
+                                            keyExtractor={item => item}
                                             style={styles.chipList}
                                             showsHorizontalScrollIndicator={false}
                                         />
@@ -339,7 +417,9 @@ class AddTags extends Component {
                         </View>
                     </View>
                 </Modal>
-            </View >
+            </SafeAreaView>
+            <SafeAreaView style={{ flex: 0, backgroundColor: '#141539' }} />
+            </>
         );
     }
 

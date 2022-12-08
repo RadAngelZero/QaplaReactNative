@@ -457,7 +457,7 @@ class UserProfileModal extends Component {
         const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${this.state.imageVersion}`;
 
         return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: '#0D1021' }}>
+            <View style={{ flex: 1, backgroundColor: '#0D1021' }}>
                 <ScrollView style={{
                 }}>
                     <View style={styles.mainContainer}>
@@ -519,7 +519,8 @@ class UserProfileModal extends Component {
                     twitchUsername={this.props.twitchUsername}
                     onSuccess={this.getUserQlanData} />
                 <NavigationEvents onWillFocus={this.getImageVersion} />
-            </SafeAreaView>
+                <SafeAreaView />
+            </View>
         );
     }
 }

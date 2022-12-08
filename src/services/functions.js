@@ -117,3 +117,18 @@ export async function getUserToStreamerRelationData(userTwitchId, streamerUid) {
 		}
 	});
 }
+
+/**
+ * Evaluates the content of the image to know if it contains violent or adult content
+ * @param {string} requestId Request identifier
+ * @param {string} imageUrl Url of the image to evaluate
+ */
+ export async function imageContentModeration(requestId, imageUrl) {
+	return await callCloudFunction({
+		cfName: 'imageContentModeration',
+		params: {
+			requestId,
+			imageUrl
+		}
+	});
+}

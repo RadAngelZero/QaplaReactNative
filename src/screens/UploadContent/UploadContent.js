@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
-import { Button, Image, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Image, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { translate } from '../../utilities/i18';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 import styles from './style';
-
 import images from '../../../assets/images';
 
 class UploadContent extends Component {
-
     state = {
         gifUrl: 'https://media.giphy.com/media/vapO47YjBqpqAdNoAl/giphy.gif',
+    };
+
+    goToAddTags = async () => {
+        return this.props.navigation.navigate('AddTags');
     }
 
     render() {
         return (
             <View style={styles.container}>
                 <TouchableWithoutFeedback
-                    onPress={() => { this.props.navigation.navigate('AddTags'); }}
+                    onPress={this.goToAddTags}
                 >
                     <View style={styles.cardContainer}>
                         <Image
@@ -35,7 +38,7 @@ class UploadContent extends Component {
                         </View>
                         <TouchableOpacity
                             style={styles.cardButton}
-                            onPress={() => { this.props.navigation.navigate('AddTags'); }}
+                            onPress={this.goToAddTags}
                         >
                             <Text style={styles.cardTextButton}>
                                 {translate('uploadContent.uploadFile')}
@@ -46,7 +49,6 @@ class UploadContent extends Component {
             </View>
         );
     }
-
 }
 
 export default UploadContent;

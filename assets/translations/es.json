@@ -817,6 +817,7 @@
         },
         "visual": {
             "searchOn": "Buscar en",
+            "searchByTags": "Buscar por tags",
             "tabs": {
                 "trends": "Tendencia"
             }

@@ -11,6 +11,7 @@ import { getModerationKey, saveMemeModerationRequest } from '../../services/data
 import { imageContentModeration } from '../../services/functions';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { VALID_MEMES_TYPES } from '../../utilities/Constants';
+import { searchMemesTagsSuggestion } from '../../services/elastic';
 
 class AddTags extends Component {
     state = {
@@ -26,6 +27,7 @@ class AddTags extends Component {
         imagePath: '',
         imageWidth: 1,
         imageHeight: 1,
+        imageType: '',
         fileSize: 0
     };
     tagsInputRef = null;
@@ -38,7 +40,7 @@ class AddTags extends Component {
             (e) => {
                 this.setState({ keyboardOpen: true, keyboardHeight: e.endCoordinates.height });
                 if (this.scrollModal) {
-                    this.scrollModal.scrollTo({ x: 0, y: this.state.keyboardHeight / 2, animated: true });
+                    this.scrollModal.scrollToEnd();
                 }
             },
         );
@@ -58,7 +60,7 @@ class AddTags extends Component {
 
     getImage = async () => {
         const result = await launchImageLibrary({
-            mediaType: 'mixed',
+            mediaType: 'photos',
             includeExtra: true,
             includeBase64: false
         });
@@ -82,6 +84,7 @@ class AddTags extends Component {
                 imagePath: selectedMedia.uri,
                 imageHeight: selectedMedia.height,
                 imageWidth: selectedMedia.width,
+                imageType: selectedMedia.type
             });
         } else {
             this.props.navigation.dismiss();
@@ -91,52 +94,30 @@ class AddTags extends Component {
     askForSuggestions = (textInput) => {
         this.fetchTimeout = setTimeout(async () => {
             try {
-                const searchResults = await fetch('https://elastic-qapla-test.es.us-central1.gcp.cloud.es.io/_search', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        suggest: {
-                            suggestions: {
-                                text: textInput,
-                                completion: {
-                                    size: 8,
-                                    field: 'suggest'
-                                }
-                            }
+                const searchResults = await searchMemesTagsSuggestion(textInput, 8);
+
+                let duplicated = false;
+                const suggestionsArr = [textInput];
+                const fetchedSuggestionsArr = searchResults.suggest.suggestions[0].options.map((tag) => tag.text);
+                let suggestTags = [];
+
+                fetchedSuggestionsArr.forEach((tag, index) => {
+                    if (tag.toLowerCase() === textInput.toLowerCase()) {
+                        duplicated = true;
+                        if (index !== 0) {
+                            fetchedSuggestionsArr.splice(index, 1);
+                            fetchedSuggestionsArr.unshift(tag);
                         }
-                    }),
-                    headers: {
-                        Authorization: 'ApiKey LTcySTdZUUJkWXF3Y2NXZ0o4eUU6QU54aXRWWUlUdkNqdEdKMm5TOHhndw==',
-                        'Content-Type': 'application/json'
                     }
                 });
 
-                if (searchResults.status === 200) {
-                    const searchResult = await searchResults.json();
-                    let duplicated = false;
-                    const suggestionsArr = [textInput];
-                    const fetchedSuggestionsArr = searchResult.suggest.suggestions[0].options.map((tag) => tag.text);
-                    let suggestTags = [];
-
-                    fetchedSuggestionsArr.forEach((tag, index) => {
-                        if (tag.toLowerCase() === textInput.toLowerCase()) {
-                            duplicated = true;
-                            if (index !== 0) {
-                                fetchedSuggestionsArr.splice(index, 1);
-                                fetchedSuggestionsArr.unshift(tag);
-                            }
-                        }
-                    });
-
-                    if (!duplicated) {
-                        suggestTags = suggestionsArr.concat(fetchedSuggestionsArr);
-                    } else {
-                        suggestTags = fetchedSuggestionsArr;
-                    }
-
-                    this.setState({ suggestTags });
-                } else if (searchResults.status === 401) {
-                    console.log('Invalid token');
+                if (!duplicated) {
+                    suggestTags = suggestionsArr.concat(fetchedSuggestionsArr);
+                } else {
+                    suggestTags = fetchedSuggestionsArr;
                 }
+
+                this.setState({ suggestTags });
             } catch (error) {
                 console.log(error);
             }
@@ -160,7 +141,7 @@ class AddTags extends Component {
         }
 
         let newTagsArr = [...this.state.tags];
-        newTagsArr.unshift(title);
+        newTagsArr.unshift(title.trim());
         this.setState({ tags: newTagsArr, suggestTags: [], tagInput: '' });
     }
 
@@ -185,7 +166,7 @@ class AddTags extends Component {
                         image.downloadURL,
                         this.state.imageWidth,
                         this.state.imageHeight,
-                        'image',
+                        this.state.imageType,
                         tags
                     );
 
@@ -233,16 +214,12 @@ class AddTags extends Component {
 
     handleFinalCardButton = () => {
         this.setState({ uploadingModalOpen: false, uploadStatusModalOpen: false });
-        switch (this.state.uploadStatus) {
-            case 0:
-                return this.props.navigation.navigate('Explore');
-            case 1:
-            case 2:
-            case 4:
-                return this.props.navigation.navigate('Upload');
-            default:
-                break;
+
+        if (this.state.uploadStatus === 0) {
+            return this.props.navigation.navigate('Explore');
         }
+
+        return this.props.navigation.navigate('Upload');
     }
 
     renderChip = ({ item, index }) => (
@@ -250,8 +227,7 @@ class AddTags extends Component {
             title={item}
             last={index === (this.state.tagInput === '' ? this.state.tags.length - 1 : this.state.suggestTags.length - 1)}
             active={this.state.tagInput === '' || index === 0}
-            onPress={(e) => this.handleTagPress(item, index)}
-        />
+            onPress={(e) => this.handleTagPress(item, index)} />
     )
 
     render() {
@@ -289,7 +265,8 @@ class AddTags extends Component {
                                 style={styles.textInput}
                                 onChange={this.handleTagInput}
                                 value={this.state.tagInput}
-                            />
+                                returnKeyType='done'
+                                keyboardAppearance='dark' />
                         </View>
                         <View style={{
                             marginTop: 16,
@@ -341,7 +318,7 @@ class AddTags extends Component {
                             }
 
                         </View>
-                        {!this.state.keyboardOpen && this.state.tags.length > 0 &&
+                        {this.state.tags.length > 0 &&
                             <TouchableOpacity style={styles.uploadButton} onPress={this.uploadHandle}>
                                 <Text style={styles.uploadButtonText}>
                                     {translate('uploadContent.uploadFile')}

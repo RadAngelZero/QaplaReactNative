@@ -813,6 +813,7 @@
         },
         "visual": {
             "searchOn": "Search",
+            "searchByTags": "Search by tags",
             "tabs": {
                 "trends": "Trending"
             }

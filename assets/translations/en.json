@@ -935,13 +935,14 @@
     "uploadContent": {
         "uploadFile": "Upload File",
         "uploading": "Uploading...",
-        "thisWillTakeSomeTime": "This may take a minute.",
+        "thisWillTakeSomeTime": "This might take a minute.",
         "uploadScreen": {
             "title": "Send your own memes on your reactions",
             "subtitle": "Upload a JPEG, PNG less than 5 MB"
         },
         "addTags": {
             "addTags": "Add Tags",
+            "typeToAdd": "Type to add tags",
             "suggestions": "Suggestions",
             "addedTags": "Added Tags",
             "makeEasierP1": "Make it easier to find memes adding",

@@ -1,6 +1,4 @@
 import { StyleSheet } from 'react-native';
-import Colors from '../../utilities/Colors';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     whiteText: {
@@ -24,7 +22,7 @@ export default styles = StyleSheet.create({
         height: 400,
         width: '90%',
         borderRadius: 25,
-        backgroundColor: '#f0f',
+        backgroundColor: '#141833',
     },
     backgroundImage: {
         position: 'absolute',
@@ -110,13 +108,13 @@ export default styles = StyleSheet.create({
     },
     textInputContainer: {
         backgroundColor: '#0D1021',
-        width: '90%',
+        width: '100%',
         height: 40,
         justifyContent: 'center',
         alignSelf: 'center',
         marginTop: 40,
         borderRadius: 18,
-        paddingHorizontal: 16,
+        paddingHorizontal: 16
     },
     textInput: {
         color: '#fff',
@@ -126,17 +124,14 @@ export default styles = StyleSheet.create({
     tagTextContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginLeft: 16,
     },
     tagText: {
         color: '#FFFFFF99',
         fontSize: 10,
         fontWeight: '500',
         lineHeight: 12,
-        marginLeft: 4,
     },
     chipList: {
-        paddingLeft: 16,
         marginTop: 16,
     },
     tipText: {

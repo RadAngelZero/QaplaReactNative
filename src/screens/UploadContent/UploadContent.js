@@ -4,11 +4,21 @@ import { translate } from '../../utilities/i18';
 
 import styles from './style';
 import images from '../../../assets/images';
+import { getRandomGifByLibrary } from '../../services/database';
 
 class UploadContent extends Component {
     state = {
-        gifUrl: 'https://media.giphy.com/media/vapO47YjBqpqAdNoAl/giphy.gif',
+        gif: null
     };
+
+    componentDidMount() {
+        this.getGif();
+    }
+
+    getGif = async () => {
+        const gif = await getRandomGifByLibrary('UploadContent');
+        this.setState({ gif: gif.val() });
+    }
 
     goToAddTags = async () => {
         return this.props.navigation.navigate('AddTags');
@@ -21,10 +31,11 @@ class UploadContent extends Component {
                     onPress={this.goToAddTags}
                 >
                     <View style={styles.cardContainer}>
-                        <Image
-                            source={{ uri: this.state.gifUrl }}
-                            style={styles.backgroundImage}
-                        />
+                        {this.state.gif &&
+                            <Image
+                                source={{ uri: this.state.gif }}
+                                style={styles.backgroundImage} />
+                        }
                         <View style={styles.backgroundAttenuation} />
                         <images.svg.fileUpload />
                         <View style={styles.cardTextContainer}>

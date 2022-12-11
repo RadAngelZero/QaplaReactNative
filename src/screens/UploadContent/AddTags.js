@@ -39,28 +39,20 @@ class AddTags extends Component {
             'keyboardDidShow',
             (e) => {
                 this.setState({ keyboardOpen: true, keyboardHeight: e.endCoordinates.height });
-                if (this.scrollModal) {
+                if (this.scrollModal && this.state.tags.length === 0) {
                     this.scrollModal.scrollToEnd();
                 }
-            },
-        );
-        this.keyboardDidHideSubscription = Keyboard.addListener(
-            'keyboardDidHide',
-            (e) => {
-                this.setState({ keyboardOpen: false, keyboardHeight: this.state.keyboardHeight / 2 });
-
             },
         );
     }
 
     componentWillUnmount() {
         this.keyboardDidShowSubscription.remove();
-        this.keyboardDidHideSubscription.remove();
     }
 
     getImage = async () => {
         const result = await launchImageLibrary({
-            mediaType: 'photos',
+            mediaType: 'photo',
             includeExtra: true,
             includeBase64: false
         });
@@ -246,7 +238,8 @@ class AddTags extends Component {
                     </View>
                     <ScrollView
                         ref={ref => { this.scrollModal = ref; }}
-                        keyboardShouldPersistTaps='handled'>
+                        keyboardShouldPersistTaps='handled'
+                        contentContainerStyle={{ paddingHorizontal: 16 }}>
                         <View style={styles.scrollView}>
                             <Image
                                 style={{
@@ -260,7 +253,7 @@ class AddTags extends Component {
                         <View style={styles.textInputContainer}>
                             <TextInput ref={(tagsInputRef) => this.tagsInputRef = tagsInputRef}
                                 autoFocus
-                                placeholder='Type to add tags'
+                                placeholder={translate('uploadContent.addTags.typeToAdd')}
                                 placeholderTextColor={'#FFFFFF66'}
                                 style={styles.textInput}
                                 onChange={this.handleTagInput}

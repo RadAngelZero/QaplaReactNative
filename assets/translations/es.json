@@ -941,6 +941,7 @@
         },
         "addTags": {
             "addTags": "Agrega Etiquetas",
+            "typeToAdd": "Escribe para agregar etiquetas",
             "suggestions": "Sugerencias",
             "addedTags": "Etiquetas Agregadas",
             "makeEasierP1": "Facilita el encontrar un meme agregando",

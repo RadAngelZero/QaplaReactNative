@@ -9,6 +9,7 @@ import { translate } from '../../utilities/i18';
 import { retrieveData } from '../../utilities/persistance';
 import SignUpModal from '../SignUpModal/SignUpModal';
 import Colors from './../../utilities/Colors';
+import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 
 class BottomBarProfileIcon extends Component {
     state = {
@@ -57,7 +58,7 @@ class BottomBarProfileIcon extends Component {
         return (
             <TouchableOpacity style={{
                     backgroundColor: '#141833',
-                    height: 48,
+                    height: heightPercentageToPx(5.91),
                     width: '100%',
                     justifyContent: 'center',
                     borderTopLeftRadius: 100,
@@ -74,7 +75,9 @@ class BottomBarProfileIcon extends Component {
                     <View style={{
                         width: 32,
                         height: 32,
-                        backgroundColor: tintColor,
+                        borderColor: tintColor,
+                        borderWidth: 2,
+                        backgroundColor: 'transparent',
                         borderRadius: 13,
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -82,38 +85,36 @@ class BottomBarProfileIcon extends Component {
                     }}>
                         {avatarId ?
                             <LinearGradient style={{
-                                    width: 28,
-                                    height: 28,
+                                    width: 25,
+                                    height: 25,
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    borderRadius: 11.2,
+                                    borderRadius: 10,
                                 }}
                                 useAngle
                                 {...avatarBackground}>
                                 <Image style={{
-                                        width: 24,
-                                        height: 24,
-                                        borderRadius: 9.8,
+                                        width: 25,
+                                        height: 25,
                                         justifyContent: 'center',
                                         alignItems: 'center',
                                     }} source={{
                                         uri: avatarImage
                                     }}
-                                    resizeMode='cover' />
+                                    resizeMode='stretch' />
                             </LinearGradient>
                         :
                             <View style={{
-                                width: 28,
-                                height: 28,
-                                backgroundColor:'#141833',
+                                width: 25,
+                                height: 25,
+                                backgroundColor:'#FFF',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                borderRadius: 11.2,
+                                borderRadius: 10,
                             }}>
                                 <Image style={{
-                                        width: 24,
-                                        height: 24,
-                                        borderRadius: 9.8,
+                                        width: 25,
+                                        height: 25,
                                     }}
                                     source={{ uri: photoUrl }}
                                     resizeMode='cover' />

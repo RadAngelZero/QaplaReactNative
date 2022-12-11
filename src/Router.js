@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, TouchableOpacity, View } from 'react-native';
 import { createAppContainer, createSwitchNavigator, NavigationActions } from 'react-navigation';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator, createBottomTabNavigator } from 'react-navigation-tabs';
@@ -42,6 +42,8 @@ import AddTags from './screens/UploadContent/AddTags';
 import CommunityHeader from './components/CommunityHeader/CommunityHeader';
 import TweetReactionControllerScreen from './screens/TweetReactionScreen/TweetReactionControllerScreen';
 import BottomBarProfileIcon from './components/BottomBarProfileIcon/BottomBarProfileIcon';
+import { SafeAreaView, useSafeArea } from 'react-native-safe-area-context';
+import { heightPercentageToPx, widthPercentageToPx } from './utilities/iosAndroidDim';
 
 //#region Stack Navigators
 
@@ -196,7 +198,8 @@ const MainBottomTabNavigator = createBottomTabNavigator({
   UserProfile: {
     screen: UserProfileModal,
     navigationOptions: {
-      tabBarOnPress: (props) => { console.log(props); return null },
+      // Do nothing, BottomBarProfileIcon handles the onPress event
+      tabBarOnPress: (props) => null,
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => <BottomBarProfileIcon tintColor={tintColor} focused={focused} />,
     },
@@ -208,29 +211,16 @@ const MainBottomTabNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor, focused }) => (
         <View style={{
           transform: [{ scale: 1 }],
-          // flex: 1,
           backgroundColor: '#141833',
-          height: 48,
+          height: heightPercentageToPx(5.91),
           width: '100%',
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-          <Svg width="30px" height="30px" viewBox="0 0 30 33">
-            <G id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <G id="Profile" transform="translate(-48.000000, -744.000000)">
-                <G id="Bottom-Nav-Bar" transform="translate(0.000000, 731.000000)">
-                  <G id="Events" transform="translate(0.000000, 12.000000)">
-                    <G id="controller-play" transform="translate(48.000000, 0.000000)">
-                      <G id="Controller" transform="translate(0.000000, 2.250000)">
-                        <Path fill={tintColor} fill-rule="evenodd" clip-rule="evenodd" d="M26.761 7.33528C25.9678 7.21597 24.8851 7.27255 23.5618 7.53688C23.0541 7.6383 22.5603 7.30891 22.4589 6.80117C22.3574 6.29344 22.6868 5.79962 23.1946 5.6982C24.6312 5.41124 25.9504 5.31728 27.0399 5.48113C28.1173 5.64317 29.1324 6.08769 29.6771 7.03124C30.2217 7.97449 30.0994 9.07547 29.7013 10.0892C29.2989 11.1143 28.5584 12.2094 27.5922 13.3097C25.6122 15.5644 22.5318 18.0126 18.8436 20.142C15.1934 22.2495 11.5711 23.6848 8.645 24.2836C7.18702 24.582 5.84847 24.6839 4.74407 24.5239C3.65299 24.3659 2.62296 23.922 2.07259 22.9687C1.528 22.0255 1.65036 20.9245 2.0484 19.9107C2.4509 18.8856 3.1914 17.7905 4.15761 16.6902C4.49926 16.3012 5.0916 16.2627 5.48066 16.6044C5.86971 16.946 5.90814 17.5384 5.5665 17.9274C4.67654 18.9409 4.08671 19.8497 3.79369 20.596C3.49622 21.3536 3.55788 21.7913 3.69639 22.0312C3.83638 22.2737 4.19103 22.5492 5.01284 22.6683C5.82133 22.7854 6.92388 22.722 8.2691 22.4467C10.9494 21.8982 14.3819 20.5529 17.9061 18.5182C21.4677 16.4619 24.3721 14.135 26.1833 12.0725C27.0732 11.0591 27.663 10.1502 27.9561 9.40395C28.2535 8.64637 28.1919 8.20865 28.0533 7.96874C27.9148 7.72876 27.5664 7.4564 26.761 7.33528Z" />
-                        <Path fill={tintColor} fill-rule="evenodd" clip-rule="evenodd" d="M3.875 15C3.875 8.37258 9.24758 3 15.875 3C21.5677 3 26.3345 6.96395 27.5659 12.2822C27.3981 12.4975 27.2132 12.7207 27.0107 12.9513C25.2502 14.9562 22.3986 17.2467 18.8749 19.2811C15.3885 21.294 12.013 22.6122 9.40639 23.1456C8.60101 23.3104 7.9011 23.3936 7.31417 23.4091C5.18704 21.2438 3.875 18.2751 3.875 15ZM10.8417 25.8965C12.3724 26.6048 14.0775 27 15.875 27C22.008 27 27.0664 22.3991 27.787 16.4606C25.8418 18.3094 23.2898 20.1963 20.3749 21.8792C17.022 23.815 13.6762 25.1996 10.8417 25.8965Z" />
-                        <Ellipse fill={focused ? '#4040FF' : '#FFF'} cx="10.25" cy="15.625" rx="3.125" ry="3.125" />
-                      </G>
-                    </G>
-                  </G>
-                </G>
-              </G>
-            </G>
+          <Svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Path fill={tintColor} fill-rule="evenodd" clip-rule="evenodd" d="M27.612 7.82514C26.7659 7.69788 25.6111 7.75824 24.1996 8.04018C23.658 8.14836 23.1312 7.79702 23.023 7.25543C22.9149 6.71385 23.2662 6.18711 23.8078 6.07893C25.3402 5.77284 26.7474 5.67261 27.9095 5.84739C29.0587 6.02023 30.1415 6.49438 30.7226 7.50084C31.3034 8.50697 31.1729 9.68135 30.7484 10.7627C30.3191 11.8561 29.5292 13.0242 28.4986 14.1979C26.3866 16.6029 23.1009 19.2143 19.1668 21.4857C15.2733 23.7336 11.4094 25.2647 8.28827 25.9034C6.73308 26.2216 5.3053 26.3303 4.12727 26.1597C2.96345 25.9911 1.86475 25.5177 1.27769 24.5008C0.696796 23.4947 0.827306 22.3203 1.25189 21.239C1.68122 20.1455 2.47109 18.9774 3.50172 17.8037C3.86614 17.3888 4.49797 17.3478 4.91296 17.7122C5.32795 18.0766 5.36895 18.7084 5.00453 19.1234C4.05524 20.2044 3.42608 21.1739 3.11353 21.9699C2.79623 22.778 2.862 23.2449 3.00974 23.5008C3.15907 23.7595 3.53736 24.0534 4.41395 24.1803C5.27634 24.3052 6.4524 24.2376 7.8873 23.944C10.7463 23.3589 14.4076 21.924 18.1668 19.7536C21.9659 17.5602 25.0639 15.0782 26.9958 12.8782C27.945 11.7972 28.5742 10.8277 28.8867 10.0317C29.204 9.22364 29.1382 8.75674 28.9905 8.50084C28.8427 8.24485 28.471 7.95434 27.612 7.82514Z" />
+            <Path fill={tintColor} fill-rule="evenodd" clip-rule="evenodd" d="M3.25 16C3.25 8.95837 8.95837 3.25 16 3.25C22.1072 3.25 27.2115 7.5439 28.4587 13.2774C28.303 13.473 28.1346 13.6742 27.9532 13.8808C26.0663 16.0295 23.0152 18.4792 19.2499 20.6531C15.5244 22.8041 11.9137 24.215 9.1202 24.7866C8.32986 24.9484 7.63184 25.0373 7.03291 25.0639C4.69712 22.7529 3.25 19.5454 3.25 16ZM10.5641 27.5364C12.213 28.3148 14.0557 28.75 16 28.75C22.5491 28.75 27.945 23.8122 28.6677 17.4564C26.5961 19.4311 23.8693 21.4502 20.7499 23.2512C17.1624 25.3225 13.5853 26.7994 10.5641 27.5364Z" />
+            <Ellipse cx="9.99984" cy="16.6673" rx="3.33333" ry="3.33333" fill={focused ? '#4040FF' : '#FFF'} />
           </Svg>
         </View>
       ),
@@ -242,30 +232,18 @@ const MainBottomTabNavigator = createBottomTabNavigator({
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
         <View style={{
-          transform: [{ scale: 1 }],
           justifyContent: 'center',
           alignItems: 'center',
           borderTopRightRadius: 100,
           borderBottomRightRadius: 100,
           backgroundColor: '#141833',
-          height: 48,
+          height: heightPercentageToPx(5.91),
           width: '100%',
         }}>
-          <Svg width="30px" height="30px" viewBox="0 0 30 30">
-            <G id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <G id="Profile" transform="translate(-175.000000, -745.000000)">
-                <G id="Bottom-Nav-Bar" transform="translate(0.000000, 731.000000)">
-                  <G id="Community" transform="translate(125.000000, 12.000000)">
-                    <G id="chat" transform="translate(48.000000, 0.000000)">
-                      <G id="Comment" transform="translate(2.500000, 2.500000)">
-                        <Path fill={tintColor} d="M15 3C9.1846 3 4.48492 7.78872 4.22417 13.743C1.74181 14.7333 0 17.2378 0 20.1459C0 23.9037 2.91675 27 6.57447 27H22.0213C26.4545 27 30 23.2455 30 18.6757C30 15.3326 28.1081 12.435 25.359 11.1127C24.0574 6.4423 19.9278 3 15 3Z" />
-                        <Path fill={focused ? '#4040FF' : '#FFF'} fill-rule="evenodd" clip-rule="evenodd" d="M14.2756 10.9813C14.7093 10.6729 15.2907 10.6729 15.7244 10.9813L20.0994 14.0924C20.662 14.4925 20.7938 15.2729 20.3937 15.8355C19.9936 16.3981 19.2132 16.5299 18.6506 16.1298L16.25 14.4227V20C16.25 20.6904 15.6904 21.25 15 21.25C14.3097 21.25 13.75 20.6904 13.75 20V14.4227L11.3494 16.1298C10.7868 16.5299 10.0064 16.3981 9.60631 15.8355C9.20624 15.2729 9.33799 14.4925 9.9006 14.0924L14.2756 10.9813Z" />
-                      </G>
-                    </G>
-                  </G>
-                </G>
-              </G>
-            </G>
+          <Svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Path fill={tintColor} d="M16 3C9.79691 3 4.78392 8.10797 4.50578 14.4592C1.85793 15.5155 0 18.187 0 21.289C0 25.2973 3.1112 28.6 7.01277 28.6H23.4894C28.2182 28.6 32 24.5952 32 19.7207C32 16.1547 29.9819 13.064 27.0496 11.6535C25.6612 6.67179 21.2563 3 16 3Z" />
+            <Path fill={tintColor} d="M16 3C9.79691 3 4.78392 8.10797 4.50578 14.4592C1.85793 15.5155 0 18.187 0 21.289C0 25.2973 3.1112 28.6 7.01277 28.6H23.4894C28.2182 28.6 32 24.5952 32 19.7207C32 16.1547 29.9819 13.064 27.0496 11.6535C25.6612 6.67179 21.2563 3 16 3Z" />
+            <Path fill={focused ? '#4040FF' : '#FFF'} fill-rule="evenodd" clip-rule="evenodd" d="M15.2274 11.7135C15.69 11.3846 16.3102 11.3846 16.7728 11.7135L21.4395 15.032C22.0396 15.4588 22.1801 16.2912 21.7534 16.8913C21.3266 17.4915 20.4942 17.632 19.8941 17.2053L17.3334 15.3844V21.3335C17.3334 22.0698 16.7365 22.6668 16.0001 22.6668C15.2637 22.6668 14.6668 22.0698 14.6668 21.3335V15.3844L12.1061 17.2053C11.506 17.632 10.6736 17.4915 10.2468 16.8913C9.82008 16.2912 9.96062 15.4588 10.5607 15.032L15.2274 11.7135Z" />
           </Svg>
         </View>
       ),
@@ -277,16 +255,20 @@ const MainBottomTabNavigator = createBottomTabNavigator({
       tabBarButtonComponent: TouchableOpacity,
       tabBarIcon: ({ tintColor, focused }) => (
         <View style={{
-          marginLeft: 16,
-          transform: [{ scale: 1 }],
-          width: 48,
-          height: 48,
-          backgroundColor: '#3B4BF9',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: 100,
+          width: '100%',
         }}>
-          <images.svg.interactionsNumberIcon style={{ transform: [{ scale: 1.5 }], }} />
+          <View style={{
+            marginLeft: 16,
+            transform: [{ scale: 1 }],
+            width: heightPercentageToPx(5.91),
+            height: heightPercentageToPx(5.91),
+            backgroundColor: '#3B4BF9',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 100,
+          }}>
+            <images.svg.interactionsNumberIcon style={{ transform: [{ scale: 1.5 }] }} />
+          </View>
         </View>
       ),
       tabBarOnPress: ({ navigation, defaultHandler }) => {
@@ -306,11 +288,14 @@ const MainBottomTabNavigator = createBottomTabNavigator({
       margin: 0,
       borderTopColor: 'transparent',
       alignSelf: 'center',
+      // Blank space is (100% - 84.8%) / 2 = 7.6%, the 16 comes because the star has a margin left of 16
+      paddingLeft: widthPercentageToPx(7.6) + 16
     },
     showLabel: false,
     activeTintColor: '#36E5CE',
-    inactiveTintColor: 'rgba(255, 255, 255, .25)',
+    inactiveTintColor: '#2F384C',
     tabStyle: {
+      width: widthPercentageToPx(84.8) / 4,
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',

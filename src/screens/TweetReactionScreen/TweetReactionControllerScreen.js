@@ -109,6 +109,7 @@ class TweetReactionControllerScreen extends Component {
                 this.setState({ openSignUpModal: true });
             }
         });
+
         await this.fetchStreamerData(() => {
             this.fetchUserSubscription();
             this.fetchStreamerEmotes();
@@ -123,6 +124,9 @@ class TweetReactionControllerScreen extends Component {
             const lastReactionLevel = await retrieveData('lastReactionLevel');
             if (lastReactionLevel) {
                 this.setState({ reactionLevel: parseInt(lastReactionLevel) });
+
+                const openMemeModal = this.props.navigation.getParam('openMemeModal', false);
+                this.setState({ openMemeModal });
             } else {
                 this.setState({ openReactionLevelModal: true });
             }
@@ -519,7 +523,7 @@ class TweetReactionControllerScreen extends Component {
     }
 
     onCloseSignUpModal = () => {
-        if (!this.state.freeReactionsSent) {
+        if (this.state.freeReactionsSent) {
             this.props.navigation.dismiss();
         }
 

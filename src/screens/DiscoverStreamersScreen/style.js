@@ -6,12 +6,11 @@ import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.backgroundColor
+        paddingHorizontal: 16,
+        backgroundColor: Colors.backgroundColor,
     },
     searchBar: {
-        width: widthPercentageToPx(91.46),
         flexDirection: 'row',
-        marginRight: 10,
         borderRadius: 50,
         paddingHorizontal: 16,
         alignSelf: 'center',

@@ -3,8 +3,7 @@ import {
     SafeAreaView,
     View,
     Linking,
-    Image,
-    TouchableOpacity
+    Image
 } from 'react-native';
 import { styles } from './style';
 import { connect } from 'react-redux';
@@ -14,11 +13,8 @@ import images from './../../../assets/images';
 import { storeData, retrieveData } from '../../utilities/persistance';
 import { defaultUserImages, HIGHLIGHT_2_NOTIFICATIONS } from '../../utilities/Constants';;
 import QaplaIcon from '../QaplaIcon/QaplaIcon';
-import SignUpModal from '../SignUpModal/SignUpModal';
-import { translate } from '../../utilities/i18';
 
 const SupportIcon = images.svg.supportIcon;
-const UserProfileIcon = images.svg.userProfile
 const DuotoneDefaultIcon = images.svg.duotoneDefault;
 const DuotoneActiveIcon = images.svg.duotoneActive;
 
@@ -29,8 +25,7 @@ class HeaderBar extends Component {
         this.state = {
             showHg2Modal: false,
             showProfile: false,
-            userImage: { uri: true, img: this.props.photoUrl },
-            openProfileModal: false
+            userImage: { uri: true, img: this.props.photoUrl }
         };
     }
 
@@ -180,19 +175,6 @@ class HeaderBar extends Component {
         });
     }
 
-    onOpenProfile = () => {
-        if (this.props.uid) {
-            this.props.navigation.navigate('UserProfileModal');
-        } else {
-            this.setState({ openProfileModal: true });
-        }
-    }
-
-    onSignUpSuccess = () => {
-        this.props.navigation.navigate('UserProfileModal');
-        this.setState({ openProfileModal: false });
-    }
-
     render() {
         if (this.props.currentScreenId !== 'StreamerProfile') {
             return (
@@ -204,17 +186,6 @@ class HeaderBar extends Component {
                                 style={styles.qaplaImage} />
                         </View>
                         <View style={styles.iconsContainer}>
-                            {this.state.userImage &&
-                                <TouchableOpacity
-                                    onPress={this.onOpenProfile}
-                                    style={{
-                                        width: 30,
-                                        height: 30,
-                                        overflow: 'hidden',
-                                    }}>
-                                    <UserProfileIcon height={30} width={30} />
-                                </TouchableOpacity>
-                            }
                             <QaplaIcon onPress={this.onActivityPressBttn} touchableStyle={styles.leftIconTouchableStyle}>
                                 {this.userHaveUnreadActivity() ?
                                     <DuotoneActiveIcon height={30} width={30} />
@@ -232,15 +203,6 @@ class HeaderBar extends Component {
                             }
                         </View>
                     </View>
-                    <SignUpModal open={this.state.openProfileModal}
-                        onClose={() => this.setState({ openProfileModal: false })}
-                        title={translate('signUpModalHeaderBar.title')}
-                        benefits={[
-                            translate('signUpModalHeaderBar.benefit1'),
-                            translate('signUpModalHeaderBar.benefit2'),
-                            translate('signUpModalHeaderBar.benefit3')
-                        ]}
-                        onSignUpSuccess={this.onSignUpSuccess} />
                 </SafeAreaView>
             );
         }

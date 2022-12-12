@@ -56,7 +56,7 @@ class BuyQoins extends Component {
                 console.warn(err.code, err.message);
             }
         } else {
-            this.props.navigation.navigate('SignIn');
+            // this.props.navigation.navigate('SignIn');
         }
     }
 

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
+import { getScreenSizeMultiplier, heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
     container: {
@@ -46,5 +46,35 @@ export default styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5
+    },
+    searchBar: {
+        flexDirection: 'row',
+        borderRadius: 50,
+        paddingHorizontal: 16,
+        alignSelf: 'center',
+        alignItems: 'center',
+    },
+    gridSearchBar: {
+        backgroundColor: '#0D1021',
+        width: widthPercentageToPx(80) - 16,
+    },
+    searchIcon: {
+        transform: [{ scale: getScreenSizeMultiplier() }]
+    },
+    gridSearchBarTextInput: {
+        flex: 1,
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '400',
+        letterSpacing: 1,
+        textAlignVertical: 'center',
+        paddingVertical: 8,
+        marginLeft: 8,
+    },
+    gridPoweredbyGiphy: {
+        flex: 1,
+        width: widthPercentageToPx(25.5),
+        maxWidth: widthPercentageToPx(25.5),
+        height: heightPercentageToPx(1.23),
     },
 });

@@ -93,7 +93,7 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Photo Library Access Warning</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow access to Photos to edit your profile picture. Your picture will show in your profile and ranking standings</string>
+	<string>Allow access to Photos to upload meme pictures.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SFRounded-Ultralight.ttf</string>

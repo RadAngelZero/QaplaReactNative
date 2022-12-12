@@ -48,7 +48,7 @@ export const styles = StyleSheet.create({
     iconsContainer: {
         flex: 1,
         marginRight: 16,
-        maxWidth: widthPercentageToPx(30),
+        maxWidth: widthPercentageToPx(18),
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',

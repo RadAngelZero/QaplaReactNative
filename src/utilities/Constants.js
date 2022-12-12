@@ -185,3 +185,11 @@ export const TWITCH_PARTNER = 'partner';
 export const TWITCH_AFFILIATE = 'affiliate';
 
 export const GIPHY_TEXT_GENERATOR_URL = 'https://dashboard.qapla.gg/giphyTextGenerator/';
+
+export const VALID_MEMES_TYPES = [
+	'image/jpeg',
+	'image/jpg',
+	'image/png'
+];
+
+export const ELASTIC_URL = 'https://qapla.es.us-central1.gcp.cloud.es.io';

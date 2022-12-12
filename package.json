@@ -1,6 +1,6 @@
 {
   "name": "Qapla-React-Native",
-  "version": "4.4.0",
+  "version": "4.5.0",
   "private": true,
   "scripts": {
     "android": "cd android && gradlew clean && cd .. && react-native run-android",
@@ -31,6 +31,7 @@
     "react-native-firebase": "5.6.0",
     "react-native-gesture-handler": "1.4.1",
     "react-native-iap": "^8.2.1",
+    "react-native-image-picker": "^4.10.2",
     "react-native-linear-gradient": "2.5.6",
     "react-native-reanimated": "1.7.0",
     "react-native-safe-area-context": "0.7.3",

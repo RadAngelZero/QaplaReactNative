@@ -129,9 +129,9 @@ class DiscoverStreamersScreen extends Component {
                 {/**
                  * View with height is to avoid Bottom bar on content
                  */}
-                {!this.state.searching &&
+                {/* {!this.state.searching &&
                     <View style={{ marginBottom: BOTTOM_NAVIGATION_BAR_HEIGHT * 1.25 }} />
-                }
+                } */}
             </View>
         );
     }

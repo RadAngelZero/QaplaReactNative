@@ -123,6 +123,8 @@ import SwapRectangle from './icons/SwapRectangle.svg';
 import PlusCircle from './icons/plusCircle.svg';
 import Avatar from './icons/Avatar.svg';
 import GiphyText from './icons/GiphyText.svg';
+import FileUpload from './icons/FileUpload.svg';
+import Tag from './icons/Tag.svg';
 import EditCircle from './icons/EditCircle.svg';
 import ShowKeyboard from './icons/ShowKeyboard.svg';
 import HideKeyboard from './icons/hideKeyboard.svg';
@@ -218,6 +220,10 @@ const images = {
 		checkCircleGlow: {
 			img: require('./icons/CheckCircleGlow.png'),
 			uri: '@assets/icons/CheckCircleGlow.png'
+		},
+		infoCircleGlow: {
+			img: require('./icons/InfoCircleGlow.png'),
+			uri: '@assets/icons/InfoCircleGlow.png'
 		},
 		joinQlanGlow: {
 			img: require('./icons/JoinQlanGlow.png'),
@@ -403,6 +409,8 @@ const images = {
 		plusCircle: PlusCircle,
 		avatar: Avatar,
 		giphyText: GiphyText,
+		fileUpload: FileUpload,
+		tag: Tag,
 		editCircle: EditCircle,
 		showKeyboard: ShowKeyboard,
 		hideKeyboard: HideKeyboard,

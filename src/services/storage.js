@@ -4,6 +4,7 @@ import { storage } from '../utilities/firebase';
 export const storageLogrosImgRef = storage.ref('/facebook_likes');
 export const verifiedUserImgRef = storage.ref('/verified_user_photos');
 export const profileUserImgRef = storage.ref('/profileUser/img');
+export const moderationImgRef = storage.ref('/Memes');
 
 /**
  * @description 
@@ -121,4 +122,17 @@ export async function getStreamerProfilePhotoUrl(streamerId) {
     const profilePhotoUrl = await ref.getDownloadURL();
 
     return profilePhotoUrl;
+}
+
+export async function uploadMemeToModeration(imageId, memeUri) {
+    let res = null;
+
+    try {
+        res = await moderationImgRef.child(`/${imageId}`).put(memeUri);
+    }
+    catch (error) {
+        console.error(error);
+    }
+
+    return res;
 }

@@ -770,6 +770,12 @@
         "benefit2": "👽 Custom animated avatar for your reactions",
         "benefit3": "🌱 Support your fave streamers"
     },
+    "signUpModalUploadContent": {
+        "title": "Keep sharing memes",
+        "benefit1": "⚡️ Use channel points to send your custom memes",
+        "benefit2": "🔥 Upgrade your memes",
+        "benefit3": "📚 Create your meme library"
+    },
     "streamerCard": {
         "viewMore": "View more"
     },
@@ -813,6 +819,7 @@
         },
         "visual": {
             "searchOn": "Search",
+            "searchByTags": "Search by tags",
             "tabs": {
                 "trends": "Trending"
             }
@@ -930,5 +937,45 @@
         "showUp": "Show up with style 👋",
         "usingAvi": "using your animated avi",
         "popUp": "Pop Up on stream"
+    },
+    "uploadContent": {
+        "uploadFile": "Upload File",
+        "uploading": "Uploading...",
+        "thisWillTakeSomeTime": "This might take a minute.",
+        "uploadScreen": {
+            "title": "Send your own memes on your reactions",
+            "subtitle": "Upload a JPEG, PNG less than 5 MB"
+        },
+        "addTags": {
+            "addTags": "Add Tags",
+            "typeToAdd": "Type to add tags",
+            "suggestions": "Suggestions",
+            "addedTags": "Added Tags",
+            "makeEasierP1": "Make it easier to find memes adding",
+            "makeEasierP2": "at least 1 tag"
+        },
+        "finalCard": {
+            "title": {
+                "0": "Boom. Uploaded.",
+                "1": "File is too powerful",
+                "2": "Your file was rejected",
+                "3": "Something went wrong\nPlease try again",
+                "4": "JPEG and PNG only"
+            },
+            "subtitle": {
+                "0": "We’ll review your content and let\nyou know when available to use\n\nIt might take up to 24 hours",
+                "1": "Max file size is 5MB",
+                "2": "Explicit sexual or violent content infringes our community gudilines",
+                "3": "If the problem persists try again later or contact support on Discord 🙏",
+                "4": "We are currently supporting only static JPEG and PNG images"
+            },
+            "buttonText": {
+                "0": "Back to Home",
+                "1": "Upload a smaller file",
+                "2": "Upload another file",
+                "3": "Try Again",
+                "4": "Upload another file"
+            }
+        }
     }
 }

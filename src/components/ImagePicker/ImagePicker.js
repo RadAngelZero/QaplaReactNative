@@ -139,7 +139,8 @@ export default class ImagePicker extends React.Component {
   * what save means, is up to the parent of the ImagePicker component.
   */
   saveImage = async () => {
-    await this.props.saveImage(this.state.picture);
+    console.log(this.state.picture);
+    /* await this.props.saveImage(this.state.picture); */
   }
 
     /**

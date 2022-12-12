@@ -9,7 +9,7 @@ export default styles = StyleSheet.create({
     },
     topNav: {
         position: 'absolute',
-        top: 36,
+        top: 44,
         left: 16,
         zIndex: 9999,
     },

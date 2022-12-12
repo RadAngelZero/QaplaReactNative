@@ -27,17 +27,6 @@ class TopNavOptions extends Component {
             this.props.navigation.navigate(this.props.onCloseNavigateTo);
         }
 
-        /**
-         * As we want to avoid that the user can access to the profile screen if is not logged we need to define manually
-         * the navigation flow on the SignIn/LogIn screens
-         *
-         * If we are on the SignIn/LogIn screen
-         */
-        if ((this.props.currentScreen === 'SignIn' && this.props.previousScreen === 'Profile')) {
-
-            return this.props.navigation.navigate('Explore');
-        }
-
         return this.props.navigation.dismiss();
     }
 

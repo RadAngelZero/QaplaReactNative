@@ -4,16 +4,13 @@ import { widthPercentageToPx, heightPercentageToPx } from '../../utilities/iosAn
 
 export default styles = StyleSheet.create({
     card: {
-        width: widthPercentageToPx(91.46),
         alignSelf: 'center',
         borderRadius: 25,
         backgroundColor: '#141833',
         justifyContent: 'flex-start',
-        paddingRight: 18,
-        paddingLeft: 18,
         overflow: 'hidden',
-        paddingBottom: 40,
-        marginBottom: 30
+        paddingBottom: 32,
+        marginBottom: 30,
     },
     smallCard: {
         width: 168,
@@ -21,17 +18,16 @@ export default styles = StyleSheet.create({
         borderRadius: 25,
         backgroundColor: '#141833',
         justifyContent: 'flex-start',
-        paddingRight: 18,
-        paddingLeft: 18,
+        paddingHorizontal: 18,
         overflow: 'hidden',
         paddingBottom: 20,
-        marginBottom: 30
+        marginBottom: 30,
     },
     coverImage: {
         display: 'flex',
         alignSelf: 'center',
-        width: widthPercentageToPx(91.46),
-        height: heightPercentageToPx(13)
+        width: '100%',
+        height: 90,
     },
     smallCoverImage: {
         display: 'flex',
@@ -40,25 +36,24 @@ export default styles = StyleSheet.create({
         height: 64,
     },
     streamerImage: {
-        height: heightPercentageToPx(12),
-        width: heightPercentageToPx(12), // We use height to get a circular Image component
+        height: 90,
+        width: 90, // We use height to get a circular Image component
         borderRadius: 100,
         alignSelf: 'center',
-        marginTop: heightPercentageToPx(-6) // Margin with (negative) half of height/width to center the streamerImage with coverImage
+        marginTop: -45, // Margin with (negative) half of height/width to center the streamerImage with coverImage
     },
     smallStreamerImage: {
         height: 65,
         width: 65, // We use height to get a circular Image component
         borderRadius: 100,
         alignSelf: 'center',
-        marginTop: -30 // Margin with (negative) half of height/width to center the streamerImage with coverImage
+        marginTop: -30, // Margin with (negative) half of height/width to center the streamerImage with coverImage
     },
     streamerNameContainer: {
-        height: heightPercentageToPx(3),
         flexDirection: 'row',
         alignSelf: 'center',
         alignItems: 'center',
-        marginTop: 15
+        marginTop: 15,
     },
     streamerName: {
         color: '#FFF',
@@ -76,12 +71,12 @@ export default styles = StyleSheet.create({
         letterSpacing: -0.41
     },
     bio: {
-        height: heightPercentageToPx(10),
         marginTop: 24,
         color: '#FFF',
         fontSize: 16,
         lineHeight: 22,
-        fontWeight: '500'
+        fontWeight: '500',
+        paddingHorizontal: 18,
     },
     viewMore: {
         color: '#3366BB',
@@ -90,17 +85,18 @@ export default styles = StyleSheet.create({
         fontWeight: '500'
     },
     tagsContainer: {
-        height: heightPercentageToPx(3.7) * 2 + 10, // Double the size of the tag + the marginBottom
+        maxHeight: 80,
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignSelf: 'flex-start',
         marginTop: 24,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        paddingHorizontal: 18,
     },
     tags: {
-        height: heightPercentageToPx(3.7),
+        height: 30,
         marginRight: 6,
-        marginBottom: 10
+        marginBottom: 10,
     },
     tagText: {
         color: '#FFF',
@@ -114,7 +110,7 @@ export default styles = StyleSheet.create({
          * Sum of all the heights, margin tops and margin bottoms from the elements inside the card, so the
          * loadingCard has the same height than a normal card
          */
-        height: heightPercentageToPx(13) + heightPercentageToPx(12) + heightPercentageToPx(3) + heightPercentageToPx(10) + (heightPercentageToPx(3.7) * 2 + 10) + heightPercentageToPx(3.7) + 24 + 24 + 15 + heightPercentageToPx(-6) + 10,
+        height: 396,
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',

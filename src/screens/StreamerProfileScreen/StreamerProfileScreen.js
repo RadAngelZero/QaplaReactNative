@@ -304,7 +304,7 @@ class StreamerProfileScreen extends Component {
                 <TouchableWithoutFeedback style={{ flex: 1 }} onPress={this.onOutsidePress}>
                     <ScrollView>
                         <View style={styles.topNav}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('MainBottomNavigator')}>
+                            <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}>
                                 <Images.svg.backIcon />
                             </TouchableOpacity>
                         </View>

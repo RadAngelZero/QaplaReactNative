@@ -12,11 +12,13 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     avatarImage: {
+        marginTop: heightPercentageToPx(4),
         position: 'absolute',
         height: heightPercentageToPx(60),
-        width: widthPercentageToPx(100)
+        width: widthPercentageToPx(100),
     },
     createAvatarBackgroundImage: {
+        marginTop: 32,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -26,20 +28,23 @@ export const styles = StyleSheet.create({
         shadowRadius: 13.16,
         elevation: 20,
         alignSelf: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        height: heightPercentageToPx(30),
-        width: widthPercentageToPx(91),
+        height: 240,
+        width: '100%',
         paddingVertical: 24,
-        justifyContent: 'space-between'
+        borderRadius: 30,
+        paddingHorizontal: 16,
+        marginBottom: 24,
     },
     createAvatarTitle: {
+        transform: [{ scaleX: 1.4 }],
         fontSize: 24,
-        fontWeight: '900',
+        fontWeight: 'bold',
         letterSpacing: -0.41,
         textAlign: 'center',
         color: '#FFF',
-        maxWidth: widthPercentageToPx(50)
+        maxWidth: 150,
     },
     createAvatarButton: {
         borderRadius: 100,
@@ -60,12 +65,12 @@ export const styles = StyleSheet.create({
     },
     editAvatarContainer: {
         // 43 is the desired size, the close icon has a margin top of 32 and a margin bottom of 16
-        height: heightPercentageToPx(43) - 32 - 16
+        height: heightPercentageToPx(43),
     },
     editButton: {
         alignSelf: 'center',
         position: 'absolute',
-        bottom: 32,
+        bottom: 0,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 100,
@@ -84,6 +89,7 @@ export const styles = StyleSheet.create({
         elevation: 8
     },
     scrollView: {
+        marginTop: 32,
         backgroundColor: '#0D1021',
         flex: 1,
         borderTopLeftRadius: widthPercentageToPx(10.66),
@@ -94,8 +100,8 @@ export const styles = StyleSheet.create({
     topContainer: {
         width: '100%',
         flexDirection: 'row',
-        marginTop: heightPercentageToPx(3.94),
-        paddingHorizontal: widthPercentageToPx(6.4),
+        marginTop: 32,
+        paddingHorizontal: 24,
         justifyContent: 'space-between',
     },
     userInfoContainer: {
@@ -103,8 +109,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     userImageContainer: {
-        width: widthPercentageToPx(13.33),
-        height: widthPercentageToPx(13.33),
+        width: 50,
+        height: 50,
         borderRadius: 20.5,
         overflow: 'hidden',
     },
@@ -115,7 +121,7 @@ export const styles = StyleSheet.create({
     },
     userUsername: {
         maxWidth: widthPercentageToPx(26.66),
-        marginLeft: widthPercentageToPx(3.2),
+        marginLeft: 12,
         color: '#fff',
         fontSize: 16,
         fontWeight: '700',
@@ -127,19 +133,19 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'center',
-        paddingHorizontal: widthPercentageToPx(4.26),
-        paddingVertical: heightPercentageToPx(1.1),
+        paddingHorizontal: 16,
+        paddingVertical: 8,
         borderRadius: 50,
     },
     twitchLinkButton: {
         backgroundColor: '#0D1021',
         borderColor: '#8B46FF',
-        borderWidth: widthPercentageToPx(0.08),
+        borderWidth: 3,
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'center',
-        paddingHorizontal: widthPercentageToPx(4.26),
-        paddingVertical: heightPercentageToPx(1.1),
+        paddingHorizontal: 16,
+        paddingVertical: 8,
         borderRadius: 50,
     },
     twitchLinkedText: {
@@ -150,8 +156,8 @@ export const styles = StyleSheet.create({
         lineHeight: 14,
     },
     twitchIcon: {
-        maxWidth: widthPercentageToPx(4.26),
-        maxHeight: widthPercentageToPx(4.26),
+        maxWidth: 16,
+        maxHeight: 16,
     },
     qoinsContainer: {
         width: '100%',

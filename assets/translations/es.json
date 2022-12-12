@@ -774,6 +774,12 @@
         "benefit2": "👽 Avatar animado personalizado para tus reacciones",
         "benefit3": "🌱 Apoya a tus streamers favoritos"
     },
+    "signUpModalUploadContent": {
+        "title": "Sigue compartiendo memes",
+        "benefit1": "⚡️ Usa puntos de canal para enviar memes",
+        "benefit2": "🔥 Mejora tus memes",
+        "benefit3": "📚 Crea tu librería de memes"
+    },
     "streamerCard": {
         "viewMore": "Ver más"
     },
@@ -817,6 +823,7 @@
         },
         "visual": {
             "searchOn": "Buscar en",
+            "searchByTags": "Buscar por tags",
             "tabs": {
                 "trends": "Tendencia"
             }
@@ -929,5 +936,45 @@
         "showUp": "Saluda con estilo 👋",
         "usingAvi": "usando tu avatar animado",
         "popUp": "Saluda en stream"
+    },
+    "uploadContent": {
+        "uploadFile": "Subir Archivo",
+        "uploading": "Subiendo...",
+        "thisWillTakeSomeTime": "Esto puede tomar un minuto.",
+        "uploadScreen": {
+            "title": "Envia tus propios memes en tus reacciones",
+            "subtitle": "Sube un JPEG, PNG menor a 5 MB"
+        },
+        "addTags": {
+            "addTags": "Agrega Etiquetas",
+            "typeToAdd": "Escribe para agregar etiquetas",
+            "suggestions": "Sugerencias",
+            "addedTags": "Etiquetas Agregadas",
+            "makeEasierP1": "Facilita el encontrar un meme agregando",
+            "makeEasierP2": "al menos 1 etiqueta"
+        },
+        "finalCard": {
+            "title": {
+                "0": "Bum. Subido.",
+                "1": "El archivo es muy poderoso",
+                "2": "Tu archivo fue rechazado",
+                "3": "Parece que hubo un problema\nPor favor intenta de nuevo",
+                "4": "Solo JPEG y PNG"
+            },
+            "subtitle": {
+                "0": "Revisaremos tu contenido\nte haremos saber cuando este disponible para usarlo\n\nPuede tomar hasta 24 horas",
+                "1": "El tamaño maximo de archivo es 5MB",
+                "2": "Contenido sexual o violento explicito infringe nuestras normas de la comunidad",
+                "3": "Si el problema persiste intenta de nuevo luego o contacta nuestro soporte en Discord 🙏",
+                "4": "Actualmente solo soportamos imagenes en formato JPEG y PNG"
+            },
+            "buttonText": {
+                "0": "Volver al inicio",
+                "1": "Subir un archivo mas pequeño",
+                "2": "Subir otro archivo",
+                "3": "Intentar de nuevo",
+                "4": "Subir otro archivo"
+            }
+        }
     }
 }

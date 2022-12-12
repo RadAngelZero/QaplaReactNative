@@ -192,4 +192,4 @@ export const VALID_MEMES_TYPES = [
 	'image/png'
 ];
 
-export const ELASTIC_URL = 'https://elastic-qapla-test.es.us-central1.gcp.cloud.es.io';
+export const ELASTIC_URL = 'https://qapla.es.us-central1.gcp.cloud.es.io';

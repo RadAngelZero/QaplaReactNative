@@ -34,13 +34,13 @@ export async function searchMostViewedMemes(from, size) {
                 views: {
                   order: 'desc'
                 },
-                dateAdded: {
+                createdAt: {
                     order: 'desc'
                 }
             }]
         }),
         headers: {
-            Authorization: 'ApiKey QXIzNDg0UUJkWXF3Y2NXZy04M3k6Z1dqTDN4dU1RSkMzZkpzV2RmdEw5UQ==',
+            Authorization: 'ApiKey MTF5UkE0VUJOLXFnczBrdExNOE86ajJ3S21rcDdSU1dNRUxHbkVmZk1GUQ==',
             'Content-Type': 'application/json'
         }
     });
@@ -90,13 +90,13 @@ export async function searchMemesWithTag(tag, from, size) {
                 views: {
                   order: 'desc'
                 },
-                dateAdded: {
+                createdAt: {
                     order: 'desc'
                 }
             }]
         }),
         headers: {
-            Authorization: 'ApiKey QXIzNDg0UUJkWXF3Y2NXZy04M3k6Z1dqTDN4dU1RSkMzZkpzV2RmdEw5UQ==',
+            Authorization: 'ApiKey MTF5UkE0VUJOLXFnczBrdExNOE86ajJ3S21rcDdSU1dNRUxHbkVmZk1GUQ==',
             'Content-Type': 'application/json'
         }
     });
@@ -125,7 +125,7 @@ export async function searchMemesTagsSuggestion(text, size) {
             }
         }),
         headers: {
-            Authorization: 'ApiKey QXIzNDg0UUJkWXF3Y2NXZy04M3k6Z1dqTDN4dU1RSkMzZkpzV2RmdEw5UQ==',
+            Authorization: 'ApiKey MTF5UkE0VUJOLXFnczBrdExNOE86ajJ3S21rcDdSU1dNRUxHbkVmZk1GUQ==',
             'Content-Type': 'application/json'
         }
     });
@@ -149,7 +149,7 @@ export async function updateMemeLastViewed(id) {
             }
         }),
         headers: {
-            Authorization: 'ApiKey QXIzNDg0UUJkWXF3Y2NXZy04M3k6Z1dqTDN4dU1RSkMzZkpzV2RmdEw5UQ==',
+            Authorization: 'ApiKey MTF5UkE0VUJOLXFnczBrdExNOE86ajJ3S21rcDdSU1dNRUxHbkVmZk1GUQ==',
             'Content-Type': 'application/json'
         }
     });

@@ -267,7 +267,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
             alignItems: 'center',
             borderRadius: 100,
           }}>
-            <images.svg.interactionsNumberIcon style={{ transform: [{ scale: 1.5 }] }} />
+            <images.svg.interactionsNumberIcon height={24} width={24} />
           </View>
         </View>
       ),
@@ -281,14 +281,12 @@ const MainBottomTabNavigator = createBottomTabNavigator({
     style: {
       backgroundColor: '#0C1021',
       position: 'absolute',
-      padding: 0,
       paddingHorizontal: '6%',
-      height: 88,
-      paddingBottom: 10,
+      height: heightPercentageToPx(13.30) - 16,
+      paddingBottom: 16,
       margin: 0,
       borderTopColor: 'transparent',
-      alignSelf: 'center',
-      // Blank space is (100% - 84.8%) / 2 = 7.6%, the 16 comes because the star has a margin left of 16
+      // Blank space is (100% - 84.8%) / 2 = 7.6%, the 16 comes because to offset the star's margin
       paddingLeft: widthPercentageToPx(7.6) + 16
     },
     showLabel: false,

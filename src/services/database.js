@@ -2236,14 +2236,16 @@ export async function getModerationKey() {
  * @param {number} height Height of image
  * @param {string} mediaType Type of media ('image' is only value valid for now)
  * @param {Array<string>} tags Tags of the image
+ * @param {string} userLanguage User language
  */
-export async function saveMemeModerationRequest(requestId, uid, imageUrl, width, height, mediaType, tags) {
+export async function saveMemeModerationRequest(requestId, uid, imageUrl, width, height, mediaType, tags, userLanguage) {
     return memesModerationRef.child(requestId).set({
         uid,
         imageUrl,
         width,
         height,
         mediaType,
-        tags
+        tags,
+        userLanguage
     });
 }

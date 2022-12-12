@@ -774,6 +774,12 @@
         "benefit2": "👽 Avatar animado personalizado para tus reacciones",
         "benefit3": "🌱 Apoya a tus streamers favoritos"
     },
+    "signUpModalUploadContent": {
+        "title": "Sigue compartiendo memes",
+        "benefit1": "⚡️ Usa puntos de canal para enviar memes",
+        "benefit2": "🔥 Mejora tus memes",
+        "benefit3": "📚 Crea tu librería de memes"
+    },
     "streamerCard": {
         "viewMore": "Ver más"
     },

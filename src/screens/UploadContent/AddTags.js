@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, FlatList, Image, Keyboard, Modal, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { connect } from 'react-redux';
 
-import { translate } from '../../utilities/i18';
+import { getLocaleLanguage, translate } from '../../utilities/i18';
 import styles from './style';
 import images from '../../../assets/images';
 import Chip from '../../components/Chip/Chip';
 import { uploadMemeToModeration } from '../../services/storage';
 import { getModerationKey, saveMemeModerationRequest } from '../../services/database';
 import { imageContentModeration } from '../../services/functions';
-import { launchImageLibrary } from 'react-native-image-picker';
 import { VALID_MEMES_TYPES } from '../../utilities/Constants';
 import { searchMemesTagsSuggestion } from '../../services/elastic';
+import { retrieveData, storeData } from '../../utilities/persistance';
+import SignUpModal from '../../components/SignUpModal/SignUpModal';
 
 class AddTags extends Component {
     state = {
@@ -28,12 +31,13 @@ class AddTags extends Component {
         imageWidth: 1,
         imageHeight: 1,
         imageType: '',
-        fileSize: 0
+        fileSize: 0,
+        openSignUpModal: false
     };
     tagsInputRef = null;
 
     componentDidMount() {
-        this.getImage();
+        this.validateUserIsAuthenticated();
 
         this.keyboardDidShowSubscription = Keyboard.addListener(
             'keyboardDidShow',
@@ -48,6 +52,15 @@ class AddTags extends Component {
 
     componentWillUnmount() {
         this.keyboardDidShowSubscription.remove();
+    }
+
+    validateUserIsAuthenticated = async () => {
+        const hasUploadImage = await retrieveData('firstImageUploaded');
+        if (this.props.uid || !hasUploadImage) {
+            this.getImage();
+        } else {
+            this.setState({ openSignUpModal: true });
+        }
     }
 
     getImage = async () => {
@@ -152,6 +165,7 @@ class AddTags extends Component {
                         tags = tags.concat(imageAnalysisResultTags);
                     }
 
+                    const userLanguage = getLocaleLanguage();
                     await saveMemeModerationRequest(
                         moderationRequestKey,
                         this.props.uid,
@@ -159,7 +173,8 @@ class AddTags extends Component {
                         this.state.imageWidth,
                         this.state.imageHeight,
                         this.state.imageType,
-                        tags
+                        tags,
+                        userLanguage
                     );
 
                     this.setState({
@@ -167,6 +182,11 @@ class AddTags extends Component {
                         uploadStatusModalOpen: true,
                         uploadStatus: 0 // 0 = ok | 1 = file size | 2 = rejected | 3 = error
                     });
+
+                    const hasUploadImage = await retrieveData('firstImageUploaded');
+                    if (!hasUploadImage) {
+                        await storeData('firstImageUploaded', 'true');
+                    }
                 } else {
                     this.setState({
                         uploadingModalOpen: false,
@@ -183,6 +203,7 @@ class AddTags extends Component {
                 });
             }
         } catch (error) {
+            console.log(error);
             this.setState({
                 uploadingModalOpen: false,
                 uploadStatusModalOpen: true,
@@ -204,14 +225,33 @@ class AddTags extends Component {
         return this.props.navigation.navigate('Upload');
     }
 
-    handleFinalCardButton = () => {
+    handleFinalCardButton = async () => {
         this.setState({ uploadingModalOpen: false, uploadStatusModalOpen: false });
 
         if (this.state.uploadStatus === 0) {
+            if (!this.props.uid) {
+
+                return this.setState({ openSignUpModal: true });
+            }
+
             return this.props.navigation.navigate('Explore');
         }
 
         return this.props.navigation.navigate('Upload');
+    }
+
+    onSignUpDismiss = () => {
+        this.setState({ openSignUpModal: false });
+        this.props.navigation.dismiss();
+    }
+
+    onSignUpSuccess = () => {
+        this.setState({ openSignUpModal: false });
+        if (this.state.tags.length > 0) {
+            this.props.navigation.dismiss();
+        } else {
+            this.getImage();
+        }
     }
 
     renderChip = ({ item, index }) => (
@@ -220,7 +260,7 @@ class AddTags extends Component {
             last={index === (this.state.tagInput === '' ? this.state.tags.length - 1 : this.state.suggestTags.length - 1)}
             active={this.state.tagInput === '' || index === 0}
             onPress={(e) => this.handleTagPress(item, index)} />
-    )
+    );
 
     render() {
         return (
@@ -398,11 +438,25 @@ class AddTags extends Component {
                     </View>
                 </Modal>
             </SafeAreaView>
+            <SignUpModal open={this.state.openSignUpModal}
+                    onClose={this.onSignUpDismiss}
+                    title={translate('signUpModalUploadContent.title')}
+                    benefits={[
+                        translate('signUpModalUploadContent.benefit1'),
+                        translate('signUpModalUploadContent.benefit2'),
+                        translate('signUpModalUploadContent.benefit3')
+                    ]}
+                    onSignUpSuccess={this.onSignUpSuccess} />
             <SafeAreaView style={{ flex: 0, backgroundColor: '#141539' }} />
             </>
         );
     }
-
 }
 
-export default AddTags;
+function mapStateToProps(state) {
+    return {
+        uid: state.userReducer.user.id
+    };
+}
+
+export default connect(mapStateToProps)(AddTags);

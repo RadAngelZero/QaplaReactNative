@@ -4,7 +4,7 @@ import { storage } from '../utilities/firebase';
 export const storageLogrosImgRef = storage.ref('/facebook_likes');
 export const verifiedUserImgRef = storage.ref('/verified_user_photos');
 export const profileUserImgRef = storage.ref('/profileUser/img');
-export const moderationImgRef = storage.ref('/MemesModeration');
+export const moderationImgRef = storage.ref('/Memes');
 
 /**
  * @description 

@@ -15,6 +15,7 @@ import { VALID_MEMES_TYPES } from '../../utilities/Constants';
 import { searchMemesTagsSuggestion } from '../../services/elastic';
 import { retrieveData, storeData } from '../../utilities/persistance';
 import SignUpModal from '../../components/SignUpModal/SignUpModal';
+import { trackOnSegment } from '../../services/statistics';
 
 class AddTags extends Component {
     state = {
@@ -152,6 +153,13 @@ class AddTags extends Component {
 
     uploadHandle = async () => {
         this.setState({ uploadingModalOpen: true });
+        const hasUploadImage = await retrieveData('firstImageUploaded');
+
+        trackOnSegment('Meme uploaded by user', {
+            FirstImage: Boolean(hasUploadImage).valueOf(),
+            MediaType: this.state.imageType
+        });
+
         try {
             const moderationRequestKey = await getModerationKey();
             const image = await uploadMemeToModeration(moderationRequestKey, this.state.imagePath);
@@ -183,15 +191,26 @@ class AddTags extends Component {
                         uploadStatus: 0 // 0 = ok | 1 = file size | 2 = rejected | 3 = error
                     });
 
-                    const hasUploadImage = await retrieveData('firstImageUploaded');
                     if (!hasUploadImage) {
                         await storeData('firstImageUploaded', 'true');
                     }
+
+                    trackOnSegment('Meme send to moderation', {
+                        Url: image.downloadURL,
+                        FirstImage: Boolean(hasUploadImage).valueOf(),
+                        MediaType: this.state.imageType,
+                    });
                 } else {
                     this.setState({
                         uploadingModalOpen: false,
                         uploadStatusModalOpen: true,
                         uploadStatus: 2 // 0 = ok | 1 = file size | 2 = rejected | 3 = error
+                    });
+
+                    trackOnSegment('Meme rejected for content', {
+                        FirstImage: Boolean(hasUploadImage).valueOf(),
+                        MediaType: this.state.imageType,
+                        Reason: imageAnalysisResult.data ? imageAnalysisResult.data.reason : ''
                     });
                 }
 

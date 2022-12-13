@@ -23,6 +23,7 @@ export default styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         paddingHorizontal: widthPercentageToPx(1.6),
+        marginTop: 16
     },
     gridMemeSubContainer: {
         paddingTop: heightPercentageToPx(1.6),
@@ -70,11 +71,5 @@ export default styles = StyleSheet.create({
         textAlignVertical: 'center',
         paddingVertical: 8,
         marginLeft: 8,
-    },
-    gridPoweredbyGiphy: {
-        flex: 1,
-        width: widthPercentageToPx(25.5),
-        maxWidth: widthPercentageToPx(25.5),
-        height: heightPercentageToPx(1.23),
-    },
+    }
 });

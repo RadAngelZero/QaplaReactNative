@@ -126,7 +126,11 @@ class TweetReactionControllerScreen extends Component {
                 this.setState({ reactionLevel: parseInt(lastReactionLevel) });
 
                 const openMemeModal = this.props.navigation.getParam('openMemeModal', false);
-                this.setState({ openMemeModal });
+                /**
+                 * This data comes from a push notification, openMemeModal can be "true" (string),
+                 * so we need to convert it to boolean
+                 */
+                this.setState({ openMemeModal: Boolean(openMemeModal).valueOf() });
             } else {
                 this.setState({ openReactionLevelModal: true });
             }

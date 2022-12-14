@@ -66,6 +66,7 @@ const usersGreetingsRef = database.ref('/UsersGreetings');
 const streamsGreetingsRef = database.ref('/StreamsGreetings');
 const gifsLibrariesRef = database.ref('/GifsLibraries');
 const reactionsPricesRef = database.ref('/ReactionsPrices');
+const reactionsPricesDefaultRef = database.ref('/ReactionsPricesDefault');
 const memesModerationRef = database.ref('/MemesModeration');
 
 /**
@@ -2214,6 +2215,17 @@ export async function getRandomGifByLibrary(libraryName) {
  */
 export async function getStreamerReactionPrice(streamerUid, reactionLevel) {
     return await reactionsPricesRef.child(streamerUid).child(reactionLevel).once('value');
+}
+
+// -----------------------------------------------
+// Reactions Prices Default
+// -----------------------------------------------
+/**
+ * Gets the default price (in Qoins) of the given reaction level
+ * @param {string} reactionLevel Name of reaction level
+ */
+export async function getReactionPriceDefault(reactionLevel) {
+    return await reactionsPricesDefaultRef.child(reactionLevel).child('qoins').once('value');
 }
 
 // -----------------------------------------------

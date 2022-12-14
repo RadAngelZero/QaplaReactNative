@@ -8,6 +8,7 @@ import { AVATAR, defaultUserImages, EMOTE, GIPHY_GIFS, GIPHY_STICKERS, GIPHY_TEX
 import GiphyMediaSelectorModal from '../../components/GiphyMediaSelectorModal/GiphyMediaSelectorModal';
 import QaplaMemeSelectorModal from '../../components/QaplaMemeSelectorModal/QaplaMemeSelectorModal';
 import {
+    getReactionPriceDefault,
     getRecentStreamersDonations,
     getStreamerPublicData,
     getStreamerReactionPrice,
@@ -214,7 +215,14 @@ class TweetReactionControllerScreen extends Component {
         let disableExtraTip = false;
         for (let i = 2; i <= 3; i++) {
             const costSnapshot = await getStreamerReactionPrice(this.state.streamerData.streamerUid, `level${i}`);
-            const cost = costSnapshot.val() ?? (i === 2 ? 500 : 800);
+            let cost = null;
+            if (costSnapshot.exists()) {
+                cost = costSnapshot.val();
+            } else {
+                const defaultCost = await getReactionPriceDefault(`level${i}`);
+                cost = defaultCost.val();
+            }
+
             if (this.props.uid) {
                 if (!this.state.freeReactionsSent) {
                     const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid);

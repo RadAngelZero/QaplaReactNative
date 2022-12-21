@@ -568,6 +568,24 @@ class TweetReactionControllerScreen extends Component {
         if (!tutorialDone) {
             this.setState({ tutorialDone: false });
         }
+
+        switch (reactionLevel) {
+            case 1:
+                this.setState({
+                    custom3DText: null,
+                    selectedVoiceBot: null,
+                    avatarReaction: null,
+                    selectedEmote: null
+                });
+                break;
+            case 2:
+                this.setState({
+                    selectedEmote: null
+                });
+                break;
+            default:
+                break;
+        }
     }
 
     onClosingTutorial = () => {

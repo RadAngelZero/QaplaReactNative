@@ -14,10 +14,7 @@ const MEMES_TO_FETCH = 25;
 class QaplaMemeSelectorModal extends Component {
     state = {
         searchQuery: '',
-        gifSection: 1,
-        media: [],
-        cursor: '',
-        fetchingMostViewedMemes: true
+        media: []
     };
     searchTimeout = null;
 

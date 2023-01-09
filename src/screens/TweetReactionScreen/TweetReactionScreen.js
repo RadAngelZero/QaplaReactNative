@@ -693,7 +693,7 @@ class TweetReactionScreen extends Component {
                                                                 :
                                                                 <MaskedView maskElement={
                                                                     <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, fontWeight: '700' }]}>
-                                                                        {this.props.currentReactioncost}
+                                                                        {this.props.currentReactioncost.toLocaleString()}
                                                                     </Text>
                                                                 }>
                                                                     <LinearGradient
@@ -702,7 +702,7 @@ class TweetReactionScreen extends Component {
                                                                         angle={227}>
                                                                         <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, fontWeight: '700', opacity: 0 }
                                                                         ]}>
-                                                                            {this.props.currentReactioncost}
+                                                                            {this.props.currentReactioncost.toLocaleString()}
                                                                         </Text>
                                                                     </LinearGradient>
                                                                 </MaskedView>
@@ -716,7 +716,7 @@ class TweetReactionScreen extends Component {
                                                         <images.svg.zap height={16} width={16}  />
                                                         <Text style={styles.costText}>
                                                             {this.props.numberOfReactions !== undefined ?
-                                                                translate('tweetReactionScreen.numberOfReactions', { numberOfReactions: this.props.numberOfReactions.toLocaleString() })
+                                                                translate('tweetReactionScreen.zaps', { numberOfReactions: this.props.currentReactioncost.toLocaleString() })
                                                                 :
                                                                 null
                                                             }

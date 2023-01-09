@@ -1,16 +1,39 @@
 import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import images from '../../../assets/images';
 
+import images from '../../../assets/images';
 import styles from './style';
 import ModalWithOverlay from '../ModalWithOverlay/ModalWithOverlay';
 import { translate } from '../../utilities/i18';
+import { QOIN } from '../../utilities/Constants';
 
 class NoReactionsModal extends Component {
+    state = {
+        upgradeCost: null
+    };
+
+    getUpgradeCost = () => {
+        if (this.props.currentLevel !== 3) {
+            if (this.props.costs[0] && this.props.costs[1] && this.props.costs[2]) {
+                this.props.costs.some(({ type, cost }, index) => {
+                    if ((index + 1) > this.props.currentLevel && type === QOIN) {
+                        this.setState({ upgradeCost: cost });
+                        return true;
+                    }
+
+                    return false;
+                });
+            }
+        } else {
+            this.setState({ upgradeCost: null });
+        }
+    }
+
     render() {
         return (
             <ModalWithOverlay open={this.props.open}
-                onClose={this.props.onClose}>
+                onClose={this.props.onClose}
+                onShow={this.getUpgradeCost}>
                 <View style={styles.contentContainer}>
                     <Image source={images.png.channelPoints.img} />
                     <Text style={styles.title}>
@@ -33,7 +56,7 @@ class NoReactionsModal extends Component {
                                 {translate('noReactionsModal.upgradeFor')}
                             </Text>
                             <Text style={[styles.upgradeButtonText, { color: '#00FFDD' }]}>
-                                {this.props.upgradeCost}
+                                {this.state.upgradeCost}
                             </Text>
                             <images.svg.qoin height={16} width={16} />
                         </TouchableOpacity>

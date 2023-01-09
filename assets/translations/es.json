@@ -483,7 +483,7 @@
         "upgradeTooltipP2": "subir o bajar de nivel ",
         "upgradeTooltipP3": "tu reacción aquí 👇",
         "free": "Gratis",
-        "numberOfReactions": "%{numberOfReactions} Reacciones",
+        "zaps": "%{numberOfReactions} Zaps",
         "youCanOnlyUseOne": "😯 Solo puedes usar uno",
         "upgradeToUse": "👀 Sube de nivel tu tu reacción para usar ",
         "noTip": "No Tip",

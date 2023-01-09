@@ -193,3 +193,6 @@ export const VALID_MEMES_TYPES = [
 ];
 
 export const ELASTIC_URL = 'https://qapla.es.us-central1.gcp.cloud.es.io';
+
+export const ZAP = 'zap';
+export const QOIN = 'qoin';

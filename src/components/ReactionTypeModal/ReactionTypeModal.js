@@ -7,6 +7,7 @@ import styles from './style';
 import images from './../../../assets/images';
 import { getRandomGifByLibrary } from '../../services/database';
 import { translate } from '../../utilities/i18';
+import { ZAP } from '../../utilities/Constants';
 
 class ReactionTypeModal extends Component {
     state = {
@@ -86,21 +87,37 @@ class ReactionTypeModal extends Component {
                                 </View>
                                 <View style={styles.priceContainer}>
                                     <View style={styles.price}>
-                                        <images.svg.zap height={16} width={16} />
-                                        <MaskedView maskElement={
-                                            <Text style={styles.priceNumber}>
-                                                1
-                                            </Text>
-                                        }>
-                                            <LinearGradient
-                                                colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
-                                                useAngle
-                                                angle={227}>
-                                                <Text style={[styles.priceNumber, { opacity: 0 }]}>
-                                                    1
+                                        {this.props.costs[0] !== undefined &&
+                                            <>
+                                            {this.props.costs[0].type === ZAP ?
+                                                <images.svg.zap height={16} width={16} />
+                                                :
+                                                <images.svg.qoin height={24} width={24} />
+                                            }
+                                            <MaskedView maskElement={
+                                                <Text style={styles.priceNumber}>
+                                                    {this.props.costs[0] ?
+                                                        this.props.costs[0].cost.toLocaleString()
+                                                        :
+                                                        translate('reactionTypeModal.free')
+                                                    }
                                                 </Text>
-                                            </LinearGradient>
-                                        </MaskedView>
+                                            }>
+                                                <LinearGradient
+                                                    colors={['#FFD4FB', '#F5FFCB', '#82FFD2']}
+                                                    useAngle
+                                                    angle={227}>
+                                                    <Text style={[styles.priceNumber, { opacity: 0 }]}>
+                                                        {this.props.costs[0] ?
+                                                            this.props.costs[0].cost.toLocaleString()
+                                                            :
+                                                            translate('reactionTypeModal.free')
+                                                        }
+                                                    </Text>
+                                                </LinearGradient>
+                                            </MaskedView>
+                                            </>
+                                        }
                                     </View>
                                 </View>
                                 </ImageBackground>
@@ -127,12 +144,17 @@ class ReactionTypeModal extends Component {
                                     </View>
                                     <View style={styles.priceContainer}>
                                         <View style={styles.price}>
-                                            <images.svg.qoin height={24} width={24} />
                                             {this.props.costs[1] !== undefined &&
+                                                <>
+                                                {this.props.costs[1].type === ZAP ?
+                                                    <images.svg.zap height={16} width={16} />
+                                                    :
+                                                    <images.svg.qoin height={24} width={24} />
+                                                }
                                                 <MaskedView maskElement={
                                                     <Text style={styles.priceNumber}>
                                                         {this.props.costs[1] ?
-                                                            this.props.costs[1]
+                                                            this.props.costs[1].cost.toLocaleString()
                                                             :
                                                             translate('reactionTypeModal.free')
                                                         }
@@ -144,13 +166,14 @@ class ReactionTypeModal extends Component {
                                                         angle={227}>
                                                         <Text style={[styles.priceNumber, { opacity: 0 }]}>
                                                             {this.props.costs[1] ?
-                                                                this.props.costs[1]
+                                                                this.props.costs[1].cost.toLocaleString()
                                                                 :
                                                                 translate('reactionTypeModal.free')
                                                             }
                                                         </Text>
                                                     </LinearGradient>
                                                 </MaskedView>
+                                                </>
                                             }
                                         </View>
                                     </View>
@@ -179,12 +202,17 @@ class ReactionTypeModal extends Component {
                                 </View>
                                 <View style={styles.priceContainer}>
                                     <View style={styles.price}>
-                                        <images.svg.qoin height={24} width={24} />
                                         {this.props.costs[2] !== undefined &&
+                                            <>
+                                            {this.props.costs[2].type === ZAP ?
+                                                <images.svg.zap height={16} width={16} />
+                                                :
+                                                <images.svg.qoin height={24} width={24} />
+                                            }
                                             <MaskedView maskElement={
                                                 <Text style={styles.priceNumber}>
                                                     {this.props.costs[2] ?
-                                                        this.props.costs[2]
+                                                        this.props.costs[2].cost.toLocaleString()
                                                         :
                                                         translate('reactionTypeModal.free')
                                                     }
@@ -196,13 +224,14 @@ class ReactionTypeModal extends Component {
                                                     angle={227}>
                                                     <Text style={[styles.priceNumber, { opacity: 0 }]}>
                                                         {this.props.costs[2] ?
-                                                            this.props.costs[2]
+                                                            this.props.costs[2].cost.toLocaleString()
                                                             :
                                                             translate('reactionTypeModal.free')
                                                         }
                                                     </Text>
                                                 </LinearGradient>
                                             </MaskedView>
+                                            </>
                                         }
                                     </View>
                                 </View>

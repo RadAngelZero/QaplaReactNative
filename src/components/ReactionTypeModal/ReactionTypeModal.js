@@ -86,7 +86,7 @@ class ReactionTypeModal extends Component {
                                 </View>
                                 <View style={styles.priceContainer}>
                                     <View style={styles.price}>
-                                        <images.svg.interactionsNumberIcon height={16} width={16} />
+                                        <images.svg.zap height={16} width={16} />
                                         <MaskedView maskElement={
                                             <Text style={styles.priceNumber}>
                                                 1

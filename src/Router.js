@@ -267,7 +267,7 @@ const MainBottomTabNavigator = createBottomTabNavigator({
             alignItems: 'center',
             borderRadius: 100,
           }}>
-            <images.svg.interactionsNumberIcon height={24} width={24} />
+            <images.svg.zap height={24} width={24} />
           </View>
         </View>
       ),

@@ -114,7 +114,7 @@ import PlusIcon from './icons/PlusIcon.svg';
 import Interactions from './icons/interactions.svg';
 import DeleteIcon from './icons/Delete.svg';
 import EditQreatorCodeIcon from './icons/EditQreatorCode.svg';
-import InteractionsNumberIcon from './icons/interactionsNumber.svg';
+import Zap from './icons/Zap.svg';
 import UserProfile from './icons/UserProfile.svg';
 import Lock from './icons/Lock.svg';
 import VideoCamera from './icons/videoCamera.svg';
@@ -400,7 +400,7 @@ const images = {
 		plusIcon: PlusIcon,
 		deleteIcon: DeleteIcon,
 		editQreatorCodeIcon: EditQreatorCodeIcon,
-		interactionsNumberIcon: InteractionsNumberIcon,
+		zap: Zap,
 		userProfile: UserProfile,
 		lock: Lock,
 		videoCamera: VideoCamera,

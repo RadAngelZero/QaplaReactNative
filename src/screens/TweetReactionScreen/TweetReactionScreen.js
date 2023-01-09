@@ -713,7 +713,7 @@ class TweetReactionScreen extends Component {
                                                             </>
                                                     :
                                                         <>
-                                                        <images.svg.interactionsNumberIcon height={16} width={16}  />
+                                                        <images.svg.zap height={16} width={16}  />
                                                         <Text style={styles.costText}>
                                                             {this.props.numberOfReactions !== undefined ?
                                                                 translate('tweetReactionScreen.numberOfReactions', { numberOfReactions: this.props.numberOfReactions.toLocaleString() })

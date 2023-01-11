@@ -1701,6 +1701,14 @@ export async function getStreamerPublicData(streamerId) {
 }
 
 /**
+ * Only returns the value of the premium field from the streamer public data
+ * @param {string} streamerId Streamer identifier
+ */
+export async function isStreamerPremium(streamerId) {
+    return await userStreamerPublicDataRef.child(streamerId).child('premium').once('value');
+}
+
+/**
  * Looks for streamers on the database based in their name or part of their name
  * @param {string} searchQuery Part of the name to search for on the database
  */
@@ -2225,12 +2233,38 @@ export async function getStreamerReactionPrice(streamerUid, reactionLevel) {
 // -----------------------------------------------
 // Reactions Prices Default
 // -----------------------------------------------
+
 /**
  * Gets the default price (in Qoins) of the given reaction level
  * @param {string} reactionLevel Name of reaction level
  */
 export async function getReactionPriceDefault(reactionLevel) {
     return await reactionsPricesLevelsDefaultsRef.child(reactionLevel).once('value');
+}
+
+// -----------------------------------------------
+// Reactions Prices Levels Subs
+// -----------------------------------------------
+
+/**
+ * Gets the price (in Qoins) of the given reaction level for subs
+ * @param {string} streamerUid Streamer identifier
+ * @param {string} reactionLevel Name of reaction level
+ */
+export async function getStreamerReactionPriceForSubs(streamerUid, reactionLevel) {
+    return await reactionsPricesLevelsSubsRef.child(streamerUid).child(reactionLevel).once('value');
+}
+
+// -----------------------------------------------
+// Reactions Prices Levels Subs Defaults
+// -----------------------------------------------
+
+/**
+ * Gets the default price (in Qoins) of the given reaction level for subs
+ * @param {string} reactionLevel Name of reaction level
+ */
+export async function getReactionPriceDefaultForSubs(reactionLevel) {
+    return await reactionsPricesLevelsSubsDefaultsRef.child(reactionLevel).once('value');
 }
 
 // -----------------------------------------------

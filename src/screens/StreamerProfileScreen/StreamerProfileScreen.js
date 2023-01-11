@@ -7,7 +7,7 @@ import Images from '../../../assets/images';
 import EventDetailsModal from '../../components/EventDetailsModal/EventDetailsModal';
 import QaplaChip from '../../components/QaplaChip/QaplaChip';
 import SocialLinkContainedButton from '../../components/SocialLinkContainedButton/SocialLinkContainedButton';
-import { getStreamerPublicProfile, getStreamerSocialLinks, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile } from '../../services/database';
+import { getStreamerPublicProfile, getStreamerSocialLinks, isStreamerPremium, subscribeUserToStreamerProfile, unsubscribeUserToStreamerProfile } from '../../services/database';
 import { getStreamerProfilePhotoUrl } from '../../services/storage';
 import { copyDataToClipboard } from '../../utilities/utils';
 import { getLocaleLanguage, translate } from './../../utilities/i18';
@@ -275,10 +275,12 @@ class StreamerProfileScreen extends Component {
 
     onInteractionShorcut = async () => {
         const { streamerId, displayName, photoUrl } = this.state.streamerData;
+        const premium = await isStreamerPremium(streamerId);
         this.props.navigation.navigate('TweetReactionScreen', {
             streamerUid: streamerId,
             streamerName: displayName,
-            streamerImage: photoUrl
+            streamerImage: photoUrl,
+            premium: premium.exists() ? premium.val() : false
         });
 
         trackOnSegment('Streamer Selected To Send Interaction From Streamer Profile', {

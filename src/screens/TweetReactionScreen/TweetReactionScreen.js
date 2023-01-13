@@ -34,7 +34,9 @@ import {
     GIPHY_STICKERS,
     GIPHY_TEXT,
     MEME,
-    TTS
+    QOIN,
+    TTS,
+    ZAP
 } from '../../utilities/Constants';
 import { widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { getStreamerProfilePhotoUrl } from '../../services/storage';
@@ -112,7 +114,7 @@ const excludingOptions = {
  * We have two modals here because a limitation with tooltip, the next props are just for one of those modals
  * label, highlightedText, cost, mediaTooltipOffset, buttonText, buttonAction
  */
-const MediaOptionTooltip = ({ children, open, onClose, label, highlightedText, cost, mediaTooltipOffset, buttonText, buttonAction, extraTipTooltip }) => {
+const MediaOptionTooltip = ({ children, open, onClose, label, highlightedText, cost, upgradeType, mediaTooltipOffset, buttonText, buttonAction, extraTipTooltip }) => {
     if (!extraTipTooltip) {
         return (
             <Tooltip showChildInTooltip={false}
@@ -141,7 +143,11 @@ const MediaOptionTooltip = ({ children, open, onClose, label, highlightedText, c
                                 <Text style={[styles.tooltipLabelText, styles.tooltipHighlihgtedText, { marginLeft: 8, marginRight: 4 }]}>
                                     {cost}
                                 </Text>
-                                <images.svg.qoin height={16} width={16} />
+                                {upgradeType === QOIN ?
+                                    <images.svg.qoin height={16} width={16} />
+                                    :
+                                    <images.svg.zap height={16} width={16} />
+                                }
                                 </>
                             }
                             <images.svg.rightArrow height={16} width={8.8} style={{ marginLeft: 8 }} />
@@ -399,7 +405,7 @@ class TweetReactionScreen extends Component {
         const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${this.state.imageVersion}`;
         const noEnabledOptions = allMediaOptionsTypes.filter((type) => !this.props.mediaSelectorBarOptions.includes(type));
 
-        const sendButtonDisabled = (!this.props.message && !this.props.selectedMedia) || this.props.currentReactioncost === undefined || this.props.sending;
+        const sendButtonDisabled = (!this.props.message && !this.props.selectedMedia) || this.props.currentReactionCost === undefined || this.props.sending;
 
         let pills = [
             this.props.voiceBot,
@@ -674,8 +680,8 @@ class TweetReactionScreen extends Component {
                                                     {this.props.qoins ?
                                                             <>
                                                             <images.svg.qoin height={16} width={16} />
-                                                            {this.props.currentReactioncost !== undefined ?
-                                                                this.props.currentReactioncost === 0 ?
+                                                            {this.props.currentReactionCost !== undefined ?
+                                                                this.props.currentReactionCost === 0 ?
                                                                     <MaskedView maskElement={
                                                                         <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, fontWeight: '700' }]}>
                                                                             {translate('tweetReactionScreen.free')}
@@ -693,7 +699,7 @@ class TweetReactionScreen extends Component {
                                                                 :
                                                                 <MaskedView maskElement={
                                                                     <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, fontWeight: '700' }]}>
-                                                                        {this.props.currentReactioncost}
+                                                                        {this.props.currentReactionCost.toLocaleString()}
                                                                     </Text>
                                                                 }>
                                                                     <LinearGradient
@@ -702,7 +708,7 @@ class TweetReactionScreen extends Component {
                                                                         angle={227}>
                                                                         <Text style={[styles.costText, { marginLeft: 8, marginRight: 4, fontWeight: '700', opacity: 0 }
                                                                         ]}>
-                                                                            {this.props.currentReactioncost}
+                                                                            {this.props.currentReactionCost.toLocaleString()}
                                                                         </Text>
                                                                     </LinearGradient>
                                                                 </MaskedView>
@@ -713,10 +719,10 @@ class TweetReactionScreen extends Component {
                                                             </>
                                                     :
                                                         <>
-                                                        <images.svg.interactionsNumberIcon height={16} width={16}  />
+                                                        <images.svg.zap height={16} width={16}  />
                                                         <Text style={styles.costText}>
-                                                            {this.props.numberOfReactions !== undefined ?
-                                                                translate('tweetReactionScreen.numberOfReactions', { numberOfReactions: this.props.numberOfReactions.toLocaleString() })
+                                                            {this.props.currentReactionCost !== undefined ?
+                                                                translate('tweetReactionScreen.zaps', { zapsCost: this.props.currentReactionCost.toLocaleString() })
                                                                 :
                                                                 null
                                                             }
@@ -760,12 +766,12 @@ class TweetReactionScreen extends Component {
                         </Tooltip>
                         <MediaOptionTooltip open={this.state.openMediaTooltip || this.state.openExtraTipTooltip}
                             highlightedText={excluded ? excludedString : this.state.selectedTooltipType ? mediaOptionsData[this.state.selectedTooltipType].label : ''}
-                            // label={excluded ? '' : ''}
                             label={excluded ? translate('tweetReactionScreen.youCanOnlyUseOne') : translate('tweetReactionScreen.upgradeToUse')}
                             buttonText={excluded ? `Use ${this.state.selectedTooltipType ? mediaOptionsData[this.state.selectedTooltipType].label : ''}` : 'Upgrade Reaction'}
                             buttonAction={this.buttonAction}
                             onClose={() => this.setState({ openMediaTooltip: false, openExtraTipTooltip: false })}
-                            cost={this.state.selectedTooltipType ? this.props.costsPerReactionLevel[mediaOptionsData[this.state.selectedTooltipType].level - 1] : 0}
+                            cost={(this.state.selectedTooltipType && this.props.costsPerReactionLevel[mediaOptionsData[this.state.selectedTooltipType].level - 1]) ? this.props.costsPerReactionLevel[mediaOptionsData[this.state.selectedTooltipType].level - 1].cost : 0}
+                            upgradeType={(this.state.selectedTooltipType && this.props.costsPerReactionLevel[mediaOptionsData[this.state.selectedTooltipType].level - 1]) ? this.props.costsPerReactionLevel[mediaOptionsData[this.state.selectedTooltipType].level - 1].type : QOIN}
                             mediaTooltipOffset={this.state.mediaTooltipOffset}
                             extraTipTooltip={this.state.openExtraTipTooltip}>
                             <View style={styles.mediaSelector}>
@@ -861,8 +867,11 @@ class TweetReactionScreen extends Component {
 
 TweetReactionScreen.propTypes = {
     qoins: PropTypes.bool,
-    currentReactioncost: PropTypes.number,
-    costsPerReactionLevel: PropTypes.arrayOf(PropTypes.number),
+    currentReactionCost: PropTypes.number,
+    costsPerReactionLevel: PropTypes.arrayOf(PropTypes.shape({
+        cost: PropTypes.number,
+        type: PropTypes.oneOf([ZAP, QOIN])
+    })),
     numberOfReactions: PropTypes.number,
     message: PropTypes.string,
     selectedMedia: PropTypes.shape({

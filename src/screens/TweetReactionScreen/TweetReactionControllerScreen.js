@@ -4,14 +4,26 @@ import { connect } from 'react-redux';
 
 import TweetReactionScreen from './TweetReactionScreen';
 import { getStreamerEmotes, getUserToStreamerRelationData } from '../../services/functions';
-import { AVATAR, defaultUserImages, EMOTE, GIPHY_GIFS, GIPHY_STICKERS, GIPHY_TEXT, MEME, TTS } from '../../utilities/Constants';
+import {
+    AVATAR,
+    defaultUserImages,
+    EMOTE,
+    GIPHY_GIFS,
+    GIPHY_STICKERS,
+    GIPHY_TEXT,
+    MEME,
+    QOIN,
+    TTS
+} from '../../utilities/Constants';
 import GiphyMediaSelectorModal from '../../components/GiphyMediaSelectorModal/GiphyMediaSelectorModal';
 import QaplaMemeSelectorModal from '../../components/QaplaMemeSelectorModal/QaplaMemeSelectorModal';
 import {
     getReactionPriceDefault,
+    getReactionPriceDefaultForSubs,
     getRecentStreamersDonations,
     getStreamerPublicData,
     getStreamerReactionPrice,
+    getStreamerReactionPriceForSubs,
     getStreamerStreamingStatus,
     isUserBannedWithStreamer,
     listenToUserReactionsCount,
@@ -55,7 +67,8 @@ class TweetReactionControllerScreen extends Component {
         streamerData: {
             streamerUid: '',
             streamerImage: '',
-            streamerName: ''
+            streamerName: '',
+            premium: false
         },
         openSearchStreamerModal: false,
         openAvatarModal: false,
@@ -65,7 +78,12 @@ class TweetReactionControllerScreen extends Component {
         openBotVoiceModal: false,
         selectedVoiceBot: null,
         costs: [
-            0,
+            undefined,
+            undefined,
+            undefined
+        ],
+        subscribersCosts: [
+            undefined,
             undefined,
             undefined
         ],
@@ -144,11 +162,14 @@ class TweetReactionControllerScreen extends Component {
         if (streamerUid) {
             const streamerImage = this.props.navigation.getParam('streamerImage', '');
             const streamerName = this.props.navigation.getParam('streamerName', '');
+            const premium = this.props.navigation.getParam('premium', false);
+
             this.setState({
                 streamerData: {
                     streamerUid,
                     streamerImage,
-                    streamerName
+                    streamerName,
+                    premium
                 }
             }, onFinished);
         } else if (this.props.uid) {
@@ -162,7 +183,8 @@ class TweetReactionControllerScreen extends Component {
                     streamerData: {
                         streamerUid: streamerKey,
                         streamerImage: streamerData.val().photoUrl,
-                        streamerName: streamerData.val().displayName
+                        streamerName: streamerData.val().displayName,
+                        premium: streamerData.val().premium
                     }
                 }, onFinished);
             } else {
@@ -173,7 +195,8 @@ class TweetReactionControllerScreen extends Component {
                         streamerData: {
                             streamerUid: lastStreamer,
                             streamerImage: streamerData.val().photoUrl,
-                            streamerName: streamerData.val().displayName
+                            streamerName: streamerData.val().displayName,
+                            premium: streamerData.val().premium
                         }
                     }, onFinished);
                 } else {
@@ -211,37 +234,80 @@ class TweetReactionControllerScreen extends Component {
     }
 
     fetchReactionsCosts = async () => {
-        let costs = [0];
+        let costs = [];
         let disableExtraTip = false;
-        for (let i = 2; i <= 3; i++) {
+        for (let i = 1; i <= 3; i++) {
             const costSnapshot = await getStreamerReactionPrice(this.state.streamerData.streamerUid, `level${i}`);
             let cost = null;
+            let type = null;
             if (costSnapshot.exists()) {
-                cost = costSnapshot.val();
+                costObject = costSnapshot.val();
+                type = costObject.type;
+                cost = costObject.price;
             } else {
                 const defaultCost = await getReactionPriceDefault(`level${i}`);
-                cost = defaultCost.val();
+                costObject = defaultCost.val();
+                type = costObject.type;
+                cost = costObject.price;
             }
 
             if (this.props.uid) {
                 if (!this.state.freeReactionsSent) {
                     const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid);
-                    costs.push(hasUserReactedBefore.exists() ? cost : 0);
+                    costs.push({ cost: hasUserReactedBefore.exists() ? cost : 0, type });
                     disableExtraTip = !hasUserReactedBefore.exists();
                     if (!hasUserReactedBefore.exists()) {
                         this.setState({ reactionLevel: 3 });
                     }
                 } else {
-                    costs.push(cost);
+                    costs.push({ cost, type });
                     disableExtraTip = false;
                 }
             } else {
-                costs.push(!this.state.freeReactionsSent ? 0 : cost);
+                costs.push({ cost: !this.state.freeReactionsSent ? 0 : cost, type });
                 disableExtraTip = !this.state.freeReactionsSent;
                 if (!this.state.freeReactionsSent) {
                     this.setState({ reactionLevel: 3 });
                 }
             }
+        }
+
+        if (this.state.streamerData.premium && !disableExtraTip) {
+            let subscribersCosts = [];
+            for (let i = 1; i <= 3; i++) {
+                const subscribersCostsSnap = await getStreamerReactionPriceForSubs(this.state.streamerData.streamerUid, `level${i}`);
+                let cost = null;
+                let type = null;
+                if (subscribersCostsSnap.exists()) {
+                    costObject = subscribersCostsSnap.val();
+                    type = costObject.type;
+                    cost = costObject.price;
+                } else {
+                    const defaultCost = await getReactionPriceDefaultForSubs(`level${i}`);
+                    costObject = defaultCost.val();
+                    type = costObject.type;
+                    cost = costObject.price;
+                }
+
+                if (this.props.uid) {
+                    if (!this.state.freeReactionsSent) {
+                        const hasUserReactedBefore = await getRecentStreamersDonations(this.props.uid);
+                        subscribersCosts.push({ cost: hasUserReactedBefore.exists() ? cost : 0, type });
+                        if (!hasUserReactedBefore.exists()) {
+                            this.setState({ reactionLevel: 3 });
+                        }
+                    } else {
+                        subscribersCosts.push({ cost, type });
+                    }
+                } else {
+                    subscribersCosts.push({ cost: !this.state.freeReactionsSent ? 0 : cost, type });
+                    if (!this.state.freeReactionsSent) {
+                        this.setState({ reactionLevel: 3 });
+                    }
+                }
+            }
+
+            this.setState({ subscribersCosts });
         }
 
         this.setState({ costs, disableExtraTip });
@@ -281,13 +347,16 @@ class TweetReactionControllerScreen extends Component {
                 const isStreaming = await getStreamerStreamingStatus(this.state.streamerData.streamerUid);
                 if (isStreaming) {
                     const userQoins = this.props.qoins ?? 0;
-                    const totalCost = this.state.costs[this.state.reactionLevel - 1] + this.state.extraTip;
+
+                    const currentReactionCost = this.getCurrentReactionCost();
+                    const isQoinsReaction = this.isQoinsReaction();
+
+                    const totalCost = isQoinsReaction ? (currentReactionCost + this.state.extraTip) : this.state.extraTip;
                     if (totalCost <= userQoins) {
                         const isUserBanned = await isUserBannedWithStreamer(this.props.twitchId, this.state.streamerData.streamerUid);
                         if (!isUserBanned.exists()) {
 
-                            const useChannelPointReaction = this.state.reactionLevel === 1;
-                            if (!useChannelPointReaction || useChannelPointReaction && this.state.numberOfReactions >= 1) {
+                            if (isQoinsReaction || (!isQoinsReaction && this.state.numberOfReactions >= currentReactionCost)) {
                                 let messageExtraData = this.state.selectedVoiceBot ?
                                     {
                                         voiceAPIName: this.state.selectedVoiceBot.voiceAPIName,
@@ -362,7 +431,8 @@ class TweetReactionControllerScreen extends Component {
                                         this.setState({ openSentModal: true });
                                     },
                                     () => this.setState({ sending: false }),
-                                    useChannelPointReaction
+                                    !isQoinsReaction,
+                                    currentReactionCost
                                 );
                             } else {
                                 this.setState({ sending: false, openNoReactionsModal: true });
@@ -497,10 +567,15 @@ class TweetReactionControllerScreen extends Component {
 
     onUpgradeReaction = (reactionLevel, mediaUnlocked) => {
         const costs = [...this.state.costs];
+        const subscribersCosts = [...this.state.subscribersCosts];
         this.onMediaOptionPress(mediaUnlocked);
-        this.setState({ reactionLevel, costs: [0, undefined, undefined] }, () => {
-            this.setState({ costs });
-        });
+        this.setState({
+                reactionLevel,
+                costs: [undefined, undefined, undefined],
+                subscribersCosts: [undefined, undefined, undefined]
+            }, () => {
+                this.setState({ costs, subscribersCosts });
+            });
     }
 
     onSignUpSuccess = () => {
@@ -554,7 +629,7 @@ class TweetReactionControllerScreen extends Component {
     onBuySuccessful = () => {
         this.setState({ openBuyQoinsModal: false }, () => {
             if (this.state.userNeedsQoinsToSend) {
-                const totalCost = this.state.costs[this.state.reactionLevel - 1] + this.state.extraTip;
+                const totalCost = this.isQoinsReaction() ? (this.getCurrentReactionCost() + this.state.extraTip) : this.state.extraTip;
                 if (totalCost <= this.props.qoins) {
                     this.onSendReaction();
                 }
@@ -610,6 +685,40 @@ class TweetReactionControllerScreen extends Component {
         this.setState({ openNoReactionsModal: false });
     }
 
+    getCurrentReactionCost = () => {
+        const showSubscriberCost = this.state.streamerData.premium && this.state.userToStreamerRelationData && this.state.userToStreamerRelationData.isSubscribed;
+
+        return showSubscriberCost ?
+            (this.state.subscribersCosts[this.state.reactionLevel - 1] ?
+                this.state.subscribersCosts[this.state.reactionLevel - 1].cost
+                :
+                0
+            )
+            :
+            (this.state.costs[this.state.reactionLevel - 1] ?
+                this.state.costs[this.state.reactionLevel - 1].cost
+                :
+                0
+           );
+    }
+
+    isQoinsReaction = () => {
+        const showSubscriberCost = this.state.streamerData.premium && this.state.userToStreamerRelationData && this.state.userToStreamerRelationData.isSubscribed;
+
+        return showSubscriberCost ?
+                (this.state.subscribersCosts[this.state.reactionLevel - 1] ?
+                    this.state.subscribersCosts[this.state.reactionLevel - 1].type === QOIN
+                    :
+                    false
+                )
+                :
+                (this.state.costs[this.state.reactionLevel - 1] ?
+                    this.state.costs[this.state.reactionLevel - 1].type === QOIN
+                    :
+                    false
+                );
+    }
+
     render() {
         let availableContent = [];
         switch (this.state.reactionLevel) {
@@ -650,13 +759,27 @@ class TweetReactionControllerScreen extends Component {
                 break;
         }
 
+        let currentReactionCost = undefined;
+        let costsPerReactionLevel = this.state.costs;
+
+        /**
+         * Cost is undefined if the streamer is premium and we are still checking if the user is subscriber
+         * because we show a different price to subscribers of premium streamers
+         */
+        if (!this.state.streamerData.premium || this.state.userToStreamerRelationData) {
+            currentReactionCost = this.getCurrentReactionCost();
+
+            const showSubscriberCost = this.state.streamerData.premium && this.state.userToStreamerRelationData && this.state.userToStreamerRelationData.isSubscribed;
+            costsPerReactionLevel = showSubscriberCost ? this.state.subscribersCosts : this.state.costs;
+        }
+
         return (
             <>
             <TweetReactionScreen onSend={this.onSendReaction}
                 sending={this.state.sending}
-                qoins={this.state.reactionLevel !== 1}
-                currentReactioncost={this.state.costs[this.state.reactionLevel - 1]}
-                costsPerReactionLevel={this.state.costs}
+                qoins={this.isQoinsReaction()}
+                currentReactionCost={currentReactionCost}
+                costsPerReactionLevel={costsPerReactionLevel}
                 mediaSelectorBarOptions={availableContent}
                 numberOfReactions={this.state.numberOfReactions}
                 avatarReaction={this.state.avatarReaction}
@@ -720,7 +843,7 @@ class TweetReactionControllerScreen extends Component {
             <ReactionTypeModal open={this.state.openReactionLevelModal}
                 onClose={this.onCloseReactionLevelModal}
                 changeReactionLevel={this.onChangeReactionLevel}
-                costs={this.state.costs}
+                costs={costsPerReactionLevel}
                 randomEmoteUrl={this.state.randomEmoteUrl} />
             <StreamerOfflineModal open={this.state.openStreamerOfflineModal}
                 onClose={() => this.setState({ openStreamerOfflineModal: false })}
@@ -728,7 +851,8 @@ class TweetReactionControllerScreen extends Component {
                 streamerDisplayName={this.state.streamerData.streamerName} />
             <NoReactionsModal open={this.state.openNoReactionsModal}
                 onClose={() => this.setState({ openNoReactionsModal: false })}
-                upgradeCost={this.state.costs[1]}
+                costs={costsPerReactionLevel}
+                currentLevel={this.state.reactionLevel}
                 onUpgradeReaction={this.changeReactionLevelAndSend}
                 onGetReward={this.getRewardOnTwitch} />
             <SentModal open={this.state.openSentModal}

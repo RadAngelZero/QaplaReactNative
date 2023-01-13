@@ -68,6 +68,10 @@ const gifsLibrariesRef = database.ref('/GifsLibraries');
 const reactionsPricesRef = database.ref('/ReactionsPrices');
 const reactionsPricesDefaultRef = database.ref('/ReactionsPricesDefault');
 const memesModerationRef = database.ref('/MemesModeration');
+const reactionsPricesLevelsRef = database.ref('/ReactionsPricesLevels');
+const reactionsPricesLevelsDefaultsRef = database.ref('/ReactionsPricesLevelsDefaults');
+const reactionsPricesLevelsSubsRef = database.ref('/ReactionsPricesLevelsSubs');
+const reactionsPricesLevelsSubsDefaultsRef = database.ref('/ReactionsPricesLevelsSubsDefaults');
 
 /**
  * Returns true if the user with the given uid exists
@@ -1486,9 +1490,10 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojiR
  * @param {Array<string>} avatarBackground.colors Array of colors for gradient background
  * @param {function} onSuccess Function to call once the cheer is sent
  * @param {function} onError Function to call on any possible error
- * @param {boolean} removeReaction Flag to remove (or not) a reaction from channel points reaction count
+ * @param {boolean} removeZaps Flag to remove (or not) zaps from channel points reaction count
+ * @param {number | undefined} zapsToRemove Amount of Zaps to remove (only exists if removeZaps is true)
  */
-export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, avatarId, avatarBackground, avatarAnimationId, onSuccess, onError, removeReaction = true) {
+export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, avatarId, avatarBackground, avatarAnimationId, onSuccess, onError, removeZaps = true, zapsToRemove) {
     let qoinsTaken = qoinsToRemove ? false : true;
     if (qoinsToRemove && uid !== 'Anonymus') {
         qoinsTaken = (await usersRef.child(uid).child('credits').transaction((qoins) => {
@@ -1510,9 +1515,9 @@ export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, 
 
     if (qoinsTaken) {
         let reactionTaken = false;
-        if (uid !== 'Anonymus' && removeReaction) {
+        if (uid !== 'Anonymus' && removeZaps) {
             reactionTaken = (await usersReactionsCountRef.child(uid).child(streamerUid).transaction((reactionsCount) => {
-                return reactionsCount - 1;
+                return reactionsCount - zapsToRemove;
             })).committed;
         } else {
             reactionTaken = true;
@@ -1693,6 +1698,14 @@ export async function getAllStreamersStreaming() {
  */
 export async function getStreamerPublicData(streamerId) {
     return await userStreamerPublicDataRef.child(streamerId).once('value');
+}
+
+/**
+ * Only returns the value of the premium field from the streamer public data
+ * @param {string} streamerId Streamer identifier
+ */
+export async function isStreamerPremium(streamerId) {
+    return await userStreamerPublicDataRef.child(streamerId).child('premium').once('value');
 }
 
 /**
@@ -2214,18 +2227,44 @@ export async function getRandomGifByLibrary(libraryName) {
  * @param {string} reactionLevel Name of reaction level
  */
 export async function getStreamerReactionPrice(streamerUid, reactionLevel) {
-    return await reactionsPricesRef.child(streamerUid).child(reactionLevel).once('value');
+    return await reactionsPricesLevelsRef.child(streamerUid).child(reactionLevel).once('value');
 }
 
 // -----------------------------------------------
 // Reactions Prices Default
 // -----------------------------------------------
+
 /**
  * Gets the default price (in Qoins) of the given reaction level
  * @param {string} reactionLevel Name of reaction level
  */
 export async function getReactionPriceDefault(reactionLevel) {
-    return await reactionsPricesDefaultRef.child(reactionLevel).child('qoins').once('value');
+    return await reactionsPricesLevelsDefaultsRef.child(reactionLevel).once('value');
+}
+
+// -----------------------------------------------
+// Reactions Prices Levels Subs
+// -----------------------------------------------
+
+/**
+ * Gets the price (in Qoins) of the given reaction level for subs
+ * @param {string} streamerUid Streamer identifier
+ * @param {string} reactionLevel Name of reaction level
+ */
+export async function getStreamerReactionPriceForSubs(streamerUid, reactionLevel) {
+    return await reactionsPricesLevelsSubsRef.child(streamerUid).child(reactionLevel).once('value');
+}
+
+// -----------------------------------------------
+// Reactions Prices Levels Subs Defaults
+// -----------------------------------------------
+
+/**
+ * Gets the default price (in Qoins) of the given reaction level for subs
+ * @param {string} reactionLevel Name of reaction level
+ */
+export async function getReactionPriceDefaultForSubs(reactionLevel) {
+    return await reactionsPricesLevelsSubsDefaultsRef.child(reactionLevel).once('value');
 }
 
 // -----------------------------------------------

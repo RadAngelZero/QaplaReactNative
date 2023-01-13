@@ -60,7 +60,7 @@ const StreamerItem = ({ uid, streamerUid, streamerImage, streamerName, selected,
             <View style={{ flex: 1 }} />
             {!selected &&
                 <View style={styles.numberOfReactionsContainer}>
-                    <images.svg.interactionsNumberIcon  />
+                    <images.svg.zap height={16} width={16} />
                     {numberOfReactions !== undefined ?
                         <Text style={styles.numberOfReactions} numberOfLines={1}>
                             {numberOfReactions.toLocaleString()}

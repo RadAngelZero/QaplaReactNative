@@ -728,11 +728,11 @@
         "free": "Gratis"
     },
     "noReactionsModal": {
-        "noReactionsP1": "No tienes reacciones",
-        "noReactionsP2": "Canjea la recompensa \"Qapla Reaction\" ",
-        "noReactionsP3": "en Twitch, ",
-        "noReactionsP4": "o actualiza tu reacción ",
-        "noReactionsP5": "para enviar tu alerta con Qoins",
+        "title": "¡Zaps insuficientes!",
+        "noReactionsP1": "Redime una Recompensa Zap o actualiza tu reacción",
+        "noReactionsP2": " para enviarla usando Qoins",
+        "noEnoughZapsP1": "Necesitas %{zaps} Recompensas Zap extra",
+        "noEnoughZapsP2": " para enviar tu reacción.",
         "upgradeFor": "Actualizar por",
         "getReward": "Canjear Recompensa"
     },

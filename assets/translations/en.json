@@ -724,13 +724,13 @@
         "free": "Free"
     },
     "noReactionsModal": {
-        "noReactionsP1": "You don´t have reactions",
-        "noReactionsP2": "Get a Qapla Reaction Reward ",
-        "noReactionsP3": "on Twitch, ",
-        "noReactionsP4": "or upgrade your reaction ",
-        "noReactionsP5": "to send your alert with Qoins",
+        "title": "Not enough Zaps!",
+        "noReactionsP1": "Get a Zap Reward or upgrade your reaction",
+        "noReactionsP2": " to send it using Qoins",
+        "noEnoughZapsP1": "You need %{zaps} extra Zap Rewards",
+        "noEnoughZapsP2": " to send your reaction.",
         "upgradeFor": "Upgrade for",
-        "getReward": "Get Channel Reward",
+        "getReward": "Get Channel Reward"
     },
     "sentModal": {
         "title": "Boom. Sent.",

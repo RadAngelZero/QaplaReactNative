@@ -241,12 +241,12 @@ class TweetReactionControllerScreen extends Component {
             let cost = null;
             let type = null;
             if (costSnapshot.exists()) {
-                costObject = costSnapshot.val();
+                const costObject = costSnapshot.val();
                 type = costObject.type;
                 cost = costObject.price;
             } else {
                 const defaultCost = await getReactionPriceDefault(`level${i}`);
-                costObject = defaultCost.val();
+                const costObject = defaultCost.val();
                 type = costObject.type;
                 cost = costObject.price;
             }
@@ -279,12 +279,12 @@ class TweetReactionControllerScreen extends Component {
                 let cost = null;
                 let type = null;
                 if (subscribersCostsSnap.exists()) {
-                    costObject = subscribersCostsSnap.val();
+                    const costObject = subscribersCostsSnap.val();
                     type = costObject.type;
                     cost = costObject.price;
                 } else {
                     const defaultCost = await getReactionPriceDefaultForSubs(`level${i}`);
-                    costObject = defaultCost.val();
+                    const costObject = defaultCost.val();
                     type = costObject.type;
                     cost = costObject.price;
                 }
@@ -853,6 +853,7 @@ class TweetReactionControllerScreen extends Component {
                 onClose={() => this.setState({ openNoReactionsModal: false })}
                 costs={costsPerReactionLevel}
                 currentLevel={this.state.reactionLevel}
+                numberOfReactions={this.state.numberOfReactions}
                 onUpgradeReaction={this.changeReactionLevelAndSend}
                 onGetReward={this.getRewardOnTwitch} />
             <SentModal open={this.state.openSentModal}

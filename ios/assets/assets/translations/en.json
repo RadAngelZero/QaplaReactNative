@@ -143,12 +143,19 @@
         }
     },
     "userProfileScreen": {
+        "yourIdentity": "Your identity on stream",
+        "createAvatar": "Create your Avatar",
+        "editAvatar": "Edit Avatar",
         "linkAccount": "Link Twitch",
         "linked": "Linked",
+        "updateProfile": "Update your profile\non Twitch",
+        "goToTwitch": "Go to Twitch",
+        "refresh": "Refresh",
         "myQoins": "My Qoins",
         "getQoins": "Get Qoins",
         "mySupport": "💜 My support",
         "totalQoinsSent": "Total Qoins sent",
+        "updatePopUp": "👋 Update Pop Up",
         "addQreatorCode": "Add a Qreator Code",
         "notifications": "Notifications",
         "newStreams": "New streams",
@@ -158,7 +165,7 @@
         "termsAndConditions": "Terms and Conditions",
         "privacyNotice": "Privacy Notice",
         "termsAndConditionsUrl": "https://www.qapla.gg/terms-and-conditions",
-        "privacyNoticeUrl": "https://www.qapla.gg/privacy-policy",
+        "privacyNoticeUrl": "https://www.qapla.gg/privacy",
         "logOut": "Log Out",
         "deleteAccount": "Delete account",
         "deleteAccountDescription": "Are you sure you want to delete your account and all the information in it permanently?",
@@ -167,9 +174,6 @@
         "accountDeletedDescription": "Your account and the information related to it have been deleted",
         "accountDeletionError": "Failed to delete account",
         "accountDeletionErrorDescription": "Failed to delete account, please try again later or contact support",
-        "interactions": {
-            "liveToYourStreamer": "on-screen to your streamer"
-        }
     },
     "notificationsScreen": {
         "notificationsHeader": "Notifications",
@@ -297,9 +301,9 @@
         "title": "Create your username",
         "userNamePlaceholder": "Insert here your username",
         "userNameAlreadyTaken": "This name is already taken, try another one",
-        "bodyFirstPart": "Before you use Qapla Gaming make sure you have read and accepted our",
+        "bodyFirstPart": "By signing up you accept our",
         "termsAndConditions": "Terms and Conditions",
-        "bodySecondPart": "and our",
+        "bodySecondPart": "and",
         "privacyPolicy": "Privacy policy",
         "agreeWithTerms": "I read and I agree with terms and conditions",
         "agreeWithPrivacy": "I read and I agree the privacy policy",
@@ -372,12 +376,18 @@
             "signInWithEmail": "Sign in with your email",
             "createUsername": "Create your username",
             "haveQreatorQode": "Do you have a Qreator Code?",
-            "getCustomAlerts": "Get ⚡️ 3 live reactions ⚡️ when mining Qoins during your first 3 streams "
+            "getCustomAlerts": "Get ⚡️ 200 extra Qoins⚡️ when mining Qoins during your first 3 streams",
+            "youJoined": "You are all set!",
+            "youWillReceiveP1": "You’ll get an ",
+            "youWillReceiveP2": "extra 200 Qoins ",
+            "youWillReceiveP3": "per stream, on your ",
+            "youWillReceiveP4": "first 3 Qapla streams 🌱"
         },
         "buttonsCarrousel": {
             "createAccount": "Create my account",
             "alreadyHaveAccount": "I already have an account",
             "continueWithGoogle": "Continue with Google",
+            "continueWithApple": "Continue with Apple",
             "continueWithTwitch": "Continue with Twitch",
             "continue": "Continue",
             "validatingUsername": "Validating username...",
@@ -386,6 +396,98 @@
             "joiningQlan": "Joining Qlan",
             "goToFirstStream": "Go to my first stream"
         }
+    },
+    "avatarOnboardingScreen": {
+        "react": "React with personality",
+        "powerUpSub": "Power up your sub",
+        "description1": "Your avi will show on the reactions you send on stream",
+        "description2": "Say hi when you show up on streams you’re subscribed with a custom greeting",
+        "next": "Next",
+        "createMyAvatar": "Create my Avatar"
+    },
+    "avatarChooseBackgroundScreen": {
+        "pickABackground": "Pick a background color",
+        "description": "This is how you’ll look in your custom reactions on stream",
+        "loading": "We’re cooking... it might take 10 to 15 seconds",
+        "useBackground": "Use Background",
+        "aviUpdated": "Avi updated 💣",
+        "backToProfile": "Back to profile"
+    },
+    "avatarChooseAnimationScreen": {
+        "confirmButton": "Use Animation"
+    },
+    "avatarReadyScreen": {
+        "aviReady": "Your Avi is ready",
+        "uses": "Say hi from the app or the Twitch extension whenever you show up on a stream",
+        "sendNow": "Send now on Stream",
+        "backToProfile": "Back to profile"
+    },
+    "greetingTTSScreen": {
+        "makeAnEntrance": "👋 Make an entrance. ",
+        "sayHi": "Say hi in your own way",
+        "readyToSave": "🔥 Lit! Ready to save?",
+        "editMessage": "Edit message",
+        "ready": "Ready",
+        "popupUpdated": "Pop up updated 💣",
+        "backToProfile": "Back to profile"
+    },
+    "greetingSearchStreamerScreen": {
+        "sayHi": "👋 Pop Up",
+        "searchStreamer": "Search streamer",
+        "confirmationModal": {
+            "titleP1": "Pop un on ",
+            "streamerName": "{{streamerName}}´s ",
+            "titleP2": "stream",
+            "sendAviNow": "Send Avi now"
+        },
+        "streamerOfflineModal": {
+            "title": "Streamer Offline",
+            "descriptionP1": "We’ll notify you when ",
+            "streamerName": "{{streamerName}}´s ",
+            "descriptionP2": "next stream will be 👇",
+            "follow": "Follow Streamer"
+        },
+        "notASubModal": {
+            "title": "You’re not a sub 🫣",
+            "descriptionP1": "Pop ups are available for channel suscribers. ",
+            "descriptionP2": "Sucribe to pop up!",
+            "subscribe": "Suscribe to channel"
+        },
+        "greetingAlreadySentModal": {
+            "title": "You already poped up 🫢",
+            "descriptionP1": "Pop ups work once per stream. ",
+            "descriptionP2": "It’s a way to say hi when you show up",
+            "goToStream": "Go to stream"
+        },
+        "sentModal": {
+            "title": "Boom. Sent.",
+            "goToStream": "Go to stream"
+        }
+    },
+    "tweetReactionScreen": {
+        "gif": "Gif",
+        "sticker": "Sticker",
+        "meme": "Meme",
+        "emote": "Emotes Animations",
+        "avatar": "Animated Avatar",
+        "text3D": "3D Text",
+        "botVoice": "TTS Bot Voice",
+        "firstReactionFree": "Your first reaction it´s free! ",
+        "afterSignUp": "After signing up you can support streamers using Qoins",
+        "or": "or",
+        "cancel": "Cancel",
+        "send": "Send",
+        "typeToCreateTTS": "Type to create TTS",
+        "optional": "Optional",
+        "upgradeTooltipP1": "You can always ",
+        "upgradeTooltipP2": "upgrade or downgrade ",
+        "upgradeTooltipP3": "your reaction here 👇",
+        "free": "Free",
+        "zaps": "%{zapsCost} Zaps",
+        "youCanOnlyUseOne": "😯 You can only use one",
+        "upgradeToUse": "👀 Upgrade your reaction to use ",
+        "noTip": "No Tip",
+        "tip": "Tip"
     },
     "headerBar": {
         "highlightModal": {
@@ -515,7 +617,7 @@
         "skip": "Skip",
         "linkAccount": "Link your account",
         "descriptionQreatorCode": "to use your Qreator Code and get your referral tokens 🙌",
-        "description": "🌱 Mine tokens in real-time using your channel points on  Twitch.",
+        "description": "👻 Show up on stream with your Twitch identity.",
         "linkButton": "Link account",
         "rejectTrakingTitle": "Allow Qapla to Request to Track to link your Twitch",
         "rejectTrakingMessage": "We use the data exclusively to connect your accounts",
@@ -524,9 +626,9 @@
     },
     "skipLinkTwitchAccount": {
         "important": "Important",
-        "reminder": "Friendly reminder: You won´t get any tokens in Qapla if your accounts aren’t linked.",
+        "reminder": "You won’t be able to interact on stream if your accounts are not linked",
         "reminderQreatorCode": "Friendly reminder: To unlock full-benefits on Qapla, you must have a linked Twitch account.",
-        "description": "No worries. You can link your account later from your profile 😉",
+        "description": "But no worries. You can link your account later from your profile 😉",
         "continue": "I wish to continue"
     },
     "sendCheersModal": {
@@ -600,6 +702,80 @@
         "description": "Your cheers are sent in real-time, and your messages appear live on their Twitch channel",
         "sendCheers": "Send Cheers"
     },
+    "chooseStreamerModal": {
+        "search": "Search by name",
+        "recents": "Recents",
+        "whosTheReactionFor": "Who’s the reaction for?\nFind your streamer 🫶"
+    },
+    "avatarReactionModal": {
+        "confirm": "Confirm"
+    },
+    "create3DTextModal": {
+        "typeToCreate": "Type to create"
+    },
+    "chooseBotVoiceModal": {
+        "chooseVoice": "Choose a TTS Bot Voice"
+    },
+    "reactionTypeModal": {
+        "selectTier": "Select Reaction Tier",
+        "level1": "Memes + TTS",
+        "level2": "+ Avatar\n3D Text, TTS Voice",
+        "level3": "+ Emote Animation",
+        "free": "Free"
+    },
+    "noReactionsModal": {
+        "noReactionsP1": "You don´t have reactions",
+        "noReactionsP2": "Get a Qapla Reaction Reward ",
+        "noReactionsP3": "on Twitch, ",
+        "noReactionsP4": "or upgrade your reaction ",
+        "noReactionsP5": "to send your alert with Qoins",
+        "upgradeFor": "Upgrade for",
+        "getReward": "Get Channel Reward",
+    },
+    "sentModal": {
+        "title": "Boom. Sent.",
+        "watchOnStream": "Watch now on stream",
+        "sendMoreReactions": "Send more reactions"
+    },
+    "signUpModal": {
+        "continueWithApple": "Continue with Apple",
+        "continueWithGoogle": "Continue with Google",
+        "continueWithTwitch": "Continue with Twitch"
+    },
+    "signUpModalTweetReactionScreen": {
+        "keepReacting": "Kepp reacting on stream",
+        "coolRight": "Cool! isn’t it? 👀",
+        "benefit1": "⚡️ Use channel points to send custom memes",
+        "benefit2": "🔥 Upgrade your memes",
+        "benefit3": "🌱 Support your fave streamers"
+    },
+    "signUpModalStreamerProfileScreen": {
+        "title": "Never miss a stream!",
+        "benefit1": "🗓️️ Always know when your streamer schedules a stream",
+        "benefit2": "🚨️ Always know when a stream is reschedule or canceled"
+    },
+    "signUpEventDetailsModal": {
+        "title": "Add stream to schedule",
+        "benefit1": "🚨️ Always know when a stream is reschedule or canceled",
+        "benefit2": "⏰ Never miss a stream! We’ll remind you of upcoming streams"
+    },
+    "signUpModalGreetingsShortcut": {
+        "title": "Your identity on stream",
+        "benefit1": "👽️ Create a custom animated avatar to use on stream",
+        "benefit2": "👋 Popup on stream using your avatar when arriving to a stream"
+    },
+    "signUpModalHeaderBar": {
+        "title": "Send memes on stream",
+        "benefit1": "⚡️ React on stream sending custom memes",
+        "benefit2": "👽 Custom animated avatar for your reactions",
+        "benefit3": "🌱 Support your fave streamers"
+    },
+    "signUpModalUploadContent": {
+        "title": "Keep sharing memes",
+        "benefit1": "⚡️ Use channel points to send your custom memes",
+        "benefit2": "🔥 Upgrade your memes",
+        "benefit3": "📚 Create your meme library"
+    },
     "streamerCard": {
         "viewMore": "View more"
     },
@@ -612,7 +788,7 @@
         "useCode": "Use the Qreator Code of your fav streamer",
         "typeQreatorCode": "Enter Qreator Code",
         "enterNewCode": "Enter new Qreator code",
-        "joinQlanButton": "Join Qlan",
+        "joinQlanButton": "Confirm code",
         "youJoined": "You are all set!",
         "backToProfile": "Go back to my profile",
         "youWillReceiveP1": "You’ll get an ",
@@ -626,7 +802,7 @@
             "favs": "Your favs",
             "recents": "Recents",
             "modal": {
-                "sendA": "Send a",
+                "sendA": "Send",
                 "message": "Message",
                 "liveToStreamer": "on-screen to your streamer",
                 "searchByName": "Search streamer by name"
@@ -635,7 +811,7 @@
         "personalize": {
             "personalizeYourInteraction": "Customize your reaction",
             "onlySend": "Only send",
-            "clips": "Pre-made clips",
+            "clips": "Video Clips",
             "giphyText": "Custom TTS"
         },
         "addVisual": {
@@ -643,6 +819,7 @@
         },
         "visual": {
             "searchOn": "Search",
+            "searchByTags": "Search by tags",
             "tabs": {
                 "trends": "Trending"
             }
@@ -675,6 +852,7 @@
         "TTS": {
             "writeYourMessage": "Type your message",
             "whatYouWantToSay": "🗣 What do you want to say?",
+            "skip": "Skip",
             "TTS": "Text-to-Speech",
             "chooseABotVoice": "🔥 Slaaay\n🤖 Now choose a bot voice:",
             "readyToSend": "👌 Ready to send?",
@@ -697,18 +875,32 @@
                 "meme": "Meme",
                 "tts": "Text-to-Speech",
                 "video": "Clip",
-                "text": "Custom Text-to-Speech",
-                "emoji": "Emoji rain"
+                "text": "Custom TTS",
+                "emoji": "Emote rain"
             },
             "discardInteraction": "Discard reaction",
             "areYouSure": "Are you sure you want to discard your reaction?",
             "yes": "Yes",
             "no": "No",
+            "customTTS": "Custom TTS",
             "sendExtraTip": "Send Extra Tip",
             "other": "Other",
             "sendInteraction": "Send Reaction",
             "emojiModal": {
-                "chooseAnEmoji": "Choose an Emoji"
+                "chooseAnEmoji": "Choose an Emote"
+            },
+            "emoteModal": {
+                "follower": "Follower",
+                "bits": "Bits",
+                "subTier1": "Sub Tier 1",
+                "subTier2": "Sub Tier 2",
+                "subTier3": "Sub Tier 3",
+                "global": "Twitch Emotes"
+            },
+            "extraTipModal": {
+                "addTip": "Add extra tip",
+                "noTip": "No extra Tip",
+                "cancel": "Cancel"
             }
         },
         "final": {
@@ -735,6 +927,55 @@
         "pendingPaymentAlert": {
             "title": "Your bank is pending to process your payment",
             "message": "We will pay your Qoins once the payment has been made. We will notify you as soon as it is done"
+        }
+    },
+    "interactionsShortcut": {
+        "liveToYourStreamer": "on-screen to your streamer",
+        "send": "Send Reaction"
+    },
+    "greetingsShortcut": {
+        "showUp": "Show up with style 👋",
+        "usingAvi": "using your animated avi",
+        "popUp": "Pop Up on stream"
+    },
+    "uploadContent": {
+        "uploadFile": "Upload File",
+        "uploading": "Uploading...",
+        "thisWillTakeSomeTime": "This might take a minute.",
+        "uploadScreen": {
+            "title": "Send your own memes on your reactions",
+            "subtitle": "Upload a JPEG, PNG less than 5 MB"
+        },
+        "addTags": {
+            "addTags": "Add Tags",
+            "typeToAdd": "Type to add tags",
+            "suggestions": "Suggestions",
+            "addedTags": "Added Tags",
+            "makeEasierP1": "Make it easier to find memes adding",
+            "makeEasierP2": "at least 1 tag"
+        },
+        "finalCard": {
+            "title": {
+                "0": "Boom. Uploaded.",
+                "1": "File is too powerful",
+                "2": "Your file was rejected",
+                "3": "Something went wrong\nPlease try again",
+                "4": "JPEG and PNG only"
+            },
+            "subtitle": {
+                "0": "We’ll review your content and let\nyou know when available to use\n\nIt might take up to 24 hours",
+                "1": "Max file size is 5MB",
+                "2": "Explicit sexual or violent content infringes our community gudilines",
+                "3": "If the problem persists try again later or contact support on Discord 🙏",
+                "4": "We are currently supporting only static JPEG and PNG images"
+            },
+            "buttonText": {
+                "0": "Back to Home",
+                "1": "Upload a smaller file",
+                "2": "Upload another file",
+                "3": "Try Again",
+                "4": "Upload another file"
+            }
         }
     }
 }

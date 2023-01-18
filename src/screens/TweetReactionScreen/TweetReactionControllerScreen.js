@@ -767,8 +767,6 @@ class TweetReactionControllerScreen extends Component {
          * because we show a different price to subscribers of premium streamers
          */
         if (!this.state.streamerData.premium || this.state.userToStreamerRelationData) {
-            currentReactionCost = this.getCurrentReactionCost();
-
             const showSubscriberCost = this.state.streamerData.premium && this.state.userToStreamerRelationData && this.state.userToStreamerRelationData.isSubscribed;
             costsPerReactionLevel = showSubscriberCost ? this.state.subscribersCosts : this.state.costs;
         }
@@ -778,7 +776,7 @@ class TweetReactionControllerScreen extends Component {
             <TweetReactionScreen onSend={this.onSendReaction}
                 sending={this.state.sending}
                 qoins={this.isQoinsReaction()}
-                currentReactionCost={currentReactionCost}
+                currentReactionCost={this.getCurrentReactionCost()}
                 costsPerReactionLevel={costsPerReactionLevel}
                 mediaSelectorBarOptions={availableContent}
                 numberOfReactions={this.state.numberOfReactions}

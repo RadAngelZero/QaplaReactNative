@@ -9,7 +9,7 @@ import { getStreamerProfilePhotoUrl } from '../../services/storage';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { translate } from '../../utilities/i18';
 
-const StreamerItem = ({ uid, streamerUid, streamerImage, streamerName, selected, onStreamerPress }) => {
+const StreamerItem = ({ uid, streamerUid, streamerImage, streamerName, premium, selected, onStreamerPress }) => {
     const [numberOfReactions, setNumberOfReactions] = useState(undefined);
     const [streamerFallbackImage, setStreamerFallbackImage] = useState(null);
 
@@ -38,7 +38,7 @@ const StreamerItem = ({ uid, streamerUid, streamerImage, streamerName, selected,
 
     return (
         <TouchableOpacity style={styles.streamerContainer}
-            onPress={() => onStreamerPress({ streamerUid, streamerImage, streamerName })}>
+            onPress={() => onStreamerPress({ streamerUid, streamerImage, streamerName, premium })}>
             <View style={styles.streamerImageAndNameContainer}>
                 <Image style={styles.streamerImage}
                     source={
@@ -139,7 +139,8 @@ class ChooseStreamerModal extends Component {
                     recentStreamers.push({
                         streamerUid: streamerKey,
                         streamerImage: streamerData.val().photoUrl,
-                        streamerName: streamerData.val().displayName
+                        streamerName: streamerData.val().displayName,
+                        premium: streamerData.val().premium
                     });
                 }
             }
@@ -163,7 +164,8 @@ class ChooseStreamerModal extends Component {
                             requestedStreamers.push({
                                 streamerUid: streamerSnapshot.key,
                                 streamerImage: streamerSnapshot.val().photoUrl,
-                                streamerName: streamerSnapshot.val().displayName
+                                streamerName: streamerSnapshot.val().displayName,
+                                premium: streamerSnapshot.val().premium
                             });
                         }
                     });

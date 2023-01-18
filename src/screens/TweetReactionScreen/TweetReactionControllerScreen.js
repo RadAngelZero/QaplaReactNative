@@ -496,7 +496,7 @@ class TweetReactionControllerScreen extends Component {
         if (this.props.uid && this.state.streamerData.streamerUid) {
             removeListenerFromReactionsCount(this.props.uid, this.state.streamerData.streamerUid);
         }
-        this.setState({ streamerData, costs: [0, undefined, undefined], selectedEmote: null }, async () => {
+        this.setState({ streamerData, costs: [undefined, undefined, undefined], selectedEmote: null }, async () => {
             this.fetchUserSubscription();
             this.fetchStreamerEmotes();
             await this.fetchReactionsCosts();

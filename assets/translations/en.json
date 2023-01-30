@@ -737,6 +737,11 @@
         "watchOnStream": "Watch now on stream",
         "sendMoreReactions": "Send more reactions"
     },
+    "reactionsSnoozedModal": {
+        "title": "Reactions snoozed 😴",
+        "description": "The streamer has their reactions disabled at the moment. Ask your streamer to turn them on!",
+        "understood": "Understood"
+    },
     "signUpModal": {
         "continueWithApple": "Continue with Apple",
         "continueWithGoogle": "Continue with Google",

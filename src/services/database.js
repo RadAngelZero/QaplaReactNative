@@ -72,6 +72,7 @@ const reactionsPricesLevelsRef = database.ref('/ReactionsPricesLevels');
 const reactionsPricesLevelsDefaultsRef = database.ref('/ReactionsPricesLevelsDefaults');
 const reactionsPricesLevelsSubsRef = database.ref('/ReactionsPricesLevelsSubs');
 const reactionsPricesLevelsSubsDefaultsRef = database.ref('/ReactionsPricesLevelsSubsDefaults');
+const streamerAlertsSettingsRef = database.ref('/StreamerAlertsSettings');
 
 /**
  * Returns true if the user with the given uid exists
@@ -2299,4 +2300,16 @@ export async function saveMemeModerationRequest(requestId, uid, imageUrl, width,
         tags,
         userLanguage
     });
+}
+
+// -----------------------------------------------
+// Streamer Alerts Settings
+// -----------------------------------------------
+
+/**
+ * Gets the reactionsEnabled flag from the streamer overlay settings
+ * @param {string} streamerUid Streamer identifier
+ */
+export async function areStreamerReactionsEnabled(streamerUid) {
+    return await streamerAlertsSettingsRef.child(streamerUid).child('reactionsEnabled').once('value');
 }

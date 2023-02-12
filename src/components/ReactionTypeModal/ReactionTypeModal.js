@@ -96,7 +96,7 @@ class ReactionTypeModal extends Component {
                                             }
                                             <MaskedView maskElement={
                                                 <Text style={styles.priceNumber}>
-                                                    {this.props.costs[0] ?
+                                                    {this.props.costs[0].cost !== 0 ?
                                                         this.props.costs[0].cost.toLocaleString()
                                                         :
                                                         translate('reactionTypeModal.free')
@@ -108,7 +108,7 @@ class ReactionTypeModal extends Component {
                                                     useAngle
                                                     angle={227}>
                                                     <Text style={[styles.priceNumber, { opacity: 0 }]}>
-                                                        {this.props.costs[0] ?
+                                                        {this.props.costs[0].cost !== 0 ?
                                                             this.props.costs[0].cost.toLocaleString()
                                                             :
                                                             translate('reactionTypeModal.free')
@@ -153,7 +153,7 @@ class ReactionTypeModal extends Component {
                                                 }
                                                 <MaskedView maskElement={
                                                     <Text style={styles.priceNumber}>
-                                                        {this.props.costs[1] ?
+                                                        {this.props.costs[1].cost !== 0 ?
                                                             this.props.costs[1].cost.toLocaleString()
                                                             :
                                                             translate('reactionTypeModal.free')
@@ -165,7 +165,7 @@ class ReactionTypeModal extends Component {
                                                         useAngle
                                                         angle={227}>
                                                         <Text style={[styles.priceNumber, { opacity: 0 }]}>
-                                                            {this.props.costs[1] ?
+                                                            {this.props.costs[1].cost !== 0 ?
                                                                 this.props.costs[1].cost.toLocaleString()
                                                                 :
                                                                 translate('reactionTypeModal.free')
@@ -211,7 +211,7 @@ class ReactionTypeModal extends Component {
                                             }
                                             <MaskedView maskElement={
                                                 <Text style={styles.priceNumber}>
-                                                    {this.props.costs[2] ?
+                                                    {this.props.costs[2].cost !== 0 ?
                                                         this.props.costs[2].cost.toLocaleString()
                                                         :
                                                         translate('reactionTypeModal.free')
@@ -223,7 +223,7 @@ class ReactionTypeModal extends Component {
                                                     useAngle
                                                     angle={227}>
                                                     <Text style={[styles.priceNumber, { opacity: 0 }]}>
-                                                        {this.props.costs[2] ?
+                                                        {this.props.costs[2].cost !== 0 ?
                                                             this.props.costs[2].cost.toLocaleString()
                                                             :
                                                             translate('reactionTypeModal.free')

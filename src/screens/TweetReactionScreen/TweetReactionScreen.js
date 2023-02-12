@@ -466,8 +466,10 @@ class TweetReactionScreen extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.ttsContainer}>
-                            {this.props.avatarId && this.props.avatarBackground ?
+                            {this.props.avatarId ?
                                 <LinearGradient style={styles.avatarImage} useAngle
+                                        angle={95.31}
+                                        colors={['#FF669D', '#9746FF']}
                                         {...this.props.avatarBackground}>
                                     {this.state.imageVersion ?
                                         <Image style={styles.avatarImage} source={{
@@ -722,7 +724,10 @@ class TweetReactionScreen extends Component {
                                                         <images.svg.zap height={16} width={16}  />
                                                         <Text style={styles.costText}>
                                                             {this.props.currentReactionCost !== undefined ?
-                                                                translate('tweetReactionScreen.zaps', { zapsCost: this.props.currentReactionCost.toLocaleString() })
+                                                                this.props.currentReactionCost !== 0 ?
+                                                                    translate('tweetReactionScreen.zaps', { zapsCost: this.props.currentReactionCost.toLocaleString() })
+                                                                    :
+                                                                    translate('tweetReactionScreen.free')
                                                                 :
                                                                 null
                                                             }

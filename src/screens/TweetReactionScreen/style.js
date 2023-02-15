@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 
 export default styles = StyleSheet.create({
@@ -40,8 +41,7 @@ export default styles = StyleSheet.create({
     ttsContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginLeft: 16,
-        width: widthPercentageToPx(20)
+        marginLeft: 16
     },
     avatarImage: {
         borderRadius: heightPercentageToPx(100),
@@ -51,8 +51,9 @@ export default styles = StyleSheet.create({
     },
     ttsInputContainer: {
         justifyContent: 'flex-start',
-        // 100 - 11 (avatar image) - 8 (marginRight) - 16 (ttsContainer)
-        width: widthPercentageToPx(89) - 24 - 16
+        // 100 - 11 (avatar image) - 8 (marginRight) - 24 (ttsContainer)
+        width: widthPercentageToPx(89) - 24 - 24,
+        marginLeft: 8
     },
     ttsTextInput: {
         color: '#FFF',
@@ -84,8 +85,7 @@ export default styles = StyleSheet.create({
         height: 46 // Pill size
     },
     pillsScrollViewContainer: {
-        paddingRight: 16,
-        width: widthPercentageToPx(11) + 8 + 16 // Width of avatar image + paddings and margins
+        width: widthPercentageToPx(11) + 8 + 24 // Width of avatar image + paddings and margins,
     },
     avatarOnContainer: {
         borderRadius: 10000,

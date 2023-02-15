@@ -11,6 +11,7 @@ import {
     GIPHY_GIFS,
     GIPHY_STICKERS,
     GIPHY_TEXT,
+    HAPPY_VIBE,
     MEME,
     QOIN,
     TTS
@@ -107,7 +108,8 @@ class TweetReactionControllerScreen extends Component {
         openReactionLevelModal: false,
         tutorialDone: true,
         openNoReactionsModal: false,
-        openReactionsSnoozedModal: false
+        openReactionsSnoozedModal: false,
+        selectedVibe: HAPPY_VIBE
     };
 
     componentDidMount() {
@@ -411,6 +413,7 @@ class TweetReactionControllerScreen extends Component {
                                         this.state.avatarId,
                                         this.props.avatarBackground,
                                         this.state.avatarReaction?.id,
+                                        this.state.selectedVibe,
                                         () => {
                                             trackOnSegment('Reaction Sent', {
                                                 MessageLength: this.state.message ? this.state.message.length : null,
@@ -800,6 +803,8 @@ class TweetReactionControllerScreen extends Component {
                 message={this.state.message}
                 onMessageChanged={(message) => this.setState({ message })}
                 onMediaOptionPress={this.onMediaOptionPress}
+                selectedVibe={this.state.selectedVibe}
+                onSelectedVibeChanged={(selectedVibe) => this.setState({ selectedVibe })}
                 randomEmoteUrl={this.state.randomEmoteUrl}
                 mediaType={this.state.mediaType}
                 selectedMedia={this.state.selectedMedia}

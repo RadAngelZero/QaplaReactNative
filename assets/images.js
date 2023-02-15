@@ -121,6 +121,9 @@ import ShowKeyboard from './icons/ShowKeyboard.svg';
 import HideKeyboard from './icons/hideKeyboard.svg';
 import CheckCircleWhite from './icons/CheckCircleWhite.svg';
 import ArrowTopCircle from './icons/arrowTopCircle.svg';
+import Angry from './icons/Angry.svg';
+import Happy from './icons/Happy.svg';
+import Sad from './icons/Sad.svg';
 
 // Images
 const images = {
@@ -397,7 +400,10 @@ const images = {
 		showKeyboard: ShowKeyboard,
 		hideKeyboard: HideKeyboard,
 		checkCircleWhite: CheckCircleWhite,
-		arrowTopCircle: ArrowTopCircle
+		arrowTopCircle: ArrowTopCircle,
+		angry: Angry,
+		happy: Happy,
+		sad: Sad
 	},
 	gif: {
 		loadingStreamers: {

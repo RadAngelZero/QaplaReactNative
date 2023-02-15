@@ -1486,15 +1486,16 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojiR
  * @param {number} qoinsToRemove Amount of donated Qoins
  * @param {string | null} avatarId User Avatar identifier
  * @param {object | null} avatarBackground Avatar linear gradient background data
- * @param {string | null} avatarAnimationId Avatar animation to show with reaction
  * @param {number} avatarBackground.angle Avatar gradient angle
  * @param {Array<string>} avatarBackground.colors Array of colors for gradient background
+ * @param {string | null} avatarAnimationId Avatar animation to show with reaction
+ * @param {string} vibe Selected vibe for the reaction
  * @param {function} onSuccess Function to call once the cheer is sent
  * @param {function} onError Function to call on any possible error
  * @param {boolean} removeZaps Flag to remove (or not) zaps from channel points reaction count
  * @param {number | undefined} zapsToRemove Amount of Zaps to remove (only exists if removeZaps is true)
  */
-export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, avatarId, avatarBackground, avatarAnimationId, onSuccess, onError, removeZaps = true, zapsToRemove) {
+export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, streamerUid, streamerName, media, message, messageExtraData, emojiRain, qoinsToRemove, avatarId, avatarBackground, avatarAnimationId, vibe, onSuccess, onError, removeZaps = true, zapsToRemove) {
     let qoinsTaken = qoinsToRemove ? false : true;
     if (qoinsToRemove && uid !== 'Anonymus') {
         qoinsTaken = (await usersRef.child(uid).child('credits').transaction((qoins) => {
@@ -1543,6 +1544,7 @@ export async function sendReaction(uid, userName, twitchUserName, userPhotoURL, 
                 twitchUserName,
                 userName,
                 photoURL: userPhotoURL,
+                vibe,
                 pointsChannelInteractions: true
             });
 

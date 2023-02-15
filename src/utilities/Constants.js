@@ -196,3 +196,8 @@ export const ELASTIC_URL = 'https://qapla.es.us-central1.gcp.cloud.es.io';
 
 export const ZAP = 'zap';
 export const QOIN = 'qoin';
+
+// Reactions vibes
+export const ANGRY_VIBE = 'angryVibe';
+export const HAPPY_VIBE = 'happyVibe';
+export const SAD_VIBE = 'sadVibe';

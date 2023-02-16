@@ -8,6 +8,7 @@ import {
     AVATAR,
     defaultUserImages,
     EMOTE,
+    EMOTE_RAIN,
     GIPHY_GIFS,
     GIPHY_STICKERS,
     GIPHY_TEXT,
@@ -43,7 +44,7 @@ import ChooseStreamerModal from '../../components/ChooseStreamerModal/ChooseStre
 import AvatarReactionModal from '../../components/AvatarReactionModal/AvatarReactionModal';
 import Create3DTextModal from '../../components/Create3DTextModal/Create3DTextModal';
 import ChooseBotVoiceModal from '../../components/ChooseBotVoiceModal/ChooseBotVoiceModal';
-import EmoteRainModal from '../../components/EmoteRainModal/EmoteRainModal';
+import EmoteAnimationModal from '../../components/EmoteAnimationModal/EmoteAnimationModal';
 import CreateAvatarModal from '../../components/CreateAvatarModal/CreateAvatarModal';
 import SignUpModal from '../../components/SignUpModal/SignUpModal';
 import BuyQoins from '../BuyQoins/BuyQoins';
@@ -94,6 +95,8 @@ class TweetReactionControllerScreen extends Component {
         userToStreamerRelationData: undefined,
         openEmoteModal: false,
         selectedEmote: null,
+        selectedEmotes: [],
+        selectedEmotesAnimation: EMOTE_RAIN,
         openCreateAvatarModal: false,
         avatarId: this.props.avatarId,
         reactionLevel: 1,
@@ -407,7 +410,8 @@ class TweetReactionControllerScreen extends Component {
                                         messageExtraData,
                                         {
                                             type: EMOTE,
-                                            emojis: emoteArray
+                                            emojis: this.state.selectedEmotes,
+                                            animationId: this.state.selectedEmotesAnimation
                                         },
                                         totalCost,
                                         this.state.avatarId,
@@ -552,14 +556,16 @@ class TweetReactionControllerScreen extends Component {
         });
     }
 
-    onEmoteSelected = (emote) => {
+    onEmoteAnimationSelected = (selectedEmotes, selectedEmotesAnimation) => {
         this.setState({ selectedEmote: {
-                url: emote,
-                title: 'Emote Raid',
+                url: selectedEmotes[0],
+                title: translate(`tweetReactionControllerScreen.${selectedEmotesAnimation}`),
                 type: EMOTE,
                 onRemove: () => this.setState({ selectedEmote: null }),
                 timestamp: new Date().getTime()
             },
+            selectedEmotes,
+            selectedEmotesAnimation,
             openEmoteModal: false
         });
     }
@@ -843,10 +849,10 @@ class TweetReactionControllerScreen extends Component {
                 onClose={() => this.setState({ openBotVoiceModal: false })}
                 currentVoice={this.state.selectedVoiceBot}
                 onVoiceSelected={this.onVoiceSelected} />
-            <EmoteRainModal open={this.state.openEmoteModal}
+            <EmoteAnimationModal open={this.state.openEmoteModal}
                 onClose={() => this.setState({ openEmoteModal: false })}
                 emotes={this.state.emotes}
-                onEmoteSelected={this.onEmoteSelected}
+                onEmoteAnimationSelected={this.onEmoteAnimationSelected}
                 userToStreamerRelation={this.state.userToStreamerRelationData} />
             <CreateAvatarModal open={this.state.openCreateAvatarModal}
                 onClose={() => this.setState({ openCreateAvatarModal: false })}

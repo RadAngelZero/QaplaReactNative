@@ -47,7 +47,10 @@ export default styles = StyleSheet.create({
         overflow: 'hidden',
         borderRadius: 25,
         width: widthPercentageToPx(91.46),
-        height: heightPercentageToPx(23.77)
+        height: heightPercentageToPx(23.77),
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end'
     },
     emotesContainer: {
         flexDirection: 'column',

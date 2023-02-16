@@ -1483,6 +1483,7 @@ export function sendCheers(amountQoins, media, message, messageExtraData, emojiR
  * @param {Object} emojiRain Emoji/Emote data for rain
  * @param {("emoji" | "emote")} emojiRain.type Type of rain (emoji or emote)
  * @param {Array<string>} emojiRain.emojis Array of strings with emojis (as text) or emotes (as urls)
+ * @param {string} emojiRain.animationId Id of the emotes animation to display on stream
  * @param {number} qoinsToRemove Amount of donated Qoins
  * @param {string | null} avatarId User Avatar identifier
  * @param {object | null} avatarBackground Avatar linear gradient background data

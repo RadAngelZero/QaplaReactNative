@@ -583,19 +583,11 @@ class TweetReactionScreen extends Component {
                                         }} />
                                     </TouchableOpacity>
                                     :
-                                    <View>
-                                        <Image style={styles.avatarImage} source={this.props.userPhotoUrl ?
-                                            { uri: this.props.userPhotoUrl }
-                                            :
-                                            images.png.defaultReactionProfilePic.img
-                                        } />
-                                        <VibeIcon height={24} width={24} style={{
-                                            position: 'absolute',
-                                            bottom: -4,
-                                            right: 4,
-                                            zIndex: 9999
-                                        }} />
-                                    </View>
+                                    <Image style={styles.avatarImage} source={this.props.userPhotoUrl ?
+                                        { uri: this.props.userPhotoUrl }
+                                        :
+                                        images.png.defaultReactionProfilePic.img
+                                    } />
                                 }
                             </Tooltip>
                             <View style={styles.ttsInputContainer}>

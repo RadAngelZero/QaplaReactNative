@@ -464,6 +464,12 @@
             "goToStream": "Go to stream"
         }
     },
+    "tweetReactionControllerScreen": {
+        "emoteRain": "Rain",
+        "emoteFireworks": "Fireworks",
+        "emoteTunnel": "Warp",
+        "emoteExplosion": "Bomb"
+    },
     "tweetReactionScreen": {
         "gif": "Gif",
         "sticker": "Sticker",

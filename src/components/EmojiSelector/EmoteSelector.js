@@ -15,27 +15,10 @@ import { translate } from '../../utilities/i18';
 class EmoteSelector extends Component {
     renderEmote = (emote, locked) => {
         return (
-            <TouchableOpacity key={emote.id} style={{
-                flexBasis: '20%',
-                aspectRatio: 1,
-                padding: '4%',
-            }}
-                disabled={locked}
-                onPress={() => { this.props.onEmoteSelect(emote.images.url_4x) }}>
-                <Image source={{ uri: emote.images.url_4x }}
-                    style={{
-                        flex: 1,
-                        // tintColor:'#ccc',
-                        opacity: locked ? 0.5 : 1,
-                    }} />
-                {locked &&
-                    <images.svg.lock style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        right: 0,
-                    }} />
-                }
-            </TouchableOpacity>
+            <Emote emote={emote}
+                locked={locked}
+                onEmoteSelect={this.props.onEmoteSelect}
+                onEmoteRemoved={this.props.onEmoteRemoved} />
         );
     }
 
@@ -112,3 +95,51 @@ class EmoteSelector extends Component {
 }
 
 export default EmoteSelector;
+
+class Emote extends Component {
+    state = {
+        isEmoteSelected: false
+    };
+
+    onEmoteSelected = (emoteUrl) => {
+        if (!this.state.isEmoteSelected) {
+            this.props.onEmoteSelect(emoteUrl, () => this.setState({ isEmoteSelected: true }));
+        } else {
+            this.props.onEmoteRemoved(emoteUrl);
+            this.setState({ isEmoteSelected: false });
+        }
+    }
+
+    render() {
+        const { emote, locked } = this.props;
+
+        return (
+            <TouchableOpacity key={emote.id} style={{
+                flexBasis: '20%',
+                aspectRatio: 1,
+                padding: '4%',
+            }}
+                disabled={locked}
+                onPress={() => this.onEmoteSelected(emote.images.url_4x)}>
+                <Image source={{ uri: emote.images.url_4x }}
+                    style={{
+                        flex: 1,
+                        // tintColor:'#ccc',
+                        opacity: locked ? 0.5 : 1,
+                    }} />
+                {this.state.isEmoteSelected &&
+                    <View style={{ position: 'absolute', top: 12, right: 12, zIndex: 9999 }}>
+                        <images.svg.checkCircle />
+                    </View>
+                }
+                {locked &&
+                    <images.svg.lock style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        right: 0,
+                    }} />
+                }
+            </TouchableOpacity>
+        );
+    }
+}

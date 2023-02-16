@@ -751,6 +751,10 @@
         "description": "The streamer has their reactions disabled at the moment. Ask your streamer to turn them on!",
         "understood": "Understood"
     },
+    "emoteAnimationModal": {
+        "fullScreenAnimations": "Full Screen Emote Animations",
+        "chooseEmotes": "Choose up to 3 Emotes"
+    },
     "signUpModal": {
         "continueWithApple": "Continue with Apple",
         "continueWithGoogle": "Continue with Google",

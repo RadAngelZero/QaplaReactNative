@@ -2214,6 +2214,10 @@ export async function getRandomSignUpGif() {
     return await gifsLibrariesRef.child('SignUp').child('gifs').child(index).once('value');
 }
 
+/**
+ * Returns a random gif from the given library
+ * @param {string} libraryName Library to look for gifs
+ */
 export async function getRandomGifByLibrary(libraryName) {
     const length = await gifsLibrariesRef.child(libraryName).child('length').once('value');
 

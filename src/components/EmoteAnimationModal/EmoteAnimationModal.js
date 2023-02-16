@@ -7,17 +7,34 @@ import EmoteSelector from '../EmojiSelector/EmoteSelector';
 import { getRandomGifByLibrary } from '../../services/database';
 import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
 import { EMOTE_EXPLOSION, EMOTE_FIREWORKS, EMOTE_RAIN, EMOTE_TUNNEL } from '../../utilities/Constants';
+import { translate } from '../../utilities/i18';
 
 class EmoteAnimationModal extends Component {
     state = {
         selectedAnimation: null,
         selectedEmotes: [],
-        gif: undefined
+        rainGif: undefined,
+        fireworksGif: undefined,
+        warpGif: undefined,
+        bombGif: undefined
     };
 
-    loadRandomGif = async () => {
-        const gif = await getRandomGifByLibrary('level3Reactions');
-        this.setState({ gif: gif.val() });
+    componentDidMount() {
+        this.loadRandomGifs();
+    }
+
+    loadRandomGifs = async () => {
+        const rainGif = await getRandomGifByLibrary('RainEmotesAnimation');
+        const fireworksGif = await getRandomGifByLibrary('FireworksEmotesAnimation');
+        const warpGif = await getRandomGifByLibrary('WarpEmotesAnimation');
+        const bombGif = await getRandomGifByLibrary('BombEmotesAnimation');
+
+        this.setState({
+            rainGif: rainGif.val(),
+            fireworksGif: fireworksGif.val(),
+            warpGif: warpGif.val(),
+            bombGif: bombGif.val()
+        });
     }
 
     onAnimationSelected = (selectedAnimation) => {
@@ -58,8 +75,6 @@ class EmoteAnimationModal extends Component {
         return (
             <Modal visible={this.props.open}
                 onRequestClose={this.onModalClose}
-                onShow={this.loadRandomGif}
-                onDismiss={() => this.setState({ gif: undefined })}
                 animationType='slide'
                 transparent>
                 <View style={styles.container}>
@@ -69,7 +84,11 @@ class EmoteAnimationModal extends Component {
                                 <images.svg.closeIcon style={styles.closeIcon} />
                             </TouchableOpacity>
                             <Text style={styles.title}>
-                                Let it rain 👇
+                                {!this.state.selectedAnimation ?
+                                    translate('emoteAnimationModal.fullScreenAnimations')
+                                    :
+                                    translate('emoteAnimationModal.chooseEmotes')
+                                }
                             </Text>
                             {/* Trick to center text */}
                             <View style={[styles.closeIcon, { opacity: 0 }]}>
@@ -85,13 +104,17 @@ class EmoteAnimationModal extends Component {
                             }}
                             showsVerticalScrollIndicator={false}>
                                 <EmotesAnimationSample animationName='💧 Rain'
-                                    onAnimationSelected={() => this.onAnimationSelected(EMOTE_RAIN)} />
+                                    onAnimationSelected={() => this.onAnimationSelected(EMOTE_RAIN)}
+                                    gif={this.state.rainGif} />
                                 <EmotesAnimationSample animationName='🎆 Fireworks'
-                                    onAnimationSelected={() => this.onAnimationSelected(EMOTE_FIREWORKS)} />
+                                    onAnimationSelected={() => this.onAnimationSelected(EMOTE_FIREWORKS)}
+                                    gif={this.state.fireworksGif} />
                                 <EmotesAnimationSample animationName='🌀 Warp'
-                                    onAnimationSelected={() => this.onAnimationSelected(EMOTE_TUNNEL)} />
+                                    onAnimationSelected={() => this.onAnimationSelected(EMOTE_TUNNEL)}
+                                    gif={this.state.warpGif} />
                                 <EmotesAnimationSample animationName='💣 Bomb'
-                                    onAnimationSelected={() => this.onAnimationSelected(EMOTE_EXPLOSION)} />
+                                    onAnimationSelected={() => this.onAnimationSelected(EMOTE_EXPLOSION)}
+                                    gif={this.state.bombGif} />
                             </ScrollView>
                         :
                             <>
@@ -174,7 +197,7 @@ class EmotesAnimationSample extends Component {
                     display: 'flex',
                     justifyContent: 'flex-end'
                 }}
-                source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/qapplaapp.appspot.com/o/AppGifs%2Fcool-cat-raid.gif?alt=media&token=12e68db1-e694-447e-a8de-aa35ce2d3592' }}>
+                source={{ uri: this.props.gif }}>
                     <Text style={{
                         fontSize: 16,
                         fontWeight: '500',

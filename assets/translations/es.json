@@ -755,6 +755,10 @@
         "description": "El streamer deshabilito las reacciones por el momento ¡Pidele que las encienda!",
         "understood": "Entendido"
     },
+    "emoteAnimationModal": {
+        "fullScreenAnimations": "Animaciones de Emotes full screen",
+        "chooseEmotes": "Escoje hasta 3 Emotes"
+    },
     "signUpModal": {
         "continueWithApple": "Continuar con Apple",
         "continueWithGoogle": "Continuar con Google",

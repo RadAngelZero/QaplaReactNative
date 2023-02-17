@@ -80,9 +80,15 @@ class EmoteAnimationModal extends Component {
                 <View style={styles.container}>
                     <View style={styles.mainContainer}>
                         <View style={styles.titleRow}>
-                            <TouchableOpacity onPress={this.onModalClose}>
-                                <images.svg.closeIcon style={styles.closeIcon} />
-                            </TouchableOpacity>
+                            {!this.state.selectedAnimation ?
+                                <TouchableOpacity onPress={this.onModalClose}>
+                                    <images.svg.closeIcon style={styles.closeIcon} />
+                                </TouchableOpacity>
+                                :
+                                <TouchableOpacity onPress={() => this.setState({ selectedAnimation: null })}>
+                                    <images.svg.backIcon style={styles.closeIcon} />
+                                </TouchableOpacity>
+                            }
                             <Text style={styles.title}>
                                 {!this.state.selectedAnimation ?
                                     translate('emoteAnimationModal.fullScreenAnimations')

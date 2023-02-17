@@ -74,7 +74,6 @@ class EmoteAnimationModal extends Component {
     }
 
     onEmoteSelected = (emoteUrl, onEmoteAdded) => {
-        this.setState({ openAnimationTooltip: true });
         if (this.state.selectedEmotes.length < 3) {
             const emotesArray = [...this.state.selectedEmotes];
 
@@ -199,7 +198,8 @@ class EmoteAnimationModal extends Component {
                                         }}
                                         topAdjustment={heightPercentageToPx(22)}
                                         arrowStyle={{
-                                            display: 'none'
+                                            display: 'none',
+                                            opacity: 0
                                         }}
                                         onClose={() => this.setState({ openAnimationTooltip: false })}
                                         contentStyle={styles.tooltipContentStyle}

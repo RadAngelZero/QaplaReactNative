@@ -757,7 +757,12 @@
     },
     "emoteAnimationModal": {
         "fullScreenAnimations": "Animaciones de Emotes full screen",
-        "chooseEmotes": "Escoje hasta 3 Emotes"
+        "chooseEmotes": "Escoje hasta 3 Emotes",
+        "emoteRain": "💧 Rain",
+        "emoteFireworks": "🎆 Fireworks",
+        "emoteTunnel": "🌀 Warp",
+        "emoteExplosion": "💣 Bomb",
+        "confirm": "Confirmar"
     },
     "signUpModal": {
         "continueWithApple": "Continuar con Apple",

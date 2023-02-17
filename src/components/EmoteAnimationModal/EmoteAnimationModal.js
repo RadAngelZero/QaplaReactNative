@@ -5,9 +5,10 @@ import styles from './style';
 import images from '../../../assets/images';
 import EmoteSelector from '../EmojiSelector/EmoteSelector';
 import { getRandomGifByLibrary } from '../../services/database';
-import { heightPercentageToPx } from '../../utilities/iosAndroidDim';
+import { heightPercentageToPx, widthPercentageToPx } from '../../utilities/iosAndroidDim';
 import { EMOTE_EXPLOSION, EMOTE_FIREWORKS, EMOTE_RAIN, EMOTE_TUNNEL } from '../../utilities/Constants';
 import { translate } from '../../utilities/i18';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
 class EmoteAnimationModal extends Component {
     state = {
@@ -16,7 +17,10 @@ class EmoteAnimationModal extends Component {
         rainGif: undefined,
         fireworksGif: undefined,
         warpGif: undefined,
-        bombGif: undefined
+        bombGif: undefined,
+        selectedAnimationGif: undefined,
+        openAnimationTooltip: false,
+        nonSelectedAnimations: []
     };
 
     componentDidMount() {
@@ -38,10 +42,39 @@ class EmoteAnimationModal extends Component {
     }
 
     onAnimationSelected = (selectedAnimation) => {
-        this.setState({ selectedAnimation });
+        let selectedAnimationGif = this.state.rainGif;
+        switch (selectedAnimation) {
+            case EMOTE_RAIN:
+                selectedAnimationGif = this.state.rainGif;
+                break;
+            case EMOTE_FIREWORKS:
+                selectedAnimationGif = this.state.fireworksGif;
+                break;
+            case EMOTE_TUNNEL:
+                selectedAnimationGif = this.state.warpGif;
+                break;
+            case EMOTE_EXPLOSION:
+                selectedAnimationGif = this.state.bombGif;
+                break;
+            default:
+                break;
+        }
+
+        const nonSelectedAnimations = [EMOTE_RAIN, EMOTE_FIREWORKS, EMOTE_TUNNEL, EMOTE_EXPLOSION];
+
+        const selectedIndex = nonSelectedAnimations.findIndex((animationName) => animationName === selectedAnimation);
+        nonSelectedAnimations.splice(selectedIndex, 1);
+
+        this.setState({
+            selectedAnimation,
+            selectedAnimationGif,
+            openAnimationTooltip: false,
+            nonSelectedAnimations
+        });
     }
 
     onEmoteSelected = (emoteUrl, onEmoteAdded) => {
+        this.setState({ openAnimationTooltip: true });
         if (this.state.selectedEmotes.length < 3) {
             const emotesArray = [...this.state.selectedEmotes];
 
@@ -125,24 +158,60 @@ class EmoteAnimationModal extends Component {
                         :
                             <>
                             <View style={styles.emoteRainGifContainer}>
-                                <ImageBackground source={this.state.gif ? {
-                                        uri: this.state.gif
+                                <ImageBackground source={this.state.selectedAnimationGif ? {
+                                        uri: this.state.selectedAnimationGif
                                     }
                                     :
                                     null
                                 }
                                 style={styles.emoteRainGif}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        fontWeight: '500',
-                                        textAlign: 'center',
-                                        color: '#FFF',
-                                        textAlignVertical: 'bottom',
-                                        paddingBottom: 24,
-                                        paddingRight: 16
-                                    }}>
-                                        {this.state.animationSelected}
-                                    </Text>
+                                    <Tooltip showChildInTooltip={false}
+                                        isVisible={this.state.openAnimationTooltip}
+                                        closeOnContentInteraction
+                                        closeOnChildInteraction
+                                        content={
+                                            <View style={styles.tooltipContainer}>
+                                                <TouchableOpacity onPress={() => this.onAnimationSelected(EMOTE_RAIN)}
+                                                    style={styles.tooltipOptionTouchableContainer}>
+                                                    <Text style={styles.tooltipOptionTextContainer}>
+                                                        {translate(`emoteAnimationModal.${this.state.selectedAnimation}`)}
+                                                    </Text>
+                                                    <images.svg.arrowDownWhite style={{
+                                                        transform: [{
+                                                            rotateX: '180deg'
+                                                        }]
+                                                    }} />
+                                                </TouchableOpacity>
+                                                {this.state.nonSelectedAnimations.map((animationName, index) => (
+                                                    <TouchableOpacity onPress={() => this.onAnimationSelected(animationName)}>
+                                                        <Text style={[styles.tooltipOptionTextContainer, {
+                                                            marginBottom: index !== this.state.nonSelectedAnimations.length - 1 ? 24 : 0
+                                                        }]}>
+                                                            {translate(`emoteAnimationModal.${animationName}`)}
+                                                        </Text>
+                                                    </TouchableOpacity>
+                                                ))}
+                                            </View>
+                                        }
+                                        displayInsets={{
+                                            right: 0,
+                                            left: widthPercentageToPx(58)
+                                        }}
+                                        topAdjustment={heightPercentageToPx(22)}
+                                        arrowStyle={{
+                                            display: 'none'
+                                        }}
+                                        onClose={() => this.setState({ openAnimationTooltip: false })}
+                                        contentStyle={styles.tooltipContentStyle}
+                                        backgroundColor='transparent'>
+                                        <TouchableOpacity style={styles.selectedAnimationButton}
+                                            onPress={() => this.setState({ openAnimationTooltip: true })}>
+                                            <Text style={styles.selectedAnimationText}>
+                                                {translate(`emoteAnimationModal.${this.state.selectedAnimation}`)}
+                                            </Text>
+                                            <images.svg.arrowDownWhite />
+                                        </TouchableOpacity>
+                                    </Tooltip>
                                 </ImageBackground>
                             </View>
                             <View style={styles.emotesContainer}>
@@ -151,29 +220,12 @@ class EmoteAnimationModal extends Component {
                                     onEmoteRemoved={this.onEmoteRemoved}
                                     {...this.props.userToStreamerRelation} />
                             </View>
-                            <View style={{
-                                position: 'relative',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}>
+                            <View style={styles.confirmButtonContainer}>
                                 {this.state.selectedEmotes.length > 0 &&
-                                    <TouchableOpacity style={{
-                                        borderRadius: 100,
-                                        backgroundColor: '#00FFDD',
-                                        paddingVertical: 16,
-                                        paddingHorizontal: 24,
-                                        position: 'absolute',
-                                        bottom: 24,
-                                        width: 126
-                                    }}
+                                    <TouchableOpacity style={styles.confirmButton}
                                     onPress={this.onEmotesAnimationConfirmed}>
-                                        <Text style={{
-                                            fontSize: 20,
-                                            fontWeight: '700',
-                                            color: '#0D1022',
-                                            textAlign: 'center'
-                                        }}>
-                                            Confirm
+                                        <Text style={styles.confirmText}>
+                                            {translate('emoteAnimationModal.confirm')}
                                         </Text>
                                     </TouchableOpacity>
                                 }
@@ -193,25 +245,9 @@ class EmotesAnimationSample extends Component {
     render() {
         return (
             <TouchableOpacity onPress={this.props.onAnimationSelected}>
-                <ImageBackground style={{
-                    borderRadius: 20,
-                    marginBottom: 16,
-                    paddingHorizontal: 16,
-                    height: heightPercentageToPx(22.17),
-                    backgroundColor: '#0D1021',
-                    overflow: 'hidden',
-                    display: 'flex',
-                    justifyContent: 'flex-end'
-                }}
-                source={{ uri: this.props.gif }}>
-                    <Text style={{
-                        fontSize: 16,
-                        fontWeight: '500',
-                        textAlign: 'center',
-                        color: '#FFF',
-                        textAlignVertical: 'bottom',
-                        paddingBottom: 24
-                    }}>
+                <ImageBackground style={styles.animationSampleImage}
+                    source={{ uri: this.props.gif }}>
+                    <Text style={styles.animationSampleText}>
                         {this.props.animationName}
                     </Text>
                 </ImageBackground>

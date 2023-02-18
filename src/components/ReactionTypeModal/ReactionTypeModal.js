@@ -16,6 +16,10 @@ class ReactionTypeModal extends Component {
         level3Gif: undefined
     };
 
+    componentDidMount() {
+        this.loadGifs();
+    }
+
     loadGifs = async () => {
         const level1Gif = await getRandomGifByLibrary('ChannelPointsReactions');
         const level2Gif = await getRandomGifByLibrary('level2Reactions');
@@ -36,8 +40,6 @@ class ReactionTypeModal extends Component {
         return (
             <Modal visible={this.props.open}
                 onRequestClose={this.props.onClose}
-                onShow={this.loadGifs}
-                onDismiss={() => this.setState({ level1Gif: undefined, level2Gif: undefined, level3Gif: undefined })}
                 animationType='slide'
                 transparent>
                 <View style={styles.container}>

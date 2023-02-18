@@ -464,6 +464,12 @@
             "goToStream": "Go to stream"
         }
     },
+    "tweetReactionControllerScreen": {
+        "emoteRain": "Rain",
+        "emoteFireworks": "Fireworks",
+        "emoteTunnel": "Warp",
+        "emoteExplosion": "Bomb"
+    },
     "tweetReactionScreen": {
         "gif": "Gif",
         "sticker": "Sticker",
@@ -477,6 +483,9 @@
         "or": "or",
         "cancel": "Cancel",
         "send": "Send",
+        "angry": "Angry",
+        "happy": "Happy",
+        "sad": "Sad",
         "typeToCreateTTS": "Type to create TTS",
         "optional": "Optional",
         "upgradeTooltipP1": "You can always ",
@@ -741,6 +750,15 @@
         "title": "Reactions snoozed 😴",
         "description": "The streamer has their reactions disabled at the moment. Ask your streamer to turn them on!",
         "understood": "Understood"
+    },
+    "emoteAnimationModal": {
+        "fullScreenAnimations": "Full Screen Emote Animations",
+        "chooseEmotes": "Choose up to 3 Emotes",
+        "emoteRain": "💧 Rain",
+        "emoteFireworks": "🎆 Fireworks",
+        "emoteTunnel": "🌀 Warp",
+        "emoteExplosion": "💣 Bomb",
+        "confirm": "Confirm"
     },
     "signUpModal": {
         "continueWithApple": "Continue with Apple",

@@ -28,13 +28,16 @@ import { connect } from 'react-redux';
 import styles from './style';
 import images from '../../../assets/images';
 import {
+    ANGRY_VIBE,
     AVATAR,
     EMOTE,
     GIPHY_GIFS,
     GIPHY_STICKERS,
     GIPHY_TEXT,
+    HAPPY_VIBE,
     MEME,
     QOIN,
+    SAD_VIBE,
     TTS,
     ZAP
 } from '../../utilities/Constants';
@@ -108,6 +111,18 @@ const excludingOptions = {
         [GIPHY_GIFS]: true,
         [GIPHY_STICKERS]: true
     },
+};
+
+const vibesObject = {
+    [ANGRY_VIBE]: {
+        Icon: images.svg.angry
+    },
+    [HAPPY_VIBE]: {
+        Icon: images.svg.happy
+    },
+    [SAD_VIBE]: {
+        Icon: images.svg.sad
+    }
 };
 
 /**
@@ -278,7 +293,8 @@ class TweetReactionScreen extends Component {
         openMediaTooltip: false,
         mediaTooltipOffset: 0,
         tutorialTooltipOffset: 0,
-        keyboardOpen: false
+        keyboardOpen: false,
+        openVibesTooltip: false
     };
 
     componentDidMount() {
@@ -401,6 +417,11 @@ class TweetReactionScreen extends Component {
         }
     }
 
+    onChangeVibe = (vibe) => {
+        this.props.onSelectedVibeChanged(vibe);
+        this.setState({ openVibesTooltip: false });
+    }
+
     render() {
         const avatarImage = `https://api.readyplayer.me/v1/avatars/${this.props.avatarId}.png?scene=fullbody-portrait-v1-transparent&version=${this.state.imageVersion}`;
         const noEnabledOptions = allMediaOptionsTypes.filter((type) => !this.props.mediaSelectorBarOptions.includes(type));
@@ -442,6 +463,8 @@ class TweetReactionScreen extends Component {
             });
         }
 
+        const VibeIcon = vibesObject[this.props.selectedVibe].Icon;
+
         return (
             <KeyboardAvoidingView behavior='padding'
                 // Android handles this behavior by himself
@@ -466,26 +489,107 @@ class TweetReactionScreen extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.ttsContainer}>
-                            {this.props.avatarId ?
-                                <LinearGradient style={styles.avatarImage} useAngle
-                                        angle={95.31}
-                                        colors={['#FF669D', '#9746FF']}
-                                        {...this.props.avatarBackground}>
-                                    {this.state.imageVersion ?
-                                        <Image style={styles.avatarImage} source={{
-                                            uri: avatarImage
+                            <Tooltip showChildInTooltip={false}
+                                isVisible={this.state.openVibesTooltip}
+                                content={
+                                    <View style={{
+                                        paddingHorizontal: 8,
+                                        paddingVertical: 14,
+                                        flexDirection: 'column',
+                                        backgroundColor: '#141539'
+                                    }}>
+                                        <TouchableOpacity onPress={() => this.onChangeVibe(HAPPY_VIBE)}
+                                            style={{
+                                                marginBottom: 16,
+                                                alignItems: 'center'
+                                            }}>
+                                            <images.svg.happy />
+                                            <Text style={{
+                                                marginTop: 4,
+                                                fontSize: 12,
+                                                color: '#FFF',
+                                                fontWeight: '500'
+                                            }}>
+                                                {translate('tweetReactionScreen.happy')}
+                                            </Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.onChangeVibe(ANGRY_VIBE)}
+                                            style={{
+                                                marginBottom: 16,
+                                                alignItems: 'center'
+                                            }}>
+                                            <images.svg.angry />
+                                            <Text style={{
+                                                marginTop: 4,
+                                                fontSize: 12,
+                                                color: '#FFF',
+                                                fontWeight: '500'
+                                            }}>
+                                                {translate('tweetReactionScreen.angry')}
+                                            </Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.onChangeVibe(SAD_VIBE)}
+                                            style={{
+                                                alignItems: 'center'
+                                            }}>
+                                            <images.svg.sad />
+                                            <Text style={{
+                                                marginTop: 4,
+                                                fontSize: 12,
+                                                color: '#FFF',
+                                                fontWeight: '500'
+                                            }}>
+                                                {translate('tweetReactionScreen.sad')}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                }
+                                placement='bottom'
+                                onClose={() => this.setState({ openVibesTooltip: false })}
+                                displayInsets={{
+                                    top: 0,
+                                    bottom: 0,
+                                    right: 0,
+                                    left: 16
+                                }}
+                                contentStyle={{
+                                    backgroundColor: '#141539',
+                                    borderRadius: 12
+                                }}
+                                arrowStyle={[{
+                                    display: 'none'
+                                }]}
+                                backgroundColor='transparent'>
+                                {this.props.avatarId ?
+                                    <TouchableOpacity onPress={() => this.setState({ openVibesTooltip: true })}>
+                                        <LinearGradient style={styles.avatarImage}
+                                            useAngle
+                                            angle={95.31}
+                                            colors={['#FF669D', '#9746FF']}
+                                            {...this.props.avatarBackground}>
+                                            {this.state.imageVersion ?
+                                                <Image style={styles.avatarImage} source={{
+                                                    uri: avatarImage
+                                                }} />
+                                            :
+                                                null
+                                            }
+                                        </LinearGradient>
+                                        <VibeIcon height={24} width={24} style={{
+                                            position: 'absolute',
+                                            bottom: -4,
+                                            right: 4,
+                                            zIndex: 9999
                                         }} />
+                                    </TouchableOpacity>
                                     :
-                                        null
-                                    }
-                                </LinearGradient>
-                                :
-                                <Image style={styles.avatarImage} source={this.props.userPhotoUrl ?
-                                    { uri: this.props.userPhotoUrl }
-                                    :
-                                    images.png.defaultReactionProfilePic.img
-                                } />
-                            }
+                                    <Image style={styles.avatarImage} source={this.props.userPhotoUrl ?
+                                        { uri: this.props.userPhotoUrl }
+                                        :
+                                        images.png.defaultReactionProfilePic.img
+                                    } />
+                                }
+                            </Tooltip>
                             <View style={styles.ttsInputContainer}>
                                 {!this.props.custom3DText ?
                                     <>
@@ -533,7 +637,7 @@ class TweetReactionScreen extends Component {
                                     data={pills}
                                     ListHeaderComponent={() => <View style={styles.pillsScrollViewContainer} />}
                                     ItemSeparatorComponent={() => <View style={{ width: 8 }} />}
-                                    ListFooterComponent={() => <View style={{ width: 16 }} />}
+                                    ListFooterComponent={() => <View style={{ width: 24 }} />}
                                     renderItem={({ item }) => (
                                         // TouchableWithoutFeedback solves scroll bug
                                         <TouchableWithoutFeedback touchSoundDisabled>
@@ -925,6 +1029,7 @@ TweetReactionScreen.propTypes = {
     }),
     disableExtraTip: PropTypes.bool,
     openTutorial: PropTypes.bool,
+    selectedVibe: PropTypes.string,
 
     // Required fields
     //Options for media selector bar
@@ -942,6 +1047,7 @@ TweetReactionScreen.propTypes = {
     onUpgradeReaction: PropTypes.func.isRequired,
     onChangeReactionLevel: PropTypes.func.isRequired,
     onClosingTutorial: PropTypes.func.isRequired,
+    onSelectedVibeChanged: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSend: PropTypes.func.isRequired
 };

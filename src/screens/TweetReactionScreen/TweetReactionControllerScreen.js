@@ -8,9 +8,11 @@ import {
     AVATAR,
     defaultUserImages,
     EMOTE,
+    EMOTE_RAIN,
     GIPHY_GIFS,
     GIPHY_STICKERS,
     GIPHY_TEXT,
+    HAPPY_VIBE,
     MEME,
     QOIN,
     TTS
@@ -42,7 +44,7 @@ import ChooseStreamerModal from '../../components/ChooseStreamerModal/ChooseStre
 import AvatarReactionModal from '../../components/AvatarReactionModal/AvatarReactionModal';
 import Create3DTextModal from '../../components/Create3DTextModal/Create3DTextModal';
 import ChooseBotVoiceModal from '../../components/ChooseBotVoiceModal/ChooseBotVoiceModal';
-import EmoteRainModal from '../../components/EmoteRainModal/EmoteRainModal';
+import EmoteAnimationModal from '../../components/EmoteAnimationModal/EmoteAnimationModal';
 import CreateAvatarModal from '../../components/CreateAvatarModal/CreateAvatarModal';
 import SignUpModal from '../../components/SignUpModal/SignUpModal';
 import BuyQoins from '../BuyQoins/BuyQoins';
@@ -93,6 +95,8 @@ class TweetReactionControllerScreen extends Component {
         userToStreamerRelationData: undefined,
         openEmoteModal: false,
         selectedEmote: null,
+        selectedEmotes: [],
+        selectedEmotesAnimation: EMOTE_RAIN,
         openCreateAvatarModal: false,
         avatarId: this.props.avatarId,
         reactionLevel: 1,
@@ -107,7 +111,8 @@ class TweetReactionControllerScreen extends Component {
         openReactionLevelModal: false,
         tutorialDone: true,
         openNoReactionsModal: false,
-        openReactionsSnoozedModal: false
+        openReactionsSnoozedModal: false,
+        selectedVibe: HAPPY_VIBE
     };
 
     componentDidMount() {
@@ -405,12 +410,14 @@ class TweetReactionControllerScreen extends Component {
                                         messageExtraData,
                                         {
                                             type: EMOTE,
-                                            emojis: emoteArray
+                                            emojis: this.state.selectedEmotes,
+                                            animationId: this.state.selectedEmotesAnimation
                                         },
                                         totalCost,
                                         this.state.avatarId,
                                         this.props.avatarBackground,
                                         this.state.avatarReaction?.id,
+                                        this.state.selectedVibe,
                                         () => {
                                             trackOnSegment('Reaction Sent', {
                                                 MessageLength: this.state.message ? this.state.message.length : null,
@@ -549,14 +556,16 @@ class TweetReactionControllerScreen extends Component {
         });
     }
 
-    onEmoteSelected = (emote) => {
+    onEmoteAnimationSelected = (selectedEmotes, selectedEmotesAnimation) => {
         this.setState({ selectedEmote: {
-                url: emote,
-                title: 'Emote Raid',
+                url: selectedEmotes[0],
+                title: translate(`tweetReactionControllerScreen.${selectedEmotesAnimation}`),
                 type: EMOTE,
                 onRemove: () => this.setState({ selectedEmote: null }),
                 timestamp: new Date().getTime()
             },
+            selectedEmotes,
+            selectedEmotesAnimation,
             openEmoteModal: false
         });
     }
@@ -800,6 +809,8 @@ class TweetReactionControllerScreen extends Component {
                 message={this.state.message}
                 onMessageChanged={(message) => this.setState({ message })}
                 onMediaOptionPress={this.onMediaOptionPress}
+                selectedVibe={this.state.selectedVibe}
+                onSelectedVibeChanged={(selectedVibe) => this.setState({ selectedVibe })}
                 randomEmoteUrl={this.state.randomEmoteUrl}
                 mediaType={this.state.mediaType}
                 selectedMedia={this.state.selectedMedia}
@@ -838,10 +849,10 @@ class TweetReactionControllerScreen extends Component {
                 onClose={() => this.setState({ openBotVoiceModal: false })}
                 currentVoice={this.state.selectedVoiceBot}
                 onVoiceSelected={this.onVoiceSelected} />
-            <EmoteRainModal open={this.state.openEmoteModal}
+            <EmoteAnimationModal open={this.state.openEmoteModal}
                 onClose={() => this.setState({ openEmoteModal: false })}
                 emotes={this.state.emotes}
-                onEmoteSelected={this.onEmoteSelected}
+                onEmoteAnimationSelected={this.onEmoteAnimationSelected}
                 userToStreamerRelation={this.state.userToStreamerRelationData} />
             <CreateAvatarModal open={this.state.openCreateAvatarModal}
                 onClose={() => this.setState({ openCreateAvatarModal: false })}

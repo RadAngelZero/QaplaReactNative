@@ -28,6 +28,7 @@ build/
 .gradle
 local.properties
 *.iml
+qapla_key_upload.jks
 
 # node.js
 #
